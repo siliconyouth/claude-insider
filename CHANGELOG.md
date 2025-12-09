@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.13.2] - 2025-12-09
+
+### Fixed
+- **Voice Assistant Browser Error** - Fixed "dangerouslyAllowBrowser" error by separating Anthropic SDK from client code
+- Client components now import from `claude-utils.ts` instead of `claude.ts` to prevent SDK bundling
+
+### Added
+- **Client-Safe Utilities Module** - New `lib/claude-utils.ts` with types and markdown functions
+- **Server-Only Directive** - Added `import "server-only"` to `lib/claude.ts` to prevent accidental client imports
+- **Error Boundary Integration** - Added error boundary wrapper to `/assistant` page
+- **Debug Error Display** - Error boundary now shows actual error message for easier debugging
+
+### Technical Details
+- `apps/web/lib/claude-utils.ts` - New file with Message type, markdownToDisplayText, markdownToSpeakableText
+- `apps/web/lib/claude.ts` - Now server-only, re-exports from claude-utils for backwards compatibility
+- `apps/web/components/voice-assistant.tsx` - Updated imports to use claude-utils
+- `apps/web/components/voice-assistant-full.tsx` - Updated imports to use claude-utils
+- `apps/web/lib/assistant-context.ts` - Updated imports to use claude-utils
+
 ## [0.13.1] - 2025-12-09
 
 ### Added

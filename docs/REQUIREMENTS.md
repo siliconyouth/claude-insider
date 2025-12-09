@@ -155,7 +155,8 @@ claude-insider/
 │   │   │   ├── reading-time.ts   # Reading time calculation (200 WPM)
 │   │   │   ├── search-history.ts # Search history localStorage utilities
 │   │   │   ├── i18n.ts           # i18n configuration for multi-language
-│   │   │   ├── claude.ts         # Anthropic Claude client & system prompts
+│   │   │   ├── claude.ts         # Server-only Anthropic Claude client & system prompts
+│   │   │   ├── claude-utils.ts   # Client-safe types & markdown utilities
 │   │   │   ├── rag.ts            # RAG system with TF-IDF search
 │   │   │   ├── wake-word.ts      # Wake word detection ("Hey Insider")
 │   │   │   ├── speech-recognition.ts # Speech recognition utilities
@@ -477,7 +478,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.13.1.
+All planned features have been implemented. The project is feature-complete at v0.13.2.
 
 ### Content Expansion (All Complete)
 
@@ -646,6 +647,14 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] **Homepage demo animation** with 32-second animated showcase
 - [x] **Audio waveform visualization** in demo during TTS playback
 - [x] **Voice assistant demo component** (`voice-assistant-demo.tsx`) for homepage preview
+
+### Phase 16: SDK Architecture Fix - COMPLETED (v0.13.2)
+- [x] **Voice Assistant Browser Error Fix** - Fixed "dangerouslyAllowBrowser" error in voice assistant
+- [x] **Client-Safe Utilities Module** - New `lib/claude-utils.ts` with browser-compatible types and functions
+- [x] **Server-Only SDK Isolation** - Added `import "server-only"` to `lib/claude.ts` to prevent client bundling
+- [x] **Error Boundary Integration** - Enhanced error boundary on `/assistant` page with actual error message display
+- [x] Updated imports across voice assistant components to use `claude-utils.ts`
+- [x] Build and runtime verification with Puppeteer testing
 
 ### Pages Implemented (28 Documentation + 7 Utility Pages)
 

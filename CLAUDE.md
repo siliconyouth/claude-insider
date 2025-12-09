@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.13.1
+**Version**: 0.13.2
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -73,8 +73,10 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Dedicated `/assistant` page** for full-page voice assistant experience
 - **Homepage demo animation** with 32-second animated showcase and audio waveform
 - **Voice assistant demo component** for interactive homepage preview
+- **Client-safe utilities module** (`lib/claude-utils.ts`) for browser-compatible code
+- **Server-only SDK isolation** - Anthropic SDK properly isolated from client bundles
 
-### Project Status: Complete (v0.13.1)
+### Project Status: Complete (v0.13.2)
 
 ## Tech Stack
 
@@ -142,7 +144,8 @@ claude-insider/
 │   │   │   ├── reading-time.ts   # Reading time calculation
 │   │   │   ├── search-history.ts # Search history localStorage
 │   │   │   ├── i18n.ts           # i18n configuration
-│   │   │   ├── claude.ts         # Claude client, system prompts, markdown conversion
+│   │   │   ├── claude.ts         # Server-only Claude client & system prompts
+│   │   │   ├── claude-utils.ts   # Client-safe types & markdown utilities
 │   │   │   ├── rag.ts            # RAG system with TF-IDF search
 │   │   │   ├── wake-word.ts      # Wake word detection ("Hey Insider")
 │   │   │   ├── speech-recognition.ts # Speech recognition utilities

@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.13.1)
+## Current Status (v0.13.2)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -87,6 +87,8 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Dedicated `/assistant` page** for full-page voice assistant experience
 - [x] **Homepage demo animation** with 32-second animated showcase
 - [x] **Audio waveform visualization** in demo during TTS playback
+- [x] **Server-only SDK isolation** - Anthropic SDK properly separated from client bundles
+- [x] **Client-safe utilities module** - `lib/claude-utils.ts` for browser-compatible types and functions
 
 ### All Features Complete
 
@@ -176,7 +178,8 @@ claude-insider/
 │   │       ├── reading-time.ts   # Reading time calculation
 │   │       ├── search-history.ts # Search history localStorage
 │   │       ├── i18n.ts           # i18n configuration
-│   │       ├── claude.ts         # Anthropic Claude client & prompts
+│   │       ├── claude.ts         # Server-only Anthropic Claude client & prompts
+│   │       ├── claude-utils.ts   # Client-safe types & markdown utilities
 │   │       ├── rag.ts            # RAG system with TF-IDF search
 │   │       ├── wake-word.ts      # Wake word detection ("Hey Insider")
 │   │       ├── speech-recognition.ts # Speech recognition utilities
