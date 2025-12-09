@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
 const DOCS_SECTIONS = [
   {
@@ -124,50 +125,9 @@ export default function DocsPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-800 mt-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <a
-              href="https://www.claudeinsider.com"
-              className="flex items-center gap-2"
-            >
-              <div className="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-orange-500 to-amber-600">
-                <span className="text-xs font-bold text-white">C</span>
-              </div>
-              <span className="text-sm text-gray-400">
-                Claude Insider - Built with Claude Code & Opus 4.5
-              </span>
-            </a>
-            <div className="flex items-center gap-6 text-sm text-gray-400">
-              <a
-                href="https://claude.ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
-              >
-                Claude AI
-              </a>
-              <a
-                href="https://anthropic.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
-              >
-                Anthropic
-              </a>
-              <a
-                href="https://github.com/siliconyouth/claude-insider"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
-              >
-                GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <div className="mt-16">
+        <Footer />
+      </div>
     </div>
   );
 }
