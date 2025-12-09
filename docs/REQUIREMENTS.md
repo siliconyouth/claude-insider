@@ -62,6 +62,7 @@ All technologies used in this project are **free and/or open source** (except fo
 | Technology | Version | License | Description |
 |------------|---------|---------|-------------|
 | **Fuse.js** | 7.1.0 | Apache-2.0 | Lightweight fuzzy-search library |
+| **highlight.js** | 11.x | BSD-3-Clause | Syntax highlighting for code blocks |
 
 ### Version Control & Hosting
 
@@ -200,6 +201,8 @@ claude-insider/
 - [x] Security headers (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection)
 - [x] Font optimization with display swap and preloading
 - [x] Image optimization with AVIF/WebP formats
+- [x] Syntax highlighting for code blocks using highlight.js
+- [x] Colored language tags above code blocks (15+ languages)
 
 ### Pages Implemented
 
@@ -331,6 +334,7 @@ All planned features have been implemented. The project is feature-complete.
 ### Optional Future Enhancements
 - [ ] Add GitHub Actions CI/CD pipeline (optional - Vercel handles deployment)
 - [ ] Add privacy-respecting analytics (optional)
+- [ ] Add more syntax highlighting languages as needed
 
 ---
 
@@ -375,6 +379,12 @@ All planned features have been implemented. The project is feature-complete.
 - [x] Skip to main content link
 - [x] ARIA labels and roles throughout
 - [x] Focus visible states on all interactive elements
+
+### Phase 7: Code Block Enhancements - COMPLETED
+- [x] Syntax highlighting using highlight.js
+- [x] Colored language tags above code blocks
+- [x] Support for 15+ languages (JavaScript, TypeScript, Python, Bash, JSON, HTML, CSS, YAML, SQL, Go, Rust, etc.)
+- [x] Language-specific colors (TypeScript=blue, JavaScript=yellow, Python=green, etc.)
 
 ---
 

@@ -8,7 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Additional accessibility improvements
+- Additional content pages as needed
+
+## [0.7.0] - 2025-12-09
+
+### Added
+- Syntax highlighting for code blocks using highlight.js
+- Colored language tags above code blocks (e.g., blue for TypeScript, yellow for JavaScript)
+- Support for 15+ languages: JavaScript, TypeScript, Python, Bash, JSON, HTML, CSS, YAML, SQL, Go, Rust, etc.
+
+### Changed
+- Code blocks now display language name in a colored pill badge
+- Improved code block styling with better padding for language tag
+- Enhanced visual distinction between different programming languages
 
 ## [0.6.0] - 2025-12-09
 
@@ -198,6 +210,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.7.0 | 2025-12-09 | Syntax highlighting with highlight.js, colored language tags |
 | 0.6.0 | 2025-12-09 | PWA offline support, accessibility audit and fixes |
 | 0.5.0 | 2025-12-09 | Lighthouse optimization, JSON-LD structured data, security headers |
 | 0.4.0 | 2025-12-09 | TOC, mobile menu, sitemap, production deployment |
@@ -211,6 +224,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Upcoming Features
 
 ### Low Priority
-- [ ] GitHub Actions CI/CD
-- [ ] PWA offline support
-- [ ] Accessibility audit
+- [ ] GitHub Actions CI/CD (optional - Vercel handles deployment)
+- [x] PWA offline support (v0.6.0)
+- [x] Accessibility audit (v0.6.0)
+- [x] Syntax highlighting for code blocks (v0.7.0)

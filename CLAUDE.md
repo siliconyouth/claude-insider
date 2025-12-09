@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.6.0
+**Version**: 0.7.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -36,6 +36,8 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Lighthouse optimizations (font swap, compression, security headers)
 - PWA offline support with service worker and manifest
 - Accessibility audit (ARIA labels, focus states, skip link)
+- Syntax highlighting for code blocks using highlight.js
+- Colored language tags above code blocks (15+ languages supported)
 
 ### Project Status: Complete
 
@@ -50,6 +52,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 | Tailwind CSS | 4.1.5 | Utility-first CSS |
 | MDX | 3.x | Markdown with React components |
 | Fuse.js | 7.1.0 | Fuzzy search |
+| highlight.js | 11.x | Syntax highlighting |
 | pnpm | 10.19.0 | Package manager |
 
 ## Project Structure

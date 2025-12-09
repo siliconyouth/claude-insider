@@ -18,7 +18,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.6.0)
+## Current Status (v0.7.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -44,6 +44,8 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Security headers (X-Content-Type-Options, X-Frame-Options, etc.)
 - [x] PWA offline support with service worker
 - [x] Accessibility audit and fixes (ARIA, focus states, skip link)
+- [x] Syntax highlighting for code blocks using highlight.js
+- [x] Colored language tags (TypeScript=blue, JavaScript=yellow, Python=green, etc.)
 
 ### All Features Complete
 
@@ -67,6 +69,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | Styling | [Tailwind CSS](https://tailwindcss.com/) | 4.1.5 |
 | Content | [MDX](https://mdxjs.com/) | 3.x |
 | Search | [Fuse.js](https://fusejs.io/) | 7.1.0 |
+| Syntax Highlighting | [highlight.js](https://highlightjs.org/) | 11.x |
 | Package Manager | [pnpm](https://pnpm.io/) | 10.19.0 |
 | Hosting | [Vercel](https://vercel.com/) | - |
 
