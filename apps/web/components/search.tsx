@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
 import {
@@ -14,9 +15,15 @@ export function Search() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchDocument[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const fuseRef = useRef<Fuse<SearchDocument> | null>(null);
   const router = useRouter();
+
+  // Track if component is mounted (for portal)
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Initialize search index
   useEffect(() => {
@@ -118,9 +125,9 @@ export function Search() {
         </kbd>
       </button>
 
-      {/* Search modal */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+      {/* Search modal - rendered via portal to escape stacking context */}
+      {mounted && isOpen && createPortal(
+        <div className="fixed inset-0 z-[9999] overflow-y-auto">
           {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/70 backdrop-blur-sm"
@@ -291,7 +298,8 @@ export function Search() {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
