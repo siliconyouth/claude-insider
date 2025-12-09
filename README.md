@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.13.0)
+## Current Status (v0.13.1)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -84,6 +84,9 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Conversation export (copy to clipboard)
 - [x] Error boundary for voice assistant resilience
 - [x] Analytics tracking for voice assistant interactions
+- [x] **Dedicated `/assistant` page** for full-page voice assistant experience
+- [x] **Homepage demo animation** with 32-second animated showcase
+- [x] **Audio waveform visualization** in demo during TTS playback
 
 ### All Features Complete
 
@@ -107,6 +110,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | Accessibility | `/accessibility` | WCAG 2.1 AA conformance statement |
 | Changelog | `/changelog` | Version history and release notes |
 | RSS Feed | `/feed.xml` | Subscribe to documentation updates |
+| AI Assistant | `/assistant` | Full-page voice assistant interface |
 
 ## Tech Stack
 
@@ -152,6 +156,8 @@ claude-insider/
 │   │   │   ├── edit-on-github.tsx # Edit page link
 │   │   │   ├── language-selector.tsx # i18n language dropdown
 │   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
+│   │   │   ├── voice-assistant-full.tsx # Full-page voice assistant
+│   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI

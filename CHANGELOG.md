@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.13.1] - 2025-12-09
+
+### Added
+- **Dedicated `/assistant` Page** - Full-page voice assistant at `/assistant` route
+- **Enhanced Homepage Demo** - Longer 32-second animation with two Q&A exchanges
+- **Audio Waveform Animation** - Visual audio bars during TTS playback in demo
+- **Voice Assistant Demo Component** - Animated showcase on homepage
+
+### Changed
+- Homepage "Try the Assistant" now links to dedicated `/assistant` page
+- Demo animation extended from 8s to 32s for better readability
+- Chat area height increased from 300px to 380px in demo
+- Added "Speaking..." indicator with animated waveform bars
+
+### Technical Details
+- `apps/web/app/assistant/page.tsx` - New route handler for assistant page
+- `apps/web/components/voice-assistant-full.tsx` - Full-page voice assistant component
+- `apps/web/components/voice-assistant-demo.tsx` - Enhanced demo with audio visualization
+
 ## [0.13.0] - 2025-12-09
 
 ### Added
@@ -426,6 +445,8 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.13.1 | 2025-12-09 | Dedicated /assistant page, enhanced homepage demo animation |
+| 0.13.0 | 2025-12-09 | 9 new doc pages, markdown cleanup, TTS improvements, performance |
 | 0.12.1 | 2025-12-09 | Voice polish, 3 new doc pages, analytics tracking, error boundary |
 | 0.12.0 | 2025-12-09 | ElevenLabs TTS with 42 voices, streaming TTS, faster voice response |
 | 0.11.0 | 2025-12-09 | AI Voice Assistant, RAG search, streaming chat with Claude |
@@ -448,26 +469,26 @@ Phase D (Lower Priority):
 
 ### Content Expansion (Planned)
 
-**Phase A: Core Enhancements (High Priority)**
+**Phase A: Core Enhancements (High Priority)** - COMPLETED
 - [x] Troubleshooting guide - Common issues and solutions (v0.12.1)
 - [x] Migration guide - Migrating from other AI tools (v0.12.1)
-- [ ] Environment variables reference
-- [ ] Permissions and security settings
+- [x] Environment variables reference (v0.13.0)
+- [x] Permissions and security settings (v0.13.0)
 - [x] Advanced prompting techniques (v0.12.1)
-- [ ] Debugging with Claude Code
+- [x] Debugging with Claude Code (v0.13.0)
 
-**Phase B: API Deep Dives (Medium Priority)**
-- [ ] Streaming responses guide
-- [ ] Error handling patterns
-- [ ] Rate limits and quotas
-- [ ] Model comparison guide
+**Phase B: API Deep Dives (Medium Priority)** - COMPLETED
+- [x] Streaming responses guide (v0.13.0)
+- [x] Error handling patterns (v0.13.0)
+- [x] Rate limits and quotas (v0.13.0)
+- [x] Model comparison guide (v0.13.0)
 
-**Phase C: Integrations Expansion (Medium Priority)**
-- [ ] GitHub Actions CI/CD integration
-- [ ] Docker and containerization
-- [ ] Database integrations
+**Phase C: Integrations Expansion (Medium Priority)** - COMPLETED
+- [x] GitHub Actions CI/CD integration (v0.13.0)
+- [x] Docker and containerization (v0.13.0)
+- [x] Database integrations (v0.13.0)
 
-**Phase D: New Categories (Lower Priority)**
+**Phase D: New Categories (Lower Priority)** - Future
 - [ ] Tutorials category: Code review, documentation generation, test generation, refactoring
 - [ ] Examples category: Real-world projects, starter templates
 

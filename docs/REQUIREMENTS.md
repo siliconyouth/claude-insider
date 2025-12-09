@@ -107,6 +107,8 @@ claude-insider/
 │   │   │   ├── edit-on-github.tsx # "Edit this page on GitHub" link component
 │   │   │   ├── language-selector.tsx # Language dropdown for i18n
 │   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
+│   │   │   ├── voice-assistant-full.tsx # Full-page voice assistant
+│   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
@@ -475,7 +477,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.13.0.
+All planned features have been implemented. The project is feature-complete at v0.13.1.
 
 ### Content Expansion (All Complete)
 
@@ -640,6 +642,25 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] **Performance optimizations** - CSS optimization enabled, source maps disabled, voices memoized
 - [x] Updated search index with all 28 documentation pages
 - [x] Updated navigation configuration for all new pages
+- [x] **Dedicated `/assistant` page** for full-page voice assistant experience
+- [x] **Homepage demo animation** with 32-second animated showcase
+- [x] **Audio waveform visualization** in demo during TTS playback
+- [x] **Voice assistant demo component** (`voice-assistant-demo.tsx`) for homepage preview
+
+### Pages Implemented (28 Documentation + 7 Utility Pages)
+
+| Route | Status | Description |
+|-------|--------|-------------|
+| `/` | Done | Homepage with hero, categories, features |
+| `/assistant` | Done | Full-page voice assistant interface |
+| `/docs` | Done | Documentation index with all sections |
+| `/docs/getting-started` | Done | Introduction to Claude AI |
+| `/privacy` | Done | Privacy Policy (GDPR, CCPA, Serbian law) |
+| `/terms` | Done | Terms of Service (international) |
+| `/disclaimer` | Done | Disclaimer (non-affiliation notice) |
+| `/accessibility` | Done | Accessibility Statement (WCAG 2.1 AA) |
+| `/changelog` | Done | Public changelog parsing CHANGELOG.md |
+| `/feed.xml` | Done | RSS 2.0 feed for documentation updates |
 
 ---
 

@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.13.0
+**Version**: 0.13.1
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -70,8 +70,11 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Markdown display cleanup** - Chat responses display without markdown syntax
 - **TTS markdown handling** - Converts markdown to speakable text for natural speech
 - Performance optimizations (CSS optimization, source map removal, memoization)
+- **Dedicated `/assistant` page** for full-page voice assistant experience
+- **Homepage demo animation** with 32-second animated showcase and audio waveform
+- **Voice assistant demo component** for interactive homepage preview
 
-### Project Status: Complete (v0.13.0)
+### Project Status: Complete (v0.13.1)
 
 ## Tech Stack
 
@@ -119,6 +122,8 @@ claude-insider/
 │   │   │   ├── edit-on-github.tsx # "Edit this page on GitHub" link
 │   │   │   ├── language-selector.tsx # Language dropdown for i18n
 │   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
+│   │   │   ├── voice-assistant-full.tsx # Full-page voice assistant
+│   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
@@ -253,10 +258,11 @@ Configured in `vercel.json`:
 | Accessibility | `/accessibility` | WCAG 2.1 AA conformance statement |
 | Changelog | `/changelog` | Version history and release notes |
 | RSS Feed | `/feed.xml` | Subscribe to documentation updates |
+| AI Assistant | `/assistant` | Full-page voice assistant interface |
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.13.0.
+All planned features have been implemented. The project is feature-complete at v0.13.1.
 
 ### Future Enhancements (Optional)
 - Multi-language support (i18n) when translations are ready
