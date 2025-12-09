@@ -12,6 +12,14 @@ interface TableOfContentsProps {
   contentSelector?: string;
 }
 
+// Generate a slug from text
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 export function TableOfContents({
   contentSelector = "article",
 }: TableOfContentsProps) {
@@ -27,11 +35,18 @@ export function TableOfContents({
     const items: TOCItem[] = [];
 
     elements.forEach((element) => {
-      const id = element.id;
+      const text = element.textContent || "";
+      // Use existing ID or generate one from text
+      let id = element.id;
+      if (!id && text) {
+        id = slugify(text);
+        // Set the ID on the element so we can scroll to it
+        element.id = id;
+      }
       if (id) {
         items.push({
           id,
-          text: element.textContent || "",
+          text,
           level: element.tagName === "H2" ? 2 : 3,
         });
       }
