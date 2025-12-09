@@ -3,15 +3,17 @@ import { ReactNode } from "react";
 import { Header } from "@/components/header";
 import { TableOfContents } from "@/components/table-of-contents";
 
+interface SidebarSection {
+  title: string;
+  items: { label: string; href: string; active?: boolean }[];
+}
+
 interface DocsLayoutProps {
   children: ReactNode;
   title: string;
   description?: string;
   breadcrumbs: { label: string; href?: string }[];
-  sidebar?: {
-    title: string;
-    items: { label: string; href: string; active?: boolean }[];
-  };
+  sidebar?: SidebarSection[];
   prevPage?: { label: string; href: string };
   nextPage?: { label: string; href: string };
 }
@@ -32,24 +34,30 @@ export function DocsLayout({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex gap-12">
           {/* Sidebar */}
-          {sidebar && (
+          {sidebar && sidebar.length > 0 && (
             <aside className="hidden lg:block w-64 flex-shrink-0">
-              <nav className="sticky top-24 space-y-1">
-                <div className="text-sm font-semibold text-gray-300 mb-4">
-                  {sidebar.title}
-                </div>
-                {sidebar.items.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`block px-3 py-2 text-sm rounded-lg transition-colors ${
-                      item.active
-                        ? "text-orange-400 bg-orange-500/10"
-                        : "text-gray-400 hover:text-white hover:bg-gray-800"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
+              <nav className="sticky top-24 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4">
+                {sidebar.map((section) => (
+                  <div key={section.title}>
+                    <div className="text-sm font-semibold text-gray-300 mb-2">
+                      {section.title}
+                    </div>
+                    <div className="space-y-1">
+                      {section.items.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={`block px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                            item.active
+                              ? "text-orange-400 bg-orange-500/10"
+                              : "text-gray-400 hover:text-white hover:bg-gray-800"
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </nav>
             </aside>

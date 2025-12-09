@@ -108,20 +108,16 @@ export default async function DocPage({ params }: PageProps) {
   const { data, content } = extractFrontmatter(fileContent);
 
   // Dynamic import of MDX content
-  const category = slug[0];
   const currentPath = `/docs/${slug.join("/")}`;
 
-  // Get sidebar config for this category
-  const sidebar = navigationConfig[category];
-  const sidebarWithActive = sidebar
-    ? {
-        ...sidebar,
-        items: sidebar.items.map((item) => ({
-          ...item,
-          active: item.href === currentPath,
-        })),
-      }
-    : undefined;
+  // Build sidebar with all sections, marking active item
+  const sidebarSections = Object.values(navigationConfig).map((section) => ({
+    ...section,
+    items: section.items.map((item) => ({
+      ...item,
+      active: item.href === currentPath,
+    })),
+  }));
 
   // Build breadcrumbs
   const breadcrumbs = [
@@ -132,26 +128,25 @@ export default async function DocPage({ params }: PageProps) {
     })),
   ];
 
-  // Find prev/next pages
+  // Find prev/next pages across all sections
   let prevPage: { label: string; href: string } | undefined;
   let nextPage: { label: string; href: string } | undefined;
 
-  if (sidebar) {
-    const currentIndex = sidebar.items.findIndex(
-      (item) => item.href === currentPath
-    );
-    if (currentIndex > 0) {
-      prevPage = {
-        label: sidebar.items[currentIndex - 1].label,
-        href: sidebar.items[currentIndex - 1].href,
-      };
-    }
-    if (currentIndex < sidebar.items.length - 1 && currentIndex >= 0) {
-      nextPage = {
-        label: sidebar.items[currentIndex + 1].label,
-        href: sidebar.items[currentIndex + 1].href,
-      };
-    }
+  // Flatten all items to find prev/next
+  const allItems = Object.values(navigationConfig).flatMap((section) => section.items);
+  const currentIndex = allItems.findIndex((item) => item.href === currentPath);
+
+  if (currentIndex > 0) {
+    prevPage = {
+      label: allItems[currentIndex - 1].label,
+      href: allItems[currentIndex - 1].href,
+    };
+  }
+  if (currentIndex < allItems.length - 1 && currentIndex >= 0) {
+    nextPage = {
+      label: allItems[currentIndex + 1].label,
+      href: allItems[currentIndex + 1].href,
+    };
   }
 
   // Import the MDX file dynamically based on the slug
@@ -175,7 +170,7 @@ export default async function DocPage({ params }: PageProps) {
       title={data.title || formatSlugToTitle(slug[slug.length - 1])}
       description={data.description}
       breadcrumbs={breadcrumbs}
-      sidebar={sidebarWithActive}
+      sidebar={sidebarSections}
       prevPage={prevPage}
       nextPage={nextPage}
     >
