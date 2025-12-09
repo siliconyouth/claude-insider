@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { DocsLayout } from "@/components/docs-layout";
 
-// Navigation structure for sidebar (same as in [...slug]/page.tsx)
+// Navigation structure for sidebar - All 7 categories with 34 pages
+// Last updated: 2025-12-09
 const navigationConfig = [
   {
     title: "Getting Started",
@@ -9,6 +10,8 @@ const navigationConfig = [
       { label: "Introduction", href: "/docs/getting-started", active: true },
       { label: "Installation", href: "/docs/getting-started/installation" },
       { label: "Quick Start", href: "/docs/getting-started/quickstart" },
+      { label: "Troubleshooting", href: "/docs/getting-started/troubleshooting" },
+      { label: "Migration", href: "/docs/getting-started/migration" },
     ],
   },
   {
@@ -17,6 +20,8 @@ const navigationConfig = [
       { label: "Overview", href: "/docs/configuration" },
       { label: "CLAUDE.md", href: "/docs/configuration/claude-md" },
       { label: "Settings", href: "/docs/configuration/settings" },
+      { label: "Environment", href: "/docs/configuration/environment" },
+      { label: "Permissions", href: "/docs/configuration/permissions" },
     ],
   },
   {
@@ -25,6 +30,8 @@ const navigationConfig = [
       { label: "Overview", href: "/docs/tips-and-tricks" },
       { label: "Prompting", href: "/docs/tips-and-tricks/prompting" },
       { label: "Productivity", href: "/docs/tips-and-tricks/productivity" },
+      { label: "Advanced Prompting", href: "/docs/tips-and-tricks/advanced-prompting" },
+      { label: "Debugging", href: "/docs/tips-and-tricks/debugging" },
     ],
   },
   {
@@ -33,6 +40,10 @@ const navigationConfig = [
       { label: "Overview", href: "/docs/api" },
       { label: "Authentication", href: "/docs/api/authentication" },
       { label: "Tool Use", href: "/docs/api/tool-use" },
+      { label: "Streaming", href: "/docs/api/streaming" },
+      { label: "Error Handling", href: "/docs/api/error-handling" },
+      { label: "Rate Limits", href: "/docs/api/rate-limits" },
+      { label: "Models", href: "/docs/api/models" },
     ],
   },
   {
@@ -42,6 +53,25 @@ const navigationConfig = [
       { label: "MCP Servers", href: "/docs/integrations/mcp-servers" },
       { label: "IDE Plugins", href: "/docs/integrations/ide-plugins" },
       { label: "Hooks", href: "/docs/integrations/hooks" },
+      { label: "GitHub Actions", href: "/docs/integrations/github-actions" },
+      { label: "Docker", href: "/docs/integrations/docker" },
+      { label: "Databases", href: "/docs/integrations/databases" },
+    ],
+  },
+  {
+    title: "Tutorials",
+    items: [
+      { label: "Overview", href: "/docs/tutorials" },
+      { label: "Code Review", href: "/docs/tutorials/code-review" },
+      { label: "Documentation Generation", href: "/docs/tutorials/documentation-generation" },
+      { label: "Test Generation", href: "/docs/tutorials/test-generation" },
+    ],
+  },
+  {
+    title: "Examples",
+    items: [
+      { label: "Overview", href: "/docs/examples" },
+      { label: "Real-World Projects", href: "/docs/examples/real-world-projects" },
     ],
   },
 ];
