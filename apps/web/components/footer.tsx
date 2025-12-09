@@ -73,6 +73,13 @@ export function Footer() {
           >
             Privacy Policy
           </Link>
+          <span className="hidden sm:inline text-gray-600">|</span>
+          <Link
+            href="/terms"
+            className="text-sm text-gray-500 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
+          >
+            Terms of Service
+          </Link>
         </div>
       </div>
     </footer>
