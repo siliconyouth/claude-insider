@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { SkipLink } from "@/components/skip-link";
+import { VoiceAssistant } from "@/components/voice-assistant";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -139,6 +140,7 @@ export default function RootLayout({
         <SkipLink />
         <ServiceWorkerRegister />
         {children}
+        <VoiceAssistant />
         <Analytics />
       </body>
     </html>

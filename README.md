@@ -11,6 +11,11 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 ## Features
 
 - **Documentation Hub**: 16 comprehensive pages covering Claude AI
+- **AI Voice Assistant**: Interactive voice assistant with "Hey Insider" wake word detection
+- **Text-to-Speech**: OpenAI TTS with 6 voice options (alloy, echo, fable, onyx, nova, shimmer)
+- **Speech-to-Text**: Voice input using Web Speech API
+- **RAG Search**: Retrieval-Augmented Generation for intelligent documentation search
+- **Streaming Chat**: Real-time streaming responses from Claude AI
 - **Tips & Tricks**: Productivity hacks, prompting strategies, best practices
 - **Configuration Guides**: Step-by-step setup instructions
 - **Code Examples**: Real-world usage examples with copy-to-clipboard
@@ -18,7 +23,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.10.0)
+## Current Status (v0.11.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -64,6 +69,13 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Reading time estimates on all doc pages
 - [x] Search history with localStorage persistence
 - [x] Language selector for i18n preparation (English only initially)
+- [x] **AI Voice Assistant** with wake word detection ("Hey Insider")
+- [x] **OpenAI Text-to-Speech** with 6 voices (alloy, echo, fable, onyx, nova, shimmer)
+- [x] **Speech-to-Text** using Web Speech API with browser fallback
+- [x] **RAG System** with TF-IDF search for intelligent documentation retrieval
+- [x] **Streaming Chat** with Claude AI (Server-Sent Events)
+- [x] **Auto-speak** responses with complete message TTS
+- [x] Voice selector dropdown with click-outside handling
 
 ### All Features Complete
 
@@ -99,10 +111,13 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | Content | [MDX](https://mdxjs.com/) | 3.x |
 | Search | [Fuse.js](https://fusejs.io/) | 7.1.0 |
 | Syntax Highlighting | [highlight.js](https://highlightjs.org/) | 11.x |
+| AI Models | [Anthropic Claude](https://anthropic.com) | Sonnet 4 |
+| Text-to-Speech | [OpenAI TTS](https://openai.com) | tts-1 |
+| Speech Recognition | Web Speech API | - |
 | Package Manager | [pnpm](https://pnpm.io/) | 10.19.0 |
 | Hosting | [Vercel](https://vercel.com/) | - |
 
-All technologies are **free and/or open source**.
+All technologies are **free and/or open source** (API services require keys).
 
 ## Project Structure
 
@@ -128,7 +143,11 @@ claude-insider/
 │   │   │   ├── content-meta.tsx  # Source citations & AI metadata
 │   │   │   ├── edit-on-github.tsx # Edit page link
 │   │   │   ├── language-selector.tsx # i18n language dropdown
+│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
 │   │   │   └── footer.tsx        # Shared footer with legal links
+│   │   ├── app/api/assistant/
+│   │   │   ├── chat/route.ts     # Streaming chat with Claude AI
+│   │   │   └── speak/route.ts    # OpenAI TTS endpoint
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation
@@ -142,7 +161,12 @@ claude-insider/
 │   │       ├── search.ts         # Search utilities
 │   │       ├── reading-time.ts   # Reading time calculation
 │   │       ├── search-history.ts # Search history localStorage
-│   │       └── i18n.ts           # i18n configuration
+│   │       ├── i18n.ts           # i18n configuration
+│   │       ├── claude.ts         # Anthropic Claude client & prompts
+│   │       ├── rag.ts            # RAG system with TF-IDF search
+│   │       ├── wake-word.ts      # Wake word detection ("Hey Insider")
+│   │       ├── speech-recognition.ts # Speech recognition utilities
+│   │       └── assistant-context.ts  # Assistant context management
 │   └── docs/                     # Secondary docs app
 ├── packages/
 │   ├── ui/                       # Shared UI components
@@ -204,6 +228,23 @@ pnpm --filter web build     # Build only web app
 | `↑ / ↓` | Navigate search results |
 | `Enter` | Select search result |
 | `Esc` | Close search |
+
+## Voice Commands
+
+| Command | Action |
+|---------|--------|
+| "Hey Insider" | Activate voice assistant |
+| Speak your question | Voice-to-text transcription |
+| Click Listen button | Hear response read aloud |
+| Toggle Auto-speak | Automatically read responses |
+
+## Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ANTHROPIC_API_KEY` | Yes | Claude AI API key for chat |
+| `OPENAI_API_KEY` | Yes | OpenAI API key for TTS |
+| `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` | Auto | Build ID for versioning |
 
 ## Deployment
 

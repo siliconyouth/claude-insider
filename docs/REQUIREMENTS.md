@@ -64,6 +64,14 @@ All technologies used in this project are **free and/or open source** (except fo
 | **Fuse.js** | 7.1.0 | Apache-2.0 | Lightweight fuzzy-search library |
 | **highlight.js** | 11.x | BSD-3-Clause | Syntax highlighting for code blocks |
 
+### AI & Voice
+
+| Technology | Version | License | Description |
+|------------|---------|---------|-------------|
+| **@anthropic-ai/sdk** | latest | Proprietary | Claude AI streaming chat |
+| **openai** | latest | MIT | OpenAI TTS (text-to-speech) |
+| **Web Speech API** | - | W3C | Speech recognition (browser native) |
+
 ### Version Control & Hosting
 
 | Technology | Tier | Description |
@@ -98,7 +106,11 @@ claude-insider/
 │   │   │   ├── content-meta.tsx  # Source citations & AI generation metadata
 │   │   │   ├── edit-on-github.tsx # "Edit this page on GitHub" link component
 │   │   │   ├── language-selector.tsx # Language dropdown for i18n
+│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
+│   │   ├── app/api/assistant/
+│   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
+│   │   │   └── speak/route.ts    # OpenAI TTS endpoint (6 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation content
@@ -127,7 +139,12 @@ claude-insider/
 │   │   │   ├── search.ts         # Search index and utilities
 │   │   │   ├── reading-time.ts   # Reading time calculation (200 WPM)
 │   │   │   ├── search-history.ts # Search history localStorage utilities
-│   │   │   └── i18n.ts           # i18n configuration for multi-language
+│   │   │   ├── i18n.ts           # i18n configuration for multi-language
+│   │   │   ├── claude.ts         # Anthropic Claude client & system prompts
+│   │   │   ├── rag.ts            # RAG system with TF-IDF search
+│   │   │   ├── wake-word.ts      # Wake word detection ("Hey Insider")
+│   │   │   ├── speech-recognition.ts # Speech recognition utilities
+│   │   │   └── assistant-context.ts  # Assistant context management
 │   │   ├── mdx-components.tsx    # Custom MDX components
 │   │   └── public/               # Static assets
 │   └── docs/                     # Secondary docs app (Turborepo default)
@@ -231,6 +248,13 @@ claude-insider/
 - [x] Reading time estimates on all documentation pages (200 WPM)
 - [x] Search history with localStorage persistence (up to 5 recent searches)
 - [x] Language selector for i18n preparation (English US only initially)
+- [x] **AI Voice Assistant** with "Hey Insider" wake word detection
+- [x] **OpenAI Text-to-Speech** with 6 voices (alloy, echo, fable, onyx, nova, shimmer)
+- [x] **Speech-to-Text** using Web Speech API with browser fallback
+- [x] **RAG System** with TF-IDF search for intelligent documentation retrieval
+- [x] **Streaming Chat** with Claude AI using Server-Sent Events (SSE)
+- [x] **Auto-speak** responses with complete message TTS
+- [x] Voice selector dropdown with click-outside handling
 
 ### Pages Implemented
 
@@ -415,7 +439,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.10.0.
+All planned features have been implemented. The project is feature-complete at v0.11.0.
 
 ### Future Content Expansion (Planned)
 
@@ -535,6 +559,25 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] `lib/i18n.ts` - i18n configuration for future multi-language support
 - [x] `components/edit-on-github.tsx` - Edit link component with GitHub icon
 - [x] `components/language-selector.tsx` - Language dropdown component
+
+### Phase 12: AI Voice Assistant & RAG - COMPLETED
+- [x] AI Voice Assistant component (`components/voice-assistant.tsx`)
+- [x] Wake word detection ("Hey Insider") using Web Speech API
+- [x] Speech-to-text transcription with real-time feedback
+- [x] Streaming chat with Claude AI using Server-Sent Events
+- [x] RAG system (`lib/rag.ts`) with TF-IDF search for documentation retrieval
+- [x] OpenAI Text-to-Speech with 6 voices (alloy, echo, fable, onyx, nova, shimmer)
+- [x] Auto-speak mode (waits for complete message, then speaks)
+- [x] Voice selector dropdown with click-outside handling
+- [x] Chat API route (`app/api/assistant/chat/route.ts`) with streaming
+- [x] Speak API route (`app/api/assistant/speak/route.ts`) for TTS
+- [x] Claude client configuration (`lib/claude.ts`) with system prompts
+- [x] Wake word library (`lib/wake-word.ts`) with phrase variations
+- [x] Speech recognition utilities (`lib/speech-recognition.ts`)
+- [x] Assistant context management (`lib/assistant-context.ts`)
+- [x] Default voice set to "nova" for natural speech
+- [x] Smart sentence splitting for technical content (avoids pausing on file extensions)
+- [x] Browser TTS fallback when OpenAI is unavailable
 
 ---
 

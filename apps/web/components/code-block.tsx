@@ -125,10 +125,11 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
         </span>
       </div>
 
-      <pre className="overflow-x-auto rounded-lg bg-gray-900 dark:bg-gray-900 border border-gray-800 pt-6 pb-4 px-4 pr-12">
+      <pre className="overflow-x-auto rounded-lg bg-gray-900 dark:bg-gray-900 border border-gray-800 pt-6 pb-4 px-4 pr-12" suppressHydrationWarning>
         <code
           ref={codeRef}
-          className={`${className || ""} text-sm block`}
+          className={`text-sm block ${className || ""}`.trim()}
+          suppressHydrationWarning
         >
           {children}
         </code>

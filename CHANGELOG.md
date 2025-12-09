@@ -10,6 +10,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Planned
 - Additional content pages (see Content Expansion Plan)
 
+## [0.11.0] - 2025-12-09
+
+### Added
+- **AI Voice Assistant** - Interactive voice assistant with chat interface
+- **Wake Word Detection** - "Hey Insider" wake phrase using Web Speech API
+- **Speech-to-Text** - Voice input with real-time transcription feedback
+- **Streaming Chat** - Claude AI integration with Server-Sent Events (SSE)
+- **RAG System** - Retrieval-Augmented Generation with TF-IDF search for intelligent documentation retrieval
+- **OpenAI Text-to-Speech** - 6 voice options (alloy, echo, fable, onyx, nova, shimmer)
+- **Auto-speak Mode** - Automatically read responses aloud (waits for complete message)
+- **Voice Selector Dropdown** - Choose TTS voice with click-outside handling
+- `components/voice-assistant.tsx` - Main voice assistant React component
+- `app/api/assistant/chat/route.ts` - Streaming chat endpoint with Claude AI
+- `app/api/assistant/speak/route.ts` - OpenAI TTS endpoint
+- `lib/claude.ts` - Anthropic Claude client and system prompts
+- `lib/rag.ts` - RAG system with TF-IDF search algorithm
+- `lib/wake-word.ts` - Wake word detection with phrase variations
+- `lib/speech-recognition.ts` - Speech recognition utilities
+- `lib/assistant-context.ts` - Assistant context management
+
+### Changed
+- Default TTS voice set to "nova" for more natural speech
+- Smart sentence splitting for technical content (avoids pausing on file extensions like .md, .ts)
+- Updated CSP headers to allow OpenAI API connections
+- Updated permissions headers to enable microphone access
+
+### Technical Details
+- Uses `@anthropic-ai/sdk` for Claude AI streaming
+- Uses `openai` SDK for TTS audio generation
+- Web Speech API for browser-native speech recognition
+- TF-IDF algorithm for document relevance scoring
+- SSE (Server-Sent Events) for real-time streaming responses
+- Browser TTS fallback when OpenAI is unavailable
+
 ## [0.10.0] - 2025-12-09
 
 ### Added
@@ -321,6 +355,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.11.0 | 2025-12-09 | AI Voice Assistant, OpenAI TTS, RAG search, streaming chat with Claude |
 | 0.10.0 | 2025-12-09 | RSS feed, changelog page, edit links, reading time, search history, i18n prep |
 | 0.9.1 | 2025-12-09 | Vercel Analytics, CSP headers, Privacy/Terms updates |
 | 0.9.0 | 2025-12-09 | ContentMeta component, source citations, AI generation metadata |
@@ -369,6 +404,10 @@ Phase D (Lower Priority):
 - [ ] Multi-language support (i18n) - infrastructure ready
 
 ### Completed Features
+- [x] AI Voice Assistant with wake word detection (v0.11.0)
+- [x] OpenAI Text-to-Speech with 6 voices (v0.11.0)
+- [x] RAG search for documentation retrieval (v0.11.0)
+- [x] Streaming chat with Claude AI (v0.11.0)
 - [x] RSS feed for documentation updates (v0.10.0)
 - [x] Public changelog page (v0.10.0)
 - [x] Edit on GitHub links (v0.10.0)

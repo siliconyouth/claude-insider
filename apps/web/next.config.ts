@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+            value: "camera=(), microphone=(self), geolocation=(), interest-cohort=()",
           },
           {
             key: "Content-Security-Policy",
@@ -53,6 +53,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https:",
+              "media-src 'self' blob:",
               "connect-src 'self' https://vitals.vercel-insights.com",
               "frame-ancestors 'none'",
               "base-uri 'self'",

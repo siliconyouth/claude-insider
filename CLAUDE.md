@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.10.0
+**Version**: 0.11.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -53,6 +53,13 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Reading time estimates on all documentation pages
 - Search history with localStorage persistence (recent searches)
 - Language selector for i18n preparation (English US only initially)
+- **AI Voice Assistant** with "Hey Insider" wake word detection
+- **OpenAI Text-to-Speech** with 6 voices (alloy, echo, fable, onyx, nova, shimmer)
+- **Speech-to-Text** using Web Speech API with browser fallback
+- **RAG System** with TF-IDF search for intelligent documentation retrieval
+- **Streaming Chat** with Claude AI using Server-Sent Events (SSE)
+- **Auto-speak** responses with complete message TTS (waits for full response)
+- Voice selector dropdown with click-outside handling
 
 ### Project Status: Complete
 
@@ -68,6 +75,9 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 | MDX | 3.x | Markdown with React components |
 | Fuse.js | 7.1.0 | Fuzzy search |
 | highlight.js | 11.x | Syntax highlighting |
+| Anthropic SDK | latest | Claude AI streaming chat |
+| OpenAI SDK | latest | Text-to-Speech (TTS) |
+| Web Speech API | - | Speech recognition |
 | pnpm | 10.19.0 | Package manager |
 
 ## Project Structure
@@ -98,7 +108,11 @@ claude-insider/
 │   │   │   ├── content-meta.tsx  # Source citations & AI metadata
 │   │   │   ├── edit-on-github.tsx # "Edit this page on GitHub" link
 │   │   │   ├── language-selector.tsx # Language dropdown for i18n
+│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
+│   │   ├── app/api/assistant/
+│   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
+│   │   │   └── speak/route.ts    # OpenAI TTS endpoint (6 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation
@@ -112,7 +126,12 @@ claude-insider/
 │   │   │   ├── search.ts         # Search index
 │   │   │   ├── reading-time.ts   # Reading time calculation
 │   │   │   ├── search-history.ts # Search history localStorage
-│   │   │   └── i18n.ts           # i18n configuration
+│   │   │   ├── i18n.ts           # i18n configuration
+│   │   │   ├── claude.ts         # Anthropic Claude client & system prompts
+│   │   │   ├── rag.ts            # RAG system with TF-IDF search
+│   │   │   ├── wake-word.ts      # Wake word detection ("Hey Insider")
+│   │   │   ├── speech-recognition.ts # Speech recognition utilities
+│   │   │   └── assistant-context.ts  # Assistant context management
 │   │   ├── mdx-components.tsx    # Custom MDX components
 │   │   └── public/               # Static assets
 │   └── docs/                     # Secondary docs app (port 3000)
@@ -227,10 +246,42 @@ Configured in `vercel.json`:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.10.0.
+All planned features have been implemented. The project is feature-complete at v0.11.0.
 
 ### Future Content Expansion
 See the Content Expansion Plan section below for planned documentation additions.
+
+## Voice Assistant Architecture
+
+The AI Voice Assistant provides a hands-free way to interact with documentation:
+
+### Components
+- **`voice-assistant.tsx`**: Main React component with chat interface, TTS controls, voice selector
+- **Wake Word Detection**: Uses Web Speech API to listen for "Hey Insider"
+- **Speech Recognition**: Converts user speech to text with real-time transcription
+- **Streaming Chat**: SSE-based streaming from Claude AI with RAG context
+- **Text-to-Speech**: OpenAI TTS with 6 voice options, auto-speak mode
+
+### API Routes
+- **`/api/assistant/chat`**: POST endpoint for streaming chat with Claude
+  - Receives: message, conversation history, page context
+  - Returns: Server-Sent Events stream
+  - Uses RAG to include relevant documentation in context
+- **`/api/assistant/speak`**: POST endpoint for OpenAI TTS
+  - Receives: text, voice selection
+  - Returns: MP3 audio buffer
+  - Supports 6 voices: alloy, echo, fable, onyx, nova, shimmer
+
+### RAG System
+- **TF-IDF Search**: Indexes all documentation pages
+- **Context Injection**: Relevant docs are included in Claude's system prompt
+- **Page Awareness**: Current page content and visible section tracked
+
+### Environment Variables
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ANTHROPIC_API_KEY` | Yes | Claude AI API key |
+| `OPENAI_API_KEY` | Yes | OpenAI API key for TTS |
 
 ## Adding New Documentation Pages
 
