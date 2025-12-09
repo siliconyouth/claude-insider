@@ -1,7 +1,12 @@
 import Link from "next/link";
 
+const APP_VERSION = "0.8.0";
+const BUILD_DATE = "2025-12-09";
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  // Vercel provides these environment variables at build time
+  const buildId = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "dev";
 
   return (
     <footer className="border-t border-gray-800">
@@ -94,6 +99,13 @@ export function Footer() {
           >
             Accessibility
           </Link>
+        </div>
+
+        {/* Version Info */}
+        <div className="mt-4 pt-4 border-t border-gray-800/30 text-center">
+          <p className="text-xs text-gray-600">
+            v{APP_VERSION} · Built {BUILD_DATE} · {buildId}
+          </p>
         </div>
       </div>
     </footer>
