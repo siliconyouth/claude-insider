@@ -71,6 +71,20 @@ export default function AccessibilityStatementPage() {
               <li><strong>Theme toggle:</strong> Accessible toggle with proper labeling</li>
               <li><strong>Mobile menu:</strong> Accessible hamburger menu for mobile navigation</li>
             </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">AI Voice Assistant</h3>
+            <p className="text-gray-300 leading-relaxed">
+              Our AI Voice Assistant is designed with accessibility in mind:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li><strong>Voice input:</strong> Speak your questions instead of typing - helpful for users with motor impairments or those who prefer speech</li>
+              <li><strong>Text-to-speech output:</strong> AI responses can be read aloud, beneficial for users with visual impairments or reading difficulties</li>
+              <li><strong>Keyboard accessible:</strong> All voice assistant controls can be operated via keyboard</li>
+              <li><strong>Visual feedback:</strong> Clear visual indicators show when the assistant is listening, processing, or speaking</li>
+              <li><strong>Screen reader compatible:</strong> ARIA live regions announce status changes and responses</li>
+              <li><strong>Alternative text input:</strong> Users can always type instead of speaking if preferred</li>
+              <li><strong>Stop controls:</strong> Easy-to-access buttons to stop listening or stop TTS playback</li>
+            </ul>
           </section>
 
           <section className="mb-8">
@@ -152,6 +166,15 @@ export default function AccessibilityStatementPage() {
               <li><strong>Third-party content:</strong> External links may lead to sites with varying accessibility levels</li>
               <li><strong>PDF documents:</strong> If any PDFs are linked, they may not be fully accessible</li>
             </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">AI Voice Assistant Limitations</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Browser support:</strong> Voice input requires a browser that supports the Web Speech API (Chrome, Edge, Safari). Firefox has limited support</li>
+              <li><strong>Speech recognition accuracy:</strong> Voice input accuracy depends on your microphone quality, accent, and background noise</li>
+              <li><strong>Language support:</strong> Speech recognition and TTS are currently optimized for English</li>
+              <li><strong>Internet required:</strong> The voice assistant requires an internet connection to process speech and generate responses</li>
+              <li><strong>AI response quality:</strong> AI-generated responses may contain errors and should be verified</li>
+            </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
               We are continuously working to improve accessibility and address any issues.
             </p>
@@ -190,7 +213,7 @@ export default function AccessibilityStatementPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> We&apos;ve built Claude Insider with accessibility in mind. We support keyboard navigation, screen readers, high contrast, and multiple themes. If you find any issues, please let us know at vladimir@dukelic.com.
+              <strong>In short:</strong> We&apos;ve built Claude Insider with accessibility in mind. We support keyboard navigation, screen readers, high contrast, multiple themes, and an AI Voice Assistant with voice input/output for hands-free interaction. If you find any issues, please let us know at vladimir@dukelic.com.
             </p>
           </section>
         </article>

@@ -88,6 +88,52 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">AI Voice Assistant</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Our website features an AI Voice Assistant that provides an interactive way to explore documentation. Here&apos;s how your data is handled when using this feature:
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">What Data Is Processed</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Chat messages:</strong> Your questions and the assistant&apos;s responses are processed to provide answers</li>
+              <li><strong>Voice input:</strong> When using speech-to-text, your voice is converted to text using your browser&apos;s Web Speech API (processed locally by your browser)</li>
+              <li><strong>Text-to-speech:</strong> Assistant responses can be read aloud using ElevenLabs TTS API</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Third-Party AI Services</h3>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
+              <p className="text-gray-300 leading-relaxed mb-4">
+                <strong className="text-orange-400">Anthropic (Claude AI)</strong><br />
+                Your chat messages are sent to Anthropic&apos;s Claude API for processing. Anthropic processes your messages in accordance with their{" "}
+                <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>.
+                Messages are used to generate responses only and are not used to train models when using the API.
+              </p>
+              <p className="text-gray-300 leading-relaxed">
+                <strong className="text-orange-400">ElevenLabs (Text-to-Speech)</strong><br />
+                When you use the voice output feature, text is sent to ElevenLabs for speech synthesis. ElevenLabs processes this data in accordance with their{" "}
+                <a href="https://elevenlabs.io/privacy" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>.
+              </p>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Data Retention</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Chat history:</strong> Stored only in your browser&apos;s memory during the session; cleared when you close the page or click &quot;Clear&quot;</li>
+              <li><strong>Voice preference:</strong> Your selected voice is saved to localStorage for convenience</li>
+              <li><strong>No server storage:</strong> We do not store your conversations on our servers</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Speech Recognition</h3>
+            <p className="text-gray-300 leading-relaxed">
+              Voice input uses your browser&apos;s built-in Web Speech API. This means:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li>Speech processing may be handled by your browser vendor (Google, Apple, Microsoft, etc.)</li>
+              <li>We do not receive or store your audio recordings</li>
+              <li>You can use the assistant in text-only mode by typing instead of speaking</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Local Storage</h2>
             <p className="text-gray-300 leading-relaxed">
               We use your browser&apos;s local storage to enhance your experience with the following features:
@@ -98,6 +144,7 @@ export default function PrivacyPolicyPage() {
               <li><strong>Theme preference:</strong> Your chosen display mode (dark, light, or system)</li>
               <li><strong>Search history:</strong> Your recent search queries (up to 5 items) for quick access</li>
               <li><strong>Language preference:</strong> Your selected language for future i18n support</li>
+              <li><strong>Voice preference:</strong> Your selected TTS voice for the AI assistant</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Important Privacy Notes</h3>
@@ -115,6 +162,7 @@ export default function PrivacyPolicyPage() {
                 <li>• <code className="text-orange-400">theme</code> - Theme preference</li>
                 <li>• <code className="text-orange-400">claude-insider-search-history</code> - Recent searches</li>
                 <li>• <code className="text-orange-400">claude-insider-locale</code> - Language preference</li>
+                <li>• <code className="text-orange-400">claude-insider-voice</code> - TTS voice preference</li>
               </ul>
             </div>
           </section>
@@ -154,8 +202,9 @@ export default function PrivacyPolicyPage() {
               <li><strong>HTTPS only:</strong> All connections are encrypted</li>
               <li><strong>Content Security Policy:</strong> Prevents XSS attacks and unauthorized scripts</li>
               <li><strong>X-Frame-Options:</strong> Prevents clickjacking attacks</li>
-              <li><strong>Permissions Policy:</strong> Disables camera, microphone, and geolocation access</li>
+              <li><strong>Permissions Policy:</strong> Restricts feature access; microphone is enabled only for voice assistant (self)</li>
               <li><strong>No FLoC:</strong> We opt out of Google&apos;s Federated Learning of Cohorts tracking</li>
+              <li><strong>API Security:</strong> All API communications with third-party services use encrypted connections</li>
             </ul>
           </section>
 
@@ -240,7 +289,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> We respect your privacy. We use cookie-free, privacy-focused analytics (Vercel Analytics) that collects only anonymous usage data. We don&apos;t collect personal information, we don&apos;t use cookies, we don&apos;t track you across sites, and we don&apos;t sell any data. Your preferences (theme, search history, language) are stored locally on your device and never sent to our servers.
+              <strong>In short:</strong> We respect your privacy. We use cookie-free, privacy-focused analytics (Vercel Analytics) that collects only anonymous usage data. We don&apos;t collect personal information, we don&apos;t use cookies, we don&apos;t track you across sites, and we don&apos;t sell any data. Your preferences (theme, search history, language, voice) are stored locally on your device. The AI Voice Assistant uses Anthropic&apos;s Claude for chat and ElevenLabs for text-to-speech; chat history is session-only and not stored on our servers. Speech recognition uses your browser&apos;s built-in API.
             </p>
           </section>
         </article>

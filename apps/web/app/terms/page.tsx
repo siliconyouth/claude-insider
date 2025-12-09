@@ -30,7 +30,16 @@ export default function TermsOfServicePage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">2. Description of Service</h2>
             <p className="text-gray-300 leading-relaxed">
-              Claude Insider is a free, open-source documentation website providing information, guides, tips, and resources related to Claude AI products. The Website is provided for educational and informational purposes only.
+              Claude Insider is a free, open-source documentation website providing information, guides, tips, and resources related to Claude AI products. The Website includes:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li>28 documentation pages covering Claude AI usage</li>
+              <li>An AI Voice Assistant powered by Claude AI and ElevenLabs TTS</li>
+              <li>Search functionality with history</li>
+              <li>Dark, light, and system theme modes</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              The Website is provided for educational and informational purposes only.
             </p>
             <p className="text-gray-300 leading-relaxed mt-4">
               <strong>Important:</strong> Claude Insider is an independent project and is not affiliated with, endorsed by, or officially connected to Anthropic, PBC or any of its subsidiaries or affiliates. &quot;Claude&quot; and related marks are trademarks of Anthropic.
@@ -145,14 +154,68 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">10. Privacy and Analytics</h2>
+            <h2 className="text-2xl font-semibold mb-4">10. AI Voice Assistant</h2>
+            <p className="text-gray-300 leading-relaxed">
+              The Website includes an AI Voice Assistant feature. By using this feature, you agree to the following:
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">10.1 Third-Party Services</h3>
+            <p className="text-gray-300 leading-relaxed">
+              The AI Voice Assistant uses the following third-party services:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li><strong>Anthropic Claude AI:</strong> Your chat messages are processed by Anthropic&apos;s Claude API. Use is subject to <a href="https://www.anthropic.com/legal/consumer-terms" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">Anthropic&apos;s Terms</a>.</li>
+              <li><strong>ElevenLabs:</strong> Text-to-speech functionality is provided by ElevenLabs. Use is subject to <a href="https://elevenlabs.io/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">ElevenLabs&apos; Terms</a>.</li>
+              <li><strong>Web Speech API:</strong> Voice input uses your browser&apos;s speech recognition, which may involve your browser vendor&apos;s services.</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">10.2 AI Limitations</h3>
+            <p className="text-gray-300 leading-relaxed">
+              The AI Voice Assistant:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li>May provide incorrect, incomplete, or outdated information</li>
+              <li>Should not be relied upon for critical decisions</li>
+              <li>Is designed to help navigate documentation, not provide expert advice</li>
+              <li>May not reflect the most current Claude AI features or API changes</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">10.3 Acceptable Use</h3>
+            <p className="text-gray-300 leading-relaxed">
+              When using the AI Voice Assistant, you agree NOT to:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li>Attempt to extract harmful, illegal, or abusive content</li>
+              <li>Use the service to generate spam, malware, or malicious code</li>
+              <li>Attempt to bypass any usage limits or restrictions</li>
+              <li>Share sensitive personal information in chat messages</li>
+              <li>Use the service in violation of Anthropic&apos;s or ElevenLabs&apos; terms</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">10.4 Data Handling</h3>
+            <p className="text-gray-300 leading-relaxed">
+              Chat messages are:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li>Sent to Anthropic&apos;s API for processing</li>
+              <li>Not stored on our servers after the session ends</li>
+              <li>Retained only in your browser memory during the active session</li>
+              <li>Cleared when you close the page or click the &quot;Clear&quot; button</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              For detailed information, see our <a href="/privacy" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">11. Privacy and Analytics</h2>
             <p className="text-gray-300 leading-relaxed">
               Your privacy is important to us. Our use of data is governed by our{" "}
               <a href="/privacy" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>,
               which is incorporated into these Terms by reference.
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">10.1 Analytics</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">11.1 Analytics</h3>
             <p className="text-gray-300 leading-relaxed">
               We use Vercel Analytics, a privacy-focused analytics service. By using this Website, you acknowledge that:
             </p>
@@ -164,7 +227,7 @@ export default function TermsOfServicePage() {
               <li>Data is not sold to third parties</li>
             </ul>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">10.2 Local Storage</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">11.2 Local Storage</h3>
             <p className="text-gray-300 leading-relaxed">
               We use browser local storage to enhance your experience with the following features:
             </p>
@@ -172,19 +235,20 @@ export default function TermsOfServicePage() {
               <li><strong>Theme preference:</strong> Your chosen display mode (dark, light, or system)</li>
               <li><strong>Search history:</strong> Your recent search queries (up to 5 items) for quick access</li>
               <li><strong>Language preference:</strong> Your selected language for future internationalization support</li>
+              <li><strong>Voice preference:</strong> Your selected TTS voice for the AI assistant</li>
             </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
               All locally stored data remains on your device and is never transmitted to our servers. You can clear this data at any time through your browser settings or directly within the application (e.g., clearing search history from the search interface).
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">10.3 Security</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">11.3 Security</h3>
             <p className="text-gray-300 leading-relaxed">
               We implement security measures including HTTPS encryption, Content Security Policy, and other protective headers to ensure a safe browsing experience.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">11. External Links</h2>
+            <h2 className="text-2xl font-semibold mb-4">12. External Links</h2>
             <p className="text-gray-300 leading-relaxed">
               The Website may contain links to external websites or resources. We are not responsible for:
             </p>
@@ -196,7 +260,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">12. Modifications to Terms</h2>
+            <h2 className="text-2xl font-semibold mb-4">13. Modifications to Terms</h2>
             <p className="text-gray-300 leading-relaxed">
               We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting to the Website with an updated &quot;Last updated&quot; date. Your continued use of the Website after any changes constitutes acceptance of the new Terms.
             </p>
@@ -206,14 +270,14 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">13. Termination</h2>
+            <h2 className="text-2xl font-semibold mb-4">14. Termination</h2>
             <p className="text-gray-300 leading-relaxed">
               We reserve the right to terminate or restrict your access to the Website at any time, without notice, for any reason, including violation of these Terms. Upon termination, your right to use the Website will immediately cease.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">14. Governing Law and Jurisdiction</h2>
+            <h2 className="text-2xl font-semibold mb-4">15. Governing Law and Jurisdiction</h2>
             <p className="text-gray-300 leading-relaxed">
               These Terms shall be governed by and construed in accordance with the laws of the Republic of Serbia, without regard to its conflict of law provisions.
             </p>
@@ -229,21 +293,21 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">15. Severability</h2>
+            <h2 className="text-2xl font-semibold mb-4">16. Severability</h2>
             <p className="text-gray-300 leading-relaxed">
               If any provision of these Terms is found to be unenforceable or invalid by a court of competent jurisdiction, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">16. Entire Agreement</h2>
+            <h2 className="text-2xl font-semibold mb-4">17. Entire Agreement</h2>
             <p className="text-gray-300 leading-relaxed">
               These Terms, together with our Privacy Policy, constitute the entire agreement between you and us regarding your use of the Website and supersede any prior agreements.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">17. Contact Information</h2>
+            <h2 className="text-2xl font-semibold mb-4">18. Contact Information</h2>
             <p className="text-gray-300 leading-relaxed">
               If you have any questions or concerns about these Terms of Service, please contact us at:
             </p>
@@ -259,7 +323,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> Claude Insider is free, open-source documentation. You can use and share it with attribution. We&apos;re not affiliated with Anthropic. The content is provided &quot;as is&quot; without warranties. We use privacy-focused analytics and store your preferences (theme, search history, language) locally on your device. Serbian law governs these terms, but your local consumer rights are preserved.
+              <strong>In short:</strong> Claude Insider is free, open-source documentation with an AI Voice Assistant. You can use and share content with attribution. We&apos;re not affiliated with Anthropic. The content is provided &quot;as is&quot; without warranties. The AI assistant uses Anthropic&apos;s Claude API and ElevenLabs TTS - chat history is session-only. We use privacy-focused analytics and store your preferences (theme, search history, language, voice) locally. Serbian law governs these terms, but your local consumer rights are preserved.
             </p>
           </section>
         </article>
