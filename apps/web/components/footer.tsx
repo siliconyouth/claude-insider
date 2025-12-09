@@ -78,7 +78,21 @@ export function Footer() {
             href="/terms"
             className="text-sm text-gray-500 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
           >
-            Terms of Service
+            Terms
+          </Link>
+          <span className="hidden sm:inline text-gray-600">|</span>
+          <Link
+            href="/disclaimer"
+            className="text-sm text-gray-500 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
+          >
+            Disclaimer
+          </Link>
+          <span className="hidden sm:inline text-gray-600">|</span>
+          <Link
+            href="/accessibility"
+            className="text-sm text-gray-500 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
+          >
+            Accessibility
           </Link>
         </div>
       </div>
