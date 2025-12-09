@@ -1,0 +1,166 @@
+---
+title: Tips & Tricks
+description: Maximize your productivity with Claude AI through proven strategies and techniques
+---
+
+Get the most out of Claude Code with these expert tips, prompting strategies, and productivity hacks. Whether you're a beginner or power user, these techniques will help you work more efficiently.
+
+## Quick Wins
+
+### Be Specific About Context
+
+Instead of:
+```
+Fix the bug
+```
+
+Try:
+```
+Fix the bug in src/auth/login.ts where users can't log in
+with email addresses containing plus signs. The validation
+regex on line 42 is too restrictive.
+```
+
+### Use File References
+
+Claude can read files directly. Reference them by path:
+
+```
+Read src/components/Button.tsx and add a loading state prop
+```
+
+### Chain Operations
+
+Combine multiple requests:
+
+```
+1. Add TypeScript types to src/utils/helpers.js
+2. Rename the file to helpers.ts
+3. Update all imports across the project
+```
+
+## Featured Guides
+
+### Prompting Strategies
+
+Learn how to communicate effectively with Claude for better results:
+
+- Structuring complex requests
+- Providing the right context
+- Iterating on responses
+- Handling edge cases
+
+[Master prompting techniques →](/docs/tips-and-tricks/prompting)
+
+### Productivity Hacks
+
+Optimize your workflow with power-user techniques:
+
+- Keyboard shortcuts
+- Session management
+- Batch operations
+- Custom workflows
+
+[Boost your productivity →](/docs/tips-and-tricks/productivity)
+
+## Pro Tips
+
+### 1. Start with the Goal
+
+Tell Claude what you want to achieve, not just what to do:
+
+```
+I want to improve the performance of the product listing page.
+Currently it loads 500+ products at once and is slow.
+Suggest and implement pagination or virtual scrolling.
+```
+
+### 2. Provide Examples
+
+When asking for specific output formats:
+
+```
+Generate API documentation for src/api/users.ts in this format:
+
+## GET /users/:id
+**Description**: Fetches a user by ID
+**Parameters**:
+- id (string): User identifier
+**Response**: User object
+```
+
+### 3. Use Constraints
+
+Be explicit about limitations:
+
+```
+Refactor this function but:
+- Keep the same public API
+- Don't add new dependencies
+- Maintain backward compatibility with Node 16
+```
+
+### 4. Leverage Git Context
+
+Claude understands git. Use it:
+
+```
+Review my uncommitted changes and suggest improvements
+```
+
+```
+What changed in the last 3 commits that might have caused the test failures?
+```
+
+### 5. Break Down Complex Tasks
+
+For large changes, work incrementally:
+
+```
+Let's add user authentication to this app. Start by:
+1. Listing what we'll need to add
+2. Then we'll implement each part step by step
+```
+
+## Common Patterns
+
+### Code Review
+
+```
+Review src/services/payment.ts for:
+- Security vulnerabilities
+- Error handling gaps
+- Performance issues
+- Code style consistency
+```
+
+### Debugging
+
+```
+This test is failing intermittently:
+[paste test output]
+
+The test file is tests/api/orders.test.ts
+Help me identify the race condition.
+```
+
+### Documentation
+
+```
+Add JSDoc comments to all exported functions in src/lib/
+Focus on parameter descriptions and return types.
+```
+
+### Refactoring
+
+```
+The UserService class (src/services/user.ts) has grown to 800 lines.
+Help me split it into smaller, focused services while maintaining
+the same public interface.
+```
+
+## Next Steps
+
+- [Learn advanced prompting →](/docs/tips-and-tricks/prompting)
+- [Discover productivity shortcuts →](/docs/tips-and-tricks/productivity)
+- [Configure Claude for your workflow →](/docs/configuration/settings)

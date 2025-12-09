@@ -1,0 +1,573 @@
+---
+title: Tool Use
+description: Enable Claude to interact with external systems and execute functions
+---
+
+Tool use (function calling) allows Claude to interact with external systems, APIs, and services. This guide covers how to define tools, handle tool calls, and implement common patterns.
+
+## Overview
+
+Tools extend Claude's capabilities by letting it:
+- Fetch real-time data (weather, stock prices, search results)
+- Perform calculations
+- Interact with databases
+- Call external APIs
+- Execute code
+
+## Defining Tools
+
+### Basic Tool Definition
+
+```typescript
+const tools = [
+  {
+    name: 'get_weather',
+    description: 'Get the current weather in a given location',
+    input_schema: {
+      type: 'object',
+      properties: {
+        location: {
+          type: 'string',
+          description: 'The city and state, e.g. San Francisco, CA'
+        },
+        unit: {
+          type: 'string',
+          enum: ['celsius', 'fahrenheit'],
+          description: 'Temperature unit'
+        }
+      },
+      required: ['location']
+    }
+  }
+];
+```
+
+### Tool Schema Properties
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `name` | string | Yes | Unique identifier for the tool |
+| `description` | string | Yes | Clear description of what the tool does |
+| `input_schema` | object | Yes | JSON Schema for input validation |
+
+## Making Requests with Tools
+
+### Python Example
+
+```python
+from anthropic import Anthropic
+
+client = Anthropic()
+
+tools = [
+    {
+        "name": "get_weather",
+        "description": "Get the current weather in a given location",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "string",
+                    "description": "City and state, e.g. San Francisco, CA"
+                }
+            },
+            "required": ["location"]
+        }
+    }
+]
+
+response = client.messages.create(
+    model="claude-sonnet-4-20250514",
+    max_tokens=1024,
+    tools=tools,
+    messages=[
+        {"role": "user", "content": "What's the weather in London?"}
+    ]
+)
+
+print(response.content)
+```
+
+### TypeScript Example
+
+```typescript
+import Anthropic from '@anthropic-ai/sdk';
+
+const client = new Anthropic();
+
+const tools: Anthropic.Tool[] = [
+  {
+    name: 'get_weather',
+    description: 'Get the current weather in a given location',
+    input_schema: {
+      type: 'object',
+      properties: {
+        location: {
+          type: 'string',
+          description: 'City and state, e.g. San Francisco, CA'
+        }
+      },
+      required: ['location']
+    }
+  }
+];
+
+const response = await client.messages.create({
+  model: 'claude-sonnet-4-20250514',
+  max_tokens: 1024,
+  tools,
+  messages: [
+    { role: 'user', content: "What's the weather in London?" }
+  ]
+});
+
+console.log(response.content);
+```
+
+## Handling Tool Calls
+
+### Response Structure
+
+When Claude wants to use a tool, it returns a `tool_use` content block:
+
+```json
+{
+  "id": "msg_01...",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "tool_use",
+      "id": "toolu_01...",
+      "name": "get_weather",
+      "input": {
+        "location": "London, UK"
+      }
+    }
+  ],
+  "stop_reason": "tool_use"
+}
+```
+
+### Processing Tool Calls
+
+```typescript
+async function handleToolUse(response: Anthropic.Message) {
+  const toolUseBlock = response.content.find(
+    block => block.type === 'tool_use'
+  ) as Anthropic.ToolUseBlock | undefined;
+
+  if (!toolUseBlock) {
+    return response;
+  }
+
+  // Execute the tool
+  const result = await executeToolCall(
+    toolUseBlock.name,
+    toolUseBlock.input
+  );
+
+  // Continue the conversation with the result
+  const followUp = await client.messages.create({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1024,
+    tools,
+    messages: [
+      { role: 'user', content: 'What\'s the weather in London?' },
+      { role: 'assistant', content: response.content },
+      {
+        role: 'user',
+        content: [
+          {
+            type: 'tool_result',
+            tool_use_id: toolUseBlock.id,
+            content: JSON.stringify(result)
+          }
+        ]
+      }
+    ]
+  });
+
+  return followUp;
+}
+```
+
+### Tool Result Format
+
+```typescript
+{
+  type: 'tool_result',
+  tool_use_id: 'toolu_01...',  // Must match the tool_use id
+  content: '{"temperature": 15, "condition": "cloudy"}'
+}
+```
+
+## Complete Example
+
+### Multi-Tool Chat Application
+
+```typescript
+import Anthropic from '@anthropic-ai/sdk';
+
+const client = new Anthropic();
+
+// Define multiple tools
+const tools: Anthropic.Tool[] = [
+  {
+    name: 'get_weather',
+    description: 'Get current weather for a location',
+    input_schema: {
+      type: 'object',
+      properties: {
+        location: { type: 'string', description: 'City name' }
+      },
+      required: ['location']
+    }
+  },
+  {
+    name: 'search_web',
+    description: 'Search the web for information',
+    input_schema: {
+      type: 'object',
+      properties: {
+        query: { type: 'string', description: 'Search query' }
+      },
+      required: ['query']
+    }
+  },
+  {
+    name: 'calculate',
+    description: 'Perform mathematical calculations',
+    input_schema: {
+      type: 'object',
+      properties: {
+        expression: { type: 'string', description: 'Math expression' }
+      },
+      required: ['expression']
+    }
+  }
+];
+
+// Tool implementations
+async function executeTool(name: string, input: any): Promise<string> {
+  switch (name) {
+    case 'get_weather':
+      // In reality, call a weather API
+      return JSON.stringify({
+        location: input.location,
+        temperature: 22,
+        condition: 'sunny'
+      });
+
+    case 'search_web':
+      // In reality, call a search API
+      return JSON.stringify({
+        query: input.query,
+        results: ['Result 1', 'Result 2', 'Result 3']
+      });
+
+    case 'calculate':
+      // Evaluate the expression safely
+      const result = eval(input.expression); // Use a safe math parser in production!
+      return JSON.stringify({ result });
+
+    default:
+      return JSON.stringify({ error: 'Unknown tool' });
+  }
+}
+
+// Main conversation loop
+async function chat(userMessage: string) {
+  const messages: Anthropic.MessageParam[] = [
+    { role: 'user', content: userMessage }
+  ];
+
+  while (true) {
+    const response = await client.messages.create({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 1024,
+      tools,
+      messages
+    });
+
+    // Check if Claude wants to use a tool
+    if (response.stop_reason === 'tool_use') {
+      const toolUseBlocks = response.content.filter(
+        block => block.type === 'tool_use'
+      ) as Anthropic.ToolUseBlock[];
+
+      // Add assistant's response to messages
+      messages.push({ role: 'assistant', content: response.content });
+
+      // Process each tool call
+      const toolResults: Anthropic.ToolResultBlockParam[] = [];
+      for (const toolUse of toolUseBlocks) {
+        const result = await executeTool(toolUse.name, toolUse.input);
+        toolResults.push({
+          type: 'tool_result',
+          tool_use_id: toolUse.id,
+          content: result
+        });
+      }
+
+      // Add tool results to messages
+      messages.push({ role: 'user', content: toolResults });
+
+      // Continue the loop to get Claude's response
+      continue;
+    }
+
+    // No more tool calls, return the final response
+    return response.content
+      .filter(block => block.type === 'text')
+      .map(block => (block as Anthropic.TextBlock).text)
+      .join('\n');
+  }
+}
+
+// Usage
+const answer = await chat(
+  "What's the weather in Tokyo and calculate 15% tip on $85"
+);
+console.log(answer);
+```
+
+## Tool Choice
+
+Control how Claude uses tools:
+
+```typescript
+const response = await client.messages.create({
+  model: 'claude-sonnet-4-20250514',
+  max_tokens: 1024,
+  tools,
+  tool_choice: { type: 'auto' },  // Default: Claude decides
+  messages: [...]
+});
+```
+
+### Tool Choice Options
+
+| Type | Description |
+|------|-------------|
+| `auto` | Claude decides whether to use tools (default) |
+| `any` | Claude must use at least one tool |
+| `tool` | Claude must use a specific tool |
+| `none` | Claude cannot use any tools |
+
+### Forcing a Specific Tool
+
+```typescript
+tool_choice: {
+  type: 'tool',
+  name: 'get_weather'  // Must use this specific tool
+}
+```
+
+## Streaming with Tools
+
+```typescript
+const stream = await client.messages.stream({
+  model: 'claude-sonnet-4-20250514',
+  max_tokens: 1024,
+  tools,
+  messages: [{ role: 'user', content: 'What is the weather in Paris?' }]
+});
+
+for await (const event of stream) {
+  if (event.type === 'content_block_start') {
+    if (event.content_block.type === 'tool_use') {
+      console.log('Tool called:', event.content_block.name);
+    }
+  }
+
+  if (event.type === 'content_block_delta') {
+    if (event.delta.type === 'input_json_delta') {
+      // Tool input is being streamed
+      process.stdout.write(event.delta.partial_json);
+    }
+  }
+}
+```
+
+## Best Practices
+
+### 1. Write Clear Descriptions
+
+Claude relies on descriptions to understand when and how to use tools:
+
+```typescript
+// ❌ Vague
+{
+  name: 'search',
+  description: 'Search for stuff'
+}
+
+// ✅ Clear and specific
+{
+  name: 'search_products',
+  description: 'Search the product catalog by name, category, or SKU. Returns up to 10 matching products with prices and availability.'
+}
+```
+
+### 2. Use Descriptive Parameter Names
+
+```typescript
+// ❌ Unclear
+{
+  properties: {
+    q: { type: 'string' },
+    n: { type: 'number' }
+  }
+}
+
+// ✅ Self-documenting
+{
+  properties: {
+    search_query: {
+      type: 'string',
+      description: 'Keywords to search for'
+    },
+    max_results: {
+      type: 'number',
+      description: 'Maximum number of results to return (1-100)'
+    }
+  }
+}
+```
+
+### 3. Handle Errors Gracefully
+
+```typescript
+async function executeTool(name: string, input: any): Promise<string> {
+  try {
+    const result = await actualToolImplementation(name, input);
+    return JSON.stringify(result);
+  } catch (error) {
+    // Return error information Claude can understand
+    return JSON.stringify({
+      error: true,
+      message: error.message,
+      suggestion: 'Try a different query or check the input format'
+    });
+  }
+}
+```
+
+### 4. Validate Tool Inputs
+
+```typescript
+import { z } from 'zod';
+
+const WeatherInputSchema = z.object({
+  location: z.string().min(1).max(100),
+  unit: z.enum(['celsius', 'fahrenheit']).optional()
+});
+
+async function getWeather(input: unknown) {
+  const validated = WeatherInputSchema.parse(input);
+  // Now safely use validated.location and validated.unit
+}
+```
+
+### 5. Keep Tools Focused
+
+Each tool should do one thing well:
+
+```typescript
+// ❌ Too broad
+{
+  name: 'database',
+  description: 'Do anything with the database'
+}
+
+// ✅ Focused tools
+[
+  { name: 'get_user', description: 'Get user by ID' },
+  { name: 'list_users', description: 'List users with filters' },
+  { name: 'create_user', description: 'Create a new user' },
+  { name: 'update_user', description: 'Update user details' }
+]
+```
+
+## Common Patterns
+
+### Calculator Tool
+
+```typescript
+{
+  name: 'calculator',
+  description: 'Perform arithmetic calculations. Supports +, -, *, /, ^, sqrt, sin, cos, tan, log.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      expression: {
+        type: 'string',
+        description: 'Mathematical expression to evaluate, e.g., "sqrt(16) + 5^2"'
+      }
+    },
+    required: ['expression']
+  }
+}
+```
+
+### Database Query Tool
+
+```typescript
+{
+  name: 'query_database',
+  description: 'Execute a read-only SQL query against the application database',
+  input_schema: {
+    type: 'object',
+    properties: {
+      query: {
+        type: 'string',
+        description: 'SQL SELECT query to execute'
+      },
+      limit: {
+        type: 'number',
+        description: 'Maximum rows to return (default: 100)'
+      }
+    },
+    required: ['query']
+  }
+}
+```
+
+### File Operations Tool
+
+```typescript
+{
+  name: 'read_file',
+  description: 'Read the contents of a file from the allowed directory',
+  input_schema: {
+    type: 'object',
+    properties: {
+      path: {
+        type: 'string',
+        description: 'Relative file path within the workspace'
+      },
+      encoding: {
+        type: 'string',
+        enum: ['utf8', 'base64'],
+        description: 'File encoding (default: utf8)'
+      }
+    },
+    required: ['path']
+  }
+}
+```
+
+## Security Considerations
+
+1. **Validate all inputs** - Never trust tool inputs blindly
+2. **Sanitize outputs** - Don't expose sensitive data in tool results
+3. **Limit scope** - Tools should have minimal required permissions
+4. **Rate limit** - Prevent abuse of expensive operations
+5. **Audit logging** - Log all tool executions for security review
+
+## Next Steps
+
+- [Learn about authentication →](/docs/api/authentication)
+- [Explore MCP servers →](/docs/integrations/mcp-servers)
+- [Configure hooks →](/docs/integrations/hooks)

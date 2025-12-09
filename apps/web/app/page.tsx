@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Search } from "@/components/search";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const CATEGORIES = [
   {
@@ -151,6 +153,8 @@ export default function HomePage() {
               >
                 GitHub
               </a>
+              <Search />
+              <ThemeToggle />
             </div>
           </div>
         </nav>

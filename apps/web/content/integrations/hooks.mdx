@@ -1,0 +1,587 @@
+---
+title: Hooks
+description: Automate workflows with Claude Code hooks
+---
+
+Hooks allow you to run custom commands at specific points during Claude Code's operation. Use them to automate workflows, enforce standards, and integrate with external tools.
+
+## Overview
+
+Hooks execute shell commands in response to Claude Code events:
+
+- **Pre-tool hooks** - Run before a tool executes
+- **Post-tool hooks** - Run after a tool completes
+- **Notification hooks** - Send alerts for specific events
+
+## Configuration
+
+Hooks are configured in your settings file:
+
+**Location:** `~/.claude/settings.json` (global) or `.claude/settings.json` (project)
+
+```json
+{
+  "hooks": {
+    "preToolExecution": [...],
+    "postToolExecution": [...],
+    "notification": [...]
+  }
+}
+```
+
+## Pre-Tool Hooks
+
+Run commands before Claude executes a tool.
+
+### Basic Example
+
+```json
+{
+  "hooks": {
+    "preToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "echo 'About to write file'"
+      }
+    ]
+  }
+}
+```
+
+### With File Path
+
+```json
+{
+  "hooks": {
+    "preToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "echo 'Writing to: $CLAUDE_FILE_PATH'"
+      }
+    ]
+  }
+}
+```
+
+### Conditional Execution
+
+Stop tool execution if the hook fails:
+
+```json
+{
+  "hooks": {
+    "preToolExecution": [
+      {
+        "matcher": "Write:*.ts",
+        "command": "eslint --fix $CLAUDE_FILE_PATH",
+        "blocking": true
+      }
+    ]
+  }
+}
+```
+
+If `eslint` exits with a non-zero code, the write is cancelled.
+
+## Post-Tool Hooks
+
+Run commands after a tool completes.
+
+### Basic Example
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "echo 'File written successfully'"
+      }
+    ]
+  }
+}
+```
+
+### Run Tests After Changes
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write:src/**/*.ts",
+        "command": "npm run test:related -- $CLAUDE_FILE_PATH"
+      }
+    ]
+  }
+}
+```
+
+### Auto-Format Code
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write:*.{ts,tsx,js,jsx}",
+        "command": "prettier --write $CLAUDE_FILE_PATH"
+      }
+    ]
+  }
+}
+```
+
+### Git Auto-Stage
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "git add $CLAUDE_FILE_PATH"
+      }
+    ]
+  }
+}
+```
+
+## Matcher Patterns
+
+Matchers specify which tools trigger hooks:
+
+### Tool Name Only
+
+```json
+{
+  "matcher": "Write"
+}
+```
+
+Matches any Write tool execution.
+
+### Tool with File Pattern
+
+```json
+{
+  "matcher": "Write:*.ts"
+}
+```
+
+Matches Write operations on TypeScript files.
+
+### Glob Patterns
+
+```json
+{
+  "matcher": "Write:src/**/*.tsx"
+}
+```
+
+Matches Write operations on TSX files in src directory.
+
+### Multiple Extensions
+
+```json
+{
+  "matcher": "Write:*.{ts,tsx,js,jsx}"
+}
+```
+
+Matches Write operations on any JS/TS file.
+
+### Bash Commands
+
+```json
+{
+  "matcher": "Bash:npm *"
+}
+```
+
+Matches npm commands executed via Bash tool.
+
+### All Tools
+
+```json
+{
+  "matcher": "*"
+}
+```
+
+Matches any tool execution.
+
+## Environment Variables
+
+Hooks have access to these environment variables:
+
+| Variable | Description |
+|----------|-------------|
+| `$CLAUDE_TOOL` | Name of the tool being executed |
+| `$CLAUDE_FILE_PATH` | File path (for file operations) |
+| `$CLAUDE_WORKING_DIR` | Current working directory |
+| `$CLAUDE_EXIT_CODE` | Tool exit code (post hooks only) |
+| `$CLAUDE_OUTPUT` | Tool output (post hooks only) |
+
+### Using Variables
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Bash:git commit*",
+        "command": "echo 'Committed in $CLAUDE_WORKING_DIR'"
+      }
+    ]
+  }
+}
+```
+
+## Hook Options
+
+### blocking
+
+If `true`, hook failure stops the tool execution:
+
+```json
+{
+  "matcher": "Write",
+  "command": "validation-script.sh",
+  "blocking": true
+}
+```
+
+### timeout
+
+Maximum execution time in milliseconds:
+
+```json
+{
+  "matcher": "Write",
+  "command": "slow-script.sh",
+  "timeout": 30000
+}
+```
+
+### shell
+
+Specify which shell to use:
+
+```json
+{
+  "matcher": "Write",
+  "command": "my-script.sh",
+  "shell": "/bin/zsh"
+}
+```
+
+### cwd
+
+Set working directory:
+
+```json
+{
+  "matcher": "Write",
+  "command": "relative-script.sh",
+  "cwd": "/path/to/scripts"
+}
+```
+
+## Notification Hooks
+
+Send notifications for specific events:
+
+### Desktop Notification
+
+```json
+{
+  "hooks": {
+    "notification": [
+      {
+        "event": "task_complete",
+        "command": "osascript -e 'display notification \"Claude completed the task\" with title \"Claude Code\"'"
+      }
+    ]
+  }
+}
+```
+
+### Slack Notification
+
+```json
+{
+  "hooks": {
+    "notification": [
+      {
+        "event": "error",
+        "command": "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Claude error: $CLAUDE_ERROR\"}' $SLACK_WEBHOOK_URL"
+      }
+    ]
+  }
+}
+```
+
+### Sound Alert
+
+```json
+{
+  "hooks": {
+    "notification": [
+      {
+        "event": "task_complete",
+        "command": "afplay /System/Library/Sounds/Glass.aiff"
+      }
+    ]
+  }
+}
+```
+
+## Common Patterns
+
+### 1. Code Quality Pipeline
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write:*.ts",
+        "command": "eslint --fix $CLAUDE_FILE_PATH && prettier --write $CLAUDE_FILE_PATH"
+      },
+      {
+        "matcher": "Write:*.ts",
+        "command": "tsc --noEmit"
+      }
+    ]
+  }
+}
+```
+
+### 2. Auto-Documentation
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write:src/**/*.ts",
+        "command": "typedoc --out docs src/"
+      }
+    ]
+  }
+}
+```
+
+### 3. Security Scanning
+
+```json
+{
+  "hooks": {
+    "preToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "grep -E '(password|secret|api_key)\\s*=' $CLAUDE_FILE_PATH && exit 1 || exit 0",
+        "blocking": true
+      }
+    ]
+  }
+}
+```
+
+### 4. Backup Before Changes
+
+```json
+{
+  "hooks": {
+    "preToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "cp $CLAUDE_FILE_PATH $CLAUDE_FILE_PATH.bak 2>/dev/null || true"
+      }
+    ]
+  }
+}
+```
+
+### 5. Auto-Commit
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "git add $CLAUDE_FILE_PATH && git commit -m 'Auto-commit: Updated $CLAUDE_FILE_PATH'"
+      }
+    ]
+  }
+}
+```
+
+### 6. Test Runner
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write:src/**/*.ts",
+        "command": "jest --findRelatedTests $CLAUDE_FILE_PATH --passWithNoTests"
+      }
+    ]
+  }
+}
+```
+
+### 7. Build Trigger
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write:src/**/*",
+        "command": "npm run build"
+      }
+    ]
+  }
+}
+```
+
+### 8. Change Log
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "echo \"$(date): Modified $CLAUDE_FILE_PATH\" >> .claude-changes.log"
+      }
+    ]
+  }
+}
+```
+
+## Advanced Patterns
+
+### Chained Hooks
+
+Run multiple commands in sequence:
+
+```json
+{
+  "matcher": "Write:*.ts",
+  "command": "eslint $CLAUDE_FILE_PATH && prettier --write $CLAUDE_FILE_PATH && tsc --noEmit"
+}
+```
+
+### Conditional Logic
+
+Use shell conditionals:
+
+```json
+{
+  "matcher": "Write",
+  "command": "if [ -f package.json ]; then npm test; fi"
+}
+```
+
+### Script Files
+
+For complex logic, use external scripts:
+
+```json
+{
+  "matcher": "Write",
+  "command": ".claude/hooks/on-file-write.sh"
+}
+```
+
+**`.claude/hooks/on-file-write.sh`:**
+```bash
+#!/bin/bash
+FILE_PATH="$CLAUDE_FILE_PATH"
+EXTENSION="${FILE_PATH##*.}"
+
+case $EXTENSION in
+  ts|tsx)
+    eslint --fix "$FILE_PATH"
+    prettier --write "$FILE_PATH"
+    ;;
+  css|scss)
+    stylelint --fix "$FILE_PATH"
+    ;;
+  md)
+    markdownlint --fix "$FILE_PATH"
+    ;;
+esac
+```
+
+## Debugging Hooks
+
+### Verbose Mode
+
+```bash
+claude --hook-debug
+```
+
+This shows:
+- Which hooks are triggered
+- Command being executed
+- Exit codes and output
+
+### Test Commands Manually
+
+Before adding to config, test commands:
+
+```bash
+CLAUDE_FILE_PATH="src/test.ts" ./my-hook-script.sh
+```
+
+### Log Hook Execution
+
+```json
+{
+  "matcher": "*",
+  "command": "echo \"$(date): $CLAUDE_TOOL on $CLAUDE_FILE_PATH\" >> ~/.claude/hook.log"
+}
+```
+
+## Troubleshooting
+
+### Hook Not Executing
+
+1. Check matcher pattern matches the tool
+2. Verify command exists and is executable
+3. Check for syntax errors in JSON
+4. Enable debug mode
+
+### Hook Blocking Unexpectedly
+
+1. Check exit codes of commands
+2. Remove `blocking: true` temporarily
+3. Test command manually
+4. Add error handling to scripts
+
+### Performance Issues
+
+1. Use async hooks where possible (remove `blocking`)
+2. Avoid expensive operations in pre-hooks
+3. Use file patterns to limit scope
+4. Consider debouncing rapid changes
+
+## Security Considerations
+
+1. **Validate inputs** - Don't blindly execute based on file paths
+2. **Use absolute paths** - Avoid path injection
+3. **Limit scope** - Use specific matchers instead of `*`
+4. **Review scripts** - Audit hook scripts for vulnerabilities
+5. **Protect secrets** - Don't log sensitive information
+
+## Next Steps
+
+- [Configure MCP servers →](/docs/integrations/mcp-servers)
+- [Set up IDE plugins →](/docs/integrations/ide-plugins)
+- [Learn about the API →](/docs/api)

@@ -1,0 +1,436 @@
+---
+title: IDE Plugins
+description: Integrate Claude Code directly into your favorite code editor
+---
+
+Claude Code offers native integration with popular IDEs, bringing AI-powered coding assistance directly into your development environment. This guide covers installation and configuration for each supported editor.
+
+## VS Code Extension
+
+### Installation
+
+1. Open VS Code
+2. Go to Extensions (Cmd/Ctrl + Shift + X)
+3. Search for "Claude Code"
+4. Click **Install**
+
+Or install from the command line:
+
+```bash
+code --install-extension anthropic.claude-code
+```
+
+### Setup
+
+After installation:
+
+1. Open the Command Palette (Cmd/Ctrl + Shift + P)
+2. Type "Claude: Sign In"
+3. Follow the authentication prompts
+
+### Features
+
+| Feature | Shortcut | Description |
+|---------|----------|-------------|
+| Inline Chat | Cmd/Ctrl + I | Chat with Claude about selected code |
+| Code Actions | Cmd/Ctrl + . | Quick fixes and refactoring suggestions |
+| Generate Code | Cmd/Ctrl + Shift + G | Generate code from natural language |
+| Explain Code | Cmd/Ctrl + Shift + E | Get explanations for selected code |
+| Find Bugs | Cmd/Ctrl + Shift + B | Analyze code for potential issues |
+
+### Configuration
+
+Open settings (Cmd/Ctrl + ,) and search for "Claude":
+
+```json
+{
+  "claude.model": "claude-sonnet-4-20250514",
+  "claude.maxTokens": 4096,
+  "claude.temperature": 0,
+  "claude.showInlineHints": true,
+  "claude.autoComplete": true,
+  "claude.codeActions": true
+}
+```
+
+### Inline Chat
+
+Select code and press Cmd/Ctrl + I to open inline chat:
+
+```
+Selected code: function calculateTotal(items) { ... }
+
+You: Add input validation and handle edge cases
+Claude: [Provides improved code with validation]
+```
+
+### Code Lens
+
+Claude adds CodeLens hints above functions:
+
+```typescript
+// 💡 Explain | 🔧 Improve | 🧪 Test
+function processOrder(order: Order): Result {
+  // ...
+}
+```
+
+Click any hint to get Claude's assistance.
+
+### Panel View
+
+Open the Claude panel for longer conversations:
+
+1. Click the Claude icon in the Activity Bar
+2. Or use Cmd/Ctrl + Shift + C
+
+The panel supports:
+- Multi-turn conversations
+- File references (@file)
+- Code generation with preview
+- Conversation history
+
+## JetBrains Plugins
+
+### Supported IDEs
+
+- IntelliJ IDEA
+- WebStorm
+- PyCharm
+- PhpStorm
+- GoLand
+- RubyMine
+- Rider
+- CLion
+- DataGrip
+
+### Installation
+
+1. Open Settings/Preferences (Cmd/Ctrl + ,)
+2. Go to Plugins → Marketplace
+3. Search for "Claude Code"
+4. Click **Install** and restart IDE
+
+Or install from JetBrains Marketplace:
+```
+https://plugins.jetbrains.com/plugin/claude-code
+```
+
+### Setup
+
+1. Go to Settings → Tools → Claude Code
+2. Enter your API key or sign in
+3. Configure default model and preferences
+
+### Features
+
+| Feature | Shortcut | Description |
+|---------|----------|-------------|
+| Ask Claude | Alt + C | Open Claude chat for selection |
+| Generate | Alt + G | Generate code from description |
+| Refactor | Alt + R | AI-powered refactoring |
+| Document | Alt + D | Generate documentation |
+| Test | Alt + T | Generate unit tests |
+
+### Tool Windows
+
+Claude appears in two locations:
+
+1. **Right Panel** - Quick chat for selected code
+2. **Bottom Panel** - Full conversation interface
+
+### Intentions
+
+Right-click on code to see Claude intentions:
+
+- "Ask Claude about this"
+- "Explain this code"
+- "Generate tests for this"
+- "Find potential bugs"
+- "Suggest improvements"
+
+### Configuration
+
+```
+Settings → Tools → Claude Code
+
+Model: claude-sonnet-4-20250514
+Max Tokens: 4096
+Include Context: ☑ Current file ☑ Open files ☑ Project structure
+Auto-suggestions: ☑ Enabled
+```
+
+## Neovim Integration
+
+### Installation
+
+Using lazy.nvim:
+
+```lua
+{
+  'anthropics/claude.nvim',
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+  },
+  config = function()
+    require('claude').setup({
+      api_key = vim.env.ANTHROPIC_API_KEY,
+      model = 'claude-sonnet-4-20250514',
+    })
+  end
+}
+```
+
+Using packer.nvim:
+
+```lua
+use {
+  'anthropics/claude.nvim',
+  requires = { 'nvim-lua/plenary.nvim' },
+  config = function()
+    require('claude').setup()
+  end
+}
+```
+
+### Setup
+
+Add your API key to your shell configuration:
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+```
+
+### Key Mappings
+
+Default mappings (customizable):
+
+```lua
+vim.keymap.set('n', '<leader>cc', ':ClaudeChat<CR>')
+vim.keymap.set('v', '<leader>ce', ':ClaudeExplain<CR>')
+vim.keymap.set('v', '<leader>cr', ':ClaudeRefactor<CR>')
+vim.keymap.set('v', '<leader>ct', ':ClaudeTest<CR>')
+vim.keymap.set('n', '<leader>cg', ':ClaudeGenerate<CR>')
+```
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `:ClaudeChat` | Open chat window |
+| `:ClaudeExplain` | Explain selected code |
+| `:ClaudeRefactor` | Refactor selected code |
+| `:ClaudeTest` | Generate tests |
+| `:ClaudeGenerate` | Generate code from prompt |
+| `:ClaudeFix` | Fix errors in code |
+
+### Configuration
+
+```lua
+require('claude').setup({
+  api_key = vim.env.ANTHROPIC_API_KEY,
+  model = 'claude-sonnet-4-20250514',
+  max_tokens = 4096,
+  temperature = 0,
+
+  -- UI options
+  window = {
+    position = 'right',  -- 'right', 'left', 'bottom', 'float'
+    width = 80,
+    border = 'rounded',
+  },
+
+  -- Keymaps
+  keymaps = {
+    chat = '<leader>cc',
+    explain = '<leader>ce',
+    refactor = '<leader>cr',
+    test = '<leader>ct',
+    generate = '<leader>cg',
+  },
+
+  -- Include context
+  context = {
+    current_file = true,
+    cursor_context = 50,  -- lines around cursor
+    lsp_diagnostics = true,
+  },
+})
+```
+
+### Telescope Integration
+
+If you use Telescope:
+
+```lua
+require('telescope').load_extension('claude')
+
+vim.keymap.set('n', '<leader>ch', ':Telescope claude history<CR>')
+vim.keymap.set('n', '<leader>cp', ':Telescope claude prompts<CR>')
+```
+
+## Sublime Text
+
+### Installation
+
+1. Install Package Control if not present
+2. Open Command Palette (Cmd/Ctrl + Shift + P)
+3. Type "Package Control: Install Package"
+4. Search for "Claude" and install
+
+### Configuration
+
+Create or edit `Packages/User/Claude.sublime-settings`:
+
+```json
+{
+  "api_key": "sk-ant-api03-...",
+  "model": "claude-sonnet-4-20250514",
+  "max_tokens": 4096,
+  "show_in_panel": true
+}
+```
+
+### Commands
+
+Access via Command Palette or keyboard shortcuts:
+
+- `Claude: Ask` - Ask about selection
+- `Claude: Explain` - Explain code
+- `Claude: Generate` - Generate code
+- `Claude: Refactor` - Suggest improvements
+
+## Emacs
+
+### Installation
+
+Using straight.el:
+
+```elisp
+(straight-use-package
+  '(claude :type git :host github :repo "anthropics/claude.el"))
+
+(require 'claude)
+(setq claude-api-key (getenv "ANTHROPIC_API_KEY"))
+```
+
+Using use-package:
+
+```elisp
+(use-package claude
+  :straight (:host github :repo "anthropics/claude.el")
+  :config
+  (setq claude-api-key (getenv "ANTHROPIC_API_KEY"))
+  (setq claude-model "claude-sonnet-4-20250514"))
+```
+
+### Key Bindings
+
+```elisp
+(global-set-key (kbd "C-c c c") 'claude-chat)
+(global-set-key (kbd "C-c c e") 'claude-explain-region)
+(global-set-key (kbd "C-c c r") 'claude-refactor-region)
+(global-set-key (kbd "C-c c g") 'claude-generate)
+```
+
+## Common Configuration
+
+### Shared Settings
+
+All IDE plugins support these common settings:
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| `model` | Claude model to use | `claude-sonnet-4-20250514` |
+| `maxTokens` | Maximum response length | `4096` |
+| `temperature` | Response randomness (0-1) | `0` |
+| `apiKey` | Your Anthropic API key | - |
+
+### Context Settings
+
+Control what context is sent to Claude:
+
+- **Current file** - Include the active file
+- **Selection** - Include selected text
+- **Open files** - Include other open files
+- **Project structure** - Include file tree
+- **Git context** - Include recent changes
+
+### Privacy Settings
+
+Some plugins offer privacy controls:
+
+- Exclude specific files/patterns
+- Disable telemetry
+- Local processing options
+
+## Troubleshooting
+
+### Extension Not Loading
+
+1. Check VS Code/IDE version compatibility
+2. Restart the IDE
+3. Check extension logs for errors
+4. Reinstall the extension
+
+### Authentication Issues
+
+1. Verify API key is correct
+2. Check key hasn't expired
+3. Ensure network connectivity
+4. Try signing out and back in
+
+### Slow Responses
+
+1. Check network connection
+2. Try a different model (Haiku is faster)
+3. Reduce context settings
+4. Check rate limits
+
+### No Code Suggestions
+
+1. Verify auto-complete is enabled
+2. Check file type is supported
+3. Ensure cursor is in valid position
+4. Check extension settings
+
+## Best Practices
+
+### 1. Use Specific Selections
+
+Select specific code rather than entire files:
+
+```typescript
+// ✅ Good: Select just this function
+function processData(data: Data): Result {
+  // ...
+}
+
+// ❌ Avoid: Selecting the entire 500-line file
+```
+
+### 2. Provide Context in Prompts
+
+Be specific about what you need:
+
+```
+❌ "Fix this"
+✅ "Fix the null pointer exception when items array is empty"
+```
+
+### 3. Review Generated Code
+
+Always review Claude's suggestions before accepting:
+- Check for correctness
+- Verify it matches your style guide
+- Test the changes
+
+### 4. Use Keyboard Shortcuts
+
+Learn the shortcuts for your most common operations to stay in flow.
+
+## Next Steps
+
+- [Configure MCP servers →](/docs/integrations/mcp-servers)
+- [Set up hooks →](/docs/integrations/hooks)
+- [Learn prompting techniques →](/docs/tips-and-tricks/prompting)

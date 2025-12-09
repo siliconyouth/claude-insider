@@ -1,0 +1,309 @@
+---
+title: Prompting Strategies
+description: Master the art of communicating with Claude for better, more accurate results
+---
+
+Effective prompting is the key to getting great results from Claude. This guide covers proven strategies for structuring your requests to get exactly what you need.
+
+## The Anatomy of a Good Prompt
+
+A well-structured prompt typically includes:
+
+1. **Context** - What Claude needs to know
+2. **Task** - What you want done
+3. **Constraints** - Limitations or requirements
+4. **Format** - How you want the output
+
+### Example: Complete Prompt
+
+```
+Context: I'm working on a Next.js e-commerce app with TypeScript.
+The cart functionality is in src/hooks/useCart.ts.
+
+Task: Add a function to calculate shipping costs based on
+the cart total and destination country.
+
+Constraints:
+- Free shipping for orders over $100
+- Use the existing CartItem type
+- Don't add external dependencies
+
+Format: Include the TypeScript types and JSDoc comments.
+```
+
+## Prompting Patterns
+
+### 1. The Specific Request
+
+Be precise about what you want:
+
+**Vague:**
+```
+Make the code better
+```
+
+**Specific:**
+```
+Refactor the fetchUsers function in src/api/users.ts to:
+- Use async/await instead of .then() chains
+- Add proper error handling with typed errors
+- Include retry logic for network failures (max 3 retries)
+```
+
+### 2. The Contextual Request
+
+Provide relevant background:
+
+```
+Our app uses a custom authentication system where:
+- JWT tokens are stored in httpOnly cookies
+- Refresh tokens are rotated on each use
+- Sessions expire after 24 hours of inactivity
+
+Given this context, implement a middleware that validates
+the session and refreshes tokens when needed.
+```
+
+### 3. The Constrained Request
+
+Set clear boundaries:
+
+```
+Create a date formatting utility that:
+- Works without any external libraries
+- Supports ISO 8601, US, and European formats
+- Is tree-shakeable (separate named exports)
+- Has full TypeScript types
+- Is under 50 lines of code
+```
+
+### 4. The Iterative Request
+
+Build on previous work:
+
+```
+That implementation looks good. Now:
+1. Add unit tests for the edge cases we discussed
+2. Handle the timezone conversion issue
+3. Add a caching layer to avoid repeated calculations
+```
+
+### 5. The Comparative Request
+
+When you want options:
+
+```
+Show me 3 different ways to implement state management
+for this form. Compare:
+1. React useState
+2. React useReducer
+3. A form library like React Hook Form
+
+Include pros/cons for each approach given our requirements.
+```
+
+## Advanced Techniques
+
+### Chain of Thought
+
+Ask Claude to think through the problem:
+
+```
+Before implementing, walk me through:
+1. What are the potential edge cases?
+2. What existing code might be affected?
+3. What's the simplest solution that works?
+
+Then implement based on your analysis.
+```
+
+### Role Assignment
+
+Set expectations with a role:
+
+```
+Act as a senior security engineer reviewing this authentication code.
+Focus on:
+- OWASP Top 10 vulnerabilities
+- Token handling best practices
+- Input validation gaps
+```
+
+### Few-Shot Examples
+
+Show what you want through examples:
+
+```
+Convert these function names to our naming convention:
+
+Input: getUserData → Output: fetchUserById
+Input: saveSettings → Output: updateUserSettings
+Input: removeItem → Output: deleteCartItem
+
+Now convert these:
+- loadProducts
+- createOrder
+- updateProfile
+```
+
+### Structured Output
+
+Request specific formats:
+
+```
+Analyze this code and return your findings as:
+
+## Summary
+[One paragraph overview]
+
+## Issues Found
+| Severity | Location | Description | Fix |
+|----------|----------|-------------|-----|
+
+## Recommendations
+1. [First recommendation]
+2. [Second recommendation]
+```
+
+## Domain-Specific Prompting
+
+### For Bug Fixes
+
+```
+Bug: Users report that the search doesn't work for queries with spaces.
+
+Steps to reproduce:
+1. Go to /search
+2. Enter "blue shirt"
+3. Click search
+4. No results appear (should show 15 items)
+
+Relevant files:
+- src/pages/search.tsx
+- src/api/search.ts
+- src/utils/query.ts
+
+Find and fix the bug.
+```
+
+### For New Features
+
+```
+Feature: Add dark mode support
+
+Requirements:
+- Toggle in the header
+- Persist preference in localStorage
+- Respect system preference by default
+- Smooth transition animation
+
+Current setup:
+- Using Tailwind CSS
+- Theme colors defined in tailwind.config.js
+- Layout component in src/components/Layout.tsx
+```
+
+### For Refactoring
+
+```
+The OrderProcessor class (src/services/orders.ts) violates
+Single Responsibility Principle. It currently handles:
+- Order validation
+- Payment processing
+- Inventory updates
+- Email notifications
+
+Refactor into separate services while:
+- Maintaining the same external API
+- Keeping all existing tests passing
+- Using dependency injection for testability
+```
+
+### For Code Review
+
+```
+Review this PR for a payment integration:
+[paste diff or describe changes]
+
+Focus on:
+1. Security (handling sensitive data)
+2. Error handling (payment failures)
+3. Idempotency (duplicate requests)
+4. Logging (audit trail)
+```
+
+## Common Mistakes to Avoid
+
+### 1. Too Vague
+
+❌ "Fix the performance"
+✅ "The /api/products endpoint takes 3s to respond. Profile and optimize the database queries in src/api/products.ts"
+
+### 2. Missing Context
+
+❌ "Add validation"
+✅ "Add Zod validation to the user registration form in src/components/RegisterForm.tsx. Validate email format, password strength (8+ chars, 1 number), and matching password confirmation."
+
+### 3. Overloading
+
+❌ "Build a complete authentication system with login, registration, password reset, 2FA, social login, session management, and admin user management"
+✅ Start with one feature: "Implement email/password login. We'll add other features incrementally."
+
+### 4. Assuming Knowledge
+
+❌ "Use our standard pattern"
+✅ "Follow the repository pattern we use in src/repositories/UserRepository.ts"
+
+## Prompt Templates
+
+### Bug Report Template
+
+```
+## Bug Description
+[What's happening vs. what should happen]
+
+## Steps to Reproduce
+1. [First step]
+2. [Second step]
+3. [Result]
+
+## Relevant Files
+- [file path]
+- [file path]
+
+## Error Messages
+[Any console errors or logs]
+
+## Environment
+- Node version:
+- Browser:
+- OS:
+```
+
+### Feature Request Template
+
+```
+## Feature
+[Name and brief description]
+
+## User Story
+As a [user type], I want to [action] so that [benefit].
+
+## Requirements
+- [ ] [Requirement 1]
+- [ ] [Requirement 2]
+
+## Technical Considerations
+- [Existing code to consider]
+- [Constraints]
+
+## Acceptance Criteria
+- [ ] [Criterion 1]
+- [ ] [Criterion 2]
+```
+
+## Next Steps
+
+- [Boost productivity with shortcuts →](/docs/tips-and-tricks/productivity)
+- [Configure Claude for your workflow →](/docs/configuration/settings)
+- [Set up IDE integration →](/docs/integrations/ide-plugins)

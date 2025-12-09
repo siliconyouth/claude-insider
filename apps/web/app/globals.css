@@ -1,14 +1,136 @@
 @import "tailwindcss";
 @import "@repo/tailwind-config";
 
-:root {
+/* Dark theme (default) */
+:root,
+.dark {
   --foreground-rgb: 255, 255, 255;
   --background-rgb: 3, 7, 18;
+  --surface-rgb: 17, 24, 39;
+  --surface-elevated-rgb: 31, 41, 55;
+  --border-rgb: 55, 65, 81;
+  --muted-rgb: 156, 163, 175;
+  --accent-rgb: 249, 115, 22;
+}
+
+/* Light theme */
+.light {
+  --foreground-rgb: 17, 24, 39;
+  --background-rgb: 255, 255, 255;
+  --surface-rgb: 249, 250, 251;
+  --surface-elevated-rgb: 243, 244, 246;
+  --border-rgb: 229, 231, 235;
+  --muted-rgb: 107, 114, 128;
+  --accent-rgb: 234, 88, 12;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-rgb));
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Light theme overrides */
+.light {
+  color-scheme: light;
+}
+
+.light .bg-gray-950 {
+  background-color: rgb(var(--background-rgb));
+}
+
+.light .bg-gray-900 {
+  background-color: rgb(var(--surface-rgb));
+}
+
+.light .bg-gray-900\/50,
+.light .bg-gray-900\/30 {
+  background-color: rgba(var(--surface-rgb), 0.5);
+}
+
+.light .bg-gray-800 {
+  background-color: rgb(var(--surface-elevated-rgb));
+}
+
+.light .bg-gray-800\/50 {
+  background-color: rgba(var(--surface-elevated-rgb), 0.5);
+}
+
+.light .bg-gray-700 {
+  background-color: rgb(var(--border-rgb));
+}
+
+.light .border-gray-800,
+.light .border-gray-700 {
+  border-color: rgb(var(--border-rgb));
+}
+
+.light .text-gray-100,
+.light .text-white {
+  color: rgb(var(--foreground-rgb));
+}
+
+.light .text-gray-300,
+.light .text-gray-400 {
+  color: rgb(var(--muted-rgb));
+}
+
+.light .text-gray-500 {
+  color: rgb(156, 163, 175);
+}
+
+.light .hover\:text-white:hover {
+  color: rgb(var(--foreground-rgb));
+}
+
+.light .hover\:bg-gray-800:hover {
+  background-color: rgb(var(--surface-elevated-rgb));
+}
+
+.light .placeholder-gray-500::placeholder {
+  color: rgb(var(--muted-rgb));
+}
+
+/* Light theme prose */
+.light .prose-invert {
+  --tw-prose-body: rgb(55, 65, 81);
+  --tw-prose-headings: rgb(17, 24, 39);
+  --tw-prose-links: rgb(234, 88, 12);
+  --tw-prose-bold: rgb(17, 24, 39);
+  --tw-prose-counters: rgb(107, 114, 128);
+  --tw-prose-bullets: rgb(107, 114, 128);
+  --tw-prose-hr: rgb(229, 231, 235);
+  --tw-prose-quotes: rgb(55, 65, 81);
+  --tw-prose-quote-borders: rgb(229, 231, 235);
+  --tw-prose-captions: rgb(107, 114, 128);
+  --tw-prose-code: rgb(17, 24, 39);
+  --tw-prose-pre-code: rgb(229, 231, 235);
+  --tw-prose-pre-bg: rgb(31, 41, 55);
+  --tw-prose-th-borders: rgb(229, 231, 235);
+  --tw-prose-td-borders: rgb(243, 244, 246);
+}
+
+/* Light theme code blocks */
+.light pre {
+  background-color: rgb(31, 41, 55) !important;
+}
+
+.light .prose :not(pre) > code {
+  background-color: rgb(243, 244, 246);
+  color: rgb(234, 88, 12);
+}
+
+/* Light theme scrollbar */
+.light::-webkit-scrollbar-track {
+  background: rgb(243, 244, 246);
+}
+
+.light::-webkit-scrollbar-thumb {
+  background: rgb(209, 213, 219);
+}
+
+.light::-webkit-scrollbar-thumb:hover {
+  background: rgb(156, 163, 175);
 }
 
 /* Custom scrollbar */

@@ -1,0 +1,319 @@
+---
+title: Productivity Hacks
+description: Work faster and smarter with Claude Code using these power-user techniques
+---
+
+Level up your Claude Code workflow with these productivity tips, keyboard shortcuts, and automation techniques used by power users.
+
+## Keyboard Shortcuts
+
+Master these shortcuts to navigate faster:
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+C` | Cancel current operation |
+| `Ctrl+L` | Clear screen |
+| `↑` / `↓` | Navigate command history |
+| `Tab` | Autocomplete file paths |
+| `Ctrl+R` | Search command history |
+| `Esc` | Dismiss suggestions |
+
+## Quick Commands
+
+### Slash Commands
+
+Use built-in slash commands for common operations:
+
+```bash
+/help          # Show available commands
+/clear         # Clear conversation history
+/compact       # Summarize and compact context
+/config        # Open configuration
+/model         # Switch Claude model
+/cost          # Show token usage and costs
+```
+
+### File Operations
+
+```bash
+# Read a specific file
+"Read src/index.ts"
+
+# Read multiple files
+"Read src/api/*.ts"
+
+# Read with line numbers
+"Show me lines 50-100 of src/utils/helpers.ts"
+```
+
+## Workflow Optimization
+
+### 1. Start with a Plan
+
+Before diving into code, ask Claude to outline the approach:
+
+```
+I need to add user authentication. Before writing code:
+1. List the files we'll need to create/modify
+2. Outline the implementation steps
+3. Identify potential challenges
+
+Then we'll implement step by step.
+```
+
+### 2. Use Context Files
+
+Create a `.claude/context.md` file for project-specific instructions that persist across sessions:
+
+```markdown
+# Project Context
+
+## Quick Commands
+- "run tests" → pnpm test
+- "start dev" → pnpm dev
+- "deploy" → pnpm deploy:prod
+
+## Common Tasks
+- New component: Create in src/components/, add story, add test
+- New API route: Create in src/app/api/, add validation, add docs
+```
+
+### 3. Batch Similar Operations
+
+Instead of making changes one at a time:
+
+```
+Update all API route handlers in src/app/api/ to:
+1. Add request validation with Zod
+2. Add proper error responses
+3. Add request logging
+4. Add rate limiting middleware
+
+Start with the users routes, then apply the pattern to others.
+```
+
+### 4. Create Reusable Prompts
+
+Save common prompts for quick reuse:
+
+**Code Review Prompt:**
+```
+Review this code for:
+- [ ] Type safety
+- [ ] Error handling
+- [ ] Performance
+- [ ] Security
+- [ ] Test coverage
+- [ ] Documentation
+
+Provide specific, actionable feedback.
+```
+
+**PR Description Prompt:**
+```
+Generate a PR description for these changes:
+- Include a summary of what changed
+- List any breaking changes
+- Add testing instructions
+- Note any deployment considerations
+```
+
+## Power User Techniques
+
+### 1. Incremental Building
+
+Build complex features piece by piece:
+
+```
+Session 1: "Create the database schema for user profiles"
+Session 2: "Add the API routes for CRUD operations"
+Session 3: "Build the React components for the profile page"
+Session 4: "Add form validation and error handling"
+Session 5: "Write tests for the new functionality"
+```
+
+### 2. Rubber Duck Debugging
+
+Use Claude to think through problems:
+
+```
+I'm stuck on this bug. Let me explain what's happening:
+
+1. User clicks submit
+2. Form data is validated (this works)
+3. API call is made (this works)
+4. Response comes back (this works)
+5. UI doesn't update (BUG IS HERE)
+
+Walk me through possible causes.
+```
+
+### 3. Learning Mode
+
+Use Claude to understand unfamiliar code:
+
+```
+I'm new to this codebase. Explain:
+1. The overall architecture
+2. How data flows from frontend to database
+3. The key abstractions and patterns used
+4. Where to find things I might need to modify
+```
+
+### 4. Template Generation
+
+Create templates for consistency:
+
+```
+Generate a template for a new React component that follows
+our project conventions:
+- TypeScript with Props interface
+- Styled with Tailwind
+- Includes basic accessibility
+- Has a Storybook story
+- Has a test file
+
+I'll use this as a starting point for new components.
+```
+
+## Session Management
+
+### Starting Fresh
+
+Clear context when starting a new task:
+
+```
+/clear
+
+Starting fresh. New task: [describe your task]
+Relevant files: [list key files]
+```
+
+### Resuming Work
+
+When returning to a previous task:
+
+```
+Continuing from yesterday. We were implementing user authentication.
+Progress so far:
+- ✅ Database schema
+- ✅ API routes
+- 🔄 Frontend components (in progress)
+- ⏳ Testing
+
+Let's continue with the frontend components.
+```
+
+### Context Compaction
+
+For long sessions, compact the context:
+
+```
+/compact
+
+We've been working on the payment integration.
+Key decisions made:
+- Using Stripe for payments
+- Webhooks for async updates
+- Storing transaction logs in PostgreSQL
+
+Continue with: webhook handler implementation
+```
+
+## Automation Ideas
+
+### Git Workflow
+
+```
+After making these changes:
+1. Create a meaningful commit message
+2. Show me what files changed
+3. Suggest a branch name if we're not on a feature branch
+```
+
+### Documentation
+
+```
+For any new public function I write today,
+automatically suggest JSDoc comments.
+```
+
+### Testing
+
+```
+After implementing each feature, suggest test cases we should add.
+Focus on edge cases and error conditions.
+```
+
+## Time-Saving Patterns
+
+### 1. The "Apply Everywhere" Pattern
+
+```
+I've updated the Button component to use the new design system.
+Find all other components using the old button styles and update them.
+```
+
+### 2. The "Explain Then Execute" Pattern
+
+```
+Before making changes, explain what you plan to do.
+I'll confirm, then you execute.
+This helps catch misunderstandings early.
+```
+
+### 3. The "Checkpoint" Pattern
+
+```
+Let's checkpoint here. Summarize:
+- What we've accomplished
+- What's left to do
+- Any blockers or concerns
+
+Then continue with the next task.
+```
+
+### 4. The "Scope Limit" Pattern
+
+```
+Let's timebox this refactoring to just the auth module.
+Don't touch other parts of the codebase yet.
+We'll expand scope after this is working.
+```
+
+## Daily Workflows
+
+### Morning Routine
+
+```
+Good morning! Let's start the day:
+1. What were we working on yesterday?
+2. Any failed CI/CD pipelines to check?
+3. What's the priority for today?
+```
+
+### Before Commits
+
+```
+Pre-commit checklist:
+1. Run the linter
+2. Run the tests
+3. Check for console.logs or debug code
+4. Review the diff one more time
+```
+
+### End of Day
+
+```
+Wrap up for today:
+1. Save current progress
+2. Note any blockers for tomorrow
+3. Update task status
+4. Create a brief summary of what was done
+```
+
+## Next Steps
+
+- [Master advanced prompting →](/docs/tips-and-tricks/prompting)
+- [Configure Claude for your workflow →](/docs/configuration/settings)
+- [Set up IDE integration →](/docs/integrations/ide-plugins)

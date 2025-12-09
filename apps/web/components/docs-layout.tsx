@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import { Search } from "@/components/search";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 interface DocsLayoutProps {
   children: ReactNode;
@@ -59,6 +61,8 @@ export function DocsLayout({
               >
                 GitHub
               </a>
+              <Search />
+              <ThemeToggle />
             </div>
           </div>
         </nav>

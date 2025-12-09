@@ -1,0 +1,330 @@
+---
+title: Authentication
+description: Secure your Claude API integration with proper authentication
+---
+
+Learn how to authenticate with the Claude API, manage API keys securely, and implement best practices for production applications.
+
+## API Keys
+
+### Getting Your API Key
+
+1. Go to [console.anthropic.com](https://console.anthropic.com)
+2. Navigate to **API Keys**
+3. Click **Create Key**
+4. Copy and securely store the key
+
+> **Important**: API keys are only shown once. Store them securely immediately after creation.
+
+### Key Format
+
+API keys follow this format:
+
+```
+sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+- Prefix: `sk-ant-` (indicates Anthropic key)
+- Type: `api03` (current key version)
+- Secret: Unique identifier
+
+## Authentication Methods
+
+### Header Authentication (Recommended)
+
+Include the API key in the `x-api-key` header:
+
+```bash
+curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: sk-ant-api03-your-key-here" \
+  -H "anthropic-version: 2024-01-01" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "claude-sonnet-4-20250514", "max_tokens": 100, "messages": [{"role": "user", "content": "Hi"}]}'
+```
+
+### SDK Authentication
+
+SDKs handle authentication automatically from environment variables:
+
+**Python:**
+```python
+import os
+from anthropic import Anthropic
+
+# Automatically uses ANTHROPIC_API_KEY environment variable
+client = Anthropic()
+
+# Or specify explicitly
+client = Anthropic(api_key="sk-ant-api03-...")
+```
+
+**TypeScript:**
+```typescript
+import Anthropic from '@anthropic-ai/sdk';
+
+// Automatically uses ANTHROPIC_API_KEY
+const client = new Anthropic();
+
+// Or specify explicitly
+const client = new Anthropic({
+  apiKey: 'sk-ant-api03-...'
+});
+```
+
+## Environment Variables
+
+### Setting Up
+
+**Linux/macOS (bash/zsh):**
+```bash
+# Add to ~/.bashrc or ~/.zshrc
+export ANTHROPIC_API_KEY="sk-ant-api03-your-key-here"
+
+# Reload shell
+source ~/.bashrc
+```
+
+**Windows (PowerShell):**
+```powershell
+# Set for current session
+$env:ANTHROPIC_API_KEY = "sk-ant-api03-your-key-here"
+
+# Set permanently
+[Environment]::SetEnvironmentVariable("ANTHROPIC_API_KEY", "sk-ant-api03-your-key-here", "User")
+```
+
+**Docker:**
+```dockerfile
+ENV ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+```
+
+Or pass at runtime:
+```bash
+docker run -e ANTHROPIC_API_KEY=sk-ant-api03-... myapp
+```
+
+### Using .env Files
+
+For local development, use `.env` files:
+
+```bash
+# .env
+ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+```
+
+**With Node.js:**
+```typescript
+import 'dotenv/config';
+import Anthropic from '@anthropic-ai/sdk';
+
+const client = new Anthropic();
+```
+
+**With Python:**
+```python
+from dotenv import load_dotenv
+load_dotenv()
+
+from anthropic import Anthropic
+client = Anthropic()
+```
+
+> **Never commit .env files!** Add `.env` to your `.gitignore`.
+
+## Security Best Practices
+
+### 1. Never Expose Keys in Code
+
+❌ **Wrong:**
+```typescript
+const client = new Anthropic({
+  apiKey: 'sk-ant-api03-actual-key-here' // Never do this!
+});
+```
+
+✅ **Correct:**
+```typescript
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY
+});
+```
+
+### 2. Use Secrets Management
+
+For production, use proper secrets management:
+
+**AWS Secrets Manager:**
+```typescript
+import { SecretsManager } from '@aws-sdk/client-secrets-manager';
+
+const secretsManager = new SecretsManager();
+const { SecretString } = await secretsManager.getSecretValue({
+  SecretId: 'anthropic-api-key'
+});
+
+const client = new Anthropic({ apiKey: SecretString });
+```
+
+**HashiCorp Vault:**
+```typescript
+import Vault from 'node-vault';
+
+const vault = Vault();
+const { data } = await vault.read('secret/anthropic');
+
+const client = new Anthropic({ apiKey: data.api_key });
+```
+
+### 3. Rotate Keys Regularly
+
+- Create a new key before revoking the old one
+- Update all applications using the key
+- Revoke the old key only after confirming the new one works
+- Set up alerts for key usage anomalies
+
+### 4. Use Separate Keys for Environments
+
+| Environment | Key Purpose |
+|-------------|-------------|
+| Development | Individual developer testing |
+| Staging | Integration testing |
+| Production | Live application |
+
+### 5. Implement Key Scoping
+
+If your app has multiple services, use different keys:
+
+```typescript
+// User-facing service
+const userClient = new Anthropic({
+  apiKey: process.env.ANTHROPIC_USER_SERVICE_KEY
+});
+
+// Internal analytics service
+const analyticsClient = new Anthropic({
+  apiKey: process.env.ANTHROPIC_ANALYTICS_KEY
+});
+```
+
+## Server-Side Integration
+
+### Proxy Pattern
+
+Never expose API keys to the client. Use a server-side proxy:
+
+```typescript
+// Server-side (Next.js API route)
+// app/api/chat/route.ts
+
+import Anthropic from '@anthropic-ai/sdk';
+
+const client = new Anthropic();
+
+export async function POST(request: Request) {
+  const { message } = await request.json();
+
+  const response = await client.messages.create({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1024,
+    messages: [{ role: 'user', content: message }]
+  });
+
+  return Response.json(response);
+}
+```
+
+```typescript
+// Client-side
+const response = await fetch('/api/chat', {
+  method: 'POST',
+  body: JSON.stringify({ message: 'Hello!' })
+});
+```
+
+### Rate Limiting Your Proxy
+
+Protect your API key with rate limiting:
+
+```typescript
+import rateLimit from 'express-rate-limit';
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 10, // 10 requests per minute
+  message: 'Too many requests'
+});
+
+app.use('/api/chat', limiter);
+```
+
+## Troubleshooting
+
+### Invalid API Key
+
+**Error:**
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Invalid API key"
+  }
+}
+```
+
+**Solutions:**
+1. Verify the key is correct (no extra spaces)
+2. Check the key hasn't been revoked
+3. Ensure environment variable is set correctly:
+   ```bash
+   echo $ANTHROPIC_API_KEY
+   ```
+
+### Missing API Key
+
+**Error:**
+```json
+{
+  "error": {
+    "type": "authentication_error",
+    "message": "Missing API key"
+  }
+}
+```
+
+**Solutions:**
+1. Check header name is `x-api-key` (lowercase)
+2. Verify environment variable name matches SDK expectations
+3. Ensure `.env` file is being loaded
+
+### Permission Denied
+
+**Error:**
+```json
+{
+  "error": {
+    "type": "permission_error",
+    "message": "Your API key does not have permission"
+  }
+}
+```
+
+**Solutions:**
+1. Check your API key's permissions in the console
+2. Verify you're on the correct pricing tier
+3. Contact support if permissions should be available
+
+## Key Management Checklist
+
+- [ ] API key stored in environment variable
+- [ ] `.env` files added to `.gitignore`
+- [ ] Production keys in secrets manager
+- [ ] Separate keys for each environment
+- [ ] Key rotation schedule established
+- [ ] Usage monitoring enabled
+- [ ] Alerts configured for anomalies
+
+## Next Steps
+
+- [Learn about the Messages API →](/docs/api)
+- [Implement tool use →](/docs/api/tool-use)
+- [Configure Claude Code →](/docs/configuration/settings)

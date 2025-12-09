@@ -1,0 +1,293 @@
+---
+title: API Reference
+description: Complete reference for the Claude API and SDK usage
+---
+
+The Claude API provides programmatic access to Claude's capabilities. This reference covers authentication, endpoints, and best practices for integrating Claude into your applications.
+
+## Overview
+
+The Claude API uses a REST architecture with JSON request and response bodies. All requests require authentication via API key.
+
+### Base URL
+
+```
+https://api.anthropic.com
+```
+
+### API Versions
+
+| Version | Status | Notes |
+|---------|--------|-------|
+| `2024-01-01` | Current | Latest stable version |
+| `2023-06-01` | Supported | Previous stable version |
+| `2023-01-01` | Deprecated | Will be removed |
+
+Always specify the version in your requests:
+
+```bash
+curl https://api.anthropic.com/v1/messages \
+  -H "anthropic-version: 2024-01-01"
+```
+
+## Quick Start
+
+### Basic Request
+
+```bash
+curl https://api.anthropic.com/v1/messages \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2024-01-01" \
+  -d '{
+    "model": "claude-sonnet-4-20250514",
+    "max_tokens": 1024,
+    "messages": [
+      {"role": "user", "content": "Hello, Claude!"}
+    ]
+  }'
+```
+
+### Response Format
+
+```json
+{
+  "id": "msg_01XFDUDYJgAACzvnptvVoYEL",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+    {
+      "type": "text",
+      "text": "Hello! How can I help you today?"
+    }
+  ],
+  "model": "claude-sonnet-4-20250514",
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 12,
+    "output_tokens": 15
+  }
+}
+```
+
+## Available Models
+
+| Model | ID | Best For |
+|-------|-----|----------|
+| Claude Opus 4.5 | `claude-opus-4-5-20251101` | Complex reasoning, research |
+| Claude Sonnet 4 | `claude-sonnet-4-20250514` | Balanced performance |
+| Claude Haiku 3.5 | `claude-haiku-3-5-20241022` | Fast, simple tasks |
+
+## Core Endpoints
+
+### Messages API
+
+The primary endpoint for conversations:
+
+```
+POST /v1/messages
+```
+
+**Request Body:**
+
+```json
+{
+  "model": "claude-sonnet-4-20250514",
+  "max_tokens": 1024,
+  "system": "You are a helpful assistant.",
+  "messages": [
+    {"role": "user", "content": "What is the capital of France?"}
+  ]
+}
+```
+
+**Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `model` | string | Yes | Model ID to use |
+| `messages` | array | Yes | Conversation messages |
+| `max_tokens` | integer | Yes | Maximum response length |
+| `system` | string | No | System prompt |
+| `temperature` | float | No | Randomness (0-1) |
+| `stream` | boolean | No | Enable streaming |
+
+### Streaming Responses
+
+For real-time responses, enable streaming:
+
+```bash
+curl https://api.anthropic.com/v1/messages \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2024-01-01" \
+  -d '{
+    "model": "claude-sonnet-4-20250514",
+    "max_tokens": 1024,
+    "stream": true,
+    "messages": [
+      {"role": "user", "content": "Tell me a story"}
+    ]
+  }'
+```
+
+Stream events:
+
+```
+event: message_start
+event: content_block_start
+event: content_block_delta
+event: content_block_stop
+event: message_delta
+event: message_stop
+```
+
+## SDKs
+
+### Python
+
+```python
+from anthropic import Anthropic
+
+client = Anthropic()
+
+message = client.messages.create(
+    model="claude-sonnet-4-20250514",
+    max_tokens=1024,
+    messages=[
+        {"role": "user", "content": "Hello, Claude!"}
+    ]
+)
+
+print(message.content[0].text)
+```
+
+### TypeScript/JavaScript
+
+```typescript
+import Anthropic from '@anthropic-ai/sdk';
+
+const client = new Anthropic();
+
+const message = await client.messages.create({
+  model: 'claude-sonnet-4-20250514',
+  max_tokens: 1024,
+  messages: [
+    { role: 'user', content: 'Hello, Claude!' }
+  ]
+});
+
+console.log(message.content[0].text);
+```
+
+## Error Handling
+
+### Error Response Format
+
+```json
+{
+  "type": "error",
+  "error": {
+    "type": "invalid_request_error",
+    "message": "max_tokens must be a positive integer"
+  }
+}
+```
+
+### Common Error Types
+
+| Type | HTTP Status | Description |
+|------|-------------|-------------|
+| `invalid_request_error` | 400 | Invalid parameters |
+| `authentication_error` | 401 | Invalid API key |
+| `permission_error` | 403 | Insufficient permissions |
+| `not_found_error` | 404 | Resource not found |
+| `rate_limit_error` | 429 | Too many requests |
+| `api_error` | 500 | Server error |
+| `overloaded_error` | 529 | API overloaded |
+
+### Retry Strategy
+
+```typescript
+async function callWithRetry(fn: () => Promise<any>, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (error.status === 429 || error.status >= 500) {
+        const delay = Math.pow(2, i) * 1000;
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      throw error;
+    }
+  }
+}
+```
+
+## Rate Limits
+
+Rate limits vary by tier:
+
+| Tier | Requests/min | Tokens/min |
+|------|--------------|------------|
+| Free | 5 | 20,000 |
+| Build | 50 | 100,000 |
+| Scale | 1,000 | 400,000 |
+
+Check headers for current usage:
+
+```
+x-ratelimit-limit-requests: 50
+x-ratelimit-limit-tokens: 100000
+x-ratelimit-remaining-requests: 49
+x-ratelimit-remaining-tokens: 99500
+```
+
+## Best Practices
+
+### 1. Use System Prompts
+
+Set consistent behavior with system prompts:
+
+```json
+{
+  "system": "You are a helpful coding assistant. Always explain your reasoning and provide working code examples.",
+  "messages": [...]
+}
+```
+
+### 2. Manage Context Length
+
+Monitor token usage and truncate when needed:
+
+```typescript
+const MAX_CONTEXT_TOKENS = 100000;
+
+function trimMessages(messages, maxTokens) {
+  // Keep system message + recent messages
+  // Estimate ~4 chars per token
+}
+```
+
+### 3. Handle Streaming Properly
+
+```typescript
+const stream = await client.messages.stream({
+  model: 'claude-sonnet-4-20250514',
+  max_tokens: 1024,
+  messages: [{ role: 'user', content: 'Hello!' }]
+});
+
+for await (const chunk of stream) {
+  if (chunk.type === 'content_block_delta') {
+    process.stdout.write(chunk.delta.text);
+  }
+}
+```
+
+## Next Steps
+
+- [Set up authentication →](/docs/api/authentication)
+- [Learn about tool use →](/docs/api/tool-use)
+- [Explore integrations →](/docs/integrations)

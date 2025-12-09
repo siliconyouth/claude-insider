@@ -1,0 +1,225 @@
+---
+title: Integrations
+description: Connect Claude Code with your development tools and workflows
+---
+
+Claude Code integrates seamlessly with your existing development environment. This section covers MCP servers, IDE plugins, hooks, and other ways to extend Claude Code's capabilities.
+
+## Overview
+
+Claude Code can be extended through several mechanisms:
+
+| Integration Type | Purpose | Complexity |
+|------------------|---------|------------|
+| MCP Servers | Add new capabilities and data sources | Medium |
+| IDE Plugins | Native IDE integration | Low |
+| Hooks | Custom automation and workflows | Medium |
+| API | Programmatic access | High |
+
+## MCP (Model Context Protocol)
+
+MCP servers extend Claude's capabilities by providing:
+
+- **Data sources** - Access databases, APIs, file systems
+- **Tools** - New actions Claude can perform
+- **Context** - Additional information for better responses
+
+[Learn about MCP servers →](/docs/integrations/mcp-servers)
+
+### Quick Example
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-filesystem", "/path/to/allowed/dir"]
+    }
+  }
+}
+```
+
+## IDE Plugins
+
+Native integration with popular IDEs:
+
+- **VS Code** - Full-featured extension
+- **JetBrains** - IntelliJ, WebStorm, PyCharm, etc.
+- **Neovim** - Terminal-based integration
+
+[Set up IDE plugins →](/docs/integrations/ide-plugins)
+
+### Benefits
+
+- Inline code suggestions
+- Context-aware completions
+- Seamless workflow integration
+- No terminal switching required
+
+## Hooks
+
+Hooks let you run custom commands at specific points in Claude Code's lifecycle:
+
+- **Pre-tool hooks** - Run before Claude executes a tool
+- **Post-tool hooks** - Run after tool execution
+- **Notification hooks** - Alert on specific events
+
+[Configure hooks →](/docs/integrations/hooks)
+
+### Quick Example
+
+```json
+{
+  "hooks": {
+    "preToolExecution": [
+      {
+        "matcher": "Write",
+        "command": "echo 'About to write to: $FILE_PATH'"
+      }
+    ]
+  }
+}
+```
+
+## Common Integration Patterns
+
+### 1. Database Access
+
+Connect Claude to your databases for query assistance:
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-postgres"],
+      "env": {
+        "POSTGRES_URL": "postgresql://localhost/mydb"
+      }
+    }
+  }
+}
+```
+
+### 2. Git Integration
+
+Enhance git workflows with automation:
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Bash:git commit",
+        "command": "git log -1 --oneline"
+      }
+    ]
+  }
+}
+```
+
+### 3. CI/CD Integration
+
+Trigger builds and tests automatically:
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write:*.ts",
+        "command": "npm run typecheck"
+      }
+    ]
+  }
+}
+```
+
+### 4. Documentation Generation
+
+Auto-generate docs when code changes:
+
+```json
+{
+  "hooks": {
+    "postToolExecution": [
+      {
+        "matcher": "Write:src/**/*.ts",
+        "command": "npm run docs:generate"
+      }
+    ]
+  }
+}
+```
+
+## Security Considerations
+
+When setting up integrations:
+
+1. **Principle of least privilege** - Only grant necessary permissions
+2. **Environment isolation** - Use separate configs for dev/prod
+3. **Secret management** - Never commit API keys or passwords
+4. **Audit logging** - Track what integrations are doing
+
+### Secure Configuration
+
+```json
+{
+  "mcpServers": {
+    "database": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-postgres"],
+      "env": {
+        "POSTGRES_URL": "${POSTGRES_URL}"
+      }
+    }
+  }
+}
+```
+
+Use environment variables instead of hardcoding secrets.
+
+## Troubleshooting
+
+### MCP Server Not Starting
+
+1. Check the command is installed: `npx -y @anthropic-ai/mcp-server-xxx --version`
+2. Verify permissions for file paths
+3. Check logs: `claude --mcp-debug`
+
+### Hook Not Executing
+
+1. Verify matcher pattern matches the tool
+2. Check command exists and is executable
+3. Test command manually in terminal
+
+### IDE Plugin Not Connecting
+
+1. Ensure Claude Code CLI is installed globally
+2. Check extension settings for correct path
+3. Restart IDE after installation
+
+## Integration Guides
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+  <a href="/docs/integrations/mcp-servers" className="block p-6 bg-gray-800/50 rounded-xl border border-gray-700 hover:border-orange-500 transition-colors">
+    <h3 className="text-lg font-semibold text-white mb-2">MCP Servers</h3>
+    <p className="text-gray-400 text-sm">Extend Claude with new capabilities and data sources</p>
+  </a>
+
+  <a href="/docs/integrations/ide-plugins" className="block p-6 bg-gray-800/50 rounded-xl border border-gray-700 hover:border-orange-500 transition-colors">
+    <h3 className="text-lg font-semibold text-white mb-2">IDE Plugins</h3>
+    <p className="text-gray-400 text-sm">Native integration with VS Code, JetBrains, and more</p>
+  </a>
+
+  <a href="/docs/integrations/hooks" className="block p-6 bg-gray-800/50 rounded-xl border border-gray-700 hover:border-orange-500 transition-colors">
+    <h3 className="text-lg font-semibold text-white mb-2">Hooks</h3>
+    <p className="text-gray-400 text-sm">Automate workflows with custom commands</p>
+  </a>
+</div>
+
+## Next Steps
+
+- [Set up MCP servers →](/docs/integrations/mcp-servers)
+- [Install IDE plugins →](/docs/integrations/ide-plugins)
+- [Configure hooks →](/docs/integrations/hooks)

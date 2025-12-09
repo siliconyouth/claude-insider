@@ -1,0 +1,495 @@
+---
+title: MCP Servers
+description: Extend Claude Code with Model Context Protocol servers
+---
+
+Model Context Protocol (MCP) servers extend Claude Code's capabilities by providing access to external data sources, tools, and services. This guide covers setup, configuration, and best practices.
+
+## What is MCP?
+
+MCP (Model Context Protocol) is an open standard that allows AI assistants to securely connect to external systems. MCP servers can provide:
+
+- **Resources** - Data Claude can read (files, databases, APIs)
+- **Tools** - Actions Claude can perform (queries, writes, API calls)
+- **Prompts** - Pre-defined prompt templates
+
+## Configuration
+
+MCP servers are configured in your settings file:
+
+**Location:** `~/.claude/settings.json` (global) or `.claude/settings.json` (project)
+
+```json
+{
+  "mcpServers": {
+    "server-name": {
+      "command": "command-to-run",
+      "args": ["arg1", "arg2"],
+      "env": {
+        "ENV_VAR": "value"
+      }
+    }
+  }
+}
+```
+
+## Official MCP Servers
+
+### Filesystem Server
+
+Access files and directories:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic-ai/mcp-server-filesystem",
+        "/Users/username/projects",
+        "/Users/username/documents"
+      ]
+    }
+  }
+}
+```
+
+**Capabilities:**
+- Read file contents
+- List directory contents
+- Search files by pattern
+- Get file metadata
+
+### PostgreSQL Server
+
+Query PostgreSQL databases:
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-postgres"],
+      "env": {
+        "POSTGRES_URL": "postgresql://user:pass@localhost:5432/mydb"
+      }
+    }
+  }
+}
+```
+
+**Capabilities:**
+- Execute SELECT queries
+- Describe tables and schemas
+- List databases
+
+### SQLite Server
+
+Work with SQLite databases:
+
+```json
+{
+  "mcpServers": {
+    "sqlite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic-ai/mcp-server-sqlite",
+        "/path/to/database.db"
+      ]
+    }
+  }
+}
+```
+
+### Git Server
+
+Enhanced git operations:
+
+```json
+{
+  "mcpServers": {
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-git"],
+      "env": {
+        "GIT_REPO_PATH": "/path/to/repo"
+      }
+    }
+  }
+}
+```
+
+**Capabilities:**
+- View commit history
+- Show diffs
+- List branches
+- Search commits
+
+### GitHub Server
+
+Access GitHub repositories and issues:
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+**Capabilities:**
+- List repositories
+- Read issues and PRs
+- Search code
+- View file contents
+
+### Slack Server
+
+Interact with Slack workspaces:
+
+```json
+{
+  "mcpServers": {
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-slack"],
+      "env": {
+        "SLACK_TOKEN": "${SLACK_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+### Google Drive Server
+
+Access Google Drive files:
+
+```json
+{
+  "mcpServers": {
+    "gdrive": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-gdrive"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/credentials.json"
+      }
+    }
+  }
+}
+```
+
+## Community MCP Servers
+
+The MCP ecosystem includes many community-built servers:
+
+| Server | Purpose | Install |
+|--------|---------|---------|
+| `mcp-server-fetch` | HTTP requests | `npx -y mcp-server-fetch` |
+| `mcp-server-puppeteer` | Browser automation | `npx -y mcp-server-puppeteer` |
+| `mcp-server-brave-search` | Web search | `npx -y mcp-server-brave-search` |
+| `mcp-server-memory` | Persistent memory | `npx -y mcp-server-memory` |
+
+Find more at [github.com/anthropics/mcp-servers](https://github.com/anthropics/mcp-servers)
+
+## Multiple Servers
+
+You can configure multiple MCP servers simultaneously:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-filesystem", "/projects"]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-postgres"],
+      "env": {
+        "POSTGRES_URL": "postgresql://localhost/mydb"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+## Environment Variables
+
+### Using System Environment Variables
+
+Reference existing environment variables:
+
+```json
+{
+  "mcpServers": {
+    "database": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-postgres"],
+      "env": {
+        "POSTGRES_URL": "${DATABASE_URL}"
+      }
+    }
+  }
+}
+```
+
+### Setting Server-Specific Variables
+
+```json
+{
+  "mcpServers": {
+    "custom": {
+      "command": "node",
+      "args": ["/path/to/server.js"],
+      "env": {
+        "API_KEY": "your-api-key",
+        "DEBUG": "true",
+        "MAX_RESULTS": "100"
+      }
+    }
+  }
+}
+```
+
+## Building Custom MCP Servers
+
+### Server Template (TypeScript)
+
+```typescript
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+
+const server = new Server(
+  { name: 'my-mcp-server', version: '1.0.0' },
+  { capabilities: { tools: {} } }
+);
+
+// Define a tool
+server.setRequestHandler('tools/list', async () => ({
+  tools: [
+    {
+      name: 'my_tool',
+      description: 'Does something useful',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          input: { type: 'string', description: 'Input value' }
+        },
+        required: ['input']
+      }
+    }
+  ]
+}));
+
+// Handle tool calls
+server.setRequestHandler('tools/call', async (request) => {
+  if (request.params.name === 'my_tool') {
+    const { input } = request.params.arguments;
+    return {
+      content: [
+        { type: 'text', text: `Processed: ${input}` }
+      ]
+    };
+  }
+  throw new Error('Unknown tool');
+});
+
+// Start server
+const transport = new StdioServerTransport();
+await server.connect(transport);
+```
+
+### Server Template (Python)
+
+```python
+from mcp.server import Server
+from mcp.server.stdio import stdio_server
+from mcp.types import Tool, TextContent
+
+server = Server("my-mcp-server")
+
+@server.list_tools()
+async def list_tools():
+    return [
+        Tool(
+            name="my_tool",
+            description="Does something useful",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "input": {"type": "string", "description": "Input value"}
+                },
+                "required": ["input"]
+            }
+        )
+    ]
+
+@server.call_tool()
+async def call_tool(name: str, arguments: dict):
+    if name == "my_tool":
+        return [TextContent(type="text", text=f"Processed: {arguments['input']}")]
+    raise ValueError(f"Unknown tool: {name}")
+
+async def main():
+    async with stdio_server() as (read_stream, write_stream):
+        await server.run(read_stream, write_stream)
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
+```
+
+## Debugging MCP Servers
+
+### Enable Debug Logging
+
+```bash
+claude --mcp-debug
+```
+
+### Check Server Status
+
+```bash
+claude /mcp
+```
+
+This shows:
+- Connected servers
+- Available tools
+- Available resources
+
+### Common Issues
+
+**Server not starting:**
+```bash
+# Test the command manually
+npx -y @anthropic-ai/mcp-server-filesystem /path/to/dir
+```
+
+**Permission errors:**
+- Check file/directory permissions
+- Verify API keys are valid
+- Ensure network access for external APIs
+
+**Server crashes:**
+- Check server logs
+- Verify all required environment variables are set
+- Test with minimal configuration first
+
+## Security Best Practices
+
+### 1. Limit File Access
+
+Only expose necessary directories:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic-ai/mcp-server-filesystem",
+        "/Users/me/projects/current-project"
+      ]
+    }
+  }
+}
+```
+
+### 2. Use Read-Only Access When Possible
+
+Some servers support read-only mode:
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-postgres", "--read-only"],
+      "env": {
+        "POSTGRES_URL": "postgresql://readonly_user@localhost/mydb"
+      }
+    }
+  }
+}
+```
+
+### 3. Separate Configs by Environment
+
+**Development** (`~/.claude/settings.json`):
+```json
+{
+  "mcpServers": {
+    "database": {
+      "env": { "POSTGRES_URL": "postgresql://localhost/dev_db" }
+    }
+  }
+}
+```
+
+**Production** (project `.claude/settings.json`):
+```json
+{
+  "mcpServers": {
+    "database": {
+      "env": { "POSTGRES_URL": "${PROD_DATABASE_URL}" }
+    }
+  }
+}
+```
+
+### 4. Rotate Credentials
+
+Regularly rotate API keys and tokens used by MCP servers.
+
+## Performance Tips
+
+### 1. Use Project-Level Config
+
+Configure servers at project level when they're only needed for specific projects.
+
+### 2. Limit Resource Scope
+
+Narrow down the scope of resources servers can access.
+
+### 3. Use Caching
+
+Some servers support caching - enable it for better performance:
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}",
+        "CACHE_TTL": "300"
+      }
+    }
+  }
+}
+```
+
+## Next Steps
+
+- [Configure IDE plugins →](/docs/integrations/ide-plugins)
+- [Set up hooks →](/docs/integrations/hooks)
+- [Learn about the API →](/docs/api)
