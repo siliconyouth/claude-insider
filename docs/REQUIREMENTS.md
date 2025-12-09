@@ -399,6 +399,72 @@ claude-insider/
   - Navigation feedback state
   - Design system styling
 
+---
+
+## Design System & UX Guidelines (MANDATORY)
+
+**These guidelines are mandatory for all future development. All new components and features MUST follow these patterns.**
+
+### Design System Location
+
+| File | Purpose |
+|------|---------|
+| `lib/design-system.ts` | Design tokens, `cn()` utility, component presets |
+| `app/globals.css` | CSS variables, utility classes, animations |
+| `components/toast.tsx` | Toast notification system |
+| `components/skeleton.tsx` | Skeleton loading components |
+| `hooks/use-optimistic-update.ts` | Optimistic update hooks |
+
+### Visual Design Rules
+
+1. **Dark-first design** - Dark theme uses Vercel blacks (#0a0a0a, #111111, #1a1a1a)
+2. **Glass morphism** - Headers and overlays use `backdrop-blur` with transparency
+3. **Orange accent** - Primary accent color is orange (orange-500 to amber-600 gradient)
+4. **Subtle animations** - GPU-optimized transforms only (translate, scale, opacity)
+5. **Layered elevation** - Shadows increase with elevation level
+6. **Use `cn()` utility** - Always use for conditional class composition
+
+### Optimistic UI Rules
+
+1. **Instant feedback** - All async operations must update UI immediately
+2. **Toast notifications** - All state changes must show user feedback
+3. **Skeleton loading** - All loading states must show visual placeholders
+4. **Rollback on error** - Failed operations must revert to previous state
+5. **Non-blocking updates** - Use `useTransition` for smooth state changes
+
+### Toast Usage
+
+```tsx
+// Always provide feedback for user actions
+toast.success("Saved!", "Your changes have been saved.");
+toast.error("Failed", "Please try again.");
+toast.warning("Slow connection");
+toast.info("Tip: Use keyboard shortcuts");
+```
+
+### Skeleton Usage
+
+```tsx
+// Always show skeletons during loading
+{isLoading ? <SkeletonCard /> : <ActualContent />}
+
+// Or use wrapper
+<SkeletonWrapper isLoading={isLoading} skeleton={<SkeletonCard />}>
+  <ActualContent />
+</SkeletonWrapper>
+```
+
+### When to Update Design Guidelines
+
+When modifying the design system or UI patterns:
+1. Update `lib/design-system.ts` for new tokens
+2. Update `app/globals.css` for new CSS classes/animations
+3. Update `CLAUDE.md` with new guidelines
+4. Update this `REQUIREMENTS.md` with new patterns
+5. Update `CHANGELOG.md` with changes
+6. Test in both light and dark modes
+7. Test with slow network (DevTools throttling)
+
 ### Phase 26: Dynamic Project Knowledge - COMPLETED (v0.16.3)
 - [x] **Comprehensive AI System Prompt** - `data/system-prompt.ts` with deep project awareness
 - [x] **Dynamic Knowledge Generator** - `scripts/generate-project-knowledge.cjs` reads source docs

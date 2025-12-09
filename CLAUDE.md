@@ -428,6 +428,9 @@ className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-
 | `lib/design-system.ts` | Design tokens, `cn()` utility, component presets |
 | `app/globals.css` | CSS variables, utility classes, animations |
 | `components/header.tsx` | Reference implementation of glass header |
+| `components/toast.tsx` | Toast notification system |
+| `components/skeleton.tsx` | Skeleton loading components |
+| `hooks/use-optimistic-update.ts` | Optimistic update hooks |
 | `app/page.tsx` | Reference implementation of cards, patterns |
 
 ### Updating the Design System
@@ -439,6 +442,203 @@ When modifying the design system:
 4. Update REQUIREMENTS.md and CHANGELOG.md
 5. Test in both light and dark modes
 6. Verify `prefers-reduced-motion` support for animations
+
+## Optimistic UI Patterns (MANDATORY)
+
+**Location**: `apps/web/hooks/use-optimistic-update.ts`, `apps/web/components/toast.tsx`, `apps/web/components/skeleton.tsx`
+
+The project uses optimistic UI patterns for instant user feedback. **All new async operations MUST implement these patterns** for consistent UX.
+
+### Core Principles
+
+1. **Instant feedback** - UI updates immediately, rollback on error
+2. **Toast notifications** - User feedback for all state changes
+3. **Skeleton loading** - Visual placeholders during async operations
+4. **Non-blocking updates** - Use `useTransition` for smooth state changes
+
+### Optimistic Updates
+
+Use for any async operation that modifies state:
+
+```tsx
+import { useOptimisticUpdate } from "@/hooks/use-optimistic-update";
+
+const {
+  data,
+  isLoading,
+  isPending,
+  update
+} = useOptimisticUpdate(
+  initialData,
+  async (optimisticData) => {
+    // API call here
+    return await saveData(optimisticData);
+  },
+  {
+    onSuccess: () => toast.success("Saved successfully"),
+    onError: () => toast.error("Failed to save")
+  }
+);
+```
+
+### Optimistic List Operations
+
+Use for lists (add, update, remove):
+
+```tsx
+import { useOptimisticList } from "@/hooks/use-optimistic-update";
+
+const {
+  items,
+  optimisticAdd,
+  optimisticUpdate,
+  optimisticRemove,
+  isPending
+} = useOptimisticList(initialItems, {
+  onAdd: async (item) => await api.create(item),
+  onUpdate: async (item) => await api.update(item),
+  onRemove: async (id) => await api.delete(id)
+});
+```
+
+### Toast Notifications
+
+Always provide feedback for user actions:
+
+```tsx
+// In components (with hook)
+import { useToast } from "@/components/toast";
+
+const { success, error, warning, info } = useToast();
+success("Changes saved", "Your changes have been saved successfully.");
+
+// Anywhere (standalone function)
+import { toast } from "@/components/toast";
+
+toast.success("Saved!");
+toast.error("Failed to save", "Please try again.");
+toast.warning("Slow connection", "This may take a moment.");
+toast.info("Tip", "You can use keyboard shortcuts.");
+```
+
+### Toast Types
+
+| Type | Color | Icon | Usage |
+|------|-------|------|-------|
+| `success` | Green | ✓ | Successful operations |
+| `error` | Red | ✕ | Failed operations, errors |
+| `warning` | Amber | ⚠ | Potential issues, slow operations |
+| `info` | Blue | ℹ | Tips, information |
+
+### Skeleton Loading
+
+Use during initial data fetch or navigation:
+
+```tsx
+import {
+  Skeleton,
+  SkeletonText,
+  SkeletonCard,
+  SkeletonSearchResult,
+  SkeletonWrapper
+} from "@/components/skeleton";
+
+// Basic skeleton
+<Skeleton className="h-4 w-32" />
+
+// Multi-line text
+<SkeletonText lines={3} />
+
+// Full card
+<SkeletonCard />
+
+// Search result row
+<SkeletonSearchResult />
+
+// Conditional wrapper
+<SkeletonWrapper isLoading={isLoading} skeleton={<SkeletonCard />}>
+  <ActualContent />
+</SkeletonWrapper>
+```
+
+### Available Skeleton Components
+
+| Component | Usage |
+|-----------|-------|
+| `Skeleton` | Base shimmer component |
+| `SkeletonText` | Multi-line text placeholder |
+| `SkeletonCard` | Card with icon, title, content |
+| `SkeletonSearchResult` | Search result row |
+| `SkeletonList` | Avatar + text list items |
+| `SkeletonDocPage` | Full documentation page layout |
+| `SkeletonHero` | Homepage hero section |
+| `SkeletonSidebar` | Navigation sidebar |
+| `SkeletonButton` | Button placeholder |
+| `SkeletonAvatar` | Circular avatar placeholder |
+| `SkeletonWrapper` | Conditional loading wrapper |
+
+### Loading Animations
+
+| Animation | Class | Usage |
+|-----------|-------|-------|
+| Shimmer | `animate-shimmer` | Skeleton loading effect |
+| Slide in Right | `animate-slide-in-right` | Toast entry |
+| Slide in Left | `animate-slide-in-left` | Side panel entry |
+| Slide in Bottom | `animate-slide-in-bottom` | Bottom sheet entry |
+
+### Search with Loading States
+
+Example from `search.tsx`:
+
+```tsx
+const [isSearching, startSearchTransition] = useTransition();
+
+// Non-blocking search
+startSearchTransition(() => {
+  const results = fuse.search(query);
+  setResults(results);
+});
+
+// Show skeleton during search
+{isSearching && (
+  <div className="py-2">
+    <SkeletonSearchResult />
+    <SkeletonSearchResult />
+  </div>
+)}
+```
+
+### When to Use Each Pattern
+
+| Scenario | Pattern |
+|----------|---------|
+| Form submission | `useOptimisticUpdate` + `toast.success/error` |
+| Adding to list | `useOptimisticList.optimisticAdd` |
+| Deleting item | `useOptimisticList.optimisticRemove` + confirmation toast |
+| Search input | `useTransition` + `SkeletonSearchResult` |
+| Page navigation | Loading indicator + `SkeletonDocPage` |
+| Initial data fetch | `SkeletonWrapper` with appropriate skeleton |
+| Toggle setting | `useOptimisticUpdate` with instant visual feedback |
+
+### Optimistic UI Files
+
+| File | Purpose |
+|------|---------|
+| `hooks/use-optimistic-update.ts` | Optimistic update hooks |
+| `components/toast.tsx` | Toast notification system |
+| `components/skeleton.tsx` | Skeleton loading components |
+| `app/layout.tsx` | ToastProvider wrapper |
+| `app/globals.css` | Loading animations |
+
+### Updating Optimistic UI Patterns
+
+When adding new patterns:
+1. Add hooks to `use-optimistic-update.ts` if needed
+2. Add new toast types to `toast.tsx` if needed
+3. Add new skeleton components to `skeleton.tsx` if needed
+4. Add animations to `globals.css`
+5. Update this CLAUDE.md documentation
+6. Test with slow network conditions (DevTools throttling)
 
 ## Content Categories
 

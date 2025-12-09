@@ -112,6 +112,8 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Toast Notification System** - Success, error, warning, and info notifications
 - [x] **Skeleton Loading Components** - Visual placeholders for async content
 - [x] **Enhanced Search** - Loading skeletons, smoother transitions with `useTransition`
+- [x] **useOptimisticUpdate Hook** - Generic optimistic updates with rollback
+- [x] **useOptimisticList Hook** - List operations (add, update, remove) with undo
 
 ### All Features Complete
 
@@ -185,7 +187,11 @@ claude-insider/
 │   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT (popup + fullscreen)
 │   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
 │   │   │   ├── open-assistant-button.tsx # Button to open assistant popup
+│   │   │   ├── toast.tsx         # Toast notification system with provider
+│   │   │   ├── skeleton.tsx      # Skeleton loading components library
 │   │   │   └── footer.tsx        # Shared footer with legal links
+│   │   ├── hooks/
+│   │   │   └── use-optimistic-update.ts  # Optimistic UI hooks
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)

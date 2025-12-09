@@ -62,6 +62,11 @@ No pending changes - all features complete.
 - Skeletons use CSS custom properties for theme-aware colors
 - Shimmer animation uses GPU-accelerated `background-position`
 
+### Documentation
+- Updated CLAUDE.md with comprehensive Optimistic UI section (MANDATORY guidelines)
+- Updated REQUIREMENTS.md with Design System & UX Guidelines section
+- All future development MUST follow these patterns for consistency
+
 ## [0.17.0] - 2025-12-09
 
 ### Added
