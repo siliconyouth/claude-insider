@@ -465,6 +465,65 @@ When modifying the design system or UI patterns:
 6. Test in both light and dark modes
 7. Test with slow network (DevTools throttling)
 
+### Content-Aware Loading Rules
+
+1. **Viewport-based loading** - Heavy content loads only when entering viewport
+2. **Route-based skeletons** - Use appropriate skeleton for each page type
+3. **Progressive reveal** - Use staggered animations for lists
+4. **Blur-up images** - All images must have loading placeholders
+5. **Lazy code blocks** - Defer syntax highlighting until visible
+
+### Lazy Loading Usage
+
+```tsx
+// Lazy sections
+<LazySection placeholder={<SkeletonCard />}>
+  <ExpensiveComponent />
+</LazySection>
+
+// Progressive reveal
+<ProgressiveReveal stagger={100}>
+  {items.map(item => <Card key={item.id} />)}
+</ProgressiveReveal>
+
+// Lazy images
+<LazyImage src="/hero.jpg" alt="Hero" aspectRatio="16/9" />
+
+// Route-based loading
+<ContentLoader>
+  <PageContent />
+</ContentLoader>
+```
+
+---
+
+### Phase 27: Content-Aware Loading - COMPLETED (v0.19.0)
+- [x] **Intersection Observer Hook** - `hooks/use-intersection-observer.ts`
+  - `useIntersectionObserver` for single element viewport detection
+  - `useIntersectionObserverArray` for multiple elements
+  - Configurable rootMargin, threshold, triggerOnce
+- [x] **Lazy Section Components** - `components/lazy-section.tsx`
+  - `LazySection` - Load content when entering viewport
+  - `ProgressiveReveal` - Staggered animation for children
+  - `LazyList` - Lazy loaded list with placeholders
+- [x] **Lazy Image System** - `components/lazy-image.tsx`
+  - `LazyImage` - Lazy load with blur placeholder
+  - `BlurUpImage` - Blur-up loading effect
+  - `ResponsiveLazyImage` - Responsive hero images
+- [x] **Lazy Code Block** - `components/lazy-code-block.tsx`
+  - Dynamic highlight.js language imports
+  - Only highlights when visible
+  - `SkeletonCodeBlock` placeholder
+- [x] **Route-Based Content Loader** - `components/content-loader.tsx`
+  - `ContentLoader` - Suspense with route-aware skeletons
+  - `HomePageSkeleton`, `DocsPageSkeleton`, `LegalPageSkeleton`
+  - `NavigationLoader` - Progress bar for navigation
+  - `PageLoadingOverlay` - Full page loading state
+- [x] **New CSS Animations**
+  - `@keyframes blur-up`, `reveal-up`, `progress-bar`
+  - `.stagger-children` for automatic staggering
+  - `.intersection-hidden/.visible` for IO triggers
+
 ### Phase 26: Dynamic Project Knowledge - COMPLETED (v0.16.3)
 - [x] **Comprehensive AI System Prompt** - `data/system-prompt.ts` with deep project awareness
 - [x] **Dynamic Knowledge Generator** - `scripts/generate-project-knowledge.cjs` reads source docs

@@ -640,6 +640,176 @@ When adding new patterns:
 5. Update this CLAUDE.md documentation
 6. Test with slow network conditions (DevTools throttling)
 
+## Content-Aware Loading (MANDATORY)
+
+**Location**: `apps/web/hooks/use-intersection-observer.ts`, `apps/web/components/lazy-section.tsx`, `apps/web/components/lazy-image.tsx`, `apps/web/components/lazy-code-block.tsx`, `apps/web/components/content-loader.tsx`
+
+The project uses content-aware loading patterns for optimal performance. **All new content sections MUST implement lazy loading** for consistent UX.
+
+### Core Principles
+
+1. **Viewport-based loading** - Content loads only when entering viewport
+2. **Route-based skeletons** - Appropriate skeleton for each page type
+3. **Progressive reveal** - Staggered animations for lists
+4. **Blur-up images** - Smooth image loading transitions
+
+### Intersection Observer Hook
+
+Use for any content that should load lazily:
+
+```tsx
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+
+const { ref, isIntersecting } = useIntersectionObserver({
+  rootMargin: "100px", // Start loading 100px before visible
+  triggerOnce: true,   // Only trigger once
+  threshold: 0.01,     // Trigger at 1% visibility
+});
+
+return (
+  <div ref={ref}>
+    {isIntersecting ? <ActualContent /> : <Skeleton />}
+  </div>
+);
+```
+
+### Lazy Sections
+
+Use for heavy content sections:
+
+```tsx
+import { LazySection, ProgressiveReveal, LazyList } from "@/components/lazy-section";
+
+// Single section with placeholder
+<LazySection placeholder={<SkeletonCard />} minHeight={200}>
+  <ExpensiveComponent />
+</LazySection>
+
+// Staggered reveal for children
+<ProgressiveReveal stagger={100}>
+  <Card />
+  <Card />
+  <Card />
+</ProgressiveReveal>
+
+// Lazy list with progressive reveal
+<LazyList
+  items={categories}
+  renderItem={(cat, i) => <CategoryCard key={i} {...cat} />}
+  renderPlaceholder={(i) => <SkeletonCard key={i} />}
+/>
+```
+
+### Lazy Images
+
+Use for all images:
+
+```tsx
+import { LazyImage, BlurUpImage, ResponsiveLazyImage } from "@/components/lazy-image";
+
+// Basic lazy image
+<LazyImage
+  src="/hero.jpg"
+  alt="Hero"
+  width={800}
+  height={400}
+  aspectRatio="16/9"
+/>
+
+// Blur-up effect with tiny placeholder
+<BlurUpImage
+  src="/photo.jpg"
+  alt="Photo"
+  placeholder="data:image/jpeg;base64,..."
+  width={600}
+  height={400}
+/>
+
+// Responsive hero image
+<ResponsiveLazyImage
+  src="/banner.jpg"
+  alt="Banner"
+  aspectRatio="21/9"
+  sizes="100vw"
+/>
+```
+
+### Lazy Code Blocks
+
+Use for code with syntax highlighting:
+
+```tsx
+import { LazyCodeBlock, SkeletonCodeBlock } from "@/components/lazy-code-block";
+
+// Only highlights when visible
+<LazyCodeBlock className="language-typescript">
+  {codeString}
+</LazyCodeBlock>
+
+// Placeholder while loading
+<SkeletonCodeBlock lines={5} />
+```
+
+### Route-Based Content Loader
+
+Use for page-level loading:
+
+```tsx
+import { ContentLoader, NavigationLoader } from "@/components/content-loader";
+
+// Automatic skeleton based on route
+<ContentLoader>
+  <Suspense>
+    <PageContent />
+  </Suspense>
+</ContentLoader>
+
+// Navigation progress bar
+<NavigationLoader isLoading={isNavigating} />
+```
+
+### Available Skeletons by Route
+
+| Route | Skeleton |
+|-------|----------|
+| `/` | `HomePageSkeleton` |
+| `/docs` | `DocsIndexSkeleton` |
+| `/docs/*` | `DocsPageSkeleton` |
+| `/privacy`, `/terms`, etc. | `LegalPageSkeleton` |
+| `/changelog` | `ChangelogSkeleton` |
+
+### When to Use Each Pattern
+
+| Content Type | Pattern |
+|--------------|---------|
+| Heavy component | `LazySection` |
+| List of items | `LazyList` or `ProgressiveReveal` |
+| Images | `LazyImage` or `BlurUpImage` |
+| Code blocks | `LazyCodeBlock` |
+| Page-level | `ContentLoader` |
+| Navigation | `NavigationLoader` |
+
+### Content Loading Files
+
+| File | Purpose |
+|------|---------|
+| `hooks/use-intersection-observer.ts` | Viewport detection hook |
+| `components/lazy-section.tsx` | Section lazy loading |
+| `components/lazy-image.tsx` | Image lazy loading |
+| `components/lazy-code-block.tsx` | Code block lazy loading |
+| `components/content-loader.tsx` | Route-based skeletons |
+| `app/globals.css` | Loading animations |
+
+### Updating Content Loading Patterns
+
+When adding new patterns:
+1. Add hooks to `use-intersection-observer.ts` if needed
+2. Add components to appropriate lazy-*.tsx file
+3. Add route skeletons to `content-loader.tsx`
+4. Add animations to `globals.css`
+5. Update this CLAUDE.md documentation
+6. Test with slow network (DevTools throttling)
+
 ## Content Categories
 
 | Category | Route | Description |

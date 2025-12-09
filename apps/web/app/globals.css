@@ -613,3 +613,141 @@ code {
 .hover-glow:hover {
   box-shadow: 0 0 24px rgba(var(--ds-accent), 0.15);
 }
+
+/* ============================================
+   LAZY LOADING & PROGRESSIVE REVEAL
+   ============================================ */
+
+/* Blur-up image effect */
+@keyframes blur-up {
+  from {
+    filter: blur(20px);
+    opacity: 0.5;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+.animate-blur-up {
+  animation: blur-up 0.5s ease-out forwards;
+}
+
+/* Progressive reveal for lazy sections */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal-up {
+  animation: reveal-up 0.5s ease-out forwards;
+}
+
+/* Stagger children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+.stagger-children > *:nth-child(9) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(10) { animation-delay: 450ms; }
+
+/* Navigation progress bar */
+@keyframes progress-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-progress {
+  animation: progress-bar 1.5s ease-in-out infinite;
+}
+
+/* Skeleton shimmer with mask */
+@keyframes skeleton-shimmer {
+  0% {
+    mask-position: -200% 0;
+    -webkit-mask-position: -200% 0;
+  }
+  100% {
+    mask-position: 200% 0;
+    -webkit-mask-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.6) 25%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.6) 75%
+  );
+  mask-size: 200% 100%;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.6) 25%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.6) 75%
+  );
+  -webkit-mask-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Image loading states */
+.image-loading {
+  background: linear-gradient(
+    110deg,
+    rgb(var(--ds-surface-2)) 8%,
+    rgb(var(--ds-surface-3)) 18%,
+    rgb(var(--ds-surface-2)) 33%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+/* Content placeholder pulse */
+@keyframes content-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.content-loading {
+  animation: content-pulse 2s ease-in-out infinite;
+}
+
+/* Intersection observer animation triggers */
+.intersection-hidden {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.intersection-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}

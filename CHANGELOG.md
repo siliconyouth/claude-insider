@@ -9,6 +9,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.19.0] - 2025-12-10
+
+### Added
+- **Content-Aware Loading System** - Intelligent lazy loading with route-based skeletons
+  - `hooks/use-intersection-observer.ts` - Intersection Observer hook for viewport detection
+  - `useIntersectionObserver` - Single element viewport detection with triggerOnce
+  - `useIntersectionObserverArray` - Multiple elements for staggered animations
+
+- **Lazy Section Components** - Defer loading until visible
+  - `components/lazy-section.tsx` - Lazy load section with placeholder
+  - `LazySection` - Section that loads content when entering viewport
+  - `ProgressiveReveal` - Staggered animation for child elements
+  - `LazyList` - Lazy loaded list with progressive reveal
+
+- **Lazy Image System** - Image optimization with blur-up effect
+  - `components/lazy-image.tsx` - Comprehensive image loading components
+  - `LazyImage` - Lazy loaded image with blur placeholder
+  - `BlurUpImage` - Image with blur-up loading effect
+  - `ResponsiveLazyImage` - Responsive lazy image for heroes and banners
+
+- **Lazy Code Block** - Deferred syntax highlighting
+  - `components/lazy-code-block.tsx` - Code block with lazy highlight.js loading
+  - `LazyCodeBlock` - Only loads syntax highlighting when visible
+  - `SkeletonCodeBlock` - Code block skeleton placeholder
+  - Dynamic language module importing for smaller initial bundles
+
+- **Route-Based Content Loader**
+  - `components/content-loader.tsx` - Automatic skeleton selection by route
+  - `ContentLoader` - Suspense wrapper with route-aware skeletons
+  - `HomePageSkeleton` - Full homepage loading state
+  - `DocsIndexSkeleton` - Documentation index loading state
+  - `DocsPageSkeleton` - Documentation page with sidebar loading state
+  - `LegalPageSkeleton` - Legal pages loading state
+  - `ChangelogSkeleton` - Changelog loading state
+  - `NavigationLoader` - Progress bar for navigation transitions
+  - `PageLoadingOverlay` - Full page loading overlay
+
+- **New CSS Animations**
+  - `@keyframes blur-up` - Image blur-up reveal effect
+  - `@keyframes reveal-up` - Content reveal with translate
+  - `@keyframes progress-bar` - Navigation progress animation
+  - `@keyframes skeleton-shimmer` - Mask-based shimmer effect
+  - `@keyframes content-pulse` - Content loading pulse
+  - `.stagger-children` - Automatic stagger for up to 10 children
+  - `.animate-blur-up` - Blur-up animation class
+  - `.animate-reveal-up` - Reveal-up animation class
+  - `.animate-progress` - Progress bar animation
+  - `.skeleton-shimmer` - Mask-based shimmer animation
+  - `.image-loading` - Image loading state
+  - `.content-loading` - Content loading pulse
+  - `.intersection-hidden/.visible` - IO animation triggers
+
+### Technical Details
+- Intersection Observer with 50-100px root margin for pre-loading
+- Dynamic imports for highlight.js language modules (smaller bundles)
+- Blur-up uses CSS `filter: blur()` with scale for edge coverage
+- All animations are GPU-optimized (transform, opacity, filter)
+- Route detection uses `usePathname` for client-side skeleton selection
+
+### Documentation
+- Updated CLAUDE.md with Content-Aware Loading section
+- Added lazy loading guidelines to REQUIREMENTS.md
+- All new async content MUST use lazy loading patterns
+
 ## [0.18.0] - 2025-12-09
 
 ### Added

@@ -114,6 +114,13 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Enhanced Search** - Loading skeletons, smoother transitions with `useTransition`
 - [x] **useOptimisticUpdate Hook** - Generic optimistic updates with rollback
 - [x] **useOptimisticList Hook** - List operations (add, update, remove) with undo
+- [x] **Content-Aware Loading** - Intelligent lazy loading with route-based skeletons
+- [x] **useIntersectionObserver Hook** - Viewport detection for lazy loading
+- [x] **LazySection Component** - Defer loading until content is visible
+- [x] **ProgressiveReveal Component** - Staggered animations for list items
+- [x] **LazyImage Components** - Blur-up image loading with placeholders
+- [x] **LazyCodeBlock Component** - Deferred syntax highlighting
+- [x] **Route-Based ContentLoader** - Automatic skeletons by page type
 
 ### All Features Complete
 
@@ -189,9 +196,14 @@ claude-insider/
 │   │   │   ├── open-assistant-button.tsx # Button to open assistant popup
 │   │   │   ├── toast.tsx         # Toast notification system with provider
 │   │   │   ├── skeleton.tsx      # Skeleton loading components library
+│   │   │   ├── lazy-section.tsx  # Lazy loading section components
+│   │   │   ├── lazy-image.tsx    # Lazy image with blur-up effect
+│   │   │   ├── lazy-code-block.tsx # Lazy code block with deferred highlighting
+│   │   │   ├── content-loader.tsx # Route-based skeleton selection
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── hooks/
-│   │   │   └── use-optimistic-update.ts  # Optimistic UI hooks
+│   │   │   ├── use-optimistic-update.ts  # Optimistic UI hooks
+│   │   │   └── use-intersection-observer.ts  # Viewport detection hook
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
