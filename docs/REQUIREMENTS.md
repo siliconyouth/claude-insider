@@ -114,7 +114,12 @@ claude-insider/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
-│   │   │   └── update-build-info.cjs  # Prebuild script for version info
+│   │   │   ├── update-build-info.cjs        # Prebuild script for version info
+│   │   │   ├── generate-rag-index.cjs       # Build-time RAG index generation
+│   │   │   └── generate-project-knowledge.cjs # Dynamic project knowledge from source docs
+│   │   ├── data/
+│   │   │   ├── system-prompt.ts       # Comprehensive AI persona & project context
+│   │   │   └── rag-index.json         # Pre-computed RAG index (435 chunks)
 │   │   ├── content/              # MDX documentation content (34 pages)
 │   │   │   ├── getting-started/
 │   │   │   │   ├── installation.mdx
@@ -291,6 +296,9 @@ claude-insider/
 - [x] **Markdown display cleanup** - Chat responses display without markdown syntax
 - [x] **TTS markdown handling** - Converts markdown to speakable text for natural speech
 - [x] **Performance optimizations** - CSS optimization, source map removal, memoization
+- [x] **Dynamic Project Knowledge** - 12 knowledge chunks generated from source docs at build time
+- [x] **Comprehensive AI Persona** - System prompt with deep project awareness in `data/system-prompt.ts`
+- [x] **RAG v2.0 Index** - 435 total chunks (423 docs + 12 project knowledge)
 
 ### Phase 20: Tutorials & Examples (Phase D) - COMPLETED (v0.16.0)
 - [x] **Tutorials Category** - 4 new pages
@@ -316,6 +324,19 @@ claude-insider/
 - [x] This duplicate config only had 5 categories while `[...slug]/page.tsx` had all 7
 - [x] Updated `getting-started/page.tsx` to include all 7 categories (34 pages total)
 - [x] All documentation pages now consistently display complete sidebar navigation
+
+### Phase 23: Dynamic Project Knowledge - COMPLETED (v0.16.3)
+- [x] **Comprehensive AI System Prompt** - `data/system-prompt.ts` with deep project awareness
+- [x] **Dynamic Knowledge Generator** - `scripts/generate-project-knowledge.cjs` reads source docs
+- [x] Reads from README.md, CLAUDE.md, REQUIREMENTS.md, CHANGELOG.md at build time
+- [x] Generates 12 project knowledge chunks (up from 6 static):
+  - Project Overview, Author & Attribution, Complete Tech Stack
+  - Documentation Structure, Voice Assistant, Architecture
+  - Website Features, Version History (dynamic from changelog)
+  - Development Guidelines, Deployment, RAG System, Target Audience
+- [x] RAG index v2.0 with 435 total chunks (423 docs + 12 project)
+- [x] Knowledge auto-updates on each build - no manual sync required
+- [x] AI assistant now deeply aware of project, author, and capabilities
 
 ### Pages Implemented (34 Documentation + 6 Utility Pages)
 
@@ -519,7 +540,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.16.2.
+All planned features have been implemented. The project is feature-complete at v0.16.3.
 
 ### Content Expansion (All Complete)
 

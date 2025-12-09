@@ -9,6 +9,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.16.3] - 2025-12-09
+
+### Added
+- **Dynamic Project Knowledge Generation** - RAG system now generates project knowledge from source files
+  - New `scripts/generate-project-knowledge.cjs` dynamically reads README.md, CLAUDE.md, REQUIREMENTS.md, CHANGELOG.md
+  - 12 comprehensive knowledge chunks generated at build time (up from 6 static chunks)
+  - Knowledge auto-updates on each build - no manual sync required
+  - Comprehensive AI assistant system prompt in `data/system-prompt.ts`
+  - Deep project awareness including author, tech stack, architecture, features
+
+### Changed
+- RAG index upgraded to v2.0 with dynamic project knowledge
+- Total RAG chunks increased to 435 (423 docs + 12 project knowledge)
+- Project knowledge now includes:
+  1. Project Overview (Claude Insider purpose and scope)
+  2. Author & Attribution (Vladimir Dukelic @siliconyouth)
+  3. Complete Tech Stack (Next.js 16, Tailwind 4, ElevenLabs, etc.)
+  4. Documentation Structure (7 categories, 34 pages)
+  5. Voice Assistant Capabilities (42 voices, streaming TTS)
+  6. Project Architecture (monorepo, component hierarchy)
+  7. Website Features (dark mode, responsive, search)
+  8. Version History (dynamically extracted from CHANGELOG.md)
+  9. Development Guidelines (from CLAUDE.md)
+  10. Deployment & Hosting (Vercel, domain config)
+  11. RAG & Search System (TF-IDF, build-time indexing)
+  12. Target Audience (developers, AI enthusiasts)
+
+### Technical Details
+- `apps/web/scripts/generate-project-knowledge.cjs` - New dynamic knowledge generator
+- `apps/web/scripts/generate-rag-index.cjs` - Updated to use dynamic generator
+- `apps/web/data/system-prompt.ts` - Comprehensive AI persona and project context
+- `apps/web/lib/claude.ts` - Uses new buildComprehensiveSystemPrompt function
+- `apps/web/lib/rag.ts` - Imports PROJECT_KNOWLEDGE_CHUNKS for runtime fallback
+
 ## [0.16.2] - 2025-12-09
 
 ### Fixed
@@ -583,6 +617,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.16.3 | 2025-12-09 | Dynamic project knowledge generation (12 chunks from source docs) |
 | 0.16.2 | 2025-12-09 | Sidebar navigation fix: Fixed duplicate config in getting-started/page.tsx |
 | 0.16.1 | 2025-12-09 | Navigation bug fix: Added missing Tutorials & Examples to navigation |
 | 0.16.0 | 2025-12-09 | Phase D content: Tutorials & Examples categories (34 docs) |

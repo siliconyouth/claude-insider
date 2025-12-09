@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.16.2
+**Version**: 0.16.3
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -86,8 +86,11 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 - **Navigation fix** - All 7 categories (34 pages) visible in /docs and homepage
 - **Sidebar navigation fix** - Fixed duplicate navigationConfig in getting-started/page.tsx
+- **Dynamic Project Knowledge** - 12 knowledge chunks generated from source docs at build time
+- **Comprehensive AI System Prompt** - `data/system-prompt.ts` with deep project awareness
+- **RAG v2.0** - 435 total chunks (423 docs + 12 project knowledge)
 
-### Project Status: Complete (v0.16.2)
+### Project Status: Complete (v0.16.3)
 
 ## Tech Stack
 
@@ -142,7 +145,12 @@ claude-insider/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
-│   │   │   └── update-build-info.cjs  # Prebuild script for version info
+│   │   │   ├── update-build-info.cjs        # Prebuild script for version info
+│   │   │   ├── generate-rag-index.cjs       # Build-time RAG index generation
+│   │   │   └── generate-project-knowledge.cjs # Dynamic project knowledge from source docs
+│   │   ├── data/
+│   │   │   ├── system-prompt.ts       # Comprehensive AI persona & project context
+│   │   │   └── rag-index.json         # Pre-computed RAG index (435 chunks)
 │   │   ├── content/              # MDX documentation (34 pages)
 │   │   │   ├── getting-started/  # installation, quickstart, troubleshooting, migration
 │   │   │   ├── configuration/    # index, claude-md, settings, environment, permissions
@@ -280,7 +288,7 @@ Configured in `vercel.json`:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.16.2.
+All planned features have been implemented. The project is feature-complete at v0.16.3.
 
 ### Future Enhancements (Optional)
 - Multi-language support (i18n) when translations are ready

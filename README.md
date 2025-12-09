@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.16.2)
+## Current Status (v0.16.3)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -98,6 +98,10 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Examples category** - Real-world projects and case studies
 - [x] **Navigation fix** - All 7 categories (34 pages) now visible in /docs and homepage navigation
 - [x] **Sidebar navigation fix** - Fixed duplicate navigationConfig in getting-started/page.tsx causing inconsistent sidebars
+- [x] **Dynamic Project Knowledge** - RAG generates 12 knowledge chunks from source docs at build time
+- [x] **Comprehensive AI Persona** - System prompt with deep project awareness (author, tech stack, features)
+- [x] **RAG v2.0 Index** - 435 total chunks (423 docs + 12 project knowledge)
+- [x] **Auto-updating knowledge** - Project info auto-syncs from README, CLAUDE.md, REQUIREMENTS.md, CHANGELOG.md
 
 ### All Features Complete
 
@@ -176,7 +180,12 @@ claude-insider/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
-│   │   │   └── update-build-info.cjs  # Prebuild script for version info
+│   │   │   ├── update-build-info.cjs        # Prebuild script for version info
+│   │   │   ├── generate-rag-index.cjs       # Build-time RAG index generation
+│   │   │   └── generate-project-knowledge.cjs # Dynamic project knowledge from source docs
+│   │   ├── data/
+│   │   │   ├── system-prompt.ts       # Comprehensive AI persona & context
+│   │   │   └── rag-index.json         # Pre-computed RAG index (435 chunks)
 │   │   ├── content/              # MDX documentation (34 pages)
 │   │   │   ├── getting-started/
 │   │   │   ├── configuration/
