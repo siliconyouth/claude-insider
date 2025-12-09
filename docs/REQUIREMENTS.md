@@ -343,6 +343,57 @@ claude-insider/
 - Links to official documentation
 - Regular updates for new features
 
+### Content Attribution Rules (MANDATORY)
+
+**All content pages MUST include source citations and AI generation metadata.**
+
+When generating or updating any content page, Claude Code MUST:
+
+#### 1. Source Citations
+- Include ALL sources of information used, even when used partially
+- Link to the original source page URL
+- Sources should be determined by how the information was acquired (web search, official docs, etc.)
+- Use official Anthropic documentation as primary sources when available:
+  - `docs.anthropic.com` - API and Claude documentation
+  - `modelcontextprotocol.io` - MCP documentation
+  - `anthropic.com/engineering` - Best practices and guides
+  - `github.com/anthropics` - Official repositories
+
+#### 2. AI Generation Metadata
+Each content page must state:
+- **Generation method**: "Generated with AI using Claude AI by Anthropic"
+- **Model used**: Always use the latest and most powerful model (currently Claude Opus 4.5)
+- **Generation date**: The exact date content was created/updated
+- **Build ID**: Unique identifier from git commit SHA
+
+#### 3. Implementation
+Add the `<ContentMeta>` component at the bottom of every MDX content page:
+
+```mdx
+<ContentMeta
+  sources={[
+    { title: "Source Title", url: "https://source-url.com" },
+    { title: "Another Source", url: "https://another-source.com" }
+  ]}
+  generatedDate="YYYY-MM-DD"
+  model="Claude Opus 4.5"
+/>
+```
+
+#### 4. Updating Content
+When updating existing content:
+- Verify information against official Anthropic documentation
+- Use web search to find the latest information
+- Update sources if new references are used
+- Update the `generatedDate` to the current date
+- Keep the model as the latest (currently Claude Opus 4.5)
+
+#### 5. Component Location
+The `ContentMeta` component is:
+- Located at `apps/web/components/content-meta.tsx`
+- Exported via `mdx-components.tsx` for use in all MDX files
+- Displays sources section and AI generation info at the bottom of each page
+
 ---
 
 ## Project Status

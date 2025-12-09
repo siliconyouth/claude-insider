@@ -226,7 +226,56 @@ All planned features have been implemented. The project is feature-complete.
    ```
 3. Update search index in `apps/web/lib/search.ts`
 4. Add to sidebar navigation if needed
-5. Build and test: `pnpm build`
+5. **Add ContentMeta component at the bottom** (see Content Attribution Rules below)
+6. Build and test: `pnpm build`
+
+## Content Attribution Rules (MANDATORY)
+
+**All content pages MUST include source citations and AI generation metadata.**
+
+When generating or updating any content page, Claude Code MUST:
+
+### 1. Source Citations
+- Include ALL sources of information used, even when used partially
+- Link to the original source page URL
+- Sources should be determined by how the information was acquired (web search, official docs, etc.)
+- Use official Anthropic documentation as primary sources when available:
+  - `docs.anthropic.com` - API and Claude documentation
+  - `modelcontextprotocol.io` - MCP documentation
+  - `anthropic.com/engineering` - Best practices and guides
+  - `github.com/anthropics` - Official repositories
+
+### 2. AI Generation Metadata
+Each content page must state:
+- **Generation method**: "Generated with AI using Claude AI by Anthropic"
+- **Model used**: Always use the latest and most powerful model (currently Claude Opus 4.5)
+- **Generation date**: The exact date content was created/updated
+- **Build ID**: Unique identifier from git commit SHA
+
+### 3. Implementation
+Add the `<ContentMeta>` component at the bottom of every MDX content page:
+
+```mdx
+<ContentMeta
+  sources={[
+    { title: "Source Title", url: "https://source-url.com" },
+    { title: "Another Source", url: "https://another-source.com" }
+  ]}
+  generatedDate="YYYY-MM-DD"
+  model="Claude Opus 4.5"
+/>
+```
+
+### 4. Updating Content
+When updating existing content:
+- Verify information against official Anthropic documentation
+- Use web search to find the latest information
+- Update sources if new references are used
+- Update the `generatedDate` to the current date
+- Keep the model as the latest (currently Claude Opus 4.5)
+
+### 5. Component Location
+The `ContentMeta` component is exported via `mdx-components.tsx` and available in all MDX files.
 
 ## Contributing
 
