@@ -68,7 +68,7 @@ All technologies used in this project are **free and/or open source** (except fo
 
 | Technology | Version | License | Description |
 |------------|---------|---------|-------------|
-| **@anthropic-ai/sdk** | latest | Proprietary | Claude AI streaming chat |
+| **@anthropic-ai/sdk** | latest | Proprietary | Claude Sonnet 4 streaming chat |
 | **@elevenlabs/elevenlabs-js** | latest | MIT | ElevenLabs TTS (42 premium voices) |
 | **Web Speech API** | - | W3C | Speech recognition (browser native) |
 

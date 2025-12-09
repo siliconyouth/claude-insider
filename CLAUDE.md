@@ -101,7 +101,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 | MDX | 3.x | Markdown with React components |
 | Fuse.js | 7.1.0 | Fuzzy search |
 | highlight.js | 11.x | Syntax highlighting |
-| Anthropic SDK | latest | Claude AI streaming chat |
+| Anthropic SDK | latest | Claude Sonnet 4 streaming chat |
 | ElevenLabs SDK | latest | Text-to-Speech (42 voices) |
 | Web Speech API | - | Speech recognition |
 | pnpm | 10.19.0 | Package manager |
