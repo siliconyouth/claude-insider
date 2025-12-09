@@ -9,6 +9,86 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.22.0] - 2025-12-10
+
+### Added
+- **Micro-interactions & Animations** - Sixth UX System pillar for delightful interactions
+  - `hooks/use-animations.ts` - Animation utility hooks
+  - `components/animated-button.tsx` - Buttons with press, ripple, and hover effects
+  - `components/animated-input.tsx` - Inputs with floating labels and focus animations
+  - `components/animated-card.tsx` - Cards with 3D tilt and glow effects
+  - `components/page-transition.tsx` - Route transition components
+
+- **Animation Hooks**
+  - `useTilt` - 3D tilt effect following cursor position
+  - `usePress` - Button press animation with haptic-like feedback
+  - `useRipple` - Material Design-style ripple effect
+  - `useSpring` - Spring physics animation for smooth values
+  - `useHoverGlow` - Cursor-following glow effect
+  - `useScrollReveal` - Scroll-triggered reveal animations
+  - `useTypewriter` - Typewriter text animation
+  - `useParallax` - Parallax scrolling effect
+  - `useReducedMotion` - Detects prefers-reduced-motion setting
+
+- **Animated Button Components**
+  - `AnimatedButton` - Button with ripple, press, and loading states
+  - `IconButton` - Circular icon button with press effect
+  - `FloatingActionButton` - FAB with position and extended variants
+  - `ToggleButton` - Toggle button with pressed state
+
+- **Animated Input Components**
+  - `AnimatedInput` - Input with floating label and focus glow
+  - `AnimatedTextarea` - Textarea with auto-resize and character count
+  - `AnimatedSwitch` - iOS-style toggle switch
+  - `AnimatedCheckbox` - Checkbox with check animation
+
+- **Animated Card Components**
+  - `AnimatedCard` - Card with tilt and glow effects
+  - `AnimatedCardLink` - Link card with prefetch-ready animations
+  - `FeatureCard` - Feature card with icon and badge
+  - `StatsCard` - Statistics display card
+  - `ImageCard` - Image card with hover zoom
+  - `CardGrid` - Responsive grid layout for cards
+
+- **Page Transition Components**
+  - `PageTransitionProvider` - Context for managing transitions
+  - `PageTransition` - Wrapper for route transitions
+  - `FadeIn` - Fade-in animation component
+  - `StaggerChildren` - Staggered children animation
+  - `AnimatePresence` - Enter/exit animations
+  - `NavigationProgress` - Top loading bar for navigation
+
+- **New CSS Animations**
+  - `@keyframes ripple-expand` - Button ripple effect
+  - `@keyframes button-press/bounce` - Button interactions
+  - `@keyframes input-focus-glow` - Input focus effect
+  - `@keyframes label-float` - Floating label animation
+  - `@keyframes card-shine` - Card shine sweep
+  - `@keyframes icon-bounce/rotate/pulse` - Icon hover effects
+  - `@keyframes switch-toggle` - Switch animation
+  - `@keyframes checkbox-check` - Checkbox stroke animation
+  - `@keyframes tooltip-enter` - Tooltip entrance
+  - `@keyframes modal-enter/backdrop` - Modal animations
+  - `@keyframes dropdown-slide` - Dropdown animation
+  - `@keyframes page-fade-in/out` - Page transitions
+  - `@keyframes page-slide-up/down` - Page slides
+  - `@keyframes nav-progress` - Navigation progress bar
+  - `@keyframes scroll-reveal-*` - Scroll reveal animations
+  - `@keyframes cursor-blink` - Typewriter cursor
+  - `.card-3d` - 3D card transform
+  - `.hover-glow` - Cursor-following glow
+  - `.stagger-1` to `.stagger-10` - Animation delays
+  - `@media (prefers-reduced-motion)` - Accessibility override
+
+### UX System (Six Pillars - MANDATORY)
+The project now uses a UX System with six mandatory pillars:
+1. **Design System** - Visual consistency (colors, typography, animations)
+2. **Optimistic UI** - Instant feedback (toasts, skeletons, rollback)
+3. **Content-Aware Loading** - Intelligent lazy loading (viewport detection, blur-up)
+4. **Smart Prefetching** - Anticipate intent, preload before click
+5. **Error Boundaries** - Graceful error handling (styled errors, retry, recovery)
+6. **Micro-interactions** - Delightful animations (tilt, ripple, transitions)
+
 ## [0.21.0] - 2025-12-10
 
 ### Added
@@ -911,6 +991,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.22.0 | 2025-12-10 | Micro-interactions & Animations (tilt, ripple, transitions, spring physics) |
 | 0.21.0 | 2025-12-10 | Error Boundaries with Style (error pages, retry, recovery, reporting) |
 | 0.20.0 | 2025-12-10 | Smart Prefetching system (hover, focus, intersection prefetch) |
 | 0.19.0 | 2025-12-10 | Content-Aware Loading system (lazy sections, images, code blocks) |

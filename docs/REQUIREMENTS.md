@@ -414,6 +414,7 @@ claude-insider/
 | **Content-Aware Loading** | Intelligent lazy loading | `hooks/use-intersection-observer.ts`, `components/lazy-*.tsx`, `components/content-loader.tsx` |
 | **Smart Prefetching** | Anticipate intent, preload before click | `lib/prefetch-queue.ts`, `hooks/use-prefetch.ts`, `components/prefetch-link.tsx` |
 | **Error Boundaries** | Graceful error handling | `components/error-boundary.tsx`, `components/error-pages.tsx`, `hooks/use-error-recovery.ts`, `lib/error-reporting.ts` |
+| **Micro-interactions** | Delightful animations | `hooks/use-animations.ts`, `components/animated-button.tsx`, `components/animated-input.tsx`, `components/animated-card.tsx`, `components/page-transition.tsx` |
 
 ### Mandatory Checklist for New Features
 
@@ -424,6 +425,7 @@ Before submitting any new feature, ensure:
 - [ ] **Content-Aware Loading**: Heavy content uses lazy loading, images have blur-up effect, code blocks defer highlighting
 - [ ] **Smart Prefetching**: Navigation links use PrefetchLink, hover/focus triggers prefetch, analytics track visits
 - [ ] **Error Boundaries**: Components wrapped with ErrorBoundary, async operations use useRetry, errors reported via errorReporter
+- [ ] **Micro-interactions**: Buttons use AnimatedButton, cards use AnimatedCard with tilt/glow, page transitions enabled
 
 ### All UX System Files
 
@@ -446,6 +448,11 @@ Before submitting any new feature, ensure:
 | `components/lazy-image.tsx` | Lazy image components |
 | `components/lazy-code-block.tsx` | Lazy code block components |
 | `components/content-loader.tsx` | Route-based skeleton selection |
+| `hooks/use-animations.ts` | Animation utilities (tilt, press, ripple, spring, scroll reveal) |
+| `components/animated-button.tsx` | Buttons with press/ripple animations |
+| `components/animated-input.tsx` | Inputs with floating labels and focus effects |
+| `components/animated-card.tsx` | Cards with 3D tilt and glow effects |
+| `components/page-transition.tsx` | Route transitions and fade-in components |
 
 ---
 
@@ -490,7 +497,7 @@ toast.info("Tip: Use keyboard shortcuts");
 
 ### When to Update UX System
 
-When modifying any of the five pillars:
+When modifying any of the six pillars:
 1. Update the relevant source files
 2. Add new CSS animations to `globals.css` if needed
 3. Update `CLAUDE.md` with new guidelines
@@ -629,6 +636,132 @@ const response = await safeFetch("/api/data");
 ```
 
 ---
+
+### Pillar 6: Micro-interactions Rules
+
+1. **Button feedback** - All buttons should use AnimatedButton with press/ripple effects
+2. **Card interactivity** - Interactive cards should use AnimatedCard with tilt or glow effects
+3. **Form focus states** - Inputs should use AnimatedInput for enhanced focus feedback
+4. **Page transitions** - Routes should use PageTransition for smooth navigation
+5. **Staggered reveals** - Lists should use StaggerChildren for progressive loading
+6. **Spring physics** - Prefer spring animations over linear/eased for natural feel
+7. **Reduced motion** - All animations must respect `prefers-reduced-motion`
+8. **Performance** - Use CSS animations where possible, JS for complex interactions
+
+### Micro-interactions Usage
+
+```tsx
+// Animated button with ripple effect
+<AnimatedButton
+  variant="primary"
+  ripple={true}
+  pressAnimation={true}
+  leftIcon={<SaveIcon />}
+>
+  Save Changes
+</AnimatedButton>
+
+// 3D tilt card with cursor glow
+<AnimatedCard tilt={true} glow={true} maxTilt={10}>
+  <CardContent />
+</AnimatedCard>
+
+// Floating label input
+<AnimatedInput
+  label="Email Address"
+  floatingLabel={true}
+  leftIcon={<MailIcon />}
+/>
+
+// Page transition wrapper
+<PageTransitionProvider>
+  <PageTransition type="fade" duration={300}>
+    <PageContent />
+  </PageTransition>
+</PageTransitionProvider>
+
+// Staggered list animation
+<StaggerChildren stagger={50} direction="up">
+  {items.map(item => <Card key={item.id} />)}
+</StaggerChildren>
+
+// Scroll reveal animation
+const { ref, isVisible, style } = useScrollReveal({
+  threshold: 0.1,
+  triggerOnce: true,
+  direction: "up"
+});
+
+<div ref={ref} style={style}>
+  <Content />
+</div>
+
+// Spring animation for custom values
+const [value, setSpringValue] = useSpring(0, {
+  tension: 170,
+  friction: 26,
+  mass: 1
+});
+
+// Typewriter effect
+const displayText = useTypewriter("Hello World", {
+  speed: 50,
+  startDelay: 500
+});
+```
+
+---
+
+### Phase 30: Micro-interactions & Animations - COMPLETED (v0.22.0)
+- [x] **Animation Hooks** - `hooks/use-animations.ts`
+  - `useTilt` - 3D tilt effect following cursor position
+  - `usePress` - Haptic-like press/hover scale animation
+  - `useRipple` - Material Design ripple on click
+  - `useSpring` - Custom spring physics interpolation
+  - `useHoverGlow` - Cursor-following glow effect
+  - `useScrollReveal` - Intersection Observer reveal animation
+  - `useTypewriter` - Character-by-character text reveal
+  - `useParallax` - Differential scroll speed effect
+  - `useReducedMotion` - Accessibility motion detection
+- [x] **Animated Button Components** - `components/animated-button.tsx`
+  - `AnimatedButton` - Primary button with press/ripple effects
+  - `IconButton` - Icon-only button with animations
+  - `FloatingActionButton` - Material-style FAB
+  - `ToggleButton` - Animated toggle states
+- [x] **Animated Input Components** - `components/animated-input.tsx`
+  - `AnimatedInput` - Input with floating label and focus effects
+  - `AnimatedTextarea` - Textarea with character count animation
+  - `AnimatedSwitch` - Toggle switch with smooth transitions
+  - `AnimatedCheckbox` - Checkbox with bounce animation
+- [x] **Animated Card Components** - `components/animated-card.tsx`
+  - `AnimatedCard` - Card with 3D tilt and glow effects
+  - `AnimatedCardLink` - Linkable card with hover animations
+  - `FeatureCard` - Feature card with icon animation
+  - `StatsCard` - Stats card with number animation
+  - `ImageCard` - Image card with overlay effects
+  - `CardGrid` - Grid with staggered reveal
+- [x] **Page Transition Components** - `components/page-transition.tsx`
+  - `PageTransitionProvider` - Context for route transitions
+  - `PageTransition` - Fade/slide/scale/blur transitions
+  - `FadeIn` - Delayed fade-in with direction
+  - `StaggerChildren` - Staggered child animations
+  - `AnimatePresence` - Enter/exit animations
+  - `NavigationProgress` - Route change progress bar
+- [x] **New CSS Animations** - `app/globals.css`
+  - `@keyframes ripple-expand` - Button ripple animation
+  - `@keyframes button-press/bounce` - Button press feedback
+  - `@keyframes input-focus-glow` - Input focus effect
+  - `@keyframes label-float` - Floating label animation
+  - `@keyframes card-shine` - Card hover shine effect
+  - `@keyframes icon-bounce/rotate/pulse` - Icon animations
+  - `@keyframes switch-toggle` - Switch state change
+  - `@keyframes checkbox-check` - Checkbox bounce
+  - `@keyframes tooltip-enter` - Tooltip reveal
+  - `@keyframes modal-enter` - Modal open animation
+  - `@keyframes dropdown-slide` - Dropdown appearance
+  - `@keyframes page-fade-in/out` - Page transitions
+  - `@keyframes scroll-reveal-*` - Scroll animations
+  - Utility classes: `.card-3d`, `.hover-glow`, `.stagger-*`, `.parallax-*`
 
 ### Phase 29: Error Boundaries with Style - COMPLETED (v0.21.0)
 - [x] **Error Boundary Components** - `components/error-boundary.tsx`
