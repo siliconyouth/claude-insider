@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.14.1] - 2025-12-09
+
+### Fixed
+- **Demo Animation Timing** - Fixed animation showing for too short a time
+  - Root cause: `useEffect` had `[visibleMessages]` dependency causing timers to restart on every state change
+  - Solution: Changed to empty dependency array `[]` with `setInterval` for proper 46-second loops
+  - Added `runAnimation()` function for timer setup and state reset at cycle start
+  - Proper cleanup for all timers and interval on unmount
+
+### Technical Details
+- `apps/web/components/voice-assistant-demo.tsx` - Refactored useEffect timing logic
+
 ## [0.14.0] - 2025-12-09
 
 ### Added
@@ -485,6 +497,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.14.1 | 2025-12-09 | Demo animation timing fix (useEffect dependency array) |
 | 0.14.0 | 2025-12-09 | Fullscreen popup mode, OpenAssistantButton, /assistant redirects to popup |
 | 0.13.2 | 2025-12-09 | SDK architecture fix, client-safe utilities module |
 | 0.13.1 | 2025-12-09 | Dedicated /assistant page, enhanced homepage demo animation |

@@ -478,7 +478,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.14.0.
+All planned features have been implemented. The project is feature-complete at v0.14.1.
 
 ### Content Expansion (All Complete)
 
@@ -665,6 +665,13 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] **`/assistant` Redirect** - Page now redirects to homepage (assistant is popup-only)
 - [x] **Extended Demo Animation** - Demo now 46 seconds with longer reading pauses and 3-second pause before loop
 - [x] **Escape Key Behavior** - First minimizes fullscreen, then closes popup on second press
+
+### Phase 18: Demo Animation Timing Fix - COMPLETED (v0.14.1)
+- [x] **Demo Animation Timing Fix** - Fixed animation showing for too short a time
+- [x] **Root Cause**: useEffect had `[visibleMessages]` dependency causing timers to restart on every state change
+- [x] **Solution**: Changed to empty dependency array `[]` with `setInterval` for proper 46-second loops
+- [x] **Timer Management**: Added `runAnimation()` function for timer setup and state reset at cycle start
+- [x] **Cleanup**: Proper cleanup for all timers and interval on unmount
 
 ### Pages Implemented (28 Documentation + 7 Utility Pages)
 
