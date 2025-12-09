@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.18.0)
+## Current Status (v0.19.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -123,6 +123,18 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Route-Based ContentLoader** - Automatic skeletons by page type
 
 ### All Features Complete
+
+## UX System (Three Pillars)
+
+The project implements a comprehensive UX system with three mandatory pillars:
+
+| Pillar | Description | Key Components |
+|--------|-------------|----------------|
+| **Design System** | Vercel-inspired visual consistency | `cn()` utility, design tokens, glass morphism, animations |
+| **Optimistic UI** | Instant user feedback | Toast notifications, skeletons, rollback on error |
+| **Content-Aware Loading** | Intelligent lazy loading | Intersection Observer, blur-up images, lazy code blocks |
+
+All new features must implement all three pillars. See [CLAUDE.md](CLAUDE.md) for detailed guidelines.
 
 ## Documentation Pages
 

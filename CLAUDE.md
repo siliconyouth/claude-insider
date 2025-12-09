@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.18.0
+**Version**: 0.19.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -98,8 +98,14 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Toast Notification System** - Success, error, warning, and info notifications
 - **Skeleton Loading Components** - Visual placeholders for async content
 - **Enhanced Search** - Loading skeletons, smoother transitions, navigation feedback
+- **Content-Aware Loading** - Intelligent lazy loading with route-based skeletons
+- **useIntersectionObserver Hook** - Viewport detection for lazy loading
+- **LazySection, ProgressiveReveal, LazyList** - Lazy loading section components
+- **LazyImage, BlurUpImage** - Image lazy loading with blur-up effect
+- **LazyCodeBlock** - Deferred syntax highlighting for code blocks
+- **ContentLoader** - Route-based skeleton selection for pages
 
-### Project Status: Complete (v0.18.0)
+### Project Status: Complete (v0.19.0)
 
 ## Tech Stack
 
@@ -251,6 +257,42 @@ Configured in `vercel.json`:
 - **Files**: PascalCase for components, camelCase for utilities
 - **Pages**: lowercase with hyphens (e.g., `getting-started/page.tsx`)
 - **Class Names**: Use `cn()` utility from `lib/design-system.ts` for conditional classes
+
+---
+
+## UX System (MANDATORY - THREE PILLARS)
+
+The project uses a comprehensive UX system with three mandatory pillars. **All new components, features, and pages MUST implement ALL THREE pillars** for consistent user experience.
+
+### The Three Pillars
+
+| Pillar | Purpose | Location |
+|--------|---------|----------|
+| **Design System** | Visual consistency (colors, typography, animations) | `lib/design-system.ts`, `globals.css` |
+| **Optimistic UI** | Instant feedback (toasts, skeletons, rollback) | `hooks/use-optimistic-update.ts`, `components/toast.tsx`, `components/skeleton.tsx` |
+| **Content-Aware Loading** | Intelligent lazy loading (viewport detection, blur-up) | `hooks/use-intersection-observer.ts`, `components/lazy-*.tsx`, `components/content-loader.tsx` |
+
+### Mandatory Checklist for New Features
+
+Before submitting any new feature, ensure:
+
+- [ ] **Design System**: Uses `cn()` utility, design tokens, proper dark/light theme support
+- [ ] **Optimistic UI**: Async operations show instant feedback, toasts for state changes, skeletons during loading
+- [ ] **Content-Aware Loading**: Heavy content uses lazy loading, images have blur-up effect, code blocks defer highlighting
+
+### When to Update UX Guidelines
+
+When modifying any of the three pillars:
+1. Update the relevant source files
+2. Add new CSS animations to `globals.css` if needed
+3. Update this CLAUDE.md documentation
+4. Update REQUIREMENTS.md with new patterns
+5. Update CHANGELOG.md with changes
+6. Test in both light and dark modes
+7. Test with slow network (DevTools throttling)
+8. Test with `prefers-reduced-motion` for accessibility
+
+---
 
 ## Design System (MANDATORY)
 
@@ -836,9 +878,22 @@ When adding new patterns:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.16.3.
+All planned features have been implemented. The project is feature-complete at v0.19.0.
+
+### AWE-Inspired UX Improvements (Completed)
+
+| Phase | Description | Version |
+|-------|-------------|---------|
+| Phase 1 | Design System Foundation | v0.17.0 |
+| Phase 2 | Optimistic UI Patterns | v0.18.0 |
+| Phase 3 | Content-Aware Loading | v0.19.0 |
 
 ### Future Enhancements (Optional)
+- Phase 4: Micro-interactions (button press, link hover animations)
+- Phase 5: Scroll Optimization (virtual scrolling, scroll-linked effects)
+- Phase 6: Error Boundaries & Recovery (global error handling)
+- Phase 7: Performance Monitoring (Core Web Vitals)
+- Phase 8: State Persistence (form auto-save, scroll position)
 - Multi-language support (i18n) when translations are ready
 - Community contributions via GitHub
 

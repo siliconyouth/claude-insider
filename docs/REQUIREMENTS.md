@@ -401,11 +401,27 @@ claude-insider/
 
 ---
 
-## Design System & UX Guidelines (MANDATORY)
+## UX System (MANDATORY - THREE PILLARS)
 
-**These guidelines are mandatory for all future development. All new components and features MUST follow these patterns.**
+**These guidelines are mandatory for all future development. All new components and features MUST implement ALL THREE pillars for consistent user experience.**
 
-### Design System Location
+### The Three Pillars
+
+| Pillar | Purpose | Key Files |
+|--------|---------|-----------|
+| **Design System** | Visual consistency | `lib/design-system.ts`, `globals.css` |
+| **Optimistic UI** | Instant feedback | `hooks/use-optimistic-update.ts`, `components/toast.tsx`, `components/skeleton.tsx` |
+| **Content-Aware Loading** | Intelligent lazy loading | `hooks/use-intersection-observer.ts`, `components/lazy-*.tsx`, `components/content-loader.tsx` |
+
+### Mandatory Checklist for New Features
+
+Before submitting any new feature, ensure:
+
+- [ ] **Design System**: Uses `cn()` utility, design tokens, proper dark/light theme support
+- [ ] **Optimistic UI**: Async operations show instant feedback, toasts for state changes, skeletons during loading
+- [ ] **Content-Aware Loading**: Heavy content uses lazy loading, images have blur-up effect, code blocks defer highlighting
+
+### All UX System Files
 
 | File | Purpose |
 |------|---------|
@@ -414,8 +430,15 @@ claude-insider/
 | `components/toast.tsx` | Toast notification system |
 | `components/skeleton.tsx` | Skeleton loading components |
 | `hooks/use-optimistic-update.ts` | Optimistic update hooks |
+| `hooks/use-intersection-observer.ts` | Viewport detection hook |
+| `components/lazy-section.tsx` | Lazy section components |
+| `components/lazy-image.tsx` | Lazy image components |
+| `components/lazy-code-block.tsx` | Lazy code block components |
+| `components/content-loader.tsx` | Route-based skeleton selection |
 
-### Visual Design Rules
+---
+
+### Pillar 1: Visual Design Rules
 
 1. **Dark-first design** - Dark theme uses Vercel blacks (#0a0a0a, #111111, #1a1a1a)
 2. **Glass morphism** - Headers and overlays use `backdrop-blur` with transparency
@@ -424,7 +447,7 @@ claude-insider/
 5. **Layered elevation** - Shadows increase with elevation level
 6. **Use `cn()` utility** - Always use for conditional class composition
 
-### Optimistic UI Rules
+### Pillar 2: Optimistic UI Rules
 
 1. **Instant feedback** - All async operations must update UI immediately
 2. **Toast notifications** - All state changes must show user feedback
@@ -454,18 +477,19 @@ toast.info("Tip: Use keyboard shortcuts");
 </SkeletonWrapper>
 ```
 
-### When to Update Design Guidelines
+### When to Update UX System
 
-When modifying the design system or UI patterns:
-1. Update `lib/design-system.ts` for new tokens
-2. Update `app/globals.css` for new CSS classes/animations
+When modifying any of the three pillars:
+1. Update the relevant source files
+2. Add new CSS animations to `globals.css` if needed
 3. Update `CLAUDE.md` with new guidelines
 4. Update this `REQUIREMENTS.md` with new patterns
 5. Update `CHANGELOG.md` with changes
 6. Test in both light and dark modes
 7. Test with slow network (DevTools throttling)
+8. Test with `prefers-reduced-motion` for accessibility
 
-### Content-Aware Loading Rules
+### Pillar 3: Content-Aware Loading Rules
 
 1. **Viewport-based loading** - Heavy content loads only when entering viewport
 2. **Route-based skeletons** - Use appropriate skeleton for each page type
