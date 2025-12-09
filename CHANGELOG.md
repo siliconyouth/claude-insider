@@ -8,7 +8,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Additional content pages as needed
+- Additional content pages (see Content Expansion Plan)
+
+## [0.10.0] - 2025-12-09
+
+### Added
+- **RSS Feed** (`/feed.xml`) - Subscribe to documentation updates via RSS 2.0
+- **Changelog Page** (`/changelog`) - Public changelog page parsing CHANGELOG.md
+- **Edit on GitHub Links** - "Edit this page on GitHub" link on all doc pages
+- **Reading Time Estimates** - Estimated reading time displayed on all doc pages
+- **Search History** - Remember recent searches in localStorage (up to 5 items)
+- **Language Selector** - i18n preparation with language selector (English US only initially)
+- `lib/reading-time.ts` - Reading time calculation utility (200 WPM)
+- `lib/search-history.ts` - Search history localStorage utilities
+- `lib/i18n.ts` - i18n configuration for future multi-language support
+- `components/edit-on-github.tsx` - Edit link component with GitHub icon
+- `components/language-selector.tsx` - Language dropdown component
+
+### Changed
+- Updated `docs-layout.tsx` with reading time and edit link props
+- Updated `[...slug]/page.tsx` to calculate and pass reading time and edit path
+- Updated `search.tsx` with recent searches UI (shows when query is empty)
+- Updated `header.tsx` with language selector
+- Updated `footer.tsx` with changelog link
+- Updated `layout.tsx` with RSS autodiscovery link
+
+### Content Expansion Plan
+Phase A (High Priority):
+- Troubleshooting guide - Common issues and solutions
+- Migration guide - Migrating from other AI tools
+- Environment variables reference
+- Permissions and security settings
+- Advanced prompting techniques
+- Debugging with Claude Code
+
+Phase B (Medium Priority):
+- Streaming responses guide
+- Error handling patterns
+- Rate limits and quotas
+- Model comparison guide
+
+Phase C (Medium Priority):
+- GitHub Actions CI/CD integration
+- Docker and containerization
+- Database integrations
+
+Phase D (Lower Priority):
+- Tutorials category: Code review, documentation generation, test generation, refactoring
+- Examples category: Real-world projects, starter templates
 
 ## [0.9.1] - 2025-12-09
 
@@ -274,6 +321,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.10.0 | 2025-12-09 | RSS feed, changelog page, edit links, reading time, search history, i18n prep |
 | 0.9.1 | 2025-12-09 | Vercel Analytics, CSP headers, Privacy/Terms updates |
 | 0.9.0 | 2025-12-09 | ContentMeta component, source citations, AI generation metadata |
 | 0.8.0 | 2025-12-09 | Legal pages, shared Footer, auto-updating build info |
@@ -288,12 +336,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | 0.2.0 | 2025-12-09 | Homepage, docs pages, dark theme |
 | 0.1.0 | 2025-12-08 | Initial Turborepo setup |
 
-## Upcoming Features
+## Future Roadmap
 
-### Low Priority
-- [ ] GitHub Actions CI/CD (optional - Vercel handles deployment)
+### Content Expansion (Planned)
+
+**Phase A: Core Enhancements (High Priority)**
+- [ ] Troubleshooting guide - Common issues and solutions
+- [ ] Migration guide - Migrating from other AI tools
+- [ ] Environment variables reference
+- [ ] Permissions and security settings
+- [ ] Advanced prompting techniques
+- [ ] Debugging with Claude Code
+
+**Phase B: API Deep Dives (Medium Priority)**
+- [ ] Streaming responses guide
+- [ ] Error handling patterns
+- [ ] Rate limits and quotas
+- [ ] Model comparison guide
+
+**Phase C: Integrations Expansion (Medium Priority)**
+- [ ] GitHub Actions CI/CD integration
+- [ ] Docker and containerization
+- [ ] Database integrations
+
+**Phase D: New Categories (Lower Priority)**
+- [ ] Tutorials category: Code review, documentation generation, test generation, refactoring
+- [ ] Examples category: Real-world projects, starter templates
+
+### Technical Enhancements (Optional)
+- [ ] GitHub Actions CI/CD pipeline (Vercel handles deployment)
+- [ ] Additional syntax highlighting languages
+- [ ] Multi-language support (i18n) - infrastructure ready
+
+### Completed Features
+- [x] RSS feed for documentation updates (v0.10.0)
+- [x] Public changelog page (v0.10.0)
+- [x] Edit on GitHub links (v0.10.0)
+- [x] Reading time estimates (v0.10.0)
+- [x] Search history persistence (v0.10.0)
+- [x] Language selector / i18n preparation (v0.10.0)
+- [x] Vercel Analytics (v0.9.1)
+- [x] Source citations and AI generation metadata (v0.9.0)
+- [x] Legal pages - Privacy, Terms, Disclaimer, Accessibility (v0.8.0)
+- [x] Syntax highlighting for code blocks (v0.7.0)
 - [x] PWA offline support (v0.6.0)
 - [x] Accessibility audit (v0.6.0)
-- [x] Syntax highlighting for code blocks (v0.7.0)
-- [x] Legal pages - Privacy, Terms, Disclaimer, Accessibility (v0.8.0)
-- [x] Source citations and AI generation metadata (v0.9.0)

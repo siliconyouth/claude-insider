@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const APP_VERSION = "0.9.1";
+const APP_VERSION = "0.10.0";
 const BUILD_DATE = "2025-12-09";
 
 export function Footer() {
@@ -35,6 +35,10 @@ export function Footer() {
           <span className="text-gray-700">·</span>
           <Link href="/accessibility" className="hover:text-white transition-colors">
             Accessibility
+          </Link>
+          <span className="text-gray-700">·</span>
+          <Link href="/changelog" className="hover:text-white transition-colors">
+            Changelog
           </Link>
           <span className="text-gray-700">·</span>
           <span>v{APP_VERSION}-{buildId}</span>

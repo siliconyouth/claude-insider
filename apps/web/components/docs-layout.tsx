@@ -4,6 +4,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ArticleJsonLd } from "@/components/json-ld";
+import { EditOnGitHub } from "@/components/edit-on-github";
 
 interface SidebarSection {
   title: string;
@@ -19,6 +20,8 @@ interface DocsLayoutProps {
   prevPage?: { label: string; href: string };
   nextPage?: { label: string; href: string };
   slug?: string[];
+  readingTime?: string;
+  editPath?: string;
 }
 
 export function DocsLayout({
@@ -30,6 +33,8 @@ export function DocsLayout({
   prevPage,
   nextPage,
   slug,
+  readingTime,
+  editPath,
 }: DocsLayoutProps) {
   // Build URL from slug or breadcrumbs
   const currentPath = slug
@@ -103,13 +108,39 @@ export function DocsLayout({
             </nav>
 
             <article className="prose prose-invert prose-orange max-w-none">
-              <h1 className="text-4xl font-bold mb-6">{title}</h1>
+              <h1 className="text-4xl font-bold mb-2">{title}</h1>
+              {readingTime && (
+                <div className="flex items-center gap-1.5 text-sm text-gray-400 mb-6 not-prose">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span>{readingTime}</span>
+                </div>
+              )}
               {description && (
                 <p className="text-gray-300 text-lg leading-relaxed mb-8">
                   {description}
                 </p>
               )}
               {children}
+
+              {/* Edit on GitHub link */}
+              {editPath && (
+                <div className="mt-12 pt-6 border-t border-gray-800 not-prose">
+                  <EditOnGitHub filePath={editPath} />
+                </div>
+              )}
             </article>
 
             {/* Page Navigation */}

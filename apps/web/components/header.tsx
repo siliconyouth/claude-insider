@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Search } from "@/components/search";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSelector } from "@/components/language-selector";
 
 interface HeaderProps {
   activePage?: "home" | "docs" | "getting-started";
@@ -57,12 +58,14 @@ export function Header({ activePage }: HeaderProps) {
             >
               GitHub
             </a>
+            <LanguageSelector />
             <Search />
             <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
+            <LanguageSelector />
             <Search />
             <ThemeToggle />
             <button

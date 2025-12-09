@@ -88,15 +88,17 @@ claude-insider/
 │   │   │       └── [...slug]/
 │   │   │           └── page.tsx  # Dynamic MDX route
 │   │   ├── components/
-│   │   │   ├── header.tsx        # Shared header with mobile menu
-│   │   │   ├── docs-layout.tsx   # Shared docs layout with TOC
+│   │   │   ├── header.tsx        # Shared header with mobile menu & language selector
+│   │   │   ├── docs-layout.tsx   # Shared docs layout with TOC, reading time, edit link
 │   │   │   ├── table-of-contents.tsx  # TOC with scroll spy
 │   │   │   ├── code-block.tsx    # Code block with copy button
 │   │   │   ├── copy-button.tsx   # Reusable copy button
-│   │   │   ├── search.tsx        # Search modal (Cmd+K) with React Portal
+│   │   │   ├── search.tsx        # Search modal (Cmd+K) with React Portal & history
 │   │   │   ├── theme-toggle.tsx  # Dark/light/system theme toggle
 │   │   │   ├── content-meta.tsx  # Source citations & AI generation metadata
-│   │   │   └── footer.tsx        # Shared footer with legal links
+│   │   │   ├── edit-on-github.tsx # "Edit this page on GitHub" link component
+│   │   │   ├── language-selector.tsx # Language dropdown for i18n
+│   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation content
@@ -122,7 +124,10 @@ claude-insider/
 │   │   │       └── hooks.mdx
 │   │   ├── lib/
 │   │   │   ├── mdx.ts            # MDX utilities
-│   │   │   └── search.ts         # Search index and utilities
+│   │   │   ├── search.ts         # Search index and utilities
+│   │   │   ├── reading-time.ts   # Reading time calculation (200 WPM)
+│   │   │   ├── search-history.ts # Search history localStorage utilities
+│   │   │   └── i18n.ts           # i18n configuration for multi-language
 │   │   ├── mdx-components.tsx    # Custom MDX components
 │   │   └── public/               # Static assets
 │   └── docs/                     # Secondary docs app (Turborepo default)
@@ -220,6 +225,12 @@ claude-insider/
 - [x] Vercel Analytics for privacy-focused usage tracking
 - [x] Content Security Policy (CSP) headers
 - [x] Permissions-Policy header (disables camera, mic, geolocation, FLoC)
+- [x] RSS feed at `/feed.xml` for documentation updates
+- [x] Public changelog page at `/changelog` parsing CHANGELOG.md
+- [x] "Edit on GitHub" links on all documentation pages
+- [x] Reading time estimates on all documentation pages (200 WPM)
+- [x] Search history with localStorage persistence (up to 5 recent searches)
+- [x] Language selector for i18n preparation (English US only initially)
 
 ### Pages Implemented
 
@@ -247,6 +258,8 @@ claude-insider/
 | `/terms` | Done | Terms of Service (international) |
 | `/disclaimer` | Done | Disclaimer (non-affiliation notice) |
 | `/accessibility` | Done | Accessibility Statement (WCAG 2.1 AA) |
+| `/changelog` | Done | Public changelog parsing CHANGELOG.md |
+| `/feed.xml` | Done | RSS 2.0 feed for documentation updates |
 
 ---
 
@@ -402,11 +415,37 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete.
+All planned features have been implemented. The project is feature-complete at v0.10.0.
 
-### Optional Future Enhancements
+### Future Content Expansion (Planned)
+
+**Phase A: Core Enhancements (High Priority)**
+- [ ] Troubleshooting guide - Common issues and solutions
+- [ ] Migration guide - Migrating from other AI tools
+- [ ] Environment variables reference
+- [ ] Permissions and security settings
+- [ ] Advanced prompting techniques
+- [ ] Debugging with Claude Code
+
+**Phase B: API Deep Dives (Medium Priority)**
+- [ ] Streaming responses guide
+- [ ] Error handling patterns
+- [ ] Rate limits and quotas
+- [ ] Model comparison guide
+
+**Phase C: Integrations Expansion (Medium Priority)**
+- [ ] GitHub Actions CI/CD integration
+- [ ] Docker and containerization
+- [ ] Database integrations
+
+**Phase D: New Categories (Lower Priority)**
+- [ ] Tutorials category: Code review, documentation generation, test generation, refactoring
+- [ ] Examples category: Real-world projects, starter templates
+
+### Optional Technical Enhancements
 - [ ] Add GitHub Actions CI/CD pipeline (optional - Vercel handles deployment)
 - [ ] Add more syntax highlighting languages as needed
+- [ ] Multi-language support (i18n) when locale content is ready
 
 ---
 
@@ -482,6 +521,20 @@ All planned features have been implemented. The project is feature-complete.
 - [x] Updated Privacy Policy with comprehensive analytics disclosure
 - [x] Updated Terms of Service with Section 10: Privacy and Analytics
 - [x] No cookies, no personal data collection, no cross-site tracking
+
+### Phase 11: User Experience Enhancements - COMPLETED
+- [x] RSS feed at `/feed.xml` for documentation update subscriptions
+- [x] Public changelog page at `/changelog` parsing CHANGELOG.md
+- [x] "Edit on GitHub" links on all documentation pages for community contributions
+- [x] Reading time estimates on all documentation pages (200 WPM calculation)
+- [x] Search history with localStorage persistence (up to 5 recent searches)
+- [x] Language selector for i18n preparation (English US only initially)
+- [x] Updated Privacy Policy and Terms of Service to document localStorage usage
+- [x] `lib/reading-time.ts` - Reading time calculation utility
+- [x] `lib/search-history.ts` - Search history localStorage utilities
+- [x] `lib/i18n.ts` - i18n configuration for future multi-language support
+- [x] `components/edit-on-github.tsx` - Edit link component with GitHub icon
+- [x] `components/language-selector.tsx` - Language dropdown component
 
 ---
 

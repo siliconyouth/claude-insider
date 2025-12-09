@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.9.1
+**Version**: 0.10.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -47,6 +47,12 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Links to official Anthropic documentation sources
 - Vercel Analytics for privacy-focused usage tracking
 - Content Security Policy (CSP) and Permissions-Policy headers
+- RSS feed at `/feed.xml` for documentation updates
+- Public changelog page at `/changelog` parsing CHANGELOG.md
+- "Edit on GitHub" links on all documentation pages
+- Reading time estimates on all documentation pages
+- Search history with localStorage persistence (recent searches)
+- Language selector for i18n preparation (English US only initially)
 
 ### Project Status: Complete
 
@@ -81,16 +87,18 @@ claude-insider/
 │   │   │       └── [...slug]/
 │   │   │           └── page.tsx  # Dynamic MDX route
 │   │   ├── components/
-│   │   │   ├── header.tsx        # Shared header with mobile menu
-│   │   │   ├── docs-layout.tsx   # Shared docs layout with TOC
+│   │   │   ├── header.tsx        # Shared header with mobile menu & language selector
+│   │   │   ├── docs-layout.tsx   # Shared docs layout with TOC, reading time, edit link
 │   │   │   ├── table-of-contents.tsx  # TOC with scroll spy
 │   │   │   ├── code-block.tsx    # Code with copy button
 │   │   │   ├── copy-button.tsx   # Reusable copy button
-│   │   │   ├── search.tsx        # Search modal (React Portal, Cmd+K)
+│   │   │   ├── search.tsx        # Search modal (React Portal, Cmd+K, history)
 │   │   │   ├── theme-toggle.tsx  # Dark/light/system toggle
 │   │   │   ├── json-ld.tsx       # JSON-LD structured data components
 │   │   │   ├── content-meta.tsx  # Source citations & AI metadata
-│   │   │   └── footer.tsx        # Shared footer with legal links
+│   │   │   ├── edit-on-github.tsx # "Edit this page on GitHub" link
+│   │   │   ├── language-selector.tsx # Language dropdown for i18n
+│   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation
@@ -101,7 +109,10 @@ claude-insider/
 │   │   │   └── integrations/     # index.mdx, mcp-servers.mdx, ide-plugins.mdx, hooks.mdx
 │   │   ├── lib/
 │   │   │   ├── mdx.ts            # MDX utilities
-│   │   │   └── search.ts         # Search index
+│   │   │   ├── search.ts         # Search index
+│   │   │   ├── reading-time.ts   # Reading time calculation
+│   │   │   ├── search-history.ts # Search history localStorage
+│   │   │   └── i18n.ts           # i18n configuration
 │   │   ├── mdx-components.tsx    # Custom MDX components
 │   │   └── public/               # Static assets
 │   └── docs/                     # Secondary docs app (port 3000)
@@ -203,7 +214,7 @@ Configured in `vercel.json`:
 | API Reference | `/docs/api` | Claude API docs, SDK, tool use |
 | Integrations | `/docs/integrations` | MCP servers, IDE plugins, hooks |
 
-## Legal Pages
+## Legal & Utility Pages
 
 | Page | Route | Description |
 |------|-------|-------------|
@@ -211,10 +222,15 @@ Configured in `vercel.json`:
 | Terms of Service | `/terms` | International coverage, Serbian jurisdiction |
 | Disclaimer | `/disclaimer` | Non-affiliation with Anthropic |
 | Accessibility | `/accessibility` | WCAG 2.1 AA conformance statement |
+| Changelog | `/changelog` | Version history and release notes |
+| RSS Feed | `/feed.xml` | Subscribe to documentation updates |
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete.
+All planned features have been implemented. The project is feature-complete at v0.10.0.
+
+### Future Content Expansion
+See the Content Expansion Plan section below for planned documentation additions.
 
 ## Adding New Documentation Pages
 
@@ -278,6 +294,46 @@ When updating existing content:
 
 ### 5. Component Location
 The `ContentMeta` component is exported via `mdx-components.tsx` and available in all MDX files.
+
+## Content Expansion Plan
+
+Future content additions organized by priority:
+
+### Phase A: Core Enhancements (High Priority)
+| Page | Category | Description |
+|------|----------|-------------|
+| `troubleshooting.mdx` | Getting Started | Common issues and solutions |
+| `migration.mdx` | Getting Started | Migrating from other AI tools |
+| `environment.mdx` | Configuration | Environment variables reference |
+| `permissions.mdx` | Configuration | Permissions and security settings |
+| `advanced-prompting.mdx` | Tips & Tricks | Advanced prompting techniques |
+| `debugging.mdx` | Tips & Tricks | Debugging with Claude Code |
+
+### Phase B: API Deep Dives (Medium Priority)
+| Page | Category | Description |
+|------|----------|-------------|
+| `streaming.mdx` | API Reference | Streaming responses guide |
+| `error-handling.mdx` | API Reference | Error handling patterns |
+| `rate-limits.mdx` | API Reference | Rate limits and quotas |
+| `models.mdx` | API Reference | Model comparison guide |
+
+### Phase C: Integrations Expansion (Medium Priority)
+| Page | Category | Description |
+|------|----------|-------------|
+| `github-actions.mdx` | Integrations | CI/CD with Claude |
+| `docker.mdx` | Integrations | Docker and containerization |
+| `databases.mdx` | Integrations | Database integrations |
+
+### Phase D: New Categories (Lower Priority)
+**Tutorials Category:**
+- Code review automation
+- Documentation generation
+- Test generation with Claude
+- Code refactoring patterns
+
+**Examples Category:**
+- Real-world project case studies
+- Starter templates and boilerplates
 
 ## Contributing
 

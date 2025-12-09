@@ -18,7 +18,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.9.1)
+## Current Status (v0.10.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -58,6 +58,12 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Vercel Analytics for privacy-focused usage tracking
 - [x] Content Security Policy (CSP) headers
 - [x] Permissions-Policy header (disables FLoC tracking)
+- [x] RSS feed at `/feed.xml` for documentation updates
+- [x] Public changelog page at `/changelog`
+- [x] "Edit on GitHub" links on all doc pages
+- [x] Reading time estimates on all doc pages
+- [x] Search history with localStorage persistence
+- [x] Language selector for i18n preparation (English only initially)
 
 ### All Features Complete
 
@@ -71,7 +77,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | **API Reference** | Overview, Authentication, Tool Use |
 | **Integrations** | Overview, MCP Servers, IDE Plugins, Hooks |
 
-## Legal Pages
+## Legal & Utility Pages
 
 | Page | Route | Description |
 |------|-------|-------------|
@@ -79,6 +85,8 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | Terms of Service | `/terms` | International coverage, Serbian jurisdiction |
 | Disclaimer | `/disclaimer` | Non-affiliation notice, accuracy warnings |
 | Accessibility | `/accessibility` | WCAG 2.1 AA conformance statement |
+| Changelog | `/changelog` | Version history and release notes |
+| RSS Feed | `/feed.xml` | Subscribe to documentation updates |
 
 ## Tech Stack
 
@@ -112,12 +120,14 @@ claude-insider/
 │   │   │       └── [...slug]/    # Dynamic MDX route
 │   │   ├── components/
 │   │   │   ├── header.tsx        # Shared header with mobile menu
-│   │   │   ├── docs-layout.tsx   # Shared docs layout
+│   │   │   ├── docs-layout.tsx   # Shared docs layout with TOC
 │   │   │   ├── table-of-contents.tsx  # TOC with scroll spy
 │   │   │   ├── code-block.tsx    # Code with copy button
-│   │   │   ├── search.tsx        # Search modal (React Portal)
+│   │   │   ├── search.tsx        # Search modal (React Portal, history)
 │   │   │   ├── theme-toggle.tsx  # Theme switcher
 │   │   │   ├── content-meta.tsx  # Source citations & AI metadata
+│   │   │   ├── edit-on-github.tsx # Edit page link
+│   │   │   ├── language-selector.tsx # i18n language dropdown
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
@@ -129,7 +139,10 @@ claude-insider/
 │   │   │   └── integrations/
 │   │   └── lib/
 │   │       ├── mdx.ts            # MDX utilities
-│   │       └── search.ts         # Search utilities
+│   │       ├── search.ts         # Search utilities
+│   │       ├── reading-time.ts   # Reading time calculation
+│   │       ├── search-history.ts # Search history localStorage
+│   │       └── i18n.ts           # i18n configuration
 │   └── docs/                     # Secondary docs app
 ├── packages/
 │   ├── ui/                       # Shared UI components

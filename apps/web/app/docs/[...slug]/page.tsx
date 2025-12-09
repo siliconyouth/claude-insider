@@ -6,6 +6,7 @@ import {
   extractFrontmatter,
   formatSlugToTitle,
 } from "@/lib/mdx";
+import { calculateReadingTime } from "@/lib/reading-time";
 import fs from "fs";
 import type { Metadata } from "next";
 
@@ -107,6 +108,15 @@ export default async function DocPage({ params }: PageProps) {
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const { data, content } = extractFrontmatter(fileContent);
 
+  // Calculate reading time
+  const readingTime = calculateReadingTime(content);
+
+  // Determine edit path (relative to repo root)
+  const isIndexFile = filePath.endsWith("index.mdx");
+  const editPath = isIndexFile
+    ? `apps/web/content/${slug.join("/")}/index.mdx`
+    : `apps/web/content/${slug.join("/")}.mdx`;
+
   // Dynamic import of MDX content
   const currentPath = `/docs/${slug.join("/")}`;
 
@@ -174,6 +184,8 @@ export default async function DocPage({ params }: PageProps) {
       prevPage={prevPage}
       nextPage={nextPage}
       slug={slug}
+      readingTime={readingTime.text}
+      editPath={editPath}
     >
       <MDXContent />
     </DocsLayout>

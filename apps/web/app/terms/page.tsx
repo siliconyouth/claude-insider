@@ -166,7 +166,15 @@ export default function TermsOfServicePage() {
 
             <h3 className="text-xl font-semibold mt-6 mb-3">10.2 Local Storage</h3>
             <p className="text-gray-300 leading-relaxed">
-              We use browser local storage solely to remember your theme preference (dark/light mode). This data remains on your device and is never transmitted to our servers.
+              We use browser local storage to enhance your experience with the following features:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li><strong>Theme preference:</strong> Your chosen display mode (dark, light, or system)</li>
+              <li><strong>Search history:</strong> Your recent search queries (up to 5 items) for quick access</li>
+              <li><strong>Language preference:</strong> Your selected language for future internationalization support</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              All locally stored data remains on your device and is never transmitted to our servers. You can clear this data at any time through your browser settings or directly within the application (e.g., clearing search history from the search interface).
             </p>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">10.3 Security</h3>
@@ -251,7 +259,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> Claude Insider is free, open-source documentation. You can use and share it with attribution. We&apos;re not affiliated with Anthropic. The content is provided &quot;as is&quot; without warranties. Serbian law governs these terms, but your local consumer rights are preserved.
+              <strong>In short:</strong> Claude Insider is free, open-source documentation. You can use and share it with attribution. We&apos;re not affiliated with Anthropic. The content is provided &quot;as is&quot; without warranties. We use privacy-focused analytics and store your preferences (theme, search history, language) locally on your device. Serbian law governs these terms, but your local consumer rights are preserved.
             </p>
           </section>
         </article>

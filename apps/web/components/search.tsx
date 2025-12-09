@@ -9,6 +9,12 @@ import {
   createSearchInstance,
   SearchDocument,
 } from "@/lib/search";
+import {
+  getSearchHistory,
+  addToSearchHistory,
+  clearSearchHistory,
+  SearchHistoryItem,
+} from "@/lib/search-history";
 
 export function Search() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +22,7 @@ export function Search() {
   const [results, setResults] = useState<SearchDocument[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const fuseRef = useRef<Fuse<SearchDocument> | null>(null);
   const router = useRouter();
@@ -24,6 +31,13 @@ export function Search() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Load search history on mount and when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setSearchHistory(getSearchHistory());
+    }
+  }, [isOpen]);
 
   // Initialize search index
   useEffect(() => {
@@ -93,10 +107,24 @@ export function Search() {
 
   // Navigate to result
   const navigateToResult = (url: string) => {
+    if (query.trim()) {
+      addToSearchHistory(query);
+    }
     router.push(url);
     setIsOpen(false);
     setQuery("");
     setResults([]);
+  };
+
+  // Handle clicking on a search history item
+  const handleHistoryClick = (historyQuery: string) => {
+    setQuery(historyQuery);
+  };
+
+  // Clear search history and refresh the list
+  const handleClearHistory = () => {
+    clearSearchHistory();
+    setSearchHistory([]);
   };
 
   return (
@@ -319,31 +347,76 @@ export function Search() {
                 </div>
               )}
 
-              {/* Initial state */}
+              {/* Initial state - show search history or hint */}
               {query.length < 2 && (
-                <div className="px-4 py-8 text-center">
-                  <p className="text-gray-600 dark:text-gray-400">
-                    Type at least 2 characters to search
-                  </p>
-                  <div className="flex justify-center gap-4 mt-4 text-xs text-gray-500">
-                    <span>
-                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
-                        ↑↓
-                      </kbd>{" "}
-                      Navigate
-                    </span>
-                    <span>
-                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
-                        Enter
-                      </kbd>{" "}
-                      Select
-                    </span>
-                    <span>
-                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
-                        Esc
-                      </kbd>{" "}
-                      Close
-                    </span>
+                <div className="px-4 py-4">
+                  {/* Recent searches */}
+                  {searchHistory.length > 0 && (
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                          Recent searches
+                        </span>
+                        <button
+                          onClick={handleClearHistory}
+                          className="text-xs text-gray-500 hover:text-orange-400 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded px-1"
+                        >
+                          Clear all
+                        </button>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {searchHistory.map((item) => (
+                          <button
+                            key={item.timestamp}
+                            onClick={() => handleHistoryClick(item.query)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-orange-500/10 hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
+                          >
+                            <svg
+                              className="w-3.5 h-3.5 text-gray-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                            {item.query}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Search hint */}
+                  <div className="text-center py-4">
+                    <p className="text-gray-600 dark:text-gray-400">
+                      Type at least 2 characters to search
+                    </p>
+                    <div className="flex justify-center gap-4 mt-4 text-xs text-gray-500">
+                      <span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
+                          ↑↓
+                        </kbd>{" "}
+                        Navigate
+                      </span>
+                      <span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
+                          Enter
+                        </kbd>{" "}
+                        Select
+                      </span>
+                      <span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
+                          Esc
+                        </kbd>{" "}
+                        Close
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}

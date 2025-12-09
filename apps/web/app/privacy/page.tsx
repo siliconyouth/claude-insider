@@ -90,14 +90,33 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Local Storage</h2>
             <p className="text-gray-300 leading-relaxed">
-              We use your browser&apos;s local storage solely to remember your theme preference (dark, light, or system mode). This data:
+              We use your browser&apos;s local storage to enhance your experience with the following features:
             </p>
-            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li>Is stored only on your device</li>
-              <li>Is never transmitted to our servers</li>
-              <li>Can be cleared by you at any time through your browser settings</li>
-              <li>Contains no personally identifiable information</li>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Data We Store Locally</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Theme preference:</strong> Your chosen display mode (dark, light, or system)</li>
+              <li><strong>Search history:</strong> Your recent search queries (up to 5 items) for quick access</li>
+              <li><strong>Language preference:</strong> Your selected language for future i18n support</li>
             </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Important Privacy Notes</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>All data is stored <strong>only on your device</strong></li>
+              <li>Data is <strong>never transmitted</strong> to our servers</li>
+              <li>You can clear this data anytime through your browser settings</li>
+              <li>None of this data contains personally identifiable information</li>
+              <li>Search history can be cleared directly from the search interface</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Storage Keys Used</h3>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
+              <ul className="space-y-1 text-gray-300 font-mono text-sm">
+                <li>• <code className="text-orange-400">theme</code> - Theme preference</li>
+                <li>• <code className="text-orange-400">claude-insider-search-history</code> - Recent searches</li>
+                <li>• <code className="text-orange-400">claude-insider-locale</code> - Language preference</li>
+              </ul>
+            </div>
           </section>
 
           <section className="mb-8">
@@ -221,7 +240,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> We respect your privacy. We use cookie-free, privacy-focused analytics (Vercel Analytics) that collects only anonymous usage data. We don&apos;t collect personal information, we don&apos;t use cookies, we don&apos;t track you across sites, and we don&apos;t sell any data. Your theme preference is stored locally on your device.
+              <strong>In short:</strong> We respect your privacy. We use cookie-free, privacy-focused analytics (Vercel Analytics) that collects only anonymous usage data. We don&apos;t collect personal information, we don&apos;t use cookies, we don&apos;t track you across sites, and we don&apos;t sell any data. Your preferences (theme, search history, language) are stored locally on your device and never sent to our servers.
             </p>
           </section>
         </article>
