@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
+import { CodeBlock } from "@/components/code-block";
 
 // Custom components for MDX rendering
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -78,14 +79,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
 
-    // Code blocks with styling
+    // Code blocks with copy button
     pre: ({ children, ...props }) => (
-      <pre
-        className="relative overflow-x-auto rounded-lg bg-gray-900 border border-gray-800 p-4 my-4"
-        {...props}
-      >
-        {children}
-      </pre>
+      <CodeBlock {...props}>{children}</CodeBlock>
     ),
 
     // Inline code
