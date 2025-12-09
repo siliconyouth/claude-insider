@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.15.0] - 2025-12-09
+
+### Added
+- **21 Additional Syntax Highlighting Languages** - Expanded code block support from 12 to 33 languages
+  - **New languages**: Java, C, C++, C#, PHP, Ruby, Swift, Kotlin, Scala, Dockerfile, GraphQL, R, Perl, Lua, TOML, Diff, Makefile, Nginx, Apache
+  - Each language has unique color badge for easy identification
+  - Supports common aliases (e.g., `rb` for Ruby, `kt` for Kotlin, `cs` for C#)
+
+### Technical Details
+- `apps/web/components/code-block.tsx` - Added 21 new highlight.js language imports and registrations
+- Added colored language tags: Java (red), C (dark blue), C++ (blue), C# (purple), PHP (indigo), Ruby (red), Swift (orange), Kotlin (violet), Scala (light red), Docker (sky blue), GraphQL (pink), R (light blue), Perl (slate), Lua (indigo), TOML (amber), Diff (emerald), Makefile (lime), Nginx (green), Apache (rose)
+
 ## [0.14.1] - 2025-12-09
 
 ### Fixed
@@ -497,6 +509,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.15.0 | 2025-12-09 | 21 additional syntax highlighting languages (33 total) |
 | 0.14.1 | 2025-12-09 | Demo animation timing fix (useEffect dependency array) |
 | 0.14.0 | 2025-12-09 | Fullscreen popup mode, OpenAssistantButton, /assistant redirects to popup |
 | 0.13.2 | 2025-12-09 | SDK architecture fix, client-safe utilities module |

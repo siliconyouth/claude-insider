@@ -15,6 +15,25 @@ import yaml from "highlight.js/lib/languages/yaml";
 import sql from "highlight.js/lib/languages/sql";
 import go from "highlight.js/lib/languages/go";
 import rust from "highlight.js/lib/languages/rust";
+import java from "highlight.js/lib/languages/java";
+import c from "highlight.js/lib/languages/c";
+import cpp from "highlight.js/lib/languages/cpp";
+import csharp from "highlight.js/lib/languages/csharp";
+import php from "highlight.js/lib/languages/php";
+import ruby from "highlight.js/lib/languages/ruby";
+import swift from "highlight.js/lib/languages/swift";
+import kotlin from "highlight.js/lib/languages/kotlin";
+import scala from "highlight.js/lib/languages/scala";
+import dockerfile from "highlight.js/lib/languages/dockerfile";
+import graphql from "highlight.js/lib/languages/graphql";
+import r from "highlight.js/lib/languages/r";
+import perl from "highlight.js/lib/languages/perl";
+import lua from "highlight.js/lib/languages/lua";
+import ini from "highlight.js/lib/languages/ini";
+import diff from "highlight.js/lib/languages/diff";
+import makefile from "highlight.js/lib/languages/makefile";
+import nginx from "highlight.js/lib/languages/nginx";
+import apache from "highlight.js/lib/languages/apache";
 
 // Register languages
 hljs.registerLanguage("javascript", javascript);
@@ -39,6 +58,37 @@ hljs.registerLanguage("sql", sql);
 hljs.registerLanguage("go", go);
 hljs.registerLanguage("rust", rust);
 hljs.registerLanguage("rs", rust);
+hljs.registerLanguage("java", java);
+hljs.registerLanguage("c", c);
+hljs.registerLanguage("cpp", cpp);
+hljs.registerLanguage("c++", cpp);
+hljs.registerLanguage("csharp", csharp);
+hljs.registerLanguage("cs", csharp);
+hljs.registerLanguage("c#", csharp);
+hljs.registerLanguage("php", php);
+hljs.registerLanguage("ruby", ruby);
+hljs.registerLanguage("rb", ruby);
+hljs.registerLanguage("swift", swift);
+hljs.registerLanguage("kotlin", kotlin);
+hljs.registerLanguage("kt", kotlin);
+hljs.registerLanguage("scala", scala);
+hljs.registerLanguage("dockerfile", dockerfile);
+hljs.registerLanguage("docker", dockerfile);
+hljs.registerLanguage("graphql", graphql);
+hljs.registerLanguage("gql", graphql);
+hljs.registerLanguage("r", r);
+hljs.registerLanguage("perl", perl);
+hljs.registerLanguage("pl", perl);
+hljs.registerLanguage("lua", lua);
+hljs.registerLanguage("ini", ini);
+hljs.registerLanguage("toml", ini);
+hljs.registerLanguage("diff", diff);
+hljs.registerLanguage("patch", diff);
+hljs.registerLanguage("makefile", makefile);
+hljs.registerLanguage("make", makefile);
+hljs.registerLanguage("nginx", nginx);
+hljs.registerLanguage("apache", apache);
+hljs.registerLanguage("apacheconf", apache);
 
 // Language display names and colors
 const languageConfig: Record<string, { name: string; color: string }> = {
@@ -66,6 +116,37 @@ const languageConfig: Record<string, { name: string; color: string }> = {
   go: { name: "Go", color: "bg-cyan-500" },
   rust: { name: "Rust", color: "bg-orange-600" },
   rs: { name: "Rust", color: "bg-orange-600" },
+  java: { name: "Java", color: "bg-red-600" },
+  c: { name: "C", color: "bg-blue-700" },
+  cpp: { name: "C++", color: "bg-blue-600" },
+  "c++": { name: "C++", color: "bg-blue-600" },
+  csharp: { name: "C#", color: "bg-purple-600" },
+  cs: { name: "C#", color: "bg-purple-600" },
+  "c#": { name: "C#", color: "bg-purple-600" },
+  php: { name: "PHP", color: "bg-indigo-500" },
+  ruby: { name: "Ruby", color: "bg-red-500" },
+  rb: { name: "Ruby", color: "bg-red-500" },
+  swift: { name: "Swift", color: "bg-orange-500" },
+  kotlin: { name: "Kotlin", color: "bg-violet-500" },
+  kt: { name: "Kotlin", color: "bg-violet-500" },
+  scala: { name: "Scala", color: "bg-red-400" },
+  dockerfile: { name: "Dockerfile", color: "bg-sky-500" },
+  docker: { name: "Docker", color: "bg-sky-500" },
+  graphql: { name: "GraphQL", color: "bg-pink-600" },
+  gql: { name: "GraphQL", color: "bg-pink-600" },
+  r: { name: "R", color: "bg-blue-400" },
+  perl: { name: "Perl", color: "bg-slate-500" },
+  pl: { name: "Perl", color: "bg-slate-500" },
+  lua: { name: "Lua", color: "bg-indigo-600" },
+  ini: { name: "INI", color: "bg-gray-500" },
+  toml: { name: "TOML", color: "bg-amber-600" },
+  diff: { name: "Diff", color: "bg-emerald-500" },
+  patch: { name: "Patch", color: "bg-emerald-500" },
+  makefile: { name: "Makefile", color: "bg-lime-600" },
+  make: { name: "Make", color: "bg-lime-600" },
+  nginx: { name: "Nginx", color: "bg-green-600" },
+  apache: { name: "Apache", color: "bg-rose-600" },
+  apacheconf: { name: "Apache", color: "bg-rose-600" },
   plaintext: { name: "Text", color: "bg-gray-600" },
   text: { name: "Text", color: "bg-gray-600" },
 };

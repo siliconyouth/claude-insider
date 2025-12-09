@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.14.1)
+## Current Status (v0.15.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -92,6 +92,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **OpenAssistantButton component** - Triggers assistant popup from anywhere
 - [x] **`/assistant` page redirects** to homepage (assistant is popup-only now)
 - [x] **Demo animation timing fix** - Proper useEffect dependency array for 46-second loops
+- [x] **33 syntax highlighting languages** - Expanded from 12 to 33 languages with colored badges
 
 ### All Features Complete
 

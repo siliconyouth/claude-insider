@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.14.1
+**Version**: 0.15.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -79,8 +79,9 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **`/assistant` page redirects** to homepage (assistant is popup-only now)
 
 - **Demo animation timing fix** - Proper useEffect dependency array for 46-second animation loops
+- **33 syntax highlighting languages** - Expanded from 12 to 33 languages with colored badges
 
-### Project Status: Complete (v0.14.1)
+### Project Status: Complete (v0.15.0)
 
 ## Tech Stack
 
@@ -269,7 +270,7 @@ Configured in `vercel.json`:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.14.1.
+All planned features have been implemented. The project is feature-complete at v0.15.0.
 
 ### Future Enhancements (Optional)
 - Multi-language support (i18n) when translations are ready
