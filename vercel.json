@@ -1,5 +1,51 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "ignoreCommand": "npx turbo-ignore"
+  "ignoreCommand": "npx turbo-ignore",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "claude-insider.com"
+        }
+      ],
+      "destination": "https://www.claudeinsider.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.claude-insider.com"
+        }
+      ],
+      "destination": "https://www.claudeinsider.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "claudeinsider.com"
+        }
+      ],
+      "destination": "https://www.claudeinsider.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "claude-insider.vercel.app"
+        }
+      ],
+      "destination": "https://www.claudeinsider.com/:path*",
+      "permanent": true
+    }
+  ]
 }

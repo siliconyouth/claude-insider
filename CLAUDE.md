@@ -5,7 +5,7 @@
 Claude Insider is a Next.js web application providing comprehensive documentation, tips, tricks, configuration guides, and setup instructions for Claude AI. Built entirely with Claude Code powered by Claude Opus 4.5.
 
 **Repository**: https://github.com/siliconyouth/claude-insider
-**Live Site**: https://claude-insider.vercel.app (pending deployment)
+**Live Site**: https://www.claudeinsider.com
 
 ## Current Project State
 

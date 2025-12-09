@@ -121,12 +121,15 @@ export default function HomePage() {
       <header className="border-b border-gray-800">
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-2">
+            <a
+              href="https://www.claudeinsider.com"
+              className="flex items-center gap-2"
+            >
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-amber-600">
                 <span className="text-lg font-bold text-white">C</span>
               </div>
               <span className="text-xl font-semibold">Claude Insider</span>
-            </div>
+            </a>
             <div className="hidden md:flex items-center gap-6">
               <Link
                 href="/docs"
@@ -250,14 +253,17 @@ export default function HomePage() {
       <footer className="border-t border-gray-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
+            <a
+              href="https://www.claudeinsider.com"
+              className="flex items-center gap-2"
+            >
               <div className="flex h-6 w-6 items-center justify-center rounded bg-gradient-to-br from-orange-500 to-amber-600">
                 <span className="text-xs font-bold text-white">C</span>
               </div>
               <span className="text-sm text-gray-400">
                 Claude Insider - Built with Claude Code & Opus 4.5
               </span>
-            </div>
+            </a>
             <div className="flex items-center gap-6 text-sm text-gray-400">
               <a
                 href="https://claude.ai"

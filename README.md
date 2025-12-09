@@ -6,7 +6,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 
 ## Live Demo
 
-Coming soon at [claude-insider.vercel.app](https://claude-insider.vercel.app)
+**[www.claudeinsider.com](https://www.claudeinsider.com)**
 
 ## Features
 
@@ -201,7 +201,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Links
 
-- [Live Site](https://claude-insider.vercel.app) (coming soon)
+- [Live Site](https://www.claudeinsider.com)
 - [GitHub Repository](https://github.com/siliconyouth/claude-insider)
 - [Claude AI](https://claude.ai)
 - [Claude Code](https://claude.ai/claude-code)
