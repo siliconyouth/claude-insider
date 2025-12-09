@@ -145,7 +145,38 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">10. External Links</h2>
+            <h2 className="text-2xl font-semibold mb-4">10. Privacy and Analytics</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Your privacy is important to us. Our use of data is governed by our{" "}
+              <a href="/privacy" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>,
+              which is incorporated into these Terms by reference.
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">10.1 Analytics</h3>
+            <p className="text-gray-300 leading-relaxed">
+              We use Vercel Analytics, a privacy-focused analytics service. By using this Website, you acknowledge that:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li>Anonymous usage data (page views, referrers, country, device type) is collected</li>
+              <li>No cookies are used for analytics</li>
+              <li>No personal data or IP addresses are stored</li>
+              <li>No cross-site tracking occurs</li>
+              <li>Data is not sold to third parties</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">10.2 Local Storage</h3>
+            <p className="text-gray-300 leading-relaxed">
+              We use browser local storage solely to remember your theme preference (dark/light mode). This data remains on your device and is never transmitted to our servers.
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">10.3 Security</h3>
+            <p className="text-gray-300 leading-relaxed">
+              We implement security measures including HTTPS encryption, Content Security Policy, and other protective headers to ensure a safe browsing experience.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">11. External Links</h2>
             <p className="text-gray-300 leading-relaxed">
               The Website may contain links to external websites or resources. We are not responsible for:
             </p>
@@ -157,7 +188,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">11. Modifications to Terms</h2>
+            <h2 className="text-2xl font-semibold mb-4">12. Modifications to Terms</h2>
             <p className="text-gray-300 leading-relaxed">
               We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting to the Website with an updated &quot;Last updated&quot; date. Your continued use of the Website after any changes constitutes acceptance of the new Terms.
             </p>
@@ -167,14 +198,14 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">12. Termination</h2>
+            <h2 className="text-2xl font-semibold mb-4">13. Termination</h2>
             <p className="text-gray-300 leading-relaxed">
               We reserve the right to terminate or restrict your access to the Website at any time, without notice, for any reason, including violation of these Terms. Upon termination, your right to use the Website will immediately cease.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">13. Governing Law and Jurisdiction</h2>
+            <h2 className="text-2xl font-semibold mb-4">14. Governing Law and Jurisdiction</h2>
             <p className="text-gray-300 leading-relaxed">
               These Terms shall be governed by and construed in accordance with the laws of the Republic of Serbia, without regard to its conflict of law provisions.
             </p>
@@ -190,21 +221,21 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">14. Severability</h2>
+            <h2 className="text-2xl font-semibold mb-4">15. Severability</h2>
             <p className="text-gray-300 leading-relaxed">
               If any provision of these Terms is found to be unenforceable or invalid by a court of competent jurisdiction, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">15. Entire Agreement</h2>
+            <h2 className="text-2xl font-semibold mb-4">16. Entire Agreement</h2>
             <p className="text-gray-300 leading-relaxed">
               These Terms, together with our Privacy Policy, constitute the entire agreement between you and us regarding your use of the Website and supersede any prior agreements.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">16. Contact Information</h2>
+            <h2 className="text-2xl font-semibold mb-4">17. Contact Information</h2>
             <p className="text-gray-300 leading-relaxed">
               If you have any questions or concerns about these Terms of Service, please contact us at:
             </p>
