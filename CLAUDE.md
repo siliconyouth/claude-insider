@@ -9,6 +9,8 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
+**Version**: 0.2.2
+
 ### Completed
 - Turborepo monorepo with pnpm workspaces
 - Next.js 16.0.7 with App Router
@@ -19,9 +21,10 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - SEO metadata and Open Graph tags
 - Responsive design
 - Vercel deployment configuration (`vercel.json`)
+- GitHub repository structure fixed (files at root)
 
 ### Pending
-- Configure Vercel Root Directory to `apps/web`
+- Configure Vercel Root Directory to `apps/web` in Vercel dashboard
 - MDX content support
 - Full documentation content
 - Search functionality

@@ -16,7 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Copy-to-clipboard for code blocks
 - Sitemap generation
 
-## [0.2.1] - 2024-12-09
+## [0.2.2] - 2025-12-09
+
+### Fixed
+- GitHub repository structure - moved all files from nested `claude-insider/` subfolder to root
+- Reset git history with clean initial commit
+- All project files now correctly at repository root
+
+### Notes
+- Repository ready for Vercel deployment (set Root Directory to `apps/web`)
+
+## [0.2.1] - 2025-12-09
 
 ### Added
 - Vercel deployment configuration (`vercel.json`)
@@ -29,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Notes
 - Vercel deployment requires setting Root Directory to `apps/web` in project settings
 
-## [0.2.0] - 2024-12-09
+## [0.2.0] - 2025-12-09
 
 ### Added
 - Homepage with hero section, category cards, and features
@@ -55,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated turbo.json with format and clean tasks
 - Customized globals.css with dark theme variables
 
-## [0.1.0] - 2024-12-08
+## [0.1.0] - 2025-12-08
 
 ### Added
 - Initial Turborepo monorepo setup with pnpm
@@ -85,9 +95,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
-| 0.2.1 | 2024-12-09 | Vercel deployment configuration |
-| 0.2.0 | 2024-12-09 | Homepage, docs pages, dark theme |
-| 0.1.0 | 2024-12-08 | Initial Turborepo setup |
+| 0.2.2 | 2025-12-09 | Fixed GitHub repo structure |
+| 0.2.1 | 2025-12-09 | Vercel deployment configuration |
+| 0.2.0 | 2025-12-09 | Homepage, docs pages, dark theme |
+| 0.1.0 | 2025-12-08 | Initial Turborepo setup |
 
 ## Upcoming Features
 

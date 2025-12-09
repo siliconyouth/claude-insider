@@ -152,6 +152,7 @@ claude-insider/
 - [x] SEO metadata and Open Graph tags
 - [x] Responsive design (mobile, tablet, desktop)
 - [x] Vercel deployment configuration
+- [x] GitHub repository structure fixed (v0.2.2)
 
 ### Pages Implemented
 
@@ -299,7 +300,8 @@ claude-insider/
 - [x] Basic page structure and navigation
 - [x] Initial content structure
 - [x] Vercel deployment configuration
-- [ ] Deploy to Vercel (pending Root Directory config)
+- [x] GitHub repository structure fixed
+- [ ] Deploy to Vercel (pending Root Directory config in Vercel dashboard)
 
 ### Phase 2: Core Content - IN PROGRESS
 - [ ] Getting Started guides (full content)

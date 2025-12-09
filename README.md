@@ -30,9 +30,10 @@ Coming soon at [claude-insider.vercel.app](https://claude-insider.vercel.app)
 - [x] Responsive design
 - [x] SEO metadata
 - [x] Vercel deployment config
+- [x] GitHub repository structure fixed
 
 ### In Progress
-- [ ] Configure Vercel Root Directory to `apps/web`
+- [ ] Configure Vercel Root Directory to `apps/web` and deploy
 - [ ] MDX content support
 - [ ] Full documentation content
 - [ ] Search functionality
