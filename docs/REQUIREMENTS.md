@@ -87,8 +87,9 @@ claude-insider/
 │   │   │       └── [...slug]/
 │   │   │           └── page.tsx  # Dynamic MDX route
 │   │   ├── components/
-│   │   │   ├── header.tsx        # Shared header with nav, search, theme
-│   │   │   ├── docs-layout.tsx   # Shared docs layout
+│   │   │   ├── header.tsx        # Shared header with mobile menu
+│   │   │   ├── docs-layout.tsx   # Shared docs layout with TOC
+│   │   │   ├── table-of-contents.tsx  # TOC with scroll spy
 │   │   │   ├── code-block.tsx    # Code block with copy button
 │   │   │   ├── copy-button.tsx   # Reusable copy button
 │   │   │   ├── search.tsx        # Search modal (Cmd+K) with React Portal
@@ -190,6 +191,11 @@ claude-insider/
 - [x] Fuzzy search with Fuse.js (Cmd/Ctrl+K)
 - [x] 16 documentation pages with comprehensive content
 - [x] Shared Header component for consistent navigation
+- [x] **Deployed to Vercel** (production live at www.claudeinsider.com)
+- [x] Table of Contents with scroll spy
+- [x] Mobile navigation menu with hamburger toggle
+- [x] Dynamic sitemap.xml generation
+- [x] robots.txt for SEO
 
 ### Pages Implemented
 
@@ -222,7 +228,7 @@ claude-insider/
 - [x] Support MDX for rich documentation content
 - [x] Syntax highlighting for code blocks
 - [x] Copy-to-clipboard functionality for code snippets
-- [ ] Table of contents generation for long articles
+- [x] Table of contents generation for long articles
 
 ### FR-2: Navigation
 - [x] Category-based navigation (Getting Started, Config, Tips, API, Integrations)
@@ -268,7 +274,8 @@ claude-insider/
 ### NFR-3: SEO
 - [x] Server-side rendering for all content pages
 - [x] Proper meta tags and Open Graph data
-- [ ] Sitemap generation
+- [x] Sitemap generation
+- [x] robots.txt
 - [ ] Structured data for documentation
 
 ### NFR-4: Security
@@ -313,22 +320,15 @@ claude-insider/
 
 ## To-Do List
 
-### High Priority
-1. [ ] Set Vercel Root Directory to `apps/web` and deploy
-2. [ ] Verify domain redirects working (claudeinsider.com → www.claudeinsider.com)
-3. [ ] Test all pages on production
-
 ### Medium Priority
-4. [ ] Generate sitemap.xml
-5. [ ] Add table of contents component for long articles
-6. [ ] Lighthouse performance audit and optimization
-7. [ ] Add structured data (JSON-LD) for documentation
+1. [ ] Lighthouse performance audit and optimization
+2. [ ] Add structured data (JSON-LD) for documentation
 
 ### Low Priority
-8. [ ] Add GitHub Actions CI/CD pipeline
-9. [ ] Implement offline support (PWA)
-10. [ ] Accessibility audit and fixes
-11. [ ] Add analytics (privacy-respecting)
+3. [ ] Add GitHub Actions CI/CD pipeline
+4. [ ] Implement offline support (PWA)
+5. [ ] Accessibility audit and fixes
+6. [ ] Add analytics (privacy-respecting)
 
 ---
 
@@ -355,11 +355,17 @@ claude-insider/
 - [x] Code copy functionality
 - [x] Custom MDX components
 
-### Phase 4: Polish - IN PROGRESS
-- [ ] Performance optimization
-- [ ] SEO improvements (sitemap, structured data)
+### Phase 4: Polish - COMPLETED
+- [x] Performance optimization (static generation)
+- [x] SEO improvements (sitemap, robots.txt)
+- [x] Table of Contents with scroll spy
+- [x] Mobile navigation menu
+- [x] Production deployment to Vercel
+
+### Phase 5: Enhancements - PLANNED
+- [ ] Lighthouse optimization
+- [ ] Structured data (JSON-LD)
 - [ ] Accessibility audit
-- [ ] Production deployment
 
 ---
 

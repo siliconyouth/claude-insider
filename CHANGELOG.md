@@ -8,11 +8,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Deploy to Vercel (configure Root Directory to `apps/web`)
-- Sitemap generation
-- Table of contents component
 - Lighthouse optimization
 - Structured data (JSON-LD)
+- Accessibility audit
+
+## [0.4.0] - 2025-12-09
+
+### Added
+- Table of Contents component with scroll spy and smooth scrolling
+- Mobile navigation menu with hamburger toggle
+- Dynamic sitemap.xml generation for all documentation pages
+- robots.txt for search engine optimization
+
+### Changed
+- Header component now supports light/dark theme properly
+- Improved mobile responsiveness across all pages
+- DocsLayout now includes Table of Contents sidebar on XL screens
+
+### Infrastructure
+- Deployed to Vercel with Root Directory set to `apps/web`
+- Domain redirects verified working (claudeinsider.com → www.claudeinsider.com)
+- All 16 documentation pages tested and verified
 
 ## [0.3.1] - 2025-12-09
 
@@ -135,6 +151,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.4.0 | 2025-12-09 | TOC, mobile menu, sitemap, production deployment |
 | 0.3.1 | 2025-12-09 | Shared Header component, search modal portal fix |
 | 0.3.0 | 2025-12-09 | MDX content, search, theme toggle, 16 doc pages |
 | 0.2.2 | 2025-12-09 | Fixed GitHub repo structure |
@@ -144,13 +161,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Upcoming Features
 
-### High Priority
-- [ ] Deploy to Vercel (configure Root Directory)
-- [ ] Verify domain redirects
-
 ### Medium Priority
-- [ ] Generate sitemap.xml
-- [ ] Table of contents component
 - [ ] Lighthouse optimization
 - [ ] Structured data (JSON-LD)
 

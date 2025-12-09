@@ -18,7 +18,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.3.1)
+## Current Status (v0.4.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -35,12 +35,14 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] SEO metadata
 - [x] Vercel deployment config with domain redirects
 - [x] Shared Header component for consistent navigation site-wide
+- [x] **Deployed to Vercel** (production live)
+- [x] Table of Contents with scroll spy
+- [x] Mobile navigation menu
+- [x] Dynamic sitemap.xml and robots.txt
 
 ### Pending
-- [ ] Deploy to Vercel (set Root Directory to `apps/web`)
-- [ ] Sitemap generation
-- [ ] Table of contents for long articles
 - [ ] Lighthouse optimization
+- [ ] Structured data (JSON-LD)
 
 ## Documentation Pages
 
@@ -82,8 +84,9 @@ claude-insider/
 │   │   │       ├── getting-started/
 │   │   │       └── [...slug]/    # Dynamic MDX route
 │   │   ├── components/
-│   │   │   ├── header.tsx        # Shared header component
+│   │   │   ├── header.tsx        # Shared header with mobile menu
 │   │   │   ├── docs-layout.tsx   # Shared docs layout
+│   │   │   ├── table-of-contents.tsx  # TOC with scroll spy
 │   │   │   ├── code-block.tsx    # Code with copy button
 │   │   │   ├── search.tsx        # Search modal (React Portal)
 │   │   │   └── theme-toggle.tsx  # Theme switcher
@@ -188,13 +191,7 @@ The `vercel.json` handles redirects:
 
 ## To-Do
 
-### High Priority
-- [ ] Deploy to Vercel (configure Root Directory)
-- [ ] Verify domain redirects
-
 ### Medium Priority
-- [ ] Generate sitemap.xml
-- [ ] Table of contents component
 - [ ] Lighthouse optimization
 - [ ] Structured data (JSON-LD)
 

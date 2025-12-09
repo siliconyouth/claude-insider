@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 import { Header } from "@/components/header";
+import { TableOfContents } from "@/components/table-of-contents";
 
 interface DocsLayoutProps {
   children: ReactNode;
@@ -55,7 +56,7 @@ export function DocsLayout({
           )}
 
           {/* Main Content */}
-          <main className={`flex-1 min-w-0 ${!sidebar ? "max-w-4xl mx-auto" : ""}`}>
+          <main className={`flex-1 min-w-0 ${!sidebar ? "max-w-4xl mx-auto" : ""}`} id="main-content">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
               {breadcrumbs.map((crumb, index) => (
@@ -137,6 +138,9 @@ export function DocsLayout({
               </div>
             )}
           </main>
+
+          {/* Table of Contents */}
+          <TableOfContents contentSelector="article" />
         </div>
       </div>
 

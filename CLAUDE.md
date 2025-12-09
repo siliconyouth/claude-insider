@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.3.1
+**Version**: 0.4.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -28,12 +28,14 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Vercel deployment configuration with domain redirects
 - Shared Header component with consistent navigation across all pages
 - Search modal using React Portal for proper z-index layering
+- **Deployed to production** at www.claudeinsider.com
+- Table of Contents with scroll spy
+- Mobile navigation menu with hamburger toggle
+- Dynamic sitemap.xml and robots.txt for SEO
 
 ### Pending
-- Deploy to Vercel (set Root Directory to `apps/web`)
-- Sitemap generation
-- Table of contents component
 - Lighthouse optimization
+- Structured data (JSON-LD)
 
 ## Tech Stack
 
@@ -65,8 +67,9 @@ claude-insider/
 │   │   │       └── [...slug]/
 │   │   │           └── page.tsx  # Dynamic MDX route
 │   │   ├── components/
-│   │   │   ├── header.tsx        # Shared header with nav, search, theme
-│   │   │   ├── docs-layout.tsx   # Shared docs layout
+│   │   │   ├── header.tsx        # Shared header with mobile menu
+│   │   │   ├── docs-layout.tsx   # Shared docs layout with TOC
+│   │   │   ├── table-of-contents.tsx  # TOC with scroll spy
 │   │   │   ├── code-block.tsx    # Code with copy button
 │   │   │   ├── copy-button.tsx   # Reusable copy button
 │   │   │   ├── search.tsx        # Search modal (React Portal, Cmd+K)
@@ -183,21 +186,14 @@ Configured in `vercel.json`:
 
 ## To-Do (Priority Order)
 
-### High Priority
-1. [ ] Deploy to Vercel (set Root Directory to `apps/web`)
-2. [ ] Verify domain redirects working
-3. [ ] Test all pages on production
-
 ### Medium Priority
-4. [ ] Generate sitemap.xml
-5. [ ] Add table of contents for long articles
-6. [ ] Lighthouse performance optimization
-7. [ ] Add structured data (JSON-LD)
+1. [ ] Lighthouse performance optimization
+2. [ ] Add structured data (JSON-LD)
 
 ### Low Priority
-8. [ ] GitHub Actions CI/CD
-9. [ ] PWA offline support
-10. [ ] Accessibility audit
+3. [ ] GitHub Actions CI/CD
+4. [ ] PWA offline support
+5. [ ] Accessibility audit
 
 ## Adding New Documentation Pages
 
