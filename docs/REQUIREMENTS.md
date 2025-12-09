@@ -94,7 +94,8 @@ claude-insider/
 │   │   │   ├── code-block.tsx    # Code block with copy button
 │   │   │   ├── copy-button.tsx   # Reusable copy button
 │   │   │   ├── search.tsx        # Search modal (Cmd+K) with React Portal
-│   │   │   └── theme-toggle.tsx  # Dark/light/system theme toggle
+│   │   │   ├── theme-toggle.tsx  # Dark/light/system theme toggle
+│   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── content/              # MDX documentation content
 │   │   │   ├── getting-started/
 │   │   │   │   ├── installation.mdx
@@ -203,6 +204,11 @@ claude-insider/
 - [x] Image optimization with AVIF/WebP formats
 - [x] Syntax highlighting for code blocks using highlight.js
 - [x] Colored language tags above code blocks (15+ languages)
+- [x] Shared Footer component with copyright attribution
+- [x] Privacy Policy page (GDPR, CCPA, Serbian law compliant)
+- [x] Terms of Service page (international coverage, Serbian jurisdiction)
+- [x] Disclaimer page (non-affiliation with Anthropic)
+- [x] Accessibility Statement page (WCAG 2.1 AA conformance)
 
 ### Pages Implemented
 
@@ -226,6 +232,10 @@ claude-insider/
 | `/docs/integrations/mcp-servers` | Done | MCP servers guide (MDX) |
 | `/docs/integrations/ide-plugins` | Done | IDE plugins guide (MDX) |
 | `/docs/integrations/hooks` | Done | Hooks documentation (MDX) |
+| `/privacy` | Done | Privacy Policy (GDPR, CCPA, Serbian law) |
+| `/terms` | Done | Terms of Service (international) |
+| `/disclaimer` | Done | Disclaimer (non-affiliation notice) |
+| `/accessibility` | Done | Accessibility Statement (WCAG 2.1 AA) |
 
 ---
 
@@ -335,6 +345,7 @@ All planned features have been implemented. The project is feature-complete.
 - [ ] Add GitHub Actions CI/CD pipeline (optional - Vercel handles deployment)
 - [ ] Add privacy-respecting analytics (optional)
 - [ ] Add more syntax highlighting languages as needed
+- [ ] Add Content Security Policy headers
 
 ---
 
@@ -385,6 +396,13 @@ All planned features have been implemented. The project is feature-complete.
 - [x] Colored language tags above code blocks
 - [x] Support for 15+ languages (JavaScript, TypeScript, Python, Bash, JSON, HTML, CSS, YAML, SQL, Go, Rust, etc.)
 - [x] Language-specific colors (TypeScript=blue, JavaScript=yellow, Python=green, etc.)
+
+### Phase 8: Legal & Compliance - COMPLETED
+- [x] Shared Footer component with copyright and legal links
+- [x] Privacy Policy page (GDPR, CCPA, Serbian Data Protection Law)
+- [x] Terms of Service page (Serbian jurisdiction, EU/US consumer rights preserved)
+- [x] Disclaimer page (non-affiliation with Anthropic, accuracy warnings)
+- [x] Accessibility Statement page (WCAG 2.1 AA conformance documentation)
 
 ---
 

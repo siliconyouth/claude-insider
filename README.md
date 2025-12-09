@@ -18,7 +18,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.7.0)
+## Current Status (v0.8.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -46,6 +46,11 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Accessibility audit and fixes (ARIA, focus states, skip link)
 - [x] Syntax highlighting for code blocks using highlight.js
 - [x] Colored language tags (TypeScript=blue, JavaScript=yellow, Python=green, etc.)
+- [x] Shared Footer component with copyright attribution
+- [x] Privacy Policy page (GDPR, CCPA, Serbian law compliant)
+- [x] Terms of Service page (international coverage)
+- [x] Disclaimer page (non-affiliation with Anthropic)
+- [x] Accessibility Statement page (WCAG 2.1 AA documentation)
 
 ### All Features Complete
 
@@ -58,6 +63,15 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | **Tips & Tricks** | Overview, Prompting, Productivity |
 | **API Reference** | Overview, Authentication, Tool Use |
 | **Integrations** | Overview, MCP Servers, IDE Plugins, Hooks |
+
+## Legal Pages
+
+| Page | Route | Description |
+|------|-------|-------------|
+| Privacy Policy | `/privacy` | GDPR, CCPA, Serbian law compliant |
+| Terms of Service | `/terms` | International coverage, Serbian jurisdiction |
+| Disclaimer | `/disclaimer` | Non-affiliation notice, accuracy warnings |
+| Accessibility | `/accessibility` | WCAG 2.1 AA conformance statement |
 
 ## Tech Stack
 
@@ -95,7 +109,8 @@ claude-insider/
 │   │   │   ├── table-of-contents.tsx  # TOC with scroll spy
 │   │   │   ├── code-block.tsx    # Code with copy button
 │   │   │   ├── search.tsx        # Search modal (React Portal)
-│   │   │   └── theme-toggle.tsx  # Theme switcher
+│   │   │   ├── theme-toggle.tsx  # Theme switcher
+│   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── content/              # MDX documentation
 │   │   │   ├── getting-started/
 │   │   │   ├── configuration/

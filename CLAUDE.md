@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.7.0
+**Version**: 0.8.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -38,6 +38,8 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Accessibility audit (ARIA labels, focus states, skip link)
 - Syntax highlighting for code blocks using highlight.js
 - Colored language tags above code blocks (15+ languages supported)
+- Shared Footer component with copyright attribution
+- Legal pages: Privacy Policy, Terms of Service, Disclaimer, Accessibility Statement
 
 ### Project Status: Complete
 
@@ -79,7 +81,8 @@ claude-insider/
 │   │   │   ├── copy-button.tsx   # Reusable copy button
 │   │   │   ├── search.tsx        # Search modal (React Portal, Cmd+K)
 │   │   │   ├── theme-toggle.tsx  # Dark/light/system toggle
-│   │   │   └── json-ld.tsx       # JSON-LD structured data components
+│   │   │   ├── json-ld.tsx       # JSON-LD structured data components
+│   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── content/              # MDX documentation
 │   │   │   ├── getting-started/  # installation.mdx, quickstart.mdx
 │   │   │   ├── configuration/    # index.mdx, claude-md.mdx, settings.mdx
@@ -189,6 +192,15 @@ Configured in `vercel.json`:
 | Tips & Tricks | `/docs/tips-and-tricks` | Prompting, productivity, best practices |
 | API Reference | `/docs/api` | Claude API docs, SDK, tool use |
 | Integrations | `/docs/integrations` | MCP servers, IDE plugins, hooks |
+
+## Legal Pages
+
+| Page | Route | Description |
+|------|-------|-------------|
+| Privacy Policy | `/privacy` | GDPR, CCPA, Serbian law compliant |
+| Terms of Service | `/terms` | International coverage, Serbian jurisdiction |
+| Disclaimer | `/disclaimer` | Non-affiliation with Anthropic |
+| Accessibility | `/accessibility` | WCAG 2.1 AA conformance statement |
 
 ## Project Status
 
