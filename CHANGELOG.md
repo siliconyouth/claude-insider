@@ -14,6 +14,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lighthouse optimization
 - Structured data (JSON-LD)
 
+## [0.3.1] - 2025-12-09
+
+### Added
+- Shared Header component (`header.tsx`) for consistent navigation across all pages
+- React Portal rendering for search modal to fix z-index layering issues
+
+### Fixed
+- Search modal now displays correctly on all pages (fixed clipping on content pages)
+- Search and Theme Toggle now appear consistently on `/docs` and `/docs/getting-started` pages
+- Removed duplicate header implementations from individual page files
+
+### Changed
+- Refactored `apps/web/app/page.tsx` to use shared Header component
+- Refactored `apps/web/app/docs/page.tsx` to use shared Header component
+- Refactored `apps/web/app/docs/getting-started/page.tsx` to use shared Header component
+- Refactored `apps/web/components/docs-layout.tsx` to use shared Header component
+- Updated search component to use `createPortal` for rendering at document.body level
+
 ## [0.3.0] - 2025-12-09
 
 ### Added
@@ -117,6 +135,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.3.1 | 2025-12-09 | Shared Header component, search modal portal fix |
 | 0.3.0 | 2025-12-09 | MDX content, search, theme toggle, 16 doc pages |
 | 0.2.2 | 2025-12-09 | Fixed GitHub repo structure |
 | 0.2.1 | 2025-12-09 | Vercel deployment configuration |

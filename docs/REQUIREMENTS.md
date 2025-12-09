@@ -87,10 +87,11 @@ claude-insider/
 │   │   │       └── [...slug]/
 │   │   │           └── page.tsx  # Dynamic MDX route
 │   │   ├── components/
+│   │   │   ├── header.tsx        # Shared header with nav, search, theme
 │   │   │   ├── docs-layout.tsx   # Shared docs layout
 │   │   │   ├── code-block.tsx    # Code block with copy button
 │   │   │   ├── copy-button.tsx   # Reusable copy button
-│   │   │   ├── search.tsx        # Search modal (Cmd+K)
+│   │   │   ├── search.tsx        # Search modal (Cmd+K) with React Portal
 │   │   │   └── theme-toggle.tsx  # Dark/light/system theme toggle
 │   │   ├── content/              # MDX documentation content
 │   │   │   ├── getting-started/
@@ -188,6 +189,7 @@ claude-insider/
 - [x] Code copy-to-clipboard functionality
 - [x] Fuzzy search with Fuse.js (Cmd/Ctrl+K)
 - [x] 16 documentation pages with comprehensive content
+- [x] Shared Header component for consistent navigation
 
 ### Pages Implemented
 

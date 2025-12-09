@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.3.0
+**Version**: 0.3.1
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -26,6 +26,8 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - SEO metadata and Open Graph tags
 - Responsive design
 - Vercel deployment configuration with domain redirects
+- Shared Header component with consistent navigation across all pages
+- Search modal using React Portal for proper z-index layering
 
 ### Pending
 - Deploy to Vercel (set Root Directory to `apps/web`)
@@ -63,10 +65,11 @@ claude-insider/
 │   │   │       └── [...slug]/
 │   │   │           └── page.tsx  # Dynamic MDX route
 │   │   ├── components/
+│   │   │   ├── header.tsx        # Shared header with nav, search, theme
 │   │   │   ├── docs-layout.tsx   # Shared docs layout
 │   │   │   ├── code-block.tsx    # Code with copy button
 │   │   │   ├── copy-button.tsx   # Reusable copy button
-│   │   │   ├── search.tsx        # Search modal (Cmd+K)
+│   │   │   ├── search.tsx        # Search modal (React Portal, Cmd+K)
 │   │   │   └── theme-toggle.tsx  # Dark/light/system toggle
 │   │   ├── content/              # MDX documentation
 │   │   │   ├── getting-started/  # installation.mdx, quickstart.mdx

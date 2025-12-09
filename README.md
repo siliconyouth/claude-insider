@@ -18,7 +18,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.3.0)
+## Current Status (v0.3.1)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -34,6 +34,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Responsive design
 - [x] SEO metadata
 - [x] Vercel deployment config with domain redirects
+- [x] Shared Header component for consistent navigation site-wide
 
 ### Pending
 - [ ] Deploy to Vercel (set Root Directory to `apps/web`)
@@ -81,9 +82,10 @@ claude-insider/
 │   │   │       ├── getting-started/
 │   │   │       └── [...slug]/    # Dynamic MDX route
 │   │   ├── components/
+│   │   │   ├── header.tsx        # Shared header component
 │   │   │   ├── docs-layout.tsx   # Shared docs layout
 │   │   │   ├── code-block.tsx    # Code with copy button
-│   │   │   ├── search.tsx        # Search modal
+│   │   │   ├── search.tsx        # Search modal (React Portal)
 │   │   │   └── theme-toggle.tsx  # Theme switcher
 │   │   ├── content/              # MDX documentation
 │   │   │   ├── getting-started/
