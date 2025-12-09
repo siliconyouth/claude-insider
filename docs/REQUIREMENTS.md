@@ -106,9 +106,9 @@ claude-insider/
 │   │   │   ├── content-meta.tsx  # Source citations & AI generation metadata
 │   │   │   ├── edit-on-github.tsx # "Edit this page on GitHub" link component
 │   │   │   ├── language-selector.tsx # Language dropdown for i18n
-│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
-│   │   │   ├── voice-assistant-full.tsx # Full-page voice assistant
+│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT (popup + fullscreen)
 │   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
+│   │   │   ├── open-assistant-button.tsx # Button to open assistant popup
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
@@ -478,7 +478,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.13.2.
+All planned features have been implemented. The project is feature-complete at v0.14.0.
 
 ### Content Expansion (All Complete)
 
@@ -656,12 +656,22 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] Updated imports across voice assistant components to use `claude-utils.ts`
 - [x] Build and runtime verification with Puppeteer testing
 
+### Phase 17: Fullscreen Popup Mode - COMPLETED (v0.14.0)
+- [x] **Fullscreen Popup Mode** - Voice assistant supports expandable fullscreen overlay
+- [x] **Expand/Minimize Toggle** - Button to toggle between chat window and fullscreen view
+- [x] **OpenAssistantButton Component** - New client component to trigger assistant popup from any page
+- [x] **External Open Function** - `openAssistant()` export to open popup programmatically
+- [x] **Homepage Integration** - "Try the Assistant" button opens popup instead of navigating to /assistant
+- [x] **`/assistant` Redirect** - Page now redirects to homepage (assistant is popup-only)
+- [x] **Extended Demo Animation** - Demo now 46 seconds with longer reading pauses and 3-second pause before loop
+- [x] **Escape Key Behavior** - First minimizes fullscreen, then closes popup on second press
+
 ### Pages Implemented (28 Documentation + 7 Utility Pages)
 
 | Route | Status | Description |
 |-------|--------|-------------|
 | `/` | Done | Homepage with hero, categories, features |
-| `/assistant` | Done | Full-page voice assistant interface |
+| `/assistant` | Done | Redirects to homepage (popup-only) |
 | `/docs` | Done | Documentation index with all sections |
 | `/docs/getting-started` | Done | Introduction to Claude AI |
 | `/privacy` | Done | Privacy Policy (GDPR, CCPA, Serbian law) |

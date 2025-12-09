@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.14.0] - 2025-12-09
+
+### Added
+- **Fullscreen Popup Mode** - Voice assistant now supports fullscreen overlay mode
+- **Expand/Minimize Toggle** - Button to toggle between chat window and fullscreen view
+- **External Open Function** - `openAssistant()` function to open popup from other components
+- **OpenAssistantButton Component** - Reusable button to trigger assistant popup
+- **Extended Demo Animation** - Demo now 46 seconds with longer reading pauses
+
+### Changed
+- **Homepage "Try the Assistant" Button** - Now opens popup instead of navigating to /assistant
+- **`/assistant` Page** - Now redirects to homepage (assistant is popup-only)
+- **Escape Key Behavior** - First minimizes fullscreen, then closes popup on second press
+- **Demo Timing** - Extended from 32s to 46s with 3-second pause before loop
+
+### Technical Details
+- `voice-assistant.tsx` - Added `isFullscreen` state, `openAssistant()` export, fullscreen backdrop
+- `open-assistant-button.tsx` - New client component for triggering assistant popup
+- `app/page.tsx` - Replaced Link to /assistant with OpenAssistantButton
+- `app/assistant/page.tsx` - Simplified to redirect to homepage
+
 ## [0.13.2] - 2025-12-09
 
 ### Fixed
@@ -464,6 +485,8 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.14.0 | 2025-12-09 | Fullscreen popup mode, OpenAssistantButton, /assistant redirects to popup |
+| 0.13.2 | 2025-12-09 | SDK architecture fix, client-safe utilities module |
 | 0.13.1 | 2025-12-09 | Dedicated /assistant page, enhanced homepage demo animation |
 | 0.13.0 | 2025-12-09 | 9 new doc pages, markdown cleanup, TTS improvements, performance |
 | 0.12.1 | 2025-12-09 | Voice polish, 3 new doc pages, analytics tracking, error boundary |

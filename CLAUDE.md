@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.13.2
+**Version**: 0.14.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -70,13 +70,15 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Markdown display cleanup** - Chat responses display without markdown syntax
 - **TTS markdown handling** - Converts markdown to speakable text for natural speech
 - Performance optimizations (CSS optimization, source map removal, memoization)
-- **Dedicated `/assistant` page** for full-page voice assistant experience
-- **Homepage demo animation** with 32-second animated showcase and audio waveform
+- **Homepage demo animation** with 46-second animated showcase and audio waveform
 - **Voice assistant demo component** for interactive homepage preview
 - **Client-safe utilities module** (`lib/claude-utils.ts`) for browser-compatible code
 - **Server-only SDK isolation** - Anthropic SDK properly isolated from client bundles
+- **Fullscreen Popup Mode** - Voice assistant supports expandable fullscreen overlay
+- **OpenAssistantButton component** - Triggers assistant popup from anywhere
+- **`/assistant` page redirects** to homepage (assistant is popup-only now)
 
-### Project Status: Complete (v0.13.2)
+### Project Status: Complete (v0.14.0)
 
 ## Tech Stack
 
@@ -123,9 +125,9 @@ claude-insider/
 │   │   │   ├── content-meta.tsx  # Source citations & AI metadata
 │   │   │   ├── edit-on-github.tsx # "Edit this page on GitHub" link
 │   │   │   ├── language-selector.tsx # Language dropdown for i18n
-│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
-│   │   │   ├── voice-assistant-full.tsx # Full-page voice assistant
+│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT (popup + fullscreen)
 │   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
+│   │   │   ├── open-assistant-button.tsx # Button to open assistant popup
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
@@ -261,11 +263,11 @@ Configured in `vercel.json`:
 | Accessibility | `/accessibility` | WCAG 2.1 AA conformance statement |
 | Changelog | `/changelog` | Version history and release notes |
 | RSS Feed | `/feed.xml` | Subscribe to documentation updates |
-| AI Assistant | `/assistant` | Full-page voice assistant interface |
+| AI Assistant | `/assistant` | Redirects to homepage (popup-only) |
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.13.1.
+All planned features have been implemented. The project is feature-complete at v0.14.0.
 
 ### Future Enhancements (Optional)
 - Multi-language support (i18n) when translations are ready
@@ -277,7 +279,8 @@ All planned features have been implemented. The project is feature-complete at v
 The AI Voice Assistant provides a hands-free way to interact with documentation:
 
 ### Components
-- **`voice-assistant.tsx`**: Main React component with chat interface, TTS controls, voice selector
+- **`voice-assistant.tsx`**: Main React component with chat interface, TTS controls, voice selector, fullscreen toggle
+- **`open-assistant-button.tsx`**: Client component to trigger opening the assistant popup from any page
 - **Wake Word Detection**: Uses Web Speech API to listen for "Hey Insider"
 - **Speech Recognition**: Converts user speech to text with real-time transcription
 - **Streaming Chat**: SSE-based streaming from Claude AI with RAG context
@@ -301,6 +304,8 @@ The AI Voice Assistant provides a hands-free way to interact with documentation:
 - **Streaming TTS**: Voice starts after first sentence (doesn't wait for full response)
 - **Conversation Export**: Copy chat history to clipboard
 - **TTS Loading Indicator**: Visual feedback during audio generation
+- **Fullscreen Mode**: Expand popup to fullscreen overlay with minimize toggle
+- **External Open Function**: `openAssistant()` export to open popup programmatically
 
 ### RAG System
 - **TF-IDF Search**: Indexes all documentation pages

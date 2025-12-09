@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.13.2)
+## Current Status (v0.14.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -84,11 +84,13 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Conversation export (copy to clipboard)
 - [x] Error boundary for voice assistant resilience
 - [x] Analytics tracking for voice assistant interactions
-- [x] **Dedicated `/assistant` page** for full-page voice assistant experience
-- [x] **Homepage demo animation** with 32-second animated showcase
+- [x] **Homepage demo animation** with 46-second animated showcase
 - [x] **Audio waveform visualization** in demo during TTS playback
 - [x] **Server-only SDK isolation** - Anthropic SDK properly separated from client bundles
 - [x] **Client-safe utilities module** - `lib/claude-utils.ts` for browser-compatible types and functions
+- [x] **Fullscreen Popup Mode** - Voice assistant supports expandable fullscreen overlay
+- [x] **OpenAssistantButton component** - Triggers assistant popup from anywhere
+- [x] **`/assistant` page redirects** to homepage (assistant is popup-only now)
 
 ### All Features Complete
 
@@ -112,7 +114,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | Accessibility | `/accessibility` | WCAG 2.1 AA conformance statement |
 | Changelog | `/changelog` | Version history and release notes |
 | RSS Feed | `/feed.xml` | Subscribe to documentation updates |
-| AI Assistant | `/assistant` | Full-page voice assistant interface |
+| AI Assistant | `/assistant` | Redirects to homepage (popup-only) |
 
 ## Tech Stack
 
@@ -157,9 +159,9 @@ claude-insider/
 │   │   │   ├── content-meta.tsx  # Source citations & AI metadata
 │   │   │   ├── edit-on-github.tsx # Edit page link
 │   │   │   ├── language-selector.tsx # i18n language dropdown
-│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT
-│   │   │   ├── voice-assistant-full.tsx # Full-page voice assistant
+│   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT (popup + fullscreen)
 │   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
+│   │   │   ├── open-assistant-button.tsx # Button to open assistant popup
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI
@@ -258,6 +260,7 @@ pnpm --filter web build     # Build only web app
 | Click preview button | Preview voice before selecting |
 | Click export button | Copy conversation to clipboard |
 | Click clear button | Clear conversation history |
+| Click expand button | Toggle fullscreen overlay mode |
 
 ## Environment Variables
 

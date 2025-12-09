@@ -23,9 +23,16 @@ interface StreamEvent {
   content?: string;
 }
 
+// Export a function to open the assistant from other components
+let openAssistantFn: (() => void) | null = null;
+export function openAssistant() {
+  if (openAssistantFn) openAssistantFn();
+}
+
 export function VoiceAssistant() {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -57,6 +64,11 @@ export function VoiceAssistant() {
     if (savedAutoSpeak !== null) {
       setAutoSpeak(savedAutoSpeak === "true");
     }
+    // Register the open function for external access
+    openAssistantFn = () => setIsOpen(true);
+    return () => {
+      openAssistantFn = null;
+    };
   }, []);
 
   // Save voice preference when it changes
@@ -488,13 +500,17 @@ export function VoiceAssistant() {
         setIsOpen((prev) => !prev);
       }
       if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
+        if (isFullscreen) {
+          setIsFullscreen(false);
+        } else {
+          setIsOpen(false);
+        }
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, isFullscreen]);
 
   // Ref for autoSpeak to avoid stale closure in sendMessage
   const autoSpeakRef = useRef(autoSpeak);
@@ -957,10 +973,23 @@ export function VoiceAssistant() {
         </button>
       </div>
 
+      {/* Fullscreen backdrop */}
+      {isOpen && isFullscreen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm"
+          onClick={() => setIsFullscreen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Assistant Panel */}
       <div
-        className={`fixed bottom-0 right-0 z-50 flex h-[600px] w-full max-w-md flex-col overflow-hidden rounded-t-2xl border border-gray-200 bg-white shadow-2xl transition-transform duration-300 ease-out dark:border-gray-700 dark:bg-gray-900 sm:bottom-6 sm:right-6 sm:rounded-2xl ${
-          isOpen ? "translate-y-0" : "translate-y-full sm:translate-y-[calc(100%+2rem)]"
+        className={`fixed z-50 flex flex-col overflow-hidden border border-gray-200 bg-white shadow-2xl transition-all duration-300 ease-out dark:border-gray-700 dark:bg-gray-900 ${
+          isFullscreen
+            ? "inset-4 sm:inset-8 md:inset-12 lg:inset-16 rounded-2xl"
+            : "bottom-0 right-0 h-[600px] w-full max-w-md rounded-t-2xl sm:bottom-6 sm:right-6 sm:rounded-2xl"
+        } ${
+          isOpen ? "translate-y-0 opacity-100" : "translate-y-full sm:translate-y-[calc(100%+2rem)] opacity-0 pointer-events-none"
         }`}
         role="dialog"
         aria-label="AI Assistant"
@@ -1153,8 +1182,27 @@ export function VoiceAssistant() {
                 </button>
               </>
             )}
+            {/* Fullscreen/Minimize toggle */}
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsFullscreen(!isFullscreen)}
+              className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+              title={isFullscreen ? "Minimize" : "Expand fullscreen"}
+            >
+              {isFullscreen ? (
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
+                </svg>
+              ) : (
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                </svg>
+              )}
+            </button>
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                setIsFullscreen(false);
+              }}
               className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
               title="Close (Esc)"
             >
