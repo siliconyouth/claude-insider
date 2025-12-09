@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.17.0
+**Version**: 0.18.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -94,8 +94,12 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Dot pattern backgrounds** - Subtle texture patterns for visual depth
 - **Staggered animations** - GPU-optimized fade-in and lift effects
 - **Material elevation system** - Layered shadows following Vercel guidelines
+- **Optimistic UI Patterns** - Instant feedback with automatic rollback on errors
+- **Toast Notification System** - Success, error, warning, and info notifications
+- **Skeleton Loading Components** - Visual placeholders for async content
+- **Enhanced Search** - Loading skeletons, smoother transitions, navigation feedback
 
-### Project Status: Complete (v0.17.0)
+### Project Status: Complete (v0.18.0)
 
 ## Tech Stack
 
@@ -145,7 +149,11 @@ claude-insider/
 │   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT (popup + fullscreen)
 │   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
 │   │   │   ├── open-assistant-button.tsx # Button to open assistant popup
+│   │   │   ├── toast.tsx         # Toast notification system with provider
+│   │   │   ├── skeleton.tsx      # Skeleton loading components library
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
+│   │   ├── hooks/
+│   │   │   └── use-optimistic-update.ts  # Optimistic UI hooks
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)

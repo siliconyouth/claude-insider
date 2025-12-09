@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.17.0)
+## Current Status (v0.18.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -108,6 +108,10 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Staggered animations** - GPU-optimized fade-in and lift effects on cards
 - [x] **Material elevation system** - Layered shadows following Vercel guidelines
 - [x] **`cn()` utility** - Conditional class name composition for cleaner JSX
+- [x] **Optimistic UI Patterns** - Instant feedback with automatic rollback on errors
+- [x] **Toast Notification System** - Success, error, warning, and info notifications
+- [x] **Skeleton Loading Components** - Visual placeholders for async content
+- [x] **Enhanced Search** - Loading skeletons, smoother transitions with `useTransition`
 
 ### All Features Complete
 

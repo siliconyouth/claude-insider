@@ -9,6 +9,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.18.0] - 2025-12-09
+
+### Added
+- **Optimistic UI System** - Instant UI feedback with automatic rollback on errors
+  - `hooks/use-optimistic-update.ts` - Generic optimistic update hook with revert capability
+  - `useOptimisticList` hook for list operations (add, update, remove)
+  - `useDebouncedOptimistic` hook for search/autocomplete patterns
+  - React `useTransition` integration for smooth state updates
+
+- **Toast Notification System** - User feedback for actions
+  - `components/toast.tsx` - Complete toast system with context provider
+  - Four toast types: success (green), error (red), warning (amber), info (blue)
+  - Auto-dismiss after 4 seconds with manual close option
+  - Slide-in animations and stacked notifications
+  - `useToast` hook for component-level usage
+  - Standalone `toast.success/error/info/warning` functions
+
+- **Skeleton Loading Components** - Visual feedback during async operations
+  - `components/skeleton.tsx` - Comprehensive skeleton component library
+  - `Skeleton` - Base shimmer component
+  - `SkeletonText` - Multi-line text placeholder
+  - `SkeletonCard` - Card with icon, title, and content placeholders
+  - `SkeletonSearchResult` - Search result row placeholder
+  - `SkeletonList` - List of avatar + text items
+  - `SkeletonDocPage` - Full documentation page layout
+  - `SkeletonHero` - Homepage hero section
+  - `SkeletonSidebar` - Navigation sidebar
+  - `SkeletonButton`, `SkeletonAvatar` - Small element placeholders
+  - `SkeletonWrapper` - Conditional loading wrapper
+
+- **Enhanced Search with Loading States**
+  - Search now shows skeleton placeholders while searching
+  - `useTransition` for smoother search result updates
+  - Navigation feedback when selecting a result
+  - Updated modal styling to match design system
+
+- **New CSS Animations**
+  - `@keyframes slide-in-right/left/bottom` - Directional slide animations
+  - `@keyframes shimmer` - Skeleton loading shimmer effect
+  - `.animate-slide-in-right/left/bottom` - Slide animation classes
+  - `.animate-shimmer` - Shimmer animation for skeletons
+
+### Changed
+- Root layout now wrapped with `ToastProvider` for app-wide toast access
+- Search modal uses design system styling (`cn()` utility)
+- Improved search result hover states
+
+### Technical Details
+- All optimistic updates use React 19's `useTransition` for non-blocking updates
+- Toast notifications use React Portal for proper z-index layering
+- Skeletons use CSS custom properties for theme-aware colors
+- Shimmer animation uses GPU-accelerated `background-position`
+
 ## [0.17.0] - 2025-12-09
 
 ### Added
@@ -674,6 +727,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.18.0 | 2025-12-09 | Optimistic UI system (toast, skeletons, loading states) |
 | 0.17.0 | 2025-12-09 | Vercel-inspired design system (glass morphism, patterns, animations) |
 | 0.16.3 | 2025-12-09 | Dynamic project knowledge generation (12 chunks from source docs) |
 | 0.16.2 | 2025-12-09 | Sidebar navigation fix: Fixed duplicate config in getting-started/page.tsx |

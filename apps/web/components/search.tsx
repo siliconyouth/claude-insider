@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useTransition } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
@@ -15,6 +15,8 @@ import {
   clearSearchHistory,
   SearchHistoryItem,
 } from "@/lib/search-history";
+import { cn } from "@/lib/design-system";
+import { SkeletonSearchResult } from "@/components/skeleton";
 
 export function Search() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +25,8 @@ export function Search() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
+  const [isSearching, startSearchTransition] = useTransition();
+  const [isNavigating, setIsNavigating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const fuseRef = useRef<Fuse<SearchDocument> | null>(null);
   const router = useRouter();
@@ -73,16 +77,18 @@ export function Search() {
     }
   }, [isOpen]);
 
-  // Search when query changes
+  // Search when query changes (with transition for smooth UI)
   useEffect(() => {
     if (!fuseRef.current || !query || query.length < 2) {
       setResults([]);
       return;
     }
 
-    const searchResults = fuseRef.current.search(query, { limit: 8 });
-    setResults(searchResults.map((r) => r.item));
-    setSelectedIndex(0);
+    startSearchTransition(() => {
+      const searchResults = fuseRef.current!.search(query, { limit: 8 });
+      setResults(searchResults.map((r) => r.item));
+      setSelectedIndex(0);
+    });
   }, [query]);
 
   // Handle keyboard navigation
@@ -105,15 +111,20 @@ export function Search() {
     [results, selectedIndex, router]
   );
 
-  // Navigate to result
+  // Navigate to result with optimistic loading state
   const navigateToResult = (url: string) => {
     if (query.trim()) {
       addToSearchHistory(query);
     }
+    setIsNavigating(true);
     router.push(url);
-    setIsOpen(false);
-    setQuery("");
-    setResults([]);
+    // Close modal after a brief delay to show navigation feedback
+    setTimeout(() => {
+      setIsOpen(false);
+      setQuery("");
+      setResults([]);
+      setIsNavigating(false);
+    }, 150);
   };
 
   // Handle clicking on a search history item
@@ -132,7 +143,17 @@ export function Search() {
       {/* Search button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:border-gray-400 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-950"
+        className={cn(
+          "flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg",
+          "text-gray-600 dark:text-gray-400",
+          "bg-gray-100 dark:bg-[#1a1a1a]",
+          "border border-gray-200 dark:border-[#262626]",
+          "hover:border-gray-300 dark:hover:border-[#404040]",
+          "hover:text-gray-900 dark:hover:text-gray-200",
+          "transition-all duration-200",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500",
+          "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]"
+        )}
         aria-label="Search documentation (Ctrl+K or Cmd+K)"
         aria-haspopup="dialog"
       >
@@ -184,7 +205,13 @@ export function Search() {
               }
             }}
           >
-            <div className="relative w-full max-w-xl bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl shadow-2xl overflow-hidden">
+            <div className={cn(
+              "relative w-full max-w-xl rounded-xl overflow-hidden",
+              "bg-white dark:bg-[#111111]",
+              "border border-gray-200 dark:border-[#262626]",
+              "shadow-2xl shadow-black/20",
+              "animate-scale-in"
+            )}>
               <h2 id="search-dialog-title" className="sr-only">Search documentation</h2>
               {/* Close button */}
               <button
@@ -268,8 +295,17 @@ export function Search() {
                 )}
               </div>
 
+              {/* Loading skeleton */}
+              {isSearching && query.length >= 2 && (
+                <div className="py-2">
+                  <SkeletonSearchResult />
+                  <SkeletonSearchResult />
+                  <SkeletonSearchResult />
+                </div>
+              )}
+
               {/* Results */}
-              {results.length > 0 && (
+              {!isSearching && results.length > 0 && (
                 <ul
                   id="search-results"
                   role="listbox"
@@ -286,12 +322,15 @@ export function Search() {
                       <button
                         onClick={() => navigateToResult(result.url)}
                         onMouseEnter={() => setSelectedIndex(index)}
-                        className={`w-full px-4 py-3 text-left flex items-start gap-3 transition-colors focus:outline-none ${
+                        className={cn(
+                          "w-full px-4 py-3 text-left flex items-start gap-3 transition-all focus:outline-none",
                           index === selectedIndex
                             ? "bg-orange-500/10"
-                            : "hover:bg-gray-100 dark:hover:bg-gray-800"
-                        }`}
+                            : "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]",
+                          isNavigating && index === selectedIndex && "opacity-50"
+                        )}
                         tabIndex={-1}
+                        disabled={isNavigating}
                       >
                         <div className="flex-shrink-0 mt-0.5">
                           <span
@@ -336,7 +375,7 @@ export function Search() {
               )}
 
               {/* No results */}
-              {query.length >= 2 && results.length === 0 && (
+              {!isSearching && query.length >= 2 && results.length === 0 && (
                 <div className="px-4 py-12 text-center" role="status" aria-live="polite">
                   <p className="text-gray-600 dark:text-gray-400">
                     No results found for &quot;{query}&quot;
@@ -348,7 +387,7 @@ export function Search() {
               )}
 
               {/* Initial state - show search history or hint */}
-              {query.length < 2 && (
+              {!isSearching && query.length < 2 && (
                 <div className="px-4 py-4">
                   {/* Recent searches */}
                   {searchHistory.length > 0 && (

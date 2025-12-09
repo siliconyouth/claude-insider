@@ -7,6 +7,7 @@ import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { SkipLink } from "@/components/skip-link";
 import { VoiceAssistant } from "@/components/voice-assistant";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
+import { ToastProvider } from "@/components/toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -138,13 +139,15 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}
       >
-        <SkipLink />
-        <ServiceWorkerRegister />
-        {children}
-        <VoiceAssistantErrorBoundary>
-          <VoiceAssistant />
-        </VoiceAssistantErrorBoundary>
-        <Analytics />
+        <ToastProvider>
+          <SkipLink />
+          <ServiceWorkerRegister />
+          {children}
+          <VoiceAssistantErrorBoundary>
+            <VoiceAssistant />
+          </VoiceAssistantErrorBoundary>
+          <Analytics />
+        </ToastProvider>
       </body>
     </html>
   );

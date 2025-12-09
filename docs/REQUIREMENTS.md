@@ -366,7 +366,40 @@ claude-insider/
 - [x] All animations GPU-optimized (transform, opacity only)
 - [x] Design system rules persist for all future code additions
 
-### Phase 25: Dynamic Project Knowledge - COMPLETED (v0.16.3)
+### Phase 25: Optimistic UI Patterns - COMPLETED (v0.18.0)
+- [x] **useOptimisticUpdate hook** - Generic optimistic update with rollback
+  - React `useTransition` integration for smooth updates
+  - Previous state storage for automatic revert on error
+  - Success/error callbacks and toast integration
+- [x] **useOptimisticList hook** - List operations (add, update, remove)
+  - Optimistic add with server sync
+  - Optimistic update with revert
+  - Optimistic remove with restore
+  - Per-item pending state tracking
+- [x] **useDebouncedOptimistic hook** - For search/autocomplete patterns
+- [x] **Toast Notification System**
+  - `ToastProvider` context wrapper
+  - `useToast` hook for component usage
+  - Four types: success, error, warning, info
+  - Auto-dismiss with manual close
+  - Slide-in animations
+  - Portal rendering for z-index
+- [x] **Skeleton Loading Components**
+  - `Skeleton` - Base shimmer component
+  - `SkeletonText` - Multi-line text
+  - `SkeletonCard` - Full card layout
+  - `SkeletonSearchResult` - Search result row
+  - `SkeletonList` - Avatar + text list
+  - `SkeletonDocPage` - Documentation page
+  - `SkeletonHero`, `SkeletonSidebar`, `SkeletonButton`, `SkeletonAvatar`
+  - `SkeletonWrapper` - Conditional loading
+- [x] **Enhanced Search Component**
+  - Loading skeletons during search
+  - `useTransition` for smooth updates
+  - Navigation feedback state
+  - Design system styling
+
+### Phase 26: Dynamic Project Knowledge - COMPLETED (v0.16.3)
 - [x] **Comprehensive AI System Prompt** - `data/system-prompt.ts` with deep project awareness
 - [x] **Dynamic Knowledge Generator** - `scripts/generate-project-knowledge.cjs` reads source docs
 - [x] Reads from README.md, CLAUDE.md, REQUIREMENTS.md, CHANGELOG.md at build time
@@ -581,7 +614,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.17.0.
+All planned features have been implemented. The project is feature-complete at v0.18.0.
 
 ### Content Expansion (All Complete)
 
