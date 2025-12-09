@@ -15,6 +15,10 @@ import {
   VoiceRecognizer,
   isSpeechRecognitionSupported,
 } from "@/lib/speech-recognition";
+import {
+  WakeWordDetector,
+  isWakeWordSupported,
+} from "@/lib/wake-word";
 
 interface StreamEvent {
   type: "text" | "done" | "error";
@@ -37,8 +41,11 @@ export function VoiceAssistant() {
   const [autoSpeak, setAutoSpeak] = useState(true);
   const [selectedVoice, setSelectedVoice] = useState<string>("nova");
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
+  const [wakeWordEnabled, setWakeWordEnabled] = useState(false);
+  const [wakeWordListening, setWakeWordListening] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const voiceMenuRef = useRef<HTMLDivElement>(null);
+  const wakeWordDetectorRef = useRef<WakeWordDetector | null>(null);
 
   // Prevent hydration mismatch
   useEffect(() => {
@@ -93,9 +100,13 @@ export function VoiceAssistant() {
     }
   }, [isOpen]);
 
-  // Initialize speech recognition
+  // Initialize speech recognition and wake word support
   useEffect(() => {
     setSpeechSupported(isSpeechRecognitionSupported());
+    // Check if wake word is supported
+    if (isWakeWordSupported()) {
+      setWakeWordEnabled(true);
+    }
   }, []);
 
   // Close voice menu when clicking outside
@@ -375,6 +386,55 @@ export function VoiceAssistant() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
+  // Ref to store toggleVoiceRecording for wake word callback
+  const toggleVoiceRecordingRef = useRef<(() => void) | null>(null);
+
+  // Initialize wake word detector
+  useEffect(() => {
+    if (!wakeWordEnabled || !mounted) return;
+
+    // Only initialize if not already initialized
+    if (!wakeWordDetectorRef.current) {
+      wakeWordDetectorRef.current = new WakeWordDetector({
+        onWakeWord: () => {
+          // Wake word detected! Open the assistant and start voice recording
+          setIsOpen(true);
+          // Small delay to ensure the panel is open before starting voice
+          setTimeout(() => {
+            toggleVoiceRecordingRef.current?.();
+          }, 300);
+        },
+        onError: (error) => {
+          console.warn("Wake word error:", error);
+        },
+        onListeningChange: (listening) => {
+          setWakeWordListening(listening);
+        },
+      });
+    }
+
+    // Start wake word detection when assistant is closed
+    if (!isOpen && !isListening && !isSpeaking) {
+      wakeWordDetectorRef.current.resume();
+    } else {
+      // Pause wake word detection when assistant is open or speaking
+      wakeWordDetectorRef.current.pause();
+    }
+
+    return () => {
+      // Don't destroy on every effect, just pause
+      wakeWordDetectorRef.current?.pause();
+    };
+  }, [wakeWordEnabled, mounted, isOpen, isListening, isSpeaking]);
+
+  // Cleanup wake word detector on unmount
+  useEffect(() => {
+    return () => {
+      wakeWordDetectorRef.current?.destroy();
+      wakeWordDetectorRef.current = null;
+    };
+  }, []);
+
   // Ref for autoSpeak to avoid stale closure in sendMessage
   const autoSpeakRef = useRef(autoSpeak);
   useEffect(() => {
@@ -611,6 +671,11 @@ export function VoiceAssistant() {
     recognizerRef.current.start();
   }, [speechSupported, isListening, sendMessage, stopSpeaking]);
 
+  // Keep toggleVoiceRecording ref updated for wake word callback
+  useEffect(() => {
+    toggleVoiceRecordingRef.current = toggleVoiceRecording;
+  }, [toggleVoiceRecording]);
+
   // Browser-native TTS fallback
   const speakWithBrowserTTS = useCallback((text: string, messageIndex: number) => {
     if (!("speechSynthesis" in window)) {
@@ -752,10 +817,23 @@ export function VoiceAssistant() {
       {/* Floating Action Button with Tooltip */}
       <div className={`fixed bottom-6 right-6 z-40 ${isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"} transition-all`}>
         {/* Tooltip Balloon */}
-        <div className="absolute bottom-full right-0 mb-3 w-56 animate-bounce">
+        <div className="absolute bottom-full right-0 mb-3 w-64 animate-bounce">
           <div className="relative rounded-lg bg-white px-3 py-2 text-sm text-gray-800 shadow-lg dark:bg-gray-800 dark:text-white">
-            <span className="font-semibold text-orange-500">AI Assistant</span>
-            <span className="text-gray-600 dark:text-gray-300"> (Cmd + . or click)</span>
+            {wakeWordEnabled && wakeWordListening ? (
+              <>
+                <span className="font-semibold text-orange-500">Say &quot;Hey Insider!&quot;</span>
+                <span className="text-gray-600 dark:text-gray-300"> or Cmd + . or click</span>
+                <div className="mt-1 flex items-center gap-1 text-xs text-green-500">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500"></span>
+                  Listening for wake word...
+                </div>
+              </>
+            ) : (
+              <>
+                <span className="font-semibold text-orange-500">AI Assistant</span>
+                <span className="text-gray-600 dark:text-gray-300"> (Cmd + . or click)</span>
+              </>
+            )}
             {/* Arrow */}
             <div className="absolute -bottom-2 right-6 h-0 w-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white dark:border-t-gray-800" />
           </div>
@@ -764,9 +842,9 @@ export function VoiceAssistant() {
         {/* Main Button */}
         <button
           onClick={() => setIsOpen(true)}
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+          className={`flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950 ${wakeWordListening ? "ring-2 ring-green-400 ring-offset-2" : ""}`}
           aria-label="Open AI Assistant"
-          title="AI Assistant (Cmd + . or click to activate)"
+          title={wakeWordEnabled ? "Say 'Hey Insider!' or Cmd + . or click" : "AI Assistant (Cmd + . or click)"}
         >
           <svg
             className="h-6 w-6"
