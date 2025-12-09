@@ -81,10 +81,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     },
 
     // Code blocks with copy button and syntax highlighting
-    pre: ({ children, ...props }) => {
+    pre: ({ children }) => {
       // Extract language class from the code element inside pre
-      const codeElement = children as React.ReactElement;
-      const className = codeElement?.props?.className || "";
+      const codeElement = children as React.ReactElement<{ className?: string; children?: React.ReactNode }>;
+      const className = codeElement?.props?.className ?? "";
       return <CodeBlock className={className}>{codeElement?.props?.children}</CodeBlock>;
     },
 

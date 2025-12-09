@@ -10,6 +10,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Planned
 - Additional content pages (see Content Expansion Plan)
 
+## [0.12.1] - 2025-12-09
+
+### Added
+- **Troubleshooting Guide** - New documentation page covering common issues and solutions
+- **Migration Guide** - Guide for transitioning from GitHub Copilot, Cursor, Codeium, ChatGPT
+- **Advanced Prompting Techniques** - Deep dive into CLAUDE.md patterns, meta-prompting, and more
+- **Voice Preference Persistence** - Selected voice saved to localStorage and restored on page load
+- **Voice Preview Button** - Preview voices before selecting them
+- **TTS Loading Indicator** - Visual feedback during audio generation
+- **Conversation Export** - Copy chat history to clipboard with formatting
+- **Error Boundary** - Graceful error handling for voice assistant component
+- **Analytics Tracking** - Track voice assistant interactions (voice changes, TTS plays, exports, etc.)
+
+### Changed
+- Documentation pages increased from 16 to 19
+- Voice assistant now shows loading spinner during TTS generation
+- Improved error resilience in voice assistant component
+
+### Technical Details
+- 8 analytics events tracked for voice assistant interactions
+- localStorage used for voice preference persistence
+- Error boundary wraps voice assistant component
+
 ## [0.12.0] - 2025-12-09
 
 ### Added
@@ -372,6 +395,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.12.1 | 2025-12-09 | Voice polish, 3 new doc pages, analytics tracking, error boundary |
 | 0.12.0 | 2025-12-09 | ElevenLabs TTS with 42 voices, streaming TTS, faster voice response |
 | 0.11.0 | 2025-12-09 | AI Voice Assistant, RAG search, streaming chat with Claude |
 | 0.10.0 | 2025-12-09 | RSS feed, changelog page, edit links, reading time, search history, i18n prep |
@@ -394,11 +418,11 @@ Phase D (Lower Priority):
 ### Content Expansion (Planned)
 
 **Phase A: Core Enhancements (High Priority)**
-- [ ] Troubleshooting guide - Common issues and solutions
-- [ ] Migration guide - Migrating from other AI tools
+- [x] Troubleshooting guide - Common issues and solutions (v0.12.1)
+- [x] Migration guide - Migrating from other AI tools (v0.12.1)
 - [ ] Environment variables reference
 - [ ] Permissions and security settings
-- [ ] Advanced prompting techniques
+- [x] Advanced prompting techniques (v0.12.1)
 - [ ] Debugging with Claude Code
 
 **Phase B: API Deep Dives (Medium Priority)**
@@ -422,8 +446,11 @@ Phase D (Lower Priority):
 - [ ] Multi-language support (i18n) - infrastructure ready
 
 ### Completed Features
+- [x] Voice preference persistence and preview (v0.12.1)
+- [x] Troubleshooting, Migration, Advanced Prompting docs (v0.12.1)
+- [x] Voice assistant analytics and error boundary (v0.12.1)
+- [x] ElevenLabs TTS with 42 voices (v0.12.0)
 - [x] AI Voice Assistant with wake word detection (v0.11.0)
-- [x] OpenAI Text-to-Speech with 6 voices (v0.11.0)
 - [x] RAG search for documentation retrieval (v0.11.0)
 - [x] Streaming chat with Claude AI (v0.11.0)
 - [x] RSS feed for documentation updates (v0.10.0)

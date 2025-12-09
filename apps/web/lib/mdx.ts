@@ -89,7 +89,7 @@ export function extractFrontmatter(content: string): {
     return { data: {}, content };
   }
 
-  const frontmatter = match[1];
+  const frontmatter = match[1] ?? "";
   const data: Record<string, string> = {};
 
   frontmatter.split("\n").forEach((line) => {
@@ -154,10 +154,11 @@ export function getDocsByCategory(): Record<string, DocMeta[]> {
   const categories: Record<string, DocMeta[]> = {};
 
   docs.forEach((doc) => {
-    if (!categories[doc.category]) {
-      categories[doc.category] = [];
+    const category = doc.category;
+    if (!categories[category]) {
+      categories[category] = [];
     }
-    categories[doc.category].push(doc);
+    categories[category]!.push(doc);
   });
 
   return categories;

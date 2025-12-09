@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
+import { track } from "@vercel/analytics";
 import type { Message } from "@/lib/claude";
 import {
   getConversationHistory,
@@ -37,13 +38,39 @@ export function VoiceAssistant() {
   const [autoSpeak, setAutoSpeak] = useState(true);
   const [selectedVoice, setSelectedVoice] = useState<string>("sarah");
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
+  const [previewingVoice, setPreviewingVoice] = useState<string | null>(null);
+  const [isTTSLoading, setIsTTSLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const previewAudioRef = useRef<HTMLAudioElement | null>(null);
   const voiceMenuRef = useRef<HTMLDivElement>(null);
 
-  // Prevent hydration mismatch
+  // Prevent hydration mismatch and load preferences from localStorage
   useEffect(() => {
     setMounted(true);
+    // Load saved preferences
+    const savedVoice = localStorage.getItem("claude-insider-voice");
+    const savedAutoSpeak = localStorage.getItem("claude-insider-auto-speak");
+    if (savedVoice) {
+      setSelectedVoice(savedVoice);
+    }
+    if (savedAutoSpeak !== null) {
+      setAutoSpeak(savedAutoSpeak === "true");
+    }
   }, []);
+
+  // Save voice preference when it changes
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem("claude-insider-voice", selectedVoice);
+    }
+  }, [selectedVoice, mounted]);
+
+  // Save auto-speak preference when it changes
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem("claude-insider-auto-speak", String(autoSpeak));
+    }
+  }, [autoSpeak, mounted]);
 
   // Available ElevenLabs voices (all pre-made voices)
   const voices = [
@@ -131,6 +158,60 @@ export function VoiceAssistant() {
       inputRef.current?.focus();
     }
   }, [isOpen]);
+
+  // Preview a voice with a short sample text
+  const previewVoice = useCallback(async (voiceId: string, e: React.MouseEvent) => {
+    e.stopPropagation(); // Don't select the voice, just preview
+
+    // Stop any existing preview
+    if (previewAudioRef.current) {
+      previewAudioRef.current.pause();
+      previewAudioRef.current = null;
+    }
+
+    // If already previewing this voice, stop
+    if (previewingVoice === voiceId) {
+      setPreviewingVoice(null);
+      return;
+    }
+
+    setPreviewingVoice(voiceId);
+
+    try {
+      const response = await fetch("/api/assistant/speak", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: "Hello! This is how I sound. Nice to meet you!",
+          voice: voiceId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to preview voice");
+      }
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      previewAudioRef.current = audio;
+
+      audio.onended = () => {
+        setPreviewingVoice(null);
+        URL.revokeObjectURL(audioUrl);
+      };
+
+      audio.onerror = () => {
+        setPreviewingVoice(null);
+        URL.revokeObjectURL(audioUrl);
+      };
+
+      await audio.play();
+    } catch (err) {
+      console.error("Preview error:", err);
+      setPreviewingVoice(null);
+    }
+  }, [previewingVoice]);
 
   // Initialize speech recognition
   useEffect(() => {
@@ -424,6 +505,9 @@ export function VoiceAssistant() {
     async (content: string) => {
       if (!content.trim() || isLoading) return;
 
+      // Track message sent
+      track("assistant_message_sent", { page: pathname, messageLength: content.trim().length });
+
       setError(null);
       setIsLoading(true);
       setStreamingContent("");
@@ -562,9 +646,45 @@ export function VoiceAssistant() {
   };
 
   const handleClearHistory = () => {
+    track("assistant_history_cleared", { messageCount: messages.length });
     setMessages([]);
     clearConversationHistory();
   };
+
+  // Export conversation as markdown file
+  const handleExportConversation = useCallback(() => {
+    if (messages.length === 0) return;
+
+    track("assistant_chat_exported", { messageCount: messages.length });
+
+    const date = new Date().toISOString().split("T")[0];
+    const time = new Date().toLocaleTimeString("en-US", { hour12: false }).replace(/:/g, "-");
+    const filename = `claude-insider-chat-${date}-${time}.md`;
+
+    let markdown = `# Claude Insider Assistant Chat\n\n`;
+    markdown += `**Exported:** ${new Date().toLocaleString()}\n\n`;
+    markdown += `---\n\n`;
+
+    messages.forEach((message) => {
+      if (message.role === "user") {
+        markdown += `## You\n\n${message.content}\n\n`;
+      } else {
+        markdown += `## Assistant\n\n${message.content}\n\n`;
+      }
+    });
+
+    markdown += `---\n\n*Exported from [Claude Insider](https://www.claudeinsider.com)*\n`;
+
+    const blob = new Blob([markdown], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, [messages]);
 
   // Stop any ongoing speech (TTS) including streaming queue
   const stopSpeaking = useCallback(() => {
@@ -597,6 +717,9 @@ export function VoiceAssistant() {
       setInterimTranscript("");
       return;
     }
+
+    // Track voice input started
+    track("assistant_voice_input_started");
 
     // Stop any ongoing speech when user starts talking
     stopSpeaking();
@@ -692,7 +815,7 @@ export function VoiceAssistant() {
     window.speechSynthesis.speak(utterance);
   }, []);
 
-  // Text-to-speech function with OpenAI + browser fallback
+  // Text-to-speech function with ElevenLabs + browser fallback
   const speakMessage = useCallback(async (text: string, messageIndex: number) => {
     // Stop any currently playing audio or speech
     if (audioRef.current) {
@@ -707,14 +830,19 @@ export function VoiceAssistant() {
     if (isSpeaking && speakingMessageIndex === messageIndex) {
       setIsSpeaking(false);
       setSpeakingMessageIndex(null);
+      setIsTTSLoading(false);
       return;
     }
 
+    // Track TTS playback
+    track("assistant_tts_played", { voice: selectedVoice, textLength: text.length });
+
     setIsSpeaking(true);
     setSpeakingMessageIndex(messageIndex);
+    setIsTTSLoading(true);
 
     try {
-      // Try OpenAI TTS first
+      // Try ElevenLabs TTS first
       const response = await fetch("/api/assistant/speak", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -723,7 +851,8 @@ export function VoiceAssistant() {
 
       if (!response.ok) {
         // Fallback to browser TTS
-        console.warn("OpenAI TTS failed, falling back to browser TTS");
+        console.warn("ElevenLabs TTS failed, falling back to browser TTS");
+        setIsTTSLoading(false);
         speakWithBrowserTTS(text, messageIndex);
         return;
       }
@@ -734,9 +863,14 @@ export function VoiceAssistant() {
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
 
+      audio.oncanplaythrough = () => {
+        setIsTTSLoading(false);
+      };
+
       audio.onended = () => {
         setIsSpeaking(false);
         setSpeakingMessageIndex(null);
+        setIsTTSLoading(false);
         URL.revokeObjectURL(audioUrl);
       };
 
@@ -744,12 +878,14 @@ export function VoiceAssistant() {
         // Fallback to browser TTS on audio error
         console.warn("Audio playback failed, falling back to browser TTS");
         URL.revokeObjectURL(audioUrl);
+        setIsTTSLoading(false);
         speakWithBrowserTTS(text, messageIndex);
       };
 
       await audio.play();
     } catch (err) {
       console.error("TTS error:", err);
+      setIsTTSLoading(false);
       // Fallback to browser TTS
       speakWithBrowserTTS(text, messageIndex);
     }
@@ -795,7 +931,10 @@ export function VoiceAssistant() {
 
         {/* Main Button */}
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setIsOpen(true);
+            track("assistant_opened", { page: pathname });
+          }}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
           aria-label="Open AI Assistant"
           title="AI Assistant (Cmd + . or click to activate)"
@@ -889,28 +1028,54 @@ export function VoiceAssistant() {
                   </div>
                   <div className="max-h-72 overflow-y-auto py-1">
                     {voices.map((voice) => (
-                      <button
+                      <div
                         key={voice.id}
-                        onClick={() => {
-                          setSelectedVoice(voice.id);
-                          setShowVoiceMenu(false);
-                        }}
                         className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
                           selectedVoice === voice.id
                             ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
                             : "text-gray-700 dark:text-gray-300"
                         }`}
                       >
-                        <div>
+                        <button
+                          onClick={() => {
+                            setSelectedVoice(voice.id);
+                            setShowVoiceMenu(false);
+                            track("assistant_voice_changed", { voice: voice.id, voiceName: voice.name });
+                          }}
+                          className="flex-1 text-left"
+                        >
                           <div className="font-medium">{voice.name}</div>
                           <div className="text-xs text-gray-500 dark:text-gray-400">{voice.description}</div>
+                        </button>
+                        <div className="flex items-center gap-1 ml-2">
+                          {/* Preview button */}
+                          <button
+                            onClick={(e) => previewVoice(voice.id, e)}
+                            className={`p-1.5 rounded-full transition-colors ${
+                              previewingVoice === voice.id
+                                ? "bg-orange-500 text-white"
+                                : "hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            }`}
+                            title={previewingVoice === voice.id ? "Stop preview" : "Preview voice"}
+                          >
+                            {previewingVoice === voice.id ? (
+                              <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                              </svg>
+                            ) : (
+                              <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            )}
+                          </button>
+                          {/* Checkmark for selected voice */}
+                          {selectedVoice === voice.id && (
+                            <svg className="h-4 w-4 flex-shrink-0 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
                         </div>
-                        {selectedVoice === voice.id && (
-                          <svg className="h-4 w-4 flex-shrink-0 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        )}
-                      </button>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -919,7 +1084,11 @@ export function VoiceAssistant() {
 
             {/* Auto-speak toggle */}
             <button
-              onClick={() => setAutoSpeak(!autoSpeak)}
+              onClick={() => {
+                const newValue = !autoSpeak;
+                setAutoSpeak(newValue);
+                track("assistant_autospeak_toggled", { enabled: newValue });
+              }}
               className={`rounded-lg p-2 transition-colors ${
                 autoSpeak
                   ? "bg-white/20 text-white"
@@ -942,25 +1111,46 @@ export function VoiceAssistant() {
               </svg>
             </button>
             {messages.length > 0 && (
-              <button
-                onClick={handleClearHistory}
-                className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                title="Clear conversation"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <>
+                <button
+                  onClick={handleExportConversation}
+                  className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                  title="Export conversation"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={handleClearHistory}
+                  className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                  title="Clear conversation"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                </button>
+              </>
             )}
             <button
               onClick={() => setIsOpen(false)}
@@ -1047,14 +1237,27 @@ export function VoiceAssistant() {
                     {message.role === "assistant" && (
                       <button
                         onClick={() => speakMessage(message.content, index)}
+                        disabled={isTTSLoading && speakingMessageIndex !== index}
                         className={`mt-2 flex items-center gap-1 text-xs transition-colors ${
                           speakingMessageIndex === index
                             ? "text-orange-500"
-                            : "text-gray-400 hover:text-orange-500"
+                            : "text-gray-400 hover:text-orange-500 disabled:opacity-50 disabled:cursor-not-allowed"
                         }`}
-                        title={speakingMessageIndex === index ? "Stop speaking" : "Read aloud"}
+                        title={speakingMessageIndex === index && isTTSLoading ? "Loading..." : speakingMessageIndex === index ? "Stop speaking" : "Read aloud"}
                       >
-                        {speakingMessageIndex === index ? (
+                        {speakingMessageIndex === index && isTTSLoading ? (
+                          <>
+                            <svg
+                              className="h-4 w-4 animate-spin"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                            <span>Loading...</span>
+                          </>
+                        ) : speakingMessageIndex === index ? (
                           <>
                             <svg
                               className="h-4 w-4 animate-pulse"

@@ -1,0 +1,369 @@
+---
+title: Migration Guide
+description: Transitioning to Claude Code from other AI coding assistants
+---
+
+Whether you're coming from GitHub Copilot, Cursor, Codeium, or another AI coding tool, this guide will help you transition smoothly to Claude Code and leverage its unique capabilities.
+
+## Why Migrate to Claude Code?
+
+Claude Code offers several advantages over other AI coding assistants:
+
+- **Agentic capabilities**: Claude can autonomously explore codebases, run commands, and complete multi-step tasks
+- **Deep context understanding**: Full project awareness through CLAUDE.md and intelligent file scanning
+- **Tool integration**: MCP servers enable connections to databases, APIs, and external services
+- **Conversational workflow**: Natural language interactions with memory across sessions
+- **Transparent operation**: See exactly what Claude is doing and why
+
+## Migration from GitHub Copilot
+
+### Workflow Differences
+
+| GitHub Copilot | Claude Code |
+|----------------|-------------|
+| Inline suggestions | Conversational requests |
+| Tab to accept | Explicit confirmation |
+| Limited context | Full project context |
+| Code completion | Code + explanation + execution |
+
+### Adapting Your Workflow
+
+**Copilot approach:**
+```
+// Type comment, wait for suggestion
+// function to validate email address
+```
+
+**Claude Code approach:**
+```
+Write a function to validate email addresses.
+Include these validations:
+- Standard email format
+- Common typo detection (gmial.com -> gmail.com)
+- Disposable email blocking
+- Put it in src/utils/validation.ts
+```
+
+### Migrating Copilot Settings
+
+If you had Copilot configurations, here's how to translate them:
+
+**Copilot suggestions filtering:**
+```json
+// VS Code settings.json (Copilot)
+{
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": false,
+    "yaml": false
+  }
+}
+```
+
+**Claude Code equivalent:**
+```markdown
+<!-- CLAUDE.md -->
+## File Handling
+- Focus on TypeScript and JavaScript files
+- Skip modifications to markdown and yaml unless asked
+- Prioritize src/ directory for code changes
+```
+
+## Migration from Cursor
+
+### Feature Mapping
+
+| Cursor Feature | Claude Code Equivalent |
+|----------------|----------------------|
+| CMD+K | Natural language prompt |
+| Chat panel | Claude conversation |
+| @codebase | CLAUDE.md + automatic context |
+| .cursorrules | CLAUDE.md |
+| Terminal integration | Direct bash execution |
+
+### Converting .cursorrules to CLAUDE.md
+
+**Cursor's .cursorrules:**
+```
+You are a helpful assistant...
+Always use TypeScript strict mode
+Follow React best practices
+Use Tailwind for styling
+```
+
+**Claude Code's CLAUDE.md:**
+```markdown
+# Project Guidelines
+
+## Tech Stack
+- TypeScript with strict mode enabled
+- React 18 with functional components
+- Tailwind CSS for all styling
+
+## Coding Standards
+- Prefer named exports
+- Use React Server Components where appropriate
+- All components should have TypeScript interfaces
+
+## Forbidden Patterns
+- No `any` types
+- No class components
+- No inline styles (use Tailwind)
+```
+
+### Workflow Translation
+
+**Cursor: Inline editing**
+```
+Select code -> CMD+K -> "Refactor to use hooks"
+```
+
+**Claude Code: Conversational**
+```
+The UserProfile component at src/components/UserProfile.tsx
+uses class-based state. Refactor it to use hooks while
+maintaining the same behavior.
+```
+
+## Migration from Codeium
+
+### Transitioning Autocomplete Habits
+
+Codeium's autocomplete is automatic; Claude Code is intentional. Adjust by:
+
+1. **Describing intent first**: Instead of waiting for suggestions, describe what you want
+2. **Batch your requests**: Claude can handle complex, multi-step tasks
+3. **Review and confirm**: Claude shows proposed changes before applying
+
+### Codeium to Claude Code Patterns
+
+**Codeium: Reactive completion**
+```javascript
+// Start typing, get suggestion
+function fetchU|  // -> fetchUsers()
+```
+
+**Claude Code: Proactive request**
+```
+Create CRUD functions for the User entity:
+- fetchUsers(filters)
+- fetchUserById(id)
+- createUser(data)
+- updateUser(id, data)
+- deleteUser(id)
+
+Use our existing API client at src/lib/api.ts
+```
+
+## Migration from ChatGPT/OpenAI
+
+### Key Differences
+
+| ChatGPT | Claude Code |
+|---------|-------------|
+| Copy-paste code | Direct file editing |
+| Describe your project | Automatic project scanning |
+| Manual context management | Intelligent context tracking |
+| Separate tool | Integrated CLI |
+
+### Adjusting Your Prompting Style
+
+**ChatGPT style (context-heavy):**
+```
+I have a Next.js project with the following structure:
+[paste entire project structure]
+
+Here's my current code:
+[paste entire file]
+
+I want to add error handling. Here's what I tried:
+[paste attempted solution]
+```
+
+**Claude Code style (context-light):**
+```
+Add comprehensive error handling to the API routes
+in src/app/api/. Include:
+- Request validation errors (400)
+- Authentication errors (401)
+- Not found errors (404)
+- Server errors (500) with logging
+
+Follow our existing error response format.
+```
+
+Claude Code automatically reads your files and understands your project structure.
+
+## Common Migration Challenges
+
+### Challenge 1: Expecting Inline Suggestions
+
+**Solution**: Shift to conversational workflow
+
+Instead of waiting for suggestions, proactively ask:
+```
+I'm about to write a function to parse CSV files.
+What edge cases should I handle?
+```
+
+Then:
+```
+Implement the CSV parser with those edge cases handled.
+Put it in src/utils/csv.ts
+```
+
+### Challenge 2: Context Switching
+
+**Solution**: Use Claude's persistent context
+
+Claude remembers your conversation. You can say:
+```
+Let's go back to the CSV parser we discussed earlier.
+Add streaming support for large files.
+```
+
+### Challenge 3: Missing Autocomplete
+
+**Solution**: Lean into Claude's strengths
+
+Instead of autocomplete, use Claude for:
+- Generating entire components or modules
+- Explaining and refactoring existing code
+- Running tests and fixing failures
+- Exploring unfamiliar codebases
+
+### Challenge 4: Slower Initial Interaction
+
+**Solution**: Batch your requests
+
+Instead of many small completions:
+```
+Create the full authentication flow:
+1. Login page component
+2. Registration form
+3. Password reset flow
+4. Session management hook
+5. Protected route wrapper
+6. Tests for critical paths
+```
+
+## Setting Up Your Environment
+
+### Essential Configuration
+
+**1. Create CLAUDE.md**
+
+```markdown
+# [Your Project Name]
+
+## Stack
+- [Your technologies]
+
+## Standards
+- [Your coding conventions]
+
+## Patterns
+- [Your architectural patterns]
+```
+
+**2. Set up .claudeignore**
+
+```plaintext
+node_modules/
+dist/
+.next/
+coverage/
+*.log
+.env*
+```
+
+**3. Configure settings**
+
+```json
+{
+  "model": "claude-sonnet-4-20250514",
+  "autoApprove": ["Read", "Glob", "Grep"],
+  "theme": "dark"
+}
+```
+
+### IDE Integration
+
+Claude Code works in your terminal but can complement any IDE:
+
+**VS Code users:**
+1. Keep VS Code open for editing
+2. Run Claude Code in integrated terminal
+3. Use split view for side-by-side work
+
+**JetBrains users:**
+1. Use the terminal panel for Claude Code
+2. Configure external tool for quick access
+3. Enable auto-reload for file changes
+
+## Quick Reference Card
+
+### From Copilot
+
+| Instead of... | Use Claude Code... |
+|---------------|-------------------|
+| Tab to accept | Review changes, then /approve |
+| Ghost text | Describe what you want |
+| File-scoped context | CLAUDE.md for project context |
+
+### From Cursor
+
+| Instead of... | Use Claude Code... |
+|---------------|-------------------|
+| @codebase | Claude auto-indexes your project |
+| CMD+K | Natural language prompts |
+| .cursorrules | CLAUDE.md |
+| Chat panel | Terminal conversation |
+
+### From ChatGPT
+
+| Instead of... | Use Claude Code... |
+|---------------|-------------------|
+| Copy-paste code | Direct file paths |
+| Explain project structure | Let Claude explore |
+| Manual file creation | Claude writes directly |
+
+## 30-Day Transition Plan
+
+**Week 1: Basics**
+- Install Claude Code
+- Create CLAUDE.md with your project info
+- Practice simple tasks (explaining code, small edits)
+
+**Week 2: Building Fluency**
+- Use Claude for feature implementation
+- Try multi-file refactoring
+- Explore code search and navigation
+
+**Week 3: Advanced Usage**
+- Set up custom commands
+- Configure MCP servers for your stack
+- Implement complex features end-to-end
+
+**Week 4: Optimization**
+- Refine your CLAUDE.md based on experience
+- Create project-specific commands
+- Share configurations with your team
+
+## Next Steps
+
+- [Complete installation guide](/docs/getting-started/installation)
+- [Quick start tutorial](/docs/getting-started/quickstart)
+- [Configure Claude Code](/docs/configuration/settings)
+- [Master prompting techniques](/docs/tips-and-tricks/prompting)
+
+<ContentMeta
+  sources={[
+    { title: "Claude Code Documentation", url: "https://docs.anthropic.com/en/docs/claude-code/overview" },
+    { title: "GitHub Copilot Documentation", url: "https://docs.github.com/en/copilot" },
+    { title: "Cursor Documentation", url: "https://cursor.sh/docs" },
+    { title: "Anthropic Claude Introduction", url: "https://docs.anthropic.com/en/docs/intro-to-claude" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

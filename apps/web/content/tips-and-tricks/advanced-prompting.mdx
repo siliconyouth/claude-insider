@@ -1,0 +1,431 @@
+---
+title: Advanced Prompting Techniques
+description: Master system prompts, multi-turn strategies, and programmatic control for expert-level Claude Code usage
+---
+
+This guide covers advanced prompting techniques for power users who want to maximize their effectiveness with Claude Code. These techniques go beyond basic prompting to give you fine-grained control over Claude's behavior.
+
+## System Prompts and CLAUDE.md
+
+### Understanding CLAUDE.md
+
+The `CLAUDE.md` file in your project root acts as a persistent system prompt that shapes Claude's behavior throughout your session.
+
+**Basic CLAUDE.md structure:**
+
+```markdown
+# Project: E-commerce Platform
+
+## Tech Stack
+- Next.js 14 with App Router
+- TypeScript strict mode
+- Prisma with PostgreSQL
+- Tailwind CSS + Radix UI
+
+## Coding Standards
+- Use functional components with hooks
+- Prefer named exports over default exports
+- All functions must have JSDoc comments
+- No any types - use proper TypeScript
+
+## File Organization
+- Components: src/components/{feature}/{Component}.tsx
+- API routes: src/app/api/{resource}/route.ts
+- Utilities: src/lib/{category}.ts
+
+## Testing Requirements
+- Unit tests with Vitest
+- E2E tests with Playwright
+- Minimum 80% coverage for new code
+```
+
+### Advanced CLAUDE.md Patterns
+
+**Pattern 1: Behavioral Constraints**
+
+```markdown
+## Behavioral Guidelines
+
+### Code Changes
+- NEVER modify package.json without explicit permission
+- ALWAYS run tests after making changes to core modules
+- PREFER extending existing code over rewriting
+
+### Security
+- NEVER log sensitive data (passwords, tokens, PII)
+- ALWAYS use parameterized queries for database operations
+- REQUIRE input validation on all API endpoints
+
+### Performance
+- AVOID N+1 queries - use eager loading
+- PREFER lazy loading for components over 50KB
+- LIMIT API responses to 100 items by default
+```
+
+**Pattern 2: Domain Knowledge**
+
+```markdown
+## Business Logic
+
+### Order Processing
+Orders go through these states:
+1. pending -> Payment not yet received
+2. confirmed -> Payment successful, awaiting fulfillment
+3. processing -> Items being picked and packed
+4. shipped -> Handed to carrier
+5. delivered -> Customer received order
+6. cancelled -> Order was cancelled (refund issued)
+
+### Pricing Rules
+- Discount codes: Applied before tax
+- Shipping: Free over $100, otherwise $9.99
+- Tax: Calculated based on shipping address state
+```
+
+**Pattern 3: Error Prevention**
+
+```markdown
+## Common Pitfalls to Avoid
+
+### Database
+- User.findUnique() can return null - always handle it
+- Prisma transactions are required for multi-table updates
+- Soft delete: Set deletedAt, don't use DELETE
+
+### API
+- Rate limiting is 100 req/min per API key
+- Webhook signatures must be verified
+- Pagination is required for list endpoints
+
+### Frontend
+- useEffect dependencies must be complete
+- Form state needs optimistic updates for UX
+- Images need width/height for CLS prevention
+```
+
+## Multi-Turn Conversation Strategies
+
+### Building Context Progressively
+
+**Round 1: Establish understanding**
+
+```
+Let's work on the checkout flow. First, walk me through how
+the current CartContext works - I want to make sure we're
+aligned before making changes.
+```
+
+**Round 2: Define the problem**
+
+```
+Good analysis. The issue is that cart updates are slow because
+we're refetching the entire cart on each change. Let's design
+an optimistic update strategy.
+```
+
+**Round 3: Implement iteratively**
+
+```
+That approach looks good. Implement the optimistic update for
+addToCart first. We'll handle removeFromCart in the next round.
+```
+
+**Round 4: Refine and polish**
+
+```
+The implementation works but I noticed the loading state flickers.
+Add a minimum 200ms delay before showing the spinner to prevent
+flash of loading content.
+```
+
+### Context Anchoring
+
+When returning to a topic, anchor Claude's memory:
+
+```
+Earlier we discussed the authentication middleware that validates
+JWT tokens and handles refresh. Let's extend that to support
+role-based access control. The middleware is in src/middleware/auth.ts.
+```
+
+### Branching Conversations
+
+Explore alternatives without losing context:
+
+```
+Let's explore two approaches:
+
+OPTION A: Server-side rendering the user dashboard
+- Pros: SEO, initial load performance
+- Cons: Server load, cache complexity
+
+OPTION B: Client-side rendering with SWR
+- Pros: Simpler, real-time updates
+- Cons: Slower initial load, no SEO
+
+Analyze both for our use case (10k daily users,
+mostly authenticated pages).
+```
+
+## Programmatic Control
+
+### Using Hooks for Automation
+
+Claude Code supports hooks that run automatically at specific points:
+
+**.claude/hooks/pre-commit.md:**
+
+```markdown
+Before committing, always:
+1. Run `pnpm lint` and fix any issues
+2. Run `pnpm test:unit` to verify no regressions
+3. Check for console.log statements and remove them
+4. Verify no TODO comments without issue references
+```
+
+**.claude/hooks/post-file-edit.md:**
+
+```markdown
+After editing any file in src/components/:
+1. Check if the component has a corresponding .test.tsx
+2. If tests exist, verify they still pass
+3. If tests don't exist and the component has >20 lines, suggest adding tests
+```
+
+### Custom Slash Commands
+
+Create reusable workflows:
+
+**.claude/commands/review-security.md:**
+
+```markdown
+# Security Review
+
+Perform a security audit of the specified file or directory.
+
+## Checklist
+- [ ] Input validation on all user inputs
+- [ ] SQL injection prevention (parameterized queries)
+- [ ] XSS prevention (output encoding)
+- [ ] CSRF protection on state-changing endpoints
+- [ ] Authentication checks before sensitive operations
+- [ ] Authorization checks for resource access
+- [ ] Sensitive data exposure (logs, errors, responses)
+- [ ] Rate limiting on authentication endpoints
+
+## Output Format
+Provide findings as:
+| Severity | Location | Issue | Recommendation |
+```
+
+**.claude/commands/implement-feature.md:**
+
+```markdown
+# Feature Implementation
+
+Given a feature description, implement it following our standards.
+
+## Process
+1. Analyze requirements and ask clarifying questions
+2. Design the solution (data model, API, UI)
+3. Implement in order: types, data layer, API, UI
+4. Write tests for critical paths
+5. Update documentation if public-facing
+
+## Standards
+- TypeScript strict mode
+- No any types
+- Comprehensive error handling
+- Accessibility compliance
+```
+
+### Conditional Instructions
+
+Use conditional logic in your prompts:
+
+```
+Implement the user profile edit feature.
+
+IF the user.role is "admin":
+  - Allow editing all fields including role
+  - Add audit log entry for changes
+ELSE:
+  - Only allow editing name, email, avatar
+  - Require current password to change email
+
+IF process.env.NODE_ENV is "production":
+  - Rate limit to 10 updates per hour
+  - Send email notification on email change
+ELSE:
+  - No rate limiting
+  - Skip email notifications
+```
+
+## Meta-Prompting
+
+### Self-Correction Instructions
+
+```
+After writing code, review it with these criteria:
+1. Would a junior developer understand this?
+2. Are there any edge cases not handled?
+3. Could this break existing functionality?
+4. Is there unnecessary complexity?
+
+If you find issues, fix them before presenting the solution.
+```
+
+### Confidence Calibration
+
+```
+Rate your confidence in this solution:
+- HIGH: Well-established pattern, tested approach
+- MEDIUM: Reasonable approach, some assumptions made
+- LOW: Novel solution, needs validation
+
+For LOW confidence items, explain what could go wrong and
+how we would verify the solution works.
+```
+
+### Thinking Out Loud
+
+```
+For this complex refactoring task:
+1. First, explain your understanding of the current code
+2. Identify all the files that will be affected
+3. List the order in which changes should be made
+4. For each change, explain why it's necessary
+5. Then proceed with implementation
+
+This ensures we catch any misunderstandings early.
+```
+
+## Advanced Patterns
+
+### The Socratic Method
+
+Instead of asking Claude to implement, ask questions:
+
+```
+I'm considering using WebSockets for real-time notifications.
+
+1. What are the scaling implications for 10k concurrent users?
+2. How would we handle reconnection and missed messages?
+3. What's the fallback for browsers that don't support WS?
+4. How does this compare to Server-Sent Events for our use case?
+
+Based on your answers, recommend an approach.
+```
+
+### Constraint Tightening
+
+Start loose, then tighten constraints:
+
+**Round 1:**
+```
+Implement a caching layer for API responses.
+```
+
+**Round 2:**
+```
+Good start. Now add these constraints:
+- TTL varies by endpoint (products: 5min, user: 30sec)
+- Cache key includes user role for personalized data
+- Background refresh 10 seconds before expiry
+```
+
+**Round 3:**
+```
+Almost there. Final constraints:
+- Handle cache stampede (singleflight pattern)
+- Add cache hit/miss metrics
+- Support cache invalidation by tag
+```
+
+### Negative Examples
+
+Show what you don't want:
+
+```
+Implement error handling for the payment API.
+
+DON'T do this (anti-pattern):
+```typescript
+try {
+  await processPayment(data);
+} catch (e) {
+  console.log(e); // Silent failure
+  return { success: false }; // No useful error info
+}
+```
+
+DO something like:
+```typescript
+try {
+  await processPayment(data);
+} catch (e) {
+  logger.error('Payment failed', { error: e, data: sanitize(data) });
+  throw new PaymentError(getErrorCode(e), getUserMessage(e));
+}
+```
+```
+
+### Invariant Enforcement
+
+Define rules that must never be broken:
+
+```
+INVARIANTS (never violate these):
+1. User balance can never be negative
+2. Order total must equal sum of line items + tax + shipping
+3. A product cannot be in both "active" and "deleted" state
+4. Authentication must happen before any API operation
+
+When implementing features, ensure these invariants are
+maintained. If a change would violate an invariant,
+refuse and explain why.
+```
+
+## Debugging with Advanced Prompts
+
+### Root Cause Analysis
+
+```
+Bug: Users occasionally see stale data after updating their profile.
+
+Analyze this systematically:
+1. List all caching layers between update and display
+2. Identify where staleness could be introduced
+3. Check for race conditions in concurrent requests
+4. Examine cache invalidation logic
+5. Propose fixes ordered by likelihood of being the root cause
+```
+
+### Hypothesis Testing
+
+```
+I suspect the memory leak is caused by event listeners not being
+cleaned up in useEffect.
+
+To test this hypothesis:
+1. Find all useEffect hooks with addEventListener
+2. Verify each has corresponding removeEventListener in cleanup
+3. Check for closures that might prevent garbage collection
+4. Suggest a test to confirm the hypothesis
+```
+
+## Next Steps
+
+- [Basic prompting strategies](/docs/tips-and-tricks/prompting)
+- [Custom commands and hooks](/docs/configuration/settings)
+- [MCP servers for extended capabilities](/docs/integrations/mcp-servers)
+
+<ContentMeta
+  sources={[
+    { title: "Anthropic Prompt Engineering Guide", url: "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering" },
+    { title: "Claude Code System Prompts", url: "https://docs.anthropic.com/en/docs/claude-code/memory" },
+    { title: "Advanced Claude Techniques", url: "https://www.anthropic.com/research" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

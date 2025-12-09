@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { SkipLink } from "@/components/skip-link";
 import { VoiceAssistant } from "@/components/voice-assistant";
+import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -140,7 +141,9 @@ export default function RootLayout({
         <SkipLink />
         <ServiceWorkerRegister />
         {children}
-        <VoiceAssistant />
+        <VoiceAssistantErrorBoundary>
+          <VoiceAssistant />
+        </VoiceAssistantErrorBoundary>
         <Analytics />
       </body>
     </html>

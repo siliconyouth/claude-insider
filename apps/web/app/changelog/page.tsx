@@ -25,7 +25,7 @@ function parseChangelog(content: string): ChangelogVersion[] {
   for (const line of lines) {
     // Match version headers: ## [x.x.x] - YYYY-MM-DD
     const versionMatch = line.match(/^## \[([^\]]+)\] - (\d{4}-\d{2}-\d{2})/);
-    if (versionMatch) {
+    if (versionMatch && versionMatch[1] && versionMatch[2]) {
       if (currentVersion) {
         if (currentSection) {
           currentVersion.sections.push(currentSection);
@@ -43,7 +43,7 @@ function parseChangelog(content: string): ChangelogVersion[] {
 
     // Match section headers: ### Added, ### Changed, etc.
     const sectionMatch = line.match(/^### (.+)/);
-    if (sectionMatch && currentVersion) {
+    if (sectionMatch && sectionMatch[1] && currentVersion) {
       if (currentSection) {
         currentVersion.sections.push(currentSection);
       }
@@ -56,7 +56,7 @@ function parseChangelog(content: string): ChangelogVersion[] {
 
     // Match list items: - item
     const itemMatch = line.match(/^- (.+)/);
-    if (itemMatch && currentSection) {
+    if (itemMatch && itemMatch[1] && currentSection) {
       currentSection.items.push(itemMatch[1]);
     }
   }

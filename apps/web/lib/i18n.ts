@@ -22,7 +22,12 @@ export const locales: Locale[] = [
   // { code: "ko", name: "Korean", flag: "🇰🇷", nativeName: "한국어" },
 ];
 
-export const defaultLocale = locales[0];
+export const defaultLocale: Locale = locales[0] ?? {
+  code: "en-US",
+  name: "English (US)",
+  flag: "🇺🇸",
+  nativeName: "English",
+};
 
 const LOCALE_STORAGE_KEY = "claude-insider-locale";
 

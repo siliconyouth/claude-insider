@@ -69,7 +69,7 @@ All technologies used in this project are **free and/or open source** (except fo
 | Technology | Version | License | Description |
 |------------|---------|---------|-------------|
 | **@anthropic-ai/sdk** | latest | Proprietary | Claude AI streaming chat |
-| **openai** | latest | MIT | OpenAI TTS (text-to-speech) |
+| **@elevenlabs/elevenlabs-js** | latest | MIT | ElevenLabs TTS (42 premium voices) |
 | **Web Speech API** | - | W3C | Speech recognition (browser native) |
 
 ### Version Control & Hosting
@@ -110,13 +110,15 @@ claude-insider/
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
-│   │   │   └── speak/route.ts    # OpenAI TTS endpoint (6 voices)
+│   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation content
 │   │   │   ├── getting-started/
 │   │   │   │   ├── installation.mdx
-│   │   │   │   └── quickstart.mdx
+│   │   │   │   ├── quickstart.mdx
+│   │   │   │   ├── troubleshooting.mdx    # NEW: Common issues & solutions
+│   │   │   │   └── migration.mdx          # NEW: Migration from other AI tools
 │   │   │   ├── configuration/
 │   │   │   │   ├── index.mdx
 │   │   │   │   ├── claude-md.mdx
@@ -124,7 +126,8 @@ claude-insider/
 │   │   │   ├── tips-and-tricks/
 │   │   │   │   ├── index.mdx
 │   │   │   │   ├── prompting.mdx
-│   │   │   │   └── productivity.mdx
+│   │   │   │   ├── productivity.mdx
+│   │   │   │   └── advanced-prompting.mdx # NEW: System prompts, multi-turn, programmatic
 │   │   │   ├── api/
 │   │   │   │   ├── index.mdx
 │   │   │   │   ├── authentication.mdx
@@ -248,13 +251,20 @@ claude-insider/
 - [x] Reading time estimates on all documentation pages (200 WPM)
 - [x] Search history with localStorage persistence (up to 5 recent searches)
 - [x] Language selector for i18n preparation (English US only initially)
-- [x] **AI Voice Assistant** with "Hey Insider" wake word detection
-- [x] **OpenAI Text-to-Speech** with 6 voices (alloy, echo, fable, onyx, nova, shimmer)
+- [x] **AI Voice Assistant** with chat interface
+- [x] **ElevenLabs TTS** with 42 premium voices (replaced OpenAI)
+- [x] **Streaming TTS** - voice starts speaking after first sentence (faster response)
 - [x] **Speech-to-Text** using Web Speech API with browser fallback
 - [x] **RAG System** with TF-IDF search for intelligent documentation retrieval
 - [x] **Streaming Chat** with Claude AI using Server-Sent Events (SSE)
-- [x] **Auto-speak** responses with complete message TTS
-- [x] Voice selector dropdown with click-outside handling
+- [x] **Auto-speak** responses with sentence-by-sentence TTS
+- [x] Voice selector dropdown with 42 voices and preview button
+- [x] **Voice preference persistence** in localStorage
+- [x] **TTS loading indicator** while fetching audio
+- [x] **Conversation export** (download chat as markdown)
+- [x] **Error boundary** for voice assistant component
+- [x] **Vercel Analytics tracking** for voice assistant usage
+- [x] **3 new documentation pages**: Troubleshooting, Migration, Advanced Prompting
 
 ### Pages Implemented
 
@@ -265,12 +275,15 @@ claude-insider/
 | `/docs/getting-started` | Done | Introduction to Claude AI |
 | `/docs/getting-started/installation` | Done | Installation guide (MDX) |
 | `/docs/getting-started/quickstart` | Done | Quick start guide (MDX) |
+| `/docs/getting-started/troubleshooting` | Done | Common issues & solutions (MDX) |
+| `/docs/getting-started/migration` | Done | Migration from other AI tools (MDX) |
 | `/docs/configuration` | Done | Configuration overview (MDX) |
 | `/docs/configuration/claude-md` | Done | CLAUDE.md guide (MDX) |
 | `/docs/configuration/settings` | Done | Settings reference (MDX) |
 | `/docs/tips-and-tricks` | Done | Tips overview (MDX) |
 | `/docs/tips-and-tricks/prompting` | Done | Prompting strategies (MDX) |
 | `/docs/tips-and-tricks/productivity` | Done | Productivity hacks (MDX) |
+| `/docs/tips-and-tricks/advanced-prompting` | Done | Advanced prompting techniques (MDX) |
 | `/docs/api` | Done | API reference (MDX) |
 | `/docs/api/authentication` | Done | Authentication guide (MDX) |
 | `/docs/api/tool-use` | Done | Tool use guide (MDX) |
@@ -439,16 +452,16 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.11.0.
+All planned features have been implemented. The project is feature-complete at v0.12.1.
 
 ### Future Content Expansion (Planned)
 
-**Phase A: Core Enhancements (High Priority)**
-- [ ] Troubleshooting guide - Common issues and solutions
-- [ ] Migration guide - Migrating from other AI tools
+**Phase A: Core Enhancements (High Priority)** - MOSTLY COMPLETED
+- [x] Troubleshooting guide - Common issues and solutions
+- [x] Migration guide - Migrating from other AI tools
 - [ ] Environment variables reference
 - [ ] Permissions and security settings
-- [ ] Advanced prompting techniques
+- [x] Advanced prompting techniques
 - [ ] Debugging with Claude Code
 
 **Phase B: API Deep Dives (Medium Priority)**
@@ -562,22 +575,38 @@ All planned features have been implemented. The project is feature-complete at v
 
 ### Phase 12: AI Voice Assistant & RAG - COMPLETED
 - [x] AI Voice Assistant component (`components/voice-assistant.tsx`)
-- [x] Wake word detection ("Hey Insider") using Web Speech API
 - [x] Speech-to-text transcription with real-time feedback
 - [x] Streaming chat with Claude AI using Server-Sent Events
 - [x] RAG system (`lib/rag.ts`) with TF-IDF search for documentation retrieval
-- [x] OpenAI Text-to-Speech with 6 voices (alloy, echo, fable, onyx, nova, shimmer)
-- [x] Auto-speak mode (waits for complete message, then speaks)
+- [x] Auto-speak mode with sentence-by-sentence TTS
 - [x] Voice selector dropdown with click-outside handling
 - [x] Chat API route (`app/api/assistant/chat/route.ts`) with streaming
 - [x] Speak API route (`app/api/assistant/speak/route.ts`) for TTS
 - [x] Claude client configuration (`lib/claude.ts`) with system prompts
-- [x] Wake word library (`lib/wake-word.ts`) with phrase variations
 - [x] Speech recognition utilities (`lib/speech-recognition.ts`)
 - [x] Assistant context management (`lib/assistant-context.ts`)
-- [x] Default voice set to "nova" for natural speech
 - [x] Smart sentence splitting for technical content (avoids pausing on file extensions)
-- [x] Browser TTS fallback when OpenAI is unavailable
+- [x] Browser TTS fallback when ElevenLabs is unavailable
+
+### Phase 13: ElevenLabs TTS & Voice Enhancements - COMPLETED (v0.12.0)
+- [x] Replaced OpenAI TTS with ElevenLabs for premium voice quality
+- [x] 42 natural voices available (17 female, 25 male)
+- [x] Streaming TTS - voice starts after first sentence (faster response)
+- [x] Scrollable voice selector with voice descriptions
+- [x] Default voice set to "Sarah" (soft, young female)
+- [x] `eleven_turbo_v2_5` model for fast, high-quality audio
+- [x] MP3 output at 44.1kHz/128kbps quality
+
+### Phase 14: Voice Assistant Polish & Content - COMPLETED (v0.12.1)
+- [x] Voice preference persistence in localStorage
+- [x] Voice preview button (hear voice samples before selecting)
+- [x] TTS loading indicator while fetching audio
+- [x] Conversation export (download chat as markdown file)
+- [x] Error boundary for voice assistant component
+- [x] Vercel Analytics tracking for voice assistant (8 events tracked)
+- [x] Troubleshooting guide (`content/getting-started/troubleshooting.mdx`)
+- [x] Migration guide (`content/getting-started/migration.mdx`)
+- [x] Advanced prompting guide (`content/tips-and-tricks/advanced-prompting.mdx`)
 
 ---
 

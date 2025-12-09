@@ -1,0 +1,434 @@
+---
+title: Troubleshooting
+description: Solutions to common Claude Code issues and how to resolve them
+---
+
+Having issues with Claude Code? This guide covers common problems and their solutions to get you back on track quickly.
+
+## Installation Issues
+
+### Command Not Found
+
+If you get "command not found" after installing Claude Code:
+
+**Solution 1: Check your PATH**
+
+```bash
+# For npm installations
+export PATH="$PATH:$(npm bin -g)"
+
+# Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
+echo 'export PATH="$PATH:$(npm bin -g)"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Solution 2: Verify installation location**
+
+```bash
+# Find where npm installs global packages
+npm root -g
+
+# Check if claude binary exists
+ls -la $(npm root -g)/../bin/claude
+```
+
+**Solution 3: Reinstall globally**
+
+```bash
+npm uninstall -g @anthropic-ai/claude-code
+npm install -g @anthropic-ai/claude-code
+```
+
+### Permission Denied Errors
+
+When npm install fails with EACCES errors:
+
+**Solution: Fix npm permissions**
+
+```bash
+# Create a directory for global packages
+mkdir ~/.npm-global
+
+# Configure npm to use it
+npm config set prefix '~/.npm-global'
+
+# Add to PATH
+export PATH=~/.npm-global/bin:$PATH
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.zshrc
+
+# Reinstall
+npm install -g @anthropic-ai/claude-code
+```
+
+### Node.js Version Issues
+
+If you see errors about unsupported Node.js versions:
+
+```bash
+# Check your Node version
+node --version
+
+# Claude Code requires Node.js 18+
+# Use nvm to install the correct version
+nvm install 18
+nvm use 18
+```
+
+## Authentication Problems
+
+### Login Failures
+
+If `claude auth login` fails or times out:
+
+**Check network connectivity:**
+
+```bash
+# Test connection to Anthropic
+curl -I https://api.anthropic.com
+
+# If behind a proxy, configure it
+export HTTPS_PROXY=http://your-proxy:port
+```
+
+**Clear cached credentials:**
+
+```bash
+# Remove stored authentication
+rm -rf ~/.claude/auth*
+
+# Try logging in again
+claude auth login
+```
+
+### API Key Issues
+
+If you're using an API key instead of OAuth:
+
+```bash
+# Set your API key
+export ANTHROPIC_API_KEY="your-api-key-here"
+
+# Verify it's set correctly
+echo $ANTHROPIC_API_KEY
+
+# Add to shell profile for persistence
+echo 'export ANTHROPIC_API_KEY="your-key"' >> ~/.zshrc
+```
+
+### Session Expiration
+
+If your session keeps expiring:
+
+```bash
+# Re-authenticate
+claude auth logout
+claude auth login
+
+# Check session status
+claude auth status
+```
+
+## Runtime Errors
+
+### Out of Memory
+
+If Claude Code crashes with memory errors:
+
+**Increase Node.js memory limit:**
+
+```bash
+# Set higher memory limit
+export NODE_OPTIONS="--max-old-space-size=4096"
+
+# Run Claude Code
+claude
+```
+
+**For large codebases:**
+
+Use `.claudeignore` to exclude unnecessary files:
+
+```plaintext
+# .claudeignore
+node_modules/
+dist/
+build/
+*.log
+.git/
+coverage/
+```
+
+### Slow Performance
+
+If Claude Code is running slowly:
+
+**1. Check file count:**
+
+```bash
+# Count files in current directory
+find . -type f | wc -l
+
+# If over 10,000 files, use .claudeignore
+```
+
+**2. Reduce context size:**
+
+```bash
+# Use compact mode
+claude --compact
+
+# Or limit file reading
+claude --max-files 100
+```
+
+**3. Clear cache:**
+
+```bash
+# Clear Claude Code cache
+rm -rf ~/.claude/cache
+```
+
+### Connection Timeouts
+
+If requests time out frequently:
+
+```bash
+# Increase timeout
+export CLAUDE_TIMEOUT=120000
+
+# Check your network
+ping api.anthropic.com
+
+# Use a different DNS
+# Add to /etc/resolv.conf or network settings:
+# nameserver 8.8.8.8
+```
+
+## Configuration Issues
+
+### Settings Not Applied
+
+If changes to `.claude/settings.json` don't take effect:
+
+**1. Validate JSON syntax:**
+
+```bash
+# Check for JSON errors
+cat ~/.claude/settings.json | python3 -m json.tool
+```
+
+**2. Check file permissions:**
+
+```bash
+# Ensure readable
+chmod 644 ~/.claude/settings.json
+```
+
+**3. Restart Claude Code:**
+
+```bash
+# Exit current session and start fresh
+claude
+```
+
+### MCP Server Connection Failures
+
+If MCP servers won't connect:
+
+**1. Check server configuration:**
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/dir"]
+    }
+  }
+}
+```
+
+**2. Test the server manually:**
+
+```bash
+# Run the MCP server directly
+npx -y @modelcontextprotocol/server-filesystem /path/to/dir
+```
+
+**3. Check for port conflicts:**
+
+```bash
+# Find processes using MCP ports
+lsof -i :3000-3010
+```
+
+### Custom Commands Not Working
+
+If slash commands don't appear:
+
+**1. Check file location:**
+
+```bash
+# Commands should be in
+ls -la .claude/commands/
+ls -la ~/.claude/commands/
+```
+
+**2. Verify file format:**
+
+```bash
+# Must be .md files with valid markdown
+cat .claude/commands/my-command.md
+```
+
+## IDE Integration Issues
+
+### VS Code Extension Problems
+
+**Extension not loading:**
+
+```bash
+# Check extension is installed
+code --list-extensions | grep claude
+
+# Reinstall extension
+code --uninstall-extension anthropic.claude-code
+code --install-extension anthropic.claude-code
+```
+
+**Extension can't find Claude CLI:**
+
+```bash
+# Set path in VS Code settings
+# settings.json:
+{
+  "claude.path": "/usr/local/bin/claude"
+}
+```
+
+### Terminal Issues in IDE
+
+**Terminal not responding:**
+
+1. Kill any stuck Claude processes:
+```bash
+pkill -f "claude"
+```
+
+2. Restart the integrated terminal
+
+3. Check terminal profile settings in IDE
+
+## Platform-Specific Issues
+
+### macOS
+
+**Gatekeeper blocking execution:**
+
+```bash
+# Allow Claude Code to run
+xattr -d com.apple.quarantine $(which claude)
+```
+
+**Keychain access issues:**
+
+```bash
+# Reset keychain for Claude
+security delete-generic-password -s "claude-code"
+```
+
+### Linux
+
+**Missing dependencies:**
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install libsecret-1-0
+
+# Fedora/RHEL
+sudo dnf install libsecret
+```
+
+### Windows (WSL)
+
+**WSL clipboard issues:**
+
+```bash
+# Install Windows clipboard support
+sudo apt-get install xclip
+
+# Configure clipboard in WSL
+export DISPLAY=:0
+```
+
+**Path issues:**
+
+```bash
+# Access Windows paths
+cd /mnt/c/Users/YourName/project
+```
+
+## Getting Help
+
+### Diagnostic Information
+
+Collect this information before seeking help:
+
+```bash
+# Version info
+claude --version
+node --version
+npm --version
+
+# System info
+uname -a
+
+# Configuration
+cat ~/.claude/settings.json
+
+# Recent logs
+tail -50 ~/.claude/logs/latest.log
+```
+
+### Where to Get Help
+
+- **GitHub Issues**: [github.com/anthropics/claude-code/issues](https://github.com/anthropics/claude-code/issues)
+- **Discord Community**: [discord.gg/anthropic](https://discord.gg/anthropic)
+- **Documentation**: [docs.anthropic.com](https://docs.anthropic.com)
+
+### Reporting Bugs
+
+When reporting issues, include:
+
+1. What you were trying to do
+2. The exact error message
+3. Steps to reproduce
+4. Your environment (OS, Node version, Claude version)
+5. Relevant configuration files (redact sensitive data)
+
+## Quick Fixes Checklist
+
+Before diving deep, try these quick fixes:
+
+- [ ] Restart Claude Code
+- [ ] Update to latest version: `npm update -g @anthropic-ai/claude-code`
+- [ ] Clear cache: `rm -rf ~/.claude/cache`
+- [ ] Re-authenticate: `claude auth logout && claude auth login`
+- [ ] Check network: `curl https://api.anthropic.com/v1/health`
+- [ ] Verify configuration: `claude config show`
+
+## Next Steps
+
+- [Complete installation guide](/docs/getting-started/installation)
+- [Configure Claude Code settings](/docs/configuration/settings)
+- [Learn productivity tips](/docs/tips-and-tricks/productivity)
+
+<ContentMeta
+  sources={[
+    { title: "Claude Code Documentation", url: "https://docs.anthropic.com/en/docs/claude-code/overview" },
+    { title: "Claude Code GitHub Issues", url: "https://github.com/anthropics/claude-code/issues" },
+    { title: "Anthropic Support", url: "https://support.anthropic.com" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

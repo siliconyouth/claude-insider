@@ -78,12 +78,14 @@ function chunkContent(
   const sections = cleanContent.split(/(?=^#{2,3}\s)/m);
 
   for (let i = 0; i < sections.length; i++) {
-    const section = sections[i].trim();
+    const rawSection = sections[i];
+    if (!rawSection) continue;
+    const section = rawSection.trim();
     if (!section) continue;
 
     // Extract section title
     const headerMatch = section.match(/^#{2,3}\s+(.+?)$/m);
-    const sectionTitle = headerMatch ? headerMatch[1].trim() : title;
+    const sectionTitle = headerMatch?.[1]?.trim() ?? title;
 
     // Get section content (without header)
     const sectionContent = headerMatch

@@ -146,16 +146,18 @@ export default async function DocPage({ params }: PageProps) {
   const allItems = Object.values(navigationConfig).flatMap((section) => section.items);
   const currentIndex = allItems.findIndex((item) => item.href === currentPath);
 
-  if (currentIndex > 0) {
+  const prevItem = currentIndex > 0 ? allItems[currentIndex - 1] : undefined;
+  if (prevItem) {
     prevPage = {
-      label: allItems[currentIndex - 1].label,
-      href: allItems[currentIndex - 1].href,
+      label: prevItem.label,
+      href: prevItem.href,
     };
   }
-  if (currentIndex < allItems.length - 1 && currentIndex >= 0) {
+  const nextItem = currentIndex < allItems.length - 1 && currentIndex >= 0 ? allItems[currentIndex + 1] : undefined;
+  if (nextItem) {
     nextPage = {
-      label: allItems[currentIndex + 1].label,
-      href: allItems[currentIndex + 1].href,
+      label: nextItem.label,
+      href: nextItem.href,
     };
   }
 
@@ -177,7 +179,7 @@ export default async function DocPage({ params }: PageProps) {
 
   return (
     <DocsLayout
-      title={data.title || formatSlugToTitle(slug[slug.length - 1])}
+      title={data.title || formatSlugToTitle(slug[slug.length - 1] ?? "")}
       description={data.description}
       breadcrumbs={breadcrumbs}
       sidebar={sidebarSections}

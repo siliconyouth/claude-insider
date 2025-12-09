@@ -7,10 +7,11 @@ import {
   setLocale,
   hasMultipleLocales,
   Locale,
+  defaultLocale,
 } from "@/lib/i18n";
 
 export function LanguageSelector() {
-  const [currentLocale, setCurrentLocale] = useState<Locale>(locales[0]);
+  const [currentLocale, setCurrentLocale] = useState<Locale>(defaultLocale);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 

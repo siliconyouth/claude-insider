@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.11.0
+**Version**: 0.12.1
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -18,7 +18,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Tailwind CSS 4.1.5 with dark/light themes
 - Homepage with hero, categories, features
 - MDX content support with dynamic routing
-- 16 documentation pages (all categories complete)
+- 19 documentation pages (all categories complete)
 - Fuzzy search with Fuse.js (Cmd/Ctrl+K)
 - Dark/Light/System theme toggle with localStorage
 - Code copy-to-clipboard functionality
@@ -43,7 +43,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Auto-updating build info in footer (version, build date, commit SHA)
 - Prebuild script for automatic version updates on each build
 - ContentMeta component for source citations on all content pages
-- AI generation metadata on all 16 MDX pages (model: Claude Opus 4.5, date, build ID)
+- AI generation metadata on all 19 MDX pages (model: Claude Opus 4.5, date, build ID)
 - Links to official Anthropic documentation sources
 - Vercel Analytics for privacy-focused usage tracking
 - Content Security Policy (CSP) and Permissions-Policy headers
@@ -54,12 +54,19 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Search history with localStorage persistence (recent searches)
 - Language selector for i18n preparation (English US only initially)
 - **AI Voice Assistant** with "Hey Insider" wake word detection
-- **OpenAI Text-to-Speech** with 6 voices (alloy, echo, fable, onyx, nova, shimmer)
+- **ElevenLabs Text-to-Speech** with 42 premium voices (turbo v2.5)
+- **Streaming TTS** - voice starts after first sentence (doesn't wait for full response)
 - **Speech-to-Text** using Web Speech API with browser fallback
 - **RAG System** with TF-IDF search for intelligent documentation retrieval
 - **Streaming Chat** with Claude AI using Server-Sent Events (SSE)
-- **Auto-speak** responses with complete message TTS (waits for full response)
-- Voice selector dropdown with click-outside handling
+- **Auto-speak** responses with sentence-by-sentence TTS
+- Voice preference persistence (localStorage)
+- Voice preview button (hear voice before selecting)
+- TTS loading indicator with visual feedback
+- Conversation export (copy to clipboard)
+- Error boundary for voice assistant resilience
+- Analytics tracking for voice assistant interactions
+- Scrollable voice selector with 42 voice options
 
 ### Project Status: Complete
 
@@ -76,7 +83,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 | Fuse.js | 7.1.0 | Fuzzy search |
 | highlight.js | 11.x | Syntax highlighting |
 | Anthropic SDK | latest | Claude AI streaming chat |
-| OpenAI SDK | latest | Text-to-Speech (TTS) |
+| ElevenLabs SDK | latest | Text-to-Speech (42 voices) |
 | Web Speech API | - | Speech recognition |
 | pnpm | 10.19.0 | Package manager |
 
@@ -112,13 +119,13 @@ claude-insider/
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
-│   │   │   └── speak/route.ts    # OpenAI TTS endpoint (6 voices)
+│   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation
-│   │   │   ├── getting-started/  # installation.mdx, quickstart.mdx
+│   │   │   ├── getting-started/  # installation.mdx, quickstart.mdx, troubleshooting.mdx, migration.mdx
 │   │   │   ├── configuration/    # index.mdx, claude-md.mdx, settings.mdx
-│   │   │   ├── tips-and-tricks/  # index.mdx, prompting.mdx, productivity.mdx
+│   │   │   ├── tips-and-tricks/  # index.mdx, prompting.mdx, productivity.mdx, advanced-prompting.mdx
 │   │   │   ├── api/              # index.mdx, authentication.mdx, tool-use.mdx
 │   │   │   └── integrations/     # index.mdx, mcp-servers.mdx, ide-plugins.mdx, hooks.mdx
 │   │   ├── lib/
@@ -246,7 +253,7 @@ Configured in `vercel.json`:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.11.0.
+All planned features have been implemented. The project is feature-complete at v0.12.1.
 
 ### Future Content Expansion
 See the Content Expansion Plan section below for planned documentation additions.
@@ -260,17 +267,26 @@ The AI Voice Assistant provides a hands-free way to interact with documentation:
 - **Wake Word Detection**: Uses Web Speech API to listen for "Hey Insider"
 - **Speech Recognition**: Converts user speech to text with real-time transcription
 - **Streaming Chat**: SSE-based streaming from Claude AI with RAG context
-- **Text-to-Speech**: OpenAI TTS with 6 voice options, auto-speak mode
+- **Text-to-Speech**: ElevenLabs TTS with 42 voice options, streaming response, auto-speak mode
+- **Error Boundary**: Catches rendering errors and provides graceful fallback
+- **Analytics**: Tracks user interactions (voice changes, TTS plays, exports)
 
 ### API Routes
 - **`/api/assistant/chat`**: POST endpoint for streaming chat with Claude
   - Receives: message, conversation history, page context
   - Returns: Server-Sent Events stream
   - Uses RAG to include relevant documentation in context
-- **`/api/assistant/speak`**: POST endpoint for OpenAI TTS
+- **`/api/assistant/speak`**: POST endpoint for ElevenLabs TTS
   - Receives: text, voice selection
   - Returns: MP3 audio buffer
-  - Supports 6 voices: alloy, echo, fable, onyx, nova, shimmer
+  - Supports 42 premium voices with turbo v2.5 model
+
+### Features
+- **Voice Preference Persistence**: Selected voice saved to localStorage
+- **Voice Preview**: Hear voice sample before selecting
+- **Streaming TTS**: Voice starts after first sentence (doesn't wait for full response)
+- **Conversation Export**: Copy chat history to clipboard
+- **TTS Loading Indicator**: Visual feedback during audio generation
 
 ### RAG System
 - **TF-IDF Search**: Indexes all documentation pages
@@ -281,7 +297,7 @@ The AI Voice Assistant provides a hands-free way to interact with documentation:
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `ANTHROPIC_API_KEY` | Yes | Claude AI API key |
-| `OPENAI_API_KEY` | Yes | OpenAI API key for TTS |
+| `ELEVENLABS_API_KEY` | Yes | ElevenLabs API key for TTS |
 
 ## Adding New Documentation Pages
 
@@ -351,14 +367,14 @@ The `ContentMeta` component is exported via `mdx-components.tsx` and available i
 Future content additions organized by priority:
 
 ### Phase A: Core Enhancements (High Priority)
-| Page | Category | Description |
-|------|----------|-------------|
-| `troubleshooting.mdx` | Getting Started | Common issues and solutions |
-| `migration.mdx` | Getting Started | Migrating from other AI tools |
-| `environment.mdx` | Configuration | Environment variables reference |
-| `permissions.mdx` | Configuration | Permissions and security settings |
-| `advanced-prompting.mdx` | Tips & Tricks | Advanced prompting techniques |
-| `debugging.mdx` | Tips & Tricks | Debugging with Claude Code |
+| Page | Category | Description | Status |
+|------|----------|-------------|--------|
+| `troubleshooting.mdx` | Getting Started | Common issues and solutions | ✅ Complete |
+| `migration.mdx` | Getting Started | Migrating from other AI tools | ✅ Complete |
+| `environment.mdx` | Configuration | Environment variables reference | Planned |
+| `permissions.mdx` | Configuration | Permissions and security settings | Planned |
+| `advanced-prompting.mdx` | Tips & Tricks | Advanced prompting techniques | ✅ Complete |
+| `debugging.mdx` | Tips & Tricks | Debugging with Claude Code | Planned |
 
 ### Phase B: API Deep Dives (Medium Priority)
 | Page | Category | Description |

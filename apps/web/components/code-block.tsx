@@ -82,8 +82,8 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
 
   // Extract language from className (e.g., "language-typescript")
   const languageMatch = className?.match(/language-(\w+)/);
-  const language = languageMatch ? languageMatch[1] : "plaintext";
-  const langConfig = languageConfig[language] || { name: language, color: "bg-gray-600" };
+  const language = languageMatch?.[1] ?? "plaintext";
+  const langConfig = languageConfig[language] ?? { name: language, color: "bg-gray-600" };
 
   // Apply syntax highlighting
   useEffect(() => {

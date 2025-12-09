@@ -10,7 +10,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 
 ## Features
 
-- **Documentation Hub**: 16 comprehensive pages covering Claude AI
+- **Documentation Hub**: 19 comprehensive pages covering Claude AI
 - **AI Voice Assistant**: Interactive voice assistant with chat interface
 - **ElevenLabs TTS**: Premium text-to-speech with 42 natural voices
 - **Streaming TTS**: Voice starts speaking immediately (doesn't wait for full response)
@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.12.0)
+## Current Status (v0.12.1)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -33,7 +33,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Tailwind CSS 4 with dark/light themes
 - [x] Homepage with hero section
 - [x] MDX content support with dynamic routing
-- [x] 16 documentation pages (all categories complete)
+- [x] 19 documentation pages (all categories complete)
 - [x] Fuzzy search with Fuse.js
 - [x] Dark/Light/System theme toggle
 - [x] Code copy-to-clipboard
@@ -59,7 +59,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Accessibility Statement page (WCAG 2.1 AA documentation)
 - [x] Auto-updating build info in footer (version, date, commit SHA)
 - [x] ContentMeta component for source citations on all content pages
-- [x] AI generation metadata on all 16 MDX pages (model, date, build ID)
+- [x] AI generation metadata on all 19 MDX pages (model, date, build ID)
 - [x] Links to official Anthropic documentation sources
 - [x] Vercel Analytics for privacy-focused usage tracking
 - [x] Content Security Policy (CSP) headers
@@ -78,6 +78,12 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Streaming Chat** with Claude AI (Server-Sent Events)
 - [x] **Auto-speak** responses with sentence-by-sentence TTS
 - [x] Scrollable voice selector with 42 voice options
+- [x] Voice preference persistence (localStorage)
+- [x] Voice preview button (hear voice before selecting)
+- [x] TTS loading indicator with visual feedback
+- [x] Conversation export (copy to clipboard)
+- [x] Error boundary for voice assistant resilience
+- [x] Analytics tracking for voice assistant interactions
 
 ### All Features Complete
 
@@ -85,9 +91,9 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 
 | Category | Pages |
 |----------|-------|
-| **Getting Started** | Installation, Quick Start |
+| **Getting Started** | Installation, Quick Start, Troubleshooting, Migration |
 | **Configuration** | Overview, CLAUDE.md Guide, Settings |
-| **Tips & Tricks** | Overview, Prompting, Productivity |
+| **Tips & Tricks** | Overview, Prompting, Productivity, Advanced Prompting |
 | **API Reference** | Overview, Authentication, Tool Use |
 | **Integrations** | Overview, MCP Servers, IDE Plugins, Hooks |
 
@@ -149,7 +155,7 @@ claude-insider/
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI
-│   │   │   └── speak/route.ts    # OpenAI TTS endpoint
+│   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation
@@ -240,6 +246,9 @@ pnpm --filter web build     # Build only web app
 | Click Listen button | Hear response read aloud |
 | Toggle Auto-speak | Automatically read responses |
 | Select voice from dropdown | Choose from 42 ElevenLabs voices |
+| Click preview button | Preview voice before selecting |
+| Click export button | Copy conversation to clipboard |
+| Click clear button | Clear conversation history |
 
 ## Environment Variables
 
