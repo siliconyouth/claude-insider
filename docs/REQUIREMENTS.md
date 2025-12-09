@@ -307,7 +307,8 @@ claude-insider/
 
 ### NFR-4: Security
 - [x] HTTPS only (enforced by Vercel)
-- [ ] Content Security Policy headers
+- [x] Content Security Policy headers
+- [x] Permissions-Policy header (disables camera, mic, geolocation, FLoC)
 - [x] No user data collection (privacy-first)
 - [x] No cookies or tracking
 
@@ -404,7 +405,6 @@ All planned features have been implemented. The project is feature-complete.
 - [ ] Add GitHub Actions CI/CD pipeline (optional - Vercel handles deployment)
 - [ ] Add privacy-respecting analytics (optional)
 - [ ] Add more syntax highlighting languages as needed
-- [ ] Add Content Security Policy headers
 
 ---
 
