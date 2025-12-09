@@ -53,7 +53,7 @@ export function Footer() {
         </div>
 
         {/* Copyright and Attribution */}
-        <div className="mt-6 pt-6 border-t border-gray-800/50 text-center">
+        <div className="mt-6 pt-6 border-t border-gray-800/50 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
           <p className="text-sm text-gray-500">
             &copy; {currentYear}{" "}
             <a
@@ -66,6 +66,13 @@ export function Footer() {
             </a>
             . MIT License with Attribution.
           </p>
+          <span className="hidden sm:inline text-gray-600">|</span>
+          <Link
+            href="/privacy"
+            className="text-sm text-gray-500 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
+          >
+            Privacy Policy
+          </Link>
         </div>
       </div>
     </footer>
