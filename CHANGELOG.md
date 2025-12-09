@@ -9,6 +9,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.21.0] - 2025-12-10
+
+### Added
+- **Error Boundaries with Style** - Graceful error handling as the fifth UX System pillar
+  - `components/error-boundary.tsx` - Styled error boundary components
+  - `components/error-pages.tsx` - Route-specific error pages (404, 500, 403, maintenance)
+  - `hooks/use-error-recovery.ts` - Error recovery hooks with retry mechanisms
+  - `lib/error-reporting.ts` - Client-side error tracking and reporting
+
+- **Error Boundary Components**
+  - `ErrorBoundary` - React class component with severity-based styling and retry logic
+  - `InlineError` - Inline error display for contained failures
+  - `AsyncErrorBoundary` - Suspense-aware error boundary with loading fallback
+  - `OfflineDetector` - Network status detection with offline fallback UI
+  - `ErrorToast` - Toast notification for non-blocking error display
+
+- **Route-Specific Error Pages**
+  - `NotFoundPage` (404) - Styled 404 with search suggestions and navigation
+  - `ServerErrorPage` (500) - Server error with auto-retry countdown and details toggle
+  - `ForbiddenPage` (403) - Access denied with helpful messaging
+  - `MaintenancePage` - Scheduled maintenance with estimated return time
+  - `GenericErrorPage` - Customizable error page for any status code
+
+- **Error Recovery Hooks**
+  - `useRetry` - Exponential backoff with jitter, countdown timer, cancel support
+  - `useCircuitBreaker` - Circuit breaker pattern (closed/open/half-open states)
+  - `useNetworkStatus` - Online/offline detection, connection quality monitoring
+  - `useFallback` - Primary/fallback pattern with timeout racing
+
+- **Error Reporting Infrastructure**
+  - `ErrorReporter` class - Singleton for error tracking and localStorage persistence
+  - `categorizeError` - Automatic error categorization (render, network, auth, validation, etc.)
+  - `determineSeverity` - Severity calculation (low, medium, high, critical)
+  - `withErrorReporting` - HOC wrapper for automatic error reporting
+  - `safeJsonParse`, `safeLocalStorage`, `safeFetch` - Safe wrappers with error tracking
+
+- **New CSS Animations**
+  - `@keyframes error-shake` - Shake animation for error emphasis
+  - `@keyframes error-glitch` - Glitch effect for error codes
+  - `.animate-spin-slow` - Slow rotation for maintenance gear icon
+  - `.retry-pulse` - Pulsing animation for retry buttons
+  - `.countdown-tick` - Countdown number animation
+  - `.offline-pulse` - Offline indicator pulse
+  - `.reconnecting-dots` - Animated connecting dots
+  - `.error-toast-enter/exit` - Toast slide animations
+  - `.circuit-open/closed/half-open` - Circuit breaker state indicators
+  - `.severity-low/medium/high/critical` - Severity-based border colors
+
+### UX System (Five Pillars - MANDATORY)
+The project now uses a UX System with five mandatory pillars:
+1. **Design System** - Visual consistency (colors, typography, animations)
+2. **Optimistic UI** - Instant feedback (toasts, skeletons, rollback)
+3. **Content-Aware Loading** - Intelligent lazy loading (viewport detection, blur-up)
+4. **Smart Prefetching** - Anticipate intent, preload before click
+5. **Error Boundaries** - Graceful error handling (styled errors, retry, recovery)
+
 ## [0.20.0] - 2025-12-10
 
 ### Added
@@ -855,6 +911,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.21.0 | 2025-12-10 | Error Boundaries with Style (error pages, retry, recovery, reporting) |
 | 0.20.0 | 2025-12-10 | Smart Prefetching system (hover, focus, intersection prefetch) |
 | 0.19.0 | 2025-12-10 | Content-Aware Loading system (lazy sections, images, code blocks) |
 | 0.18.0 | 2025-12-09 | Optimistic UI system (toast, skeletons, loading states) |

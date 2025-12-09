@@ -401,11 +401,11 @@ claude-insider/
 
 ---
 
-## UX System (MANDATORY - FOUR PILLARS)
+## UX System (MANDATORY - FIVE PILLARS)
 
-**These guidelines are mandatory for all future development. All new components and features MUST implement ALL FOUR pillars for consistent user experience.**
+**These guidelines are mandatory for all future development. All new components and features MUST implement ALL FIVE pillars for consistent user experience.**
 
-### The Four Pillars
+### The Five Pillars
 
 | Pillar | Purpose | Key Files |
 |--------|---------|-----------|
@@ -413,6 +413,7 @@ claude-insider/
 | **Optimistic UI** | Instant feedback | `hooks/use-optimistic-update.ts`, `components/toast.tsx`, `components/skeleton.tsx` |
 | **Content-Aware Loading** | Intelligent lazy loading | `hooks/use-intersection-observer.ts`, `components/lazy-*.tsx`, `components/content-loader.tsx` |
 | **Smart Prefetching** | Anticipate intent, preload before click | `lib/prefetch-queue.ts`, `hooks/use-prefetch.ts`, `components/prefetch-link.tsx` |
+| **Error Boundaries** | Graceful error handling | `components/error-boundary.tsx`, `components/error-pages.tsx`, `hooks/use-error-recovery.ts`, `lib/error-reporting.ts` |
 
 ### Mandatory Checklist for New Features
 
@@ -422,6 +423,7 @@ Before submitting any new feature, ensure:
 - [ ] **Optimistic UI**: Async operations show instant feedback, toasts for state changes, skeletons during loading
 - [ ] **Content-Aware Loading**: Heavy content uses lazy loading, images have blur-up effect, code blocks defer highlighting
 - [ ] **Smart Prefetching**: Navigation links use PrefetchLink, hover/focus triggers prefetch, analytics track visits
+- [ ] **Error Boundaries**: Components wrapped with ErrorBoundary, async operations use useRetry, errors reported via errorReporter
 
 ### All UX System Files
 
@@ -429,13 +431,17 @@ Before submitting any new feature, ensure:
 |------|---------|
 | `lib/design-system.ts` | Design tokens, `cn()` utility, component presets |
 | `lib/prefetch-queue.ts` | Priority queue for smart prefetching |
+| `lib/error-reporting.ts` | Error tracking, categorization, reporting |
 | `app/globals.css` | CSS variables, utility classes, animations |
 | `components/toast.tsx` | Toast notification system |
 | `components/skeleton.tsx` | Skeleton loading components |
 | `components/prefetch-link.tsx` | Smart link components with prefetching |
+| `components/error-boundary.tsx` | Styled error boundary components |
+| `components/error-pages.tsx` | Route-specific error pages |
 | `hooks/use-optimistic-update.ts` | Optimistic update hooks |
 | `hooks/use-intersection-observer.ts` | Viewport detection hook |
 | `hooks/use-prefetch.ts` | Prefetching hooks |
+| `hooks/use-error-recovery.ts` | Retry, circuit breaker, fallback hooks |
 | `components/lazy-section.tsx` | Lazy section components |
 | `components/lazy-image.tsx` | Lazy image components |
 | `components/lazy-code-block.tsx` | Lazy code block components |
@@ -484,7 +490,7 @@ toast.info("Tip: Use keyboard shortcuts");
 
 ### When to Update UX System
 
-When modifying any of the three pillars:
+When modifying any of the five pillars:
 1. Update the relevant source files
 2. Add new CSS animations to `globals.css` if needed
 3. Update `CLAUDE.md` with new guidelines
@@ -565,6 +571,96 @@ usePageVisitTracker();
 ```
 
 ---
+
+### Pillar 5: Error Boundaries Rules
+
+1. **Wrap with ErrorBoundary** - All major sections should have error boundaries
+2. **Styled error states** - Errors use design system styling, not browser defaults
+3. **Retry mechanisms** - Failed operations offer retry with exponential backoff
+4. **Circuit breaker** - Prevent cascading failures with automatic circuit breaking
+5. **Error reporting** - All errors tracked via errorReporter singleton
+6. **Graceful degradation** - Fallback content when primary fails
+7. **Offline detection** - Show appropriate UI when network unavailable
+
+### Error Boundary Usage
+
+```tsx
+// Wrap major sections
+<ErrorBoundary fallback={<InlineError message="Section failed to load" />}>
+  <ComplexSection />
+</ErrorBoundary>
+
+// Async operations with retry
+const { execute, state, attempt, nextRetryIn } = useRetry(
+  async () => await fetch("/api/data").then(r => r.json()),
+  { maxRetries: 3, initialDelay: 1000 }
+);
+
+{state === "error" && nextRetryIn && (
+  <p>Retrying in {Math.ceil(nextRetryIn / 1000)}s...</p>
+)}
+
+// Circuit breaker for flaky services
+const { execute, circuitState, isAllowed } = useCircuitBreaker(
+  () => fetch("/api/fragile"),
+  { failureThreshold: 3, resetTimeout: 30000 }
+);
+
+{!isAllowed && <p>Service temporarily unavailable</p>}
+
+// Network status detection
+const { isOnline, isSlow } = useNetworkStatus();
+
+{!isOnline && <OfflineBanner />}
+{isSlow && <SlowConnectionWarning />}
+
+// Error reporting
+try {
+  riskyOperation();
+} catch (error) {
+  errorReporter.report(error, { component: "MyComponent" });
+  throw error;
+}
+
+// Safe wrappers
+const data = safeJsonParse(json, defaultValue);
+const stored = safeLocalStorage("get", "key");
+const response = await safeFetch("/api/data");
+```
+
+---
+
+### Phase 29: Error Boundaries with Style - COMPLETED (v0.21.0)
+- [x] **Error Boundary Components** - `components/error-boundary.tsx`
+  - `ErrorBoundary` - React class component with severity-based styling
+  - `InlineError` - Inline error display for contained failures
+  - `AsyncErrorBoundary` - Suspense-aware error boundary with loading fallback
+  - `OfflineDetector` - Network status detection with offline fallback UI
+  - `ErrorToast` - Toast notification for non-blocking error display
+- [x] **Route-Specific Error Pages** - `components/error-pages.tsx`
+  - `NotFoundPage` (404) - Styled 404 with search suggestions
+  - `ServerErrorPage` (500) - Auto-retry countdown and details toggle
+  - `ForbiddenPage` (403) - Access denied with helpful messaging
+  - `MaintenancePage` - Scheduled maintenance with ETA
+  - `GenericErrorPage` - Customizable error page for any status
+- [x] **Error Recovery Hooks** - `hooks/use-error-recovery.ts`
+  - `useRetry` - Exponential backoff with jitter, cancel support
+  - `useCircuitBreaker` - Circuit breaker pattern (closed/open/half-open)
+  - `useNetworkStatus` - Online/offline detection, connection quality
+  - `useFallback` - Primary/fallback pattern with timeout racing
+- [x] **Error Reporting Infrastructure** - `lib/error-reporting.ts`
+  - `ErrorReporter` class - Singleton with localStorage persistence
+  - `categorizeError` - Auto-categorization (render, network, auth, etc.)
+  - `determineSeverity` - Severity levels (low, medium, high, critical)
+  - `withErrorReporting` - HOC wrapper for automatic reporting
+  - `safeJsonParse`, `safeLocalStorage`, `safeFetch` - Safe wrappers
+- [x] **New CSS Animations**
+  - `@keyframes error-shake` - Shake animation for errors
+  - `@keyframes error-glitch` - Glitch effect for error codes
+  - `.retry-pulse` - Pulsing retry button
+  - `.countdown-tick` - Countdown animation
+  - `.circuit-open/closed/half-open` - Circuit breaker indicators
+  - `.severity-low/medium/high/critical` - Severity border colors
 
 ### Phase 28: Smart Prefetching - COMPLETED (v0.20.0)
 - [x] **Prefetch Queue Manager** - `lib/prefetch-queue.ts`
