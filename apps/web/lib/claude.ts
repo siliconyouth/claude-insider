@@ -16,26 +16,17 @@ import Anthropic from "@anthropic-ai/sdk";
 export type { Message, AssistantContext } from "./claude-utils";
 export { markdownToDisplayText, markdownToSpeakableText } from "./claude-utils";
 
+// Re-export model configuration from shared models file (prevents circular deps)
+export {
+  CLAUDE_MODELS,
+  DEFAULT_MODEL,
+  DEFAULT_MODEL_NAME,
+  DEFAULT_MODEL_ID,
+} from "./models";
+
 // Initialize Anthropic client
 // API key is read from ANTHROPIC_API_KEY environment variable
 export const anthropic = new Anthropic();
-
-// Model configuration
-export const CLAUDE_MODELS = {
-  // Best for complex reasoning and documentation
-  OPUS: "claude-opus-4-20250514",
-  // Excellent balance of speed and quality (recommended)
-  SONNET: "claude-sonnet-4-20250514",
-  // Fast and cheap for simple tasks
-  HAIKU: "claude-3-5-haiku-20241022",
-} as const;
-
-// Default model for the assistant
-export const DEFAULT_MODEL = CLAUDE_MODELS.SONNET;
-
-// Human-readable model name for display
-export const DEFAULT_MODEL_NAME = "Claude Sonnet 4";
-export const DEFAULT_MODEL_ID = DEFAULT_MODEL;
 
 // Import the comprehensive system prompt builder
 import buildComprehensiveSystemPrompt from "../data/system-prompt";

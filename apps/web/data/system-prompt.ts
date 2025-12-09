@@ -12,7 +12,7 @@
  * - Voice assistant capabilities
  */
 
-import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/claude";
+import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
 
 // =============================================================================
 // PROJECT METADATA

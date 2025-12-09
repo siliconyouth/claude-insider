@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2025-12-09T19:15:48.231Z",
+  "generatedAt": "2025-12-09T19:25:44.093Z",
   "documentCount": 435,
   "documentationChunks": 423,
   "projectKnowledgeCount": 12,
@@ -8170,7 +8170,7 @@
       "id": "project-versions",
       "title": "Version History",
       "section": "Recent Updates",
-      "content": "Claude Insider version history and recent updates.\n\nCurrent Version: 0.16.2\n\nRecent Releases:\nv0.16.2 (2025-12-09): Fixed\nv0.16.1 (2025-12-09): Fixed\nv0.16.0 (2025-12-09): Added\nv0.15.1 (2025-12-09): Added\nv0.15.0 (2025-12-09): Added\n\nMajor Milestones:\n- v0.16.x - Tutorials & Examples categories, navigation fixes\n- v0.15.x - 33 language syntax highlighting, build-time RAG index\n- v0.14.x - Fullscreen popup mode, demo animation improvements\n- v0.13.x - 9 new documentation pages, SDK architecture fix\n- v0.12.x - ElevenLabs TTS (42 voices), voice polish features\n- v0.11.x - AI Voice Assistant, RAG search, streaming chat\n- v0.10.x - RSS feed, changelog, edit links, reading time, i18n prep\n- v0.9.x - Analytics, security headers, source citations\n- v0.8.x - Legal pages, footer, build info\n- v0.7.x - Syntax highlighting\n- v0.6.x - PWA, accessibility\n- v0.5.x - Lighthouse optimization, JSON-LD\n- v0.4.x - TOC, mobile menu, production deployment\n- v0.3.x - MDX, search, theme toggle\n- v0.2.x - Homepage, docs structure\n- v0.1.x - Initial Turborepo setup\n\nFull changelog available at /changelog or in CHANGELOG.md",
+      "content": "Claude Insider version history and recent updates.\n\nCurrent Version: 0.16.2\n\nRecent Releases:\nv0.16.3 (2025-12-09): Added\nv0.16.2 (2025-12-09): Fixed\nv0.16.1 (2025-12-09): Fixed\nv0.16.0 (2025-12-09): Added\nv0.15.1 (2025-12-09): Added\n\nMajor Milestones:\n- v0.16.x - Tutorials & Examples categories, navigation fixes\n- v0.15.x - 33 language syntax highlighting, build-time RAG index\n- v0.14.x - Fullscreen popup mode, demo animation improvements\n- v0.13.x - 9 new documentation pages, SDK architecture fix\n- v0.12.x - ElevenLabs TTS (42 voices), voice polish features\n- v0.11.x - AI Voice Assistant, RAG search, streaming chat\n- v0.10.x - RSS feed, changelog, edit links, reading time, i18n prep\n- v0.9.x - Analytics, security headers, source citations\n- v0.8.x - Legal pages, footer, build info\n- v0.7.x - Syntax highlighting\n- v0.6.x - PWA, accessibility\n- v0.5.x - Lighthouse optimization, JSON-LD\n- v0.4.x - TOC, mobile menu, production deployment\n- v0.3.x - MDX, search, theme toggle\n- v0.2.x - Homepage, docs structure\n- v0.1.x - Initial Turborepo setup\n\nFull changelog available at /changelog or in CHANGELOG.md",
       "url": "/changelog",
       "category": "Project",
       "keywords": [
@@ -17544,8 +17544,8 @@
       "updates": 0.4,
       "current": 0.2,
       "releases": 0.2,
-      "fixed": 0.4,
       "added": 0.6,
+      "fixed": 0.4,
       "major": 0.2,
       "milestones": 0.2,
       "tutorials": 0.2,
