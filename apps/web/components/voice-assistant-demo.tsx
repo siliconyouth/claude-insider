@@ -2,44 +2,98 @@
 
 import { useEffect, useState } from "react";
 
-const DEMO_MESSAGES = [
+const DEMO_CONVERSATIONS = [
+  // First exchange
   { role: "user", content: "What is Claude Code?" },
   { role: "assistant", content: "Claude Code is Anthropic's official CLI tool that brings AI-powered coding assistance directly to your terminal. It can help with code reviews, refactoring, debugging, and writing new features." },
+  // Second exchange
+  { role: "user", content: "How do I install it?" },
+  { role: "assistant", content: "You can install Claude Code globally using npm: npm install -g @anthropic-ai/claude-code. After installation, run 'claude' in your terminal to start. You'll need an Anthropic API key to use it." },
 ];
 
 export function VoiceAssistantDemo() {
   const [visibleMessages, setVisibleMessages] = useState<number>(0);
   const [isTyping, setIsTyping] = useState(false);
   const [showPulse, setShowPulse] = useState(false);
+  const [typingText, setTypingText] = useState("");
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   useEffect(() => {
-    const timer1 = setTimeout(() => {
-      setVisibleMessages(1);
-      setIsTyping(true);
-    }, 1500);
+    const timers: NodeJS.Timeout[] = [];
 
-    const timer2 = setTimeout(() => {
+    // Timeline (all times in ms):
+    // 0ms: Start - welcome screen visible
+    // 2000ms: First user message appears
+    // 3500ms: Typing indicator starts
+    // 6000ms: First assistant response appears, audio plays
+    // 12000ms: Audio ends
+    // 14000ms: Second user message appears
+    // 15500ms: Typing indicator starts
+    // 18500ms: Second assistant response appears, audio plays
+    // 25000ms: Audio ends, voice pulse starts
+    // 28000ms: Voice pulse ends
+    // 32000ms: Reset animation
+
+    // First user message
+    timers.push(setTimeout(() => {
+      setVisibleMessages(1);
+    }, 2000));
+
+    // First typing indicator
+    timers.push(setTimeout(() => {
+      setIsTyping(true);
+    }, 3500));
+
+    // First assistant response
+    timers.push(setTimeout(() => {
       setIsTyping(false);
       setVisibleMessages(2);
-      setShowPulse(true);
-    }, 3500);
+      setIsPlayingAudio(true);
+    }, 6000));
 
-    const timer3 = setTimeout(() => {
+    // First audio ends
+    timers.push(setTimeout(() => {
+      setIsPlayingAudio(false);
+    }, 12000));
+
+    // Second user message
+    timers.push(setTimeout(() => {
+      setVisibleMessages(3);
+    }, 14000));
+
+    // Second typing indicator
+    timers.push(setTimeout(() => {
+      setIsTyping(true);
+    }, 15500));
+
+    // Second assistant response
+    timers.push(setTimeout(() => {
+      setIsTyping(false);
+      setVisibleMessages(4);
+      setIsPlayingAudio(true);
+    }, 18500));
+
+    // Second audio ends, show voice pulse
+    timers.push(setTimeout(() => {
+      setIsPlayingAudio(false);
+      setShowPulse(true);
+    }, 25000));
+
+    // Voice pulse ends
+    timers.push(setTimeout(() => {
       setShowPulse(false);
-    }, 5500);
+    }, 28000));
 
     // Reset animation
-    const resetTimer = setTimeout(() => {
+    timers.push(setTimeout(() => {
       setVisibleMessages(0);
       setIsTyping(false);
       setShowPulse(false);
-    }, 8000);
+      setIsPlayingAudio(false);
+    }, 32000));
 
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearTimeout(resetTimer);
+      timers.forEach(timer => clearTimeout(timer));
     };
   }, [visibleMessages]);
 
@@ -64,27 +118,62 @@ export function VoiceAssistantDemo() {
         </div>
 
         {/* Chat area */}
-        <div className="p-4 min-h-[300px] max-h-[300px] overflow-hidden">
-          {/* Welcome message */}
-          <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-500/10 mb-3">
-              <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
+        <div className="p-4 min-h-[380px] max-h-[380px] overflow-hidden">
+          {/* Welcome message - only show when no messages */}
+          {visibleMessages === 0 && (
+            <div className="text-center mb-6 animate-fadeIn">
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-500/10 mb-3">
+                <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <p className="text-sm text-gray-400">Ask me anything about Claude AI</p>
+              <p className="text-xs text-gray-500 mt-2">Voice & text input supported</p>
             </div>
-            <p className="text-sm text-gray-400">Ask me anything about Claude AI</p>
-          </div>
+          )}
 
           {/* Messages */}
-          <div className="space-y-4">
+          <div className="space-y-3">
+            {/* First user message */}
             {visibleMessages >= 1 && (
               <div className="flex justify-end animate-fadeIn">
                 <div className="max-w-[80%] rounded-lg px-4 py-2 bg-orange-500/20 text-gray-200 text-sm">
-                  {DEMO_MESSAGES[0]?.content}
+                  {DEMO_CONVERSATIONS[0]?.content}
                 </div>
               </div>
             )}
 
+            {/* First assistant response */}
+            {visibleMessages >= 2 && (
+              <div className="flex justify-start animate-fadeIn">
+                <div className="max-w-[85%] rounded-lg px-4 py-2 bg-gray-800 text-gray-200 text-sm leading-relaxed">
+                  {DEMO_CONVERSATIONS[1]?.content}
+                  {isPlayingAudio && visibleMessages === 2 && (
+                    <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-gray-700">
+                      <div className="flex items-center gap-0.5">
+                        <span className="w-1 h-3 bg-orange-400 rounded-full animate-audioWave1" />
+                        <span className="w-1 h-4 bg-orange-400 rounded-full animate-audioWave2" />
+                        <span className="w-1 h-2 bg-orange-400 rounded-full animate-audioWave3" />
+                        <span className="w-1 h-5 bg-orange-400 rounded-full animate-audioWave1" />
+                        <span className="w-1 h-3 bg-orange-400 rounded-full animate-audioWave2" />
+                      </div>
+                      <span className="text-xs text-orange-400">Speaking...</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Second user message */}
+            {visibleMessages >= 3 && (
+              <div className="flex justify-end animate-fadeIn">
+                <div className="max-w-[80%] rounded-lg px-4 py-2 bg-orange-500/20 text-gray-200 text-sm">
+                  {DEMO_CONVERSATIONS[2]?.content}
+                </div>
+              </div>
+            )}
+
+            {/* Typing indicator */}
             {isTyping && (
               <div className="flex justify-start animate-fadeIn">
                 <div className="max-w-[80%] rounded-lg px-4 py-3 bg-gray-800 text-sm">
@@ -97,10 +186,23 @@ export function VoiceAssistantDemo() {
               </div>
             )}
 
-            {visibleMessages >= 2 && (
+            {/* Second assistant response */}
+            {visibleMessages >= 4 && (
               <div className="flex justify-start animate-fadeIn">
                 <div className="max-w-[85%] rounded-lg px-4 py-2 bg-gray-800 text-gray-200 text-sm leading-relaxed">
-                  {DEMO_MESSAGES[1]?.content}
+                  {DEMO_CONVERSATIONS[3]?.content}
+                  {isPlayingAudio && visibleMessages === 4 && (
+                    <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-gray-700">
+                      <div className="flex items-center gap-0.5">
+                        <span className="w-1 h-3 bg-orange-400 rounded-full animate-audioWave1" />
+                        <span className="w-1 h-4 bg-orange-400 rounded-full animate-audioWave2" />
+                        <span className="w-1 h-2 bg-orange-400 rounded-full animate-audioWave3" />
+                        <span className="w-1 h-5 bg-orange-400 rounded-full animate-audioWave1" />
+                        <span className="w-1 h-3 bg-orange-400 rounded-full animate-audioWave2" />
+                      </div>
+                      <span className="text-xs text-orange-400">Speaking...</span>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -172,7 +274,30 @@ export function VoiceAssistantDemo() {
           }
         }
         .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out forwards;
+          animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes audioWave1 {
+          0%, 100% { height: 12px; }
+          50% { height: 20px; }
+        }
+        @keyframes audioWave2 {
+          0%, 100% { height: 16px; }
+          50% { height: 8px; }
+        }
+        @keyframes audioWave3 {
+          0%, 100% { height: 8px; }
+          50% { height: 16px; }
+        }
+        .animate-audioWave1 {
+          animation: audioWave1 0.5s ease-in-out infinite;
+        }
+        .animate-audioWave2 {
+          animation: audioWave2 0.5s ease-in-out infinite;
+          animation-delay: 0.1s;
+        }
+        .animate-audioWave3 {
+          animation: audioWave3 0.5s ease-in-out infinite;
+          animation-delay: 0.2s;
         }
       `}</style>
     </div>
