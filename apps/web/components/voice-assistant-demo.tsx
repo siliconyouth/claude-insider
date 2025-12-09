@@ -19,7 +19,8 @@ export function VoiceAssistantDemo() {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   useEffect(() => {
-    const timers: NodeJS.Timeout[] = [];
+    // Total cycle duration: 46 seconds
+    const CYCLE_DURATION = 46000;
 
     // Timeline (all times in ms) - Extended for better readability:
     // 0ms: Start - welcome screen visible
@@ -27,77 +28,97 @@ export function VoiceAssistantDemo() {
     // 3500ms: Typing indicator starts
     // 6000ms: First assistant response appears, audio plays
     // 12000ms: Audio ends
-    // 18000ms: Reading time - wait 6 more seconds for user to read
-    // 20000ms: Second user message appears
+    // 20000ms: Second user message appears (reading time for first response)
     // 21500ms: Typing indicator starts
     // 24500ms: Second assistant response appears, audio plays
     // 31000ms: Audio ends
-    // 40000ms: Reading time - wait 9 seconds for user to read second answer
-    // 43000ms: 3-second pause begins (animation stops)
+    // 34000ms: Voice pulse starts
+    // 37000ms: Voice pulse ends
+    // 43000ms: 3-second static pause begins
     // 46000ms: Reset and loop from beginning
 
-    // First user message
-    timers.push(setTimeout(() => {
-      setVisibleMessages(1);
-    }, 2000));
+    const runAnimation = () => {
+      const timers: NodeJS.Timeout[] = [];
 
-    // First typing indicator
-    timers.push(setTimeout(() => {
-      setIsTyping(true);
-    }, 3500));
-
-    // First assistant response
-    timers.push(setTimeout(() => {
-      setIsTyping(false);
-      setVisibleMessages(2);
-      setIsPlayingAudio(true);
-    }, 6000));
-
-    // First audio ends - reading time begins
-    timers.push(setTimeout(() => {
-      setIsPlayingAudio(false);
-    }, 12000));
-
-    // Second user message (after reading time)
-    timers.push(setTimeout(() => {
-      setVisibleMessages(3);
-    }, 20000));
-
-    // Second typing indicator
-    timers.push(setTimeout(() => {
-      setIsTyping(true);
-    }, 21500));
-
-    // Second assistant response
-    timers.push(setTimeout(() => {
-      setIsTyping(false);
-      setVisibleMessages(4);
-      setIsPlayingAudio(true);
-    }, 24500));
-
-    // Second audio ends - extended reading time
-    timers.push(setTimeout(() => {
-      setIsPlayingAudio(false);
-      setShowPulse(true);
-    }, 31000));
-
-    // Voice pulse ends
-    timers.push(setTimeout(() => {
-      setShowPulse(false);
-    }, 34000));
-
-    // Reset animation after 3-second static pause
-    timers.push(setTimeout(() => {
+      // Reset state at start of each cycle
       setVisibleMessages(0);
       setIsTyping(false);
       setShowPulse(false);
       setIsPlayingAudio(false);
-    }, 46000));
+
+      // First user message
+      timers.push(setTimeout(() => {
+        setVisibleMessages(1);
+      }, 2000));
+
+      // First typing indicator
+      timers.push(setTimeout(() => {
+        setIsTyping(true);
+      }, 3500));
+
+      // First assistant response
+      timers.push(setTimeout(() => {
+        setIsTyping(false);
+        setVisibleMessages(2);
+        setIsPlayingAudio(true);
+      }, 6000));
+
+      // First audio ends - reading time begins
+      timers.push(setTimeout(() => {
+        setIsPlayingAudio(false);
+      }, 12000));
+
+      // Second user message (after reading time)
+      timers.push(setTimeout(() => {
+        setVisibleMessages(3);
+      }, 20000));
+
+      // Second typing indicator
+      timers.push(setTimeout(() => {
+        setIsTyping(true);
+      }, 21500));
+
+      // Second assistant response
+      timers.push(setTimeout(() => {
+        setIsTyping(false);
+        setVisibleMessages(4);
+        setIsPlayingAudio(true);
+      }, 24500));
+
+      // Second audio ends - extended reading time
+      timers.push(setTimeout(() => {
+        setIsPlayingAudio(false);
+      }, 31000));
+
+      // Voice pulse starts
+      timers.push(setTimeout(() => {
+        setShowPulse(true);
+      }, 34000));
+
+      // Voice pulse ends
+      timers.push(setTimeout(() => {
+        setShowPulse(false);
+      }, 37000));
+
+      return timers;
+    };
+
+    // Run initial animation
+    let timers = runAnimation();
+
+    // Set up interval to loop the animation
+    const interval = setInterval(() => {
+      // Clear previous timers
+      timers.forEach(timer => clearTimeout(timer));
+      // Run animation again
+      timers = runAnimation();
+    }, CYCLE_DURATION);
 
     return () => {
       timers.forEach(timer => clearTimeout(timer));
+      clearInterval(interval);
     };
-  }, [visibleMessages]);
+  }, []);
 
   return (
     <div className="relative">
