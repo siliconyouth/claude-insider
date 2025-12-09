@@ -403,7 +403,6 @@ All planned features have been implemented. The project is feature-complete.
 
 ### Optional Future Enhancements
 - [ ] Add GitHub Actions CI/CD pipeline (optional - Vercel handles deployment)
-- [ ] Add privacy-respecting analytics (optional)
 - [ ] Add more syntax highlighting languages as needed
 
 ---

@@ -2,6 +2,7 @@ import "@repo/ui/styles.css";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { SkipLink } from "@/components/skip-link";
 
@@ -137,6 +138,7 @@ export default function RootLayout({
         <SkipLink />
         <ServiceWorkerRegister />
         {children}
+        <Analytics />
       </body>
     </html>
   );
