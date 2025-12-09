@@ -163,6 +163,7 @@ claude-insider/
 │   │   │       ├── index.mdx              # Examples overview
 │   │   │       └── real-world-projects.mdx # Case studies
 │   │   ├── lib/
+│   │   │   ├── design-system.ts  # Vercel-inspired design tokens & cn() utility
 │   │   │   ├── mdx.ts            # MDX utilities
 │   │   │   ├── search.ts         # Search index and utilities
 │   │   │   ├── reading-time.ts   # Reading time calculation (200 WPM)
@@ -299,6 +300,12 @@ claude-insider/
 - [x] **Dynamic Project Knowledge** - 12 knowledge chunks generated from source docs at build time
 - [x] **Comprehensive AI Persona** - System prompt with deep project awareness in `data/system-prompt.ts`
 - [x] **RAG v2.0 Index** - 435 total chunks (423 docs + 12 project knowledge)
+- [x] **Vercel-Inspired Design System** - Comprehensive design tokens in `lib/design-system.ts`
+- [x] **Glass morphism effects** - Backdrop blur with layered transparency for headers
+- [x] **Dot pattern backgrounds** - Subtle texture patterns for visual depth
+- [x] **Staggered animations** - GPU-optimized fade-in and lift effects on cards
+- [x] **Material elevation system** - Layered shadows following Vercel guidelines
+- [x] **`cn()` utility** - Conditional class name composition for cleaner JSX
 
 ### Phase 20: Tutorials & Examples (Phase D) - COMPLETED (v0.16.0)
 - [x] **Tutorials Category** - 4 new pages
@@ -326,6 +333,40 @@ claude-insider/
 - [x] All documentation pages now consistently display complete sidebar navigation
 
 ### Phase 23: Dynamic Project Knowledge - COMPLETED (v0.16.3)
+- [x] **Comprehensive AI System Prompt** - `data/system-prompt.ts` with deep project awareness
+- [x] **Dynamic Knowledge Generator** - `scripts/generate-project-knowledge.cjs` reads source docs
+- [x] Reads from README.md, CLAUDE.md, REQUIREMENTS.md, CHANGELOG.md at build time
+- [x] Generates 12 project knowledge chunks
+- [x] RAG index v2.0 with 435 total chunks (423 docs + 12 project)
+- [x] Knowledge auto-updates on each build - no manual sync required
+- [x] AI assistant now deeply aware of project, author, and capabilities
+
+### Phase 24: Vercel-Inspired Design System - COMPLETED (v0.17.0)
+- [x] **Design System File** - New `lib/design-system.ts` with comprehensive tokens
+  - Typography scale (display, heading, label, copy, code)
+  - Color system (10-scale for backgrounds, surfaces, borders, text)
+  - Material elevation levels (base → tooltip → menu → modal → fullscreen)
+  - Animation presets with `prefers-reduced-motion` support
+  - Glass morphism utilities with backdrop-blur
+  - Pattern backgrounds (dots, grid)
+  - Component presets for cards, buttons, navigation
+  - `cn()` utility function for conditional class composition
+- [x] **Updated Global Styles** (`globals.css`)
+  - CSS custom properties (`--ds-*`) for design tokens
+  - Utility classes (`.bg-ds-*`, `.border-ds-*`, `.text-ds-*`)
+  - Material classes (`.material-base`, `.material-elevated`, etc.)
+  - Glass classes (`.glass`, `.glass-header`)
+  - Animation classes (`.animate-fade-in`, `.animate-fade-in-up`)
+  - Pattern classes (`.pattern-dots`, `.pattern-grid`)
+- [x] **Header Glass Effect** - Backdrop blur with layered transparency
+- [x] **Homepage Redesign** - Dot patterns, staggered animations, hover effects
+- [x] **Footer Updates** - Light/dark theme support, consistent styling
+- [x] **Documentation** - CLAUDE.md updated with MANDATORY design guidelines
+- [x] Dark theme uses Vercel blacks (#0a0a0a, #111111, #1a1a1a)
+- [x] All animations GPU-optimized (transform, opacity only)
+- [x] Design system rules persist for all future code additions
+
+### Phase 25: Dynamic Project Knowledge - COMPLETED (v0.16.3)
 - [x] **Comprehensive AI System Prompt** - `data/system-prompt.ts` with deep project awareness
 - [x] **Dynamic Knowledge Generator** - `scripts/generate-project-knowledge.cjs` reads source docs
 - [x] Reads from README.md, CLAUDE.md, REQUIREMENTS.md, CHANGELOG.md at build time
@@ -540,7 +581,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.16.3.
+All planned features have been implemented. The project is feature-complete at v0.17.0.
 
 ### Content Expansion (All Complete)
 

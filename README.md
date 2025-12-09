@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.16.3)
+## Current Status (v0.17.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -102,6 +102,12 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Comprehensive AI Persona** - System prompt with deep project awareness (author, tech stack, features)
 - [x] **RAG v2.0 Index** - 435 total chunks (423 docs + 12 project knowledge)
 - [x] **Auto-updating knowledge** - Project info auto-syncs from README, CLAUDE.md, REQUIREMENTS.md, CHANGELOG.md
+- [x] **Vercel-Inspired Design System** - Comprehensive design tokens in `lib/design-system.ts`
+- [x] **Glass morphism effects** - Backdrop blur with layered transparency for headers
+- [x] **Dot pattern backgrounds** - Subtle texture patterns for visual depth
+- [x] **Staggered animations** - GPU-optimized fade-in and lift effects on cards
+- [x] **Material elevation system** - Layered shadows following Vercel guidelines
+- [x] **`cn()` utility** - Conditional class name composition for cleaner JSX
 
 ### All Features Complete
 
@@ -195,6 +201,7 @@ claude-insider/
 │   │   │   ├── tutorials/        # Code review, docs generation, testing
 │   │   │   └── examples/         # Real-world projects, case studies
 │   │   └── lib/
+│   │       ├── design-system.ts  # Vercel-inspired design tokens & cn() utility
 │   │       ├── mdx.ts            # MDX utilities
 │   │       ├── search.ts         # Search utilities
 │   │       ├── reading-time.ts   # Reading time calculation

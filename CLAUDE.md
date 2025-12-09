@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.16.3
+**Version**: 0.17.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -89,8 +89,13 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Dynamic Project Knowledge** - 12 knowledge chunks generated from source docs at build time
 - **Comprehensive AI System Prompt** - `data/system-prompt.ts` with deep project awareness
 - **RAG v2.0** - 435 total chunks (423 docs + 12 project knowledge)
+- **Vercel-Inspired Design System** - Comprehensive design tokens in `lib/design-system.ts`
+- **Glass morphism effects** - Backdrop blur with layered transparency
+- **Dot pattern backgrounds** - Subtle texture patterns for visual depth
+- **Staggered animations** - GPU-optimized fade-in and lift effects
+- **Material elevation system** - Layered shadows following Vercel guidelines
 
-### Project Status: Complete (v0.16.3)
+### Project Status: Complete (v0.17.0)
 
 ## Tech Stack
 
@@ -160,6 +165,7 @@ claude-insider/
 │   │   │   ├── tutorials/        # index, code-review, documentation-generation, test-generation
 │   │   │   └── examples/         # index, real-world-projects
 │   │   ├── lib/
+│   │   │   ├── design-system.ts  # Vercel-inspired design tokens & cn() utility
 │   │   │   ├── mdx.ts            # MDX utilities
 │   │   │   ├── search.ts         # Search index
 │   │   │   ├── reading-time.ts   # Reading time calculation
@@ -233,34 +239,198 @@ Configured in `vercel.json`:
 
 - **TypeScript**: Strict mode enabled, use explicit types
 - **Components**: Functional components with hooks, named exports
-- **Styling**: Tailwind CSS only, no inline styles
+- **Styling**: Tailwind CSS only, use design system utilities
 - **Files**: PascalCase for components, camelCase for utilities
 - **Pages**: lowercase with hyphens (e.g., `getting-started/page.tsx`)
+- **Class Names**: Use `cn()` utility from `lib/design-system.ts` for conditional classes
 
-## Design System
+## Design System (MANDATORY)
+
+**Location**: `apps/web/lib/design-system.ts`
+
+The project uses a Vercel-inspired design system. **All new components and pages MUST follow these guidelines** to maintain visual consistency.
+
+### Core Principles
+
+1. **Use design system tokens** - Never hardcode colors, use design system values
+2. **Dark-first design** - Dark theme uses Vercel blacks (#0a0a0a, #111111, #1a1a1a)
+3. **Glass morphism** - Headers and overlays use backdrop-blur with transparency
+4. **Subtle animations** - GPU-optimized transforms (translate, scale, opacity)
+5. **Layered elevation** - Shadows increase with elevation level
 
 ### Colors (Dark Theme - Default)
-- **Background**: `gray-950` (#030712)
-- **Surface**: `gray-900` with opacity
-- **Border**: `gray-800`
-- **Text Primary**: `gray-100`
-- **Text Secondary**: `gray-400`
-- **Accent**: Orange/Amber gradient (`from-orange-500 to-amber-600`)
+
+| Role | Value | Hex | Usage |
+|------|-------|-----|-------|
+| Background 1 | `dark:bg-[#0a0a0a]` | #0A0A0A | Page backgrounds |
+| Background 2 | `dark:bg-[#111111]` | #111111 | Cards, elevated surfaces |
+| Background 3 | `dark:bg-[#1a1a1a]` | #1A1A1A | Hover states, active elements |
+| Border | `dark:border-[#262626]` | #262626 | Dividers, card borders |
+| Border Hover | `dark:border-[#404040]` | #404040 | Hover border states |
+| Text Primary | `dark:text-white` | #FFFFFF | Headings, important text |
+| Text Secondary | `dark:text-gray-400` | #9CA3AF | Body text, descriptions |
+| Text Muted | `dark:text-gray-500` | #6B7280 | Captions, metadata |
+| Accent | `text-orange-400` | #FB923C | Links, highlights |
 
 ### Colors (Light Theme)
-- **Background**: `white` (#FFFFFF)
-- **Surface**: `gray-50` / `gray-100`
-- **Border**: `gray-200`
-- **Text Primary**: `gray-900`
-- **Text Secondary**: `gray-500`
-- **Accent**: Orange (`orange-600`)
 
-### Components
-- Cards with hover states and border transitions
-- Orange accent on interactive elements
-- Custom scrollbar styling
-- Code blocks with copy button
-- Theme-aware prose styling
+| Role | Value | Hex | Usage |
+|------|-------|-----|-------|
+| Background 1 | `bg-white` | #FFFFFF | Page backgrounds |
+| Background 2 | `bg-gray-50` | #F9FAFB | Cards, elevated surfaces |
+| Background 3 | `bg-gray-100` | #F3F4F6 | Hover states |
+| Border | `border-gray-200` | #E5E7EB | Dividers, card borders |
+| Border Hover | `border-gray-300` | #D1D5DB | Hover border states |
+| Text Primary | `text-gray-900` | #111827 | Headings, important text |
+| Text Secondary | `text-gray-600` | #4B5563 | Body text, descriptions |
+| Text Muted | `text-gray-500` | #6B7280 | Captions, metadata |
+| Accent | `text-orange-600` | #EA580C | Links, highlights |
+
+### Glass Morphism
+
+Use for headers, modals, and floating elements:
+
+```tsx
+// Header glass effect
+className={cn(
+  "bg-white/80 dark:bg-[#0a0a0a]/80",
+  "backdrop-blur-lg",
+  "supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-[#0a0a0a]/60"
+)}
+```
+
+### Card Styles
+
+Interactive cards should use:
+
+```tsx
+className={cn(
+  "rounded-xl p-6",
+  "bg-white dark:bg-[#111111]",
+  "border border-gray-200 dark:border-[#262626]",
+  "shadow-sm",
+  "hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/5",
+  "hover:-translate-y-1",
+  "transition-all duration-300"
+)}
+```
+
+### Animations
+
+All animations must be GPU-optimized (transform, opacity only):
+
+| Animation | Class | Duration |
+|-----------|-------|----------|
+| Fade In | `animate-fade-in` | 500ms |
+| Fade In Up | `animate-fade-in-up` | 500ms |
+| Hover Lift | `hover:-translate-y-0.5` | 200ms |
+| Hover Glow | `hover:shadow-lg hover:shadow-orange-500/5` | 300ms |
+
+For staggered animations, use inline styles:
+```tsx
+style={{ animationDelay: `${index * 50}ms` }}
+```
+
+### Pattern Backgrounds
+
+Use for hero sections and visual interest:
+
+```tsx
+// Dot pattern
+<div className="absolute inset-0 -z-10 pattern-dots opacity-50" />
+```
+
+### `cn()` Utility
+
+Always use the `cn()` function for conditional class names:
+
+```tsx
+import { cn } from "@/lib/design-system";
+
+className={cn(
+  "base-classes",
+  "responsive-classes",
+  condition && "conditional-classes"
+)}
+```
+
+### Button Styles
+
+Primary button (CTA):
+```tsx
+className={cn(
+  "rounded-lg px-6 py-3 text-sm font-semibold text-white",
+  "bg-gradient-to-r from-orange-500 to-amber-600",
+  "shadow-lg shadow-orange-500/25",
+  "hover:from-orange-600 hover:to-amber-700",
+  "hover:shadow-xl hover:shadow-orange-500/30",
+  "hover:-translate-y-0.5",
+  "transition-all duration-200"
+)}
+```
+
+Secondary button:
+```tsx
+className={cn(
+  "rounded-lg px-4 py-2 text-sm",
+  "border border-gray-200 dark:border-[#262626]",
+  "text-gray-600 dark:text-gray-400",
+  "bg-white dark:bg-[#111111]",
+  "hover:text-orange-600 dark:hover:text-orange-400",
+  "hover:border-orange-500/50",
+  "hover:-translate-y-0.5 hover:shadow-md",
+  "transition-all duration-200"
+)}
+```
+
+### Focus States
+
+All interactive elements must have visible focus states:
+
+```tsx
+className={cn(
+  "focus:outline-none",
+  "focus-visible:ring-2 focus-visible:ring-orange-500",
+  "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]"
+)}
+```
+
+### Typography
+
+| Level | Class | Usage |
+|-------|-------|-------|
+| Display | `text-4xl sm:text-6xl font-bold tracking-tight` | Hero headings |
+| H1 | `text-3xl font-bold` | Page titles |
+| H2 | `text-2xl font-bold` | Section headings |
+| H3 | `text-lg font-semibold` | Card titles |
+| Body | `text-base` or `text-sm` | Paragraphs |
+| Caption | `text-xs` | Metadata, footer |
+
+### Gradient Text
+
+For accent headings:
+```tsx
+className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent"
+```
+
+### Design System Files
+
+| File | Purpose |
+|------|---------|
+| `lib/design-system.ts` | Design tokens, `cn()` utility, component presets |
+| `app/globals.css` | CSS variables, utility classes, animations |
+| `components/header.tsx` | Reference implementation of glass header |
+| `app/page.tsx` | Reference implementation of cards, patterns |
+
+### Updating the Design System
+
+When modifying the design system:
+1. Update `lib/design-system.ts` with new tokens
+2. Add corresponding CSS classes to `globals.css` if needed
+3. Update this CLAUDE.md documentation
+4. Update REQUIREMENTS.md and CHANGELOG.md
+5. Test in both light and dark modes
+6. Verify `prefers-reduced-motion` support for animations
 
 ## Content Categories
 

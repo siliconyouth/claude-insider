@@ -1,97 +1,319 @@
 @import "tailwindcss";
 @import "@repo/tailwind-config";
 
-/* Dark theme (default) */
-:root,
-.dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-rgb: 3, 7, 18;
-  --surface-rgb: 17, 24, 39;
-  --surface-elevated-rgb: 31, 41, 55;
-  --border-rgb: 55, 65, 81;
-  --muted-rgb: 156, 163, 175;
-  --accent-rgb: 249, 115, 22;
-}
+/* ============================================
+   CLAUDE INSIDER DESIGN SYSTEM
+   Vercel/Geist-inspired theme variables
+   ============================================ */
 
 /* Light theme */
-.light {
+:root {
+  color-scheme: light;
+
+  /* Background colors */
+  --ds-background-1: 255 255 255;     /* #ffffff */
+  --ds-background-2: 250 250 250;     /* #fafafa */
+
+  /* Surface colors (components) */
+  --ds-surface-1: 255 255 255;        /* Default */
+  --ds-surface-2: 249 250 251;        /* Hover - gray-50 */
+  --ds-surface-3: 243 244 246;        /* Active - gray-100 */
+
+  /* Border colors */
+  --ds-border-1: 229 231 235;         /* Default - gray-200 */
+  --ds-border-2: 209 213 219;         /* Hover - gray-300 */
+  --ds-border-3: 156 163 175;         /* Focus - gray-400 */
+
+  /* Contrast backgrounds */
+  --ds-contrast-1: 243 244 246;       /* gray-100 */
+  --ds-contrast-2: 229 231 235;       /* gray-200 */
+
+  /* Text colors */
+  --ds-text-primary: 17 24 39;        /* gray-900 */
+  --ds-text-secondary: 75 85 99;      /* gray-600 */
+  --ds-text-muted: 107 114 128;       /* gray-500 */
+
+  /* Accent (Claude Insider Orange) */
+  --ds-accent: 249 115 22;            /* orange-500 */
+  --ds-accent-hover: 234 88 12;       /* orange-600 */
+  --ds-accent-light: 255 237 213;     /* orange-100 */
+
+  /* Legacy compatibility */
   --foreground-rgb: 17, 24, 39;
   --background-rgb: 255, 255, 255;
   --surface-rgb: 249, 250, 251;
   --surface-elevated-rgb: 243, 244, 246;
   --border-rgb: 229, 231, 235;
   --muted-rgb: 107, 114, 128;
-  --accent-rgb: 234, 88, 12;
+  --accent-rgb: 249, 115, 22;
+}
+
+/* Dark theme (default) */
+.dark,
+:root:has(.dark) {
+  color-scheme: dark;
+
+  /* Background colors - Vercel-style blacks */
+  --ds-background-1: 10 10 10;        /* #0a0a0a */
+  --ds-background-2: 17 17 17;        /* #111111 */
+
+  /* Surface colors */
+  --ds-surface-1: 10 10 10;           /* Default #0a0a0a */
+  --ds-surface-2: 26 26 26;           /* Hover #1a1a1a */
+  --ds-surface-3: 38 38 38;           /* Active #262626 */
+
+  /* Border colors */
+  --ds-border-1: 38 38 38;            /* #262626 */
+  --ds-border-2: 58 58 58;            /* #3a3a3a */
+  --ds-border-3: 82 82 82;            /* #525252 */
+
+  /* Contrast backgrounds */
+  --ds-contrast-1: 42 42 42;          /* #2a2a2a */
+  --ds-contrast-2: 58 58 58;          /* #3a3a3a */
+
+  /* Text colors */
+  --ds-text-primary: 250 250 250;     /* #fafafa */
+  --ds-text-secondary: 163 163 163;   /* #a3a3a3 */
+  --ds-text-muted: 115 115 115;       /* #737373 */
+
+  /* Accent */
+  --ds-accent: 251 146 60;            /* orange-400 */
+  --ds-accent-hover: 249 115 22;      /* orange-500 */
+  --ds-accent-light: 124 45 18;       /* orange-900 */
+
+  /* Legacy compatibility */
+  --foreground-rgb: 250, 250, 250;
+  --background-rgb: 10, 10, 10;
+  --surface-rgb: 26, 26, 26;
+  --surface-elevated-rgb: 38, 38, 38;
+  --border-rgb: 38, 38, 38;
+  --muted-rgb: 163, 163, 163;
+  --accent-rgb: 251, 146, 60;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  border-color: rgb(var(--ds-border-1));
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-rgb));
-  transition: background-color 0.2s, color 0.2s;
+  color: rgb(var(--ds-text-primary));
+  background-color: rgb(var(--ds-background-1));
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Light theme overrides */
-.light {
-  color-scheme: light;
+::selection {
+  background-color: rgba(var(--ds-accent), 0.2);
 }
 
-.light .bg-gray-950 {
-  background-color: rgb(var(--background-rgb));
+/* ============================================
+   CUSTOM COLOR UTILITIES
+   ============================================ */
+
+/* Backgrounds */
+.bg-ds-background-1 { background-color: rgb(var(--ds-background-1)); }
+.bg-ds-background-2 { background-color: rgb(var(--ds-background-2)); }
+.bg-ds-surface-1 { background-color: rgb(var(--ds-surface-1)); }
+.bg-ds-surface-2 { background-color: rgb(var(--ds-surface-2)); }
+.bg-ds-surface-3 { background-color: rgb(var(--ds-surface-3)); }
+.bg-ds-contrast-1 { background-color: rgb(var(--ds-contrast-1)); }
+.bg-ds-contrast-2 { background-color: rgb(var(--ds-contrast-2)); }
+
+/* Borders */
+.border-ds-border-1 { border-color: rgb(var(--ds-border-1)); }
+.border-ds-border-2 { border-color: rgb(var(--ds-border-2)); }
+.border-ds-border-3 { border-color: rgb(var(--ds-border-3)); }
+
+/* Text */
+.text-ds-text-primary { color: rgb(var(--ds-text-primary)); }
+.text-ds-text-secondary { color: rgb(var(--ds-text-secondary)); }
+.text-ds-text-muted { color: rgb(var(--ds-text-muted)); }
+
+/* ============================================
+   SCROLLBAR (Subtle, Vercel-style)
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.light .bg-gray-900 {
-  background-color: rgb(var(--surface-rgb));
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.light .bg-gray-900\/50,
-.light .bg-gray-900\/30 {
-  background-color: rgba(var(--surface-rgb), 0.5);
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--ds-border-2));
+  border-radius: 4px;
 }
 
-.light .bg-gray-800 {
-  background-color: rgb(var(--surface-elevated-rgb));
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--ds-border-3));
 }
 
-.light .bg-gray-800\/50 {
-  background-color: rgba(var(--surface-elevated-rgb), 0.5);
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--ds-border-2)) transparent;
 }
 
-.light .bg-gray-700 {
-  background-color: rgb(var(--border-rgb));
+/* ============================================
+   REDUCED MOTION (Accessibility)
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-.light .border-gray-800,
-.light .border-gray-700 {
-  border-color: rgb(var(--border-rgb));
+/* ============================================
+   FOCUS STATES (APCA-compliant contrast)
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid rgb(var(--ds-accent));
+  outline-offset: 2px;
 }
 
-.light .text-gray-100,
-.light .text-white {
-  color: rgb(var(--foreground-rgb));
+/* ============================================
+   MATERIAL CLASSES (Elevation levels)
+   ============================================ */
+
+.material-base {
+  border-radius: 0.375rem;
+  border: 1px solid rgb(var(--ds-border-1));
+  background-color: rgb(var(--ds-surface-1));
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.light .text-gray-300,
-.light .text-gray-400 {
-  color: rgb(var(--muted-rgb));
+.material-elevated {
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--ds-border-1));
+  background-color: rgb(var(--ds-surface-2));
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
-.light .text-gray-500 {
-  color: rgb(156, 163, 175);
+.material-menu {
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--ds-border-2));
+  background-color: rgb(var(--ds-surface-2));
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
-.light .hover\:text-white:hover {
-  color: rgb(var(--foreground-rgb));
+.material-modal {
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--ds-border-2));
+  background-color: rgb(var(--ds-surface-2));
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.light .hover\:bg-gray-800:hover {
-  background-color: rgb(var(--surface-elevated-rgb));
+/* ============================================
+   GLASS MORPHISM
+   ============================================ */
+
+.glass {
+  background-color: rgba(var(--ds-background-1), 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
-.light .placeholder-gray-500::placeholder {
-  color: rgb(var(--muted-rgb));
+.glass-header {
+  background-color: rgba(var(--ds-background-1), 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-/* Light theme prose */
+@supports (backdrop-filter: blur(16px)) {
+  .glass-header {
+    background-color: rgba(var(--ds-background-1), 0.6);
+  }
+}
+
+/* ============================================
+   PATTERNS (Vercel-style dot/grid patterns)
+   ============================================ */
+
+.pattern-dots {
+  background-image: radial-gradient(rgb(var(--ds-border-1)) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.pattern-dots-large {
+  background-image: radial-gradient(rgb(var(--ds-border-1)) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+}
+
+.pattern-grid {
+  background-image:
+    linear-gradient(to right, rgba(var(--ds-border-1), 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--ds-border-1), 0.5) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.pattern-grid-large {
+  background-image:
+    linear-gradient(to right, rgba(var(--ds-border-1), 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--ds-border-1), 0.5) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ============================================
+   CARD STYLES
+   ============================================ */
+
+.card-interactive {
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--ds-border-1));
+  background-color: rgb(var(--ds-surface-2));
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border-color: rgb(var(--ds-border-2));
+}
+
+.dark .card-interactive:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   PROSE CUSTOMIZATION
+   ============================================ */
+
+.prose-invert {
+  --tw-prose-body: rgb(var(--ds-text-secondary));
+  --tw-prose-headings: rgb(var(--ds-text-primary));
+  --tw-prose-links: rgb(var(--ds-accent));
+  --tw-prose-bold: rgb(var(--ds-text-primary));
+  --tw-prose-counters: rgb(var(--ds-text-muted));
+  --tw-prose-bullets: rgb(var(--ds-text-muted));
+  --tw-prose-hr: rgb(var(--ds-border-1));
+  --tw-prose-quotes: rgb(var(--ds-text-secondary));
+  --tw-prose-quote-borders: rgb(var(--ds-border-1));
+  --tw-prose-captions: rgb(var(--ds-text-muted));
+  --tw-prose-code: rgb(var(--ds-text-primary));
+  --tw-prose-pre-code: rgb(229, 231, 235);
+  --tw-prose-pre-bg: rgb(var(--ds-surface-2));
+  --tw-prose-th-borders: rgb(var(--ds-border-1));
+  --tw-prose-td-borders: rgb(var(--ds-border-1));
+}
+
+/* Light theme prose overrides */
 .light .prose-invert {
   --tw-prose-body: rgb(55, 65, 81);
   --tw-prose-headings: rgb(17, 24, 39);
@@ -110,6 +332,42 @@ body {
   --tw-prose-td-borders: rgb(243, 244, 246);
 }
 
+/* ============================================
+   CODE BLOCKS & SYNTAX HIGHLIGHTING
+   ============================================ */
+
+pre {
+  background-color: rgb(var(--ds-surface-2)) !important;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(var(--ds-border-1));
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.dark pre {
+  background-color: rgb(17, 24, 39) !important;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.875em;
+}
+
+/* Inline code */
+.prose :not(pre) > code {
+  background-color: rgb(var(--ds-surface-3));
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  color: rgb(var(--ds-accent));
+}
+
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
+}
+
 /* Light theme code blocks */
 .light pre {
   background-color: rgb(31, 41, 55) !important;
@@ -120,77 +378,10 @@ body {
   color: rgb(234, 88, 12);
 }
 
-/* Light theme scrollbar */
-.light::-webkit-scrollbar-track {
-  background: rgb(243, 244, 246);
-}
+/* ============================================
+   SYNTAX HIGHLIGHTING
+   ============================================ */
 
-.light::-webkit-scrollbar-thumb {
-  background: rgb(209, 213, 219);
-}
-
-.light::-webkit-scrollbar-thumb:hover {
-  background: rgb(156, 163, 175);
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(17, 24, 39);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(55, 65, 81);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(75, 85, 99);
-}
-
-/* Selection */
-::selection {
-  background-color: rgba(249, 115, 22, 0.3);
-}
-
-/* Code blocks */
-pre {
-  background-color: rgb(17, 24, 39) !important;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  overflow-x: auto;
-}
-
-code {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
-  font-size: 0.875em;
-}
-
-/* Prose customization for dark mode */
-.prose-invert {
-  --tw-prose-body: rgb(209, 213, 219);
-  --tw-prose-headings: rgb(255, 255, 255);
-  --tw-prose-links: rgb(251, 146, 60);
-  --tw-prose-bold: rgb(255, 255, 255);
-  --tw-prose-counters: rgb(156, 163, 175);
-  --tw-prose-bullets: rgb(156, 163, 175);
-  --tw-prose-hr: rgb(55, 65, 81);
-  --tw-prose-quotes: rgb(229, 231, 235);
-  --tw-prose-quote-borders: rgb(55, 65, 81);
-  --tw-prose-captions: rgb(156, 163, 175);
-  --tw-prose-code: rgb(255, 255, 255);
-  --tw-prose-pre-code: rgb(229, 231, 235);
-  --tw-prose-pre-bg: rgb(17, 24, 39);
-  --tw-prose-th-borders: rgb(55, 65, 81);
-  --tw-prose-td-borders: rgb(31, 41, 55);
-}
-
-/* Syntax Highlighting - Dark Theme */
 .hljs {
   background: rgb(17, 24, 39) !important;
   color: rgb(229, 231, 235);
@@ -201,7 +392,7 @@ code {
 .hljs-built_in,
 .hljs-name,
 .hljs-tag {
-  color: rgb(249, 115, 22); /* orange-500 */
+  color: rgb(var(--ds-accent));
 }
 
 .hljs-string,
@@ -220,7 +411,7 @@ code {
 .hljs-quote,
 .hljs-deletion,
 .hljs-meta {
-  color: rgb(107, 114, 128); /* gray-500 */
+  color: rgb(var(--ds-text-muted));
 }
 
 .hljs-variable,
@@ -238,7 +429,7 @@ code {
 .hljs-bullet,
 .hljs-subst,
 .hljs-params {
-  color: rgb(229, 231, 235); /* gray-200 */
+  color: rgb(229, 231, 235);
 }
 
 .hljs-function {
@@ -249,7 +440,10 @@ code {
   color: rgb(251, 191, 36); /* amber-400 */
 }
 
-/* MDX content styling */
+/* ============================================
+   MDX CONTENT STYLING
+   ============================================ */
+
 .prose h1,
 .prose h2,
 .prose h3,
@@ -260,7 +454,7 @@ code {
 .prose h2 {
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid rgb(31, 41, 55);
+  border-top: 1px solid rgb(var(--ds-border-1));
 }
 
 .prose h2:first-of-type {
@@ -269,16 +463,88 @@ code {
   border-top: none;
 }
 
-/* Inline code in MDX */
-.prose :not(pre) > code {
-  background-color: rgb(31, 41, 55);
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  font-size: 0.875em;
-  color: rgb(251, 146, 60);
+/* ============================================
+   SKELETON LOADING
+   ============================================ */
+
+.skeleton {
+  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: rgb(var(--ds-surface-3));
+  border-radius: 0.375rem;
 }
 
-.prose :not(pre) > code::before,
-.prose :not(pre) > code::after {
-  content: none;
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+/* ============================================
+   HOVER EFFECTS
+   ============================================ */
+
+.hover-lift {
+  transition: transform 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-glow {
+  transition: box-shadow 0.2s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 24px rgba(var(--ds-accent), 0.15);
 }
