@@ -35,7 +35,7 @@ export function VoiceAssistant() {
   const [interimTranscript, setInterimTranscript] = useState("");
   const [speechSupported, setSpeechSupported] = useState(false);
   const [autoSpeak, setAutoSpeak] = useState(true);
-  const [selectedVoice, setSelectedVoice] = useState<string>("nova");
+  const [selectedVoice, setSelectedVoice] = useState<string>("sarah");
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const voiceMenuRef = useRef<HTMLDivElement>(null);
@@ -45,14 +45,53 @@ export function VoiceAssistant() {
     setMounted(true);
   }, []);
 
-  // Available OpenAI TTS voices
+  // Available ElevenLabs voices (all pre-made voices)
   const voices = [
-    { id: "alloy", name: "Alloy", description: "Neutral & balanced" },
-    { id: "echo", name: "Echo", description: "Warm & clear" },
-    { id: "fable", name: "Fable", description: "Expressive & dramatic" },
-    { id: "onyx", name: "Onyx", description: "Deep & authoritative" },
-    { id: "nova", name: "Nova", description: "Friendly & upbeat" },
-    { id: "shimmer", name: "Shimmer", description: "Soft & gentle" },
+    // Female voices
+    { id: "sarah", name: "Sarah", description: "Soft, young female" },
+    { id: "rachel", name: "Rachel", description: "Calm, young female" },
+    { id: "emily", name: "Emily", description: "Calm, young female" },
+    { id: "matilda", name: "Matilda", description: "Warm, young female" },
+    { id: "freya", name: "Freya", description: "Expressive, female" },
+    { id: "charlotte", name: "Charlotte", description: "Seductive, female" },
+    { id: "alice", name: "Alice", description: "Confident, female" },
+    { id: "lily", name: "Lily", description: "Warm, female" },
+    { id: "domi", name: "Domi", description: "Strong, young female" },
+    { id: "elli", name: "Elli", description: "Young, female" },
+    { id: "dorothy", name: "Dorothy", description: "Pleasant, female" },
+    { id: "grace", name: "Grace", description: "Southern accent, female" },
+    { id: "serena", name: "Serena", description: "Pleasant, female" },
+    { id: "nicole", name: "Nicole", description: "Whisper, young female" },
+    { id: "glinda", name: "Glinda", description: "Witch, female" },
+    { id: "mimi", name: "Mimi", description: "Childish, female" },
+    { id: "gigi", name: "Gigi", description: "Childish, female" },
+    // Male voices
+    { id: "daniel", name: "Daniel", description: "Deep, authoritative" },
+    { id: "brian", name: "Brian", description: "Deep, middle-aged" },
+    { id: "adam", name: "Adam", description: "Deep, middle-aged" },
+    { id: "josh", name: "Josh", description: "Deep, young male" },
+    { id: "liam", name: "Liam", description: "Articulate, male" },
+    { id: "charlie", name: "Charlie", description: "Casual, male" },
+    { id: "george", name: "George", description: "Warm, male" },
+    { id: "chris", name: "Chris", description: "Casual, male" },
+    { id: "drew", name: "Drew", description: "Well-rounded, male" },
+    { id: "clyde", name: "Clyde", description: "War veteran, male" },
+    { id: "paul", name: "Paul", description: "Ground reporter, male" },
+    { id: "dave", name: "Dave", description: "Conversational, male" },
+    { id: "fin", name: "Fin", description: "Sailor, male" },
+    { id: "antoni", name: "Antoni", description: "Well-rounded, male" },
+    { id: "thomas", name: "Thomas", description: "Calm, male" },
+    { id: "callum", name: "Callum", description: "Hoarse, male" },
+    { id: "patrick", name: "Patrick", description: "Shouty, male" },
+    { id: "harry", name: "Harry", description: "Anxious, male" },
+    { id: "arnold", name: "Arnold", description: "Crisp, male" },
+    { id: "james", name: "James", description: "Calm, old male" },
+    { id: "michael", name: "Michael", description: "Old, male" },
+    { id: "ethan", name: "Ethan", description: "Young, male" },
+    { id: "ryan", name: "Ryan", description: "Soldier, male" },
+    { id: "sam", name: "Sam", description: "Raspy, young male" },
+    { id: "jessie", name: "Jessie", description: "Raspy, older male" },
+    { id: "giovanni", name: "Giovanni", description: "Foreigner, male" },
   ];
   const recognizerRef = useRef<VoiceRecognizer | null>(null);
 
@@ -445,7 +484,28 @@ export function VoiceAssistant() {
                 if (data.type === "text" && data.content) {
                   assistantContent += data.content;
                   setStreamingContent(assistantContent);
-                  // Don't speak during streaming - wait for complete message
+
+                  // Stream TTS: speak sentences as they complete during streaming
+                  if (autoSpeakRef.current) {
+                    const sentences = splitIntoSentences(assistantContent);
+                    // Get new complete sentences that haven't been queued yet
+                    const newSentences = sentences.slice(lastSpokenIndexRef.current);
+                    if (newSentences.length > 0) {
+                      // Only queue sentences that are "complete" (have ending punctuation or significant length)
+                      // Keep the last sentence if it might be incomplete
+                      const completeCount = newSentences.length > 1 ? newSentences.length - 1 : 0;
+                      const sentencesToQueue = newSentences.slice(0, completeCount);
+
+                      if (sentencesToQueue.length > 0) {
+                        setSpeakingMessageIndex(assistantMessageIndex);
+                        sentencesToQueue.forEach(sentence => {
+                          speechQueueRef.current.push(sentence);
+                        });
+                        lastSpokenIndexRef.current += sentencesToQueue.length;
+                        processSpeechQueue();
+                      }
+                    }
+                  }
                 } else if (data.type === "error") {
                   throw new Error(data.content || "Stream error");
                 }
@@ -459,44 +519,16 @@ export function VoiceAssistant() {
         // Mark streaming as complete
         streamingCompleteRef.current = true;
 
-        // Auto-speak the complete message (not during streaming to avoid pauses)
+        // Queue any remaining text that wasn't spoken during streaming
         if (autoSpeakRef.current && assistantContent.trim()) {
-          setSpeakingMessageIndex(assistantMessageIndex);
-          setIsSpeaking(true);
-
-          try {
-            const ttsResponse = await fetch("/api/assistant/speak", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ text: assistantContent, voice: selectedVoiceRef.current }),
+          const sentences = splitIntoSentences(assistantContent);
+          const remainingSentences = sentences.slice(lastSpokenIndexRef.current);
+          if (remainingSentences.length > 0) {
+            setSpeakingMessageIndex(assistantMessageIndex);
+            remainingSentences.forEach(sentence => {
+              speechQueueRef.current.push(sentence);
             });
-
-            if (ttsResponse.ok) {
-              const audioBlob = await ttsResponse.blob();
-              const audioUrl = URL.createObjectURL(audioBlob);
-              const audio = new Audio(audioUrl);
-              audioRef.current = audio;
-
-              audio.onended = () => {
-                setIsSpeaking(false);
-                setSpeakingMessageIndex(null);
-                URL.revokeObjectURL(audioUrl);
-              };
-
-              audio.onerror = () => {
-                setIsSpeaking(false);
-                setSpeakingMessageIndex(null);
-                URL.revokeObjectURL(audioUrl);
-              };
-
-              await audio.play();
-            } else {
-              setIsSpeaking(false);
-              setSpeakingMessageIndex(null);
-            }
-          } catch {
-            setIsSpeaking(false);
-            setSpeakingMessageIndex(null);
+            processSpeechQueue();
           }
         }
 
@@ -517,7 +549,7 @@ export function VoiceAssistant() {
         setStreamingContent("");
       }
     },
-    [messages, isLoading, pathname, stopStreamingTTS]
+    [messages, isLoading, pathname, stopStreamingTTS, splitIntoSentences, processSpeechQueue]
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -846,34 +878,41 @@ export function VoiceAssistant() {
 
               {/* Voice dropdown menu */}
               {showVoiceMenu && (
-                <div className="absolute right-0 top-full mt-1 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-800 z-50">
-                  <div className="px-3 py-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400">
-                    Select Voice
+                <div className="absolute right-0 top-full mt-1 w-56 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800 z-50">
+                  <div className="sticky top-0 bg-white dark:bg-gray-800 px-3 py-2 border-b border-gray-100 dark:border-gray-700">
+                    <div className="text-xs font-semibold text-gray-500 dark:text-gray-400">
+                      Select Voice
+                    </div>
+                    <div className="text-[10px] text-gray-400 dark:text-gray-500">
+                      {voices.length} voices available
+                    </div>
                   </div>
-                  {voices.map((voice) => (
-                    <button
-                      key={voice.id}
-                      onClick={() => {
-                        setSelectedVoice(voice.id);
-                        setShowVoiceMenu(false);
-                      }}
-                      className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                        selectedVoice === voice.id
-                          ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
-                          : "text-gray-700 dark:text-gray-300"
-                      }`}
-                    >
-                      <div>
-                        <div className="font-medium">{voice.name}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">{voice.description}</div>
-                      </div>
-                      {selectedVoice === voice.id && (
-                        <svg className="h-4 w-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                    </button>
-                  ))}
+                  <div className="max-h-72 overflow-y-auto py-1">
+                    {voices.map((voice) => (
+                      <button
+                        key={voice.id}
+                        onClick={() => {
+                          setSelectedVoice(voice.id);
+                          setShowVoiceMenu(false);
+                        }}
+                        className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                          selectedVoice === voice.id
+                            ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
+                            : "text-gray-700 dark:text-gray-300"
+                        }`}
+                      >
+                        <div>
+                          <div className="font-medium">{voice.name}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">{voice.description}</div>
+                        </div>
+                        {selectedVoice === voice.id && (
+                          <svg className="h-4 w-4 flex-shrink-0 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        )}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

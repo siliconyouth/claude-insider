@@ -11,8 +11,9 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 ## Features
 
 - **Documentation Hub**: 16 comprehensive pages covering Claude AI
-- **AI Voice Assistant**: Interactive voice assistant with "Hey Insider" wake word detection
-- **Text-to-Speech**: OpenAI TTS with 6 voice options (alloy, echo, fable, onyx, nova, shimmer)
+- **AI Voice Assistant**: Interactive voice assistant with chat interface
+- **ElevenLabs TTS**: Premium text-to-speech with 42 natural voices
+- **Streaming TTS**: Voice starts speaking immediately (doesn't wait for full response)
 - **Speech-to-Text**: Voice input using Web Speech API
 - **RAG Search**: Retrieval-Augmented Generation for intelligent documentation search
 - **Streaming Chat**: Real-time streaming responses from Claude AI
@@ -23,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.11.0)
+## Current Status (v0.12.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -69,13 +70,14 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Reading time estimates on all doc pages
 - [x] Search history with localStorage persistence
 - [x] Language selector for i18n preparation (English only initially)
-- [x] **AI Voice Assistant** with wake word detection ("Hey Insider")
-- [x] **OpenAI Text-to-Speech** with 6 voices (alloy, echo, fable, onyx, nova, shimmer)
+- [x] **AI Voice Assistant** with interactive chat interface
+- [x] **ElevenLabs TTS** with 42 natural voices (replaced OpenAI)
+- [x] **Streaming TTS** - voice starts after first sentence (faster response)
 - [x] **Speech-to-Text** using Web Speech API with browser fallback
 - [x] **RAG System** with TF-IDF search for intelligent documentation retrieval
 - [x] **Streaming Chat** with Claude AI (Server-Sent Events)
-- [x] **Auto-speak** responses with complete message TTS
-- [x] Voice selector dropdown with click-outside handling
+- [x] **Auto-speak** responses with sentence-by-sentence TTS
+- [x] Scrollable voice selector with 42 voice options
 
 ### All Features Complete
 
@@ -112,7 +114,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | Search | [Fuse.js](https://fusejs.io/) | 7.1.0 |
 | Syntax Highlighting | [highlight.js](https://highlightjs.org/) | 11.x |
 | AI Models | [Anthropic Claude](https://anthropic.com) | Sonnet 4 |
-| Text-to-Speech | [OpenAI TTS](https://openai.com) | tts-1 |
+| Text-to-Speech | [ElevenLabs](https://elevenlabs.io) | turbo v2.5 |
 | Speech Recognition | Web Speech API | - |
 | Package Manager | [pnpm](https://pnpm.io/) | 10.19.0 |
 | Hosting | [Vercel](https://vercel.com/) | - |
@@ -233,17 +235,18 @@ pnpm --filter web build     # Build only web app
 
 | Command | Action |
 |---------|--------|
-| "Hey Insider" | Activate voice assistant |
+| Click microphone button | Start voice input |
 | Speak your question | Voice-to-text transcription |
 | Click Listen button | Hear response read aloud |
 | Toggle Auto-speak | Automatically read responses |
+| Select voice from dropdown | Choose from 42 ElevenLabs voices |
 
 ## Environment Variables
 
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `ANTHROPIC_API_KEY` | Yes | Claude AI API key for chat |
-| `OPENAI_API_KEY` | Yes | OpenAI API key for TTS |
+| `ELEVENLABS_API_KEY` | Yes | ElevenLabs API key for TTS |
 | `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` | Auto | Build ID for versioning |
 
 ## Deployment

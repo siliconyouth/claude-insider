@@ -10,39 +10,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Planned
 - Additional content pages (see Content Expansion Plan)
 
+## [0.12.0] - 2025-12-09
+
+### Added
+- **ElevenLabs TTS Integration** - Premium text-to-speech with 42 natural voices
+- **Streaming TTS** - Voice starts speaking after first sentence (faster perceived response)
+- **Scrollable Voice Selector** - Browse all 42 voices with descriptions
+
+### Changed
+- Replaced OpenAI TTS with ElevenLabs for much higher voice quality
+- Default voice changed to "Sarah" (soft, young female)
+- TTS now uses `eleven_turbo_v2_5` model for fast, high-quality audio
+- Voice selector now shows voice count and scrolls for easy browsing
+
+### Technical Details
+- Uses `@elevenlabs/elevenlabs-js` SDK
+- Sentence-by-sentence TTS queuing during streaming
+- MP3 output at 44.1kHz/128kbps quality
+
+### Environment Variables
+- Added `ELEVENLABS_API_KEY` (required for TTS)
+- `OPENAI_API_KEY` no longer required
+
 ## [0.11.0] - 2025-12-09
 
 ### Added
 - **AI Voice Assistant** - Interactive voice assistant with chat interface
-- **Wake Word Detection** - "Hey Insider" wake phrase using Web Speech API
 - **Speech-to-Text** - Voice input with real-time transcription feedback
 - **Streaming Chat** - Claude AI integration with Server-Sent Events (SSE)
 - **RAG System** - Retrieval-Augmented Generation with TF-IDF search for intelligent documentation retrieval
-- **OpenAI Text-to-Speech** - 6 voice options (alloy, echo, fable, onyx, nova, shimmer)
-- **Auto-speak Mode** - Automatically read responses aloud (waits for complete message)
+- **Auto-speak Mode** - Automatically read responses aloud
 - **Voice Selector Dropdown** - Choose TTS voice with click-outside handling
 - `components/voice-assistant.tsx` - Main voice assistant React component
 - `app/api/assistant/chat/route.ts` - Streaming chat endpoint with Claude AI
-- `app/api/assistant/speak/route.ts` - OpenAI TTS endpoint
+- `app/api/assistant/speak/route.ts` - TTS endpoint
 - `lib/claude.ts` - Anthropic Claude client and system prompts
 - `lib/rag.ts` - RAG system with TF-IDF search algorithm
-- `lib/wake-word.ts` - Wake word detection with phrase variations
 - `lib/speech-recognition.ts` - Speech recognition utilities
 - `lib/assistant-context.ts` - Assistant context management
 
 ### Changed
-- Default TTS voice set to "nova" for more natural speech
 - Smart sentence splitting for technical content (avoids pausing on file extensions like .md, .ts)
-- Updated CSP headers to allow OpenAI API connections
+- Updated CSP headers to allow API connections
 - Updated permissions headers to enable microphone access
 
 ### Technical Details
 - Uses `@anthropic-ai/sdk` for Claude AI streaming
-- Uses `openai` SDK for TTS audio generation
 - Web Speech API for browser-native speech recognition
 - TF-IDF algorithm for document relevance scoring
 - SSE (Server-Sent Events) for real-time streaming responses
-- Browser TTS fallback when OpenAI is unavailable
+- Browser TTS fallback when API is unavailable
 
 ## [0.10.0] - 2025-12-09
 
@@ -355,7 +372,8 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
-| 0.11.0 | 2025-12-09 | AI Voice Assistant, OpenAI TTS, RAG search, streaming chat with Claude |
+| 0.12.0 | 2025-12-09 | ElevenLabs TTS with 42 voices, streaming TTS, faster voice response |
+| 0.11.0 | 2025-12-09 | AI Voice Assistant, RAG search, streaming chat with Claude |
 | 0.10.0 | 2025-12-09 | RSS feed, changelog page, edit links, reading time, search history, i18n prep |
 | 0.9.1 | 2025-12-09 | Vercel Analytics, CSP headers, Privacy/Terms updates |
 | 0.9.0 | 2025-12-09 | ContentMeta component, source citations, AI generation metadata |
