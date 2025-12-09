@@ -65,6 +65,25 @@ const DOCS_SECTIONS = [
       { title: "Hooks & Commands", href: "/docs/integrations/hooks" },
     ],
   },
+  {
+    title: "Tutorials",
+    href: "/docs/tutorials",
+    description: "Step-by-step development guides",
+    articles: [
+      { title: "Code Review", href: "/docs/tutorials/code-review" },
+      { title: "Documentation Generation", href: "/docs/tutorials/documentation-generation" },
+      { title: "Test Generation", href: "/docs/tutorials/test-generation" },
+    ],
+  },
+  {
+    title: "Examples",
+    href: "/docs/examples",
+    description: "Real-world projects and case studies",
+    articles: [
+      { title: "Examples Overview", href: "/docs/examples" },
+      { title: "Real-World Projects", href: "/docs/examples/real-world-projects" },
+    ],
+  },
 ];
 
 export default function DocsPage() {
