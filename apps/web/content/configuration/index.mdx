@@ -1,0 +1,98 @@
+---
+title: Configuration
+description: Learn how to configure Claude Code for your projects and workflow
+---
+
+Claude Code offers flexible configuration options to customize its behavior for your specific needs. From project-level settings in CLAUDE.md files to global preferences, you have full control over how Claude assists you.
+
+## Configuration Options
+
+### CLAUDE.md Files
+
+The most powerful way to configure Claude Code is through `CLAUDE.md` files. These Markdown files provide project-specific context and instructions that Claude reads automatically.
+
+```
+your-project/
+├── CLAUDE.md          # Project root configuration
+├── src/
+│   └── CLAUDE.md      # Directory-specific overrides
+└── tests/
+    └── CLAUDE.md      # Test-specific instructions
+```
+
+[Learn more about CLAUDE.md files →](/docs/configuration/claude-md)
+
+### Settings & Preferences
+
+Claude Code stores user preferences and settings that persist across sessions:
+
+- **Model selection** - Choose your preferred Claude model
+- **Output formatting** - Customize how responses are displayed
+- **Safety settings** - Configure approval requirements for file changes
+- **Theme preferences** - Set your preferred color scheme
+
+[Explore all settings →](/docs/configuration/settings)
+
+## Quick Configuration Examples
+
+### Basic Project Setup
+
+Create a `CLAUDE.md` at your project root:
+
+```markdown
+# Project: My Web App
+
+## Overview
+This is a Next.js application with TypeScript.
+
+## Tech Stack
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Prisma ORM
+
+## Conventions
+- Use functional components with hooks
+- Follow the existing code style
+- Write tests for new features
+```
+
+### Monorepo Configuration
+
+For monorepos, you can have configuration at multiple levels:
+
+```markdown
+# Monorepo Root CLAUDE.md
+
+## Structure
+- apps/web - Main web application
+- apps/api - Backend API
+- packages/ui - Shared components
+
+## Guidelines
+- Changes to packages/ require updating dependent apps
+- Run tests before committing: `pnpm test`
+```
+
+## Environment Variables
+
+Some Claude Code features can be configured via environment variables:
+
+| Variable | Description |
+|----------|-------------|
+| `ANTHROPIC_API_KEY` | Your API key for Claude |
+| `CLAUDE_MODEL` | Default model to use |
+| `CLAUDE_CONFIG_DIR` | Custom config directory |
+
+## Best Practices
+
+1. **Keep CLAUDE.md updated** - As your project evolves, update the configuration
+2. **Be specific** - Clear instructions lead to better assistance
+3. **Use directory-level configs** - Override settings for specific parts of your codebase
+4. **Document conventions** - Help Claude understand your coding standards
+
+## Next Steps
+
+- [Create your first CLAUDE.md file](/docs/configuration/claude-md)
+- [Explore all configuration settings](/docs/configuration/settings)
+- [Learn prompting strategies](/docs/tips-and-tricks/prompting)

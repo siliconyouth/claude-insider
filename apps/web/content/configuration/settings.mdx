@@ -1,0 +1,274 @@
+---
+title: Settings & Preferences
+description: Configure Claude Code settings for your optimal workflow
+---
+
+Claude Code provides various settings to customize its behavior. These range from model selection to safety preferences and output formatting.
+
+## Accessing Settings
+
+### Via Command Line
+
+```bash
+# View current settings
+claude config list
+
+# Set a specific option
+claude config set <key> <value>
+
+# Reset to defaults
+claude config reset
+```
+
+### Via Settings File
+
+Settings are stored in `~/.claude/settings.json`:
+
+```json
+{
+  "model": "claude-sonnet-4-20250514",
+  "theme": "dark",
+  "autoApprove": false,
+  "maxTokens": 4096
+}
+```
+
+## Available Settings
+
+### Model Selection
+
+Choose which Claude model to use:
+
+| Model | Best For |
+|-------|----------|
+| `claude-opus-4-5-20251101` | Complex reasoning, research |
+| `claude-sonnet-4-20250514` | Balanced performance (default) |
+| `claude-haiku-3-5-20241022` | Fast, simple tasks |
+
+```bash
+claude config set model claude-opus-4-5-20251101
+```
+
+### Safety Settings
+
+Control how Claude handles file modifications:
+
+```bash
+# Require approval for all file changes (safest)
+claude config set autoApprove false
+
+# Auto-approve non-destructive changes
+claude config set autoApprove safe
+
+# Auto-approve all changes (use with caution)
+claude config set autoApprove true
+```
+
+### Output Formatting
+
+Customize how responses are displayed:
+
+```bash
+# Enable/disable syntax highlighting
+claude config set syntaxHighlight true
+
+# Set output width
+claude config set outputWidth 120
+
+# Enable/disable markdown rendering
+claude config set renderMarkdown true
+```
+
+### Context Settings
+
+Configure how Claude handles context:
+
+```bash
+# Maximum context window size
+claude config set maxContext 100000
+
+# Include git diff in context
+claude config set includeGitDiff true
+
+# Auto-read CLAUDE.md files
+claude config set readClaudeMd true
+```
+
+## Environment Variables
+
+Override settings via environment variables:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `ANTHROPIC_API_KEY` | API authentication | `sk-ant-...` |
+| `CLAUDE_MODEL` | Override default model | `claude-opus-4-5-20251101` |
+| `CLAUDE_CONFIG_DIR` | Custom config location | `~/.config/claude` |
+| `CLAUDE_MAX_TOKENS` | Response length limit | `8192` |
+| `NO_COLOR` | Disable colored output | `1` |
+
+### Setting Environment Variables
+
+```bash
+# Bash/Zsh (add to ~/.bashrc or ~/.zshrc)
+export ANTHROPIC_API_KEY="sk-ant-your-key-here"
+export CLAUDE_MODEL="claude-sonnet-4-20250514"
+
+# Fish
+set -x ANTHROPIC_API_KEY "sk-ant-your-key-here"
+```
+
+## Configuration Profiles
+
+Create different configurations for different contexts:
+
+### Work Profile
+
+```json
+// ~/.claude/profiles/work.json
+{
+  "model": "claude-sonnet-4-20250514",
+  "autoApprove": false,
+  "includeGitDiff": true,
+  "systemPrompt": "Follow company coding standards strictly."
+}
+```
+
+### Personal Profile
+
+```json
+// ~/.claude/profiles/personal.json
+{
+  "model": "claude-haiku-3-5-20241022",
+  "autoApprove": "safe",
+  "systemPrompt": "Be concise and practical."
+}
+```
+
+### Switching Profiles
+
+```bash
+claude --profile work
+claude --profile personal
+```
+
+## Project-Level Settings
+
+Override global settings per project with `.claude/config.json`:
+
+```json
+{
+  "model": "claude-opus-4-5-20251101",
+  "includePaths": ["src/**", "tests/**"],
+  "excludePaths": ["node_modules/**", "dist/**"],
+  "customInstructions": "This is a TypeScript project. Always use strict types."
+}
+```
+
+## Advanced Configuration
+
+### Custom System Prompts
+
+Add persistent instructions:
+
+```bash
+claude config set systemPrompt "Always explain your reasoning step by step."
+```
+
+### File Ignore Patterns
+
+Prevent Claude from reading certain files:
+
+```json
+{
+  "ignorePatterns": [
+    "*.log",
+    "*.env*",
+    "node_modules/**",
+    ".git/**",
+    "**/*.min.js"
+  ]
+}
+```
+
+### Token Limits
+
+Configure token usage:
+
+```json
+{
+  "maxTokens": 4096,
+  "maxContextTokens": 100000,
+  "reserveTokens": 1000
+}
+```
+
+## Troubleshooting
+
+### Settings Not Applying
+
+1. Check file permissions: `ls -la ~/.claude/settings.json`
+2. Validate JSON syntax: `cat ~/.claude/settings.json | jq .`
+3. Restart Claude Code after changes
+
+### Environment Variables Not Working
+
+```bash
+# Verify variable is set
+echo $ANTHROPIC_API_KEY
+
+# Check if exported
+env | grep ANTHROPIC
+```
+
+### Reset All Settings
+
+```bash
+# Backup current settings
+cp ~/.claude/settings.json ~/.claude/settings.backup.json
+
+# Reset to defaults
+claude config reset
+
+# Or manually delete
+rm ~/.claude/settings.json
+```
+
+## Recommended Settings
+
+### For Development
+
+```json
+{
+  "model": "claude-sonnet-4-20250514",
+  "autoApprove": "safe",
+  "includeGitDiff": true,
+  "syntaxHighlight": true,
+  "outputWidth": 120
+}
+```
+
+### For Code Review
+
+```json
+{
+  "model": "claude-opus-4-5-20251101",
+  "autoApprove": false,
+  "maxContext": 200000,
+  "systemPrompt": "Focus on code quality, security, and best practices."
+}
+```
+
+### For Learning
+
+```json
+{
+  "model": "claude-opus-4-5-20251101",
+  "systemPrompt": "Explain concepts thoroughly with examples. Be patient and educational."
+}
+```
+
+## Next Steps
+
+- [Master CLAUDE.md files](/docs/configuration/claude-md)
+- [Learn productivity tips](/docs/tips-and-tricks/productivity)
+- [Set up MCP servers](/docs/integrations/mcp-servers)

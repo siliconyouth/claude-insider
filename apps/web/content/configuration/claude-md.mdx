@@ -1,0 +1,266 @@
+---
+title: CLAUDE.md Guide
+description: Master the CLAUDE.md file format to give Claude perfect context about your projects
+---
+
+The `CLAUDE.md` file is the primary way to provide Claude Code with context about your project. When you start a session, Claude automatically reads these files to understand your codebase, conventions, and preferences.
+
+## Why Use CLAUDE.md?
+
+Without context, Claude has to infer information about your project from the code itself. With a well-crafted `CLAUDE.md`, you can:
+
+- **Reduce repetition** - No need to explain your stack every session
+- **Ensure consistency** - Claude follows your conventions automatically
+- **Speed up workflows** - Claude understands your project structure immediately
+- **Improve accuracy** - Better context leads to better suggestions
+
+## File Location
+
+Claude Code looks for `CLAUDE.md` files in several locations:
+
+```
+~/.claude/CLAUDE.md           # Global defaults (all projects)
+~/projects/my-app/CLAUDE.md   # Project root (most common)
+~/projects/my-app/src/CLAUDE.md  # Directory-specific
+```
+
+**Precedence**: Directory-specific > Project root > Global
+
+## Basic Structure
+
+A typical `CLAUDE.md` includes these sections:
+
+```markdown
+# Project Name
+
+## Overview
+Brief description of what this project does.
+
+## Tech Stack
+- Framework and version
+- Key libraries
+- Database/services
+
+## Project Structure
+Key directories and their purposes.
+
+## Coding Conventions
+Style guide, patterns, naming conventions.
+
+## Common Tasks
+Frequent operations and how to perform them.
+```
+
+## Complete Example
+
+Here's a comprehensive `CLAUDE.md` for a Next.js project:
+
+```markdown
+# E-Commerce Platform
+
+## Overview
+A full-stack e-commerce platform built with Next.js,
+featuring product catalog, shopping cart, and checkout.
+
+## Tech Stack
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript 5.x (strict mode)
+- **Styling**: Tailwind CSS 3.x
+- **Database**: PostgreSQL with Prisma ORM
+- **Auth**: NextAuth.js with Google/GitHub providers
+- **Payments**: Stripe
+
+## Project Structure
+\`\`\`
+src/
+├── app/              # Next.js App Router pages
+├── components/       # React components
+│   ├── ui/          # Reusable UI components
+│   └── features/    # Feature-specific components
+├── lib/             # Utility functions
+├── hooks/           # Custom React hooks
+├── types/           # TypeScript type definitions
+└── styles/          # Global styles
+\`\`\`
+
+## Coding Conventions
+
+### Components
+- Use functional components with TypeScript
+- Props interface named `{ComponentName}Props`
+- Export components as named exports
+- Co-locate component styles and tests
+
+### Naming
+- Components: PascalCase (`ProductCard.tsx`)
+- Utilities: camelCase (`formatPrice.ts`)
+- Constants: SCREAMING_SNAKE_CASE
+- CSS classes: kebab-case
+
+### State Management
+- Server state: React Query
+- Client state: Zustand for global, useState for local
+- Form state: React Hook Form
+
+## Database
+
+### Running Migrations
+\`\`\`bash
+pnpm prisma migrate dev    # Development
+pnpm prisma migrate deploy # Production
+\`\`\`
+
+### Seeding
+\`\`\`bash
+pnpm prisma db seed
+\`\`\`
+
+## Common Tasks
+
+### Adding a New Page
+1. Create file in `src/app/[route]/page.tsx`
+2. Add metadata export for SEO
+3. Create associated components in `src/components/features/`
+
+### Adding a New API Route
+1. Create file in `src/app/api/[route]/route.ts`
+2. Use `NextResponse` for responses
+3. Add Zod schema for validation
+
+## Environment Variables
+Required variables in `.env.local`:
+- `DATABASE_URL` - PostgreSQL connection string
+- `NEXTAUTH_SECRET` - Auth encryption key
+- `STRIPE_SECRET_KEY` - Stripe API key
+
+## Testing
+\`\`\`bash
+pnpm test        # Run all tests
+pnpm test:watch  # Watch mode
+pnpm test:cov    # With coverage
+\`\`\`
+
+## Deployment
+- Main branch auto-deploys to production
+- PRs create preview deployments
+- Run `pnpm build` locally to verify before pushing
+```
+
+## Section Deep Dive
+
+### Overview Section
+
+Keep it concise but informative:
+
+```markdown
+## Overview
+A real-time collaborative document editor supporting
+multiple users, rich text formatting, and version history.
+Built for teams who need Google Docs-like functionality
+with self-hosting capabilities.
+```
+
+### Tech Stack Section
+
+List versions for accuracy:
+
+```markdown
+## Tech Stack
+- React 18.2 with TypeScript 5.3
+- Vite 5.0 for bundling
+- TanStack Query v5 for data fetching
+- Tailwind CSS 3.4
+- Vitest for testing
+```
+
+### Conventions Section
+
+Be specific about patterns:
+
+```markdown
+## Conventions
+
+### Error Handling
+- Use custom `AppError` class for application errors
+- Wrap async route handlers with `asyncHandler`
+- Log errors to Sentry in production
+
+### API Responses
+Always return consistent shape:
+\`\`\`typescript
+{
+  success: boolean;
+  data?: T;
+  error?: { code: string; message: string };
+}
+\`\`\`
+```
+
+## Directory-Specific Overrides
+
+Create `CLAUDE.md` files in subdirectories for specialized instructions:
+
+### `tests/CLAUDE.md`
+```markdown
+# Test Directory
+
+## Testing Conventions
+- Use `describe` blocks for grouping
+- Name tests: "should [expected behavior] when [condition]"
+- Mock external services, not internal modules
+- Aim for >80% coverage on business logic
+```
+
+### `scripts/CLAUDE.md`
+```markdown
+# Scripts Directory
+
+## Script Conventions
+- Scripts should be idempotent when possible
+- Include --dry-run flag for destructive operations
+- Log progress to stdout, errors to stderr
+- Exit with appropriate codes (0 success, 1 error)
+```
+
+## Tips for Effective CLAUDE.md
+
+1. **Update regularly** - Keep it in sync with your project
+2. **Be specific** - Vague instructions lead to vague results
+3. **Include examples** - Show don't just tell
+4. **Document gotchas** - Warn about common pitfalls
+5. **Keep it readable** - Use clear headings and formatting
+
+## Common Patterns
+
+### For APIs
+```markdown
+## API Design
+- RESTful endpoints under `/api/v1/`
+- Use HTTP verbs correctly (GET, POST, PUT, DELETE)
+- Return appropriate status codes
+- Include pagination for list endpoints
+```
+
+### For CLI Tools
+```markdown
+## CLI Conventions
+- Use Commander.js for argument parsing
+- Support both `--flag` and `-f` short forms
+- Provide helpful `--help` output
+- Use chalk for colored output
+```
+
+### For Libraries
+```markdown
+## Library Guidelines
+- Maintain backward compatibility in minor versions
+- Document all public APIs with JSDoc
+- Include TypeScript declarations
+- Provide migration guides for breaking changes
+```
+
+## Next Steps
+
+- [Configure Claude Code settings](/docs/configuration/settings)
+- [Learn effective prompting](/docs/tips-and-tricks/prompting)
+- [Set up IDE integration](/docs/integrations/ide-plugins)
