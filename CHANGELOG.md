@@ -10,6 +10,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Planned
 - Additional content pages as needed
 
+## [0.9.1] - 2025-12-09
+
+### Added
+- Vercel Analytics integration for privacy-focused usage tracking
+- Content Security Policy (CSP) headers for XSS protection
+- Permissions-Policy header (disables camera, microphone, geolocation, FLoC tracking)
+
+### Changed
+- Updated Privacy Policy with comprehensive Vercel Analytics disclosure
+- Updated Terms of Service with new Section 10: Privacy and Analytics
+  - Added subsections: 10.1 Analytics, 10.2 Local Storage, 10.3 Security
+  - Renumbered subsequent sections (11-17)
+
+### Security
+- CSP directives: default-src, script-src, style-src, font-src, img-src, connect-src, frame-ancestors
+- Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+- Upgrade-insecure-requests enabled
+
 ## [0.9.0] - 2025-12-09
 
 ### Added
@@ -256,6 +274,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.9.1 | 2025-12-09 | Vercel Analytics, CSP headers, Privacy/Terms updates |
 | 0.9.0 | 2025-12-09 | ContentMeta component, source citations, AI generation metadata |
 | 0.8.0 | 2025-12-09 | Legal pages, shared Footer, auto-updating build info |
 | 0.7.0 | 2025-12-09 | Syntax highlighting with highlight.js, colored language tags |

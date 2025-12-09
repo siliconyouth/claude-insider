@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.9.0
+**Version**: 0.9.1
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -45,6 +45,8 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - ContentMeta component for source citations on all content pages
 - AI generation metadata on all 16 MDX pages (model: Claude Opus 4.5, date, build ID)
 - Links to official Anthropic documentation sources
+- Vercel Analytics for privacy-focused usage tracking
+- Content Security Policy (CSP) and Permissions-Policy headers
 
 ### Project Status: Complete
 

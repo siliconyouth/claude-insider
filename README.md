@@ -18,7 +18,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.9.0)
+## Current Status (v0.9.1)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -55,6 +55,9 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] ContentMeta component for source citations on all content pages
 - [x] AI generation metadata on all 16 MDX pages (model, date, build ID)
 - [x] Links to official Anthropic documentation sources
+- [x] Vercel Analytics for privacy-focused usage tracking
+- [x] Content Security Policy (CSP) headers
+- [x] Permissions-Policy header (disables FLoC tracking)
 
 ### All Features Complete
 

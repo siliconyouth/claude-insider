@@ -217,6 +217,9 @@ claude-insider/
 - [x] ContentMeta component for source citations on all content pages
 - [x] AI generation metadata on all 16 MDX pages (model, date, build ID)
 - [x] Links to official Anthropic documentation sources
+- [x] Vercel Analytics for privacy-focused usage tracking
+- [x] Content Security Policy (CSP) headers
+- [x] Permissions-Policy header (disables camera, mic, geolocation, FLoC)
 
 ### Pages Implemented
 
@@ -471,6 +474,14 @@ All planned features have been implemented. The project is feature-complete.
 - [x] Sources include: docs.anthropic.com, modelcontextprotocol.io, anthropic.com/engineering
 - [x] Dynamic build ID from `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` environment variable
 - [x] ContentMeta exported via mdx-components.tsx for use in MDX files
+
+### Phase 10: Analytics & Security Hardening - COMPLETED
+- [x] Vercel Analytics integration (@vercel/analytics) for privacy-focused usage tracking
+- [x] Content Security Policy (CSP) headers for XSS protection
+- [x] Permissions-Policy header (disables camera, microphone, geolocation, FLoC)
+- [x] Updated Privacy Policy with comprehensive analytics disclosure
+- [x] Updated Terms of Service with Section 10: Privacy and Analytics
+- [x] No cookies, no personal data collection, no cross-site tracking
 
 ---
 
