@@ -216,7 +216,21 @@ The `vercel.json` handles redirects:
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+**MIT License with Attribution** - see [LICENSE](LICENSE) for details.
+
+Copyright (c) 2025 **Vladimir Dukelic** ([vladimir@dukelic.com](mailto:vladimir@dukelic.com))
+
+### Attribution Requirements
+
+When using this software or its derivatives, you must:
+1. Provide a link to the original repository: https://github.com/siliconyouth/claude-insider
+2. Credit the original author: **Vladimir Dukelic** (vladimir@dukelic.com)
+
+## Author
+
+**Vladimir Dukelic**
+- Email: [vladimir@dukelic.com](mailto:vladimir@dukelic.com)
+- GitHub: [@siliconyouth](https://github.com/siliconyouth)
 
 ## Links
 

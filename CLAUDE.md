@@ -216,3 +216,21 @@ Configured in `vercel.json`:
 3. Test with `pnpm dev` and `pnpm build`
 4. Run `pnpm lint` before committing
 5. Submit PR for review
+
+## License
+
+**MIT License with Attribution**
+
+Copyright (c) 2025 Vladimir Dukelic (vladimir@dukelic.com)
+
+### Attribution Requirements
+
+When using this software or its derivatives, you must:
+1. Provide a link to the original repository: https://github.com/siliconyouth/claude-insider
+2. Credit the original author: Vladimir Dukelic (vladimir@dukelic.com)
+
+## Author
+
+**Vladimir Dukelic**
+- Email: vladimir@dukelic.com
+- GitHub: [@siliconyouth](https://github.com/siliconyouth)
