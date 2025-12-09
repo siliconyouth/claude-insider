@@ -93,6 +93,9 @@ importers:
       fuse.js:
         specifier: ^7.1.0
         version: 7.1.0
+      highlight.js:
+        specifier: ^11.11.1
+        version: 11.11.1
       next:
         specifier: ^16.0.7
         version: 16.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)

@@ -79,19 +79,21 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
 
-    // Code blocks with copy button
-    pre: ({ children, ...props }) => (
-      <CodeBlock {...props}>{children}</CodeBlock>
-    ),
+    // Code blocks with copy button and syntax highlighting
+    pre: ({ children, ...props }) => {
+      // Extract language class from the code element inside pre
+      const codeElement = children as React.ReactElement;
+      const className = codeElement?.props?.className || "";
+      return <CodeBlock className={className}>{codeElement?.props?.children}</CodeBlock>;
+    },
 
-    // Inline code
+    // Inline code (not inside pre)
     code: ({ children, className, ...props }) => {
-      // Check if this is inside a pre (code block) or inline
-      const isCodeBlock = className?.includes("language-");
-
-      if (isCodeBlock) {
+      // If it has a language class, it's a code block (handled by pre)
+      // Otherwise it's inline code
+      if (className?.includes("language-")) {
         return (
-          <code className={`${className} text-sm`} {...props}>
+          <code className={className} {...props}>
             {children}
           </code>
         );
