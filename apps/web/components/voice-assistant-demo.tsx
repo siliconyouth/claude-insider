@@ -21,18 +21,20 @@ export function VoiceAssistantDemo() {
   useEffect(() => {
     const timers: NodeJS.Timeout[] = [];
 
-    // Timeline (all times in ms):
+    // Timeline (all times in ms) - Extended for better readability:
     // 0ms: Start - welcome screen visible
     // 2000ms: First user message appears
     // 3500ms: Typing indicator starts
     // 6000ms: First assistant response appears, audio plays
     // 12000ms: Audio ends
-    // 14000ms: Second user message appears
-    // 15500ms: Typing indicator starts
-    // 18500ms: Second assistant response appears, audio plays
-    // 25000ms: Audio ends, voice pulse starts
-    // 28000ms: Voice pulse ends
-    // 32000ms: Reset animation
+    // 18000ms: Reading time - wait 6 more seconds for user to read
+    // 20000ms: Second user message appears
+    // 21500ms: Typing indicator starts
+    // 24500ms: Second assistant response appears, audio plays
+    // 31000ms: Audio ends
+    // 40000ms: Reading time - wait 9 seconds for user to read second answer
+    // 43000ms: 3-second pause begins (animation stops)
+    // 46000ms: Reset and loop from beginning
 
     // First user message
     timers.push(setTimeout(() => {
@@ -51,46 +53,46 @@ export function VoiceAssistantDemo() {
       setIsPlayingAudio(true);
     }, 6000));
 
-    // First audio ends
+    // First audio ends - reading time begins
     timers.push(setTimeout(() => {
       setIsPlayingAudio(false);
     }, 12000));
 
-    // Second user message
+    // Second user message (after reading time)
     timers.push(setTimeout(() => {
       setVisibleMessages(3);
-    }, 14000));
+    }, 20000));
 
     // Second typing indicator
     timers.push(setTimeout(() => {
       setIsTyping(true);
-    }, 15500));
+    }, 21500));
 
     // Second assistant response
     timers.push(setTimeout(() => {
       setIsTyping(false);
       setVisibleMessages(4);
       setIsPlayingAudio(true);
-    }, 18500));
+    }, 24500));
 
-    // Second audio ends, show voice pulse
+    // Second audio ends - extended reading time
     timers.push(setTimeout(() => {
       setIsPlayingAudio(false);
       setShowPulse(true);
-    }, 25000));
+    }, 31000));
 
     // Voice pulse ends
     timers.push(setTimeout(() => {
       setShowPulse(false);
-    }, 28000));
+    }, 34000));
 
-    // Reset animation
+    // Reset animation after 3-second static pause
     timers.push(setTimeout(() => {
       setVisibleMessages(0);
       setIsTyping(false);
       setShowPulse(false);
       setIsPlayingAudio(false);
-    }, 32000));
+    }, 46000));
 
     return () => {
       timers.forEach(timer => clearTimeout(timer));
