@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.16.1] - 2025-12-09
+
+### Fixed
+- **Navigation Bug Fix** - Added missing Tutorials and Examples categories to navigation
+  - `/docs` landing page now displays all 7 categories (was showing only 5)
+  - Homepage now displays all 7 category cards with links to all 34 pages
+  - Stats section updated: 34 pages, 7 categories (was showing 28 pages, 5 categories)
+
+### Changed
+- `apps/web/app/docs/page.tsx` - Added Tutorials and Examples to DOCS_SECTIONS array
+- `apps/web/app/page.tsx` - Added Tutorials and Examples to CATEGORIES array, updated stats
+
 ## [0.16.0] - 2025-12-09
 
 ### Added
@@ -557,6 +569,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.16.1 | 2025-12-09 | Navigation bug fix: Added missing Tutorials & Examples to navigation |
 | 0.16.0 | 2025-12-09 | Phase D content: Tutorials & Examples categories (34 docs) |
 | 0.15.1 | 2025-12-09 | Build-time RAG index generation |
 | 0.15.0 | 2025-12-09 | 21 additional syntax highlighting languages (33 total) |

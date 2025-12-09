@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.16.0)
+## Current Status (v0.16.1)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -96,6 +96,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Build-time RAG index generation** - Pre-computed index with 423 document chunks for faster AI responses
 - [x] **Tutorials category** - Code review, documentation generation, test generation tutorials
 - [x] **Examples category** - Real-world projects and case studies
+- [x] **Navigation fix** - All 7 categories (34 pages) now visible in /docs and homepage navigation
 
 ### All Features Complete
 

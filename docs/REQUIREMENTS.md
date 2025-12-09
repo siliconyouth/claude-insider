@@ -305,6 +305,12 @@ claude-insider/
 - [x] Search index updated with 6 new entries
 - [x] RAG index regenerated (423 document chunks)
 
+### Phase 21: Navigation Bug Fix - COMPLETED (v0.16.1)
+- [x] **Fixed /docs landing page** - Added missing Tutorials and Examples categories to DOCS_SECTIONS
+- [x] **Fixed homepage** - Added missing Tutorials and Examples to CATEGORIES array
+- [x] **Updated stats section** - Now shows correct 34 pages and 7 categories
+- [x] All 7 categories (34 documentation pages) now visible in site navigation
+
 ### Pages Implemented (34 Documentation + 6 Utility Pages)
 
 | Route | Status | Description |
@@ -507,7 +513,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.16.0.
+All planned features have been implemented. The project is feature-complete at v0.16.1.
 
 ### Content Expansion (All Complete)
 
