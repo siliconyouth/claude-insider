@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const APP_VERSION = "0.10.0";
+const APP_VERSION = "0.13.0";
 const BUILD_DATE = "2025-12-09";
 
 export function Footer() {
