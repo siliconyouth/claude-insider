@@ -30,21 +30,21 @@ export function Header({ activePage }: HeaderProps) {
           <div className="hidden md:flex items-center gap-6">
             <Link
               href="/docs"
-              className={
+              className={`rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
                 activePage === "docs"
                   ? "text-gray-900 dark:text-white font-medium transition-colors"
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-              }
+              }`}
             >
               Documentation
             </Link>
             <Link
               href="/docs/getting-started"
-              className={
+              className={`rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-500 ${
                 activePage === "getting-started"
                   ? "text-gray-900 dark:text-white font-medium transition-colors"
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-              }
+              }`}
             >
               Getting Started
             </Link>
@@ -52,7 +52,8 @@ export function Header({ activePage }: HeaderProps) {
               href="https://github.com/siliconyouth/claude-insider"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              aria-label="GitHub repository (opens in new tab)"
             >
               GitHub
             </a>

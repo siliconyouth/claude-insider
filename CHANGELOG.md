@@ -8,8 +8,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Accessibility audit
-- GitHub Actions CI/CD
+- Additional accessibility improvements
+
+## [0.6.0] - 2025-12-09
+
+### Added
+- PWA (Progressive Web App) support with service worker for offline access
+- Web app manifest with app icons
+- Skip to main content link for keyboard navigation
+- ARIA labels and roles throughout the application
+- Focus states with visible outlines on all interactive elements
+
+### Accessibility Improvements
+- Search modal: proper dialog role, aria-modal, aria-labelledby
+- Search results: listbox pattern with aria-selected, aria-activedescendant
+- All SVG icons marked with aria-hidden="true"
+- Skip link for keyboard users to bypass navigation
+- Focus rings on all buttons, links, and form elements
+- Live region for search "no results" message
+
+### Changed
+- Search button now theme-aware (light/dark mode)
+- Search modal styling improved for light theme
+- All interactive elements have visible focus indicators
+- Input type changed to "search" for better semantics
 
 ## [0.5.0] - 2025-12-09
 
@@ -176,6 +198,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.6.0 | 2025-12-09 | PWA offline support, accessibility audit and fixes |
 | 0.5.0 | 2025-12-09 | Lighthouse optimization, JSON-LD structured data, security headers |
 | 0.4.0 | 2025-12-09 | TOC, mobile menu, sitemap, production deployment |
 | 0.3.1 | 2025-12-09 | Shared Header component, search modal portal fix |

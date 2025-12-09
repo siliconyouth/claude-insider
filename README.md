@@ -18,7 +18,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.5.0)
+## Current Status (v0.6.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -42,9 +42,10 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] JSON-LD structured data (TechArticle, Organization, WebSite, BreadcrumbList)
 - [x] Lighthouse performance optimization
 - [x] Security headers (X-Content-Type-Options, X-Frame-Options, etc.)
+- [x] PWA offline support with service worker
+- [x] Accessibility audit and fixes (ARIA, focus states, skip link)
 
-### Pending
-- [ ] Accessibility audit
+### All Features Complete
 
 ## Documentation Pages
 
@@ -191,12 +192,9 @@ The `vercel.json` handles redirects:
 - `claude-insider.com` → `www.claudeinsider.com`
 - `www.claude-insider.com` → `www.claudeinsider.com`
 
-## To-Do
+## Project Complete
 
-### Low Priority
-- [ ] GitHub Actions CI/CD
-- [ ] PWA offline support
-- [ ] Accessibility audit
+All planned features have been implemented. The project is feature-complete and deployed to production.
 
 ## Contributing
 

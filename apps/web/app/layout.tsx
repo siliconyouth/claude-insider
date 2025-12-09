@@ -2,6 +2,8 @@ import "@repo/ui/styles.css";
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { ServiceWorkerRegister } from "@/components/service-worker-register";
+import { SkipLink } from "@/components/skip-link";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,6 +41,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.claudeinsider.com"),
   alternates: {
     canonical: "/",
+  },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Claude Insider",
   },
   openGraph: {
     title: "Claude Insider - Tips, Tricks & Documentation for Claude AI",
@@ -117,6 +125,7 @@ export default function RootLayout({
       <head>
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -125,6 +134,8 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}
       >
+        <SkipLink />
+        <ServiceWorkerRegister />
         {children}
       </body>
     </html>

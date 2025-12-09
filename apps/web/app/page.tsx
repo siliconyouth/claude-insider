@@ -121,7 +121,7 @@ export default function HomePage() {
       <Header activePage="home" />
 
       {/* Hero Section */}
-      <main>
+      <main id="main-content">
         <div className="relative isolate overflow-hidden">
           {/* Gradient background */}
           <div className="absolute inset-0 -z-10 overflow-hidden">

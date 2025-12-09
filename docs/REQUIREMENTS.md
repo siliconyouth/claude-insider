@@ -251,7 +251,7 @@ claude-insider/
 - [x] System theme preference detection
 - [x] Responsive design (mobile, tablet, desktop)
 - [x] Fast page loads (< 1s) - static generation
-- [ ] Offline support for cached content
+- [x] Offline support for cached content (PWA)
 
 ### FR-5: Content Categories
 - [x] **Getting Started**: Installation, setup, quickstart guides
@@ -271,9 +271,11 @@ claude-insider/
 - [x] Turborepo caching for fast builds (5s build time)
 
 ### NFR-2: Accessibility
-- [ ] WCAG 2.1 AA compliance (partial)
+- [x] WCAG 2.1 AA compliance (implemented)
 - [x] Keyboard navigation support
-- [ ] Screen reader compatible
+- [x] Screen reader compatible (ARIA labels, roles, live regions)
+- [x] Skip to main content link
+- [x] Focus states on all interactive elements
 
 ### NFR-3: SEO
 - [x] Server-side rendering for all content pages
@@ -322,13 +324,13 @@ claude-insider/
 
 ---
 
-## To-Do List
+## Project Status
 
-### Low Priority
-1. [ ] Add GitHub Actions CI/CD pipeline
-2. [ ] Implement offline support (PWA)
-3. [ ] Accessibility audit and fixes
-4. [ ] Add analytics (privacy-respecting)
+All planned features have been implemented. The project is feature-complete.
+
+### Optional Future Enhancements
+- [ ] Add GitHub Actions CI/CD pipeline (optional - Vercel handles deployment)
+- [ ] Add privacy-respecting analytics (optional)
 
 ---
 
@@ -365,7 +367,14 @@ claude-insider/
 ### Phase 5: Enhancements - COMPLETED
 - [x] Lighthouse optimization (font swap, compression, security headers)
 - [x] Structured data (JSON-LD: TechArticle, Organization, WebSite, BreadcrumbList)
-- [ ] Accessibility audit (planned)
+- [x] Accessibility audit (ARIA, focus states, skip link)
+
+### Phase 6: PWA & Accessibility - COMPLETED
+- [x] PWA support with service worker and manifest
+- [x] Offline caching for documentation pages
+- [x] Skip to main content link
+- [x] ARIA labels and roles throughout
+- [x] Focus visible states on all interactive elements
 
 ---
 

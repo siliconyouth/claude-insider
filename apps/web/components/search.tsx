@@ -104,13 +104,16 @@ export function Search() {
       {/* Search button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-400 bg-gray-800 border border-gray-700 rounded-lg hover:border-gray-600 hover:text-gray-300 transition-colors"
+        className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg hover:border-gray-400 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-950"
+        aria-label="Search documentation (Ctrl+K or Cmd+K)"
+        aria-haspopup="dialog"
       >
         <svg
           className="w-4 h-4"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -120,7 +123,7 @@ export function Search() {
           />
         </svg>
         <span className="hidden sm:inline">Search docs...</span>
-        <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-medium text-gray-500 bg-gray-700 rounded">
+        <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-medium text-gray-500 bg-gray-200 dark:bg-gray-700 rounded">
           <span className="text-xs">⌘</span>K
         </kbd>
       </button>
@@ -129,6 +132,9 @@ export function Search() {
       {mounted && isOpen && createPortal(
         <div
           className="fixed inset-0 z-[9999] overflow-y-auto bg-black/70 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="search-dialog-title"
           onClick={(e) => {
             // Close when clicking on the backdrop (not the modal content)
             if (e.target === e.currentTarget) {
@@ -150,7 +156,8 @@ export function Search() {
               }
             }}
           >
-            <div className="relative w-full max-w-xl bg-gray-900 border border-gray-700 rounded-xl shadow-2xl overflow-hidden">
+            <div className="relative w-full max-w-xl bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl shadow-2xl overflow-hidden">
+              <h2 id="search-dialog-title" className="sr-only">Search documentation</h2>
               {/* Close button */}
               <button
                 onClick={() => {
@@ -158,7 +165,7 @@ export function Search() {
                   setQuery("");
                   setResults([]);
                 }}
-                className="absolute top-3 right-3 p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors z-10"
+                className="absolute top-3 right-3 p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-orange-500"
                 aria-label="Close search"
               >
                 <svg
@@ -166,6 +173,7 @@ export function Search() {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -177,12 +185,13 @@ export function Search() {
               </button>
 
               {/* Search input */}
-              <div className="flex items-center gap-3 px-4 pr-12 border-b border-gray-700">
+              <div className="flex items-center gap-3 px-4 pr-12 border-b border-gray-300 dark:border-gray-700">
                 <svg
-                  className="w-5 h-5 text-gray-400 flex-shrink-0"
+                  className="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -193,12 +202,16 @@ export function Search() {
                 </svg>
                 <input
                   ref={inputRef}
-                  type="text"
+                  type="search"
                   placeholder="Search documentation..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  className="w-full py-4 bg-transparent text-white placeholder-gray-500 outline-none"
+                  className="w-full py-4 bg-transparent text-gray-900 dark:text-white placeholder-gray-500 outline-none"
+                  aria-label="Search"
+                  aria-autocomplete="list"
+                  aria-controls={results.length > 0 ? "search-results" : undefined}
+                  aria-activedescendant={results.length > 0 ? `search-result-${selectedIndex}` : undefined}
                 />
                 {query && (
                   <button
@@ -206,13 +219,15 @@ export function Search() {
                       setQuery("");
                       setResults([]);
                     }}
-                    className="p-1 text-gray-400 hover:text-white"
+                    className="p-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
+                    aria-label="Clear search"
                   >
                     <svg
                       className="w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"
@@ -227,25 +242,37 @@ export function Search() {
 
               {/* Results */}
               {results.length > 0 && (
-                <ul className="max-h-96 overflow-y-auto py-2">
+                <ul
+                  id="search-results"
+                  role="listbox"
+                  aria-label="Search results"
+                  className="max-h-96 overflow-y-auto py-2"
+                >
                   {results.map((result, index) => (
-                    <li key={result.url}>
+                    <li
+                      key={result.url}
+                      id={`search-result-${index}`}
+                      role="option"
+                      aria-selected={index === selectedIndex}
+                    >
                       <button
                         onClick={() => navigateToResult(result.url)}
                         onMouseEnter={() => setSelectedIndex(index)}
-                        className={`w-full px-4 py-3 text-left flex items-start gap-3 transition-colors ${
+                        className={`w-full px-4 py-3 text-left flex items-start gap-3 transition-colors focus:outline-none ${
                           index === selectedIndex
                             ? "bg-orange-500/10"
-                            : "hover:bg-gray-800"
+                            : "hover:bg-gray-100 dark:hover:bg-gray-800"
                         }`}
+                        tabIndex={-1}
                       >
                         <div className="flex-shrink-0 mt-0.5">
                           <span
                             className={`inline-flex items-center justify-center w-6 h-6 rounded text-xs font-medium ${
                               index === selectedIndex
                                 ? "bg-orange-500 text-white"
-                                : "bg-gray-700 text-gray-400"
+                                : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
                             }`}
+                            aria-hidden="true"
                           >
                             {result.category.charAt(0)}
                           </span>
@@ -254,13 +281,13 @@ export function Search() {
                           <p
                             className={`font-medium truncate ${
                               index === selectedIndex
-                                ? "text-orange-400"
-                                : "text-white"
+                                ? "text-orange-600 dark:text-orange-400"
+                                : "text-gray-900 dark:text-white"
                             }`}
                           >
                             {result.title}
                           </p>
-                          <p className="text-sm text-gray-400 truncate">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
                             {result.description}
                           </p>
                           <p className="text-xs text-gray-500 mt-1">
@@ -268,8 +295,8 @@ export function Search() {
                           </p>
                         </div>
                         {index === selectedIndex && (
-                          <div className="flex-shrink-0 text-xs text-gray-500">
-                            <kbd className="px-1.5 py-0.5 bg-gray-700 rounded">
+                          <div className="flex-shrink-0 text-xs text-gray-500" aria-hidden="true">
+                            <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
                               Enter
                             </kbd>
                           </div>
@@ -282,8 +309,8 @@ export function Search() {
 
               {/* No results */}
               {query.length >= 2 && results.length === 0 && (
-                <div className="px-4 py-12 text-center">
-                  <p className="text-gray-400">
+                <div className="px-4 py-12 text-center" role="status" aria-live="polite">
+                  <p className="text-gray-600 dark:text-gray-400">
                     No results found for &quot;{query}&quot;
                   </p>
                   <p className="text-sm text-gray-500 mt-1">
@@ -295,24 +322,24 @@ export function Search() {
               {/* Initial state */}
               {query.length < 2 && (
                 <div className="px-4 py-8 text-center">
-                  <p className="text-gray-400">
+                  <p className="text-gray-600 dark:text-gray-400">
                     Type at least 2 characters to search
                   </p>
                   <div className="flex justify-center gap-4 mt-4 text-xs text-gray-500">
                     <span>
-                      <kbd className="px-1.5 py-0.5 bg-gray-700 rounded">
+                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
                         ↑↓
                       </kbd>{" "}
                       Navigate
                     </span>
                     <span>
-                      <kbd className="px-1.5 py-0.5 bg-gray-700 rounded">
+                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
                         Enter
                       </kbd>{" "}
                       Select
                     </span>
                     <span>
-                      <kbd className="px-1.5 py-0.5 bg-gray-700 rounded">
+                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">
                         Esc
                       </kbd>{" "}
                       Close
@@ -322,11 +349,11 @@ export function Search() {
               )}
 
               {/* Footer */}
-              <div className="px-4 py-2 border-t border-gray-700 bg-gray-800/50">
+              <div className="px-4 py-2 border-t border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800/50">
                 <div className="flex items-center justify-between text-xs text-gray-500">
                   <span>Search powered by Fuse.js</span>
                   <span>
-                    <kbd className="px-1.5 py-0.5 bg-gray-700 rounded">Esc</kbd>{" "}
+                    <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">Esc</kbd>{" "}
                     or click outside to close
                   </span>
                 </div>

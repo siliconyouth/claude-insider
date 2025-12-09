@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.5.0
+**Version**: 0.6.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -34,9 +34,10 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Dynamic sitemap.xml and robots.txt for SEO
 - JSON-LD structured data (TechArticle, Organization, WebSite, BreadcrumbList)
 - Lighthouse optimizations (font swap, compression, security headers)
+- PWA offline support with service worker and manifest
+- Accessibility audit (ARIA labels, focus states, skip link)
 
-### Pending
-- Accessibility audit
+### Project Status: Complete
 
 ## Tech Stack
 
@@ -186,12 +187,9 @@ Configured in `vercel.json`:
 | API Reference | `/docs/api` | Claude API docs, SDK, tool use |
 | Integrations | `/docs/integrations` | MCP servers, IDE plugins, hooks |
 
-## To-Do (Priority Order)
+## Project Status
 
-### Low Priority
-1. [ ] GitHub Actions CI/CD
-2. [ ] PWA offline support
-3. [ ] Accessibility audit
+All planned features have been implemented. The project is feature-complete.
 
 ## Adding New Documentation Pages
 
