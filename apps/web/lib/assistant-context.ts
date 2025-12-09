@@ -1,4 +1,4 @@
-import type { Message } from "./claude";
+import type { Message } from "./claude-utils";
 
 // Storage key for conversation history
 const HISTORY_STORAGE_KEY = "claude-insider-assistant-history";

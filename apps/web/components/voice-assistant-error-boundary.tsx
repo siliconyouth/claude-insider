@@ -56,6 +56,11 @@ export class VoiceAssistantErrorBoundary extends Component<Props, State> {
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                 Something went wrong with the assistant. Please try again.
               </p>
+              {this.state.error && (
+                <p className="mt-1 text-xs text-red-400 font-mono break-all">
+                  {this.state.error.message}
+                </p>
+              )}
               <button
                 onClick={this.handleRetry}
                 className="mt-3 rounded-lg bg-orange-500 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-orange-600"

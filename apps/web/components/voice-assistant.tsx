@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { track } from "@vercel/analytics";
-import type { Message } from "@/lib/claude";
-import { markdownToSpeakableText, markdownToDisplayText } from "@/lib/claude";
+import type { Message } from "@/lib/claude-utils";
+import { markdownToSpeakableText, markdownToDisplayText } from "@/lib/claude-utils";
 import {
   getConversationHistory,
   saveConversationHistory,

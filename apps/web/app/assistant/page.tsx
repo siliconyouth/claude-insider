@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { VoiceAssistantFull } from "@/components/voice-assistant-full";
+import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 
 export const metadata: Metadata = {
   title: "AI Assistant - Claude Insider",
@@ -10,13 +11,13 @@ export const metadata: Metadata = {
 
 export default function AssistantPage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-950">
       <Header />
 
       <main id="main-content" className="flex-1 flex flex-col">
         <div className="mx-auto max-w-4xl w-full px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">
+            <h1 className="text-3xl font-bold mb-2 text-white">
               Claude Insider{" "}
               <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">
                 AI Assistant
@@ -27,7 +28,9 @@ export default function AssistantPage() {
             </p>
           </div>
 
-          <VoiceAssistantFull />
+          <VoiceAssistantErrorBoundary>
+            <VoiceAssistantFull />
+          </VoiceAssistantErrorBoundary>
         </div>
       </main>
 
