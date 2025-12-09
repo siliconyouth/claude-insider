@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.16.2] - 2025-12-09
+
+### Fixed
+- **Getting Started Sidebar Navigation Fix** - Fixed duplicate navigation config causing inconsistent sidebar
+  - ROOT CAUSE: `/docs/getting-started/page.tsx` had its own hardcoded `navigationConfig` with only 5 categories
+  - This was separate from the main navigation in `[...slug]/page.tsx` which had all 7 categories
+  - Updated `getting-started/page.tsx` to include all 7 categories (34 pages total)
+  - All documentation pages now consistently show complete sidebar navigation
+
+### Technical Details
+- `apps/web/app/docs/getting-started/page.tsx` - Updated navigationConfig from 5 to 7 categories
+- Issue manifested as: `/docs/tutorials` showed 7 categories, `/docs/getting-started` showed only 5
+- This was NOT a Vercel caching issue - it was a code-level duplicate config that fell out of sync
+
 ## [0.16.1] - 2025-12-09
 
 ### Fixed
@@ -569,6 +583,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.16.2 | 2025-12-09 | Sidebar navigation fix: Fixed duplicate config in getting-started/page.tsx |
 | 0.16.1 | 2025-12-09 | Navigation bug fix: Added missing Tutorials & Examples to navigation |
 | 0.16.0 | 2025-12-09 | Phase D content: Tutorials & Examples categories (34 docs) |
 | 0.15.1 | 2025-12-09 | Build-time RAG index generation |

@@ -311,6 +311,12 @@ claude-insider/
 - [x] **Updated stats section** - Now shows correct 34 pages and 7 categories
 - [x] All 7 categories (34 documentation pages) now visible in site navigation
 
+### Phase 22: Sidebar Navigation Fix - COMPLETED (v0.16.2)
+- [x] **ROOT CAUSE FIX** - `/docs/getting-started/page.tsx` had its own hardcoded `navigationConfig`
+- [x] This duplicate config only had 5 categories while `[...slug]/page.tsx` had all 7
+- [x] Updated `getting-started/page.tsx` to include all 7 categories (34 pages total)
+- [x] All documentation pages now consistently display complete sidebar navigation
+
 ### Pages Implemented (34 Documentation + 6 Utility Pages)
 
 | Route | Status | Description |
@@ -513,7 +519,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.16.1.
+All planned features have been implemented. The project is feature-complete at v0.16.2.
 
 ### Content Expansion (All Complete)
 
