@@ -50,20 +50,18 @@ All technologies used in this project are **free and/or open source** (except fo
 | **Tailwind CSS** | 4.1.5 | MIT | Utility-first CSS framework |
 | **tailwind-config** | (shared) | - | Shared Tailwind configuration package |
 
-### Content & Documentation (Planned)
+### Content & Documentation
 
 | Technology | Version | License | Description |
 |------------|---------|---------|-------------|
 | **MDX** | 3.x | MIT | Markdown with JSX components |
-| **@next/mdx** | latest | MIT | Next.js MDX integration |
-| **rehype-highlight** | latest | MIT | Syntax highlighting for code blocks |
-| **rehype-slug** | latest | MIT | Auto-generate heading IDs |
+| **@next/mdx** | 3.1.0 | MIT | Next.js MDX integration |
 
-### Search & Navigation (Planned)
+### Search & Navigation
 
 | Technology | Version | License | Description |
 |------------|---------|---------|-------------|
-| **Fuse.js** | 7.x | Apache-2.0 | Lightweight fuzzy-search library |
+| **Fuse.js** | 7.1.0 | Apache-2.0 | Lightweight fuzzy-search library |
 
 ### Version Control & Hosting
 
@@ -81,16 +79,44 @@ claude-insider/
 │   │   ├── app/
 │   │   │   ├── page.tsx          # Homepage
 │   │   │   ├── layout.tsx        # Root layout with metadata
-│   │   │   ├── globals.css       # Global styles (dark theme)
+│   │   │   ├── globals.css       # Global styles (dark/light themes)
 │   │   │   └── docs/
 │   │   │       ├── page.tsx      # Documentation index
 │   │   │       ├── getting-started/
 │   │   │       │   └── page.tsx  # Getting started guide
-│   │   │       ├── configuration/
-│   │   │       ├── tips-and-tricks/
-│   │   │       ├── api/
-│   │   │       └── integrations/
-│   │   ├── content/              # MDX content (to be added)
+│   │   │       └── [...slug]/
+│   │   │           └── page.tsx  # Dynamic MDX route
+│   │   ├── components/
+│   │   │   ├── docs-layout.tsx   # Shared docs layout
+│   │   │   ├── code-block.tsx    # Code block with copy button
+│   │   │   ├── copy-button.tsx   # Reusable copy button
+│   │   │   ├── search.tsx        # Search modal (Cmd+K)
+│   │   │   └── theme-toggle.tsx  # Dark/light/system theme toggle
+│   │   ├── content/              # MDX documentation content
+│   │   │   ├── getting-started/
+│   │   │   │   ├── installation.mdx
+│   │   │   │   └── quickstart.mdx
+│   │   │   ├── configuration/
+│   │   │   │   ├── index.mdx
+│   │   │   │   ├── claude-md.mdx
+│   │   │   │   └── settings.mdx
+│   │   │   ├── tips-and-tricks/
+│   │   │   │   ├── index.mdx
+│   │   │   │   ├── prompting.mdx
+│   │   │   │   └── productivity.mdx
+│   │   │   ├── api/
+│   │   │   │   ├── index.mdx
+│   │   │   │   ├── authentication.mdx
+│   │   │   │   └── tool-use.mdx
+│   │   │   └── integrations/
+│   │   │       ├── index.mdx
+│   │   │       ├── mcp-servers.mdx
+│   │   │       ├── ide-plugins.mdx
+│   │   │       └── hooks.mdx
+│   │   ├── lib/
+│   │   │   ├── mdx.ts            # MDX utilities
+│   │   │   └── search.ts         # Search index and utilities
+│   │   ├── mdx-components.tsx    # Custom MDX components
 │   │   └── public/               # Static assets
 │   └── docs/                     # Secondary docs app (Turborepo default)
 ├── packages/
@@ -126,7 +152,7 @@ claude-insider/
 | **Output Directory** | Default (`.next`) |
 | **Install Command** | Default (`pnpm install`) |
 
-**Important**: When Root Directory is set to `apps/web`, Vercel runs all commands from that directory. The `vercel.json` at repo root only needs minimal configuration (framework and ignoreCommand).
+**Important**: When Root Directory is set to `apps/web`, Vercel runs all commands from that directory. The `vercel.json` at repo root handles domain redirects.
 
 ### CI/CD Pipeline (GitHub Actions) - Planned
 
@@ -150,11 +176,18 @@ claude-insider/
 - [x] Documentation index page
 - [x] Getting Started introduction page
 - [x] Dark theme with orange/amber accent colors
+- [x] Light theme with CSS variable overrides
+- [x] Dark/Light/System theme toggle with localStorage persistence
 - [x] Custom scrollbar and code block styling
 - [x] SEO metadata and Open Graph tags
 - [x] Responsive design (mobile, tablet, desktop)
-- [x] Vercel deployment configuration
+- [x] Vercel deployment configuration with domain redirects
 - [x] GitHub repository structure fixed (v0.2.2)
+- [x] MDX content support with dynamic routing
+- [x] Custom MDX components (headings, code blocks, tables, links)
+- [x] Code copy-to-clipboard functionality
+- [x] Fuzzy search with Fuse.js (Cmd/Ctrl+K)
+- [x] 16 documentation pages with comprehensive content
 
 ### Pages Implemented
 
@@ -163,47 +196,57 @@ claude-insider/
 | `/` | Done | Homepage with hero, categories, features |
 | `/docs` | Done | Documentation index with all sections |
 | `/docs/getting-started` | Done | Introduction to Claude AI |
-| `/docs/getting-started/installation` | Pending | Installation guide |
-| `/docs/getting-started/quickstart` | Pending | Quick start guide |
-| `/docs/configuration` | Pending | Configuration overview |
-| `/docs/tips-and-tricks` | Pending | Tips overview |
-| `/docs/api` | Pending | API reference |
-| `/docs/integrations` | Pending | Integrations overview |
+| `/docs/getting-started/installation` | Done | Installation guide (MDX) |
+| `/docs/getting-started/quickstart` | Done | Quick start guide (MDX) |
+| `/docs/configuration` | Done | Configuration overview (MDX) |
+| `/docs/configuration/claude-md` | Done | CLAUDE.md guide (MDX) |
+| `/docs/configuration/settings` | Done | Settings reference (MDX) |
+| `/docs/tips-and-tricks` | Done | Tips overview (MDX) |
+| `/docs/tips-and-tricks/prompting` | Done | Prompting strategies (MDX) |
+| `/docs/tips-and-tricks/productivity` | Done | Productivity hacks (MDX) |
+| `/docs/api` | Done | API reference (MDX) |
+| `/docs/api/authentication` | Done | Authentication guide (MDX) |
+| `/docs/api/tool-use` | Done | Tool use guide (MDX) |
+| `/docs/integrations` | Done | Integrations overview (MDX) |
+| `/docs/integrations/mcp-servers` | Done | MCP servers guide (MDX) |
+| `/docs/integrations/ide-plugins` | Done | IDE plugins guide (MDX) |
+| `/docs/integrations/hooks` | Done | Hooks documentation (MDX) |
 
 ---
 
 ## Functional Requirements
 
 ### FR-1: Content Management
-- [ ] Support MDX for rich documentation content
-- [ ] Syntax highlighting for code blocks
-- [ ] Copy-to-clipboard functionality for code snippets
+- [x] Support MDX for rich documentation content
+- [x] Syntax highlighting for code blocks
+- [x] Copy-to-clipboard functionality for code snippets
 - [ ] Table of contents generation for long articles
 
 ### FR-2: Navigation
 - [x] Category-based navigation (Getting Started, Config, Tips, API, Integrations)
 - [x] Breadcrumb navigation
-- [ ] Previous/Next article navigation (partial)
+- [x] Previous/Next article navigation
 - [x] Sidebar navigation for documentation sections
 
 ### FR-3: Search
-- [ ] Full-text search across all content
-- [ ] Search suggestions/autocomplete
-- [ ] Filter by category
-- [ ] Keyboard shortcut (Cmd/Ctrl + K)
+- [x] Full-text search across all content
+- [x] Search suggestions/autocomplete
+- [x] Filter by category
+- [x] Keyboard shortcut (Cmd/Ctrl + K)
 
 ### FR-4: User Experience
-- [ ] Dark/Light theme toggle (dark only currently)
+- [x] Dark/Light theme toggle
+- [x] System theme preference detection
 - [x] Responsive design (mobile, tablet, desktop)
 - [x] Fast page loads (< 1s) - static generation
 - [ ] Offline support for cached content
 
 ### FR-5: Content Categories
-- [x] **Getting Started**: Installation, setup, quickstart guides (structure ready)
-- [x] **Configuration**: CLAUDE.md, settings, environment setup (structure ready)
-- [x] **Tips & Tricks**: Productivity hacks, prompting strategies (structure ready)
-- [x] **API Reference**: Claude API docs, SDK usage, tool use (structure ready)
-- [x] **Integrations**: MCP servers, IDE plugins, hooks, slash commands (structure ready)
+- [x] **Getting Started**: Installation, setup, quickstart guides
+- [x] **Configuration**: CLAUDE.md, settings, environment setup
+- [x] **Tips & Tricks**: Productivity hacks, prompting strategies
+- [x] **API Reference**: Claude API docs, SDK usage, tool use
+- [x] **Integrations**: MCP servers, IDE plugins, hooks, slash commands
 
 ---
 
@@ -217,7 +260,7 @@ claude-insider/
 
 ### NFR-2: Accessibility
 - [ ] WCAG 2.1 AA compliance (partial)
-- [ ] Keyboard navigation support
+- [x] Keyboard navigation support
 - [ ] Screen reader compatible
 
 ### NFR-3: SEO
@@ -247,20 +290,20 @@ claude-insider/
 
 ## Content Requirements
 
-### Initial Content Scope (To Be Written)
-1. [ ] Claude Code CLI setup and configuration
-2. [ ] CLAUDE.md file best practices
-3. [ ] Effective prompting strategies
-4. [ ] MCP server configuration
-5. [ ] IDE integration guides (VS Code, JetBrains)
-6. [ ] Hook system documentation
-7. [ ] Slash command creation
-8. [ ] API usage examples
+### Initial Content Scope - COMPLETED
+1. [x] Claude Code CLI setup and configuration
+2. [x] CLAUDE.md file best practices
+3. [x] Effective prompting strategies
+4. [x] MCP server configuration
+5. [x] IDE integration guides (VS Code, JetBrains)
+6. [x] Hook system documentation
+7. [x] API usage examples
+8. [x] Authentication best practices
 
 ### Content Guidelines
 - Clear, concise writing
-- Step-by-step instructions with screenshots where helpful
-- Working code examples
+- Step-by-step instructions with code examples
+- Working code examples with copy button
 - Links to official documentation
 - Regular updates for new features
 
@@ -269,27 +312,21 @@ claude-insider/
 ## To-Do List
 
 ### High Priority
-1. [ ] Configure Vercel Root Directory to `apps/web` and deploy
-2. [ ] Add MDX support for content pages
-3. [ ] Create installation guide (`/docs/getting-started/installation`)
-4. [ ] Create quick start guide (`/docs/getting-started/quickstart`)
-5. [ ] Implement search functionality with Fuse.js
-6. [ ] Add dark/light theme toggle
+1. [ ] Set Vercel Root Directory to `apps/web` and deploy
+2. [ ] Verify domain redirects working (claudeinsider.com → www.claudeinsider.com)
+3. [ ] Test all pages on production
 
 ### Medium Priority
-7. [ ] Create configuration documentation pages
-8. [ ] Create tips & tricks pages
-9. [ ] Create API reference pages
-10. [ ] Create integrations documentation
-11. [ ] Add copy-to-clipboard for code blocks
-12. [ ] Generate sitemap.xml
+4. [ ] Generate sitemap.xml
+5. [ ] Add table of contents component for long articles
+6. [ ] Lighthouse performance audit and optimization
+7. [ ] Add structured data (JSON-LD) for documentation
 
 ### Low Priority
-13. [ ] Add GitHub Actions CI/CD pipeline
-14. [ ] Implement offline support (PWA)
-15. [ ] Add structured data (JSON-LD)
-16. [ ] Accessibility audit and fixes
-17. [ ] Performance optimization audit
+8. [ ] Add GitHub Actions CI/CD pipeline
+9. [ ] Implement offline support (PWA)
+10. [ ] Accessibility audit and fixes
+11. [ ] Add analytics (privacy-respecting)
 
 ---
 
@@ -303,24 +340,24 @@ claude-insider/
 - [x] Initial content structure
 - [x] Vercel deployment configuration
 - [x] GitHub repository structure fixed
-- [ ] Deploy to Vercel (pending Root Directory config in Vercel dashboard)
 
-### Phase 2: Core Content - IN PROGRESS
-- [ ] Getting Started guides (full content)
-- [ ] Configuration documentation
-- [ ] Basic search functionality
+### Phase 2: Core Content - COMPLETED
+- [x] Getting Started guides (full content)
+- [x] Configuration documentation
+- [x] MDX support with dynamic routing
+- [x] 16 documentation pages
 
-### Phase 3: Enhanced Features
-- [ ] Full-text search with Fuse.js
-- [ ] Dark/light theme toggle
-- [ ] Table of contents
-- [ ] Code copy functionality
+### Phase 3: Enhanced Features - COMPLETED
+- [x] Full-text search with Fuse.js
+- [x] Dark/light theme toggle
+- [x] Code copy functionality
+- [x] Custom MDX components
 
-### Phase 4: Polish
+### Phase 4: Polish - IN PROGRESS
 - [ ] Performance optimization
-- [ ] SEO improvements
+- [ ] SEO improvements (sitemap, structured data)
 - [ ] Accessibility audit
-- [ ] Mobile optimization
+- [ ] Production deployment
 
 ---
 
@@ -328,7 +365,7 @@ claude-insider/
 
 - User engagement (time on site, pages per session)
 - Search usage and success rate
-- Content coverage (topics documented)
+- Content coverage (topics documented) - **16 pages completed**
 - Page load performance (Core Web Vitals)
 - User feedback and contributions
 - GitHub stars and forks

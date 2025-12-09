@@ -8,13 +8,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Configure Vercel Root Directory to `apps/web` for deployment
-- MDX content support with syntax highlighting
-- Full documentation content for all categories
-- Search functionality with Fuse.js
-- Dark/light theme toggle
-- Copy-to-clipboard for code blocks
+- Deploy to Vercel (configure Root Directory to `apps/web`)
 - Sitemap generation
+- Table of contents component
+- Lighthouse optimization
+- Structured data (JSON-LD)
+
+## [0.3.0] - 2025-12-09
+
+### Added
+- MDX content support with dynamic routing (`[...slug]/page.tsx`)
+- 16 documentation pages across 5 categories:
+  - Getting Started: Installation, Quick Start
+  - Configuration: Overview, CLAUDE.md Guide, Settings
+  - Tips & Tricks: Overview, Prompting Strategies, Productivity Hacks
+  - API Reference: Overview, Authentication, Tool Use
+  - Integrations: Overview, MCP Servers, IDE Plugins, Hooks
+- Fuzzy search with Fuse.js (Cmd/Ctrl+K keyboard shortcut)
+- Dark/Light/System theme toggle with localStorage persistence
+- Code copy-to-clipboard functionality for all code blocks
+- Custom MDX components (headings with anchors, code blocks, tables, links)
+- Light theme CSS with variable overrides
+- Search modal with keyboard navigation
+- Theme-aware styling throughout
+
+### Changed
+- Updated homepage to include Search and Theme Toggle in header
+- Updated docs layout to include Search and Theme Toggle
+- Expanded globals.css with light theme support
+- Added Fuse.js dependency for search
 
 ## [0.2.2] - 2025-12-09
 
@@ -95,6 +117,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.3.0 | 2025-12-09 | MDX content, search, theme toggle, 16 doc pages |
 | 0.2.2 | 2025-12-09 | Fixed GitHub repo structure |
 | 0.2.1 | 2025-12-09 | Vercel deployment configuration |
 | 0.2.0 | 2025-12-09 | Homepage, docs pages, dark theme |
@@ -103,22 +126,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Upcoming Features
 
 ### High Priority
-- [ ] Configure Vercel Root Directory and deploy
-- [ ] MDX support for documentation content
-- [ ] Installation guide (`/docs/getting-started/installation`)
-- [ ] Quick start guide (`/docs/getting-started/quickstart`)
-- [ ] Search functionality with Fuse.js
+- [ ] Deploy to Vercel (configure Root Directory)
+- [ ] Verify domain redirects
 
 ### Medium Priority
-- [ ] Configuration documentation pages
-- [ ] Tips & tricks pages
-- [ ] API reference pages
-- [ ] Integrations documentation
-- [ ] Dark/light theme toggle
-- [ ] Code copy functionality
+- [ ] Generate sitemap.xml
+- [ ] Table of contents component
+- [ ] Lighthouse optimization
+- [ ] Structured data (JSON-LD)
 
 ### Low Priority
 - [ ] GitHub Actions CI/CD
 - [ ] PWA offline support
-- [ ] Structured data (JSON-LD)
-- [ ] Accessibility improvements
+- [ ] Accessibility audit

@@ -10,33 +10,46 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 
 ## Features
 
-- **Documentation Hub**: Centralized Claude AI documentation
-- **Tips & Tricks**: Productivity hacks and best practices
+- **Documentation Hub**: 16 comprehensive pages covering Claude AI
+- **Tips & Tricks**: Productivity hacks, prompting strategies, best practices
 - **Configuration Guides**: Step-by-step setup instructions
-- **Code Examples**: Real-world usage examples
-- **Dark Theme**: Beautiful dark UI with orange/amber accents
+- **Code Examples**: Real-world usage examples with copy-to-clipboard
+- **Search**: Fuzzy search with Cmd/Ctrl+K keyboard shortcut
+- **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status
+## Current Status (v0.3.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
 - [x] Next.js 16 with App Router
 - [x] TypeScript strict mode
-- [x] Tailwind CSS 4 dark theme
+- [x] Tailwind CSS 4 with dark/light themes
 - [x] Homepage with hero section
-- [x] Documentation index page
-- [x] Getting Started introduction
+- [x] MDX content support with dynamic routing
+- [x] 16 documentation pages (all categories complete)
+- [x] Fuzzy search with Fuse.js
+- [x] Dark/Light/System theme toggle
+- [x] Code copy-to-clipboard
 - [x] Responsive design
 - [x] SEO metadata
-- [x] Vercel deployment config
-- [x] GitHub repository structure fixed
+- [x] Vercel deployment config with domain redirects
 
-### In Progress
-- [ ] Configure Vercel Root Directory to `apps/web` and deploy
-- [ ] MDX content support
-- [ ] Full documentation content
-- [ ] Search functionality
+### Pending
+- [ ] Deploy to Vercel (set Root Directory to `apps/web`)
+- [ ] Sitemap generation
+- [ ] Table of contents for long articles
+- [ ] Lighthouse optimization
+
+## Documentation Pages
+
+| Category | Pages |
+|----------|-------|
+| **Getting Started** | Installation, Quick Start |
+| **Configuration** | Overview, CLAUDE.md Guide, Settings |
+| **Tips & Tricks** | Overview, Prompting, Productivity |
+| **API Reference** | Overview, Authentication, Tool Use |
+| **Integrations** | Overview, MCP Servers, IDE Plugins, Hooks |
 
 ## Tech Stack
 
@@ -46,9 +59,10 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | Framework | [Next.js](https://nextjs.org/) | 16.0.7 |
 | Language | [TypeScript](https://www.typescriptlang.org/) | 5.9.2 |
 | Styling | [Tailwind CSS](https://tailwindcss.com/) | 4.1.5 |
+| Content | [MDX](https://mdxjs.com/) | 3.x |
+| Search | [Fuse.js](https://fusejs.io/) | 7.1.0 |
 | Package Manager | [pnpm](https://pnpm.io/) | 10.19.0 |
 | Hosting | [Vercel](https://vercel.com/) | - |
-| Version Control | [GitHub](https://github.com/) | - |
 
 All technologies are **free and/or open source**.
 
@@ -61,15 +75,25 @@ claude-insider/
 │   │   ├── app/
 │   │   │   ├── page.tsx          # Homepage
 │   │   │   ├── layout.tsx        # Root layout
-│   │   │   ├── globals.css       # Global styles
+│   │   │   ├── globals.css       # Global styles (dark/light)
 │   │   │   └── docs/
 │   │   │       ├── page.tsx      # Docs index
 │   │   │       ├── getting-started/
-│   │   │       ├── configuration/
-│   │   │       ├── tips-and-tricks/
-│   │   │       ├── api/
-│   │   │       └── integrations/
-│   │   └── content/              # MDX content
+│   │   │       └── [...slug]/    # Dynamic MDX route
+│   │   ├── components/
+│   │   │   ├── docs-layout.tsx   # Shared docs layout
+│   │   │   ├── code-block.tsx    # Code with copy button
+│   │   │   ├── search.tsx        # Search modal
+│   │   │   └── theme-toggle.tsx  # Theme switcher
+│   │   ├── content/              # MDX documentation
+│   │   │   ├── getting-started/
+│   │   │   ├── configuration/
+│   │   │   ├── tips-and-tricks/
+│   │   │   ├── api/
+│   │   │   └── integrations/
+│   │   └── lib/
+│   │       ├── mdx.ts            # MDX utilities
+│   │       └── search.ts         # Search utilities
 │   └── docs/                     # Secondary docs app
 ├── packages/
 │   ├── ui/                       # Shared UI components
@@ -123,15 +147,14 @@ pnpm --filter web dev       # Start only web app
 pnpm --filter web build     # Build only web app
 ```
 
-## Content Categories
+## Keyboard Shortcuts
 
-| Category | Description | Status |
-|----------|-------------|--------|
-| **Getting Started** | Installation and first steps | Structure ready |
-| **Configuration** | Settings and customization | Structure ready |
-| **Tips & Tricks** | Best practices and productivity | Structure ready |
-| **API Reference** | Claude API documentation | Structure ready |
-| **Integrations** | IDE plugins, MCP servers, hooks | Structure ready |
+| Shortcut | Action |
+|----------|--------|
+| `Cmd/Ctrl + K` | Open search |
+| `↑ / ↓` | Navigate search results |
+| `Enter` | Select search result |
+| `Esc` | Close search |
 
 ## Deployment
 
@@ -154,33 +177,29 @@ For Turborepo monorepos, configure Vercel with:
 3. Leave all other settings as default
 4. Deploy
 
-### Remote Caching (Optional)
+### Domain Redirects
 
-Enable Turborepo remote caching for faster builds:
-
-```bash
-pnpm dlx turbo login
-```
+The `vercel.json` handles redirects:
+- `claudeinsider.com` → `www.claudeinsider.com`
+- `claude-insider.com` → `www.claudeinsider.com`
+- `www.claude-insider.com` → `www.claudeinsider.com`
 
 ## To-Do
 
 ### High Priority
-- [ ] Configure Vercel Root Directory and deploy
-- [ ] Add MDX support for content pages
-- [ ] Create installation guide
-- [ ] Create quick start guide
-- [ ] Implement search with Fuse.js
+- [ ] Deploy to Vercel (configure Root Directory)
+- [ ] Verify domain redirects
 
 ### Medium Priority
-- [ ] Full documentation content
-- [ ] Dark/light theme toggle
-- [ ] Copy-to-clipboard for code
-- [ ] Sitemap generation
+- [ ] Generate sitemap.xml
+- [ ] Table of contents component
+- [ ] Lighthouse optimization
+- [ ] Structured data (JSON-LD)
 
 ### Low Priority
 - [ ] GitHub Actions CI/CD
 - [ ] PWA offline support
-- [ ] Structured data (JSON-LD)
+- [ ] Accessibility audit
 
 ## Contributing
 
@@ -194,6 +213,7 @@ pnpm dlx turbo login
 
 - [Project Requirements](docs/REQUIREMENTS.md) - Detailed requirements, tech stack, and to-dos
 - [CLAUDE.md](CLAUDE.md) - Claude Code project guidelines
+- [CHANGELOG.md](CHANGELOG.md) - Version history
 
 ## License
 

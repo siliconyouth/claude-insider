@@ -9,25 +9,29 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.2.2
+**Version**: 0.3.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
 - Next.js 16.0.7 with App Router
 - TypeScript 5.9.2 strict mode
-- Tailwind CSS 4.1.5 dark theme
+- Tailwind CSS 4.1.5 with dark/light themes
 - Homepage with hero, categories, features
-- Documentation index and Getting Started pages
+- MDX content support with dynamic routing
+- 16 documentation pages (all categories complete)
+- Fuzzy search with Fuse.js (Cmd/Ctrl+K)
+- Dark/Light/System theme toggle with localStorage
+- Code copy-to-clipboard functionality
+- Custom MDX components (headings, code blocks, tables)
 - SEO metadata and Open Graph tags
 - Responsive design
-- Vercel deployment configuration (`vercel.json`)
-- GitHub repository structure fixed (files at root)
+- Vercel deployment configuration with domain redirects
 
 ### Pending
-- Configure Vercel Root Directory to `apps/web` in Vercel dashboard
-- MDX content support
-- Full documentation content
-- Search functionality
+- Deploy to Vercel (set Root Directory to `apps/web`)
+- Sitemap generation
+- Table of contents component
+- Lighthouse optimization
 
 ## Tech Stack
 
@@ -38,6 +42,8 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 | React | 19.2.0 | UI library |
 | TypeScript | 5.9.2 | Type-safe JavaScript |
 | Tailwind CSS | 4.1.5 | Utility-first CSS |
+| MDX | 3.x | Markdown with React components |
+| Fuse.js | 7.1.0 | Fuzzy search |
 | pnpm | 10.19.0 | Package manager |
 
 ## Project Structure
@@ -49,16 +55,29 @@ claude-insider/
 │   │   ├── app/
 │   │   │   ├── page.tsx          # Homepage
 │   │   │   ├── layout.tsx        # Root layout with metadata
-│   │   │   ├── globals.css       # Dark theme styles
+│   │   │   ├── globals.css       # Dark/light theme styles
 │   │   │   └── docs/
 │   │   │       ├── page.tsx      # Documentation index
 │   │   │       ├── getting-started/
 │   │   │       │   └── page.tsx  # Introduction page
-│   │   │       ├── configuration/
-│   │   │       ├── tips-and-tricks/
-│   │   │       ├── api/
-│   │   │       └── integrations/
-│   │   ├── content/              # MDX content (to be added)
+│   │   │       └── [...slug]/
+│   │   │           └── page.tsx  # Dynamic MDX route
+│   │   ├── components/
+│   │   │   ├── docs-layout.tsx   # Shared docs layout
+│   │   │   ├── code-block.tsx    # Code with copy button
+│   │   │   ├── copy-button.tsx   # Reusable copy button
+│   │   │   ├── search.tsx        # Search modal (Cmd+K)
+│   │   │   └── theme-toggle.tsx  # Dark/light/system toggle
+│   │   ├── content/              # MDX documentation
+│   │   │   ├── getting-started/  # installation.mdx, quickstart.mdx
+│   │   │   ├── configuration/    # index.mdx, claude-md.mdx, settings.mdx
+│   │   │   ├── tips-and-tricks/  # index.mdx, prompting.mdx, productivity.mdx
+│   │   │   ├── api/              # index.mdx, authentication.mdx, tool-use.mdx
+│   │   │   └── integrations/     # index.mdx, mcp-servers.mdx, ide-plugins.mdx, hooks.mdx
+│   │   ├── lib/
+│   │   │   ├── mdx.ts            # MDX utilities
+│   │   │   └── search.ts         # Search index
+│   │   ├── mdx-components.tsx    # Custom MDX components
 │   │   └── public/               # Static assets
 │   └── docs/                     # Secondary docs app (port 3000)
 ├── packages/
@@ -110,7 +129,11 @@ Set in Vercel Project Settings → General → Root Directory:
 | **Output Directory** | Default (`.next`) |
 | **Install Command** | Default (`pnpm install`) |
 
-**Note**: When Root Directory is set to `apps/web`, Vercel runs commands from that directory. The `vercel.json` at repo root only needs minimal config.
+### Domain Redirects
+Configured in `vercel.json`:
+- `claudeinsider.com` → `www.claudeinsider.com`
+- `claude-insider.com` → `www.claudeinsider.com`
+- `www.claude-insider.com` → `www.claudeinsider.com`
 
 ## Code Style Guidelines
 
@@ -122,7 +145,7 @@ Set in Vercel Project Settings → General → Root Directory:
 
 ## Design System
 
-### Colors (Dark Theme)
+### Colors (Dark Theme - Default)
 - **Background**: `gray-950` (#030712)
 - **Surface**: `gray-900` with opacity
 - **Border**: `gray-800`
@@ -130,11 +153,20 @@ Set in Vercel Project Settings → General → Root Directory:
 - **Text Secondary**: `gray-400`
 - **Accent**: Orange/Amber gradient (`from-orange-500 to-amber-600`)
 
+### Colors (Light Theme)
+- **Background**: `white` (#FFFFFF)
+- **Surface**: `gray-50` / `gray-100`
+- **Border**: `gray-200`
+- **Text Primary**: `gray-900`
+- **Text Secondary**: `gray-500`
+- **Accent**: Orange (`orange-600`)
+
 ### Components
-- Cards with `border-gray-800` and hover states
+- Cards with hover states and border transitions
 - Orange accent on interactive elements
 - Custom scrollbar styling
-- Code blocks with dark background
+- Code blocks with copy button
+- Theme-aware prose styling
 
 ## Content Categories
 
@@ -149,37 +181,34 @@ Set in Vercel Project Settings → General → Root Directory:
 ## To-Do (Priority Order)
 
 ### High Priority
-1. [ ] Configure Vercel Root Directory to `apps/web` and deploy
-2. [ ] Add MDX support (`@next/mdx`, `rehype-highlight`)
-3. [ ] Create installation guide page
-4. [ ] Create quick start guide page
-5. [ ] Implement search with Fuse.js
+1. [ ] Deploy to Vercel (set Root Directory to `apps/web`)
+2. [ ] Verify domain redirects working
+3. [ ] Test all pages on production
 
 ### Medium Priority
-6. [ ] Add dark/light theme toggle
-7. [ ] Complete all documentation content
-8. [ ] Add copy-to-clipboard for code blocks
-9. [ ] Generate sitemap.xml
+4. [ ] Generate sitemap.xml
+5. [ ] Add table of contents for long articles
+6. [ ] Lighthouse performance optimization
+7. [ ] Add structured data (JSON-LD)
 
 ### Low Priority
-10. [ ] GitHub Actions CI/CD
-11. [ ] PWA offline support
-12. [ ] Structured data (JSON-LD)
-13. [ ] Accessibility audit
-
-## Environment Variables
-
-Create `.env.local` in `apps/web/`:
-```
-NEXT_PUBLIC_SITE_URL=https://claude-insider.vercel.app
-```
+8. [ ] GitHub Actions CI/CD
+9. [ ] PWA offline support
+10. [ ] Accessibility audit
 
 ## Adding New Documentation Pages
 
-1. Create directory under `apps/web/app/docs/[category]/`
-2. Add `page.tsx` with content
-3. Update navigation in parent pages
-4. Follow existing page structure (header, sidebar, content, footer)
+1. Create MDX file in `apps/web/content/[category]/`
+2. Add frontmatter with title and description:
+   ```mdx
+   ---
+   title: Page Title
+   description: Brief description
+   ---
+   ```
+3. Update search index in `apps/web/lib/search.ts`
+4. Add to sidebar navigation if needed
+5. Build and test: `pnpm build`
 
 ## Contributing
 
