@@ -38,6 +38,22 @@ export function buildSearchIndex(): SearchDocument[] {
       url: "/docs/getting-started/quickstart",
       category: "Getting Started",
     },
+    {
+      title: "Troubleshooting",
+      description: "Common issues and solutions for Claude Code",
+      content:
+        "Troubleshooting, common errors, installation problems, authentication issues, network errors, permission denied, debugging tips, FAQ.",
+      url: "/docs/getting-started/troubleshooting",
+      category: "Getting Started",
+    },
+    {
+      title: "Migration Guide",
+      description: "Transitioning to Claude Code from other AI assistants",
+      content:
+        "Migration, GitHub Copilot, Cursor, Codeium, ChatGPT, transition guide, workflow changes, configuration migration.",
+      url: "/docs/getting-started/migration",
+      category: "Getting Started",
+    },
 
     // Configuration
     {
@@ -62,6 +78,22 @@ export function buildSearchIndex(): SearchDocument[] {
       content:
         "Settings reference, JSON configuration, environment variables, API keys, model selection, permissions, themes, keybindings.",
       url: "/docs/configuration/settings",
+      category: "Configuration",
+    },
+    {
+      title: "Environment Variables",
+      description: "Complete reference for Claude Code environment variables",
+      content:
+        "Environment variables, ANTHROPIC_API_KEY, ANTHROPIC_MODEL, configuration, shell profile, direnv, secrets management.",
+      url: "/docs/configuration/environment",
+      category: "Configuration",
+    },
+    {
+      title: "Permissions & Security",
+      description: "Configure Claude Code permissions for safe operation",
+      content:
+        "Permissions, security, auto-approve, tool permissions, bash commands, file access, network access, git operations, safety.",
+      url: "/docs/configuration/permissions",
       category: "Configuration",
     },
 
@@ -90,6 +122,22 @@ export function buildSearchIndex(): SearchDocument[] {
       url: "/docs/tips-and-tricks/productivity",
       category: "Tips & Tricks",
     },
+    {
+      title: "Advanced Prompting",
+      description: "Advanced prompting techniques for Claude Code",
+      content:
+        "Advanced prompting, chain of thought, meta-prompting, system prompts, role-based prompting, structured output, reasoning.",
+      url: "/docs/tips-and-tricks/advanced-prompting",
+      category: "Tips & Tricks",
+    },
+    {
+      title: "Debugging",
+      description: "Debugging techniques with Claude Code",
+      content:
+        "Debugging, error analysis, stack traces, reproduction, bug hunting, binary search, git bisect, logging, troubleshooting.",
+      url: "/docs/tips-and-tricks/debugging",
+      category: "Tips & Tricks",
+    },
 
     // API
     {
@@ -114,6 +162,38 @@ export function buildSearchIndex(): SearchDocument[] {
       content:
         "Tool use, function calling, tool definitions, input schema, tool calls, tool results, streaming, tool choice, best practices.",
       url: "/docs/api/tool-use",
+      category: "API",
+    },
+    {
+      title: "Streaming",
+      description: "Implement real-time streaming responses",
+      content:
+        "Streaming, SSE, server-sent events, real-time, progressive rendering, cancellation, React hooks, async iteration.",
+      url: "/docs/api/streaming",
+      category: "API",
+    },
+    {
+      title: "Error Handling",
+      description: "Handle API errors gracefully",
+      content:
+        "Error handling, HTTP status codes, retry logic, exponential backoff, rate limit errors, authentication errors, best practices.",
+      url: "/docs/api/error-handling",
+      category: "API",
+    },
+    {
+      title: "Rate Limits",
+      description: "Understand and work within API rate limits",
+      content:
+        "Rate limits, quotas, tokens per minute, requests per minute, throttling, queuing, optimization, tier limits.",
+      url: "/docs/api/rate-limits",
+      category: "API",
+    },
+    {
+      title: "Models",
+      description: "Compare and select Claude models",
+      content:
+        "Models, Claude Opus, Claude Sonnet, Claude Haiku, model selection, comparison, pricing, performance, capabilities.",
+      url: "/docs/api/models",
       category: "API",
     },
 
@@ -148,6 +228,30 @@ export function buildSearchIndex(): SearchDocument[] {
       content:
         "Hooks, pre-tool hooks, post-tool hooks, notification hooks, matchers, environment variables, automation, code quality pipeline.",
       url: "/docs/integrations/hooks",
+      category: "Integrations",
+    },
+    {
+      title: "GitHub Actions",
+      description: "Automate workflows with Claude Code in CI/CD",
+      content:
+        "GitHub Actions, CI/CD, automation, code review, documentation generation, test generation, workflows, pull requests.",
+      url: "/docs/integrations/github-actions",
+      category: "Integrations",
+    },
+    {
+      title: "Docker",
+      description: "Run Claude Code in containerized environments",
+      content:
+        "Docker, containers, Dockerfile, docker-compose, Kubernetes, CI/CD, development environment, production deployment.",
+      url: "/docs/integrations/docker",
+      category: "Integrations",
+    },
+    {
+      title: "Databases",
+      description: "Connect Claude Code to databases via MCP",
+      content:
+        "Databases, PostgreSQL, MySQL, SQLite, MongoDB, Redis, MCP servers, queries, schema exploration, data analysis.",
+      url: "/docs/integrations/databases",
       category: "Integrations",
     },
   ];

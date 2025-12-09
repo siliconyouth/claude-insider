@@ -113,30 +113,40 @@ claude-insider/
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
-│   │   ├── content/              # MDX documentation content
+│   │   ├── content/              # MDX documentation content (28 pages)
 │   │   │   ├── getting-started/
 │   │   │   │   ├── installation.mdx
 │   │   │   │   ├── quickstart.mdx
-│   │   │   │   ├── troubleshooting.mdx    # NEW: Common issues & solutions
-│   │   │   │   └── migration.mdx          # NEW: Migration from other AI tools
+│   │   │   │   ├── troubleshooting.mdx    # Common issues & solutions
+│   │   │   │   └── migration.mdx          # Migration from other AI tools
 │   │   │   ├── configuration/
 │   │   │   │   ├── index.mdx
 │   │   │   │   ├── claude-md.mdx
-│   │   │   │   └── settings.mdx
+│   │   │   │   ├── settings.mdx
+│   │   │   │   ├── environment.mdx        # Environment variables reference
+│   │   │   │   └── permissions.mdx        # Permissions & security guide
 │   │   │   ├── tips-and-tricks/
 │   │   │   │   ├── index.mdx
 │   │   │   │   ├── prompting.mdx
 │   │   │   │   ├── productivity.mdx
-│   │   │   │   └── advanced-prompting.mdx # NEW: System prompts, multi-turn, programmatic
+│   │   │   │   ├── advanced-prompting.mdx # System prompts, multi-turn, programmatic
+│   │   │   │   └── debugging.mdx          # Debugging with Claude Code
 │   │   │   ├── api/
 │   │   │   │   ├── index.mdx
 │   │   │   │   ├── authentication.mdx
-│   │   │   │   └── tool-use.mdx
+│   │   │   │   ├── tool-use.mdx
+│   │   │   │   ├── streaming.mdx          # Streaming responses guide
+│   │   │   │   ├── error-handling.mdx     # Error handling patterns
+│   │   │   │   ├── rate-limits.mdx        # Rate limits & quotas
+│   │   │   │   └── models.mdx             # Model comparison guide
 │   │   │   └── integrations/
 │   │   │       ├── index.mdx
 │   │   │       ├── mcp-servers.mdx
 │   │   │       ├── ide-plugins.mdx
-│   │   │       └── hooks.mdx
+│   │   │       ├── hooks.mdx
+│   │   │       ├── github-actions.mdx     # GitHub Actions CI/CD
+│   │   │       ├── docker.mdx             # Docker containerization
+│   │   │       └── databases.mdx          # Database integrations via MCP
 │   │   ├── lib/
 │   │   │   ├── mdx.ts            # MDX utilities
 │   │   │   ├── search.ts         # Search index and utilities
@@ -219,7 +229,7 @@ claude-insider/
 - [x] Custom MDX components (headings, code blocks, tables, links)
 - [x] Code copy-to-clipboard functionality
 - [x] Fuzzy search with Fuse.js (Cmd/Ctrl+K)
-- [x] 16 documentation pages with comprehensive content
+- [x] 28 documentation pages with comprehensive content
 - [x] Shared Header component for consistent navigation
 - [x] **Deployed to Vercel** (production live at www.claudeinsider.com)
 - [x] Table of Contents with scroll spy
@@ -240,7 +250,7 @@ claude-insider/
 - [x] Auto-updating build info in footer (version, date, commit SHA)
 - [x] Prebuild script for automatic version updates
 - [x] ContentMeta component for source citations on all content pages
-- [x] AI generation metadata on all 16 MDX pages (model, date, build ID)
+- [x] AI generation metadata on all 28 MDX pages (model, date, build ID)
 - [x] Links to official Anthropic documentation sources
 - [x] Vercel Analytics for privacy-focused usage tracking
 - [x] Content Security Policy (CSP) headers
@@ -264,9 +274,12 @@ claude-insider/
 - [x] **Conversation export** (download chat as markdown)
 - [x] **Error boundary** for voice assistant component
 - [x] **Vercel Analytics tracking** for voice assistant usage
-- [x] **3 new documentation pages**: Troubleshooting, Migration, Advanced Prompting
+- [x] **13 new documentation pages**: Troubleshooting, Migration, Advanced Prompting, Environment, Permissions, Debugging, Streaming, Error Handling, Rate Limits, Models, GitHub Actions, Docker, Databases
+- [x] **Markdown display cleanup** - Chat responses display without markdown syntax
+- [x] **TTS markdown handling** - Converts markdown to speakable text for natural speech
+- [x] **Performance optimizations** - CSS optimization, source map removal, memoization
 
-### Pages Implemented
+### Pages Implemented (28 Documentation + 6 Utility Pages)
 
 | Route | Status | Description |
 |-------|--------|-------------|
@@ -280,17 +293,27 @@ claude-insider/
 | `/docs/configuration` | Done | Configuration overview (MDX) |
 | `/docs/configuration/claude-md` | Done | CLAUDE.md guide (MDX) |
 | `/docs/configuration/settings` | Done | Settings reference (MDX) |
+| `/docs/configuration/environment` | Done | Environment variables reference (MDX) |
+| `/docs/configuration/permissions` | Done | Permissions & security guide (MDX) |
 | `/docs/tips-and-tricks` | Done | Tips overview (MDX) |
 | `/docs/tips-and-tricks/prompting` | Done | Prompting strategies (MDX) |
 | `/docs/tips-and-tricks/productivity` | Done | Productivity hacks (MDX) |
 | `/docs/tips-and-tricks/advanced-prompting` | Done | Advanced prompting techniques (MDX) |
+| `/docs/tips-and-tricks/debugging` | Done | Debugging with Claude Code (MDX) |
 | `/docs/api` | Done | API reference (MDX) |
 | `/docs/api/authentication` | Done | Authentication guide (MDX) |
 | `/docs/api/tool-use` | Done | Tool use guide (MDX) |
+| `/docs/api/streaming` | Done | Streaming responses guide (MDX) |
+| `/docs/api/error-handling` | Done | Error handling patterns (MDX) |
+| `/docs/api/rate-limits` | Done | Rate limits & quotas (MDX) |
+| `/docs/api/models` | Done | Model comparison guide (MDX) |
 | `/docs/integrations` | Done | Integrations overview (MDX) |
 | `/docs/integrations/mcp-servers` | Done | MCP servers guide (MDX) |
 | `/docs/integrations/ide-plugins` | Done | IDE plugins guide (MDX) |
 | `/docs/integrations/hooks` | Done | Hooks documentation (MDX) |
+| `/docs/integrations/github-actions` | Done | GitHub Actions CI/CD (MDX) |
+| `/docs/integrations/docker` | Done | Docker containerization (MDX) |
+| `/docs/integrations/databases` | Done | Database integrations via MCP (MDX) |
 | `/privacy` | Done | Privacy Policy (GDPR, CCPA, Serbian law) |
 | `/terms` | Done | Terms of Service (international) |
 | `/disclaimer` | Done | Disclaimer (non-affiliation notice) |
@@ -452,30 +475,30 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.12.1.
+All planned features have been implemented. The project is feature-complete at v0.13.0.
 
-### Future Content Expansion (Planned)
+### Content Expansion (All Complete)
 
-**Phase A: Core Enhancements (High Priority)** - MOSTLY COMPLETED
+**Phase A: Core Enhancements** - COMPLETED
 - [x] Troubleshooting guide - Common issues and solutions
 - [x] Migration guide - Migrating from other AI tools
-- [ ] Environment variables reference
-- [ ] Permissions and security settings
+- [x] Environment variables reference
+- [x] Permissions and security settings
 - [x] Advanced prompting techniques
-- [ ] Debugging with Claude Code
+- [x] Debugging with Claude Code
 
-**Phase B: API Deep Dives (Medium Priority)**
-- [ ] Streaming responses guide
-- [ ] Error handling patterns
-- [ ] Rate limits and quotas
-- [ ] Model comparison guide
+**Phase B: API Deep Dives** - COMPLETED
+- [x] Streaming responses guide
+- [x] Error handling patterns
+- [x] Rate limits and quotas
+- [x] Model comparison guide
 
-**Phase C: Integrations Expansion (Medium Priority)**
-- [ ] GitHub Actions CI/CD integration
-- [ ] Docker and containerization
-- [ ] Database integrations
+**Phase C: Integrations Expansion** - COMPLETED
+- [x] GitHub Actions CI/CD integration
+- [x] Docker and containerization
+- [x] Database integrations via MCP
 
-**Phase D: New Categories (Lower Priority)**
+**Phase D: New Categories (Future)**
 - [ ] Tutorials category: Code review, documentation generation, test generation, refactoring
 - [ ] Examples category: Real-world projects, starter templates
 
@@ -501,7 +524,7 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] Getting Started guides (full content)
 - [x] Configuration documentation
 - [x] MDX support with dynamic routing
-- [x] 16 documentation pages
+- [x] 28 documentation pages
 
 ### Phase 3: Enhanced Features - COMPLETED
 - [x] Full-text search with Fuse.js
@@ -546,7 +569,7 @@ All planned features have been implemented. The project is feature-complete at v
 ### Phase 9: Content Attribution & Sources - COMPLETED
 - [x] ContentMeta component (`components/content-meta.tsx`) for source citations
 - [x] AI generation metadata on all content pages (model, date, build ID)
-- [x] Links to official Anthropic documentation sources on all 16 MDX pages
+- [x] Links to official Anthropic documentation sources on all 28 MDX pages
 - [x] Sources include: docs.anthropic.com, modelcontextprotocol.io, anthropic.com/engineering
 - [x] Dynamic build ID from `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` environment variable
 - [x] ContentMeta exported via mdx-components.tsx for use in MDX files
@@ -608,13 +631,23 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] Migration guide (`content/getting-started/migration.mdx`)
 - [x] Advanced prompting guide (`content/tips-and-tricks/advanced-prompting.mdx`)
 
+### Phase 15: Documentation Expansion & Performance - COMPLETED (v0.13.0)
+- [x] **Phase A Content**: Environment variables reference, Permissions guide, Debugging guide
+- [x] **Phase B Content**: Streaming guide, Error handling, Rate limits, Model comparison
+- [x] **Phase C Content**: GitHub Actions, Docker, Database integrations
+- [x] **Markdown display cleanup** - Chat responses render without raw markdown syntax
+- [x] **TTS markdown handling** - Converts markdown to speakable text (headings, lists, code)
+- [x] **Performance optimizations** - CSS optimization enabled, source maps disabled, voices memoized
+- [x] Updated search index with all 28 documentation pages
+- [x] Updated navigation configuration for all new pages
+
 ---
 
 ## Success Metrics
 
 - User engagement (time on site, pages per session)
 - Search usage and success rate
-- Content coverage (topics documented) - **16 pages completed**
+- Content coverage (topics documented) - **28 pages completed**
 - Page load performance (Core Web Vitals)
 - User feedback and contributions
 - GitHub stars and forks

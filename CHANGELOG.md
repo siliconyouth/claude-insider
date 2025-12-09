@@ -7,8 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned
-- Additional content pages (see Content Expansion Plan)
+No pending changes - all features complete.
+
+## [0.13.0] - 2025-12-09
+
+### Added
+- **Environment Variables Guide** - Complete reference for Claude Code environment configuration
+- **Permissions & Security Guide** - Understanding and configuring permissions for safe operation
+- **Debugging Guide** - Effective techniques for debugging code with Claude as AI pair programmer
+- **Streaming Responses Guide** - Implementing real-time streaming with the Claude API
+- **Error Handling Guide** - Comprehensive error handling patterns and best practices
+- **Rate Limits Guide** - Understanding and working within API rate limits
+- **Model Comparison Guide** - Comparing Claude models to choose the right one
+- **GitHub Actions Integration** - CI/CD automation with Claude Code
+- **Docker Integration** - Running Claude Code in containerized environments
+- **Database Integration** - Connecting to databases via MCP servers
+- **Markdown Display Cleanup** - Chat responses now display without markdown syntax (##, **, ```)
+- **TTS Markdown Handling** - ElevenLabs TTS now converts markdown to speakable text
+
+### Changed
+- Documentation pages increased from 19 to 28
+- Chat assistant system prompt updated to discourage markdown syntax for better readability
+- TTS now uses `markdownToSpeakableText()` for cleaner speech output
+- Voice assistant message display now uses `markdownToDisplayText()` for clean rendering
+- Updated navigation sidebar with all new documentation pages
+- Updated search index with all new pages
+
+### Technical Details
+- Added `markdownToDisplayText()` and `markdownToSpeakableText()` utility functions
+- System prompt instructs Claude to use plain text formatting
+- Both streaming and stored messages are now converted for display
+- CSS optimization enabled in Next.js (`experimental.optimizeCss: true`)
+- Production source maps disabled for smaller bundle size
+- Voice assistant voices array memoized with `useMemo`
 
 ## [0.12.1] - 2025-12-09
 

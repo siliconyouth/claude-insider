@@ -1,0 +1,422 @@
+---
+title: Database Integrations
+description: Connecting Claude Code to databases via MCP servers
+---
+
+Claude Code can interact with databases through MCP (Model Context Protocol) servers. This enables querying, schema exploration, and data analysis directly from your Claude conversations.
+
+## Overview
+
+Database integration with Claude Code works through MCP servers that act as secure bridges between Claude and your databases. This approach:
+
+- Keeps credentials secure on the server
+- Allows fine-grained access control
+- Supports multiple database types
+- Enables complex queries and analysis
+
+## PostgreSQL Integration
+
+### MCP Server Setup
+
+```json
+// .claude/settings.json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_URL": "postgresql://user:pass@localhost:5432/mydb"
+      }
+    }
+  }
+}
+```
+
+### Usage Examples
+
+**Explore schema:**
+```
+Show me the database schema for the users table
+```
+
+**Query data:**
+```
+Find all users who signed up in the last 30 days
+and haven't made a purchase
+```
+
+**Analyze patterns:**
+```
+What are the most common user journeys
+based on the events table?
+```
+
+## MySQL / MariaDB Integration
+
+### Server Configuration
+
+```json
+{
+  "mcpServers": {
+    "mysql": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-mysql"],
+      "env": {
+        "MYSQL_HOST": "localhost",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "claude",
+        "MYSQL_PASSWORD": "${MYSQL_PASSWORD}",
+        "MYSQL_DATABASE": "production"
+      }
+    }
+  }
+}
+```
+
+### Read-Only Mode
+
+For safety, configure read-only access:
+
+```sql
+-- Create a read-only user
+CREATE USER 'claude'@'%' IDENTIFIED BY 'secure_password';
+GRANT SELECT ON production.* TO 'claude'@'%';
+FLUSH PRIVILEGES;
+```
+
+## SQLite Integration
+
+### Local Database
+
+```json
+{
+  "mcpServers": {
+    "sqlite": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-sqlite", "path/to/database.db"]
+    }
+  }
+}
+```
+
+### Memory Database for Testing
+
+```json
+{
+  "mcpServers": {
+    "sqlite-memory": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-sqlite", ":memory:"]
+    }
+  }
+}
+```
+
+## MongoDB Integration
+
+### Connection Setup
+
+```json
+{
+  "mcpServers": {
+    "mongodb": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-mongodb"],
+      "env": {
+        "MONGODB_URI": "mongodb://localhost:27017/myapp"
+      }
+    }
+  }
+}
+```
+
+### Working with Collections
+
+```
+List all collections in the database
+```
+
+```
+Find documents in the orders collection
+where status is "pending" and total is over $100
+```
+
+```
+Show me the schema/shape of documents
+in the users collection
+```
+
+## Redis Integration
+
+### Configuration
+
+```json
+{
+  "mcpServers": {
+    "redis": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-redis"],
+      "env": {
+        "REDIS_URL": "redis://localhost:6379"
+      }
+    }
+  }
+}
+```
+
+### Common Operations
+
+```
+Show all keys matching "session:*"
+```
+
+```
+What's the value stored at key "config:feature_flags"?
+```
+
+```
+Show memory usage and key statistics
+```
+
+## Security Best Practices
+
+### 1. Use Read-Only Accounts
+
+Always create database users with minimal permissions:
+
+```sql
+-- PostgreSQL
+CREATE ROLE claude_readonly WITH LOGIN PASSWORD 'secure_pass';
+GRANT CONNECT ON DATABASE myapp TO claude_readonly;
+GRANT USAGE ON SCHEMA public TO claude_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO claude_readonly;
+```
+
+### 2. Environment Variables
+
+Never hardcode credentials:
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_URL": "${POSTGRES_URL}"  // From environment
+      }
+    }
+  }
+}
+```
+
+### 3. Connection Limits
+
+Configure connection pooling:
+
+```json
+{
+  "env": {
+    "POSTGRES_URL": "postgresql://user:pass@host/db?pool_size=5&pool_timeout=30"
+  }
+}
+```
+
+### 4. Query Timeouts
+
+Set reasonable timeouts:
+
+```json
+{
+  "env": {
+    "POSTGRES_URL": "postgresql://user:pass@host/db?statement_timeout=30000"
+  }
+}
+```
+
+### 5. Audit Logging
+
+Enable query logging for audit:
+
+```sql
+-- PostgreSQL
+ALTER SYSTEM SET log_statement = 'all';
+ALTER SYSTEM SET log_min_duration_statement = 0;
+SELECT pg_reload_conf();
+```
+
+## Common Workflows
+
+### Schema Exploration
+
+```
+I'm working on the orders system.
+Show me all tables and their relationships.
+Which tables reference the users table?
+```
+
+### Data Analysis
+
+```
+Analyze the orders table:
+- What's the average order value by month?
+- Which products are most frequently ordered together?
+- What's the customer retention rate?
+```
+
+### Query Optimization
+
+```
+This query is slow:
+SELECT * FROM orders o
+JOIN users u ON o.user_id = u.id
+WHERE o.created_at > '2024-01-01'
+
+Analyze the execution plan and suggest optimizations.
+```
+
+### Data Migration Planning
+
+```
+I need to add a new status field to the orders table.
+- Show current status distribution
+- Suggest a migration strategy
+- What constraints should I add?
+```
+
+## Troubleshooting
+
+### Connection Issues
+
+**"Connection refused":**
+- Check database is running
+- Verify host/port configuration
+- Check firewall rules
+
+**"Authentication failed":**
+- Verify credentials
+- Check user permissions
+- Ensure database exists
+
+### MCP Server Issues
+
+**"MCP server not found":**
+```bash
+# Install the server
+npm install -g @modelcontextprotocol/server-postgres
+```
+
+**"Server timeout":**
+- Increase timeout in settings
+- Check network latency
+- Verify database responsiveness
+
+### Query Errors
+
+**"Permission denied":**
+- Verify user has SELECT permissions
+- Check schema access
+- Review role grants
+
+**"Query too complex":**
+- Add query timeouts
+- Use LIMIT clauses
+- Index frequently queried columns
+
+## Advanced Configurations
+
+### Multiple Databases
+
+```json
+{
+  "mcpServers": {
+    "postgres-prod": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-postgres"],
+      "env": { "POSTGRES_URL": "${POSTGRES_PROD_URL}" }
+    },
+    "postgres-staging": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-postgres"],
+      "env": { "POSTGRES_URL": "${POSTGRES_STAGING_URL}" }
+    }
+  }
+}
+```
+
+### Custom MCP Server
+
+For specialized needs, create a custom server:
+
+```typescript
+// custom-db-server.ts
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+
+const server = new Server({
+  name: "custom-db",
+  version: "1.0.0",
+});
+
+server.setRequestHandler("tools/list", async () => ({
+  tools: [
+    {
+      name: "query",
+      description: "Execute a database query",
+      inputSchema: {
+        type: "object",
+        properties: {
+          sql: { type: "string" },
+        },
+        required: ["sql"],
+      },
+    },
+  ],
+}));
+
+server.setRequestHandler("tools/call", async (request) => {
+  if (request.params.name === "query") {
+    // Execute query with your custom logic
+    const result = await executeQuery(request.params.arguments.sql);
+    return { content: [{ type: "text", text: JSON.stringify(result) }] };
+  }
+});
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
+```
+
+## Best Practices Summary
+
+1. **Always use read-only accounts** for Claude database access
+
+2. **Set query timeouts** to prevent long-running queries
+
+3. **Use environment variables** for all credentials
+
+4. **Enable audit logging** to track database access
+
+5. **Test in staging first** before connecting production databases
+
+6. **Review generated queries** before execution on sensitive data
+
+7. **Use connection pooling** to manage resources
+
+8. **Index frequently queried columns** for performance
+
+## Next Steps
+
+- [MCP servers overview](/docs/integrations/mcp-servers)
+- [GitHub Actions integration](/docs/integrations/github-actions)
+- [Docker integration](/docs/integrations/docker)
+
+<ContentMeta
+  sources={[
+    { title: "MCP Server Documentation", url: "https://modelcontextprotocol.io" },
+    { title: "Claude Code Documentation", url: "https://docs.anthropic.com/en/docs/claude-code/overview" },
+    { title: "PostgreSQL Security", url: "https://www.postgresql.org/docs/current/user-manag.html" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

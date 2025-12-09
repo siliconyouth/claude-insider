@@ -1,0 +1,319 @@
+---
+title: Debugging with Claude Code
+description: Effective techniques for debugging code using Claude as your AI pair programmer
+---
+
+Claude Code excels at helping you find and fix bugs. This guide covers techniques for effective debugging sessions, from simple errors to complex issues.
+
+## Debugging Workflow
+
+### 1. Describe the Problem
+
+Be specific about what's happening:
+
+```
+The login form submits but nothing happens.
+Expected: Redirect to dashboard after successful login
+Actual: Form clears but user stays on login page
+No errors in console
+```
+
+### 2. Share the Error
+
+When you have error messages, share them in full:
+
+```
+TypeError: Cannot read properties of undefined (reading 'user')
+    at AuthContext.tsx:45:23
+    at renderWithHooks (react-dom.development.js:14985:18)
+```
+
+### 3. Let Claude Investigate
+
+Claude can search for relevant code:
+
+```
+Look at the AuthContext component around line 45.
+What's causing the undefined 'user' error?
+```
+
+## Common Debugging Patterns
+
+### Pattern 1: Error-First Debugging
+
+Start with the error message:
+
+```
+I'm getting this error:
+"ReferenceError: process is not defined"
+
+The error occurs when I run the app in the browser.
+Using Next.js 14 with App Router.
+```
+
+Claude will:
+- Identify the root cause (server-only code in client component)
+- Suggest specific fixes
+- Explain why the error occurs
+
+### Pattern 2: Behavior Debugging
+
+When there's no error, describe the behavior:
+
+```
+The shopping cart total doesn't update when I change quantities.
+- Adding items works fine
+- Removing items works fine
+- Changing quantity shows the new number but total stays the same
+```
+
+### Pattern 3: Performance Debugging
+
+For slow code or memory issues:
+
+```
+The dashboard takes 5+ seconds to load.
+It was fast before I added the recent activity feed.
+Here's the component: src/components/RecentActivity.tsx
+```
+
+### Pattern 4: Regression Debugging
+
+When something that worked breaks:
+
+```
+The export feature stopped working after updating to v2.0.
+It was working in commit abc123.
+Now it throws "Invalid file format" error.
+```
+
+## Debugging Strategies
+
+### Binary Search with Git
+
+Find when a bug was introduced:
+
+```
+Help me find when this bug was introduced.
+The feature works in commit from last week (abc123).
+It's broken in current main (def456).
+Use git bisect to narrow it down.
+```
+
+### Minimal Reproduction
+
+Ask Claude to isolate the problem:
+
+```
+The bug only happens sometimes.
+Help me create a minimal reproduction case
+that triggers it consistently.
+```
+
+### Log-Based Debugging
+
+When you can't step through code:
+
+```
+Add strategic console.log statements to trace
+the data flow through the payment processing pipeline.
+I need to see where the discount calculation goes wrong.
+```
+
+## Framework-Specific Debugging
+
+### React Debugging
+
+```
+The component re-renders infinitely.
+I think it's a useEffect dependency issue.
+Check src/components/UserProfile.tsx
+
+Also check if any parent components might be
+causing unnecessary re-renders.
+```
+
+### API Debugging
+
+```
+The API returns 500 but only for certain users.
+Check the error logs and identify the pattern.
+Looking at src/app/api/users/[id]/route.ts
+```
+
+### State Management Debugging
+
+```
+The Redux store has the correct data,
+but the component shows stale values.
+Check if the selector is memoized correctly.
+```
+
+## Advanced Debugging Techniques
+
+### Conditional Breakpoints with Logging
+
+```
+I can't use a debugger in production.
+Add conditional logging that only fires when:
+- User ID is 12345
+- Amount is over $100
+- The discount code is "SPECIAL"
+```
+
+### Network Request Debugging
+
+```
+The API call works in Postman but fails in the app.
+Compare the exact headers, body, and request format.
+Check for any request interceptors or middleware.
+```
+
+### Memory Leak Detection
+
+```
+The app slows down after extended use.
+Help me identify potential memory leaks:
+- Event listeners not being removed
+- Subscriptions not being cancelled
+- Large objects being held in closures
+```
+
+## Debugging Best Practices
+
+### 1. Reproduce First
+
+Before fixing, ensure you can reproduce:
+
+```
+Help me write a test case that reproduces this bug
+so we can verify the fix works.
+```
+
+### 2. Understand Before Fixing
+
+Ask Claude to explain the issue:
+
+```
+Before we fix this, explain what's causing
+the null reference at line 145.
+I want to understand the root cause.
+```
+
+### 3. One Fix at a Time
+
+Avoid multiple changes:
+
+```
+Let's fix the authentication bug first.
+Don't change the validation logic yet -
+we need to isolate whether auth is the problem.
+```
+
+### 4. Test the Fix
+
+After fixing:
+
+```
+Now that we've fixed it:
+1. Run the existing tests
+2. Add a test for this specific bug
+3. Check for any related edge cases
+```
+
+## Debugging Prompts Collection
+
+### Initial Investigation
+
+```
+I have a bug in [feature]. Here's what I know:
+- Expected behavior: [...]
+- Actual behavior: [...]
+- Error message (if any): [...]
+- When it started: [...]
+
+Please investigate the relevant code and suggest
+what might be causing this.
+```
+
+### Narrowing Down
+
+```
+We've identified the bug is in the [module].
+The issue happens between [step A] and [step B].
+Look at the code flow and find exactly where
+the data gets corrupted/lost/changed incorrectly.
+```
+
+### Fix Verification
+
+```
+I've applied the fix. Please:
+1. Review the change for correctness
+2. Check for edge cases I might have missed
+3. Suggest any additional tests needed
+4. Look for similar patterns elsewhere that might have the same bug
+```
+
+### Root Cause Analysis
+
+```
+We fixed the immediate issue, but I want to
+understand how this happened.
+- Why wasn't this caught earlier?
+- Are there similar patterns in the codebase?
+- What can we do to prevent this type of bug?
+```
+
+## When You're Stuck
+
+### Rubber Duck Debugging
+
+Use Claude as your rubber duck:
+
+```
+Let me explain what this code is supposed to do,
+step by step. Stop me if anything sounds wrong:
+
+1. User clicks submit
+2. Form data is collected into an object
+3. We validate required fields
+4. API call is made with the data
+5. On success, we redirect to /dashboard
+```
+
+### Fresh Perspective
+
+```
+I've been staring at this for hours.
+Please look at the authentication flow with fresh eyes.
+Something obvious might be wrong that I'm missing.
+```
+
+### Systematic Review
+
+```
+Let's systematically check each component
+in the data pipeline, from input to database:
+1. Form submission
+2. API route handler
+3. Validation middleware
+4. Database query
+5. Response handling
+```
+
+## Next Steps
+
+- [Advanced prompting techniques](/docs/tips-and-tricks/advanced-prompting)
+- [Productivity tips](/docs/tips-and-tricks/productivity)
+- [Troubleshooting Claude Code](/docs/getting-started/troubleshooting)
+
+<ContentMeta
+  sources={[
+    { title: "Claude Code Documentation", url: "https://docs.anthropic.com/en/docs/claude-code/overview" },
+    { title: "Debugging Best Practices", url: "https://docs.anthropic.com/en/docs/build-with-claude/debugging" },
+    { title: "Anthropic Claude Guide", url: "https://docs.anthropic.com/en/docs/intro-to-claude" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

@@ -1,0 +1,460 @@
+---
+title: Error Handling
+description: Comprehensive guide to handling errors when using the Claude API
+---
+
+Proper error handling ensures your applications remain robust and provide good user experiences even when things go wrong. This guide covers all error types, handling patterns, and best practices.
+
+## Error Categories
+
+### HTTP Status Codes
+
+| Status | Name | Description |
+|--------|------|-------------|
+| 400 | Bad Request | Invalid request format or parameters |
+| 401 | Unauthorized | Invalid or missing API key |
+| 403 | Forbidden | API key lacks required permissions |
+| 404 | Not Found | Invalid endpoint or model |
+| 429 | Rate Limited | Too many requests |
+| 500 | Server Error | Internal API error |
+| 529 | Overloaded | API is temporarily overloaded |
+
+### Error Response Format
+
+```json
+{
+  "type": "error",
+  "error": {
+    "type": "invalid_request_error",
+    "message": "max_tokens: integer above 1 expected"
+  }
+}
+```
+
+## Error Types
+
+### invalid_request_error
+
+Request is malformed or has invalid parameters.
+
+**Common causes:**
+- Missing required fields
+- Invalid parameter values
+- Malformed JSON
+
+**Example handling:**
+```typescript
+try {
+  await anthropic.messages.create({
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 0, // Invalid: must be >= 1
+    messages: [{ role: "user", content: "Hello" }],
+  });
+} catch (error) {
+  if (error instanceof Anthropic.BadRequestError) {
+    console.error("Invalid request:", error.message);
+    // Fix the request parameters
+  }
+}
+```
+
+### authentication_error
+
+API key is invalid, expired, or missing.
+
+```typescript
+try {
+  await anthropic.messages.create({ ... });
+} catch (error) {
+  if (error instanceof Anthropic.AuthenticationError) {
+    console.error("Authentication failed. Check your API key.");
+    // Prompt user to update API key
+  }
+}
+```
+
+### permission_error
+
+API key doesn't have permission for the requested action.
+
+```typescript
+catch (error) {
+  if (error instanceof Anthropic.PermissionDeniedError) {
+    console.error("Permission denied:", error.message);
+    // Check API key permissions at console.anthropic.com
+  }
+}
+```
+
+### not_found_error
+
+Requested resource (model, endpoint) doesn't exist.
+
+```typescript
+catch (error) {
+  if (error instanceof Anthropic.NotFoundError) {
+    console.error("Not found:", error.message);
+    // Check model name and endpoint
+  }
+}
+```
+
+### rate_limit_error
+
+Too many requests or tokens in a time period.
+
+```typescript
+catch (error) {
+  if (error instanceof Anthropic.RateLimitError) {
+    const retryAfter = error.headers?.["retry-after"];
+    console.log(`Rate limited. Retry after: ${retryAfter}s`);
+    // Implement exponential backoff
+  }
+}
+```
+
+### overloaded_error
+
+API is temporarily overloaded.
+
+```typescript
+catch (error) {
+  if (error instanceof Anthropic.InternalServerError && error.status === 529) {
+    console.log("API overloaded, retrying...");
+    // Retry with backoff
+  }
+}
+```
+
+## Comprehensive Error Handling
+
+### TypeScript Pattern
+
+```typescript
+import Anthropic from "@anthropic-ai/sdk";
+
+const anthropic = new Anthropic();
+
+async function sendMessage(content: string) {
+  try {
+    const response = await anthropic.messages.create({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1024,
+      messages: [{ role: "user", content }],
+    });
+    return response;
+  } catch (error) {
+    if (error instanceof Anthropic.APIError) {
+      switch (error.status) {
+        case 400:
+          throw new Error(`Invalid request: ${error.message}`);
+        case 401:
+          throw new Error("Invalid API key");
+        case 403:
+          throw new Error("Permission denied");
+        case 404:
+          throw new Error("Model not found");
+        case 429:
+          throw new RateLimitError(error);
+        case 500:
+          throw new Error("Server error, please retry");
+        case 529:
+          throw new OverloadedError(error);
+        default:
+          throw new Error(`API error: ${error.message}`);
+      }
+    }
+    throw error;
+  }
+}
+```
+
+### Python Pattern
+
+```python
+import anthropic
+from anthropic import APIError, RateLimitError, APIStatusError
+
+client = anthropic.Anthropic()
+
+def send_message(content: str):
+    try:
+        return client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=1024,
+            messages=[{"role": "user", "content": content}]
+        )
+    except RateLimitError as e:
+        print(f"Rate limited: {e}")
+        raise
+    except APIStatusError as e:
+        print(f"API error {e.status_code}: {e.message}")
+        raise
+    except APIError as e:
+        print(f"API error: {e}")
+        raise
+```
+
+## Retry Strategies
+
+### Exponential Backoff
+
+```typescript
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<T> {
+  let lastError: Error | undefined;
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error as Error;
+
+      // Don't retry client errors (4xx except 429)
+      if (
+        error instanceof Anthropic.APIError &&
+        error.status >= 400 &&
+        error.status < 500 &&
+        error.status !== 429
+      ) {
+        throw error;
+      }
+
+      // Calculate delay with jitter
+      const delay = baseDelay * Math.pow(2, attempt);
+      const jitter = delay * 0.1 * Math.random();
+      await new Promise((r) => setTimeout(r, delay + jitter));
+    }
+  }
+
+  throw lastError;
+}
+
+// Usage
+const response = await withRetry(() =>
+  anthropic.messages.create({
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 1024,
+    messages: [{ role: "user", content: "Hello" }],
+  })
+);
+```
+
+### Rate Limit Handling
+
+```typescript
+async function withRateLimitRetry<T>(fn: () => Promise<T>): Promise<T> {
+  while (true) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (error instanceof Anthropic.RateLimitError) {
+        const retryAfter = parseInt(error.headers?.["retry-after"] ?? "60", 10);
+        console.log(`Rate limited. Waiting ${retryAfter}s...`);
+        await new Promise((r) => setTimeout(r, retryAfter * 1000));
+        continue;
+      }
+      throw error;
+    }
+  }
+}
+```
+
+## Streaming Error Handling
+
+### Handling Mid-Stream Errors
+
+```typescript
+const stream = anthropic.messages.stream({
+  model: "claude-sonnet-4-20250514",
+  max_tokens: 1024,
+  messages: [{ role: "user", content: "Tell me a story" }],
+});
+
+stream.on("error", (error) => {
+  if (error instanceof Anthropic.APIError) {
+    console.error("Stream error:", error.status, error.message);
+    // Handle partial response
+  }
+});
+
+stream.on("end", () => {
+  console.log("Stream completed");
+});
+
+try {
+  for await (const event of stream) {
+    // Process events
+  }
+} catch (error) {
+  console.error("Stream failed:", error);
+  // Decide whether to retry
+}
+```
+
+### Reconnection Logic
+
+```typescript
+async function streamWithReconnect(message: string, maxRetries = 3) {
+  let attempt = 0;
+  let receivedContent = "";
+
+  while (attempt < maxRetries) {
+    try {
+      const stream = anthropic.messages.stream({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1024,
+        messages: [
+          { role: "user", content: message },
+          // Include partial response if reconnecting
+          ...(receivedContent
+            ? [
+                { role: "assistant", content: receivedContent },
+                { role: "user", content: "Please continue from where you left off." },
+              ]
+            : []),
+        ],
+      });
+
+      for await (const event of stream) {
+        if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+          receivedContent += event.delta.text;
+          process.stdout.write(event.delta.text);
+        }
+      }
+      return receivedContent;
+    } catch (error) {
+      attempt++;
+      if (attempt === maxRetries) throw error;
+      await new Promise((r) => setTimeout(r, 1000 * attempt));
+    }
+  }
+}
+```
+
+## User-Facing Error Messages
+
+### Mapping Errors to User Messages
+
+```typescript
+function getUserFriendlyError(error: unknown): string {
+  if (error instanceof Anthropic.APIError) {
+    switch (error.status) {
+      case 400:
+        return "There was a problem with your request. Please try again.";
+      case 401:
+        return "Authentication failed. Please check your settings.";
+      case 429:
+        return "The service is busy. Please wait a moment and try again.";
+      case 500:
+      case 529:
+        return "The AI service is temporarily unavailable. Please try again later.";
+      default:
+        return "An unexpected error occurred. Please try again.";
+    }
+  }
+
+  if (error instanceof Error) {
+    if (error.message.includes("network")) {
+      return "Network connection error. Please check your internet connection.";
+    }
+    if (error.message.includes("timeout")) {
+      return "Request timed out. Please try again.";
+    }
+  }
+
+  return "Something went wrong. Please try again.";
+}
+```
+
+## Logging and Monitoring
+
+### Structured Error Logging
+
+```typescript
+interface ErrorLog {
+  timestamp: string;
+  errorType: string;
+  statusCode?: number;
+  message: string;
+  requestId?: string;
+  context: Record<string, unknown>;
+}
+
+function logAPIError(error: Anthropic.APIError, context: Record<string, unknown>) {
+  const log: ErrorLog = {
+    timestamp: new Date().toISOString(),
+    errorType: error.constructor.name,
+    statusCode: error.status,
+    message: error.message,
+    requestId: error.headers?.["x-request-id"],
+    context,
+  };
+
+  // Send to your logging service
+  console.error(JSON.stringify(log));
+}
+```
+
+### Error Metrics
+
+Track error rates for monitoring:
+
+```typescript
+const errorMetrics = {
+  total: 0,
+  byType: new Map<string, number>(),
+  byStatus: new Map<number, number>(),
+};
+
+function recordError(error: Anthropic.APIError) {
+  errorMetrics.total++;
+
+  const type = error.constructor.name;
+  errorMetrics.byType.set(type, (errorMetrics.byType.get(type) || 0) + 1);
+
+  if (error.status) {
+    errorMetrics.byStatus.set(
+      error.status,
+      (errorMetrics.byStatus.get(error.status) || 0) + 1
+    );
+  }
+}
+```
+
+## Best Practices
+
+1. **Always catch errors** - Never let API errors crash your application
+
+2. **Be specific** - Handle different error types appropriately
+
+3. **Retry intelligently** - Use exponential backoff with jitter
+
+4. **Don't retry client errors** - 400-level errors (except 429) won't succeed on retry
+
+5. **Log comprehensively** - Include request IDs for debugging
+
+6. **Provide user feedback** - Show appropriate messages for different errors
+
+7. **Set timeouts** - Prevent indefinite waits
+
+8. **Monitor error rates** - Track and alert on unusual patterns
+
+## Next Steps
+
+- [Rate limits and quotas](/docs/api/rate-limits)
+- [Streaming responses](/docs/api/streaming)
+- [Model comparison](/docs/api/models)
+
+<ContentMeta
+  sources={[
+    { title: "Claude API Errors", url: "https://docs.anthropic.com/en/api/errors" },
+    { title: "Anthropic SDK Reference", url: "https://docs.anthropic.com/en/api/client-sdks" },
+    { title: "Rate Limits", url: "https://docs.anthropic.com/en/api/rate-limits" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

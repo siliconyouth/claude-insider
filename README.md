@@ -10,7 +10,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 
 ## Features
 
-- **Documentation Hub**: 19 comprehensive pages covering Claude AI
+- **Documentation Hub**: 28 comprehensive pages covering Claude AI
 - **AI Voice Assistant**: Interactive voice assistant with chat interface
 - **ElevenLabs TTS**: Premium text-to-speech with 42 natural voices
 - **Streaming TTS**: Voice starts speaking immediately (doesn't wait for full response)
@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.12.1)
+## Current Status (v0.13.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -33,7 +33,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Tailwind CSS 4 with dark/light themes
 - [x] Homepage with hero section
 - [x] MDX content support with dynamic routing
-- [x] 19 documentation pages (all categories complete)
+- [x] 28 documentation pages (all categories complete)
 - [x] Fuzzy search with Fuse.js
 - [x] Dark/Light/System theme toggle
 - [x] Code copy-to-clipboard
@@ -92,10 +92,10 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | Category | Pages |
 |----------|-------|
 | **Getting Started** | Installation, Quick Start, Troubleshooting, Migration |
-| **Configuration** | Overview, CLAUDE.md Guide, Settings |
-| **Tips & Tricks** | Overview, Prompting, Productivity, Advanced Prompting |
-| **API Reference** | Overview, Authentication, Tool Use |
-| **Integrations** | Overview, MCP Servers, IDE Plugins, Hooks |
+| **Configuration** | Overview, CLAUDE.md Guide, Settings, Environment, Permissions |
+| **Tips & Tricks** | Overview, Prompting, Productivity, Advanced Prompting, Debugging |
+| **API Reference** | Overview, Authentication, Tool Use, Streaming, Error Handling, Rate Limits, Models |
+| **Integrations** | Overview, MCP Servers, IDE Plugins, Hooks, GitHub Actions, Docker, Databases |
 
 ## Legal & Utility Pages
 

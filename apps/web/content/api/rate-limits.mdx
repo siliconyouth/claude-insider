@@ -1,0 +1,405 @@
+---
+title: Rate Limits & Quotas
+description: Understanding and working within Claude API rate limits and usage quotas
+---
+
+The Claude API implements rate limits to ensure fair usage and system stability. This guide explains how limits work and strategies to optimize your usage.
+
+## Rate Limit Types
+
+### Request Limits
+
+| Tier | Requests Per Minute (RPM) |
+|------|---------------------------|
+| Free | 5 |
+| Build | 50 |
+| Scale | 1,000 |
+| Enterprise | Custom |
+
+### Token Limits
+
+| Tier | Tokens Per Minute (TPM) | Tokens Per Day (TPD) |
+|------|-------------------------|----------------------|
+| Free | 20,000 | 300,000 |
+| Build | 100,000 | 2,500,000 |
+| Scale | 400,000 | 10,000,000 |
+| Enterprise | Custom | Custom |
+
+### Model-Specific Limits
+
+Different models may have different limits:
+
+| Model | Max Context | Max Output |
+|-------|-------------|------------|
+| Claude Opus 4 | 200K | 8,192 |
+| Claude Sonnet 4 | 200K | 8,192 |
+| Claude 3.5 Haiku | 200K | 8,192 |
+
+## Understanding Rate Limit Headers
+
+Every API response includes rate limit information:
+
+```
+anthropic-ratelimit-requests-limit: 50
+anthropic-ratelimit-requests-remaining: 45
+anthropic-ratelimit-requests-reset: 2024-01-01T12:00:00Z
+anthropic-ratelimit-tokens-limit: 100000
+anthropic-ratelimit-tokens-remaining: 85000
+anthropic-ratelimit-tokens-reset: 2024-01-01T12:00:00Z
+```
+
+### Accessing Headers
+
+```typescript
+const response = await anthropic.messages.create({
+  model: "claude-sonnet-4-20250514",
+  max_tokens: 1024,
+  messages: [{ role: "user", content: "Hello" }],
+});
+
+// Headers available on the response
+console.log("Requests remaining:", response._headers?.["anthropic-ratelimit-requests-remaining"]);
+console.log("Tokens remaining:", response._headers?.["anthropic-ratelimit-tokens-remaining"]);
+```
+
+## Handling Rate Limits
+
+### Basic Rate Limit Handler
+
+```typescript
+import Anthropic from "@anthropic-ai/sdk";
+
+const anthropic = new Anthropic();
+
+async function sendWithRateLimitHandling(message: string) {
+  try {
+    return await anthropic.messages.create({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1024,
+      messages: [{ role: "user", content: message }],
+    });
+  } catch (error) {
+    if (error instanceof Anthropic.RateLimitError) {
+      const retryAfter = error.headers?.["retry-after"];
+      const waitTime = retryAfter ? parseInt(retryAfter, 10) : 60;
+
+      console.log(`Rate limited. Waiting ${waitTime} seconds...`);
+      await new Promise((resolve) => setTimeout(resolve, waitTime * 1000));
+
+      // Retry the request
+      return sendWithRateLimitHandling(message);
+    }
+    throw error;
+  }
+}
+```
+
+### Token-Based Rate Limiting
+
+```typescript
+class TokenRateLimiter {
+  private tokensUsed = 0;
+  private windowStart = Date.now();
+  private readonly maxTokensPerMinute: number;
+
+  constructor(maxTokensPerMinute = 100000) {
+    this.maxTokensPerMinute = maxTokensPerMinute;
+  }
+
+  async waitIfNeeded(estimatedTokens: number): Promise<void> {
+    const now = Date.now();
+    const elapsedMs = now - this.windowStart;
+
+    // Reset window if a minute has passed
+    if (elapsedMs >= 60000) {
+      this.tokensUsed = 0;
+      this.windowStart = now;
+    }
+
+    // Check if we'd exceed the limit
+    if (this.tokensUsed + estimatedTokens > this.maxTokensPerMinute) {
+      const waitMs = 60000 - elapsedMs;
+      console.log(`Token limit reached. Waiting ${waitMs}ms...`);
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+      this.tokensUsed = 0;
+      this.windowStart = Date.now();
+    }
+
+    this.tokensUsed += estimatedTokens;
+  }
+
+  recordActualUsage(tokens: number): void {
+    // Adjust for actual usage vs estimate
+    this.tokensUsed = Math.max(0, this.tokensUsed + tokens - tokens);
+  }
+}
+```
+
+## Request Queuing
+
+### Simple Queue Implementation
+
+```typescript
+class RequestQueue {
+  private queue: Array<() => Promise<void>> = [];
+  private processing = false;
+  private requestsThisMinute = 0;
+  private minuteStart = Date.now();
+  private readonly maxRequestsPerMinute: number;
+
+  constructor(maxRequestsPerMinute = 50) {
+    this.maxRequestsPerMinute = maxRequestsPerMinute;
+  }
+
+  async add<T>(fn: () => Promise<T>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.queue.push(async () => {
+        try {
+          const result = await fn();
+          resolve(result);
+        } catch (error) {
+          reject(error);
+        }
+      });
+      this.processQueue();
+    });
+  }
+
+  private async processQueue(): Promise<void> {
+    if (this.processing || this.queue.length === 0) return;
+
+    this.processing = true;
+
+    while (this.queue.length > 0) {
+      // Reset counter each minute
+      const now = Date.now();
+      if (now - this.minuteStart >= 60000) {
+        this.requestsThisMinute = 0;
+        this.minuteStart = now;
+      }
+
+      // Wait if at limit
+      if (this.requestsThisMinute >= this.maxRequestsPerMinute) {
+        const waitTime = 60000 - (now - this.minuteStart);
+        await new Promise((r) => setTimeout(r, waitTime));
+        this.requestsThisMinute = 0;
+        this.minuteStart = Date.now();
+      }
+
+      const task = this.queue.shift();
+      if (task) {
+        this.requestsThisMinute++;
+        await task();
+      }
+    }
+
+    this.processing = false;
+  }
+}
+
+// Usage
+const queue = new RequestQueue(50);
+
+const results = await Promise.all(
+  messages.map((msg) =>
+    queue.add(() =>
+      anthropic.messages.create({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1024,
+        messages: [{ role: "user", content: msg }],
+      })
+    )
+  )
+);
+```
+
+## Optimizing Token Usage
+
+### Prompt Compression
+
+Reduce token usage by being concise:
+
+```typescript
+// Less efficient
+const verbosePrompt = `
+  I would like you to please help me with the following task.
+  I need you to analyze the following code and tell me if there
+  are any issues or improvements that could be made.
+
+  Here is the code:
+  ${code}
+
+  Please provide a detailed analysis.
+`;
+
+// More efficient
+const concisePrompt = `
+  Review this code for issues and improvements:
+
+  ${code}
+`;
+```
+
+### Response Length Control
+
+Set appropriate max_tokens:
+
+```typescript
+// For short responses
+const quickAnswer = await anthropic.messages.create({
+  model: "claude-sonnet-4-20250514",
+  max_tokens: 256, // Limit output
+  messages: [{ role: "user", content: "What's 2+2?" }],
+});
+
+// For detailed responses
+const detailedAnswer = await anthropic.messages.create({
+  model: "claude-sonnet-4-20250514",
+  max_tokens: 4096,
+  messages: [{ role: "user", content: "Explain quantum computing" }],
+});
+```
+
+### Context Window Management
+
+Trim conversation history to stay within limits:
+
+```typescript
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+}
+
+function trimConversation(messages: Message[], maxTokens: number): Message[] {
+  // Estimate tokens (rough approximation: 4 chars = 1 token)
+  const estimateTokens = (text: string) => Math.ceil(text.length / 4);
+
+  let totalTokens = 0;
+  const trimmed: Message[] = [];
+
+  // Always keep the last message
+  const lastMessage = messages[messages.length - 1];
+  totalTokens += estimateTokens(lastMessage.content);
+  trimmed.unshift(lastMessage);
+
+  // Add messages from end, respecting limit
+  for (let i = messages.length - 2; i >= 0; i--) {
+    const msgTokens = estimateTokens(messages[i].content);
+    if (totalTokens + msgTokens > maxTokens) break;
+    totalTokens += msgTokens;
+    trimmed.unshift(messages[i]);
+  }
+
+  return trimmed;
+}
+```
+
+## Model Selection for Cost Optimization
+
+Choose the appropriate model for the task:
+
+| Task Type | Recommended Model | Rationale |
+|-----------|-------------------|-----------|
+| Simple Q&A | Haiku | Fast, cheap |
+| Code review | Sonnet | Good balance |
+| Complex analysis | Opus | Highest capability |
+| High volume | Haiku/Sonnet | Cost effective |
+
+```typescript
+function selectModel(taskComplexity: "simple" | "medium" | "complex") {
+  switch (taskComplexity) {
+    case "simple":
+      return "claude-3-5-haiku-20241022";
+    case "medium":
+      return "claude-sonnet-4-20250514";
+    case "complex":
+      return "claude-opus-4-20250514";
+  }
+}
+```
+
+## Monitoring Usage
+
+### Usage Tracking
+
+```typescript
+interface UsageStats {
+  inputTokens: number;
+  outputTokens: number;
+  requests: number;
+  startTime: number;
+}
+
+class UsageTracker {
+  private stats: UsageStats = {
+    inputTokens: 0,
+    outputTokens: 0,
+    requests: 0,
+    startTime: Date.now(),
+  };
+
+  record(response: Anthropic.Message): void {
+    this.stats.requests++;
+    this.stats.inputTokens += response.usage.input_tokens;
+    this.stats.outputTokens += response.usage.output_tokens;
+  }
+
+  getStats(): UsageStats & { elapsedMinutes: number } {
+    return {
+      ...this.stats,
+      elapsedMinutes: (Date.now() - this.stats.startTime) / 60000,
+    };
+  }
+
+  estimateCost(): number {
+    // Sonnet pricing example
+    const inputCost = (this.stats.inputTokens / 1_000_000) * 3.0;
+    const outputCost = (this.stats.outputTokens / 1_000_000) * 15.0;
+    return inputCost + outputCost;
+  }
+}
+```
+
+## Best Practices
+
+1. **Implement backoff** - Always use exponential backoff for retries
+
+2. **Monitor headers** - Track remaining limits in responses
+
+3. **Batch when possible** - Reduce request overhead
+
+4. **Use appropriate models** - Don't use Opus for simple tasks
+
+5. **Set max_tokens appropriately** - Don't request more than needed
+
+6. **Compress prompts** - Remove unnecessary verbosity
+
+7. **Manage conversation length** - Trim history to stay within limits
+
+8. **Plan for scale** - Consider upgrading tiers for production
+
+## Tier Upgrades
+
+If you're hitting limits regularly:
+
+1. **Build tier** - For development and small-scale production
+2. **Scale tier** - For production applications
+3. **Enterprise** - For custom limits and SLAs
+
+Visit [console.anthropic.com](https://console.anthropic.com) to manage your tier.
+
+## Next Steps
+
+- [Error handling](/docs/api/error-handling)
+- [Streaming responses](/docs/api/streaming)
+- [Model comparison](/docs/api/models)
+
+<ContentMeta
+  sources={[
+    { title: "Claude API Rate Limits", url: "https://docs.anthropic.com/en/api/rate-limits" },
+    { title: "API Pricing", url: "https://www.anthropic.com/pricing" },
+    { title: "Claude Models", url: "https://docs.anthropic.com/en/docs/models-overview" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

@@ -1,0 +1,500 @@
+---
+title: Docker Integration
+description: Running Claude Code in containerized environments
+---
+
+Using Claude Code with Docker enables consistent development environments, CI/CD integration, and scalable deployments. This guide covers containerization patterns and best practices.
+
+## Basic Docker Setup
+
+### Dockerfile for Claude Code
+
+```dockerfile
+# Dockerfile
+FROM node:20-alpine
+
+# Install Claude Code
+RUN npm install -g @anthropic-ai/claude-code
+
+# Create app directory
+WORKDIR /app
+
+# Copy project files
+COPY . .
+
+# Install dependencies
+RUN npm ci
+
+# Set entrypoint
+ENTRYPOINT ["claude"]
+```
+
+### Building and Running
+
+```bash
+# Build the image
+docker build -t claude-code-app .
+
+# Run with API key
+docker run -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY \
+  -v $(pwd):/app \
+  claude-code-app "Analyze this codebase"
+```
+
+## Docker Compose Setup
+
+### Development Environment
+
+```yaml
+# docker-compose.yml
+version: '3.8'
+
+services:
+  claude:
+    build: .
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    working_dir: /app
+    stdin_open: true
+    tty: true
+
+  # Optional: Add database for context storage
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: claude_context
+      POSTGRES_USER: claude
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+
+### Running Services
+
+```bash
+# Start all services
+docker-compose up -d
+
+# Run Claude Code
+docker-compose exec claude claude "Help me with this project"
+
+# Stop services
+docker-compose down
+```
+
+## Production Patterns
+
+### Multi-Stage Build
+
+```dockerfile
+# Multi-stage Dockerfile for smaller images
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
+FROM node:20-alpine AS runtime
+
+# Create non-root user
+RUN addgroup -g 1001 -S claude && \
+    adduser -S claude -u 1001
+
+# Install Claude Code
+RUN npm install -g @anthropic-ai/claude-code
+
+WORKDIR /app
+
+# Copy from builder
+COPY --from=builder /app/node_modules ./node_modules
+COPY --chown=claude:claude . .
+
+USER claude
+
+ENTRYPOINT ["claude"]
+```
+
+### API Service
+
+```dockerfile
+# Dockerfile.api
+FROM node:20-alpine
+
+RUN npm install -g @anthropic-ai/claude-code
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
+```
+
+```javascript
+// server.js - Express API wrapping Claude Code
+const express = require("express");
+const { execSync } = require("child_process");
+
+const app = express();
+app.use(express.json());
+
+app.post("/api/claude", async (req, res) => {
+  const { prompt } = req.body;
+
+  try {
+    const result = execSync(`claude "${prompt}" --output-format json`, {
+      encoding: "utf8",
+      env: { ...process.env },
+    });
+    res.json(JSON.parse(result));
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.listen(3000, () => {
+  console.log("Claude API running on port 3000");
+});
+```
+
+## Security Best Practices
+
+### Secret Management
+
+```yaml
+# docker-compose.yml with secrets
+version: '3.8'
+
+services:
+  claude:
+    build: .
+    secrets:
+      - anthropic_api_key
+    environment:
+      - ANTHROPIC_API_KEY_FILE=/run/secrets/anthropic_api_key
+
+secrets:
+  anthropic_api_key:
+    file: ./secrets/api_key.txt
+```
+
+```dockerfile
+# Dockerfile with secret handling
+FROM node:20-alpine
+
+RUN npm install -g @anthropic-ai/claude-code
+
+# Script to read secret from file
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+```
+
+```bash
+#!/bin/sh
+# entrypoint.sh
+
+# Read API key from file if provided
+if [ -f "$ANTHROPIC_API_KEY_FILE" ]; then
+  export ANTHROPIC_API_KEY=$(cat "$ANTHROPIC_API_KEY_FILE")
+fi
+
+exec claude "$@"
+```
+
+### Read-Only Filesystem
+
+```yaml
+services:
+  claude:
+    build: .
+    read_only: true
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./workspace:/app/workspace:rw  # Only allow writes to workspace
+```
+
+### Resource Limits
+
+```yaml
+services:
+  claude:
+    build: .
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+```
+
+## CI/CD Integration
+
+### GitHub Actions with Docker
+
+```yaml
+# .github/workflows/docker-claude.yml
+name: Docker Claude Review
+
+on:
+  pull_request:
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Claude image
+        run: docker build -t claude-review .
+
+      - name: Run review
+        run: |
+          docker run \
+            -e ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }} \
+            -v $(pwd):/app \
+            claude-review "Review the code changes"
+```
+
+### GitLab CI
+
+```yaml
+# .gitlab-ci.yml
+stages:
+  - review
+
+claude-review:
+  stage: review
+  image: node:20-alpine
+  before_script:
+    - npm install -g @anthropic-ai/claude-code
+  script:
+    - claude "Review this merge request"
+  variables:
+    ANTHROPIC_API_KEY: $ANTHROPIC_API_KEY
+```
+
+## Development Workflow
+
+### Dev Container Configuration
+
+```json
+// .devcontainer/devcontainer.json
+{
+  "name": "Claude Code Dev",
+  "dockerFile": "Dockerfile",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "extensions": [
+    "anthropic.claude-code"
+  ],
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm install",
+  "remoteEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
+  }
+}
+```
+
+```dockerfile
+# .devcontainer/Dockerfile
+FROM mcr.microsoft.com/devcontainers/javascript-node:20
+
+# Install Claude Code
+RUN npm install -g @anthropic-ai/claude-code
+
+# Install additional tools
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+### Interactive Development
+
+```yaml
+# docker-compose.dev.yml
+version: '3.8'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+    command: sh -c "npm run dev"
+```
+
+## Kubernetes Deployment
+
+### Basic Deployment
+
+```yaml
+# k8s/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: claude-code-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: claude-code
+  template:
+    metadata:
+      labels:
+        app: claude-code
+    spec:
+      containers:
+      - name: claude-code
+        image: your-registry/claude-code:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ANTHROPIC_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: claude-secrets
+              key: api-key
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: claude-secrets
+type: Opaque
+stringData:
+  api-key: your-api-key-here  # Use proper secret management
+```
+
+### Service and Ingress
+
+```yaml
+# k8s/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: claude-code-service
+spec:
+  selector:
+    app: claude-code
+  ports:
+  - port: 80
+    targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: claude-code-ingress
+spec:
+  rules:
+  - host: claude.your-domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: claude-code-service
+            port:
+              number: 80
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Container exits immediately:**
+```yaml
+# Ensure stdin/tty for interactive use
+services:
+  claude:
+    stdin_open: true
+    tty: true
+```
+
+**Permission denied:**
+```dockerfile
+# Run as non-root but ensure correct permissions
+RUN chown -R node:node /app
+USER node
+```
+
+**API key not found:**
+```bash
+# Verify environment variable is passed
+docker run -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY your-image env | grep ANTHROPIC
+```
+
+### Debugging
+
+```bash
+# Interactive debugging
+docker run -it --entrypoint /bin/sh your-image
+
+# Check logs
+docker logs container_name
+
+# Inspect container
+docker inspect container_name
+```
+
+## Best Practices
+
+1. **Use multi-stage builds** - Smaller, more secure images
+
+2. **Never bake in secrets** - Use environment variables or secret management
+
+3. **Run as non-root** - Follow principle of least privilege
+
+4. **Set resource limits** - Prevent runaway containers
+
+5. **Use health checks** - Enable orchestrator management
+
+6. **Pin versions** - Avoid unexpected updates
+
+7. **Scan images** - Check for vulnerabilities regularly
+
+## Next Steps
+
+- [GitHub Actions integration](/docs/integrations/github-actions)
+- [Database integrations](/docs/integrations/databases)
+- [MCP servers](/docs/integrations/mcp-servers)
+
+<ContentMeta
+  sources={[
+    { title: "Docker Documentation", url: "https://docs.docker.com" },
+    { title: "Claude Code Documentation", url: "https://docs.anthropic.com/en/docs/claude-code/overview" },
+    { title: "Kubernetes Documentation", url: "https://kubernetes.io/docs" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

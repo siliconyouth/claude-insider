@@ -25,6 +25,8 @@ const navigationConfig: Record<
       { label: "Introduction", href: "/docs/getting-started" },
       { label: "Installation", href: "/docs/getting-started/installation" },
       { label: "Quick Start", href: "/docs/getting-started/quickstart" },
+      { label: "Troubleshooting", href: "/docs/getting-started/troubleshooting" },
+      { label: "Migration", href: "/docs/getting-started/migration" },
     ],
   },
   configuration: {
@@ -33,6 +35,8 @@ const navigationConfig: Record<
       { label: "Overview", href: "/docs/configuration" },
       { label: "CLAUDE.md", href: "/docs/configuration/claude-md" },
       { label: "Settings", href: "/docs/configuration/settings" },
+      { label: "Environment", href: "/docs/configuration/environment" },
+      { label: "Permissions", href: "/docs/configuration/permissions" },
     ],
   },
   "tips-and-tricks": {
@@ -41,6 +45,8 @@ const navigationConfig: Record<
       { label: "Overview", href: "/docs/tips-and-tricks" },
       { label: "Prompting", href: "/docs/tips-and-tricks/prompting" },
       { label: "Productivity", href: "/docs/tips-and-tricks/productivity" },
+      { label: "Advanced Prompting", href: "/docs/tips-and-tricks/advanced-prompting" },
+      { label: "Debugging", href: "/docs/tips-and-tricks/debugging" },
     ],
   },
   api: {
@@ -49,6 +55,10 @@ const navigationConfig: Record<
       { label: "Overview", href: "/docs/api" },
       { label: "Authentication", href: "/docs/api/authentication" },
       { label: "Tool Use", href: "/docs/api/tool-use" },
+      { label: "Streaming", href: "/docs/api/streaming" },
+      { label: "Error Handling", href: "/docs/api/error-handling" },
+      { label: "Rate Limits", href: "/docs/api/rate-limits" },
+      { label: "Models", href: "/docs/api/models" },
     ],
   },
   integrations: {
@@ -58,6 +68,9 @@ const navigationConfig: Record<
       { label: "MCP Servers", href: "/docs/integrations/mcp-servers" },
       { label: "IDE Plugins", href: "/docs/integrations/ide-plugins" },
       { label: "Hooks", href: "/docs/integrations/hooks" },
+      { label: "GitHub Actions", href: "/docs/integrations/github-actions" },
+      { label: "Docker", href: "/docs/integrations/docker" },
+      { label: "Databases", href: "/docs/integrations/databases" },
     ],
   },
 };

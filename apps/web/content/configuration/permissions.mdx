@@ -1,0 +1,332 @@
+---
+title: Permissions & Security
+description: Understanding and configuring Claude Code permissions for safe operation
+---
+
+Claude Code operates with a permission system that gives you control over what actions it can perform. Understanding and configuring these permissions properly is essential for both security and productivity.
+
+## Permission Model Overview
+
+Claude Code uses a tiered permission system:
+
+| Level | Actions | Approval Required |
+|-------|---------|-------------------|
+| Read-only | File reading, searching, exploring | Optional |
+| Write | File editing, creation, deletion | Yes (configurable) |
+| Execute | Running bash commands | Yes (configurable) |
+| Network | API calls, web requests | Yes |
+| Git | Commits, pushes, branch operations | Yes |
+
+## Auto-Approval Configuration
+
+### Setting Auto-Approved Tools
+
+Configure which tools run without confirmation:
+
+```json
+{
+  "autoApprove": [
+    "Read",
+    "Glob",
+    "Grep",
+    "Task"
+  ]
+}
+```
+
+### Available Tools
+
+| Tool | Description | Risk Level |
+|------|-------------|------------|
+| Read | Read file contents | Low |
+| Glob | Find files by pattern | Low |
+| Grep | Search file contents | Low |
+| Task | Launch subagents | Low-Medium |
+| Edit | Modify files | Medium |
+| Write | Create new files | Medium |
+| Bash | Execute commands | High |
+| WebFetch | Make HTTP requests | Medium |
+
+### Recommended Configurations
+
+**Conservative (default):**
+```json
+{
+  "autoApprove": []
+}
+```
+Requires approval for everything.
+
+**Standard development:**
+```json
+{
+  "autoApprove": ["Read", "Glob", "Grep"]
+}
+```
+Auto-approves read-only operations.
+
+**Trusted project:**
+```json
+{
+  "autoApprove": ["Read", "Glob", "Grep", "Edit", "Write", "Task"]
+}
+```
+Auto-approves file operations, still requires approval for commands.
+
+**Full trust (use with caution):**
+```json
+{
+  "autoApprove": ["Read", "Glob", "Grep", "Edit", "Write", "Task", "Bash"]
+}
+```
+Auto-approves everything including bash commands.
+
+## Bash Command Permissions
+
+### Command Allowlists
+
+Specify safe commands that can run automatically:
+
+```json
+{
+  "autoApprove": [
+    "Bash(git status:*)",
+    "Bash(npm test:*)",
+    "Bash(pnpm lint:*)"
+  ]
+}
+```
+
+The format is `Bash(prefix:pattern)`:
+- `git status:*` - Allow any git status command
+- `npm test:*` - Allow npm test with any arguments
+- `pnpm lint:*` - Allow pnpm lint commands
+
+### Dangerous Commands
+
+Claude Code blocks certain dangerous commands by default:
+
+- `rm -rf /` - System destruction
+- `sudo` without explicit approval
+- Commands that modify system files
+- Package installation in system directories
+
+## File System Permissions
+
+### Restricting File Access
+
+Use `.claudeignore` to prevent Claude from accessing certain files:
+
+```plaintext
+# Secrets
+.env
+.env.local
+*.pem
+*.key
+credentials.json
+
+# Sensitive directories
+/secrets/
+/private/
+/.ssh/
+
+# Build artifacts
+/node_modules/
+/dist/
+/.next/
+```
+
+### Protecting Sensitive Files
+
+For additional protection, configure in CLAUDE.md:
+
+```markdown
+## Security
+
+### Off-limits files
+- Never read or modify files in /secrets/
+- Do not access .env files directly
+- Skip any file containing "password" or "secret" in the name
+```
+
+## Network Permissions
+
+### API Access Control
+
+Configure allowed network operations:
+
+```json
+{
+  "allowedHosts": [
+    "api.github.com",
+    "registry.npmjs.org"
+  ]
+}
+```
+
+### MCP Server Permissions
+
+MCP servers have their own permission scopes:
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "permissions": {
+        "read": true,
+        "write": false
+      }
+    }
+  }
+}
+```
+
+## Git Permissions
+
+### Safe Git Operations
+
+By default, these git operations are considered safe:
+
+- `git status`
+- `git log`
+- `git diff`
+- `git branch` (listing)
+
+### Requiring Approval
+
+These operations always require approval:
+
+- `git commit` - Creating commits
+- `git push` - Pushing to remote
+- `git checkout -b` - Creating branches
+- `git merge` - Merging branches
+- `git reset` - Resetting history
+
+### Git Safety Configuration
+
+```markdown
+<!-- CLAUDE.md -->
+## Git Guidelines
+
+- Never force push
+- Always create branches for changes
+- Use conventional commit messages
+- Never commit to main directly
+```
+
+## Session-Based Permissions
+
+### Temporary Permissions
+
+Grant permissions for the current session only:
+
+```bash
+# Start with elevated permissions
+claude --auto-approve "Read,Edit,Bash"
+```
+
+### Permission Escalation
+
+When Claude needs additional permissions:
+
+1. Claude explains what action is needed
+2. You can approve once or for the session
+3. Denied permissions are remembered
+
+## Security Best Practices
+
+### 1. Principle of Least Privilege
+
+Start with minimal permissions and add as needed:
+
+```json
+{
+  "autoApprove": ["Read", "Glob", "Grep"]
+}
+```
+
+### 2. Project Isolation
+
+Use project-specific configurations:
+
+```
+project-a/.claude/settings.json  # Strict
+project-b/.claude/settings.json  # Relaxed
+```
+
+### 3. Review Before Commit
+
+Always review changes before committing:
+
+```markdown
+<!-- CLAUDE.md -->
+## Workflow
+- After making changes, show me git diff
+- Wait for my approval before committing
+```
+
+### 4. Audit Trail
+
+Keep track of what Claude has done:
+
+```bash
+# View recent Claude actions
+claude /history
+```
+
+### 5. Secure Secrets
+
+Never store secrets in:
+- CLAUDE.md
+- settings.json
+- Any tracked files
+
+Instead use:
+- Environment variables
+- Secret managers
+- `.env` files (gitignored)
+
+## Troubleshooting Permissions
+
+### Permission Denied Errors
+
+**Symptom**: "Permission denied" or "Access blocked"
+
+**Solutions**:
+1. Check `.claudeignore` for overly broad patterns
+2. Verify file ownership and system permissions
+3. Run Claude from the correct directory
+
+### Stuck on Approval
+
+**Symptom**: Too many approval prompts
+
+**Solutions**:
+1. Add commonly used tools to `autoApprove`
+2. Use session-based permissions
+3. Configure command allowlists
+
+### Unintended Actions
+
+**Symptom**: Claude performed unexpected operations
+
+**Solutions**:
+1. Review and restrict `autoApprove` list
+2. Use git to revert changes
+3. Add explicit restrictions to CLAUDE.md
+
+## Next Steps
+
+- [Configure environment variables](/docs/configuration/environment)
+- [Set up CLAUDE.md](/docs/configuration/claude-md)
+- [Review security settings](/docs/configuration/settings)
+
+<ContentMeta
+  sources={[
+    { title: "Claude Code Documentation", url: "https://docs.anthropic.com/en/docs/claude-code/overview" },
+    { title: "Claude Code Security", url: "https://docs.anthropic.com/en/docs/claude-code/security" },
+    { title: "Tool Use Safety", url: "https://docs.anthropic.com/en/docs/tool-use" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

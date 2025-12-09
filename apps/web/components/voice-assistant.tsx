@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { track } from "@vercel/analytics";
 import type { Message } from "@/lib/claude";
+import { markdownToSpeakableText, markdownToDisplayText } from "@/lib/claude";
 import {
   getConversationHistory,
   saveConversationHistory,
@@ -72,8 +73,8 @@ export function VoiceAssistant() {
     }
   }, [autoSpeak, mounted]);
 
-  // Available ElevenLabs voices (all pre-made voices)
-  const voices = [
+  // Available ElevenLabs voices (all pre-made voices) - memoized to prevent re-renders
+  const voices = useMemo(() => [
     // Female voices
     { id: "sarah", name: "Sarah", description: "Soft, young female" },
     { id: "rachel", name: "Rachel", description: "Calm, young female" },
@@ -119,7 +120,7 @@ export function VoiceAssistant() {
     { id: "sam", name: "Sam", description: "Raspy, young male" },
     { id: "jessie", name: "Jessie", description: "Raspy, older male" },
     { id: "giovanni", name: "Giovanni", description: "Foreigner, male" },
-  ];
+  ], []);
   const recognizerRef = useRef<VoiceRecognizer | null>(null);
 
   // Streaming TTS state
@@ -299,7 +300,7 @@ export function VoiceAssistant() {
       const response = await fetch("/api/assistant/speak", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: textToSpeak, voice: selectedVoiceRef.current }),
+        body: JSON.stringify({ text: markdownToSpeakableText(textToSpeak), voice: selectedVoiceRef.current }),
       });
 
       if (!response.ok) {
@@ -846,7 +847,7 @@ export function VoiceAssistant() {
       const response = await fetch("/api/assistant/speak", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, voice: selectedVoice }),
+        body: JSON.stringify({ text: markdownToSpeakableText(text), voice: selectedVoice }),
       });
 
       if (!response.ok) {
@@ -1232,7 +1233,9 @@ export function VoiceAssistant() {
                         : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
                     }`}
                   >
-                    <p className="whitespace-pre-wrap text-sm">{message.content}</p>
+                    <p className="whitespace-pre-wrap text-sm">
+                      {message.role === "assistant" ? markdownToDisplayText(message.content) : message.content}
+                    </p>
                     {/* Speaker button for assistant messages */}
                     {message.role === "assistant" && (
                       <button
@@ -1297,7 +1300,7 @@ export function VoiceAssistant() {
                 <div className="flex justify-start">
                   <div className="max-w-[85%] rounded-2xl bg-gray-100 px-4 py-2 dark:bg-gray-800">
                     <p className="whitespace-pre-wrap text-sm text-gray-900 dark:text-white">
-                      {streamingContent}
+                      {markdownToDisplayText(streamingContent)}
                     </p>
                   </div>
                 </div>

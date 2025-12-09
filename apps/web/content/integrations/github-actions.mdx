@@ -1,0 +1,461 @@
+---
+title: GitHub Actions Integration
+description: Automating workflows with Claude Code in CI/CD pipelines
+---
+
+Integrate Claude Code into your GitHub Actions workflows for automated code review, documentation generation, test creation, and more.
+
+## Basic Setup
+
+### Prerequisites
+
+1. Claude Code installed in your CI environment
+2. `ANTHROPIC_API_KEY` stored as a GitHub secret
+3. A GitHub repository with Actions enabled
+
+### Simple Workflow
+
+```yaml
+# .github/workflows/claude-review.yml
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run Code Review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude "Review the changes in this PR and provide feedback" \
+            --output-format json > review.json
+
+      - name: Post Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = JSON.parse(fs.readFileSync('review.json', 'utf8'));
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: review.content
+            });
+```
+
+## Common Use Cases
+
+### Automated Code Review
+
+```yaml
+name: AI Code Review
+
+on:
+  pull_request:
+    paths:
+      - '**.ts'
+      - '**.tsx'
+      - '**.js'
+      - '**.jsx'
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed
+        run: |
+          echo "files=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | tr '\n' ' ')" >> $GITHUB_OUTPUT
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Review changes
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude "Review these changed files for:
+          - Code quality issues
+          - Potential bugs
+          - Security concerns
+          - Performance problems
+
+          Files: ${{ steps.changed.outputs.files }}
+
+          Format your response as markdown with sections for each category."
+```
+
+### Documentation Generation
+
+```yaml
+name: Generate Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**/*.ts'
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Generate documentation
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude "Generate API documentation for all exported functions in src/.
+          Create markdown files in docs/ directory.
+          Include parameter descriptions, return types, and usage examples."
+
+      - name: Commit docs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --staged --quiet || git commit -m "docs: auto-generated documentation"
+          git push
+```
+
+### Test Generation
+
+```yaml
+name: Generate Tests
+
+on:
+  pull_request:
+    paths:
+      - 'src/**/*.ts'
+      - '!src/**/*.test.ts'
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install -g @anthropic-ai/claude-code
+
+      - name: Find untested files
+        id: untested
+        run: |
+          # Find source files without corresponding test files
+          untested=""
+          for file in src/**/*.ts; do
+            test_file="${file%.ts}.test.ts"
+            if [ ! -f "$test_file" ]; then
+              untested="$untested $file"
+            fi
+          done
+          echo "files=$untested" >> $GITHUB_OUTPUT
+
+      - name: Generate tests
+        if: steps.untested.outputs.files != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude "Generate unit tests for these files: ${{ steps.untested.outputs.files }}
+
+          Requirements:
+          - Use Jest and React Testing Library
+          - Cover edge cases
+          - Mock external dependencies
+          - Follow existing test patterns in the codebase"
+
+      - name: Run tests
+        run: npm test
+```
+
+### Commit Message Enhancement
+
+```yaml
+name: Enhance Commit Messages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  enhance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Analyze commit
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          DIFF=$(git diff HEAD~1)
+
+          claude "Given this commit message and diff, suggest an improved commit message that:
+          - Follows conventional commits format
+          - Is more descriptive
+          - Includes the scope
+
+          Original message: $COMMIT_MSG
+          Diff: $DIFF"
+```
+
+## Advanced Patterns
+
+### Conditional Reviews
+
+```yaml
+name: Smart Review
+
+on:
+  pull_request:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    outputs:
+      needs-review: ${{ steps.check.outputs.needs-review }}
+      complexity: ${{ steps.check.outputs.complexity }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check PR complexity
+        id: check
+        run: |
+          LINES_CHANGED=$(git diff --shortstat origin/${{ github.base_ref }} | awk '{print $4+$6}')
+          FILES_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} | wc -l)
+
+          if [ "$LINES_CHANGED" -gt 100 ] || [ "$FILES_CHANGED" -gt 5 ]; then
+            echo "needs-review=true" >> $GITHUB_OUTPUT
+            echo "complexity=high" >> $GITHUB_OUTPUT
+          else
+            echo "needs-review=false" >> $GITHUB_OUTPUT
+            echo "complexity=low" >> $GITHUB_OUTPUT
+          fi
+
+  review:
+    needs: analyze
+    if: needs.analyze.outputs.needs-review == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Deep review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude "This is a ${{ needs.analyze.outputs.complexity }} complexity PR.
+          Perform a thorough review focusing on:
+          - Architecture decisions
+          - Breaking changes
+          - Test coverage
+          - Documentation needs"
+```
+
+### Multi-Model Strategy
+
+```yaml
+name: Multi-Model Review
+
+jobs:
+  quick-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Quick lint check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: claude-3-5-haiku-20241022
+        run: |
+          claude "Quick check: any obvious issues in the changed files?"
+
+  deep-review:
+    needs: quick-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deep analysis
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: claude-opus-4-20250514
+        run: |
+          claude "Perform comprehensive code review..."
+```
+
+### Caching for Performance
+
+```yaml
+name: Cached Review
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Claude context
+        uses: actions/cache@v4
+        with:
+          path: ~/.claude
+          key: claude-${{ github.repository }}-${{ hashFiles('CLAUDE.md') }}
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Review with context
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: claude "Review the PR changes"
+```
+
+## Security Considerations
+
+### Secrets Management
+
+```yaml
+# Never log or expose the API key
+- name: Safe usage
+  env:
+    ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  run: |
+    # Don't echo the key
+    claude "Review code"
+```
+
+### Permission Scoping
+
+```yaml
+# Minimal permissions
+permissions:
+  contents: read
+  pull-requests: write  # Only if commenting
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    # ...
+```
+
+### Input Sanitization
+
+```yaml
+- name: Sanitize PR title
+  run: |
+    # Don't pass untrusted input directly
+    SAFE_TITLE=$(echo "${{ github.event.pull_request.title }}" | tr -cd '[:alnum:] ')
+    claude "Review PR: $SAFE_TITLE"
+```
+
+## Troubleshooting
+
+### Rate Limits
+
+```yaml
+- name: Handle rate limits
+  env:
+    ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  run: |
+    for i in 1 2 3; do
+      claude "Review code" && break
+      echo "Rate limited, waiting..."
+      sleep 60
+    done
+```
+
+### Large Diffs
+
+```yaml
+- name: Handle large PRs
+  run: |
+    DIFF_SIZE=$(git diff --shortstat origin/${{ github.base_ref }} | awk '{print $4+$6}')
+
+    if [ "$DIFF_SIZE" -gt 1000 ]; then
+      # Review file by file for large PRs
+      for file in $(git diff --name-only origin/${{ github.base_ref }}); do
+        claude "Review $file"
+      done
+    else
+      claude "Review all changes"
+    fi
+```
+
+### Timeout Handling
+
+```yaml
+- name: Review with timeout
+  timeout-minutes: 10
+  env:
+    ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+  run: |
+    timeout 300 claude "Review code" || echo "Review timed out"
+```
+
+## Best Practices
+
+1. **Use secrets** - Never hardcode API keys
+
+2. **Scope permissions** - Request minimal GitHub permissions
+
+3. **Handle failures gracefully** - Don't block PRs on review failures
+
+4. **Cache when possible** - Reduce API calls and costs
+
+5. **Use appropriate models** - Haiku for quick checks, Opus for deep reviews
+
+6. **Log responsibly** - Don't log sensitive information
+
+7. **Test workflows** - Use act for local testing
+
+## Next Steps
+
+- [Docker integration](/docs/integrations/docker)
+- [Database integrations](/docs/integrations/databases)
+- [MCP servers](/docs/integrations/mcp-servers)
+
+<ContentMeta
+  sources={[
+    { title: "GitHub Actions Documentation", url: "https://docs.github.com/en/actions" },
+    { title: "Claude Code Documentation", url: "https://docs.anthropic.com/en/docs/claude-code/overview" },
+    { title: "Anthropic API Reference", url: "https://docs.anthropic.com/en/api" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

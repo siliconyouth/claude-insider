@@ -9,12 +9,18 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   poweredByHeader: false,
   compress: true,
+  // Enable experimental features for better performance
+  experimental: {
+    optimizeCss: true,
+  },
   // Image optimization
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
   },
+  // Bundle analyzer optimization
+  productionBrowserSourceMaps: false,
   // Security headers
   async headers() {
     return [

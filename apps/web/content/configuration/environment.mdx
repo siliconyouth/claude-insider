@@ -1,0 +1,262 @@
+---
+title: Environment Variables
+description: Complete reference for Claude Code environment variables and configuration options
+---
+
+Claude Code uses environment variables to configure API connections, behavior settings, and integrations. This guide covers all available environment variables and best practices for managing them.
+
+## Required Variables
+
+### ANTHROPIC_API_KEY
+
+The primary API key for authenticating with Claude.
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-api03-..."
+```
+
+**Notes:**
+- Required for all Claude Code operations
+- Obtain from console.anthropic.com
+- Never commit to version control
+- Use project-specific keys when possible
+
+## Optional Variables
+
+### Model Selection
+
+#### ANTHROPIC_MODEL
+
+Override the default model used by Claude Code.
+
+```bash
+export ANTHROPIC_MODEL="claude-sonnet-4-20250514"
+```
+
+Available models:
+- `claude-opus-4-20250514` - Most capable, best for complex tasks
+- `claude-sonnet-4-20250514` - Balanced speed and capability (default)
+- `claude-3-5-haiku-20241022` - Fastest, best for simple tasks
+
+### API Configuration
+
+#### ANTHROPIC_BASE_URL
+
+Custom API endpoint for proxies or alternative backends.
+
+```bash
+export ANTHROPIC_BASE_URL="https://your-proxy.example.com/v1"
+```
+
+Use cases:
+- Corporate proxies
+- Self-hosted Claude instances
+- API gateways with custom authentication
+
+#### ANTHROPIC_TIMEOUT
+
+Request timeout in milliseconds.
+
+```bash
+export ANTHROPIC_TIMEOUT="120000"  # 2 minutes
+```
+
+Default: 60000 (1 minute)
+
+### Behavior Settings
+
+#### CLAUDE_CODE_MAX_TOKENS
+
+Maximum tokens for Claude responses.
+
+```bash
+export CLAUDE_CODE_MAX_TOKENS="8192"
+```
+
+Higher values allow longer responses but increase costs.
+
+#### CLAUDE_CODE_AUTO_APPROVE
+
+Comma-separated list of tools to auto-approve.
+
+```bash
+export CLAUDE_CODE_AUTO_APPROVE="Read,Glob,Grep"
+```
+
+Reduces confirmation prompts for read-only operations.
+
+### Security
+
+#### CLAUDE_CODE_DISABLE_TELEMETRY
+
+Disable anonymous usage telemetry.
+
+```bash
+export CLAUDE_CODE_DISABLE_TELEMETRY="1"
+```
+
+### Git Integration
+
+#### CLAUDE_CODE_GIT_AUTHOR
+
+Override the git author for commits made by Claude.
+
+```bash
+export CLAUDE_CODE_GIT_AUTHOR="Claude Code <claude@example.com>"
+```
+
+## Setting Environment Variables
+
+### Shell Configuration
+
+Add to your shell profile for persistence:
+
+**Bash (~/.bashrc or ~/.bash_profile):**
+```bash
+export ANTHROPIC_API_KEY="your-key-here"
+```
+
+**Zsh (~/.zshrc):**
+```bash
+export ANTHROPIC_API_KEY="your-key-here"
+```
+
+**Fish (~/.config/fish/config.fish):**
+```fish
+set -x ANTHROPIC_API_KEY "your-key-here"
+```
+
+### Project-Specific Variables
+
+Create a `.env` file in your project root (never commit):
+
+```bash
+# .env
+ANTHROPIC_API_KEY=sk-ant-api03-...
+ANTHROPIC_MODEL=claude-sonnet-4-20250514
+```
+
+Add to `.gitignore`:
+
+```
+.env
+.env.local
+.env.*.local
+```
+
+### Using direnv
+
+Automatically load environment variables when entering a directory:
+
+1. Install direnv:
+```bash
+brew install direnv  # macOS
+```
+
+2. Add to shell:
+```bash
+eval "$(direnv hook bash)"  # or zsh, fish
+```
+
+3. Create `.envrc`:
+```bash
+export ANTHROPIC_API_KEY="your-key-here"
+```
+
+4. Allow the directory:
+```bash
+direnv allow
+```
+
+## Environment Variable Precedence
+
+Claude Code loads variables in this order (later overrides earlier):
+
+1. System environment
+2. Shell profile (~/.bashrc, ~/.zshrc)
+3. Project `.env` file
+4. `.env.local` file
+5. Command-line exports
+
+## Validating Configuration
+
+Check if your API key is set:
+
+```bash
+echo $ANTHROPIC_API_KEY | head -c 20
+# Should show: sk-ant-api03-...
+```
+
+Test the connection:
+
+```bash
+claude "Hello, are you working?"
+```
+
+## Troubleshooting
+
+### API Key Not Found
+
+**Symptom**: "ANTHROPIC_API_KEY not set" error
+
+**Solutions**:
+1. Verify the variable is exported (not just set):
+   ```bash
+   export ANTHROPIC_API_KEY="..."  # Correct
+   ANTHROPIC_API_KEY="..."         # Wrong - not exported
+   ```
+
+2. Source your profile after changes:
+   ```bash
+   source ~/.zshrc
+   ```
+
+3. Check for typos in the variable name
+
+### Invalid API Key
+
+**Symptom**: 401 Unauthorized errors
+
+**Solutions**:
+1. Verify the key at console.anthropic.com
+2. Check for extra whitespace or quotes
+3. Ensure the key starts with `sk-ant-api03-`
+
+### Model Not Available
+
+**Symptom**: "Model not found" error
+
+**Solutions**:
+1. Check model name spelling
+2. Verify your API plan includes the model
+3. Use the default model (unset ANTHROPIC_MODEL)
+
+## Security Best Practices
+
+1. **Never commit API keys** - Use `.env` files and `.gitignore`
+
+2. **Use project-specific keys** - Create separate keys for different projects in the Anthropic console
+
+3. **Rotate keys regularly** - Especially if you suspect exposure
+
+4. **Use environment managers** - Tools like direnv, dotenv, or 1Password CLI
+
+5. **Audit access** - Monitor API usage in the Anthropic console
+
+6. **Limit permissions** - Use the minimum required API access level
+
+## Next Steps
+
+- [Configure Claude Code settings](/docs/configuration/settings)
+- [Set up permissions](/docs/configuration/permissions)
+- [Learn about CLAUDE.md](/docs/configuration/claude-md)
+
+<ContentMeta
+  sources={[
+    { title: "Claude Code Documentation", url: "https://docs.anthropic.com/en/docs/claude-code/overview" },
+    { title: "Anthropic API Keys", url: "https://console.anthropic.com/settings/keys" },
+    { title: "Claude API Reference", url: "https://docs.anthropic.com/en/api/getting-started" }
+  ]}
+  generatedDate="2025-12-09"
+  model="Claude Opus 4.5"
+/>

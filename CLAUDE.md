@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.12.1
+**Version**: 0.13.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -18,7 +18,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Tailwind CSS 4.1.5 with dark/light themes
 - Homepage with hero, categories, features
 - MDX content support with dynamic routing
-- 19 documentation pages (all categories complete)
+- 28 documentation pages (all categories complete)
 - Fuzzy search with Fuse.js (Cmd/Ctrl+K)
 - Dark/Light/System theme toggle with localStorage
 - Code copy-to-clipboard functionality
@@ -43,7 +43,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Auto-updating build info in footer (version, build date, commit SHA)
 - Prebuild script for automatic version updates on each build
 - ContentMeta component for source citations on all content pages
-- AI generation metadata on all 19 MDX pages (model: Claude Opus 4.5, date, build ID)
+- AI generation metadata on all 28 MDX pages (model: Claude Opus 4.5, date, build ID)
 - Links to official Anthropic documentation sources
 - Vercel Analytics for privacy-focused usage tracking
 - Content Security Policy (CSP) and Permissions-Policy headers
@@ -67,8 +67,11 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Error boundary for voice assistant resilience
 - Analytics tracking for voice assistant interactions
 - Scrollable voice selector with 42 voice options
+- **Markdown display cleanup** - Chat responses display without markdown syntax
+- **TTS markdown handling** - Converts markdown to speakable text for natural speech
+- Performance optimizations (CSS optimization, source map removal, memoization)
 
-### Project Status: Complete
+### Project Status: Complete (v0.13.0)
 
 ## Tech Stack
 
@@ -123,18 +126,18 @@ claude-insider/
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation
-│   │   │   ├── getting-started/  # installation.mdx, quickstart.mdx, troubleshooting.mdx, migration.mdx
-│   │   │   ├── configuration/    # index.mdx, claude-md.mdx, settings.mdx
-│   │   │   ├── tips-and-tricks/  # index.mdx, prompting.mdx, productivity.mdx, advanced-prompting.mdx
-│   │   │   ├── api/              # index.mdx, authentication.mdx, tool-use.mdx
-│   │   │   └── integrations/     # index.mdx, mcp-servers.mdx, ide-plugins.mdx, hooks.mdx
+│   │   │   ├── getting-started/  # installation, quickstart, troubleshooting, migration
+│   │   │   ├── configuration/    # index, claude-md, settings, environment, permissions
+│   │   │   ├── tips-and-tricks/  # index, prompting, productivity, advanced-prompting, debugging
+│   │   │   ├── api/              # index, authentication, tool-use, streaming, error-handling, rate-limits, models
+│   │   │   └── integrations/     # index, mcp-servers, ide-plugins, hooks, github-actions, docker, databases
 │   │   ├── lib/
 │   │   │   ├── mdx.ts            # MDX utilities
 │   │   │   ├── search.ts         # Search index
 │   │   │   ├── reading-time.ts   # Reading time calculation
 │   │   │   ├── search-history.ts # Search history localStorage
 │   │   │   ├── i18n.ts           # i18n configuration
-│   │   │   ├── claude.ts         # Anthropic Claude client & system prompts
+│   │   │   ├── claude.ts         # Claude client, system prompts, markdown conversion
 │   │   │   ├── rag.ts            # RAG system with TF-IDF search
 │   │   │   ├── wake-word.ts      # Wake word detection ("Hey Insider")
 │   │   │   ├── speech-recognition.ts # Speech recognition utilities
@@ -253,10 +256,12 @@ Configured in `vercel.json`:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.12.1.
+All planned features have been implemented. The project is feature-complete at v0.13.0.
 
-### Future Content Expansion
-See the Content Expansion Plan section below for planned documentation additions.
+### Future Enhancements (Optional)
+- Multi-language support (i18n) when translations are ready
+- Additional tutorial and example pages (Phase D)
+- Community contributions via GitHub
 
 ## Voice Assistant Architecture
 
@@ -362,36 +367,19 @@ When updating existing content:
 ### 5. Component Location
 The `ContentMeta` component is exported via `mdx-components.tsx` and available in all MDX files.
 
-## Content Expansion Plan
+## Content Status (All Complete)
 
-Future content additions organized by priority:
+### Documentation Pages (28 total)
 
-### Phase A: Core Enhancements (High Priority)
-| Page | Category | Description | Status |
-|------|----------|-------------|--------|
-| `troubleshooting.mdx` | Getting Started | Common issues and solutions | ✅ Complete |
-| `migration.mdx` | Getting Started | Migrating from other AI tools | ✅ Complete |
-| `environment.mdx` | Configuration | Environment variables reference | Planned |
-| `permissions.mdx` | Configuration | Permissions and security settings | Planned |
-| `advanced-prompting.mdx` | Tips & Tricks | Advanced prompting techniques | ✅ Complete |
-| `debugging.mdx` | Tips & Tricks | Debugging with Claude Code | Planned |
+| Category | Pages | Count |
+|----------|-------|-------|
+| Getting Started | Installation, Quick Start, Troubleshooting, Migration | 4 |
+| Configuration | Overview, CLAUDE.md, Settings, Environment, Permissions | 5 |
+| Tips & Tricks | Overview, Prompting, Productivity, Advanced Prompting, Debugging | 5 |
+| API Reference | Overview, Authentication, Tool Use, Streaming, Error Handling, Rate Limits, Models | 7 |
+| Integrations | Overview, MCP Servers, IDE Plugins, Hooks, GitHub Actions, Docker, Databases | 7 |
 
-### Phase B: API Deep Dives (Medium Priority)
-| Page | Category | Description |
-|------|----------|-------------|
-| `streaming.mdx` | API Reference | Streaming responses guide |
-| `error-handling.mdx` | API Reference | Error handling patterns |
-| `rate-limits.mdx` | API Reference | Rate limits and quotas |
-| `models.mdx` | API Reference | Model comparison guide |
-
-### Phase C: Integrations Expansion (Medium Priority)
-| Page | Category | Description |
-|------|----------|-------------|
-| `github-actions.mdx` | Integrations | CI/CD with Claude |
-| `docker.mdx` | Integrations | Docker and containerization |
-| `databases.mdx` | Integrations | Database integrations |
-
-### Phase D: New Categories (Lower Priority)
+### Future Content (Optional - Phase D)
 **Tutorials Category:**
 - Code review automation
 - Documentation generation
