@@ -96,6 +96,8 @@ claude-insider/
 │   │   │   ├── search.tsx        # Search modal (Cmd+K) with React Portal
 │   │   │   ├── theme-toggle.tsx  # Dark/light/system theme toggle
 │   │   │   └── footer.tsx        # Shared footer with legal links
+│   │   ├── scripts/
+│   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation content
 │   │   │   ├── getting-started/
 │   │   │   │   ├── installation.mdx
@@ -209,6 +211,8 @@ claude-insider/
 - [x] Terms of Service page (international coverage, Serbian jurisdiction)
 - [x] Disclaimer page (non-affiliation with Anthropic)
 - [x] Accessibility Statement page (WCAG 2.1 AA conformance)
+- [x] Auto-updating build info in footer (version, date, commit SHA)
+- [x] Prebuild script for automatic version updates
 
 ### Pages Implemented
 
@@ -403,6 +407,8 @@ All planned features have been implemented. The project is feature-complete.
 - [x] Terms of Service page (Serbian jurisdiction, EU/US consumer rights preserved)
 - [x] Disclaimer page (non-affiliation with Anthropic, accuracy warnings)
 - [x] Accessibility Statement page (WCAG 2.1 AA conformance documentation)
+- [x] Auto-updating build info in footer (version from package.json, build date, git commit SHA)
+- [x] Prebuild script (`scripts/update-build-info.cjs`) runs automatically on each build
 
 ---
 

@@ -40,6 +40,8 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Colored language tags above code blocks (15+ languages supported)
 - Shared Footer component with copyright attribution
 - Legal pages: Privacy Policy, Terms of Service, Disclaimer, Accessibility Statement
+- Auto-updating build info in footer (version, build date, commit SHA)
+- Prebuild script for automatic version updates on each build
 
 ### Project Status: Complete
 
@@ -83,6 +85,8 @@ claude-insider/
 │   │   │   ├── theme-toggle.tsx  # Dark/light/system toggle
 │   │   │   ├── json-ld.tsx       # JSON-LD structured data components
 │   │   │   └── footer.tsx        # Shared footer with legal links
+│   │   ├── scripts/
+│   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation
 │   │   │   ├── getting-started/  # installation.mdx, quickstart.mdx
 │   │   │   ├── configuration/    # index.mdx, claude-md.mdx, settings.mdx

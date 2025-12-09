@@ -51,6 +51,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Terms of Service page (international coverage)
 - [x] Disclaimer page (non-affiliation with Anthropic)
 - [x] Accessibility Statement page (WCAG 2.1 AA documentation)
+- [x] Auto-updating build info in footer (version, date, commit SHA)
 
 ### All Features Complete
 
@@ -111,6 +112,8 @@ claude-insider/
 │   │   │   ├── search.tsx        # Search modal (React Portal)
 │   │   │   ├── theme-toggle.tsx  # Theme switcher
 │   │   │   └── footer.tsx        # Shared footer with legal links
+│   │   ├── scripts/
+│   │   │   └── update-build-info.cjs  # Prebuild script for version info
 │   │   ├── content/              # MDX documentation
 │   │   │   ├── getting-started/
 │   │   │   ├── configuration/

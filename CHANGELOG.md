@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Terms of Service page (`/terms`) - international coverage with Serbian governing law
 - Disclaimer page (`/disclaimer`) - non-affiliation with Anthropic, accuracy warnings
 - Accessibility Statement page (`/accessibility`) - WCAG 2.1 AA conformance documentation
+- Auto-updating build info in footer (version, build date, commit SHA)
+- Prebuild script (`scripts/update-build-info.cjs`) for automatic version updates
 
 ### Legal Compliance
 - Privacy Policy covers EU GDPR, US CCPA, and Serbian Data Protection Law
@@ -29,6 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Footer now displays on all pages with consistent styling
 - Footer includes copyright with link to GitHub repository
 - Footer links: Privacy Policy, Terms, Disclaimer, Accessibility
+- Footer displays version, build date, and git commit SHA at bottom
+- Version sourced from package.json, updates automatically on each build
 
 ## [0.7.0] - 2025-12-09
 
@@ -230,7 +234,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
-| 0.8.0 | 2025-12-09 | Legal pages (Privacy, Terms, Disclaimer, Accessibility), shared Footer |
+| 0.8.0 | 2025-12-09 | Legal pages, shared Footer, auto-updating build info |
 | 0.7.0 | 2025-12-09 | Syntax highlighting with highlight.js, colored language tags |
 | 0.6.0 | 2025-12-09 | PWA offline support, accessibility audit and fixes |
 | 0.5.0 | 2025-12-09 | Lighthouse optimization, JSON-LD structured data, security headers |
