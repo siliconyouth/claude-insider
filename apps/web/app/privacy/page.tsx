@@ -41,17 +41,50 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Information We Collect</h2>
+            <h2 className="text-2xl font-semibold mb-4">Analytics</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>We do not collect any personal data.</strong> Our website is designed with privacy in mind:
+              We use <strong>Vercel Analytics</strong>, a privacy-focused analytics service, to understand how visitors use our website. This helps us improve the content and user experience.
             </p>
-            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li><strong>No cookies:</strong> We do not use cookies or similar tracking technologies</li>
-              <li><strong>No analytics:</strong> We do not use any analytics services</li>
-              <li><strong>No user accounts:</strong> We do not require registration or collect login information</li>
-              <li><strong>No forms:</strong> We do not collect information through contact forms</li>
-              <li><strong>No tracking:</strong> We do not track your browsing behavior</li>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">What Vercel Analytics Collects</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Page views:</strong> Which pages are visited</li>
+              <li><strong>Referrers:</strong> How visitors found our site (e.g., search engine, direct link)</li>
+              <li><strong>Geographic location:</strong> Country-level only (not city or precise location)</li>
+              <li><strong>Device information:</strong> Device type (desktop, mobile, tablet), browser, and operating system</li>
+              <li><strong>Web Vitals:</strong> Performance metrics (page load time, interactivity, visual stability)</li>
             </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">What Vercel Analytics Does NOT Collect</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>No cookies:</strong> Vercel Analytics is cookie-free</li>
+              <li><strong>No personal data:</strong> No names, emails, or identifying information</li>
+              <li><strong>No IP addresses:</strong> IP addresses are not stored or logged</li>
+              <li><strong>No cross-site tracking:</strong> Your activity is not tracked across other websites</li>
+              <li><strong>No fingerprinting:</strong> No browser or device fingerprinting techniques</li>
+              <li><strong>No data selling:</strong> Analytics data is never sold to third parties</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Privacy Compliance</h3>
+            <p className="text-gray-300 leading-relaxed">
+              Vercel Analytics is designed to be privacy-compliant:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>GDPR compliant:</strong> No consent banner required as no personal data is collected</li>
+              <li><strong>CCPA compliant:</strong> No personal information is sold or shared</li>
+              <li><strong>Cookie-free:</strong> No cookie consent needed</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              For more information, see{" "}
+              <a
+                href="https://vercel.com/docs/analytics/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-400 hover:text-orange-300"
+              >
+                Vercel Analytics Privacy Policy
+              </a>.
+            </p>
           </section>
 
           <section className="mb-8">
@@ -91,6 +124,20 @@ export default function PrivacyPolicyPage() {
               </a>
               . We do not have access to individual-level data collected by Vercel.
             </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Security Measures</h2>
+            <p className="text-gray-300 leading-relaxed">
+              We implement the following security measures to protect your browsing experience:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li><strong>HTTPS only:</strong> All connections are encrypted</li>
+              <li><strong>Content Security Policy:</strong> Prevents XSS attacks and unauthorized scripts</li>
+              <li><strong>X-Frame-Options:</strong> Prevents clickjacking attacks</li>
+              <li><strong>Permissions Policy:</strong> Disables camera, microphone, and geolocation access</li>
+              <li><strong>No FLoC:</strong> We opt out of Google&apos;s Federated Learning of Cohorts tracking</li>
+            </ul>
           </section>
 
           <section className="mb-8">
@@ -174,7 +221,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> We respect your privacy. We don&apos;t collect your personal data, we don&apos;t use cookies, we don&apos;t track you, and we don&apos;t sell any information. Your theme preference is stored locally on your device. That&apos;s it.
+              <strong>In short:</strong> We respect your privacy. We use cookie-free, privacy-focused analytics (Vercel Analytics) that collects only anonymous usage data. We don&apos;t collect personal information, we don&apos;t use cookies, we don&apos;t track you across sites, and we don&apos;t sell any data. Your theme preference is stored locally on your device.
             </p>
           </section>
         </article>
