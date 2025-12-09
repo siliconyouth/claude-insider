@@ -1,0 +1,506 @@
+---
+title: Test Generation with Claude
+description: Learn how to generate comprehensive test suites with Claude Code, from unit tests to integration tests with proper mocking
+---
+
+Writing tests is essential for code quality but often tedious. Claude Code can generate comprehensive test suites that cover edge cases, follow best practices, and integrate with your existing testing framework.
+
+## Why Use Claude for Test Generation?
+
+Manual test writing challenges:
+
+- **Time-consuming** - Writing tests often takes as long as writing code
+- **Incomplete coverage** - Easy to miss edge cases
+- **Inconsistent patterns** - Different developers write tests differently
+
+Claude addresses these by:
+
+- **Fast generation** - Tests in seconds, not hours
+- **Comprehensive coverage** - Systematic edge case identification
+- **Consistent patterns** - Same structure and best practices every time
+
+## Quick Start: Generate Tests
+
+The simplest approach:
+
+```
+Write tests for this function:
+[paste your function]
+
+Use Jest/Vitest/pytest (specify your framework)
+Include edge cases and error scenarios
+```
+
+## Test Types Claude Can Generate
+
+| Type | Purpose | Example |
+|------|---------|---------|
+| **Unit Tests** | Test individual functions | Function input/output |
+| **Integration Tests** | Test component interactions | API + Database |
+| **Component Tests** | Test UI components | React/Vue components |
+| **E2E Tests** | Test user workflows | Login flow |
+| **Snapshot Tests** | Detect UI changes | Component rendering |
+
+## Generating Unit Tests
+
+### JavaScript/TypeScript with Jest
+
+```
+Generate Jest unit tests for this utility function:
+
+export function validateEmail(email: string): boolean {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+Include:
+- Valid email formats
+- Invalid email formats
+- Edge cases (empty, null, undefined)
+- Special characters
+```
+
+**Generated Output:**
+
+```typescript
+import { validateEmail } from './validation';
+
+describe('validateEmail', () => {
+  describe('valid emails', () => {
+    it('should accept standard email format', () => {
+      expect(validateEmail('user@example.com')).toBe(true);
+    });
+
+    it('should accept email with subdomain', () => {
+      expect(validateEmail('user@mail.example.com')).toBe(true);
+    });
+
+    it('should accept email with plus sign', () => {
+      expect(validateEmail('user+tag@example.com')).toBe(true);
+    });
+
+    it('should accept email with numbers', () => {
+      expect(validateEmail('user123@example.com')).toBe(true);
+    });
+  });
+
+  describe('invalid emails', () => {
+    it('should reject email without @', () => {
+      expect(validateEmail('userexample.com')).toBe(false);
+    });
+
+    it('should reject email without domain', () => {
+      expect(validateEmail('user@')).toBe(false);
+    });
+
+    it('should reject email with spaces', () => {
+      expect(validateEmail('user @example.com')).toBe(false);
+    });
+
+    it('should reject email without TLD', () => {
+      expect(validateEmail('user@example')).toBe(false);
+    });
+  });
+
+  describe('edge cases', () => {
+    it('should reject empty string', () => {
+      expect(validateEmail('')).toBe(false);
+    });
+
+    it('should handle null gracefully', () => {
+      expect(validateEmail(null as any)).toBe(false);
+    });
+
+    it('should handle undefined gracefully', () => {
+      expect(validateEmail(undefined as any)).toBe(false);
+    });
+  });
+});
+```
+
+### Python with pytest
+
+```
+Generate pytest tests for this function:
+
+def calculate_discount(price: float, percentage: float) -> float:
+    if price < 0:
+        raise ValueError("Price cannot be negative")
+    if not 0 <= percentage <= 100:
+        raise ValueError("Percentage must be between 0 and 100")
+    return price * (1 - percentage / 100)
+
+Include parametrized tests and exception testing.
+```
+
+**Generated Output:**
+
+```python
+import pytest
+from discount import calculate_discount
+
+class TestCalculateDiscount:
+    @pytest.mark.parametrize("price,percentage,expected", [
+        (100.0, 10, 90.0),
+        (100.0, 50, 50.0),
+        (100.0, 0, 100.0),
+        (100.0, 100, 0.0),
+        (50.0, 25, 37.5),
+    ])
+    def test_valid_discounts(self, price, percentage, expected):
+        assert calculate_discount(price, percentage) == expected
+
+    @pytest.mark.parametrize("price,percentage", [
+        (-10.0, 10),
+        (-1.0, 50),
+    ])
+    def test_negative_price_raises_error(self, price, percentage):
+        with pytest.raises(ValueError, match="Price cannot be negative"):
+            calculate_discount(price, percentage)
+
+    @pytest.mark.parametrize("price,percentage", [
+        (100.0, -1),
+        (100.0, 101),
+        (100.0, 150),
+    ])
+    def test_invalid_percentage_raises_error(self, price, percentage):
+        with pytest.raises(ValueError, match="Percentage must be between"):
+            calculate_discount(price, percentage)
+
+    def test_zero_price(self):
+        assert calculate_discount(0, 50) == 0.0
+
+    def test_decimal_percentage(self):
+        result = calculate_discount(100.0, 33.33)
+        assert abs(result - 66.67) < 0.01
+```
+
+## Generating Component Tests
+
+### React Testing Library
+
+```
+Generate tests for this React component:
+
+function Counter({ initialCount = 0, onCountChange }) {
+  const [count, setCount] = useState(initialCount);
+
+  const increment = () => {
+    const newCount = count + 1;
+    setCount(newCount);
+    onCountChange?.(newCount);
+  };
+
+  return (
+    <div>
+      <span data-testid="count">{count}</span>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+
+Use React Testing Library with user-event.
+Test rendering, interactions, and callbacks.
+```
+
+**Generated Output:**
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Counter } from './Counter';
+
+describe('Counter', () => {
+  it('renders with default count of 0', () => {
+    render(<Counter />);
+    expect(screen.getByTestId('count')).toHaveTextContent('0');
+  });
+
+  it('renders with custom initial count', () => {
+    render(<Counter initialCount={5} />);
+    expect(screen.getByTestId('count')).toHaveTextContent('5');
+  });
+
+  it('increments count when button is clicked', async () => {
+    const user = userEvent.setup();
+    render(<Counter />);
+
+    await user.click(screen.getByRole('button', { name: /increment/i }));
+
+    expect(screen.getByTestId('count')).toHaveTextContent('1');
+  });
+
+  it('calls onCountChange with new count', async () => {
+    const user = userEvent.setup();
+    const handleChange = jest.fn();
+    render(<Counter onCountChange={handleChange} />);
+
+    await user.click(screen.getByRole('button', { name: /increment/i }));
+
+    expect(handleChange).toHaveBeenCalledWith(1);
+  });
+
+  it('increments multiple times correctly', async () => {
+    const user = userEvent.setup();
+    render(<Counter />);
+    const button = screen.getByRole('button', { name: /increment/i });
+
+    await user.click(button);
+    await user.click(button);
+    await user.click(button);
+
+    expect(screen.getByTestId('count')).toHaveTextContent('3');
+  });
+});
+```
+
+## Generating API Tests
+
+### Express/Node.js API Tests
+
+```
+Generate supertest tests for this Express endpoint:
+
+app.post('/api/users', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password required' });
+  }
+
+  const existingUser = await User.findByEmail(email);
+  if (existingUser) {
+    return res.status(409).json({ error: 'Email already registered' });
+  }
+
+  const user = await User.create({ email, password });
+  res.status(201).json({ id: user.id, email: user.email });
+});
+
+Include mocking for the User model.
+```
+
+**Generated Output:**
+
+```typescript
+import request from 'supertest';
+import { app } from '../app';
+import { User } from '../models/User';
+
+jest.mock('../models/User');
+
+describe('POST /api/users', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('successful registration', () => {
+    it('should create user and return 201', async () => {
+      (User.findByEmail as jest.Mock).mockResolvedValue(null);
+      (User.create as jest.Mock).mockResolvedValue({
+        id: 'usr_123',
+        email: 'test@example.com'
+      });
+
+      const response = await request(app)
+        .post('/api/users')
+        .send({ email: 'test@example.com', password: 'password123' });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual({
+        id: 'usr_123',
+        email: 'test@example.com'
+      });
+    });
+  });
+
+  describe('validation errors', () => {
+    it('should return 400 if email missing', async () => {
+      const response = await request(app)
+        .post('/api/users')
+        .send({ password: 'password123' });
+
+      expect(response.status).toBe(400);
+      expect(response.body.error).toBe('Email and password required');
+    });
+
+    it('should return 400 if password missing', async () => {
+      const response = await request(app)
+        .post('/api/users')
+        .send({ email: 'test@example.com' });
+
+      expect(response.status).toBe(400);
+    });
+  });
+
+  describe('duplicate email', () => {
+    it('should return 409 if email exists', async () => {
+      (User.findByEmail as jest.Mock).mockResolvedValue({ id: 'existing' });
+
+      const response = await request(app)
+        .post('/api/users')
+        .send({ email: 'existing@example.com', password: 'password123' });
+
+      expect(response.status).toBe(409);
+      expect(response.body.error).toBe('Email already registered');
+    });
+  });
+});
+```
+
+## Test Generation Strategies
+
+### Strategy 1: Coverage-First
+
+```
+Generate tests to achieve 100% code coverage for this file.
+Identify all branches, conditions, and edge cases.
+```
+
+### Strategy 2: Behavior-Driven
+
+```
+Generate BDD-style tests using given/when/then format:
+- Given: Setup conditions
+- When: Action performed
+- Then: Expected outcome
+```
+
+### Strategy 3: Property-Based
+
+```
+Generate property-based tests using fast-check.
+Test invariants that should always hold true.
+```
+
+### Strategy 4: Regression Tests
+
+```
+This function had a bug where [describe bug].
+Generate tests that would catch this bug
+and prevent regression.
+```
+
+## Mocking Strategies
+
+### Mocking External APIs
+
+```
+Generate tests with mocked HTTP requests using MSW:
+
+async function fetchUser(id: string) {
+  const response = await fetch(`/api/users/${id}`);
+  if (!response.ok) throw new Error('User not found');
+  return response.json();
+}
+```
+
+### Mocking Database
+
+```
+Generate tests with mocked database calls.
+Use dependency injection pattern for testability.
+```
+
+### Mocking Time
+
+```
+Generate tests for time-dependent code.
+Use jest.useFakeTimers() for setTimeout/setInterval.
+```
+
+## Best Practices for Test Generation
+
+### 1. Provide Test Context
+
+```
+This is a payment processing function.
+Generate tests covering:
+- Successful payments
+- Declined cards
+- Network errors
+- Rate limiting
+- Concurrent requests
+```
+
+### 2. Specify Framework and Style
+
+```
+Use Vitest with the following conventions:
+- Arrange-Act-Assert pattern
+- Descriptive test names
+- One assertion per test
+- Group related tests with describe
+```
+
+### 3. Include Setup/Teardown
+
+```
+Generate tests including:
+- beforeEach for setup
+- afterEach for cleanup
+- Proper mock reset between tests
+```
+
+### 4. Request Specific Scenarios
+
+```
+Focus on these scenarios:
+- Happy path
+- Invalid inputs
+- Boundary conditions
+- Concurrent operations
+- Error recovery
+```
+
+## Test File Structure
+
+```
+Generate test file following this structure:
+
+describe('[Module Name]', () => {
+  // Test fixtures and setup
+  beforeEach(() => {});
+
+  describe('[Function/Method]', () => {
+    describe('when [condition]', () => {
+      it('should [expected behavior]', () => {});
+    });
+
+    describe('error handling', () => {
+      it('should throw when [condition]', () => {});
+    });
+  });
+});
+```
+
+## Common Testing Patterns
+
+| Pattern | When to Use | Example |
+|---------|-------------|---------|
+| **AAA** | Most unit tests | Arrange-Act-Assert |
+| **Given-When-Then** | BDD/behavior tests | Scenario description |
+| **Table-Driven** | Multiple inputs | Parametrized tests |
+| **Snapshot** | UI components | Component rendering |
+| **Contract** | API boundaries | Request/response |
+
+## Limitations
+
+Claude cannot:
+
+- **Run tests** - Generate only, not execute
+- **Fix failing tests** - May need manual adjustment
+- **Access runtime** - Cannot observe actual behavior
+- **Guarantee coverage** - Review coverage reports separately
+
+Always:
+- Review generated tests for accuracy
+- Run tests and fix any failures
+- Check coverage reports
+- Add tests for discovered edge cases
+
+## Next Steps
+
+- [Code Review](/docs/tutorials/code-review) - Review code before testing
+- [Documentation Generation](/docs/tutorials/documentation-generation) - Document tested code
+- [Real-World Projects](/docs/examples/real-world-projects) - See testing in practice

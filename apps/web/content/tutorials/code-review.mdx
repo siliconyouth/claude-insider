@@ -1,0 +1,354 @@
+---
+title: Automated Code Review with Claude
+description: Learn how to use Claude Code for comprehensive code reviews, catching bugs, security vulnerabilities, and style issues
+---
+
+Code review is one of the most powerful use cases for Claude Code. This tutorial shows you how to leverage AI-powered code review to catch issues before they reach production.
+
+## Why Use Claude for Code Review?
+
+Traditional code review has limitations:
+
+- **Time-consuming** - Reviewers may rush through large PRs
+- **Inconsistent** - Different reviewers catch different issues
+- **Limited expertise** - Reviewers may miss security or performance issues outside their domain
+
+Claude Code addresses these by providing:
+
+- **Comprehensive analysis** - Every line gets attention
+- **Consistent standards** - Same criteria applied every time
+- **Broad expertise** - Security, performance, and best practices
+
+## Quick Start: Review a File
+
+The simplest way to review code:
+
+```
+Review this file for bugs, security issues, and improvements:
+[paste your code or reference a file]
+```
+
+Claude will analyze and provide:
+- Critical bugs
+- Security vulnerabilities
+- Performance issues
+- Style improvements
+- Best practice suggestions
+
+## Review Strategies
+
+### Strategy 1: Full PR Review
+
+Review all changes in a pull request:
+
+```
+Review all the changes in this PR. Look for:
+1. Bugs and logic errors
+2. Security vulnerabilities
+3. Performance issues
+4. Code style consistency
+5. Missing error handling
+```
+
+Claude will:
+1. Read all changed files
+2. Understand the context of changes
+3. Provide categorized feedback
+
+### Strategy 2: Security-Focused Review
+
+For security-critical code:
+
+```
+Perform a security audit on the authentication module.
+Focus on:
+- SQL injection vulnerabilities
+- XSS attack vectors
+- Authentication bypass risks
+- Sensitive data exposure
+- CSRF protection
+```
+
+### Strategy 3: Performance Review
+
+For performance-critical sections:
+
+```
+Review this code for performance issues:
+- N+1 query problems
+- Memory leaks
+- Unnecessary re-renders (React)
+- Inefficient algorithms
+- Missing caching opportunities
+```
+
+### Strategy 4: Incremental Review
+
+Review specific changes:
+
+```
+I just added error handling to the payment processor.
+Review only the new error handling code for:
+- Edge cases I might have missed
+- Error message clarity
+- Logging completeness
+```
+
+## Review Checklist Template
+
+Use this template for comprehensive reviews:
+
+```
+Review this code against the following checklist:
+
+## Correctness
+- [ ] Logic errors
+- [ ] Off-by-one errors
+- [ ] Null/undefined handling
+- [ ] Edge cases
+
+## Security
+- [ ] Input validation
+- [ ] SQL injection
+- [ ] XSS vulnerabilities
+- [ ] Authentication/authorization
+- [ ] Sensitive data handling
+
+## Performance
+- [ ] Algorithm efficiency
+- [ ] Database queries
+- [ ] Memory usage
+- [ ] Caching
+
+## Maintainability
+- [ ] Code clarity
+- [ ] Naming conventions
+- [ ] Documentation
+- [ ] Test coverage
+
+## Error Handling
+- [ ] Try/catch blocks
+- [ ] Error messages
+- [ ] Logging
+- [ ] User feedback
+```
+
+## Real-World Examples
+
+### Example 1: API Endpoint Review
+
+```typescript
+// Code to review
+app.post('/api/users', async (req, res) => {
+  const { email, password, role } = req.body;
+  const user = await db.users.create({
+    email,
+    password,
+    role: role || 'user'
+  });
+  res.json(user);
+});
+```
+
+**Claude's Review:**
+
+> **Critical Issues:**
+> 1. **Password stored in plain text** - Use bcrypt or argon2 to hash passwords
+> 2. **Role injection vulnerability** - Attacker can set `role: 'admin'` in request body
+> 3. **No input validation** - Email format and password strength not validated
+> 4. **Sensitive data exposure** - Response includes password field
+>
+> **Recommended Fix:**
+> ```typescript
+> app.post('/api/users', async (req, res) => {
+>   const { email, password } = req.body;
+>
+>   // Validate input
+>   if (!isValidEmail(email)) {
+>     return res.status(400).json({ error: 'Invalid email' });
+>   }
+>
+>   // Hash password
+>   const hashedPassword = await bcrypt.hash(password, 12);
+>
+>   // Never accept role from client
+>   const user = await db.users.create({
+>     email,
+>     password: hashedPassword,
+>     role: 'user'  // Always default, admin set separately
+>   });
+>
+>   // Exclude sensitive fields
+>   const { password: _, ...safeUser } = user;
+>   res.json(safeUser);
+> });
+> ```
+
+### Example 2: React Component Review
+
+```tsx
+// Code to review
+function UserList() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => setUsers(data));
+  });
+
+  return (
+    <ul>
+      {users.map(user => (
+        <li>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+**Claude's Review:**
+
+> **Issues Found:**
+> 1. **Infinite loop** - useEffect missing dependency array, causing infinite API calls
+> 2. **Missing key prop** - List items need unique keys for React reconciliation
+> 3. **No error handling** - API failures will silently fail
+> 4. **No loading state** - Users see empty list while loading
+>
+> **Recommended Fix:**
+> ```tsx
+> function UserList() {
+>   const [users, setUsers] = useState([]);
+>   const [loading, setLoading] = useState(true);
+>   const [error, setError] = useState(null);
+>
+>   useEffect(() => {
+>     fetch('/api/users')
+>       .then(res => {
+>         if (!res.ok) throw new Error('Failed to fetch');
+>         return res.json();
+>       })
+>       .then(data => setUsers(data))
+>       .catch(err => setError(err.message))
+>       .finally(() => setLoading(false));
+>   }, []); // Empty array = run once
+>
+>   if (loading) return <p>Loading...</p>;
+>   if (error) return <p>Error: {error}</p>;
+>
+>   return (
+>     <ul>
+>       {users.map(user => (
+>         <li key={user.id}>{user.name}</li>
+>       ))}
+>     </ul>
+>   );
+> }
+> ```
+
+## Integrating with Git Workflows
+
+### Pre-Commit Review
+
+Review staged changes before committing:
+
+```
+Review my staged changes (git diff --staged).
+Are there any issues I should fix before committing?
+```
+
+### PR Description Generation
+
+Generate PR descriptions from code changes:
+
+```
+Generate a PR description for these changes.
+Include:
+- Summary of what changed
+- Why these changes were made
+- Testing performed
+- Any breaking changes
+```
+
+### Automated Review with Hooks
+
+Create a pre-push hook that asks Claude to review:
+
+```bash
+# .claude/commands/review-changes.md
+Review the changes between HEAD and origin/main.
+Provide a summary of:
+1. Critical issues that must be fixed
+2. Warnings that should be addressed
+3. Minor suggestions for improvement
+```
+
+## Best Practices
+
+### 1. Provide Context
+
+```
+This is a payment processing module for an e-commerce site.
+Users can pay with credit cards or PayPal.
+Review for PCI compliance and security issues.
+```
+
+### 2. Specify Standards
+
+```
+Review against our team standards:
+- Use TypeScript strict mode
+- All functions must have JSDoc comments
+- No console.log in production code
+- Error messages must be user-friendly
+```
+
+### 3. Prioritize Feedback
+
+```
+Categorize issues by severity:
+- CRITICAL: Must fix before merge
+- WARNING: Should fix soon
+- SUGGESTION: Nice to have
+```
+
+### 4. Request Actionable Feedback
+
+```
+For each issue found, provide:
+1. The problem
+2. Why it matters
+3. How to fix it
+4. Example code if applicable
+```
+
+## Common Issues Claude Catches
+
+| Category | Examples |
+|----------|----------|
+| **Security** | SQL injection, XSS, CSRF, auth bypass |
+| **Performance** | N+1 queries, memory leaks, blocking I/O |
+| **Reliability** | Missing error handling, race conditions |
+| **Maintainability** | Complex functions, poor naming, missing docs |
+| **Best Practices** | Anti-patterns, deprecated APIs, type safety |
+
+## Limitations
+
+Be aware of Claude Code review limitations:
+
+- **Runtime behavior** - Cannot catch issues that only appear at runtime
+- **Integration issues** - May miss problems with external systems
+- **Business logic** - Cannot verify correctness of business rules
+- **Performance benchmarks** - Cannot measure actual performance
+
+Always combine AI review with:
+- Human review for business logic
+- Automated tests for runtime behavior
+- Integration tests for system interactions
+- Performance testing for optimization
+
+## Next Steps
+
+- [Test Generation](/docs/tutorials/test-generation) - Write tests for reviewed code
+- [Documentation Generation](/docs/tutorials/documentation-generation) - Document your code
+- [Debugging Guide](/docs/tips-and-tricks/debugging) - Fix issues found in review

@@ -115,7 +115,7 @@ claude-insider/
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
-│   │   ├── content/              # MDX documentation content (28 pages)
+│   │   ├── content/              # MDX documentation content (34 pages)
 │   │   │   ├── getting-started/
 │   │   │   │   ├── installation.mdx
 │   │   │   │   ├── quickstart.mdx
@@ -141,14 +141,22 @@ claude-insider/
 │   │   │   │   ├── error-handling.mdx     # Error handling patterns
 │   │   │   │   ├── rate-limits.mdx        # Rate limits & quotas
 │   │   │   │   └── models.mdx             # Model comparison guide
-│   │   │   └── integrations/
-│   │   │       ├── index.mdx
-│   │   │       ├── mcp-servers.mdx
-│   │   │       ├── ide-plugins.mdx
-│   │   │       ├── hooks.mdx
-│   │   │       ├── github-actions.mdx     # GitHub Actions CI/CD
-│   │   │       ├── docker.mdx             # Docker containerization
-│   │   │       └── databases.mdx          # Database integrations via MCP
+│   │   │   ├── integrations/
+│   │   │   │   ├── index.mdx
+│   │   │   │   ├── mcp-servers.mdx
+│   │   │   │   ├── ide-plugins.mdx
+│   │   │   │   ├── hooks.mdx
+│   │   │   │   ├── github-actions.mdx     # GitHub Actions CI/CD
+│   │   │   │   ├── docker.mdx             # Docker containerization
+│   │   │   │   └── databases.mdx          # Database integrations via MCP
+│   │   │   ├── tutorials/                 # Tutorials category (Phase D)
+│   │   │   │   ├── index.mdx              # Tutorials overview
+│   │   │   │   ├── code-review.mdx        # Automated code review
+│   │   │   │   ├── documentation-generation.mdx  # Auto-generating docs
+│   │   │   │   └── test-generation.mdx    # Writing tests with Claude
+│   │   │   └── examples/                  # Examples category (Phase D)
+│   │   │       ├── index.mdx              # Examples overview
+│   │   │       └── real-world-projects.mdx # Case studies
 │   │   ├── lib/
 │   │   │   ├── mdx.ts            # MDX utilities
 │   │   │   ├── search.ts         # Search index and utilities
@@ -232,7 +240,7 @@ claude-insider/
 - [x] Custom MDX components (headings, code blocks, tables, links)
 - [x] Code copy-to-clipboard functionality
 - [x] Fuzzy search with Fuse.js (Cmd/Ctrl+K)
-- [x] 28 documentation pages with comprehensive content
+- [x] 34 documentation pages with comprehensive content (all phases complete)
 - [x] Shared Header component for consistent navigation
 - [x] **Deployed to Vercel** (production live at www.claudeinsider.com)
 - [x] Table of Contents with scroll spy
@@ -253,7 +261,7 @@ claude-insider/
 - [x] Auto-updating build info in footer (version, date, commit SHA)
 - [x] Prebuild script for automatic version updates
 - [x] ContentMeta component for source citations on all content pages
-- [x] AI generation metadata on all 28 MDX pages (model, date, build ID)
+- [x] AI generation metadata on all 34 MDX pages (model, date, build ID)
 - [x] Links to official Anthropic documentation sources
 - [x] Vercel Analytics for privacy-focused usage tracking
 - [x] Content Security Policy (CSP) headers
@@ -278,11 +286,26 @@ claude-insider/
 - [x] **Error boundary** for voice assistant component
 - [x] **Vercel Analytics tracking** for voice assistant usage
 - [x] **13 new documentation pages**: Troubleshooting, Migration, Advanced Prompting, Environment, Permissions, Debugging, Streaming, Error Handling, Rate Limits, Models, GitHub Actions, Docker, Databases
+- [x] **Tutorials category** (Phase D): Code review, documentation generation, test generation
+- [x] **Examples category** (Phase D): Real-world projects and case studies
 - [x] **Markdown display cleanup** - Chat responses display without markdown syntax
 - [x] **TTS markdown handling** - Converts markdown to speakable text for natural speech
 - [x] **Performance optimizations** - CSS optimization, source map removal, memoization
 
-### Pages Implemented (28 Documentation + 6 Utility Pages)
+### Phase 20: Tutorials & Examples (Phase D) - COMPLETED (v0.16.0)
+- [x] **Tutorials Category** - 4 new pages
+  - [x] `tutorials/index.mdx` - Tutorials overview
+  - [x] `tutorials/code-review.mdx` - Automated code review with Claude
+  - [x] `tutorials/documentation-generation.mdx` - Auto-generating README, API docs, JSDoc
+  - [x] `tutorials/test-generation.mdx` - Unit tests, component tests, mocking strategies
+- [x] **Examples Category** - 2 new pages
+  - [x] `examples/index.mdx` - Examples overview
+  - [x] `examples/real-world-projects.mdx` - 5 case studies (Claude Insider, E-Commerce API, DevOps CLI, React Component Library, Data Pipeline)
+- [x] Navigation sidebar updated with Tutorials and Examples
+- [x] Search index updated with 6 new entries
+- [x] RAG index regenerated (423 document chunks)
+
+### Pages Implemented (34 Documentation + 6 Utility Pages)
 
 | Route | Status | Description |
 |-------|--------|-------------|
@@ -317,6 +340,12 @@ claude-insider/
 | `/docs/integrations/github-actions` | Done | GitHub Actions CI/CD (MDX) |
 | `/docs/integrations/docker` | Done | Docker containerization (MDX) |
 | `/docs/integrations/databases` | Done | Database integrations via MCP (MDX) |
+| `/docs/tutorials` | Done | Tutorials overview (MDX) |
+| `/docs/tutorials/code-review` | Done | Automated code review (MDX) |
+| `/docs/tutorials/documentation-generation` | Done | Auto-generating docs (MDX) |
+| `/docs/tutorials/test-generation` | Done | Writing tests with Claude (MDX) |
+| `/docs/examples` | Done | Examples overview (MDX) |
+| `/docs/examples/real-world-projects` | Done | Case studies (MDX) |
 | `/privacy` | Done | Privacy Policy (GDPR, CCPA, Serbian law) |
 | `/terms` | Done | Terms of Service (international) |
 | `/disclaimer` | Done | Disclaimer (non-affiliation notice) |
@@ -478,7 +507,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.15.0.
+All planned features have been implemented. The project is feature-complete at v0.16.0.
 
 ### Content Expansion (All Complete)
 
@@ -501,9 +530,9 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] Docker and containerization
 - [x] Database integrations via MCP
 
-**Phase D: New Categories (Future)**
-- [ ] Tutorials category: Code review, documentation generation, test generation, refactoring
-- [ ] Examples category: Real-world projects, starter templates
+**Phase D: New Categories** - COMPLETED (v0.16.0)
+- [x] Tutorials category: Code review, documentation generation, test generation
+- [x] Examples category: Real-world projects and case studies
 
 ### Optional Technical Enhancements
 - [ ] Add GitHub Actions CI/CD pipeline (optional - Vercel handles deployment)
@@ -572,7 +601,7 @@ All planned features have been implemented. The project is feature-complete at v
 ### Phase 9: Content Attribution & Sources - COMPLETED
 - [x] ContentMeta component (`components/content-meta.tsx`) for source citations
 - [x] AI generation metadata on all content pages (model, date, build ID)
-- [x] Links to official Anthropic documentation sources on all 28 MDX pages
+- [x] Links to official Anthropic documentation sources on all 34 MDX pages
 - [x] Sources include: docs.anthropic.com, modelcontextprotocol.io, anthropic.com/engineering
 - [x] Dynamic build ID from `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` environment variable
 - [x] ContentMeta exported via mdx-components.tsx for use in MDX files
@@ -700,7 +729,7 @@ All planned features have been implemented. The project is feature-complete at v
 
 - User engagement (time on site, pages per session)
 - Search usage and success rate
-- Content coverage (topics documented) - **28 pages completed**
+- Content coverage (topics documented) - **34 pages completed**
 - Page load performance (Core Web Vitals)
 - User feedback and contributions
 - GitHub stars and forks

@@ -73,6 +73,22 @@ const navigationConfig: Record<
       { label: "Databases", href: "/docs/integrations/databases" },
     ],
   },
+  tutorials: {
+    title: "Tutorials",
+    items: [
+      { label: "Overview", href: "/docs/tutorials" },
+      { label: "Code Review", href: "/docs/tutorials/code-review" },
+      { label: "Documentation Generation", href: "/docs/tutorials/documentation-generation" },
+      { label: "Test Generation", href: "/docs/tutorials/test-generation" },
+    ],
+  },
+  examples: {
+    title: "Examples",
+    items: [
+      { label: "Overview", href: "/docs/examples" },
+      { label: "Real-World Projects", href: "/docs/examples/real-world-projects" },
+    ],
+  },
 };
 
 // Generate static paths for all MDX content

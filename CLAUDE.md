@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.15.0
+**Version**: 0.16.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -18,7 +18,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Tailwind CSS 4.1.5 with dark/light themes
 - Homepage with hero, categories, features
 - MDX content support with dynamic routing
-- 28 documentation pages (all categories complete)
+- 34 documentation pages (all categories complete including Phase D)
 - Fuzzy search with Fuse.js (Cmd/Ctrl+K)
 - Dark/Light/System theme toggle with localStorage
 - Code copy-to-clipboard functionality
@@ -80,8 +80,11 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 - **Demo animation timing fix** - Proper useEffect dependency array for 46-second animation loops
 - **33 syntax highlighting languages** - Expanded from 12 to 33 languages with colored badges
+- **Build-time RAG index generation** - Pre-computed index with 423 document chunks for faster AI responses
+- **Tutorials category** - Code review, documentation generation, test generation tutorials
+- **Examples category** - Real-world projects and case studies
 
-### Project Status: Complete (v0.15.0)
+### Project Status: Complete (v0.16.0)
 
 ## Tech Stack
 
@@ -137,12 +140,14 @@ claude-insider/
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
-│   │   ├── content/              # MDX documentation
+│   │   ├── content/              # MDX documentation (34 pages)
 │   │   │   ├── getting-started/  # installation, quickstart, troubleshooting, migration
 │   │   │   ├── configuration/    # index, claude-md, settings, environment, permissions
 │   │   │   ├── tips-and-tricks/  # index, prompting, productivity, advanced-prompting, debugging
 │   │   │   ├── api/              # index, authentication, tool-use, streaming, error-handling, rate-limits, models
-│   │   │   └── integrations/     # index, mcp-servers, ide-plugins, hooks, github-actions, docker, databases
+│   │   │   ├── integrations/     # index, mcp-servers, ide-plugins, hooks, github-actions, docker, databases
+│   │   │   ├── tutorials/        # index, code-review, documentation-generation, test-generation
+│   │   │   └── examples/         # index, real-world-projects
 │   │   ├── lib/
 │   │   │   ├── mdx.ts            # MDX utilities
 │   │   │   ├── search.ts         # Search index
@@ -255,6 +260,8 @@ Configured in `vercel.json`:
 | Tips & Tricks | `/docs/tips-and-tricks` | Prompting, productivity, best practices |
 | API Reference | `/docs/api` | Claude API docs, SDK, tool use |
 | Integrations | `/docs/integrations` | MCP servers, IDE plugins, hooks |
+| Tutorials | `/docs/tutorials` | Code review, docs generation, testing |
+| Examples | `/docs/examples` | Real-world projects, case studies |
 
 ## Legal & Utility Pages
 
@@ -270,11 +277,10 @@ Configured in `vercel.json`:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.15.0.
+All planned features have been implemented. The project is feature-complete at v0.16.0.
 
 ### Future Enhancements (Optional)
 - Multi-language support (i18n) when translations are ready
-- Additional tutorial and example pages (Phase D)
 - Community contributions via GitHub
 
 ## Voice Assistant Architecture
@@ -386,7 +392,7 @@ The `ContentMeta` component is exported via `mdx-components.tsx` and available i
 
 ## Content Status (All Complete)
 
-### Documentation Pages (28 total)
+### Documentation Pages (34 total)
 
 | Category | Pages | Count |
 |----------|-------|-------|
@@ -395,17 +401,14 @@ The `ContentMeta` component is exported via `mdx-components.tsx` and available i
 | Tips & Tricks | Overview, Prompting, Productivity, Advanced Prompting, Debugging | 5 |
 | API Reference | Overview, Authentication, Tool Use, Streaming, Error Handling, Rate Limits, Models | 7 |
 | Integrations | Overview, MCP Servers, IDE Plugins, Hooks, GitHub Actions, Docker, Databases | 7 |
+| Tutorials | Overview, Code Review, Documentation Generation, Test Generation | 4 |
+| Examples | Overview, Real-World Projects | 2 |
 
-### Future Content (Optional - Phase D)
-**Tutorials Category:**
-- Code review automation
-- Documentation generation
-- Test generation with Claude
-- Code refactoring patterns
-
-**Examples Category:**
-- Real-world project case studies
-- Starter templates and boilerplates
+### All Phases Complete
+- Phase A: Core Enhancements (v0.12.1, v0.13.0)
+- Phase B: API Deep Dives (v0.13.0)
+- Phase C: Integrations Expansion (v0.13.0)
+- Phase D: Tutorials & Examples (v0.16.0)
 
 ## Contributing
 

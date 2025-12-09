@@ -9,6 +9,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.16.0] - 2025-12-09
+
+### Added
+- **Tutorials Category** - New documentation category with 4 pages
+  - `tutorials/index.mdx` - Overview of all tutorials
+  - `tutorials/code-review.mdx` - Automated code review with Claude (security, performance, PR reviews)
+  - `tutorials/documentation-generation.mdx` - Auto-generating README, API docs, JSDoc, docstrings
+  - `tutorials/test-generation.mdx` - Unit tests, component tests, API tests, mocking strategies
+
+- **Examples Category** - New documentation category with 2 pages
+  - `examples/index.mdx` - Overview of examples and case studies
+  - `examples/real-world-projects.mdx` - 5 case studies (Claude Insider, E-Commerce API, DevOps CLI, React Component Library, Data Pipeline)
+
+### Changed
+- Documentation pages increased from 28 to 34 (Phase D complete)
+- RAG index now contains 423 document chunks (up from 360)
+- Updated navigation sidebar with Tutorials and Examples categories
+- Updated search index with 6 new page entries
+- Updated category mappings in RAG system
+
+### Technical Details
+- `apps/web/content/tutorials/` - 4 new MDX files
+- `apps/web/content/examples/` - 2 new MDX files
+- `apps/web/app/docs/[...slug]/page.tsx` - Added tutorials and examples navigation
+- `apps/web/lib/search.ts` - Added 6 new search entries
+- `apps/web/lib/rag.ts` - Added tutorials and examples categories
+- `apps/web/scripts/generate-rag-index.cjs` - Added tutorials and examples categories
+- `apps/web/data/rag-index.json` - Regenerated with 423 chunks
+
+## [0.15.1] - 2025-12-09
+
+### Added
+- **Build-Time RAG Index Generation** - Pre-computed document index for faster AI assistant responses
+  - New `scripts/generate-rag-index.cjs` prebuild script
+  - Generates `data/rag-index.json` with 360 document chunks and TF-IDF scores
+  - RAG system now loads pre-built index instantly instead of building at runtime
+  - Falls back to runtime indexing if pre-built index is not available
+
+### Changed
+- `prebuild` script now runs both build info update and RAG index generation
+- RAG system (`lib/rag.ts`) updated to support pre-built index loading
+
+### Technical Details
+- `apps/web/scripts/generate-rag-index.cjs` - New prebuild script for RAG index generation
+- `apps/web/lib/rag.ts` - Added `loadPrebuiltIndex()`, `isIndexPrebuilt()`, `clearIndex()` functions
+- `apps/web/data/rag-index.json` - Pre-computed index with chunks, TF-IDF scores, and IDF values
+- `apps/web/package.json` - Updated prebuild to run RAG generation
+
 ## [0.15.0] - 2025-12-09
 
 ### Added
@@ -509,6 +557,8 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.16.0 | 2025-12-09 | Phase D content: Tutorials & Examples categories (34 docs) |
+| 0.15.1 | 2025-12-09 | Build-time RAG index generation |
 | 0.15.0 | 2025-12-09 | 21 additional syntax highlighting languages (33 total) |
 | 0.14.1 | 2025-12-09 | Demo animation timing fix (useEffect dependency array) |
 | 0.14.0 | 2025-12-09 | Fullscreen popup mode, OpenAssistantButton, /assistant redirects to popup |
@@ -556,9 +606,9 @@ Phase D (Lower Priority):
 - [x] Docker and containerization (v0.13.0)
 - [x] Database integrations (v0.13.0)
 
-**Phase D: New Categories (Lower Priority)** - Future
-- [ ] Tutorials category: Code review, documentation generation, test generation, refactoring
-- [ ] Examples category: Real-world projects, starter templates
+**Phase D: New Categories (Lower Priority)** - COMPLETED
+- [x] Tutorials category: Code review, documentation generation, test generation (v0.16.0)
+- [x] Examples category: Real-world projects (v0.16.0)
 
 ### Technical Enhancements (Optional)
 - [ ] GitHub Actions CI/CD pipeline (Vercel handles deployment)

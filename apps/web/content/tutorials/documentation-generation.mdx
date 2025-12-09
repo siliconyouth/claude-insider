@@ -1,0 +1,411 @@
+---
+title: Documentation Generation with Claude
+description: Automatically generate comprehensive documentation for your codebase including API docs, README files, and inline comments
+---
+
+Good documentation is essential but time-consuming. Claude Code can generate comprehensive documentation from your codebase, saving hours of manual work while ensuring accuracy and consistency.
+
+## Types of Documentation
+
+Claude can generate:
+
+| Type | Description | Best For |
+|------|-------------|----------|
+| **README files** | Project overview and setup | Open source projects |
+| **API documentation** | Endpoint references | REST/GraphQL APIs |
+| **JSDoc/TSDoc** | Inline function docs | Libraries and SDKs |
+| **Architecture docs** | System design overview | Complex applications |
+| **User guides** | How-to instructions | End-user documentation |
+
+## Quick Start: Generate a README
+
+The simplest documentation task:
+
+```
+Generate a comprehensive README.md for this project.
+Include:
+- Project description
+- Features list
+- Installation instructions
+- Usage examples
+- Configuration options
+- Contributing guidelines
+```
+
+Claude will analyze your codebase and create a complete README.
+
+## Generating API Documentation
+
+### REST API Documentation
+
+```
+Generate API documentation for all endpoints in the /api directory.
+For each endpoint include:
+- HTTP method and path
+- Description
+- Request parameters
+- Request body schema
+- Response schema
+- Example requests/responses
+- Error codes
+```
+
+**Example Output:**
+
+```markdown
+## POST /api/users
+
+Create a new user account.
+
+### Request Body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| email | string | Yes | User's email address |
+| password | string | Yes | Minimum 8 characters |
+| name | string | No | Display name |
+
+### Response
+
+**201 Created**
+```json
+{
+  "id": "usr_123",
+  "email": "user@example.com",
+  "name": "John Doe",
+  "createdAt": "2024-01-15T10:30:00Z"
+}
+```
+
+### Errors
+
+| Code | Description |
+|------|-------------|
+| 400 | Invalid email or password format |
+| 409 | Email already registered |
+```
+
+### OpenAPI/Swagger Generation
+
+```
+Generate an OpenAPI 3.0 specification for all API routes.
+Include request/response schemas, authentication requirements,
+and example values.
+```
+
+## Generating Code Documentation
+
+### JSDoc for JavaScript/TypeScript
+
+```
+Add comprehensive JSDoc comments to all exported functions
+in the utils directory. Include:
+- Description
+- @param tags with types and descriptions
+- @returns tag with type and description
+- @throws tag for error conditions
+- @example with usage code
+```
+
+**Before:**
+```typescript
+export function formatCurrency(amount, currency, locale) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency
+  }).format(amount);
+}
+```
+
+**After:**
+```typescript
+/**
+ * Formats a number as currency according to locale conventions.
+ *
+ * @param {number} amount - The numeric amount to format
+ * @param {string} currency - ISO 4217 currency code (e.g., 'USD', 'EUR')
+ * @param {string} [locale='en-US'] - BCP 47 locale identifier
+ * @returns {string} Formatted currency string
+ * @throws {RangeError} If currency code is invalid
+ *
+ * @example
+ * formatCurrency(1234.56, 'USD', 'en-US')
+ * // Returns: '$1,234.56'
+ *
+ * @example
+ * formatCurrency(1234.56, 'EUR', 'de-DE')
+ * // Returns: '1.234,56 EUR'
+ */
+export function formatCurrency(
+  amount: number,
+  currency: string,
+  locale: string = 'en-US'
+): string {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency
+  }).format(amount);
+}
+```
+
+### Python Docstrings
+
+```
+Add Google-style docstrings to all functions in the services module.
+Include Args, Returns, Raises, and Examples sections.
+```
+
+**Example Output:**
+```python
+def calculate_discount(price: float, percentage: float, max_discount: float = None) -> float:
+    """Calculate discounted price with optional maximum limit.
+
+    Applies a percentage discount to the original price. If max_discount
+    is specified, the discount amount will not exceed this value.
+
+    Args:
+        price: Original price in dollars.
+        percentage: Discount percentage (0-100).
+        max_discount: Maximum discount amount in dollars. Defaults to None.
+
+    Returns:
+        The final price after applying the discount.
+
+    Raises:
+        ValueError: If price is negative or percentage is outside 0-100.
+
+    Examples:
+        >>> calculate_discount(100.0, 20)
+        80.0
+
+        >>> calculate_discount(100.0, 50, max_discount=25.0)
+        75.0
+    """
+```
+
+## Generating Architecture Documentation
+
+### System Overview
+
+```
+Create architecture documentation for this project including:
+1. High-level system diagram description
+2. Component responsibilities
+3. Data flow between components
+4. External dependencies
+5. Security boundaries
+```
+
+### Database Schema Documentation
+
+```
+Document the database schema including:
+- Table descriptions
+- Column definitions with types and constraints
+- Relationships between tables
+- Indexes and their purposes
+- Common query patterns
+```
+
+## Generating User Documentation
+
+### Feature Documentation
+
+```
+Create user documentation for the authentication feature.
+Include:
+- How to sign up
+- How to log in
+- Password reset process
+- Two-factor authentication setup
+- Common troubleshooting
+```
+
+### Configuration Reference
+
+```
+Generate a configuration reference document listing all
+environment variables, their purposes, default values,
+and example values.
+```
+
+**Example Output:**
+
+```markdown
+## Environment Variables
+
+### Required Variables
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `DATABASE_URL` | PostgreSQL connection string | `postgres://user:pass@localhost:5432/mydb` |
+| `JWT_SECRET` | Secret key for JWT signing | `your-256-bit-secret` |
+
+### Optional Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PORT` | Server port | `3000` |
+| `LOG_LEVEL` | Logging verbosity | `info` |
+| `RATE_LIMIT` | Requests per minute | `100` |
+```
+
+## Documentation Workflows
+
+### Workflow 1: New Project Setup
+
+```
+1. Generate README.md with project overview
+2. Create CONTRIBUTING.md with guidelines
+3. Generate API.md for endpoint documentation
+4. Create CHANGELOG.md template
+```
+
+### Workflow 2: Code Documentation Sprint
+
+```
+Day 1: Document all public APIs
+Day 2: Add inline comments to complex functions
+Day 3: Create architecture overview
+Day 4: Write deployment guide
+Day 5: Review and refine all docs
+```
+
+### Workflow 3: Continuous Documentation
+
+Set up a pre-commit hook:
+
+```bash
+# .claude/commands/update-docs.md
+Check if any exported functions are missing documentation.
+If found, generate appropriate JSDoc/docstrings.
+```
+
+## Best Practices
+
+### 1. Provide Context
+
+```
+This is a payment processing library used by e-commerce sites.
+Users are developers integrating payments into their apps.
+Generate documentation assuming intermediate JavaScript knowledge.
+```
+
+### 2. Specify Audience
+
+```
+Generate documentation for:
+- Audience: Backend developers
+- Experience level: Intermediate
+- Primary use case: Building REST APIs
+```
+
+### 3. Maintain Consistency
+
+```
+Follow these documentation standards:
+- Use present tense ("Returns" not "Will return")
+- Use active voice ("Call this function" not "This function should be called")
+- Include code examples for every function
+- Document error conditions
+```
+
+### 4. Keep It Updated
+
+```
+Review existing documentation and update it to match
+the current implementation. Flag any outdated sections.
+```
+
+## Documentation Templates
+
+### README Template
+
+```
+Generate a README following this structure:
+# Project Name
+Brief description
+
+## Features
+- Feature 1
+- Feature 2
+
+## Quick Start
+bash commands
+
+## Installation
+Step-by-step
+
+## Usage
+Code examples
+
+## Configuration
+Options table
+
+## API Reference
+Link to detailed docs
+
+## Contributing
+How to contribute
+
+## License
+License info
+```
+
+### API Endpoint Template
+
+```
+Document each endpoint with:
+## [METHOD] /path
+
+Description paragraph.
+
+### Authentication
+Required auth type
+
+### Parameters
+Table of params
+
+### Request Body
+JSON schema
+
+### Response
+Success response
+
+### Errors
+Error codes table
+
+### Example
+curl command
+```
+
+## Generating Documentation Files
+
+### All-in-One Command
+
+```
+Generate complete project documentation:
+
+1. README.md - Project overview (main directory)
+2. docs/API.md - Full API reference
+3. docs/ARCHITECTURE.md - System design
+4. docs/DEPLOYMENT.md - Deployment guide
+5. docs/CONTRIBUTING.md - Contribution guidelines
+
+Use markdown format with table of contents.
+```
+
+## Limitations
+
+Claude cannot:
+
+- **Access private APIs** - Document only what's in the codebase
+- **Verify accuracy** - Review generated docs for correctness
+- **Update diagrams** - Cannot create visual diagrams (text descriptions only)
+- **Know runtime behavior** - Documents static code, not runtime state
+
+## Next Steps
+
+- [Code Review](/docs/tutorials/code-review) - Review your documented code
+- [Test Generation](/docs/tutorials/test-generation) - Generate tests with documentation
+- [Real-World Projects](/docs/examples/real-world-projects) - See documentation in action

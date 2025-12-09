@@ -254,6 +254,58 @@ export function buildSearchIndex(): SearchDocument[] {
       url: "/docs/integrations/databases",
       category: "Integrations",
     },
+
+    // Tutorials
+    {
+      title: "Tutorials",
+      description: "Step-by-step tutorials for common development workflows",
+      content:
+        "Tutorials, guides, code review, documentation generation, test generation, workflows, best practices.",
+      url: "/docs/tutorials",
+      category: "Tutorials",
+    },
+    {
+      title: "Code Review",
+      description: "Automated code review with Claude",
+      content:
+        "Code review, automated review, security audit, performance review, bug detection, pull request review, best practices.",
+      url: "/docs/tutorials/code-review",
+      category: "Tutorials",
+    },
+    {
+      title: "Documentation Generation",
+      description: "Auto-generate comprehensive documentation",
+      content:
+        "Documentation generation, README, API docs, JSDoc, docstrings, architecture docs, user guides, automated documentation.",
+      url: "/docs/tutorials/documentation-generation",
+      category: "Tutorials",
+    },
+    {
+      title: "Test Generation",
+      description: "Generate comprehensive test suites with Claude",
+      content:
+        "Test generation, unit tests, integration tests, Jest, pytest, testing library, mocking, test coverage, TDD.",
+      url: "/docs/tutorials/test-generation",
+      category: "Tutorials",
+    },
+
+    // Examples
+    {
+      title: "Examples",
+      description: "Real-world examples and case studies",
+      content:
+        "Examples, case studies, real-world projects, workflows, web development, API development, automation.",
+      url: "/docs/examples",
+      category: "Examples",
+    },
+    {
+      title: "Real-World Projects",
+      description: "Case studies of Claude Code in production",
+      content:
+        "Real-world projects, case studies, e-commerce API, CLI tools, component library, data pipeline, production, success stories.",
+      url: "/docs/examples/real-world-projects",
+      category: "Examples",
+    },
   ];
 }
 

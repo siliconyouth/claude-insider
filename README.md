@@ -10,7 +10,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 
 ## Features
 
-- **Documentation Hub**: 28 comprehensive pages covering Claude AI
+- **Documentation Hub**: 34 comprehensive pages covering Claude AI
 - **AI Voice Assistant**: Interactive voice assistant with chat interface
 - **ElevenLabs TTS**: Premium text-to-speech with 42 natural voices
 - **Streaming TTS**: Voice starts speaking immediately (doesn't wait for full response)
@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.15.0)
+## Current Status (v0.16.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -33,7 +33,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Tailwind CSS 4 with dark/light themes
 - [x] Homepage with hero section
 - [x] MDX content support with dynamic routing
-- [x] 28 documentation pages (all categories complete)
+- [x] 34 documentation pages (all phases complete including Tutorials & Examples)
 - [x] Fuzzy search with Fuse.js
 - [x] Dark/Light/System theme toggle
 - [x] Code copy-to-clipboard
@@ -59,7 +59,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Accessibility Statement page (WCAG 2.1 AA documentation)
 - [x] Auto-updating build info in footer (version, date, commit SHA)
 - [x] ContentMeta component for source citations on all content pages
-- [x] AI generation metadata on all 19 MDX pages (model, date, build ID)
+- [x] AI generation metadata on all 34 MDX pages (model, date, build ID)
 - [x] Links to official Anthropic documentation sources
 - [x] Vercel Analytics for privacy-focused usage tracking
 - [x] Content Security Policy (CSP) headers
@@ -93,6 +93,9 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **`/assistant` page redirects** to homepage (assistant is popup-only now)
 - [x] **Demo animation timing fix** - Proper useEffect dependency array for 46-second loops
 - [x] **33 syntax highlighting languages** - Expanded from 12 to 33 languages with colored badges
+- [x] **Build-time RAG index generation** - Pre-computed index with 423 document chunks for faster AI responses
+- [x] **Tutorials category** - Code review, documentation generation, test generation tutorials
+- [x] **Examples category** - Real-world projects and case studies
 
 ### All Features Complete
 
@@ -105,6 +108,8 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 | **Tips & Tricks** | Overview, Prompting, Productivity, Advanced Prompting, Debugging |
 | **API Reference** | Overview, Authentication, Tool Use, Streaming, Error Handling, Rate Limits, Models |
 | **Integrations** | Overview, MCP Servers, IDE Plugins, Hooks, GitHub Actions, Docker, Databases |
+| **Tutorials** | Overview, Code Review, Documentation Generation, Test Generation |
+| **Examples** | Overview, Real-World Projects |
 
 ## Legal & Utility Pages
 
@@ -170,12 +175,14 @@ claude-insider/
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
-│   │   ├── content/              # MDX documentation
+│   │   ├── content/              # MDX documentation (34 pages)
 │   │   │   ├── getting-started/
 │   │   │   ├── configuration/
 │   │   │   ├── tips-and-tricks/
 │   │   │   ├── api/
-│   │   │   └── integrations/
+│   │   │   ├── integrations/
+│   │   │   ├── tutorials/        # Code review, docs generation, testing
+│   │   │   └── examples/         # Real-world projects, case studies
 │   │   └── lib/
 │   │       ├── mdx.ts            # MDX utilities
 │   │       ├── search.ts         # Search utilities
