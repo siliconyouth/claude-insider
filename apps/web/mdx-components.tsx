@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
+import { ContentMeta } from "@/components/content-meta";
 
 // Custom components for MDX rendering
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -163,6 +164,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     // Emphasis/italic
     em: ({ children }) => <em className="italic text-gray-200">{children}</em>,
+
+    // Content metadata component for sources and generation info
+    ContentMeta,
 
     // Spread any additional components
     ...components,

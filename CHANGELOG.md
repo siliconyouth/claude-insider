@@ -10,6 +10,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Planned
 - Additional content pages as needed
 
+## [0.9.0] - 2025-12-09
+
+### Added
+- ContentMeta component (`components/content-meta.tsx`) for source citations
+- AI generation metadata on all 16 MDX content pages
+- Links to official Anthropic documentation sources on every content page
+- Sources include: docs.anthropic.com, modelcontextprotocol.io, anthropic.com/engineering
+- Dynamic build ID from `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` environment variable
+
+### Content Attribution
+- Each content page now displays sources section with clickable links
+- "Generated with AI using Claude AI by Anthropic" notice on all content
+- Model information (Claude Opus 4.5), generation date, and build ID displayed
+- ContentMeta exported via mdx-components.tsx for MDX usage
+
+### Sources Added Per Category
+- Getting Started: Claude Code Docs, GitHub Repository, Best Practices
+- Configuration: Memory Docs, Settings Docs, Best Practices
+- Tips & Tricks: Prompt Engineering Guide, Best Practices
+- API Reference: API Reference, Messages API, Tool Use Docs
+- Integrations: MCP Protocol Docs, Hooks Docs, IDE Integration Docs
+
 ## [0.8.0] - 2025-12-09
 
 ### Added
@@ -234,6 +256,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.9.0 | 2025-12-09 | ContentMeta component, source citations, AI generation metadata |
 | 0.8.0 | 2025-12-09 | Legal pages, shared Footer, auto-updating build info |
 | 0.7.0 | 2025-12-09 | Syntax highlighting with highlight.js, colored language tags |
 | 0.6.0 | 2025-12-09 | PWA offline support, accessibility audit and fixes |
@@ -254,3 +277,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Accessibility audit (v0.6.0)
 - [x] Syntax highlighting for code blocks (v0.7.0)
 - [x] Legal pages - Privacy, Terms, Disclaimer, Accessibility (v0.8.0)
+- [x] Source citations and AI generation metadata (v0.9.0)

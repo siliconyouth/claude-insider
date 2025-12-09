@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.8.0
+**Version**: 0.9.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -42,6 +42,9 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Legal pages: Privacy Policy, Terms of Service, Disclaimer, Accessibility Statement
 - Auto-updating build info in footer (version, build date, commit SHA)
 - Prebuild script for automatic version updates on each build
+- ContentMeta component for source citations on all content pages
+- AI generation metadata on all 16 MDX pages (model: Claude Opus 4.5, date, build ID)
+- Links to official Anthropic documentation sources
 
 ### Project Status: Complete
 
@@ -84,6 +87,7 @@ claude-insider/
 │   │   │   ├── search.tsx        # Search modal (React Portal, Cmd+K)
 │   │   │   ├── theme-toggle.tsx  # Dark/light/system toggle
 │   │   │   ├── json-ld.tsx       # JSON-LD structured data components
+│   │   │   ├── content-meta.tsx  # Source citations & AI metadata
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info

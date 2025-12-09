@@ -95,6 +95,7 @@ claude-insider/
 │   │   │   ├── copy-button.tsx   # Reusable copy button
 │   │   │   ├── search.tsx        # Search modal (Cmd+K) with React Portal
 │   │   │   ├── theme-toggle.tsx  # Dark/light/system theme toggle
+│   │   │   ├── content-meta.tsx  # Source citations & AI generation metadata
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
@@ -213,6 +214,9 @@ claude-insider/
 - [x] Accessibility Statement page (WCAG 2.1 AA conformance)
 - [x] Auto-updating build info in footer (version, date, commit SHA)
 - [x] Prebuild script for automatic version updates
+- [x] ContentMeta component for source citations on all content pages
+- [x] AI generation metadata on all 16 MDX pages (model, date, build ID)
+- [x] Links to official Anthropic documentation sources
 
 ### Pages Implemented
 
@@ -409,6 +413,14 @@ All planned features have been implemented. The project is feature-complete.
 - [x] Accessibility Statement page (WCAG 2.1 AA conformance documentation)
 - [x] Auto-updating build info in footer (version from package.json, build date, git commit SHA)
 - [x] Prebuild script (`scripts/update-build-info.cjs`) runs automatically on each build
+
+### Phase 9: Content Attribution & Sources - COMPLETED
+- [x] ContentMeta component (`components/content-meta.tsx`) for source citations
+- [x] AI generation metadata on all content pages (model, date, build ID)
+- [x] Links to official Anthropic documentation sources on all 16 MDX pages
+- [x] Sources include: docs.anthropic.com, modelcontextprotocol.io, anthropic.com/engineering
+- [x] Dynamic build ID from `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` environment variable
+- [x] ContentMeta exported via mdx-components.tsx for use in MDX files
 
 ---
 

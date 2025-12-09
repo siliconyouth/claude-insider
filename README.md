@@ -18,7 +18,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.8.0)
+## Current Status (v0.9.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -52,6 +52,9 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] Disclaimer page (non-affiliation with Anthropic)
 - [x] Accessibility Statement page (WCAG 2.1 AA documentation)
 - [x] Auto-updating build info in footer (version, date, commit SHA)
+- [x] ContentMeta component for source citations on all content pages
+- [x] AI generation metadata on all 16 MDX pages (model, date, build ID)
+- [x] Links to official Anthropic documentation sources
 
 ### All Features Complete
 
@@ -111,6 +114,7 @@ claude-insider/
 │   │   │   ├── code-block.tsx    # Code with copy button
 │   │   │   ├── search.tsx        # Search modal (React Portal)
 │   │   │   ├── theme-toggle.tsx  # Theme switcher
+│   │   │   ├── content-meta.tsx  # Source citations & AI metadata
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── scripts/
 │   │   │   └── update-build-info.cjs  # Prebuild script for version info
