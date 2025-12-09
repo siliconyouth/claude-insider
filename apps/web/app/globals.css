@@ -1,0 +1,69 @@
+@import "tailwindcss";
+@import "@repo/tailwind-config";
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 3, 7, 18;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-rgb));
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(17, 24, 39);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(55, 65, 81);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(75, 85, 99);
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(249, 115, 22, 0.3);
+}
+
+/* Code blocks */
+pre {
+  background-color: rgb(17, 24, 39) !important;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.875em;
+}
+
+/* Prose customization for dark mode */
+.prose-invert {
+  --tw-prose-body: rgb(209, 213, 219);
+  --tw-prose-headings: rgb(255, 255, 255);
+  --tw-prose-links: rgb(251, 146, 60);
+  --tw-prose-bold: rgb(255, 255, 255);
+  --tw-prose-counters: rgb(156, 163, 175);
+  --tw-prose-bullets: rgb(156, 163, 175);
+  --tw-prose-hr: rgb(55, 65, 81);
+  --tw-prose-quotes: rgb(229, 231, 235);
+  --tw-prose-quote-borders: rgb(55, 65, 81);
+  --tw-prose-captions: rgb(156, 163, 175);
+  --tw-prose-code: rgb(255, 255, 255);
+  --tw-prose-pre-code: rgb(229, 231, 235);
+  --tw-prose-pre-bg: rgb(17, 24, 39);
+  --tw-prose-th-borders: rgb(55, 65, 81);
+  --tw-prose-td-borders: rgb(31, 41, 55);
+}
