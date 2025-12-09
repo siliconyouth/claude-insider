@@ -15,6 +15,7 @@ interface PageProps {
 }
 
 // Navigation structure for sidebars
+// Last updated: 2025-12-09 - All 7 categories with 34 pages
 const navigationConfig: Record<
   string,
   { title: string; items: { label: string; href: string }[] }
