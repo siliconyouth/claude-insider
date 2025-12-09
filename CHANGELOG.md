@@ -9,6 +9,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.20.0] - 2025-12-10
+
+### Added
+- **Smart Prefetching System** - Anticipate user intent, preload before click
+  - `lib/prefetch-queue.ts` - Priority queue with analytics-informed ordering
+  - `hooks/use-prefetch.ts` - Hover/focus/intersection-based prefetching hooks
+  - `components/prefetch-link.tsx` - Smart link components with prefetch indicators
+
+- **Prefetch Queue Manager**
+  - Priority levels: critical, high, normal, low
+  - Analytics-based popularity boost for frequently visited routes
+  - Concurrent prefetch limiting (max 2 simultaneous)
+  - Queue size limiting with lowest-priority eviction
+  - Deduplication of pending/loaded routes
+  - localStorage persistence for visit analytics
+
+- **Prefetch Hooks**
+  - `usePrefetch` - Single route prefetching with hover/focus/intersection triggers
+  - `usePageVisitTracker` - Record page visits and prefetch popular routes
+  - `usePrefetchVisibleLinks` - Prefetch all visible links on a page
+
+- **Smart Link Components**
+  - `PrefetchLink` - Base smart link with prefetch indicators
+  - `NavPrefetchLink` - Navigation links for sidebar/header
+  - `CardPrefetchLink` - Card links for category/feature cards
+  - `BreadcrumbPrefetchLink` - Breadcrumb navigation links
+  - `TocLink` - Table of contents with smooth scroll
+
+- **New CSS Animations**
+  - `.prefetch-loading` - Subtle pulse animation on loading links
+  - `.prefetch-dot-loading` - Amber pulsing indicator dot
+  - `.prefetch-dot-loaded` - Green indicator for prefetched links
+  - `.nav-transition-bar` - Top navigation progress bar
+  - `.hover-intent-highlight` - Highlight on hover intent
+  - `.link-prefetched` - Subtle glow for prefetched links
+  - `.prefetched-navigation` - Quick fade for instant navigation
+
+### Technical Details
+- Intersection Observer with 100px root margin for early prefetch
+- Route priority based on path patterns (getting-started = critical)
+- 100ms hover delay to avoid unnecessary prefetches
+- Popular routes prefetched 2 seconds after page load
+- All prefetch states tracked in singleton queue
+
+### UX System (Four Pillars - MANDATORY)
+The project now uses a UX System with four mandatory pillars:
+1. **Design System** - Visual consistency (colors, typography, animations)
+2. **Optimistic UI** - Instant feedback (toasts, skeletons, rollback)
+3. **Content-Aware Loading** - Intelligent lazy loading (viewport detection, blur-up)
+4. **Smart Prefetching** - Anticipate intent, preload before click
+
 ## [0.19.0] - 2025-12-10
 
 ### Added
@@ -804,6 +855,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.20.0 | 2025-12-10 | Smart Prefetching system (hover, focus, intersection prefetch) |
 | 0.19.0 | 2025-12-10 | Content-Aware Loading system (lazy sections, images, code blocks) |
 | 0.18.0 | 2025-12-09 | Optimistic UI system (toast, skeletons, loading states) |
 | 0.17.0 | 2025-12-09 | Vercel-inspired design system (glass morphism, patterns, animations) |

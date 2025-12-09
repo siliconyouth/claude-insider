@@ -401,17 +401,18 @@ claude-insider/
 
 ---
 
-## UX System (MANDATORY - THREE PILLARS)
+## UX System (MANDATORY - FOUR PILLARS)
 
-**These guidelines are mandatory for all future development. All new components and features MUST implement ALL THREE pillars for consistent user experience.**
+**These guidelines are mandatory for all future development. All new components and features MUST implement ALL FOUR pillars for consistent user experience.**
 
-### The Three Pillars
+### The Four Pillars
 
 | Pillar | Purpose | Key Files |
 |--------|---------|-----------|
 | **Design System** | Visual consistency | `lib/design-system.ts`, `globals.css` |
 | **Optimistic UI** | Instant feedback | `hooks/use-optimistic-update.ts`, `components/toast.tsx`, `components/skeleton.tsx` |
 | **Content-Aware Loading** | Intelligent lazy loading | `hooks/use-intersection-observer.ts`, `components/lazy-*.tsx`, `components/content-loader.tsx` |
+| **Smart Prefetching** | Anticipate intent, preload before click | `lib/prefetch-queue.ts`, `hooks/use-prefetch.ts`, `components/prefetch-link.tsx` |
 
 ### Mandatory Checklist for New Features
 
@@ -420,17 +421,21 @@ Before submitting any new feature, ensure:
 - [ ] **Design System**: Uses `cn()` utility, design tokens, proper dark/light theme support
 - [ ] **Optimistic UI**: Async operations show instant feedback, toasts for state changes, skeletons during loading
 - [ ] **Content-Aware Loading**: Heavy content uses lazy loading, images have blur-up effect, code blocks defer highlighting
+- [ ] **Smart Prefetching**: Navigation links use PrefetchLink, hover/focus triggers prefetch, analytics track visits
 
 ### All UX System Files
 
 | File | Purpose |
 |------|---------|
 | `lib/design-system.ts` | Design tokens, `cn()` utility, component presets |
+| `lib/prefetch-queue.ts` | Priority queue for smart prefetching |
 | `app/globals.css` | CSS variables, utility classes, animations |
 | `components/toast.tsx` | Toast notification system |
 | `components/skeleton.tsx` | Skeleton loading components |
+| `components/prefetch-link.tsx` | Smart link components with prefetching |
 | `hooks/use-optimistic-update.ts` | Optimistic update hooks |
 | `hooks/use-intersection-observer.ts` | Viewport detection hook |
+| `hooks/use-prefetch.ts` | Prefetching hooks |
 | `components/lazy-section.tsx` | Lazy section components |
 | `components/lazy-image.tsx` | Lazy image components |
 | `components/lazy-code-block.tsx` | Lazy code block components |
@@ -520,6 +525,67 @@ When modifying any of the three pillars:
 ```
 
 ---
+
+### Pillar 4: Smart Prefetching Rules
+
+1. **Hover-based prefetch** - Links prefetch after 100ms hover delay
+2. **Focus-based prefetch** - Prefetch immediately on keyboard focus
+3. **Intersection prefetch** - Visible links prefetch at low priority
+4. **Priority ordering** - Critical > High > Normal > Low
+5. **Analytics tracking** - Record visits for popular route detection
+6. **Concurrent limiting** - Max 2 simultaneous prefetches
+
+### Prefetching Usage
+
+```tsx
+// Basic prefetch link
+<PrefetchLink href="/docs/getting-started">
+  Getting Started
+</PrefetchLink>
+
+// With indicator dot
+<PrefetchLink href="/docs/api" showIndicator priority="high">
+  API Reference
+</PrefetchLink>
+
+// Navigation links
+<NavPrefetchLink href="/docs" isActive={pathname === "/docs"}>
+  Docs
+</NavPrefetchLink>
+
+// Card links
+<CardPrefetchLink
+  href="/docs/tutorials"
+  title="Tutorials"
+  description="Step-by-step guides"
+/>
+
+// Track page visits
+usePageVisitTracker();
+```
+
+---
+
+### Phase 28: Smart Prefetching - COMPLETED (v0.20.0)
+- [x] **Prefetch Queue Manager** - `lib/prefetch-queue.ts`
+  - Priority levels: critical, high, normal, low
+  - Analytics-based popularity boost
+  - Concurrent limiting (max 2)
+  - localStorage persistence
+- [x] **Prefetch Hooks** - `hooks/use-prefetch.ts`
+  - `usePrefetch` for single route prefetching
+  - `usePageVisitTracker` for analytics
+  - `usePrefetchVisibleLinks` for page-level prefetch
+- [x] **Smart Link Components** - `components/prefetch-link.tsx`
+  - `PrefetchLink` with indicators
+  - `NavPrefetchLink` for navigation
+  - `CardPrefetchLink` for cards
+  - `BreadcrumbPrefetchLink` for breadcrumbs
+- [x] **New CSS Animations**
+  - `.prefetch-loading` pulse animation
+  - `.prefetch-dot-loading/loaded` indicators
+  - `.nav-transition-bar` progress bar
+  - `.hover-intent-highlight` hover effect
 
 ### Phase 27: Content-Aware Loading - COMPLETED (v0.19.0)
 - [x] **Intersection Observer Hook** - `hooks/use-intersection-observer.ts`

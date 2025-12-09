@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.19.0
+**Version**: 0.20.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -104,8 +104,12 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **LazyImage, BlurUpImage** - Image lazy loading with blur-up effect
 - **LazyCodeBlock** - Deferred syntax highlighting for code blocks
 - **ContentLoader** - Route-based skeleton selection for pages
+- **Smart Prefetching System** - Anticipate user intent, preload before click
+- **Prefetch Queue Manager** - Priority-based prefetching with analytics
+- **usePrefetch Hook** - Hover/focus/intersection-based prefetching
+- **PrefetchLink Components** - Smart link components with prefetch indicators
 
-### Project Status: Complete (v0.19.0)
+### Project Status: Complete (v0.20.0)
 
 ## Tech Stack
 
@@ -159,7 +163,9 @@ claude-insider/
 │   │   │   ├── skeleton.tsx      # Skeleton loading components library
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── hooks/
-│   │   │   └── use-optimistic-update.ts  # Optimistic UI hooks
+│   │   │   ├── use-optimistic-update.ts  # Optimistic UI hooks
+│   │   │   ├── use-intersection-observer.ts # Viewport detection for lazy loading
+│   │   │   └── use-prefetch.ts           # Smart prefetching hooks
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
@@ -180,6 +186,7 @@ claude-insider/
 │   │   │   └── examples/         # index, real-world-projects
 │   │   ├── lib/
 │   │   │   ├── design-system.ts  # Vercel-inspired design tokens & cn() utility
+│   │   │   ├── prefetch-queue.ts # Priority queue for smart prefetching
 │   │   │   ├── mdx.ts            # MDX utilities
 │   │   │   ├── search.ts         # Search index
 │   │   │   ├── reading-time.ts   # Reading time calculation
@@ -260,17 +267,18 @@ Configured in `vercel.json`:
 
 ---
 
-## UX System (MANDATORY - THREE PILLARS)
+## UX System (MANDATORY - FOUR PILLARS)
 
-The project uses a comprehensive UX system with three mandatory pillars. **All new components, features, and pages MUST implement ALL THREE pillars** for consistent user experience.
+The project uses a comprehensive UX system with four mandatory pillars. **All new components, features, and pages MUST implement ALL FOUR pillars** for consistent user experience.
 
-### The Three Pillars
+### The Four Pillars
 
 | Pillar | Purpose | Location |
 |--------|---------|----------|
 | **Design System** | Visual consistency (colors, typography, animations) | `lib/design-system.ts`, `globals.css` |
 | **Optimistic UI** | Instant feedback (toasts, skeletons, rollback) | `hooks/use-optimistic-update.ts`, `components/toast.tsx`, `components/skeleton.tsx` |
 | **Content-Aware Loading** | Intelligent lazy loading (viewport detection, blur-up) | `hooks/use-intersection-observer.ts`, `components/lazy-*.tsx`, `components/content-loader.tsx` |
+| **Smart Prefetching** | Anticipate intent, preload before click | `lib/prefetch-queue.ts`, `hooks/use-prefetch.ts`, `components/prefetch-link.tsx` |
 
 ### Mandatory Checklist for New Features
 
@@ -279,10 +287,11 @@ Before submitting any new feature, ensure:
 - [ ] **Design System**: Uses `cn()` utility, design tokens, proper dark/light theme support
 - [ ] **Optimistic UI**: Async operations show instant feedback, toasts for state changes, skeletons during loading
 - [ ] **Content-Aware Loading**: Heavy content uses lazy loading, images have blur-up effect, code blocks defer highlighting
+- [ ] **Smart Prefetching**: Navigation links use PrefetchLink, hover/focus triggers prefetch, analytics track visits
 
 ### When to Update UX Guidelines
 
-When modifying any of the three pillars:
+When modifying any of the four pillars:
 1. Update the relevant source files
 2. Add new CSS animations to `globals.css` if needed
 3. Update this CLAUDE.md documentation
