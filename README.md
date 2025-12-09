@@ -144,13 +144,15 @@ For Turborepo monorepos, configure Vercel with:
 | **Root Directory** | `apps/web` |
 | **Framework** | Next.js (auto-detected) |
 | **Build Command** | Default (`next build`) |
-| **Install Command** | `pnpm install` |
+| **Output Directory** | Default (`.next`) |
+| **Install Command** | Default (`pnpm install`) |
 
 ### Steps to Deploy
 
 1. Import the GitHub repository in Vercel
 2. Set **Root Directory** to `apps/web`
-3. Deploy
+3. Leave all other settings as default
+4. Deploy
 
 ### Remote Caching (Optional)
 

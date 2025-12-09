@@ -121,10 +121,12 @@ claude-insider/
 | Setting | Value |
 |---------|-------|
 | **Root Directory** | `apps/web` |
-| **Framework** | Next.js |
-| **Build Command** | `pnpm turbo run build --filter=web` |
-| **Output Directory** | `.next` |
-| **Install Command** | `pnpm install` |
+| **Framework** | Next.js (auto-detected) |
+| **Build Command** | Default (`next build`) |
+| **Output Directory** | Default (`.next`) |
+| **Install Command** | Default (`pnpm install`) |
+
+**Important**: When Root Directory is set to `apps/web`, Vercel runs all commands from that directory. The `vercel.json` at repo root only needs minimal configuration (framework and ignoreCommand).
 
 ### CI/CD Pipeline (GitHub Actions) - Planned
 

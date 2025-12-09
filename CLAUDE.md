@@ -106,8 +106,11 @@ Set in Vercel Project Settings → General → Root Directory:
 |---------|-------|
 | **Root Directory** | `apps/web` |
 | **Framework** | Next.js (auto-detected) |
-| **Build Command** | Default |
-| **Install Command** | `pnpm install` |
+| **Build Command** | Default (`next build`) |
+| **Output Directory** | Default (`.next`) |
+| **Install Command** | Default (`pnpm install`) |
+
+**Note**: When Root Directory is set to `apps/web`, Vercel runs commands from that directory. The `vercel.json` at repo root only needs minimal config.
 
 ## Code Style Guidelines
 
