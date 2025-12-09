@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { Header } from "@/components/header";
 import { TableOfContents } from "@/components/table-of-contents";
+import { ArticleJsonLd } from "@/components/json-ld";
 
 interface SidebarSection {
   title: string;
@@ -16,6 +17,7 @@ interface DocsLayoutProps {
   sidebar?: SidebarSection[];
   prevPage?: { label: string; href: string };
   nextPage?: { label: string; href: string };
+  slug?: string[];
 }
 
 export function DocsLayout({
@@ -26,9 +28,24 @@ export function DocsLayout({
   sidebar,
   prevPage,
   nextPage,
+  slug,
 }: DocsLayoutProps) {
+  // Build URL from slug or breadcrumbs
+  const currentPath = slug
+    ? `/docs/${slug.join("/")}`
+    : breadcrumbs.length > 1
+      ? breadcrumbs[breadcrumbs.length - 1]?.href || "/docs"
+      : "/docs";
+  const url = `https://www.claudeinsider.com${currentPath}`;
+
   return (
     <div className="min-h-screen">
+      <ArticleJsonLd
+        title={title}
+        description={description}
+        url={url}
+        breadcrumbs={breadcrumbs}
+      />
       <Header />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">

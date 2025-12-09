@@ -173,6 +173,7 @@ export default async function DocPage({ params }: PageProps) {
       sidebar={sidebarSections}
       prevPage={prevPage}
       nextPage={nextPage}
+      slug={slug}
     >
       <MDXContent />
     </DocsLayout>

@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.4.0
+**Version**: 0.5.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -32,10 +32,11 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - Table of Contents with scroll spy
 - Mobile navigation menu with hamburger toggle
 - Dynamic sitemap.xml and robots.txt for SEO
+- JSON-LD structured data (TechArticle, Organization, WebSite, BreadcrumbList)
+- Lighthouse optimizations (font swap, compression, security headers)
 
 ### Pending
-- Lighthouse optimization
-- Structured data (JSON-LD)
+- Accessibility audit
 
 ## Tech Stack
 
@@ -73,7 +74,8 @@ claude-insider/
 │   │   │   ├── code-block.tsx    # Code with copy button
 │   │   │   ├── copy-button.tsx   # Reusable copy button
 │   │   │   ├── search.tsx        # Search modal (React Portal, Cmd+K)
-│   │   │   └── theme-toggle.tsx  # Dark/light/system toggle
+│   │   │   ├── theme-toggle.tsx  # Dark/light/system toggle
+│   │   │   └── json-ld.tsx       # JSON-LD structured data components
 │   │   ├── content/              # MDX documentation
 │   │   │   ├── getting-started/  # installation.mdx, quickstart.mdx
 │   │   │   ├── configuration/    # index.mdx, claude-md.mdx, settings.mdx
@@ -186,14 +188,10 @@ Configured in `vercel.json`:
 
 ## To-Do (Priority Order)
 
-### Medium Priority
-1. [ ] Lighthouse performance optimization
-2. [ ] Add structured data (JSON-LD)
-
 ### Low Priority
-3. [ ] GitHub Actions CI/CD
-4. [ ] PWA offline support
-5. [ ] Accessibility audit
+1. [ ] GitHub Actions CI/CD
+2. [ ] PWA offline support
+3. [ ] Accessibility audit
 
 ## Adding New Documentation Pages
 

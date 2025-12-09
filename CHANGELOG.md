@@ -8,9 +8,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Lighthouse optimization
-- Structured data (JSON-LD)
 - Accessibility audit
+- GitHub Actions CI/CD
+
+## [0.5.0] - 2025-12-09
+
+### Added
+- JSON-LD structured data for all documentation pages (TechArticle schema)
+- Organization and WebSite schema in root layout
+- BreadcrumbList schema for navigation
+- SearchAction schema for site search
+- Font optimization with `display: swap` and preloading
+- DNS prefetch and preconnect for external resources
+- Security headers (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy)
+- Viewport meta configuration with theme colors
+
+### Changed
+- Updated Next.js config with performance optimizations
+- Enabled image optimization with AVIF/WebP formats
+- Removed X-Powered-By header for security
+- Updated OpenGraph URL to production domain (www.claudeinsider.com)
+- Added metadataBase for proper URL generation
+- Updated author metadata to Vladimir Dukelic
+
+### Performance
+- Font swap for faster initial render
+- DNS prefetching for Google Fonts
+- Compression enabled
+- Image size optimization configured
 
 ## [0.4.0] - 2025-12-09
 
@@ -151,6 +176,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.5.0 | 2025-12-09 | Lighthouse optimization, JSON-LD structured data, security headers |
 | 0.4.0 | 2025-12-09 | TOC, mobile menu, sitemap, production deployment |
 | 0.3.1 | 2025-12-09 | Shared Header component, search modal portal fix |
 | 0.3.0 | 2025-12-09 | MDX content, search, theme toggle, 16 doc pages |
@@ -160,10 +186,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | 0.1.0 | 2025-12-08 | Initial Turborepo setup |
 
 ## Upcoming Features
-
-### Medium Priority
-- [ ] Lighthouse optimization
-- [ ] Structured data (JSON-LD)
 
 ### Low Priority
 - [ ] GitHub Actions CI/CD
