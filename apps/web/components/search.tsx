@@ -127,19 +127,29 @@ export function Search() {
 
       {/* Search modal - rendered via portal to escape stacking context */}
       {mounted && isOpen && createPortal(
-        <div className="fixed inset-0 z-[9999] overflow-y-auto">
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={() => {
+        <div
+          className="fixed inset-0 z-[9999] overflow-y-auto bg-black/70 backdrop-blur-sm"
+          onClick={(e) => {
+            // Close when clicking on the backdrop (not the modal content)
+            if (e.target === e.currentTarget) {
               setIsOpen(false);
               setQuery("");
               setResults([]);
+            }
+          }}
+        >
+          {/* Modal container - clicks here also close if outside modal */}
+          <div
+            className="min-h-screen flex items-start justify-center pt-16 sm:pt-24 px-4"
+            onClick={(e) => {
+              // Close when clicking on the container area (not the modal itself)
+              if (e.target === e.currentTarget) {
+                setIsOpen(false);
+                setQuery("");
+                setResults([]);
+              }
             }}
-          />
-
-          {/* Modal */}
-          <div className="relative min-h-screen flex items-start justify-center pt-16 sm:pt-24 px-4">
+          >
             <div className="relative w-full max-w-xl bg-gray-900 border border-gray-700 rounded-xl shadow-2xl overflow-hidden">
               {/* Close button */}
               <button
