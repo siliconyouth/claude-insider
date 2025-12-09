@@ -1,0 +1,116 @@
+---
+title: Installation
+description: How to install Claude Code on your system
+---
+
+## System Requirements
+
+Before installing Claude Code, ensure your system meets these requirements:
+
+- **Node.js**: Version 18.0 or higher
+- **Operating System**: macOS, Linux, or Windows (via WSL)
+- **Terminal**: A modern terminal emulator
+
+## Installation Methods
+
+### Using npm (Recommended)
+
+The fastest way to install Claude Code is via npm:
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+### Using Homebrew (macOS)
+
+If you're on macOS and prefer Homebrew:
+
+```bash
+brew install anthropic/tap/claude-code
+```
+
+### Using pnpm
+
+For pnpm users:
+
+```bash
+pnpm add -g @anthropic-ai/claude-code
+```
+
+## Verify Installation
+
+After installation, verify that Claude Code is properly installed:
+
+```bash
+claude --version
+```
+
+You should see output like:
+
+```
+Claude Code v1.x.x
+```
+
+## Authentication
+
+Before using Claude Code, you need to authenticate with your Anthropic account:
+
+```bash
+claude auth login
+```
+
+This will open a browser window where you can sign in with your Anthropic account. Once authenticated, you're ready to start using Claude Code!
+
+## First Run
+
+To start your first Claude Code session:
+
+```bash
+claude
+```
+
+Or start with a specific prompt:
+
+```bash
+claude "Help me understand this codebase"
+```
+
+## Updating Claude Code
+
+To update to the latest version:
+
+```bash
+npm update -g @anthropic-ai/claude-code
+```
+
+Or with Homebrew:
+
+```bash
+brew upgrade claude-code
+```
+
+## Troubleshooting
+
+### Command Not Found
+
+If you get a "command not found" error after installation, ensure your global npm bin directory is in your PATH:
+
+```bash
+export PATH="$PATH:$(npm bin -g)"
+```
+
+Add this line to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.) to make it permanent.
+
+### Permission Errors
+
+If you encounter permission errors during installation, you may need to fix npm permissions:
+
+```bash
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+export PATH=~/.npm-global/bin:$PATH
+```
+
+## Next Steps
+
+Now that you have Claude Code installed, check out the [Quick Start guide](/docs/getting-started/quickstart) to learn the basics.

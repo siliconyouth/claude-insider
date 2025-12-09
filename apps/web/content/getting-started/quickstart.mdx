@@ -1,0 +1,109 @@
+---
+title: Quick Start
+description: Get up and running with Claude Code in minutes
+---
+
+## Your First Session
+
+After [installing Claude Code](/docs/getting-started/installation), start your first session:
+
+```bash
+claude
+```
+
+You'll see Claude's prompt waiting for your input. Try asking it to help you understand your current project:
+
+```bash
+claude "What does this project do?"
+```
+
+## Basic Commands
+
+### Interactive Mode
+
+Start an interactive session where you can have a conversation:
+
+```bash
+claude
+```
+
+### Single Query
+
+Ask a single question and get a response:
+
+```bash
+claude "Explain this function: $(cat myfile.js)"
+```
+
+### Working with Files
+
+Claude Code can read and modify files in your project:
+
+```bash
+claude "Read the README and summarize it"
+claude "Add a new feature to handle user authentication"
+```
+
+## Project Context with CLAUDE.md
+
+Create a `CLAUDE.md` file in your project root to give Claude context about your project:
+
+```markdown
+# Project Overview
+
+This is a Next.js application for managing tasks.
+
+## Key Files
+
+- `src/app/page.tsx` - Main homepage
+- `src/lib/db.ts` - Database utilities
+
+## Conventions
+
+- Use TypeScript strict mode
+- Follow the existing code style
+```
+
+Claude will automatically read this file and use it to provide better assistance.
+
+## Common Workflows
+
+### Code Review
+
+```bash
+claude "Review the changes in my last commit"
+```
+
+### Bug Fixing
+
+```bash
+claude "There's a bug where the form doesn't submit. Can you help debug it?"
+```
+
+### Refactoring
+
+```bash
+claude "Refactor this component to use React hooks instead of class components"
+```
+
+### Documentation
+
+```bash
+claude "Add JSDoc comments to the functions in src/utils/"
+```
+
+## Tips for Better Results
+
+1. **Be specific**: Instead of "fix the bug", describe what's happening and what you expect.
+
+2. **Provide context**: Share relevant error messages, logs, or code snippets.
+
+3. **Use the filesystem**: Claude can read files directly, so reference them by path.
+
+4. **Iterate**: If the first response isn't quite right, provide feedback and ask for adjustments.
+
+## Next Steps
+
+- Learn about [CLAUDE.md configuration](/docs/configuration/claude-md)
+- Explore [prompting strategies](/docs/tips-and-tricks/prompting)
+- Set up [IDE integrations](/docs/integrations/ide-plugins)
