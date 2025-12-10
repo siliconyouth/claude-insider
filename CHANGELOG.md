@@ -45,6 +45,16 @@ No pending changes - all features complete.
 
 - **Header** - Gradient logo (`from-violet-600 via-blue-600 to-cyan-600`)
 - **Voice Assistant** - FAB, header, user messages, buttons all use new gradients
+- **Voice Assistant Demo** - Complete visual refresh with new gradient theme
+  - Animated glow effect with `glowPulse` and `glowShift` keyframes
+  - User message bubbles with violet→blue→cyan gradient
+  - Audio waveform bars with gradient colors
+  - Gradient "Speaking..." text with ElevenLabs badge
+  - Typing indicator with gradient animated dots
+  - Send button with gradient background and blue glow shadow
+  - Voice button with gradient when active
+  - Title bar with gradient accent line
+  - Welcome icon with animated spinning ring (`spin-slow` 12s cycle)
 - **Search Modal** - Updated highlights and focus rings to blue/cyan
 - **Docs Layout** - Sidebar active state uses cyan, prose uses `prose-cyan`
 - **Docs Page** - Category cards use cyan hover states

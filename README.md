@@ -141,6 +141,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Multi-Color Gradient System** - Violet → Blue → Cyan (Stripe-style) throughout
 - [x] **New HeroBackground Component** - Animated lens flares with light rays
 - [x] **Updated Color Palette** - Replaced orange with violet/blue/cyan gradients
+- [x] **Voice Assistant Demo Redesign** - Homepage demo with gradient glow, animated waveform, gradient messages
 
 ### All Features Complete
 
@@ -150,7 +151,7 @@ The project implements a comprehensive UX system with seven mandatory pillars:
 
 | Pillar | Description | Key Components |
 |--------|-------------|----------------|
-| **Design System** | Stripe/Vercel-inspired visual consistency | `cn()` utility, gradient tokens, glass morphism, lens flares |
+| **Design System** | Stripe/Vercel-inspired visual consistency | `cn()` utility, gradient tokens, glass morphism, lens flares, demo animations |
 | **Optimistic UI** | Instant user feedback | Toast notifications, skeletons, rollback on error |
 | **Content-Aware Loading** | Intelligent lazy loading | Intersection Observer, blur-up images, lazy code blocks |
 | **Smart Prefetching** | Anticipate intent, preload before click | Priority queue, hover/focus triggers, analytics |
@@ -183,6 +184,8 @@ The project uses a **Stripe/Vercel/Linear-inspired design** with a modern multi-
 .lens-flare-orb-violet   /* Animated violet glow orb */
 .lens-flare-orb-blue     /* Animated blue glow orb */
 .lens-flare-orb-cyan     /* Animated cyan glow orb */
+.animate-glowPulse       /* Pulsing glow effect for demo */
+.animate-glowShift       /* Shifting glow position */
 ```
 
 ### Hero Background Component

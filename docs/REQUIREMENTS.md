@@ -498,6 +498,32 @@ Before submitting any new feature, ensure:
 .lens-flare-orb-violet   /* Animated violet glow orb */
 .lens-flare-orb-blue     /* Animated blue glow orb */
 .lens-flare-orb-cyan     /* Animated cyan glow orb */
+.animate-glowPulse       /* Pulsing glow effect (opacity + scale) */
+.animate-glowShift       /* Shifting glow position */
+.spin-slow               /* Slow rotation (12s cycle) for accent elements */
+```
+
+### Demo & Preview Component Styling
+
+When creating demo or preview components (like voice assistant demo), follow these patterns:
+
+```tsx
+// Animated glow container
+<div className="relative">
+  <div className="absolute -inset-4 rounded-2xl blur-2xl opacity-60 animate-glowPulse">
+    <div className="bg-gradient-to-r from-violet-500/30 via-blue-500/30 to-cyan-500/30" />
+  </div>
+  {/* Content */}
+</div>
+
+// User action elements (messages, buttons)
+<div className="bg-gradient-to-r from-violet-600/30 via-blue-600/30 to-cyan-600/30 border border-blue-500/20">
+
+// Audio/visual feedback elements
+<span className="bg-gradient-to-t from-violet-400 to-cyan-400" />
+
+// Interactive buttons
+<button className="bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 shadow-lg shadow-blue-500/20">
 ```
 
 ### Hero Background Component
@@ -836,6 +862,12 @@ useKeyboardShortcut({
 - [x] **Footer Version** - Updated to v0.24.0
 - [x] **Accessibility** - `prefers-reduced-motion` support for all animations
 - [x] **Design System Updates** - Updated `lib/design-system.ts` with new gradient tokens
+- [x] **Voice Assistant Demo Redesign** - Complete visual refresh with gradient theme
+  - Animated glow effect with `glowPulse` and `glowShift` animations
+  - User message bubbles with violet→blue→cyan gradient
+  - Audio waveform bars with gradient colors
+  - Send/voice buttons with gradient backgrounds and glow shadows
+  - Welcome icon with animated spinning ring
 
 ### Phase 31: Accessibility Refinements - COMPLETED (v0.23.0)
 - [x] **Focus Management Hooks** - `hooks/use-focus-trap.ts`

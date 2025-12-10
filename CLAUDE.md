@@ -137,6 +137,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Multi-Color Gradient System** - Violet → Blue → Cyan (Stripe-style) throughout
 - **New HeroBackground Component** - Animated lens flares with light rays
 - **Updated Color Palette** - Replaced orange with violet/blue/cyan gradients
+- **Voice Assistant Demo Redesign** - Homepage demo with gradient theme matching new design system
 
 ### Project Status: Complete (v0.24.0)
 
@@ -505,6 +506,31 @@ The component features:
 - GPU-accelerated CSS animations
 - `prefers-reduced-motion` support
 - Configurable intensity and ray visibility
+
+### Voice Assistant Demo Styling
+
+The `VoiceAssistantDemo` component on the homepage uses the new gradient system:
+
+```tsx
+// Animated glow effect - Stripe gradient
+<div className="absolute -inset-4 rounded-2xl blur-2xl opacity-60 animate-glowPulse">
+  <div className="absolute inset-0 bg-gradient-to-r from-violet-500/30 via-blue-500/30 to-cyan-500/30" />
+</div>
+
+// User message with gradient
+<div className="bg-gradient-to-r from-violet-600/30 via-blue-600/30 to-cyan-600/30 border border-blue-500/20">
+
+// Audio waveform bars with gradient
+<span className="w-1 h-3 bg-gradient-to-t from-violet-400 to-cyan-400 rounded-full" />
+
+// Send button with gradient and glow
+<button className="bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 shadow-lg shadow-blue-500/20">
+```
+
+CSS animations used in the demo:
+- `glowPulse` - Pulsing opacity and scale on glow effect
+- `glowShift` - Shifting position for dynamic glow
+- `spin-slow` - Slow rotation for accent ring (12s cycle)
 
 ### Pattern Backgrounds
 
