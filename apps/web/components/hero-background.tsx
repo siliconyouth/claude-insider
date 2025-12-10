@@ -101,7 +101,7 @@ export function HeroBackground({
           <div
             className="absolute top-1/4 left-1/2 w-[200%] h-[1px] -translate-x-1/2"
             style={{
-              background: `linear-gradient(90deg, transparent, rgba(var(--ds-glow-blue), ${0.08 * intensity}), transparent)`,
+              background: `linear-gradient(90deg, transparent, rgb(var(--ds-glow-blue) / ${0.08 * intensity}), transparent)`,
               animation: "ray-sweep 45s linear infinite",
             }}
           />
@@ -109,7 +109,7 @@ export function HeroBackground({
           <div
             className="absolute top-1/3 left-1/3 w-[150%] h-[1px] rotate-45"
             style={{
-              background: `linear-gradient(90deg, transparent, rgba(var(--ds-glow-violet), ${0.06 * intensity}), transparent)`,
+              background: `linear-gradient(90deg, transparent, rgb(var(--ds-glow-violet) / ${0.06 * intensity}), transparent)`,
               animation: "ray-sweep 50s linear infinite 5s",
             }}
           />
@@ -117,7 +117,7 @@ export function HeroBackground({
           <div
             className="absolute top-1/2 left-1/2 w-[150%] h-[1px] -rotate-30"
             style={{
-              background: `linear-gradient(90deg, transparent, rgba(var(--ds-glow-cyan), ${0.05 * intensity}), transparent)`,
+              background: `linear-gradient(90deg, transparent, rgb(var(--ds-glow-cyan) / ${0.05 * intensity}), transparent)`,
               animation: "ray-sweep 55s linear infinite 10s",
             }}
           />
@@ -136,9 +136,9 @@ export function HeroBackground({
       <div
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(ellipse at 30% 20%, rgba(var(--ds-glow-violet), ${0.08 * intensity}) 0%, transparent 50%),
-                       radial-gradient(ellipse at 70% 60%, rgba(var(--ds-glow-blue), ${0.06 * intensity}) 0%, transparent 40%),
-                       radial-gradient(ellipse at 50% 80%, rgba(var(--ds-glow-cyan), ${0.05 * intensity}) 0%, transparent 45%)`,
+          background: `radial-gradient(ellipse at 30% 20%, rgb(var(--ds-glow-violet) / ${0.08 * intensity}) 0%, transparent 50%),
+                       radial-gradient(ellipse at 70% 60%, rgb(var(--ds-glow-blue) / ${0.06 * intensity}) 0%, transparent 40%),
+                       radial-gradient(ellipse at 50% 80%, rgb(var(--ds-glow-cyan) / ${0.05 * intensity}) 0%, transparent 45%)`,
         }}
       />
     </div>

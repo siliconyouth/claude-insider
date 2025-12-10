@@ -1974,19 +1974,19 @@ code {
 }
 
 .lens-flare-orb-violet {
-  background: radial-gradient(circle, rgba(var(--ds-glow-violet), 0.4) 0%, transparent 70%);
+  background: radial-gradient(circle, rgb(var(--ds-glow-violet) / 0.4) 0%, transparent 70%);
   filter: blur(60px);
   animation: flare-drift-1 25s ease-in-out infinite, flare-pulse 8s ease-in-out infinite;
 }
 
 .lens-flare-orb-blue {
-  background: radial-gradient(circle, rgba(var(--ds-glow-blue), 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgb(var(--ds-glow-blue) / 0.35) 0%, transparent 70%);
   filter: blur(50px);
   animation: flare-drift-2 30s ease-in-out infinite, flare-pulse 10s ease-in-out infinite 2s;
 }
 
 .lens-flare-orb-cyan {
-  background: radial-gradient(circle, rgba(var(--ds-glow-cyan), 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgb(var(--ds-glow-cyan) / 0.3) 0%, transparent 70%);
   filter: blur(55px);
   animation: flare-drift-3 20s ease-in-out infinite, flare-pulse 12s ease-in-out infinite 4s;
 }
@@ -2003,7 +2003,7 @@ code {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(var(--ds-glow-blue), 0.1) 50%,
+    rgb(var(--ds-glow-blue) / 0.1) 50%,
     transparent 100%
   );
   transform-origin: center;
@@ -2078,25 +2078,25 @@ code {
 
 .btn-gradient:hover {
   background-position: 100% 100%;
-  box-shadow: 0 0 30px rgba(var(--ds-glow-blue), 0.3);
+  box-shadow: 0 0 30px rgb(var(--ds-glow-blue) / 0.3);
 }
 
 /* Glow effects */
 .glow-violet {
-  box-shadow: 0 0 40px rgba(var(--ds-glow-violet), 0.3);
+  box-shadow: 0 0 40px rgb(var(--ds-glow-violet) / 0.3);
 }
 
 .glow-blue {
-  box-shadow: 0 0 40px rgba(var(--ds-glow-blue), 0.3);
+  box-shadow: 0 0 40px rgb(var(--ds-glow-blue) / 0.3);
 }
 
 .glow-cyan {
-  box-shadow: 0 0 40px rgba(var(--ds-glow-cyan), 0.3);
+  box-shadow: 0 0 40px rgb(var(--ds-glow-cyan) / 0.3);
 }
 
 .glow-gradient {
   box-shadow:
-    0 0 30px rgba(var(--ds-glow-violet), 0.2),
-    0 0 60px rgba(var(--ds-glow-blue), 0.15),
-    0 0 90px rgba(var(--ds-glow-cyan), 0.1);
+    0 0 30px rgb(var(--ds-glow-violet) / 0.2),
+    0 0 60px rgb(var(--ds-glow-blue) / 0.15),
+    0 0 90px rgb(var(--ds-glow-cyan) / 0.1);
 }
