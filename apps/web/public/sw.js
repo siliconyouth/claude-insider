@@ -1,6 +1,8 @@
-const CACHE_NAME = 'claude-insider-v1';
-const STATIC_CACHE = 'claude-insider-static-v1';
-const DYNAMIC_CACHE = 'claude-insider-dynamic-v1';
+// Cache version - UPDATE THIS ON EACH DEPLOY to bust old caches
+const CACHE_VERSION = 'v2';
+const CACHE_NAME = `claude-insider-${CACHE_VERSION}`;
+const STATIC_CACHE = `claude-insider-static-${CACHE_VERSION}`;
+const DYNAMIC_CACHE = `claude-insider-dynamic-${CACHE_VERSION}`;
 
 // Static assets to cache immediately
 const STATIC_ASSETS = [
@@ -37,7 +39,7 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - network-first for pages, cache-first for assets
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
@@ -53,27 +55,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      // Return cached response if available
-      if (cachedResponse) {
-        // Fetch updated version in background
-        event.waitUntil(
-          fetch(request).then((response) => {
-            if (response.ok) {
-              caches.open(DYNAMIC_CACHE).then((cache) => {
-                cache.put(request, response);
-              });
-            }
-          }).catch(() => {})
-        );
-        return cachedResponse;
-      }
-
-      // Otherwise fetch from network
-      return fetch(request)
+  // For navigation requests (HTML pages) - use NETWORK-FIRST strategy
+  // This ensures users always get the latest content
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
         .then((response) => {
-          // Cache successful responses
+          // Cache the fresh response
           if (response.ok) {
             const responseClone = response.clone();
             caches.open(DYNAMIC_CACHE).then((cache) => {
@@ -83,10 +71,33 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          // Return offline page for navigation requests
-          if (request.mode === 'navigate') {
-            return caches.match('/');
+          // Offline fallback - serve from cache
+          return caches.match(request).then((cachedResponse) => {
+            return cachedResponse || caches.match('/');
+          });
+        })
+    );
+    return;
+  }
+
+  // For other assets (images, scripts, etc.) - use CACHE-FIRST strategy
+  event.respondWith(
+    caches.match(request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(DYNAMIC_CACHE).then((cache) => {
+              cache.put(request, responseClone);
+            });
           }
+          return response;
+        })
+        .catch(() => {
           return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
         });
     })
