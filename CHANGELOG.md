@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.5] - 2025-12-10
+
+### Changed
+- **Realistic Device Mockups** - Complete overhaul of hero device mockups
+  - **iPhone 16 Pro Max**: Proper titanium frame with gradient finish, Dynamic Island with front camera, iOS status bar with cellular/wifi/battery, Safari browser chrome with URL bar and bottom navigation, home indicator bar
+  - **MacBook Pro**: M3 Pro style Space Black aluminum finish, notch camera area, GitHub-style terminal theme, proper shadows and depth
+  - **Terminal content**: Updated to Claude Code v2.0.62, shows claude-sonnet-4-20250514 model, realistic file creation output
+  - **Positioning**: Devices repositioned more to the right (like Stripe), iPhone overlapping at bottom-right with 8° rotation
+  - **Sizing**: MacBook increased to 580px max-width, iPhone increased to 160px width
+  - **Glow effects**: Added violet/cyan/blue background glows behind devices
+
 ## [0.25.4] - 2025-12-10
 
 ### Added
