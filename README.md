@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.25.0)
+## Current Status (v0.25.1)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -92,7 +92,8 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **OpenAssistantButton component** - Triggers assistant popup from anywhere
 - [x] **`/assistant` page redirects** to homepage (assistant is popup-only now)
 - [x] **Demo animation timing fix** - Proper useEffect dependency array for 46-second loops
-- [x] **33 syntax highlighting languages** - Expanded from 12 to 33 languages with colored badges
+- [x] **33 syntax highlighting languages** - Expanded from 12 to 33 languages with distinct colored badges
+- [x] **Enhanced Code Block Colors** - Each language has a unique, visually distinct color organized by family
 - [x] **Build-time RAG index generation** - Pre-computed index with 423 document chunks for faster AI responses
 - [x] **Tutorials category** - Code review, documentation generation, test generation tutorials
 - [x] **Examples category** - Real-world projects and case studies
@@ -190,6 +191,25 @@ The project uses a **Stripe/Vercel/Linear-inspired design** with a modern multi-
 .animate-glowPulse       /* Pulsing glow effect for demo */
 .animate-glowShift       /* Shifting glow position */
 ```
+
+### Code Block Language Colors
+
+Each of the 33 supported languages has a distinct colored pill tag:
+
+| Category | Languages | Colors |
+|----------|-----------|--------|
+| **JavaScript** | `js`, `jsx` | Yellow, Amber |
+| **TypeScript** | `ts`, `tsx` | Blue, Sky |
+| **Python** | `py` | Emerald |
+| **Shell** | `bash`, `sh` | Teal |
+| **Data** | `json`, `yaml`, `toml` | Lime, Pink, Orange |
+| **Web** | `html`, `xml`, `css` | Orange, Cyan, Purple |
+| **Systems** | `go`, `rust`, `c`, `c++` | Cyan, Amber, Blue |
+| **JVM** | `java`, `kotlin`, `scala` | Red, Violet, Rose |
+| **Scripting** | `php`, `ruby`, `lua`, `r` | Indigo, Red, Purple, Sky |
+| **DevOps** | `dockerfile`, `nginx`, `makefile` | Sky, Green, Yellow |
+
+See `apps/web/components/code-block.tsx` for the complete `languageConfig`.
 
 ### Hero Background Component
 

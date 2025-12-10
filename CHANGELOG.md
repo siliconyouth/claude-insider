@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.1] - 2025-12-10
+
+### Added
+- **Enhanced Code Block Language Colors** - 33 distinct colors organized by language family
+  - Each language now has a unique, visually distinct colored pill tag
+  - Colors grouped by family (JS=yellow, TS=blue, Python=emerald, Shell=teal, etc.)
+  - New color assignments for better distinction:
+    - Bash/Shell: `bg-gray-500` → `bg-teal-600` (now distinct from plain text)
+    - JSON: `bg-orange-500` → `bg-lime-500` (distinct from HTML)
+    - XML: `bg-red-400` → `bg-cyan-600` (now distinct from Ruby/Java)
+    - C#: `bg-purple-600` → `bg-fuchsia-600` (distinct from CSS/Lua)
+  - Comprehensive documentation in CLAUDE.md for adding new languages
+
+### Changed
+- **Code Block Color Guidelines** - Added mandatory guidelines section to CLAUDE.md
+  - Color assignment rules documented
+  - Color palette by category defined
+  - Step-by-step instructions for adding new languages
+
 ## [0.25.0] - 2025-12-10
 
 ### Added

@@ -1511,6 +1511,17 @@ All planned features have been implemented. The project is feature-complete at v
 - [x] **Colored Language Badges** - Each language has unique color for easy identification
 - [x] **Alias Support** - Common aliases work (rb for Ruby, kt for Kotlin, cs for C#, etc.)
 
+### Phase 20: Enhanced Code Block Colors - COMPLETED (v0.25.1)
+- [x] **33 Distinct Language Colors** - Each language now has a unique, visually distinct colored pill tag
+- [x] **Color Organization by Family** - Languages grouped by category (JS=yellow, TS=blue, Python=emerald, etc.)
+- [x] **Key Color Changes**:
+  - Bash/Shell: `bg-gray-500` → `bg-teal-600` (now distinct from plain text)
+  - JSON: `bg-orange-500` → `bg-lime-500` (distinct from HTML)
+  - XML: `bg-red-400` → `bg-cyan-600` (distinct from Ruby/Java)
+  - C#: `bg-purple-600` → `bg-fuchsia-600` (distinct from CSS/Lua)
+- [x] **Comprehensive Guidelines** - Added mandatory color guidelines section to CLAUDE.md
+- [x] **Color Palette Documentation** - Warm colors for JS/config, cool blues for TS/systems, etc.
+
 ### Pages Implemented (28 Documentation + 7 Utility Pages)
 
 | Route | Status | Description |

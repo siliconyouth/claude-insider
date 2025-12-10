@@ -90,65 +90,98 @@ hljs.registerLanguage("nginx", nginx);
 hljs.registerLanguage("apache", apache);
 hljs.registerLanguage("apacheconf", apache);
 
-// Language display names and colors
+// Language display names and colors - each language has a unique, distinct color
 const languageConfig: Record<string, { name: string; color: string }> = {
+  // JavaScript family - yellows/golds
   javascript: { name: "JavaScript", color: "bg-yellow-500" },
   js: { name: "JavaScript", color: "bg-yellow-500" },
-  typescript: { name: "TypeScript", color: "bg-blue-500" },
-  ts: { name: "TypeScript", color: "bg-blue-500" },
-  tsx: { name: "TSX", color: "bg-blue-400" },
-  jsx: { name: "JSX", color: "bg-yellow-400" },
-  python: { name: "Python", color: "bg-green-500" },
-  py: { name: "Python", color: "bg-green-500" },
-  bash: { name: "Bash", color: "bg-gray-500" },
-  sh: { name: "Shell", color: "bg-gray-500" },
-  shell: { name: "Shell", color: "bg-gray-500" },
-  json: { name: "JSON", color: "bg-orange-500" },
-  html: { name: "HTML", color: "bg-red-500" },
-  xml: { name: "XML", color: "bg-red-400" },
-  css: { name: "CSS", color: "bg-purple-500" },
-  markdown: { name: "Markdown", color: "bg-gray-400" },
-  md: { name: "Markdown", color: "bg-gray-400" },
-  mdx: { name: "MDX", color: "bg-orange-400" },
+  jsx: { name: "JSX", color: "bg-amber-500" },
+
+  // TypeScript family - blues
+  typescript: { name: "TypeScript", color: "bg-blue-600" },
+  ts: { name: "TypeScript", color: "bg-blue-600" },
+  tsx: { name: "TSX", color: "bg-sky-500" },
+
+  // Python - distinct green
+  python: { name: "Python", color: "bg-emerald-500" },
+  py: { name: "Python", color: "bg-emerald-500" },
+
+  // Shell/Bash - dark teal (not gray anymore)
+  bash: { name: "Bash", color: "bg-teal-600" },
+  sh: { name: "Shell", color: "bg-teal-600" },
+  shell: { name: "Shell", color: "bg-teal-600" },
+
+  // Data formats - each distinct
+  json: { name: "JSON", color: "bg-lime-500" },
   yaml: { name: "YAML", color: "bg-pink-500" },
   yml: { name: "YAML", color: "bg-pink-500" },
-  sql: { name: "SQL", color: "bg-blue-600" },
+  toml: { name: "TOML", color: "bg-orange-600" },
+  ini: { name: "INI", color: "bg-stone-500" },
+
+  // Web - distinct colors
+  html: { name: "HTML", color: "bg-orange-500" },
+  xml: { name: "XML", color: "bg-cyan-600" },
+  css: { name: "CSS", color: "bg-purple-500" },
+
+  // Documentation
+  markdown: { name: "Markdown", color: "bg-slate-500" },
+  md: { name: "Markdown", color: "bg-slate-500" },
+  mdx: { name: "MDX", color: "bg-violet-500" },
+
+  // Database
+  sql: { name: "SQL", color: "bg-indigo-500" },
+
+  // Systems languages - each unique
   go: { name: "Go", color: "bg-cyan-500" },
-  rust: { name: "Rust", color: "bg-orange-600" },
-  rs: { name: "Rust", color: "bg-orange-600" },
-  java: { name: "Java", color: "bg-red-600" },
+  rust: { name: "Rust", color: "bg-amber-700" },
+  rs: { name: "Rust", color: "bg-amber-700" },
   c: { name: "C", color: "bg-blue-700" },
-  cpp: { name: "C++", color: "bg-blue-600" },
-  "c++": { name: "C++", color: "bg-blue-600" },
-  csharp: { name: "C#", color: "bg-purple-600" },
-  cs: { name: "C#", color: "bg-purple-600" },
-  "c#": { name: "C#", color: "bg-purple-600" },
-  php: { name: "PHP", color: "bg-indigo-500" },
+  cpp: { name: "C++", color: "bg-blue-500" },
+  "c++": { name: "C++", color: "bg-blue-500" },
+
+  // JVM languages - each distinct
+  java: { name: "Java", color: "bg-red-600" },
+  kotlin: { name: "Kotlin", color: "bg-violet-600" },
+  kt: { name: "Kotlin", color: "bg-violet-600" },
+  scala: { name: "Scala", color: "bg-rose-500" },
+
+  // .NET
+  csharp: { name: "C#", color: "bg-fuchsia-600" },
+  cs: { name: "C#", color: "bg-fuchsia-600" },
+  "c#": { name: "C#", color: "bg-fuchsia-600" },
+
+  // Scripting languages - each unique
+  php: { name: "PHP", color: "bg-indigo-600" },
   ruby: { name: "Ruby", color: "bg-red-500" },
   rb: { name: "Ruby", color: "bg-red-500" },
-  swift: { name: "Swift", color: "bg-orange-500" },
-  kotlin: { name: "Kotlin", color: "bg-violet-500" },
-  kt: { name: "Kotlin", color: "bg-violet-500" },
-  scala: { name: "Scala", color: "bg-red-400" },
-  dockerfile: { name: "Dockerfile", color: "bg-sky-500" },
-  docker: { name: "Docker", color: "bg-sky-500" },
-  graphql: { name: "GraphQL", color: "bg-pink-600" },
-  gql: { name: "GraphQL", color: "bg-pink-600" },
-  r: { name: "R", color: "bg-blue-400" },
-  perl: { name: "Perl", color: "bg-slate-500" },
-  pl: { name: "Perl", color: "bg-slate-500" },
-  lua: { name: "Lua", color: "bg-indigo-600" },
-  ini: { name: "INI", color: "bg-gray-500" },
-  toml: { name: "TOML", color: "bg-amber-600" },
-  diff: { name: "Diff", color: "bg-emerald-500" },
-  patch: { name: "Patch", color: "bg-emerald-500" },
-  makefile: { name: "Makefile", color: "bg-lime-600" },
-  make: { name: "Make", color: "bg-lime-600" },
+  perl: { name: "Perl", color: "bg-blue-400" },
+  pl: { name: "Perl", color: "bg-blue-400" },
+  lua: { name: "Lua", color: "bg-purple-600" },
+  r: { name: "R", color: "bg-sky-600" },
+
+  // Mobile
+  swift: { name: "Swift", color: "bg-orange-400" },
+
+  // DevOps/Config
+  dockerfile: { name: "Dockerfile", color: "bg-sky-400" },
+  docker: { name: "Docker", color: "bg-sky-400" },
   nginx: { name: "Nginx", color: "bg-green-600" },
   apache: { name: "Apache", color: "bg-rose-600" },
   apacheconf: { name: "Apache", color: "bg-rose-600" },
-  plaintext: { name: "Text", color: "bg-gray-600" },
-  text: { name: "Text", color: "bg-gray-600" },
+  makefile: { name: "Makefile", color: "bg-yellow-600" },
+  make: { name: "Make", color: "bg-yellow-600" },
+
+  // API/Query
+  graphql: { name: "GraphQL", color: "bg-pink-600" },
+  gql: { name: "GraphQL", color: "bg-pink-600" },
+
+  // Diff/Patch
+  diff: { name: "Diff", color: "bg-green-500" },
+  patch: { name: "Patch", color: "bg-green-500" },
+
+  // Plain text - neutral gray
+  plaintext: { name: "Text", color: "bg-neutral-500" },
+  text: { name: "Text", color: "bg-neutral-500" },
 };
 
 interface CodeBlockProps {

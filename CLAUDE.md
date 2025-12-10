@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.25.0
+**Version**: 0.25.1
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -37,7 +37,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - PWA offline support with service worker and manifest
 - Accessibility audit (ARIA labels, focus states, skip link)
 - Syntax highlighting for code blocks using highlight.js
-- Colored language tags above code blocks (15+ languages supported)
+- Colored language tags above code blocks (33 languages with distinct colors)
 - Shared Footer component with copyright attribution
 - Legal pages: Privacy Policy, Terms of Service, Disclaimer, Accessibility Statement
 - Auto-updating build info in footer (version, build date, commit SHA)
@@ -141,7 +141,9 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Voice Assistant Header Redesign** - Compact header with settings panel overlay (v0.25.0)
 - **Voice Assistant Settings Panel** - In-window settings with voice selection, auto-speak toggle, conversation actions
 
-### Project Status: Complete (v0.25.0)
+- **Enhanced Code Block Colors** - 33 distinct language colors organized by family (v0.25.1)
+
+### Project Status: Complete (v0.25.1)
 
 ## Tech Stack
 
@@ -1010,6 +1012,81 @@ When adding new patterns:
 5. Update this CLAUDE.md documentation
 6. Test with slow network (DevTools throttling)
 
+## Code Block Language Color Guidelines (MANDATORY)
+
+**Location**: `apps/web/components/code-block.tsx`
+
+When adding new languages to code blocks, follow these rules to maintain visual consistency:
+
+### Color Assignment Rules
+
+1. **Language families share similar hues** (JS=yellow, TS=blue, Python=emerald)
+2. **Aliases use identical colors** (`js` and `javascript` both use same color)
+3. **No two unrelated languages should share the same color**
+4. **Fallback**: Unknown languages get `bg-gray-600`
+
+### Current Language Colors (33 languages)
+
+| Family | Languages | Tailwind Color |
+|--------|-----------|----------------|
+| JavaScript | `javascript`, `js` | `bg-yellow-500` |
+| | `jsx` | `bg-amber-500` |
+| TypeScript | `typescript`, `ts` | `bg-blue-600` |
+| | `tsx` | `bg-sky-500` |
+| Python | `python`, `py` | `bg-emerald-500` |
+| Shell | `bash`, `sh`, `shell` | `bg-teal-600` |
+| Data Formats | `json` | `bg-lime-500` |
+| | `yaml`, `yml` | `bg-pink-500` |
+| | `toml` | `bg-orange-600` |
+| | `ini` | `bg-stone-500` |
+| Web | `html` | `bg-orange-500` |
+| | `xml` | `bg-cyan-600` |
+| | `css` | `bg-purple-500` |
+| Documentation | `markdown`, `md` | `bg-slate-500` |
+| | `mdx` | `bg-violet-500` |
+| Database | `sql` | `bg-indigo-500` |
+| Systems | `go` | `bg-cyan-500` |
+| | `rust`, `rs` | `bg-amber-700` |
+| | `c` | `bg-blue-700` |
+| | `cpp`, `c++` | `bg-blue-500` |
+| JVM | `java` | `bg-red-600` |
+| | `kotlin`, `kt` | `bg-violet-600` |
+| | `scala` | `bg-rose-500` |
+| .NET | `csharp`, `cs`, `c#` | `bg-fuchsia-600` |
+| Scripting | `php` | `bg-indigo-600` |
+| | `ruby`, `rb` | `bg-red-500` |
+| | `perl`, `pl` | `bg-blue-400` |
+| | `lua` | `bg-purple-600` |
+| | `r` | `bg-sky-600` |
+| Mobile | `swift` | `bg-orange-400` |
+| DevOps | `dockerfile`, `docker` | `bg-sky-400` |
+| | `nginx` | `bg-green-600` |
+| | `apache`, `apacheconf` | `bg-rose-600` |
+| | `makefile`, `make` | `bg-yellow-600` |
+| API/Query | `graphql`, `gql` | `bg-pink-600` |
+| Diff/Patch | `diff`, `patch` | `bg-green-500` |
+| Plain Text | `plaintext`, `text` | `bg-neutral-500` |
+
+### Color Palette by Category
+
+- **Warm colors** (yellow, orange, amber): JavaScript family, config files
+- **Cool blues** (blue, sky, cyan): TypeScript, systems, DevOps
+- **Greens** (emerald, lime, green): Python, diff, server configs
+- **Purples** (purple, violet, fuchsia): CSS, Kotlin, C#, Lua
+- **Pinks/Roses** (pink, rose): YAML, Scala, Apache, GraphQL
+- **Reds** (red): Java, Ruby
+- **Neutrals** (slate, stone, neutral): Markdown, INI, plain text
+
+### Adding New Languages
+
+1. Import from `highlight.js/lib/languages/[lang]`
+2. Register with `hljs.registerLanguage()`
+3. Add to `languageConfig` with unique color
+4. Register aliases (e.g., `py` for `python`)
+5. Update this documentation with the new language
+
+---
+
 ## Content Categories
 
 | Category | Route | Description |
@@ -1036,7 +1113,7 @@ When adding new patterns:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.25.0.
+All planned features have been implemented. The project is feature-complete at v0.25.1.
 
 ### AWE-Inspired UX Improvements (All Complete)
 
@@ -1051,6 +1128,7 @@ All planned features have been implemented. The project is feature-complete at v
 | Phase 7 | Accessibility Refinements | v0.23.0 |
 | **Visual Redesign** | **Stripe/Vercel/Linear-Inspired Colors** | **v0.24.0** |
 | **Voice Assistant UX** | **Compact Header with Settings Panel** | **v0.25.0** |
+| **Code Block Colors** | **33 Distinct Language Colors** | **v0.25.1** |
 
 ### Future Enhancements (Optional)
 - Multi-language support (i18n) when translations are ready
