@@ -88,6 +88,14 @@ export function useFocusTrap(
   const containerRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
+  // Store callbacks in refs to prevent useEffect re-runs when inline functions are passed
+  const onEscapeRef = useRef(onEscape);
+  const onClickOutsideRef = useRef(onClickOutside);
+
+  // Update refs when callbacks change (without triggering useEffect)
+  onEscapeRef.current = onEscape;
+  onClickOutsideRef.current = onClickOutside;
+
   // Get all focusable elements within the container
   const getFocusableElements = useCallback((): HTMLElement[] => {
     if (!containerRef.current) return [];
@@ -134,7 +142,7 @@ export function useFocusTrap(
         if (closeOnEscape) {
           event.preventDefault();
           event.stopPropagation();
-          onEscape?.();
+          onEscapeRef.current?.();
         }
         return;
       }
@@ -182,7 +190,7 @@ export function useFocusTrap(
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [enabled, closeOnEscape, onEscape, getFocusableElements]);
+  }, [enabled, closeOnEscape, getFocusableElements]);
 
   // Handle click outside
   useEffect(() => {
@@ -193,7 +201,7 @@ export function useFocusTrap(
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
-        onClickOutside?.();
+        onClickOutsideRef.current?.();
       }
     };
 
@@ -206,7 +214,7 @@ export function useFocusTrap(
       clearTimeout(timeoutId);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [enabled, closeOnClickOutside, onClickOutside]);
+  }, [enabled, closeOnClickOutside]);
 
   // Store previous focus and set initial focus
   useEffect(() => {
