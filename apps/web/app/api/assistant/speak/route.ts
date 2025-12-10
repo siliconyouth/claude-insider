@@ -3,16 +3,11 @@ import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-// Lazy initialization of ElevenLabs client
-let elevenlabsClient: ElevenLabsClient | null = null;
-
-function getElevenLabs(): ElevenLabsClient {
-  if (!elevenlabsClient) {
-    elevenlabsClient = new ElevenLabsClient({
-      apiKey: process.env.ELEVENLABS_API_KEY,
-    });
-  }
-  return elevenlabsClient;
+// Create a fresh client for each request to avoid stale API key issues
+function getElevenLabs(apiKey: string): ElevenLabsClient {
+  return new ElevenLabsClient({
+    apiKey: apiKey,
+  });
 }
 
 // Available ElevenLabs voices
@@ -72,6 +67,15 @@ interface SpeakRequest {
 
 export async function POST(request: Request) {
   try {
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: "ElevenLabs API key not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const body: SpeakRequest = await request.json();
     const { text, voice = "sarah" } = body; // Default to Sarah - natural sounding
 
@@ -89,7 +93,7 @@ export async function POST(request: Request) {
     const voiceId = TTS_VOICES[voice] || TTS_VOICES.sarah;
 
     // Generate speech using ElevenLabs
-    const elevenlabs = getElevenLabs();
+    const elevenlabs = getElevenLabs(apiKey);
     const audioStream = await elevenlabs.textToSpeech.convert(voiceId, {
       text: truncatedText,
       modelId: "eleven_turbo_v2_5", // Fast, high-quality model
@@ -116,6 +120,22 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("TTS API error:", error);
+
+    // Check for quota exceeded error
+    const errorBody = (error as { body?: { detail?: { status?: string; message?: string } } })?.body;
+    if (errorBody?.detail?.status === "quota_exceeded") {
+      console.warn("[TTS API] Quota exceeded:", errorBody.detail.message);
+      return new Response(
+        JSON.stringify({
+          error: "quota_exceeded",
+          message: errorBody.detail.message
+        }),
+        {
+          status: 429, // Use proper rate limit status code
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
 
     const errorMessage =
       error instanceof Error ? error.message : "Failed to generate speech";

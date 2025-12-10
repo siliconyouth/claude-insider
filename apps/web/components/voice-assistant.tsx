@@ -20,6 +20,13 @@ import {
 import { useFocusTrap } from "@/hooks/use-focus-trap";
 import { useAnnouncer } from "@/hooks/use-aria-live";
 
+// Extend window for quota warning tracking
+declare global {
+  interface Window {
+    __elevenLabsQuotaWarned?: boolean;
+  }
+}
+
 interface StreamEvent {
   type: "text" | "done" | "error";
   content?: string;
@@ -256,8 +263,6 @@ export function VoiceAssistant() {
     // Also check if it's Safari on iOS specifically (most restrictive)
     const isIOSSafari = /iPad|iPhone|iPod/.test(ua) && !('MSStream' in window);
     isMobileRef.current = isMobileDevice || isIOSSafari;
-
-    console.log('[TTS] Mobile detection:', { isMobileDevice, isIOSSafari, result: isMobileRef.current });
   }, []);
 
   // Close voice menu when clicking outside
@@ -312,20 +317,9 @@ export function VoiceAssistant() {
   // Process speech queue - handles both desktop (sequential) and mobile (single batch)
   // On mobile, we DON'T chain audio via onended because Safari blocks programmatic play()
   const processSpeechQueue = useCallback(async () => {
-    console.log('[TTS] processSpeechQueue called', {
-      isSpeakingQueue: isSpeakingQueueRef.current,
-      queueLength: speechQueueRef.current.length,
-      streamingComplete: streamingCompleteRef.current,
-      isMobile: isMobileRef.current
-    });
-
     // Strict guard - only one audio at a time
-    if (isSpeakingQueueRef.current) {
-      console.log('[TTS] Already speaking, returning');
-      return;
-    }
+    if (isSpeakingQueueRef.current) return;
     if (speechQueueRef.current.length === 0) {
-      console.log('[TTS] Queue empty');
       if (streamingCompleteRef.current) {
         setIsSpeaking(false);
         setSpeakingMessageIndex(null);
@@ -338,7 +332,6 @@ export function VoiceAssistant() {
     speechQueueRef.current = [];
 
     if (!textToSpeak.trim()) {
-      console.log('[TTS] No text to speak');
       if (streamingCompleteRef.current) {
         setIsSpeaking(false);
         setSpeakingMessageIndex(null);
@@ -346,24 +339,33 @@ export function VoiceAssistant() {
       return;
     }
 
-    console.log('[TTS] Speaking text:', textToSpeak.substring(0, 100) + '...');
-
     // Mark as speaking BEFORE any async operations
     isSpeakingQueueRef.current = true;
     setIsSpeaking(true);
 
     try {
-      console.log('[TTS] Fetching audio from API...');
       const response = await fetch("/api/assistant/speak", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: markdownToSpeakableText(textToSpeak), voice: selectedVoiceRef.current }),
       });
 
-      console.log('[TTS] API response status:', response.status);
-
       if (!response.ok) {
-        console.warn('[TTS] API failed, falling back to browser TTS');
+        // Check if it's a quota exceeded error
+        if (response.status === 429) {
+          try {
+            const errorData = await response.json();
+            if (errorData.error === 'quota_exceeded') {
+              // Only announce once per session
+              if (!window.__elevenLabsQuotaWarned) {
+                window.__elevenLabsQuotaWarned = true;
+                announce('Voice quota exceeded. Using browser voice instead.');
+              }
+            }
+          } catch {
+            // Ignore JSON parse errors
+          }
+        }
         // Fallback to browser TTS
         speakWithBrowserTTSQueue(textToSpeak, () => {
           isSpeakingQueueRef.current = false;
@@ -379,13 +381,11 @@ export function VoiceAssistant() {
       }
 
       const audioBlob = await response.blob();
-      console.log('[TTS] Got audio blob, size:', audioBlob.size);
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
 
       audio.onended = () => {
-        console.log('[TTS] Audio ended');
         URL.revokeObjectURL(audioUrl);
         isSpeakingQueueRef.current = false;
 
@@ -400,8 +400,7 @@ export function VoiceAssistant() {
         }
       };
 
-      audio.onerror = (e) => {
-        console.error('[TTS] Audio error:', e);
+      audio.onerror = () => {
         URL.revokeObjectURL(audioUrl);
         isSpeakingQueueRef.current = false;
         // On mobile, don't try to continue - fall back gracefully
@@ -413,9 +412,7 @@ export function VoiceAssistant() {
         }
       };
 
-      console.log('[TTS] Attempting to play audio...');
       await audio.play();
-      console.log('[TTS] Audio playing successfully');
     } catch (err) {
       console.error("[TTS] Error:", err);
       isSpeakingQueueRef.current = false;

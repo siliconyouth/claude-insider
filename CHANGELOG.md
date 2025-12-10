@@ -17,13 +17,14 @@ No pending changes.
   - Removed `maxTouchPoints > 0` check (also triggers on MacBooks)
   - Now uses user agent only for accurate mobile device detection
 
-### Added
-- **TTS Debugging Logs** - Console logging for troubleshooting
-  - `[TTS] Mobile detection:` shows device detection results
-  - `[TTS] processSpeechQueue called` shows queue state
-  - `[TTS] Streaming complete` shows auto-speak settings
-  - `[TTS] API response status:` shows API success/failure
-  - `[TTS] Audio playing successfully` confirms playback started
+- **ElevenLabs API Error Handling** - Improved quota exceeded error handling
+  - API now returns HTTP 429 (rate limit) for quota exceeded instead of 500
+  - Voice assistant announces "Voice quota exceeded. Using browser voice instead." once per session
+  - Graceful fallback to browser TTS when ElevenLabs quota is depleted
+
+- **TTS API Client** - Fixed potential stale API key issues
+  - Changed from lazy singleton pattern to fresh client per request
+  - Ensures API key changes are picked up without server restart
 
 ## [0.25.10] - 2025-12-11
 
