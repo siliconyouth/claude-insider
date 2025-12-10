@@ -79,7 +79,7 @@ function getSectionColor(title: string): string {
     Fixed: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
     Removed: "bg-red-500/10 text-red-400 border-red-500/20",
     Security: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-    Deprecated: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    Deprecated: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
   };
   return colors[title] || "bg-gray-500/10 text-gray-400 border-gray-500/20";
 }

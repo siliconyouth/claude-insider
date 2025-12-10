@@ -145,11 +145,11 @@ const severityStyles: Record<ErrorSeverity, {
   button: string;
 }> = {
   warning: {
-    container: "border-amber-200 dark:border-amber-800/50",
-    icon: "text-amber-500",
-    iconBg: "bg-amber-100 dark:bg-amber-900/30",
-    title: "text-amber-700 dark:text-amber-400",
-    button: "bg-amber-500 hover:bg-amber-600",
+    container: "border-blue-200 dark:border-blue-800/50",
+    icon: "text-blue-500",
+    iconBg: "bg-blue-100 dark:bg-blue-900/30",
+    title: "text-blue-700 dark:text-cyan-400",
+    button: "bg-blue-500 hover:bg-blue-600",
   },
   error: {
     container: "border-red-200 dark:border-red-800/50",
@@ -486,13 +486,13 @@ export function OfflineDetector({ children, offlineFallback }: OfflineDetectorPr
   if (!isOnline) {
     return (
       offlineFallback || (
-        <div className="rounded-xl border border-amber-200 dark:border-amber-800/50 bg-white dark:bg-ds-surface-2 p-6">
+        <div className="rounded-xl border border-blue-200 dark:border-blue-800/50 bg-white dark:bg-ds-surface-2 p-6">
           <div className="flex items-center gap-4">
-            <div className="flex-shrink-0 rounded-full bg-amber-100 dark:bg-amber-900/30 p-3">
-              <WifiOffIcon className="h-6 w-6 text-amber-500" />
+            <div className="flex-shrink-0 rounded-full bg-blue-100 dark:bg-blue-900/30 p-3">
+              <WifiOffIcon className="h-6 w-6 text-blue-500" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-amber-700 dark:text-amber-400">
+              <h3 className="text-lg font-semibold text-blue-700 dark:text-cyan-400">
                 You&apos;re Offline
               </h3>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">

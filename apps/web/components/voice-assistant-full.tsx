@@ -622,7 +622,7 @@ export function VoiceAssistantFull() {
   if (!mounted) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-2 border-orange-500 border-t-transparent rounded-full" />
+        <div className="animate-spin h-8 w-8 border-2 border-blue-500 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -630,7 +630,7 @@ export function VoiceAssistantFull() {
   return (
     <div className="flex-1 flex flex-col rounded-2xl border border-gray-200 bg-white shadow-xl overflow-hidden dark:border-gray-700 dark:bg-gray-900">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-gray-200 bg-gradient-to-r from-orange-500 to-amber-600 px-4 py-3 dark:border-gray-700">
+      <div className="flex items-center justify-between border-b border-gray-200 bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-3 dark:border-gray-700">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
             <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -668,7 +668,7 @@ export function VoiceAssistantFull() {
                     <div
                       key={voice.id}
                       className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                        selectedVoice === voice.id ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400" : "text-gray-700 dark:text-gray-300"
+                        selectedVoice === voice.id ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-cyan-400" : "text-gray-700 dark:text-gray-300"
                       }`}
                     >
                       <button
@@ -685,7 +685,7 @@ export function VoiceAssistantFull() {
                       <button
                         onClick={(e) => previewVoice(voice.id, e)}
                         className={`p-1.5 rounded-full transition-colors ml-2 ${
-                          previewingVoice === voice.id ? "bg-orange-500 text-white" : "hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400"
+                          previewingVoice === voice.id ? "bg-blue-500 text-white" : "hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400"
                         }`}
                         title="Preview voice"
                       >
@@ -716,12 +716,12 @@ export function VoiceAssistantFull() {
           </button>
           {messages.length > 0 && (
             <>
-              <button onClick={handleExportConversation} className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white" title="Export">
+              <button onClick={handleExportConversation} className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white" title="Export" aria-label="Export conversation">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
               </button>
-              <button onClick={handleClearHistory} className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white" title="Clear">
+              <button onClick={handleClearHistory} className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white" title="Clear" aria-label="Clear conversation history">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
@@ -735,8 +735,8 @@ export function VoiceAssistantFull() {
       <div className="flex-1 overflow-y-auto p-4 min-h-[300px]">
         {messages.length === 0 && !streamingContent ? (
           <div className="flex h-full flex-col items-center justify-center text-center">
-            <div className="mb-4 rounded-full bg-orange-100 p-4 dark:bg-orange-900/30">
-              <svg className="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="mb-4 rounded-full bg-blue-100 p-4 dark:bg-blue-900/30">
+              <svg className="h-8 w-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
@@ -748,7 +748,7 @@ export function VoiceAssistantFull() {
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(question)}
-                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:border-orange-300 hover:bg-orange-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-orange-600 dark:hover:bg-orange-900/20"
+                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-cyan-600 dark:hover:bg-blue-900/20"
                 >
                   {question}
                 </button>
@@ -761,7 +761,7 @@ export function VoiceAssistantFull() {
               <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                   message.role === "user"
-                    ? "bg-gradient-to-r from-orange-500 to-amber-600 text-white"
+                    ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white"
                     : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
                 }`}>
                   <p className="whitespace-pre-wrap text-sm">
@@ -772,7 +772,7 @@ export function VoiceAssistantFull() {
                       onClick={() => speakMessage(message.content, index)}
                       disabled={isTTSLoading && speakingMessageIndex !== index}
                       className={`mt-2 flex items-center gap-1 text-xs transition-colors ${
-                        speakingMessageIndex === index ? "text-orange-500" : "text-gray-400 hover:text-orange-500"
+                        speakingMessageIndex === index ? "text-cyan-500" : "text-gray-400 hover:text-cyan-500"
                       }`}
                     >
                       {speakingMessageIndex === index && isTTSLoading ? (
@@ -830,7 +830,7 @@ export function VoiceAssistantFull() {
       {/* Input Area */}
       <div className="border-t border-gray-200 p-4 dark:border-gray-700">
         {isListening && (
-          <div className="mb-3 flex items-center gap-2 text-sm text-orange-500">
+          <div className="mb-3 flex items-center gap-2 text-sm text-cyan-500">
             <span className="h-2 w-2 animate-pulse rounded-full bg-red-500"></span>
             <span>Listening...</span>
             {interimTranscript && <span className="text-gray-400 italic truncate">&quot;{interimTranscript}&quot;</span>}
@@ -861,12 +861,12 @@ export function VoiceAssistantFull() {
             onChange={(e) => setInput(e.target.value)}
             placeholder={isListening ? "Speak now..." : "Ask a question..."}
             disabled={isLoading || isListening}
-            className="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+            className="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
           />
           <button
             type="submit"
             disabled={isLoading || isListening || !input.trim()}
-            className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-white transition-all hover:scale-105 disabled:scale-100 disabled:opacity-50"
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white transition-all hover:scale-105 disabled:scale-100 disabled:opacity-50"
             title="Send message"
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

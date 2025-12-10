@@ -113,7 +113,7 @@ export const PrefetchLink = forwardRef<HTMLAnchorElement, PrefetchLinkProps>(
           <span
             className={cn(
               "absolute -right-2 -top-0.5 h-1.5 w-1.5 rounded-full transition-all duration-300",
-              isPrefetching && "bg-amber-400 animate-pulse",
+              isPrefetching && "bg-blue-400 animate-pulse",
               isPrefetched && "bg-green-400"
             )}
             aria-hidden="true"

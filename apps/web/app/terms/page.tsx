@@ -13,7 +13,7 @@ export default function TermsOfServicePage() {
       <Header />
 
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
-        <article className="prose prose-invert prose-orange max-w-none">
+        <article className="prose prose-invert prose-blue max-w-none">
           <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
           <p className="text-gray-400 text-sm mb-8">Last updated: December 9, 2025</p>
 
@@ -164,8 +164,8 @@ export default function TermsOfServicePage() {
               The AI Voice Assistant uses the following third-party services:
             </p>
             <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li><strong>Anthropic Claude AI:</strong> Your chat messages are processed by Anthropic&apos;s Claude API. Use is subject to <a href="https://www.anthropic.com/legal/consumer-terms" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">Anthropic&apos;s Terms</a>.</li>
-              <li><strong>ElevenLabs:</strong> Text-to-speech functionality is provided by ElevenLabs. Use is subject to <a href="https://elevenlabs.io/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">ElevenLabs&apos; Terms</a>.</li>
+              <li><strong>Anthropic Claude AI:</strong> Your chat messages are processed by Anthropic&apos;s Claude API. Use is subject to <a href="https://www.anthropic.com/legal/consumer-terms" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">Anthropic&apos;s Terms</a>.</li>
+              <li><strong>ElevenLabs:</strong> Text-to-speech functionality is provided by ElevenLabs. Use is subject to <a href="https://elevenlabs.io/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">ElevenLabs&apos; Terms</a>.</li>
               <li><strong>Web Speech API:</strong> Voice input uses your browser&apos;s speech recognition, which may involve your browser vendor&apos;s services.</li>
             </ul>
 
@@ -203,7 +203,7 @@ export default function TermsOfServicePage() {
               <li>Cleared when you close the page or click the &quot;Clear&quot; button</li>
             </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
-              For detailed information, see our <a href="/privacy" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>.
+              For detailed information, see our <a href="/privacy" className="text-cyan-400 hover:text-cyan-300">Privacy Policy</a>.
             </p>
           </section>
 
@@ -211,7 +211,7 @@ export default function TermsOfServicePage() {
             <h2 className="text-2xl font-semibold mb-4">11. Privacy and Analytics</h2>
             <p className="text-gray-300 leading-relaxed">
               Your privacy is important to us. Our use of data is governed by our{" "}
-              <a href="/privacy" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>,
+              <a href="/privacy" className="text-cyan-400 hover:text-cyan-300">Privacy Policy</a>,
               which is incorporated into these Terms by reference.
             </p>
 
@@ -314,8 +314,8 @@ export default function TermsOfServicePage() {
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300">
                 <strong>Vladimir Dukelic</strong><br />
-                Email: <a href="mailto:vladimir@dukelic.com" className="text-orange-400 hover:text-orange-300">vladimir@dukelic.com</a><br />
-                GitHub: <a href="https://github.com/siliconyouth/claude-insider" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">github.com/siliconyouth/claude-insider</a>
+                Email: <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">vladimir@dukelic.com</a><br />
+                GitHub: <a href="https://github.com/siliconyouth/claude-insider" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">github.com/siliconyouth/claude-insider</a>
               </p>
             </div>
           </section>

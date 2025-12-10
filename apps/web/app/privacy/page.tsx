@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
       <Header />
 
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
-        <article className="prose prose-invert prose-orange max-w-none">
+        <article className="prose prose-invert prose-blue max-w-none">
           <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
           <p className="text-gray-400 text-sm mb-8">Last updated: December 9, 2025</p>
 
@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300">
                 <strong>Vladimir Dukelic</strong><br />
-                Email: <a href="mailto:vladimir@dukelic.com" className="text-orange-400 hover:text-orange-300">vladimir@dukelic.com</a>
+                Email: <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">vladimir@dukelic.com</a>
               </p>
             </div>
           </section>
@@ -80,7 +80,7 @@ export default function PrivacyPolicyPage() {
                 href="https://vercel.com/docs/analytics/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-orange-400 hover:text-orange-300"
+                className="text-cyan-400 hover:text-cyan-300"
               >
                 Vercel Analytics Privacy Policy
               </a>.
@@ -103,15 +103,15 @@ export default function PrivacyPolicyPage() {
             <h3 className="text-xl font-semibold mt-6 mb-3">Third-Party AI Services</h3>
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300 leading-relaxed mb-4">
-                <strong className="text-orange-400">Anthropic (Claude AI)</strong><br />
+                <strong className="text-cyan-400">Anthropic (Claude AI)</strong><br />
                 Your chat messages are sent to Anthropic&apos;s Claude API for processing. Anthropic processes your messages in accordance with their{" "}
-                <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>.
+                <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">Privacy Policy</a>.
                 Messages are used to generate responses only and are not used to train models when using the API.
               </p>
               <p className="text-gray-300 leading-relaxed">
-                <strong className="text-orange-400">ElevenLabs (Text-to-Speech)</strong><br />
+                <strong className="text-cyan-400">ElevenLabs (Text-to-Speech)</strong><br />
                 When you use the voice output feature, text is sent to ElevenLabs for speech synthesis. ElevenLabs processes this data in accordance with their{" "}
-                <a href="https://elevenlabs.io/privacy" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">Privacy Policy</a>.
+                <a href="https://elevenlabs.io/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">Privacy Policy</a>.
               </p>
             </div>
 
@@ -159,10 +159,10 @@ export default function PrivacyPolicyPage() {
             <h3 className="text-xl font-semibold mt-6 mb-3">Storage Keys Used</h3>
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <ul className="space-y-1 text-gray-300 font-mono text-sm">
-                <li>• <code className="text-orange-400">theme</code> - Theme preference</li>
-                <li>• <code className="text-orange-400">claude-insider-search-history</code> - Recent searches</li>
-                <li>• <code className="text-orange-400">claude-insider-locale</code> - Language preference</li>
-                <li>• <code className="text-orange-400">claude-insider-voice</code> - TTS voice preference</li>
+                <li>• <code className="text-cyan-400">theme</code> - Theme preference</li>
+                <li>• <code className="text-cyan-400">claude-insider-search-history</code> - Recent searches</li>
+                <li>• <code className="text-cyan-400">claude-insider-locale</code> - Language preference</li>
+                <li>• <code className="text-cyan-400">claude-insider-voice</code> - TTS voice preference</li>
               </ul>
             </div>
           </section>
@@ -185,7 +185,7 @@ export default function PrivacyPolicyPage() {
                 href="https://vercel.com/legal/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-orange-400 hover:text-orange-300"
+                className="text-cyan-400 hover:text-cyan-300"
               >
                 Privacy Policy
               </a>
@@ -276,7 +276,7 @@ export default function PrivacyPolicyPage() {
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300">
                 <strong>Email:</strong>{" "}
-                <a href="mailto:vladimir@dukelic.com" className="text-orange-400 hover:text-orange-300">
+                <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">
                   vladimir@dukelic.com
                 </a>
               </p>

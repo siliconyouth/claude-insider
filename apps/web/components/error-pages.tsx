@@ -327,7 +327,7 @@ export function ForbiddenPage({
             403
           </span>
           <div className="absolute inset-0 flex items-center justify-center">
-            <ShieldIcon className="h-16 w-16 text-amber-500" />
+            <ShieldIcon className="h-16 w-16 text-blue-500" />
           </div>
         </div>
 
@@ -375,9 +375,9 @@ export function MaintenancePage({
       <div className={cardStyles}>
         {/* Maintenance icon */}
         <div className="mb-6">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-100 dark:bg-amber-900/30">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 dark:bg-blue-900/30">
             <svg
-              className="h-10 w-10 text-amber-500 animate-spin-slow"
+              className="h-10 w-10 text-blue-500 animate-spin-slow"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -406,7 +406,7 @@ export function MaintenancePage({
         </p>
 
         {estimatedTime && (
-          <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 dark:bg-amber-900/30 px-4 py-2 text-sm text-amber-700 dark:text-amber-400">
+          <div className="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/30 px-4 py-2 text-sm text-blue-700 dark:text-cyan-400">
             <ClockIcon className="h-4 w-4" />
             Estimated time: {estimatedTime}
           </div>
