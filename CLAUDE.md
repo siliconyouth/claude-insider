@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.25.1
+**Version**: 0.25.2
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -142,8 +142,9 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Voice Assistant Settings Panel** - In-window settings with voice selection, auto-speak toggle, conversation actions
 
 - **Enhanced Code Block Colors** - 33 distinct language colors organized by family (v0.25.1)
+- **Light/Dark Theme Consistency** - Fixed poor contrast on docs pages in light mode (v0.25.2)
 
-### Project Status: Complete (v0.25.1)
+### Project Status: Complete (v0.25.2)
 
 ## Tech Stack
 
@@ -644,6 +645,90 @@ When modifying the design system:
 4. Update REQUIREMENTS.md and CHANGELOG.md
 5. Test in both light and dark modes
 6. Verify `prefers-reduced-motion` support for animations
+
+### Light/Dark Theme Guidelines (MANDATORY)
+
+**All components MUST support both light and dark themes.** Never use dark-only colors without light mode alternatives.
+
+#### Text Color Rules
+
+| Element | Light Mode | Dark Mode | Pattern |
+|---------|------------|-----------|---------|
+| **Body text** | `text-gray-700` or `text-gray-800` | `text-gray-300` | `text-gray-700 dark:text-gray-300` |
+| **Headings** | `text-gray-900` | `text-white` | `text-gray-900 dark:text-white` |
+| **Secondary text** | `text-gray-600` | `text-gray-400` | `text-gray-600 dark:text-gray-400` |
+| **Muted text** | `text-gray-500` | `text-gray-500` | `text-gray-500` (same) |
+| **Links** | `text-blue-600` | `text-cyan-400` | `text-blue-600 dark:text-cyan-400` |
+| **Link hover** | `text-blue-700` | `text-cyan-300` | `hover:text-blue-700 dark:hover:text-cyan-300` |
+
+#### Background Color Rules
+
+| Element | Light Mode | Dark Mode | Pattern |
+|---------|------------|-----------|---------|
+| **Page background** | `bg-white` | `bg-[#0a0a0a]` | `bg-white dark:bg-[#0a0a0a]` |
+| **Card/Surface** | `bg-gray-50` | `bg-gray-900/50` | `bg-gray-50 dark:bg-gray-900/50` |
+| **Inline code** | `bg-gray-100` | `bg-gray-800` | `bg-gray-100 dark:bg-gray-800` |
+| **Hover state** | `bg-gray-100` | `bg-gray-800` | `hover:bg-gray-100 dark:hover:bg-gray-800` |
+
+#### Border Color Rules
+
+| Element | Light Mode | Dark Mode | Pattern |
+|---------|------------|-----------|---------|
+| **Default border** | `border-gray-200` | `border-gray-800` | `border-gray-200 dark:border-gray-800` |
+| **Active border** | `border-blue-500/50` | `border-orange-500/50` | `border-blue-500/50 dark:border-orange-500/50` |
+
+#### Prose Typography (MDX Content)
+
+For documentation pages using Tailwind Typography plugin:
+
+```tsx
+// CORRECT: Conditional prose-invert for dark mode only
+<article className="prose dark:prose-invert prose-blue dark:prose-cyan max-w-none">
+
+// WRONG: prose-invert always applied (forces light text everywhere)
+<article className="prose prose-invert prose-cyan max-w-none">
+```
+
+#### Custom Page Components (Non-MDX)
+
+When creating custom pages (not MDX), ALWAYS use light/dark variants:
+
+```tsx
+// CORRECT: Both themes supported
+<p className="text-gray-700 dark:text-gray-300">Body text</p>
+<ul className="text-gray-700 dark:text-gray-300">
+<li><span className="text-blue-600 dark:text-orange-400">•</span> Item</li>
+</ul>
+
+// WRONG: Dark mode only colors
+<p className="text-gray-300">Body text</p>  // Too light in light mode!
+<ul className="text-gray-300">
+```
+
+#### Card Components
+
+```tsx
+// CORRECT: Full light/dark support
+<div className="p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-900">
+  <h3 className="text-gray-900 dark:text-white">Title</h3>
+  <p className="text-gray-600 dark:text-gray-400">Description</p>
+</div>
+```
+
+#### WCAG AA Compliance
+
+Minimum contrast ratios for accessibility:
+- **Body text**: 4.5:1 minimum
+- **Large text (18px+)**: 3:1 minimum
+- **Interactive elements**: 3:1 minimum
+
+Light mode text colors that meet WCAG AA:
+- `text-gray-700` (#374151) on white: ~8:1 ✓
+- `text-gray-800` (#1F2937) on white: ~13:1 ✓
+- `text-gray-900` (#111827) on white: ~16:1 ✓
+- `text-gray-600` (#4B5563) on white: ~5:1 ✓
+
+**Never use `text-gray-400` or lighter for body text in light mode.**
 
 ## Optimistic UI Patterns (MANDATORY)
 

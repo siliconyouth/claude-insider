@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.25.1)
+## Current Status (v0.25.2)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -146,6 +146,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Voice Assistant Header Redesign** (v0.25.0) - Compact header with settings panel overlay
 - [x] **Voice Assistant Settings Panel** - In-window settings with voice selection, auto-speak toggle, conversation actions
 - [x] **Renamed to "Claude AI Assistant"** - Clear branding with "Powered by Claude AI" in footer
+- [x] **Light/Dark Theme Consistency** - Fixed poor contrast on docs pages, WCAG AA compliant (v0.25.2)
 
 ### All Features Complete
 
@@ -191,6 +192,32 @@ The project uses a **Stripe/Vercel/Linear-inspired design** with a modern multi-
 .animate-glowPulse       /* Pulsing glow effect for demo */
 .animate-glowShift       /* Shifting glow position */
 ```
+
+### Light/Dark Theme Colors
+
+All components must support both themes. Use these color patterns consistently:
+
+| Element | Light Mode | Dark Mode |
+|---------|------------|-----------|
+| **Body Text** | `text-gray-700` | `text-gray-300` |
+| **Headings** | `text-gray-900` | `text-white` |
+| **Secondary Text** | `text-gray-600` | `text-gray-400` |
+| **Links** | `text-blue-600` | `text-cyan-400` |
+| **Background** | `bg-white` | `bg-gray-950` |
+| **Surface** | `bg-gray-50` | `bg-gray-900/50` |
+| **Border** | `border-gray-200` | `border-gray-800` |
+| **Inline Code** | `bg-gray-100 text-gray-900` | `bg-gray-800 text-orange-300` |
+
+**Prose Typography Pattern:**
+```tsx
+// Correct - only invert in dark mode
+<article className="prose dark:prose-invert prose-blue dark:prose-cyan">
+
+// Incorrect - always inverted (breaks light mode)
+<article className="prose prose-invert">
+```
+
+See CLAUDE.md "Light/Dark Theme Guidelines" section for complete documentation.
 
 ### Code Block Language Colors
 
