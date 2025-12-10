@@ -9,6 +9,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.4] - 2025-12-10
+
+### Added
+- **Stripe-Style Hero Layout** - Complete redesign with left-aligned text and device mockups
+  - New headline: "Master Claude AI development"
+  - Larger typography: `text-5xl sm:text-6xl lg:text-7xl` (up from 4xl/6xl)
+  - Left-aligned layout with device mockups on right (Stripe pattern)
+  - Feature checkmark list: Installation, API, MCP Servers, Hooks
+  - Animated badge with live indicator: "34 Guides • 7 Categories • AI Voice Assistant"
+  - Secondary CTA button: "API Reference" with outlined style
+
+- **Device Mockups Component** (`components/device-mockups.tsx`)
+  - MacBook Pro mockup with terminal showing Claude Code in action
+  - iPhone mockup with website preview in Safari
+  - Animated terminal content with typing effect
+  - Glow effects behind devices
+  - Hover interactions with subtle transforms
+
+### Changed
+- **Hero Section** - Now uses 2-column grid layout on desktop
+  - Text content on left side
+  - Device showcase on right side (hidden on mobile for performance)
+  - Hero height increased to 700-800px for more impact
+  - CTA buttons larger (px-8 py-4) with rounded-xl corners
+
+- **Hero Copy** - More descriptive content covering actual docs:
+  - Subheadline: "From setup to production. API integration, MCP servers, IDE plugins, and advanced prompting techniques."
+  - Trust badge: "Built with Claude Code • Powered by Claude Opus 4.5 • Open Source"
+
 ## [0.25.3] - 2025-12-10
 
 ### Changed

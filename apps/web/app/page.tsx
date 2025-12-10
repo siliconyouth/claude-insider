@@ -4,6 +4,7 @@ import { Footer } from "@/components/footer";
 import { VoiceAssistantDemo } from "@/components/voice-assistant-demo";
 import { OpenAssistantButton } from "@/components/open-assistant-button";
 import { HeroBackground } from "@/components/hero-background";
+import { DeviceShowcase } from "@/components/device-mockups";
 import { cn } from "@/lib/design-system";
 
 const CATEGORIES = [
@@ -209,49 +210,111 @@ export default function HomePage() {
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
       <Header activePage="home" />
 
-      {/* Hero Section */}
+      {/* Hero Section - Stripe-style left-aligned with device mockups */}
       <main id="main-content">
-        <div className="relative isolate overflow-hidden min-h-[600px]">
+        <div className="relative isolate overflow-hidden min-h-[700px] lg:min-h-[800px]">
           {/* Animated lens flare background */}
           <HeroBackground className="-z-10" />
 
           {/* Subtle dot pattern overlay */}
           <div className="absolute inset-0 -z-10 pattern-dots opacity-30 dark:opacity-20" />
 
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
-            <div className="text-center animate-fade-in">
-              {/* Stripe-style: Clean, high-contrast headline */}
-              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-gray-900 dark:text-white">
-                Claude Insider
-              </h1>
-              <p className="mt-6 text-lg leading-8 text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-                Your comprehensive resource for Claude AI documentation, tips,
-                tricks, configuration guides, and setup instructions.
-              </p>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                Built entirely with Claude Code powered by Claude Opus 4.5
-              </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Link
-                  href="/docs/getting-started"
-                  className={cn(
-                    "rounded-lg px-6 py-3 text-sm font-semibold text-white",
-                    "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-                    "shadow-lg shadow-blue-500/25",
-                    "hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500",
-                    "hover:shadow-xl hover:shadow-blue-500/30",
-                    "hover:-translate-y-0.5",
-                    "transition-all duration-200"
-                  )}
-                >
-                  Get Started
-                </Link>
-                <Link
-                  href="/docs"
-                  className="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
-                >
-                  Browse Docs <span aria-hidden="true">&rarr;</span>
-                </Link>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Left side - Text content */}
+              <div className="animate-fade-in text-left">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 text-xs font-medium mb-6">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+                  </span>
+                  34 Guides • 7 Categories • AI Voice Assistant
+                </div>
+
+                {/* Headline - Stripe-style large typography */}
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white leading-[1.1]">
+                  Master{" "}
+                  <span className="gradient-text-stripe">Claude AI</span>
+                  <br />
+                  development
+                </h1>
+
+                {/* Subheadline */}
+                <p className="mt-6 text-xl sm:text-2xl leading-relaxed text-gray-600 dark:text-gray-300 max-w-xl">
+                  From setup to production. API integration, MCP servers,
+                  IDE plugins, and advanced prompting techniques.
+                </p>
+
+                {/* Feature list */}
+                <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Installation & Setup
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    API & Streaming
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    MCP Servers
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Hooks & Actions
+                  </span>
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="mt-10 flex flex-wrap items-center gap-4">
+                  <Link
+                    href="/docs/getting-started"
+                    className={cn(
+                      "rounded-xl px-8 py-4 text-base font-semibold text-white",
+                      "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                      "shadow-lg shadow-blue-500/25",
+                      "hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500",
+                      "hover:shadow-xl hover:shadow-blue-500/30",
+                      "hover:-translate-y-0.5",
+                      "transition-all duration-200"
+                    )}
+                  >
+                    Start Learning
+                  </Link>
+                  <Link
+                    href="/docs/api"
+                    className={cn(
+                      "rounded-xl px-8 py-4 text-base font-semibold",
+                      "text-gray-700 dark:text-gray-200",
+                      "bg-white dark:bg-white/10",
+                      "border border-gray-200 dark:border-white/20",
+                      "hover:bg-gray-50 dark:hover:bg-white/20",
+                      "hover:-translate-y-0.5",
+                      "transition-all duration-200"
+                    )}
+                  >
+                    API Reference
+                  </Link>
+                </div>
+
+                {/* Trust badge */}
+                <p className="mt-6 text-xs text-gray-400 dark:text-gray-500">
+                  Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
+                </p>
+              </div>
+
+              {/* Right side - Device mockups */}
+              <div className="relative animate-fade-in lg:animate-slide-in-right hidden sm:block">
+                <DeviceShowcase className="w-full" />
               </div>
             </div>
           </div>
