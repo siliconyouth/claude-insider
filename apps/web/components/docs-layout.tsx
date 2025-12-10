@@ -72,7 +72,7 @@ export function DocsLayout({
                           href={item.href}
                           className={`block px-3 py-1.5 text-sm rounded-lg transition-colors ${
                             item.active
-                              ? "text-orange-400 bg-orange-500/10"
+                              ? "text-cyan-400 bg-blue-500/10"
                               : "text-gray-400 hover:text-white hover:bg-gray-800"
                           }`}
                         >
@@ -107,7 +107,7 @@ export function DocsLayout({
               ))}
             </nav>
 
-            <article className="prose prose-invert prose-orange max-w-none">
+            <article className="prose prose-invert prose-cyan max-w-none">
               <h1 className="text-4xl font-bold mb-2">{title}</h1>
               {readingTime && (
                 <div className="flex items-center gap-1.5 text-sm text-gray-400 mb-6 not-prose">

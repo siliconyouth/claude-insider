@@ -185,7 +185,7 @@ export function Search() {
           "hover:border-gray-300 dark:hover:border-[#404040]",
           "hover:text-gray-900 dark:hover:text-gray-200",
           "transition-all duration-200",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
           "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]"
         )}
         aria-label="Search documentation (Ctrl+K or Cmd+K)"
@@ -257,7 +257,7 @@ export function Search() {
                   setQuery("");
                   setResults([]);
                 }}
-                className="absolute top-3 right-3 p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="absolute top-3 right-3 p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Close search"
               >
                 <svg
@@ -311,7 +311,7 @@ export function Search() {
                       setQuery("");
                       setResults([]);
                     }}
-                    className="p-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded"
+                    className="p-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
                     aria-label="Clear search"
                   >
                     <svg
@@ -362,7 +362,7 @@ export function Search() {
                         className={cn(
                           "w-full px-4 py-3 text-left flex items-start gap-3 transition-all focus:outline-none",
                           index === selectedIndex
-                            ? "bg-orange-500/10"
+                            ? "bg-blue-500/10"
                             : "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]",
                           isNavigating && index === selectedIndex && "opacity-50"
                         )}
@@ -373,7 +373,7 @@ export function Search() {
                           <span
                             className={`inline-flex items-center justify-center w-6 h-6 rounded text-xs font-medium ${
                               index === selectedIndex
-                                ? "bg-orange-500 text-white"
+                                ? "bg-gradient-to-r from-violet-600 to-blue-600 text-white"
                                 : "bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
                             }`}
                             aria-hidden="true"
@@ -385,7 +385,7 @@ export function Search() {
                           <p
                             className={`font-medium truncate ${
                               index === selectedIndex
-                                ? "text-orange-600 dark:text-orange-400"
+                                ? "text-blue-600 dark:text-cyan-400"
                                 : "text-gray-900 dark:text-white"
                             }`}
                           >
@@ -435,7 +435,7 @@ export function Search() {
                         </span>
                         <button
                           onClick={handleClearHistory}
-                          className="text-xs text-gray-500 hover:text-orange-400 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 rounded px-1"
+                          className="text-xs text-gray-500 hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1"
                         >
                           Clear all
                         </button>
@@ -445,7 +445,7 @@ export function Search() {
                           <button
                             key={item.timestamp}
                             onClick={() => handleHistoryClick(item.query)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-orange-500/10 hover:text-orange-500 dark:hover:text-orange-400 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-blue-500/10 hover:text-blue-500 dark:hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                           >
                             <svg
                               className="w-3.5 h-3.5 text-gray-400"

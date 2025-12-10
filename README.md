@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.20.0)
+## Current Status (v0.24.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -125,21 +125,76 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Prefetch Queue Manager** - Priority-based prefetching with analytics
 - [x] **usePrefetch Hook** - Hover/focus/intersection-based prefetching
 - [x] **PrefetchLink Components** - Smart link components with prefetch indicators
+- [x] **Error Boundaries & Recovery** - Styled error states, retry mechanisms, circuit breaker
+- [x] **useRetry Hook** - Exponential backoff with jitter and cancel support
+- [x] **useCircuitBreaker Hook** - Circuit breaker pattern for flaky services
+- [x] **Micro-interactions & Animations** - Button press, ripple, card tilt, glow effects
+- [x] **AnimatedButton Component** - Buttons with press/ripple/loading states
+- [x] **AnimatedCard Component** - Cards with 3D tilt and cursor-following glow
+- [x] **Page Transitions** - Fade/slide/scale transitions between routes
+- [x] **Accessibility Refinements** - Focus trap, ARIA live regions, keyboard shortcuts
+- [x] **useFocusTrap Hook** - Modal focus management
+- [x] **useAnnouncer Hook** - Screen reader announcements
+- [x] **AccessibleModal Components** - WCAG-compliant modals, dialogs, drawers
+- [x] **Stripe/Vercel/Linear-Inspired Redesign** - Modern gradient color scheme (v0.24.0)
+- [x] **Lens Flare Hero Animation** - GPU-accelerated animated background with glowing orbs
+- [x] **Multi-Color Gradient System** - Violet → Blue → Cyan (Stripe-style) throughout
+- [x] **New HeroBackground Component** - Animated lens flares with light rays
+- [x] **Updated Color Palette** - Replaced orange with violet/blue/cyan gradients
 
 ### All Features Complete
 
-## UX System (Four Pillars)
+## UX System (Seven Pillars)
 
-The project implements a comprehensive UX system with four mandatory pillars:
+The project implements a comprehensive UX system with seven mandatory pillars:
 
 | Pillar | Description | Key Components |
 |--------|-------------|----------------|
-| **Design System** | Vercel-inspired visual consistency | `cn()` utility, design tokens, glass morphism, animations |
+| **Design System** | Stripe/Vercel-inspired visual consistency | `cn()` utility, gradient tokens, glass morphism, lens flares |
 | **Optimistic UI** | Instant user feedback | Toast notifications, skeletons, rollback on error |
 | **Content-Aware Loading** | Intelligent lazy loading | Intersection Observer, blur-up images, lazy code blocks |
 | **Smart Prefetching** | Anticipate intent, preload before click | Priority queue, hover/focus triggers, analytics |
+| **Error Boundaries** | Graceful error handling | Retry mechanisms, circuit breaker, styled error pages |
+| **Micro-interactions** | Delightful animations | Button press/ripple, card tilt/glow, page transitions |
+| **Accessibility** | WCAG 2.1 AA compliance | Focus trap, ARIA live regions, keyboard shortcuts |
 
-All new features must implement all four pillars. See [CLAUDE.md](CLAUDE.md) for detailed guidelines.
+All new features must implement all seven pillars. See [CLAUDE.md](CLAUDE.md) for detailed guidelines.
+
+## Design System (Stripe-Inspired)
+
+The project uses a **Stripe/Vercel/Linear-inspired design** with a modern multi-color gradient aesthetic:
+
+### Gradient Color System
+
+| Purpose | Tailwind Classes |
+|---------|-----------------|
+| **Primary Gradient** | `from-violet-600 via-blue-600 to-cyan-600` |
+| **Text Gradient** | `from-violet-400 via-blue-400 to-cyan-400` |
+| **Hover Gradient** | `from-violet-500 via-blue-500 to-cyan-500` |
+| **Glow Shadow** | `shadow-blue-500/25` |
+| **Accent Text (Dark)** | `dark:text-cyan-400` |
+| **Accent Text (Light)** | `text-blue-600` |
+
+### CSS Gradient Classes
+
+```css
+.gradient-text-stripe    /* Gradient text for headings */
+.gradient-button-stripe  /* Gradient background for buttons */
+.lens-flare-orb-violet   /* Animated violet glow orb */
+.lens-flare-orb-blue     /* Animated blue glow orb */
+.lens-flare-orb-cyan     /* Animated cyan glow orb */
+```
+
+### Hero Background Component
+
+```tsx
+import { HeroBackground } from "@/components/hero-background";
+
+<div className="relative isolate overflow-hidden min-h-[600px]">
+  <HeroBackground className="-z-10" />
+  {/* Hero content */}
+</div>
+```
 
 ## Documentation Pages
 
@@ -217,10 +272,20 @@ claude-insider/
 │   │   │   ├── lazy-image.tsx    # Lazy image with blur-up effect
 │   │   │   ├── lazy-code-block.tsx # Lazy code block with deferred highlighting
 │   │   │   ├── content-loader.tsx # Route-based skeleton selection
+│   │   │   ├── hero-background.tsx # Animated lens flare hero background
+│   │   │   ├── error-boundary.tsx # Styled error boundary components
+│   │   │   ├── animated-button.tsx # Buttons with press/ripple effects
+│   │   │   ├── animated-card.tsx  # Cards with 3D tilt and glow
+│   │   │   ├── accessible-modal.tsx # WCAG-compliant modals
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── hooks/
 │   │   │   ├── use-optimistic-update.ts  # Optimistic UI hooks
-│   │   │   └── use-intersection-observer.ts  # Viewport detection hook
+│   │   │   ├── use-intersection-observer.ts  # Viewport detection hook
+│   │   │   ├── use-error-recovery.ts     # Retry, circuit breaker hooks
+│   │   │   ├── use-animations.ts         # Tilt, press, ripple, spring hooks
+│   │   │   ├── use-focus-trap.ts         # Modal focus management
+│   │   │   ├── use-aria-live.tsx         # Screen reader announcements
+│   │   │   └── use-keyboard-shortcuts.ts # Global keyboard shortcuts
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
@@ -240,7 +305,9 @@ claude-insider/
 │   │   │   ├── tutorials/        # Code review, docs generation, testing
 │   │   │   └── examples/         # Real-world projects, case studies
 │   │   └── lib/
-│   │       ├── design-system.ts  # Vercel-inspired design tokens & cn() utility
+│   │       ├── design-system.ts  # Stripe-inspired gradient tokens & cn() utility
+│   │       ├── error-reporting.ts # Error tracking and categorization
+│   │       ├── prefetch-queue.ts  # Priority-based prefetch manager
 │   │       ├── mdx.ts            # MDX utilities
 │   │       ├── search.ts         # Search utilities
 │   │       ├── reading-time.ts   # Reading time calculation

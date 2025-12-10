@@ -9,6 +9,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.24.0] - 2025-12-10
+
+### Added
+- **Stripe/Vercel/Linear-Inspired Visual Redesign** - Complete color scheme transformation
+  - `components/hero-background.tsx` - New animated lens flare hero background
+  - Multi-color gradient system replacing single orange accent color
+  - Stripe-style `violet-600 → blue-600 → cyan-600` gradient throughout
+  - 6 animated glowing orbs (violet, blue, cyan) with GPU-accelerated animations
+  - Subtle light rays effect radiating from hero section
+  - `prefers-reduced-motion` support for all new animations
+
+- **New CSS Gradient Utilities** (150+ lines added to `globals.css`)
+  - `.gradient-text-stripe` - Gradient text for headings
+  - `.gradient-button-stripe` - Gradient background for buttons
+  - `.lens-flare-orb-violet/.blue/.cyan` - Animated glow orbs
+  - `@keyframes flare-drift-1/2/3` - Staggered orb movement (25-35s cycles)
+  - `@keyframes flare-pulse` - Orb opacity/blur pulsing (8s cycle)
+  - `@keyframes ray-sweep` - Light ray animation (45-55s cycle)
+  - New CSS custom properties: `--ds-gradient-start/mid/end`, `--ds-glow-violet/blue/cyan`
+
+- **Design System Token Updates** (`lib/design-system.ts`)
+  - New accent colors: `violet-600`, `blue-500/600`, `cyan-400/500`
+  - Updated gradient presets for Stripe aesthetic
+  - New glow shadow utilities: `shadow-blue-500/25`
+  - Updated focus ring colors: `ring-blue-500`
+
+### Changed
+- **Homepage** - Complete redesign with lens flare hero and gradient accents
+  - Hero section now uses `HeroBackground` component
+  - CTA button uses violet→blue→cyan gradient
+  - Category card icons use gradient backgrounds
+  - Stats section uses `gradient-text-stripe` class
+  - All links use blue/cyan hover colors
+
+- **Header** - Gradient logo (`from-violet-600 via-blue-600 to-cyan-600`)
+- **Voice Assistant** - FAB, header, user messages, buttons all use new gradients
+- **Search Modal** - Updated highlights and focus rings to blue/cyan
+- **Docs Layout** - Sidebar active state uses cyan, prose uses `prose-cyan`
+- **Docs Page** - Category cards use cyan hover states
+- **Footer** - Version updated to 0.24.0
+
+### Removed
+- All orange accent colors (`orange-400/500/600`, `amber-500/600`)
+- Static gradient orb background (replaced with animated lens flares)
+
 ## [0.23.0] - 2025-12-10
 
 ### Added

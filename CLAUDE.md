@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.23.0
+**Version**: 0.24.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -132,8 +132,13 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **useKeyboardShortcuts Hook** - Global keyboard shortcut registry
 - **AccessibleModal Components** - WCAG-compliant modals, dialogs, drawers, tooltips
 - **Accessibility CSS Utilities** - High contrast, focus rings, touch targets
+- **Stripe/Vercel/Linear-Inspired Redesign** - Modern gradient color scheme (v0.24.0)
+- **Lens Flare Hero Animation** - GPU-accelerated animated background with glowing orbs
+- **Multi-Color Gradient System** - Violet → Blue → Cyan (Stripe-style) throughout
+- **New HeroBackground Component** - Animated lens flares with light rays
+- **Updated Color Palette** - Replaced orange with violet/blue/cyan gradients
 
-### Project Status: Complete (v0.23.0)
+### Project Status: Complete (v0.24.0)
 
 ## Tech Stack
 
@@ -350,15 +355,37 @@ When modifying any of the seven pillars:
 
 **Location**: `apps/web/lib/design-system.ts`
 
-The project uses a Vercel-inspired design system. **All new components and pages MUST follow these guidelines** to maintain visual consistency.
+The project uses a **Stripe/Vercel/Linear-inspired design system** with a modern multi-color gradient aesthetic. **All new components and pages MUST follow these guidelines** to maintain visual consistency.
 
 ### Core Principles
 
 1. **Use design system tokens** - Never hardcode colors, use design system values
 2. **Dark-first design** - Dark theme uses Vercel blacks (#0a0a0a, #111111, #1a1a1a)
 3. **Glass morphism** - Headers and overlays use backdrop-blur with transparency
-4. **Subtle animations** - GPU-optimized transforms (translate, scale, opacity)
-5. **Layered elevation** - Shadows increase with elevation level
+4. **Multi-color gradients** - Use Violet → Blue → Cyan instead of single colors
+5. **GPU-optimized animations** - transforms (translate, scale, opacity) only
+6. **Layered elevation** - Shadows increase with elevation level
+
+### Gradient Color System (MANDATORY)
+
+The project uses a **Stripe-inspired gradient system**. Never use single accent colors like orange.
+
+| Purpose | Value | Usage |
+|---------|-------|-------|
+| **Primary Gradient** | `from-violet-600 via-blue-600 to-cyan-600` | CTA buttons, user messages |
+| **Text Gradient** | `from-violet-400 via-blue-400 to-cyan-400` | Hero headings, stats |
+| **Hover Gradient** | `from-violet-500 via-blue-500 to-cyan-500` | Button hover states |
+| **Glow Shadow** | `shadow-blue-500/25` | Button shadows, card hover |
+| **Accent Text** | `text-blue-600 dark:text-cyan-400` | Links, active states |
+| **Focus Ring** | `ring-blue-500` | Focus indicators |
+
+### CSS Gradient Classes
+
+```tsx
+// Use these gradient utilities from globals.css:
+className="gradient-text-stripe"     // Gradient text for headings
+className="gradient-button-stripe"   // Gradient background for buttons
+```
 
 ### Colors (Dark Theme - Default)
 
@@ -368,11 +395,12 @@ The project uses a Vercel-inspired design system. **All new components and pages
 | Background 2 | `dark:bg-[#111111]` | #111111 | Cards, elevated surfaces |
 | Background 3 | `dark:bg-[#1a1a1a]` | #1A1A1A | Hover states, active elements |
 | Border | `dark:border-[#262626]` | #262626 | Dividers, card borders |
-| Border Hover | `dark:border-[#404040]` | #404040 | Hover border states |
+| Border Hover | `dark:border-blue-500/50` | - | Hover border states |
 | Text Primary | `dark:text-white` | #FFFFFF | Headings, important text |
 | Text Secondary | `dark:text-gray-400` | #9CA3AF | Body text, descriptions |
 | Text Muted | `dark:text-gray-500` | #6B7280 | Captions, metadata |
-| Accent | `text-orange-400` | #FB923C | Links, highlights |
+| Accent | `dark:text-cyan-400` | #22D3EE | Links, highlights |
+| Accent Hover | `dark:hover:text-cyan-400` | - | Link hover |
 
 ### Colors (Light Theme)
 
@@ -382,11 +410,25 @@ The project uses a Vercel-inspired design system. **All new components and pages
 | Background 2 | `bg-gray-50` | #F9FAFB | Cards, elevated surfaces |
 | Background 3 | `bg-gray-100` | #F3F4F6 | Hover states |
 | Border | `border-gray-200` | #E5E7EB | Dividers, card borders |
-| Border Hover | `border-gray-300` | #D1D5DB | Hover border states |
+| Border Hover | `border-blue-500/50` | - | Hover border states |
 | Text Primary | `text-gray-900` | #111827 | Headings, important text |
 | Text Secondary | `text-gray-600` | #4B5563 | Body text, descriptions |
 | Text Muted | `text-gray-500` | #6B7280 | Captions, metadata |
-| Accent | `text-orange-600` | #EA580C | Links, highlights |
+| Accent | `text-blue-600` | #2563EB | Links, highlights |
+| Accent Hover | `hover:text-blue-600` | - | Link hover |
+
+### Gradient CSS Variables
+
+Available in `globals.css`:
+
+```css
+--ds-gradient-start: 124 58 237;    /* violet-600 */
+--ds-gradient-mid: 59 130 246;      /* blue-500 */
+--ds-gradient-end: 6 182 212;       /* cyan-500 */
+--ds-glow-violet: 139 92 246;       /* For lens flares */
+--ds-glow-blue: 59 130 246;         /* For lens flares */
+--ds-glow-cyan: 34 211 238;         /* For lens flares */
+```
 
 ### Glass Morphism
 
@@ -411,8 +453,17 @@ className={cn(
   "bg-white dark:bg-[#111111]",
   "border border-gray-200 dark:border-[#262626]",
   "shadow-sm",
-  "hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/5",
+  "hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10",
   "hover:-translate-y-1",
+  "transition-all duration-300"
+)}
+
+// Category card icons with gradient background:
+className={cn(
+  "flex h-10 w-10 items-center justify-center rounded-lg",
+  "bg-gradient-to-br from-violet-500/10 via-blue-500/10 to-cyan-500/10",
+  "text-blue-600 dark:text-cyan-400",
+  "group-hover:from-violet-500/20 group-hover:via-blue-500/20 group-hover:to-cyan-500/20",
   "transition-all duration-300"
 )}
 ```
@@ -426,12 +477,34 @@ All animations must be GPU-optimized (transform, opacity only):
 | Fade In | `animate-fade-in` | 500ms |
 | Fade In Up | `animate-fade-in-up` | 500ms |
 | Hover Lift | `hover:-translate-y-0.5` | 200ms |
-| Hover Glow | `hover:shadow-lg hover:shadow-orange-500/5` | 300ms |
+| Hover Glow | `hover:shadow-lg hover:shadow-blue-500/10` | 300ms |
+| Lens Flare Drift | `flare-drift-1/2/3` | 25-35s |
+| Lens Flare Pulse | `flare-pulse` | 8s |
 
 For staggered animations, use inline styles:
 ```tsx
 style={{ animationDelay: `${index * 50}ms` }}
 ```
+
+### Hero Background (Lens Flares)
+
+Use the `HeroBackground` component for animated hero sections:
+
+```tsx
+import { HeroBackground } from "@/components/hero-background";
+
+<div className="relative isolate overflow-hidden min-h-[600px]">
+  <HeroBackground className="-z-10" />
+  {/* Hero content */}
+</div>
+```
+
+The component features:
+- 6 animated glowing orbs (violet, blue, cyan)
+- Subtle light rays effect
+- GPU-accelerated CSS animations
+- `prefers-reduced-motion` support
+- Configurable intensity and ray visibility
 
 ### Pattern Backgrounds
 
@@ -439,7 +512,7 @@ Use for hero sections and visual interest:
 
 ```tsx
 // Dot pattern
-<div className="absolute inset-0 -z-10 pattern-dots opacity-50" />
+<div className="absolute inset-0 -z-10 pattern-dots opacity-30 dark:opacity-20" />
 ```
 
 ### `cn()` Utility
@@ -462,10 +535,10 @@ Primary button (CTA):
 ```tsx
 className={cn(
   "rounded-lg px-6 py-3 text-sm font-semibold text-white",
-  "bg-gradient-to-r from-orange-500 to-amber-600",
-  "shadow-lg shadow-orange-500/25",
-  "hover:from-orange-600 hover:to-amber-700",
-  "hover:shadow-xl hover:shadow-orange-500/30",
+  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+  "shadow-lg shadow-blue-500/25",
+  "hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500",
+  "hover:shadow-xl hover:shadow-blue-500/30",
   "hover:-translate-y-0.5",
   "transition-all duration-200"
 )}
@@ -478,8 +551,8 @@ className={cn(
   "border border-gray-200 dark:border-[#262626]",
   "text-gray-600 dark:text-gray-400",
   "bg-white dark:bg-[#111111]",
-  "hover:text-orange-600 dark:hover:text-orange-400",
-  "hover:border-orange-500/50",
+  "hover:text-blue-600 dark:hover:text-cyan-400",
+  "hover:border-blue-500/50",
   "hover:-translate-y-0.5 hover:shadow-md",
   "transition-all duration-200"
 )}
@@ -492,7 +565,7 @@ All interactive elements must have visible focus states:
 ```tsx
 className={cn(
   "focus:outline-none",
-  "focus-visible:ring-2 focus-visible:ring-orange-500",
+  "focus-visible:ring-2 focus-visible:ring-blue-500",
   "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]"
 )}
 ```
@@ -510,22 +583,27 @@ className={cn(
 
 ### Gradient Text
 
-For accent headings:
+For accent headings (use the CSS class or inline):
 ```tsx
-className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent"
+// CSS class (preferred):
+className="gradient-text-stripe"
+
+// Or inline:
+className="bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent"
 ```
 
 ### Design System Files
 
 | File | Purpose |
 |------|---------|
-| `lib/design-system.ts` | Design tokens, `cn()` utility, component presets |
-| `app/globals.css` | CSS variables, utility classes, animations |
-| `components/header.tsx` | Reference implementation of glass header |
+| `lib/design-system.ts` | Design tokens, `cn()` utility, gradient presets |
+| `app/globals.css` | CSS variables, lens flare animations, gradient utilities |
+| `components/hero-background.tsx` | Animated lens flare hero background |
+| `components/header.tsx` | Reference implementation of glass header with gradient logo |
 | `components/toast.tsx` | Toast notification system |
 | `components/skeleton.tsx` | Skeleton loading components |
 | `hooks/use-optimistic-update.ts` | Optimistic update hooks |
-| `app/page.tsx` | Reference implementation of cards, patterns |
+| `app/page.tsx` | Reference implementation of gradients, lens flares |
 
 ### Updating the Design System
 
@@ -930,22 +1008,22 @@ When adding new patterns:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.19.0.
+All planned features have been implemented. The project is feature-complete at v0.24.0.
 
-### AWE-Inspired UX Improvements (Completed)
+### AWE-Inspired UX Improvements (All Complete)
 
 | Phase | Description | Version |
 |-------|-------------|---------|
 | Phase 1 | Design System Foundation | v0.17.0 |
 | Phase 2 | Optimistic UI Patterns | v0.18.0 |
 | Phase 3 | Content-Aware Loading | v0.19.0 |
+| Phase 4 | Smart Prefetching | v0.20.0 |
+| Phase 5 | Error Boundaries & Recovery | v0.21.0 |
+| Phase 6 | Micro-interactions & Animations | v0.22.0 |
+| Phase 7 | Accessibility Refinements | v0.23.0 |
+| **Visual Redesign** | **Stripe/Vercel/Linear-Inspired Colors** | **v0.24.0** |
 
 ### Future Enhancements (Optional)
-- Phase 4: Micro-interactions (button press, link hover animations)
-- Phase 5: Scroll Optimization (virtual scrolling, scroll-linked effects)
-- Phase 6: Error Boundaries & Recovery (global error handling)
-- Phase 7: Performance Monitoring (Core Web Vitals)
-- Phase 8: State Persistence (form auto-save, scroll position)
 - Multi-language support (i18n) when translations are ready
 - Community contributions via GitHub
 

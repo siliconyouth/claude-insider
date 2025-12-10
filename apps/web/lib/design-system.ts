@@ -1,11 +1,16 @@
 /**
  * Claude Insider Design System
- * Vercel/Geist-inspired design tokens for consistent UI
+ * Stripe/Vercel/Linear-inspired design tokens for consistent UI
  *
  * Based on:
+ * - Stripe's gradient aesthetic (purple → blue → cyan)
  * - Vercel's Geist Design System (https://vercel.com/geist)
- * - Vercel Web Interface Guidelines (https://vercel.com/design/guidelines)
- * - AWE Project patterns
+ * - Linear's modern UI patterns
+ * - AWE Project patterns (Seven Pillars)
+ *
+ * Color Palette: Purple → Blue → Cyan
+ * - Primary: violet-600 (#7c3aed) → blue-500 (#3b82f6) → cyan-500 (#06b6d4)
+ * - Accents: purple-500 (#a855f7), indigo-500 (#6366f1), cyan-400 (#22d3ee)
  */
 
 export const designSystem = {
@@ -87,13 +92,20 @@ export const designSystem = {
       secondary: 'text-gray-600 dark:text-ds-text-secondary',
       muted: 'text-gray-500 dark:text-ds-text-muted',
     },
-    // Brand/Accent (Claude Insider Orange)
+    // Brand/Accent (Stripe-inspired Purple → Blue → Cyan)
     accent: {
-      solid: 'bg-orange-500 dark:bg-orange-500',
-      hover: 'hover:bg-orange-600 dark:hover:bg-orange-400',
-      text: 'text-orange-600 dark:text-orange-400',
-      border: 'border-orange-500 dark:border-orange-400',
-      gradient: 'bg-gradient-to-r from-orange-500 to-amber-500',
+      solid: 'bg-blue-500 dark:bg-blue-500',
+      hover: 'hover:bg-blue-600 dark:hover:bg-blue-400',
+      text: 'text-blue-600 dark:text-cyan-400',
+      border: 'border-blue-500 dark:border-cyan-400',
+      gradient: 'bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500',
+      // Additional gradient variants
+      gradientSubtle: 'bg-gradient-to-r from-violet-500/80 via-blue-500/80 to-cyan-500/80',
+      gradientText: 'bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent',
+      // Individual colors for fine-tuning
+      violet: 'text-violet-500 dark:text-violet-400',
+      blue: 'text-blue-500 dark:text-blue-400',
+      cyan: 'text-cyan-500 dark:text-cyan-400',
     },
     // Status colors
     status: {
@@ -161,9 +173,11 @@ export const designSystem = {
     '2xl': 'shadow-2xl',
     // Vercel-style subtle border shadow
     border: 'shadow-[0_0_0_1px_rgba(0,0,0,0.05)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.05)]',
-    // Glow effect for focus/accent
-    glow: 'shadow-[0_0_24px_rgba(249,115,22,0.15)]',
-    glowStrong: 'shadow-[0_0_32px_rgba(249,115,22,0.25)]',
+    // Glow effect for focus/accent (purple/blue/cyan)
+    glow: 'shadow-[0_0_24px_rgba(59,130,246,0.2)]',
+    glowStrong: 'shadow-[0_0_32px_rgba(59,130,246,0.3)]',
+    glowViolet: 'shadow-[0_0_30px_rgba(139,92,246,0.3)]',
+    glowCyan: 'shadow-[0_0_30px_rgba(34,211,238,0.3)]',
     // Card hover shadow
     cardHover: 'shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)]',
   },
@@ -187,14 +201,17 @@ export const designSystem = {
       lift: 'transition-transform duration-200 hover:-translate-y-0.5',
       liftWithShadow: 'transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
       scale: 'transition-transform duration-200 hover:scale-[1.02]',
-      glow: 'transition-shadow duration-200 hover:shadow-[0_0_24px_rgba(249,115,22,0.15)]',
+      glow: 'transition-shadow duration-200 hover:shadow-[0_0_24px_rgba(59,130,246,0.2)]',
+      glowGradient: 'transition-shadow duration-200 hover:shadow-[0_0_30px_rgba(139,92,246,0.2),0_0_60px_rgba(59,130,246,0.15)]',
       brighten: 'transition-opacity duration-200 hover:opacity-80',
     },
 
     // Focus effects
     focus: {
-      ring: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ds-background-1',
-      ringInset: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-inset',
+      ring: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ds-background-1',
+      ringInset: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset',
+      ringViolet: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2',
+      ringCyan: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2',
     },
 
     // Loading
@@ -204,27 +221,43 @@ export const designSystem = {
   },
 
   // ============================================
-  // GRADIENTS (Subtle, Vercel-style)
+  // GRADIENTS (Stripe-inspired Purple → Blue → Cyan)
   // ============================================
   gradients: {
     // Text gradients
     text: {
       primary: 'bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent',
-      accent: 'bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent',
-      brand: 'bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent',
+      accent: 'bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500 bg-clip-text text-transparent',
+      brand: 'bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent',
+      stripe: 'bg-gradient-to-r from-violet-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent',
+      aurora: 'bg-gradient-to-r from-pink-400 via-violet-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent',
     },
     // Background gradients
     background: {
       subtle: 'bg-gradient-to-b from-gray-50 to-white dark:from-ds-background-1 dark:to-ds-background-2',
       radial: 'bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 via-white to-white dark:from-ds-surface-2 dark:via-ds-background-1 dark:to-ds-background-1',
       mesh: 'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-gray-100 via-gray-50 to-white dark:from-ds-surface-2 dark:via-ds-background-2 dark:to-ds-background-1',
-      hero: 'bg-gradient-to-b from-orange-50/50 to-white dark:from-orange-950/20 dark:to-ds-background-1',
-      heroRadial: 'bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/50 via-white to-white dark:from-orange-900/20 dark:via-ds-background-1 dark:to-ds-background-1',
+      hero: 'bg-gradient-to-b from-violet-50/30 via-blue-50/20 to-white dark:from-violet-950/20 dark:via-blue-950/10 dark:to-ds-background-1',
+      heroRadial: 'bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-100/40 via-blue-50/30 to-white dark:from-violet-900/30 dark:via-blue-950/20 dark:to-ds-background-1',
+      stripe: 'bg-gradient-to-br from-violet-500/10 via-blue-500/10 to-cyan-500/10',
     },
     // Border gradients (for special elements)
     border: {
       subtle: 'bg-gradient-to-r from-gray-200 to-gray-100 dark:from-ds-border-1 dark:to-ds-surface-2',
-      accent: 'bg-gradient-to-r from-orange-500 to-amber-500',
+      accent: 'bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500',
+      stripe: 'bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-400',
+    },
+    // Button gradients
+    button: {
+      primary: 'bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500',
+      secondary: 'bg-gradient-to-r from-violet-500/20 via-blue-500/20 to-cyan-500/20',
+    },
+    // Glow effects for lens flares
+    glow: {
+      violet: 'bg-[radial-gradient(circle,rgba(139,92,246,0.4)_0%,transparent_70%)]',
+      blue: 'bg-[radial-gradient(circle,rgba(59,130,246,0.4)_0%,transparent_70%)]',
+      cyan: 'bg-[radial-gradient(circle,rgba(34,211,238,0.4)_0%,transparent_70%)]',
+      combined: 'bg-[radial-gradient(circle_at_30%_20%,rgba(139,92,246,0.3)_0%,transparent_50%),radial-gradient(circle_at_70%_60%,rgba(59,130,246,0.25)_0%,transparent_50%),radial-gradient(circle_at_50%_80%,rgba(34,211,238,0.2)_0%,transparent_50%)]',
     },
   },
 
@@ -257,22 +290,24 @@ export const designSystem = {
       default: 'rounded-xl border border-gray-200 dark:border-ds-border-1 bg-white dark:bg-ds-surface-2 shadow-sm',
       hover: 'rounded-xl border border-gray-200 dark:border-ds-border-1 bg-white dark:bg-ds-surface-2 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 hover:border-gray-300 dark:hover:border-ds-border-2',
       elevated: 'rounded-xl border border-gray-200 dark:border-ds-border-1 bg-white dark:bg-ds-surface-2 shadow-md',
-      interactive: 'rounded-xl border border-gray-200 dark:border-ds-border-1 bg-white dark:bg-ds-surface-2 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-orange-300 dark:hover:border-orange-500/50',
+      interactive: 'rounded-xl border border-gray-200 dark:border-ds-border-1 bg-white dark:bg-ds-surface-2 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-1 hover:border-blue-300 dark:hover:border-blue-500/50',
       ghost: 'rounded-xl border border-transparent hover:border-gray-200 dark:hover:border-ds-border-1 bg-transparent hover:bg-gray-50 dark:hover:bg-ds-surface-2 transition-all duration-200',
+      gradient: 'rounded-xl border border-transparent bg-gradient-to-br from-violet-500/10 via-blue-500/10 to-cyan-500/10 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5',
     },
 
     // Button variants
     button: {
-      primary: 'inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2',
-      secondary: 'inline-flex items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 border border-gray-200 transition-colors hover:bg-gray-50 dark:bg-ds-surface-2 dark:text-white dark:border-ds-border-1 dark:hover:bg-ds-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2',
-      ghost: 'inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-ds-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2',
-      accent: 'inline-flex items-center justify-center rounded-md bg-orange-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2',
-      link: 'inline-flex items-center text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 underline-offset-4 hover:underline',
+      primary: 'inline-flex items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2',
+      secondary: 'inline-flex items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 border border-gray-200 transition-colors hover:bg-gray-50 dark:bg-ds-surface-2 dark:text-white dark:border-ds-border-1 dark:hover:bg-ds-surface-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2',
+      ghost: 'inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-ds-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2',
+      accent: 'inline-flex items-center justify-center rounded-md bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-2 text-sm font-medium text-white transition-all hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2',
+      link: 'inline-flex items-center text-sm font-medium text-blue-600 dark:text-cyan-400 hover:text-blue-700 dark:hover:text-cyan-300 underline-offset-4 hover:underline',
+      gradient: 'inline-flex items-center justify-center rounded-md bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-2 text-sm font-medium text-white transition-all hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500 hover:shadow-lg hover:shadow-blue-500/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2',
     },
 
     // Input variants
     input: {
-      default: 'flex h-10 w-full rounded-md border border-gray-200 dark:border-ds-border-1 bg-white dark:bg-ds-background-1 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors',
+      default: 'flex h-10 w-full rounded-md border border-gray-200 dark:border-ds-border-1 bg-white dark:bg-ds-background-1 px-3 py-2 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors',
       error: 'flex h-10 w-full rounded-md border border-red-500 bg-white dark:bg-ds-background-1 px-3 py-2 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500',
     },
 
@@ -282,7 +317,8 @@ export const designSystem = {
       primary: 'bg-gray-900 text-white dark:bg-white dark:text-gray-900',
       secondary: 'bg-gray-100 text-gray-800 dark:bg-ds-surface-3 dark:text-gray-200',
       outline: 'border border-gray-200 text-gray-600 dark:border-ds-border-2 dark:text-gray-400',
-      accent: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
+      accent: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-cyan-400',
+      gradient: 'bg-gradient-to-r from-violet-500/20 via-blue-500/20 to-cyan-500/20 text-blue-700 dark:text-cyan-400',
       success: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
       warning: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
       error: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
@@ -298,7 +334,7 @@ export const designSystem = {
 
     // Code blocks
     code: {
-      inline: 'rounded-md bg-gray-100 dark:bg-ds-surface-2 px-1.5 py-0.5 text-sm font-mono text-orange-600 dark:text-orange-400',
+      inline: 'rounded-md bg-gray-100 dark:bg-ds-surface-2 px-1.5 py-0.5 text-sm font-mono text-blue-600 dark:text-cyan-400',
       block: 'rounded-xl border border-gray-200 dark:border-ds-border-1 bg-gray-900 dark:bg-ds-surface-1 p-4 overflow-x-auto font-mono text-sm',
     },
 
@@ -315,8 +351,8 @@ export const designSystem = {
   // ============================================
   utils: {
     // Focus states (WCAG 2.1 AA compliant)
-    focusRing: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ds-background-1',
-    focusWithin: 'focus-within:ring-2 focus-within:ring-orange-500',
+    focusRing: 'focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ds-background-1',
+    focusWithin: 'focus-within:ring-2 focus-within:ring-blue-500',
 
     // Transition defaults
     transition: 'transition-all duration-200 ease-out',

@@ -3,6 +3,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { VoiceAssistantDemo } from "@/components/voice-assistant-demo";
 import { OpenAssistantButton } from "@/components/open-assistant-button";
+import { HeroBackground } from "@/components/hero-background";
 import { cn } from "@/lib/design-system";
 
 const CATEGORIES = [
@@ -210,18 +211,16 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <main id="main-content">
-        <div className="relative isolate overflow-hidden">
-          {/* Dot pattern background */}
-          <div className="absolute inset-0 -z-10 pattern-dots opacity-50" />
+        <div className="relative isolate overflow-hidden min-h-[600px]">
+          {/* Animated lens flare background */}
+          <HeroBackground className="-z-10" />
 
-          {/* Gradient orb background */}
-          <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-r from-orange-500/15 to-amber-500/15 blur-3xl dark:from-orange-500/10 dark:to-amber-500/10" />
-          </div>
+          {/* Subtle dot pattern overlay */}
+          <div className="absolute inset-0 -z-10 pattern-dots opacity-30 dark:opacity-20" />
 
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
             <div className="text-center animate-fade-in">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl gradient-text-stripe">
                 Claude Insider
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -236,10 +235,10 @@ export default function HomePage() {
                   href="/docs/getting-started"
                   className={cn(
                     "rounded-lg px-6 py-3 text-sm font-semibold text-white",
-                    "bg-gradient-to-r from-orange-500 to-amber-600",
-                    "shadow-lg shadow-orange-500/25",
-                    "hover:from-orange-600 hover:to-amber-700",
-                    "hover:shadow-xl hover:shadow-orange-500/30",
+                    "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                    "shadow-lg shadow-blue-500/25",
+                    "hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500",
+                    "hover:shadow-xl hover:shadow-blue-500/30",
                     "hover:-translate-y-0.5",
                     "transition-all duration-200"
                   )}
@@ -248,7 +247,7 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="/docs"
-                  className="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  className="text-sm font-semibold leading-6 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
                 >
                   Browse Docs <span aria-hidden="true">&rarr;</span>
                 </Link>
@@ -262,7 +261,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-600 dark:text-orange-400 text-sm mb-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-cyan-400 text-sm mb-6">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                   </svg>
@@ -270,7 +269,7 @@ export default function HomePage() {
                 </div>
                 <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
                   Meet the Claude Insider{" "}
-                  <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
+                  <span className="gradient-text-stripe">
                     AI Assistant
                   </span>
                 </h2>
@@ -279,25 +278,25 @@ export default function HomePage() {
                 </p>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                    <svg className="w-5 h-5 text-orange-500 dark:text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-cyan-500 dark:text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Voice input with Web Speech API
                   </li>
                   <li className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                    <svg className="w-5 h-5 text-orange-500 dark:text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-cyan-500 dark:text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Premium voices powered by ElevenLabs
                   </li>
                   <li className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                    <svg className="w-5 h-5 text-orange-500 dark:text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-cyan-500 dark:text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Powered by Claude Sonnet 4 (claude-sonnet-4-20250514)
                   </li>
                   <li className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                    <svg className="w-5 h-5 text-orange-500 dark:text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-cyan-500 dark:text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Export conversations to clipboard
@@ -329,7 +328,7 @@ export default function HomePage() {
                   "bg-white dark:bg-[#111111]",
                   "border border-gray-200 dark:border-[#262626]",
                   "shadow-sm",
-                  "hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/5",
+                  "hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10",
                   "hover:-translate-y-1",
                   "transition-all duration-300",
                   "animate-fade-in-up"
@@ -340,13 +339,14 @@ export default function HomePage() {
                   <div className="flex items-center gap-4 mb-4">
                     <div className={cn(
                       "flex h-10 w-10 items-center justify-center rounded-lg",
-                      "bg-orange-500/10 text-orange-600 dark:text-orange-400",
-                      "group-hover:bg-orange-500/20 group-hover:scale-110",
+                      "bg-gradient-to-br from-violet-500/10 via-blue-500/10 to-cyan-500/10",
+                      "text-blue-600 dark:text-cyan-400",
+                      "group-hover:from-violet-500/20 group-hover:via-blue-500/20 group-hover:to-cyan-500/20 group-hover:scale-110",
                       "transition-all duration-300"
                     )}>
                       {category.icon}
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
                       {category.title}
                     </h3>
                   </div>
@@ -358,7 +358,7 @@ export default function HomePage() {
                       <li key={doc.href}>
                         <Link
                           href={doc.href}
-                          className="text-sm text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors flex items-center gap-2"
+                          className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors flex items-center gap-2"
                         >
                           <svg className="w-3 h-3 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -379,25 +379,25 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div className="group">
-                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform">34</div>
+                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">34</div>
                 <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
                   Documentation Pages
                 </div>
               </div>
               <div className="group">
-                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform">7</div>
+                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">7</div>
                 <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
                   Categories
                 </div>
               </div>
               <div className="group">
-                <div className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform">100%</div>
+                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">100%</div>
                 <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
                   Built with Claude
                 </div>
               </div>
               <div className="group">
-                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform">
+                <div className="text-2xl sm:text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">
                   Open Source
                 </div>
                 <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">Free forever</div>
@@ -419,8 +419,8 @@ export default function HomePage() {
                 "border border-gray-200 dark:border-[#262626]",
                 "text-gray-600 dark:text-gray-400",
                 "bg-white dark:bg-[#111111]",
-                "hover:text-orange-600 dark:hover:text-orange-400",
-                "hover:border-orange-500/50",
+                "hover:text-blue-600 dark:hover:text-cyan-400",
+                "hover:border-blue-500/50",
                 "hover:-translate-y-0.5 hover:shadow-md",
                 "transition-all duration-200"
               )}
@@ -437,8 +437,8 @@ export default function HomePage() {
                 "border border-gray-200 dark:border-[#262626]",
                 "text-gray-600 dark:text-gray-400",
                 "bg-white dark:bg-[#111111]",
-                "hover:text-orange-600 dark:hover:text-orange-400",
-                "hover:border-orange-500/50",
+                "hover:text-blue-600 dark:hover:text-cyan-400",
+                "hover:border-blue-500/50",
                 "hover:-translate-y-0.5 hover:shadow-md",
                 "transition-all duration-200"
               )}
@@ -457,8 +457,8 @@ export default function HomePage() {
                 "border border-gray-200 dark:border-[#262626]",
                 "text-gray-600 dark:text-gray-400",
                 "bg-white dark:bg-[#111111]",
-                "hover:text-orange-600 dark:hover:text-orange-400",
-                "hover:border-orange-500/50",
+                "hover:text-blue-600 dark:hover:text-cyan-400",
+                "hover:border-blue-500/50",
                 "hover:-translate-y-0.5 hover:shadow-md",
                 "transition-all duration-200"
               )}
@@ -477,8 +477,8 @@ export default function HomePage() {
                 "border border-gray-200 dark:border-[#262626]",
                 "text-gray-600 dark:text-gray-400",
                 "bg-white dark:bg-[#111111]",
-                "hover:text-orange-600 dark:hover:text-orange-400",
-                "hover:border-orange-500/50",
+                "hover:text-blue-600 dark:hover:text-cyan-400",
+                "hover:border-blue-500/50",
                 "hover:-translate-y-0.5 hover:shadow-md",
                 "transition-all duration-200"
               )}

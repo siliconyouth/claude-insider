@@ -31,7 +31,7 @@ export function Header({ activePage }: HeaderProps) {
             href="https://www.claudeinsider.com"
             className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 shadow-sm">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20">
               <span className="text-lg font-bold text-white">C</span>
             </div>
             <span className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -45,7 +45,7 @@ export function Header({ activePage }: HeaderProps) {
               href="/docs"
               className={cn(
                 "rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
                 activePage === "docs"
                   ? "text-gray-900 dark:text-white bg-gray-100 dark:bg-[#1a1a1a]"
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
@@ -57,7 +57,7 @@ export function Header({ activePage }: HeaderProps) {
               href="/docs/getting-started"
               className={cn(
                 "rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
                 activePage === "getting-started"
                   ? "text-gray-900 dark:text-white bg-gray-100 dark:bg-[#1a1a1a]"
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
@@ -72,7 +72,7 @@ export function Header({ activePage }: HeaderProps) {
               className={cn(
                 "rounded-md px-3 py-2 text-sm font-medium transition-colors",
                 "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]"
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]"
               )}
               aria-label="GitHub repository (opens in new tab)"
             >
@@ -99,7 +99,7 @@ export function Header({ activePage }: HeaderProps) {
                 "p-2 rounded-md transition-colors",
                 "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white",
                 "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               )}
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileMenuOpen}
@@ -147,7 +147,7 @@ export function Header({ activePage }: HeaderProps) {
                 className={cn(
                   "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
                   activePage === "docs"
-                    ? "text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20"
+                    ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
                     : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
                 )}
               >
@@ -159,7 +159,7 @@ export function Header({ activePage }: HeaderProps) {
                 className={cn(
                   "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
                   activePage === "getting-started"
-                    ? "text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20"
+                    ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
                     : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
                 )}
               >

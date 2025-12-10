@@ -3,7 +3,8 @@
 
 /* ============================================
    CLAUDE INSIDER DESIGN SYSTEM
-   Vercel/Geist-inspired theme variables
+   Stripe/Vercel/Linear-inspired theme variables
+   Color Palette: Purple → Blue → Cyan
    ============================================ */
 
 /* Light theme */
@@ -33,10 +34,20 @@
   --ds-text-secondary: 75 85 99;      /* gray-600 */
   --ds-text-muted: 107 114 128;       /* gray-500 */
 
-  /* Accent (Claude Insider Orange) */
-  --ds-accent: 249 115 22;            /* orange-500 */
-  --ds-accent-hover: 234 88 12;       /* orange-600 */
-  --ds-accent-light: 255 237 213;     /* orange-100 */
+  /* Accent (Stripe-inspired Purple → Blue → Cyan) */
+  --ds-accent: 59 130 246;            /* blue-500 */
+  --ds-accent-hover: 37 99 235;       /* blue-600 */
+  --ds-accent-light: 219 234 254;     /* blue-100 */
+
+  /* Gradient colors */
+  --ds-gradient-start: 124 58 237;    /* violet-600 */
+  --ds-gradient-mid: 59 130 246;      /* blue-500 */
+  --ds-gradient-end: 6 182 212;       /* cyan-500 */
+
+  /* Glow colors for lens flares */
+  --ds-glow-violet: 139 92 246;       /* violet-500 */
+  --ds-glow-blue: 59 130 246;         /* blue-500 */
+  --ds-glow-cyan: 34 211 238;         /* cyan-400 */
 
   /* Legacy compatibility */
   --foreground-rgb: 17, 24, 39;
@@ -45,7 +56,7 @@
   --surface-elevated-rgb: 243, 244, 246;
   --border-rgb: 229, 231, 235;
   --muted-rgb: 107, 114, 128;
-  --accent-rgb: 249, 115, 22;
+  --accent-rgb: 59, 130, 246;
 }
 
 /* Dark theme (default) */
@@ -76,10 +87,20 @@
   --ds-text-secondary: 163 163 163;   /* #a3a3a3 */
   --ds-text-muted: 115 115 115;       /* #737373 */
 
-  /* Accent */
-  --ds-accent: 251 146 60;            /* orange-400 */
-  --ds-accent-hover: 249 115 22;      /* orange-500 */
-  --ds-accent-light: 124 45 18;       /* orange-900 */
+  /* Accent (Stripe-inspired Purple → Blue → Cyan) */
+  --ds-accent: 96 165 250;            /* blue-400 */
+  --ds-accent-hover: 59 130 246;      /* blue-500 */
+  --ds-accent-light: 30 58 138;       /* blue-900 */
+
+  /* Gradient colors */
+  --ds-gradient-start: 139 92 246;    /* violet-500 */
+  --ds-gradient-mid: 96 165 250;      /* blue-400 */
+  --ds-gradient-end: 34 211 238;      /* cyan-400 */
+
+  /* Glow colors for lens flares (brighter in dark mode) */
+  --ds-glow-violet: 167 139 250;      /* violet-400 */
+  --ds-glow-blue: 96 165 250;         /* blue-400 */
+  --ds-glow-cyan: 34 211 238;         /* cyan-400 */
 
   /* Legacy compatibility */
   --foreground-rgb: 250, 250, 250;
@@ -88,7 +109,7 @@
   --surface-elevated-rgb: 38, 38, 38;
   --border-rgb: 38, 38, 38;
   --muted-rgb: 163, 163, 163;
-  --accent-rgb: 251, 146, 60;
+  --accent-rgb: 96, 165, 250;
 }
 
 /* ============================================
@@ -1822,4 +1843,260 @@ code {
   .card-3d:hover {
     transform: scale(1.02);
   }
+
+  /* Disable lens flare animations */
+  .lens-flare,
+  .lens-flare-orb,
+  .light-rays {
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   LENS FLARE & LIGHT RAYS ANIMATIONS
+   Stripe-inspired hero background effects
+   ============================================ */
+
+/* Main lens flare animation - slow drift */
+@keyframes flare-drift {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(5%, -3%) scale(1.05);
+  }
+  50% {
+    transform: translate(-3%, 5%) scale(0.98);
+  }
+  75% {
+    transform: translate(-5%, -5%) scale(1.02);
+  }
+}
+
+/* Flare pulse - brightness variation */
+@keyframes flare-pulse {
+  0%, 100% {
+    opacity: 0.5;
+    filter: blur(60px);
+  }
+  50% {
+    opacity: 0.7;
+    filter: blur(50px);
+  }
+}
+
+/* Individual orb animations with different timing */
+@keyframes flare-drift-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(8%, -5%) scale(1.1);
+  }
+  66% {
+    transform: translate(-4%, 8%) scale(0.95);
+  }
+}
+
+@keyframes flare-drift-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  40% {
+    transform: translate(-6%, 4%) scale(1.08);
+  }
+  80% {
+    transform: translate(5%, -6%) scale(0.92);
+  }
+}
+
+@keyframes flare-drift-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(4%, 6%) scale(1.05);
+  }
+}
+
+/* Light rays rotation */
+@keyframes ray-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Light ray sweep effect */
+@keyframes ray-sweep {
+  0%, 100% {
+    opacity: 0.05;
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.15;
+    transform: rotate(180deg) scale(1.1);
+  }
+  75% {
+    opacity: 0.1;
+  }
+}
+
+/* Gradient color shift */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Hero background container */
+.hero-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Lens flare orbs */
+.lens-flare-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.lens-flare-orb-violet {
+  background: radial-gradient(circle, rgba(var(--ds-glow-violet), 0.4) 0%, transparent 70%);
+  filter: blur(60px);
+  animation: flare-drift-1 25s ease-in-out infinite, flare-pulse 8s ease-in-out infinite;
+}
+
+.lens-flare-orb-blue {
+  background: radial-gradient(circle, rgba(var(--ds-glow-blue), 0.35) 0%, transparent 70%);
+  filter: blur(50px);
+  animation: flare-drift-2 30s ease-in-out infinite, flare-pulse 10s ease-in-out infinite 2s;
+}
+
+.lens-flare-orb-cyan {
+  background: radial-gradient(circle, rgba(var(--ds-glow-cyan), 0.3) 0%, transparent 70%);
+  filter: blur(55px);
+  animation: flare-drift-3 20s ease-in-out infinite, flare-pulse 12s ease-in-out infinite 4s;
+}
+
+/* Light rays container */
+.light-rays {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.light-ray {
+  position: absolute;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--ds-glow-blue), 0.1) 50%,
+    transparent 100%
+  );
+  transform-origin: center;
+  animation: ray-sweep 40s linear infinite;
+}
+
+/* Gradient text utilities */
+.gradient-text-stripe {
+  background: linear-gradient(135deg,
+    rgb(var(--ds-gradient-start)) 0%,
+    rgb(var(--ds-gradient-mid)) 50%,
+    rgb(var(--ds-gradient-end)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gradient-text-aurora {
+  background: linear-gradient(135deg,
+    #ec4899 0%,
+    rgb(var(--ds-gradient-start)) 25%,
+    rgb(var(--ds-gradient-mid)) 50%,
+    rgb(var(--ds-gradient-end)) 75%,
+    #10b981 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Gradient border effect */
+.gradient-border {
+  position: relative;
+  background: rgb(var(--ds-surface-2));
+  border-radius: 0.75rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    rgb(var(--ds-gradient-start)),
+    rgb(var(--ds-gradient-mid)),
+    rgb(var(--ds-gradient-end))
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+/* Animated gradient button */
+.btn-gradient {
+  background: linear-gradient(135deg,
+    rgb(var(--ds-gradient-start)) 0%,
+    rgb(var(--ds-gradient-mid)) 50%,
+    rgb(var(--ds-gradient-end)) 100%
+  );
+  background-size: 200% 200%;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background-position: 100% 100%;
+  box-shadow: 0 0 30px rgba(var(--ds-glow-blue), 0.3);
+}
+
+/* Glow effects */
+.glow-violet {
+  box-shadow: 0 0 40px rgba(var(--ds-glow-violet), 0.3);
+}
+
+.glow-blue {
+  box-shadow: 0 0 40px rgba(var(--ds-glow-blue), 0.3);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 40px rgba(var(--ds-glow-cyan), 0.3);
+}
+
+.glow-gradient {
+  box-shadow:
+    0 0 30px rgba(var(--ds-glow-violet), 0.2),
+    0 0 60px rgba(var(--ds-glow-blue), 0.15),
+    0 0 90px rgba(var(--ds-glow-cyan), 0.1);
 }

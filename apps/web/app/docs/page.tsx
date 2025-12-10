@@ -109,7 +109,7 @@ export default function DocsPage() {
               className="rounded-xl border border-gray-800 bg-gray-900/50 p-6"
             >
               <Link href={section.href} className="group">
-                <h2 className="text-xl font-semibold mb-2 group-hover:text-orange-400 transition-colors">
+                <h2 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">
                   {section.title}
                 </h2>
               </Link>
@@ -119,7 +119,7 @@ export default function DocsPage() {
                   <li key={article.title}>
                     <Link
                       href={article.href}
-                      className="text-gray-300 hover:text-orange-400 transition-colors text-sm flex items-center gap-2"
+                      className="text-gray-300 hover:text-cyan-400 transition-colors text-sm flex items-center gap-2"
                     >
                       <svg
                         className="w-4 h-4 text-gray-600"

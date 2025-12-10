@@ -955,7 +955,7 @@ export function VoiceAssistant() {
         {/* Tooltip Balloon */}
         <div className="absolute bottom-full right-0 mb-3 w-56 animate-bounce">
           <div className="relative rounded-lg bg-white px-3 py-2 text-sm text-gray-800 shadow-lg dark:bg-gray-800 dark:text-white">
-            <span className="font-semibold text-orange-500">AI Assistant</span>
+            <span className="font-semibold text-blue-500 dark:text-cyan-400">AI Assistant</span>
             <span className="text-gray-600 dark:text-gray-300"> (Cmd + . or click)</span>
             {/* Arrow */}
             <div className="absolute -bottom-2 right-6 h-0 w-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white dark:border-t-gray-800" />
@@ -970,7 +970,7 @@ export function VoiceAssistant() {
             track("assistant_opened", { page: pathname });
             announce("AI Assistant opened");
           }}
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
           aria-label="Open AI Assistant"
           title="AI Assistant (Cmd + . or click to activate)"
         >
@@ -1016,7 +1016,7 @@ export function VoiceAssistant() {
         aria-hidden={!isOpen}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-gray-200 bg-gradient-to-r from-orange-500 to-amber-600 px-4 py-3 dark:border-gray-700">
+        <div className="flex items-center justify-between border-b border-gray-200 bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-3 dark:border-gray-700">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
               <svg
@@ -1082,7 +1082,7 @@ export function VoiceAssistant() {
                         key={voice.id}
                         className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
                           selectedVoice === voice.id
-                            ? "bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400"
+                            ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-cyan-400"
                             : "text-gray-700 dark:text-gray-300"
                         }`}
                       >
@@ -1103,7 +1103,7 @@ export function VoiceAssistant() {
                             onClick={(e) => previewVoice(voice.id, e)}
                             className={`p-1.5 rounded-full transition-colors ${
                               previewingVoice === voice.id
-                                ? "bg-orange-500 text-white"
+                                ? "bg-blue-500 text-white"
                                 : "hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                             }`}
                             title={previewingVoice === voice.id ? "Stop preview" : "Preview voice"}
@@ -1120,7 +1120,7 @@ export function VoiceAssistant() {
                           </button>
                           {/* Checkmark for selected voice */}
                           {selectedVoice === voice.id && (
-                            <svg className="h-4 w-4 flex-shrink-0 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                            <svg className="h-4 w-4 flex-shrink-0 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
                           )}
@@ -1247,9 +1247,9 @@ export function VoiceAssistant() {
         <div className="flex-1 overflow-y-auto p-4">
           {messages.length === 0 && !streamingContent ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <div className="mb-4 rounded-full bg-orange-100 p-4 dark:bg-orange-900/30">
+              <div className="mb-4 rounded-full bg-blue-100 p-4 dark:bg-blue-900/30">
                 <svg
-                  className="h-8 w-8 text-orange-500"
+                  className="h-8 w-8 text-blue-500 dark:text-cyan-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -1278,7 +1278,7 @@ export function VoiceAssistant() {
                   <button
                     key={index}
                     onClick={() => handleSuggestionClick(question)}
-                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:border-orange-300 hover:bg-orange-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-orange-600 dark:hover:bg-orange-900/20"
+                    className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-left text-sm text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-blue-600 dark:hover:bg-blue-900/20"
                   >
                     {question}
                   </button>
@@ -1297,7 +1297,7 @@ export function VoiceAssistant() {
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-2 ${
                       message.role === "user"
-                        ? "bg-gradient-to-r from-orange-500 to-amber-600 text-white"
+                        ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white"
                         : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
                     }`}
                   >
@@ -1311,8 +1311,8 @@ export function VoiceAssistant() {
                         disabled={isTTSLoading && speakingMessageIndex !== index}
                         className={`mt-2 flex items-center gap-1 text-xs transition-colors ${
                           speakingMessageIndex === index
-                            ? "text-orange-500"
-                            : "text-gray-400 hover:text-orange-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                            ? "text-cyan-500"
+                            : "text-gray-400 hover:text-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed"
                         }`}
                         title={speakingMessageIndex === index && isTTSLoading ? "Loading..." : speakingMessageIndex === index ? "Stop speaking" : "Read aloud"}
                       >
@@ -1403,7 +1403,7 @@ export function VoiceAssistant() {
         <div className="border-t border-gray-200 p-4 dark:border-gray-700">
           {/* Listening indicator */}
           {isListening && (
-            <div className="mb-3 flex items-center gap-2 text-sm text-orange-500">
+            <div className="mb-3 flex items-center gap-2 text-sm text-cyan-500">
               <div className="flex items-center gap-1">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-red-500"></span>
                 <span>Listening...</span>
@@ -1453,12 +1453,12 @@ export function VoiceAssistant() {
               onChange={(e) => setInput(e.target.value)}
               placeholder={isListening ? "Speak now..." : "Ask a question..."}
               disabled={isLoading || isListening}
-              className="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+              className="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
             />
             <button
               type="submit"
               disabled={isLoading || isListening || !input.trim()}
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-white transition-all hover:scale-105 disabled:scale-100 disabled:opacity-50"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white shadow-md shadow-blue-500/20 transition-all hover:scale-105 disabled:scale-100 disabled:opacity-50"
               title="Send message"
             >
               <svg

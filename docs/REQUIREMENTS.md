@@ -239,7 +239,7 @@ claude-insider/
 - [x] Homepage with hero section, category cards, features, footer
 - [x] Documentation index page
 - [x] Getting Started introduction page
-- [x] Dark theme with orange/amber accent colors
+- [x] Dark theme with Stripe-inspired gradient colors (violet→blue→cyan)
 - [x] Light theme with CSS variable overrides
 - [x] Dark/Light/System theme toggle with localStorage persistence
 - [x] Custom scrollbar and code block styling
@@ -436,7 +436,8 @@ Before submitting any new feature, ensure:
 
 | File | Purpose |
 |------|---------|
-| `lib/design-system.ts` | Design tokens, `cn()` utility, component presets |
+| `lib/design-system.ts` | Design tokens, `cn()` utility, gradient presets |
+| `components/hero-background.tsx` | Animated lens flare hero background |
 | `lib/prefetch-queue.ts` | Priority queue for smart prefetching |
 | `lib/error-reporting.ts` | Error tracking, categorization, reporting |
 | `app/globals.css` | CSS variables, utility classes, animations |
@@ -469,10 +470,46 @@ Before submitting any new feature, ensure:
 
 1. **Dark-first design** - Dark theme uses Vercel blacks (#0a0a0a, #111111, #1a1a1a)
 2. **Glass morphism** - Headers and overlays use `backdrop-blur` with transparency
-3. **Orange accent** - Primary accent color is orange (orange-500 to amber-600 gradient)
-4. **Subtle animations** - GPU-optimized transforms only (translate, scale, opacity)
-5. **Layered elevation** - Shadows increase with elevation level
-6. **Use `cn()` utility** - Always use for conditional class composition
+3. **Stripe-inspired gradients** - Primary accent uses `from-violet-600 via-blue-600 to-cyan-600`
+4. **Never use single colors** - Always use multi-color gradients for accents
+5. **Subtle animations** - GPU-optimized transforms only (translate, scale, opacity)
+6. **Layered elevation** - Shadows increase with elevation level
+7. **Use `cn()` utility** - Always use for conditional class composition
+
+### Gradient Color System (MANDATORY)
+
+| Purpose | Tailwind Classes |
+|---------|-----------------|
+| Primary Gradient | `from-violet-600 via-blue-600 to-cyan-600` |
+| Text Gradient | `from-violet-400 via-blue-400 to-cyan-400` |
+| Hover Gradient | `from-violet-500 via-blue-500 to-cyan-500` |
+| Glow Shadow | `shadow-blue-500/25` |
+| Accent Text (Dark) | `dark:text-cyan-400` |
+| Accent Text (Light) | `text-blue-600` |
+| Focus Ring | `ring-blue-500` |
+| Hover Border | `hover:border-blue-500/50` |
+
+### CSS Gradient Classes
+
+```css
+/* Use from globals.css */
+.gradient-text-stripe    /* Gradient text for headings */
+.gradient-button-stripe  /* Gradient background for buttons */
+.lens-flare-orb-violet   /* Animated violet glow orb */
+.lens-flare-orb-blue     /* Animated blue glow orb */
+.lens-flare-orb-cyan     /* Animated cyan glow orb */
+```
+
+### Hero Background Component
+
+```tsx
+import { HeroBackground } from "@/components/hero-background";
+
+<div className="relative isolate overflow-hidden min-h-[600px]">
+  <HeroBackground className="-z-10" />
+  {/* Hero content */}
+</div>
+```
 
 ### Pillar 2: Optimistic UI Rules
 
@@ -782,6 +819,23 @@ useKeyboardShortcut({
 ```
 
 ---
+
+### Phase 32: Stripe/Vercel/Linear-Inspired Redesign - COMPLETED (v0.24.0)
+- [x] **Multi-Color Gradient System** - Replaced orange with Stripe-style violet→blue→cyan gradients
+- [x] **New HeroBackground Component** - `components/hero-background.tsx` with animated lens flares
+- [x] **6 Animated Glowing Orbs** - Violet, blue, cyan orbs with GPU-accelerated animations
+- [x] **Light Rays Effect** - Subtle animated light rays radiating from hero
+- [x] **Updated CSS Variables** - New gradient and glow CSS custom properties
+- [x] **150+ Lines of Animation CSS** - Lens flare keyframes, gradient utilities
+- [x] **Homepage Redesign** - New gradient hero, category cards, stats, links
+- [x] **Header Gradient Logo** - Purple→blue→cyan gradient on logo
+- [x] **Voice Assistant Colors** - Updated FAB, header, messages, buttons
+- [x] **Search Modal Colors** - Updated highlights and focus rings
+- [x] **Docs Layout Colors** - Sidebar and TOC accent colors
+- [x] **Docs Page Colors** - Category card hover states
+- [x] **Footer Version** - Updated to v0.24.0
+- [x] **Accessibility** - `prefers-reduced-motion` support for all animations
+- [x] **Design System Updates** - Updated `lib/design-system.ts` with new gradient tokens
 
 ### Phase 31: Accessibility Refinements - COMPLETED (v0.23.0)
 - [x] **Focus Management Hooks** - `hooks/use-focus-trap.ts`
@@ -1172,7 +1226,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.18.0.
+All planned features have been implemented. The project is feature-complete at v0.24.0.
 
 ### Content Expansion (All Complete)
 
