@@ -250,9 +250,14 @@ export function VoiceAssistant() {
     setSpeechSupported(isSpeechRecognitionSupported());
     // Detect mobile/touch devices for TTS strategy
     // Mobile Safari blocks programmatic audio.play() calls without user gesture
-    isMobileRef.current = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
-      ('ontouchstart' in window) ||
-      (navigator.maxTouchPoints > 0);
+    // Note: We ONLY check user agent, not touch support (MacBooks have touch trackpads)
+    const ua = navigator.userAgent;
+    const isMobileDevice = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+    // Also check if it's Safari on iOS specifically (most restrictive)
+    const isIOSSafari = /iPad|iPhone|iPod/.test(ua) && !('MSStream' in window);
+    isMobileRef.current = isMobileDevice || isIOSSafari;
+
+    console.log('[TTS] Mobile detection:', { isMobileDevice, isIOSSafari, result: isMobileRef.current });
   }, []);
 
   // Close voice menu when clicking outside
@@ -307,9 +312,20 @@ export function VoiceAssistant() {
   // Process speech queue - handles both desktop (sequential) and mobile (single batch)
   // On mobile, we DON'T chain audio via onended because Safari blocks programmatic play()
   const processSpeechQueue = useCallback(async () => {
+    console.log('[TTS] processSpeechQueue called', {
+      isSpeakingQueue: isSpeakingQueueRef.current,
+      queueLength: speechQueueRef.current.length,
+      streamingComplete: streamingCompleteRef.current,
+      isMobile: isMobileRef.current
+    });
+
     // Strict guard - only one audio at a time
-    if (isSpeakingQueueRef.current) return;
+    if (isSpeakingQueueRef.current) {
+      console.log('[TTS] Already speaking, returning');
+      return;
+    }
     if (speechQueueRef.current.length === 0) {
+      console.log('[TTS] Queue empty');
       if (streamingCompleteRef.current) {
         setIsSpeaking(false);
         setSpeakingMessageIndex(null);
@@ -322,6 +338,7 @@ export function VoiceAssistant() {
     speechQueueRef.current = [];
 
     if (!textToSpeak.trim()) {
+      console.log('[TTS] No text to speak');
       if (streamingCompleteRef.current) {
         setIsSpeaking(false);
         setSpeakingMessageIndex(null);
@@ -329,18 +346,24 @@ export function VoiceAssistant() {
       return;
     }
 
+    console.log('[TTS] Speaking text:', textToSpeak.substring(0, 100) + '...');
+
     // Mark as speaking BEFORE any async operations
     isSpeakingQueueRef.current = true;
     setIsSpeaking(true);
 
     try {
+      console.log('[TTS] Fetching audio from API...');
       const response = await fetch("/api/assistant/speak", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: markdownToSpeakableText(textToSpeak), voice: selectedVoiceRef.current }),
       });
 
+      console.log('[TTS] API response status:', response.status);
+
       if (!response.ok) {
+        console.warn('[TTS] API failed, falling back to browser TTS');
         // Fallback to browser TTS
         speakWithBrowserTTSQueue(textToSpeak, () => {
           isSpeakingQueueRef.current = false;
@@ -356,11 +379,13 @@ export function VoiceAssistant() {
       }
 
       const audioBlob = await response.blob();
+      console.log('[TTS] Got audio blob, size:', audioBlob.size);
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
 
       audio.onended = () => {
+        console.log('[TTS] Audio ended');
         URL.revokeObjectURL(audioUrl);
         isSpeakingQueueRef.current = false;
 
@@ -375,7 +400,8 @@ export function VoiceAssistant() {
         }
       };
 
-      audio.onerror = () => {
+      audio.onerror = (e) => {
+        console.error('[TTS] Audio error:', e);
         URL.revokeObjectURL(audioUrl);
         isSpeakingQueueRef.current = false;
         // On mobile, don't try to continue - fall back gracefully
@@ -387,9 +413,11 @@ export function VoiceAssistant() {
         }
       };
 
+      console.log('[TTS] Attempting to play audio...');
       await audio.play();
+      console.log('[TTS] Audio playing successfully');
     } catch (err) {
-      console.error("TTS error:", err);
+      console.error("[TTS] Error:", err);
       isSpeakingQueueRef.current = false;
       // Fallback to browser TTS
       speakWithBrowserTTSQueue(textToSpeak, () => {
@@ -668,12 +696,20 @@ export function VoiceAssistant() {
         // Mark streaming as complete
         streamingCompleteRef.current = true;
 
+        console.log('[TTS] Streaming complete', {
+          autoSpeak: autoSpeakRef.current,
+          hasContent: !!assistantContent.trim(),
+          isMobile: isMobileRef.current,
+          lastSpokenIndex: lastSpokenIndexRef.current
+        });
+
         // Queue any remaining text that wasn't spoken during streaming
         if (autoSpeakRef.current && assistantContent.trim()) {
           if (isMobileRef.current) {
             // On mobile: speak the ENTIRE response as one audio request
             // This is triggered right after streaming completes, so it's still
             // considered a "continuation" of the original user gesture
+            console.log('[TTS] Mobile: queuing entire response');
             setSpeakingMessageIndex(assistantMessageIndex);
             speechQueueRef.current.push(assistantContent);
             processSpeechQueue();
@@ -681,6 +717,11 @@ export function VoiceAssistant() {
             // On desktop: just queue remaining sentences (we already played most)
             const sentences = splitIntoSentences(assistantContent);
             const remainingSentences = sentences.slice(lastSpokenIndexRef.current);
+            console.log('[TTS] Desktop: queuing remaining sentences', {
+              totalSentences: sentences.length,
+              lastSpoken: lastSpokenIndexRef.current,
+              remaining: remainingSentences.length
+            });
             if (remainingSentences.length > 0) {
               setSpeakingMessageIndex(assistantMessageIndex);
               remainingSentences.forEach(sentence => {
