@@ -145,6 +145,8 @@ export function VoiceAssistant() {
   const isSpeakingQueueRef = useRef(false);
   const lastSpokenIndexRef = useRef(0);
   const streamingCompleteRef = useRef(false); // Track if streaming is done
+  const pendingAutoSpeakTextRef = useRef<string>(""); // Accumulate text for mobile-safe TTS
+  const isMobileRef = useRef(false); // Detect mobile for TTS strategy
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -243,9 +245,14 @@ export function VoiceAssistant() {
     }
   }, [previewingVoice]);
 
-  // Initialize speech recognition
+  // Initialize speech recognition and detect mobile
   useEffect(() => {
     setSpeechSupported(isSpeechRecognitionSupported());
+    // Detect mobile/touch devices for TTS strategy
+    // Mobile Safari blocks programmatic audio.play() calls without user gesture
+    isMobileRef.current = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+      ('ontouchstart' in window) ||
+      (navigator.maxTouchPoints > 0);
   }, []);
 
   // Close voice menu when clicking outside
@@ -297,7 +304,8 @@ export function VoiceAssistant() {
     window.speechSynthesis.speak(utterance);
   }, [getPreferredVoice]);
 
-  // Process speech queue - simple sequential processing, one audio at a time
+  // Process speech queue - handles both desktop (sequential) and mobile (single batch)
+  // On mobile, we DON'T chain audio via onended because Safari blocks programmatic play()
   const processSpeechQueue = useCallback(async () => {
     // Strict guard - only one audio at a time
     if (isSpeakingQueueRef.current) return;
@@ -336,7 +344,13 @@ export function VoiceAssistant() {
         // Fallback to browser TTS
         speakWithBrowserTTSQueue(textToSpeak, () => {
           isSpeakingQueueRef.current = false;
-          processSpeechQueue();
+          // On mobile, don't try to process next - it will fail without user gesture
+          if (!isMobileRef.current && speechQueueRef.current.length > 0) {
+            processSpeechQueue();
+          } else {
+            setIsSpeaking(false);
+            setSpeakingMessageIndex(null);
+          }
         });
         return;
       }
@@ -349,10 +363,13 @@ export function VoiceAssistant() {
       audio.onended = () => {
         URL.revokeObjectURL(audioUrl);
         isSpeakingQueueRef.current = false;
-        // Process next chunk if available
-        if (speechQueueRef.current.length > 0) {
+
+        // On mobile, DON'T try to chain audio - Safari blocks it without user gesture
+        // On desktop, we can continue processing the queue
+        if (!isMobileRef.current && speechQueueRef.current.length > 0) {
           processSpeechQueue();
-        } else if (streamingCompleteRef.current) {
+        } else {
+          // Either mobile or queue is empty
           setIsSpeaking(false);
           setSpeakingMessageIndex(null);
         }
@@ -361,7 +378,13 @@ export function VoiceAssistant() {
       audio.onerror = () => {
         URL.revokeObjectURL(audioUrl);
         isSpeakingQueueRef.current = false;
-        processSpeechQueue();
+        // On mobile, don't try to continue - fall back gracefully
+        if (!isMobileRef.current && speechQueueRef.current.length > 0) {
+          processSpeechQueue();
+        } else {
+          setIsSpeaking(false);
+          setSpeakingMessageIndex(null);
+        }
       };
 
       await audio.play();
@@ -370,7 +393,12 @@ export function VoiceAssistant() {
       isSpeakingQueueRef.current = false;
       // Fallback to browser TTS
       speakWithBrowserTTSQueue(textToSpeak, () => {
-        processSpeechQueue();
+        if (!isMobileRef.current && speechQueueRef.current.length > 0) {
+          processSpeechQueue();
+        } else {
+          setIsSpeaking(false);
+          setSpeakingMessageIndex(null);
+        }
       });
     }
   }, [speakWithBrowserTTSQueue]);
@@ -550,6 +578,7 @@ export function VoiceAssistant() {
       stopStreamingTTS();
       lastSpokenIndexRef.current = 0;
       streamingCompleteRef.current = false;
+      pendingAutoSpeakTextRef.current = ""; // Reset pending text for mobile
 
       // Add user message
       const userMessage: Message = { role: "user", content: content.trim() };
@@ -604,7 +633,9 @@ export function VoiceAssistant() {
                   setStreamingContent(assistantContent);
 
                   // Stream TTS: speak sentences as they complete during streaming
-                  if (autoSpeakRef.current) {
+                  // On mobile, we DON'T do incremental TTS - we wait until the end
+                  // because Safari blocks chained audio.play() calls
+                  if (autoSpeakRef.current && !isMobileRef.current) {
                     const sentences = splitIntoSentences(assistantContent);
                     // Get new complete sentences that haven't been queued yet
                     const newSentences = sentences.slice(lastSpokenIndexRef.current);
@@ -639,14 +670,24 @@ export function VoiceAssistant() {
 
         // Queue any remaining text that wasn't spoken during streaming
         if (autoSpeakRef.current && assistantContent.trim()) {
-          const sentences = splitIntoSentences(assistantContent);
-          const remainingSentences = sentences.slice(lastSpokenIndexRef.current);
-          if (remainingSentences.length > 0) {
+          if (isMobileRef.current) {
+            // On mobile: speak the ENTIRE response as one audio request
+            // This is triggered right after streaming completes, so it's still
+            // considered a "continuation" of the original user gesture
             setSpeakingMessageIndex(assistantMessageIndex);
-            remainingSentences.forEach(sentence => {
-              speechQueueRef.current.push(sentence);
-            });
+            speechQueueRef.current.push(assistantContent);
             processSpeechQueue();
+          } else {
+            // On desktop: just queue remaining sentences (we already played most)
+            const sentences = splitIntoSentences(assistantContent);
+            const remainingSentences = sentences.slice(lastSpokenIndexRef.current);
+            if (remainingSentences.length > 0) {
+              setSpeakingMessageIndex(assistantMessageIndex);
+              remainingSentences.forEach(sentence => {
+                speechQueueRef.current.push(sentence);
+              });
+              processSpeechQueue();
+            }
           }
         }
 
@@ -851,7 +892,10 @@ export function VoiceAssistant() {
 
   // Text-to-speech function with ElevenLabs + browser fallback
   const speakMessage = useCallback(async (text: string, messageIndex: number) => {
-    // Stop any currently playing audio or speech
+    // Check if we're currently speaking THIS message using the ref (more reliable than state)
+    const isCurrentlySpeakingThisMessage = isSpeakingQueueRef.current && speakingMessageIndex === messageIndex;
+
+    // Stop any currently playing audio or speech FIRST
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
@@ -859,9 +903,12 @@ export function VoiceAssistant() {
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
+    // Clear the queue and speaking state
+    speechQueueRef.current = [];
+    isSpeakingQueueRef.current = false;
 
-    // If clicking the same message that's speaking, just stop
-    if (isSpeaking && speakingMessageIndex === messageIndex) {
+    // If clicking the same message that was speaking, just stop (toggle off)
+    if (isCurrentlySpeakingThisMessage) {
       setIsSpeaking(false);
       setSpeakingMessageIndex(null);
       setIsTTSLoading(false);
@@ -923,7 +970,7 @@ export function VoiceAssistant() {
       // Fallback to browser TTS
       speakWithBrowserTTS(text, messageIndex);
     }
-  }, [isSpeaking, speakingMessageIndex, speakWithBrowserTTS, selectedVoice]);
+  }, [speakingMessageIndex, speakWithBrowserTTS, selectedVoice]);
 
   // Cleanup audio, speech synthesis, and recognizer on unmount
   useEffect(() => {

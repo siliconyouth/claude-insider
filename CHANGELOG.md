@@ -7,7 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-No pending changes - all features complete.
+No pending changes.
+
+## [0.25.10] - 2025-12-11
+
+### Fixed
+- **Mobile Safari TTS Bug** - Voice assistant now works correctly on iOS devices
+  - Fixed streaming TTS only speaking first sentence on mobile Safari
+  - Mobile Safari blocks programmatic `audio.play()` calls without user gesture
+  - On mobile: TTS now waits until streaming completes, then speaks entire response at once
+  - On desktop: Continues with sentence-by-sentence streaming TTS as before
+  - Added mobile detection using user agent, touch events, and maxTouchPoints
+
+- **Listen Button State Issue** - Fixed "Listen" button not playing after stopping
+  - Changed from React state (`isSpeaking`) to ref (`isSpeakingQueueRef`) for reliable state checking
+  - Properly clears all audio state before attempting new playback
+  - Fixes stale closure issues with React's async state updates
+
+### Changed
+- **TTS Architecture** - Platform-aware audio playback strategy
+  - `isMobileRef` for runtime mobile detection
+  - `pendingAutoSpeakTextRef` for accumulating text on mobile
+  - `processSpeechQueue` now handles mobile/desktop differently
+  - `speakMessage` uses refs instead of state for toggle detection
 
 ## [0.25.9] - 2025-12-10
 
