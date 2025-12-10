@@ -9,6 +9,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.9] - 2025-12-10
+
+### Fixed
+- **Comprehensive Design System Compliance Scan** - Removed ALL remaining orange/amber colors
+  - `voice-assistant-full.tsx` - 11 color replacements:
+    - Header gradient: `from-orange-500 to-amber-600` → `from-violet-600 via-blue-600 to-cyan-600`
+    - User message bubbles: Same gradient replacement
+    - Send button: Same gradient replacement
+    - Selected voice highlight: `bg-orange-50 text-orange-600` → `bg-blue-50 text-blue-600`
+    - Focus states: `focus:border-orange-500` → `focus:border-blue-500`
+    - Loading spinner: `border-orange-500` → `border-blue-500`
+    - Speak button active: `text-orange-500` → `text-cyan-500`
+    - Listening indicator: `text-orange-500` → `text-cyan-500`
+  - `error-pages.tsx` - 4 amber color replacements:
+    - 403 Forbidden shield icon
+    - Maintenance page gear icon
+    - Maintenance estimated time badge
+  - `error-boundary.tsx` - 9 amber color replacements:
+    - Warning severity styles (container, icon, iconBg, title, button)
+    - Offline fallback UI colors
+  - `toast.tsx` - Warning icon: `text-amber-500` → `text-yellow-500`
+  - `prefetch-link.tsx` - Prefetching dot: `bg-amber-400` → `bg-blue-400`
+  - `changelog/page.tsx` - Deprecated badge: `bg-amber-500/10` → `bg-yellow-500/10`
+  - `privacy/page.tsx` - 13 link colors + `prose-orange` → `prose-blue`
+  - `terms/page.tsx` - 7 link colors + `prose-orange` → `prose-blue`
+
+### Added
+- **Accessibility Improvements** - aria-labels for icon-only buttons
+  - Export conversation button: `aria-label="Export conversation"`
+  - Clear history button: `aria-label="Clear conversation history"`
+
+### Changed
+- **Legal Pages Typography** - Consistent with docs styling
+  - Changed from `prose-orange` to `prose-blue` accent colors
+  - All external links now use `text-cyan-400 hover:text-cyan-300`
+
 ## [0.25.8] - 2025-12-10
 
 ### Fixed

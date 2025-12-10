@@ -150,7 +150,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **Version Consistency Fix** - All components now use consistent version strings (v0.25.8)
 - **Design System Compliance** - All orange colors replaced with violet/blue/cyan throughout
 
-### Project Status: Complete (v0.25.8)
+### Project Status: Complete (v0.25.9)
 
 ## Tech Stack
 
@@ -404,6 +404,37 @@ className="bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600"
 className="border-blue-500"
 className="focus:ring-blue-500"
 className="hover:text-cyan-300"
+```
+
+**Exception: Syntax Highlighting Colors**
+
+The only place orange/amber colors are allowed is in `code-block.tsx` and `lazy-code-block.tsx` for **syntax highlighting language badges**. These files use a variety of colors to distinguish programming languages visually:
+
+| Allowed Colors (Syntax Only) | Used For |
+|------------------------------|----------|
+| `bg-yellow-500`, `bg-amber-500` | JavaScript (`js`, `jsx`) |
+| `bg-orange-500`, `bg-orange-600` | HTML, TOML config |
+| `bg-amber-700` | Rust |
+| `bg-orange-400` | Swift |
+
+These exceptions exist because:
+1. They match community-recognized language colors (JS=yellow, Rust=orange)
+2. They only appear in code block headers, not UI elements
+3. They help users quickly identify code language
+
+**IMPORTANT**: Orange/amber colors MUST NOT be used ANYWHERE ELSE in the project.
+
+### Semantic Warning Colors
+
+For warning states (toasts, alerts, deprecation badges), use `yellow-500` instead of `amber-*`:
+
+```tsx
+// ✅ CORRECT - Use yellow for warnings
+className="text-yellow-500"  // Warning icon
+className="bg-yellow-500/10 text-yellow-400"  // Warning badge
+
+// ❌ WRONG - Don't use amber
+className="text-amber-500"  // BANNED
 ```
 
 ### Gradient Color System (MANDATORY)
@@ -703,16 +734,31 @@ When modifying the design system:
 #### How to Verify (Run These Commands)
 
 ```bash
-# Check for banned orange colors in components
-grep -r "orange-" apps/web/components/ apps/web/app/ --include="*.tsx" --include="*.css"
+# Check for banned orange/amber colors (excluding syntax highlighting files)
+grep -r "orange-\|amber-" apps/web/components/ apps/web/app/ \
+  --include="*.tsx" --include="*.css" \
+  | grep -v "code-block\|lazy-code"
 
-# Check for banned amber colors
-grep -r "amber-" apps/web/components/ apps/web/app/ --include="*.tsx" --include="*.css"
+# Should return ZERO results
+# If any results appear, those files need color replacement
 
-# Should return ZERO results for both commands
+# Quick validation command for CI/CD:
+! grep -r "orange-\|amber-" apps/web/components/ apps/web/app/ \
+  --include="*.tsx" --include="*.css" \
+  | grep -v "code-block\|lazy-code" | grep -q . && echo "✅ No banned colors" || echo "❌ Banned colors found"
 ```
 
-If either command returns results, those colors MUST be replaced before committing.
+If any results appear (outside code-block files), those colors MUST be replaced before committing.
+
+**Common Replacements:**
+| Find | Replace With |
+|------|-------------|
+| `text-orange-*` | `text-blue-*` or `text-cyan-*` |
+| `bg-orange-*` | `bg-blue-*` or gradient |
+| `border-orange-*` | `border-blue-*` or `border-cyan-*` |
+| `ring-orange-*` | `ring-blue-*` |
+| `amber-*` | `blue-*`, `cyan-*`, or `yellow-*` (for warnings) |
+| `prose-orange` | `prose-blue` |
 
 ### Light/Dark Theme Guidelines (MANDATORY)
 
@@ -743,7 +789,7 @@ If either command returns results, those colors MUST be replaced before committi
 | Element | Light Mode | Dark Mode | Pattern |
 |---------|------------|-----------|---------|
 | **Default border** | `border-gray-200` | `border-gray-800` | `border-gray-200 dark:border-gray-800` |
-| **Active border** | `border-blue-500/50` | `border-orange-500/50` | `border-blue-500/50 dark:border-orange-500/50` |
+| **Active border** | `border-blue-500/50` | `border-cyan-500/50` | `border-blue-500/50 dark:border-cyan-500/50` |
 
 #### Prose Typography (MDX Content)
 
