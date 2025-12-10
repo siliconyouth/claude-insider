@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.22.0
+**Version**: 0.23.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -125,8 +125,15 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **AnimatedInput Components** - Inputs with floating labels and focus glow
 - **AnimatedCard Components** - Cards with 3D tilt and glow effects
 - **Page Transition Components** - Route transitions with fade/slide effects
+- **Accessibility Refinements** - Seventh UX pillar for WCAG 2.1 AA compliance
+- **useFocusTrap Hook** - Modal focus management with Tab/Shift+Tab trapping
+- **useFocusReturn Hook** - Return focus to trigger element on modal close
+- **useAriaLive Hook** - Screen reader announcements for dynamic content
+- **useKeyboardShortcuts Hook** - Global keyboard shortcut registry
+- **AccessibleModal Components** - WCAG-compliant modals, dialogs, drawers, tooltips
+- **Accessibility CSS Utilities** - High contrast, focus rings, touch targets
 
-### Project Status: Complete (v0.22.0)
+### Project Status: Complete (v0.23.0)
 
 ## Tech Stack
 
@@ -184,13 +191,17 @@ claude-insider/
 │   │   │   ├── animated-input.tsx  # Input with floating label and focus effects
 │   │   │   ├── animated-card.tsx   # Card with 3D tilt and glow effects
 │   │   │   ├── page-transition.tsx # Route transitions and fade-in components
+│   │   │   ├── accessible-modal.tsx # WCAG-compliant modal with focus trap
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── hooks/
 │   │   │   ├── use-optimistic-update.ts  # Optimistic UI hooks
 │   │   │   ├── use-intersection-observer.ts # Viewport detection for lazy loading
 │   │   │   ├── use-prefetch.ts           # Smart prefetching hooks
 │   │   │   ├── use-error-recovery.ts     # Error recovery hooks (retry, circuit breaker)
-│   │   │   └── use-animations.ts         # Animation hooks (tilt, press, ripple, spring)
+│   │   │   ├── use-animations.ts         # Animation hooks (tilt, press, ripple, spring)
+│   │   │   ├── use-focus-trap.ts         # Modal focus management (trap, return, roving)
+│   │   │   ├── use-aria-live.tsx         # Screen reader announcements
+│   │   │   └── use-keyboard-shortcuts.ts # Global keyboard shortcuts registry
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
@@ -293,11 +304,11 @@ Configured in `vercel.json`:
 
 ---
 
-## UX System (MANDATORY - SIX PILLARS)
+## UX System (MANDATORY - SEVEN PILLARS)
 
-The project uses a comprehensive UX system with six mandatory pillars. **All new components, features, and pages MUST implement ALL SIX pillars** for consistent user experience.
+The project uses a comprehensive UX system with seven mandatory pillars. **All new components, features, and pages MUST implement ALL SEVEN pillars** for consistent user experience.
 
-### The Six Pillars
+### The Seven Pillars
 
 | Pillar | Purpose | Location |
 |--------|---------|----------|
@@ -307,6 +318,7 @@ The project uses a comprehensive UX system with six mandatory pillars. **All new
 | **Smart Prefetching** | Anticipate intent, preload before click | `lib/prefetch-queue.ts`, `hooks/use-prefetch.ts`, `components/prefetch-link.tsx` |
 | **Error Boundaries** | Graceful error handling (styled errors, retry, recovery) | `components/error-boundary.tsx`, `components/error-pages.tsx`, `hooks/use-error-recovery.ts`, `lib/error-reporting.ts` |
 | **Micro-interactions** | Delightful animations (tilt, ripple, transitions) | `hooks/use-animations.ts`, `components/animated-*.tsx`, `components/page-transition.tsx` |
+| **Accessibility** | Focus trap, ARIA live, keyboard shortcuts | `hooks/use-focus-trap.ts`, `hooks/use-aria-live.tsx`, `hooks/use-keyboard-shortcuts.ts`, `components/accessible-modal.tsx` |
 
 ### Mandatory Checklist for New Features
 
@@ -318,10 +330,11 @@ Before submitting any new feature, ensure:
 - [ ] **Smart Prefetching**: Navigation links use PrefetchLink, hover/focus triggers prefetch, analytics track visits
 - [ ] **Error Boundaries**: Components wrapped with ErrorBoundary, async operations use useRetry, errors reported via errorReporter
 - [ ] **Micro-interactions**: Buttons use AnimatedButton, cards use AnimatedCard with tilt/glow, page transitions enabled
+- [ ] **Accessibility**: Modals use focus trap, dynamic content uses ARIA live regions, keyboard shortcuts documented
 
 ### When to Update UX Guidelines
 
-When modifying any of the six pillars:
+When modifying any of the seven pillars:
 1. Update the relevant source files
 2. Add new CSS animations to `globals.css` if needed
 3. Update this CLAUDE.md documentation

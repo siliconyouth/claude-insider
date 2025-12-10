@@ -17,6 +17,8 @@ import {
 } from "@/lib/search-history";
 import { cn } from "@/lib/design-system";
 import { SkeletonSearchResult } from "@/components/skeleton";
+import { useFocusTrap } from "@/hooks/use-focus-trap";
+import { useAnnouncer } from "@/hooks/use-aria-live";
 
 export function Search() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,8 +30,29 @@ export function Search() {
   const [isSearching, startSearchTransition] = useTransition();
   const [isNavigating, setIsNavigating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const triggerButtonRef = useRef<HTMLButtonElement>(null);
   const fuseRef = useRef<Fuse<SearchDocument> | null>(null);
   const router = useRouter();
+  const { announce } = useAnnouncer();
+
+  // Focus trap for modal accessibility
+  const { containerRef } = useFocusTrap({
+    enabled: isOpen,
+    initialFocusRef: inputRef as React.RefObject<HTMLElement>,
+    returnFocusRef: triggerButtonRef as React.RefObject<HTMLElement>,
+    onEscape: () => {
+      setIsOpen(false);
+      setQuery("");
+      setResults([]);
+    },
+    closeOnEscape: true,
+    closeOnClickOutside: true,
+    onClickOutside: () => {
+      setIsOpen(false);
+      setQuery("");
+      setResults([]);
+    },
+  });
 
   // Track if component is mounted (for portal)
   useEffect(() => {
@@ -86,10 +109,20 @@ export function Search() {
 
     startSearchTransition(() => {
       const searchResults = fuseRef.current!.search(query, { limit: 8 });
-      setResults(searchResults.map((r) => r.item));
+      const mappedResults = searchResults.map((r) => r.item);
+      setResults(mappedResults);
       setSelectedIndex(0);
+
+      // Announce results count for screen readers
+      if (mappedResults.length > 0) {
+        announce(
+          `${mappedResults.length} ${mappedResults.length === 1 ? "result" : "results"} found`
+        );
+      } else {
+        announce("No results found");
+      }
     });
-  }, [query]);
+  }, [query, announce]);
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
@@ -142,6 +175,7 @@ export function Search() {
     <>
       {/* Search button */}
       <button
+        ref={triggerButtonRef}
         onClick={() => setIsOpen(true)}
         className={cn(
           "flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg",
@@ -205,13 +239,16 @@ export function Search() {
               }
             }}
           >
-            <div className={cn(
-              "relative w-full max-w-xl rounded-xl overflow-hidden",
-              "bg-white dark:bg-[#111111]",
-              "border border-gray-200 dark:border-[#262626]",
-              "shadow-2xl shadow-black/20",
-              "animate-scale-in"
-            )}>
+            <div
+              ref={containerRef}
+              className={cn(
+                "relative w-full max-w-xl rounded-xl overflow-hidden",
+                "bg-white dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]",
+                "shadow-2xl shadow-black/20",
+                "animate-scale-in"
+              )}
+            >
               <h2 id="search-dialog-title" className="sr-only">Search documentation</h2>
               {/* Close button */}
               <button

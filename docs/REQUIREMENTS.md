@@ -109,7 +109,12 @@ claude-insider/
 │   │   │   ├── voice-assistant.tsx # AI voice assistant with TTS/STT (popup + fullscreen)
 │   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
 │   │   │   ├── open-assistant-button.tsx # Button to open assistant popup
+│   │   │   ├── accessible-modal.tsx # WCAG-compliant modal with focus trap
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
+│   │   ├── hooks/
+│   │   │   ├── use-focus-trap.ts         # Modal focus management (trap, return, roving)
+│   │   │   ├── use-aria-live.tsx         # Screen reader announcements
+│   │   │   └── use-keyboard-shortcuts.ts # Global keyboard shortcuts registry
 │   │   ├── app/api/assistant/
 │   │   │   ├── chat/route.ts     # Streaming chat with Claude AI (SSE)
 │   │   │   └── speak/route.ts    # ElevenLabs TTS endpoint (42 voices)
@@ -453,6 +458,10 @@ Before submitting any new feature, ensure:
 | `components/animated-input.tsx` | Inputs with floating labels and focus effects |
 | `components/animated-card.tsx` | Cards with 3D tilt and glow effects |
 | `components/page-transition.tsx` | Route transitions and fade-in components |
+| `hooks/use-focus-trap.ts` | Focus management (trap, return, roving tabindex) |
+| `hooks/use-aria-live.tsx` | Screen reader announcements (ARIA live regions) |
+| `hooks/use-keyboard-shortcuts.ts` | Global keyboard shortcuts registry |
+| `components/accessible-modal.tsx` | WCAG-compliant modals, dialogs, drawers, tooltips |
 
 ---
 
@@ -711,6 +720,111 @@ const displayText = useTypewriter("Hello World", {
 ```
 
 ---
+
+### Pillar 7: Accessibility Refinements Rules
+
+1. **Focus trapping** - All modals must trap focus within their boundaries
+2. **Focus return** - When a modal closes, focus returns to the trigger element
+3. **ARIA live regions** - Dynamic content changes are announced to screen readers
+4. **Keyboard navigation** - All interactive elements are keyboard accessible
+5. **Skip links** - Provide skip-to-content links for keyboard users
+6. **Touch targets** - Minimum 44x44px touch targets for mobile
+7. **High contrast** - Support `prefers-contrast: high` media query
+8. **Reduced motion** - All animations respect `prefers-reduced-motion`
+
+### Accessibility Usage
+
+```tsx
+// Focus trap in modals
+const { containerRef, focusFirst } = useFocusTrap({
+  enabled: isOpen,
+  onEscape: onClose,
+  autoFocus: true,
+  returnFocus: true,
+});
+
+<div ref={containerRef} role="dialog" aria-modal="true">
+  <ModalContent />
+</div>
+
+// ARIA announcements for dynamic content
+const { announce } = useAnnouncer();
+
+useEffect(() => {
+  if (searchResults.length > 0) {
+    announce(`Found ${searchResults.length} results`);
+  }
+}, [searchResults, announce]);
+
+// Keyboard shortcuts registration
+useKeyboardShortcut({
+  key: "k",
+  modifiers: ["meta"],
+  handler: () => setSearchOpen(true),
+  description: "Open search",
+});
+
+// Accessible modal component
+<AccessibleModal
+  isOpen={isOpen}
+  onClose={onClose}
+  title="Confirm Action"
+  description="Are you sure you want to proceed?"
+>
+  <ModalContent />
+</AccessibleModal>
+
+// Skip links for keyboard navigation
+<SkipLinks links={[
+  { id: "main-content", label: "Skip to main content" },
+  { id: "navigation", label: "Skip to navigation" },
+]} />
+```
+
+---
+
+### Phase 31: Accessibility Refinements - COMPLETED (v0.23.0)
+- [x] **Focus Management Hooks** - `hooks/use-focus-trap.ts`
+  - `useFocusTrap` - Trap Tab/Shift+Tab within modal containers
+  - `useFocusReturn` - Return focus to trigger element on close
+  - `useFocusVisible` - CSS :focus-visible polyfill hook
+  - `useRovingTabIndex` - Keyboard navigation in lists/menus
+- [x] **ARIA Live Regions** - `hooks/use-aria-live.tsx`
+  - `AnnouncerProvider` - Context provider for announcements
+  - `useAnnouncer` - Announce dynamic content to screen readers
+  - `useAriaLive` - Create ARIA live region with props
+  - `useLoadingAnnouncement` - Announce loading states
+  - `useErrorAnnouncement` - Announce errors
+  - `useSuccessAnnouncement` - Announce success messages
+  - `useRouteAnnouncement` - Announce route changes
+  - `useListCountAnnouncement` - Announce list/search result counts
+- [x] **Keyboard Shortcuts** - `hooks/use-keyboard-shortcuts.ts`
+  - `KeyboardShortcutsProvider` - Global shortcuts context
+  - `useKeyboardShortcuts` - Access shortcuts context
+  - `useKeyboardShortcut` - Register individual shortcut
+  - `useCommonShortcuts` - Common shortcuts (Escape, search)
+  - `formatShortcut` - Format shortcut for display
+  - `useShortcutsHelp` - Get all shortcuts for help dialog
+- [x] **Accessible Modal Components** - `components/accessible-modal.tsx`
+  - `AccessibleModal` - WCAG-compliant modal with focus trap
+  - `ConfirmationDialog` - Confirm/cancel dialog
+  - `AlertDialog` - Alert with severity variants
+  - `Drawer` - Slide-in drawer (left/right/top/bottom)
+  - `Tooltip` - Accessible tooltip with ARIA
+  - `SkipLinks` - Skip navigation links
+- [x] **Search & Voice Assistant Accessibility**
+  - Focus trap integration in search modal
+  - Focus return to trigger button on close
+  - ARIA announcements for search results
+  - Voice assistant focus management
+- [x] **Accessibility CSS Utilities** - `app/globals.css`
+  - `.sr-only` - Screen reader only content
+  - `.sr-only-focusable` - Visible on focus (skip links)
+  - `.skip-link` - Skip navigation link styling
+  - `.focus-ring` - Enhanced focus indicators
+  - `.announce-region` - ARIA live region styling
+  - `.touch-target` - 44x44px minimum touch targets
+  - `@media (prefers-contrast: high)` - High contrast mode
 
 ### Phase 30: Micro-interactions & Animations - COMPLETED (v0.22.0)
 - [x] **Animation Hooks** - `hooks/use-animations.ts`

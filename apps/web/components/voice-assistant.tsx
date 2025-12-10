@@ -17,6 +17,8 @@ import {
   VoiceRecognizer,
   isSpeechRecognitionSupported,
 } from "@/lib/speech-recognition";
+import { useFocusTrap } from "@/hooks/use-focus-trap";
+import { useAnnouncer } from "@/hooks/use-aria-live";
 
 interface StreamEvent {
   type: "text" | "done" | "error";
@@ -51,6 +53,8 @@ export function VoiceAssistant() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
   const voiceMenuRef = useRef<HTMLDivElement>(null);
+  const triggerButtonRef = useRef<HTMLButtonElement>(null);
+  const { announce } = useAnnouncer();
 
   // Prevent hydration mismatch and load preferences from localStorage
   useEffect(() => {
@@ -144,6 +148,18 @@ export function VoiceAssistant() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const pathname = usePathname();
+
+  // Focus trap for modal accessibility
+  const { containerRef: assistantContainerRef } = useFocusTrap({
+    enabled: isOpen,
+    initialFocusRef: inputRef as React.RefObject<HTMLElement>,
+    returnFocusRef: triggerButtonRef as React.RefObject<HTMLElement>,
+    onEscape: () => {
+      setIsOpen(false);
+      track("assistant_closed", { page: pathname });
+    },
+    closeOnEscape: true,
+  });
 
   // Load conversation history on mount
   useEffect(() => {
@@ -948,9 +964,11 @@ export function VoiceAssistant() {
 
         {/* Main Button */}
         <button
+          ref={triggerButtonRef}
           onClick={() => {
             setIsOpen(true);
             track("assistant_opened", { page: pathname });
+            announce("AI Assistant opened");
           }}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
           aria-label="Open AI Assistant"
@@ -984,6 +1002,10 @@ export function VoiceAssistant() {
 
       {/* Assistant Panel */}
       <div
+        ref={assistantContainerRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="AI Assistant"
         className={`fixed z-50 flex flex-col overflow-hidden border border-gray-200 bg-white shadow-2xl transition-all duration-300 ease-out dark:border-gray-700 dark:bg-gray-900 ${
           isFullscreen
             ? "inset-4 sm:inset-8 md:inset-12 lg:inset-16 rounded-2xl"
@@ -991,8 +1013,6 @@ export function VoiceAssistant() {
         } ${
           isOpen ? "translate-y-0 opacity-100" : "translate-y-full sm:translate-y-[calc(100%+2rem)] opacity-0 pointer-events-none"
         }`}
-        role="dialog"
-        aria-label="AI Assistant"
         aria-hidden={!isOpen}
       >
         {/* Header */}

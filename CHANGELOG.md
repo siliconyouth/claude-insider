@@ -9,6 +9,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.23.0] - 2025-12-10
+
+### Added
+- **Accessibility Refinements** - Seventh UX System pillar for comprehensive accessibility
+  - `hooks/use-focus-trap.ts` - Focus trapping for modal dialogs
+  - `hooks/use-aria-live.tsx` - Screen reader announcements
+  - `hooks/use-keyboard-shortcuts.ts` - Global keyboard shortcut management
+  - `components/accessible-modal.tsx` - Fully accessible modal components
+
+- **Focus Management Hooks**
+  - `useFocusTrap` - Traps Tab/Shift+Tab within container, auto-focus, focus return
+  - `useFocusReturn` - Returns focus to trigger element on modal close
+  - `useFocusVisible` - Detects keyboard vs mouse focus
+  - `useRovingTabIndex` - Roving tabindex pattern for lists/menus
+
+- **ARIA Live Region Hooks**
+  - `useAnnouncer` - Context-based announcer for global announcements
+  - `useAriaLive` - Standalone live region for component-local announcements
+  - `useLoadingAnnouncement` - Announces loading state changes
+  - `useErrorAnnouncement` - Announces form validation errors
+  - `useSuccessAnnouncement` - Announces successful actions
+  - `useRouteAnnouncement` - Announces navigation changes
+  - `useCountdownAnnouncement` - Announces countdown updates
+  - `useListCountAnnouncement` - Announces list item count changes
+
+- **Keyboard Shortcuts System**
+  - `KeyboardShortcutsProvider` - Context for shortcut registration
+  - `useKeyboardShortcut` - Register single keyboard shortcut
+  - `useCommonShortcuts` - Common shortcuts (search, escape, save, undo, redo)
+  - `formatShortcut` - Display-friendly shortcut formatting
+  - `useShortcutsHelp` - Get shortcuts for help dialog
+
+- **Accessible Modal Components**
+  - `AccessibleModal` - Full-featured modal with focus trap and ARIA
+  - `ConfirmationDialog` - Accessible confirmation dialog
+  - `AlertDialog` - Alert with icon variants (info, success, warning, error)
+  - `Drawer` - Slide-in panel (left/right positioning)
+  - `Tooltip` - Accessible tooltip with positioning
+  - `SkipLinks` - Enhanced skip link navigation
+
+- **New Accessibility CSS Utilities**
+  - `.sr-only` - Screen reader only (visually hidden)
+  - `.sr-only-focusable` - Focusable screen reader element
+  - `.skip-link` - Skip link with focus reveal
+  - `.focus-ring` - Enhanced focus indicator with glow
+  - `.focus-indicator` - Pseudo-element focus outline
+  - `.kbd-hint` - Keyboard shortcut hint styling
+  - `.input-error/.input-success` - Form validation states
+  - `.touch-target` - Minimum 44x44px touch target
+  - `@media (prefers-contrast: high)` - High contrast mode support
+
+### Changed
+- Updated Search component with focus trap and focus return
+- Updated Voice Assistant with focus trap and ARIA announcements
+- UX System now has Seven Pillars (added Accessibility)
+
 ## [0.22.0] - 2025-12-10
 
 ### Added
@@ -991,6 +1047,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.23.0 | 2025-12-10 | Accessibility Refinements (focus trap, ARIA live, keyboard shortcuts) |
 | 0.22.0 | 2025-12-10 | Micro-interactions & Animations (tilt, ripple, transitions, spring physics) |
 | 0.21.0 | 2025-12-10 | Error Boundaries with Style (error pages, retry, recovery, reporting) |
 | 0.20.0 | 2025-12-10 | Smart Prefetching system (hover, focus, intersection prefetch) |
