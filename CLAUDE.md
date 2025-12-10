@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.24.0
+**Version**: 0.25.0
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -138,8 +138,10 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **New HeroBackground Component** - Animated lens flares with light rays
 - **Updated Color Palette** - Replaced orange with violet/blue/cyan gradients
 - **Voice Assistant Demo Redesign** - Homepage demo with gradient theme matching new design system
+- **Voice Assistant Header Redesign** - Compact header with settings panel overlay (v0.25.0)
+- **Voice Assistant Settings Panel** - In-window settings with voice selection, auto-speak toggle, conversation actions
 
-### Project Status: Complete (v0.24.0)
+### Project Status: Complete (v0.25.0)
 
 ## Tech Stack
 
@@ -1034,7 +1036,7 @@ When adding new patterns:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.24.0.
+All planned features have been implemented. The project is feature-complete at v0.25.0.
 
 ### AWE-Inspired UX Improvements (All Complete)
 
@@ -1048,6 +1050,7 @@ All planned features have been implemented. The project is feature-complete at v
 | Phase 6 | Micro-interactions & Animations | v0.22.0 |
 | Phase 7 | Accessibility Refinements | v0.23.0 |
 | **Visual Redesign** | **Stripe/Vercel/Linear-Inspired Colors** | **v0.24.0** |
+| **Voice Assistant UX** | **Compact Header with Settings Panel** | **v0.25.0** |
 
 ### Future Enhancements (Optional)
 - Multi-language support (i18n) when translations are ready
@@ -1058,7 +1061,7 @@ All planned features have been implemented. The project is feature-complete at v
 The AI Voice Assistant provides a hands-free way to interact with documentation:
 
 ### Components
-- **`voice-assistant.tsx`**: Main React component with chat interface, TTS controls, voice selector, fullscreen toggle
+- **`voice-assistant.tsx`**: Main React component with chat interface, settings panel, fullscreen toggle
 - **`open-assistant-button.tsx`**: Client component to trigger opening the assistant popup from any page
 - **Wake Word Detection**: Uses Web Speech API to listen for "Hey Insider"
 - **Speech Recognition**: Converts user speech to text with real-time transcription

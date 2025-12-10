@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.24.0)
+## Current Status (v0.25.0)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -142,6 +142,9 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **New HeroBackground Component** - Animated lens flares with light rays
 - [x] **Updated Color Palette** - Replaced orange with violet/blue/cyan gradients
 - [x] **Voice Assistant Demo Redesign** - Homepage demo with gradient glow, animated waveform, gradient messages
+- [x] **Voice Assistant Header Redesign** (v0.25.0) - Compact header with settings panel overlay
+- [x] **Voice Assistant Settings Panel** - In-window settings with voice selection, auto-speak toggle, conversation actions
+- [x] **Renamed to "Claude AI Assistant"** - Clear branding with "Powered by Claude AI" in footer
 
 ### All Features Complete
 

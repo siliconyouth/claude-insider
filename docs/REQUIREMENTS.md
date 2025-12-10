@@ -463,6 +463,44 @@ Before submitting any new feature, ensure:
 | `hooks/use-aria-live.tsx` | Screen reader announcements (ARIA live regions) |
 | `hooks/use-keyboard-shortcuts.ts` | Global keyboard shortcuts registry |
 | `components/accessible-modal.tsx` | WCAG-compliant modals, dialogs, drawers, tooltips |
+| `components/voice-assistant.tsx` | AI voice assistant with settings panel, TTS/STT |
+| `components/voice-assistant-demo.tsx` | Animated homepage demo with gradient styling |
+
+---
+
+### Voice Assistant Component Guidelines (MANDATORY)
+
+When modifying the voice assistant (`components/voice-assistant.tsx`), follow these rules:
+
+1. **Header Layout** - Keep compact with maximum 3 icons (Settings, Fullscreen, Close)
+2. **Settings Panel** - Use in-window overlay, not separate modal
+3. **Branding** - Title is "Claude AI Assistant", footer shows "Powered by Claude AI"
+4. **Keyboard Shortcut** - Show "Cmd + . to toggle" hint in footer
+5. **Gradient Styling** - Header uses `from-violet-600 via-blue-600 to-cyan-600`
+6. **User Messages** - Use gradient background with transparency (`from-violet-600/30 via-blue-600/30 to-cyan-600/30`)
+7. **Settings Panel Contents**:
+   - Voice selector dropdown (42 ElevenLabs voices)
+   - Auto-speak toggle switch
+   - Export conversation button
+   - Clear conversation button
+
+```tsx
+// Voice assistant header pattern
+<div className="bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-3">
+  <div className="flex items-center justify-between">
+    <h2 className="font-semibold text-white">Claude AI Assistant</h2>
+    <div className="flex items-center gap-1">
+      {/* Settings, Fullscreen, Close buttons only */}
+    </div>
+  </div>
+</div>
+
+// Voice assistant footer pattern
+<div className="flex items-center justify-between text-xs text-gray-400">
+  <span>Powered by Claude AI</span>
+  <span><kbd>Cmd + .</kbd> to toggle</span>
+</div>
+```
 
 ---
 
@@ -845,6 +883,20 @@ useKeyboardShortcut({
 ```
 
 ---
+
+### Phase 33: Voice Assistant Header Redesign - COMPLETED (v0.25.0)
+- [x] **Compact Header Design** - Reduced from 4-5 rows to single compact row
+- [x] **Settings Panel Overlay** - In-window settings panel (not separate modal)
+- [x] **Settings Gear Icon** - Groups all settings under single icon
+- [x] **Voice Selection in Settings** - Moved 42-voice dropdown into settings panel
+- [x] **Auto-speak Toggle in Settings** - Moved from header to settings panel
+- [x] **Conversation Actions in Settings** - Export and Clear buttons in settings
+- [x] **Renamed Title** - "Claude Insider Assistant" → "Claude AI Assistant"
+- [x] **Footer Attribution** - "Powered by Claude AI" moved to footer
+- [x] **Keyboard Shortcut Hint** - "Cmd + . to toggle" shown in footer
+- [x] **Infinite Loop Bug Fix** - Fixed useEffect dependency issues in hooks
+  - `use-aria-live.tsx` - Stable singleton `noopAnnouncer` fallback
+  - `use-focus-trap.ts` - Callbacks stored in refs to prevent re-runs
 
 ### Phase 32: Stripe/Vercel/Linear-Inspired Redesign - COMPLETED (v0.24.0)
 - [x] **Multi-Color Gradient System** - Replaced orange with Stripe-style violet→blue→cyan gradients
@@ -1258,7 +1310,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.24.0.
+All planned features have been implemented. The project is feature-complete at v0.25.0.
 
 ### Content Expansion (All Complete)
 

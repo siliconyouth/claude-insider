@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.0] - 2025-12-10
+
+### Added
+- **Voice Assistant Header Redesign** - Improved UX with collapsible settings panel
+  - Compact header with only 3 icons: Settings (gear), Fullscreen, Close
+  - In-window settings panel overlay (no separate modal)
+  - Settings panel includes: Voice selection, Auto-speak toggle, Export/Clear conversation
+  - Footer now shows "Powered by Claude AI" on left, keyboard shortcut hint on right
+
+### Changed
+- **Voice Assistant Title** - Renamed "Claude Insider Assistant" to "Claude AI Assistant"
+- **Voice Assistant Layout** - Header no longer spans 4-5 rows in narrow windows
+- **Settings Accessibility** - All voice settings accessible via single gear icon
+- **Footer Attribution** - "Powered by Claude AI" moved from header to footer
+
+### Fixed
+- **Infinite Loop Bug** (v0.24.1) - Fixed React useEffect infinite loop in navigation
+  - `use-aria-live.tsx` - Created stable singleton `noopAnnouncer` object for fallback
+  - `use-focus-trap.ts` - Stored callbacks in refs to prevent useEffect re-runs
+- **Voice Assistant Header** - Fixed cramped layout in narrow popup window
+
 ## [0.24.0] - 2025-12-10
 
 ### Added
