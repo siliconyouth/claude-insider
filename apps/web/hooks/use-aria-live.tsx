@@ -63,21 +63,22 @@ interface UseAriaLiveOptions {
 
 const AnnouncerContext = createContext<AnnouncerContextValue | null>(null);
 
+// Stable no-op fallback object for when used outside AnnouncerProvider
+// This prevents infinite loops when announce is used as a useEffect dependency
+const noopAnnouncer: AnnouncerContextValue = {
+  announce: () => {},
+  announceAssertive: () => {},
+  clearAnnouncements: () => {},
+  announcements: [],
+};
+
 /**
  * Hook to access the announcer context
  */
 export function useAnnouncer() {
   const context = useContext(AnnouncerContext);
-  if (!context) {
-    // Return no-op functions if used outside provider
-    return {
-      announce: () => {},
-      announceAssertive: () => {},
-      clearAnnouncements: () => {},
-      announcements: [],
-    };
-  }
-  return context;
+  // Return stable reference to prevent infinite loops in useEffect dependencies
+  return context ?? noopAnnouncer;
 }
 
 // ============================================
