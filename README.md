@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.25.7)
+## Current Status (v0.25.8)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -151,6 +151,8 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **DeviceShowcase Component** - Stripe-style hero section with MacBook Pro and iPhone mockups
 - [x] **foreignObject Content Embedding** - React content precisely positioned inside SVG device frames
 - [x] **Container Query Responsive Sizing** - `cqw` units for perfectly scaled screen content
+- [x] **Version Consistency** (v0.25.8) - All components use synchronized version strings
+- [x] **Design System Compliance** (v0.25.8) - All orange colors removed, violet/blue/cyan throughout
 
 ### All Features Complete
 
@@ -210,7 +212,7 @@ All components must support both themes. Use these color patterns consistently:
 | **Background** | `bg-white` | `bg-gray-950` |
 | **Surface** | `bg-gray-50` | `bg-gray-900/50` |
 | **Border** | `border-gray-200` | `border-gray-800` |
-| **Inline Code** | `bg-gray-100 text-gray-900` | `bg-gray-800 text-orange-300` |
+| **Inline Code** | `bg-gray-100 text-gray-900` | `bg-gray-800 text-cyan-300` |
 
 **Prose Typography Pattern:**
 ```tsx

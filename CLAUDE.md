@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.25.7
+**Version**: 0.25.8
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -147,7 +147,10 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 - **DeviceShowcase Component** - Stripe-style hero section with MacBook Pro and iPhone mockups
 - **foreignObject Content Embedding** - React content precisely positioned inside SVG device frames
 
-### Project Status: Complete (v0.25.7)
+- **Version Consistency Fix** - All components now use consistent version strings (v0.25.8)
+- **Design System Compliance** - All orange colors replaced with violet/blue/cyan throughout
+
+### Project Status: Complete (v0.25.8)
 
 ## Tech Stack
 
@@ -375,6 +378,33 @@ The project uses a **Stripe/Vercel/Linear-inspired design system** with a modern
 4. **Multi-color gradients** - Use Violet → Blue → Cyan instead of single colors
 5. **GPU-optimized animations** - transforms (translate, scale, opacity) only
 6. **Layered elevation** - Shadows increase with elevation level
+
+### PROHIBITED COLORS (NEVER USE)
+
+**The following colors are BANNED from this project:**
+
+| Prohibited Color | Reason | Use Instead |
+|------------------|--------|-------------|
+| `orange-*` | Old design system | `blue-*` or gradient |
+| `amber-*` | Old design system | `blue-*` or gradient |
+| `yellow-*` for accents | Old design system | `cyan-*` or gradient |
+
+**Examples of what NOT to do:**
+```tsx
+// ❌ WRONG - These colors are BANNED
+className="text-orange-500"
+className="bg-amber-600"
+className="border-orange-400"
+className="focus:ring-orange-500"
+className="hover:text-orange-300"
+
+// ✅ CORRECT - Use violet/blue/cyan instead
+className="text-blue-500 dark:text-cyan-400"
+className="bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600"
+className="border-blue-500"
+className="focus:ring-blue-500"
+className="hover:text-cyan-300"
+```
 
 ### Gradient Color System (MANDATORY)
 
@@ -649,6 +679,40 @@ When modifying the design system:
 4. Update REQUIREMENTS.md and CHANGELOG.md
 5. Test in both light and dark modes
 6. Verify `prefers-reduced-motion` support for animations
+
+### Design System Compliance Checklist (MANDATORY FOR ALL NEW CODE)
+
+**Before committing any new component, page, or style change, verify ALL of the following:**
+
+#### Color Compliance
+- [ ] **No orange colors** - Search your code for `orange-` and `amber-` - NONE should exist
+- [ ] **Gradients use violet/blue/cyan** - Primary actions use `from-violet-600 via-blue-600 to-cyan-600`
+- [ ] **Focus rings use blue** - All `focus:ring-*` and `focus-visible:ring-*` use `ring-blue-500`
+- [ ] **Accent text uses blue/cyan** - Links use `text-blue-600 dark:text-cyan-400`
+
+#### Theme Compliance
+- [ ] **Light mode works** - Text is readable, contrast is WCAG AA compliant
+- [ ] **Dark mode works** - Uses Vercel blacks (#0a0a0a, #111111, #1a1a1a)
+- [ ] **All colors have light/dark variants** - Never use standalone `text-gray-300` without `dark:` variant
+
+#### Component Patterns
+- [ ] **Uses `cn()` utility** - All conditional classes use `cn()` from `lib/design-system.ts`
+- [ ] **Follows card pattern** - Cards use standard border/hover/shadow pattern
+- [ ] **Buttons follow gradient pattern** - Primary CTAs use gradient, secondary use outlined style
+
+#### How to Verify (Run These Commands)
+
+```bash
+# Check for banned orange colors in components
+grep -r "orange-" apps/web/components/ apps/web/app/ --include="*.tsx" --include="*.css"
+
+# Check for banned amber colors
+grep -r "amber-" apps/web/components/ apps/web/app/ --include="*.tsx" --include="*.css"
+
+# Should return ZERO results for both commands
+```
+
+If either command returns results, those colors MUST be replaced before committing.
 
 ### Light/Dark Theme Guidelines (MANDATORY)
 

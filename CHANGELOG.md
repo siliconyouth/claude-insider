@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.8] - 2025-12-10
+
+### Fixed
+- **Version Consistency Across Components** - All components now use version 0.25.8
+  - `content-meta.tsx` - Updated from 0.9.0 to 0.25.8
+  - `system-prompt.ts` - Updated from 0.16.2 to 0.25.8
+
+- **Design System Violations Fixed** - Remaining orange colors replaced with violet/blue/cyan
+  - `skip-link.tsx` - Focus state changed from `bg-orange-500 ring-orange-300` to `bg-gradient-to-r from-violet-600 to-blue-600 ring-blue-300`
+  - `animated-input.tsx` - All orange-500 references changed to blue-500 (text, border, ring, shadow, focus states)
+  - `mdx-components.tsx` - Inline code dark mode color changed from `text-orange-300` to `text-cyan-300`
+  - `accessibility/page.tsx` - Removed `prose-orange` class, fixed email link from `text-orange-400` to `text-blue-400`
+
+### Changed
+- **Documentation Updated** - All docs now include persistent visual style guidelines
+  - CLAUDE.md updated with explicit orange color prohibition
+  - README.md color table shows correct dark mode inline code color
+  - Added "Design System Compliance" section for new pages/components
+
 ## [0.25.7] - 2025-12-10
 
 ### Added
@@ -1252,6 +1271,7 @@ Phase D (Lower Priority):
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.25.8 | 2025-12-10 | Version consistency & design system violations fixed |
 | 0.23.0 | 2025-12-10 | Accessibility Refinements (focus trap, ARIA live, keyboard shortcuts) |
 | 0.22.0 | 2025-12-10 | Micro-interactions & Animations (tilt, ripple, transitions, spring physics) |
 | 0.21.0 | 2025-12-10 | Error Boundaries with Style (error pages, retry, recovery, reporting) |
