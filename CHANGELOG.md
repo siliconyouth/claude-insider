@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.25.11] - 2025-12-11
+
+### Fixed
+- **Mobile Detection False Positives** - Fixed TTS not working on MacBooks
+  - Removed `'ontouchstart' in window` check (MacBooks with trackpads have this)
+  - Removed `maxTouchPoints > 0` check (also triggers on MacBooks)
+  - Now uses user agent only for accurate mobile device detection
+
+### Added
+- **TTS Debugging Logs** - Console logging for troubleshooting
+  - `[TTS] Mobile detection:` shows device detection results
+  - `[TTS] processSpeechQueue called` shows queue state
+  - `[TTS] Streaming complete` shows auto-speak settings
+  - `[TTS] API response status:` shows API success/failure
+  - `[TTS] Audio playing successfully` confirms playback started
+
 ## [0.25.10] - 2025-12-11
 
 ### Fixed
@@ -17,7 +33,6 @@ No pending changes.
   - Mobile Safari blocks programmatic `audio.play()` calls without user gesture
   - On mobile: TTS now waits until streaming completes, then speaks entire response at once
   - On desktop: Continues with sentence-by-sentence streaming TTS as before
-  - Added mobile detection using user agent, touch events, and maxTouchPoints
 
 - **Listen Button State Issue** - Fixed "Listen" button not playing after stopping
   - Changed from React state (`isSpeaking`) to ref (`isSpeakingQueueRef`) for reliable state checking
@@ -27,7 +42,6 @@ No pending changes.
 ### Changed
 - **TTS Architecture** - Platform-aware audio playback strategy
   - `isMobileRef` for runtime mobile detection
-  - `pendingAutoSpeakTextRef` for accumulating text on mobile
   - `processSpeechQueue` now handles mobile/desktop differently
   - `speakMessage` uses refs instead of state for toggle detection
 
