@@ -13,7 +13,7 @@ export default function AccessibilityStatementPage() {
       <Header />
 
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
-        <article className="prose prose-invert prose-orange max-w-none">
+        <article className="prose prose-invert max-w-none">
           <h1 className="text-4xl font-bold mb-2">Accessibility Statement</h1>
           <p className="text-gray-400 text-sm mb-8">Last updated: December 9, 2025</p>
 
@@ -188,7 +188,7 @@ export default function AccessibilityStatementPage() {
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300">
                 <strong>Email:</strong>{" "}
-                <a href="mailto:vladimir@dukelic.com" className="text-orange-400 hover:text-orange-300">
+                <a href="mailto:vladimir@dukelic.com" className="text-blue-400 hover:text-cyan-300">
                   vladimir@dukelic.com
                 </a>
               </p>

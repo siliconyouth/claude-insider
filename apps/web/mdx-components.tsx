@@ -102,7 +102,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
       return (
         <code
-          className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-orange-300 text-sm font-mono"
+          className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-cyan-300 text-sm font-mono"
           {...props}
         >
           {children}

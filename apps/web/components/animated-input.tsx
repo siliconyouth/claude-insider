@@ -184,7 +184,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
                         : success
                         ? "text-emerald-500"
                         : isFocused
-                        ? "text-orange-500"
+                        ? "text-blue-500"
                         : ""
                     )
                   : cn(
@@ -205,7 +205,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
                 "absolute left-4 top-1/2 -translate-y-1/2",
                 "text-gray-400 dark:text-gray-500",
                 "transition-colors duration-200",
-                isFocused && "text-orange-500",
+                isFocused && "text-blue-500",
                 error && "text-red-500",
                 success && "text-emerald-500",
                 iconSizes[size]
@@ -243,7 +243,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
                 : cn(
                     "border-gray-200 dark:border-[#333]",
                     "hover:border-gray-300 dark:hover:border-[#444]",
-                    "focus:border-orange-500"
+                    "focus:border-blue-500"
                   ),
               // Focus ring
               "focus:outline-none focus:ring-4",
@@ -251,7 +251,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
                 ? "focus:ring-red-500/20"
                 : success
                 ? "focus:ring-emerald-500/20"
-                : "focus:ring-orange-500/20",
+                : "focus:ring-blue-500/20",
               // Disabled
               "disabled:opacity-50 disabled:cursor-not-allowed",
               "disabled:bg-gray-50 dark:disabled:bg-[#111]",
@@ -288,7 +288,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
               isFocused && !error && !success
                 ? "opacity-100"
                 : "opacity-0",
-              "shadow-[0_0_0_4px_rgba(251,146,60,0.1)]"
+              "shadow-[0_0_0_4px_rgba(59,130,246,0.1)]"
             )}
           />
         </div>
@@ -433,7 +433,7 @@ export const AnimatedTextarea = forwardRef<
                         : success
                         ? "text-emerald-500"
                         : isFocused
-                        ? "text-orange-500"
+                        ? "text-blue-500"
                         : ""
                     )
                   : cn("top-4", labelSizes[size])
@@ -472,7 +472,7 @@ export const AnimatedTextarea = forwardRef<
                 : cn(
                     "border-gray-200 dark:border-[#333]",
                     "hover:border-gray-300 dark:hover:border-[#444]",
-                    "focus:border-orange-500"
+                    "focus:border-blue-500"
                   ),
               // Focus ring
               "focus:outline-none focus:ring-4",
@@ -480,7 +480,7 @@ export const AnimatedTextarea = forwardRef<
                 ? "focus:ring-red-500/20"
                 : success
                 ? "focus:ring-emerald-500/20"
-                : "focus:ring-orange-500/20",
+                : "focus:ring-blue-500/20",
               // Disabled
               "disabled:opacity-50 disabled:cursor-not-allowed",
               "disabled:bg-gray-50 dark:disabled:bg-[#111]",
@@ -499,7 +499,7 @@ export const AnimatedTextarea = forwardRef<
               "transition-opacity duration-300",
               prefersReducedMotion && "hidden",
               isFocused && !error && !success ? "opacity-100" : "opacity-0",
-              "shadow-[0_0_0_4px_rgba(251,146,60,0.1)]"
+              "shadow-[0_0_0_4px_rgba(59,130,246,0.1)]"
             )}
           />
         </div>
@@ -614,11 +614,11 @@ export function AnimatedSwitch({
           "relative inline-flex shrink-0 items-center rounded-full",
           "transition-colors duration-200",
           prefersReducedMotion && "transition-none",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-[#0a0a0a]",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           checked
-            ? "bg-orange-500"
+            ? "bg-blue-500"
             : "bg-gray-200 dark:bg-[#333]",
           sizeConfig.track
         )}
@@ -717,16 +717,16 @@ export function AnimatedCheckbox({
           "relative inline-flex items-center justify-center rounded",
           "transition-all duration-200",
           prefersReducedMotion && "transition-none",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-[#0a0a0a]",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           // Border and background
           checked || indeterminate
-            ? "bg-orange-500 border-2 border-orange-500"
+            ? "bg-blue-500 border-2 border-blue-500"
             : cn(
                 "bg-white dark:bg-[#0a0a0a]",
                 "border-2 border-gray-300 dark:border-[#444]",
-                "hover:border-orange-500"
+                "hover:border-blue-500"
               ),
           sizeConfig.box
         )}
