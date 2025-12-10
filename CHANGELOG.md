@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.3] - 2025-12-10
+
+### Changed
+- **Stripe-Style Hero Background Redesign** - Complete overhaul of the hero section
+  - Added diagonal skewed gradient band (`skewY(-6deg)`) at bottom of hero
+  - Repositioned lens flare orbs below text area (not over headline)
+  - Reduced orbs from 11 to 5 (violet, pink, cyan, blue, gold)
+  - Increased blur from sharp (10-15px) to soft (50-60px) for Stripe aesthetic
+  - Added top gradient overlay for text contrast (solid white/black fading to transparent)
+  - Headline changed from gradient to solid colors: black on light theme, white on dark theme
+  - Removed showRays prop - light rays disabled for cleaner look
+  - Animation timing: slower 8-10s pulse cycles instead of 4s
+
+### Fixed
+- **Hero Text Readability** - Headline "Claude Insider" now has proper contrast
+  - Light mode: `text-gray-900` (black)
+  - Dark mode: `text-white` (pure white)
+  - Body text: `text-gray-700 dark:text-gray-300`
+  - Muted text: `text-gray-500 dark:text-gray-400`
+
 ## [0.25.2] - 2025-12-10
 
 ### Fixed

@@ -220,14 +220,15 @@ export default function HomePage() {
 
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
             <div className="text-center animate-fade-in">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl gradient-text-stripe">
+              {/* Stripe-style: Clean, high-contrast headline */}
+              <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-gray-900 dark:text-white">
                 Claude Insider
               </h1>
-              <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              <p className="mt-6 text-lg leading-8 text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
                 Your comprehensive resource for Claude AI documentation, tips,
                 tricks, configuration guides, and setup instructions.
               </p>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 Built entirely with Claude Code powered by Claude Opus 4.5
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">

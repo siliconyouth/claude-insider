@@ -1874,14 +1874,26 @@ code {
   }
 }
 
-/* Flare pulse - brightness variation (more dramatic) */
+/* Flare pulse - brightness variation (Stripe-style sharp gradients) */
 @keyframes flare-pulse {
   0%, 100% {
-    opacity: 0.4;
-    filter: blur(80px);
+    opacity: 0.7;
+    filter: blur(20px);
   }
   50% {
-    opacity: 0.9;
+    opacity: 1;
+    filter: blur(10px);
+  }
+}
+
+/* Flare pulse for larger soft orbs */
+@keyframes flare-pulse-soft {
+  0%, 100% {
+    opacity: 0.5;
+    filter: blur(60px);
+  }
+  50% {
+    opacity: 0.8;
     filter: blur(40px);
   }
 }
@@ -1980,7 +1992,7 @@ code {
   pointer-events: none;
 }
 
-/* Lens flare orbs */
+/* Lens flare orbs - Stripe-style soft, blurred gradients */
 .lens-flare-orb {
   position: absolute;
   border-radius: 50%;
@@ -1988,22 +2000,64 @@ code {
   will-change: transform, opacity;
 }
 
+/* Soft violet/purple orb (#a960ee inspired) - heavy blur for subtle effect */
 .lens-flare-orb-violet {
-  background: radial-gradient(circle, rgb(var(--ds-glow-violet) / 0.5) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(169, 96, 238, 0.8) 0%,
+    rgba(139, 92, 246, 0.4) 40%,
+    transparent 70%
+  );
   filter: blur(60px);
-  animation: flare-drift-1 12s ease-in-out infinite, flare-pulse 4s ease-in-out infinite;
+  animation: flare-drift-1 20s ease-in-out infinite, flare-pulse-soft 8s ease-in-out infinite;
 }
 
+/* Soft blue orb */
 .lens-flare-orb-blue {
-  background: radial-gradient(circle, rgb(var(--ds-glow-blue) / 0.45) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(96, 165, 250, 0.75) 0%,
+    rgba(59, 130, 246, 0.35) 40%,
+    transparent 70%
+  );
   filter: blur(50px);
-  animation: flare-drift-2 15s ease-in-out infinite, flare-pulse 5s ease-in-out infinite 1s;
+  animation: flare-drift-2 25s ease-in-out infinite, flare-pulse-soft 10s ease-in-out infinite 2s;
 }
 
+/* Soft cyan orb (#90e0ff inspired) */
 .lens-flare-orb-cyan {
-  background: radial-gradient(circle, rgb(var(--ds-glow-cyan) / 0.4) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(144, 224, 255, 0.8) 0%,
+    rgba(34, 211, 238, 0.4) 40%,
+    transparent 70%
+  );
   filter: blur(55px);
-  animation: flare-drift-3 10s ease-in-out infinite, flare-pulse 6s ease-in-out infinite 2s;
+  animation: flare-drift-3 18s ease-in-out infinite, flare-pulse-soft 9s ease-in-out infinite 1s;
+}
+
+/* Stripe-style Red/Pink (#ff333d) */
+.lens-flare-orb-pink {
+  background: radial-gradient(
+    circle,
+    rgba(255, 51, 61, 0.75) 0%,
+    rgba(236, 72, 153, 0.35) 40%,
+    transparent 70%
+  );
+  filter: blur(55px);
+  animation: flare-drift-1 22s ease-in-out infinite 3s, flare-pulse-soft 8s ease-in-out infinite;
+}
+
+/* Stripe-style Gold (#ffcb57) */
+.lens-flare-orb-gold {
+  background: radial-gradient(
+    circle,
+    rgba(255, 203, 87, 0.8) 0%,
+    rgba(251, 191, 36, 0.4) 40%,
+    transparent 70%
+  );
+  filter: blur(50px);
+  animation: flare-drift-2 20s ease-in-out infinite 2s, flare-pulse-soft 7s ease-in-out infinite 1s;
 }
 
 /* Light rays container */

@@ -1,12 +1,12 @@
 "use client";
 
 /**
- * HeroBackground - Animated lens flare and light rays background
+ * HeroBackground - Stripe-inspired gradient background
  *
- * Stripe/Vercel/Linear-inspired animated background with:
- * - Multiple overlapping glowing orbs (purple, blue, cyan)
- * - Animated light rays radiating outward
- * - Subtle pulsing and drifting animations
+ * Key features from Stripe's homepage:
+ * - Diagonal skewed gradient at the bottom (creates contrast for text)
+ * - Subtle, blurred color orbs (not sharp lens flares)
+ * - Clean separation between text area and gradient area
  * - GPU-accelerated with CSS transforms
  * - Respects prefers-reduced-motion
  */
@@ -15,41 +15,37 @@ import { useEffect, useState } from "react";
 
 interface LensFlareOrb {
   id: number;
-  color: "violet" | "blue" | "cyan";
+  color: "violet" | "blue" | "cyan" | "pink" | "gold";
   size: number;
   top: string;
   left: string;
   delay: number;
 }
 
-// Predefined orb positions for consistent rendering
+// Stripe-style: Fewer, softer, more subtle orbs positioned in the gradient area
+// These sit within/below the diagonal - NOT over the text
 const orbs: LensFlareOrb[] = [
-  // Large violet orb - top left area
-  { id: 1, color: "violet", size: 600, top: "5%", left: "15%", delay: 0 },
-  // Medium blue orb - center right
-  { id: 2, color: "blue", size: 500, top: "30%", left: "60%", delay: 2 },
-  // Large cyan orb - bottom center
-  { id: 3, color: "cyan", size: 550, top: "50%", left: "35%", delay: 4 },
-  // Small violet accent - top right
-  { id: 4, color: "violet", size: 300, top: "10%", left: "75%", delay: 1 },
-  // Small blue accent - bottom left
-  { id: 5, color: "blue", size: 350, top: "60%", left: "10%", delay: 3 },
-  // Medium cyan - top center
-  { id: 6, color: "cyan", size: 400, top: "15%", left: "45%", delay: 5 },
+  // Large soft violet - bottom left of diagonal
+  { id: 1, color: "violet", size: 500, top: "55%", left: "5%", delay: 0 },
+  // Medium pink/red - center of diagonal
+  { id: 2, color: "pink", size: 400, top: "50%", left: "35%", delay: 1 },
+  // Large cyan - right side of diagonal
+  { id: 3, color: "cyan", size: 450, top: "45%", left: "65%", delay: 2 },
+  // Blue accent - bottom right
+  { id: 4, color: "blue", size: 350, top: "60%", left: "80%", delay: 1.5 },
+  // Gold accent - adds warmth
+  { id: 5, color: "gold", size: 300, top: "70%", left: "25%", delay: 3 },
 ];
 
 interface HeroBackgroundProps {
   /** Additional CSS classes */
   className?: string;
-  /** Show light rays effect */
-  showRays?: boolean;
   /** Intensity of the glow (0-1) */
   intensity?: number;
 }
 
 export function HeroBackground({
   className = "",
-  showRays = true,
   intensity = 1,
 }: HeroBackgroundProps) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -78,59 +74,39 @@ export function HeroBackground({
         style={{ opacity: intensity }}
       />
 
-      {/* Lens flare orbs */}
-      {orbs.map((orb) => (
+      {/* Stripe-style diagonal gradient band */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-[60%] origin-bottom-left"
+        style={{
+          transform: "skewY(-6deg)",
+          transformOrigin: "bottom left",
+        }}
+      >
+        {/* Dark base for the diagonal section */}
         <div
-          key={orb.id}
-          className={`lens-flare-orb lens-flare-orb-${orb.color}`}
-          style={{
-            width: orb.size,
-            height: orb.size,
-            top: orb.top,
-            left: orb.left,
-            animationDelay: prefersReducedMotion ? "0s" : `${orb.delay}s`,
-            opacity: intensity * (orb.color === "violet" ? 0.6 : orb.color === "blue" ? 0.5 : 0.4),
-          }}
+          className="absolute inset-0 bg-gradient-to-t from-[#0f0f23] via-[#13132b] to-transparent dark:from-[#0a0a15] dark:via-[#0f0f20]"
+          style={{ opacity: intensity }}
         />
-      ))}
 
-      {/* Light rays layer */}
-      {showRays && !prefersReducedMotion && (
-        <div className="light-rays">
-          {/* Central light ray - more visible */}
+        {/* Lens flare orbs - positioned within the diagonal gradient area */}
+        {orbs.map((orb) => (
           <div
-            className="absolute top-1/4 left-1/2 w-[250%] h-[2px] -translate-x-1/2"
+            key={orb.id}
+            className={`lens-flare-orb lens-flare-orb-${orb.color}`}
             style={{
-              background: `linear-gradient(90deg, transparent 10%, rgb(var(--ds-glow-blue) / ${0.2 * intensity}) 50%, transparent 90%)`,
-              animation: "ray-sweep 20s ease-in-out infinite",
+              width: orb.size,
+              height: orb.size,
+              top: orb.top,
+              left: orb.left,
+              animationDelay: prefersReducedMotion ? "0s" : `${orb.delay}s`,
+              opacity: intensity * 0.7,
             }}
           />
-          {/* Diagonal ray */}
-          <div
-            className="absolute top-1/3 left-1/4 w-[200%] h-[2px] rotate-45"
-            style={{
-              background: `linear-gradient(90deg, transparent 10%, rgb(var(--ds-glow-violet) / ${0.15 * intensity}) 50%, transparent 90%)`,
-              animation: "ray-sweep 25s ease-in-out infinite 3s",
-            }}
-          />
-          {/* Counter-diagonal ray */}
-          <div
-            className="absolute top-1/2 left-1/3 w-[200%] h-[2px] -rotate-[30deg]"
-            style={{
-              background: `linear-gradient(90deg, transparent 10%, rgb(var(--ds-glow-cyan) / ${0.15 * intensity}) 50%, transparent 90%)`,
-              animation: "ray-sweep 22s ease-in-out infinite 6s",
-            }}
-          />
-          {/* Additional crossing ray */}
-          <div
-            className="absolute top-2/3 left-1/2 w-[180%] h-[1px] rotate-[15deg] -translate-x-1/2"
-            style={{
-              background: `linear-gradient(90deg, transparent 15%, rgb(var(--ds-glow-blue) / ${0.1 * intensity}) 50%, transparent 85%)`,
-              animation: "ray-sweep 28s ease-in-out infinite 9s",
-            }}
-          />
-        </div>
-      )}
+        ))}
+      </div>
+
+      {/* Light rays layer - disabled for cleaner Stripe-style look */}
+      {/* Stripe doesn't use light rays - they keep the gradient clean */}
 
       {/* Noise/grain overlay for texture (very subtle) */}
       <div
@@ -140,13 +116,26 @@ export function HeroBackground({
         }}
       />
 
-      {/* Radial gradient overlay for depth */}
+      {/* Subtle top gradient for text area contrast - Stripe-style clean text area */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-x-0 top-0 h-[55%] dark:hidden"
         style={{
-          background: `radial-gradient(ellipse at 30% 20%, rgb(var(--ds-glow-violet) / ${0.08 * intensity}) 0%, transparent 50%),
-                       radial-gradient(ellipse at 70% 60%, rgb(var(--ds-glow-blue) / ${0.06 * intensity}) 0%, transparent 40%),
-                       radial-gradient(ellipse at 50% 80%, rgb(var(--ds-glow-cyan) / ${0.05 * intensity}) 0%, transparent 45%)`,
+          background: `linear-gradient(to bottom,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.9) 60%,
+            transparent 100%)`,
+          opacity: intensity,
+        }}
+      />
+      {/* Dark mode version */}
+      <div
+        className="absolute inset-x-0 top-0 h-[55%] hidden dark:block"
+        style={{
+          background: `linear-gradient(to bottom,
+            rgba(10, 10, 10, 1) 0%,
+            rgba(10, 10, 10, 0.9) 60%,
+            transparent 100%)`,
+          opacity: intensity,
         }}
       />
     </div>
