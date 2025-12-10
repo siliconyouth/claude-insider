@@ -62,7 +62,7 @@ export function DocsLayout({
               <nav className="sticky top-24 space-y-6 max-h-[calc(100vh-8rem)] overflow-y-auto pr-4">
                 {sidebar.map((section) => (
                   <div key={section.title}>
-                    <div className="text-sm font-semibold text-gray-300 mb-2">
+                    <div className="text-sm font-semibold text-gray-900 dark:text-gray-300 mb-2">
                       {section.title}
                     </div>
                     <div className="space-y-1">
@@ -72,8 +72,8 @@ export function DocsLayout({
                           href={item.href}
                           className={`block px-3 py-1.5 text-sm rounded-lg transition-colors ${
                             item.active
-                              ? "text-cyan-400 bg-blue-500/10"
-                              : "text-gray-400 hover:text-white hover:bg-gray-800"
+                              ? "text-blue-600 dark:text-cyan-400 bg-blue-500/10"
+                              : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
                           }`}
                         >
                           {item.label}
@@ -89,28 +89,28 @@ export function DocsLayout({
           {/* Main Content */}
           <main className={`flex-1 min-w-0 ${!sidebar ? "max-w-4xl mx-auto" : ""}`} id="main-content">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+            <nav className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-8">
               {breadcrumbs.map((crumb, index) => (
                 <span key={index} className="flex items-center gap-2">
                   {index > 0 && <span>/</span>}
                   {crumb.href ? (
                     <Link
                       href={crumb.href}
-                      className="hover:text-white transition-colors"
+                      className="hover:text-gray-900 dark:hover:text-white transition-colors"
                     >
                       {crumb.label}
                     </Link>
                   ) : (
-                    <span className="text-white">{crumb.label}</span>
+                    <span className="text-gray-900 dark:text-white">{crumb.label}</span>
                   )}
                 </span>
               ))}
             </nav>
 
-            <article className="prose prose-invert prose-cyan max-w-none">
+            <article className="prose dark:prose-invert prose-blue dark:prose-cyan max-w-none">
               <h1 className="text-4xl font-bold mb-2">{title}</h1>
               {readingTime && (
-                <div className="flex items-center gap-1.5 text-sm text-gray-400 mb-6 not-prose">
+                <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 mb-6 not-prose">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -129,7 +129,7 @@ export function DocsLayout({
                 </div>
               )}
               {description && (
-                <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
                   {description}
                 </p>
               )}
@@ -137,7 +137,7 @@ export function DocsLayout({
 
               {/* Edit on GitHub link */}
               {editPath && (
-                <div className="mt-12 pt-6 border-t border-gray-800 not-prose">
+                <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800 not-prose">
                   <EditOnGitHub filePath={editPath} />
                 </div>
               )}
@@ -145,11 +145,11 @@ export function DocsLayout({
 
             {/* Page Navigation */}
             {(prevPage || nextPage) && (
-              <div className="flex justify-between mt-16 pt-8 border-t border-gray-800">
+              <div className="flex justify-between mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
                 {prevPage ? (
                   <Link
                     href={prevPage.href}
-                    className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                    className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
                     <svg
                       className="w-4 h-4 group-hover:-translate-x-1 transition-transform"
@@ -172,7 +172,7 @@ export function DocsLayout({
                 {nextPage ? (
                   <Link
                     href={nextPage.href}
-                    className="group flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+                    className="group flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
                     <span>{nextPage.label}</span>
                     <svg

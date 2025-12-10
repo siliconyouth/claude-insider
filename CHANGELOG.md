@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.2] - 2025-12-10
+
+### Fixed
+- **Light/Dark Theme Consistency** - Fixed poor contrast on docs pages in light mode
+  - Documentation pages now properly support both light and dark themes
+  - Text is readable in both themes with WCAG AA compliant contrast ratios
+  - Changes made to:
+    - `globals.css` - Fixed prose color variables for light mode (gray-900 body text)
+    - `docs-layout.tsx` - Made `prose-invert` conditional (`dark:prose-invert`)
+    - `mdx-components.tsx` - Added light/dark variants to all text colors
+    - `getting-started/page.tsx` - Fixed hardcoded dark-only colors
+  - Light mode now uses:
+    - Body text: `text-gray-700` / `text-gray-800`
+    - Headings: `text-gray-900`
+    - Links: `text-blue-600` (changed from cyan for better light mode contrast)
+    - Bullet points: `text-blue-600` in light mode, `text-orange-400` in dark mode
+    - Cards: Light borders and backgrounds that adapt to theme
+
 ## [0.25.1] - 2025-12-10
 
 ### Added
