@@ -49,7 +49,7 @@ export function LanguageSelector() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => multipleLocalesAvailable && setIsOpen(!isOpen)}
-        className={`flex items-center gap-1.5 px-2 py-1.5 text-sm text-gray-600 dark:text-gray-400 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-950 ${
+        className={`flex items-center gap-1.5 px-2 py-1.5 text-sm text-gray-600 dark:text-gray-400 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-950 ${
           multipleLocalesAvailable
             ? "hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
             : "cursor-default opacity-80"
@@ -97,7 +97,7 @@ export function LanguageSelector() {
               onClick={() => handleLocaleChange(locale)}
               className={`w-full px-3 py-2 text-left flex items-center gap-2 text-sm transition-colors ${
                 locale.code === currentLocale.code
-                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                  ? "bg-blue-500/10 text-blue-600 dark:text-cyan-400"
                   : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
               }`}
               role="option"
@@ -109,7 +109,7 @@ export function LanguageSelector() {
               <span>{locale.name}</span>
               {locale.code === currentLocale.code && (
                 <svg
-                  className="w-4 h-4 ml-auto text-orange-500"
+                  className="w-4 h-4 ml-auto text-cyan-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

@@ -33,7 +33,7 @@ export interface AnimatedCardProps extends HTMLAttributes<HTMLDivElement> {
   maxTilt?: number;
   /** Scale on hover */
   hoverScale?: number;
-  /** Glow color (defaults to orange) */
+  /** Glow color (defaults to blue) */
   glowColor?: string;
   /** Card variant */
   variant?: "default" | "elevated" | "bordered" | "glass";
@@ -98,7 +98,7 @@ const paddingStyles = {
 const badgeStyles = {
   default: "bg-gray-100 dark:bg-[#262626] text-gray-600 dark:text-gray-400",
   new: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400",
-  popular: "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400",
+  popular: "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400",
   updated: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400",
 };
 
@@ -115,7 +115,7 @@ export const AnimatedCard = forwardRef<HTMLDivElement, AnimatedCardProps>(
       glow = false,
       maxTilt = 8,
       hoverScale = 1.02,
-      glowColor = "rgba(251, 146, 60, 0.15)",
+      glowColor = "rgba(59, 130, 246, 0.15)",
       variant = "default",
       padding = "md",
       interactive = false,
@@ -201,7 +201,7 @@ export const AnimatedCardLink = forwardRef<
       glow = true,
       maxTilt = 8,
       hoverScale = 1.02,
-      glowColor = "rgba(251, 146, 60, 0.15)",
+      glowColor = "rgba(59, 130, 246, 0.15)",
       variant = "default",
       padding = "md",
       ...props
@@ -245,7 +245,7 @@ export const AnimatedCardLink = forwardRef<
           "relative block rounded-xl overflow-hidden",
           "transition-all duration-300",
           prefersReducedMotion && "transition-none",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-[#0a0a0a]",
           variantStyles[variant],
           paddingStyles[padding],
@@ -305,8 +305,8 @@ export function FeatureCard({
               className={cn(
                 "flex items-center justify-center",
                 "w-12 h-12 rounded-lg",
-                "bg-orange-100 dark:bg-orange-900/30",
-                "text-orange-600 dark:text-orange-400",
+                "bg-blue-100 dark:bg-blue-900/30",
+                "text-blue-600 dark:text-cyan-400",
                 "transition-transform duration-300",
                 !prefersReducedMotion && "group-hover:scale-110"
               )}
@@ -334,7 +334,7 @@ export function FeatureCard({
             "text-lg font-semibold",
             "text-gray-900 dark:text-white",
             "transition-colors duration-200",
-            "group-hover:text-orange-600 dark:group-hover:text-orange-400"
+            "group-hover:text-blue-600 dark:group-hover:text-cyan-400"
           )}
         >
           {title}
@@ -349,7 +349,7 @@ export function FeatureCard({
         <div
           className={cn(
             "flex items-center gap-1 text-sm font-medium",
-            "text-orange-600 dark:text-orange-400",
+            "text-blue-600 dark:text-cyan-400",
             "transition-transform duration-200",
             !prefersReducedMotion && "group-hover:translate-x-1"
           )}

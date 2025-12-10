@@ -63,7 +63,7 @@ export class VoiceAssistantErrorBoundary extends Component<Props, State> {
               )}
               <button
                 onClick={this.handleRetry}
-                className="mt-3 rounded-lg bg-orange-500 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-orange-600"
+                className="mt-3 rounded-lg bg-gradient-to-r from-violet-600 to-blue-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:from-violet-500 hover:to-blue-500"
               >
                 Retry
               </button>

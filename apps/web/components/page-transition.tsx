@@ -488,7 +488,7 @@ export interface NavigationProgressProps {
 
 export function NavigationProgress({
   isNavigating = false,
-  color = "rgb(249, 115, 22)", // orange-500
+  color = "rgb(59, 130, 246)", // blue-500
   height = 2,
   className,
 }: NavigationProgressProps) {

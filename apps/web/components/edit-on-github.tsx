@@ -11,7 +11,7 @@ export function EditOnGitHub({ filePath }: EditOnGitHubProps) {
       href={editUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-orange-400 transition-colors"
+      className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors"
     >
       <svg
         className="w-4 h-4"

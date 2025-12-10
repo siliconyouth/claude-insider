@@ -204,7 +204,7 @@ export function AccessibleModal({
                 "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200",
                 "hover:bg-gray-100 dark:hover:bg-gray-800",
                 "transition-colors",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               )}
               aria-label="Close dialog"
             >
@@ -296,7 +296,7 @@ export function ConfirmationDialog({
             "bg-gray-100 dark:bg-gray-800",
             "hover:bg-gray-200 dark:hover:bg-gray-700",
             "transition-colors",
-            "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
             "disabled:opacity-50"
           )}
         >
@@ -311,9 +311,9 @@ export function ConfirmationDialog({
             "text-white",
             variant === "danger"
               ? "bg-red-600 hover:bg-red-700"
-              : "bg-orange-600 hover:bg-orange-700",
+              : "bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500",
             "transition-colors",
-            "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
             "disabled:opacity-50"
           )}
         >
@@ -386,9 +386,9 @@ export function AlertDialog({
           onClick={onClose}
           className={cn(
             "px-6 py-2 rounded-lg",
-            "text-white bg-orange-600 hover:bg-orange-700",
+            "text-white bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500",
             "transition-colors",
-            "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           )}
         >
           {buttonText}
@@ -486,7 +486,7 @@ export function Drawer({
               "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200",
               "hover:bg-gray-100 dark:hover:bg-gray-800",
               "transition-colors",
-              "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             )}
             aria-label="Close drawer"
           >
@@ -589,9 +589,9 @@ export function SkipLinks({
           className={cn(
             "fixed top-4 left-4 z-[9999]",
             "px-4 py-2 rounded-lg",
-            "bg-orange-600 text-white",
+            "bg-gradient-to-r from-violet-600 to-blue-600 text-white",
             "font-medium",
-            "focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+            "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           )}
         >
           {link.label}

@@ -13,12 +13,12 @@ export default function DisclaimerPage() {
       <Header />
 
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
-        <article className="prose prose-invert prose-orange max-w-none">
+        <article className="prose prose-invert max-w-none">
           <h1 className="text-4xl font-bold mb-2">Disclaimer</h1>
           <p className="text-gray-400 text-sm mb-8">Last updated: December 9, 2025</p>
 
-          <section className="mb-8 p-6 bg-orange-500/10 border border-orange-500/30 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4 text-orange-400">Important Notice</h2>
+          <section className="mb-8 p-6 bg-violet-500/10 border border-violet-500/30 rounded-lg">
+            <h2 className="text-xl font-semibold mb-4 text-violet-400">Important Notice</h2>
             <p className="text-gray-300 leading-relaxed">
               Claude Insider is an <strong>unofficial, independent project</strong> and is <strong>not affiliated with, endorsed by, sponsored by, or officially connected to Anthropic, PBC</strong> or any of its subsidiaries, affiliates, or related companies.
             </p>
@@ -32,7 +32,7 @@ export default function DisclaimerPage() {
             <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
               <li>&quot;Claude&quot;, &quot;Claude AI&quot;, &quot;Claude Code&quot;, and related marks are trademarks of Anthropic, PBC</li>
               <li>This website does not represent Anthropic&apos;s official views or positions</li>
-              <li>For official Claude documentation, please visit <a href="https://docs.anthropic.com" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300">docs.anthropic.com</a></li>
+              <li>For official Claude documentation, please visit <a href="https://docs.anthropic.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-cyan-300">docs.anthropic.com</a></li>
               <li>For official support, please contact Anthropic directly through their official channels</li>
             </ul>
           </section>
@@ -187,7 +187,7 @@ export default function DisclaimerPage() {
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300">
                 <strong>Email:</strong>{" "}
-                <a href="mailto:vladimir@dukelic.com" className="text-orange-400 hover:text-orange-300">
+                <a href="mailto:vladimir@dukelic.com" className="text-blue-400 hover:text-cyan-300">
                   vladimir@dukelic.com
                 </a>
               </p>

@@ -79,7 +79,7 @@ function getSectionColor(title: string): string {
     Fixed: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
     Removed: "bg-red-500/10 text-red-400 border-red-500/20",
     Security: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-    Deprecated: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+    Deprecated: "bg-amber-500/10 text-amber-400 border-amber-500/20",
   };
   return colors[title] || "bg-gray-500/10 text-gray-400 border-gray-500/20";
 }
@@ -113,7 +113,7 @@ export default function ChangelogPage() {
               href="https://semver.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-orange-400 hover:text-orange-300"
+              className="text-blue-400 hover:text-cyan-300"
             >
               Semantic Versioning
             </a>
@@ -131,7 +131,7 @@ export default function ChangelogPage() {
                 className="relative pl-8 border-l-2 border-gray-800"
               >
                 {/* Version dot */}
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-orange-500" />
+                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gradient-to-r from-violet-500 to-blue-500" />
 
                 {/* Version header */}
                 <header className="mb-6">
@@ -188,7 +188,7 @@ export default function ChangelogPage() {
               href="https://github.com/siliconyouth/claude-insider/blob/main/CHANGELOG.md"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-orange-400 hover:text-orange-300"
+              className="text-blue-400 hover:text-cyan-300"
             >
               GitHub
             </a>

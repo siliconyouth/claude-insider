@@ -49,7 +49,7 @@ export function ContentMeta({
                 href={source.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-orange-400 hover:text-orange-300 transition-colors inline-flex items-center gap-1"
+                className="text-blue-400 hover:text-cyan-300 transition-colors inline-flex items-center gap-1"
               >
                 {source.title}
                 <svg
@@ -75,7 +75,7 @@ export function ContentMeta({
       {/* Generation Info */}
       <div className="p-4 bg-gray-900/50 border border-gray-800 rounded-lg">
         <div className="flex items-start gap-3">
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center">
+          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 to-blue-600 flex items-center justify-center">
             <svg
               className="w-4 h-4 text-white"
               fill="none"
@@ -98,7 +98,7 @@ export function ContentMeta({
                 href="https://claude.ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-orange-400 hover:text-orange-300"
+                className="text-blue-400 hover:text-cyan-300"
               >
                 Claude AI
               </a>{" "}
@@ -107,7 +107,7 @@ export function ContentMeta({
                 href="https://anthropic.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-orange-400 hover:text-orange-300"
+                className="text-blue-400 hover:text-cyan-300"
               >
                 Anthropic
               </a>

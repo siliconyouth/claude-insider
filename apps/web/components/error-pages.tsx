@@ -91,9 +91,9 @@ const cardStyles = cn(
 const buttonPrimary = cn(
   "inline-flex items-center gap-2 rounded-lg px-5 py-2.5",
   "text-sm font-medium text-white",
-  "bg-orange-500 hover:bg-orange-600",
+  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500",
   "transition-colors focus:outline-none focus-visible:ring-2",
-  "focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+  "focus-visible:ring-blue-500 focus-visible:ring-offset-2"
 );
 
 const buttonSecondary = cn(
@@ -139,7 +139,7 @@ export function NotFoundPage({
             404
           </span>
           <div className="absolute inset-0 flex items-center justify-center">
-            <SearchIcon className="h-16 w-16 text-orange-500 animate-pulse" />
+            <SearchIcon className="h-16 w-16 text-blue-500 animate-pulse" />
           </div>
         </div>
 
@@ -164,7 +164,7 @@ export function NotFoundPage({
                   "bg-gray-50 dark:bg-ds-background-1 px-4 py-3 pr-10",
                   "text-sm text-gray-900 dark:text-white",
                   "placeholder:text-gray-400 dark:placeholder:text-gray-500",
-                  "focus:outline-none focus:ring-2 focus:ring-orange-500",
+                  "focus:outline-none focus:ring-2 focus:ring-blue-500",
                   "focus:border-transparent"
                 )}
               />
@@ -194,15 +194,15 @@ export function NotFoundPage({
             Popular pages:
           </p>
           <div className="flex flex-wrap gap-2 justify-center">
-            <Link href="/docs/getting-started" className="text-xs text-orange-600 dark:text-orange-400 hover:underline">
+            <Link href="/docs/getting-started" className="text-xs text-blue-600 dark:text-cyan-400 hover:underline">
               Getting Started
             </Link>
             <span className="text-gray-300 dark:text-gray-700">·</span>
-            <Link href="/docs/configuration" className="text-xs text-orange-600 dark:text-orange-400 hover:underline">
+            <Link href="/docs/configuration" className="text-xs text-blue-600 dark:text-cyan-400 hover:underline">
               Configuration
             </Link>
             <span className="text-gray-300 dark:text-gray-700">·</span>
-            <Link href="/docs/api" className="text-xs text-orange-600 dark:text-orange-400 hover:underline">
+            <Link href="/docs/api" className="text-xs text-blue-600 dark:text-cyan-400 hover:underline">
               API Reference
             </Link>
           </div>
@@ -282,7 +282,7 @@ export function ServerErrorPage({
             <span>Auto-retrying in {countdown}s</span>
             <button
               onClick={() => setAutoRetry(false)}
-              className="text-orange-500 hover:underline"
+              className="text-blue-600 dark:text-cyan-400 hover:underline"
             >
               Cancel
             </button>

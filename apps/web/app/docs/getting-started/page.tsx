@@ -95,23 +95,23 @@ export default function GettingStartedPage() {
       </p>
       <ul className="space-y-2 text-gray-700 dark:text-gray-300 mb-8">
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>Writing and editing code across multiple languages</span>
         </li>
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>Analyzing and explaining complex topics</span>
         </li>
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>Creative writing and brainstorming</span>
         </li>
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>Research and data analysis</span>
         </li>
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>Task automation and workflow optimization</span>
         </li>
       </ul>
@@ -123,23 +123,23 @@ export default function GettingStartedPage() {
       </p>
       <ul className="space-y-2 text-gray-700 dark:text-gray-300 mb-8">
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>Direct terminal access to Claude AI</span>
         </li>
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>File system integration for code editing</span>
         </li>
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>Project-aware context with CLAUDE.md files</span>
         </li>
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>Extensibility through MCP servers and custom hooks</span>
         </li>
         <li className="flex items-start gap-3">
-          <span className="text-blue-600 dark:text-orange-400 mt-1">•</span>
+          <span className="text-blue-600 dark:text-cyan-400 mt-1">•</span>
           <span>IDE integrations for VS Code, JetBrains, and more</span>
         </li>
       </ul>
@@ -152,9 +152,9 @@ export default function GettingStartedPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 not-prose">
         <Link
           href="/docs/getting-started/installation"
-          className="group p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 dark:hover:border-orange-500/50 bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-900 transition-all"
+          className="group p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 dark:hover:border-cyan-500/50 bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-900 transition-all"
         >
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors mb-1">
+          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors mb-1">
             Installation Guide
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -163,9 +163,9 @@ export default function GettingStartedPage() {
         </Link>
         <Link
           href="/docs/getting-started/quickstart"
-          className="group p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 dark:hover:border-orange-500/50 bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-900 transition-all"
+          className="group p-4 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-blue-500/50 dark:hover:border-cyan-500/50 bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-900 transition-all"
         >
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors mb-1">
+          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors mb-1">
             Quick Start
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">

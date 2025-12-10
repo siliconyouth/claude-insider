@@ -108,7 +108,7 @@ export function TableOfContents({
                 }}
                 className={`block py-1 transition-colors border-l-2 pl-3 ${
                   activeId === heading.id
-                    ? "border-orange-500 text-orange-400 dark:text-orange-400"
+                    ? "border-cyan-500 text-cyan-500 dark:text-cyan-400"
                     : "border-transparent text-gray-500 dark:text-gray-500 hover:text-gray-300 dark:hover:text-gray-300 hover:border-gray-600"
                 }`}
               >

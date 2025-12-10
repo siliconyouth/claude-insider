@@ -281,7 +281,7 @@ export function NavigationLoader({ isLoading }: { isLoading: boolean }) {
     <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-gray-200 dark:bg-gray-800 overflow-hidden">
       <div
         className={cn(
-          "h-full bg-gradient-to-r from-orange-500 to-amber-500",
+          "h-full bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500",
           "animate-[progress_1s_ease-in-out_infinite]"
         )}
         style={{
@@ -325,7 +325,7 @@ export function PageLoadingOverlay({
         <div className="relative w-12 h-12 mx-auto">
           <div className="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-gray-700" />
           <div
-            className="absolute inset-0 rounded-full border-4 border-orange-500 border-t-transparent animate-spin"
+            className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"
           />
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400">{message}</p>

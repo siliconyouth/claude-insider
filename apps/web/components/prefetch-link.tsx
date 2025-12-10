@@ -207,11 +207,11 @@ export function CardPrefetchLink({
       {...props}
     >
       {icon && (
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-cyan-400">
           {icon}
         </div>
       )}
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+      <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
         {title}
       </h3>
       {description && (
@@ -294,7 +294,7 @@ export function TocLink({
         "block text-sm transition-colors py-1",
         level > 0 && "pl-4",
         isActive
-          ? "text-orange-600 dark:text-orange-400 font-medium"
+          ? "text-blue-600 dark:text-cyan-400 font-medium"
           : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white",
         className
       )}

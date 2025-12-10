@@ -41,10 +41,10 @@ export interface AnimatedButtonProps
 
 const variantStyles = {
   primary: cn(
-    "bg-gradient-to-r from-orange-500 to-amber-500",
-    "hover:from-orange-600 hover:to-amber-600",
-    "text-white shadow-lg shadow-orange-500/25",
-    "border border-orange-400/50"
+    "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+    "hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500",
+    "text-white shadow-lg shadow-blue-500/25",
+    "border border-blue-400/50"
   ),
   secondary: cn(
     "bg-gray-100 dark:bg-[#1a1a1a]",
@@ -130,7 +130,7 @@ export const AnimatedButton = forwardRef<HTMLButtonElement, AnimatedButtonProps>
           "relative inline-flex items-center justify-center",
           "font-medium rounded-lg",
           "transition-all duration-200",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-[#0a0a0a]",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           "overflow-hidden",
@@ -242,7 +242,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           "relative inline-flex items-center justify-center",
           "rounded-full",
           "transition-all duration-200",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-[#0a0a0a]",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           "overflow-hidden",
@@ -329,12 +329,12 @@ export const FloatingActionButton = forwardRef<
         className={cn(
           // Base styles
           "relative inline-flex items-center justify-center",
-          "bg-gradient-to-r from-orange-500 to-amber-500",
-          "hover:from-orange-600 hover:to-amber-600",
+          "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+          "hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500",
           "text-white font-medium",
-          "shadow-xl shadow-orange-500/30",
+          "shadow-xl shadow-blue-500/30",
           "transition-all duration-300",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-[#0a0a0a]",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           "overflow-hidden z-50",
@@ -414,14 +414,14 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
           "relative inline-flex items-center justify-center",
           "rounded-lg font-medium",
           "transition-all duration-200",
-          "focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
           "dark:focus-visible:ring-offset-[#0a0a0a]",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           // State styles
           isPressed
             ? cn(
-                "bg-orange-500 text-white",
-                "border border-orange-400"
+                "bg-gradient-to-r from-violet-600 to-blue-600 text-white",
+                "border border-blue-400"
               )
             : cn(
                 "bg-gray-100 dark:bg-[#1a1a1a]",
