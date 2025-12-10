@@ -9,6 +9,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes - all features complete.
 
+## [0.25.7] - 2025-12-10
+
+### Added
+- **SVG-Based Device Mockups** - Complete rewrite of iPhone mockup using pure SVG
+  - **iPhone 17 Pro Max**: Pure SVG implementation with precise dimensions
+    - viewBox `0 0 236 480` maintaining 19.5:9 aspect ratio
+    - 6px titanium frame with photorealistic multi-stop gradient
+    - Screen area exactly 224×468 pixels at position (6, 6)
+    - Narrower Dynamic Island (60×18) reflecting metalens technology
+    - Side buttons (volume, power, action button) with depth
+    - Ground shadow for floating effect
+  - **foreignObject Content Embedding**: React content precisely positioned inside SVG
+  - **Container Query Sizing**: `containerType: 'inline-size'` with `cqw` units for responsive screen content
+
+- **Device Mockup Guidelines** - Comprehensive documentation in CLAUDE.md
+  - Mandatory guidelines for creating/modifying device mockups
+  - SVG structure patterns with code examples
+  - iPhone 17 Pro Max specifications table
+  - Container query unit usage for responsive content
+  - DeviceShowcase layout patterns for hero sections
+
+### Changed
+- **DeviceShowcase Positioning** - Improved visual arrangement
+  - MacBook Pro moved lower: `top-0` → `top-[12%]`
+  - iPhone pushed further right: `right-[-8%]` → `right-[-15%] sm:right-[-12%] lg:right-[-10%]`
+  - iPhone positioned higher: `top-[8%]` → `top-[5%]`
+
+### Removed
+- **PNG-based iPhone Frame** - Replaced with SVG for accurate screen embedding
+  - Previous PNG approach had inaccurate screen measurements
+  - SVG provides mathematically precise boundaries for content
+
 ## [0.25.5] - 2025-12-10
 
 ### Changed

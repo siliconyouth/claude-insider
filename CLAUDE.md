@@ -9,7 +9,7 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 ## Current Project State
 
-**Version**: 0.25.2
+**Version**: 0.25.7
 
 ### Completed
 - Turborepo monorepo with pnpm workspaces
@@ -143,8 +143,11 @@ Claude Insider is a Next.js web application providing comprehensive documentatio
 
 - **Enhanced Code Block Colors** - 33 distinct language colors organized by family (v0.25.1)
 - **Light/Dark Theme Consistency** - Fixed poor contrast on docs pages in light mode (v0.25.2)
+- **SVG Device Mockups** - Pure SVG-based iPhone 17 Pro Max mockup with precise screen embedding (v0.25.7)
+- **DeviceShowcase Component** - Stripe-style hero section with MacBook Pro and iPhone mockups
+- **foreignObject Content Embedding** - React content precisely positioned inside SVG device frames
 
-### Project Status: Complete (v0.25.2)
+### Project Status: Complete (v0.25.7)
 
 ## Tech Stack
 
@@ -203,6 +206,7 @@ claude-insider/
 │   │   │   ├── animated-card.tsx   # Card with 3D tilt and glow effects
 │   │   │   ├── page-transition.tsx # Route transitions and fade-in components
 │   │   │   ├── accessible-modal.tsx # WCAG-compliant modal with focus trap
+│   │   │   ├── device-mockups.tsx  # SVG device mockups (MacBook, iPhone 17 Pro Max)
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── hooks/
 │   │   │   ├── use-optimistic-update.ts  # Optimistic UI hooks
@@ -1172,6 +1176,141 @@ When adding new languages to code blocks, follow these rules to maintain visual 
 
 ---
 
+## Device Mockup Guidelines (MANDATORY)
+
+**Location**: `apps/web/components/device-mockups.tsx`
+
+The project uses **pure SVG-based device mockups** for hero sections. When creating or modifying device mockups, follow these rules for precise screen content embedding.
+
+### Core Principles
+
+1. **Use SVG-based mockups** - Never use PNG frames for screen content embedding (inaccurate measurements)
+2. **foreignObject for React content** - Use SVG `foreignObject` to embed React components at exact pixel coordinates
+3. **Container queries for responsive sizing** - Use `containerType: 'inline-size'` with `cqw` units for responsive content
+4. **Photorealistic styling** - Use multi-stop gradients and subtle shadows for realism
+
+### iPhone 17 Pro Max Specifications
+
+| Property | Value | Notes |
+|----------|-------|-------|
+| **SVG viewBox** | `0 0 236 480` | Maintains 19.5:9 aspect ratio |
+| **Frame width** | `6px` | Titanium bezel thickness |
+| **Screen area** | `224 × 468` | At position (6, 6) |
+| **Outer radius** | `36px` | Device corner radius |
+| **Screen radius** | `32px` | Inner screen corner radius |
+| **Dynamic Island** | `60 × 18` | Centered at y=14, narrower than previous models |
+
+### SVG Structure Pattern
+
+```tsx
+<svg viewBox="0 0 236 480" className="w-full h-auto">
+  <defs>
+    {/* Gradients for titanium frame */}
+    <linearGradient id="iphone17-titanium" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#4a4a4a"/>
+      <stop offset="15%" stopColor="#3d3d3d"/>
+      {/* ... more stops for photorealistic effect */}
+    </linearGradient>
+  </defs>
+
+  {/* Main titanium body */}
+  <rect x="0" y="0" width={236} height={480} rx={36} fill="url(#iphone17-titanium)" />
+
+  {/* Screen area (black) */}
+  <rect x={6} y={6} width={224} height={468} rx={32} fill="#000" />
+
+  {/* Dynamic Island */}
+  <rect x={88} y={14} width={60} height={18} rx={9} fill="#1a1a1a" />
+
+  {/* foreignObject for React content - CRITICAL positioning */}
+  <foreignObject
+    x={6}              // screenX
+    y={6}              // screenY
+    width={224}        // screenWidth
+    height={468}       // screenHeight
+    style={{ borderRadius: '32px', overflow: 'hidden' }}
+  >
+    <div style={{
+      width: '100%',
+      height: '100%',
+      borderRadius: '32px',
+      overflow: 'hidden',
+      containerType: 'inline-size'  // Enable container queries
+    }}>
+      {children}
+    </div>
+  </foreignObject>
+
+  {/* Home indicator */}
+  <rect x={93} y={460} width={50} height={4} rx={2} fill="#333" />
+</svg>
+```
+
+### Container Query Units
+
+Inside `foreignObject`, use container query units for responsive sizing:
+
+```tsx
+// Screen content with container-query-responsive sizing
+<div style={{
+  fontSize: '4cqw',     // 4% of container width
+  padding: '3cqw',
+  gap: '2cqw'
+}}>
+  <h1 style={{ fontSize: '5cqw' }}>Title</h1>
+  <p style={{ fontSize: '3cqw' }}>Body text</p>
+</div>
+```
+
+### DeviceShowcase Layout
+
+For hero sections with multiple devices:
+
+```tsx
+export function DeviceShowcase({ className = "" }: { className?: string }) {
+  return (
+    <div className={cn("relative min-h-[520px] lg:min-h-[600px]", className)}>
+      {/* MacBook Pro - Primary device, lowered for visual balance */}
+      <div className="absolute top-[12%] -right-[10%] w-[100%] max-w-[600px] ...">
+        <MacBookMockup />
+      </div>
+
+      {/* iPhone - Overlapping, pushed right with responsive breakpoints */}
+      <div className="absolute right-[-15%] sm:right-[-12%] lg:right-[-10%] top-[5%] w-[160px] sm:w-[200px] lg:w-[240px] z-10">
+        <IPhone17ProMax />
+      </div>
+    </div>
+  );
+}
+```
+
+### Ground Shadow Pattern
+
+Add realistic ground shadows beneath devices:
+
+```tsx
+<div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[85%] h-6 bg-black/20 rounded-[100%] blur-xl" />
+```
+
+### When to Update Device Mockups
+
+When modifying device mockups:
+1. Maintain exact SVG coordinate precision for screen boundaries
+2. Update this documentation with new device specifications
+3. Test at multiple viewport sizes (mobile, tablet, desktop)
+4. Verify content fits within screen area without overflow
+5. Test in both light and dark modes
+
+### Device Mockup Files
+
+| File | Purpose |
+|------|---------|
+| `components/device-mockups.tsx` | MacBook Pro and iPhone 17 Pro Max components |
+| `components/hero-background.tsx` | Animated lens flare background |
+| `app/page.tsx` | Homepage integration with DeviceShowcase |
+
+---
+
 ## Content Categories
 
 | Category | Route | Description |
@@ -1198,7 +1337,7 @@ When adding new languages to code blocks, follow these rules to maintain visual 
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.25.1.
+All planned features have been implemented. The project is feature-complete at v0.25.7.
 
 ### AWE-Inspired UX Improvements (All Complete)
 

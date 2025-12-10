@@ -110,6 +110,7 @@ claude-insider/
 │   │   │   ├── voice-assistant-demo.tsx # Animated demo for homepage
 │   │   │   ├── open-assistant-button.tsx # Button to open assistant popup
 │   │   │   ├── accessible-modal.tsx # WCAG-compliant modal with focus trap
+│   │   │   ├── device-mockups.tsx  # SVG device mockups (MacBook, iPhone 17 Pro Max)
 │   │   │   └── footer.tsx        # Shared footer with legal links & changelog
 │   │   ├── hooks/
 │   │   │   ├── use-focus-trap.ts         # Modal focus management (trap, return, roving)
@@ -529,6 +530,60 @@ When using Tailwind Typography plugin in MDX content areas:
 
 ---
 
+### Device Mockup Guidelines (MANDATORY)
+
+When creating or modifying device mockups (`components/device-mockups.tsx`), follow these rules:
+
+1. **Use SVG-based mockups** - Never use PNG frames for screen content embedding (inaccurate measurements)
+2. **foreignObject for React content** - Use SVG `foreignObject` to embed React components at exact pixel coordinates
+3. **Container queries for responsive sizing** - Use `containerType: 'inline-size'` with `cqw` units for responsive content
+4. **Photorealistic styling** - Use multi-stop gradients and subtle shadows for realism
+
+#### iPhone 17 Pro Max Specifications
+
+| Property | Value | Notes |
+|----------|-------|-------|
+| **SVG viewBox** | `0 0 236 480` | Maintains 19.5:9 aspect ratio |
+| **Frame width** | `6px` | Titanium bezel thickness |
+| **Screen area** | `224 × 468` | At position (6, 6) |
+| **Outer radius** | `36px` | Device corner radius |
+| **Screen radius** | `32px` | Inner screen corner radius |
+| **Dynamic Island** | `60 × 18` | Centered at y=14, narrower than previous |
+
+#### foreignObject Pattern
+
+```tsx
+<foreignObject
+  x={6}              // screenX
+  y={6}              // screenY
+  width={224}        // screenWidth
+  height={468}       // screenHeight
+  style={{ borderRadius: '32px', overflow: 'hidden' }}
+>
+  <div style={{
+    width: '100%',
+    height: '100%',
+    borderRadius: '32px',
+    overflow: 'hidden',
+    containerType: 'inline-size'  // Enable container queries
+  }}>
+    {children}
+  </div>
+</foreignObject>
+```
+
+#### Container Query Units
+
+```tsx
+// Screen content with container-query-responsive sizing
+<div style={{ fontSize: '4cqw', padding: '3cqw', gap: '2cqw' }}>
+  <h1 style={{ fontSize: '5cqw' }}>Title</h1>
+  <p style={{ fontSize: '3cqw' }}>Body text</p>
+</div>
+```
+
+---
+
 ### Voice Assistant Component Guidelines (MANDATORY)
 
 When modifying the voice assistant (`components/voice-assistant.tsx`), follow these rules:
@@ -944,6 +999,25 @@ useKeyboardShortcut({
 ```
 
 ---
+
+### Phase 35: SVG Device Mockups - COMPLETED (v0.25.7)
+- [x] **Pure SVG iPhone 17 Pro Max** - Replaced PNG-based mockup with mathematically precise SVG
+  - viewBox `0 0 236 480` maintaining 19.5:9 aspect ratio
+  - 6px titanium frame with photorealistic multi-stop gradient
+  - Screen area exactly 224×468 pixels at position (6, 6)
+  - Narrower Dynamic Island (60×18) reflecting metalens technology
+  - Side buttons with proper depth (volume, power, action button)
+  - Ground shadow for floating effect
+- [x] **foreignObject Content Embedding** - React content precisely positioned inside SVG frames
+- [x] **Container Query Sizing** - `containerType: 'inline-size'` with `cqw` units for responsive content
+- [x] **DeviceShowcase Layout Improvements** - Better visual arrangement
+  - MacBook Pro moved lower: `top-0` → `top-[12%]`
+  - iPhone pushed further right with responsive breakpoints
+  - iPhone positioned higher: `top-[8%]` → `top-[5%]`
+- [x] **Device Mockup Guidelines** - Comprehensive documentation in CLAUDE.md
+  - SVG structure patterns with code examples
+  - iPhone 17 Pro Max specifications table
+  - Container query unit usage for responsive content
 
 ### Phase 34: Light/Dark Theme Consistency - COMPLETED (v0.25.2)
 - [x] **Fixed docs page light mode contrast** - Poor contrast on `/docs/*` pages now WCAG AA compliant
@@ -1381,7 +1455,7 @@ The `ContentMeta` component is:
 
 ## Project Status
 
-All planned features have been implemented. The project is feature-complete at v0.25.2.
+All planned features have been implemented. The project is feature-complete at v0.25.7.
 
 ### Content Expansion (All Complete)
 

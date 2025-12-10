@@ -24,7 +24,7 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - **Theme Toggle**: Dark, Light, and System theme modes
 - **Fast & Responsive**: Static generation for instant page loads
 
-## Current Status (v0.25.2)
+## Current Status (v0.25.7)
 
 ### Completed
 - [x] Turborepo monorepo setup
@@ -147,6 +147,10 @@ A comprehensive resource for Claude AI documentation, tips, tricks, configuratio
 - [x] **Voice Assistant Settings Panel** - In-window settings with voice selection, auto-speak toggle, conversation actions
 - [x] **Renamed to "Claude AI Assistant"** - Clear branding with "Powered by Claude AI" in footer
 - [x] **Light/Dark Theme Consistency** - Fixed poor contrast on docs pages, WCAG AA compliant (v0.25.2)
+- [x] **SVG Device Mockups** (v0.25.7) - Pure SVG-based iPhone 17 Pro Max mockup with precise screen embedding
+- [x] **DeviceShowcase Component** - Stripe-style hero section with MacBook Pro and iPhone mockups
+- [x] **foreignObject Content Embedding** - React content precisely positioned inside SVG device frames
+- [x] **Container Query Responsive Sizing** - `cqw` units for perfectly scaled screen content
 
 ### All Features Complete
 
@@ -330,6 +334,7 @@ claude-insider/
 │   │   │   ├── animated-button.tsx # Buttons with press/ripple effects
 │   │   │   ├── animated-card.tsx  # Cards with 3D tilt and glow
 │   │   │   ├── accessible-modal.tsx # WCAG-compliant modals
+│   │   │   ├── device-mockups.tsx  # SVG device mockups (MacBook, iPhone 17 Pro Max)
 │   │   │   └── footer.tsx        # Shared footer with legal links
 │   │   ├── hooks/
 │   │   │   ├── use-optimistic-update.ts  # Optimistic UI hooks
