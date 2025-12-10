@@ -50,6 +50,7 @@ export function VoiceAssistant() {
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
   const [previewingVoice, setPreviewingVoice] = useState<string | null>(null);
   const [isTTSLoading, setIsTTSLoading] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
   const voiceMenuRef = useRef<HTMLDivElement>(null);
@@ -1015,7 +1016,7 @@ export function VoiceAssistant() {
         }`}
         aria-hidden={!isOpen}
       >
-        {/* Header */}
+        {/* Header - Compact design with settings icon */}
         <div className="flex items-center justify-between border-b border-gray-200 bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-3 dark:border-gray-700">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
@@ -1033,175 +1034,24 @@ export function VoiceAssistant() {
                 />
               </svg>
             </div>
-            <div>
-              <h2 className="font-semibold text-white">Claude Insider Assistant</h2>
-              <p className="text-xs text-white/80">Powered by Claude AI</p>
-            </div>
+            <h2 className="font-semibold text-white">Claude AI Assistant</h2>
           </div>
           <div className="flex items-center gap-1">
-            {/* Voice selector */}
-            <div className="relative" ref={voiceMenuRef}>
-              <button
-                onClick={() => setShowVoiceMenu(!showVoiceMenu)}
-                className="flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                title="Select voice"
-              >
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                  />
-                </svg>
-                <span className="hidden sm:inline">{voices.find(v => v.id === selectedVoice)?.name}</span>
-                <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-
-              {/* Voice dropdown menu */}
-              {showVoiceMenu && (
-                <div className="absolute right-0 top-full mt-1 w-56 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800 z-50">
-                  <div className="sticky top-0 bg-white dark:bg-gray-800 px-3 py-2 border-b border-gray-100 dark:border-gray-700">
-                    <div className="text-xs font-semibold text-gray-500 dark:text-gray-400">
-                      Select Voice
-                    </div>
-                    <div className="text-[10px] text-gray-400 dark:text-gray-500">
-                      {voices.length} voices available
-                    </div>
-                  </div>
-                  <div className="max-h-72 overflow-y-auto py-1">
-                    {voices.map((voice) => (
-                      <div
-                        key={voice.id}
-                        className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                          selectedVoice === voice.id
-                            ? "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-cyan-400"
-                            : "text-gray-700 dark:text-gray-300"
-                        }`}
-                      >
-                        <button
-                          onClick={() => {
-                            setSelectedVoice(voice.id);
-                            setShowVoiceMenu(false);
-                            track("assistant_voice_changed", { voice: voice.id, voiceName: voice.name });
-                          }}
-                          className="flex-1 text-left"
-                        >
-                          <div className="font-medium">{voice.name}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">{voice.description}</div>
-                        </button>
-                        <div className="flex items-center gap-1 ml-2">
-                          {/* Preview button */}
-                          <button
-                            onClick={(e) => previewVoice(voice.id, e)}
-                            className={`p-1.5 rounded-full transition-colors ${
-                              previewingVoice === voice.id
-                                ? "bg-blue-500 text-white"
-                                : "hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                            }`}
-                            title={previewingVoice === voice.id ? "Stop preview" : "Preview voice"}
-                          >
-                            {previewingVoice === voice.id ? (
-                              <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                              </svg>
-                            ) : (
-                              <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                            )}
-                          </button>
-                          {/* Checkmark for selected voice */}
-                          {selectedVoice === voice.id && (
-                            <svg className="h-4 w-4 flex-shrink-0 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Auto-speak toggle */}
+            {/* Settings button */}
             <button
-              onClick={() => {
-                const newValue = !autoSpeak;
-                setAutoSpeak(newValue);
-                track("assistant_autospeak_toggled", { enabled: newValue });
-              }}
+              onClick={() => setShowSettings(!showSettings)}
               className={`rounded-lg p-2 transition-colors ${
-                autoSpeak
+                showSettings
                   ? "bg-white/20 text-white"
-                  : "text-white/60 hover:bg-white/10 hover:text-white"
+                  : "text-white/80 hover:bg-white/10 hover:text-white"
               }`}
-              title={autoSpeak ? "Auto-speak: ON" : "Auto-speak: OFF"}
+              title="Settings"
             >
-              <svg
-                className="h-5 w-5"
-                fill={autoSpeak ? "currentColor" : "none"}
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
-                />
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </button>
-            {messages.length > 0 && (
-              <>
-                <button
-                  onClick={handleExportConversation}
-                  className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                  title="Export conversation"
-                >
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                </button>
-                <button
-                  onClick={handleClearHistory}
-                  className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                  title="Clear conversation"
-                >
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
-                  </svg>
-                </button>
-              </>
-            )}
             {/* Fullscreen/Minimize toggle */}
             <button
               onClick={() => setIsFullscreen(!isFullscreen)}
@@ -1218,10 +1068,12 @@ export function VoiceAssistant() {
                 </svg>
               )}
             </button>
+            {/* Close button */}
             <button
               onClick={() => {
                 setIsOpen(false);
                 setIsFullscreen(false);
+                setShowSettings(false);
               }}
               className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
               title="Close (Esc)"
@@ -1242,6 +1094,193 @@ export function VoiceAssistant() {
             </button>
           </div>
         </div>
+
+        {/* Settings Panel - slides in from right */}
+        {showSettings && (
+          <div className="absolute inset-0 z-10 flex flex-col bg-white dark:bg-gray-900">
+            {/* Settings Header */}
+            <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-gray-700">
+              <h3 className="font-semibold text-gray-900 dark:text-white">Settings</h3>
+              <button
+                onClick={() => setShowSettings(false)}
+                className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+                title="Back to chat"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Settings Content */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-6">
+              {/* Voice Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                  Voice
+                </label>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                  Select a voice for text-to-speech responses
+                </p>
+                <div className="relative" ref={voiceMenuRef}>
+                  <button
+                    onClick={() => setShowVoiceMenu(!showVoiceMenu)}
+                    className="w-full flex items-center justify-between rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-left text-sm transition-colors hover:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:hover:border-gray-500"
+                  >
+                    <div>
+                      <div className="font-medium text-gray-900 dark:text-white">
+                        {voices.find(v => v.id === selectedVoice)?.name}
+                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                        {voices.find(v => v.id === selectedVoice)?.description}
+                      </div>
+                    </div>
+                    <svg className={`h-4 w-4 text-gray-400 transition-transform ${showVoiceMenu ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {/* Voice dropdown */}
+                  {showVoiceMenu && (
+                    <div className="absolute left-0 right-0 top-full mt-1 max-h-64 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800 z-50">
+                      {voices.map((voice) => (
+                        <div
+                          key={voice.id}
+                          className={`flex w-full items-center justify-between px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                            selectedVoice === voice.id
+                              ? "bg-blue-50 dark:bg-blue-900/20"
+                              : ""
+                          }`}
+                        >
+                          <button
+                            onClick={() => {
+                              setSelectedVoice(voice.id);
+                              setShowVoiceMenu(false);
+                              track("assistant_voice_changed", { voice: voice.id, voiceName: voice.name });
+                            }}
+                            className="flex-1 text-left"
+                          >
+                            <div className={`font-medium ${selectedVoice === voice.id ? "text-blue-600 dark:text-cyan-400" : "text-gray-900 dark:text-white"}`}>
+                              {voice.name}
+                            </div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">{voice.description}</div>
+                          </button>
+                          <div className="flex items-center gap-2 ml-2">
+                            <button
+                              onClick={(e) => previewVoice(voice.id, e)}
+                              className={`p-1.5 rounded-full transition-colors ${
+                                previewingVoice === voice.id
+                                  ? "bg-blue-500 text-white"
+                                  : "hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                              }`}
+                              title={previewingVoice === voice.id ? "Stop preview" : "Preview voice"}
+                            >
+                              {previewingVoice === voice.id ? (
+                                <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                                </svg>
+                              ) : (
+                                <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M8 5v14l11-7z" />
+                                </svg>
+                              )}
+                            </button>
+                            {selectedVoice === voice.id && (
+                              <svg className="h-4 w-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Auto-speak Toggle */}
+              <div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 dark:text-white">
+                      Auto-speak responses
+                    </label>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                      Automatically read assistant responses aloud
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newValue = !autoSpeak;
+                      setAutoSpeak(newValue);
+                      track("assistant_autospeak_toggled", { enabled: newValue });
+                    }}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                      autoSpeak ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-600"
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        autoSpeak ? "translate-x-6" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
+              </div>
+
+              {/* Divider */}
+              <hr className="border-gray-200 dark:border-gray-700" />
+
+              {/* Conversation Actions */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-white mb-3">
+                  Conversation
+                </label>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => {
+                      handleExportConversation();
+                      setShowSettings(false);
+                    }}
+                    disabled={messages.length === 0}
+                    className="w-full flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-left text-sm transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700"
+                  >
+                    <svg className="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    <div>
+                      <div className="font-medium text-gray-900 dark:text-white">Export conversation</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">Download as Markdown file</div>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleClearHistory();
+                      setShowSettings(false);
+                    }}
+                    disabled={messages.length === 0}
+                    className="w-full flex items-center gap-3 rounded-lg border border-red-200 bg-white px-3 py-2.5 text-left text-sm transition-colors hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed dark:border-red-900/50 dark:bg-gray-800 dark:hover:bg-red-900/20"
+                  >
+                    <svg className="h-5 w-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    <div>
+                      <div className="font-medium text-red-600 dark:text-red-400">Clear conversation</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400">Delete all messages</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Settings Footer */}
+            <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
+              <p className="text-center text-xs text-gray-400 dark:text-gray-500">
+                Powered by Claude AI
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Messages Area */}
         <div className="flex-1 overflow-y-auto p-4">
@@ -1477,13 +1516,15 @@ export function VoiceAssistant() {
             </button>
           </form>
 
-          <p className="mt-2 text-center text-xs text-gray-400 dark:text-gray-500">
-            Press{" "}
-            <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs dark:bg-gray-800">
-              Cmd + .
-            </kbd>{" "}
-            to toggle
-          </p>
+          <div className="mt-2 flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+            <span>Powered by Claude AI</span>
+            <span>
+              <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs dark:bg-gray-800">
+                Cmd + .
+              </kbd>{" "}
+              to toggle
+            </span>
+          </div>
         </div>
       </div>
 
