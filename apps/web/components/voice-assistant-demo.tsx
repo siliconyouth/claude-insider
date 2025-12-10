@@ -22,21 +22,6 @@ export function VoiceAssistantDemo() {
     // Total cycle duration: 46 seconds
     const CYCLE_DURATION = 46000;
 
-    // Timeline (all times in ms) - Extended for better readability:
-    // 0ms: Start - welcome screen visible
-    // 2000ms: First user message appears
-    // 3500ms: Typing indicator starts
-    // 6000ms: First assistant response appears, audio plays
-    // 12000ms: Audio ends
-    // 20000ms: Second user message appears (reading time for first response)
-    // 21500ms: Typing indicator starts
-    // 24500ms: Second assistant response appears, audio plays
-    // 31000ms: Audio ends
-    // 34000ms: Voice pulse starts
-    // 37000ms: Voice pulse ends
-    // 43000ms: 3-second static pause begins
-    // 46000ms: Reset and loop from beginning
-
     const runAnimation = () => {
       const timers: NodeJS.Timeout[] = [];
 
@@ -122,13 +107,18 @@ export function VoiceAssistantDemo() {
 
   return (
     <div className="relative">
-      {/* Glow effect */}
-      <div className="absolute -inset-4 bg-gradient-to-r from-orange-500/20 via-amber-500/20 to-orange-500/20 rounded-2xl blur-2xl opacity-50" />
+      {/* Animated glow effect - Stripe gradient */}
+      <div className="absolute -inset-4 rounded-2xl blur-2xl opacity-60 animate-glowPulse">
+        <div className="absolute inset-0 bg-gradient-to-r from-violet-500/30 via-blue-500/30 to-cyan-500/30 rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-transparent to-cyan-600/20 rounded-2xl animate-glowShift" />
+      </div>
 
       {/* Window frame */}
       <div className="relative rounded-xl border border-gray-700 bg-gray-900 shadow-2xl overflow-hidden">
-        {/* Title bar */}
-        <div className="flex items-center gap-2 px-4 py-3 bg-gray-800 border-b border-gray-700">
+        {/* Title bar with gradient accent */}
+        <div className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-gray-800 via-gray-800 to-gray-800 border-b border-gray-700 relative overflow-hidden">
+          {/* Subtle gradient line at top */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500 opacity-60" />
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-red-500/80" />
             <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -141,12 +131,19 @@ export function VoiceAssistantDemo() {
         </div>
 
         {/* Chat area */}
-        <div className="p-4 min-h-[380px] max-h-[380px] overflow-hidden">
+        <div className="p-4 min-h-[380px] max-h-[380px] overflow-hidden relative">
+          {/* Subtle background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-violet-900/5 pointer-events-none" />
+
           {/* Welcome message - only show when no messages */}
           {visibleMessages === 0 && (
-            <div className="text-center mb-6 animate-fadeIn">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-500/10 mb-3">
-                <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-center mb-6 animate-fadeIn relative z-10">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-violet-500/20 via-blue-500/20 to-cyan-500/20 mb-3 relative">
+                {/* Animated ring */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500 opacity-30 animate-spin-slow" style={{ padding: '2px' }}>
+                  <div className="w-full h-full rounded-full bg-gray-900" />
+                </div>
+                <svg className="w-7 h-7 text-cyan-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
               </div>
@@ -156,11 +153,11 @@ export function VoiceAssistantDemo() {
           )}
 
           {/* Messages */}
-          <div className="space-y-3">
+          <div className="space-y-3 relative z-10">
             {/* First user message */}
             {visibleMessages >= 1 && (
               <div className="flex justify-end animate-fadeIn">
-                <div className="max-w-[80%] rounded-lg px-4 py-2 bg-orange-500/20 text-gray-200 text-sm">
+                <div className="max-w-[80%] rounded-lg px-4 py-2 bg-gradient-to-r from-violet-600/30 via-blue-600/30 to-cyan-600/30 border border-blue-500/20 text-gray-200 text-sm">
                   {DEMO_CONVERSATIONS[0]?.content}
                 </div>
               </div>
@@ -169,18 +166,20 @@ export function VoiceAssistantDemo() {
             {/* First assistant response */}
             {visibleMessages >= 2 && (
               <div className="flex justify-start animate-fadeIn">
-                <div className="max-w-[85%] rounded-lg px-4 py-2 bg-gray-800 text-gray-200 text-sm leading-relaxed">
+                <div className="max-w-[85%] rounded-lg px-4 py-2 bg-gray-800/80 border border-gray-700 text-gray-200 text-sm leading-relaxed">
                   {DEMO_CONVERSATIONS[1]?.content}
                   {isPlayingAudio && visibleMessages === 2 && (
                     <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-gray-700">
                       <div className="flex items-center gap-0.5">
-                        <span className="w-1 h-3 bg-orange-400 rounded-full animate-audioWave1" />
-                        <span className="w-1 h-4 bg-orange-400 rounded-full animate-audioWave2" />
-                        <span className="w-1 h-2 bg-orange-400 rounded-full animate-audioWave3" />
-                        <span className="w-1 h-5 bg-orange-400 rounded-full animate-audioWave1" />
-                        <span className="w-1 h-3 bg-orange-400 rounded-full animate-audioWave2" />
+                        <span className="w-1 h-3 bg-gradient-to-t from-violet-400 to-cyan-400 rounded-full animate-audioWave1" />
+                        <span className="w-1 h-4 bg-gradient-to-t from-blue-400 to-cyan-400 rounded-full animate-audioWave2" />
+                        <span className="w-1 h-2 bg-gradient-to-t from-violet-400 to-blue-400 rounded-full animate-audioWave3" />
+                        <span className="w-1 h-5 bg-gradient-to-t from-cyan-400 to-violet-400 rounded-full animate-audioWave1" />
+                        <span className="w-1 h-3 bg-gradient-to-t from-blue-400 to-violet-400 rounded-full animate-audioWave2" />
+                        <span className="w-1 h-4 bg-gradient-to-t from-violet-400 to-cyan-400 rounded-full animate-audioWave3" />
+                        <span className="w-1 h-2 bg-gradient-to-t from-cyan-400 to-blue-400 rounded-full animate-audioWave1" />
                       </div>
-                      <span className="text-xs text-orange-400">Speaking...</span>
+                      <span className="text-xs bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent font-medium">Speaking...</span>
                     </div>
                   )}
                 </div>
@@ -190,7 +189,7 @@ export function VoiceAssistantDemo() {
             {/* Second user message */}
             {visibleMessages >= 3 && (
               <div className="flex justify-end animate-fadeIn">
-                <div className="max-w-[80%] rounded-lg px-4 py-2 bg-orange-500/20 text-gray-200 text-sm">
+                <div className="max-w-[80%] rounded-lg px-4 py-2 bg-gradient-to-r from-violet-600/30 via-blue-600/30 to-cyan-600/30 border border-blue-500/20 text-gray-200 text-sm">
                   {DEMO_CONVERSATIONS[2]?.content}
                 </div>
               </div>
@@ -199,11 +198,11 @@ export function VoiceAssistantDemo() {
             {/* Typing indicator */}
             {isTyping && (
               <div className="flex justify-start animate-fadeIn">
-                <div className="max-w-[80%] rounded-lg px-4 py-3 bg-gray-800 text-sm">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "300ms" }} />
+                <div className="max-w-[80%] rounded-lg px-4 py-3 bg-gray-800/80 border border-gray-700 text-sm">
+                  <div className="flex gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-violet-400 to-blue-400 animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-400 to-violet-400 animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                 </div>
               </div>
@@ -212,18 +211,20 @@ export function VoiceAssistantDemo() {
             {/* Second assistant response */}
             {visibleMessages >= 4 && (
               <div className="flex justify-start animate-fadeIn">
-                <div className="max-w-[85%] rounded-lg px-4 py-2 bg-gray-800 text-gray-200 text-sm leading-relaxed">
+                <div className="max-w-[85%] rounded-lg px-4 py-2 bg-gray-800/80 border border-gray-700 text-gray-200 text-sm leading-relaxed">
                   {DEMO_CONVERSATIONS[3]?.content}
                   {isPlayingAudio && visibleMessages === 4 && (
                     <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-gray-700">
                       <div className="flex items-center gap-0.5">
-                        <span className="w-1 h-3 bg-orange-400 rounded-full animate-audioWave1" />
-                        <span className="w-1 h-4 bg-orange-400 rounded-full animate-audioWave2" />
-                        <span className="w-1 h-2 bg-orange-400 rounded-full animate-audioWave3" />
-                        <span className="w-1 h-5 bg-orange-400 rounded-full animate-audioWave1" />
-                        <span className="w-1 h-3 bg-orange-400 rounded-full animate-audioWave2" />
+                        <span className="w-1 h-3 bg-gradient-to-t from-violet-400 to-cyan-400 rounded-full animate-audioWave1" />
+                        <span className="w-1 h-4 bg-gradient-to-t from-blue-400 to-cyan-400 rounded-full animate-audioWave2" />
+                        <span className="w-1 h-2 bg-gradient-to-t from-violet-400 to-blue-400 rounded-full animate-audioWave3" />
+                        <span className="w-1 h-5 bg-gradient-to-t from-cyan-400 to-violet-400 rounded-full animate-audioWave1" />
+                        <span className="w-1 h-3 bg-gradient-to-t from-blue-400 to-violet-400 rounded-full animate-audioWave2" />
+                        <span className="w-1 h-4 bg-gradient-to-t from-violet-400 to-cyan-400 rounded-full animate-audioWave3" />
+                        <span className="w-1 h-2 bg-gradient-to-t from-cyan-400 to-blue-400 rounded-full animate-audioWave1" />
                       </div>
-                      <span className="text-xs text-orange-400">Speaking...</span>
+                      <span className="text-xs bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent font-medium">Speaking...</span>
                     </div>
                   )}
                 </div>
@@ -233,18 +234,24 @@ export function VoiceAssistantDemo() {
         </div>
 
         {/* Input area */}
-        <div className="border-t border-gray-700 p-3 bg-gray-800/50">
-          <div className="flex items-center gap-2">
+        <div className="border-t border-gray-700 p-3 bg-gray-800/50 relative">
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-violet-900/5 via-transparent to-cyan-900/5 pointer-events-none" />
+
+          <div className="flex items-center gap-2 relative z-10">
             {/* Voice button */}
             <button
               className={`relative p-2.5 rounded-full transition-all ${
                 showPulse
-                  ? "bg-orange-500 text-white"
+                  ? "bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/30"
                   : "bg-gray-700 text-gray-400 hover:bg-gray-600"
               }`}
             >
               {showPulse && (
-                <span className="absolute inset-0 rounded-full bg-orange-500 animate-ping opacity-75" />
+                <>
+                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500 animate-ping opacity-50" />
+                  <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-violet-500/30 via-blue-500/30 to-cyan-500/30 blur-md animate-pulse" />
+                </>
               )}
               <svg className="w-5 h-5 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
@@ -256,13 +263,13 @@ export function VoiceAssistantDemo() {
               <input
                 type="text"
                 placeholder="Type your message..."
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-sm text-gray-300 placeholder-gray-500 focus:outline-none focus:border-orange-500/50"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-sm text-gray-300 placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
                 readOnly
               />
             </div>
 
             {/* Send button */}
-            <button className="p-2.5 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition-colors">
+            <button className="p-2.5 rounded-full bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500 transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>
@@ -270,7 +277,7 @@ export function VoiceAssistantDemo() {
           </div>
 
           {/* Voice selector */}
-          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-700">
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-700 relative z-10">
             <div className="flex items-center gap-2">
               <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 012.828-2.828" />
@@ -279,7 +286,7 @@ export function VoiceAssistantDemo() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-500">Powered by</span>
-              <span className="text-xs text-orange-400">ElevenLabs</span>
+              <span className="text-xs bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent font-medium">ElevenLabs</span>
             </div>
           </div>
         </div>
@@ -321,6 +328,29 @@ export function VoiceAssistantDemo() {
         .animate-audioWave3 {
           animation: audioWave3 0.5s ease-in-out infinite;
           animation-delay: 0.2s;
+        }
+        @keyframes glowPulse {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 0.7; transform: scale(1.02); }
+        }
+        .animate-glowPulse {
+          animation: glowPulse 4s ease-in-out infinite;
+        }
+        @keyframes glowShift {
+          0%, 100% { transform: translateX(0) translateY(0); }
+          25% { transform: translateX(10px) translateY(-5px); }
+          50% { transform: translateX(0) translateY(5px); }
+          75% { transform: translateX(-10px) translateY(0); }
+        }
+        .animate-glowShift {
+          animation: glowShift 8s ease-in-out infinite;
+        }
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 8s linear infinite;
         }
       `}</style>
     </div>
