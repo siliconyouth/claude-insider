@@ -97,28 +97,36 @@ export function HeroBackground({
       {/* Light rays layer */}
       {showRays && !prefersReducedMotion && (
         <div className="light-rays">
-          {/* Central light ray - very subtle */}
+          {/* Central light ray - more visible */}
           <div
-            className="absolute top-1/4 left-1/2 w-[200%] h-[1px] -translate-x-1/2"
+            className="absolute top-1/4 left-1/2 w-[250%] h-[2px] -translate-x-1/2"
             style={{
-              background: `linear-gradient(90deg, transparent, rgb(var(--ds-glow-blue) / ${0.08 * intensity}), transparent)`,
-              animation: "ray-sweep 45s linear infinite",
+              background: `linear-gradient(90deg, transparent 10%, rgb(var(--ds-glow-blue) / ${0.2 * intensity}) 50%, transparent 90%)`,
+              animation: "ray-sweep 20s ease-in-out infinite",
             }}
           />
           {/* Diagonal ray */}
           <div
-            className="absolute top-1/3 left-1/3 w-[150%] h-[1px] rotate-45"
+            className="absolute top-1/3 left-1/4 w-[200%] h-[2px] rotate-45"
             style={{
-              background: `linear-gradient(90deg, transparent, rgb(var(--ds-glow-violet) / ${0.06 * intensity}), transparent)`,
-              animation: "ray-sweep 50s linear infinite 5s",
+              background: `linear-gradient(90deg, transparent 10%, rgb(var(--ds-glow-violet) / ${0.15 * intensity}) 50%, transparent 90%)`,
+              animation: "ray-sweep 25s ease-in-out infinite 3s",
             }}
           />
           {/* Counter-diagonal ray */}
           <div
-            className="absolute top-1/2 left-1/2 w-[150%] h-[1px] -rotate-30"
+            className="absolute top-1/2 left-1/3 w-[200%] h-[2px] -rotate-[30deg]"
             style={{
-              background: `linear-gradient(90deg, transparent, rgb(var(--ds-glow-cyan) / ${0.05 * intensity}), transparent)`,
-              animation: "ray-sweep 55s linear infinite 10s",
+              background: `linear-gradient(90deg, transparent 10%, rgb(var(--ds-glow-cyan) / ${0.15 * intensity}) 50%, transparent 90%)`,
+              animation: "ray-sweep 22s ease-in-out infinite 6s",
+            }}
+          />
+          {/* Additional crossing ray */}
+          <div
+            className="absolute top-2/3 left-1/2 w-[180%] h-[1px] rotate-[15deg] -translate-x-1/2"
+            style={{
+              background: `linear-gradient(90deg, transparent 15%, rgb(var(--ds-glow-blue) / ${0.1 * intensity}) 50%, transparent 85%)`,
+              animation: "ray-sweep 28s ease-in-out infinite 9s",
             }}
           />
         </div>

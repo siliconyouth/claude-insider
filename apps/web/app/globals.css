@@ -1873,28 +1873,34 @@ code {
   }
 }
 
-/* Flare pulse - brightness variation */
+/* Flare pulse - brightness variation (more dramatic) */
 @keyframes flare-pulse {
   0%, 100% {
-    opacity: 0.5;
-    filter: blur(60px);
+    opacity: 0.4;
+    filter: blur(80px);
   }
   50% {
-    opacity: 0.7;
-    filter: blur(50px);
+    opacity: 0.9;
+    filter: blur(40px);
   }
 }
 
-/* Individual orb animations with different timing */
+/* Individual orb animations with different timing - MORE MOVEMENT */
 @keyframes flare-drift-1 {
   0%, 100% {
     transform: translate(0, 0) scale(1);
   }
-  33% {
-    transform: translate(8%, -5%) scale(1.1);
+  20% {
+    transform: translate(15%, -10%) scale(1.15);
   }
-  66% {
-    transform: translate(-4%, 8%) scale(0.95);
+  40% {
+    transform: translate(5%, 12%) scale(0.9);
+  }
+  60% {
+    transform: translate(-12%, 5%) scale(1.2);
+  }
+  80% {
+    transform: translate(-8%, -15%) scale(0.85);
   }
 }
 
@@ -1902,11 +1908,14 @@ code {
   0%, 100% {
     transform: translate(0, 0) scale(1);
   }
-  40% {
-    transform: translate(-6%, 4%) scale(1.08);
+  25% {
+    transform: translate(-18%, 8%) scale(1.25);
   }
-  80% {
-    transform: translate(5%, -6%) scale(0.92);
+  50% {
+    transform: translate(10%, 15%) scale(0.85);
+  }
+  75% {
+    transform: translate(12%, -12%) scale(1.1);
   }
 }
 
@@ -1914,8 +1923,11 @@ code {
   0%, 100% {
     transform: translate(0, 0) scale(1);
   }
-  50% {
-    transform: translate(4%, 6%) scale(1.05);
+  33% {
+    transform: translate(20%, -8%) scale(1.3);
+  }
+  66% {
+    transform: translate(-15%, 18%) scale(0.8);
   }
 }
 
@@ -1929,21 +1941,23 @@ code {
   }
 }
 
-/* Light ray sweep effect */
+/* Light ray sweep effect - more visible */
 @keyframes ray-sweep {
   0%, 100% {
-    opacity: 0.05;
-    transform: rotate(0deg) scale(1);
+    opacity: 0.1;
+    transform: translateX(-50%) rotate(0deg) scaleX(1);
   }
   25% {
-    opacity: 0.1;
+    opacity: 0.25;
+    transform: translateX(-30%) rotate(5deg) scaleX(1.2);
   }
   50% {
-    opacity: 0.15;
-    transform: rotate(180deg) scale(1.1);
+    opacity: 0.3;
+    transform: translateX(-50%) rotate(0deg) scaleX(1.5);
   }
   75% {
-    opacity: 0.1;
+    opacity: 0.25;
+    transform: translateX(-70%) rotate(-5deg) scaleX(1.2);
   }
 }
 
@@ -1974,21 +1988,21 @@ code {
 }
 
 .lens-flare-orb-violet {
-  background: radial-gradient(circle, rgb(var(--ds-glow-violet) / 0.4) 0%, transparent 70%);
+  background: radial-gradient(circle, rgb(var(--ds-glow-violet) / 0.5) 0%, transparent 70%);
   filter: blur(60px);
-  animation: flare-drift-1 25s ease-in-out infinite, flare-pulse 8s ease-in-out infinite;
+  animation: flare-drift-1 12s ease-in-out infinite, flare-pulse 4s ease-in-out infinite;
 }
 
 .lens-flare-orb-blue {
-  background: radial-gradient(circle, rgb(var(--ds-glow-blue) / 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgb(var(--ds-glow-blue) / 0.45) 0%, transparent 70%);
   filter: blur(50px);
-  animation: flare-drift-2 30s ease-in-out infinite, flare-pulse 10s ease-in-out infinite 2s;
+  animation: flare-drift-2 15s ease-in-out infinite, flare-pulse 5s ease-in-out infinite 1s;
 }
 
 .lens-flare-orb-cyan {
-  background: radial-gradient(circle, rgb(var(--ds-glow-cyan) / 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgb(var(--ds-glow-cyan) / 0.4) 0%, transparent 70%);
   filter: blur(55px);
-  animation: flare-drift-3 20s ease-in-out infinite, flare-pulse 12s ease-in-out infinite 4s;
+  animation: flare-drift-3 10s ease-in-out infinite, flare-pulse 6s ease-in-out infinite 2s;
 }
 
 /* Light rays container */
