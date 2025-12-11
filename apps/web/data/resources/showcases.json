@@ -1,0 +1,182 @@
+[
+  {
+    "id": "claude-insider",
+    "title": "Claude Insider",
+    "description": "This website - comprehensive Claude documentation and resources, built entirely with Claude Code.",
+    "url": "https://www.claudeinsider.com",
+    "category": "showcases",
+    "subcategory": "Documentation",
+    "tags": ["documentation", "nextjs", "typescript", "open-source"],
+    "status": "community",
+    "github": {
+      "owner": "siliconyouth",
+      "repo": "claude-insider",
+      "stars": 50,
+      "forks": 5,
+      "lastUpdated": "2024-12-11",
+      "language": "TypeScript"
+    },
+    "featured": true,
+    "featuredReason": "Built with Claude",
+    "addedDate": "2024-12-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "v0-vercel",
+    "title": "v0 by Vercel",
+    "description": "AI-powered UI generation tool using Claude for component creation.",
+    "url": "https://v0.dev",
+    "category": "showcases",
+    "subcategory": "Production",
+    "tags": ["vercel", "ui-generation", "react", "production"],
+    "status": "community",
+    "featured": true,
+    "featuredReason": "Industry Example",
+    "addedDate": "2024-03-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "perplexity",
+    "title": "Perplexity AI",
+    "description": "AI-powered search engine using Claude for answer generation.",
+    "url": "https://www.perplexity.ai",
+    "category": "showcases",
+    "subcategory": "Production",
+    "tags": ["search", "ai-search", "production", "startup"],
+    "status": "community",
+    "addedDate": "2024-01-15",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "quora-poe",
+    "title": "Poe by Quora",
+    "description": "AI chat platform featuring Claude and other models.",
+    "url": "https://poe.com",
+    "category": "showcases",
+    "subcategory": "Production",
+    "tags": ["chat", "multi-model", "production", "quora"],
+    "status": "community",
+    "addedDate": "2024-02-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "notion-ai",
+    "title": "Notion AI",
+    "description": "AI writing assistant powered by Claude in Notion workspace.",
+    "url": "https://www.notion.so/product/ai",
+    "category": "showcases",
+    "subcategory": "Production",
+    "tags": ["notion", "writing", "productivity", "production"],
+    "status": "community",
+    "addedDate": "2024-02-15",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "duckduckgo-ai",
+    "title": "DuckDuckGo AI Chat",
+    "description": "Private AI chat using Claude without tracking.",
+    "url": "https://duckduckgo.com/aichat",
+    "category": "showcases",
+    "subcategory": "Production",
+    "tags": ["privacy", "search", "chat", "production"],
+    "status": "community",
+    "addedDate": "2024-04-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "replit-agent",
+    "title": "Replit Agent",
+    "description": "AI coding agent in Replit IDE powered by Claude.",
+    "url": "https://replit.com/ai",
+    "category": "showcases",
+    "subcategory": "Production",
+    "tags": ["replit", "ide", "coding", "agent"],
+    "status": "community",
+    "addedDate": "2024-09-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "codeium-windsurf",
+    "title": "Windsurf IDE",
+    "description": "AI-first IDE with Claude integration by Codeium.",
+    "url": "https://codeium.com/windsurf",
+    "category": "showcases",
+    "subcategory": "Production",
+    "tags": ["ide", "codeium", "coding", "production"],
+    "status": "community",
+    "addedDate": "2024-11-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "chatgpt-alternative",
+    "title": "Claude.ai",
+    "description": "Official Claude web interface by Anthropic.",
+    "url": "https://claude.ai",
+    "category": "showcases",
+    "subcategory": "Official",
+    "tags": ["official", "chat", "web", "interface"],
+    "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "obsidian-copilot",
+    "title": "Obsidian Copilot",
+    "description": "Claude-powered AI assistant for Obsidian note-taking.",
+    "url": "https://github.com/logancyang/obsidian-copilot",
+    "category": "showcases",
+    "subcategory": "Plugin",
+    "tags": ["obsidian", "notes", "plugin", "productivity"],
+    "status": "community",
+    "github": {
+      "owner": "logancyang",
+      "repo": "obsidian-copilot",
+      "stars": 4500,
+      "forks": 300,
+      "lastUpdated": "2024-12-09",
+      "language": "TypeScript"
+    },
+    "addedDate": "2024-05-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "aichat",
+    "title": "AIChat",
+    "description": "All-in-one AI CLI tool supporting Claude with RAG.",
+    "url": "https://github.com/sigoden/aichat",
+    "category": "showcases",
+    "subcategory": "Open Source",
+    "tags": ["cli", "terminal", "rag", "rust"],
+    "status": "community",
+    "github": {
+      "owner": "sigoden",
+      "repo": "aichat",
+      "stars": 5200,
+      "forks": 400,
+      "lastUpdated": "2024-12-11",
+      "language": "Rust"
+    },
+    "addedDate": "2024-06-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "khoj",
+    "title": "Khoj",
+    "description": "Self-hosted AI second brain with Claude support.",
+    "url": "https://github.com/khoj-ai/khoj",
+    "category": "showcases",
+    "subcategory": "Open Source",
+    "tags": ["self-hosted", "second-brain", "search", "python"],
+    "status": "community",
+    "github": {
+      "owner": "khoj-ai",
+      "repo": "khoj",
+      "stars": 17000,
+      "forks": 900,
+      "lastUpdated": "2024-12-11",
+      "language": "Python"
+    },
+    "addedDate": "2024-07-01",
+    "lastVerified": "2024-12-11"
+  }
+]

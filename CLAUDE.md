@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.25.11**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.26.0**.
 
 | Link | URL |
 |------|-----|
@@ -71,14 +71,18 @@ claude-insider/
 │   │   ├── globals.css           # Global styles, animations
 │   │   ├── docs/[...slug]/       # Dynamic MDX routes
 │   │   └── api/assistant/        # Chat & TTS endpoints
-│   ├── components/               # 35+ React components
+│   ├── components/               # 40+ React components
 │   │   ├── voice-assistant.tsx   # AI assistant (1500+ LOC)
 │   │   ├── header.tsx, footer.tsx
 │   │   ├── toast.tsx, skeleton.tsx
 │   │   ├── animated-*.tsx        # Micro-interaction components
 │   │   ├── lazy-*.tsx            # Lazy loading components
 │   │   ├── error-*.tsx           # Error handling components
-│   │   └── device-mockups.tsx    # SVG device frames
+│   │   ├── device-mockups.tsx    # SVG device frames
+│   │   ├── resources/            # Resources components
+│   │   │   └── resource-card.tsx # Card with 3 variants
+│   │   └── home/                 # Homepage components
+│   │       └── resources-section.tsx # Resources showcase
 │   ├── hooks/                    # Custom React hooks
 │   │   ├── use-optimistic-update.ts
 │   │   ├── use-intersection-observer.ts
@@ -93,7 +97,11 @@ claude-insider/
 │   │   ├── claude.ts             # Server-only Claude client
 │   │   ├── claude-utils.ts       # Client-safe utilities
 │   │   ├── rag.ts                # RAG with TF-IDF search
-│   │   └── [other utilities]
+│   │   └── resources/            # Resources library
+│   │       ├── types.ts          # ResourceEntry schema
+│   │       ├── data.ts           # Data loaders & utilities
+│   │       ├── search.ts         # Fuse.js search
+│   │       └── index.ts          # Public exports
 │   ├── content/                  # 34 MDX documentation pages
 │   │   ├── getting-started/      # 4 pages
 │   │   ├── configuration/        # 5 pages
@@ -104,7 +112,18 @@ claude-insider/
 │   │   └── examples/             # 2 pages
 │   ├── data/
 │   │   ├── system-prompt.ts      # AI persona & context
-│   │   └── rag-index.json        # Pre-computed index (435 chunks)
+│   │   ├── rag-index.json        # Pre-computed index (435 chunks)
+│   │   └── resources/            # Curated resources (122+ entries)
+│   │       ├── official.json     # Anthropic official resources
+│   │       ├── tools.json        # Development tools
+│   │       ├── mcp-servers.json  # MCP server implementations
+│   │       ├── rules.json        # CLAUDE.md templates
+│   │       ├── prompts.json      # System prompts library
+│   │       ├── agents.json       # AI agent frameworks
+│   │       ├── tutorials.json    # Learning resources
+│   │       ├── sdks.json         # Client libraries
+│   │       ├── showcases.json    # Example projects
+│   │       └── community.json    # Community resources
 │   └── scripts/                  # Build-time scripts
 ├── packages/                     # Shared configs (ui, eslint, ts, tailwind)
 ├── vercel.json                   # Domain redirects
@@ -305,6 +324,114 @@ className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 
 ---
 
+## Resources Section
+
+**Location**: `lib/resources/`, `data/resources/`, `components/resources/`, `app/resources/`
+
+The Resources section provides a curated knowledge base of 122+ tools, templates, and community contributions for Claude AI development.
+
+### Architecture
+
+| Layer | Location | Purpose |
+|-------|----------|---------|
+| **Data** | `data/resources/*.json` | 10 JSON files with resource entries |
+| **Types** | `lib/resources/types.ts` | TypeScript interfaces (ResourceEntry, Category) |
+| **Utilities** | `lib/resources/data.ts` | Loaders, filters, stats, category helpers |
+| **Search** | `lib/resources/search.ts` | Fuse.js with weighted fields |
+| **Components** | `components/resources/` | ResourceCard with 3 variants |
+| **Pages** | `app/resources/` | Index page + [category] dynamic routes |
+
+### Categories (10 total)
+
+| Category | Slug | Description |
+|----------|------|-------------|
+| Official | `official` | Anthropic documentation & SDKs |
+| Tools | `tools` | Development utilities |
+| MCP Servers | `mcp-servers` | Model Context Protocol servers |
+| Rules | `rules` | CLAUDE.md templates & configs |
+| Prompts | `prompts` | System prompt library |
+| Agents | `agents` | AI agent frameworks |
+| Tutorials | `tutorials` | Learning resources & guides |
+| SDKs | `sdks` | Client libraries & integrations |
+| Showcases | `showcases` | Example projects |
+| Community | `community` | Discussions, Discord, resources |
+
+### ResourceEntry Schema
+
+```typescript
+interface ResourceEntry {
+  id: string;                    // Unique identifier
+  title: string;                 // Display name
+  description: string;           // Short description
+  url: string;                   // Primary link
+  category: ResourceCategorySlug;
+  subcategory?: string;
+  tags: string[];
+  featured?: boolean;            // Show in featured section
+  status?: 'stable' | 'beta' | 'experimental' | 'deprecated';
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  addedDate: string;             // ISO date
+  lastUpdated?: string;
+  github?: {                     // Optional GitHub metadata
+    owner: string;
+    repo: string;
+    stars?: number;
+    forks?: number;
+    language?: string;
+    lastCommit?: string;
+  };
+  author?: { name: string; url?: string; };
+  license?: string;
+  image?: string;
+}
+```
+
+### Search Configuration
+
+Fuse.js with weighted fields:
+
+| Field | Weight | Purpose |
+|-------|--------|---------|
+| title | 0.4 | Primary match |
+| description | 0.3 | Context match |
+| tags | 0.15 | Tag filtering |
+| subcategory | 0.1 | Subcategory match |
+| github.owner | 0.03 | Author lookup |
+| github.repo | 0.02 | Repo name match |
+
+### Routes
+
+| Route | Type | Description |
+|-------|------|-------------|
+| `/resources` | Static | Search, filter, browse all resources |
+| `/resources/[category]` | SSG | Category-specific listing (10 paths) |
+
+### Homepage Integration
+
+The `ResourcesSection` component appears after the hero with:
+- **StatsBar**: Total resources, categories, GitHub stars
+- **CategoryGrid**: 10 category cards with icons
+- **FeaturedResources**: Top 6 featured entries
+- **PopularTags**: Tag cloud (top 12)
+- **TopByStars**: Resources sorted by GitHub stars
+
+### Adding New Resources
+
+1. Edit the appropriate JSON file in `data/resources/`
+2. Add entry following `ResourceEntry` schema
+3. Run `pnpm build` to verify
+4. Featured entries show on homepage and category page headers
+
+### Component Variants
+
+| Variant | Usage | Features |
+|---------|-------|----------|
+| `default` | General listing | Full card with tags, badges |
+| `compact` | Dense lists | Smaller, minimal info |
+| `featured` | Homepage/headers | Larger with gradient border |
+
+---
+
 ## Device Mockups
 
 **Location**: `components/device-mockups.tsx`
@@ -384,7 +511,7 @@ See `code-block.tsx` for full `languageConfig`.
 | Tutorials | `/docs/tutorials` | 4 |
 | Examples | `/docs/examples` | 2 |
 
-**Total: 34 documentation pages + 6 utility pages** (privacy, terms, disclaimer, accessibility, changelog, RSS)
+**Total: 34 documentation pages + 7 utility pages** (resources, privacy, terms, disclaimer, accessibility, changelog, RSS)
 
 ---
 

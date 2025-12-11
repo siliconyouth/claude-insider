@@ -146,6 +146,18 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] ElevenLabs TTS with 42 voices
 - [x] Speech-to-text via Web Speech API
 
+### FR-6: Resources Section
+- [x] Curated knowledge base (122+ resources)
+- [x] 10 categories (official, tools, mcp-servers, rules, prompts, agents, tutorials, sdks, showcases, community)
+- [x] Full-text search with Fuse.js (weighted fields)
+- [x] Category and tag filtering
+- [x] Grid/list view modes
+- [x] GitHub integration (stars, forks, language badges)
+- [x] Status badges (stable, beta, experimental, deprecated)
+- [x] Difficulty levels (beginner, intermediate, advanced)
+- [x] Homepage featured section with stats
+- [x] SSG for all category pages
+
 ---
 
 ## Non-Functional Requirements
@@ -204,6 +216,22 @@ All technologies are **free and/or open source** (except hosting services with f
 | Tutorials | `/docs/tutorials` | 4 |
 | Examples | `/docs/examples` | 2 |
 
+### Resources Section (11 pages)
+
+| Page | Route | Description |
+|------|-------|-------------|
+| Resources Index | `/resources` | Search, filter, browse all 122+ resources |
+| Official | `/resources/official` | Anthropic documentation & SDKs |
+| Tools | `/resources/tools` | Development utilities |
+| MCP Servers | `/resources/mcp-servers` | Model Context Protocol servers |
+| Rules | `/resources/rules` | CLAUDE.md templates & configs |
+| Prompts | `/resources/prompts` | System prompt library |
+| Agents | `/resources/agents` | AI agent frameworks |
+| Tutorials | `/resources/tutorials` | Learning resources & guides |
+| SDKs | `/resources/sdks` | Client libraries & integrations |
+| Showcases | `/resources/showcases` | Example projects |
+| Community | `/resources/community` | Discussions, Discord, resources |
+
 ### Utility Pages (6 pages)
 
 | Page | Route |
@@ -221,7 +249,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 - User engagement (time on site, pages per session)
 - Search usage and success rate
-- Content coverage: **34 documentation pages**
+- Content coverage: **34 documentation pages + 122+ curated resources**
 - Page load performance (Core Web Vitals)
 - GitHub stars and community contributions
 
@@ -229,7 +257,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.25.11**
+**Version 0.26.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

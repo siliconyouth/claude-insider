@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.0] - 2025-12-11
+
+### Added
+- **Resources Section** - Comprehensive curated knowledge base for Claude AI development
+  - **122+ curated resources** across 10 categories (official, tools, mcp-servers, rules, prompts, agents, tutorials, sdks, showcases, community)
+  - **Full-text search** with Fuse.js using weighted fields (title, description, tags, subcategory, GitHub metadata)
+  - **Homepage ResourcesSection** with stats bar, category grid, featured resources, popular tags, top by stars
+  - **`/resources` page** with search, category/tag filtering, grid/list view modes
+  - **`/resources/[category]` pages** with SSG for all 10 categories
+  - **ResourceCard component** with 3 variants: default, compact, featured
+  - **GitHub integration** showing stars, forks, language badges for repositories
+  - **Status badges** (stable, beta, experimental, deprecated) and difficulty levels
+  - **Navigation integration** - Resources link added to header
+
+### Architecture
+- **Data layer**: `data/resources/*.json` - 10 JSON files with ResourceEntry schema
+- **Library layer**: `lib/resources/` - types, data utilities, Fuse.js search
+- **Component layer**: `components/resources/` - ResourceCard with skeleton states
+- **Route layer**: `app/resources/` - index page with Suspense, [category] dynamic routes
+
 ## [0.25.11] - 2025-12-11
 
 ### Fixed

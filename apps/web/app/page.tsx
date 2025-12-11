@@ -5,6 +5,7 @@ import { VoiceAssistantDemo } from "@/components/voice-assistant-demo";
 import { OpenAssistantButton } from "@/components/open-assistant-button";
 import { HeroBackground } from "@/components/hero-background";
 import { DeviceShowcase } from "@/components/device-mockups";
+import { ResourcesSection } from "@/components/home/resources-section";
 import { cn } from "@/lib/design-system";
 
 const CATEGORIES = [
@@ -319,6 +320,9 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* Resources Section */}
+        <ResourcesSection />
 
         {/* AI Assistant Section */}
         <div className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gradient-to-b from-gray-50 dark:from-[#111111]/50 to-transparent">

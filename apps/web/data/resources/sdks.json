@@ -1,0 +1,214 @@
+[
+  {
+    "id": "sdk-python-official",
+    "title": "Anthropic Python SDK",
+    "description": "Official Python SDK with async support and streaming.",
+    "url": "https://github.com/anthropics/anthropic-sdk-python",
+    "category": "sdks",
+    "subcategory": "Official",
+    "tags": ["python", "official", "async", "streaming"],
+    "status": "official",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-python",
+      "stars": 5800,
+      "forks": 650,
+      "lastUpdated": "2024-12-10",
+      "language": "Python"
+    },
+    "version": "0.40.0",
+    "featured": true,
+    "featuredReason": "Official SDK",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "sdk-typescript-official",
+    "title": "Anthropic TypeScript SDK",
+    "description": "Official TypeScript/JavaScript SDK for Node.js and browsers.",
+    "url": "https://github.com/anthropics/anthropic-sdk-typescript",
+    "category": "sdks",
+    "subcategory": "Official",
+    "tags": ["typescript", "javascript", "official", "nodejs"],
+    "status": "official",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-typescript",
+      "stars": 3200,
+      "forks": 380,
+      "lastUpdated": "2024-12-10",
+      "language": "TypeScript"
+    },
+    "version": "0.32.0",
+    "featured": true,
+    "featuredReason": "Official SDK",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "sdk-go",
+    "title": "Claude Go SDK",
+    "description": "Community Go client for the Anthropic API.",
+    "url": "https://github.com/liushuangls/go-anthropic",
+    "category": "sdks",
+    "subcategory": "Community",
+    "tags": ["go", "golang", "community", "api"],
+    "status": "community",
+    "github": {
+      "owner": "liushuangls",
+      "repo": "go-anthropic",
+      "stars": 450,
+      "forks": 65,
+      "lastUpdated": "2024-12-08",
+      "language": "Go"
+    },
+    "addedDate": "2024-03-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "sdk-rust",
+    "title": "Claude Rust SDK",
+    "description": "Community Rust client for the Anthropic API.",
+    "url": "https://github.com/abdelhamidbakhta/anthropic-rs",
+    "category": "sdks",
+    "subcategory": "Community",
+    "tags": ["rust", "community", "api", "async"],
+    "status": "community",
+    "github": {
+      "owner": "abdelhamidbakhta",
+      "repo": "anthropic-rs",
+      "stars": 280,
+      "forks": 35,
+      "lastUpdated": "2024-11-20",
+      "language": "Rust"
+    },
+    "addedDate": "2024-04-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "sdk-ruby",
+    "title": "Claude Ruby SDK",
+    "description": "Community Ruby client for the Anthropic API.",
+    "url": "https://github.com/alexrudall/anthropic",
+    "category": "sdks",
+    "subcategory": "Community",
+    "tags": ["ruby", "community", "api", "rails"],
+    "status": "community",
+    "github": {
+      "owner": "alexrudall",
+      "repo": "anthropic",
+      "stars": 350,
+      "forks": 40,
+      "lastUpdated": "2024-12-05",
+      "language": "Ruby"
+    },
+    "addedDate": "2024-05-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "sdk-java",
+    "title": "Claude Java SDK",
+    "description": "Community Java client for the Anthropic API.",
+    "url": "https://github.com/aallam/anthropic-kotlin",
+    "category": "sdks",
+    "subcategory": "Community",
+    "tags": ["java", "kotlin", "community", "jvm"],
+    "status": "community",
+    "github": {
+      "owner": "aallam",
+      "repo": "anthropic-kotlin",
+      "stars": 220,
+      "forks": 25,
+      "lastUpdated": "2024-11-15",
+      "language": "Kotlin"
+    },
+    "addedDate": "2024-06-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "sdk-php",
+    "title": "Claude PHP SDK",
+    "description": "Community PHP client for the Anthropic API.",
+    "url": "https://github.com/mozex/anthropic-php",
+    "category": "sdks",
+    "subcategory": "Community",
+    "tags": ["php", "community", "api", "laravel"],
+    "status": "community",
+    "github": {
+      "owner": "mozex",
+      "repo": "anthropic-php",
+      "stars": 180,
+      "forks": 20,
+      "lastUpdated": "2024-11-28",
+      "language": "PHP"
+    },
+    "addedDate": "2024-07-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "sdk-dotnet",
+    "title": "Claude .NET SDK",
+    "description": "Community .NET client for the Anthropic API.",
+    "url": "https://github.com/tghamm/Anthropic.SDK",
+    "category": "sdks",
+    "subcategory": "Community",
+    "tags": ["dotnet", "csharp", "community", "api"],
+    "status": "community",
+    "github": {
+      "owner": "tghamm",
+      "repo": "Anthropic.SDK",
+      "stars": 320,
+      "forks": 45,
+      "lastUpdated": "2024-12-01",
+      "language": "C#"
+    },
+    "addedDate": "2024-08-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "langchain-anthropic",
+    "title": "LangChain Anthropic Integration",
+    "description": "Official LangChain integration for Claude models.",
+    "url": "https://python.langchain.com/docs/integrations/providers/anthropic/",
+    "category": "sdks",
+    "subcategory": "Integration",
+    "tags": ["langchain", "integration", "python", "agents"],
+    "status": "community",
+    "addedDate": "2024-02-01",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "llamaindex-anthropic",
+    "title": "LlamaIndex Anthropic Integration",
+    "description": "LlamaIndex integration for Claude models.",
+    "url": "https://docs.llamaindex.ai/en/stable/examples/llm/anthropic/",
+    "category": "sdks",
+    "subcategory": "Integration",
+    "tags": ["llamaindex", "integration", "python", "rag"],
+    "status": "community",
+    "addedDate": "2024-03-15",
+    "lastVerified": "2024-12-11"
+  },
+  {
+    "id": "vercel-ai-sdk",
+    "title": "Vercel AI SDK",
+    "description": "TypeScript toolkit for building AI apps with Claude support.",
+    "url": "https://github.com/vercel/ai",
+    "category": "sdks",
+    "subcategory": "Integration",
+    "tags": ["vercel", "typescript", "react", "nextjs"],
+    "status": "community",
+    "github": {
+      "owner": "vercel",
+      "repo": "ai",
+      "stars": 12000,
+      "forks": 1800,
+      "lastUpdated": "2024-12-11",
+      "language": "TypeScript"
+    },
+    "featured": true,
+    "featuredReason": "Popular",
+    "addedDate": "2024-04-15",
+    "lastVerified": "2024-12-11"
+  }
+]
