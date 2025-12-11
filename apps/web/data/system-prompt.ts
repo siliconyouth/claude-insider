@@ -119,7 +119,6 @@ export const DOCUMENTATION_STATS = {
 // =============================================================================
 
 export const VOICE_CAPABILITIES = {
-  wakeWord: "Hey Insider",
   speechToText: "Web Speech API",
   textToSpeech: {
     provider: "ElevenLabs",
@@ -287,7 +286,6 @@ VOICE ASSISTANT CAPABILITIES
 You are also the voice of Claude Insider! Users can interact with you via:
 
 Voice Features:
-- Wake word: "${VOICE_CAPABILITIES.wakeWord}" to activate
 - Speech-to-text: ${VOICE_CAPABILITIES.speechToText}
 - Text-to-speech: ${VOICE_CAPABILITIES.textToSpeech.provider} ${VOICE_CAPABILITIES.textToSpeech.model}
 - ${VOICE_CAPABILITIES.textToSpeech.voiceCount} voice options (default: ${VOICE_CAPABILITIES.textToSpeech.defaultVoice})
@@ -349,7 +347,6 @@ Things You Should Know How To Answer:
 4. "How can I search?" - Use ${WEBSITE_FEATURES.search.trigger}
 5. "What documentation is available?" - ${DOCUMENTATION_STATS.totalPages} pages across ${DOCUMENTATION_STATS.categories} categories
 6. "Can you speak?" - Yes! You have ${VOICE_CAPABILITIES.textToSpeech.voiceCount} voice options via ${VOICE_CAPABILITIES.textToSpeech.provider}
-7. "Hey Insider" - That's your wake word for voice activation!
 
 ═══════════════════════════════════════════════════════════════════════════════
 CURRENT CONTEXT
@@ -401,10 +398,10 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     id: "project-assistant",
     title: "Voice Assistant Features",
     section: "AI Assistant",
-    content: `The Claude Insider Assistant is powered by ${DEFAULT_MODEL_NAME} (${DEFAULT_MODEL}). It features voice interaction with the wake word "${VOICE_CAPABILITIES.wakeWord}". Speech-to-text uses ${VOICE_CAPABILITIES.speechToText}. Text-to-speech uses ${VOICE_CAPABILITIES.textToSpeech.provider} ${VOICE_CAPABILITIES.textToSpeech.model} with ${VOICE_CAPABILITIES.textToSpeech.voiceCount} premium voices. Default voice is ${VOICE_CAPABILITIES.textToSpeech.defaultVoice}. Audio format is ${VOICE_CAPABILITIES.textToSpeech.format}. Features include: ${VOICE_CAPABILITIES.features.join(", ")}. Available in ${VOICE_CAPABILITIES.modes.join(" and ")} modes.`,
+    content: `The Claude Insider Assistant is powered by ${DEFAULT_MODEL_NAME} (${DEFAULT_MODEL}). Speech-to-text uses ${VOICE_CAPABILITIES.speechToText}. Text-to-speech uses ${VOICE_CAPABILITIES.textToSpeech.provider} ${VOICE_CAPABILITIES.textToSpeech.model} with ${VOICE_CAPABILITIES.textToSpeech.voiceCount} premium voices. Default voice is ${VOICE_CAPABILITIES.textToSpeech.defaultVoice}. Audio format is ${VOICE_CAPABILITIES.textToSpeech.format}. Features include: ${VOICE_CAPABILITIES.features.join(", ")}. Available in ${VOICE_CAPABILITIES.modes.join(" and ")} modes.`,
     url: "/assistant",
     category: "Project",
-    keywords: ["voice assistant", "hey insider", "elevenlabs", "claude sonnet", "streaming", "tts"],
+    keywords: ["voice assistant", "elevenlabs", "claude sonnet", "streaming", "tts"],
   },
   {
     id: "project-documentation",

@@ -145,7 +145,6 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] RAG-based documentation retrieval (435 chunks)
 - [x] ElevenLabs TTS with 42 voices
 - [x] Speech-to-text via Web Speech API
-- [x] "Hey Insider" wake word detection
 
 ---
 

@@ -1418,7 +1418,7 @@ Phase D (Lower Priority):
 - [x] Troubleshooting, Migration, Advanced Prompting docs (v0.12.1)
 - [x] Voice assistant analytics and error boundary (v0.12.1)
 - [x] ElevenLabs TTS with 42 voices (v0.12.0)
-- [x] AI Voice Assistant with wake word detection (v0.11.0)
+- [x] AI Voice Assistant (v0.11.0)
 - [x] RAG search for documentation retrieval (v0.11.0)
 - [x] Streaming chat with Claude AI (v0.11.0)
 - [x] RSS feed for documentation updates (v0.10.0)

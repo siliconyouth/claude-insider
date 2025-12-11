@@ -286,7 +286,6 @@ className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 ### Architecture
 
 - **Main Component**: `voice-assistant.tsx` (popup + fullscreen modes)
-- **Wake Word**: "Hey Insider" via Web Speech API
 - **Chat**: SSE streaming from Claude AI with RAG context
 - **TTS**: ElevenLabs with 42 voices, streaming sentence-by-sentence
 - **Settings**: In-window panel (not modal) with voice selector, auto-speak toggle

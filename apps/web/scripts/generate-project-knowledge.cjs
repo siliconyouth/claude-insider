@@ -103,7 +103,7 @@ Built entirely with Claude Code powered by Claude Opus 4.5, this project serves 
 
 Key Features:
 - 34 comprehensive documentation pages across 7 categories
-- AI Voice Assistant with "Hey Insider" wake word
+- AI Voice Assistant with speech-to-text
 - ElevenLabs Text-to-Speech with 42 premium voices
 - Streaming chat with Claude Sonnet 4
 - RAG (Retrieval-Augmented Generation) for intelligent search
@@ -182,7 +182,7 @@ Search & RAG:
 AI & Voice:
 - @anthropic-ai/sdk (Claude Sonnet 4 streaming chat)
 - @elevenlabs/elevenlabs-js (42 premium TTS voices, turbo v2.5 model)
-- Web Speech API (speech recognition, "Hey Insider" wake word)
+- Web Speech API (speech recognition)
 
 Hosting & Analytics:
 - Vercel (edge deployment, CDN, automatic deployments)
@@ -281,7 +281,6 @@ Runtime Model:
 - Streaming responses via Server-Sent Events (SSE)
 
 Voice Activation:
-- Wake word: "Hey Insider" (Web Speech API)
 - Click microphone button to start voice input
 - Real-time speech-to-text transcription
 
@@ -312,7 +311,7 @@ Additional Features:
 - Analytics tracking for interactions`,
     url: "/assistant",
     category: "Project",
-    keywords: ["voice assistant", "hey insider", "elevenlabs", "tts", "speech", "claude sonnet", "streaming", "wake word"]
+    keywords: ["voice assistant", "elevenlabs", "tts", "speech", "claude sonnet", "streaming"]
   });
 
   // ==========================================================================
