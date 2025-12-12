@@ -11,12 +11,14 @@ interface ChatRequest {
   pageContent?: string;
   visibleSection?: string;
   customAssistantName?: string;
+  userName?: string;
+  shouldAskForName?: boolean;
 }
 
 export async function POST(request: Request) {
   try {
     const body: ChatRequest = await request.json();
-    const { messages, currentPage, pageContent, visibleSection, customAssistantName } = body;
+    const { messages, currentPage, pageContent, visibleSection, customAssistantName, userName, shouldAskForName } = body;
 
     if (!messages || messages.length === 0) {
       return new Response(
@@ -40,6 +42,8 @@ export async function POST(request: Request) {
       visibleSection,
       ragContext,
       customAssistantName,
+      userName,
+      shouldAskForName,
     });
 
     // Convert messages to Anthropic format

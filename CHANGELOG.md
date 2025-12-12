@@ -9,6 +9,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.2] - 2025-12-12
+
+### Added
+- **User Name Personalization** - AI assistant now asks for and remembers user's name
+  - Users can set their name in Settings → Your Name
+  - Name stored in localStorage (never shared externally)
+  - Privacy note displayed to reassure users data stays on device
+  - AI uses name naturally in responses (1-2 times per response, not forced)
+  - Greets users by name: "Great question, [name]!" or "Hope that helps, [name]!"
+
+- **Smart Name Request** - Assistant asks for name at conversation start
+  - Only asks once per browser session (uses sessionStorage to track)
+  - If user declines, assistant respects the decision and doesn't ask again
+  - Occasionally reminds users they can share their name in Settings
+  - Warm, non-pushy approach to personalization
+
+### Changed
+- **Storage Module** - Added user name management functions
+  - `getUserName()` / `setUserName()` / `clearUserName()` - localStorage management
+  - `hasAskedForNameThisSession()` / `setAskedForNameThisSession()` - session tracking
+  - `clearAskedForNameThisSession()` - reset for testing
+
+- **System Prompt** - Enhanced with personalization logic
+  - Conditional sections based on whether name is known
+  - Natural name usage guidelines to avoid over-personalization
+  - Graceful handling of declined name sharing
+
+- **Chat API** - Added `userName` and `shouldAskForName` parameters
+  - Client tracks when to trigger name request
+  - Server injects appropriate personalization context
+
 ## [0.28.1] - 2025-12-12
 
 ### Added

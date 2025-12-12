@@ -12,6 +12,8 @@ import type { Message } from "./claude-utils";
 // Storage keys
 const STORAGE_KEYS = {
   ASSISTANT_NAME: "claude-insider-assistant-name",
+  USER_NAME: "claude-insider-user-name",
+  NAME_ASKED_SESSION: "claude-insider-name-asked",
   CONVERSATIONS: "claude-insider-conversations",
   ACTIVE_CONVERSATION: "claude-insider-active-conversation",
   // Legacy key for migration
@@ -78,6 +80,96 @@ export function clearAssistantName(): void {
 
   try {
     localStorage.removeItem(STORAGE_KEYS.ASSISTANT_NAME);
+  } catch {
+    // Silently fail
+  }
+}
+
+// =============================================================================
+// USER NAME MANAGEMENT
+// =============================================================================
+
+/**
+ * Get the user's name from localStorage
+ * Returns empty string if not set (user hasn't provided name)
+ */
+export function getUserName(): string {
+  if (typeof window === "undefined") return "";
+
+  try {
+    const name = localStorage.getItem(STORAGE_KEYS.USER_NAME);
+    return name && name.trim() ? name.trim() : "";
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Set the user's name
+ */
+export function setUserName(name: string): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    const trimmed = name.trim();
+    if (trimmed) {
+      localStorage.setItem(STORAGE_KEYS.USER_NAME, trimmed);
+    } else {
+      localStorage.removeItem(STORAGE_KEYS.USER_NAME);
+    }
+  } catch {
+    // Silently fail if localStorage is full
+  }
+}
+
+/**
+ * Clear user's name
+ */
+export function clearUserName(): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.removeItem(STORAGE_KEYS.USER_NAME);
+  } catch {
+    // Silently fail
+  }
+}
+
+/**
+ * Check if we've asked for the user's name in this session
+ * Uses sessionStorage so it resets when browser is closed
+ */
+export function hasAskedForNameThisSession(): boolean {
+  if (typeof window === "undefined") return false;
+
+  try {
+    return sessionStorage.getItem(STORAGE_KEYS.NAME_ASKED_SESSION) === "true";
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Mark that we've asked for the user's name this session
+ */
+export function setAskedForNameThisSession(): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    sessionStorage.setItem(STORAGE_KEYS.NAME_ASKED_SESSION, "true");
+  } catch {
+    // Silently fail
+  }
+}
+
+/**
+ * Clear the session flag (for testing or new conversations)
+ */
+export function clearAskedForNameThisSession(): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    sessionStorage.removeItem(STORAGE_KEYS.NAME_ASKED_SESSION);
   } catch {
     // Silently fail
   }

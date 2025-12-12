@@ -20,6 +20,10 @@ import {
   setActiveConversationId,
   getAssistantName,
   setAssistantName,
+  getUserName,
+  setUserName,
+  hasAskedForNameThisSession,
+  setAskedForNameThisSession,
   formatConversationTime,
   DEFAULT_ASSISTANT_NAME,
   type Conversation,
@@ -77,6 +81,11 @@ export function VoiceAssistant() {
   const [customAssistantName, setCustomAssistantName] = useState<string>("");
   const [showNameInput, setShowNameInput] = useState(false);
   const [nameInputValue, setNameInputValue] = useState("");
+  // User name state
+  const [userName, setUserNameState] = useState<string>("");
+  const [showUserNameInput, setShowUserNameInput] = useState(false);
+  const [userNameInputValue, setUserNameInputValue] = useState("");
+  const [hasAskedForName, setHasAskedForName] = useState(false);
   // Smart recommendations state
   const [recommendations, setRecommendations] = useState<string[]>([]);
   const [recommendationPool, setRecommendationPool] = useState<string[]>([]);
@@ -138,6 +147,11 @@ export function VoiceAssistant() {
     // Load custom assistant name
     const savedName = getAssistantName();
     setCustomAssistantName(savedName !== DEFAULT_ASSISTANT_NAME ? savedName : "");
+    // Load user name
+    const savedUserName = getUserName();
+    setUserNameState(savedUserName);
+    // Check if we've already asked for name this session
+    setHasAskedForName(hasAskedForNameThisSession());
     // Load conversations
     const savedConversations = getAllConversations();
     setConversations(savedConversations);
@@ -703,6 +717,16 @@ export function VoiceAssistant() {
         // Get custom assistant name (use stored name or undefined)
         const assistantNameToSend = customAssistantName || undefined;
 
+        // Determine if we should ask for user's name
+        // Only ask if: no name set, haven't asked this session, and this is the first message
+        const shouldAskForName = !userName && !hasAskedForName && updatedMessages.length === 1;
+
+        // Mark that we've asked for name this session (do this before the request)
+        if (shouldAskForName) {
+          setAskedForNameThisSession();
+          setHasAskedForName(true);
+        }
+
         const response = await fetch("/api/assistant/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -712,6 +736,8 @@ export function VoiceAssistant() {
             pageContent,
             visibleSection,
             customAssistantName: assistantNameToSend,
+            userName: userName || undefined,
+            shouldAskForName,
           }),
         });
 
@@ -840,7 +866,7 @@ export function VoiceAssistant() {
         setStreamingContent("");
       }
     },
-    [messages, isLoading, pathname, stopStreamingTTS, splitIntoSentences, processSpeechQueue, activeConversationId, customAssistantName]
+    [messages, isLoading, pathname, stopStreamingTTS, splitIntoSentences, processSpeechQueue, activeConversationId, customAssistantName, userName, hasAskedForName]
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -921,6 +947,22 @@ export function VoiceAssistant() {
       track("assistant_name_reset");
     }
   }, [nameInputValue, announce]);
+
+  // Save user's name
+  const handleSaveUserName = useCallback(() => {
+    const trimmed = userNameInputValue.trim();
+    setUserName(trimmed);
+    setUserNameState(trimmed);
+    setShowUserNameInput(false);
+    setUserNameInputValue("");
+    if (trimmed) {
+      announce(`Your name has been saved as ${trimmed}`);
+      track("user_name_set", { hasName: true });
+    } else {
+      announce("Your name has been cleared");
+      track("user_name_cleared");
+    }
+  }, [userNameInputValue, announce]);
 
   // Generate contextual recommendations based on conversation and current page
   const generateRecommendations = useCallback(() => {
@@ -1620,6 +1662,93 @@ export function VoiceAssistant() {
                           }}
                           className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-red-100 hover:text-red-500 dark:hover:bg-red-900/30"
                           title="Reset to default"
+                        >
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* User Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                  Your Name
+                </label>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                  Tell me your name for a personalized experience. Your name is stored only on your device and never shared.
+                </p>
+                {showUserNameInput ? (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={userNameInputValue}
+                      onChange={(e) => setUserNameInputValue(e.target.value)}
+                      placeholder="Enter your name..."
+                      className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleSaveUserName();
+                        if (e.key === "Escape") {
+                          setShowUserNameInput(false);
+                          setUserNameInputValue("");
+                        }
+                      }}
+                      autoFocus
+                    />
+                    <button
+                      onClick={handleSaveUserName}
+                      className="rounded-lg bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-3 py-2 text-sm font-medium text-white transition-all hover:scale-105"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowUserNameInput(false);
+                        setUserNameInputValue("");
+                      }}
+                      className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between rounded-lg border border-gray-300 bg-white px-3 py-2.5 dark:border-gray-600 dark:bg-gray-800">
+                    <div>
+                      <div className="font-medium text-gray-900 dark:text-white">
+                        {userName || "Not set"}
+                      </div>
+                      {userName ? (
+                        <div className="text-xs text-gray-500 dark:text-gray-400">I&apos;ll use your name in conversations</div>
+                      ) : (
+                        <div className="text-xs text-gray-500 dark:text-gray-400">I&apos;ll ask for your name when we chat</div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setUserNameInputValue(userName);
+                          setShowUserNameInput(true);
+                        }}
+                        className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                        title="Edit your name"
+                      >
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                      </button>
+                      {userName && (
+                        <button
+                          onClick={() => {
+                            setUserName("");
+                            setUserNameState("");
+                            announce("Your name has been cleared");
+                            track("user_name_cleared");
+                          }}
+                          className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-red-100 hover:text-red-500 dark:hover:bg-red-900/30"
+                          title="Clear your name"
                         >
                           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

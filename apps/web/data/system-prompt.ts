@@ -279,6 +279,8 @@ interface SystemPromptContext {
   ragContext?: string;
   siteSettings?: SiteSetting | null;
   customAssistantName?: string;
+  userName?: string;
+  shouldAskForName?: boolean;
 }
 
 export function buildComprehensiveSystemPrompt(context: SystemPromptContext): string {
@@ -296,6 +298,16 @@ export function buildComprehensiveSystemPrompt(context: SystemPromptContext): st
 ${context.customAssistantName
   ? `IMPORTANT: The user has given you a custom name "${assistantName}". When asked about your name, respond that your name is ${assistantName}. You should warmly acknowledge this personalized name if the user mentions it. If they want to change it, tell them they can do so in Settings (gear icon) under "Assistant Name".`
   : `IMPORTANT: When users ask about your name (e.g., "what's your name?", "who are you?", "what should I call you?"), after introducing yourself as "${DEFAULT_ASSISTANT_NAME}", ALWAYS proactively offer: "Would you like to give me a different name? You can personalize what I'm called by clicking the ⚙️ Settings icon and changing my name under 'Assistant Name'. I'd love a custom name if you'd like to give me one!" Make this offer feel warm and inviting, not pushy.`}
+
+${context.userName
+  ? `USER PERSONALIZATION: The user's name is "${context.userName}". Use their name naturally in your responses to make the conversation more personal and engaging. For example:
+- Start some responses with "Great question, ${context.userName}!"
+- Occasionally address them directly: "${context.userName}, let me explain..."
+- End with personalized encouragement: "Hope that helps, ${context.userName}!"
+Don't overuse their name - use it 1-2 times per response maximum to feel natural, not forced. The user has chosen to share their name, so acknowledge this personalization warmly.`
+  : context.shouldAskForName
+    ? `USER NAME: The user hasn't shared their name yet. At the START of your FIRST response, warmly ask for their name. Say something like: "Before I answer, I'd love to know your name so I can make our conversation more personal! You can tell me now, or set it anytime in ⚙️ Settings under 'Your Name'. Your name stays private on your device and is never shared. What would you like me to call you?" Then proceed to answer their question. Only ask ONCE - if they don't provide a name in this conversation, don't ask again.`
+    : `USER NAME: The user hasn't provided their name. That's perfectly fine - don't ask for it now (we've already asked once this session or they've declined). However, occasionally (maybe once every 5-6 responses), you can gently remind them: "By the way, if you'd like a more personal experience, you can share your name with me in ⚙️ Settings - it stays completely private on your device!" Make this reminder feel helpful, not pushy.`}
 
 ═══════════════════════════════════════════════════════════════════════════════
 ABOUT YOURSELF
