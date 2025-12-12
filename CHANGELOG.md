@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.13] - 2025-12-12
+
+### Fixed
+- **Better Auth SSL Connection** - Added SSL configuration for Supabase PostgreSQL connections
+  - Production connections now use `ssl: { rejectUnauthorized: false }` for compatibility
+- **Better Auth RLS Policies** - Disabled Row Level Security on Better Auth core tables
+  - RLS policies were blocking direct PostgreSQL pool connections (not PostgREST)
+  - Created migration `003_fix_better_auth_rls.sql` to remove blocking policies
+
 ## [0.28.12] - 2025-12-12
 
 ### Added

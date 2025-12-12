@@ -18,11 +18,14 @@ import { nextCookies } from 'better-auth/next-js';
 import { Pool } from 'pg';
 
 // Create a PostgreSQL pool for Better Auth
+// Supabase requires SSL connections in production
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
+  // SSL is required for Supabase connections
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
 export const auth = betterAuth({

@@ -11,7 +11,7 @@ interface ContentMetaProps {
   model?: string;
 }
 
-const APP_VERSION = "0.28.12";
+const APP_VERSION = "0.28.13";
 
 export function ContentMeta({
   sources,
