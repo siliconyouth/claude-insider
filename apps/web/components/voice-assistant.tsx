@@ -61,6 +61,8 @@ export function VoiceAssistant() {
   const [showSettings, setShowSettings] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
+  // Cache for generated TTS audio to avoid regenerating on replay
+  const audioCacheRef = useRef<Map<string, string>>(new Map());
   const voiceMenuRef = useRef<HTMLDivElement>(null);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
   const { announce } = useAnnouncer();
@@ -964,11 +966,33 @@ export function VoiceAssistant() {
   }, []);
 
   // Text-to-speech function with ElevenLabs + browser fallback
+  // Includes caching to avoid regenerating audio on replay
   const speakMessage = useCallback(async (text: string, messageIndex: number) => {
-    // Check if we're currently speaking THIS message using the ref (more reliable than state)
-    const isCurrentlySpeakingThisMessage = isSpeakingQueueRef.current && speakingMessageIndex === messageIndex;
+    // Check if we're currently speaking THIS message - check BEFORE stopping anything
+    // Use audioRef to detect if audio is actively playing (not just queued)
+    const isAudioPlaying = audioRef.current !== null && !audioRef.current.paused;
+    const isCurrentlySpeakingThisMessage =
+      speakingMessageIndex === messageIndex &&
+      (isAudioPlaying || isSpeakingQueueRef.current);
 
-    // Stop any currently playing audio or speech FIRST
+    // If clicking the same message that's currently playing, just stop (toggle off)
+    if (isCurrentlySpeakingThisMessage) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      speechQueueRef.current = [];
+      isSpeakingQueueRef.current = false;
+      setIsSpeaking(false);
+      setSpeakingMessageIndex(null);
+      setIsTTSLoading(false);
+      return;
+    }
+
+    // Stop any OTHER audio that might be playing (different message)
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
@@ -976,23 +1000,62 @@ export function VoiceAssistant() {
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
-    // Clear the queue and speaking state
     speechQueueRef.current = [];
     isSpeakingQueueRef.current = false;
-
-    // If clicking the same message that was speaking, just stop (toggle off)
-    if (isCurrentlySpeakingThisMessage) {
-      setIsSpeaking(false);
-      setSpeakingMessageIndex(null);
-      setIsTTSLoading(false);
-      return;
-    }
 
     // Track TTS playback
     track("assistant_tts_played", { voice: selectedVoice, textLength: text.length });
 
     setIsSpeaking(true);
     setSpeakingMessageIndex(messageIndex);
+
+    // Create cache key using text content and voice
+    const cacheKey = `${selectedVoice}:${text}`;
+    const cachedAudioUrl = audioCacheRef.current.get(cacheKey);
+
+    // Helper function to play audio from URL
+    const playAudioFromUrl = (audioUrl: string, isCached: boolean) => {
+      const audio = new Audio(audioUrl);
+      audioRef.current = audio;
+
+      audio.oncanplaythrough = () => {
+        setIsTTSLoading(false);
+      };
+
+      audio.onended = () => {
+        setIsSpeaking(false);
+        setSpeakingMessageIndex(null);
+        setIsTTSLoading(false);
+        // Note: Don't revoke cached URLs - they'll be reused for replay
+      };
+
+      audio.onerror = () => {
+        // Fallback to browser TTS on audio error
+        console.warn("Audio playback failed, falling back to browser TTS");
+        if (!isCached) {
+          URL.revokeObjectURL(audioUrl);
+          audioCacheRef.current.delete(cacheKey);
+        }
+        setIsTTSLoading(false);
+        speakWithBrowserTTS(text, messageIndex);
+      };
+
+      audio.play().catch((err) => {
+        console.error("Audio play error:", err);
+        setIsTTSLoading(false);
+        speakWithBrowserTTS(text, messageIndex);
+      });
+    };
+
+    // Use cached audio if available
+    if (cachedAudioUrl) {
+      console.log("[TTS] Using cached audio");
+      setIsTTSLoading(false);
+      playAudioFromUrl(cachedAudioUrl, true);
+      return;
+    }
+
+    // No cache - fetch from API
     setIsTTSLoading(true);
 
     try {
@@ -1014,29 +1077,11 @@ export function VoiceAssistant() {
       const audioBlob = await response.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
 
-      const audio = new Audio(audioUrl);
-      audioRef.current = audio;
+      // Cache the audio URL for future replays
+      audioCacheRef.current.set(cacheKey, audioUrl);
+      console.log("[TTS] Audio cached for reuse");
 
-      audio.oncanplaythrough = () => {
-        setIsTTSLoading(false);
-      };
-
-      audio.onended = () => {
-        setIsSpeaking(false);
-        setSpeakingMessageIndex(null);
-        setIsTTSLoading(false);
-        URL.revokeObjectURL(audioUrl);
-      };
-
-      audio.onerror = () => {
-        // Fallback to browser TTS on audio error
-        console.warn("Audio playback failed, falling back to browser TTS");
-        URL.revokeObjectURL(audioUrl);
-        setIsTTSLoading(false);
-        speakWithBrowserTTS(text, messageIndex);
-      };
-
-      await audio.play();
+      playAudioFromUrl(audioUrl, false);
     } catch (err) {
       console.error("TTS error:", err);
       setIsTTSLoading(false);

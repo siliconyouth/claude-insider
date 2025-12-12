@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.5] - 2025-12-12
+
+### Fixed
+- **AI Assistant Stop Button** - Fixed toggle behavior for Listen/Stop button
+  - Stop button now correctly stops audio playback instead of restarting
+  - Fixed detection logic: now checks `audioRef.current.paused` state
+  - Properly toggles between Listen and Stop states
+
+### Added
+- **TTS Audio Caching** - Reuse generated audio to save ElevenLabs credits
+  - Audio blobs are cached by voice and message content
+  - Second "Listen" click on same message plays cached audio instantly
+  - No API call made when replaying previously generated audio
+  - Cache persists for the session (cleared on page refresh)
+
 ## [0.26.4] - 2025-12-12
 
 ### Fixed
