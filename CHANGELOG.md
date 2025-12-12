@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.9] - 2025-12-12
+
+### Fixed
+- **AI Assistant Text Overflow** - Long URLs no longer overflow message bubbles
+  - Added `break-words` class to message text for word-breaking at arbitrary points
+  - Added `overflow-hidden` to message bubble containers as safety fallback
+  - Long URLs like `https://www.claudeinsider.com/resources/rules` now wrap properly
+  - Applied to both regular messages and streaming responses
+
 ## [0.26.8] - 2025-12-12
 
 ### Added

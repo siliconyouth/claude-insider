@@ -1515,13 +1515,13 @@ export function VoiceAssistant() {
                   }`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-2 select-text ${
+                    className={`max-w-[85%] rounded-2xl px-4 py-2 select-text overflow-hidden ${
                       message.role === "user"
                         ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white"
                         : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
                     }`}
                   >
-                    <p className="whitespace-pre-wrap text-sm select-text cursor-text">
+                    <p className="whitespace-pre-wrap break-words text-sm select-text cursor-text">
                       {message.role === "assistant" ? markdownToDisplayText(message.content) : message.content}
                     </p>
                     {/* Action buttons for assistant messages */}
@@ -1635,8 +1635,8 @@ export function VoiceAssistant() {
               {/* Streaming response */}
               {streamingContent && (
                 <div className="flex justify-start">
-                  <div className="max-w-[85%] rounded-2xl bg-gray-100 px-4 py-2 dark:bg-gray-800 select-text">
-                    <p className="whitespace-pre-wrap text-sm text-gray-900 dark:text-white select-text cursor-text">
+                  <div className="max-w-[85%] rounded-2xl bg-gray-100 px-4 py-2 dark:bg-gray-800 select-text overflow-hidden">
+                    <p className="whitespace-pre-wrap break-words text-sm text-gray-900 dark:text-white select-text cursor-text">
                       {markdownToDisplayText(streamingContent)}
                     </p>
                   </div>
