@@ -19,6 +19,7 @@ import {
 } from "@/lib/speech-recognition";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
 import { useAnnouncer } from "@/hooks/use-aria-live";
+import { LinkifiedText } from "./linkified-text";
 
 // Extend window for quota warning tracking
 declare global {
@@ -1522,7 +1523,11 @@ export function VoiceAssistant() {
                     }`}
                   >
                     <p className="whitespace-pre-wrap break-words text-sm select-text cursor-text">
-                      {message.role === "assistant" ? markdownToDisplayText(message.content) : message.content}
+                      {message.role === "assistant" ? (
+                        <LinkifiedText text={markdownToDisplayText(message.content)} />
+                      ) : (
+                        message.content
+                      )}
                     </p>
                     {/* Action buttons for assistant messages */}
                     {message.role === "assistant" && (
@@ -1637,7 +1642,7 @@ export function VoiceAssistant() {
                 <div className="flex justify-start">
                   <div className="max-w-[85%] rounded-2xl bg-gray-100 px-4 py-2 dark:bg-gray-800 select-text overflow-hidden">
                     <p className="whitespace-pre-wrap break-words text-sm text-gray-900 dark:text-white select-text cursor-text">
-                      {markdownToDisplayText(streamingContent)}
+                      <LinkifiedText text={markdownToDisplayText(streamingContent)} />
                     </p>
                   </div>
                 </div>

@@ -20,7 +20,7 @@ import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
 
 export const PROJECT_INFO = {
   name: "Claude Insider",
-  version: "0.26.9",
+  version: "0.27.0",
   tagline: "Your guide to mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",

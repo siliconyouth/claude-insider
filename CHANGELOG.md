@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.27.0] - 2025-12-12
+
+### Added
+- **Clickable Links in AI Assistant** - URLs in assistant responses are now interactive
+  - URLs automatically detected and converted to clickable links
+  - Links open in new tabs with proper security attributes
+  - Styled with blue/cyan color matching design system
+
+- **Link Preview Hover Cards** - Rich previews appear when hovering over links
+  - **Internal links** (claudeinsider.com): Show page title, description, and category badge
+  - **External links**: Show domain name, favicon, and external link indicator
+  - Preview cards animate in smoothly with 300ms delay to prevent flicker
+  - Cards reposition automatically to stay within viewport
+
+- **New LinkifiedText Component** - Reusable component for URL parsing
+  - URL regex detection with comprehensive character support
+  - Integrates with search index for internal page metadata
+  - Uses Google favicon service for external link icons
+  - Portal-based tooltips to avoid z-index issues
+
 ## [0.26.9] - 2025-12-12
 
 ### Fixed
