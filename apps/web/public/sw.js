@@ -1,6 +1,5 @@
 // Cache version - UPDATE THIS ON EACH DEPLOY to bust old caches
 const CACHE_VERSION = 'v2';
-const CACHE_NAME = `claude-insider-${CACHE_VERSION}`;
 const STATIC_CACHE = `claude-insider-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `claude-insider-dynamic-${CACHE_VERSION}`;
 

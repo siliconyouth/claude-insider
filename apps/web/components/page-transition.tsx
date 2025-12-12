@@ -203,7 +203,7 @@ export function PageTransition({
       switch (transitionType) {
         case "fade":
           return { ...baseStyles, opacity: 0 };
-        case "slide":
+        case "slide": {
           const slideOffset = "20px";
           const transforms = {
             up: `translateY(${slideOffset})`,
@@ -216,6 +216,7 @@ export function PageTransition({
             opacity: 0,
             transform: transforms[transitionDirection],
           };
+        }
         case "scale":
           return { ...baseStyles, opacity: 0, transform: "scale(0.98)" };
         case "blur":
@@ -433,7 +434,7 @@ export function AnimatePresence({
           opacity: isVisible ? 1 : 0,
           transition: baseTransition,
         };
-      case "slide":
+      case "slide": {
         const offset = "20px";
         const transforms = {
           up: `translateY(${offset})`,
@@ -446,6 +447,7 @@ export function AnimatePresence({
           transform: isVisible ? "none" : transforms[direction],
           transition: baseTransition,
         };
+      }
       case "scale":
         return {
           opacity: isVisible ? 1 : 0,

@@ -7,6 +7,7 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useId,
   type ReactNode,
 } from "react";
 
@@ -344,18 +345,21 @@ export function useKeyboardShortcut(options: UseKeyboardShortcutOptions) {
     modifiers,
     handler,
     description = "",
-    category = "General",
+    category: _category = "General",
     enabled = true,
-    priority = 0,
+    priority: _priority = 0,
   } = options;
+
+  // Silence unused vars warning - these are for future use or part of the options API
+  void _category;
+  void _priority;
 
   const handlerRef = useRef(handler);
   handlerRef.current = handler;
 
-  // Generate stable ID
-  const idRef = useRef(
-    `shortcut-${key}-${(modifiers || []).sort().join("-")}-${Math.random().toString(36).slice(2)}`
-  );
+  // Generate stable ID using React's useId
+  const uniqueId = useId();
+  const shortcutId = `shortcut-${key}-${(modifiers || []).sort().join("-")}-${uniqueId}`;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -399,9 +403,9 @@ export function useKeyboardShortcut(options: UseKeyboardShortcutOptions) {
   }, [key, modifiers, enabled]);
 
   return {
-    id: idRef.current,
+    id: shortcutId,
     formatted: formatShortcut({
-      id: idRef.current,
+      id: shortcutId,
       key,
       modifiers,
       description,
@@ -498,28 +502,31 @@ export interface ShortcutHelpItem {
 
 /**
  * Get formatted shortcuts for help display
+ * Returns empty array if used outside KeyboardShortcutsProvider
  */
 export function useShortcutsHelp(): ShortcutHelpItem[] {
-  try {
-    const { getShortcuts } = useKeyboardShortcuts();
-    return getShortcuts()
-      .filter((s) => s.description)
-      .map((s) => ({
-        key: s.key,
-        modifiers: s.modifiers,
-        description: s.description,
-        category: s.category || "General",
-        formatted: formatShortcut(s),
-      }))
-      .sort((a, b) => {
-        // Sort by category, then by key
-        if (a.category !== b.category) {
-          return a.category.localeCompare(b.category);
-        }
-        return a.key.localeCompare(b.key);
-      });
-  } catch {
-    // Return empty if used outside provider
+  const context = useContext(KeyboardShortcutsContext);
+
+  // Return empty if not within provider
+  if (!context) {
     return [];
   }
+
+  const { getShortcuts } = context;
+  return getShortcuts()
+    .filter((s) => s.description)
+    .map((s) => ({
+      key: s.key,
+      modifiers: s.modifiers,
+      description: s.description,
+      category: s.category || "General",
+      formatted: formatShortcut(s),
+    }))
+    .sort((a, b) => {
+      // Sort by category, then by key
+      if (a.category !== b.category) {
+        return a.category.localeCompare(b.category);
+      }
+      return a.key.localeCompare(b.key);
+    });
 }

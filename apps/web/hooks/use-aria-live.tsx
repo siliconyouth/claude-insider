@@ -217,7 +217,7 @@ export function useAriaLive(options: UseAriaLiveOptions = {}) {
   const clearRef = useRef<NodeJS.Timeout>();
 
   const announce = useCallback(
-    (text: string, overridePoliteness?: AriaLivePoliteness) => {
+    (text: string, _overridePoliteness?: AriaLivePoliteness) => {
       // Debounce rapid announcements
       if (debounceRef.current) {
         clearTimeout(debounceRef.current);

@@ -7,16 +7,15 @@
  */
 
 import Link from 'next/link';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { cn } from '@/lib/design-system';
-import { ResourceCard, ResourceCardSkeleton } from '@/components/resources/resource-card';
+import { ResourceCard } from '@/components/resources/resource-card';
 import {
   getResourceStats,
   getFeaturedResources,
   getCategoriesWithCounts,
   getPopularTags,
   getTopByStars,
-  type ResourceEntry,
 } from '@/data/resources';
 
 // Icons

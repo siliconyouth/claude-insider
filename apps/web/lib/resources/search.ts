@@ -118,7 +118,7 @@ export function searchResources(options: ResourceSearchOptions): ResourceSearchR
   });
 
   // Apply filters to search results
-  let filteredResults = searchResults.filter((result) => {
+  const filteredResults = searchResults.filter((result) => {
     const r = result.item;
 
     if (category && r.category !== category) return false;

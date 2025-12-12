@@ -214,7 +214,7 @@ export async function POST() {
 
     // Step 4: Update tag counts
     console.log('Updating tag counts...');
-    for (const [tagName, tagId] of tagMap) {
+    for (const [, tagId] of tagMap) {
       const resourcesWithTag = await payload.find({
         collection: 'resources',
         where: { tags: { contains: tagId } },

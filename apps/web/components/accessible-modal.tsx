@@ -3,7 +3,7 @@
 import {
   useEffect,
   useRef,
-  useCallback,
+  useId,
   type ReactNode,
   type HTMLAttributes,
 } from "react";
@@ -128,8 +128,9 @@ export function AccessibleModal({
 }: AccessibleModalProps) {
   const prefersReducedMotion = useReducedMotion();
   const { announce } = useAnnouncer();
-  const titleId = useRef(`modal-title-${Math.random().toString(36).slice(2)}`);
-  const descId = useRef(`modal-desc-${Math.random().toString(36).slice(2)}`);
+  const uniqueId = useId();
+  const titleId = `modal-title-${uniqueId}`;
+  const descId = `modal-desc-${uniqueId}`;
   const portalContainer = useRef<HTMLElement | null>(null);
 
   // Focus trap
@@ -173,9 +174,9 @@ export function AccessibleModal({
         ref={containerRef}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={ariaLabelledBy || titleId.current}
+        aria-labelledby={ariaLabelledBy || titleId}
         aria-describedby={
-          description ? ariaDescribedBy || descId.current : undefined
+          description ? ariaDescribedBy || descId : undefined
         }
         className={cn(
           "relative w-full rounded-lg",
@@ -190,7 +191,7 @@ export function AccessibleModal({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-[#1a1a1a]">
           <h2
-            id={titleId.current}
+            id={titleId}
             className="text-lg font-semibold text-gray-900 dark:text-white"
           >
             {title}
@@ -229,7 +230,7 @@ export function AccessibleModal({
         {/* Description (if provided) */}
         {description && (
           <p
-            id={descId.current}
+            id={descId}
             className="px-6 py-2 text-sm text-gray-500 dark:text-gray-400"
           >
             {description}
@@ -534,7 +535,7 @@ export function Tooltip({
   className,
   ...props
 }: TooltipProps) {
-  const tooltipId = useRef(`tooltip-${Math.random().toString(36).slice(2)}`);
+  const tooltipId = useId();
   const prefersReducedMotion = useReducedMotion();
 
   const positionStyles = {
@@ -546,9 +547,9 @@ export function Tooltip({
 
   return (
     <div className={cn("relative group inline-block", className)} {...props}>
-      <div aria-describedby={tooltipId.current}>{children}</div>
+      <div aria-describedby={tooltipId}>{children}</div>
       <div
-        id={tooltipId.current}
+        id={tooltipId}
         role="tooltip"
         className={cn(
           "absolute z-50 px-3 py-1.5 text-sm",

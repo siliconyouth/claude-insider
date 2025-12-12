@@ -8,7 +8,7 @@
 
 import { cn } from '@/lib/design-system';
 import type { ResourceEntry, ResourceCategory } from '@/data/resources/schema';
-import { getCategoryBySlug, CATEGORY_COLORS } from '@/data/resources/schema';
+import { getCategoryBySlug } from '@/data/resources/schema';
 
 // Icons for different resource elements
 const StarIcon = ({ className }: { className?: string }) => (

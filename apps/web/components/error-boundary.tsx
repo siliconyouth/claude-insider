@@ -1,6 +1,7 @@
 "use client";
 
 import { Component, ReactNode, useEffect, useState } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/design-system";
 
 /**
@@ -375,7 +376,7 @@ function ErrorFallback({
               </p>
             )}
 
-            <a
+            <Link
               href="/"
               className={cn(
                 "inline-flex items-center gap-2 rounded-lg px-4 py-2",
@@ -386,7 +387,7 @@ function ErrorFallback({
             >
               <HomeIcon className="h-4 w-4" />
               Go Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>

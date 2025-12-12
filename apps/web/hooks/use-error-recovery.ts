@@ -293,7 +293,7 @@ export function useCircuitBreaker<T>(
 
   const [circuitState, setCircuitState] = useState<CircuitState>("closed");
   const [failureCount, setFailureCount] = useState(0);
-  const [successCount, setSuccessCount] = useState(0);
+  const [_successCount, setSuccessCount] = useState(0);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 

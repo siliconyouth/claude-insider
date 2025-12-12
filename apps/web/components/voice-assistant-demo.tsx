@@ -15,7 +15,6 @@ export function VoiceAssistantDemo() {
   const [visibleMessages, setVisibleMessages] = useState<number>(0);
   const [isTyping, setIsTyping] = useState(false);
   const [showPulse, setShowPulse] = useState(false);
-  const [typingText, setTypingText] = useState("");
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   useEffect(() => {

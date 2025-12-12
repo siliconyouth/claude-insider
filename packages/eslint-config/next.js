@@ -24,6 +24,11 @@ export const nextJsConfig = [
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // CommonJS scripts and service worker (use Node.js globals)
+    "scripts/**/*.cjs",
+    "public/sw.js",
+    // Payload CMS generated migrations
+    "migrations/**",
   ]),
   {
     ...pluginReact.configs.flat.recommended,

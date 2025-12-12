@@ -13,7 +13,6 @@ import { Footer } from '@/components/footer';
 import { ResourceCard, ResourceCardSkeleton } from '@/components/resources/resource-card';
 import { cn } from '@/lib/design-system';
 import {
-  getAllResources,
   getResourceStats,
   getCategoriesWithCounts,
   getPopularTags,

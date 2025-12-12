@@ -47,7 +47,7 @@ export function VoiceAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [streamingContent, setStreamingContent] = useState("");
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [_isSpeaking, setIsSpeaking] = useState(false);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState("");
@@ -532,8 +532,8 @@ export function VoiceAssistant() {
     return sentences;
   }, []);
 
-  // Add text to speech queue (splits by sentences)
-  const queueSpeech = useCallback((text: string) => {
+  // Add text to speech queue (splits by sentences) - reserved for future use
+  const _queueSpeech = useCallback((text: string) => {
     const sentences = splitIntoSentences(text);
     sentences.forEach(sentence => {
       if (sentence.length > 0) {

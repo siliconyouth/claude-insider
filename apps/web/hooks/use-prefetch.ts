@@ -5,7 +5,6 @@ import { useRouter, usePathname } from "next/navigation";
 import {
   prefetchQueue,
   getRoutePriority,
-  extractInternalLinks,
 } from "@/lib/prefetch-queue";
 
 export type { PrefetchPriority } from "@/lib/prefetch-queue";
@@ -301,9 +300,6 @@ export function usePrefetchVisibleLinks(
     });
 
     if (!containerRef.current) return;
-
-    // Extract all internal links
-    const links = extractInternalLinks(containerRef.current);
 
     // Create observer for visible links
     observerRef.current = new IntersectionObserver(
