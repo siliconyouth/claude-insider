@@ -20,7 +20,7 @@ import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
 
 export const PROJECT_INFO = {
   name: "Claude Insider",
-  version: "0.25.8",
+  version: "0.26.8",
   tagline: "Your guide to mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -61,7 +61,7 @@ export const TECH_STACK = {
     model: "eleven_turbo_v2_5",
   },
   search: { library: "Fuse.js", type: "Fuzzy search with Cmd/Ctrl+K" },
-  rag: { method: "TF-IDF", chunkCount: 423 },
+  rag: { method: "TF-IDF", chunkCount: 557 },
   hosting: "Vercel",
 } as const;
 
@@ -112,6 +112,36 @@ export const DOCUMENTATION_STATS = {
   categories: 7,
   legalPages: ["Privacy Policy", "Terms of Service", "Disclaimer", "Accessibility"],
   utilityPages: ["Changelog", "RSS Feed", "Sitemap"],
+} as const;
+
+// =============================================================================
+// RESOURCES SECTION
+// =============================================================================
+
+export const RESOURCES_INFO = {
+  totalResources: 122,
+  categories: 10,
+  categoriesList: {
+    official: { name: "Official Resources", description: "Anthropic official documentation, SDKs, and tools" },
+    tools: { name: "Development Tools", description: "CLI tools, utilities, and development aids for Claude" },
+    "mcp-servers": { name: "MCP Servers", description: "Model Context Protocol server implementations" },
+    rules: { name: "CLAUDE.md Rules", description: "Project configuration templates and best practices" },
+    prompts: { name: "System Prompts", description: "Curated library of system prompts for various use cases" },
+    agents: { name: "AI Agents", description: "Agent frameworks and autonomous AI implementations" },
+    tutorials: { name: "Tutorials", description: "Learning resources, guides, and courses" },
+    sdks: { name: "SDKs & Libraries", description: "Client libraries and integrations for various languages" },
+    showcases: { name: "Showcases", description: "Example projects and real-world applications" },
+    community: { name: "Community", description: "Forums, Discord servers, and community resources" },
+  },
+  features: [
+    "Full-text search with weighted fields",
+    "Category and tag filtering",
+    "GitHub integration (stars, forks, language)",
+    "Status badges (stable, beta, experimental)",
+    "Difficulty levels (beginner, intermediate, advanced)",
+    "Featured resources highlighted on homepage",
+  ],
+  baseUrl: "/resources",
 } as const;
 
 // =============================================================================
@@ -314,6 +344,24 @@ Documentation Features:
 ${WEBSITE_FEATURES.documentation.features.map(f => `- ${f}`).join("\n")}
 
 ═══════════════════════════════════════════════════════════════════════════════
+CURATED RESOURCES (${RESOURCES_INFO.totalResources}+ entries across ${RESOURCES_INFO.categories} categories)
+═══════════════════════════════════════════════════════════════════════════════
+
+Claude Insider maintains a curated knowledge base of tools, templates, and community resources at ${RESOURCES_INFO.baseUrl}.
+
+Resource Categories:
+${Object.entries(RESOURCES_INFO.categoriesList).map(([slug, cat]) =>
+  `- ${cat.name} (${RESOURCES_INFO.baseUrl}/${slug}): ${cat.description}`
+).join("\n")}
+
+When recommending resources:
+- Match user needs to specific resources from RELEVANT DOCUMENTATION context
+- Mention GitHub stars when available to indicate popularity
+- Note the resource status (stable, beta, experimental) if not stable
+- Suggest featured resources when they match the query
+- Point users to ${RESOURCES_INFO.baseUrl} for browsing all resources
+
+═══════════════════════════════════════════════════════════════════════════════
 HOW TO RESPOND
 ═══════════════════════════════════════════════════════════════════════════════
 
@@ -347,6 +395,9 @@ Things You Should Know How To Answer:
 4. "How can I search?" - Use ${WEBSITE_FEATURES.search.trigger}
 5. "What documentation is available?" - ${DOCUMENTATION_STATS.totalPages} pages across ${DOCUMENTATION_STATS.categories} categories
 6. "Can you speak?" - Yes! You have ${VOICE_CAPABILITIES.textToSpeech.voiceCount} voice options via ${VOICE_CAPABILITIES.textToSpeech.provider}
+7. "What resources are available?" - ${RESOURCES_INFO.totalResources}+ curated resources across ${RESOURCES_INFO.categories} categories at ${RESOURCES_INFO.baseUrl}
+8. "Recommend an MCP server" - Check RELEVANT DOCUMENTATION for specific MCP servers with GitHub stars
+9. "What Claude tools exist?" - Browse Development Tools at ${RESOURCES_INFO.baseUrl}/tools
 
 ═══════════════════════════════════════════════════════════════════════════════
 CURRENT CONTEXT
@@ -420,6 +471,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/",
     category: "Project",
     keywords: ["search", "themes", "accessibility", "code highlighting", "table of contents"],
+  },
+  {
+    id: "project-resources",
+    title: "Curated Resources",
+    section: "Resources Section",
+    content: `Claude Insider curates ${RESOURCES_INFO.totalResources}+ resources across ${RESOURCES_INFO.categories} categories at ${RESOURCES_INFO.baseUrl}. Categories include: ${Object.values(RESOURCES_INFO.categoriesList).map(c => c.name).join(", ")}. Features include ${RESOURCES_INFO.features.join(", ")}. The assistant can recommend specific resources from the RAG index based on user questions about tools, MCP servers, SDKs, tutorials, agents, and more.`,
+    url: "/resources",
+    category: "Project",
+    keywords: ["resources", "tools", "mcp servers", "sdks", "tutorials", "agents", "community", "prompts"],
   },
 ];
 

@@ -18,6 +18,20 @@ const matter = require("gray-matter");
 // Import dynamic project knowledge generator
 const { generateProjectKnowledge } = require("./generate-project-knowledge.cjs");
 
+// Resources category metadata
+const RESOURCE_CATEGORIES = {
+  official: { name: "Official Resources", description: "Anthropic official documentation and tools" },
+  tools: { name: "Development Tools", description: "Tools and utilities for Claude development" },
+  "mcp-servers": { name: "MCP Servers", description: "Model Context Protocol server implementations" },
+  rules: { name: "CLAUDE.md Rules", description: "Project configuration templates and rules" },
+  prompts: { name: "System Prompts", description: "Curated system prompts library" },
+  agents: { name: "AI Agents", description: "Agent frameworks and implementations" },
+  tutorials: { name: "Tutorials", description: "Learning resources and guides" },
+  sdks: { name: "SDKs & Libraries", description: "Client libraries and integrations" },
+  showcases: { name: "Showcases", description: "Example projects and demos" },
+  community: { name: "Community", description: "Community resources and discussions" },
+};
+
 // Common stop words to filter out
 const STOP_WORDS = new Set([
   "the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for",
@@ -124,6 +138,95 @@ function chunkContent(content, title, url, category) {
       category,
       keywords,
     });
+  }
+
+  return chunks;
+}
+
+/**
+ * Generate chunks from resources data
+ * This allows the AI assistant to recommend specific resources
+ */
+function generateResourceChunks() {
+  const resourcesDir = path.join(__dirname, "../data/resources");
+  const chunks = [];
+
+  if (!fs.existsSync(resourcesDir)) {
+    console.log("  Resources directory not found, skipping...");
+    return chunks;
+  }
+
+  // Read all JSON files in resources directory
+  const files = fs.readdirSync(resourcesDir).filter((f) => f.endsWith(".json"));
+
+  for (const file of files) {
+    const filePath = path.join(resourcesDir, file);
+    try {
+      const content = fs.readFileSync(filePath, "utf-8");
+      const resources = JSON.parse(content);
+
+      for (const resource of resources) {
+        // Build rich content for search
+        const contentParts = [
+          resource.title,
+          resource.description,
+          resource.subcategory || "",
+          (resource.tags || []).join(" "),
+          resource.github?.language || "",
+          resource.github?.owner || "",
+          resource.featuredReason || "",
+        ];
+
+        const content = contentParts.filter(Boolean).join(". ");
+
+        // Build keywords from tags and metadata
+        const keywords = [
+          ...(resource.tags || []),
+          resource.category,
+          resource.subcategory,
+          resource.github?.language,
+          resource.status,
+        ].filter(Boolean).map((k) => k.toLowerCase());
+
+        // Create a descriptive section title
+        const categoryInfo = RESOURCE_CATEGORIES[resource.category] || { name: resource.category };
+        const sectionTitle = `${resource.title} - ${categoryInfo.name}`;
+
+        // Build a recommendation-friendly description
+        let recommendationText = `${resource.title}: ${resource.description}`;
+        if (resource.github?.stars) {
+          recommendationText += ` (${resource.github.stars.toLocaleString()} GitHub stars)`;
+        }
+        if (resource.featured) {
+          recommendationText += ` [Featured: ${resource.featuredReason || "Recommended"}]`;
+        }
+        if (resource.status && resource.status !== "stable") {
+          recommendationText += ` [Status: ${resource.status}]`;
+        }
+
+        chunks.push({
+          id: `resource-${resource.id}`,
+          title: resource.title,
+          section: sectionTitle,
+          content: recommendationText,
+          url: resource.url,
+          category: "Resources",
+          subcategory: categoryInfo.name,
+          keywords: [...new Set(keywords)],
+          isResource: true,
+          resourceData: {
+            id: resource.id,
+            category: resource.category,
+            tags: resource.tags || [],
+            featured: resource.featured || false,
+            status: resource.status || "stable",
+            github: resource.github || null,
+          },
+        });
+      }
+    } catch (error) {
+      console.error(`  Error processing ${file}:`, error.message);
+    }
   }
 
   return chunks;
@@ -243,16 +346,26 @@ function generateRagIndex() {
   const projectKnowledge = generateProjectKnowledge();
   chunks.push(...projectKnowledge);
 
+  const projectKnowledgeCount = projectKnowledge.length;
+
+  // Generate and add resource chunks for AI assistant recommendations
+  console.log("\nGenerating resource chunks for AI recommendations...");
+  const resourceChunks = generateResourceChunks();
+  chunks.push(...resourceChunks);
+
+  const resourceChunkCount = resourceChunks.length;
+
   // Build TF-IDF index
   const { tfidfIndex, idfValues } = buildTfidfIndex(chunks);
 
   // Create the RAG index object
   const ragIndex = {
-    version: "2.0",
+    version: "3.0",
     generatedAt: new Date().toISOString(),
     documentCount: chunks.length,
     documentationChunks: docsChunkCount,
-    projectKnowledgeCount: projectKnowledge.length,
+    projectKnowledgeCount: projectKnowledgeCount,
+    resourceChunkCount: resourceChunkCount,
     chunks,
     tfidfIndex,
     idfValues,
@@ -263,9 +376,10 @@ function generateRagIndex() {
 
   console.log(`\n✓ Generated RAG index: ${chunks.length} total chunks`);
   console.log(`  - Documentation chunks: ${docsChunkCount}`);
-  console.log(`  - Project knowledge chunks: ${projectKnowledge.length} (dynamically generated)`);
+  console.log(`  - Project knowledge chunks: ${projectKnowledgeCount} (dynamically generated)`);
+  console.log(`  - Resource chunks: ${resourceChunkCount} (for AI recommendations)`);
   console.log(`  Output: ${outputPath}`);
-  console.log(`  Categories: ${Object.values(categories).join(", ")}, Project`);
+  console.log(`  Categories: ${Object.values(categories).join(", ")}, Project, Resources`);
 }
 
 // Run the generator

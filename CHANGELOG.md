@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.8] - 2025-12-12
+
+### Added
+- **AI Assistant Resource Recommendations** - Assistant can now recommend specific resources
+  - RAG index expanded from 423 to 557 chunks (+122 resource entries)
+  - Resources include title, description, GitHub stars, status, and tags
+  - System prompt updated with resources knowledge and recommendation guidelines
+  - 10 resource categories: Official, Tools, MCP Servers, Rules, Prompts, Agents, Tutorials, SDKs, Showcases, Community
+  - Assistant can point users to specific tools, MCP servers, SDKs based on questions
+  - `generate-rag-index.cjs` now processes all JSON files in `data/resources/`
+
+### Changed
+- **System Prompt** - Enhanced with comprehensive resources section
+  - Added `RESOURCES_INFO` constant with category definitions
+  - Added project knowledge chunk for resources section
+  - Updated "Things You Should Know" with resource-related FAQs
+  - Assistant now guided to mention GitHub stars and resource status
+
 ## [0.26.7] - 2025-12-12
 
 ### Fixed
