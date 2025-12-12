@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.3] - 2025-12-12
+
+### Added
+- **AI Assistant Copy/Paste Support** - Enhanced clipboard functionality
+  - Text selection enabled with `select-text cursor-text` for native browser selection
+  - Keyboard shortcuts (Ctrl+C / Cmd+C) now work on selected text
+  - Right-click context menu works for copy operations
+  - New **Copy button** added to each assistant response with visual feedback
+  - Shows "Copied!" with checkmark icon for 2 seconds after copying
+  - Fallback to `document.execCommand('copy')` for older browsers
+  - ARIA live region announces copy status for screen reader accessibility
+
+### Changed
+- **Assistant Message Actions** - Redesigned action bar layout
+  - New separator line between message content and action buttons
+  - Two-button layout: Copy | Listen
+  - Consistent hover states and spacing
+
 ## [0.26.2] - 2025-12-12
 
 ### Fixed

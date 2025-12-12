@@ -57,12 +57,47 @@ export function VoiceAssistant() {
   const [showVoiceMenu, setShowVoiceMenu] = useState(false);
   const [previewingVoice, setPreviewingVoice] = useState<string | null>(null);
   const [isTTSLoading, setIsTTSLoading] = useState(false);
+  const [copiedMessageIndex, setCopiedMessageIndex] = useState<number | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
   const voiceMenuRef = useRef<HTMLDivElement>(null);
   const triggerButtonRef = useRef<HTMLButtonElement>(null);
   const { announce } = useAnnouncer();
+
+  // Copy message to clipboard
+  const copyToClipboard = useCallback(async (text: string, messageIndex: number) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedMessageIndex(messageIndex);
+      announce("Message copied to clipboard");
+      // Reset after 2 seconds
+      setTimeout(() => {
+        setCopiedMessageIndex(null);
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy text:", err);
+      // Fallback for older browsers
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        setCopiedMessageIndex(messageIndex);
+        announce("Message copied to clipboard");
+        setTimeout(() => {
+          setCopiedMessageIndex(null);
+        }, 2000);
+      } catch (fallbackErr) {
+        console.error("Fallback copy failed:", fallbackErr);
+        announce("Failed to copy message");
+      }
+      document.body.removeChild(textarea);
+    }
+  }, [announce]);
 
   // Prevent hydration mismatch and load preferences from localStorage
   useEffect(() => {
@@ -1425,63 +1460,112 @@ export function VoiceAssistant() {
                         : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
                     }`}
                   >
-                    <p className="whitespace-pre-wrap text-sm">
+                    <p className="whitespace-pre-wrap text-sm select-text cursor-text">
                       {message.role === "assistant" ? markdownToDisplayText(message.content) : message.content}
                     </p>
-                    {/* Speaker button for assistant messages */}
+                    {/* Action buttons for assistant messages */}
                     {message.role === "assistant" && (
-                      <button
-                        onClick={() => speakMessage(message.content, index)}
-                        disabled={isTTSLoading && speakingMessageIndex !== index}
-                        className={`mt-2 flex items-center gap-1 text-xs transition-colors ${
-                          speakingMessageIndex === index
-                            ? "text-cyan-500"
-                            : "text-gray-400 hover:text-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                        }`}
-                        title={speakingMessageIndex === index && isTTSLoading ? "Loading..." : speakingMessageIndex === index ? "Stop speaking" : "Read aloud"}
-                      >
-                        {speakingMessageIndex === index && isTTSLoading ? (
-                          <>
-                            <svg
-                              className="h-4 w-4 animate-spin"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                            </svg>
-                            <span>Loading...</span>
-                          </>
-                        ) : speakingMessageIndex === index ? (
-                          <>
-                            <svg
-                              className="h-4 w-4 animate-pulse"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                            </svg>
-                            <span>Stop</span>
-                          </>
-                        ) : (
-                          <>
-                            <svg
-                              className="h-4 w-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
-                              />
-                            </svg>
-                            <span>Listen</span>
-                          </>
-                        )}
-                      </button>
+                      <div className="mt-2 flex items-center gap-3 border-t border-gray-200 dark:border-gray-700 pt-2">
+                        {/* Copy button */}
+                        <button
+                          onClick={() => copyToClipboard(message.content, index)}
+                          className={`flex items-center gap-1 text-xs transition-colors ${
+                            copiedMessageIndex === index
+                              ? "text-green-500"
+                              : "text-gray-400 hover:text-cyan-500"
+                          }`}
+                          title={copiedMessageIndex === index ? "Copied!" : "Copy to clipboard"}
+                        >
+                          {copiedMessageIndex === index ? (
+                            <>
+                              <svg
+                                className="h-4 w-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                              <span>Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <svg
+                                className="h-4 w-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                                />
+                              </svg>
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                        {/* Speaker button */}
+                        <button
+                          onClick={() => speakMessage(message.content, index)}
+                          disabled={isTTSLoading && speakingMessageIndex !== index}
+                          className={`flex items-center gap-1 text-xs transition-colors ${
+                            speakingMessageIndex === index
+                              ? "text-cyan-500"
+                              : "text-gray-400 hover:text-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                          }`}
+                          title={speakingMessageIndex === index && isTTSLoading ? "Loading..." : speakingMessageIndex === index ? "Stop speaking" : "Read aloud"}
+                        >
+                          {speakingMessageIndex === index && isTTSLoading ? (
+                            <>
+                              <svg
+                                className="h-4 w-4 animate-spin"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                              </svg>
+                              <span>Loading...</span>
+                            </>
+                          ) : speakingMessageIndex === index ? (
+                            <>
+                              <svg
+                                className="h-4 w-4 animate-pulse"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                              </svg>
+                              <span>Stop</span>
+                            </>
+                          ) : (
+                            <>
+                              <svg
+                                className="h-4 w-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                                />
+                              </svg>
+                              <span>Listen</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -1491,7 +1575,7 @@ export function VoiceAssistant() {
               {streamingContent && (
                 <div className="flex justify-start">
                   <div className="max-w-[85%] rounded-2xl bg-gray-100 px-4 py-2 dark:bg-gray-800">
-                    <p className="whitespace-pre-wrap text-sm text-gray-900 dark:text-white">
+                    <p className="whitespace-pre-wrap text-sm text-gray-900 dark:text-white select-text cursor-text">
                       {markdownToDisplayText(streamingContent)}
                     </p>
                   </div>
