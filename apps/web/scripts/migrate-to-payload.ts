@@ -38,9 +38,12 @@ async function migrate() {
       });
 
       if (existing.docs.length > 0) {
-        console.log(`  ⏭️  Category "${category.name}" already exists, skipping...`);
-        categoryIdMap.set(category.slug, existing.docs[0].id as number);
-        continue;
+        const existingDoc = existing.docs[0];
+        if (existingDoc) {
+          console.log(`  ⏭️  Category "${category.name}" already exists, skipping...`);
+          categoryIdMap.set(category.slug, existingDoc.id);
+          continue;
+        }
       }
 
       const created = await payload.create({
@@ -51,7 +54,7 @@ async function migrate() {
           shortName: category.shortName,
           description: category.description,
           icon: category.icon,
-          color: category.color,
+          color: category.color as 'violet' | 'blue' | 'cyan' | 'green' | 'yellow' | 'purple' | 'pink' | 'indigo' | 'amber' | 'rose',
           sortOrder: index,
         },
       });
@@ -78,9 +81,12 @@ async function migrate() {
       });
 
       if (existing.docs.length > 0) {
-        console.log(`  ⏭️  Tag "${tag.name}" already exists, skipping...`);
-        tagIdMap.set(tag.name, existing.docs[0].id as number);
-        continue;
+        const existingDoc = existing.docs[0];
+        if (existingDoc) {
+          console.log(`  ⏭️  Tag "${tag.name}" already exists, skipping...`);
+          tagIdMap.set(tag.name, existingDoc.id);
+          continue;
+        }
       }
 
       const created = await payload.create({
@@ -132,41 +138,48 @@ async function migrate() {
         .map((tagName) => tagIdMap.get(tagName))
         .filter((id): id is number => id !== undefined);
 
-      // Prepare resource data
-      const resourceData: Record<string, unknown> = {
-        title: resource.title,
-        description: resource.description,
-        url: resource.url,
-        category: categoryId,
-        subcategory: resource.subcategory || undefined,
-        tags: tagIds,
-        difficulty: resource.difficulty || undefined,
-        status: resource.status,
-        featured: resource.featured || false,
-        featuredReason: resource.featuredReason
-          ? resource.featuredReason.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')
-          : undefined,
-        addedDate: resource.addedDate,
-        lastVerified: resource.lastVerified,
-        version: resource.version || undefined,
-        namespace: resource.namespace || undefined,
+      // Map featuredReason to valid Payload enum value
+      const mapFeaturedReason = (reason?: string): 'editors-pick' | 'most-popular' | 'new' | 'trending' | 'essential' | undefined => {
+        if (!reason) return undefined;
+        const normalized = reason.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+        const validReasons = ['editors-pick', 'most-popular', 'new', 'trending', 'essential'] as const;
+        return validReasons.includes(normalized as typeof validReasons[number])
+          ? (normalized as typeof validReasons[number])
+          : 'editors-pick';
       };
 
-      // Add GitHub info if present
-      if (resource.github) {
-        resourceData.github = {
-          owner: resource.github.owner,
-          repo: resource.github.repo,
-          stars: resource.github.stars || 0,
-          forks: resource.github.forks || 0,
-          lastUpdated: resource.github.lastUpdated || undefined,
-          language: resource.github.language || undefined,
-        };
-      }
-
+      // Prepare resource data - note: subcategory, difficulty, and github.language
+      // are relationships in Payload that require ID lookups (not implemented in this migration)
       await payload.create({
         collection: 'resources',
-        data: resourceData,
+        data: {
+          title: resource.title,
+          description: resource.description,
+          url: resource.url,
+          category: categoryId,
+          // subcategory is a relationship - requires ID lookup (not migrated)
+          subcategory: undefined,
+          tags: tagIds,
+          // difficulty is a relationship - requires ID lookup (not migrated)
+          difficulty: undefined,
+          status: resource.status as 'official' | 'community' | 'beta' | 'deprecated' | 'archived',
+          featured: resource.featured || false,
+          featuredReason: resource.featured ? mapFeaturedReason(resource.featuredReason) : undefined,
+          addedDate: resource.addedDate,
+          lastVerified: resource.lastVerified,
+          version: resource.version || undefined,
+          namespace: resource.namespace || undefined,
+          // GitHub group field
+          github: resource.github ? {
+            owner: resource.github.owner,
+            repo: resource.github.repo,
+            stars: resource.github.stars || 0,
+            forks: resource.github.forks || 0,
+            lastUpdated: resource.github.lastUpdated || undefined,
+            // language is a relationship - requires ID lookup (not migrated)
+            language: undefined,
+          } : undefined,
+        },
       });
       resourceCount++;
       console.log(`  ✅ Created resource: ${resource.title}`);

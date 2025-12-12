@@ -99,8 +99,7 @@ export async function POST() {
     console.log('Creating categories...');
     const categoryMap = new Map<string, number>();
 
-    for (let i = 0; i < RESOURCE_CATEGORIES.length; i++) {
-      const cat = RESOURCE_CATEGORIES[i];
+    for (const [i, cat] of RESOURCE_CATEGORIES.entries()) {
       try {
         const created = await payload.create({
           collection: 'categories',
@@ -182,9 +181,11 @@ export async function POST() {
             description: resource.description,
             url: resource.url,
             category: categoryId,
-            subcategory: resource.subcategory,
+            // subcategory is a relationship - not migrated (would need subcategory ID lookup)
+            subcategory: undefined,
             tags: tagIds,
-            difficulty: resource.difficulty as 'beginner' | 'intermediate' | 'advanced' | 'expert' | undefined,
+            // difficulty is a relationship - not migrated (would need difficulty level ID lookup)
+            difficulty: undefined,
             status: resource.status as 'official' | 'community' | 'beta' | 'deprecated' | 'archived',
             // GitHub is a group field with nested properties
             github: resource.github ? {
@@ -193,12 +194,15 @@ export async function POST() {
               stars: resource.github.stars || 0,
               forks: resource.github.forks || 0,
               lastUpdated: githubLastUpdated,
-              language: resource.github.language,
+              // language is a relationship - not migrated (would need language ID lookup)
+              language: undefined,
             } : undefined,
             version: resource.version,
             namespace: resource.namespace,
             featured: resource.featured || false,
-            featuredReason: resource.featured ? mapFeaturedReason(resource.featuredReason) : undefined,
+            featuredReason: resource.featured
+              ? (mapFeaturedReason(resource.featuredReason) as 'editors-pick' | 'most-popular' | 'new' | 'trending' | 'essential' | undefined)
+              : undefined,
             addedDate,
             lastVerified,
           },

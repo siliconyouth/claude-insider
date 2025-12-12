@@ -18,8 +18,8 @@ export const generateMetadata = async ({ params, searchParams }: Args): Promise<
   const resolvedSearchParams = await searchParams;
   return generatePageMetadata({
     config,
-    params: { segments: resolvedParams.segments || [] },
-    searchParams: resolvedSearchParams,
+    params: Promise.resolve({ segments: resolvedParams.segments || [] }),
+    searchParams: Promise.resolve(resolvedSearchParams),
   });
 };
 
@@ -28,8 +28,8 @@ const Page = async ({ params, searchParams }: Args) => {
   const resolvedSearchParams = await searchParams;
   return RootPage({
     config,
-    params: { segments: resolvedParams.segments || [] },
-    searchParams: resolvedSearchParams,
+    params: Promise.resolve({ segments: resolvedParams.segments || [] }),
+    searchParams: Promise.resolve(resolvedSearchParams),
     importMap,
   });
 };

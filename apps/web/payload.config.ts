@@ -26,8 +26,7 @@ export default buildConfig({
     user: Users.slug,
     meta: {
       titleSuffix: ' — Claude Insider Admin',
-      favicon: '/favicon.ico',
-      ogImage: '/og-image.png',
+      // Note: favicon and ogImage are handled via public/admin/ folder in Payload v3
     },
     components: {
       // Custom branding can be added here later
@@ -93,11 +92,7 @@ export default buildConfig({
     'https://claudeinsider.com',
   ],
 
-  // Rate limiting
-  rateLimit: {
-    max: 500, // 500 requests per window
-    window: 60 * 1000, // 1 minute window
-  },
+  // Note: Rate limiting is handled at the Vercel/infrastructure level in Payload v3
 
   // Email configuration using Resend
   // Get a free API key at https://resend.com (100 emails/day free)

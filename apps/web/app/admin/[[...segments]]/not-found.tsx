@@ -7,16 +7,16 @@ import { importMap } from './importMap';
 export const generateMetadata = async (): Promise<Metadata> => {
   return generatePageMetadata({
     config,
-    params: { segments: ['not-found'] },
-    searchParams: {},
+    params: Promise.resolve({ segments: ['not-found'] }),
+    searchParams: Promise.resolve({}),
   });
 };
 
 const NotFound = async () => {
   return NotFoundPage({
     config,
-    params: { segments: ['not-found'] },
-    searchParams: {},
+    params: Promise.resolve({ segments: ['not-found'] }),
+    searchParams: Promise.resolve({}),
     importMap,
   });
 };

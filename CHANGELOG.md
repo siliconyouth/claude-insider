@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.8] - 2025-12-12
+
+### Fixed
+- **Payload CMS TypeScript Errors** - Fixed 50+ TypeScript errors from Payload CMS v3 integration
+  - Created `lib/tts-voices.ts` to move TTS_VOICES out of API route (named exports not allowed)
+  - Fixed admin pages async params for Next.js 15 compatibility (wrapped in Promise.resolve)
+  - Updated `data-layer.ts` to use Payload-generated Resource type instead of Record<string, unknown>
+  - Fixed migrate route array iteration with for...of to handle noUncheckedIndexedAccess
+  - Removed invalid favicon/ogImage from payload.config.ts admin.meta
+  - Fixed Resources collection filterOptions return type (return true, not empty object)
+  - Added `as const` to seed-reference route color values for literal type inference
+  - Added null checks to migration script for docs array access
+
+### Changed
+- **Type Safety** - Improved type safety across Payload CMS integrations
+  - Import Payload Where type for query clauses
+  - Use proper relationship types (number | RelatedType) for Payload fields
+  - Explicit type assertions for enum values in migration data
+
 ## [0.28.7] - 2025-12-12
 
 ### Added

@@ -70,7 +70,7 @@ export const Resources: CollectionConfig = {
             },
           };
         }
-        return {};
+        return true; // Return true to show all when no category selected
       },
     },
 

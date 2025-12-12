@@ -9,7 +9,9 @@
  */
 
 import { getPayload } from 'payload';
+import type { Where } from 'payload';
 import config from '../../payload.config';
+import type { Resource, Category, Tag, DifficultyLevel, ProgrammingLanguage } from '../../payload-types';
 
 // Static fallback imports
 import {
@@ -108,13 +110,14 @@ export async function getResourcesByCategory(category: ResourceCategorySlug): Pr
       limit: 1,
     });
 
-    if (categoryResult.docs.length === 0) {
+    const categoryDoc = categoryResult.docs[0];
+    if (!categoryDoc) {
       return [];
     }
 
     const result = await payload.find({
       collection: 'resources',
-      where: { category: { equals: categoryResult.docs[0].id } },
+      where: { category: { equals: categoryDoc.id } },
       limit: 1000,
       depth: 2,
     });
@@ -188,8 +191,9 @@ export async function getResourceById(id: string): Promise<ResourceEntry | undef
       depth: 2,
     });
 
-    if (result.docs.length > 0) {
-      return transformPayloadResource(result.docs[0]);
+    const foundDoc = result.docs[0];
+    if (foundDoc) {
+      return transformPayloadResource(foundDoc);
     }
 
     return undefined;
@@ -334,7 +338,7 @@ export async function filterResources(filters: ResourceFilters): Promise<Resourc
 
   try {
     const payload = await getPayload({ config });
-    const whereClause: Record<string, unknown> = {};
+    const whereClause: Where = {};
 
     if (filters.category) {
       const categoryResult = await payload.find({
@@ -343,7 +347,7 @@ export async function filterResources(filters: ResourceFilters): Promise<Resourc
         limit: 1,
       });
       if (categoryResult.docs.length > 0) {
-        whereClause.category = { equals: categoryResult.docs[0].id };
+        whereClause.category = { equals: categoryResult.docs[0]?.id };
       }
     }
 
@@ -440,37 +444,56 @@ export async function getTopByStars(limit: number = 10): Promise<ResourceEntry[]
 /**
  * Transform Payload CMS document to ResourceEntry format
  */
-function transformPayloadResource(doc: Record<string, unknown>): ResourceEntry {
-  const category = doc.category as Record<string, unknown>;
-  const tags = (doc.tags as Record<string, unknown>[]) || [];
-  const github = doc.github as Record<string, unknown> | undefined;
+function transformPayloadResource(doc: Resource): ResourceEntry {
+  // Handle category - can be number (ID) or populated Category object
+  const category = typeof doc.category === 'object' ? doc.category as Category : null;
+
+  // Handle tags - can be array of numbers or populated Tag objects
+  const tags = (doc.tags || []) as (number | Tag)[];
+
+  // Handle github group field
+  const github = doc.github;
+
+  // Handle programming language in github - can be number or ProgrammingLanguage
+  const githubLanguage = github?.language;
+  const languageString = typeof githubLanguage === 'object' && githubLanguage
+    ? (githubLanguage as ProgrammingLanguage).name
+    : undefined;
+
+  // Handle difficulty - can be number or DifficultyLevel
+  const difficulty = doc.difficulty;
+  const difficultyString = typeof difficulty === 'object' && difficulty
+    ? (difficulty as DifficultyLevel).slug
+    : undefined;
 
   return {
     id: String(doc.id),
-    title: doc.title as string,
-    description: doc.description as string,
-    url: doc.url as string,
-    category: (category?.slug || doc.category) as ResourceCategorySlug,
-    subcategory: doc.subcategory as string | undefined,
-    tags: tags.map((t) => (typeof t === 'string' ? t : (t.name as string))),
-    difficulty: doc.difficulty as ResourceEntry['difficulty'],
-    status: doc.status as ResourceEntry['status'],
-    github: github
+    title: doc.title,
+    description: doc.description,
+    url: doc.url,
+    category: (category?.slug || String(doc.category)) as ResourceCategorySlug,
+    subcategory: typeof doc.subcategory === 'object' && doc.subcategory
+      ? (doc.subcategory as { name?: string }).name
+      : undefined,
+    tags: tags.map((t) => (typeof t === 'number' ? String(t) : (t as Tag).name)),
+    difficulty: difficultyString as ResourceEntry['difficulty'],
+    status: doc.status,
+    github: github?.owner && github?.repo
       ? {
-          owner: github.owner as string,
-          repo: github.repo as string,
-          stars: github.stars as number,
-          forks: github.forks as number,
-          lastUpdated: github.lastUpdated as string,
-          language: github.language as string,
+          owner: github.owner,
+          repo: github.repo,
+          stars: github.stars ?? 0,
+          forks: github.forks ?? 0,
+          lastUpdated: github.lastUpdated ?? '',
+          language: languageString ?? '',
         }
       : undefined,
-    version: doc.version as string | undefined,
-    namespace: doc.namespace as string | undefined,
-    featured: doc.featured as boolean | undefined,
-    featuredReason: doc.featuredReason as string | undefined,
-    addedDate: doc.addedDate as string,
-    lastVerified: doc.lastVerified as string,
+    version: doc.version ?? undefined,
+    namespace: doc.namespace ?? undefined,
+    featured: doc.featured ?? undefined,
+    featuredReason: doc.featuredReason ?? undefined,
+    addedDate: doc.addedDate,
+    lastVerified: doc.lastVerified,
   };
 }
 
