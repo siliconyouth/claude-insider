@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.11] - 2025-12-12
+
+### Changed
+- **Privacy Policy** - Complete rewrite of localStorage section
+  - Added comprehensive inventory of all 10 localStorage keys used
+  - Added "How to Delete Your Data" instructions
+  - Emphasized NO server-side data storage
+  - Updated Data Retention section to reflect persistent chat history
+- **Terms of Service** - Updated data handling sections
+  - Updated docs count from 28 to 34
+  - Section 10.4 (Data Handling) now reflects localStorage persistence
+  - Section 11.2 (Local Storage) completely rewritten with all storage keys
+  - Updated Summary to emphasize local-only data storage
+- **Disclaimer** - Added new "Data and Privacy" section
+  - Clarified that all user data remains in browser localStorage
+  - Emphasized user control over data deletion
+- **Accessibility Statement** - Added "Preferences and Data Storage" section
+  - Documents accessibility-related preferences stored locally
+  - Links to Privacy Policy for complete details
+
+### Documentation
+- All legal pages updated to December 12, 2025
+- Consistent messaging across all docs: "Claude Insider stores NO data on servers"
+
 ## [0.28.10] - 2025-12-12
 
 ### Fixed
