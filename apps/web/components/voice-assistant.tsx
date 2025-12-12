@@ -1479,7 +1479,7 @@ export function VoiceAssistant() {
         className={`fixed z-50 flex flex-col overflow-hidden border border-gray-200 bg-white shadow-2xl transition-all duration-300 ease-out dark:border-gray-700 dark:bg-gray-900 ${
           isFullscreen
             ? "inset-4 sm:inset-8 md:inset-12 lg:inset-16 rounded-2xl"
-            : "bottom-0 right-0 h-[600px] w-full max-w-md rounded-t-2xl sm:bottom-6 sm:right-6 sm:rounded-2xl"
+            : "bottom-0 right-0 h-[700px] w-full max-w-md rounded-t-2xl sm:bottom-6 sm:right-6 sm:rounded-2xl"
         } ${
           isOpen ? "translate-y-0 opacity-100" : "translate-y-full sm:translate-y-[calc(100%+2rem)] opacity-0 pointer-events-none"
         }`}
@@ -2230,6 +2230,30 @@ export function VoiceAssistant() {
                 </div>
               )}
 
+              {/* Smart Recommendations - shown below last message */}
+              {showRecommendations && recommendations.length > 0 && !isLoading && !streamingContent && (
+                <div className="mt-3 space-y-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Suggested follow-ups:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {recommendations.map((rec, index) => (
+                      <button
+                        key={`${rec}-${index}`}
+                        onClick={() => handleRecommendationClick(rec)}
+                        className="rounded-full bg-gray-100 px-3 py-1.5 text-xs text-gray-700 transition-all hover:bg-blue-100 hover:text-blue-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-blue-900/30 dark:hover:text-cyan-400"
+                      >
+                        {rec}
+                      </button>
+                    ))}
+                    <button
+                      onClick={showNextRecommendations}
+                      className="rounded-full border border-dashed border-gray-300 px-3 py-1.5 text-xs text-gray-500 transition-all hover:border-blue-400 hover:text-blue-600 dark:border-gray-600 dark:text-gray-400 dark:hover:border-cyan-400 dark:hover:text-cyan-400"
+                    >
+                      More...
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <div ref={messagesEndRef} />
             </div>
           )}
@@ -2241,42 +2265,6 @@ export function VoiceAssistant() {
             </div>
           )}
         </div>
-
-        {/* Smart Recommendations */}
-        {showRecommendations && recommendations.length > 0 && !isLoading && !streamingContent && (
-          <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
-            <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">Suggested questions:</p>
-            <div className="flex flex-col gap-2">
-              {recommendations.map((rec, index) => (
-                <button
-                  key={`${rec}-${index}`}
-                  onClick={() => handleRecommendationClick(rec)}
-                  className="group flex items-center justify-between rounded-2xl rounded-tr-sm bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-2.5 text-left text-sm text-white shadow-md transition-all hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
-                >
-                  <span className="flex-1">{rec}</span>
-                  <svg
-                    className="ml-2 h-4 w-4 opacity-60 transition-opacity group-hover:opacity-100"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
-              ))}
-              {/* Something else button */}
-              <button
-                onClick={showNextRecommendations}
-                className="flex items-center justify-center gap-2 rounded-2xl rounded-tr-sm border-2 border-dashed border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-600 transition-all hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-cyan-400 dark:hover:bg-gray-750 dark:hover:text-cyan-400"
-              >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                Something else
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* Input Area */}
         <div className="border-t border-gray-200 p-4 dark:border-gray-700">

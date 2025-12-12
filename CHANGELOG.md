@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.4] - 2025-12-12
+
+### Changed
+- **Recommendations UI Redesign** - Moved suggested questions below messages
+  - Questions now appear inline after the last AI response (not as overlay)
+  - Compact pill-style buttons that wrap naturally
+  - "More..." button replaces "Something else" for cleaner look
+  - Scrolls naturally with conversation instead of fixed position
+
+- **Taller Assistant Window** - Increased popup height from 600px to 700px
+  - More room for longer conversations
+  - Better visibility of messages and recommendations
+
+- **Concise AI Responses** - Updated system prompt for brevity
+  - AI now answers in 2-4 sentences for simple questions
+  - Always provides relevant documentation links
+  - Encourages users to ask follow-ups or read docs for more detail
+  - Reduces information overload in chat interface
+
 ## [0.28.3] - 2025-12-12
 
 ### Changed
