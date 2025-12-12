@@ -15,7 +15,7 @@ export default function AccessibilityStatementPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert max-w-none">
           <h1 className="text-4xl font-bold mb-2">Accessibility Statement</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 9, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 12, 2025</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Our Commitment</h2>
@@ -177,6 +177,21 @@ export default function AccessibilityStatementPage() {
             </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
               We are continuously working to improve accessibility and address any issues.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Preferences and Data Storage</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Your accessibility-related preferences are stored locally on your device:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li><strong>Theme preference:</strong> Your chosen display mode (dark, light, or system) persists between sessions</li>
+              <li><strong>Voice settings:</strong> Your TTS voice selection and auto-speak preference are remembered</li>
+              <li><strong>All settings stored locally:</strong> None of your preferences or data are sent to our servers</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              You can clear all locally stored data at any time through your browser settings. See our <a href="/privacy" className="text-blue-400 hover:text-cyan-300">Privacy Policy</a> for complete details.
             </p>
           </section>
 

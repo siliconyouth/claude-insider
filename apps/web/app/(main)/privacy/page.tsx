@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert prose-blue max-w-none">
           <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 9, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 12, 2025</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
@@ -117,9 +117,10 @@ export default function PrivacyPolicyPage() {
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Data Retention</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>Chat history:</strong> Stored only in your browser&apos;s memory during the session; cleared when you close the page or click &quot;Clear&quot;</li>
-              <li><strong>Voice preference:</strong> Your selected voice is saved to localStorage for convenience</li>
-              <li><strong>No server storage:</strong> We do not store your conversations on our servers</li>
+              <li><strong>Chat history:</strong> Stored in your browser&apos;s localStorage for your convenience; you can delete individual conversations or all data at any time</li>
+              <li><strong>Voice preference:</strong> Your selected voice and auto-speak setting are saved to localStorage</li>
+              <li><strong>Assistant personalization:</strong> Your custom assistant name and user name are stored locally</li>
+              <li><strong>No server storage:</strong> We do <strong>NOT</strong> store your conversations on our servers. All data remains on your device only.</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Speech Recognition</h3>
@@ -136,7 +137,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Local Storage</h2>
             <p className="text-gray-300 leading-relaxed">
-              We use your browser&apos;s local storage to enhance your experience with the following features:
+              We use your browser&apos;s local storage to enhance your experience. <strong>All data is stored exclusively on your device</strong> — we do not have access to it, and it is never transmitted to our servers.
             </p>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Data We Store Locally</h3>
@@ -144,16 +145,33 @@ export default function PrivacyPolicyPage() {
               <li><strong>Theme preference:</strong> Your chosen display mode (dark, light, or system)</li>
               <li><strong>Search history:</strong> Your recent search queries (up to 5 items) for quick access</li>
               <li><strong>Language preference:</strong> Your selected language for future i18n support</li>
-              <li><strong>Voice preference:</strong> Your selected TTS voice for the AI assistant</li>
+              <li><strong>Voice settings:</strong> Your selected TTS voice and auto-speak preference</li>
+              <li><strong>Chat conversations:</strong> Your AI assistant conversation history for continuity</li>
+              <li><strong>Personalization:</strong> Custom assistant name and your name (if provided)</li>
+              <li><strong>Performance cache:</strong> Prefetch cache for faster navigation</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Important Privacy Notes</h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li>All data is stored <strong>only on your device</strong></li>
-              <li>Data is <strong>never transmitted</strong> to our servers</li>
-              <li>You can clear this data anytime through your browser settings</li>
-              <li>None of this data contains personally identifiable information</li>
-              <li>Search history can be cleared directly from the search interface</li>
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mt-4">
+              <ul className="space-y-2 text-gray-300">
+                <li>✅ All data is stored <strong>only on your device</strong></li>
+                <li>✅ Data is <strong>never transmitted</strong> to Claude Insider servers</li>
+                <li>✅ <strong>You have complete control</strong> — delete data anytime</li>
+                <li>✅ None of this data contains personally identifiable information</li>
+                <li>✅ Search history can be cleared directly from the search interface</li>
+                <li>✅ Conversations can be deleted individually or all at once</li>
+              </ul>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">How to Delete Your Data</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You can delete all locally stored data at any time using one of these methods:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>Within the app:</strong> Use the &quot;Clear conversation&quot; button in the AI assistant</li>
+              <li><strong>Search history:</strong> Click &quot;Clear history&quot; in the search modal</li>
+              <li><strong>Browser settings:</strong> Clear site data for claudeinsider.com in your browser settings</li>
+              <li><strong>Developer tools:</strong> Open DevTools → Application → Local Storage → Delete all</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Storage Keys Used</h3>
@@ -163,6 +181,12 @@ export default function PrivacyPolicyPage() {
                 <li>• <code className="text-cyan-400">claude-insider-search-history</code> - Recent searches</li>
                 <li>• <code className="text-cyan-400">claude-insider-locale</code> - Language preference</li>
                 <li>• <code className="text-cyan-400">claude-insider-voice</code> - TTS voice preference</li>
+                <li>• <code className="text-cyan-400">claude-insider-auto-speak</code> - Auto-speak toggle</li>
+                <li>• <code className="text-cyan-400">claude-insider-conversations</code> - Chat history</li>
+                <li>• <code className="text-cyan-400">claude-insider-active-conversation</code> - Active chat ID</li>
+                <li>• <code className="text-cyan-400">claude-insider-assistant-name</code> - Custom assistant name</li>
+                <li>• <code className="text-cyan-400">claude-insider-user-name</code> - Your name (optional)</li>
+                <li>• <code className="text-cyan-400">claude-insider-prefetch-cache</code> - Navigation cache</li>
               </ul>
             </div>
           </section>
@@ -289,7 +313,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> We respect your privacy. We use cookie-free, privacy-focused analytics (Vercel Analytics) that collects only anonymous usage data. We don&apos;t collect personal information, we don&apos;t use cookies, we don&apos;t track you across sites, and we don&apos;t sell any data. Your preferences (theme, search history, language, voice) are stored locally on your device. The AI Voice Assistant uses Anthropic&apos;s Claude for chat and ElevenLabs for text-to-speech; chat history is session-only and not stored on our servers. Speech recognition uses your browser&apos;s built-in API.
+              <strong>In short:</strong> We respect your privacy. <strong>Claude Insider does NOT store any of your data on our servers.</strong> All your data (preferences, search history, chat conversations, personalization) is stored <strong>only on your device</strong> in your browser&apos;s localStorage. You have complete control and can delete everything at any time. We use cookie-free, privacy-focused analytics (Vercel Analytics) that collects only anonymous usage data. The AI Voice Assistant uses Anthropic&apos;s Claude for chat and ElevenLabs for text-to-speech — messages are sent to these services for processing but not stored by us. Speech recognition uses your browser&apos;s built-in API.
             </p>
           </section>
         </article>

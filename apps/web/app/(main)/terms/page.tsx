@@ -15,7 +15,7 @@ export default function TermsOfServicePage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert prose-blue max-w-none">
           <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 9, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 12, 2025</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
@@ -33,7 +33,7 @@ export default function TermsOfServicePage() {
               Claude Insider is a free, open-source documentation website providing information, guides, tips, and resources related to Claude AI products. The Website includes:
             </p>
             <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li>28 documentation pages covering Claude AI usage</li>
+              <li>34 documentation pages covering Claude AI usage</li>
               <li>An AI Voice Assistant powered by Claude AI and ElevenLabs TTS</li>
               <li>Search functionality with history</li>
               <li>Dark, light, and system theme modes</li>
@@ -197,11 +197,14 @@ export default function TermsOfServicePage() {
               Chat messages are:
             </p>
             <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li>Sent to Anthropic&apos;s API for processing</li>
-              <li>Not stored on our servers after the session ends</li>
-              <li>Retained only in your browser memory during the active session</li>
-              <li>Cleared when you close the page or click the &quot;Clear&quot; button</li>
+              <li>Sent to Anthropic&apos;s API for processing in real-time</li>
+              <li><strong>NOT stored on our servers</strong> - we have no server-side storage of your conversations</li>
+              <li>Stored in your browser&apos;s localStorage for your convenience between sessions</li>
+              <li>Completely under your control - you can delete individual conversations or all data at any time</li>
             </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              <strong>Important:</strong> Your data remains on your device only. We do not have access to your conversations, preferences, or any locally stored data.
+            </p>
             <p className="text-gray-300 leading-relaxed mt-4">
               For detailed information, see our <a href="/privacy" className="text-cyan-400 hover:text-cyan-300">Privacy Policy</a>.
             </p>
@@ -229,16 +232,27 @@ export default function TermsOfServicePage() {
 
             <h3 className="text-xl font-semibold mt-6 mb-3">11.2 Local Storage</h3>
             <p className="text-gray-300 leading-relaxed">
-              We use browser local storage to enhance your experience with the following features:
+              We use browser localStorage to enhance your experience. <strong>All data remains on your device and is never transmitted to our servers.</strong>
             </p>
             <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
               <li><strong>Theme preference:</strong> Your chosen display mode (dark, light, or system)</li>
               <li><strong>Search history:</strong> Your recent search queries (up to 5 items) for quick access</li>
-              <li><strong>Language preference:</strong> Your selected language for future internationalization support</li>
-              <li><strong>Voice preference:</strong> Your selected TTS voice for the AI assistant</li>
+              <li><strong>Chat conversations:</strong> Your AI assistant chat history for continuity between sessions</li>
+              <li><strong>Voice settings:</strong> Your selected TTS voice and auto-speak preference</li>
+              <li><strong>Personalization:</strong> Custom assistant name and user name (if set)</li>
+              <li><strong>Language preference:</strong> Your selected language for future internationalization</li>
+              <li><strong>Navigation cache:</strong> Temporary prefetch cache for faster page loads</li>
             </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
-              All locally stored data remains on your device and is never transmitted to our servers. You can clear this data at any time through your browser settings or directly within the application (e.g., clearing search history from the search interface).
+              <strong>Your control:</strong> You can delete all locally stored data at any time through:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li>Browser settings (clearing site data for claudeinsider.com)</li>
+              <li>The AI assistant settings panel (delete all conversations)</li>
+              <li>The search interface (clear search history)</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              <strong>We emphasize:</strong> Claude Insider has no server-side storage for user data. Your conversations, preferences, and settings exist only on your device.
             </p>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">11.3 Security</h3>
@@ -323,7 +337,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> Claude Insider is free, open-source documentation with an AI Voice Assistant. You can use and share content with attribution. We&apos;re not affiliated with Anthropic. The content is provided &quot;as is&quot; without warranties. The AI assistant uses Anthropic&apos;s Claude API and ElevenLabs TTS - chat history is session-only. We use privacy-focused analytics and store your preferences (theme, search history, language, voice) locally. Serbian law governs these terms, but your local consumer rights are preserved.
+              <strong>In short:</strong> Claude Insider is free, open-source documentation with an AI Voice Assistant. You can use and share content with attribution. We&apos;re not affiliated with Anthropic. The content is provided &quot;as is&quot; without warranties. The AI assistant uses Anthropic&apos;s Claude API and ElevenLabs TTS. <strong>All your data (chat history, preferences, settings) is stored only in your browser&apos;s localStorage - we do NOT store anything on our servers.</strong> You can delete your data anytime. Serbian law governs these terms, but your local consumer rights are preserved.
             </p>
           </section>
         </article>
