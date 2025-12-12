@@ -40,7 +40,8 @@ export const auth = betterAuth({
   // Email/Password authentication
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: process.env.NODE_ENV === 'production',
+    // Temporarily disable email verification until Resend is configured
+    requireEmailVerification: false,
     sendVerificationEmail: async ({
       user,
       url,
