@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.4] - 2025-12-12
+
+### Fixed
+- **AI Assistant Text Selection** - Improved text selection support
+  - Added `select-text` class to Messages Area container for consistent selection
+  - Added `select-text` class to message bubble containers
+  - Text selection now works reliably at all container levels
+  - Users can select, copy (Ctrl+C), and use right-click context menu
+
 ## [0.26.3] - 2025-12-12
 
 ### Added

@@ -1403,7 +1403,7 @@ export function VoiceAssistant() {
         )}
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-4 select-text">
           {messages.length === 0 && !streamingContent ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
               <div className="mb-4 rounded-full bg-blue-100 p-4 dark:bg-blue-900/30">
@@ -1454,7 +1454,7 @@ export function VoiceAssistant() {
                   }`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-2 ${
+                    className={`max-w-[85%] rounded-2xl px-4 py-2 select-text ${
                       message.role === "user"
                         ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white"
                         : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
@@ -1574,7 +1574,7 @@ export function VoiceAssistant() {
               {/* Streaming response */}
               {streamingContent && (
                 <div className="flex justify-start">
-                  <div className="max-w-[85%] rounded-2xl bg-gray-100 px-4 py-2 dark:bg-gray-800">
+                  <div className="max-w-[85%] rounded-2xl bg-gray-100 px-4 py-2 dark:bg-gray-800 select-text">
                     <p className="whitespace-pre-wrap text-sm text-gray-900 dark:text-white select-text cursor-text">
                       {markdownToDisplayText(streamingContent)}
                     </p>
