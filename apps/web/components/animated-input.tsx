@@ -190,7 +190,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
                   : cn(
                       "top-1/2 -translate-y-1/2",
                       labelSizes[size],
-                      leftIcon && "left-11"
+                      leftIcon ? "left-11" : undefined
                     )
               )}
             >
@@ -258,8 +258,8 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
               // Size
               inputSizes[size],
               // Icon padding
-              leftIcon && "pl-11",
-              rightIcon && "pr-11",
+              leftIcon ? "pl-11" : undefined,
+              rightIcon ? "pr-11" : undefined,
               // Floating label padding
               floatingLabel && "pt-4 pb-1"
             )}

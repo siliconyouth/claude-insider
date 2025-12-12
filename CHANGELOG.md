@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.9] - 2025-12-12
+
+### Fixed
+- **TypeScript Strict Mode Errors** - Fixed all 30 remaining TypeScript errors
+  - Fixed `animated-card.tsx` - Removed unnecessary event arguments from glow handlers
+  - Fixed `animated-input.tsx` - Changed boolean `&&` to ternary for cn() arguments
+  - Fixed `lazy-image.tsx` - Renamed `placeholder` prop to `customPlaceholder` to avoid Next.js Image conflict
+  - Fixed `linkified-text.tsx` - Added proper null checks for knownPages and path captures
+  - Fixed `resource-card.tsx` - Added DEFAULT_COLOR fallback for category colors
+  - Fixed `voice-assistant.tsx` - Added `?? []` fallback for baseRecommendations iteration
+  - Fixed `use-animations.tsx` - Changed IntersectionObserver entry destructuring to handle undefined
+  - Fixed `use-aria-live.tsx` - Added explicit undefined initial values to useRef calls
+  - Fixed `use-focus-trap.ts` - Multiple fixes for focusable element access and ref handling
+  - Fixed `use-keyboard-shortcuts.tsx` - Added shortcut existence check and moved ref updates to useEffect
+  - Fixed `use-prefetch.ts` - Imported PrefetchPriority type properly for local use
+
+### Changed
+- **Improved React Hooks Compliance** - Reduced lint warnings from 41 to 31
+  - Moved ref updates from render phase to useEffect (proper React 18+ patterns)
+  - Changed `useFocusVisible` to use useState instead of ref for reactive value
+  - Captured ref values in effect setup for use in cleanup functions
+  - Changed `useFocusReturn` to return getter function instead of direct ref access
+
 ## [0.28.8] - 2025-12-12
 
 ### Fixed

@@ -280,9 +280,8 @@ export function KeyboardShortcutsProvider({
         .sort((a, b) => (b.priority || 0) - (a.priority || 0));
 
       // Execute highest priority match
-      if (matchingShortcuts.length > 0) {
-        const shortcut = matchingShortcuts[0];
-
+      const shortcut = matchingShortcuts[0];
+      if (shortcut) {
         if (shortcut.preventDefault !== false) {
           event.preventDefault();
         }
@@ -355,7 +354,10 @@ export function useKeyboardShortcut(options: UseKeyboardShortcutOptions) {
   void _priority;
 
   const handlerRef = useRef(handler);
-  handlerRef.current = handler;
+  // Update ref in effect to avoid setting during render
+  useEffect(() => {
+    handlerRef.current = handler;
+  });
 
   // Generate stable ID using React's useId
   const uniqueId = useId();
@@ -409,7 +411,7 @@ export function useKeyboardShortcut(options: UseKeyboardShortcutOptions) {
       key,
       modifiers,
       description,
-      handler: handlerRef.current,
+      handler, // Use handler prop directly to avoid ref access during render
     }),
   };
 }

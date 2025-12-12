@@ -140,12 +140,12 @@ export const AnimatedCard = forwardRef<HTMLDivElement, AnimatedCardProps>(
         tiltHandlers.onMouseMove(e);
         glowHandlers.onMouseMove(e);
       },
-      onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => {
-        glowHandlers.onMouseEnter(e);
+      onMouseEnter: () => {
+        glowHandlers.onMouseEnter();
       },
-      onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => {
+      onMouseLeave: () => {
         tiltHandlers.onMouseLeave();
-        glowHandlers.onMouseLeave(e);
+        glowHandlers.onMouseLeave();
       },
     };
 
@@ -224,12 +224,12 @@ export const AnimatedCardLink = forwardRef<
         tiltHandlers.onMouseMove(e as unknown as React.MouseEvent<HTMLElement>);
         glowHandlers.onMouseMove(e as unknown as React.MouseEvent<HTMLElement>);
       },
-      onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement>) => {
-        glowHandlers.onMouseEnter(e as unknown as React.MouseEvent<HTMLElement>);
+      onMouseEnter: () => {
+        glowHandlers.onMouseEnter();
       },
       onMouseLeave: () => {
         tiltHandlers.onMouseLeave();
-        glowHandlers.onMouseLeave({} as React.MouseEvent<HTMLElement>);
+        glowHandlers.onMouseLeave();
       },
     };
 

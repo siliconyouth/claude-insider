@@ -6,11 +6,11 @@ import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { cn } from "@/lib/design-system";
 import { Skeleton } from "@/components/skeleton";
 
-interface LazyImageProps extends Omit<ImageProps, "onLoad" | "onError"> {
+interface LazyImageProps extends Omit<ImageProps, "onLoad" | "onError" | "placeholder"> {
   /** Blur placeholder (base64 or URL to tiny image) */
   blurPlaceholder?: string;
   /** Custom placeholder component */
-  placeholder?: React.ReactNode;
+  customPlaceholder?: React.ReactNode;
   /** Aspect ratio for placeholder (e.g., "16/9", "4/3", "1/1") */
   aspectRatio?: string;
   /** Root margin for intersection observer */
@@ -45,7 +45,7 @@ export function LazyImage({
   width,
   height,
   blurPlaceholder,
-  placeholder,
+  customPlaceholder,
   aspectRatio,
   rootMargin = "200px",
   containerClassName,
@@ -101,8 +101,8 @@ export function LazyImage({
                 backgroundPosition: "center",
               }}
             />
-          ) : placeholder ? (
-            placeholder
+          ) : customPlaceholder ? (
+            customPlaceholder
           ) : showSkeleton ? (
             <Skeleton className="absolute inset-0 rounded-none" />
           ) : null}

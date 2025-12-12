@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback, type RefObject } from "react";
+import { useEffect, useRef, useCallback, useState, type RefObject } from "react";
 
 /**
  * Focus Trap Hook
@@ -92,9 +92,11 @@ export function useFocusTrap(
   const onEscapeRef = useRef(onEscape);
   const onClickOutsideRef = useRef(onClickOutside);
 
-  // Update refs when callbacks change (without triggering useEffect)
-  onEscapeRef.current = onEscape;
-  onClickOutsideRef.current = onClickOutside;
+  // Update refs when callbacks change (in effect to avoid setting during render)
+  useEffect(() => {
+    onEscapeRef.current = onEscape;
+    onClickOutsideRef.current = onClickOutside;
+  });
 
   // Get all focusable elements within the container
   const getFocusableElements = useCallback((): HTMLElement[] => {
@@ -119,16 +121,18 @@ export function useFocusTrap(
   // Focus first focusable element
   const focusFirst = useCallback(() => {
     const focusable = getFocusableElements();
-    if (focusable.length > 0) {
-      focusable[0].focus();
+    const first = focusable[0];
+    if (first) {
+      first.focus();
     }
   }, [getFocusableElements]);
 
   // Focus last focusable element
   const focusLast = useCallback(() => {
     const focusable = getFocusableElements();
-    if (focusable.length > 0) {
-      focusable[focusable.length - 1].focus();
+    const last = focusable[focusable.length - 1];
+    if (last) {
+      last.focus();
     }
   }, [getFocusableElements]);
 
@@ -157,6 +161,10 @@ export function useFocusTrap(
 
         const firstElement = focusable[0];
         const lastElement = focusable[focusable.length - 1];
+        if (!firstElement || !lastElement) {
+          event.preventDefault();
+          return;
+        }
         const activeElement = document.activeElement as HTMLElement;
 
         // Shift+Tab on first element -> focus last
@@ -265,8 +273,9 @@ export function useFocusTrap(
         containerRef.current &&
         !containerRef.current.contains(activeElement)
       ) {
-        if (focusable.length > 0) {
-          focusable[0].focus();
+        const first = focusable[0];
+        if (first) {
+          first.focus();
         }
       }
     });
@@ -317,9 +326,13 @@ export function useFocusReturn(options: UseFocusReturnOptions = {}) {
 
   // Return focus on unmount
   useEffect(() => {
+    // Capture ref values at effect setup time for use in cleanup
+    const returnToElement = returnTo?.current;
+    const prevElement = previousElement.current;
+
     return () => {
       if (enabled) {
-        const element = returnTo?.current || previousElement.current;
+        const element = returnToElement || prevElement;
         if (element && typeof element.focus === "function") {
           // Use setTimeout to ensure cleanup happens after React updates
           setTimeout(() => element.focus(), 0);
@@ -329,7 +342,8 @@ export function useFocusReturn(options: UseFocusReturnOptions = {}) {
   }, [enabled, returnTo]);
 
   return {
-    previousElement: previousElement.current,
+    // Return a getter to avoid accessing ref during render
+    getPreviousElement: () => previousElement.current,
     returnFocus: () => {
       const element = returnTo?.current || previousElement.current;
       if (element && typeof element.focus === "function") {
@@ -349,17 +363,17 @@ export function useFocusReturn(options: UseFocusReturnOptions = {}) {
  */
 export function useFocusVisible() {
   const ref = useRef<HTMLElement>(null);
-  const isFocusVisible = useRef(false);
+  const [isFocusVisible, setIsFocusVisible] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Tab") {
-        isFocusVisible.current = true;
+        setIsFocusVisible(true);
       }
     };
 
     const handleMouseDown = () => {
-      isFocusVisible.current = false;
+      setIsFocusVisible(false);
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -373,7 +387,7 @@ export function useFocusVisible() {
 
   return {
     ref,
-    isFocusVisible: isFocusVisible.current,
+    isFocusVisible,
   };
 }
 

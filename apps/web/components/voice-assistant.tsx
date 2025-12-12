@@ -1039,10 +1039,10 @@ export function VoiceAssistant() {
 
     if (hasMessages) {
       // Prioritize follow-up questions when there's conversation context
-      pool = [...baseRecommendations.followUp, ...baseRecommendations[contextKey], ...baseRecommendations.general];
+      pool = [...(baseRecommendations.followUp ?? []), ...(baseRecommendations[contextKey] ?? []), ...(baseRecommendations.general ?? [])];
     } else {
       // Start with context-specific, then general
-      pool = [...baseRecommendations[contextKey], ...baseRecommendations.general];
+      pool = [...(baseRecommendations[contextKey] ?? []), ...(baseRecommendations.general ?? [])];
     }
 
     // Remove duplicates and shuffle

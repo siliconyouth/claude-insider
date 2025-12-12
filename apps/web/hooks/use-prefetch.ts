@@ -5,9 +5,10 @@ import { useRouter, usePathname } from "next/navigation";
 import {
   prefetchQueue,
   getRoutePriority,
+  type PrefetchPriority,
 } from "@/lib/prefetch-queue";
 
-export type { PrefetchPriority } from "@/lib/prefetch-queue";
+export type { PrefetchPriority };
 
 interface UsePrefetchOptions {
   /**

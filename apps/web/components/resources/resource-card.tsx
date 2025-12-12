@@ -75,9 +75,10 @@ function formatNumber(num: number): string {
  * Get the appropriate color classes for a category
  */
 function getCategoryColor(category: ResourceCategory): string {
+  const DEFAULT_COLOR = 'bg-blue-500/10 text-blue-600 dark:text-blue-400';
   const colorMap: Record<string, string> = {
     violet: 'bg-violet-500/10 text-violet-600 dark:text-violet-400',
-    blue: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+    blue: DEFAULT_COLOR,
     cyan: 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400',
     emerald: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
     green: 'bg-green-500/10 text-green-600 dark:text-green-400',
@@ -87,7 +88,7 @@ function getCategoryColor(category: ResourceCategory): string {
     sky: 'bg-sky-500/10 text-sky-600 dark:text-sky-400',
     teal: 'bg-teal-500/10 text-teal-600 dark:text-teal-400',
   };
-  return colorMap[category.color] || colorMap.blue;
+  return colorMap[category.color] ?? DEFAULT_COLOR;
 }
 
 export function ResourceCard({

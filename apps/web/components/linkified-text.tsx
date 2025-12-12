@@ -100,8 +100,9 @@ function getInternalPageInfo(urlOrPath: string): { title: string; description: s
       "/accessibility": { title: "Accessibility", description: "Accessibility statement", category: "Legal" },
     };
 
-    if (knownPages[pathname]) {
-      return { ...knownPages[pathname], path: pathname };
+    const knownPage = knownPages[pathname];
+    if (knownPage) {
+      return { ...knownPage, path: pathname };
     }
 
     // For any other /docs path, return generic info
@@ -364,6 +365,8 @@ export function LinkifiedText({ text, className }: LinkifiedTextProps) {
     // The path is in capture group 1, and might have leading whitespace
     const fullMatch = match[0];
     const path = match[1];
+    // Skip if capture group is empty
+    if (!path) continue;
     const leadingWhitespace = fullMatch.length - path.length;
     const pathIndex = match.index + leadingWhitespace;
 

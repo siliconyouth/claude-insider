@@ -98,7 +98,7 @@ export function AnnouncerProvider({
   const [politeMessage, setPoliteMessage] = useState("");
   const [assertiveMessage, setAssertiveMessage] = useState("");
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-  const clearTimeoutRef = useRef<NodeJS.Timeout>();
+  const clearTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const generateId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
@@ -213,8 +213,8 @@ export function useAriaLive(options: UseAriaLiveOptions = {}) {
   } = options;
 
   const [message, setMessage] = useState("");
-  const debounceRef = useRef<NodeJS.Timeout>();
-  const clearRef = useRef<NodeJS.Timeout>();
+  const debounceRef = useRef<NodeJS.Timeout | undefined>(undefined);
+  const clearRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const announce = useCallback(
     (text: string, _overridePoliteness?: AriaLivePoliteness) => {

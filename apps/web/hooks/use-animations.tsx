@@ -574,8 +574,9 @@ export function useScrollReveal(options: {
     if (!element) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
           if (triggerOnce && hasTriggeredRef.current) return;
           hasTriggeredRef.current = true;
 
