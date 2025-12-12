@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.3] - 2025-12-12
+
+### Changed
+- **Improved Conversation History Button** - Made the history button more visible and accessible
+  - Added "History" text label (visible on larger screens)
+  - Fixed badge positioning with proper `relative` class
+  - Changed from icon-only to icon + text for better discoverability
+  - Badge now displays inline instead of absolute positioned
+  - Better touch target with increased padding
+
 ## [0.28.2] - 2025-12-12
 
 ### Added

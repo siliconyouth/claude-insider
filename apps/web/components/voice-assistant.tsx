@@ -1488,19 +1488,20 @@ export function VoiceAssistant() {
         {/* Header - Compact design with settings icon */}
         <div className="flex items-center justify-between border-b border-gray-200 bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-3 dark:border-gray-700">
           <div className="flex items-center gap-2">
-            {/* Conversations button */}
+            {/* Conversations/History button */}
             <button
               onClick={() => setShowConversationList(!showConversationList)}
-              className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
+              className={`relative flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-white transition-colors ${
                 showConversationList ? "bg-white/30" : "bg-white/20 hover:bg-white/30"
               }`}
-              title="Conversations"
+              title="View conversation history"
             >
-              <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
               </svg>
+              <span className="hidden sm:inline">History</span>
               {conversations.length > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-cyan-400 text-[10px] font-bold text-gray-900">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-cyan-400 text-[10px] font-bold text-gray-900">
                   {conversations.length}
                 </span>
               )}
