@@ -130,7 +130,14 @@ body {
 }
 
 ::selection {
-  background-color: rgba(var(--ds-accent), 0.2);
+  background-color: rgba(var(--ds-accent), 0.4);
+  color: white;
+}
+
+/* Light mode selection - darker background for better visibility */
+:root:not(.dark) ::selection {
+  background-color: rgba(59, 130, 246, 0.35);
+  color: rgb(17, 24, 39);
 }
 
 /* ============================================

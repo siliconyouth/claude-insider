@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.6] - 2025-12-12
+
+### Fixed
+- **Text Selection Highlight** - Fixed invisible selection background in AI Assistant
+  - Increased `::selection` opacity from 0.2 to 0.4 for better visibility
+  - Added contrasting text color (white in dark mode, dark gray in light mode)
+  - Light mode uses blue-500 at 35% opacity for native-like appearance
+  - Selection now shows standard system-like highlight behavior
+
 ## [0.26.5] - 2025-12-12
 
 ### Fixed
