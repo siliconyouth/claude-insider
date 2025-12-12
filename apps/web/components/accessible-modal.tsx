@@ -3,6 +3,7 @@
 import {
   useEffect,
   useRef,
+  useState,
   useId,
   type ReactNode,
   type HTMLAttributes,
@@ -131,7 +132,7 @@ export function AccessibleModal({
   const uniqueId = useId();
   const titleId = `modal-title-${uniqueId}`;
   const descId = `modal-desc-${uniqueId}`;
-  const portalContainer = useRef<HTMLElement | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   // Focus trap
   const { containerRef } = useFocusTrap({
@@ -147,6 +148,11 @@ export function AccessibleModal({
   // Scroll lock
   useScrollLock(isOpen);
 
+  // Track client-side mount for portal rendering
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Announce on open
   useEffect(() => {
     if (isOpen && announceOnOpen) {
@@ -154,12 +160,7 @@ export function AccessibleModal({
     }
   }, [isOpen, announceOnOpen, title, announce]);
 
-  // Setup portal container
-  useEffect(() => {
-    portalContainer.current = document.body;
-  }, []);
-
-  if (!isOpen || !portalContainer.current) return null;
+  if (!isOpen || !mounted) return null;
 
   const modalContent = (
     <div
@@ -243,7 +244,7 @@ export function AccessibleModal({
     </div>
   );
 
-  return createPortal(modalContent, portalContainer.current);
+  return createPortal(modalContent, document.body);
 }
 
 // ============================================

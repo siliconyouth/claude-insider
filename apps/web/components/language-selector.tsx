@@ -7,18 +7,13 @@ import {
   setLocale,
   hasMultipleLocales,
   Locale,
-  defaultLocale,
 } from "@/lib/i18n";
 
 export function LanguageSelector() {
-  const [currentLocale, setCurrentLocale] = useState<Locale>(defaultLocale);
+  // Use lazy initializer - getCurrentLocale is SSR-safe
+  const [currentLocale, setCurrentLocale] = useState<Locale>(getCurrentLocale);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Load saved locale on mount
-  useEffect(() => {
-    setCurrentLocale(getCurrentLocale());
-  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {

@@ -217,7 +217,8 @@ export function useAriaLive(options: UseAriaLiveOptions = {}) {
   const clearRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const announce = useCallback(
-    (text: string, _overridePoliteness?: AriaLivePoliteness) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (text: string, overridePoliteness?: AriaLivePoliteness) => {
       // Debounce rapid announcements
       if (debounceRef.current) {
         clearTimeout(debounceRef.current);

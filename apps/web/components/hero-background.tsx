@@ -48,13 +48,15 @@ export function HeroBackground({
   className = "",
   intensity = 1,
 }: HeroBackgroundProps) {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  // Use lazy initializer for SSR-safe initial value
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   useEffect(() => {
-    // Check for reduced motion preference
+    // Subscribe to changes in reduced motion preference
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mediaQuery.matches);
-
     const handleChange = (e: MediaQueryListEvent) => {
       setPrefersReducedMotion(e.matches);
     };

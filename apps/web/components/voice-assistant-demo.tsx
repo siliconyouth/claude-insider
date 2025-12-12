@@ -291,6 +291,7 @@ export function VoiceAssistantDemo() {
         </div>
       </div>
 
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx>{`
         @keyframes fadeIn {
           from {

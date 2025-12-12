@@ -395,6 +395,7 @@ export function useSpring(
   const velocityRef = useRef(0);
   const rafRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number | null>(null);
+  const animateRef = useRef<(() => void) | undefined>(undefined);
 
   const animate = useCallback(() => {
     const now = performance.now();
@@ -424,19 +425,25 @@ export function useSpring(
       rafRef.current = null;
     } else {
       setValueState(result.value);
-      rafRef.current = requestAnimationFrame(animate);
+      // Use ref to avoid self-reference TDZ warning
+      rafRef.current = requestAnimationFrame(() => animateRef.current?.());
     }
   }, [value, config]);
+
+  // Keep animate ref updated in effect to avoid refs-during-render warning
+  useEffect(() => {
+    animateRef.current = animate;
+  }, [animate]);
 
   const setValue = useCallback(
     (target: number) => {
       targetRef.current = target;
       if (!rafRef.current) {
         lastTimeRef.current = null;
-        rafRef.current = requestAnimationFrame(animate);
+        rafRef.current = requestAnimationFrame(() => animateRef.current?.());
       }
     },
-    [animate]
+    [] // No dependencies - uses refs
   );
 
   useEffect(() => {
@@ -782,13 +789,17 @@ export function useParallax(options: {
  * ```
  */
 export function useReducedMotion(): boolean {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  // Use lazy initializer to get initial value from browser API
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    // Return false during SSR (window not available)
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    setPrefersReducedMotion(mediaQuery.matches);
-
+    // Subscribe to changes
     const handler = (event: MediaQueryListEvent) => {
       setPrefersReducedMotion(event.matches);
     };

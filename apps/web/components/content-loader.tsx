@@ -289,6 +289,7 @@ export function NavigationLoader({ isLoading }: { isLoading: boolean }) {
           animation: "progress 1s ease-in-out infinite",
         }}
       />
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx>{`
         @keyframes progress {
           0% {

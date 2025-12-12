@@ -63,7 +63,7 @@ export function VoiceAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [streamingContent, setStreamingContent] = useState("");
-  const [_isSpeaking, setIsSpeaking] = useState(false);
+  const [, setIsSpeaking] = useState(false);
   const [speakingMessageIndex, setSpeakingMessageIndex] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState("");
@@ -508,7 +508,7 @@ export function VoiceAssistant() {
         }
       });
     }
-  }, [speakWithBrowserTTSQueue]);
+  }, [speakWithBrowserTTSQueue, announce]);
 
   // Split text into speakable sentences, avoiding splits on technical dots
   // Also breaks on empty lines and list items for natural pauses
@@ -615,6 +615,7 @@ export function VoiceAssistant() {
   }, []);
 
   // Add text to speech queue (splits by sentences) - reserved for future use
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _queueSpeech = useCallback((text: string) => {
     const sentences = splitIntoSentences(text);
     sentences.forEach(sentence => {
@@ -669,6 +670,9 @@ export function VoiceAssistant() {
   useEffect(() => {
     autoSpeakRef.current = autoSpeak;
   }, [autoSpeak]);
+
+  // Ref for generateRecommendations to avoid forward reference (defined later in the file)
+  const generateRecommendationsRef = useRef<() => string[]>(() => []);
 
   const sendMessage = useCallback(
     async (content: string) => {
@@ -852,7 +856,7 @@ export function VoiceAssistant() {
           // Initialize recommendations after assistant responds
           // Small delay to let the UI settle
           setTimeout(() => {
-            const pool = generateRecommendations();
+            const pool = generateRecommendationsRef.current();
             setRecommendationPool(pool.slice(3));
             setRecommendations(pool.slice(0, 3));
             setShowRecommendations(true);
@@ -1051,6 +1055,11 @@ export function VoiceAssistant() {
     return pool;
   }, [pathname, messages.length]);
 
+  // Keep ref updated for use in sendMessage (which is defined before this)
+  useEffect(() => {
+    generateRecommendationsRef.current = generateRecommendations;
+  }, [generateRecommendations]);
+
   // Show next set of recommendations (for "Something else")
   const showNextRecommendations = useCallback(() => {
     const pool = recommendationPool.length > 0 ? recommendationPool : generateRecommendations();
@@ -1080,14 +1089,6 @@ export function VoiceAssistant() {
     sendMessage(recommendation);
     track("assistant_recommendation_clicked", { recommendation: recommendation.substring(0, 50) });
   }, [sendMessage]);
-
-  // Initialize recommendations after assistant responds
-  const initializeRecommendations = useCallback(() => {
-    const pool = generateRecommendations();
-    setRecommendationPool(pool.slice(3));
-    setRecommendations(pool.slice(0, 3));
-    setShowRecommendations(true);
-  }, [generateRecommendations]);
 
   // Export conversation as markdown file
   const handleExportConversation = useCallback(() => {
