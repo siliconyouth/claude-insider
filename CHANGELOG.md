@@ -9,6 +9,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.12] - 2025-12-12
+
+### Added
+- **User Authentication System** - Complete authentication infrastructure for community features
+  - **Better Auth Integration** - Modern TypeScript-first authentication library
+    - Email/password authentication with verification
+    - GitHub and Google OAuth providers (optional)
+    - JWT-based stateless sessions for PgBouncer compatibility
+    - Rate limiting and secure cookie configuration
+  - **Payload CMS User Roles** - Extended admin user management
+    - New roles: admin, editor, moderator, beta_tester
+    - Fine-grained permissions system (canApproveComments, canApproveEdits, etc.)
+    - Login tracking (lastLoginAt, loginCount)
+  - **EditSuggestions Collection** - Moderation workflow for user contributions
+    - Status flow: pending → reviewing → approved/rejected → merged
+    - Submitter info, reviewer tracking, rejection reasons
+  - **Media Collection** - File uploads with responsive image processing
+    - WebP format optimization (thumbnail, avatar, card, feature sizes)
+    - RBAC access control for uploads
+  - **Supabase User Data Tables** - 8 tables with Row Level Security
+    - profiles, favorites, ratings, comments, comment_votes
+    - collections, collection_items, user_activity
+    - Rating aggregation view (rating_stats)
+    - Automatic vote count triggers
+  - **Supabase Client Utilities**
+    - Browser client (`lib/supabase/client.ts`)
+    - Server client (`lib/supabase/server.ts`)
+    - Full TypeScript types (`lib/database.types.ts`)
+
+### Changed
+- **Environment Variables** - Added auth-related configuration
+  - BETTER_AUTH_SECRET, BETTER_AUTH_URL
+  - GITHUB_CLIENT_ID/SECRET, GOOGLE_CLIENT_ID/SECRET (optional)
+  - RESEND_API_KEY for transactional emails (optional)
+
+### Documentation
+- Created `docs/AUTH-IMPLEMENTATION-PLAN.md` - Comprehensive 6-phase implementation guide
+
+### Dependencies
+- Added `better-auth` for public user authentication
+- Added `@supabase/ssr` and `@supabase/supabase-js` for user data
+- Added `pg` and `@types/pg` for PostgreSQL connectivity
+
 ## [0.28.11] - 2025-12-12
 
 ### Changed

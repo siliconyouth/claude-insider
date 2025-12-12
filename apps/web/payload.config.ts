@@ -14,6 +14,8 @@ import {
   DifficultyLevels,
   ProgrammingLanguages,
   Users,
+  EditSuggestions,
+  Media,
 } from './collections';
 import { SiteSettings } from './globals';
 
@@ -37,6 +39,8 @@ export default buildConfig({
   collections: [
     // User management first
     Users,
+    // Media uploads (needed for user avatars)
+    Media,
     // Core content collections
     Categories,
     Subcategories,
@@ -45,6 +49,8 @@ export default buildConfig({
     // Reference data (Settings group)
     DifficultyLevels,
     ProgrammingLanguages,
+    // Moderation (Community group)
+    EditSuggestions,
   ],
 
   // Globals (single-instance documents for site-wide config)

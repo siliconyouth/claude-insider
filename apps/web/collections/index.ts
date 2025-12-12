@@ -14,4 +14,11 @@ export { DifficultyLevels } from './DifficultyLevels';
 export { ProgrammingLanguages } from './ProgrammingLanguages';
 
 // User management
-export { Users } from './Users';
+export { Users, hasRole } from './Users';
+export type { UserRole } from './Users';
+
+// Moderation
+export { EditSuggestions } from './EditSuggestions';
+
+// Media uploads
+export { Media } from './Media';

@@ -68,12 +68,14 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    media: Media;
     categories: Category;
     subcategories: Subcategory;
     tags: Tag;
     resources: Resource;
     'difficulty-levels': DifficultyLevel;
     'programming-languages': ProgrammingLanguage;
+    'edit-suggestions': EditSuggestion;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,12 +84,14 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     subcategories: SubcategoriesSelect<false> | SubcategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
     'difficulty-levels': DifficultyLevelsSelect<false> | DifficultyLevelsSelect<true>;
     'programming-languages': ProgrammingLanguagesSelect<false> | ProgrammingLanguagesSelect<true>;
+    'edit-suggestions': EditSuggestionsSelect<false> | EditSuggestionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -131,13 +135,58 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * CMS users who manage content and moderate submissions
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: number;
+  /**
+   * Display name for the admin panel
+   */
   name: string;
-  role: 'admin' | 'editor';
+  /**
+   * Short biography or description
+   */
+  bio?: string | null;
+  /**
+   * User role determines access level
+   */
+  role: 'admin' | 'editor' | 'moderator' | 'beta_tester';
+  /**
+   * Inactive users cannot log in
+   */
+  isActive?: boolean | null;
+  /**
+   * Fine-grained permissions (for moderators)
+   */
+  permissions?: {
+    /**
+     * Can approve or reject user comments
+     */
+    canApproveComments?: boolean | null;
+    /**
+     * Can approve or reject edit suggestions
+     */
+    canApproveEdits?: boolean | null;
+    /**
+     * Can create, edit, and delete resources
+     */
+    canManageResources?: boolean | null;
+    /**
+     * Can view site analytics and reports
+     */
+    canViewAnalytics?: boolean | null;
+  };
+  /**
+   * Last successful login
+   */
+  lastLoginAt?: string | null;
+  /**
+   * Total number of logins
+   */
+  loginCount?: number | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -148,6 +197,72 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * Uploaded images and files
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Alternative text for accessibility (required)
+   */
+  alt: string;
+  /**
+   * Optional caption for the image
+   */
+  caption?: string | null;
+  /**
+   * Category for organization
+   */
+  category?: ('avatar' | 'resource' | 'doc' | 'general') | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    avatar?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    feature?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -415,6 +530,82 @@ export interface ProgrammingLanguage {
   createdAt: string;
 }
 /**
+ * User-submitted edit suggestions for docs and resources
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "edit-suggestions".
+ */
+export interface EditSuggestion {
+  id: number;
+  /**
+   * Brief description of the suggested change
+   */
+  title: string;
+  /**
+   * Type of content being edited
+   */
+  targetType: 'doc' | 'resource';
+  /**
+   * ID or slug of the target content
+   */
+  targetId: string;
+  /**
+   * URL where the suggestion was made
+   */
+  targetUrl?: string | null;
+  /**
+   * The current content (for reference)
+   */
+  currentContent?: string | null;
+  /**
+   * The proposed changes (use markdown)
+   */
+  suggestedContent: string;
+  /**
+   * Why this change should be made
+   */
+  reason?: string | null;
+  status: 'pending' | 'reviewing' | 'approved' | 'rejected' | 'merged';
+  /**
+   * Priority for review
+   */
+  priority?: ('low' | 'normal' | 'high' | 'critical') | null;
+  /**
+   * Information about who submitted this suggestion
+   */
+  submitter?: {
+    type?: ('public' | 'cms' | 'anonymous') | null;
+    /**
+     * User ID (public or CMS)
+     */
+    userId?: string | null;
+    /**
+     * Email for notification about status
+     */
+    email?: string | null;
+    /**
+     * Display name
+     */
+    name?: string | null;
+  };
+  submitterEmail?: string | null;
+  /**
+   * Moderator who reviewed this
+   */
+  reviewedBy?: (number | null) | User;
+  /**
+   * Notes from the reviewer (internal)
+   */
+  reviewNotes?: string | null;
+  /**
+   * Reason for rejection (sent to submitter)
+   */
+  rejectionReason?: string | null;
+  reviewedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -443,6 +634,10 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
         relationTo: 'categories';
         value: number | Category;
       } | null)
@@ -465,6 +660,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'programming-languages';
         value: number | ProgrammingLanguage;
+      } | null)
+    | ({
+        relationTo: 'edit-suggestions';
+        value: number | EditSuggestion;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -514,7 +713,19 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  bio?: T;
   role?: T;
+  isActive?: T;
+  permissions?:
+    | T
+    | {
+        canApproveComments?: T;
+        canApproveEdits?: T;
+        canManageResources?: T;
+        canViewAnalytics?: T;
+      };
+  lastLoginAt?: T;
+  loginCount?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -524,6 +735,70 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  caption?: T;
+  category?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        avatar?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        feature?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -630,6 +905,36 @@ export interface ProgrammingLanguagesSelect<T extends boolean = true> {
   icon?: T;
   website?: T;
   resourceCount?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "edit-suggestions_select".
+ */
+export interface EditSuggestionsSelect<T extends boolean = true> {
+  title?: T;
+  targetType?: T;
+  targetId?: T;
+  targetUrl?: T;
+  currentContent?: T;
+  suggestedContent?: T;
+  reason?: T;
+  status?: T;
+  priority?: T;
+  submitter?:
+    | T
+    | {
+        type?: T;
+        userId?: T;
+        email?: T;
+        name?: T;
+      };
+  submitterEmail?: T;
+  reviewedBy?: T;
+  reviewNotes?: T;
+  rejectionReason?: T;
+  reviewedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
