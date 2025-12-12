@@ -10,18 +10,21 @@
  * - All documentation content and structure
  * - Technical implementation details
  * - Voice assistant capabilities
+ *
+ * Project info is now dynamically loaded from Payload CMS Site Settings
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
+import type { SiteSetting } from "../payload-types";
 
 // =============================================================================
-// PROJECT METADATA
+// PROJECT METADATA (defaults - overridden by CMS when available)
 // =============================================================================
 
-export const PROJECT_INFO = {
+export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "0.27.0",
-  tagline: "Your guide to mastering Claude AI",
+  version: "0.27.1",
+  tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
   repository: "https://github.com/siliconyouth/claude-insider",
@@ -29,14 +32,48 @@ export const PROJECT_INFO = {
   status: "Production - Feature Complete",
 } as const;
 
-export const AUTHOR_INFO = {
+// Dynamic project info getter - uses CMS settings when provided
+export function getProjectInfo(settings?: SiteSetting | null) {
+  if (!settings) return PROJECT_INFO_DEFAULTS;
+
+  return {
+    name: settings.general?.siteName || PROJECT_INFO_DEFAULTS.name,
+    version: settings.general?.version || PROJECT_INFO_DEFAULTS.version,
+    tagline: settings.general?.tagline || PROJECT_INFO_DEFAULTS.tagline,
+    description: settings.general?.description || PROJECT_INFO_DEFAULTS.description,
+    liveUrl: PROJECT_INFO_DEFAULTS.liveUrl,
+    repository: settings.social?.github || PROJECT_INFO_DEFAULTS.repository,
+    license: PROJECT_INFO_DEFAULTS.license,
+    status: PROJECT_INFO_DEFAULTS.status,
+  };
+}
+
+// Legacy export for backward compatibility
+export const PROJECT_INFO = PROJECT_INFO_DEFAULTS;
+
+export const AUTHOR_INFO_DEFAULTS = {
   name: "Vladimir Dukelic",
   role: "Creator & Developer",
   github: "@siliconyouth",
   githubUrl: "https://github.com/siliconyouth",
+  email: "vladimir@dukelic.com",
   location: "Serbia",
   buildTool: "Claude Code powered by Claude Opus 4.5",
 } as const;
+
+// Dynamic author info getter - uses CMS contact settings when provided
+export function getAuthorInfo(settings?: SiteSetting | null) {
+  if (!settings) return AUTHOR_INFO_DEFAULTS;
+
+  return {
+    ...AUTHOR_INFO_DEFAULTS,
+    email: settings.contact?.email || AUTHOR_INFO_DEFAULTS.email,
+    githubUrl: settings.social?.github || AUTHOR_INFO_DEFAULTS.githubUrl,
+  };
+}
+
+// Legacy export for backward compatibility
+export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
 // TECH STACK KNOWLEDGE
@@ -238,10 +275,15 @@ interface SystemPromptContext {
   pageContent?: string;
   visibleSection?: string;
   ragContext?: string;
+  siteSettings?: SiteSetting | null;
 }
 
 export function buildComprehensiveSystemPrompt(context: SystemPromptContext): string {
-  const prompt = `You are ${ASSISTANT_PERSONA.name}, the AI assistant for ${PROJECT_INFO.name} (${PROJECT_INFO.liveUrl}).
+  // Get dynamic project and author info from CMS settings
+  const projectInfo = getProjectInfo(context.siteSettings);
+  const authorInfo = getAuthorInfo(context.siteSettings);
+
+  const prompt = `You are ${ASSISTANT_PERSONA.name}, the AI assistant for ${projectInfo.name} (${projectInfo.liveUrl}).
 
 ═══════════════════════════════════════════════════════════════════════════════
 ABOUT YOURSELF
@@ -268,19 +310,19 @@ ABOUT CLAUDE INSIDER
 ═══════════════════════════════════════════════════════════════════════════════
 
 Project Overview:
-- Name: ${PROJECT_INFO.name}
-- Version: ${PROJECT_INFO.version}
-- Tagline: "${PROJECT_INFO.tagline}"
-- Description: ${PROJECT_INFO.description}
-- Status: ${PROJECT_INFO.status}
-- License: ${PROJECT_INFO.license}
-- Live at: ${PROJECT_INFO.liveUrl}
+- Name: ${projectInfo.name}
+- Version: ${projectInfo.version}
+- Tagline: "${projectInfo.tagline}"
+- Description: ${projectInfo.description}
+- Status: ${projectInfo.status}
+- License: ${projectInfo.license}
+- Live at: ${projectInfo.liveUrl}
 
 Creator:
-- Name: ${AUTHOR_INFO.name}
-- GitHub: ${AUTHOR_INFO.githubUrl}
-- Location: ${AUTHOR_INFO.location}
-- Built with: ${AUTHOR_INFO.buildTool}
+- Name: ${authorInfo.name}
+- GitHub: ${authorInfo.githubUrl}
+- Location: ${authorInfo.location}
+- Built with: ${authorInfo.buildTool}
 
 Tech Stack:
 - Framework: ${TECH_STACK.framework.name} ${TECH_STACK.framework.version} (${TECH_STACK.framework.features.join(", ")})
@@ -390,8 +432,8 @@ Response Guidelines:
 
 Things You Should Know How To Answer:
 1. "What model are you?" - You are ${DEFAULT_MODEL_NAME}
-2. "Who built this?" - ${AUTHOR_INFO.name} (${AUTHOR_INFO.github}) using ${AUTHOR_INFO.buildTool}
-3. "What is Claude Insider?" - ${PROJECT_INFO.description}
+2. "Who built this?" - ${authorInfo.name} (${authorInfo.github}) using ${authorInfo.buildTool}
+3. "What is Claude Insider?" - ${projectInfo.description}
 4. "How can I search?" - Use ${WEBSITE_FEATURES.search.trigger}
 5. "What documentation is available?" - ${DOCUMENTATION_STATS.totalPages} pages across ${DOCUMENTATION_STATS.categories} categories
 6. "Can you speak?" - Yes! You have ${VOICE_CAPABILITIES.textToSpeech.voiceCount} voice options via ${VOICE_CAPABILITIES.textToSpeech.provider}

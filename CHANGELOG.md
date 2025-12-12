@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.27.1] - 2025-12-12
+
+### Changed
+- **Dynamic System Prompt** - AI assistant now uses CMS settings for project info
+  - Tagline, description, and version loaded from Payload CMS Site Settings
+  - Social links (GitHub) pulled from CMS contact settings
+  - New `lib/site-settings.ts` helper with 1-minute cache TTL
+  - Falls back to hardcoded defaults if CMS is unavailable
+  - `buildSystemPrompt` is now async to support CMS fetch
+
+### Added
+- **Site Settings Cache** - Efficient caching for Payload CMS global settings
+  - `getSiteSettings()` - Async fetch with cache
+  - `getCachedSiteSettings()` - Sync access to cached values
+  - `refreshSiteSettings()` - Force cache invalidation
+  - `warmSettingsCache()` - Pre-warm cache at startup
+
 ## [0.27.0] - 2025-12-12
 
 ### Added

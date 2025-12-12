@@ -32,8 +32,8 @@ export async function POST(request: Request) {
     // Search documentation for relevant context
     const ragContext = getRAGContext(latestUserMessage, 3);
 
-    // Build system prompt with context
-    const systemPrompt = buildSystemPrompt({
+    // Build system prompt with context (async - fetches CMS settings)
+    const systemPrompt = await buildSystemPrompt({
       currentPage,
       pageContent,
       visibleSection,
