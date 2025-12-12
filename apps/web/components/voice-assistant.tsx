@@ -77,6 +77,10 @@ export function VoiceAssistant() {
   const [customAssistantName, setCustomAssistantName] = useState<string>("");
   const [showNameInput, setShowNameInput] = useState(false);
   const [nameInputValue, setNameInputValue] = useState("");
+  // Smart recommendations state
+  const [recommendations, setRecommendations] = useState<string[]>([]);
+  const [recommendationPool, setRecommendationPool] = useState<string[]>([]);
+  const [showRecommendations, setShowRecommendations] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
   // Cache for generated TTS audio to avoid regenerating on replay
@@ -659,6 +663,10 @@ export function VoiceAssistant() {
       // Track message sent
       track("assistant_message_sent", { page: pathname, messageLength: content.trim().length });
 
+      // Clear recommendations when user sends a message
+      setShowRecommendations(false);
+      setRecommendations([]);
+
       setError(null);
       setIsLoading(true);
       setStreamingContent("");
@@ -814,6 +822,15 @@ export function VoiceAssistant() {
           };
           const newMessages = [...updatedMessages, assistantMessage];
           setMessages(newMessages);
+
+          // Initialize recommendations after assistant responds
+          // Small delay to let the UI settle
+          setTimeout(() => {
+            const pool = generateRecommendations();
+            setRecommendationPool(pool.slice(3));
+            setRecommendations(pool.slice(0, 3));
+            setShowRecommendations(true);
+          }, 300);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to send message");
@@ -904,6 +921,131 @@ export function VoiceAssistant() {
       track("assistant_name_reset");
     }
   }, [nameInputValue, announce]);
+
+  // Generate contextual recommendations based on conversation and current page
+  const generateRecommendations = useCallback(() => {
+    const currentPath = pathname || "/";
+
+    // Base recommendations pool organized by context
+    const baseRecommendations: Record<string, string[]> = {
+      general: [
+        "What can you help me with?",
+        "Tell me about Claude Code features",
+        "How do I get started with Claude?",
+        "What's new in the latest Claude update?",
+        "Explain Claude's capabilities",
+        "What are the best practices for using Claude?",
+      ],
+      gettingStarted: [
+        "How do I install Claude Code?",
+        "What are the system requirements?",
+        "How do I authenticate with Claude?",
+        "Walk me through the setup process",
+        "What's the quickest way to get started?",
+      ],
+      configuration: [
+        "How do I configure CLAUDE.md?",
+        "What settings can I customize?",
+        "How do I set up environment variables?",
+        "Explain the configuration options",
+        "What's the best configuration for my project?",
+      ],
+      api: [
+        "How do I use the Claude API?",
+        "Explain API authentication",
+        "What are the rate limits?",
+        "Show me API examples",
+        "How do I handle API errors?",
+      ],
+      tips: [
+        "What are your top productivity tips?",
+        "How can I write better prompts?",
+        "What shortcuts should I know?",
+        "How do I get better responses?",
+        "Share some advanced techniques",
+      ],
+      resources: [
+        "What resources do you recommend?",
+        "Show me popular MCP servers",
+        "What tools work well with Claude?",
+        "Where can I find examples?",
+        "What SDKs are available?",
+      ],
+      followUp: [
+        "Can you explain that more simply?",
+        "Give me a code example",
+        "What are the alternatives?",
+        "How does this compare to other approaches?",
+        "What should I do next?",
+        "Are there any gotchas I should know about?",
+      ],
+    };
+
+    // Determine context based on current page
+    let contextKey = "general";
+    if (currentPath.includes("getting-started")) contextKey = "gettingStarted";
+    else if (currentPath.includes("configuration")) contextKey = "configuration";
+    else if (currentPath.includes("api")) contextKey = "api";
+    else if (currentPath.includes("tips")) contextKey = "tips";
+    else if (currentPath.includes("resources")) contextKey = "resources";
+
+    // If we have messages, add follow-up questions
+    const hasMessages = messages.length > 0;
+
+    // Build the recommendation pool
+    let pool: string[] = [];
+
+    if (hasMessages) {
+      // Prioritize follow-up questions when there's conversation context
+      pool = [...baseRecommendations.followUp, ...baseRecommendations[contextKey], ...baseRecommendations.general];
+    } else {
+      // Start with context-specific, then general
+      pool = [...baseRecommendations[contextKey], ...baseRecommendations.general];
+    }
+
+    // Remove duplicates and shuffle
+    pool = [...new Set(pool)].sort(() => Math.random() - 0.5);
+
+    return pool;
+  }, [pathname, messages.length]);
+
+  // Show next set of recommendations (for "Something else")
+  const showNextRecommendations = useCallback(() => {
+    const pool = recommendationPool.length > 0 ? recommendationPool : generateRecommendations();
+
+    // Get next 3 recommendations (excluding current ones)
+    const currentSet = new Set(recommendations);
+    const available = pool.filter(r => !currentSet.has(r));
+
+    if (available.length < 3) {
+      // Reset pool if we've shown most recommendations
+      const newPool = generateRecommendations();
+      setRecommendationPool(newPool);
+      setRecommendations(newPool.slice(0, 3));
+    } else {
+      setRecommendations(available.slice(0, 3));
+      setRecommendationPool(available.slice(3));
+    }
+    setShowRecommendations(true);
+  }, [recommendationPool, recommendations, generateRecommendations]);
+
+  // Handle clicking a recommendation
+  const handleRecommendationClick = useCallback((recommendation: string) => {
+    // Hide recommendations
+    setShowRecommendations(false);
+    setRecommendations([]);
+    // Send the recommendation as if user typed it
+    sendMessage(recommendation);
+    track("assistant_recommendation_clicked", { recommendation: recommendation.substring(0, 50) });
+  }, [sendMessage]);
+
+  // Initialize recommendations after assistant responds
+  const initializeRecommendations = useCallback(() => {
+    const pool = generateRecommendations();
+    setRecommendationPool(pool.slice(3));
+    setRecommendations(pool.slice(0, 3));
+    setShowRecommendations(true);
+  }, [generateRecommendations]);
 
   // Export conversation as markdown file
   const handleExportConversation = useCallback(() => {
@@ -1969,6 +2111,42 @@ export function VoiceAssistant() {
             </div>
           )}
         </div>
+
+        {/* Smart Recommendations */}
+        {showRecommendations && recommendations.length > 0 && !isLoading && !streamingContent && (
+          <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
+            <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">Suggested questions:</p>
+            <div className="flex flex-col gap-2">
+              {recommendations.map((rec, index) => (
+                <button
+                  key={`${rec}-${index}`}
+                  onClick={() => handleRecommendationClick(rec)}
+                  className="group flex items-center justify-between rounded-2xl rounded-tr-sm bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-2.5 text-left text-sm text-white shadow-md transition-all hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+                >
+                  <span className="flex-1">{rec}</span>
+                  <svg
+                    className="ml-2 h-4 w-4 opacity-60 transition-opacity group-hover:opacity-100"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+              ))}
+              {/* Something else button */}
+              <button
+                onClick={showNextRecommendations}
+                className="flex items-center justify-center gap-2 rounded-2xl rounded-tr-sm border-2 border-dashed border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-600 transition-all hover:border-blue-400 hover:bg-blue-50 hover:text-blue-600 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-cyan-400 dark:hover:bg-gray-750 dark:hover:text-cyan-400"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Something else
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Input Area */}
         <div className="border-t border-gray-200 p-4 dark:border-gray-700">

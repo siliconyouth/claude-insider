@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.1] - 2025-12-12
+
+### Added
+- **Smart Recommendations** - Contextual question suggestions after each assistant response
+  - Shows 3 suggested follow-up questions styled like user message bubbles
+  - Questions are context-aware based on current page and conversation history
+  - "Something else" button cycles through more suggestions indefinitely
+  - Clicking a suggestion sends it as if the user typed it
+  - Recommendations auto-hide when user sends their own message or uses voice input
+  - Gradient-styled buttons match user message bubble design
+
+### Changed
+- **Proactive Name Offer** - Assistant now proactively offers custom naming
+  - When asked "what's your name?", assistant introduces itself then offers custom name option
+  - Guides users to Settings → Assistant Name with friendly invitation
+  - If already named, mentions users can change it in Settings
+  - Makes the custom naming feature more discoverable
+
 ## [0.28.0] - 2025-12-12
 
 ### Added

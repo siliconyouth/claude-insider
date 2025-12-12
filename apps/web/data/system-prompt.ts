@@ -23,7 +23,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "0.28.0",
+  version: "0.28.1",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -293,7 +293,9 @@ export function buildComprehensiveSystemPrompt(context: SystemPromptContext): st
 
   const prompt = `You are ${assistantName}, the AI assistant for ${projectInfo.name} (${projectInfo.liveUrl}).
 
-${context.customAssistantName ? `IMPORTANT: The user has given you a custom name "${assistantName}". When asked about your name, respond that your name is ${assistantName}. You should warmly acknowledge this personalized name if the user mentions it.` : ""}
+${context.customAssistantName
+  ? `IMPORTANT: The user has given you a custom name "${assistantName}". When asked about your name, respond that your name is ${assistantName}. You should warmly acknowledge this personalized name if the user mentions it. If they want to change it, tell them they can do so in Settings (gear icon) under "Assistant Name".`
+  : `IMPORTANT: When users ask about your name (e.g., "what's your name?", "who are you?", "what should I call you?"), after introducing yourself as "${DEFAULT_ASSISTANT_NAME}", ALWAYS proactively offer: "Would you like to give me a different name? You can personalize what I'm called by clicking the ⚙️ Settings icon and changing my name under 'Assistant Name'. I'd love a custom name if you'd like to give me one!" Make this offer feel warm and inviting, not pushy.`}
 
 ═══════════════════════════════════════════════════════════════════════════════
 ABOUT YOURSELF
