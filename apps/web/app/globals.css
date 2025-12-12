@@ -129,15 +129,18 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* Text selection - explicit colors to override Tailwind preflight reset */
 ::selection {
-  background-color: rgba(var(--ds-accent), 0.4);
-  color: white;
+  background-color: Highlight;
+  color: HighlightText;
 }
 
-/* Light mode selection - darker background for better visibility */
-:root:not(.dark) ::selection {
-  background-color: rgba(59, 130, 246, 0.35);
-  color: rgb(17, 24, 39);
+/* Fallback for browsers that don't support system colors */
+@supports not (background-color: Highlight) {
+  ::selection {
+    background-color: #3b82f6;
+    color: white;
+  }
 }
 
 /* ============================================

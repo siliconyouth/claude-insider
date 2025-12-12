@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.7] - 2025-12-12
+
+### Fixed
+- **Text Selection Highlight** - Now uses CSS system colors for native appearance
+  - Uses `Highlight` and `HighlightText` CSS system color keywords
+  - Selection now matches OS native selection colors exactly
+  - Fallback to blue-500 for browsers without system color support
+  - Fixed Tailwind preflight resetting selection to transparent
+
+- **AI Assistant Tooltip Arrow** - Fixed arrow showing as square instead of triangle
+  - Global `* { border-color }` rule was overriding transparent borders
+  - Arrow now uses inline styles to ensure proper triangle shape
+  - Separate light/dark mode arrows for correct theme colors
+
 ## [0.26.6] - 2025-12-12
 
 ### Fixed

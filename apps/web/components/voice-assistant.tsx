@@ -1123,8 +1123,24 @@ export function VoiceAssistant() {
           <div className="relative rounded-lg bg-white px-3 py-2 text-sm text-gray-800 shadow-lg dark:bg-gray-800 dark:text-white">
             <span className="font-semibold text-blue-500 dark:text-cyan-400">AI Assistant</span>
             <span className="text-gray-600 dark:text-gray-300"> (Cmd + . or click)</span>
-            {/* Arrow */}
-            <div className="absolute -bottom-2 right-6 h-0 w-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white dark:border-t-gray-800" />
+            {/* Arrow - inline styles override global border-color rule */}
+            <div
+              className="absolute -bottom-2 right-6 h-0 w-0 dark:hidden"
+              style={{
+                borderLeft: "8px solid transparent",
+                borderRight: "8px solid transparent",
+                borderTop: "8px solid white",
+              }}
+            />
+            {/* Dark mode arrow */}
+            <div
+              className="absolute -bottom-2 right-6 h-0 w-0 hidden dark:block"
+              style={{
+                borderLeft: "8px solid transparent",
+                borderRight: "8px solid transparent",
+                borderTop: "8px solid rgb(31, 41, 55)",
+              }}
+            />
           </div>
         </div>
 
