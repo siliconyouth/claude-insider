@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.7] - 2025-12-12
+
+### Added
+- **Internal Path Linkification** - AI assistant now linkifies internal paths
+  - Paths like `/docs/getting-started` or `/resources` are now clickable links
+  - Hover preview cards show page title, description, and category
+  - Internal links use Next.js Link for smooth navigation (no page reload)
+  - External URLs continue to open in new tabs
+  - Supported paths: /docs, /resources, /assistant, /changelog, /privacy, /terms, /disclaimer, /accessibility
+
+### Changed
+- **LinkifiedText Component** - Extended to detect both URLs and internal paths
+  - Added path regex for internal routes detection
+  - getInternalPageInfo now works with paths, not just full URLs
+  - Preview cards work for both path-style and URL-style internal links
+
 ## [0.28.6] - 2025-12-12
 
 ### Fixed

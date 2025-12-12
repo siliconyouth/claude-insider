@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, ReactNode, Fragment } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { buildSearchIndex, type SearchDocument } from "@/lib/search";
 
@@ -9,6 +10,11 @@ import { buildSearchIndex, type SearchDocument } from "@/lib/search";
 // Using function to create fresh regex each time (avoids global state issues with lastIndex)
 function createUrlRegex() {
   return /(https?:\/\/[^\s<>"{}|\\^`[\]]+)/g;
+}
+
+// Internal path detection regex - matches /docs/... /resources/... etc.
+function createPathRegex() {
+  return /(?:^|\s)(\/(?:docs|resources|assistant|changelog|privacy|terms|disclaimer|accessibility)(?:\/[^\s.,!?;:)"'<>]*)?)/g;
 }
 
 // Cache for search index
@@ -21,15 +27,23 @@ function getSearchIndex(): SearchDocument[] {
   return searchIndexCache;
 }
 
-// Get page info for internal claudeinsider.com links
-function getInternalPageInfo(url: string): { title: string; description: string; category: string } | null {
+// Get page info for internal paths or claudeinsider.com links
+function getInternalPageInfo(urlOrPath: string): { title: string; description: string; category: string; path: string } | null {
   try {
-    const urlObj = new URL(url);
-    if (!urlObj.hostname.includes("claudeinsider.com")) {
-      return null;
+    let pathname: string;
+
+    // Handle full URLs
+    if (urlOrPath.startsWith("http")) {
+      const urlObj = new URL(urlOrPath);
+      if (!urlObj.hostname.includes("claudeinsider.com")) {
+        return null;
+      }
+      pathname = urlObj.pathname;
+    } else {
+      // Handle paths directly
+      pathname = urlOrPath;
     }
 
-    const pathname = urlObj.pathname;
     const searchIndex = getSearchIndex();
 
     // Find matching page in search index
@@ -39,6 +53,7 @@ function getInternalPageInfo(url: string): { title: string; description: string;
         title: page.title,
         description: page.description,
         category: page.category,
+        path: pathname,
       };
     }
 
@@ -63,6 +78,7 @@ function getInternalPageInfo(url: string): { title: string; description: string;
           title: categoryNames[category],
           description: `Browse ${categoryNames[category].toLowerCase()} for Claude AI`,
           category: "Resources",
+          path: pathname,
         };
       }
 
@@ -70,6 +86,31 @@ function getInternalPageInfo(url: string): { title: string; description: string;
         title: "Resources",
         description: "Curated tools, templates, and community resources for Claude AI",
         category: "Resources",
+        path: pathname,
+      };
+    }
+
+    // Check for other known pages
+    const knownPages: Record<string, { title: string; description: string; category: string }> = {
+      "/assistant": { title: "AI Assistant", description: "Chat with our AI assistant about Claude", category: "Tools" },
+      "/changelog": { title: "Changelog", description: "See what's new in Claude Insider", category: "About" },
+      "/privacy": { title: "Privacy Policy", description: "How we handle your data", category: "Legal" },
+      "/terms": { title: "Terms of Service", description: "Terms and conditions", category: "Legal" },
+      "/disclaimer": { title: "Disclaimer", description: "Important notices", category: "Legal" },
+      "/accessibility": { title: "Accessibility", description: "Accessibility statement", category: "Legal" },
+    };
+
+    if (knownPages[pathname]) {
+      return { ...knownPages[pathname], path: pathname };
+    }
+
+    // For any other /docs path, return generic info
+    if (pathname.startsWith("/docs")) {
+      return {
+        title: pathname.split("/").pop()?.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase()) || "Documentation",
+        description: "Claude Insider documentation",
+        category: "Docs",
+        path: pathname,
       };
     }
 
@@ -95,9 +136,10 @@ function getExternalLinkInfo(url: string): { domain: string; favicon: string } {
 interface LinkPreviewProps {
   url: string;
   children: ReactNode;
+  isInternalPath?: boolean; // True if this is a path like /docs/..., not a full URL
 }
 
-function LinkPreview({ url, children }: LinkPreviewProps) {
+function LinkPreview({ url, children, isInternalPath = false }: LinkPreviewProps) {
   const [showPreview, setShowPreview] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [mounted, setMounted] = useState(false);
@@ -235,6 +277,34 @@ function LinkPreview({ url, children }: LinkPreviewProps) {
     </div>
   );
 
+  const linkClassName = cn(
+    "text-blue-600 dark:text-cyan-400",
+    "underline decoration-blue-400/50 dark:decoration-cyan-400/50",
+    "underline-offset-2 decoration-1",
+    "hover:decoration-blue-500 dark:hover:decoration-cyan-300",
+    "hover:text-blue-700 dark:hover:text-cyan-300",
+    "transition-colors duration-150"
+  );
+
+  // Use Next.js Link for internal paths
+  if (isInternalPath && internalInfo) {
+    return (
+      <>
+        <Link
+          ref={linkRef as React.RefObject<HTMLAnchorElement>}
+          href={internalInfo.path}
+          className={linkClassName}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          title={internalInfo.title}
+        >
+          {children}
+        </Link>
+        {mounted && createPortal(previewContent, document.body)}
+      </>
+    );
+  }
+
   return (
     <>
       <a
@@ -242,14 +312,7 @@ function LinkPreview({ url, children }: LinkPreviewProps) {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(
-          "text-blue-600 dark:text-cyan-400",
-          "underline decoration-blue-400/50 dark:decoration-cyan-400/50",
-          "underline-offset-2 decoration-1",
-          "hover:decoration-blue-500 dark:hover:decoration-cyan-300",
-          "hover:text-blue-700 dark:hover:text-cyan-300",
-          "transition-colors duration-150"
-        )}
+        className={linkClassName}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         title={internalInfo?.title || externalInfo?.domain}
@@ -266,54 +329,99 @@ interface LinkifiedTextProps {
   className?: string;
 }
 
+interface MatchInfo {
+  index: number;
+  length: number;
+  text: string;
+  isPath: boolean;
+}
+
 /**
  * Renders text with clickable links and hover previews.
- * - Internal claudeinsider.com links show rich previews with title and description
- * - External links show domain and favicon
- * - All links open in new tabs
+ * - Internal paths like /docs/... are linkified and open in same tab
+ * - Internal claudeinsider.com URLs show rich previews with title and description
+ * - External links show domain and favicon and open in new tabs
  */
 export function LinkifiedText({ text, className }: LinkifiedTextProps) {
-  // Split text by URLs and create array of strings and links
+  // Collect all matches (URLs and internal paths)
+  const matches: MatchInfo[] = [];
+
+  // Find all URLs
+  const urlRegex = createUrlRegex();
+  let match: RegExpExecArray | null;
+  while ((match = urlRegex.exec(text)) !== null) {
+    matches.push({
+      index: match.index,
+      length: match[0].length,
+      text: match[0],
+      isPath: false,
+    });
+  }
+
+  // Find all internal paths
+  const pathRegex = createPathRegex();
+  while ((match = pathRegex.exec(text)) !== null) {
+    // The path is in capture group 1, and might have leading whitespace
+    const fullMatch = match[0];
+    const path = match[1];
+    const leadingWhitespace = fullMatch.length - path.length;
+    const pathIndex = match.index + leadingWhitespace;
+
+    // Only add if not overlapping with an existing URL match
+    const overlaps = matches.some(
+      m => (pathIndex >= m.index && pathIndex < m.index + m.length) ||
+           (pathIndex + path.length > m.index && pathIndex + path.length <= m.index + m.length)
+    );
+
+    if (!overlaps) {
+      matches.push({
+        index: pathIndex,
+        length: path.length,
+        text: path,
+        isPath: true,
+      });
+    }
+  }
+
+  // Sort matches by index
+  matches.sort((a, b) => a.index - b.index);
+
+  // If no matches found, just return the text
+  if (matches.length === 0) {
+    return <span className={className}>{text}</span>;
+  }
+
+  // Build parts array
   const parts: ReactNode[] = [];
   let lastIndex = 0;
-  let match: RegExpExecArray | null;
 
-  // Create fresh regex instance to avoid global state issues
-  const urlRegex = createUrlRegex();
-
-  while ((match = urlRegex.exec(text)) !== null) {
-    // Add text before the URL
-    if (match.index > lastIndex) {
+  for (const m of matches) {
+    // Add text before this match
+    if (m.index > lastIndex) {
       parts.push(
         <Fragment key={`text-${lastIndex}`}>
-          {text.slice(lastIndex, match.index)}
+          {text.slice(lastIndex, m.index)}
         </Fragment>
       );
     }
 
-    // Add the URL as a link
-    const url = match[0];
+    // Add the link
     parts.push(
-      <LinkPreview key={`link-${match.index}`} url={url}>
-        {url}
+      <LinkPreview key={`link-${m.index}`} url={m.text} isInternalPath={m.isPath}>
+        {m.text}
       </LinkPreview>
     );
 
-    lastIndex = match.index + url.length;
+    lastIndex = m.index + m.length;
   }
 
-  // Add any remaining text after the last URL
+  // Add any remaining text after the last match
   if (lastIndex < text.length) {
     parts.push(
       <Fragment key={`text-${lastIndex}`}>
         {text.slice(lastIndex)}
       </Fragment>
     );
-  }
-
-  // If no URLs found, just return the text
-  if (parts.length === 0) {
-    return <span className={className}>{text}</span>;
   }
 
   return <span className={className}>{parts}</span>;
