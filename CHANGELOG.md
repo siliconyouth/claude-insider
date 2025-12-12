@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.6] - 2025-12-12
+
+### Fixed
+- **ContentMeta Light Theme** - Fixed "Generated with AI" block invisible on light theme
+  - Added `dark:` variants for all colors (borders, backgrounds, text)
+  - Light mode: gray-100 background, gray-200 border, gray-700 text
+  - Dark mode: gray-900/50 background, gray-800 border, gray-300 text
+  - Links now blue-600 (light) / blue-400 (dark) for proper contrast
+  - Updated stale APP_VERSION from 0.25.8 to current version
+
 ## [0.28.5] - 2025-12-12
 
 ### Fixed

@@ -11,7 +11,7 @@ interface ContentMetaProps {
   model?: string;
 }
 
-const APP_VERSION = "0.25.8";
+const APP_VERSION = "0.28.6";
 
 export function ContentMeta({
   sources,
@@ -22,10 +22,10 @@ export function ContentMeta({
   const buildId = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "dev";
 
   return (
-    <div className="mt-16 pt-8 border-t border-gray-800">
+    <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
       {/* Sources Section */}
       <div className="mb-6">
-        <h4 className="text-sm font-semibold text-gray-400 mb-3 flex items-center gap-2">
+        <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3 flex items-center gap-2">
           <svg
             className="w-4 h-4"
             fill="none"
@@ -49,7 +49,7 @@ export function ContentMeta({
                 href={source.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 hover:text-cyan-300 transition-colors inline-flex items-center gap-1"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-cyan-300 transition-colors inline-flex items-center gap-1"
               >
                 {source.title}
                 <svg
@@ -73,7 +73,7 @@ export function ContentMeta({
       </div>
 
       {/* Generation Info */}
-      <div className="p-4 bg-gray-900/50 border border-gray-800 rounded-lg">
+      <div className="p-4 bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-lg">
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 to-blue-600 flex items-center justify-center">
             <svg
@@ -92,13 +92,13 @@ export function ContentMeta({
             </svg>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-gray-700 dark:text-gray-300">
               <span className="font-medium">Generated with AI</span> using{" "}
               <a
                 href="https://claude.ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 hover:text-cyan-300"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-cyan-300"
               >
                 Claude AI
               </a>{" "}
@@ -107,12 +107,12 @@ export function ContentMeta({
                 href="https://anthropic.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 hover:text-cyan-300"
+                className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-cyan-300"
               >
                 Anthropic
               </a>
             </p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
               Model: {model} · Generated: {generatedDate} · Build: v{APP_VERSION}-{buildId}
             </p>
           </div>
