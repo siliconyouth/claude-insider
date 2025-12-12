@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.5] - 2025-12-12
+
+### Fixed
+- **Code Block Light Theme** - Fixed code blocks being invisible on light theme
+  - Code blocks now always use dark background (gray-900) for readability
+  - Light text (gray-200) ensures code is always visible
+  - Syntax highlighting colors use fixed values that work on dark backgrounds
+  - Inline code uses theme-aware colors (orange-700 on light, cyan-400 on dark)
+  - Added `!important` to prevent style conflicts with prose/MDX styles
+
 ## [0.28.4] - 2025-12-12
 
 ### Changed
