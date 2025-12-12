@@ -257,7 +257,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.26.0**
+**Version 0.26.5**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 
