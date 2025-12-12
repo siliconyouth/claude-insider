@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.26.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.26.1**.
 
 | Link | URL |
 |------|-----|
@@ -20,9 +20,9 @@ Claude Insider is a Next.js documentation site for Claude AI. **Version 0.26.0**
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| Next.js | 16.0.7 | React framework (App Router) |
-| React | 19.2.0 | UI library |
-| TypeScript | 5.9.2 | Type-safe JavaScript (strict mode) |
+| Next.js | 16.0.10 | React framework (App Router) |
+| React | 19.2.3 | UI library |
+| TypeScript | 5.9.3 | Type-safe JavaScript (strict mode) |
 | Tailwind CSS | 4.1.5 | Utility-first CSS |
 | MDX | 3.x | Markdown with React components |
 | Fuse.js | 7.1.0 | Fuzzy search |

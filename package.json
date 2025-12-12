@@ -10,9 +10,9 @@
     "clean": "rm -rf node_modules .turbo && find . -name 'node_modules' -type d -prune -exec rm -rf {} + && find . -name '.next' -type d -prune -exec rm -rf {} + && find . -name 'dist' -type d -prune -exec rm -rf {} +"
   },
   "devDependencies": {
-    "next": "^16.0.7",
-    "prettier": "^3.6.0",
-    "prettier-plugin-tailwindcss": "^0.7.1",
+    "next": "^16.0.10",
+    "prettier": "^3.7.4",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "turbo": "^2.6.3"
   },
   "packageManager": "pnpm@10.19.0",

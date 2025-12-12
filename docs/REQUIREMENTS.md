@@ -39,9 +39,9 @@ All technologies are **free and/or open source** (except hosting services with f
 
 | Technology | Version | License | Description |
 |------------|---------|---------|-------------|
-| Next.js | 16.0.7 | MIT | React framework with App Router, SSR, SSG |
-| React | 19.2.0 | MIT | UI component library |
-| TypeScript | 5.9.2 | Apache-2.0 | Type-safe JavaScript (strict mode) |
+| Next.js | 16.0.10 | MIT | React framework with App Router, SSR, SSG |
+| React | 19.2.3 | MIT | UI component library |
+| TypeScript | 5.9.3 | Apache-2.0 | Type-safe JavaScript (strict mode) |
 
 ### Build & Development
 

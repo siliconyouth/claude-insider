@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2025-12-11T11:07:53.751Z",
+  "generatedAt": "2025-12-12T11:16:11.361Z",
   "documentCount": 435,
   "documentationChunks": 423,
   "projectKnowledgeCount": 12,
@@ -8045,7 +8045,7 @@
       "id": "project-overview",
       "title": "About Claude Insider",
       "section": "Project Overview",
-      "content": "Claude Insider is a comprehensive documentation website for Claude AI, Claude Code, and the Anthropic ecosystem.\n\nCurrent Version: 0.26.0 (2025-12-11)\nLive URL: https://www.claudeinsider.com\nRepository: https://github.com/siliconyouth/claude-insider\nStatus: Production - Feature Complete\n\nBuilt entirely with Claude Code powered by Claude Opus 4.5, this project serves as both documentation hub and a demonstration of AI-assisted development.\n\nKey Features:\n- 34 comprehensive documentation pages across 7 categories\n- AI Voice Assistant with speech-to-text\n- ElevenLabs Text-to-Speech with 42 premium voices\n- Streaming chat with Claude Sonnet 4\n- RAG (Retrieval-Augmented Generation) for intelligent search\n- Fuzzy search with Cmd/Ctrl+K keyboard shortcut\n- Dark/Light/System theme support\n- Full PWA offline support\n- WCAG 2.1 AA accessibility compliance\n\nThe project goal is to centralize Claude knowledge, improve discoverability of Claude features, help users maximize productivity with Claude AI, and keep content updated with the latest Claude capabilities.",
+      "content": "Claude Insider is a comprehensive documentation website for Claude AI, Claude Code, and the Anthropic ecosystem.\n\nCurrent Version: 0.26.0 (2025-12-12)\nLive URL: https://www.claudeinsider.com\nRepository: https://github.com/siliconyouth/claude-insider\nStatus: Production - Feature Complete\n\nBuilt entirely with Claude Code powered by Claude Opus 4.5, this project serves as both documentation hub and a demonstration of AI-assisted development.\n\nKey Features:\n- 34 comprehensive documentation pages across 7 categories\n- AI Voice Assistant with speech-to-text\n- ElevenLabs Text-to-Speech with 42 premium voices\n- Streaming chat with Claude Sonnet 4\n- RAG (Retrieval-Augmented Generation) for intelligent search\n- Fuzzy search with Cmd/Ctrl+K keyboard shortcut\n- Dark/Light/System theme support\n- Full PWA offline support\n- WCAG 2.1 AA accessibility compliance\n\nThe project goal is to centralize Claude knowledge, improve discoverability of Claude features, help users maximize productivity with Claude AI, and keep content updated with the latest Claude capabilities.",
       "url": "/",
       "category": "Project",
       "keywords": [

@@ -9,6 +9,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.26.1] - 2025-12-12
+
+### Added
+- **Payload CMS Email Adapter** - Production-ready email support with Resend
+  - Installed `@payloadcms/email-resend` and `resend` packages
+  - Conditional email configuration (real emails when `RESEND_API_KEY` is set)
+  - Falls back to console logging in development
+  - Default sender: `noreply@claudeinsider.com`
+
+- **New Payload Collections** - Extended CMS schema for resource management
+  - **Subcategories** collection for hierarchical categorization
+  - **DifficultyLevels** collection (Beginner, Intermediate, Advanced, Expert)
+  - **ProgrammingLanguages** collection (22 languages with color badges)
+  - Database migrations for new collections and relationships
+
+- **Seed Reference Data API** - `/api/seed-reference` endpoint
+  - Seeds difficulty levels and programming languages
+  - Idempotent (can be called multiple times safely)
+
+- **Cache Revalidation API** - `/api/revalidate` endpoint for on-demand ISR
+
+### Changed
+- **Package Updates** - All dependencies updated to latest versions
+  - Next.js: 16.0.7 → 16.0.10 (security patch)
+  - Payload CMS: 3.68.2 → 3.68.3
+  - React: 19.2.0 → 19.2.3
+  - TypeScript: 5.9.2 → 5.9.3
+  - Resend: 6.5.0 → 6.6.0
+  - OpenAI SDK: 6.9.0 → 6.10.0
+  - Anthropic SDK: 0.71.1 → 0.71.2
+
+### Fixed
+- **Site Settings Admin Panel** - Added missing FK columns to `payload_locked_documents_rels`
+  - Migration `20251212_120000` adds columns for new collections
+  - Fixes "column does not exist" errors in admin panel
+
 ## [0.26.0] - 2025-12-11
 
 ### Added

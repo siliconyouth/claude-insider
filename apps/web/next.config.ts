@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import { withPayload } from "@payloadcms/next/withPayload";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
@@ -24,8 +25,35 @@ const nextConfig: NextConfig = {
   // Security headers
   async headers() {
     return [
+      // Admin panel - relaxed CSP for Payload UI
       {
-        source: "/:path*",
+        source: "/admin/:path*",
+        headers: [
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN", // Allow embedding within same origin for admin
+          },
+          {
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+        ],
+      },
+      // Public routes - strict CSP
+      {
+        source: "/:path((?!admin).*)",
         headers: [
           {
             key: "X-DNS-Prefetch-Control",
@@ -77,4 +105,5 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
-export default withMDX(nextConfig);
+// Wrap with Payload and MDX
+export default withPayload(withMDX(nextConfig));

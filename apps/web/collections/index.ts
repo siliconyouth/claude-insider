@@ -1,0 +1,17 @@
+/**
+ * Payload CMS Collections - Index Export
+ * All collections used by the admin panel
+ */
+
+// Core content collections
+export { Categories } from './Categories';
+export { Subcategories } from './Subcategories';
+export { Tags } from './Tags';
+export { Resources } from './Resources';
+
+// Reference data collections (lookups)
+export { DifficultyLevels } from './DifficultyLevels';
+export { ProgrammingLanguages } from './ProgrammingLanguages';
+
+// User management
+export { Users } from './Users';
