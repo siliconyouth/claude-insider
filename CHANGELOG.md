@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.10] - 2025-12-12
+
+### Fixed
+- **Lint Warnings Reduced** - Reduced ESLint warnings from 31 to 16
+  - Fixed unused variables with empty destructuring pattern `[, setter]`
+  - Added eslint-disable for intentional styled-jsx `<style jsx>` patterns
+  - Used lazy initializers for SSR-safe state initialization (useReducedMotion, LanguageSelector)
+  - Fixed refs-during-render in accessible-modal using state-based mount detection
+  - Fixed self-reference TDZ warning in useSpring animation hook using ref pattern
+  - Used ref pattern for forward-referenced generateRecommendations in voice-assistant
+
+### Changed
+- **SSR-Safe Initialization** - Improved hydration-safe patterns
+  - useReducedMotion now uses lazy initializer with SSR check
+  - HeroBackground uses lazy initializer for reduced motion preference
+  - LanguageSelector uses getCurrentLocale directly in useState initializer
+  - Remaining 16 warnings are intentional setState-in-effect patterns for SSR/SSG initialization
+
 ## [0.28.9] - 2025-12-12
 
 ### Fixed

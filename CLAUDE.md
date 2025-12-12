@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.28.7**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.28.10**.
 
 | Link | URL |
 |------|-----|
