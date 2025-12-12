@@ -23,7 +23,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "0.27.1",
+  version: "0.28.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -242,8 +242,10 @@ export const WEBSITE_FEATURES = {
 // ASSISTANT PERSONA
 // =============================================================================
 
+export const DEFAULT_ASSISTANT_NAME = "Claude Insider Assistant";
+
 export const ASSISTANT_PERSONA = {
-  name: "Claude Insider Assistant",
+  name: DEFAULT_ASSISTANT_NAME,
   personality: [
     "Friendly and approachable",
     "Technically knowledgeable but not condescending",
@@ -276,6 +278,7 @@ interface SystemPromptContext {
   visibleSection?: string;
   ragContext?: string;
   siteSettings?: SiteSetting | null;
+  customAssistantName?: string;
 }
 
 export function buildComprehensiveSystemPrompt(context: SystemPromptContext): string {
@@ -283,7 +286,14 @@ export function buildComprehensiveSystemPrompt(context: SystemPromptContext): st
   const projectInfo = getProjectInfo(context.siteSettings);
   const authorInfo = getAuthorInfo(context.siteSettings);
 
-  const prompt = `You are ${ASSISTANT_PERSONA.name}, the AI assistant for ${projectInfo.name} (${projectInfo.liveUrl}).
+  // Use custom name if provided, otherwise use default
+  const assistantName = context.customAssistantName && context.customAssistantName.trim()
+    ? context.customAssistantName.trim()
+    : DEFAULT_ASSISTANT_NAME;
+
+  const prompt = `You are ${assistantName}, the AI assistant for ${projectInfo.name} (${projectInfo.liveUrl}).
+
+${context.customAssistantName ? `IMPORTANT: The user has given you a custom name "${assistantName}". When asked about your name, respond that your name is ${assistantName}. You should warmly acknowledge this personalized name if the user mentions it.` : ""}
 
 ═══════════════════════════════════════════════════════════════════════════════
 ABOUT YOURSELF

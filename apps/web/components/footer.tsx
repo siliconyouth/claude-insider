@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 
-const APP_VERSION = "0.27.1";
+const APP_VERSION = "0.28.0";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();

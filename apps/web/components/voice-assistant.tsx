@@ -6,13 +6,24 @@ import { track } from "@vercel/analytics";
 import type { Message } from "@/lib/claude-utils";
 import { markdownToSpeakableText, markdownToDisplayText } from "@/lib/claude-utils";
 import {
-  getConversationHistory,
-  saveConversationHistory,
-  clearConversationHistory,
   getPageContent,
   getVisibleSection,
   getSuggestedQuestions,
 } from "@/lib/assistant-context";
+import {
+  getAllConversations,
+  createConversation,
+  updateConversationMessages,
+  deleteConversation,
+  clearAllConversations,
+  getActiveConversationId,
+  setActiveConversationId,
+  getAssistantName,
+  setAssistantName,
+  formatConversationTime,
+  DEFAULT_ASSISTANT_NAME,
+  type Conversation,
+} from "@/lib/assistant-storage";
 import {
   VoiceRecognizer,
   isSpeechRecognitionSupported,
@@ -60,6 +71,12 @@ export function VoiceAssistant() {
   const [isTTSLoading, setIsTTSLoading] = useState(false);
   const [copiedMessageIndex, setCopiedMessageIndex] = useState<number | null>(null);
   const [showSettings, setShowSettings] = useState(false);
+  const [showConversationList, setShowConversationList] = useState(false);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [activeConversationId, setActiveConvId] = useState<string | null>(null);
+  const [customAssistantName, setCustomAssistantName] = useState<string>("");
+  const [showNameInput, setShowNameInput] = useState(false);
+  const [nameInputValue, setNameInputValue] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const previewAudioRef = useRef<HTMLAudioElement | null>(null);
   // Cache for generated TTS audio to avoid regenerating on replay
@@ -113,6 +130,21 @@ export function VoiceAssistant() {
     }
     if (savedAutoSpeak !== null) {
       setAutoSpeak(savedAutoSpeak === "true");
+    }
+    // Load custom assistant name
+    const savedName = getAssistantName();
+    setCustomAssistantName(savedName !== DEFAULT_ASSISTANT_NAME ? savedName : "");
+    // Load conversations
+    const savedConversations = getAllConversations();
+    setConversations(savedConversations);
+    // Load active conversation
+    const activeId = getActiveConversationId();
+    if (activeId && savedConversations.some(c => c.id === activeId)) {
+      setActiveConvId(activeId);
+      const activeConv = savedConversations.find(c => c.id === activeId);
+      if (activeConv) {
+        setMessages(activeConv.messages);
+      }
     }
     // Register the open function for external access
     openAssistantFn = () => setIsOpen(true);
@@ -209,20 +241,14 @@ export function VoiceAssistant() {
     closeOnEscape: true,
   });
 
-  // Load conversation history on mount
-  useEffect(() => {
-    const history = getConversationHistory();
-    if (history.length > 0) {
-      setMessages(history);
-    }
-  }, []);
-
   // Save messages when they change
   useEffect(() => {
-    if (messages.length > 0) {
-      saveConversationHistory(messages);
+    if (messages.length > 0 && activeConversationId) {
+      updateConversationMessages(activeConversationId, messages);
+      // Refresh conversations list
+      setConversations(getAllConversations());
     }
-  }, [messages]);
+  }, [messages, activeConversationId]);
 
   // Scroll to bottom when new messages arrive
   useEffect(() => {
@@ -643,6 +669,15 @@ export function VoiceAssistant() {
       streamingCompleteRef.current = false;
       pendingAutoSpeakTextRef.current = ""; // Reset pending text for mobile
 
+      // Create a new conversation if this is the first message
+      let currentConvId = activeConversationId;
+      if (!currentConvId) {
+        const newConv = createConversation();
+        currentConvId = newConv.id;
+        setActiveConvId(currentConvId);
+        setConversations(getAllConversations());
+      }
+
       // Add user message
       const userMessage: Message = { role: "user", content: content.trim() };
       const updatedMessages = [...messages, userMessage];
@@ -657,6 +692,9 @@ export function VoiceAssistant() {
         const pageContent = getPageContent();
         const visibleSection = getVisibleSection();
 
+        // Get custom assistant name (use stored name or undefined)
+        const assistantNameToSend = customAssistantName || undefined;
+
         const response = await fetch("/api/assistant/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -665,6 +703,7 @@ export function VoiceAssistant() {
             currentPage: pathname,
             pageContent,
             visibleSection,
+            customAssistantName: assistantNameToSend,
           }),
         });
 
@@ -784,7 +823,7 @@ export function VoiceAssistant() {
         setStreamingContent("");
       }
     },
-    [messages, isLoading, pathname, stopStreamingTTS, splitIntoSentences, processSpeechQueue]
+    [messages, isLoading, pathname, stopStreamingTTS, splitIntoSentences, processSpeechQueue, activeConversationId, customAssistantName]
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -796,11 +835,75 @@ export function VoiceAssistant() {
     sendMessage(suggestion);
   };
 
+  // Start a new conversation
+  const handleNewConversation = useCallback(() => {
+    const newConv = createConversation();
+    setActiveConvId(newConv.id);
+    setMessages([]);
+    setConversations(getAllConversations());
+    setShowConversationList(false);
+    track("assistant_new_conversation");
+  }, []);
+
+  // Select an existing conversation
+  const handleSelectConversation = useCallback((conv: Conversation) => {
+    setActiveConvId(conv.id);
+    setActiveConversationId(conv.id);
+    setMessages(conv.messages);
+    setShowConversationList(false);
+    track("assistant_conversation_selected", { messageCount: conv.messages.length });
+  }, []);
+
+  // Delete a specific conversation
+  const handleDeleteConversation = useCallback((convId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    deleteConversation(convId);
+    const updated = getAllConversations();
+    setConversations(updated);
+    // If we deleted the active conversation, clear messages
+    if (convId === activeConversationId) {
+      setActiveConvId(null);
+      setMessages([]);
+    }
+    track("assistant_conversation_deleted");
+  }, [activeConversationId]);
+
+  // Clear current conversation (existing behavior)
   const handleClearHistory = () => {
     track("assistant_history_cleared", { messageCount: messages.length });
+    if (activeConversationId) {
+      deleteConversation(activeConversationId);
+      setConversations(getAllConversations());
+    }
+    setActiveConvId(null);
     setMessages([]);
-    clearConversationHistory();
   };
+
+  // Clear all conversations
+  const handleClearAllConversations = useCallback(() => {
+    track("assistant_all_conversations_cleared", { count: conversations.length });
+    clearAllConversations();
+    setConversations([]);
+    setActiveConvId(null);
+    setMessages([]);
+    setShowConversationList(false);
+  }, [conversations.length]);
+
+  // Save custom assistant name
+  const handleSaveAssistantName = useCallback(() => {
+    const trimmed = nameInputValue.trim();
+    setAssistantName(trimmed);
+    setCustomAssistantName(trimmed);
+    setShowNameInput(false);
+    setNameInputValue("");
+    if (trimmed) {
+      announce(`Assistant name changed to ${trimmed}`);
+      track("assistant_name_changed", { name: trimmed });
+    } else {
+      announce("Assistant name reset to default");
+      track("assistant_name_reset");
+    }
+  }, [nameInputValue, announce]);
 
   // Export conversation as markdown file
   const handleExportConversation = useCallback(() => {
@@ -1201,22 +1304,26 @@ export function VoiceAssistant() {
         {/* Header - Compact design with settings icon */}
         <div className="flex items-center justify-between border-b border-gray-200 bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-4 py-3 dark:border-gray-700">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-              <svg
-                className="h-5 w-5 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                />
+            {/* Conversations button */}
+            <button
+              onClick={() => setShowConversationList(!showConversationList)}
+              className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
+                showConversationList ? "bg-white/30" : "bg-white/20 hover:bg-white/30"
+              }`}
+              title="Conversations"
+            >
+              <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
               </svg>
-            </div>
-            <h2 className="font-semibold text-white">Claude AI Assistant</h2>
+              {conversations.length > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-cyan-400 text-[10px] font-bold text-gray-900">
+                  {conversations.length}
+                </span>
+              )}
+            </button>
+            <h2 className="font-semibold text-white truncate max-w-[180px]" title={customAssistantName || "Claude AI Assistant"}>
+              {customAssistantName || "Claude AI Assistant"}
+            </h2>
           </div>
           <div className="flex items-center gap-1">
             {/* Settings button */}
@@ -1256,6 +1363,7 @@ export function VoiceAssistant() {
                 setIsOpen(false);
                 setIsFullscreen(false);
                 setShowSettings(false);
+                setShowConversationList(false);
               }}
               className="rounded-lg p-2 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
               title="Close (Esc)"
@@ -1296,6 +1404,94 @@ export function VoiceAssistant() {
 
             {/* Settings Content */}
             <div className="flex-1 overflow-y-auto p-4 space-y-6">
+              {/* Assistant Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
+                  Assistant Name
+                </label>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                  Give your assistant a custom name
+                </p>
+                {showNameInput ? (
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={nameInputValue}
+                      onChange={(e) => setNameInputValue(e.target.value)}
+                      placeholder="Enter a name..."
+                      className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleSaveAssistantName();
+                        if (e.key === "Escape") {
+                          setShowNameInput(false);
+                          setNameInputValue("");
+                        }
+                      }}
+                      autoFocus
+                    />
+                    <button
+                      onClick={handleSaveAssistantName}
+                      className="rounded-lg bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-3 py-2 text-sm font-medium text-white transition-all hover:scale-105"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowNameInput(false);
+                        setNameInputValue("");
+                      }}
+                      className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between rounded-lg border border-gray-300 bg-white px-3 py-2.5 dark:border-gray-600 dark:bg-gray-800">
+                    <div>
+                      <div className="font-medium text-gray-900 dark:text-white">
+                        {customAssistantName || DEFAULT_ASSISTANT_NAME}
+                      </div>
+                      {customAssistantName && (
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Custom name</div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => {
+                          setNameInputValue(customAssistantName);
+                          setShowNameInput(true);
+                        }}
+                        className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                        title="Edit name"
+                      >
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                      </button>
+                      {customAssistantName && (
+                        <button
+                          onClick={() => {
+                            setAssistantName("");
+                            setCustomAssistantName("");
+                            announce("Assistant name reset to default");
+                            track("assistant_name_reset");
+                          }}
+                          className="rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-red-100 hover:text-red-500 dark:hover:bg-red-900/30"
+                          title="Reset to default"
+                        >
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Divider */}
+              <hr className="border-gray-200 dark:border-gray-700" />
+
               {/* Voice Selection */}
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
@@ -1461,6 +1657,107 @@ export function VoiceAssistant() {
                 Powered by Claude AI
               </p>
             </div>
+          </div>
+        )}
+
+        {/* Conversation List Panel */}
+        {showConversationList && (
+          <div className="absolute inset-0 z-10 flex flex-col bg-white dark:bg-gray-900">
+            {/* Conversation List Header */}
+            <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-gray-700">
+              <h3 className="font-semibold text-gray-900 dark:text-white">Conversations</h3>
+              <div className="flex items-center gap-2">
+                {/* New conversation button */}
+                <button
+                  onClick={handleNewConversation}
+                  className="flex items-center gap-1 rounded-lg bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-3 py-1.5 text-xs font-medium text-white transition-all hover:scale-105"
+                  title="Start new conversation"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  New
+                </button>
+                {/* Close button */}
+                <button
+                  onClick={() => setShowConversationList(false)}
+                  className="rounded-lg p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+                  title="Back to chat"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Conversation List Content */}
+            <div className="flex-1 overflow-y-auto p-4">
+              {conversations.length === 0 ? (
+                <div className="flex h-full flex-col items-center justify-center text-center">
+                  <div className="mb-4 rounded-full bg-gray-100 p-4 dark:bg-gray-800">
+                    <svg className="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">No conversations yet</p>
+                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">Start a new conversation to get started</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {conversations.map((conv) => (
+                    <button
+                      key={conv.id}
+                      onClick={() => handleSelectConversation(conv)}
+                      className={`group w-full rounded-lg border p-3 text-left transition-all hover:border-blue-500/50 hover:shadow-md ${
+                        activeConversationId === conv.id
+                          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                          : "border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-750"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <p className={`truncate text-sm font-medium ${
+                            activeConversationId === conv.id
+                              ? "text-blue-600 dark:text-cyan-400"
+                              : "text-gray-900 dark:text-white"
+                          }`}>
+                            {conv.title}
+                          </p>
+                          <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+                            {conv.messages.length} message{conv.messages.length !== 1 ? "s" : ""} · {formatConversationTime(conv.updatedAt)}
+                          </p>
+                        </div>
+                        <button
+                          onClick={(e) => handleDeleteConversation(conv.id, e)}
+                          className="rounded p-1 text-gray-400 opacity-0 transition-all hover:bg-red-100 hover:text-red-500 group-hover:opacity-100 dark:hover:bg-red-900/30"
+                          title="Delete conversation"
+                        >
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Conversation List Footer */}
+            {conversations.length > 0 && (
+              <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
+                <button
+                  onClick={handleClearAllConversations}
+                  className="w-full flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-white px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50 dark:border-red-900/50 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-red-900/20"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                  Clear all conversations
+                </button>
+              </div>
+            )}
           </div>
         )}
 

@@ -9,6 +9,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.0] - 2025-12-12
+
+### Added
+- **Multiple Conversations** - Keep and manage multiple conversation threads
+  - Conversations automatically saved to localStorage with unique IDs
+  - Click the chat icon in the header to view all conversations
+  - Each conversation shows title (from first message), message count, and time
+  - Continue any past conversation by clicking on it
+  - Delete individual conversations with the trash icon
+  - Start new conversations with the "New" button
+  - Migrates legacy single-conversation history on first load
+
+- **Custom Assistant Name** - Personalize your AI assistant
+  - Set a custom name in Settings → Assistant Name
+  - Name is stored in localStorage and persists across sessions
+  - AI responds with your custom name when asked "What's your name?"
+  - Reset to default "Claude Insider Assistant" anytime
+  - Name displayed in the assistant header
+
+- **Clear All Conversations** - Bulk delete option
+  - Button in conversation list footer to clear all history
+  - Removes all conversations from localStorage
+  - Includes confirmation in tracking analytics
+
+- **New Storage Module** - `lib/assistant-storage.ts`
+  - `getAssistantName()` / `setAssistantName()` - Custom name management
+  - `getAllConversations()` - List all saved conversations
+  - `createConversation()` / `updateConversationMessages()` - CRUD operations
+  - `deleteConversation()` / `clearAllConversations()` - Cleanup functions
+  - `formatConversationTime()` - Human-readable timestamps
+  - Max 50 conversations, 50 messages per conversation
+
+### Changed
+- **System Prompt** - Now accepts custom assistant name parameter
+  - `buildComprehensiveSystemPrompt` accepts `customAssistantName` in context
+  - When set, AI acknowledges the custom name warmly
+  - Exported `DEFAULT_ASSISTANT_NAME` constant for consistency
+
+- **Chat API** - Passes custom name to system prompt
+  - Added `customAssistantName` to `ChatRequest` interface
+  - Name sent from client and injected into prompt
+
 ## [0.27.1] - 2025-12-12
 
 ### Changed

@@ -45,6 +45,7 @@ export async function buildSystemPrompt(context: {
   pageContent?: string;
   visibleSection?: string;
   ragContext?: string;
+  customAssistantName?: string;
 }): Promise<string> {
   // Fetch site settings from CMS (cached)
   const siteSettings = await getSiteSettings();
