@@ -8,6 +8,8 @@ import { SkipLink } from "@/components/skip-link";
 import { VoiceAssistant } from "@/components/voice-assistant";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { ToastProvider } from "@/components/toast";
+import { AuthProvider } from "@/components/providers/auth-provider";
+import { AuthModalWrapper } from "@/components/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -139,15 +141,18 @@ export default function MainLayout({
       <body
         className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}
       >
-        <ToastProvider>
-          <SkipLink />
-          <ServiceWorkerRegister />
-          {children}
-          <VoiceAssistantErrorBoundary>
-            <VoiceAssistant />
-          </VoiceAssistantErrorBoundary>
-          <Analytics />
-        </ToastProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <SkipLink />
+            <ServiceWorkerRegister />
+            {children}
+            <VoiceAssistantErrorBoundary>
+              <VoiceAssistant />
+            </VoiceAssistantErrorBoundary>
+            <AuthModalWrapper />
+            <Analytics />
+          </ToastProvider>
+        </AuthProvider>
       </body>
     </html>
   );

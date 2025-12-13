@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Search } from "@/components/search";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
+import { UserMenu } from "@/components/auth";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
@@ -97,6 +98,7 @@ export function Header({ activePage }: HeaderProps) {
             <LanguageSelector />
             <Search />
             <ThemeToggle />
+            <UserMenu />
           </div>
 
           {/* Mobile Menu Button */}
@@ -104,6 +106,7 @@ export function Header({ activePage }: HeaderProps) {
             <LanguageSelector />
             <Search />
             <ThemeToggle />
+            <UserMenu />
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

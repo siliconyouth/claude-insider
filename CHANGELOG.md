@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.15] - 2025-12-13
+
+### Added
+- **Authentication UI Components** - Complete frontend auth system
+  - `AuthProvider` - React context for auth state management
+  - `AuthModal` - Combined sign-in/sign-up modal with email and social auth
+  - `UserMenu` - Header dropdown with profile, favorites, collections, settings
+  - `AuthModalWrapper` - Connects modal to auth context
+- **Header Integration** - Added UserMenu to desktop and mobile navigation
+- **Social Login Support** - GitHub and Google OAuth buttons (requires OAuth app setup)
+
+### Changed
+- Root layout now wraps app with `AuthProvider` for global auth state
+- Auth modal accessible from anywhere via `useAuth().showSignIn()`
+
 ## [0.28.14] - 2025-12-13
 
 ### Added
