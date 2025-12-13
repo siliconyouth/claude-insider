@@ -23,8 +23,8 @@
  * ```
  */
 
-import { createContext, useContext, useState, useCallback, useEffect } from "react";
-import { useSession, signOut as authSignOut, getSession } from "@/lib/auth-client";
+import { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
+import { useSession, signOut as authSignOut } from "@/lib/auth-client";
 
 interface User {
   id: string;
@@ -77,35 +77,54 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { data: sessionData, isPending, refetch } = useSession();
+  const { data: sessionData, isPending } = useSession();
   const [authModalState, setAuthModalState] = useState<"closed" | "signin" | "signup">("closed");
+  const [manualSession, setManualSession] = useState<Session | null>(null);
   const [isRefetching, setIsRefetching] = useState(false);
+  const hasCheckedSession = useRef(false);
 
-  // Force session refetch on mount to handle OAuth callback scenarios
+  // Force session fetch on mount to handle OAuth callback scenarios
   // This works around the Better Auth useSession reactivity issue
   useEffect(() => {
     const forceSessionRefresh = async () => {
-      // Only refetch if we're done with initial pending state and no session
-      // This catches the case where OAuth set cookies but useSession didn't update
-      if (!isPending && !sessionData) {
-        setIsRefetching(true);
-        try {
-          // Try direct API call first
-          const freshSession = await getSession();
-          if (freshSession?.data) {
-            // Session exists - trigger refetch to update the hook state
-            refetch();
+      // Only check once per mount, and only if useSession shows no session
+      if (hasCheckedSession.current) return;
+      if (isPending) return; // Wait for initial load to complete
+
+      hasCheckedSession.current = true;
+
+      // If useSession already has data, we're good
+      if (sessionData) return;
+
+      // Try fetching session directly from API
+      setIsRefetching(true);
+      try {
+        const response = await fetch("/api/auth/get-session", {
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data?.session && data?.user) {
+            console.log("[Auth] Session found via direct API call");
+            setManualSession({
+              user: data.user,
+              session: data.session,
+            });
           }
-        } catch (error) {
-          console.error("[Auth] Session refresh failed:", error);
-        } finally {
-          setIsRefetching(false);
         }
+      } catch (error) {
+        console.error("[Auth] Session refresh failed:", error);
+      } finally {
+        setIsRefetching(false);
       }
     };
 
     forceSessionRefresh();
-  }, [isPending, sessionData, refetch]);
+  }, [isPending, sessionData]);
+
+  // Use sessionData from hook if available, otherwise use manual session
+  const effectiveSession = sessionData || manualSession;
 
   const showSignIn = useCallback(() => setAuthModalState("signin"), []);
   const showSignUp = useCallback(() => setAuthModalState("signup"), []);
@@ -113,13 +132,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = useCallback(async () => {
     await authSignOut();
+    setManualSession(null); // Clear manual session on sign out
   }, []);
 
   const value: AuthContextValue = {
-    user: sessionData?.user ?? null,
-    session: sessionData ?? null,
+    user: effectiveSession?.user ?? null,
+    session: effectiveSession ?? null,
     isLoading: isPending || isRefetching,
-    isAuthenticated: !!sessionData?.user,
+    isAuthenticated: !!effectiveSession?.user,
     showSignIn,
     showSignUp,
     hideAuthModal,
