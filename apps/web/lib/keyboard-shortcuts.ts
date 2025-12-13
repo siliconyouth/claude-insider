@@ -113,8 +113,17 @@ export const shortcuts: KeyboardShortcut[] = [
   {
     id: "copy-link",
     key: "c",
-    modifiers: ["shift"],
+    modifiers: ["meta"],
     description: "Copy link",
+    category: "actions",
+    action: "copyLink",
+    global: true,
+  },
+  {
+    id: "copy-link-alt",
+    key: "c",
+    modifiers: ["ctrl", "shift"],
+    description: "Copy link (Windows/Linux)",
     category: "actions",
     action: "copyLink",
     global: true,
