@@ -94,10 +94,11 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
     try {
       setError(null);
       // signIn.social() redirects to the OAuth provider
-      // Don't use startTransition as it can interfere with redirects
+      // Use origin + pathname to force a clean redirect back
+      const callbackURL = window.location.origin + window.location.pathname;
       await signIn.social({
         provider,
-        callbackURL: window.location.href,
+        callbackURL,
       });
     } catch (err) {
       console.error("[Auth] Social login error:", err);

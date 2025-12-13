@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.19] - 2025-12-13
+
+### Fixed
+- **OAuth Session Recognition** - Fixed session not updating after GitHub/Google OAuth login
+  - Added session refresh mechanism to work around Better Auth useSession reactivity issue
+  - Auth provider now forces refetch when session cookies exist but hook hasn't updated
+  - Reference: [better-auth/issues/1006](https://github.com/better-auth/better-auth/issues/1006)
+
+### Added
+- **OAuth Onboarding Flow** - New user welcome experience for social sign-ups
+  - `OnboardingModal` - Shows profile data from OAuth provider for review/editing
+  - Users can set display name and bio before completing registration
+  - "Skip for now" option for users who want to customize later
+  - `hasCompletedOnboarding` user field to track onboarding status
+- **Profile Update API** - New endpoint for updating user additional fields
+  - `POST /api/user/update-profile` - Updates displayName, bio, hasCompletedOnboarding
+  - Secure session-based authentication required
+
+### Technical
+- Auth provider imports `getSession` for forced session refresh
+- `isRefetching` state prevents flicker during session reconciliation
+- OnboardingModalWrapper detects OAuth users (those with provider avatar)
+- Direct database updates via pg Pool for Better Auth additional fields
+
 ## [0.28.18] - 2025-12-13
 
 ### Added

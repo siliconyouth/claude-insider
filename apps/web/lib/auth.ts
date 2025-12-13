@@ -130,6 +130,10 @@ export const auth = betterAuth({
         type: 'boolean',
         defaultValue: false,
       },
+      hasCompletedOnboarding: {
+        type: 'boolean',
+        defaultValue: false,
+      },
     },
   },
 

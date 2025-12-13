@@ -6,6 +6,12 @@
  * Provides authentication context throughout the application.
  * Wraps the app to provide user session state to all components.
  *
+ * Known issue: Better Auth's useSession() hook doesn't always update after
+ * OAuth callbacks due to nanostores reactivity. We force a refetch on mount
+ * to ensure the session is properly recognized.
+ *
+ * @see https://github.com/better-auth/better-auth/issues/1006
+ *
  * @example
  * ```tsx
  * // In a component
@@ -17,8 +23,8 @@
  * ```
  */
 
-import { createContext, useContext, useState, useCallback } from "react";
-import { useSession, signOut as authSignOut } from "@/lib/auth-client";
+import { createContext, useContext, useState, useCallback, useEffect } from "react";
+import { useSession, signOut as authSignOut, getSession } from "@/lib/auth-client";
 
 interface User {
   id: string;
@@ -33,6 +39,7 @@ interface User {
   avatarUrl?: string;
   isBetaTester?: boolean;
   isVerified?: boolean;
+  hasCompletedOnboarding?: boolean;
 }
 
 interface Session {
@@ -70,8 +77,35 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const { data: sessionData, isPending } = useSession();
+  const { data: sessionData, isPending, refetch } = useSession();
   const [authModalState, setAuthModalState] = useState<"closed" | "signin" | "signup">("closed");
+  const [isRefetching, setIsRefetching] = useState(false);
+
+  // Force session refetch on mount to handle OAuth callback scenarios
+  // This works around the Better Auth useSession reactivity issue
+  useEffect(() => {
+    const forceSessionRefresh = async () => {
+      // Only refetch if we're done with initial pending state and no session
+      // This catches the case where OAuth set cookies but useSession didn't update
+      if (!isPending && !sessionData) {
+        setIsRefetching(true);
+        try {
+          // Try direct API call first
+          const freshSession = await getSession();
+          if (freshSession?.data) {
+            // Session exists - trigger refetch to update the hook state
+            refetch();
+          }
+        } catch (error) {
+          console.error("[Auth] Session refresh failed:", error);
+        } finally {
+          setIsRefetching(false);
+        }
+      }
+    };
+
+    forceSessionRefresh();
+  }, [isPending, sessionData, refetch]);
 
   const showSignIn = useCallback(() => setAuthModalState("signin"), []);
   const showSignUp = useCallback(() => setAuthModalState("signup"), []);
@@ -84,7 +118,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value: AuthContextValue = {
     user: sessionData?.user ?? null,
     session: sessionData ?? null,
-    isLoading: isPending,
+    isLoading: isPending || isRefetching,
     isAuthenticated: !!sessionData?.user,
     showSignIn,
     showSignUp,

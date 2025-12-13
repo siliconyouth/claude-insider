@@ -9,7 +9,7 @@ import { VoiceAssistant } from "@/components/voice-assistant";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { ToastProvider } from "@/components/toast";
 import { AuthProvider } from "@/components/providers/auth-provider";
-import { AuthModalWrapper } from "@/components/auth";
+import { AuthModalWrapper, OnboardingModalWrapper } from "@/components/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -150,6 +150,7 @@ export default function MainLayout({
               <VoiceAssistant />
             </VoiceAssistantErrorBoundary>
             <AuthModalWrapper />
+            <OnboardingModalWrapper />
             <Analytics />
           </ToastProvider>
         </AuthProvider>

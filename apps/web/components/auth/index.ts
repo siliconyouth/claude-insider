@@ -7,3 +7,5 @@
 export { AuthModal } from "./auth-modal";
 export { AuthModalWrapper } from "./auth-modal-wrapper";
 export { UserMenu } from "./user-menu";
+export { OnboardingModal } from "./onboarding-modal";
+export { OnboardingModalWrapper } from "./onboarding-modal-wrapper";
