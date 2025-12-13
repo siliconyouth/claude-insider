@@ -25,7 +25,6 @@ export function AskAIModal() {
     currentContext,
     currentQuestion,
     suggestedQuestions,
-    setQuestion,
     // Conversation history
     currentConversationId,
     setCurrentConversationId,

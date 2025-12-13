@@ -289,7 +289,7 @@ export function getContextAwareSuggestions(currentPath: string): string[] {
  * Build context string for AI
  */
 export function buildContextForAI(): string {
-  const _context = getUserContext();
+  getUserContext();
   const session = getSessionContext();
   const parts: string[] = [];
 

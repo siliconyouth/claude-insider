@@ -280,13 +280,14 @@ export function getSocialLinkUrl(platform: SocialPlatformId, value: string): str
       return `https://linkedin.com/${value}`;
     case "bluesky":
       return `https://bsky.app/profile/${value}`;
-    case "mastodon":
+    case "mastodon": {
       // Parse @user@instance format
       const match = value.match(/@?([^@]+)@(.+)/);
       if (match) {
         return `https://${match[2]}/@${match[1]}`;
       }
       return value;
+    }
     case "discord":
       // Discord doesn't have public profile URLs
       return "";

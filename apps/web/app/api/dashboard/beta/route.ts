@@ -57,7 +57,6 @@ export async function GET(request: NextRequest) {
       whereClause += ` AND ba.experience_level = $${params.length}`;
     }
 
-    const validSortFields = ["created_at", "updated_at"];
     const sortField = sortBy === "updatedAt" ? "updated_at" : "created_at";
     const order = sortOrder === "asc" ? "ASC" : "DESC";
 

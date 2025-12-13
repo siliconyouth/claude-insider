@@ -29,7 +29,7 @@ export function NativeShareButton({
   showLabel = true,
 }: NativeShareButtonProps) {
   const [copied, setCopied] = useState(false);
-  const [canShare, setCanShare] = useState(() => {
+  const [canShare] = useState(() => {
     if (typeof navigator === "undefined") return false;
     return !!navigator.share;
   });
@@ -56,6 +56,7 @@ export function NativeShareButton({
     } else {
       await copyToClipboard();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canShare, shareTitle, text, shareUrl]);
 
   const copyToClipboard = async () => {

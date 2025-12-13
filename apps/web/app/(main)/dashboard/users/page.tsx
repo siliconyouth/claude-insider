@@ -69,7 +69,7 @@ export default function UsersPage() {
       } else {
         toast.error("Failed to load user details");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to load user details");
     } finally {
       setIsLoadingUser(false);
@@ -95,7 +95,7 @@ export default function UsersPage() {
         const data = await response.json();
         toast.error(data.error || "Failed to update role");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to update role");
     } finally {
       setIsUpdating(false);
@@ -191,6 +191,7 @@ export default function UsersPage() {
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         {user.image ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
                           <img
                             src={user.image}
                             alt={user.name}
@@ -276,6 +277,7 @@ export default function UsersPage() {
                 <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-6 flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     {selectedUser.image ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={selectedUser.image}
                         alt={selectedUser.name}

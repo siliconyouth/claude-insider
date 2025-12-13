@@ -7,7 +7,7 @@
  */
 
 import { cn } from "@/lib/design-system";
-import { getLevelProgress, type Level } from "@/lib/gamification";
+import { getLevelProgress } from "@/lib/gamification";
 
 interface LevelBadgeProps {
   points: number;

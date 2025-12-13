@@ -29,6 +29,7 @@ export function InstallPrompt({ className }: InstallPromptProps) {
       const daysSinceDismissed =
         (now.getTime() - dismissedDate.getTime()) / (1000 * 60 * 60 * 24);
       if (daysSinceDismissed < 7) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsDismissed(true);
       }
     }

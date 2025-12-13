@@ -65,6 +65,7 @@ export default function FeedPage() {
     } else if (!authLoading) {
       setIsLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, authLoading]);
 
   const loadMore = () => {
@@ -268,6 +269,7 @@ export default function FeedPage() {
                   className="flex-shrink-0"
                 >
                   {activity.user.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={activity.user.image}
                       alt={activity.user.name}

@@ -8,7 +8,7 @@
  */
 
 import { createContext, useContext, useState, useCallback, useMemo } from "react";
-import type { WizardData, WizardStep, WIZARD_STEPS } from "@/types/onboarding";
+import type { WizardData, WizardStep } from "@/types/onboarding";
 import { useAuth } from "@/components/providers/auth-provider";
 
 interface WizardContextValue {

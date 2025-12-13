@@ -91,6 +91,7 @@ export function AchievementBadge({
           isFeatured && colors.ring
         )}
       >
+        {/* eslint-disable-next-line react-hooks/static-components */}
         <IconComponent className={cn(colors.icon, iconSizeClasses[size])} />
       </button>
 

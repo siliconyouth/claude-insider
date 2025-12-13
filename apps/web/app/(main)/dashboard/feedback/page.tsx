@@ -71,7 +71,7 @@ export default function FeedbackPage() {
         const data = await response.json();
         toast.error(data.error || "Failed to update status");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to update status");
     } finally {
       setIsUpdating(false);

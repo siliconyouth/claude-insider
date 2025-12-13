@@ -147,6 +147,7 @@ export function UserSearch({
                     className="flex-shrink-0"
                   >
                     {user.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={user.image}
                         alt={user.name}

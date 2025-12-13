@@ -7,6 +7,7 @@
  */
 
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { getSession } from "@/lib/auth";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 import { DashboardNav } from "./components/dashboard-nav";
@@ -49,7 +50,7 @@ export default async function DashboardLayout({
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center gap-4">
-              <a
+              <Link
                 href="/"
                 className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
               >
@@ -62,7 +63,7 @@ export default async function DashboardLayout({
                   />
                 </svg>
                 Back to Site
-              </a>
+              </Link>
               <div className="h-6 w-px bg-gray-800" />
               <h1 className="text-lg font-semibold text-white">Dashboard</h1>
             </div>

@@ -13,7 +13,7 @@ import { cn } from "@/lib/design-system";
 import { getCollection, getCollectionItems, removeFromCollection, updateCollection, deleteCollection } from "@/lib/favorites";
 import { useToast } from "@/components/toast";
 import type { CollectionWithCount, FavoriteWithDetails, CollectionColor, CollectionIcon } from "@/types/favorites";
-import { COLLECTION_COLORS, COLLECTION_ICONS, COLLECTION_COLOR_STYLES } from "@/types/favorites";
+import { COLLECTION_COLORS, COLLECTION_COLOR_STYLES } from "@/types/favorites";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -57,7 +57,7 @@ export default function CollectionDetailPage({ params }: PageProps) {
           setEditIcon(colResult.collection.icon);
           setEditIsPublic(colResult.collection.isPublic);
         }
-      } catch (error) {
+      } catch {
         if (!cancelled) {
           toast.error("Collection not found");
           router.push("/favorites/collections");

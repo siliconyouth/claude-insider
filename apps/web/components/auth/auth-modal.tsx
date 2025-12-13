@@ -9,7 +9,6 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { cn } from "@/lib/design-system";
-import { useAuth } from "@/components/providers/auth-provider";
 import { signIn, signUp } from "@/lib/auth-client";
 
 interface AuthModalProps {
@@ -30,6 +29,7 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
   // Reset form when modal opens/closes
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMode(initialMode);
       setEmail("");
       setPassword("");

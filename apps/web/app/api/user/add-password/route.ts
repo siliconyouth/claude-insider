@@ -6,7 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { getSession, auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { Pool } from "pg";
 
 // Create pool for direct database access

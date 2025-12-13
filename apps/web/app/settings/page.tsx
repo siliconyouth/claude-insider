@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useTransition, useCallback } from "react";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useToast } from "@/components/toast";
@@ -71,13 +71,7 @@ export default function SettingsPage() {
     }
   }, [authLoading, isAuthenticated, showSignIn]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadProfile();
-    }
-  }, [isAuthenticated]);
-
-  const loadProfile = async () => {
+  const loadProfile = useCallback(async () => {
     setIsLoading(true);
 
     const [profileResult, privacyResult, notifResult] = await Promise.all([
@@ -109,7 +103,14 @@ export default function SettingsPage() {
     }
 
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+      loadProfile();
+    }
+  }, [isAuthenticated, loadProfile]);
 
   // Track changes
   useEffect(() => {
@@ -120,6 +121,7 @@ export default function SettingsPage() {
       bio !== (profile.bio || "") ||
       website !== (profile.website || "");
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasChanges(changed);
   }, [name, bio, website, profile]);
 

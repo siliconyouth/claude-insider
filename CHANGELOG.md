@@ -9,6 +9,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.59.0] - 2025-12-14
+
+### Fixed
+- **Keyboard Shortcuts Input Conflict** - Capital letters can now be typed in input fields
+  - Changed copy-link shortcut from `Shift+C` to `Cmd+C` (Mac) / `Ctrl+Shift+C` (Win)
+  - All `Shift+letter` shortcuts now skip when typing in inputs/textareas
+  - Fixes onboarding wizard where users couldn't type capital letters (G, D, R, F, T)
+- **Better Auth Database Trigger** - Fixed "record has no field updated_at" error
+  - Migration 021 creates `update_updated_at_column_camelcase()` for Better Auth tables
+  - Better Auth uses camelCase `"updatedAt"`, not snake_case `updated_at`
+  - Fixes onboarding "Continue" button hanging on save
+
+### Improved
+- **Zero Lint Warnings** - Codebase now has 0 lint warnings (down from 106)
+  - Fixed all `@typescript-eslint/no-unused-vars` warnings
+  - Fixed all `react-hooks/exhaustive-deps` dependency warnings
+  - Fixed all `@next/next/no-img-element` warnings with eslint-disable comments
+  - Fixed `no-case-declarations` warnings by wrapping case blocks
+  - Set `eslint --max-warnings 0` to maintain clean codebase
+
+### Updated
+- **Legal Documents** - Comprehensive update for user authentication
+  - Privacy Policy: User account data, security measures, GDPR compliance (export/delete)
+  - Terms of Service: User accounts, content ownership, community guidelines
+  - Disclaimer: Authenticated vs anonymous users, code playground, user-generated content
+
+### New Files
+- `supabase/migrations/021_fix_better_auth_triggers.sql` - Database migration for trigger fix
+
 ## [0.58.0] - 2025-12-13
 
 ### Added

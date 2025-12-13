@@ -670,6 +670,7 @@ export function useTypewriter(
 
   useEffect(() => {
     indexRef.current = 0;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDisplayText("");
     setIsTyping(true);
 

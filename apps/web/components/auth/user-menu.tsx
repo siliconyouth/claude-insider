@@ -91,6 +91,7 @@ export function UserMenu() {
         aria-haspopup="true"
       >
         {user?.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={user.image}
             alt={user.name || "User"}

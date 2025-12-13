@@ -87,6 +87,7 @@ export function ReviewCard({ review, onDelete, className }: ReviewCardProps) {
             className="flex-shrink-0"
           >
             {review.userImage ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={review.userImage}
                 alt={review.userName}

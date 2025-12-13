@@ -48,7 +48,7 @@ export function ActivityChart({
         className="flex items-end gap-[2px] rounded-lg overflow-hidden"
         style={{ height }}
       >
-        {data.map((item, index) => {
+        {data.map((item) => {
           const barHeight = (item.count / maxCount) * height;
           return (
             <div

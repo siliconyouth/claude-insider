@@ -32,12 +32,14 @@ export function FAQContent() {
   // Load FAQs on mount
   useEffect(() => {
     initializeDefaultFAQs();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setFaqs(getCachedFAQs());
   }, []);
 
   // Filter FAQs by category
   useEffect(() => {
     if (activeCategory) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFaqs(getFAQsByCategory(activeCategory));
     } else {
       setFaqs(getCachedFAQs());

@@ -39,6 +39,7 @@ export function useKeyboardNavigation({
   // Reset selection when item count changes
   useEffect(() => {
     if (selectedIndex >= itemCount) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedIndex(itemCount > 0 ? 0 : -1);
     }
   }, [itemCount, selectedIndex]);

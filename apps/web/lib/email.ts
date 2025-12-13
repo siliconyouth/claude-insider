@@ -11,6 +11,7 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Default sender configuration
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const FROM_EMAIL = process.env.EMAIL_FROM || "Claude Insider <noreply@claudeinsider.com>";
 const APP_NAME = "Claude Insider";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://claudeinsider.com";

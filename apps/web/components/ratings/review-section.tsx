@@ -47,13 +47,14 @@ export function ReviewSection({
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState<"recent" | "helpful" | "highest" | "lowest">("recent");
   const [showForm, setShowForm] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const toast = useToast();
   const { isAuthenticated } = useAuth();
 
   // Load data
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resourceType, resourceId, sortBy]);
 
   const loadData = async () => {

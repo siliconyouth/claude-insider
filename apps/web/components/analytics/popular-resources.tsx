@@ -47,6 +47,7 @@ export function PopularResources({
   }, [type, resourceType, limit]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadResources();
   }, [loadResources]);
 

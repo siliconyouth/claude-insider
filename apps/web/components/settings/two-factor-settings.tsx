@@ -40,10 +40,6 @@ export function TwoFactorSettings() {
   const [showRegenerateModal, setShowRegenerateModal] = useState(false);
   const [regenerateCode, setRegenerateCode] = useState("");
 
-  useEffect(() => {
-    loadStatus();
-  }, []);
-
   const loadStatus = async () => {
     setIsLoading(true);
     const result = await getTwoFactorStatus();
@@ -54,6 +50,13 @@ export function TwoFactorSettings() {
     }
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadStatus();
+  }, []);
+
+
 
   const handleStartSetup = () => {
     startTransition(async () => {
@@ -317,6 +320,7 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
 
         <div className="flex flex-col items-center mb-6">
           {qrCodeUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={qrCodeUrl}
               alt="2FA QR Code"

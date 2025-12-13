@@ -34,8 +34,7 @@ export function hasMentions(text: string): boolean {
  * Returns array of strings and React elements
  */
 export function parseMentions(
-  text: string,
-  _linkClass?: string
+  text: string
 ): Array<string | { type: "mention"; username: string; key: string }> {
   const parts: Array<string | { type: "mention"; username: string; key: string }> = [];
   let lastIndex = 0;

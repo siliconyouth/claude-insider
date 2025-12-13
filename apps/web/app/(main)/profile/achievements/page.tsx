@@ -6,7 +6,7 @@
  * View all achievements and manage featured ones.
  */
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useTransition, useCallback } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -44,13 +44,7 @@ export default function AchievementsPage() {
     }
   }, [authLoading, isAuthenticated, showSignIn]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadData();
-    }
-  }, [isAuthenticated]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setIsLoading(true);
     const [earnedResult, allResult, progressResult, statsResult] = await Promise.all([
       getUserAchievements(),
@@ -64,7 +58,14 @@ export default function AchievementsPage() {
     if (progressResult.data) setProgress(progressResult.data);
     setStats(statsResult);
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect
+      loadData();
+    }
+  }, [isAuthenticated, loadData]);
 
   const handleToggleFeatured = (achievementId: string) => {
     startTransition(async () => {

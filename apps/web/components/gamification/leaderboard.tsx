@@ -122,6 +122,7 @@ export function Leaderboard({
               {/* Avatar */}
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center text-white font-semibold">
                 {entry.avatar ? (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={entry.avatar}
                     alt={entry.username}

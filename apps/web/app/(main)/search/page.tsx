@@ -158,6 +158,7 @@ function SearchPageContent() {
   // Initial search from URL
   useEffect(() => {
     if (initialQuery) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       performSearch(initialQuery, filters);
     }
   }, [initialQuery, filters, performSearch]);

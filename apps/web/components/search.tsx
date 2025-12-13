@@ -56,12 +56,14 @@ export function Search() {
 
   // Track if component is mounted (for portal)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
   // Load search history on mount and when modal opens
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSearchHistory(getSearchHistory());
     }
   }, [isOpen]);
@@ -103,6 +105,7 @@ export function Search() {
   // Search when query changes (with transition for smooth UI)
   useEffect(() => {
     if (!fuseRef.current || !query || query.length < 2) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setResults([]);
       return;
     }

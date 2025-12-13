@@ -26,6 +26,7 @@ export function LanguageSelector() {
 
   // Handle locale change - set cookie and reload
   const handleLocaleChange = (locale: Locale) => {
+    // eslint-disable-next-line react-hooks/immutability
     document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=31536000`;
     setIsOpen(false);
     window.location.reload();

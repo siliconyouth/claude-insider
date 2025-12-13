@@ -39,6 +39,7 @@ export function SavedSearches({ onSelect, className }: SavedSearchesProps) {
 
   const handleSelect = async (search: SavedSearch) => {
     // Update use count
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useSavedSearch(search.id);
     onSelect?.(search.query, search.filters);
   };

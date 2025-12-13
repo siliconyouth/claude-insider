@@ -157,6 +157,7 @@ export function OnboardingWizard({ isOpen, onComplete }: OnboardingWizardProps) 
             {/* User Avatar */}
             <div className="relative mx-auto mb-3">
               {user.image || user.avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={user.avatarUrl || user.image || ""}
                   alt={user.name || "Profile"}

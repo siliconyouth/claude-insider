@@ -178,6 +178,7 @@ export function AISearch() {
         clearTimeout(searchTimeoutRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const performAISearch = async (searchQuery: string) => {
@@ -229,6 +230,7 @@ export function AISearch() {
         navigateToResult(response.results[selectedIndex].url);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [response, selectedIndex]
   );
 

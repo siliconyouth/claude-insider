@@ -23,10 +23,6 @@ export function BlockedUsers() {
   const [unblockingId, setUnblockingId] = useState<string | null>(null);
   const toast = useToast();
 
-  useEffect(() => {
-    loadBlockedUsers();
-  }, []);
-
   const loadBlockedUsers = async () => {
     setIsLoading(true);
     const result = await getBlockedUsers();
@@ -35,6 +31,13 @@ export function BlockedUsers() {
     }
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadBlockedUsers();
+  }, []);
+
+
 
   const handleUnblock = (userId: string) => {
     setUnblockingId(userId);
@@ -124,6 +127,7 @@ export function BlockedUsers() {
             className="flex-shrink-0"
           >
             {user.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={user.image}
                 alt={user.name}

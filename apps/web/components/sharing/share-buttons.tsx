@@ -82,6 +82,7 @@ export function ShareButtons({
     const shareLink = getShareUrl(platform);
     if (shareLink) {
       if (platform === "email") {
+        // eslint-disable-next-line react-hooks/immutability
         window.location.href = shareLink;
       } else {
         window.open(shareLink, "_blank", "width=600,height=400,noopener,noreferrer");

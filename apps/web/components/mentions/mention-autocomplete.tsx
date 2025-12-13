@@ -105,6 +105,7 @@ export function MentionAutocomplete({
         setShowSuggestions(false);
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSuggestions, suggestions, selectedIndex, onSubmit]);
 
   // Select a suggestion
@@ -203,6 +204,7 @@ export function MentionAutocomplete({
             >
               {/* Avatar */}
               {user.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={user.image}
                   alt={user.name}

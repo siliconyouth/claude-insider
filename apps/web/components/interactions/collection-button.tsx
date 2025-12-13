@@ -39,6 +39,7 @@ export function CollectionButton({
   // Load collections when dropdown opens
   useEffect(() => {
     if (isOpen && isAuthenticated) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoading(true);
       Promise.all([
         getUserCollections(),

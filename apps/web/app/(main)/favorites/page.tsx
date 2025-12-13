@@ -49,7 +49,7 @@ export default function FavoritesPage() {
           setTotal(favResult.total);
           setCollections(colResult.collections);
         }
-      } catch (error) {
+      } catch {
         if (!cancelled) {
           toast.error("Failed to load favorites");
         }

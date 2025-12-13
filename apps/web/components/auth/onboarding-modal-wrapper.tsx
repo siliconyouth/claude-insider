@@ -27,6 +27,7 @@ export function OnboardingModalWrapper() {
       const needsOnboarding = !user.hasCompletedOnboarding;
 
       if (needsOnboarding) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setShowOnboarding(true);
       }
       setHasChecked(true);

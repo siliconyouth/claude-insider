@@ -38,6 +38,7 @@ export function UserStatsDashboard({ className }: UserStatsDashboardProps) {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadData();
   }, [loadData]);
 

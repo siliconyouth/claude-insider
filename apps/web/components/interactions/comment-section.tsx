@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { cn } from "@/lib/design-system";
 import { getComments, type Comment } from "@/app/actions/comments";
 import { CommentForm } from "./comment-form";
 import { CommentItem } from "./comment-item";
@@ -37,6 +36,7 @@ export function CommentSection({
   }, [resourceType, resourceId]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadComments();
   }, [loadComments]);
 

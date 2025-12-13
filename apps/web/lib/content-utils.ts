@@ -33,7 +33,7 @@ export function calculateReadingTime(content: string): ReadingTimeResult {
 
   // Count words in regular content
   const words = contentWithoutCode
-    .replace(/[#*_\[\]()]/g, "") // Remove markdown syntax
+    .replace(/[#*_[\]()]/g, "") // Remove markdown syntax
     .split(/\s+/)
     .filter((word) => word.length > 0).length;
 
@@ -175,7 +175,7 @@ export function extractTOCFromMarkdown(markdown: string): TOCItem[] {
 export function getWordCount(content: string): number {
   return content
     .replace(/```[\s\S]*?```/g, "") // Remove code blocks
-    .replace(/[#*_\[\]()]/g, "") // Remove markdown
+    .replace(/[#*_[\]()]/g, "") // Remove markdown
     .split(/\s+/)
     .filter((word) => word.length > 0).length;
 }

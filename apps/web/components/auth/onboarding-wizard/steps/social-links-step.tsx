@@ -12,7 +12,7 @@ import { WizardNavigation } from "../wizard-navigation";
 import { StepWrapper, StepInfoBox } from "../shared/step-wrapper";
 import { SocialInput } from "../shared/social-input";
 import { SOCIAL_PLATFORMS } from "@/types/onboarding";
-import type { SocialPlatformId, SocialLinks } from "@/types/onboarding";
+import type { SocialPlatformId } from "@/types/onboarding";
 import { validateAllSocialLinks } from "@/lib/validations/social-links";
 
 export function SocialLinksStep() {

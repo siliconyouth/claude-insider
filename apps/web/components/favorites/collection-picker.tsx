@@ -11,8 +11,8 @@ import { createPortal } from "react-dom";
 import { cn } from "@/lib/design-system";
 import { useToast } from "@/components/toast";
 import { getCollections, createCollection, addToCollection, removeFromCollection, getCollectionItems } from "@/lib/favorites";
-import type { CollectionWithCount, CollectionColor, CollectionIcon } from "@/types/favorites";
-import { COLLECTION_COLORS, COLLECTION_ICONS, COLLECTION_COLOR_STYLES } from "@/types/favorites";
+import type { CollectionWithCount, CollectionIcon } from "@/types/favorites";
+import { COLLECTION_COLORS, COLLECTION_COLOR_STYLES } from "@/types/favorites";
 
 interface CollectionPickerProps {
   isOpen: boolean;
@@ -71,7 +71,7 @@ export function CollectionPicker({
         if (!cancelled) {
           setSelectedCollections(selectedSet);
         }
-      } catch (error) {
+      } catch {
         if (!cancelled) {
           toast.error("Failed to load collections");
         }

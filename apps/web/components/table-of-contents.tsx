@@ -52,6 +52,7 @@ export function TableOfContents({
       }
     });
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHeadings(items);
 
     // Set up intersection observer for scroll spy

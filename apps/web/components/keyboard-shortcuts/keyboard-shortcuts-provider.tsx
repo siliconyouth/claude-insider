@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 import {
   shortcuts,
   matchesShortcut,
-  type KeyboardShortcut,
 } from "@/lib/keyboard-shortcuts";
 import { KeyboardShortcutsModal } from "./keyboard-shortcuts-modal";
 
@@ -104,14 +103,15 @@ export function KeyboardShortcutsProvider({ children }: KeyboardShortcutsProvide
         case "goFavorites":
           router.push("/favorites");
           return true;
-        case "skipToContent":
+        case "skipToContent": {
           const main = document.getElementById("main-content");
           if (main) {
             main.focus();
             main.scrollIntoView({ behavior: "smooth" });
           }
           return true;
-        case "focusSearch":
+        }
+        case "focusSearch": {
           const searchInput = document.querySelector<HTMLInputElement>(
             '[data-search-input], input[type="search"], input[placeholder*="Search"]'
           );
@@ -120,6 +120,7 @@ export function KeyboardShortcutsProvider({ children }: KeyboardShortcutsProvide
             return true;
           }
           return false;
+        }
         case "copyLink":
           navigator.clipboard.writeText(window.location.href);
           return true;

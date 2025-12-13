@@ -107,6 +107,7 @@ export function OnboardingModal({ isOpen, onComplete }: OnboardingModalProps) {
           {/* User Avatar */}
           <div className="relative mx-auto mb-4">
             {user.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={user.image}
                 alt={user.name || "Profile"}

@@ -8,7 +8,7 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
-import type { CollectionWithCount, CollectionColor, CollectionIcon } from "@/types/favorites";
+import type { CollectionWithCount, CollectionIcon } from "@/types/favorites";
 import { COLLECTION_COLOR_STYLES } from "@/types/favorites";
 
 interface CollectionCardProps {

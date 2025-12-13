@@ -83,7 +83,7 @@ export default function AdminSuggestionsPage() {
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setSuggestions(data.suggestions || []);
-      } catch (error) {
+      } catch {
         toast.error("Failed to load suggestions");
       } finally {
         setIsLoading(false);

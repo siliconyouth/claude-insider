@@ -10,7 +10,6 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
 import { FollowButton } from "@/components/users/follow-button";
 
 interface PublicProfile {
@@ -88,7 +87,6 @@ export default function PublicProfilePage({
   const [profile, setProfile] = useState<PublicProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const toast = useToast();
 
   useEffect(() => {
     async function fetchProfile() {
@@ -198,6 +196,7 @@ export default function PublicProfilePage({
       <div className="flex flex-col sm:flex-row items-start gap-6 mb-8">
         {/* Avatar */}
         {profile.avatar ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={profile.avatar}
             alt={profile.name}

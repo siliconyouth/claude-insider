@@ -132,6 +132,7 @@ export default function FollowingPage({
               {/* Avatar */}
               <Link href={user.username ? `/users/${user.username}` : "#"}>
                 {user.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={user.image}
                     alt={user.name}

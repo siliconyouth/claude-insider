@@ -8,7 +8,6 @@
 
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
-import { cn } from "@/lib/design-system";
 import { FollowButton } from "@/components/users/follow-button";
 
 interface FollowerUser {
@@ -132,6 +131,7 @@ export default function FollowersPage({
               {/* Avatar */}
               <Link href={follower.username ? `/users/${follower.username}` : "#"}>
                 {follower.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={follower.image}
                     alt={follower.name}

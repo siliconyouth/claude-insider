@@ -74,7 +74,7 @@ export default function BetaApplicationsPage() {
         const data = await response.json();
         toast.error(data.error || "Failed to review application");
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to review application");
     } finally {
       setIsReviewing(false);
