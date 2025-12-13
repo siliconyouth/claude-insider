@@ -4,9 +4,10 @@
 -- ============================================================================
 
 -- Create edit_suggestions table
+-- Note: user_id is TEXT to match Better Auth's user.id type
 CREATE TABLE IF NOT EXISTS edit_suggestions (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+  user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
   resource_type TEXT NOT NULL CHECK (resource_type IN ('resource', 'doc')),
   resource_id TEXT NOT NULL,
   suggestion_type TEXT NOT NULL CHECK (suggestion_type IN ('content', 'metadata', 'typo', 'other')),
@@ -14,7 +15,7 @@ CREATE TABLE IF NOT EXISTS edit_suggestions (
   description TEXT NOT NULL CHECK (LENGTH(description) <= 5000),
   suggested_changes TEXT,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'merged')),
-  reviewer_id UUID REFERENCES "user"(id) ON DELETE SET NULL,
+  reviewer_id TEXT REFERENCES "user"(id) ON DELETE SET NULL,
   reviewer_notes TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -31,17 +32,17 @@ ALTER TABLE edit_suggestions ENABLE ROW LEVEL SECURITY;
 -- Policy: Users can view their own suggestions
 CREATE POLICY "Users can view own suggestions"
   ON edit_suggestions FOR SELECT
-  USING (auth.uid() = user_id);
+  USING (auth.uid()::text = user_id);
 
 -- Policy: Users can create suggestions
 CREATE POLICY "Users can create suggestions"
   ON edit_suggestions FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
+  WITH CHECK (auth.uid()::text = user_id);
 
 -- Policy: Users can delete their own pending suggestions
 CREATE POLICY "Users can delete own pending suggestions"
   ON edit_suggestions FOR DELETE
-  USING (auth.uid() = user_id AND status = 'pending');
+  USING (auth.uid()::text = user_id AND status = 'pending');
 
 -- Policy: Service role can do everything (for admin operations)
 CREATE POLICY "Service role full access"
