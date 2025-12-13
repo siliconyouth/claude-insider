@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.14] - 2025-12-13
+
+### Added
+- **Auth Health Check Endpoint** - `/api/auth/health` for diagnosing database connectivity
+  - Tests DATABASE_URL connectivity and displays connection status
+  - Shows environment variable configuration (masked secrets)
+  - Verifies Better Auth tables exist in database
+
+### Fixed
+- **Turbo Environment Variables** - Added auth-related env vars to turbo.json
+  - BETTER_AUTH_SECRET, BETTER_AUTH_URL, GITHUB_CLIENT_ID/SECRET
+  - GOOGLE_CLIENT_ID/SECRET, SUPABASE_SERVICE_ROLE_KEY
+- **Auth Route Error Handling** - Added try-catch with error messages
+  - Returns detailed error messages for debugging auth issues
+- **Unused Import** - Removed unused CookieOptions from supabase/server.ts
+
 ## [0.28.13] - 2025-12-12
 
 ### Fixed
