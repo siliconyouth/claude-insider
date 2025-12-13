@@ -27,11 +27,24 @@ interface ToastContextValue {
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 
-// Hook to use toast
+// No-op fallback for SSR/SSG when ToastProvider is not available
+const noopToast: ToastContextValue = {
+  toasts: [],
+  addToast: () => "",
+  removeToast: () => {},
+  success: () => "",
+  error: () => "",
+  info: () => "",
+  warning: () => "",
+};
+
+// Hook to use toast - returns safe no-op during SSR/SSG
 export function useToast() {
   const context = useContext(ToastContext);
+  // Return no-op fallback during SSR/SSG instead of throwing
+  // This allows pages using useToast to be statically generated
   if (!context) {
-    throw new Error("useToast must be used within a ToastProvider");
+    return noopToast;
   }
   return context;
 }
