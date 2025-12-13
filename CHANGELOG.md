@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.16] - 2025-12-13
+
+### Added
+- **Interaction Components** - User engagement components for resources and docs
+  - `FavoriteButton` - Heart icon button with optimistic updates and toast feedback
+  - `RatingStars` - 5-star rating system with hover states and visual feedback
+  - Components support multiple sizes (sm, md, lg) and accessibility features
+- **Server Actions** - Backend logic for favorites and ratings
+  - `app/actions/favorites.ts` - Toggle favorites, get user favorites, check favorite status
+  - `app/actions/ratings.ts` - Submit/update ratings, get statistics, delete ratings
+  - Activity logging for user engagement tracking
+  - Session verification via Better Auth
+
+### Technical
+- Server actions use explicit any typing for Supabase to handle tables that may not exist yet
+- Optimistic UI updates with automatic reversion on error
+- All interactions require authentication with sign-in modal prompt
+
 ## [0.28.15] - 2025-12-13
 
 ### Added
