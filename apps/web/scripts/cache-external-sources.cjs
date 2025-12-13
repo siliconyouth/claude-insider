@@ -44,8 +44,8 @@ const MAX_CACHE_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const WEB_REQUEST_DELAY_MS = 2000;
 const CLAUDE_REQUEST_DELAY_MS = 1000;
 
-// Maximum content size (2MB to handle large documentation pages)
-const MAX_CONTENT_SIZE = 2 * 1024 * 1024;
+// Maximum content size (10MB to handle large documentation pages like Messages API)
+const MAX_CONTENT_SIZE = 10 * 1024 * 1024;
 
 // User agent for requests
 const USER_AGENT = "ClaudeInsider-SourceCacher/1.0 (Documentation crawler)";

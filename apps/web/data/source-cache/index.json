@@ -15,7 +15,7 @@
     },
     "https://console.anthropic.com": {
       "title": "Anthropic Console",
-      "cachedAt": "2025-12-13T23:23:54.553Z",
+      "cachedAt": "2025-12-13T23:28:58.344Z",
       "contentLength": 10,
       "summaryLength": 0,
       "hasSummary": false,
@@ -81,14 +81,6 @@
         "api/index.mdx",
         "api/tool-use.mdx",
         "integrations/github-actions.mdx"
-      ]
-    },
-    "https://docs.anthropic.com/en/api/messages": {
-      "title": "Messages API Documentation",
-      "error": "Content too large",
-      "failedAt": "2025-12-13T23:23:59.153Z",
-      "referencedFrom": [
-        "api/index.mdx"
       ]
     },
     "https://docs.anthropic.com/en/docs/about-claude/models": {
@@ -187,7 +179,7 @@
     },
     "https://docs.anthropic.com/en/docs/claude-code/memory": {
       "title": "Claude Code Documentation - Memory",
-      "cachedAt": "2025-12-13T23:23:59.573Z",
+      "cachedAt": "2025-12-13T23:29:23.273Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -217,7 +209,7 @@
     },
     "https://docs.anthropic.com/en/docs/claude-code/overview": {
       "title": "Claude Code Documentation",
-      "cachedAt": "2025-12-13T23:24:02.192Z",
+      "cachedAt": "2025-12-13T23:29:25.648Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -241,7 +233,7 @@
     },
     "https://console.anthropic.com/settings/keys": {
       "title": "Anthropic API Keys",
-      "cachedAt": "2025-12-13T23:24:04.848Z",
+      "cachedAt": "2025-12-13T23:29:28.356Z",
       "contentLength": 10,
       "summaryLength": 0,
       "hasSummary": false,
@@ -252,7 +244,7 @@
     },
     "https://docs.anthropic.com/en/docs/claude-code/settings": {
       "title": "Claude Code Documentation - Settings",
-      "cachedAt": "2025-12-13T23:24:07.099Z",
+      "cachedAt": "2025-12-13T23:29:30.656Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -264,7 +256,7 @@
     },
     "https://docs.anthropic.com/en/docs/claude-code/security": {
       "title": "Claude Code Security",
-      "cachedAt": "2025-12-13T23:24:09.347Z",
+      "cachedAt": "2025-12-13T23:29:32.958Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -299,7 +291,7 @@
     },
     "https://cursor.sh/docs": {
       "title": "Cursor Documentation",
-      "cachedAt": "2025-12-13T23:24:11.790Z",
+      "cachedAt": "2025-12-13T23:29:35.396Z",
       "contentLength": 11,
       "summaryLength": 0,
       "hasSummary": false,
@@ -321,7 +313,7 @@
     },
     "https://modelcontextprotocol.io": {
       "title": "MCP Server Documentation",
-      "cachedAt": "2025-12-13T23:24:14.259Z",
+      "cachedAt": "2025-12-13T23:29:37.850Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -334,7 +326,7 @@
     },
     "https://www.postgresql.org/docs/current/user-manag.html": {
       "title": "PostgreSQL Security",
-      "cachedAt": "2025-12-13T23:24:17.160Z",
+      "cachedAt": "2025-12-13T23:29:40.807Z",
       "contentLength": 82,
       "summaryLength": 0,
       "hasSummary": false,
@@ -367,7 +359,7 @@
     },
     "https://docs.anthropic.com/en/docs/claude-code/hooks": {
       "title": "Claude Code Documentation - Hooks",
-      "cachedAt": "2025-12-13T23:24:19.527Z",
+      "cachedAt": "2025-12-13T23:29:43.294Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -379,7 +371,7 @@
     },
     "https://docs.anthropic.com/en/docs/claude-code/ide-integrations": {
       "title": "Claude Code Documentation - IDE Integration",
-      "cachedAt": "2025-12-13T23:24:21.856Z",
+      "cachedAt": "2025-12-13T23:29:46.246Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -390,7 +382,7 @@
     },
     "https://marketplace.visualstudio.com": {
       "title": "VS Code Marketplace",
-      "cachedAt": "2025-12-13T23:24:24.375Z",
+      "cachedAt": "2025-12-13T23:29:48.898Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -401,7 +393,7 @@
     },
     "https://docs.anthropic.com/en/docs/claude-code/mcp": {
       "title": "Claude Code Documentation - MCP",
-      "cachedAt": "2025-12-13T23:24:26.635Z",
+      "cachedAt": "2025-12-13T23:29:51.163Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -448,7 +440,7 @@
     },
     "https://docs.anthropic.com/en/docs/claude-code/cli-usage": {
       "title": "Claude Code Documentation - Commands",
-      "cachedAt": "2025-12-13T23:24:28.978Z",
+      "cachedAt": "2025-12-13T23:29:53.522Z",
       "contentLength": 0,
       "summaryLength": 0,
       "hasSummary": false,
@@ -456,7 +448,18 @@
       "referencedFrom": [
         "tips-and-tricks/productivity.mdx"
       ]
+    },
+    "https://docs.anthropic.com/en/api/messages": {
+      "title": "Messages API Documentation",
+      "cachedAt": "2025-12-13T23:29:20.781Z",
+      "contentLength": 15003,
+      "summaryLength": 3250,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/index.mdx"
+      ]
     }
   },
-  "lastUpdated": "2025-12-13T23:24:28.979Z"
+  "lastUpdated": "2025-12-13T23:29:53.522Z"
 }
