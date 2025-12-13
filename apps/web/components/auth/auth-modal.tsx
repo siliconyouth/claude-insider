@@ -90,17 +90,19 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
     });
   };
 
-  const handleSocialLogin = (provider: "github" | "google") => {
-    startTransition(async () => {
-      try {
-        await signIn.social({
-          provider,
-          callbackURL: window.location.href,
-        });
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Social login failed");
-      }
-    });
+  const handleSocialLogin = async (provider: "github" | "google") => {
+    try {
+      setError(null);
+      // signIn.social() redirects to the OAuth provider
+      // Don't use startTransition as it can interfere with redirects
+      await signIn.social({
+        provider,
+        callbackURL: window.location.href,
+      });
+    } catch (err) {
+      console.error("[Auth] Social login error:", err);
+      setError(err instanceof Error ? err.message : "Social login failed");
+    }
   };
 
   if (!isOpen) return null;
