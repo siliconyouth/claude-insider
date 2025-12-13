@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
 import { withPayload } from "@payloadcms/next/withPayload";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
@@ -105,5 +106,7 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
-// Wrap with Payload and MDX
-export default withPayload(withMDX(nextConfig));
+const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+
+// Wrap with Payload, MDX, and i18n
+export default withPayload(withNextIntl(withMDX(nextConfig)));

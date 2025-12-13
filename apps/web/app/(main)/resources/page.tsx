@@ -542,6 +542,8 @@ function ResourcesContent() {
                     variant={viewMode === 'grid' ? 'default' : 'compact'}
                     showCategory
                     showTags={viewMode === 'grid'}
+                    showInteractions
+                    showAskAI
                     maxTags={3}
                   />
                 </div>

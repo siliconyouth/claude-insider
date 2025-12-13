@@ -3,6 +3,7 @@ import "../globals.css";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { getLocale, getMessages } from "next-intl/server";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { SkipLink } from "@/components/skip-link";
 import { VoiceAssistant } from "@/components/voice-assistant";
@@ -10,6 +11,10 @@ import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-
 import { ToastProvider } from "@/components/toast";
 import { AuthProvider } from "@/components/providers/auth-provider";
 import { AuthModalWrapper, OnboardingModalWrapper } from "@/components/auth";
+import { FeedbackButton } from "@/components/feedback/feedback-button";
+import { I18nProvider } from "@/i18n";
+import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
+import { AskAIProvider, AskAIModal } from "@/components/ask-ai";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -121,13 +126,16 @@ const jsonLd = {
   ],
 };
 
-export default function MainLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" className="dark">
+    <html lang={locale} className="dark">
       <head>
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -141,19 +149,27 @@ export default function MainLayout({
       <body
         className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}
       >
-        <AuthProvider>
-          <ToastProvider>
-            <SkipLink />
-            <ServiceWorkerRegister />
-            {children}
-            <VoiceAssistantErrorBoundary>
-              <VoiceAssistant />
-            </VoiceAssistantErrorBoundary>
-            <AuthModalWrapper />
-            <OnboardingModalWrapper />
-            <Analytics />
-          </ToastProvider>
-        </AuthProvider>
+        <I18nProvider locale={locale} messages={messages}>
+          <AuthProvider>
+            <AskAIProvider>
+              <KeyboardShortcutsProvider>
+                <ToastProvider>
+                  <SkipLink />
+                  <ServiceWorkerRegister />
+                  {children}
+                  <VoiceAssistantErrorBoundary>
+                    <VoiceAssistant />
+                  </VoiceAssistantErrorBoundary>
+                  <AuthModalWrapper />
+                  <OnboardingModalWrapper />
+                  <FeedbackButton />
+                  <AskAIModal />
+                  <Analytics />
+                </ToastProvider>
+              </KeyboardShortcutsProvider>
+            </AskAIProvider>
+          </AuthProvider>
+        </I18nProvider>
       </body>
     </html>
   );

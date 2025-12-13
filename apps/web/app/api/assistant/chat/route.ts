@@ -13,12 +13,21 @@ interface ChatRequest {
   customAssistantName?: string;
   userName?: string;
   shouldAskForName?: boolean;
+  userContext?: string; // Context from behavior tracking
+  // AI context from Ask AI buttons
+  aiContext?: {
+    type?: string;
+    category?: string;
+    code?: string;
+    language?: string;
+    title?: string;
+  };
 }
 
 export async function POST(request: Request) {
   try {
     const body: ChatRequest = await request.json();
-    const { messages, currentPage, pageContent, visibleSection, customAssistantName, userName, shouldAskForName } = body;
+    const { messages, currentPage, pageContent, visibleSection, customAssistantName, userName, shouldAskForName, userContext, aiContext } = body;
 
     if (!messages || messages.length === 0) {
       return new Response(
@@ -32,8 +41,8 @@ export async function POST(request: Request) {
       .filter((m) => m.role === "user")
       .pop()?.content || "";
 
-    // Search documentation for relevant context
-    const ragContext = getRAGContext(latestUserMessage, 3);
+    // Search documentation for relevant context with AI context for better ranking
+    const ragContext = getRAGContext(latestUserMessage, 3, aiContext);
 
     // Build system prompt with context (async - fetches CMS settings)
     const systemPrompt = await buildSystemPrompt({
@@ -44,6 +53,7 @@ export async function POST(request: Request) {
       customAssistantName,
       userName,
       shouldAskForName,
+      userContext,
     });
 
     // Convert messages to Anthropic format

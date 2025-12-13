@@ -1,17 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import {
-  locales,
-  getCurrentLocale,
-  setLocale,
-  hasMultipleLocales,
-  Locale,
-} from "@/lib/i18n";
+import { useLocale } from "next-intl";
+import { locales, localeNames, localeFlags, type Locale } from "@/i18n/config";
 
 export function LanguageSelector() {
-  // Use lazy initializer - getCurrentLocale is SSR-safe
-  const [currentLocale, setCurrentLocale] = useState<Locale>(getCurrentLocale);
+  const currentLocaleCode = useLocale() as Locale;
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -30,15 +24,14 @@ export function LanguageSelector() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle locale change
+  // Handle locale change - set cookie and reload
   const handleLocaleChange = (locale: Locale) => {
-    setLocale(locale.code);
-    setCurrentLocale(locale);
+    document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=31536000`;
     setIsOpen(false);
-    // Future: trigger page refresh or content reload for i18n
+    window.location.reload();
   };
 
-  const multipleLocalesAvailable = hasMultipleLocales();
+  const multipleLocalesAvailable = locales.length > 1;
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -58,9 +51,9 @@ export function LanguageSelector() {
         aria-expanded={multipleLocalesAvailable ? isOpen : undefined}
       >
         <span className="text-base" aria-hidden="true">
-          {currentLocale.flag}
+          {localeFlags[currentLocaleCode]}
         </span>
-        <span className="hidden sm:inline">{currentLocale.name}</span>
+        <span className="hidden sm:inline">{localeNames[currentLocaleCode]}</span>
         {multipleLocalesAvailable && (
           <svg
             className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -88,21 +81,21 @@ export function LanguageSelector() {
         >
           {locales.map((locale) => (
             <button
-              key={locale.code}
+              key={locale}
               onClick={() => handleLocaleChange(locale)}
               className={`w-full px-3 py-2 text-left flex items-center gap-2 text-sm transition-colors ${
-                locale.code === currentLocale.code
+                locale === currentLocaleCode
                   ? "bg-blue-500/10 text-blue-600 dark:text-cyan-400"
                   : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
               }`}
               role="option"
-              aria-selected={locale.code === currentLocale.code}
+              aria-selected={locale === currentLocaleCode}
             >
               <span className="text-base" aria-hidden="true">
-                {locale.flag}
+                {localeFlags[locale]}
               </span>
-              <span>{locale.name}</span>
-              {locale.code === currentLocale.code && (
+              <span>{localeNames[locale]}</span>
+              {locale === currentLocaleCode && (
                 <svg
                   className="w-4 h-4 ml-auto text-cyan-500"
                   fill="none"

@@ -182,6 +182,8 @@ export default async function CategoryPage({
                       variant="featured"
                       showCategory={false}
                       showTags
+                      showInteractions
+                      showAskAI
                       maxTags={4}
                     />
                   </div>
@@ -209,6 +211,8 @@ export default async function CategoryPage({
                     variant="default"
                     showCategory={false}
                     showTags
+                    showInteractions
+                    showAskAI
                     maxTags={3}
                   />
                 </div>

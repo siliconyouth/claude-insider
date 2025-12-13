@@ -7,8 +7,21 @@ import { useToast } from "@/components/toast";
 import {
   getCurrentUserProfile,
   updateUserProfile,
+  getPrivacySettings,
+  updatePrivacySettings,
+  updateUsername,
   type UserProfile,
+  type PrivacySettings,
 } from "@/app/actions/profile";
+import {
+  getNotificationPreferences,
+  updateNotificationPreferences,
+  type NotificationPreferences,
+} from "@/app/actions/notifications";
+import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
+import { DataManagement } from "@/components/settings/data-management";
+import { BlockedUsers } from "@/components/settings/blocked-users";
+import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import Link from "next/link";
 
 export default function SettingsPage() {
@@ -24,6 +37,34 @@ export default function SettingsPage() {
   const [website, setWebsite] = useState("");
   const [hasChanges, setHasChanges] = useState(false);
 
+  // Username state
+  const [username, setUsername] = useState("");
+  const [originalUsername, setOriginalUsername] = useState("");
+  const [usernameError, setUsernameError] = useState<string | null>(null);
+
+  // Privacy settings state
+  const [privacy, setPrivacy] = useState<PrivacySettings>({
+    showEmail: false,
+    showActivity: true,
+    showCollections: true,
+    showStats: true,
+  });
+
+  // Notification preferences state
+  const [notifPrefs, setNotifPrefs] = useState<NotificationPreferences>({
+    in_app_comments: true,
+    in_app_replies: true,
+    in_app_suggestions: true,
+    in_app_follows: true,
+    in_app_mentions: true,
+    email_comments: false,
+    email_replies: true,
+    email_suggestions: true,
+    email_follows: false,
+    email_digest: false,
+    email_digest_frequency: "weekly",
+  });
+
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       showSignIn();
@@ -38,13 +79,33 @@ export default function SettingsPage() {
 
   const loadProfile = async () => {
     setIsLoading(true);
-    const result = await getCurrentUserProfile();
 
-    if (result.data) {
-      setProfile(result.data);
-      setName(result.data.name || "");
-      setBio(result.data.bio || "");
-      setWebsite(result.data.website || "");
+    const [profileResult, privacyResult, notifResult] = await Promise.all([
+      getCurrentUserProfile(),
+      getPrivacySettings(),
+      getNotificationPreferences(),
+    ]);
+
+    if (profileResult.data) {
+      setProfile(profileResult.data);
+      setName(profileResult.data.name || "");
+      setBio(profileResult.data.bio || "");
+      setWebsite(profileResult.data.website || "");
+    }
+
+    if (privacyResult.data) {
+      setUsername(privacyResult.data.username || "");
+      setOriginalUsername(privacyResult.data.username || "");
+      setPrivacy({
+        showEmail: privacyResult.data.showEmail,
+        showActivity: privacyResult.data.showActivity,
+        showCollections: privacyResult.data.showCollections,
+        showStats: privacyResult.data.showStats,
+      });
+    }
+
+    if (notifResult.data) {
+      setNotifPrefs(notifResult.data);
     }
 
     setIsLoading(false);
@@ -84,6 +145,55 @@ export default function SettingsPage() {
     } catch {
       toast.error("Failed to sign out");
     }
+  };
+
+  const handleUsernameUpdate = () => {
+    if (username === originalUsername) return;
+
+    setUsernameError(null);
+    startTransition(async () => {
+      const result = await updateUsername(username);
+
+      if (result.error) {
+        setUsernameError(result.error);
+        toast.error(result.error);
+      } else {
+        toast.success("Username updated successfully");
+        setOriginalUsername(username);
+      }
+    });
+  };
+
+  const handlePrivacyToggle = (key: keyof PrivacySettings) => {
+    const newValue = !privacy[key];
+    setPrivacy((prev) => ({ ...prev, [key]: newValue }));
+
+    startTransition(async () => {
+      const result = await updatePrivacySettings({ [key]: newValue });
+
+      if (result.error) {
+        // Revert on error
+        setPrivacy((prev) => ({ ...prev, [key]: !newValue }));
+        toast.error(result.error);
+      }
+    });
+  };
+
+  const handleNotifPrefToggle = (key: keyof NotificationPreferences) => {
+    if (key === "email_digest_frequency") return; // Not a boolean toggle
+
+    const newValue = !notifPrefs[key];
+    setNotifPrefs((prev) => ({ ...prev, [key]: newValue }));
+
+    startTransition(async () => {
+      const result = await updateNotificationPreferences({ [key]: newValue });
+
+      if (result.error) {
+        // Revert on error
+        setNotifPrefs((prev) => ({ ...prev, [key]: !newValue }));
+        toast.error(result.error);
+      }
+    });
   };
 
   if (authLoading || isLoading) {
@@ -138,21 +248,39 @@ export default function SettingsPage() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <Link
-              href="/profile"
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-            </Link>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Settings</h1>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-3">
+              <Link
+                href="/profile"
+                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
+              </Link>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Settings</h1>
+            </div>
+            <AskAIButton
+              context={{
+                type: "setting",
+                title: "Settings & Configuration",
+              }}
+              suggestions={[
+                "How do I enable 2FA?",
+                "What privacy settings should I use?",
+                "How do I export my data?",
+                "How do I delete my account?",
+              ]}
+              variant="pill"
+              size="md"
+              position="inline"
+              label="Need help?"
+            />
           </div>
           <p className="text-gray-500 dark:text-gray-400">
             Manage your profile and account preferences
@@ -324,6 +452,270 @@ export default function SettingsPage() {
         {/* Divider */}
         <hr className="border-gray-200 dark:border-[#262626] mb-12" />
 
+        {/* Public Profile Section */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Public Profile
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Your public profile is visible to other users at{" "}
+            {originalUsername ? (
+              <Link
+                href={`/users/${originalUsername}`}
+                className="text-blue-600 dark:text-cyan-400 hover:underline"
+              >
+                /users/{originalUsername}
+              </Link>
+            ) : (
+              <span className="text-gray-400">/users/your-username</span>
+            )}
+          </p>
+
+          <div className="space-y-6">
+            {/* Username */}
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                Username
+              </label>
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                      @
+                    </span>
+                    <input
+                      id="username"
+                      type="text"
+                      value={username}
+                      onChange={(e) => {
+                        setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""));
+                        setUsernameError(null);
+                      }}
+                      placeholder="your-username"
+                      maxLength={30}
+                      className={cn(
+                        "w-full pl-8 pr-4 py-2.5 rounded-lg",
+                        "bg-white dark:bg-[#111111]",
+                        "border",
+                        usernameError
+                          ? "border-red-500"
+                          : "border-gray-200 dark:border-[#262626]",
+                        "text-gray-900 dark:text-white",
+                        "placeholder:text-gray-400",
+                        "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                        "transition-colors"
+                      )}
+                    />
+                  </div>
+                  {usernameError && (
+                    <p className="mt-1 text-xs text-red-500">{usernameError}</p>
+                  )}
+                  <p className="mt-1 text-xs text-gray-400">
+                    3-30 characters. Lowercase letters, numbers, and hyphens only.
+                  </p>
+                </div>
+                <button
+                  onClick={handleUsernameUpdate}
+                  disabled={isPending || username === originalUsername || !username}
+                  className={cn(
+                    "px-4 py-2.5 text-sm font-medium rounded-lg whitespace-nowrap",
+                    "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                    "text-white shadow-sm",
+                    "hover:shadow-md hover:-translate-y-0.5",
+                    "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0",
+                    "transition-all duration-200"
+                  )}
+                >
+                  {isPending ? "..." : "Update"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
+        {/* Privacy Section */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Privacy Settings
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Control what information is visible on your public profile
+          </p>
+
+          <div className="space-y-4">
+            {/* Show Email */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Show Email</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Display your email address on your public profile
+                </p>
+              </div>
+              <button
+                onClick={() => handlePrivacyToggle("showEmail")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  privacy.showEmail
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    privacy.showEmail ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Show Stats */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Show Stats</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Display favorites, collections, and comment counts
+                </p>
+              </div>
+              <button
+                onClick={() => handlePrivacyToggle("showStats")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  privacy.showStats
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    privacy.showStats ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Show Collections */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Show Collections</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Display your public collections on your profile
+                </p>
+              </div>
+              <button
+                onClick={() => handlePrivacyToggle("showCollections")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  privacy.showCollections
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    privacy.showCollections ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Show Activity */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Show Activity</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Display your recent comments and suggestions
+                </p>
+              </div>
+              <button
+                onClick={() => handlePrivacyToggle("showActivity")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  privacy.showActivity
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    privacy.showActivity ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
+        {/* Security Section */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Security
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Protect your account with additional security measures
+          </p>
+
+          <TwoFactorSettings />
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
+        {/* Blocked Users Section */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Blocked Users
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Users you&apos;ve blocked won&apos;t be able to see your content or interact with you
+          </p>
+
+          <BlockedUsers />
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
         {/* Account Section */}
         <section className="mb-12">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
@@ -359,68 +751,362 @@ export default function SettingsPage() {
               </button>
             </div>
 
-            {/* Delete Account - Coming Soon */}
-            <div
-              className={cn(
-                "flex items-center justify-between p-4 rounded-xl",
-                "bg-gray-50 dark:bg-[#111111]",
-                "border border-gray-200 dark:border-[#262626]",
-                "opacity-50"
-              )}
-            >
-              <div>
-                <p className="font-medium text-gray-900 dark:text-white">
-                  Delete Account
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Permanently delete your account and all data
-                </p>
-              </div>
-              <span className="text-xs text-gray-400 dark:text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#1a1a1a] rounded">
-                Coming Soon
-              </span>
-            </div>
           </div>
         </section>
 
         {/* Divider */}
         <hr className="border-gray-200 dark:border-[#262626] mb-12" />
 
-        {/* Preferences Section - Coming Soon */}
-        <section>
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-            Preferences
+        {/* Data Management Section */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Data & Privacy
           </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Export your data or delete your account
+          </p>
 
-          <div
-            className={cn(
-              "p-6 rounded-xl text-center",
-              "bg-gray-50 dark:bg-[#111111]",
-              "border border-gray-200 dark:border-[#262626]"
-            )}
-          >
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-[#1a1a1a] text-gray-400 mb-4">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+          <DataManagement />
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
+        {/* Notification Preferences Section */}
+        <section>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Notification Preferences
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Choose which notifications you want to receive
+          </p>
+
+          {/* In-App Notifications */}
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
+            In-App Notifications
+          </h3>
+          <div className="space-y-3 mb-8">
+            {/* Comments */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Comments</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  When someone comments on your content
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("in_app_comments")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.in_app_comments
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.in_app_comments ? "left-6" : "left-1"
+                  )}
                 />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
+              </button>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              Notification Preferences
-            </h3>
-            <p className="text-gray-500 dark:text-gray-400">
-              Email notifications and preferences coming soon
-            </p>
+
+            {/* Replies */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Replies</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  When someone replies to your comment
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("in_app_replies")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.in_app_replies
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.in_app_replies ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Suggestions */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Suggestions</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Updates on your edit suggestions
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("in_app_suggestions")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.in_app_suggestions
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.in_app_suggestions ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Follows */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Follows</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  When someone follows you
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("in_app_follows")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.in_app_follows
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.in_app_follows ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Mentions */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Mentions</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  When someone mentions you
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("in_app_mentions")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.in_app_mentions
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.in_app_mentions ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+          </div>
+
+          {/* Email Notifications */}
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">
+            Email Notifications
+          </h3>
+          <div className="space-y-3">
+            {/* Email Comments */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Comments</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Get emails when someone comments on your content
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("email_comments")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.email_comments
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.email_comments ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Email Replies */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Replies</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Get emails when someone replies to your comment
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("email_replies")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.email_replies
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.email_replies ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Email Suggestions */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Suggestions</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Get emails when your edit suggestions are reviewed
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("email_suggestions")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.email_suggestions
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.email_suggestions ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Email Follows */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Follows</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Get emails when someone starts following you
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("email_follows")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.email_follows
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.email_follows ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Email Digest - Coming Soon */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl opacity-50",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Weekly Digest</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Receive a weekly summary of activity
+                </p>
+              </div>
+              <span className="text-xs text-gray-400 dark:text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#1a1a1a] rounded">
+                Coming Soon
+              </span>
+            </div>
           </div>
         </section>
       </div>

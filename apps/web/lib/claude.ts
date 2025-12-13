@@ -48,14 +48,22 @@ export async function buildSystemPrompt(context: {
   customAssistantName?: string;
   userName?: string;
   shouldAskForName?: boolean;
+  userContext?: string; // Context from behavior tracking
 }): Promise<string> {
   // Fetch site settings from CMS (cached)
   const siteSettings = await getSiteSettings();
 
-  return buildComprehensiveSystemPrompt({
+  const systemPrompt = buildComprehensiveSystemPrompt({
     ...context,
     siteSettings,
   });
+
+  // Append user context if provided
+  if (context.userContext) {
+    return systemPrompt + context.userContext;
+  }
+
+  return systemPrompt;
 }
 
 // Synchronous version for cases where async isn't possible

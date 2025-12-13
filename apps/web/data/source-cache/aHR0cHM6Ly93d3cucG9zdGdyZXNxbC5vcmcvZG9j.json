@@ -1,0 +1,13 @@
+{
+  "url": "https://www.postgresql.org/docs/current/user-manag.html",
+  "title": "PostgreSQL Security",
+  "content": "Home About Download Documentation Community Developers Support Donate Your account",
+  "summary": null,
+  "referencedFrom": [
+    "integrations/databases.mdx"
+  ],
+  "cachedAt": "2025-12-13T18:36:26.957Z",
+  "contentLength": 82,
+  "summaryLength": 0,
+  "model": null
+}

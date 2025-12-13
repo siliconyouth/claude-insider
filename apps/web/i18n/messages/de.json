@@ -1,0 +1,214 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and",
+    "all": "All",
+    "none": "None",
+    "more": "More",
+    "less": "Less",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "viewAll": "View all",
+    "seeAll": "See all",
+    "noResults": "No results found",
+    "tryAgain": "Try again"
+  },
+  "navigation": {
+    "home": "Home",
+    "docs": "Documentation",
+    "resources": "Resources",
+    "search": "Search",
+    "favorites": "Favorites",
+    "collections": "Collections",
+    "readingLists": "Reading Lists",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "settings": "Settings",
+    "dashboard": "Dashboard",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "getStarted": "Get Started"
+  },
+  "home": {
+    "hero": {
+      "title": "Master Claude AI",
+      "subtitle": "Your comprehensive guide to Claude Code, configuration, and best practices",
+      "cta": "Explore Documentation",
+      "secondaryCta": "Browse Resources"
+    },
+    "features": {
+      "title": "Everything you need",
+      "subtitle": "Comprehensive resources to help you get the most out of Claude AI"
+    },
+    "resources": {
+      "title": "Curated Resources",
+      "subtitle": "Hand-picked tools, templates, and community contributions",
+      "categories": "Categories",
+      "featured": "Featured",
+      "popular": "Popular"
+    }
+  },
+  "search": {
+    "placeholder": "Search documentation, resources...",
+    "title": "Search",
+    "subtitle": "Search documentation, resources, and more",
+    "filters": "Filters",
+    "results": "{count, plural, one {# result} other {# results}} for \"{query}\"",
+    "noResults": "No results found for \"{query}\"",
+    "noResultsHint": "Try adjusting your search or filters",
+    "enterQuery": "Enter a search term to get started",
+    "savedSearches": "Saved Searches",
+    "recentSearches": "Recent Searches",
+    "popularSearches": "Popular Searches",
+    "clearHistory": "Clear history",
+    "saveSearch": "Save search",
+    "contentType": "Content Type",
+    "category": "Category",
+    "sortBy": "Sort by",
+    "dateRange": "Date Range",
+    "minRating": "Minimum Rating",
+    "sortOptions": {
+      "relevance": "Relevance",
+      "date": "Most Recent",
+      "rating": "Highest Rated",
+      "popularity": "Most Popular"
+    },
+    "dateOptions": {
+      "all": "Any time",
+      "day": "Today",
+      "week": "This week",
+      "month": "This month",
+      "year": "This year"
+    }
+  },
+  "favorites": {
+    "title": "Favorites",
+    "subtitle": "Your saved items",
+    "empty": "No favorites yet",
+    "emptyHint": "Save items you want to revisit later",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites"
+  },
+  "collections": {
+    "title": "Collections",
+    "subtitle": "Organize your favorites",
+    "create": "Create collection",
+    "empty": "No collections yet",
+    "emptyHint": "Create collections to organize your favorites",
+    "items": "{count, plural, one {# item} other {# items}}"
+  },
+  "readingLists": {
+    "title": "Reading Lists",
+    "subtitle": "Track your reading progress",
+    "create": "Create list",
+    "readLater": "Read Later",
+    "empty": "No reading lists yet",
+    "emptyHint": "Create lists to organize what you want to read",
+    "progress": {
+      "unread": "Unread",
+      "reading": "Reading",
+      "completed": "Completed"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications",
+    "markAllRead": "Mark all as read",
+    "markRead": "Mark as read",
+    "new": "New"
+  },
+  "profile": {
+    "title": "Profile",
+    "editProfile": "Edit profile",
+    "stats": "Statistics",
+    "achievements": "Achievements",
+    "activity": "Activity",
+    "joined": "Joined {date}",
+    "followers": "Followers",
+    "following": "Following",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "privacy": "Privacy",
+    "notifications": "Notifications",
+    "appearance": "Appearance",
+    "language": "Language",
+    "security": "Security"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "continueWith": "Continue with {provider}",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "pwa": {
+    "install": {
+      "title": "Install Claude Insider",
+      "subtitle": "Add to your home screen for quick access",
+      "benefits": {
+        "offline": "Works offline",
+        "faster": "Faster loading",
+        "native": "Native app experience"
+      },
+      "button": "Install",
+      "later": "Later",
+      "installing": "Installing..."
+    },
+    "offline": {
+      "title": "You're offline",
+      "subtitle": "Some features may be limited",
+      "reconnected": "Back online",
+      "reconnectedSubtitle": "Connection restored"
+    },
+    "update": {
+      "title": "Update available",
+      "subtitle": "A new version is ready to use",
+      "refresh": "Refresh"
+    },
+    "saveOffline": "Save offline",
+    "savedOffline": "Saved offline"
+  },
+  "errors": {
+    "pageNotFound": "Page not found",
+    "serverError": "Server error",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Access denied",
+    "networkError": "Network error",
+    "generic": "Something went wrong"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "disclaimer": "Haftungsausschluss",
+    "accessibility": "Barrierefreiheit",
+    "changelog": "Änderungen"
+  }
+}

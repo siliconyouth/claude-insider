@@ -1,0 +1,462 @@
+{
+  "version": "2.0",
+  "entries": {
+    "https://docs.anthropic.com/en/api/getting-started": {
+      "title": "Claude API Authentication",
+      "cachedAt": "2025-12-13T18:31:38.812Z",
+      "contentLength": 952,
+      "summaryLength": 1030,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/authentication.mdx",
+        "configuration/environment.mdx"
+      ]
+    },
+    "https://console.anthropic.com": {
+      "title": "Anthropic Console",
+      "cachedAt": "2025-12-13T18:31:41.366Z",
+      "contentLength": 10,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9jb25zb2xlLmFudGhyb3BpYy5jb20_.json",
+      "referencedFrom": [
+        "api/authentication.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/build-with-claude/authentication": {
+      "title": "API Key Management",
+      "cachedAt": "2025-12-13T18:31:54.001Z",
+      "contentLength": 952,
+      "summaryLength": 1224,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/authentication.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/api/errors": {
+      "title": "Claude API Errors",
+      "cachedAt": "2025-12-13T18:32:06.400Z",
+      "contentLength": 952,
+      "summaryLength": 1157,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/error-handling.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/api/client-sdks": {
+      "title": "Anthropic SDK Reference",
+      "cachedAt": "2025-12-13T18:32:21.042Z",
+      "contentLength": 952,
+      "summaryLength": 1762,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/error-handling.mdx",
+        "api/streaming.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/api/rate-limits": {
+      "title": "Rate Limits",
+      "cachedAt": "2025-12-13T18:32:35.374Z",
+      "contentLength": 952,
+      "summaryLength": 1370,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/error-handling.mdx",
+        "api/rate-limits.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/api": {
+      "title": "Claude API Reference",
+      "cachedAt": "2025-12-13T18:32:49.598Z",
+      "contentLength": 952,
+      "summaryLength": 1623,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/index.mdx",
+        "api/tool-use.mdx",
+        "integrations/github-actions.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/api/messages": {
+      "title": "Messages API Documentation",
+      "error": "Content too large",
+      "failedAt": "2025-12-13T18:32:53.967Z",
+      "referencedFrom": [
+        "api/index.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/about-claude/models": {
+      "title": "Claude Models Overview",
+      "cachedAt": "2025-12-13T18:33:06.063Z",
+      "contentLength": 952,
+      "summaryLength": 1505,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/index.mdx",
+        "configuration/settings.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/models-overview": {
+      "title": "Claude Models Overview",
+      "cachedAt": "2025-12-13T18:33:20.561Z",
+      "contentLength": 952,
+      "summaryLength": 1715,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/models.mdx",
+        "api/rate-limits.mdx"
+      ]
+    },
+    "https://www.anthropic.com/pricing": {
+      "title": "Anthropic Pricing",
+      "cachedAt": "2025-12-13T18:33:46.250Z",
+      "contentLength": 5440,
+      "summaryLength": 4896,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly93d3cuYW50aHJvcGljLmNvbS9wcmlj.json",
+      "referencedFrom": [
+        "api/models.mdx",
+        "api/rate-limits.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/intro-to-claude": {
+      "title": "Model Selection Guide",
+      "cachedAt": "2025-12-13T18:33:59.675Z",
+      "contentLength": 952,
+      "summaryLength": 1594,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/models.mdx",
+        "getting-started/migration.mdx",
+        "tips-and-tricks/debugging.mdx",
+        "tips-and-tricks/prompting.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/api/streaming": {
+      "title": "Claude API Streaming",
+      "cachedAt": "2025-12-13T18:34:12.873Z",
+      "contentLength": 952,
+      "summaryLength": 1342,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/streaming.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/api/streaming#server-sent-events": {
+      "title": "Server-Sent Events",
+      "cachedAt": "2025-12-13T18:34:25.262Z",
+      "contentLength": 952,
+      "summaryLength": 1214,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/streaming.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/build-with-claude/tool-use": {
+      "title": "Claude API Tool Use",
+      "cachedAt": "2025-12-13T18:34:39.715Z",
+      "contentLength": 952,
+      "summaryLength": 1501,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/tool-use.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/build-with-claude/tool-use#best-practices": {
+      "title": "Tool Use Best Practices",
+      "cachedAt": "2025-12-13T18:34:53.561Z",
+      "contentLength": 952,
+      "summaryLength": 1333,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "api/tool-use.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/claude-code/memory": {
+      "title": "Claude Code Documentation - Memory",
+      "cachedAt": "2025-12-13T18:34:56.180Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "configuration/claude-md.mdx",
+        "configuration/index.mdx",
+        "tips-and-tricks/advanced-prompting.mdx"
+      ]
+    },
+    "https://www.anthropic.com/engineering/claude-code-best-practices": {
+      "title": "Claude Code Best Practices",
+      "cachedAt": "2025-12-13T18:35:26.714Z",
+      "contentLength": 15003,
+      "summaryLength": 6383,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly93d3cuYW50aHJvcGljLmNvbS9lbmdp.json",
+      "referencedFrom": [
+        "configuration/claude-md.mdx",
+        "configuration/index.mdx",
+        "getting-started/quickstart.mdx",
+        "integrations/hooks.mdx",
+        "tips-and-tricks/index.mdx",
+        "tips-and-tricks/productivity.mdx",
+        "tips-and-tricks/prompting.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/claude-code/overview": {
+      "title": "Claude Code Documentation",
+      "cachedAt": "2025-12-13T18:35:29.476Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "configuration/environment.mdx",
+        "configuration/permissions.mdx",
+        "getting-started/installation.mdx",
+        "getting-started/migration.mdx",
+        "getting-started/quickstart.mdx",
+        "getting-started/troubleshooting.mdx",
+        "integrations/databases.mdx",
+        "integrations/docker.mdx",
+        "integrations/github-actions.mdx",
+        "integrations/hooks.mdx",
+        "integrations/ide-plugins.mdx",
+        "tips-and-tricks/debugging.mdx",
+        "tips-and-tricks/index.mdx",
+        "tips-and-tricks/productivity.mdx"
+      ]
+    },
+    "https://console.anthropic.com/settings/keys": {
+      "title": "Anthropic API Keys",
+      "cachedAt": "2025-12-13T18:35:32.046Z",
+      "contentLength": 10,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9jb25zb2xlLmFudGhyb3BpYy5jb20v.json",
+      "referencedFrom": [
+        "configuration/environment.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/claude-code/settings": {
+      "title": "Claude Code Documentation - Settings",
+      "cachedAt": "2025-12-13T18:35:34.533Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "configuration/index.mdx",
+        "configuration/settings.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/claude-code/security": {
+      "title": "Claude Code Security",
+      "cachedAt": "2025-12-13T18:35:36.975Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "configuration/permissions.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/tool-use": {
+      "title": "Tool Use Safety",
+      "cachedAt": "2025-12-13T18:35:50.878Z",
+      "contentLength": 952,
+      "summaryLength": 1379,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "configuration/permissions.mdx"
+      ]
+    },
+    "https://docs.anthropic.com": {
+      "title": "Anthropic Documentation",
+      "cachedAt": "2025-12-13T18:36:04.550Z",
+      "contentLength": 952,
+      "summaryLength": 1702,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20_.json",
+      "referencedFrom": [
+        "configuration/settings.mdx",
+        "getting-started/installation.mdx",
+        "getting-started/quickstart.mdx"
+      ]
+    },
+    "https://cursor.sh/docs": {
+      "title": "Cursor Documentation",
+      "cachedAt": "2025-12-13T18:36:07.105Z",
+      "contentLength": 11,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9jdXJzb3Iuc2gvZG9jcw__.json",
+      "referencedFrom": [
+        "getting-started/migration.mdx"
+      ]
+    },
+    "https://support.anthropic.com": {
+      "title": "Anthropic Support",
+      "cachedAt": "2025-12-13T18:36:20.877Z",
+      "contentLength": 1038,
+      "summaryLength": 1997,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9zdXBwb3J0LmFudGhyb3BpYy5jb20_.json",
+      "referencedFrom": [
+        "getting-started/troubleshooting.mdx"
+      ]
+    },
+    "https://modelcontextprotocol.io": {
+      "title": "MCP Server Documentation",
+      "cachedAt": "2025-12-13T18:36:23.583Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9tb2RlbGNvbnRleHRwcm90b2NvbC5p.json",
+      "referencedFrom": [
+        "integrations/databases.mdx",
+        "integrations/index.mdx",
+        "integrations/mcp-servers.mdx"
+      ]
+    },
+    "https://www.postgresql.org/docs/current/user-manag.html": {
+      "title": "PostgreSQL Security",
+      "cachedAt": "2025-12-13T18:36:26.957Z",
+      "contentLength": 82,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly93d3cucG9zdGdyZXNxbC5vcmcvZG9j.json",
+      "referencedFrom": [
+        "integrations/databases.mdx"
+      ]
+    },
+    "https://docs.docker.com": {
+      "title": "Docker Documentation",
+      "cachedAt": "2025-12-13T18:36:44.115Z",
+      "contentLength": 3152,
+      "summaryLength": 3474,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmRvY2tlci5jb20_.json",
+      "referencedFrom": [
+        "integrations/docker.mdx"
+      ]
+    },
+    "https://kubernetes.io/docs": {
+      "title": "Kubernetes Documentation",
+      "cachedAt": "2025-12-13T18:36:57.034Z",
+      "contentLength": 2180,
+      "summaryLength": 1973,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9rdWJlcm5ldGVzLmlvL2RvY3M_.json",
+      "referencedFrom": [
+        "integrations/docker.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/claude-code/hooks": {
+      "title": "Claude Code Documentation - Hooks",
+      "cachedAt": "2025-12-13T18:36:59.809Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "integrations/hooks.mdx",
+        "integrations/index.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/claude-code/ide-integrations": {
+      "title": "Claude Code Documentation - IDE Integration",
+      "cachedAt": "2025-12-13T18:37:02.554Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "integrations/ide-plugins.mdx"
+      ]
+    },
+    "https://marketplace.visualstudio.com": {
+      "title": "VS Code Marketplace",
+      "cachedAt": "2025-12-13T18:37:05.232Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9tYXJrZXRwbGFjZS52aXN1YWxzdHVk.json",
+      "referencedFrom": [
+        "integrations/ide-plugins.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/claude-code/mcp": {
+      "title": "Claude Code Documentation - MCP",
+      "cachedAt": "2025-12-13T18:37:07.713Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "integrations/index.mdx",
+        "integrations/mcp-servers.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering": {
+      "title": "Anthropic Prompt Engineering Guide",
+      "cachedAt": "2025-12-13T18:37:21.591Z",
+      "contentLength": 952,
+      "summaryLength": 1554,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "tips-and-tricks/advanced-prompting.mdx",
+        "tips-and-tricks/index.mdx",
+        "tips-and-tricks/prompting.mdx"
+      ]
+    },
+    "https://www.anthropic.com/research": {
+      "title": "Advanced Claude Techniques",
+      "cachedAt": "2025-12-13T18:37:37.505Z",
+      "contentLength": 3336,
+      "summaryLength": 2533,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly93d3cuYW50aHJvcGljLmNvbS9yZXNl.json",
+      "referencedFrom": [
+        "tips-and-tricks/advanced-prompting.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/build-with-claude/debugging": {
+      "title": "Debugging Best Practices",
+      "cachedAt": "2025-12-13T18:37:49.854Z",
+      "contentLength": 952,
+      "summaryLength": 1270,
+      "hasSummary": true,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "tips-and-tricks/debugging.mdx"
+      ]
+    },
+    "https://docs.anthropic.com/en/docs/claude-code/cli-usage": {
+      "title": "Claude Code Documentation - Commands",
+      "cachedAt": "2025-12-13T18:37:52.725Z",
+      "contentLength": 0,
+      "summaryLength": 0,
+      "hasSummary": false,
+      "cacheFile": "aHR0cHM6Ly9kb2NzLmFudGhyb3BpYy5jb20vZW4v.json",
+      "referencedFrom": [
+        "tips-and-tricks/productivity.mdx"
+      ]
+    }
+  },
+  "lastUpdated": "2025-12-13T18:37:52.725Z"
+}

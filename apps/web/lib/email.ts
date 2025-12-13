@@ -20,6 +20,36 @@ interface EmailResult {
   error?: string;
 }
 
+interface SendEmailParams {
+  to: string;
+  subject: string;
+  html: string;
+}
+
+/**
+ * Generic email sender
+ */
+export async function sendEmail(params: SendEmailParams): Promise<EmailResult> {
+  try {
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: params.to,
+      subject: params.subject,
+      html: params.html,
+    });
+
+    if (error) {
+      console.error("[Email] Send error:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Email] Unexpected error:", error);
+    return { success: false, error: "Failed to send email" };
+  }
+}
+
 /**
  * Send email verification link
  */
@@ -275,4 +305,166 @@ function getWelcomeEmailHtml(userName?: string): string {
   `;
 
   return getEmailWrapper(content);
+}
+
+// ================================
+// Notification Emails
+// ================================
+
+export interface NotificationEmailParams {
+  email: string;
+  userName?: string;
+  type: "reply" | "comment" | "suggestion_approved" | "suggestion_rejected" | "suggestion_merged" | "follow" | "mention";
+  title: string;
+  message: string;
+  actorName?: string;
+  actionUrl?: string;
+}
+
+/**
+ * Send notification email
+ */
+export async function sendNotificationEmail(params: NotificationEmailParams): Promise<EmailResult> {
+  try {
+    const subject = getNotificationSubject(params.type, params.actorName);
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: params.email,
+      subject,
+      html: getNotificationEmailHtml(params),
+    });
+
+    if (error) {
+      console.error("[Email] Notification send error:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Email] Unexpected error:", error);
+    return { success: false, error: "Failed to send email" };
+  }
+}
+
+/**
+ * Get subject line for notification type
+ */
+function getNotificationSubject(type: NotificationEmailParams["type"], actorName?: string): string {
+  const actor = actorName || "Someone";
+
+  switch (type) {
+    case "reply":
+      return `${actor} replied to your comment on ${APP_NAME}`;
+    case "comment":
+      return `${actor} commented on your content on ${APP_NAME}`;
+    case "suggestion_approved":
+      return `Your suggestion was approved on ${APP_NAME}`;
+    case "suggestion_rejected":
+      return `Update on your suggestion on ${APP_NAME}`;
+    case "suggestion_merged":
+      return `Your suggestion was merged on ${APP_NAME}`;
+    case "follow":
+      return `${actor} started following you on ${APP_NAME}`;
+    case "mention":
+      return `${actor} mentioned you on ${APP_NAME}`;
+    default:
+      return `New notification on ${APP_NAME}`;
+  }
+}
+
+/**
+ * Notification email template
+ */
+function getNotificationEmailHtml(params: NotificationEmailParams): string {
+  const greeting = params.userName ? `Hi ${params.userName},` : "Hi there,";
+  const icon = getNotificationIcon(params.type);
+  const buttonText = getNotificationButtonText(params.type);
+  const actionUrl = params.actionUrl || `${APP_URL}/notifications`;
+
+  const content = `
+    <div style="text-align: center; margin-bottom: 24px;">
+      <div style="display: inline-block; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(to bottom right, #7c3aed, #2563eb); padding: 12px;">
+        ${icon}
+      </div>
+    </div>
+    <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #18181b; text-align: center;">
+      ${params.title}
+    </h2>
+    <p style="margin: 0 0 24px 0; color: #52525b; line-height: 1.6;">
+      ${greeting}<br><br>
+      ${params.message}
+    </p>
+    <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto 24px auto;">
+      <tr>
+        <td style="background: linear-gradient(to right, #7c3aed, #2563eb, #06b6d4); border-radius: 8px;">
+          <a href="${actionUrl}" style="display: inline-block; padding: 12px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">
+            ${buttonText}
+          </a>
+        </td>
+      </tr>
+    </table>
+    <hr style="border: none; border-top: 1px solid #e4e4e7; margin: 24px 0;" />
+    <p style="margin: 0; color: #71717a; font-size: 13px; text-align: center;">
+      You received this email because you have email notifications enabled.
+      <a href="${APP_URL}/settings" style="color: #2563eb; text-decoration: none;">Manage preferences</a>
+    </p>
+  `;
+
+  return getEmailWrapper(content);
+}
+
+/**
+ * Get icon SVG for notification type
+ */
+function getNotificationIcon(type: NotificationEmailParams["type"]): string {
+  switch (type) {
+    case "reply":
+    case "comment":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>`;
+    case "suggestion_approved":
+    case "suggestion_merged":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>`;
+    case "suggestion_rejected":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>`;
+    case "follow":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+      </svg>`;
+    case "mention":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+      </svg>`;
+    default:
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+      </svg>`;
+  }
+}
+
+/**
+ * Get button text for notification type
+ */
+function getNotificationButtonText(type: NotificationEmailParams["type"]): string {
+  switch (type) {
+    case "reply":
+    case "comment":
+      return "View Comment";
+    case "suggestion_approved":
+    case "suggestion_rejected":
+    case "suggestion_merged":
+      return "View Suggestion";
+    case "follow":
+      return "View Profile";
+    case "mention":
+      return "View Mention";
+    default:
+      return "View Notification";
+  }
 }

@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Search } from "@/components/search";
+import { AISearch } from "@/components/ai-search";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
 import { UserMenu } from "@/components/auth";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
@@ -13,6 +16,7 @@ interface HeaderProps {
 }
 
 export function Header({ activePage }: HeaderProps) {
+  const t = useTranslations("navigation");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -52,7 +56,7 @@ export function Header({ activePage }: HeaderProps) {
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
               )}
             >
-              Documentation
+              {t("docs")}
             </Link>
             <Link
               href="/docs/getting-started"
@@ -64,7 +68,7 @@ export function Header({ activePage }: HeaderProps) {
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
               )}
             >
-              Getting Started
+              {t("getStarted")}
             </Link>
             <Link
               href="/resources"
@@ -76,7 +80,7 @@ export function Header({ activePage }: HeaderProps) {
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
               )}
             >
-              Resources
+              {t("resources")}
             </Link>
             <a
               href="https://github.com/siliconyouth/claude-insider"
@@ -97,7 +101,9 @@ export function Header({ activePage }: HeaderProps) {
 
             <LanguageSelector />
             <Search />
+            <AISearch />
             <ThemeToggle />
+            <NotificationBell />
             <UserMenu />
           </div>
 
@@ -105,7 +111,9 @@ export function Header({ activePage }: HeaderProps) {
           <div className="flex md:hidden items-center gap-1">
             <LanguageSelector />
             <Search />
+            <AISearch />
             <ThemeToggle />
+            <NotificationBell />
             <UserMenu />
             <button
               type="button"
@@ -166,7 +174,7 @@ export function Header({ activePage }: HeaderProps) {
                     : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
                 )}
               >
-                Documentation
+                {t("docs")}
               </Link>
               <Link
                 href="/docs/getting-started"
@@ -178,7 +186,7 @@ export function Header({ activePage }: HeaderProps) {
                     : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
                 )}
               >
-                Getting Started
+                {t("getStarted")}
               </Link>
               <Link
                 href="/resources"
@@ -190,7 +198,7 @@ export function Header({ activePage }: HeaderProps) {
                     : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
                 )}
               >
-                Resources
+                {t("resources")}
               </Link>
               <a
                 href="https://github.com/siliconyouth/claude-insider"

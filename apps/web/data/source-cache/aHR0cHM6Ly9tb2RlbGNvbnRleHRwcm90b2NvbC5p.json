@@ -1,0 +1,15 @@
+{
+  "url": "https://modelcontextprotocol.io",
+  "title": "MCP Server Documentation",
+  "content": "",
+  "summary": null,
+  "referencedFrom": [
+    "integrations/databases.mdx",
+    "integrations/index.mdx",
+    "integrations/mcp-servers.mdx"
+  ],
+  "cachedAt": "2025-12-13T18:36:23.583Z",
+  "contentLength": 0,
+  "summaryLength": 0,
+  "model": null
+}

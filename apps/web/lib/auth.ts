@@ -134,6 +134,20 @@ export const auth = betterAuth({
         type: 'boolean',
         defaultValue: false,
       },
+      hasPassword: {
+        type: 'boolean',
+        defaultValue: false,
+      },
+      onboardingStep: {
+        type: 'number',
+        defaultValue: 0,
+      },
+      role: {
+        type: 'string',
+        defaultValue: 'user',
+      },
+      // Note: socialLinks is stored as JSONB in DB and managed via direct SQL
+      // Not declared here as Better Auth doesn't support object types
     },
   },
 

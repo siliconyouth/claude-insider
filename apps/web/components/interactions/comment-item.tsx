@@ -6,6 +6,7 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { voteComment, deleteComment, type Comment } from "@/app/actions/comments";
 import { useToast } from "@/components/toast";
 import { CommentForm } from "./comment-form";
+import Link from "next/link";
 
 interface CommentItemProps {
   comment: Comment;
@@ -124,9 +125,18 @@ export function CommentItem({
         <div className="flex-1 min-w-0">
           {/* Header */}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-medium text-sm text-gray-900 dark:text-white">
-              {comment.user?.name || "Anonymous"}
-            </span>
+            {comment.user?.username ? (
+              <Link
+                href={`/users/${comment.user.username}`}
+                className="font-medium text-sm text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
+              >
+                {comment.user.name || "Anonymous"}
+              </Link>
+            ) : (
+              <span className="font-medium text-sm text-gray-900 dark:text-white">
+                {comment.user?.name || "Anonymous"}
+              </span>
+            )}
             <span className="text-xs text-gray-400">
               {formatDate(comment.created_at)}
             </span>

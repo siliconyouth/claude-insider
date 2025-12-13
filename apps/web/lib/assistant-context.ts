@@ -127,10 +127,20 @@ export function formatMessageTime(timestamp?: number): string {
   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
+import { getContextAwareSuggestions, recordSuggestionShown } from "./context-tracker";
+
 /**
- * Suggested questions based on current page
+ * Suggested questions based on current page and user context
  */
 export function getSuggestedQuestions(currentPage: string): string[] {
+  // First, try to get context-aware suggestions
+  const contextAware = getContextAwareSuggestions(currentPage);
+  if (contextAware.length > 0) {
+    contextAware.forEach(recordSuggestionShown);
+    return contextAware;
+  }
+
+  // Fall back to page-based suggestions
   const suggestions: Record<string, string[]> = {
     "/docs/getting-started": [
       "How do I install Claude Code?",

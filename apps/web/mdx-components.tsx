@@ -2,53 +2,18 @@ import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
 import { ContentMeta } from "@/components/content-meta";
+import { H1, H2, H3, H4, H5, H6 } from "@/components/mdx/headings";
 
 // Custom components for MDX rendering
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
-    // Headings with anchor links
-    h1: ({ children, id }) => (
-      <h1 id={id} className="group scroll-mt-24 text-gray-900 dark:text-white">
-        {children}
-        {id && (
-          <a
-            href={`#${id}`}
-            className="ml-2 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
-            aria-label="Link to this section"
-          >
-            #
-          </a>
-        )}
-      </h1>
-    ),
-    h2: ({ children, id }) => (
-      <h2 id={id} className="group scroll-mt-24 text-gray-900 dark:text-white">
-        {children}
-        {id && (
-          <a
-            href={`#${id}`}
-            className="ml-2 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
-            aria-label="Link to this section"
-          >
-            #
-          </a>
-        )}
-      </h2>
-    ),
-    h3: ({ children, id }) => (
-      <h3 id={id} className="group scroll-mt-24 text-gray-900 dark:text-white">
-        {children}
-        {id && (
-          <a
-            href={`#${id}`}
-            className="ml-2 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity"
-            aria-label="Link to this section"
-          >
-            #
-          </a>
-        )}
-      </h3>
-    ),
+    // Headings with anchor links and Ask AI buttons
+    h1: H1,
+    h2: H2,
+    h3: H3,
+    h4: H4,
+    h5: H5,
+    h6: H6,
 
     // Custom link component for internal/external links
     a: ({ href, children, ...props }) => {

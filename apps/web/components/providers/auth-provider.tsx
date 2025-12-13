@@ -25,6 +25,7 @@
 
 import { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
 import { useSession, signOut as authSignOut } from "@/lib/auth-client";
+import type { UserRole } from "@/lib/roles";
 
 interface User {
   id: string;
@@ -40,6 +41,18 @@ interface User {
   isBetaTester?: boolean;
   isVerified?: boolean;
   hasCompletedOnboarding?: boolean;
+  hasPassword?: boolean;
+  onboardingStep?: number;
+  role?: UserRole;
+  socialLinks?: {
+    github?: string;
+    twitter?: string;
+    linkedin?: string;
+    bluesky?: string;
+    mastodon?: string;
+    discord?: string;
+    website?: string;
+  };
 }
 
 interface Session {

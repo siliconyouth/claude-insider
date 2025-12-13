@@ -12,6 +12,7 @@ import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { signOut } from "@/lib/auth-client";
+import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 
 export function UserMenu() {
   const { user, isAuthenticated, isLoading, showSignIn } = useAuth();
@@ -201,6 +202,24 @@ export function UserMenu() {
               </svg>
               Settings
             </Link>
+
+            {/* Dashboard link for moderators and admins */}
+            {hasMinRole(user?.role as UserRole, ROLES.MODERATOR) && (
+              <Link
+                href="/dashboard"
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "flex items-center gap-3 px-4 py-2 text-sm",
+                  "text-violet-600 dark:text-violet-400",
+                  "hover:bg-violet-50 dark:hover:bg-violet-900/20"
+                )}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                </svg>
+                Dashboard
+              </Link>
+            )}
           </div>
 
           {/* Sign Out */}

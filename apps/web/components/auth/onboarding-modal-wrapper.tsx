@@ -3,13 +3,15 @@
 /**
  * Onboarding Modal Wrapper
  *
- * Handles showing the onboarding modal for new OAuth users who haven't
+ * Handles showing the onboarding wizard for new users who haven't
  * completed their profile setup yet.
+ *
+ * Now uses the multi-step OnboardingWizard for enhanced onboarding flow.
  */
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/components/providers/auth-provider";
-import { OnboardingModal } from "./onboarding-modal";
+import { OnboardingWizard } from "./onboarding-wizard";
 
 export function OnboardingModalWrapper() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -22,11 +24,9 @@ export function OnboardingModalWrapper() {
 
     if (isAuthenticated && user) {
       // Show onboarding for users who haven't completed it yet
-      // Only trigger for OAuth users (they have an image from provider)
-      const isOAuthUser = !!user.image;
       const needsOnboarding = !user.hasCompletedOnboarding;
 
-      if (isOAuthUser && needsOnboarding) {
+      if (needsOnboarding) {
         setShowOnboarding(true);
       }
       setHasChecked(true);
@@ -40,7 +40,7 @@ export function OnboardingModalWrapper() {
   };
 
   return (
-    <OnboardingModal
+    <OnboardingWizard
       isOpen={showOnboarding}
       onComplete={handleComplete}
     />

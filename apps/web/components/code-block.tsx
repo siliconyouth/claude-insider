@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect, ReactNode } from "react";
+import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
+import { useAskAI } from "./ask-ai";
+import { getPageContext } from "@/lib/ai-context";
 import hljs from "highlight.js/lib/core";
 // Import common languages
 import javascript from "highlight.js/lib/languages/javascript";
@@ -193,6 +195,7 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const codeRef = useRef<HTMLElement>(null);
   const [highlighted, setHighlighted] = useState(false);
+  const { openWithContext } = useAskAI();
 
   // Extract language from className (e.g., "language-typescript")
   const languageMatch = className?.match(/language-(\w+)/);
@@ -228,6 +231,19 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
     }
   };
 
+  const handleAskAI = useCallback(() => {
+    const code = codeRef.current?.textContent || "";
+    const pageContext = getPageContext();
+    openWithContext({
+      page: pageContext,
+      content: {
+        type: "code",
+        code,
+        language: langConfig.name,
+      },
+    });
+  }, [openWithContext, langConfig.name]);
+
   return (
     <div className="group relative my-4">
       {/* Language tag */}
@@ -249,45 +265,68 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
         </code>
       </pre>
 
-      {/* Copy button */}
-      <button
-        onClick={handleCopy}
-        className="absolute top-3 right-3 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-400 hover:text-white transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        aria-label={copied ? "Copied!" : "Copy code"}
-        title={copied ? "Copied!" : "Copy code"}
-      >
-        {copied ? (
-          <svg
-            className="w-4 h-4 text-green-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
-        ) : (
+      {/* Action buttons */}
+      <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+        {/* Ask AI button */}
+        <button
+          onClick={handleAskAI}
+          className="p-2 rounded-lg bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
+          aria-label="Ask AI about this code"
+          title="Ask AI about this code"
+        >
           <svg
             className="w-4 h-4"
+            viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-            />
+            <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" />
           </svg>
-        )}
-      </button>
+        </button>
+
+        {/* Copy button */}
+        <button
+          onClick={handleCopy}
+          className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-400 hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
+          aria-label={copied ? "Copied!" : "Copy code"}
+          title={copied ? "Copied!" : "Copy code"}
+        >
+          {copied ? (
+            <svg
+              className="w-4 h-4 text-green-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          ) : (
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

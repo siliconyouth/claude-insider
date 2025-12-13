@@ -17,6 +17,22 @@ const matter = require("gray-matter");
 
 // Import dynamic project knowledge generator
 const { generateProjectKnowledge } = require("./generate-project-knowledge.cjs");
+// Import settings/options extractor
+const { generateSettingsChunks } = require("./generate-settings-index.cjs");
+// Import external source cache (optional)
+let generateSourceChunks;
+try {
+  generateSourceChunks = require("./cache-external-sources.cjs").generateSourceChunks;
+} catch {
+  generateSourceChunks = () => [];
+}
+// Import code examples index (optional)
+let generateCodeChunks;
+try {
+  generateCodeChunks = require("./generate-code-examples-index.cjs").generateCodeChunks;
+} catch {
+  generateCodeChunks = () => [];
+}
 
 // Resources category metadata
 const RESOURCE_CATEGORIES = {
@@ -355,17 +371,41 @@ function generateRagIndex() {
 
   const resourceChunkCount = resourceChunks.length;
 
+  // Generate and add settings/options chunks for precise AI answers
+  console.log("\nGenerating settings and options chunks...");
+  const settingsChunks = generateSettingsChunks();
+  chunks.push(...settingsChunks);
+
+  const settingsChunkCount = settingsChunks.length;
+
+  // Generate and add external source chunks if cache exists
+  console.log("\nAdding external source chunks (if cached)...");
+  const sourceChunks = generateSourceChunks();
+  chunks.push(...sourceChunks);
+
+  const sourceChunkCount = sourceChunks.length;
+
+  // Generate and add code examples chunks
+  console.log("\nGenerating code examples index...");
+  const codeChunks = generateCodeChunks();
+  chunks.push(...codeChunks);
+
+  const codeChunkCount = codeChunks.length;
+
   // Build TF-IDF index
   const { tfidfIndex, idfValues } = buildTfidfIndex(chunks);
 
   // Create the RAG index object
   const ragIndex = {
-    version: "3.0",
+    version: "5.0",
     generatedAt: new Date().toISOString(),
     documentCount: chunks.length,
     documentationChunks: docsChunkCount,
     projectKnowledgeCount: projectKnowledgeCount,
     resourceChunkCount: resourceChunkCount,
+    settingsChunkCount: settingsChunkCount,
+    externalSourceCount: sourceChunkCount,
+    codeExamplesCount: codeChunkCount,
     chunks,
     tfidfIndex,
     idfValues,
@@ -378,8 +418,11 @@ function generateRagIndex() {
   console.log(`  - Documentation chunks: ${docsChunkCount}`);
   console.log(`  - Project knowledge chunks: ${projectKnowledgeCount} (dynamically generated)`);
   console.log(`  - Resource chunks: ${resourceChunkCount} (for AI recommendations)`);
+  console.log(`  - Settings/options chunks: ${settingsChunkCount} (for precise answers)`);
+  console.log(`  - External source chunks: ${sourceChunkCount} (cached references)`);
+  console.log(`  - Code examples chunks: ${codeChunkCount} (searchable snippets)`);
   console.log(`  Output: ${outputPath}`);
-  console.log(`  Categories: ${Object.values(categories).join(", ")}, Project, Resources`);
+  console.log(`  Categories: ${Object.values(categories).join(", ")}, Project, Resources, Settings, Sources, Code`);
 }
 
 // Run the generator

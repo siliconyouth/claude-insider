@@ -14,6 +14,7 @@ export interface UserProfile {
   id: string;
   name: string;
   email: string;
+  username?: string;
   avatarUrl?: string;
   bio?: string;
   website?: string;
@@ -24,6 +25,13 @@ export interface UserProfile {
     collections: number;
     comments: number;
   };
+}
+
+export interface PrivacySettings {
+  showEmail: boolean;
+  showActivity: boolean;
+  showCollections: boolean;
+  showStats: boolean;
 }
 
 export interface FavoriteWithResource {
@@ -344,6 +352,162 @@ export async function updateUserProfile(data: {
     if (error) {
       console.error("[Profile] Update error:", error);
       return { error: "Failed to update profile" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Profile] Unexpected error:", error);
+    return { error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Default privacy settings
+ */
+const defaultPrivacySettings: PrivacySettings = {
+  showEmail: false,
+  showActivity: true,
+  showCollections: true,
+  showStats: true,
+};
+
+/**
+ * Get user's privacy settings
+ */
+export async function getPrivacySettings(): Promise<{
+  data?: PrivacySettings & { username?: string };
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { error: "You must be signed in" };
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
+
+    const { data, error } = await supabase
+      .from("user")
+      .select("username, profilePrivacy")
+      .eq("id", session.user.id)
+      .single();
+
+    if (error) {
+      console.error("[Profile] Privacy settings fetch error:", error);
+      return { error: "Failed to load privacy settings" };
+    }
+
+    const privacy = (data?.profilePrivacy as PrivacySettings) || defaultPrivacySettings;
+
+    return {
+      data: {
+        ...defaultPrivacySettings,
+        ...privacy,
+        username: data?.username || undefined,
+      },
+    };
+  } catch (error) {
+    console.error("[Profile] Unexpected error:", error);
+    return { error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Update user's privacy settings
+ */
+export async function updatePrivacySettings(settings: Partial<PrivacySettings>): Promise<{
+  success?: boolean;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { error: "You must be signed in" };
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
+
+    // Get current settings first
+    const { data: current } = await supabase
+      .from("user")
+      .select("profilePrivacy")
+      .eq("id", session.user.id)
+      .single();
+
+    const currentSettings = (current?.profilePrivacy as PrivacySettings) || defaultPrivacySettings;
+
+    // Merge with new settings
+    const updatedSettings: PrivacySettings = {
+      ...currentSettings,
+      ...settings,
+    };
+
+    const { error } = await supabase
+      .from("user")
+      .update({ profilePrivacy: updatedSettings })
+      .eq("id", session.user.id);
+
+    if (error) {
+      console.error("[Profile] Privacy update error:", error);
+      return { error: "Failed to update privacy settings" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Profile] Unexpected error:", error);
+    return { error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Update username
+ */
+export async function updateUsername(username: string): Promise<{
+  success?: boolean;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { error: "You must be signed in" };
+    }
+
+    // Validate username format
+    const usernameRegex = /^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/;
+    const cleanUsername = username.toLowerCase().trim();
+
+    if (!usernameRegex.test(cleanUsername)) {
+      return {
+        error:
+          "Username must be 3-30 characters, start and end with a letter or number, and contain only lowercase letters, numbers, and hyphens",
+      };
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
+
+    // Check if username is already taken
+    const { data: existing } = await supabase
+      .from("user")
+      .select("id")
+      .eq("username", cleanUsername)
+      .neq("id", session.user.id)
+      .single();
+
+    if (existing) {
+      return { error: "This username is already taken" };
+    }
+
+    const { error } = await supabase
+      .from("user")
+      .update({ username: cleanUsername })
+      .eq("id", session.user.id);
+
+    if (error) {
+      console.error("[Profile] Username update error:", error);
+      return { error: "Failed to update username" };
     }
 
     return { success: true };

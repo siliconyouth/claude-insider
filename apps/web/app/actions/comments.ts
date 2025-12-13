@@ -10,6 +10,7 @@
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { createNotification } from "./notifications";
 
 export type CommentResult = {
   success?: boolean;
@@ -35,6 +36,7 @@ export type Comment = {
     name: string;
     email: string;
     image?: string;
+    username?: string;
   };
   replies?: Comment[];
   user_vote?: "up" | "down" | null;
@@ -87,6 +89,46 @@ export async function createComment(
     // Log activity
     await logActivity(supabase, session.user.id, resourceType, resourceId);
 
+    // Create notification for reply
+    if (parentId && data) {
+      try {
+        // Get parent comment author
+        const { data: parentComment } = await supabase
+          .from("comments")
+          .select("user_id")
+          .eq("id", parentId)
+          .single();
+
+        if (parentComment && parentComment.user_id !== session.user.id) {
+          // Get commenter's name for notification
+          const { data: commenter } = await supabase
+            .from("user")
+            .select("name, username")
+            .eq("id", session.user.id)
+            .single();
+
+          const commenterName = commenter?.name || commenter?.username || "Someone";
+
+          await createNotification({
+            userId: parentComment.user_id,
+            type: "reply",
+            title: `${commenterName} replied to your comment`,
+            message: content.trim().slice(0, 100) + (content.length > 100 ? "..." : ""),
+            actorId: session.user.id,
+            resourceType: resourceType,
+            resourceId: resourceId,
+            data: {
+              commentId: data.id,
+              parentId: parentId,
+            },
+          });
+        }
+      } catch (notifError) {
+        console.error("[Comments] Notification error:", notifError);
+        // Don't fail the comment creation if notification fails
+      }
+    }
+
     revalidatePath(`/${resourceType}s`);
 
     return { success: true, data };
@@ -109,9 +151,18 @@ export async function getComments(
     const session = await getSession();
 
     // Get approved comments (and user's own pending comments)
+    // Join with user table to get user info including username
     let query = supabase
       .from("comments")
-      .select("*")
+      .select(`
+        *,
+        user:user_id (
+          name,
+          email,
+          image,
+          username
+        )
+      `)
       .eq("resource_type", resourceType)
       .eq("resource_id", resourceId)
       .is("parent_id", null) // Only top-level comments
@@ -136,7 +187,15 @@ export async function getComments(
       const commentIds = comments.map((c: Comment) => c.id);
       const { data: replies } = await supabase
         .from("comments")
-        .select("*")
+        .select(`
+          *,
+          user:user_id (
+            name,
+            email,
+            image,
+            username
+          )
+        `)
         .in("parent_id", commentIds)
         .eq("status", "approved")
         .order("created_at", { ascending: true });

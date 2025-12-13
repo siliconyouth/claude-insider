@@ -9,6 +9,1337 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.58.0] - 2025-12-13
+
+### Added
+- **Internationalization (i18n) Activation** - Full multi-language support now active
+  - Cookie-based locale switching via language selector
+  - 8 supported languages: English, Spanish, French, German, Japanese, Chinese, Korean, Portuguese
+  - Browser Accept-Language auto-detection
+  - Persistent locale preference with 1-year cookie
+  - Language selector with flag icons and native language names
+- **Translated UI Components** - Header and footer now use translations
+  - Navigation links (Documentation, Get Started, Resources)
+  - Footer links (Privacy, Terms, Disclaimer, Accessibility, Changelog)
+  - All 8 language files updated with proper translations
+
+### Enhanced
+- `components/language-selector.tsx` - Updated to use next-intl with proper locale detection
+- `components/header.tsx` - Navigation now uses `useTranslations` hook
+- `components/footer.tsx` - Server-side translations with `getTranslations`
+- `i18n/messages/*.json` - All 8 language files updated with footer translations
+
+### Documentation
+- **Keyboard Shortcuts System** - Already complete from previous versions
+  - 15 shortcuts across 4 categories (search, navigation, actions, accessibility)
+  - `?` opens help modal showing all shortcuts
+  - `⌘/Ctrl+K` opens search, `/` focuses search input
+  - `Shift+G/D/R/F` navigates to home/docs/resources/favorites
+  - `J/K` for list navigation, `S` to toggle favorite
+- **Dynamic OG Images** - Already complete from previous versions
+  - `/api/og` endpoint for dynamic social media images
+  - Support for title, description, type, category, badge, author parameters
+  - Gradient backgrounds based on content type
+
+## [0.57.0] - 2025-12-13
+
+### Added
+- **Voice Search** - Voice-activated AI search
+  - Web Speech API integration for speech recognition
+  - Real-time interim transcript display
+  - Animated listening indicator with pulsing dots
+  - Accessibility announcements for screen readers
+  - Graceful fallback when speech recognition unavailable
+- **Multi-language Code Playground** - Support for multiple programming languages
+  - Python simulation - Execute Python code in the browser
+  - Support for 7 languages: JavaScript, TypeScript, Python, Go, Rust, Bash, JSON
+  - Language switcher dropdown with color-coded badges
+  - Python built-in functions: print, len, range, sum, min, max, sorted, enumerate, zip
+  - Python syntax transformation (f-strings, list comprehensions, for/while loops)
+  - JSON validation mode
+  - View-only mode for non-executable languages (Go, Rust, Bash)
+- **FAQ Analytics Dashboard** - Admin view for query analytics
+  - Query statistics (total, unique, generated FAQs, categories)
+  - Top categories chart with visual breakdown
+  - Popular queries list with ranking
+  - FAQ performance metrics (helpful/not helpful feedback)
+  - Category breakdown with query counts
+- **Share Playground Feature** - Share code examples via URL
+  - URL-based code encoding/decoding
+  - Copy share link button
+  - Web Share API integration for native sharing
+  - Shared code indicator with editable playground
+  - Preserve language when sharing
+
+### New Files
+- `app/(main)/dashboard/faq-analytics/page.tsx` - FAQ analytics dashboard
+
+### Enhanced
+- `components/ai-search.tsx` - Voice search integration with Web Speech API
+- `components/code-playground.tsx` - Multi-language support, Python simulation, sharing
+- `app/(main)/playground/page.tsx` - Python examples, URL parameter handling, shared code support
+- `app/(main)/dashboard/components/dashboard-nav.tsx` - FAQ Analytics navigation link
+
+### Python Simulation Features
+- Variables and basic types (strings, numbers, booleans)
+- Lists with comprehensions and iteration
+- Functions with parameters and return values
+- Control flow (if/elif/else, for loops, while loops)
+- Built-in functions for data manipulation
+
+## [0.56.0] - 2025-12-13
+
+### Added
+- **AI-Powered Search** - Natural language search with AI understanding
+  - Query expansion for better search results
+  - AI-generated result summaries
+  - Suggested follow-up queries
+  - Semantic understanding of user intent
+  - Access via `⌘⇧K` / `Ctrl+Shift+K`
+- **Code Playground** - Interactive code editor with AI assistance
+  - Run JavaScript/TypeScript code in sandbox
+  - Syntax highlighting with highlight.js
+  - AI assistance (explain, improve, debug)
+  - Multiple pre-built examples
+  - New `/playground` page
+- **Voice Assistant Enhancement** - Context-aware responses
+  - User behavior tracking (pages visited, time spent)
+  - Topic interest detection and scoring
+  - Dynamic suggestions based on reading patterns
+  - Session context memory
+- **FAQ System** - Auto-generated FAQ content
+  - Query tracking and popularity scoring
+  - Category-based organization
+  - Expandable FAQ items with helpful feedback
+  - AI-powered follow-up questions
+  - Default FAQs for common questions
+  - New `/faq` page
+
+### New Files
+- `app/api/search/ai/route.ts` - AI search API endpoint
+- `components/ai-search.tsx` - AI-powered search component
+- `components/code-playground.tsx` - Interactive code editor
+- `app/(main)/playground/page.tsx` - Code playground page
+- `lib/context-tracker.ts` - User behavior tracking
+- `lib/faq-generator.ts` - FAQ generation and storage
+- `app/(main)/faq/page.tsx` - FAQ page
+- `components/faq/faq-content.tsx` - FAQ display component
+
+### Enhanced
+- `components/header.tsx` - Added AI Search button
+- `lib/claude.ts` - Support for userContext in system prompt
+- `app/api/assistant/chat/route.ts` - Context-aware responses
+- `lib/assistant-context.ts` - Integration with context tracker
+
+## [0.55.0] - 2025-12-13
+
+### Added
+- **AI Knowledge Enhancement** - Expanded AI context and capabilities
+  - Code Example Database - 580 indexed code snippets with language and pattern detection
+  - Ask AI on Resource Cards - AI assistance for 122+ curated resources
+  - Ask AI on Settings Pages - Configuration help with suggested questions
+  - Conversation History - Save and load AI conversations (authenticated users)
+- **Code Examples Index** - Searchable code snippet database
+  - Extract code blocks from all MDX documentation
+  - Language detection (16 languages)
+  - Pattern detection (API calls, auth, streaming, tool use, etc.)
+  - Context extraction (preceding text, section title)
+- **Conversation Persistence** - Save AI chat history
+  - Database schema for conversations and messages
+  - Auto-generated titles from first message
+  - Starred conversations support
+  - Message count tracking
+
+### Components
+- `components/ask-ai/ask-ai-modal.tsx` - Enhanced with history panel
+- `components/resources/resource-card.tsx` - Added Ask AI button integration
+
+### Scripts
+- `scripts/generate-code-examples-index.cjs` - Code snippet extraction and indexing
+
+### Database
+- `020_ai_conversations.sql` - AI conversation history tables
+
+### Enhanced
+- RAG Index - Now 1884 chunks (was 1304) with code examples
+- Ask AI Modal - History view for authenticated users
+- Ask AI Provider - Conversation state management
+
+## [0.54.0] - 2025-12-13
+
+### Added
+- **Contextual Ask AI System** - Context-aware AI assistant integration
+  - Ask AI buttons on code blocks with language context
+  - Ask AI buttons on headings and sections
+  - Context tracking for user location (page, section, content type)
+  - Contextual question generation with suggested follow-ups
+  - Modal interface with streaming responses
+  - Context preview toggle to see what AI knows
+- **Enhanced RAG Index** - 3x more searchable content (1267 chunks)
+  - Settings extraction from markdown tables
+  - CLI command parsing from code blocks
+  - Environment variable detection
+  - Feature descriptions from headings
+  - JSON configuration example indexing
+  - Query intent detection (settings, commands, env vars, features, resources)
+  - Context-aware boosting for better search results
+- **External Source Caching** - Infrastructure for caching referenced docs
+  - Extract source URLs from ContentMeta components
+  - HTML to text conversion with main content extraction
+  - Cache index with metadata tracking
+  - 7-day cache expiration with auto-refresh
+  - Rate-limited fetching (2s between requests)
+
+### Components
+- `components/ask-ai/` - Ask AI system
+  - `AskAIProvider` - Global context and state management
+  - `AskAIButton` - Universal button with 4 variants (icon, text, pill, inline)
+  - `AskAIWrapper` - Wrapper component for any content
+  - `AskAIModal` - Chat interface with streaming
+- `components/mdx/headings.tsx` - H1-H6 with Ask AI buttons
+- `lib/ai-context.ts` - Context tracking utilities
+
+### Scripts
+- `scripts/generate-settings-index.cjs` - Settings/options extraction
+- `scripts/cache-external-sources.cjs` - External source caching
+
+### Enhanced
+- `lib/rag.ts` - Query intent detection, context-aware boosting
+- `scripts/generate-rag-index.cjs` - Integrated settings and source chunks
+- `app/api/assistant/chat/route.ts` - Accepts AI context for better RAG ranking
+- `components/code-block.tsx` - Added Ask AI button
+- `mdx-components.tsx` - Uses new heading components with Ask AI
+
+### Technical
+- RAG index version 4.0 with 1267 total chunks
+  - 423 documentation chunks
+  - 12 project knowledge chunks
+  - 122 resource chunks
+  - 710 settings/options chunks
+  - External source chunks (when cached)
+
+## [0.53.0] - 2025-12-13
+
+### Added
+- **Table of Contents** - Auto-generated page navigation
+  - Extract headings from HTML or Markdown
+  - Hierarchical structure (h2 → h3 → h4)
+  - Active heading highlight on scroll
+  - Smooth scroll to section on click
+  - Three variants: default, compact (collapsible), floating
+  - `useTableOfContents` hook for React usage
+- **Reading Time** - Estimated read duration
+  - Words per minute calculation (200 WPM)
+  - Additional time for code blocks
+  - Word count display
+  - Three variants: default, compact, detailed
+- **Code Playground** - Interactive code execution
+  - JavaScript/TypeScript execution
+  - JSON parsing and formatting
+  - Console.log capture
+  - Run, Reset, Copy buttons
+  - Error display with syntax highlighting
+  - Read-only mode for examples
+
+### Components (`components/content/`)
+- `TableOfContents` - Page navigation from headings
+- `useTableOfContents` - Hook for DOM-based TOC extraction
+- `ReadingTime` - Display estimated reading duration
+- `useReadingTimeDisplay` - Simple hook for inline usage
+- `CodePlayground` - Interactive code editor/runner
+
+### Utilities (`lib/content-utils.ts`)
+- `calculateReadingTime()` - Words + code time calculation
+- `extractTOCFromHTML()` - DOM-based heading extraction
+- `extractTOCFromMarkdown()` - Markdown heading extraction
+- `getWordCount()` - Count words in content
+- `getCharacterCount()` - Character count with/without spaces
+- `formatDate()` - Short, long, relative date formatting
+
+## [0.52.0] - 2025-12-13
+
+### Added
+- **Points System** - Earn points for engagement
+  - 15 point-earning actions across 4 categories
+  - Reading: read article (5pts), complete tutorial (25pts), explore resource (3pts)
+  - Engagement: daily visit (10pts), search (2pts), favorite (5pts), create collection (15pts)
+  - Contribution: suggestion (50pts), approved (100pts), comment (10pts), helpful comment (25pts)
+  - Social: share (10pts), refer user (100pts), follow (5pts)
+  - Daily limits to prevent abuse
+- **Level System** - 10 progression levels
+  - Newcomer to Titan progression
+  - Unique icons and colors per level
+  - Progress bar to next level
+  - Points thresholds: 0 → 100 → 300 → 750 → 1500 → 3000 → 6000 → 12000 → 25000 → 50000
+- **Streak System** - Daily activity tracking
+  - Streak bonuses up to 50% extra points
+  - 36-hour grace period
+  - Milestone badges: 3, 7, 14, 30, 60, 100, 365 days
+  - Bonus points at milestones
+- **Leaderboard** - Top contributors ranking
+  - Medal icons for top 3
+  - User avatars and level badges
+  - Streak indicators
+  - Current user highlighting
+
+### Components (`components/gamification/`)
+- `LevelBadge` - User level with icon and progress (3 variants)
+- `StreakIndicator` - Fire streak display (3 variants)
+- `Leaderboard` - Top users list (2 variants)
+- `PointsPopup` - Animated points earned notification
+- `PointsPopupContainer` - Manage multiple popups
+- `usePointsNotifications` - Hook for showing points
+
+### Configuration (`lib/gamification.ts`)
+- `pointActions` - All earnable actions with points
+- `levels` - 10 level definitions with thresholds
+- `streakMilestones` - Streak bonus configuration
+- `getLevelFromPoints()` - Calculate user level
+- `getLevelProgress()` - Progress to next level
+- `getStreakBonus()` - Calculate streak multiplier
+- `calculatePoints()` - Apply streak bonus to points
+
+## [0.51.0] - 2025-12-13
+
+### Added
+- **Performance Monitoring** - Core Web Vitals tracking
+  - LCP (Largest Contentful Paint) tracking
+  - FID (First Input Delay) measurement
+  - CLS (Cumulative Layout Shift) calculation
+  - FCP (First Contentful Paint) reporting
+  - TTFB (Time to First Byte) measurement
+  - INP (Interaction to Next Paint) thresholds
+  - Rating system: good / needs-improvement / poor
+- **Error Boundary Reporting** - Client-side error tracking
+  - Automatic error capture with stack traces
+  - Component stack trace for React errors
+  - User-friendly error UI with retry button
+  - Metadata support for context
+- **API Timing Tracking** - Slow endpoint detection
+  - Wrapped fetch for automatic timing
+  - 1 second slow request threshold
+  - Endpoint, method, duration, status tracking
+- **Analytics API Routes** - Server-side data collection
+  - `/api/analytics/performance` - Web Vitals collection
+  - `/api/analytics/errors` - Error report ingestion
+  - `/api/analytics/api-timing` - API response times
+  - sendBeacon support for reliable delivery
+
+### Components (`components/monitoring/`)
+- `PerformanceProvider` - Initialize observers and wrap fetch
+- `ReportingErrorBoundary` - Error boundary with reporting
+
+### Utilities (`lib/monitoring.ts`)
+- `initPerformanceObserver()` - Start Web Vitals tracking
+- `reportMetric()` - Send metric to analytics
+- `reportError()` - Report errors to monitoring
+- `trackApiCall()` - Track API response times
+- `createTrackedFetch()` - Wrapped fetch with timing
+- `getRating()` - Calculate metric rating
+
+## [0.50.0] - 2025-12-13
+
+### Added
+- **Dynamic OG Images** - Auto-generated social preview images
+  - Edge runtime API at `/api/og`
+  - Gradient backgrounds matching brand colors
+  - Type-specific styling (default, article, resource, profile)
+  - Title, description, category, author support
+  - 1200x630 optimized for social platforms
+- **Share Buttons** - Multi-platform social sharing
+  - Twitter/X, LinkedIn, Facebook, Reddit, Hacker News
+  - Email sharing with pre-filled subject/body
+  - Copy link with visual feedback
+  - Three variants: default, compact, icons-only
+  - Platform-specific colors on hover
+- **Native Share Button** - Web Share API integration
+  - Uses native share sheet on supported devices
+  - Graceful fallback to copy link
+  - Multiple sizes and style variants
+- **SEO Utilities** - Metadata generation helpers
+  - `getOGImageUrl()` - Dynamic OG image URL builder
+  - `generatePageMetadata()` - Full metadata object generator
+  - `generateArticleJsonLd()` - Article structured data
+  - `generateSoftwareJsonLd()` - Software/resource structured data
+
+### Components (`components/sharing/`)
+- `ShareButtons` - Social platform share buttons
+- `NativeShareButton` - Web Share API button with fallback
+
+### API Routes
+- `GET /api/og` - Dynamic OG image generation
+  - Query params: title, description, type, category, badge, author
+  - Returns 1200x630 PNG image
+
+### Utilities (`lib/og-image.ts`)
+- Open Graph image URL generation
+- Metadata generation for pages
+- JSON-LD structured data helpers
+
+## [0.49.0] - 2025-12-13
+
+### Added
+- **Global Keyboard Shortcuts** - Power-user keyboard navigation
+  - `Cmd/Ctrl+K` - Open search
+  - `Shift+G` - Go to home
+  - `Shift+D` - Go to documentation
+  - `Shift+R` - Go to resources
+  - `Shift+F` - Go to favorites
+  - `Shift+C` - Copy current page link
+  - `/` - Focus search input
+  - `Escape` - Close modals
+- **Vim-Style Navigation** - J/K list navigation
+  - `J` / `ArrowDown` - Next item
+  - `K` / `ArrowUp` - Previous item
+  - `Enter` / `Space` - Select item
+  - `Home` / `End` - First/last item
+  - Loop navigation support
+- **Keyboard Shortcuts Help Modal** - Discoverable shortcuts
+  - Press `?` to show all shortcuts
+  - Organized by category (Search, Navigation, Actions, Accessibility)
+  - Platform-aware key display (⌘ on Mac, Ctrl on Windows)
+  - Beautiful kbd styling
+
+### Components (`components/keyboard-shortcuts/`)
+- `KeyboardShortcutsProvider` - Global shortcut handler and context
+- `KeyboardShortcutsModal` - Help modal with all shortcuts
+- `ShortcutHint` - Inline shortcut badge display
+- `ShortcutButton` - Button with shortcut hint on hover
+
+### Hooks
+- `useKeyboardNavigation` - J/K vim-style list navigation hook
+  - `selectedIndex` - Current selection
+  - `getItemProps()` - Props for list items
+  - Scroll into view, loop support, aria-selected
+
+### Configuration (`lib/keyboard-shortcuts.ts`)
+- 15+ predefined shortcuts
+- `formatShortcutKey()` - Platform-aware key formatting
+- `matchesShortcut()` - Event matching utility
+- Custom action registration via context
+
+## [0.48.0] - 2025-12-13
+
+### Added
+- **Internationalization (i18n)** - Multi-language support
+  - 8 supported locales: English, Spanish, French, German, Japanese, Chinese, Korean, Portuguese
+  - `next-intl` integration with App Router
+  - Server-side locale detection via cookies and Accept-Language header
+  - Client-side translations with NextIntlClientProvider
+- **Language Switcher** - UI component for locale selection
+  - Three variants: dropdown, inline, compact
+  - Cookie-based persistence (1 year)
+  - Flag emoji indicators
+  - Smooth transitions
+- **Translation System** - Comprehensive message catalogs
+  - Structured JSON translation files
+  - Sections: common, navigation, home, search, favorites, collections, reading lists, notifications, profile, settings, auth, PWA, errors, footer
+  - Complete English (en) and Spanish (es) translations
+  - Skeleton files for remaining 6 locales
+
+### i18n Configuration (`i18n/`)
+- `config.ts` - Locale definitions, names, flags, RTL support
+- `request.ts` - Server-side locale detection for next-intl
+- `provider.tsx` - NextIntlClientProvider wrapper
+- `messages/*.json` - Translation files per locale
+
+### Components
+- `LanguageSwitcher` - Locale selection with three display variants
+  - `variant="dropdown"` - Full dropdown with flag and name
+  - `variant="inline"` - Horizontal button group
+  - `variant="compact"` - Icon-only dropdown
+
+### Technical
+- Plugin composition: `withPayload(withNextIntl(withMDX(nextConfig)))`
+- Async layout for server-side locale fetching
+- Dynamic `<html lang>` attribute based on detected locale
+
+## [0.47.0] - 2025-12-13
+
+### Added
+- **PWA Install Prompt** - Native app install experience
+  - Install banner with benefits list
+  - Compact install button for header
+  - Dismissible with 7-day cooldown
+  - Tracks install vs dismissed state
+- **Offline Support** - Works without internet connection
+  - Service worker with multi-tier caching
+  - Network-first for pages, cache-first for assets
+  - Stale-while-revalidate for API routes
+  - Offline fallback to cached content
+- **Offline Indicator** - Visual feedback for connection status
+  - Banner shows when offline
+  - "Back online" notification on reconnect
+  - Compact status badge component
+- **Service Worker Updates** - Auto-update notifications
+  - Periodic update checks (hourly)
+  - Update banner with refresh button
+  - Skip waiting on user action
+- **Save for Offline** - Cache pages for offline reading
+  - `SaveOfflineButton` for individual pages
+  - `SaveAllOfflineButton` for bulk caching
+  - Cache status persistence
+- **Push Notifications Support** - Browser push infrastructure
+  - Push subscription handling
+  - Notification click actions
+  - VAPID key configuration
+
+### Enhanced
+- **Web App Manifest** - Improved PWA configuration
+  - App shortcuts (Search, Resources, Favorites, Reading Lists)
+  - Multiple icon sizes (72-512px)
+  - Maskable icons for adaptive display
+  - Updated theme colors to match design system
+
+### Service Worker (`public/sw.js`)
+- Cache version 3 with three-tier caching
+- Static cache for app shell
+- Dynamic cache for visited pages
+- Offline cache for user-saved content
+- Push notification handler
+- Message handler for cache operations
+- Stale-while-revalidate for favorites/collections API
+
+### PWA Hook (`hooks/use-pwa.ts`)
+- `usePWA()` - Complete PWA state management
+  - `isInstallable` - Install prompt available
+  - `isInstalled` - Running as installed app
+  - `isOnline` - Network connection status
+  - `isUpdating` - New version available
+  - `isPushSupported` - Push API available
+  - `isPushEnabled` - Push subscription active
+  - `promptInstall()` - Trigger install prompt
+  - `requestPushPermission()` - Enable push notifications
+  - `cachePage(url)` - Cache single page
+  - `cachePages(urls)` - Cache multiple pages
+  - `clearOfflineCache()` - Clear offline cache
+  - `checkForUpdates()` - Check for SW updates
+
+### UI Components
+- `InstallPrompt` - Full install banner with benefits
+- `InstallButton` - Compact install button
+- `OfflineIndicator` - Offline/online status banner
+- `OfflineStatusBadge` - Compact status indicator
+- `UpdateNotification` - New version available banner
+- `SaveOfflineButton` - Cache page for offline
+- `SaveAllOfflineButton` - Bulk cache pages
+
+## [0.46.0] - 2025-12-13
+
+### Added
+- **Advanced Search Page** - Full-featured search at `/search`
+  - Full-text search across all content
+  - Real-time results with Fuse.js
+  - Clean search UI with skeleton loading
+- **Search Filters** - Filter and refine search results
+  - Content type filter (All, Docs, Resources, Users)
+  - Category filter dropdown
+  - Sort options (Relevance, Date, Rating, Popularity)
+  - Date range filters (Today, This Week, This Month, This Year)
+  - Minimum rating filter with star selector
+  - Compact filter bar for inline use
+  - Full filter panel for advanced options
+- **Saved Searches** - Save frequently used searches
+  - Name and save search queries with filters
+  - Track use count for each saved search
+  - Quick access from sidebar
+  - Delete saved searches
+- **Search History** - Track recent searches
+  - Server-side history for logged-in users
+  - Auto-cleanup (keeps last 50 searches)
+  - Quick re-search from history
+  - Clear history option
+- **Search Analytics** - Track popular searches
+  - Popular searches sidebar
+  - Search count tracking
+  - No-results query tracking for admins
+  - Search suggestions based on popular queries
+
+### Database Migration (`019_saved_searches.sql`)
+- `saved_searches` table - User's saved search queries
+- `search_history` table - Per-user search history
+- `search_analytics` table - Aggregate search data
+- `upsert_search_analytics()` - Track search usage with normalized queries
+- `limit_search_history()` trigger - Auto-cleanup old history entries
+- `update_saved_search_count()` trigger - Track saved search counts
+- RLS policies for owner-only access
+
+### Server Actions (`app/actions/search.ts`)
+- `getSavedSearches()` - Get user's saved searches
+- `saveSearch()` - Save a new search
+- `updateSavedSearch()` - Update saved search
+- `deleteSavedSearch()` - Delete saved search
+- `useSavedSearch()` - Increment use count
+- `recordSearch()` - Record search to history and analytics
+- `getSearchHistory()` - Get user's recent searches
+- `clearSearchHistory()` - Clear search history
+- `removeFromHistory()` - Remove single search from history
+- `getPopularSearches()` - Get most popular searches
+- `getSearchSuggestions()` - Get suggestions for autocomplete
+- `getNoResultsQueries()` - Get queries with no results (admin)
+
+### Pages & Routes
+- `/search` - Advanced search page with filters, history, saved searches
+
+### UI Components
+- `SearchFiltersPanel` - Full filter controls panel
+  - Content type buttons
+  - Category dropdown
+  - Sort dropdown
+  - Date range buttons
+  - Rating selector
+  - Clear all filters
+- `SearchFilterBar` - Compact inline filter bar
+  - Quick type filter toggle
+  - Sort dropdown
+  - Clear button
+- `SavedSearches` - Saved searches list
+  - Click to re-run search
+  - Use count display
+  - Delete button with hover reveal
+  - Loading skeleton
+  - Empty state
+- `SaveSearchModal` - Modal for saving current search
+  - Name input
+  - Query preview
+  - Filter count display
+
+## [0.45.0] - 2025-12-13
+
+### Added
+- **View Tracking** - Track resource views
+  - Anonymous and authenticated view tracking
+  - Session-based deduplication
+  - Referrer tracking
+  - Automatic stats aggregation
+- **Popular Content** - Display trending resources
+  - Sort by views (today, week, month, all-time)
+  - Trending content with growth indicators
+  - Filter by resource type
+- **User Stats Dashboard** - Personal activity statistics
+  - Comments, suggestions, favorites counts
+  - Reading lists and items read progress
+  - Followers/following counts
+  - Achievements summary
+  - 30-day activity chart
+- **Admin Analytics** - Site-wide usage metrics (admin/moderator only)
+  - Total and active users
+  - Daily view counts
+  - Comments and suggestions totals
+  - Views over time chart
+
+### Database Migration (`018_analytics_functions.sql`)
+- `increment_view_stats()` - Atomically increment view counters
+- `reset_daily_view_counts()` - Reset daily counters (for cron)
+- `reset_weekly_view_counts()` - Reset weekly counters
+- `reset_monthly_view_counts()` - Reset monthly counters
+- Upsert logic for view stats with date-based resets
+
+### Server Actions (`app/actions/analytics.ts`)
+- `trackView()` - Record resource view with metadata
+- `getResourceViewStats()` - Get view stats for a resource
+- `getPopularResources()` - Get top resources by views
+- `getTrendingResources()` - Get resources with most recent growth
+- `getUserActivityStats()` - Get current user's activity counts
+- `getUserReadingActivity()` - Get reading activity over time
+- `getSiteStats()` - Get site-wide stats (admin only)
+- `getDailyViews()` - Get daily view data for charts (admin only)
+
+### Pages & Routes
+- `/profile/stats` - User activity dashboard
+
+### UI Components
+- `ActivityChart` - Bar chart for activity over time
+  - Tooltips with date and count
+  - X-axis date labels
+  - Configurable height and color
+- `ActivitySparkline` - Mini sparkline visualization
+- `StatCard` - Stat display with change indicator
+  - Optional sparkline
+  - Positive/negative change coloring
+  - Custom icon and color
+- `StatsGrid` - Responsive grid for stat cards
+- `ViewCount` - Inline view count display
+- `PopularResources` - Trending/popular resources list
+  - Ranked display with medals
+  - Weekly view counts
+  - Resource type badges
+- `TrendingBadge` - Trending rank badge
+- `UserStatsDashboard` - Complete user stats view
+  - 8 stat cards with icons
+  - 30-day activity chart
+  - Member since date
+
+## [0.44.0] - 2025-12-13
+
+### Added
+- **Reading Lists** - Organize resources into custom reading lists
+  - Create multiple named lists with custom colors and icons
+  - Default "Read Later" list for quick saves
+  - Public/private list visibility settings
+  - List description and item counts
+- **Reading Progress Tracking** - Track what you're reading
+  - Three statuses: Unread, Reading, Completed
+  - Visual progress indicators
+  - Completion dates tracked automatically
+  - Notes for each item
+- **View History** - Track recently viewed resources
+  - Automatic tracking of resource views
+  - View count per resource
+  - Clear history option
+  - Time-sorted history list
+- **Quick Add Button** - Add resources to reading list instantly
+  - `ReadLaterButton` component for any resource
+  - Optimistic UI updates
+  - Toggle saved/unsaved state
+
+### Database Migration (`017_reading_lists.sql`)
+- `reading_lists` table with color, icon, public/private settings
+- `reading_list_items` table with status tracking (unread/reading/completed)
+- `view_history` table for user viewing history
+- `resource_views` table for anonymous tracking
+- `resource_view_stats` table for cached aggregates
+- Triggers: `update_reading_list_item_count()`, `update_user_reading_list_count()`, `update_items_read_count()`, `upsert_view_history()`
+- Auto-create default "Read Later" list for new users
+- RLS policies for all tables
+
+### Server Actions (`app/actions/reading-lists.ts`)
+- `getReadingLists()` - Get user's reading lists
+- `createReadingList()` - Create new list with name, color, icon
+- `updateReadingList()` - Edit list settings
+- `deleteReadingList()` - Delete list (not default)
+- `getReadingListBySlug()` - Get list with items
+- `addToReadingList()` - Add item to specific list
+- `quickAddToReadLater()` - Quick add to default list
+- `removeFromReadingList()` - Remove item
+- `updateReadingProgress()` - Change status/progress
+- `moveToList()` - Move item between lists
+- `isInReadingList()` - Check if resource is saved
+- `recordView()` - Track resource view
+- `getViewHistory()` - Get viewing history
+- `clearViewHistory()` - Clear all history
+- `getReadingStats()` - Get reading statistics
+- `getPublicReadingList()` - View public lists
+
+### Pages & Routes
+- `/reading-lists` - Main reading lists page with stats
+- `/reading-lists/[slug]` - Individual list detail page
+
+### UI Components
+- `ReadLaterButton` - Quick save button with toggle
+  - Sizes: sm, md, lg
+  - Optional label display
+  - Animated bookmark icon
+- `ReadingListCard` - List display with actions
+  - Custom color indicator
+  - Icon display
+  - Item count badge
+  - Edit/delete actions
+- `ReadingListItemCard` - Item with progress controls
+  - Click-through status (unread → reading → completed)
+  - Visual status indicator
+  - Quick action buttons
+  - Notes display
+- `ReadingListForm` - Create/edit list form
+  - Color picker (8 colors)
+  - Icon picker (6 icons)
+  - Public toggle
+- `ViewHistory` - View history list
+  - Time-relative dates
+  - View count display
+  - Clear all button
+
+## [0.43.0] - 2025-12-13
+
+### Added
+- **@Mentions** - Tag users in comments and text content
+  - `@username` syntax with word boundary detection
+  - Extract and deduplicate mentions from text
+  - Check if text contains mentions
+  - Parse mentions into React-safe objects
+- **Mention Autocomplete** - Username suggestions while typing
+  - Keyboard navigation (Arrow keys, Enter/Tab, Escape)
+  - Debounced search (200ms) for performance
+  - User avatar and name display in dropdown
+  - Click-outside to close suggestions
+- **Mention Text Rendering** - Display mentions as clickable links
+  - `MentionText` for single-line content
+  - `MentionTextMultiline` for multi-line with preserved breaks
+  - Links to user profiles (`/users/{username}`)
+  - Blue/cyan accent styling matching design system
+- **Mention Notifications** - Notify users when mentioned
+  - Creates notification with context (comment, reply, review)
+  - Links to original content
+  - Excludes self-mentions
+
+### Mention Utilities (`lib/mentions.ts`)
+- `MENTION_REGEX` - Pattern for @mentions with alphanumeric/hyphen usernames
+- `extractMentions()` - Get array of mentioned usernames from text
+- `hasMentions()` - Boolean check for mentions presence
+- `parseMentions()` - Convert text to array of strings and mention objects
+- `getMentionAtCursor()` - Get partial mention being typed at cursor
+- `insertMention()` - Replace partial mention with selected username
+
+### Server Actions (`app/actions/mentions.ts`)
+- `processMentions()` - Extract mentions and create notifications
+- `searchUsersForMention()` - Autocomplete search by username
+- `validateMentions()` - Check if mentioned usernames exist
+
+### UI Components
+- `MentionAutocomplete` - Textarea with autocomplete dropdown
+  - Props: value, onChange, onSubmit, placeholder, rows, maxLength, disabled
+  - Shows 5 suggestions max
+  - Minimum 1 character to trigger search
+- `MentionText` - Render mentions as clickable links
+  - Props: text, className
+  - Blue text with hover underline
+- `MentionTextMultiline` - Preserve line breaks with mentions
+  - Props: text, className
+  - Handles empty lines correctly
+
+## [0.42.0] - 2025-12-13
+
+### Added
+- **Star Ratings** - Quick 1-5 star rating for resources
+  - Interactive star component with hover effects
+  - Optimistic updates for instant feedback
+  - Automatic stats aggregation via database triggers
+  - Rating distribution breakdown (1-5 stars)
+- **Written Reviews** - Detailed reviews with ratings
+  - Title and content fields (10-2000 characters)
+  - Edit existing reviews
+  - Delete own reviews
+  - Report reviews for moderation
+- **Helpful Voting** - Vote reviews as helpful
+  - Toggle helpful votes
+  - Sort reviews by helpful count
+  - Visual indicator for voted reviews
+- **Review Stats** - Aggregate rating statistics
+  - Average rating display
+  - Total ratings count
+  - Rating distribution bar chart
+  - Cached stats for performance
+
+### Database Migration
+- `016_ratings_reviews.sql` - Ratings and reviews system
+  - `ratings` table for simple star ratings
+  - `reviews` table for written reviews
+  - `review_helpful_votes` table for helpful votes
+  - `resource_rating_stats` table for cached aggregates
+  - Triggers: `update_rating_stats()`, `update_review_count()`, `update_helpful_count()`
+  - `review_count` column on user table
+  - RLS policies for all tables
+
+### Server Actions
+- `submitRating()` - Submit or update star rating
+- `deleteRating()` - Remove a rating
+- `getRatingStats()` - Get aggregate stats for resource
+- `getUserRating()` - Get user's rating for resource
+- `getReviews()` - Get reviews with sorting options
+- `submitReview()` - Submit or update a review
+- `deleteReview()` - Delete own review
+- `getUserReview()` - Get user's existing review
+- `voteHelpful()` - Toggle helpful vote
+- `reportReview()` - Flag review for moderation
+
+### UI Components
+- `StarRating` - Interactive star rating input
+  - Sizes: sm, md, lg
+  - Hover preview effect
+  - Optional average display
+- `StarDisplay` - Read-only star display
+  - Partial star support
+  - Configurable size
+- `ReviewCard` - Single review display
+  - User avatar and name
+  - Rating stars
+  - Helpful voting button
+  - Report/delete menu
+- `ReviewForm` - Review submission form
+  - Star rating selector
+  - Title (optional) and content fields
+  - Character counter
+  - Edit mode support
+- `ReviewSection` - Complete reviews UI
+  - Stats overview with distribution chart
+  - Sort options (recent, helpful, highest, lowest)
+  - User's review display
+  - Empty state with CTA
+
+## [0.41.0] - 2025-12-13
+
+### Added
+- **User Search** - Find and discover other users
+  - Real-time search with 300ms debounce
+  - Search by name or username (partial matching)
+  - Search results show avatar, name, username
+  - Follow button directly in search results
+  - Block button directly in search results
+  - Blocked users filtered from results
+- **User Blocking** - Block unwanted users
+  - Block/unblock with confirmation dialog
+  - Blocks remove existing follow relationships (bidirectional)
+  - Blocked users hidden from search, comments, and feeds
+  - Blocked users list in settings with unblock option
+- **Blocked Users Management** - Settings page integration
+  - View all blocked users with block date
+  - Unblock users directly from list
+  - Empty state when no users blocked
+
+### Database Migration
+- `015_user_blocking.sql` - User blocking system
+  - `user_blocks` table with blocker_id, blocked_id
+  - Indexes for efficient lookups (both directions)
+  - `blocked_count` column on user table
+  - Trigger to update blocked count automatically
+  - Trigger to remove follows when blocking
+  - `is_user_blocked()` function for bidirectional check
+  - Full-text search index on user table
+  - RLS policies for privacy
+
+### Server Actions
+- `searchUsers()` - Search users by name/username with blocking filter
+- `blockUser()` - Block a user (removes existing follows)
+- `unblockUser()` - Unblock a previously blocked user
+- `getBlockedUsers()` - Get list of blocked users with metadata
+- `isUserBlocked()` - Check if user is blocked (either direction)
+- `getBlockedCount()` - Get total blocked users count
+
+### Pages & Routes
+- `/search/users` - User search page with tips
+
+### UI Components
+- `UserSearch` - Searchable dropdown with follow/block actions
+  - Debounced search input
+  - Click-outside to close
+  - Loading spinner during search
+- `BlockButton` - Block/unblock with confirmation
+  - Two-step confirmation before blocking
+  - Small and medium size variants
+  - Icon-only or with label
+- `BlockedUsers` - Settings page blocked users list
+  - Avatar, name, username display
+  - Block date shown
+  - Unblock action per user
+  - Empty state with explanation
+
+## [0.40.0] - 2025-12-13
+
+### Added
+- **Data Export** - GDPR-compliant data export functionality
+  - Export all user data as downloadable JSON file
+  - Includes profile, settings, comments, suggestions, favorites
+  - Collections with item counts
+  - Social data (followers/following)
+  - Achievements and progress
+  - Export timestamp and schema version for future compatibility
+- **Account Deletion** - Self-service account deletion with safeguards
+  - Request deletion with "DELETE" confirmation text
+  - Email confirmation required (24-hour expiry token)
+  - Clear warning about permanent data loss
+  - Lists all data that will be deleted
+  - Cancel pending deletion requests
+  - View pending deletion status with expiration time
+- **Data Management UI** - Settings section for data privacy
+  - Export button with instant JSON download
+  - Delete account flow with multi-step confirmation
+  - Pending deletion status display
+  - Cancel deletion request option
+
+### Server Actions
+- `exportUserData()` - Compile and return all user data as JSON
+- `requestAccountDeletion()` - Initiate deletion with email confirmation
+- `confirmAccountDeletion()` - Execute deletion after token verification
+- `cancelAccountDeletion()` - Cancel pending deletion request
+- `getPendingDeletionRequest()` - Check for pending deletion status
+
+### Email Template
+- Account deletion confirmation email with branded styling
+- Clear warning about irreversible action
+- 24-hour expiry notice
+- Confirm deletion button with token URL
+
+### UI Components
+- `DataManagement` - Data export and account deletion interface
+  - Three states: default, pending deletion, confirm deletion
+  - Export data with gradient CTA button
+  - Red-themed danger zone for deletion
+  - Confirmation input requiring exact "DELETE" text
+
+## [0.39.0] - 2025-12-13
+
+### Added
+- **Achievements System** - Track milestones and display badges on profiles
+  - 27 unique achievements across 4 categories (contribution, engagement, milestone, special)
+  - 4 tiers: Bronze, Silver, Gold, Platinum with visual styling
+  - Achievement progress tracking with percentage completion
+  - Points system with user ranks (Newcomer → Legend)
+  - Featured achievements (up to 6) displayed on profiles
+- **Achievement Types** - Variety of unlockable badges
+  - Contribution: Comments, suggestions, approvals
+  - Engagement: Favorites, collections, follows
+  - Milestone: Profile completion, beta tester, 2FA enabled
+  - Special: Early adopter, top contributor, helpful comment
+- **Achievements Page** - Full management at `/profile/achievements`
+  - View earned achievements with earned dates
+  - Browse all available achievements (hidden until unlocked)
+  - Track progress toward incomplete achievements
+  - Toggle featured status for profile display
+- **Profile Integration** - Show achievements on public profiles
+  - AchievementsShowcase component with user rank
+  - Featured badges with tier-colored styling
+
+### Database Migration
+- `014_achievements.sql` - Achievements system schema
+  - `achievements` table with definitions (slug, name, icon, tier, requirements)
+  - `user_achievements` table for earned achievements
+  - `achievement_progress` table for tracking progress
+  - `achievements_count` and `achievement_points` columns on user table
+  - PostgreSQL functions: `check_achievement()`, `increment_achievement_progress()`, `award_achievement()`
+  - 27 seeded achievement definitions
+  - RLS policies for privacy
+
+### Server Actions
+- `getAllAchievements()` - Get all achievement definitions
+- `getUserAchievements()` - Get user's earned achievements
+- `getFeaturedAchievements()` - Get featured achievements for profile
+- `toggleFeaturedAchievement()` - Toggle featured status (max 6)
+- `getAchievementProgress()` - Get progress toward unearned achievements
+- `incrementProgress()` - Increment progress (internal)
+- `awardSpecialAchievement()` - Award special achievements (internal)
+- `getAchievementStats()` - Get total, points, and rank
+
+### UI Components
+- `AchievementBadge` - Individual achievement display with tier colors
+  - Tooltip with name, description, points, earned date
+  - Featured ring indicator
+  - Bronze/Silver/Gold/Platinum color schemes
+- `AchievementsShowcase` - Profile section component
+  - Featured achievements grid
+  - User rank badge
+  - Points and count stats
+
+## [0.38.0] - 2025-12-13
+
+### Added
+- **Two-Factor Authentication (2FA)** - TOTP-based security for accounts
+  - QR code setup with authenticator apps (Google Authenticator, Authy, etc.)
+  - Manual secret entry option for unsupported apps
+  - 6-digit verification code input with validation
+  - 10 single-use backup codes for account recovery
+  - Backup code download and copy functionality
+- **2FA Management** - Full control over 2FA settings
+  - Enable/disable 2FA from Security settings section
+  - View remaining backup codes count
+  - Regenerate backup codes (requires verification)
+  - Clear status indicator showing 2FA state
+
+### Database Migration
+- `013_two_factor_auth.sql` - 2FA schema
+  - `twoFactorEnabled`, `twoFactorSecret`, `twoFactorBackupCodes` columns on user table
+  - `two_factor_sessions` table for pending verifications
+  - Automatic session cleanup trigger
+  - PostgreSQL functions: `enable_two_factor()`, `disable_two_factor()`, `use_backup_code()`, `regenerate_backup_codes()`
+  - RLS policies for session isolation
+
+### Server Actions
+- `generateTwoFactorSecret()` - Create TOTP secret and QR code
+- `enableTwoFactor()` - Verify code and activate 2FA
+- `disableTwoFactor()` - Deactivate 2FA with verification
+- `verifyTwoFactorCode()` - Validate TOTP or backup code
+- `getTwoFactorStatus()` - Check current 2FA state
+- `regenerateBackupCodes()` - Generate new backup codes
+- `checkUserHasTwoFactor()` - Check if user requires 2FA login
+
+### UI Components
+- `TwoFactorSettings` - Complete 2FA setup and management component
+  - Multi-step setup wizard (scan, verify, backup)
+  - QR code display for authenticator apps
+  - Code input with digit-only validation
+  - Backup code grid with copy/download
+  - Disable and regenerate modals with verification
+
+### Dependencies
+- Added `otplib` for TOTP generation and verification
+- Added `qrcode` for QR code generation
+
+## [0.37.0] - 2025-12-13
+
+### Added
+- **User Following System** - Follow other users and see their activity
+  - Follow/unfollow buttons on user profiles
+  - Followers page at `/users/[username]/followers`
+  - Following page at `/users/[username]/following`
+  - Follower/following counts on user profiles
+  - Optimistic UI updates for instant feedback
+- **Activity Feed** - Feed of activity from followed users
+  - Activity feed page at `/feed`
+  - Shows comments, suggestions, and collections from followed users
+  - Chronological ordering with infinite scroll
+  - Sign-in prompt for unauthenticated users
+- **Follow Notifications** - Get notified when someone follows you
+  - In-app notification with actor name
+  - Email notification (if enabled in preferences)
+
+### Database Migration
+- `012_user_following.sql` - User following system schema
+  - `user_follows` table with follower/following relationships
+  - Automatic `followers_count` and `following_count` columns on user table
+  - PostgreSQL trigger for real-time count updates
+  - PostgreSQL functions: `follow_user()`, `unfollow_user()`, `is_following()`
+  - Indexes for efficient querying
+  - RLS policies for user data isolation
+
+### API Routes
+- `GET /api/users/[username]/followers` - Get user's followers list
+- `GET /api/users/[username]/following` - Get user's following list
+- `GET/POST/DELETE /api/users/[username]/follow` - Follow operations
+- `GET /api/feed` - Activity feed for current user
+
+### Server Actions
+- `followUser()` / `unfollowUser()` - Follow operations with notifications
+- `isFollowing()` - Check follow status
+- `getFollowers()` / `getFollowing()` - Paginated lists
+- `getActivityFeed()` - Feed from followed users
+- `getFollowCounts()` - Get follower/following counts
+
+### UI Components
+- `FollowButton` - Optimistic follow/unfollow button component
+- Updated user profile page with follow stats and button
+- Followers and following list pages with user cards
+
+## [0.36.0] - 2025-12-13
+
+### Added
+- **Email Notifications** - Transactional emails for user notifications
+  - Reply emails when someone replies to your comment
+  - Comment emails when someone comments on your content
+  - Suggestion status emails (approved, rejected, merged)
+  - Follow notification emails
+  - Mention notification emails
+- **Email Preferences** - User settings for email notifications
+  - Toggle email notifications by type (comments, replies, suggestions, follows)
+  - Independent from in-app notification settings
+  - Weekly digest placeholder (coming in future update)
+- **Email Templates** - Professional HTML email templates
+  - Consistent branding with violet-blue gradient
+  - Type-specific icons and call-to-action buttons
+  - Link to manage preferences in footer
+
+### Email Service
+- Extended `lib/email.ts` with notification emails
+- `sendNotificationEmail()` - Generic notification email sender
+- Type-aware subject lines with actor names
+- Deep linking to relevant content
+
+### Updated
+- `createNotification()` now checks both in-app and email preferences
+- Sends email notification when user has enabled email for that type
+- Graceful fallback if email sending fails (doesn't block in-app notification)
+- Settings page now shows email notification toggles
+
+## [0.35.0] - 2025-12-13
+
+### Added
+- **In-App Notifications** - Real-time notification system
+  - Notification bell icon in header with unread count badge
+  - Dropdown preview showing latest 5 notifications
+  - Full notifications page at `/notifications`
+  - Filter by: All, Unread, Comments, Suggestions, Follows
+  - Mark as read on click or mark all as read
+  - Delete all read notifications
+  - 30-second polling for new notifications
+- **Notification Types** - Multiple notification categories
+  - Comment notifications when someone comments on your content
+  - Reply notifications when someone replies to your comment
+  - Suggestion status updates (approved, rejected, merged)
+  - Follow notifications (for future use)
+  - Mention notifications (for future use)
+- **Notification Preferences** - User settings at `/settings`
+  - Toggle in-app notifications by type (comments, replies, suggestions, follows, mentions)
+  - Preferences saved per-user in database
+  - Email notifications section placeholder for Phase 7
+
+### Database Migration
+- `011_notifications.sql` - Notifications system schema
+  - `notifications` table with type, read status, actor, resource tracking
+  - `notification_preferences` table for user settings
+  - PostgreSQL functions: `create_notification()`, `mark_notifications_read()`, `get_unread_notification_count()`
+  - Indexes for efficient querying by user and read status
+  - RLS policies for user isolation
+
+### API Routes
+- `GET /api/notifications` - Fetch notifications with pagination
+- `PATCH /api/notifications` - Mark notifications as read (single or all)
+- `DELETE /api/notifications?all=true` - Delete read notifications
+
+### Server Actions
+- `getNotifications()` - Fetch with pagination and filtering
+- `getUnreadCount()` - Quick count for header bell
+- `markAsRead()` - Mark individual or all as read
+- `deleteNotification()` / `deleteAllRead()` - Cleanup functions
+- `getNotificationPreferences()` / `updateNotificationPreferences()` - Settings
+- `createNotification()` - Internal function for triggering notifications
+
+### UI Components
+- `NotificationBell` - Header component with dropdown
+- Updated header to include notification bell
+- Updated `/settings` with notification preferences toggles
+- Updated comments action to notify on replies
+- Updated suggestions dashboard to notify on status changes
+
+## [0.34.0] - 2025-12-13
+
+### Added
+- **User Public Profiles** - View other users' activity and contributions
+  - Public profile page at `/users/[username]`
+  - Username field with unique constraint and validation
+  - Profile privacy controls (email, stats, collections, activity visibility)
+  - Display user bio, social links, and role badges
+  - Show public collections with item counts
+  - Recent approved comments and merged suggestions
+- **Privacy Settings** - New settings section for profile visibility
+  - Show/hide email address on public profile
+  - Show/hide favorites and collections counts
+  - Show/hide public collections list
+  - Show/hide recent activity (comments, suggestions)
+  - Toggle switches with instant optimistic updates
+- **Username Management** - Users can set custom usernames
+  - Auto-generated from name for existing users
+  - Validation: 3-30 chars, lowercase, alphanumeric, hyphens
+  - Unique username check with friendly error
+  - Link to public profile from settings page
+- **Profile Links** - Clickable usernames throughout the app
+  - Comments show author names linked to profiles
+  - Dashboard moderation pages link to user profiles
+  - Suggestions show contributor profiles
+
+### Database Migration
+- `010_public_profiles.sql` - Public profiles schema
+  - `username` column with unique constraint and index
+  - `profilePrivacy` JSONB column for privacy settings
+  - `socialLinks` JSONB column (if not present)
+  - PostgreSQL function to auto-generate usernames
+  - RLS policy for public profile viewing
+
+### API Routes
+- `GET /api/users/[username]` - Get public profile
+  - Respects privacy settings for data visibility
+  - Returns stats, collections, recent activity based on settings
+  - Identifies own profile for full data access
+
+### Server Actions
+- `getPrivacySettings()` - Fetch user's privacy settings
+- `updatePrivacySettings()` - Update privacy toggles
+- `updateUsername()` - Change username with validation
+
+### UI Components
+- Updated `/settings` page with Public Profile and Privacy sections
+- Comment items link to author profiles when username exists
+- Dashboard comments/suggestions pages link to user profiles
+
+## [0.33.0] - 2025-12-13
+
+### Added
+- **Comments System** - User discussions on resources and documentation
+  - Comments with moderation workflow (pending → approved/rejected)
+  - Threaded replies for nested discussions
+  - Upvote/downvote voting system with optimistic updates
+  - Character limit (2000) with live counter
+  - "Pending review" badge for unmoderated comments
+- **Comment Moderation Dashboard** - Admin page at `/dashboard/comments`
+  - Filter by status: All, Pending, Approved, Rejected, Flagged
+  - Status counts displayed in summary cards
+  - Expandable cards with full comment content
+  - Approve, Reject, Flag, or Delete actions with optional notes
+  - Links to view related resource/doc in new tab
+
+### Database Migration
+- `009_comments.sql` - Comments system schema
+  - `comments` table with status, voting, moderation fields
+  - `comment_votes` table for tracking user votes
+  - `user_activity` table for engagement logging
+  - PostgreSQL triggers for automatic vote counting
+  - Row Level Security policies for data isolation
+
+### API Routes
+- `GET /api/dashboard/comments` - List comments with status filter (editor+ role)
+- `GET /api/dashboard/comments/[id]` - Get single comment (editor+ role)
+- `PATCH /api/dashboard/comments/[id]` - Moderate comment (editor+ role)
+- `DELETE /api/dashboard/comments/[id]` - Delete comment (moderator+ role)
+
+### Dashboard Navigation
+- Added "Comments" link to admin dashboard sidebar
+- Uses chat bubble icon matching other navigation items
+
+### Technical
+- Existing comment components (`CommentSection`, `CommentItem`, `CommentForm`) already functional
+- Server actions in `app/actions/comments.ts` handle CRUD, voting, replies
+- Admin actions logged to `admin_logs` for audit trail
+- Vote counts automatically updated via PostgreSQL triggers
+
+## [0.32.0] - 2025-12-13
+
+### Added
+- **Edit Suggestions Review System** - Complete workflow for managing user-submitted content edits
+  - User suggestions page at `/suggestions` - Track your own suggestion status
+  - Admin review page at `/dashboard/suggestions` - Review queue for editors/moderators
+  - Status filter tabs (All, Pending, Approved, Rejected, Merged)
+  - Expandable cards showing full description, suggested changes, and reviewer notes
+  - Review actions: Approve, Reject, Mark as Merged with optional notes
+
+### API Routes
+- `GET /api/dashboard/suggestions` - List all suggestions with status filter (editor+ role)
+- `GET /api/dashboard/suggestions/[id]` - Get single suggestion details (editor+ role)
+- `PATCH /api/dashboard/suggestions/[id]` - Update suggestion status (editor+ role)
+
+### Dashboard Navigation
+- Added "Edit Suggestions" link to admin dashboard sidebar
+- Uses pencil icon matching other dashboard navigation items
+
+### Technical
+- Admin actions logged to `admin_logs` table for audit trail
+- Role-based access using `hasMinRole(userRole, ROLES.EDITOR)` check
+- Optimistic UI updates with toast notifications
+- Resource links to view related doc/resource in new tab
+
+## [0.31.0] - 2025-12-13
+
+### Added
+- **Favorites System** - Save and organize favorite resources and docs
+  - `FavoriteButton` component with gradient heart animation and particle effects
+  - Optimistic UI updates with toast notifications
+  - Favorites page at `/favorites` with filtering and pagination
+  - Heart icon shows favorited state with smooth transitions
+- **Collections System** - Organize favorites into themed groups
+  - Create collections with custom name, description, color, and icon
+  - 7 color themes (blue, violet, cyan, emerald, rose, amber, slate)
+  - 8 icon options (folder, star, bookmark, heart, code, book, lightbulb, zap)
+  - Collections list page at `/favorites/collections`
+  - Collection detail page with item management
+  - Add favorites to multiple collections via picker modal
+  - Public/private collection visibility
+- **Database Schema** - Migration `008_favorites_collections.sql`
+  - `favorites` table with user_id, resource_type, resource_id, notes
+  - `collections` table with name, description, slug, color, icon, is_public
+  - `collection_items` table linking favorites to collections
+  - Row Level Security policies for data isolation
+  - Helper functions for slug generation and favorite counts
+
+### API Routes
+- `GET/POST /api/favorites` - List and create favorites
+- `DELETE /api/favorites/[id]` - Remove a favorite
+- `GET /api/favorites/check` - Check favorite status for a resource
+- `GET/POST /api/collections` - List and create collections
+- `GET/PATCH/DELETE /api/collections/[slug]` - Collection CRUD operations
+- `GET/POST/DELETE /api/collections/[slug]/items` - Collection item management
+
+### Technical
+- CSS animations for favorite button (`animate-favorite-pop`, `animate-burst`)
+- TypeScript types in `types/favorites.ts`
+- Client utilities in `lib/favorites.ts`
+- Reusable components in `components/favorites/`
+
 ## [0.28.19] - 2025-12-13
 
 ### Fixed

@@ -1,0 +1,15 @@
+{
+  "url": "https://docs.anthropic.com",
+  "title": "Anthropic Documentation",
+  "content": "Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Solutions AI agents Code modernization Coding Customer support Education Financial services Government Life sciences Partners Amazon Bedrock Google Cloud&#x27;s Vertex AI Learn Blog Catalog Courses Use cases Connectors Customer stories Engineering at Anthropic Events Powered by Claude Service partners Startups program Company Anthropic Careers Economic Futures Research News Responsible Scaling Policy Security and compliance Transparency Learn Blog Catalog Courses Use cases Connectors Customer stories Engineering at Anthropic Events Powered by Claude Service partners Startups program Help and security Availability Status Support Discord Terms and policies Privacy policy Responsible disclosure policy Terms of service: Commercial Terms of service: Consumer Usage policy",
+  "summary": "# Summary: Anthropic Documentation - Site Navigation/Index Page\n\n## Overview\nThis content appears to be a navigation menu or site map from the Anthropic documentation website (docs.anthropic.com), not substantive documentation content. The page was likely captured while still loading (\"Loading...\" repeated multiple times).\n\n## Main Topics Identified\n\n### Solutions/Use Cases\n- AI agents\n- Code modernization\n- Coding\n- Customer support\n- Education\n- Financial services\n- Government\n- Life sciences\n\n### Platform Partners\n- Amazon Bedrock\n- Google Cloud's Vertex AI\n\n### Learning Resources\n- Blog\n- Catalog\n- Courses\n- Use cases\n- Connectors\n- Customer stories\n- Engineering at Anthropic\n- Events\n- Powered by Claude\n- Service partners\n- Startups program\n\n### Company Information\n- Anthropic (company info)\n- Careers\n- Economic Futures Research\n- News\n- Responsible Scaling Policy\n- Security and compliance\n- Transparency\n\n### Help and Policies\n- Availability Status\n- Support\n- Discord (community)\n- Privacy policy\n- Responsible disclosure policy\n- Terms of service: Commercial\n- Terms of service: Consumer\n- Usage policy\n\n## Key Observations\n\n**No Technical Content**: This page does not contain:\n- API endpoints or commands\n- Configuration settings\n- Code examples\n- Best practices\n- Technical warnings or caveats\n\n**Content Type**: This is purely navigational/structural content showing the organization of Anthropic's documentation and website.\n\n## Recommendation\nThis summary provides limited value for a knowledge base. The actual documentation pages linked from this navigation would contain the substantive technical information needed for answering questions about Claude AI and Claude Code.",
+  "referencedFrom": [
+    "configuration/settings.mdx",
+    "getting-started/installation.mdx",
+    "getting-started/quickstart.mdx"
+  ],
+  "cachedAt": "2025-12-13T18:36:04.550Z",
+  "contentLength": 952,
+  "summaryLength": 1702,
+  "model": "claude-opus-4-5-20251101"
+}

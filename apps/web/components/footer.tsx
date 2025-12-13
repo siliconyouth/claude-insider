@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/design-system";
 
-const APP_VERSION = "0.28.19";
+const APP_VERSION = "0.58.0";
 
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslations("footer");
   const currentYear = new Date().getFullYear();
   const buildId = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "dev";
 
@@ -18,7 +20,7 @@ export function Footer() {
     <footer className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gray-50 dark:bg-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-gray-500 dark:text-gray-500">
-          <span>&copy; {currentYear}</span>
+          <span>{t("copyright", { year: currentYear })}</span>
           <a
             href="https://github.com/siliconyouth/claude-insider"
             target="_blank"
@@ -29,23 +31,23 @@ export function Footer() {
           </a>
           <span className={separatorClass}>·</span>
           <Link href="/privacy" className={linkClass}>
-            Privacy
+            {t("privacy")}
           </Link>
           <span className={separatorClass}>·</span>
           <Link href="/terms" className={linkClass}>
-            Terms
+            {t("terms")}
           </Link>
           <span className={separatorClass}>·</span>
           <Link href="/disclaimer" className={linkClass}>
-            Disclaimer
+            {t("disclaimer")}
           </Link>
           <span className={separatorClass}>·</span>
           <Link href="/accessibility" className={linkClass}>
-            Accessibility
+            {t("accessibility")}
           </Link>
           <span className={separatorClass}>·</span>
           <Link href="/changelog" className={linkClass}>
-            Changelog
+            {t("changelog")}
           </Link>
           <span className={separatorClass}>·</span>
           <span className="font-mono text-gray-400 dark:text-gray-600">v{APP_VERSION}-{buildId}</span>

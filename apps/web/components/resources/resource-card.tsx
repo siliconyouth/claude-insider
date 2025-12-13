@@ -13,6 +13,7 @@ import type { ResourceEntry, ResourceCategory } from '@/data/resources/schema';
 import { getCategoryBySlug } from '@/data/resources/schema';
 import { FavoriteButton } from '@/components/interactions/favorite-button';
 import { CollectionButton } from '@/components/interactions/collection-button';
+import { AskAIButton } from '@/components/ask-ai/ask-ai-button';
 
 // Icons for different resource elements
 const StarIcon = ({ className }: { className?: string }) => (
@@ -62,6 +63,7 @@ interface ResourceCardProps {
   showCategory?: boolean;
   showTags?: boolean;
   showInteractions?: boolean;
+  showAskAI?: boolean;
   maxTags?: number;
   className?: string;
 }
@@ -70,11 +72,13 @@ interface ResourceCardProps {
  * Wrapper component for interaction buttons to prevent link navigation
  */
 function InteractionBar({
-  resourceId,
+  resource,
   variant = 'default',
+  showAskAI = false,
 }: {
-  resourceId: string;
+  resource: ResourceEntry;
   variant?: 'default' | 'compact' | 'featured';
+  showAskAI?: boolean;
 }) {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -82,6 +86,26 @@ function InteractionBar({
   };
 
   const size = variant === 'compact' ? 'sm' : 'sm';
+
+  // Build AI context for this resource
+  const aiContext = {
+    type: 'resource' as const,
+    title: resource.title,
+    text: resource.description,
+    metadata: {
+      category: resource.category,
+      status: resource.status,
+      ...(resource.github?.language && { language: resource.github.language }),
+      ...(resource.github?.stars && { stars: String(resource.github.stars) }),
+    },
+  };
+
+  // Build suggested questions based on resource
+  const suggestions = [
+    `What is ${resource.title}?`,
+    `How do I use ${resource.title}?`,
+    resource.github ? `How do I install ${resource.title}?` : null,
+  ].filter(Boolean) as string[];
 
   return (
     <div
@@ -91,8 +115,18 @@ function InteractionBar({
         variant === 'compact' ? 'ml-auto' : ''
       )}
     >
-      <FavoriteButton resourceType="resource" resourceId={resourceId} size={size} />
-      <CollectionButton resourceType="resource" resourceId={resourceId} size={size} />
+      {showAskAI && (
+        <AskAIButton
+          context={aiContext}
+          suggestions={suggestions}
+          variant="pill"
+          size="sm"
+          position="inline"
+          label="Ask"
+        />
+      )}
+      <FavoriteButton resourceType="resource" resourceId={resource.id} size={size} />
+      <CollectionButton resourceType="resource" resourceId={resource.id} size={size} />
     </div>
   );
 }
@@ -133,6 +167,7 @@ export function ResourceCard({
   showCategory = true,
   showTags = true,
   showInteractions = false,
+  showAskAI = false,
   maxTags = 3,
   className,
 }: ResourceCardProps) {
@@ -268,7 +303,7 @@ export function ResourceCard({
                 </span>
               )}
               {showInteractions && (
-                <InteractionBar resourceId={resource.id} variant="featured" />
+                <InteractionBar resource={resource} variant="featured" showAskAI={showAskAI} />
               )}
             </div>
           </div>
@@ -336,7 +371,7 @@ export function ResourceCard({
 
         {/* Interactions */}
         {showInteractions && (
-          <InteractionBar resourceId={resource.id} variant="compact" />
+          <InteractionBar resource={resource} variant="compact" showAskAI={showAskAI} />
         )}
 
         {/* External Link Icon */}
@@ -455,7 +490,7 @@ export function ResourceCard({
           )}
         </div>
         {showInteractions && (
-          <InteractionBar resourceId={resource.id} variant="default" />
+          <InteractionBar resource={resource} variant="default" showAskAI={showAskAI} />
         )}
       </div>
     </a>

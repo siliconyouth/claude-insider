@@ -27,6 +27,31 @@ export interface DocumentChunk {
   url: string;
   category: string;
   keywords: string[];
+  // Optional fields for specialized chunks
+  subcategory?: string;
+  isResource?: boolean;
+  isConfigOption?: boolean;
+  isCommand?: boolean;
+  isEnvVar?: boolean;
+  isFeature?: boolean;
+  isExternalSource?: boolean;
+  // Structured data for specific chunk types
+  settingData?: {
+    name: string;
+    description: string;
+    sourceDoc: string;
+  };
+  commandData?: {
+    command: string;
+    description: string;
+    sourceDoc: string;
+  };
+  resourceData?: {
+    id: string;
+    category: string;
+    tags: string[];
+    featured: boolean;
+  };
 }
 
 // Search result with relevance score
@@ -331,17 +356,41 @@ function buildTfidfIndex(chunks: DocumentChunk[]): void {
 }
 
 /**
- * Search documents using TF-IDF scoring
+ * Detect query intent for better result ranking
+ */
+function detectQueryIntent(query: string): {
+  isSettingQuery: boolean;
+  isCommandQuery: boolean;
+  isEnvVarQuery: boolean;
+  isFeatureQuery: boolean;
+  isResourceQuery: boolean;
+} {
+  const q = query.toLowerCase();
+  return {
+    isSettingQuery: /setting|config|option|preference|parameter|value|toggle|enable|disable/.test(q),
+    isCommandQuery: /command|cli|how\s+to|run|execute|terminal|bash|shell|claude\s+\w+/.test(q),
+    isEnvVarQuery: /env|environment|variable|api.?key|export/.test(q),
+    isFeatureQuery: /feature|capability|can\s+(?:i|you|claude)|support|does/.test(q),
+    isResourceQuery: /tool|library|mcp|server|sdk|resource|recommend/.test(q),
+  };
+}
+
+/**
+ * Search documents using TF-IDF scoring with context-aware boosting
  */
 export function searchDocuments(
   query: string,
-  limit: number = 5
+  limit: number = 5,
+  context?: { type?: string; category?: string }
 ): SearchResult[] {
   const chunks = loadDocumentIndex();
   if (!tfidfIndex || !idfValues) return [];
 
   const queryTerms = tokenize(query);
   if (queryTerms.length === 0) return [];
+
+  // Detect query intent for smart boosting
+  const intent = detectQueryIntent(query);
 
   const scores: { chunk: DocumentChunk; score: number }[] = [];
 
@@ -374,6 +423,36 @@ export function searchDocuments(
       score *= 2;
     }
 
+    // Context-aware boosting based on query intent
+    if (intent.isSettingQuery && chunk.isConfigOption) {
+      score *= 2.5; // Strong boost for settings when asking about configuration
+    }
+    if (intent.isCommandQuery && chunk.isCommand) {
+      score *= 2.5; // Strong boost for commands when asking how to do something
+    }
+    if (intent.isEnvVarQuery && chunk.isEnvVar) {
+      score *= 2.5; // Strong boost for env vars when asking about environment
+    }
+    if (intent.isFeatureQuery && chunk.isFeature) {
+      score *= 2.0; // Boost features when asking about capabilities
+    }
+    if (intent.isResourceQuery && chunk.isResource) {
+      score *= 2.0; // Boost resources when asking for recommendations
+    }
+
+    // Boost based on context if provided
+    if (context?.category && chunk.category.toLowerCase().includes(context.category.toLowerCase())) {
+      score *= 1.5;
+    }
+    if (context?.type === "code" && (chunk.isCommand || chunk.isConfigOption)) {
+      score *= 1.3;
+    }
+
+    // Slight boost for structured data chunks (they have more precise info)
+    if (chunk.settingData || chunk.commandData) {
+      score *= 1.1;
+    }
+
     if (score > 0) {
       scores.push({ chunk, score });
     }
@@ -388,8 +467,12 @@ export function searchDocuments(
 /**
  * Get context for RAG from search results
  */
-export function getRAGContext(query: string, maxChunks: number = 3): string {
-  const results = searchDocuments(query, maxChunks);
+export function getRAGContext(
+  query: string,
+  maxChunks: number = 3,
+  aiContext?: { type?: string; category?: string }
+): string {
+  const results = searchDocuments(query, maxChunks, aiContext);
 
   if (results.length === 0) {
     return "";
@@ -398,13 +481,43 @@ export function getRAGContext(query: string, maxChunks: number = 3): string {
   let context = "\n\nRELEVANT DOCUMENTATION:\n";
 
   for (const result of results) {
+    const chunk = result.chunk;
     context += `\n---\n`;
-    context += `[${result.chunk.category}] ${result.chunk.title}`;
-    if (result.chunk.section !== result.chunk.title) {
-      context += ` > ${result.chunk.section}`;
+
+    // Format based on chunk type for clearer context
+    if (chunk.isConfigOption && chunk.settingData) {
+      context += `[SETTING] ${chunk.settingData.name}\n`;
+      context += `Description: ${chunk.settingData.description}\n`;
+      context += `From: ${chunk.settingData.sourceDoc}\n`;
+      context += `URL: ${chunk.url}\n`;
+    } else if (chunk.isCommand && chunk.commandData) {
+      context += `[COMMAND] ${chunk.commandData.command}\n`;
+      if (chunk.commandData.description) {
+        context += `Description: ${chunk.commandData.description}\n`;
+      }
+      context += `From: ${chunk.commandData.sourceDoc}\n`;
+      context += `URL: ${chunk.url}\n`;
+    } else if (chunk.isEnvVar) {
+      context += `[ENV VARIABLE] ${chunk.title}\n`;
+      context += chunk.content;
+      context += `\nURL: ${chunk.url}\n`;
+    } else if (chunk.isResource && chunk.resourceData) {
+      context += `[RESOURCE] ${chunk.title}\n`;
+      context += `Category: ${chunk.resourceData.category}\n`;
+      if (chunk.resourceData.tags.length > 0) {
+        context += `Tags: ${chunk.resourceData.tags.join(", ")}\n`;
+      }
+      context += chunk.content;
+      context += `\nURL: ${chunk.url}\n`;
+    } else {
+      // Standard documentation chunk
+      context += `[${chunk.category}] ${chunk.title}`;
+      if (chunk.section !== chunk.title) {
+        context += ` > ${chunk.section}`;
+      }
+      context += `\nURL: ${chunk.url}\n\n`;
+      context += chunk.content;
     }
-    context += `\nURL: ${result.chunk.url}\n\n`;
-    context += result.chunk.content;
     context += `\n`;
   }
 
