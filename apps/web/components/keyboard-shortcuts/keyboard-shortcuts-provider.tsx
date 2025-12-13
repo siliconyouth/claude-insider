@@ -150,6 +150,23 @@ export function KeyboardShortcutsProvider({ children }: KeyboardShortcutsProvide
         // Skip search shortcut (/) when in input - let user type
         if (isTyping && shortcut.key === "/") return false;
 
+        // When typing, skip shortcuts that would interfere with normal text input:
+        // - Shift + single letter (typing capital letters)
+        // - Shift + punctuation (typing symbols like >, ?, etc.)
+        // Only allow shortcuts with Cmd/Ctrl/Alt when typing
+        if (isTyping && shortcut.modifiers) {
+          const hasOnlyShift =
+            shortcut.modifiers.length === 1 &&
+            shortcut.modifiers[0] === "shift";
+          const hasCmdCtrlAlt =
+            shortcut.modifiers.includes("meta") ||
+            shortcut.modifiers.includes("ctrl") ||
+            shortcut.modifiers.includes("alt");
+
+          // Skip Shift-only shortcuts when typing (blocks capital letters)
+          if (hasOnlyShift && !hasCmdCtrlAlt) return false;
+        }
+
         return matchesShortcut(event, shortcut);
       });
 
