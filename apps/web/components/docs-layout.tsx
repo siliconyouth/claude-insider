@@ -5,6 +5,8 @@ import { Footer } from "@/components/footer";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ArticleJsonLd } from "@/components/json-ld";
 import { EditOnGitHub } from "@/components/edit-on-github";
+import { SuggestEditButton } from "@/components/interactions/suggest-edit-button";
+import { CommentSection } from "@/components/interactions/comment-section";
 
 interface SidebarSection {
   title: string;
@@ -135,10 +137,19 @@ export function DocsLayout({
               )}
               {children}
 
-              {/* Edit on GitHub link */}
+              {/* Edit actions */}
               {editPath && (
                 <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800 not-prose">
-                  <EditOnGitHub filePath={editPath} />
+                  <div className="flex items-center gap-4">
+                    <EditOnGitHub filePath={editPath} />
+                    <span className="text-gray-300 dark:text-gray-700">·</span>
+                    <SuggestEditButton
+                      resourceType="doc"
+                      resourceId={slug?.join("/") || "index"}
+                      resourceTitle={title}
+                      variant="link"
+                    />
+                  </div>
                 </div>
               )}
             </article>
@@ -193,6 +204,15 @@ export function DocsLayout({
                   <div />
                 )}
               </div>
+            )}
+
+            {/* Comments Section */}
+            {slug && (
+              <CommentSection
+                resourceType="doc"
+                resourceId={slug.join("/")}
+                title="Discussion"
+              />
             )}
           </main>
 

@@ -9,6 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.28.18] - 2025-12-13
+
+### Added
+- **User Interactions on Doc Pages** - Community engagement features
+  - `SuggestEditButton` integrated into all documentation pages (link variant)
+  - `CommentSection` added to all documentation pages for discussions
+  - Components placed in `DocsLayout` for consistent experience
+- **Edit Suggestions Database** - Supabase migration for user suggestions
+  - `004_edit_suggestions.sql` - Creates edit_suggestions table with RLS policies
+  - Supports suggestion types: content, metadata, typo, other
+  - Status workflow: pending → approved/rejected → merged
+
+### Technical
+- DocsLayout now imports and renders interaction components
+- Suggestions use resource type "doc" with slug as resource ID
+- Comments section titled "Discussion" for community engagement
+
+## [0.28.17] - 2025-12-13
+
+### Added
+- **Resend Email Integration** - Transactional email support
+  - Added `RESEND_API_KEY` environment variable
+  - Added `EMAIL_FROM` configuration for sender address
+  - Enables email verification and password reset flows
+
 ## [0.28.16] - 2025-12-13
 
 ### Added
