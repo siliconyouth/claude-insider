@@ -16,6 +16,7 @@
 import { betterAuth } from 'better-auth';
 import { nextCookies } from 'better-auth/next-js';
 import { Pool } from 'pg';
+import { sendVerificationEmail, sendPasswordResetEmail } from './email';
 
 // Create a PostgreSQL pool for Better Auth
 // Supabase requires SSL connections in production
@@ -40,30 +41,46 @@ export const auth = betterAuth({
   // Email/Password authentication
   emailAndPassword: {
     enabled: true,
-    // Temporarily disable email verification until Resend is configured
-    requireEmailVerification: false,
+    // Enable email verification when RESEND_API_KEY is configured
+    requireEmailVerification: !!process.env.RESEND_API_KEY,
     sendVerificationEmail: async ({
       user,
       url,
     }: {
-      user: { email: string };
+      user: { email: string; name?: string };
       url: string;
     }) => {
-      // TODO: Implement with Resend when ready
+      // Log in development
       if (process.env.NODE_ENV === 'development') {
         console.log(`[Auth] Verification email for ${user.email}: ${url}`);
+      }
+
+      // Send via Resend if API key is configured
+      if (process.env.RESEND_API_KEY) {
+        const result = await sendVerificationEmail(user.email, url, user.name);
+        if (!result.success) {
+          console.error('[Auth] Failed to send verification email:', result.error);
+        }
       }
     },
     sendResetPasswordEmail: async ({
       user,
       url,
     }: {
-      user: { email: string };
+      user: { email: string; name?: string };
       url: string;
     }) => {
-      // TODO: Implement with Resend when ready
+      // Log in development
       if (process.env.NODE_ENV === 'development') {
         console.log(`[Auth] Password reset for ${user.email}: ${url}`);
+      }
+
+      // Send via Resend if API key is configured
+      if (process.env.RESEND_API_KEY) {
+        const result = await sendPasswordResetEmail(user.email, url, user.name);
+        if (!result.success) {
+          console.error('[Auth] Failed to send password reset email:', result.error);
+        }
       }
     },
   },

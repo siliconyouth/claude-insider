@@ -18,7 +18,7 @@
  */
 
 import { createContext, useContext, useState, useCallback } from "react";
-import { useSession } from "@/lib/auth-client";
+import { useSession, signOut as authSignOut } from "@/lib/auth-client";
 
 interface User {
   id: string;
@@ -53,6 +53,7 @@ interface AuthContextValue {
   showSignIn: () => void;
   showSignUp: () => void;
   hideAuthModal: () => void;
+  signOut: () => Promise<void>;
   authModalState: "closed" | "signin" | "signup";
 }
 
@@ -64,6 +65,7 @@ const AuthContext = createContext<AuthContextValue>({
   showSignIn: () => {},
   showSignUp: () => {},
   hideAuthModal: () => {},
+  signOut: async () => {},
   authModalState: "closed",
 });
 
@@ -75,6 +77,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const showSignUp = useCallback(() => setAuthModalState("signup"), []);
   const hideAuthModal = useCallback(() => setAuthModalState("closed"), []);
 
+  const signOut = useCallback(async () => {
+    await authSignOut();
+  }, []);
+
   const value: AuthContextValue = {
     user: sessionData?.user ?? null,
     session: sessionData ?? null,
@@ -83,6 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     showSignIn,
     showSignUp,
     hideAuthModal,
+    signOut,
     authModalState,
   };
 

@@ -4,11 +4,15 @@
  * ResourceCard Component
  * Displays a resource with title, description, tags, and metadata
  * Follows Claude Insider design system patterns (violet/blue/cyan gradients)
+ *
+ * Now supports user interaction buttons (favorites, ratings, collections)
  */
 
 import { cn } from '@/lib/design-system';
 import type { ResourceEntry, ResourceCategory } from '@/data/resources/schema';
 import { getCategoryBySlug } from '@/data/resources/schema';
+import { FavoriteButton } from '@/components/interactions/favorite-button';
+import { CollectionButton } from '@/components/interactions/collection-button';
 
 // Icons for different resource elements
 const StarIcon = ({ className }: { className?: string }) => (
@@ -57,8 +61,40 @@ interface ResourceCardProps {
   variant?: 'default' | 'compact' | 'featured';
   showCategory?: boolean;
   showTags?: boolean;
+  showInteractions?: boolean;
   maxTags?: number;
   className?: string;
+}
+
+/**
+ * Wrapper component for interaction buttons to prevent link navigation
+ */
+function InteractionBar({
+  resourceId,
+  variant = 'default',
+}: {
+  resourceId: string;
+  variant?: 'default' | 'compact' | 'featured';
+}) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const size = variant === 'compact' ? 'sm' : 'sm';
+
+  return (
+    <div
+      onClick={handleClick}
+      className={cn(
+        'flex items-center gap-1',
+        variant === 'compact' ? 'ml-auto' : ''
+      )}
+    >
+      <FavoriteButton resourceType="resource" resourceId={resourceId} size={size} />
+      <CollectionButton resourceType="resource" resourceId={resourceId} size={size} />
+    </div>
+  );
 }
 
 /**
@@ -96,6 +132,7 @@ export function ResourceCard({
   variant = 'default',
   showCategory = true,
   showTags = true,
+  showInteractions = false,
   maxTags = 3,
   className,
 }: ResourceCardProps) {
@@ -202,7 +239,7 @@ export function ResourceCard({
             </div>
           )}
 
-          {/* Footer: Status + Version */}
+          {/* Footer: Status + Version + Interactions */}
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span
@@ -224,11 +261,16 @@ export function ResourceCard({
                 </span>
               )}
             </div>
-            {resource.version && (
-              <span className="text-xs text-gray-500 dark:text-gray-500 font-mono">
-                v{resource.version}
-              </span>
-            )}
+            <div className="flex items-center gap-2">
+              {resource.version && (
+                <span className="text-xs text-gray-500 dark:text-gray-500 font-mono">
+                  v{resource.version}
+                </span>
+              )}
+              {showInteractions && (
+                <InteractionBar resourceId={resource.id} variant="featured" />
+              )}
+            </div>
           </div>
         </div>
       </a>
@@ -290,6 +332,11 @@ export function ResourceCard({
             <StarIcon className="w-4 h-4 text-yellow-500" />
             <span>{formatNumber(resource.github.stars)}</span>
           </div>
+        )}
+
+        {/* Interactions */}
+        {showInteractions && (
+          <InteractionBar resourceId={resource.id} variant="compact" />
         )}
 
         {/* External Link Icon */}
@@ -387,23 +434,28 @@ export function ResourceCard({
 
       {/* Footer */}
       <div className="mt-3 flex items-center justify-between">
-        <span
-          className={cn(
-            'px-2 py-0.5 text-[10px] font-medium rounded-full capitalize',
-            STATUS_BADGE_STYLES[resource.status] || STATUS_BADGE_STYLES.community
-          )}
-        >
-          {resource.status}
-        </span>
-        {resource.difficulty && (
+        <div className="flex items-center gap-2">
           <span
             className={cn(
               'px-2 py-0.5 text-[10px] font-medium rounded-full capitalize',
-              DIFFICULTY_BADGE_STYLES[resource.difficulty]
+              STATUS_BADGE_STYLES[resource.status] || STATUS_BADGE_STYLES.community
             )}
           >
-            {resource.difficulty}
+            {resource.status}
           </span>
+          {resource.difficulty && (
+            <span
+              className={cn(
+                'px-2 py-0.5 text-[10px] font-medium rounded-full capitalize',
+                DIFFICULTY_BADGE_STYLES[resource.difficulty]
+              )}
+            >
+              {resource.difficulty}
+            </span>
+          )}
+        </div>
+        {showInteractions && (
+          <InteractionBar resourceId={resource.id} variant="default" />
         )}
       </div>
     </a>
