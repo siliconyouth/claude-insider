@@ -15,7 +15,7 @@ export default function DisclaimerPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert max-w-none">
           <h1 className="text-4xl font-bold mb-2">Disclaimer</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 12, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 13, 2025</p>
 
           <section className="mb-8 p-6 bg-violet-500/10 border border-violet-500/30 rounded-lg">
             <h2 className="text-xl font-semibold mb-4 text-violet-400">Important Notice</h2>
@@ -147,20 +147,71 @@ export default function DisclaimerPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Data and Privacy</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>Claude Insider does NOT store your data on any server.</strong> All user data is stored exclusively in your browser&apos;s localStorage:
+              Claude Insider offers both anonymous and authenticated experiences. Here&apos;s what you should know:
             </p>
-            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li>Chat conversations with the AI assistant</li>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">For Anonymous Users</h3>
+            <p className="text-gray-300 leading-relaxed">
+              If you use Claude Insider without creating an account, your data is stored locally in your browser:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li>AI chat conversations (localStorage)</li>
               <li>Theme, voice, and language preferences</li>
-              <li>Search history</li>
-              <li>Any personalization settings you configure</li>
+              <li>Reading progress and bookmarks</li>
             </ul>
-            <p className="text-gray-300 leading-relaxed mt-4">
-              <strong>Your data remains on your device only.</strong> We have no access to your conversations, preferences, or any locally stored information. You can delete all your data at any time through your browser settings or the application interface.
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">For Registered Users</h3>
+            <p className="text-gray-300 leading-relaxed">
+              If you create an account, we store additional data on our servers:
             </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li>Profile information (name, username, bio, avatar)</li>
+              <li>Comments, reviews, and edit suggestions</li>
+              <li>Favorites, collections, and reading lists</li>
+              <li>Activity data (logins, sessions)</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Your Data Rights</h3>
+            <p className="text-gray-300 leading-relaxed">
+              As a registered user, you have the right to:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>Export:</strong> Download all your data in JSON format from Settings → Data Management</li>
+              <li><strong>Delete:</strong> Permanently delete your account and all associated data</li>
+              <li><strong>Control:</strong> Adjust privacy settings for your profile visibility</li>
+            </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
               For complete details, see our <a href="/privacy" className="text-blue-400 hover:text-cyan-300">Privacy Policy</a>.
             </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">User-Generated Content</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Claude Insider allows registered users to submit content including comments, reviews, and edit suggestions. Regarding this content:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li>You retain ownership of your original content</li>
+              <li>Content is moderated and may be removed if it violates our guidelines</li>
+              <li>We are not responsible for the accuracy or quality of user-submitted content</li>
+              <li>User content does not represent the views of Claude Insider or its owner</li>
+              <li>Comments and suggestions may contain inaccurate information—always verify</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Code Playground</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Claude Insider includes an interactive Code Playground feature. Important disclaimers:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li>Code is executed in a sandboxed browser environment</li>
+              <li>Python execution is simulated with limited built-in functions</li>
+              <li>We cannot guarantee the accuracy of code execution results</li>
+              <li>Do not enter sensitive data (API keys, passwords) in the playground</li>
+              <li>Shared playground links are publicly accessible—do not share confidential code</li>
+              <li>The playground is for learning purposes only, not production use</li>
+            </ul>
           </section>
 
           <section className="mb-8">
@@ -216,7 +267,13 @@ export default function DisclaimerPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> Claude Insider is an unofficial, independent resource. We&apos;re not affiliated with Anthropic. Information may be outdated or inaccurate. Always verify with official sources. Use code examples at your own risk. <strong>Your data (chat history, preferences) is stored only in your browser - we keep nothing on our servers.</strong> For official documentation, visit docs.anthropic.com.
+              <strong>In short:</strong> Claude Insider is an unofficial, independent resource. We&apos;re not affiliated with Anthropic. Information may be outdated or inaccurate. Always verify with official sources. Use code examples at your own risk.
+            </p>
+            <p className="text-gray-300 leading-relaxed mt-3">
+              <strong>Regarding your data:</strong> Anonymous users have data stored locally in the browser. Registered users have profile and activity data stored on our servers with industry-standard security. You can export or delete all your data at any time from Settings.
+            </p>
+            <p className="text-gray-300 leading-relaxed mt-3">
+              For official documentation, visit <a href="https://docs.anthropic.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-cyan-300">docs.anthropic.com</a>.
             </p>
           </section>
         </article>
