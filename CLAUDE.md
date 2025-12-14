@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.62.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.63.0**.
 
 | Link | URL |
 |------|-----|
@@ -29,6 +29,9 @@ Claude Insider is a Next.js documentation site for Claude AI. **Version 0.62.0**
 | highlight.js | 11.x | Syntax highlighting (33 languages) |
 | Anthropic SDK | latest | Claude Sonnet 4 streaming chat |
 | ElevenLabs SDK | latest | Text-to-Speech (42 voices) |
+| Better Auth | 1.4.6 | User authentication (OAuth, 2FA) |
+| Supabase | 2.87.1 | PostgreSQL with RLS |
+| Payload CMS | 3.68.3 | Content management system |
 | Turborepo | 2.6.3 | Monorepo build system |
 | pnpm | 10.19.0 | Package manager |
 
@@ -49,6 +52,15 @@ pnpm clean            # Remove build artifacts
 |----------|----------|-------------|
 | `ANTHROPIC_API_KEY` | Yes | Claude AI API key |
 | `ELEVENLABS_API_KEY` | Yes | ElevenLabs TTS API key |
+| `BETTER_AUTH_SECRET` | Yes | Auth secret (min 32 chars) |
+| `GITHUB_CLIENT_ID` | Yes | GitHub OAuth app client ID |
+| `GITHUB_CLIENT_SECRET` | Yes | GitHub OAuth app client secret |
+| `GOOGLE_CLIENT_ID` | Yes | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Yes | Google OAuth client secret |
+| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase anonymous key |
+| `DATABASE_URL` | Yes | PostgreSQL connection string |
+| `NEXT_PUBLIC_APP_URL` | Yes | App URL (e.g., https://www.claudeinsider.com) |
 | `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` | Auto | Build versioning |
 
 ### Vercel Deployment
@@ -71,7 +83,7 @@ claude-insider/
 │   │   ├── globals.css           # Global styles, animations
 │   │   ├── docs/[...slug]/       # Dynamic MDX routes
 │   │   └── api/assistant/        # Chat & TTS endpoints
-│   ├── components/               # 40+ React components
+│   ├── components/               # 60+ React components
 │   │   ├── voice-assistant.tsx   # AI assistant (1500+ LOC)
 │   │   ├── header.tsx, footer.tsx
 │   │   ├── toast.tsx, skeleton.tsx
@@ -79,6 +91,18 @@ claude-insider/
 │   │   ├── lazy-*.tsx            # Lazy loading components
 │   │   ├── error-*.tsx           # Error handling components
 │   │   ├── device-mockups.tsx    # SVG device frames
+│   │   ├── auth/                 # Authentication components
+│   │   │   ├── auth-modal.tsx    # Sign in/sign up modal
+│   │   │   ├── user-menu.tsx     # User dropdown menu
+│   │   │   └── onboarding-wizard/ # New user onboarding
+│   │   ├── interactions/         # User interaction components
+│   │   │   ├── favorite-button.tsx
+│   │   │   ├── rating-stars.tsx
+│   │   │   ├── comment-section.tsx
+│   │   │   └── collection-button.tsx
+│   │   ├── achievements/         # Gamification components
+│   │   ├── notifications/        # Notification center
+│   │   ├── analytics/            # User stats dashboards
 │   │   ├── resources/            # Resources components
 │   │   │   └── resource-card.tsx # Card with 3 variants
 │   │   └── home/                 # Homepage components
@@ -97,6 +121,13 @@ claude-insider/
 │   │   ├── claude.ts             # Server-only Claude client
 │   │   ├── claude-utils.ts       # Client-safe utilities
 │   │   ├── rag.ts                # RAG with TF-IDF search
+│   │   ├── auth.ts               # Better Auth configuration
+│   │   ├── auth-client.ts        # Client-side auth hooks
+│   │   ├── gamification.ts       # Points, levels, streaks
+│   │   ├── email.ts              # Resend email templates
+│   │   ├── supabase/             # Supabase clients
+│   │   │   ├── client.ts         # Browser client
+│   │   │   └── server.ts         # Server client with RLS
 │   │   └── resources/            # Resources library
 │   │       ├── types.ts          # ResourceEntry schema
 │   │       ├── data.ts           # Data loaders & utilities
@@ -124,6 +155,16 @@ claude-insider/
 │   │       ├── sdks.json         # Client libraries
 │   │       ├── showcases.json    # Example projects
 │   │       └── community.json    # Community resources
+│   ├── collections/              # Payload CMS collections
+│   │   ├── Users.ts              # CMS users (admin, editor, moderator)
+│   │   ├── EditSuggestions.ts    # Community edit suggestions
+│   │   ├── Media.ts              # File uploads and avatars
+│   │   └── Resources.ts          # Curated resources
+│   ├── supabase/                 # Database migrations
+│   │   └── migrations/           # 21 SQL migration files
+│   │       ├── 001_user_data.sql # Profiles, favorites, ratings
+│   │       ├── ...               # Comments, collections, activity
+│   │       └── 021_fix_triggers.sql # Latest migration
 │   └── scripts/                  # Build-time scripts
 ├── packages/                     # Shared configs (ui, eslint, ts, tailwind)
 ├── vercel.json                   # Domain redirects

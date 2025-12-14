@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert prose-blue max-w-none">
           <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 13, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 14, 2025</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
