@@ -36,3 +36,6 @@ yarn-error.log*
 dist/
 .vercel
 .env*.local
+
+# Supabase CLI temp files (but not apps/web/supabase migrations)
+/supabase/

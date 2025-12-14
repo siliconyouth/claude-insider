@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+#### Settings Page Notification Preferences
+- **createAdminClient Fix** - Fixed "Failed to update preferences" error on settings page
+  - Root cause: `createAdminClient` used `createServerClient` from `@supabase/ssr` which doesn't properly bypass RLS
+  - Solution: Use direct `createClient` from `@supabase/supabase-js` for admin operations
+  - This ensures service role key properly bypasses Row Level Security policies
+
 #### Database Schema Synchronization
 - **Migration 022** - Fixed missing schema elements from migrations 007, 008, and 010
   - Added `username` column to user table (TEXT UNIQUE) for public profile URLs
