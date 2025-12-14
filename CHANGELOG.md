@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+#### Complete Database Reset
+- **Fresh Start Migration (000)** - Consolidated all 21+ migrations into a single unified file
+  - Created `apps/web/supabase/migrations/000_fresh_start.sql` (~1665 lines)
+  - Dropped and recreated all 38 tables with clean schema
+  - Simplified RLS policies to use `USING (true)` pattern for proper service role bypass
+  - All user data tables with TEXT user_id columns (Better Auth compatibility)
+  - 90 RLS policies total, all allowing service role bypass
+  - All triggers for denormalized counters (favorites_count, ratings_count, etc.)
+  - All utility functions (generate_username, generate_collection_slug, etc.)
+  - Better Auth tables have RLS disabled (they use service role exclusively)
+
 ### Fixed
 
 #### Settings Page Notification Preferences
@@ -15,18 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Solution: Use direct `createClient` from `@supabase/supabase-js` for admin operations
   - This ensures service role key properly bypasses Row Level Security policies
 
-#### Database Schema Synchronization
-- **Migration 022** - Fixed missing schema elements from migrations 007, 008, and 010
-  - Added `username` column to user table (TEXT UNIQUE) for public profile URLs
-  - Added `profilePrivacy` column (JSONB) for user privacy settings
-  - Added `idx_user_username` index for fast username lookups
-  - Created `generate_username()` function for auto-generating usernames from names
-  - Enabled RLS on `admin_logs` table (was incorrectly disabled)
-  - Added `admin_logs_select_admin` and `admin_logs_insert_moderator` policies
-  - Created `user_has_role()` function for role hierarchy checking
-  - Created `log_admin_action()` function for audit logging
-  - Created `generate_collection_slug()` function for collection URL slugs
-  - Auto-generated usernames for existing users without one
+#### Database Schema Issues Resolved
+- Previous incremental migrations had accumulated issues:
+  - Missing columns from migrations 007, 008, 010 (username, profilePrivacy)
+  - Complex RLS policies that didn't work with service role
+  - SSR client vs direct client confusion for admin operations
+- All issues resolved with fresh consolidated migration
 
 ## [0.66.0] - 2025-12-14
 
