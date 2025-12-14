@@ -359,16 +359,47 @@ export async function updateNotificationPreferences(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const supabase = (await createAdminClient()) as any;
 
-    const { error } = await supabase.from("notification_preferences").upsert(
-      {
+    // Check if preferences row exists
+    const { data: existing } = await supabase
+      .from("notification_preferences")
+      .select("id")
+      .eq("user_id", session.user.id)
+      .single();
+
+    let error;
+
+    if (existing) {
+      // Update existing row
+      const result = await supabase
+        .from("notification_preferences")
+        .update({
+          ...preferences,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("user_id", session.user.id);
+      error = result.error;
+    } else {
+      // Insert new row with defaults + provided preferences
+      const result = await supabase.from("notification_preferences").insert({
         user_id: session.user.id,
+        // Defaults
+        in_app_comments: true,
+        in_app_replies: true,
+        in_app_suggestions: true,
+        in_app_follows: true,
+        in_app_mentions: true,
+        email_comments: false,
+        email_replies: true,
+        email_suggestions: true,
+        email_follows: false,
+        email_digest: false,
+        email_digest_frequency: "weekly",
+        // Override with provided preferences
         ...preferences,
         updated_at: new Date().toISOString(),
-      },
-      {
-        onConflict: "user_id",
-      }
-    );
+      });
+      error = result.error;
+    }
 
     if (error) {
       console.error("[Notifications] Preferences update error:", error);
