@@ -85,7 +85,7 @@ export function UserMenu() {
         aria-haspopup="true"
       >
         <UserAvatar
-          src={user?.image}
+          src={user?.image || user?.avatarUrl}
           name={user?.name}
           size="sm"
         />
