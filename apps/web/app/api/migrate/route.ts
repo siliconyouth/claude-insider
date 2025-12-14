@@ -176,11 +176,13 @@ export async function POST() {
 
         await payload.create({
           collection: 'resources',
+          draft: false, // Publish immediately (required with versioning enabled)
           data: {
             title: resource.title,
             description: resource.description,
             url: resource.url,
             category: categoryId,
+            publishStatus: 'published', // Imported resources are published by default
             // subcategory is a relationship - not migrated (would need subcategory ID lookup)
             subcategory: undefined,
             tags: tagIds,

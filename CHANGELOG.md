@@ -9,6 +9,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.61.0] - 2025-12-14
+
+### Added
+- **AI-Powered Resource Administration System** - Comprehensive admin system for managing 122+ resources with Claude Opus 4.5 integration
+  - **Discovery Dashboard** (`/dashboard/resources`) - Custom admin UI for AI-powered resource discovery
+  - **Queue Management** - Review pending AI-discovered resources with approve/reject workflow
+  - **Discovery Controls** - Analyze URLs, GitHub repos, npm packages with Claude Opus 4.5
+  - **Source Management** - Configure discovery sources (GitHub, npm, awesome lists, websites)
+
+### New Collections
+- `resource-discovery-queue` - AI-discovered resources pending review with scores, analysis, and workflow status
+- `resource-sources` - Discovery source configurations (GitHub org, npm search, awesome lists, etc.)
+
+### Enhanced Collections
+- `resources` - Added publishStatus workflow (published/hidden/pending_review/rejected/draft)
+- `resources` - Added discovery metadata group (source, discoveredAt, discoveredBy, aiConfidenceScore)
+- `resources` - Added review tracking group (reviewedBy, reviewedAt, reviewNotes, rejectionReason)
+- `resources` - Enabled Payload versioning with drafts (maxPerDoc: 10)
+
+### New API Routes
+- `POST /api/admin/resources/discover` - Full discovery workflow (scrape → analyze → queue)
+- `POST /api/admin/resources/analyze` - AI analysis with Claude Opus 4.5
+- `POST /api/admin/resources/scrape` - Firecrawl scraping API
+- `POST /api/admin/resources/scrape/github` - GitHub repository data fetching
+- `POST /api/admin/resources/scrape/npm` - npm package data and search
+- `GET/POST /api/admin/resources/queue` - Queue listing and management
+- `GET/PATCH/DELETE /api/admin/resources/queue/[id]` - Single queue item operations
+- `POST /api/admin/resources/queue/bulk` - Bulk approve/reject/delete operations
+- `GET /api/admin/resources/sources` - Discovery sources listing
+
+### New Source Adapters
+- `lib/adapters/base.ts` - Base adapter interface for extensible discovery
+- `lib/adapters/github.ts` - GitHub repos, organizations, and search
+- `lib/adapters/npm.ts` - npm package discovery and search
+- `lib/adapters/awesome-list.ts` - Awesome list markdown parsing
+- `lib/adapters/website.ts` - Generic website scraping with Firecrawl
+- `lib/adapters/index.ts` - Adapter registry with auto-selection
+
+### New Library Files
+- `lib/ai/resource-analyzer.ts` - Claude Opus 4.5 resource analysis service
+- `lib/firecrawl.ts` - Firecrawl API wrapper (scrape, map, search, extract)
+
+### New Dashboard Components
+- `components/dashboard/header.tsx` - Dashboard header with user info
+- `components/dashboard/sidebar.tsx` - Navigation sidebar with route states
+
+### New Dashboard Pages
+- `app/dashboard/layout.tsx` - Protected admin layout with authentication
+- `app/dashboard/resources/page.tsx` - Dashboard overview with stats and quick actions
+- `app/dashboard/resources/queue/page.tsx` - Queue management with bulk operations
+- `app/dashboard/resources/discover/page.tsx` - AI discovery interface
+- `app/dashboard/resources/sources/page.tsx` - Source configuration
+
+### Technical Details
+- Uses Claude Opus 4.5 (claude-opus-4-5-20251101) for resource analysis
+- Firecrawl integration for web scraping and content extraction
+- Queue-based workflow: pending → approved/rejected
+- Role-based access: admin/moderator required for all operations
+- Duplicate detection during discovery workflow
+
 ## [0.60.0] - 2025-12-14
 
 ### Added

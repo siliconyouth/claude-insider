@@ -1,11 +1,12 @@
 import type { CollectionConfig } from 'payload';
 import { createRevalidateHook, createDeleteRevalidateHook } from '../lib/revalidate';
+import { hasRole } from './Users';
 
 export const Resources: CollectionConfig = {
   slug: 'resources',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'status', 'featured', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'publishStatus', 'status', 'featured', 'updatedAt'],
     group: 'Resources',
     listSearchableFields: ['title', 'description', 'url'],
   },
@@ -13,13 +14,35 @@ export const Resources: CollectionConfig = {
     read: () => true, // Public read
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => hasRole(user, ['admin', 'moderator']),
+  },
+  versions: {
+    drafts: true,
+    maxPerDoc: 10,
   },
   hooks: {
     afterChange: [createRevalidateHook('resources')],
     afterDelete: [createDeleteRevalidateHook('resources')],
   },
   fields: [
+    // Publication workflow status
+    {
+      name: 'publishStatus',
+      type: 'select',
+      required: true,
+      defaultValue: 'draft',
+      options: [
+        { label: 'Published', value: 'published' },
+        { label: 'Hidden', value: 'hidden' },
+        { label: 'Pending Review', value: 'pending_review' },
+        { label: 'Rejected', value: 'rejected' },
+        { label: 'Draft', value: 'draft' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Publication workflow status',
+      },
+    },
     // Core fields
     {
       name: 'title',
@@ -253,6 +276,106 @@ export const Resources: CollectionConfig = {
           admin: {
             description: 'Auto-matched documents based on shared tags (read-only)',
             readOnly: true,
+          },
+        },
+      ],
+    },
+
+    // Discovery metadata (for AI-discovered resources)
+    {
+      name: 'discovery',
+      type: 'group',
+      label: 'Discovery Information',
+      admin: {
+        description: 'Metadata about how this resource was discovered',
+      },
+      fields: [
+        {
+          name: 'source',
+          type: 'relationship',
+          relationTo: 'resource-sources',
+          admin: {
+            description: 'The source from which this resource was discovered',
+          },
+        },
+        {
+          name: 'discoveredAt',
+          type: 'date',
+          admin: {
+            description: 'When this resource was discovered',
+          },
+        },
+        {
+          name: 'discoveredBy',
+          type: 'select',
+          options: [
+            { label: 'AI Discovery', value: 'ai' },
+            { label: 'Manual Entry', value: 'manual' },
+            { label: 'Bulk Import', value: 'import' },
+            { label: 'User Suggestion', value: 'suggestion' },
+          ],
+          admin: {
+            description: 'How this resource was added to the system',
+          },
+        },
+        {
+          name: 'aiConfidenceScore',
+          type: 'number',
+          min: 0,
+          max: 100,
+          admin: {
+            description: 'AI confidence score (0-100) for auto-discovered resources',
+            condition: (data) => data?.discovery?.discoveredBy === 'ai',
+          },
+        },
+        {
+          name: 'aiNotes',
+          type: 'textarea',
+          admin: {
+            description: 'AI analysis notes and reasoning',
+            condition: (data) => data?.discovery?.discoveredBy === 'ai',
+          },
+        },
+      ],
+    },
+
+    // Review tracking (for workflow management)
+    {
+      name: 'review',
+      type: 'group',
+      label: 'Review Information',
+      admin: {
+        description: 'Review and approval tracking',
+      },
+      fields: [
+        {
+          name: 'reviewedBy',
+          type: 'relationship',
+          relationTo: 'users',
+          admin: {
+            description: 'Admin who reviewed this resource',
+          },
+        },
+        {
+          name: 'reviewedAt',
+          type: 'date',
+          admin: {
+            description: 'When this resource was last reviewed',
+          },
+        },
+        {
+          name: 'reviewNotes',
+          type: 'textarea',
+          admin: {
+            description: 'Notes from the reviewer',
+          },
+        },
+        {
+          name: 'rejectionReason',
+          type: 'textarea',
+          admin: {
+            description: 'Reason for rejection (if applicable)',
+            condition: (data) => data?.publishStatus === 'rejected',
           },
         },
       ],

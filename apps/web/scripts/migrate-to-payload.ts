@@ -152,11 +152,13 @@ async function migrate() {
       // are relationships in Payload that require ID lookups (not implemented in this migration)
       await payload.create({
         collection: 'resources',
+        draft: false, // Publish immediately (required with versioning enabled)
         data: {
           title: resource.title,
           description: resource.description,
           url: resource.url,
           category: categoryId,
+          publishStatus: 'published', // Imported resources are published by default
           // subcategory is a relationship - requires ID lookup (not migrated)
           subcategory: undefined,
           tags: tagIds,

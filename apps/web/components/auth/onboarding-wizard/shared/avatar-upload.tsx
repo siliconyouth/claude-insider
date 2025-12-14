@@ -20,7 +20,9 @@ export function AvatarUpload() {
   const { user } = useAuth();
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  // Upload state for future async upload support
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isUploading, _setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Get display avatar: uploaded preview > user avatar > OAuth image > initials

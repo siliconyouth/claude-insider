@@ -92,7 +92,6 @@ export function extractSections(mdxContent: string): ExtractedSection[] {
   const lines = mdxContent.split('\n');
 
   let order = 0;
-  let currentHeadingIndex = -1;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -138,8 +137,6 @@ export function extractSections(mdxContent: string): ExtractedSection[] {
         displayMode: metadata.displayMode as ExtractedSection['displayMode'],
         contentPreview: contentPreview.trim().substring(0, 200),
       });
-
-      currentHeadingIndex = sections.length - 1;
     }
   }
 

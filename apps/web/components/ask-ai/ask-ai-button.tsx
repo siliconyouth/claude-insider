@@ -182,7 +182,9 @@ export function AskAIWrapper({
   buttonVariant = "icon",
   showOnHover = true,
 }: AskAIWrapperProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  // Track hover state for potential future enhancements (e.g., delayed show)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_isHovered, setIsHovered] = useState(false);
 
   return (
     <div

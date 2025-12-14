@@ -111,6 +111,7 @@ export function ResourceEmbed({
   }
 
   // Dynamically import ResourceCard to avoid circular dependencies
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { ResourceCard } = require('@/components/resources/resource-card');
 
   return (
@@ -150,6 +151,7 @@ export function ResourceGrid({
     return null;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { ResourceCard } = require('@/components/resources/resource-card');
 
   return (

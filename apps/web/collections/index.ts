@@ -9,6 +9,10 @@ export { Subcategories } from './Subcategories';
 export { Tags } from './Tags';
 export { Resources } from './Resources';
 
+// Resource discovery and administration
+export { ResourceSources } from './ResourceSources';
+export { ResourceDiscoveryQueue } from './ResourceDiscoveryQueue';
+
 // Documentation cross-linking
 export { Documents } from './Documents';
 export { DocumentSections } from './DocumentSections';

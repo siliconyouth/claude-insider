@@ -73,6 +73,8 @@ export interface Config {
     subcategories: Subcategory;
     tags: Tag;
     resources: Resource;
+    'resource-sources': ResourceSource;
+    'resource-discovery-queue': ResourceDiscoveryQueue;
     documents: Document;
     'document-sections': DocumentSection;
     'code-examples': CodeExample;
@@ -92,6 +94,8 @@ export interface Config {
     subcategories: SubcategoriesSelect<false> | SubcategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
+    'resource-sources': ResourceSourcesSelect<false> | ResourceSourcesSelect<true>;
+    'resource-discovery-queue': ResourceDiscoveryQueueSelect<false> | ResourceDiscoveryQueueSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     'document-sections': DocumentSectionsSelect<false> | DocumentSectionsSelect<true>;
     'code-examples': CodeExamplesSelect<false> | CodeExamplesSelect<true>;
@@ -370,6 +374,10 @@ export interface Tag {
 export interface Resource {
   id: number;
   /**
+   * Publication workflow status
+   */
+  publishStatus: 'published' | 'hidden' | 'pending_review' | 'rejected' | 'draft';
+  /**
    * Resource title (e.g., "Claude Desktop")
    */
   title: string;
@@ -465,8 +473,55 @@ export interface Resource {
      */
     autoMatchedDocs?: (number | Document)[] | null;
   };
+  /**
+   * Metadata about how this resource was discovered
+   */
+  discovery?: {
+    /**
+     * The source from which this resource was discovered
+     */
+    source?: (number | null) | ResourceSource;
+    /**
+     * When this resource was discovered
+     */
+    discoveredAt?: string | null;
+    /**
+     * How this resource was added to the system
+     */
+    discoveredBy?: ('ai' | 'manual' | 'import' | 'suggestion') | null;
+    /**
+     * AI confidence score (0-100) for auto-discovered resources
+     */
+    aiConfidenceScore?: number | null;
+    /**
+     * AI analysis notes and reasoning
+     */
+    aiNotes?: string | null;
+  };
+  /**
+   * Review and approval tracking
+   */
+  review?: {
+    /**
+     * Admin who reviewed this resource
+     */
+    reviewedBy?: (number | null) | User;
+    /**
+     * When this resource was last reviewed
+     */
+    reviewedAt?: string | null;
+    /**
+     * Notes from the reviewer
+     */
+    reviewNotes?: string | null;
+    /**
+     * Reason for rejection (if applicable)
+     */
+    rejectionReason?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * Skill levels for classifying resource difficulty
@@ -695,6 +750,334 @@ export interface DocumentSection {
   createdAt: string;
 }
 /**
+ * Sources for discovering new resources
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resource-sources".
+ */
+export interface ResourceSource {
+  id: number;
+  /**
+   * Display name for this source (e.g., "Awesome Claude Code")
+   */
+  name: string;
+  /**
+   * What kind of resources can be found from this source
+   */
+  description?: string | null;
+  /**
+   * Type of source determines how discovery works
+   */
+  type: 'github_repo' | 'github_search' | 'awesome_list' | 'npm' | 'pypi' | 'website' | 'rss' | 'api' | 'manual';
+  /**
+   * Primary URL or API endpoint for this source
+   */
+  url: string;
+  /**
+   * GitHub-specific configuration
+   */
+  github?: {
+    /**
+     * Repository owner (username or organization)
+     */
+    owner?: string | null;
+    /**
+     * Repository name
+     */
+    repo?: string | null;
+    /**
+     * Branch to scan (default: main)
+     */
+    branch?: string | null;
+    /**
+     * Path to scan (e.g., "README.md" or "docs/")
+     */
+    path?: string | null;
+    /**
+     * GitHub search query (for github_search type)
+     */
+    searchQuery?: string | null;
+    /**
+     * Comma-separated topics to filter by
+     */
+    topics?: string | null;
+  };
+  /**
+   * Package registry configuration
+   */
+  registry?: {
+    /**
+     * Package search query (e.g., "claude", "anthropic")
+     */
+    searchQuery?: string | null;
+    /**
+     * Package scope to monitor (e.g., "@anthropic-ai")
+     */
+    scope?: string | null;
+    /**
+     * Comma-separated keywords to filter by
+     */
+    keywords?: string | null;
+  };
+  /**
+   * How discovered resources should be processed
+   */
+  discoverySettings?: {
+    /**
+     * Default category for resources from this source
+     */
+    defaultCategory?: (number | null) | Category;
+    /**
+     * Default subcategory for resources from this source
+     */
+    defaultSubcategory?: (number | null) | Subcategory;
+    /**
+     * Tags to automatically apply to discovered resources
+     */
+    defaultTags?: (number | Tag)[] | null;
+    /**
+     * Automatically approve resources from trusted sources
+     */
+    autoApprove?: boolean | null;
+    /**
+     * Minimum GitHub stars required (0 = no minimum)
+     */
+    minStars?: number | null;
+    /**
+     * Minimum weekly downloads required (0 = no minimum)
+     */
+    minDownloads?: number | null;
+    /**
+     * URL patterns to include (one per line, regex supported)
+     */
+    includePatterns?: string | null;
+    /**
+     * URL patterns to exclude (one per line, regex supported)
+     */
+    excludePatterns?: string | null;
+  };
+  /**
+   * Enable or disable this source
+   */
+  isActive?: boolean | null;
+  /**
+   * How often to scan this source
+   */
+  scanFrequency?: ('daily' | 'weekly' | 'monthly' | 'manual') | null;
+  /**
+   * Last successful scan timestamp
+   */
+  lastScannedAt?: string | null;
+  /**
+   * Status of last scan
+   */
+  lastScanStatus?: ('success' | 'partial' | 'failed' | 'never') | null;
+  /**
+   * Error message from last failed scan
+   */
+  lastScanError?: string | null;
+  /**
+   * Total resources discovered from this source
+   */
+  resourceCount?: number | null;
+  /**
+   * Resources pending review from this source
+   */
+  pendingCount?: number | null;
+  /**
+   * Internal notes about this source
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * AI-discovered resources pending review
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resource-discovery-queue".
+ */
+export interface ResourceDiscoveryQueue {
+  id: number;
+  /**
+   * Resource title (AI-suggested, editable)
+   */
+  title: string;
+  /**
+   * Resource description (AI-suggested, editable)
+   */
+  description: string;
+  /**
+   * Primary URL for the resource
+   */
+  url: string;
+  /**
+   * AI-suggested category (can be changed)
+   */
+  suggestedCategory?: (number | null) | Category;
+  /**
+   * AI-suggested subcategory
+   */
+  suggestedSubcategory?: (number | null) | Subcategory;
+  /**
+   * AI-suggested tags
+   */
+  suggestedTags?: (number | Tag)[] | null;
+  /**
+   * AI-suggested difficulty level
+   */
+  suggestedDifficulty?: (number | null) | DifficultyLevel;
+  /**
+   * AI-suggested status
+   */
+  suggestedStatus?: ('official' | 'community' | 'beta' | 'deprecated') | null;
+  /**
+   * GitHub repository data
+   */
+  github?: {
+    /**
+     * Repository owner
+     */
+    owner?: string | null;
+    /**
+     * Repository name
+     */
+    repo?: string | null;
+    /**
+     * Star count
+     */
+    stars?: number | null;
+    /**
+     * Fork count
+     */
+    forks?: number | null;
+    /**
+     * Primary language
+     */
+    language?: string | null;
+    /**
+     * Last commit date
+     */
+    lastCommit?: string | null;
+    /**
+     * Open issues count
+     */
+    openIssues?: number | null;
+    /**
+     * Repository license
+     */
+    license?: string | null;
+  };
+  /**
+   * Package registry data
+   */
+  package?: {
+    /**
+     * Package name
+     */
+    name?: string | null;
+    /**
+     * Latest version
+     */
+    version?: string | null;
+    /**
+     * Weekly downloads
+     */
+    weeklyDownloads?: number | null;
+    /**
+     * Package registry
+     */
+    registry?: ('npm' | 'pypi') | null;
+  };
+  /**
+   * Source where this resource was discovered
+   */
+  source?: (number | null) | ResourceSource;
+  /**
+   * Specific URL where this was found
+   */
+  sourceUrl?: string | null;
+  /**
+   * Raw scraped data (for debugging)
+   */
+  rawData?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Results from Claude Opus 4.5 analysis
+   */
+  aiAnalysis?: {
+    /**
+     * Overall confidence in categorization (0-100)
+     */
+    confidenceScore?: number | null;
+    /**
+     * Relevance to Claude/Anthropic ecosystem (0-100)
+     */
+    relevanceScore?: number | null;
+    /**
+     * Project quality assessment (0-100)
+     */
+    qualityScore?: number | null;
+    /**
+     * AI reasoning for categorization and scores
+     */
+    reasoning?: string | null;
+    /**
+     * Suggestions for improving the resource listing
+     */
+    suggestedImprovements?: string | null;
+    /**
+     * Potential issues or concerns noted by AI
+     */
+    warnings?: string | null;
+    /**
+     * When the AI analysis was performed
+     */
+    analyzedAt?: string | null;
+  };
+  /**
+   * Review workflow status
+   */
+  status: 'pending' | 'approved' | 'rejected' | 'duplicate' | 'needs_info';
+  /**
+   * Review priority
+   */
+  priority?: ('high' | 'normal' | 'low') | null;
+  /**
+   * Admin who reviewed this item
+   */
+  reviewedBy?: (number | null) | User;
+  /**
+   * When this was reviewed
+   */
+  reviewedAt?: string | null;
+  /**
+   * Notes from the reviewer
+   */
+  reviewNotes?: string | null;
+  /**
+   * Reason for rejection
+   */
+  rejectionReason?: string | null;
+  /**
+   * Resource created from this queue item
+   */
+  createdResource?: (number | null) | Resource;
+  /**
+   * Existing resource this is a duplicate of
+   */
+  duplicateOf?: (number | null) | Resource;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Code blocks for targeted resource linking
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -889,6 +1272,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'resources';
         value: number | Resource;
+      } | null)
+    | ({
+        relationTo: 'resource-sources';
+        value: number | ResourceSource;
+      } | null)
+    | ({
+        relationTo: 'resource-discovery-queue';
+        value: number | ResourceDiscoveryQueue;
       } | null)
     | ({
         relationTo: 'documents';
@@ -1095,6 +1486,7 @@ export interface TagsSelect<T extends boolean = true> {
  * via the `definition` "resources_select".
  */
 export interface ResourcesSelect<T extends boolean = true> {
+  publishStatus?: T;
   title?: T;
   description?: T;
   url?: T;
@@ -1126,6 +1518,131 @@ export interface ResourcesSelect<T extends boolean = true> {
         relatedSections?: T;
         autoMatchedDocs?: T;
       };
+  discovery?:
+    | T
+    | {
+        source?: T;
+        discoveredAt?: T;
+        discoveredBy?: T;
+        aiConfidenceScore?: T;
+        aiNotes?: T;
+      };
+  review?:
+    | T
+    | {
+        reviewedBy?: T;
+        reviewedAt?: T;
+        reviewNotes?: T;
+        rejectionReason?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resource-sources_select".
+ */
+export interface ResourceSourcesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  type?: T;
+  url?: T;
+  github?:
+    | T
+    | {
+        owner?: T;
+        repo?: T;
+        branch?: T;
+        path?: T;
+        searchQuery?: T;
+        topics?: T;
+      };
+  registry?:
+    | T
+    | {
+        searchQuery?: T;
+        scope?: T;
+        keywords?: T;
+      };
+  discoverySettings?:
+    | T
+    | {
+        defaultCategory?: T;
+        defaultSubcategory?: T;
+        defaultTags?: T;
+        autoApprove?: T;
+        minStars?: T;
+        minDownloads?: T;
+        includePatterns?: T;
+        excludePatterns?: T;
+      };
+  isActive?: T;
+  scanFrequency?: T;
+  lastScannedAt?: T;
+  lastScanStatus?: T;
+  lastScanError?: T;
+  resourceCount?: T;
+  pendingCount?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resource-discovery-queue_select".
+ */
+export interface ResourceDiscoveryQueueSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  url?: T;
+  suggestedCategory?: T;
+  suggestedSubcategory?: T;
+  suggestedTags?: T;
+  suggestedDifficulty?: T;
+  suggestedStatus?: T;
+  github?:
+    | T
+    | {
+        owner?: T;
+        repo?: T;
+        stars?: T;
+        forks?: T;
+        language?: T;
+        lastCommit?: T;
+        openIssues?: T;
+        license?: T;
+      };
+  package?:
+    | T
+    | {
+        name?: T;
+        version?: T;
+        weeklyDownloads?: T;
+        registry?: T;
+      };
+  source?: T;
+  sourceUrl?: T;
+  rawData?: T;
+  aiAnalysis?:
+    | T
+    | {
+        confidenceScore?: T;
+        relevanceScore?: T;
+        qualityScore?: T;
+        reasoning?: T;
+        suggestedImprovements?: T;
+        warnings?: T;
+        analyzedAt?: T;
+      };
+  status?: T;
+  priority?: T;
+  reviewedBy?: T;
+  reviewedAt?: T;
+  reviewNotes?: T;
+  rejectionReason?: T;
+  createdResource?: T;
+  duplicateOf?: T;
   updatedAt?: T;
   createdAt?: T;
 }

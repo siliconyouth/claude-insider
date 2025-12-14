@@ -11,6 +11,8 @@ import {
   Subcategories,
   Tags,
   Resources,
+  ResourceSources,
+  ResourceDiscoveryQueue,
   Documents,
   DocumentSections,
   CodeExamples,
@@ -49,6 +51,9 @@ export default buildConfig({
     Subcategories,
     Tags,
     Resources,
+    // Resource discovery and administration
+    ResourceSources,
+    ResourceDiscoveryQueue,
     // Documentation cross-linking (Content group)
     Documents,
     DocumentSections,
