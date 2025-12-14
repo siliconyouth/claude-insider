@@ -7,7 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-No pending changes.
+### Fixed
+
+#### Database Schema Synchronization
+- **Migration 022** - Fixed missing schema elements from migrations 007, 008, and 010
+  - Added `username` column to user table (TEXT UNIQUE) for public profile URLs
+  - Added `profilePrivacy` column (JSONB) for user privacy settings
+  - Added `idx_user_username` index for fast username lookups
+  - Created `generate_username()` function for auto-generating usernames from names
+  - Enabled RLS on `admin_logs` table (was incorrectly disabled)
+  - Added `admin_logs_select_admin` and `admin_logs_insert_moderator` policies
+  - Created `user_has_role()` function for role hierarchy checking
+  - Created `log_admin_action()` function for audit logging
+  - Created `generate_collection_slug()` function for collection URL slugs
+  - Auto-generated usernames for existing users without one
 
 ## [0.66.0] - 2025-12-14
 
