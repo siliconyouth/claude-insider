@@ -293,7 +293,7 @@ export async function deleteAllRead(): Promise<{
 /**
  * Get notification preferences
  *
- * Reads from the profiles.notification_preferences JSON column.
+ * Reads from the notification_preferences table.
  */
 export async function getNotificationPreferences(): Promise<{
   data?: NotificationPreferences;
@@ -305,37 +305,34 @@ export async function getNotificationPreferences(): Promise<{
       return { error: "You must be signed in" };
     }
 
-    const supabase = await createAdminClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
 
-    const { data: profile, error } = await supabase
-      .from("profiles")
-      .select("notification_preferences")
-      .eq("id", session.user.id)
-      .single();
+    const { data, error } = await supabase
+      .from("notification_preferences")
+      .select("*")
+      .eq("user_id", session.user.id)
+      .maybeSingle();
 
-    if (error && error.code !== "PGRST116") {
-      // PGRST116 = no rows returned
+    if (error) {
       console.error("[Notifications] Preferences fetch error:", error);
       return { error: "Failed to load preferences" };
     }
 
-    // Parse the JSON preferences or use defaults
-    const prefs = profile?.notification_preferences as NotificationPreferences | null;
-
     return {
-      data: prefs
+      data: data
         ? {
-            in_app_comments: prefs.in_app_comments ?? defaultPreferences.in_app_comments,
-            in_app_replies: prefs.in_app_replies ?? defaultPreferences.in_app_replies,
-            in_app_suggestions: prefs.in_app_suggestions ?? defaultPreferences.in_app_suggestions,
-            in_app_follows: prefs.in_app_follows ?? defaultPreferences.in_app_follows,
-            in_app_mentions: prefs.in_app_mentions ?? defaultPreferences.in_app_mentions,
-            email_comments: prefs.email_comments ?? defaultPreferences.email_comments,
-            email_replies: prefs.email_replies ?? defaultPreferences.email_replies,
-            email_suggestions: prefs.email_suggestions ?? defaultPreferences.email_suggestions,
-            email_follows: prefs.email_follows ?? defaultPreferences.email_follows,
-            email_digest: prefs.email_digest ?? defaultPreferences.email_digest,
-            email_digest_frequency: prefs.email_digest_frequency ?? defaultPreferences.email_digest_frequency,
+            in_app_comments: data.in_app_comments ?? defaultPreferences.in_app_comments,
+            in_app_replies: data.in_app_replies ?? defaultPreferences.in_app_replies,
+            in_app_suggestions: data.in_app_suggestions ?? defaultPreferences.in_app_suggestions,
+            in_app_follows: data.in_app_follows ?? defaultPreferences.in_app_follows,
+            in_app_mentions: data.in_app_mentions ?? defaultPreferences.in_app_mentions,
+            email_comments: data.email_comments ?? defaultPreferences.email_comments,
+            email_replies: data.email_replies ?? defaultPreferences.email_replies,
+            email_suggestions: data.email_suggestions ?? defaultPreferences.email_suggestions,
+            email_follows: data.email_follows ?? defaultPreferences.email_follows,
+            email_digest: data.email_digest ?? defaultPreferences.email_digest,
+            email_digest_frequency: data.email_digest_frequency ?? defaultPreferences.email_digest_frequency,
           }
         : defaultPreferences,
     };
@@ -348,8 +345,7 @@ export async function getNotificationPreferences(): Promise<{
 /**
  * Update notification preferences
  *
- * Uses the profiles.notification_preferences JSON column to store preferences.
- * This is more reliable than a separate table and matches the existing schema.
+ * Uses the notification_preferences table with upsert.
  */
 export async function updateNotificationPreferences(
   preferences: Partial<NotificationPreferences>
@@ -363,35 +359,40 @@ export async function updateNotificationPreferences(
       return { error: "You must be signed in" };
     }
 
-    const supabase = await createAdminClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
 
-    // Get current preferences from profiles table
-    const { data: profile, error: fetchError } = await supabase
-      .from("profiles")
-      .select("notification_preferences")
-      .eq("id", session.user.id)
-      .single();
+    // Check if row exists
+    const { data: existing } = await supabase
+      .from("notification_preferences")
+      .select("id")
+      .eq("user_id", session.user.id)
+      .maybeSingle();
 
-    if (fetchError && fetchError.code !== "PGRST116") {
-      console.error("[Notifications] Fetch error:", fetchError);
-      return { error: "Failed to load preferences" };
+    let error;
+
+    if (existing) {
+      // Update existing row
+      const result = await supabase
+        .from("notification_preferences")
+        .update({
+          ...preferences,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("user_id", session.user.id);
+      error = result.error;
+    } else {
+      // Insert new row with defaults + provided preferences
+      const result = await supabase.from("notification_preferences").insert({
+        user_id: session.user.id,
+        ...defaultPreferences,
+        ...preferences,
+      });
+      error = result.error;
     }
 
-    // Merge current preferences with new ones
-    const currentPrefs = (profile?.notification_preferences as NotificationPreferences) || defaultPreferences;
-    const updatedPrefs = { ...currentPrefs, ...preferences };
-
-    // Update profiles table with merged preferences
-    const { error: updateError } = await supabase
-      .from("profiles")
-      .update({
-        notification_preferences: updatedPrefs,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", session.user.id);
-
-    if (updateError) {
-      console.error("[Notifications] Update error:", updateError);
+    if (error) {
+      console.error("[Notifications] Preferences update error:", error);
       return { error: "Failed to update preferences" };
     }
 
