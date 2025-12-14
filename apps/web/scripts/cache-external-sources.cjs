@@ -44,8 +44,8 @@ const MAX_CACHE_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const WEB_REQUEST_DELAY_MS = 2000;
 const CLAUDE_REQUEST_DELAY_MS = 1000;
 
-// Maximum content size (10MB to handle large documentation pages like Messages API)
-const MAX_CONTENT_SIZE = 10 * 1024 * 1024;
+// Maximum content size (50MB to handle very large documentation pages)
+const MAX_CONTENT_SIZE = 50 * 1024 * 1024;
 
 // User agent for requests
 const USER_AGENT = "ClaudeInsider-SourceCacher/1.0 (Documentation crawler)";
@@ -295,8 +295,8 @@ function extractTextFromHtml(html) {
   // Clean up whitespace
   cleanText = cleanText.replace(/\s+/g, " ").trim();
 
-  // Limit content length
-  const maxLength = 15000;
+  // Limit content length (50k chars for comprehensive summarization)
+  const maxLength = 50000;
   if (cleanText.length > maxLength) {
     cleanText = cleanText.slice(0, maxLength) + "...";
   }

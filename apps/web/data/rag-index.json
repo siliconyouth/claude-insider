@@ -1,6 +1,6 @@
 {
   "version": "5.0",
-  "generatedAt": "2025-12-14T01:14:58.545Z",
+  "generatedAt": "2025-12-14T01:45:42.337Z",
   "documentCount": 1885,
   "documentationChunks": 423,
   "projectKnowledgeCount": 12,
@@ -8049,7 +8049,7 @@
       "id": "project-overview",
       "title": "About Claude Insider",
       "section": "Project Overview",
-      "content": "Claude Insider is a comprehensive documentation website for Claude AI, Claude Code, and the Anthropic ecosystem.\n\nCurrent Version: 0.61.0 (2025-12-14)\nLive URL: https://www.claudeinsider.com\nRepository: https://github.com/siliconyouth/claude-insider\nStatus: Production - Feature Complete\n\nBuilt entirely with Claude Code powered by Claude Opus 4.5, this project serves as both documentation hub and a demonstration of AI-assisted development.\n\nKey Features:\n- 34 comprehensive documentation pages across 7 categories\n- AI Voice Assistant with speech-to-text\n- ElevenLabs Text-to-Speech with 42 premium voices\n- Streaming chat with Claude Sonnet 4\n- RAG (Retrieval-Augmented Generation) for intelligent search\n- Fuzzy search with Cmd/Ctrl+K keyboard shortcut\n- Dark/Light/System theme support\n- Full PWA offline support\n- WCAG 2.1 AA accessibility compliance\n\nThe project goal is to centralize Claude knowledge, improve discoverability of Claude features, help users maximize productivity with Claude AI, and keep content updated with the latest Claude capabilities.",
+      "content": "Claude Insider is a comprehensive documentation website for Claude AI, Claude Code, and the Anthropic ecosystem.\n\nCurrent Version: 0.62.0 (2025-12-14)\nLive URL: https://www.claudeinsider.com\nRepository: https://github.com/siliconyouth/claude-insider\nStatus: Production - Feature Complete\n\nBuilt entirely with Claude Code powered by Claude Opus 4.5, this project serves as both documentation hub and a demonstration of AI-assisted development.\n\nKey Features:\n- 34 comprehensive documentation pages across 7 categories\n- AI Voice Assistant with speech-to-text\n- ElevenLabs Text-to-Speech with 42 premium voices\n- Streaming chat with Claude Sonnet 4\n- RAG (Retrieval-Augmented Generation) for intelligent search\n- Fuzzy search with Cmd/Ctrl+K keyboard shortcut\n- Dark/Light/System theme support\n- Full PWA offline support\n- WCAG 2.1 AA accessibility compliance\n\nThe project goal is to centralize Claude knowledge, improve discoverability of Claude features, help users maximize productivity with Claude AI, and keep content updated with the latest Claude capabilities.",
       "url": "/",
       "category": "Project",
       "keywords": [
@@ -8172,7 +8172,7 @@
       "id": "project-versions",
       "title": "Version History",
       "section": "Recent Updates",
-      "content": "Claude Insider version history and recent updates.\n\nCurrent Version: 0.61.0\n\nRecent Releases:\nv0.61.0 (2025-12-14): Added\nv0.60.0 (2025-12-14): Added\nv0.59.0 (2025-12-14): Fixed\nv0.58.0 (2025-12-13): Added\nv0.57.0 (2025-12-13): Added\n\nMajor Milestones:\n- v0.16.x - Tutorials & Examples categories, navigation fixes\n- v0.15.x - 33 language syntax highlighting, build-time RAG index\n- v0.14.x - Fullscreen popup mode, demo animation improvements\n- v0.13.x - 9 new documentation pages, SDK architecture fix\n- v0.12.x - ElevenLabs TTS (42 voices), voice polish features\n- v0.11.x - AI Voice Assistant, RAG search, streaming chat\n- v0.10.x - RSS feed, changelog, edit links, reading time, i18n prep\n- v0.9.x - Analytics, security headers, source citations\n- v0.8.x - Legal pages, footer, build info\n- v0.7.x - Syntax highlighting\n- v0.6.x - PWA, accessibility\n- v0.5.x - Lighthouse optimization, JSON-LD\n- v0.4.x - TOC, mobile menu, production deployment\n- v0.3.x - MDX, search, theme toggle\n- v0.2.x - Homepage, docs structure\n- v0.1.x - Initial Turborepo setup\n\nFull changelog available at /changelog or in CHANGELOG.md",
+      "content": "Claude Insider version history and recent updates.\n\nCurrent Version: 0.62.0\n\nRecent Releases:\nv0.62.0 (2025-12-14): Added\nv0.61.0 (2025-12-14): Added\nv0.60.0 (2025-12-14): Added\nv0.59.0 (2025-12-14): Fixed\nv0.58.0 (2025-12-13): Added\n\nMajor Milestones:\n- v0.16.x - Tutorials & Examples categories, navigation fixes\n- v0.15.x - 33 language syntax highlighting, build-time RAG index\n- v0.14.x - Fullscreen popup mode, demo animation improvements\n- v0.13.x - 9 new documentation pages, SDK architecture fix\n- v0.12.x - ElevenLabs TTS (42 voices), voice polish features\n- v0.11.x - AI Voice Assistant, RAG search, streaming chat\n- v0.10.x - RSS feed, changelog, edit links, reading time, i18n prep\n- v0.9.x - Analytics, security headers, source citations\n- v0.8.x - Legal pages, footer, build info\n- v0.7.x - Syntax highlighting\n- v0.6.x - PWA, accessibility\n- v0.5.x - Lighthouse optimization, JSON-LD\n- v0.4.x - TOC, mobile menu, production deployment\n- v0.3.x - MDX, search, theme toggle\n- v0.2.x - Homepage, docs structure\n- v0.1.x - Initial Turborepo setup\n\nFull changelog available at /changelog or in CHANGELOG.md",
       "url": "/changelog",
       "category": "Project",
       "keywords": [
@@ -28369,7 +28369,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/api/getting-started",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28397,7 +28397,7 @@
       "sourceData": {
         "originalUrl": "https://console.anthropic.com",
         "title": "Anthropic Console",
-        "cachedAt": "2025-12-13T23:28:58.344Z",
+        "cachedAt": "2025-12-14T01:44:14.726Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28428,7 +28428,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/build-with-claude/authentication",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28459,7 +28459,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/api/errors",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28490,7 +28490,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/api/client-sdks",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28521,7 +28521,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/api/rate-limits",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28552,7 +28552,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/api",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28583,7 +28583,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/about-claude/models",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28614,7 +28614,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/models-overview",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28674,7 +28674,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/intro-to-claude",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28705,7 +28705,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/api/streaming",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28736,7 +28736,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/api/streaming#server-sent-events",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28767,7 +28767,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28798,7 +28798,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use#best-practices",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28829,7 +28829,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/claude-code/memory",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28896,7 +28896,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/claude-code/overview",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28925,7 +28925,7 @@
       "sourceData": {
         "originalUrl": "https://console.anthropic.com/settings/keys",
         "title": "Anthropic API Keys",
-        "cachedAt": "2025-12-13T23:29:28.356Z",
+        "cachedAt": "2025-12-14T01:44:21.909Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28956,7 +28956,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/claude-code/settings",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -28987,7 +28987,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/claude-code/security",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29018,7 +29018,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/tool-use",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29076,7 +29076,7 @@
       "sourceData": {
         "originalUrl": "https://cursor.sh/docs",
         "title": "Cursor Documentation",
-        "cachedAt": "2025-12-13T23:29:35.396Z",
+        "cachedAt": "2025-12-14T01:44:28.904Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29133,7 +29133,7 @@
       "sourceData": {
         "originalUrl": "https://modelcontextprotocol.io",
         "title": "MCP Server Documentation",
-        "cachedAt": "2025-12-13T23:29:37.850Z",
+        "cachedAt": "2025-12-14T01:44:31.497Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29163,7 +29163,7 @@
       "sourceData": {
         "originalUrl": "https://www.postgresql.org/docs/current/user-manag.html",
         "title": "PostgreSQL Security",
-        "cachedAt": "2025-12-13T23:29:40.807Z",
+        "cachedAt": "2025-12-14T01:44:34.466Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29250,7 +29250,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/claude-code/hooks",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29281,7 +29281,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/claude-code/ide-integrations",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29310,7 +29310,7 @@
       "sourceData": {
         "originalUrl": "https://marketplace.visualstudio.com",
         "title": "VS Code Marketplace",
-        "cachedAt": "2025-12-13T23:29:48.898Z",
+        "cachedAt": "2025-12-14T01:44:41.981Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29341,7 +29341,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/claude-code/mcp",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29372,7 +29372,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29432,7 +29432,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/build-with-claude/debugging",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29463,7 +29463,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/docs/claude-code/cli-usage",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
@@ -29494,7 +29494,7 @@
       "sourceData": {
         "originalUrl": "https://docs.anthropic.com/en/api/messages",
         "title": "Claude Code Documentation - Commands",
-        "cachedAt": "2025-12-13T23:29:53.522Z",
+        "cachedAt": "2025-12-14T01:44:46.723Z",
         "hasSummary": false,
         "model": null,
         "referencedFrom": [
