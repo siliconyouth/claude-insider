@@ -10,6 +10,8 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { useToast } from "@/components/toast";
 
 interface Notification {
@@ -246,14 +248,20 @@ export default function NotificationsPage() {
 
   if (authLoading || (!isAuthenticated && !authLoading)) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-12">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 w-48 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-          <div className="h-12 w-full bg-gray-200 dark:bg-[#1a1a1a] rounded-xl" />
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-20 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl" />
-          ))}
-        </div>
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <main id="main-content" className="flex-1">
+          <div className="max-w-3xl mx-auto px-4 py-12">
+            <div className="animate-pulse space-y-4">
+              <div className="h-8 w-48 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+              <div className="h-12 w-full bg-gray-200 dark:bg-[#1a1a1a] rounded-xl" />
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="h-20 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl" />
+              ))}
+            </div>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
   }
@@ -267,8 +275,11 @@ export default function NotificationsPage() {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
-      {/* Header */}
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+      <Header />
+      <main id="main-content" className="flex-1">
+        <div className="max-w-3xl mx-auto px-4 py-12">
+          {/* Page Title */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Notifications</h1>
         <div className="flex items-center gap-2">
@@ -481,6 +492,9 @@ export default function NotificationsPage() {
           )}
         </div>
       )}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }

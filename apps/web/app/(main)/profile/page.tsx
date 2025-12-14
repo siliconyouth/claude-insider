@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import {
   getCompleteProfileData,
   getUserFavoritesWithDetails,
@@ -146,75 +148,87 @@ export default function ProfilePage() {
 
   if (authLoading || isLoading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Profile Header Skeleton */}
-          <div className="flex items-start gap-6 mb-8 animate-pulse">
-            <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-[#1a1a1a]" />
-            <div className="flex-1 space-y-3">
-              <div className="h-8 w-48 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-              <div className="h-4 w-64 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-              <div className="flex gap-4">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-6 w-20 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-                ))}
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <main id="main-content" className="flex-1">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            {/* Profile Header Skeleton */}
+            <div className="flex items-start gap-6 mb-8 animate-pulse">
+              <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-[#1a1a1a]" />
+              <div className="flex-1 space-y-3">
+                <div className="h-8 w-48 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+                <div className="h-4 w-64 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+                <div className="flex gap-4">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-6 w-20 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Tabs Skeleton */}
-          <div className="flex gap-4 mb-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-10 w-28 bg-gray-200 dark:bg-[#1a1a1a] rounded-lg" />
-            ))}
-          </div>
+            {/* Tabs Skeleton */}
+            <div className="flex gap-4 mb-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-10 w-28 bg-gray-200 dark:bg-[#1a1a1a] rounded-lg" />
+              ))}
+            </div>
 
-          {/* Content Skeleton */}
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-24 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl animate-pulse" />
-            ))}
+            {/* Content Skeleton */}
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-24 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl animate-pulse" />
+              ))}
+            </div>
           </div>
-        </div>
+        </main>
+        <Footer />
       </div>
     );
   }
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Sign in to view your profile
-          </h1>
-          <button
-            onClick={showSignIn}
-            className={cn(
-              "px-6 py-3 text-sm font-semibold rounded-lg",
-              "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-              "text-white shadow-lg shadow-blue-500/25",
-              "hover:-translate-y-0.5 transition-all duration-200"
-            )}
-          >
-            Sign In
-          </button>
-        </div>
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <main id="main-content" className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Sign in to view your profile
+            </h1>
+            <button
+              onClick={showSignIn}
+              className={cn(
+                "px-6 py-3 text-sm font-semibold rounded-lg",
+                "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                "text-white shadow-lg shadow-blue-500/25",
+                "hover:-translate-y-0.5 transition-all duration-200"
+              )}
+            >
+              Sign In
+            </button>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-500 mb-4">{error}</p>
-          <button
-            onClick={() => loadProfileData(true)}
-            className="text-blue-600 dark:text-cyan-400 hover:underline"
-          >
-            Try again
-          </button>
-        </div>
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <main id="main-content" className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-red-500 mb-4">{error}</p>
+            <button
+              onClick={() => loadProfileData(true)}
+              className="text-blue-600 dark:text-cyan-400 hover:underline"
+            >
+              Try again
+            </button>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
   }
@@ -226,10 +240,12 @@ export default function ProfilePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Profile Header */}
-        <div className="flex flex-col sm:flex-row items-start gap-6 mb-8">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+      <Header />
+      <main id="main-content" className="flex-1">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Profile Header */}
+          <div className="flex flex-col sm:flex-row items-start gap-6 mb-8">
           {/* Avatar */}
           <div
             className={cn(
@@ -350,19 +366,21 @@ export default function ProfilePage() {
           ))}
         </div>
 
-        {/* Tab Content */}
-        <div className="space-y-4">
-          {activeTab === "favorites" && (
-            <FavoritesTab favorites={favorites} formatDate={formatDate} />
-          )}
-          {activeTab === "ratings" && (
-            <RatingsTab ratings={ratings} formatDate={formatDate} />
-          )}
-          {activeTab === "collections" && (
-            <CollectionsTab collections={collections} formatDate={formatDate} />
-          )}
+          {/* Tab Content */}
+          <div className="space-y-4">
+            {activeTab === "favorites" && (
+              <FavoritesTab favorites={favorites} formatDate={formatDate} />
+            )}
+            {activeTab === "ratings" && (
+              <RatingsTab ratings={ratings} formatDate={formatDate} />
+            )}
+            {activeTab === "collections" && (
+              <CollectionsTab collections={collections} formatDate={formatDate} />
+            )}
+          </div>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }

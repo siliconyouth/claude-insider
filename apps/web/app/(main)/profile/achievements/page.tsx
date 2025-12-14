@@ -11,6 +11,8 @@ import { useState, useEffect, useTransition, useCallback, useRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { useToast } from "@/components/toast";
 import { AchievementBadge } from "@/components/achievements/achievement-badge";
 import {
@@ -161,26 +163,41 @@ export default function AchievementsPage() {
 
   if (authLoading || isLoading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="animate-pulse space-y-6">
-          <div className="h-8 w-48 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-          <div className="h-24 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl" />
-          <div className="grid grid-cols-4 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="h-32 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl" />
-            ))}
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <main id="main-content" className="flex-1">
+          <div className="max-w-4xl mx-auto px-4 py-12">
+            <div className="animate-pulse space-y-6">
+              <div className="h-8 w-48 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+              <div className="h-24 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl" />
+              <div className="grid grid-cols-4 gap-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  <div key={i} className="h-32 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl" />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        </main>
+        <Footer />
       </div>
     );
   }
 
   if (!isAuthenticated) {
-    return null;
+    return (
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <main id="main-content" className="flex-1" />
+        <Footer />
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+      <Header />
+      <main id="main-content" className="flex-1">
+        <div className="max-w-4xl mx-auto px-4 py-12">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
@@ -462,6 +479,9 @@ export default function AchievementsPage() {
           )}
         </div>
       )}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }

@@ -8,6 +8,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/design-system";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { getReadingLists, deleteReadingList, getReadingStats } from "@/app/actions/reading-lists";
 import { ReadingListCard } from "@/components/reading-lists/reading-list-card";
 import { ReadingListForm } from "@/components/reading-lists/reading-list-form";
@@ -71,9 +73,11 @@ export default function ReadingListsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
-        {/* Header */}
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+      <Header />
+      <main id="main-content" className="flex-1">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+          {/* Page Title */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -238,7 +242,9 @@ export default function ReadingListsPage() {
         ) : (
           <ViewHistory limit={30} />
         )}
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }

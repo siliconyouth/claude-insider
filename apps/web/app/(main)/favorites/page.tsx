@@ -9,6 +9,8 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { getFavorites, removeFavorite, getCollections } from "@/lib/favorites";
 import { CollectionCard, CollectionCardSkeleton } from "@/components/favorites";
 import { CollectionPicker } from "@/components/favorites/collection-picker";
@@ -94,8 +96,11 @@ export default function FavoritesPage() {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      {/* Header */}
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+      <Header />
+      <main id="main-content" className="flex-1">
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          {/* Page Title */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -340,18 +345,21 @@ export default function FavoritesPage() {
         </>
       )}
 
-      {/* Collection picker modal */}
-      {selectedFavorite && (
-        <CollectionPicker
-          isOpen={pickerOpen}
-          onClose={() => {
-            setPickerOpen(false);
-            setSelectedFavorite(null);
-          }}
-          favoriteId={selectedFavorite.id}
-          resourceTitle={selectedFavorite.title}
-        />
-      )}
+          {/* Collection picker modal */}
+          {selectedFavorite && (
+            <CollectionPicker
+              isOpen={pickerOpen}
+              onClose={() => {
+                setPickerOpen(false);
+                setSelectedFavorite(null);
+              }}
+              favoriteId={selectedFavorite.id}
+              resourceTitle={selectedFavorite.title}
+            />
+          )}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }

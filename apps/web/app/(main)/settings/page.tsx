@@ -4,6 +4,8 @@ import { useState, useEffect, useTransition, useCallback, useRef } from "react";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useToast } from "@/components/toast";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import {
   getCompleteSettingsData,
   updateUserProfile,
@@ -276,55 +278,65 @@ export default function SettingsPage() {
 
   if (authLoading || isLoading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Header Skeleton */}
-          <div className="mb-8 animate-pulse">
-            <div className="h-8 w-32 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-2" />
-            <div className="h-4 w-64 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-          </div>
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <main id="main-content" className="flex-1">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            {/* Header Skeleton */}
+            <div className="mb-8 animate-pulse">
+              <div className="h-8 w-32 bg-gray-200 dark:bg-[#1a1a1a] rounded mb-2" />
+              <div className="h-4 w-64 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+            </div>
 
-          {/* Form Skeleton */}
-          <div className="space-y-6">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="space-y-2">
-                <div className="h-4 w-20 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-                <div className="h-10 w-full bg-gray-200 dark:bg-[#1a1a1a] rounded-lg" />
-              </div>
-            ))}
+            {/* Form Skeleton */}
+            <div className="space-y-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="space-y-2">
+                  <div className="h-4 w-20 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+                  <div className="h-10 w-full bg-gray-200 dark:bg-[#1a1a1a] rounded-lg" />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </main>
+        <Footer />
       </div>
     );
   }
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Sign in to access settings
-          </h1>
-          <button
-            onClick={showSignIn}
-            className={cn(
-              "px-6 py-3 text-sm font-semibold rounded-lg",
-              "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-              "text-white shadow-lg shadow-blue-500/25",
-              "hover:-translate-y-0.5 transition-all duration-200"
-            )}
-          >
-            Sign In
-          </button>
-        </div>
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <main id="main-content" className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Sign in to access settings
+            </h1>
+            <button
+              onClick={showSignIn}
+              className={cn(
+                "px-6 py-3 text-sm font-semibold rounded-lg",
+                "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                "text-white shadow-lg shadow-blue-500/25",
+                "hover:-translate-y-0.5 transition-all duration-200"
+              )}
+            >
+              Sign In
+            </button>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex flex-col">
+      <Header />
+      <main id="main-content" className="flex-1">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Page Title */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
@@ -1187,7 +1199,9 @@ export default function SettingsPage() {
             </div>
           </div>
         </section>
-      </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }
