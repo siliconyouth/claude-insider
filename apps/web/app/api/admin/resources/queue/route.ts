@@ -12,6 +12,10 @@ import config from "@payload-config";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { hasRole } from "@/collections/Users";
+import {
+  checkRateLimit,
+  createRateLimitResponse,
+} from "@/lib/rate-limiter";
 
 export async function GET(request: Request) {
   try {
@@ -42,6 +46,12 @@ export async function GET(request: Request) {
 
     if (!user || !hasRole(user, ["admin", "moderator"])) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    // Check rate limit
+    const rateLimitResult = checkRateLimit(user.id, "queue");
+    if (!rateLimitResult.allowed) {
+      return createRateLimitResponse(rateLimitResult);
     }
 
     // Parse query params

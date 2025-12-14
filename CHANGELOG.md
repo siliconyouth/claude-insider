@@ -9,6 +9,92 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.62.0] - 2025-12-14
+
+### Added
+- **Admin System Enhancements** - Production-ready admin features for resource management
+
+#### Rate Limiting
+- Token bucket algorithm with per-endpoint configuration
+- Industry-standard `X-RateLimit-*` headers in responses
+- In-memory storage (use Redis for distributed deployments)
+- Rate limit status API at `GET /api/admin/rate-limits`
+- Configurable limits: discover (10/hr), scrape (20/hr), analyze (30/hr), queue (100/hr), import (5/hr)
+
+#### Audit Logging
+- Immutable audit log collection (`audit-logs`) with no update/delete access
+- User snapshot preservation for accountability
+- Tracks all admin actions: create, update, delete, approve, reject, discover, scrape, analyze, import, bulk
+- Audit log viewer dashboard at `/dashboard/resources/audit`
+- Filtering by action, user, collection, status, and date range
+- `lib/audit.ts` with helper functions: `createAuditLog`, `withAuditLog`, `auditQueueAction`, `auditDiscovery`
+
+#### Scheduled Auto-Discovery
+- Vercel Cron integration for automatic resource discovery every 6 hours
+- `GET /api/cron/discover` - Cron endpoint with CRON_SECRET authentication
+- `POST /api/cron/discover` - Manual trigger for admins
+- Sequential source processing with 1-second delays for rate limit compliance
+- Source-level scan frequency settings (daily, weekly, monthly, manual)
+- `lib/scheduled-discovery.ts` orchestrator with `runScheduledDiscovery` and `runSourceDiscovery`
+
+#### Analytics Dashboard
+- Discovery metrics and insights at `/dashboard/resources/analytics`
+- CSS-based visualizations (no external charting library)
+- Summary cards: total resources, pending queue, approval rate, active sources
+- Daily activity bar chart (discovered/approved/rejected)
+- Category distribution progress bars
+- Source performance with SVG donut charts for success rates
+- Time range selector: 7, 14, 30, 90 days
+
+#### Batch Import
+- Import resources from CSV or JSON files
+- `POST /api/admin/resources/import` - Batch import API (max 500 entries)
+- Import dashboard at `/dashboard/resources/import`
+- CSV parser with quoted value support
+- JSON array and `{ resources: [] }` format support
+- Duplicate detection against queue and existing resources
+- Options: skipDuplicates, defaultPriority, autoApprove
+- Preview first 10 entries before import
+- Detailed results with status per entry
+
+#### Email Notifications
+- Admin notification emails via Resend
+- `sendQueueDigestEmail` - Daily summary of pending items
+- `sendDiscoveryCompleteEmail` - Scheduled discovery results
+- `sendHighPriorityAlertEmail` - Urgent resource notifications
+- `sendImportCompleteEmail` - Batch import results
+- HTML email templates with inline CSS for email client compatibility
+
+### New Files
+- `lib/rate-limiter.ts` - Token bucket rate limiting
+- `lib/audit.ts` - Audit logging utilities
+- `lib/scheduled-discovery.ts` - Scheduled discovery orchestrator
+- `collections/AuditLogs.ts` - Immutable audit log collection
+- `app/api/admin/rate-limits/route.ts` - Rate limit status API
+- `app/api/admin/audit-logs/route.ts` - Audit logs API
+- `app/api/admin/resources/analytics/route.ts` - Analytics API
+- `app/api/admin/resources/import/route.ts` - Batch import API
+- `app/api/cron/discover/route.ts` - Cron endpoint
+- `app/dashboard/resources/audit/page.tsx` - Audit log viewer
+- `app/dashboard/resources/analytics/page.tsx` - Analytics dashboard
+- `app/dashboard/resources/import/page.tsx` - Import dashboard
+
+### Modified Files
+- All admin API routes - Added rate limiting
+- `collections/index.ts` - Added AuditLogs export
+- `payload.config.ts` - Added AuditLogs collection
+- `components/dashboard/sidebar.tsx` - Added Audit, Analytics, Import navigation
+- `vercel.json` - Added crons configuration for auto-discovery
+- `lib/email.ts` - Added admin notification email functions
+
+### Technical Details
+- Rate limiting uses in-memory Map storage
+- Audit logs are immutable (no update/delete at collection level)
+- Cron runs every 6 hours: `0 */6 * * *`
+- Analytics API fetches data in parallel with Promise.all
+- Import validates URLs before processing
+- Email templates use HTML tables for email client compatibility
+
 ## [0.61.0] - 2025-12-14
 
 ### Added

@@ -24,6 +24,10 @@ import { NextResponse } from "next/server";
 import { hasRole } from "@/collections/Users";
 import { scrapeUrl } from "@/lib/firecrawl";
 import { analyzeResourceUrl, quickRelevanceCheck } from "@/lib/ai/resource-analyzer";
+import {
+  checkRateLimit,
+  createRateLimitResponse,
+} from "@/lib/rate-limiter";
 
 // Helper to extract GitHub info from URL
 function parseGitHubUrl(url: string): { owner: string; repo: string } | null {
@@ -102,6 +106,12 @@ export async function POST(request: Request) {
 
     if (!user || !hasRole(user, ["admin", "moderator"])) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    // Check rate limit
+    const rateLimitResult = checkRateLimit(user.id, "discover");
+    if (!rateLimitResult.allowed) {
+      return createRateLimitResponse(rateLimitResult);
     }
 
     const body = await request.json();

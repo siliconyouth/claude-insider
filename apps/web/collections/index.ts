@@ -12,6 +12,7 @@ export { Resources } from './Resources';
 // Resource discovery and administration
 export { ResourceSources } from './ResourceSources';
 export { ResourceDiscoveryQueue } from './ResourceDiscoveryQueue';
+export { AuditLogs } from './AuditLogs';
 
 // Documentation cross-linking
 export { Documents } from './Documents';

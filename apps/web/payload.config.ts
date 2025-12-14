@@ -13,6 +13,7 @@ import {
   Resources,
   ResourceSources,
   ResourceDiscoveryQueue,
+  AuditLogs,
   Documents,
   DocumentSections,
   CodeExamples,
@@ -54,6 +55,8 @@ export default buildConfig({
     // Resource discovery and administration
     ResourceSources,
     ResourceDiscoveryQueue,
+    // System - Audit logging
+    AuditLogs,
     // Documentation cross-linking (Content group)
     Documents,
     DocumentSections,

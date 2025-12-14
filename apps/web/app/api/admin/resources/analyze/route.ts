@@ -24,6 +24,10 @@ import {
   quickRelevanceCheck,
 } from "@/lib/ai/resource-analyzer";
 import { hasRole } from "@/collections/Users";
+import {
+  checkRateLimit,
+  createRateLimitResponse,
+} from "@/lib/rate-limiter";
 
 export async function POST(request: Request) {
   try {
@@ -54,6 +58,12 @@ export async function POST(request: Request) {
 
     if (!user || !hasRole(user, ["admin", "moderator"])) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    // Check rate limit
+    const rateLimitResult = checkRateLimit(user.id, "analyze");
+    if (!rateLimitResult.allowed) {
+      return createRateLimitResponse(rateLimitResult);
     }
 
     // Parse request body
