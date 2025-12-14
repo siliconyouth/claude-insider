@@ -78,6 +78,7 @@ export function ProfileHoverCard({
 
   // Client-side only for portal
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     return () => setMounted(false);
   }, []);

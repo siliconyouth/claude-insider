@@ -8,8 +8,6 @@ import { Footer } from "@/components/footer";
 import { UserAvatar } from "@/components/users";
 import {
   getCompleteProfileData,
-  getUserFavoritesWithDetails,
-  getUserRatingsWithDetails,
   type UserProfile,
   type FavoriteWithResource,
   type RatingWithResource,

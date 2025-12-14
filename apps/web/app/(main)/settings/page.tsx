@@ -186,6 +186,7 @@ export default function SettingsPage() {
     // Prevent duplicate fetches on auth state changes
     if (isAuthenticated && !hasFetched.current) {
       hasFetched.current = true;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       loadSettings();
     }
   }, [isAuthenticated, loadSettings]);

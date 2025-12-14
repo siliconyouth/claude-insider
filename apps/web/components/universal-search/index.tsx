@@ -15,7 +15,7 @@
  * - Search history
  */
 
-import { useState, useEffect, useCallback, useRef, useTransition } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef, useTransition } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
@@ -265,10 +265,26 @@ export function UniversalSearch() {
     });
   };
 
-  // Get current results based on mode
-  const currentResults = mode === "quick" ? quickResults : (aiResponse?.results || []);
+  // Get current results based on mode (memoized to prevent recreation on every render)
+  const currentResults = useMemo(
+    () => mode === "quick" ? quickResults : (aiResponse?.results || []),
+    [mode, quickResults, aiResponse?.results]
+  );
   const isSearching = mode === "quick" ? isQuickSearching : isAISearching;
   const minQueryLength = mode === "quick" ? 2 : 3;
+
+  // Navigate to result (defined before handleKeyDown which uses it)
+  const navigateToResult = useCallback((url: string) => {
+    if (query.trim()) {
+      addToSearchHistory(query);
+    }
+    setIsNavigating(true);
+    router.push(url);
+    setTimeout(() => {
+      closeModal();
+      setIsNavigating(false);
+    }, 150);
+  }, [query, router, closeModal]);
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
@@ -289,21 +305,8 @@ export function UniversalSearch() {
         setMode(mode === "quick" ? "ai" : "quick");
       }
     },
-    [currentResults, selectedIndex, mode]
+    [currentResults, selectedIndex, mode, navigateToResult]
   );
-
-  // Navigate to result
-  const navigateToResult = (url: string) => {
-    if (query.trim()) {
-      addToSearchHistory(query);
-    }
-    setIsNavigating(true);
-    router.push(url);
-    setTimeout(() => {
-      closeModal();
-      setIsNavigating(false);
-    }, 150);
-  };
 
   // Handle history click
   const handleHistoryClick = (historyQuery: string) => {

@@ -9,6 +9,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.66.0] - 2025-12-14
+
+### Added
+
+#### User Avatar & Profile Hover Cards
+- **UserAvatar Component** - Reusable avatar with image or initials fallback (`components/users/user-avatar.tsx`)
+  - Multiple sizes: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+  - Optional online status indicator
+  - Gradient background for initials fallback
+- **ProfileHoverCard Component** - User profile preview on hover (`components/users/profile-hover-card.tsx`)
+  - Portal-based rendering for proper z-index handling
+  - Viewport-aware positioning (adjusts to avoid edge clipping)
+  - Delayed appearance (300ms) to prevent accidental triggers
+  - Shows: avatar, name, username, role badge, bio, join date
+
+### Changed
+
+- **Profile Page** - Uses `UserAvatar` component for consistent avatar display
+- **Settings Page** - Uses `UserAvatar` component with proper image or initials
+- **User Menu** - Uses `UserAvatar` for dropdown trigger
+- **Comment Item** - Uses `UserAvatar` and `ProfileHoverCard` for author links
+- **Feedback Button** - Redesigned with improvements:
+  - New bug/beetle icon to distinguish from AI assistant
+  - Repositioned to center-right (`top-1/2 right-6 -translate-y-1/2`)
+  - Size matches AI assistant button (`h-14 w-14`) for consistency
+  - Added hover tooltip
+
+### Fixed
+
+- **Notification Preferences Error** - Fixed "Failed to update preferences" error when saving settings
+  - Issue: `upsert` with partial data failed when no preferences row existed
+  - Solution: Check for existing row first, then INSERT with full defaults or UPDATE existing
+- **Lint Warnings** - Fixed all ESLint warnings:
+  - Added proper memoization in universal-search (`useMemo` for `currentResults`, `useCallback` for `navigateToResult`)
+  - Added eslint-disable comments for legitimate `setState` in portal mount effects
+
 ## [0.65.0] - 2025-12-14
 
 ### Added
