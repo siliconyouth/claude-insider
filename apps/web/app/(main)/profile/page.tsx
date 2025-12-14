@@ -5,6 +5,7 @@ import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { UserAvatar } from "@/components/users";
 import {
   getCompleteProfileData,
   getUserFavoritesWithDetails,
@@ -246,15 +247,12 @@ export default function ProfilePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Profile Header */}
           <div className="flex flex-col sm:flex-row items-start gap-6 mb-8">
-          {/* Avatar */}
-          <div
-            className={cn(
-              "w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold",
-              "bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white"
-            )}
-          >
-            {profile?.name?.[0]?.toUpperCase() || "U"}
-          </div>
+            {/* Avatar */}
+            <UserAvatar
+              src={profile?.avatarUrl}
+              name={profile?.name}
+              size="2xl"
+            />
 
           {/* Info */}
           <div className="flex-1">

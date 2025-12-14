@@ -20,6 +20,7 @@ import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
 import { DataManagement } from "@/components/settings/data-management";
 import { BlockedUsers } from "@/components/settings/blocked-users";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
+import { UserAvatar } from "@/components/users";
 import Link from "next/link";
 
 // Cache key for sessionStorage
@@ -386,20 +387,19 @@ export default function SettingsPage() {
           <div className="space-y-6">
             {/* Avatar Preview */}
             <div className="flex items-center gap-4">
-              <div
-                className={cn(
-                  "w-16 h-16 rounded-full flex items-center justify-center text-xl font-bold",
-                  "bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white"
-                )}
-              >
-                {name?.[0]?.toUpperCase() || "U"}
-              </div>
+              <UserAvatar
+                src={profile?.avatarUrl}
+                name={name || profile?.name}
+                size="lg"
+              />
               <div>
                 <p className="text-sm font-medium text-gray-900 dark:text-white">
                   Profile Photo
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Avatar is generated from your initials
+                  {profile?.avatarUrl
+                    ? "Your profile photo"
+                    : "Avatar is generated from your initials"}
                 </p>
               </div>
             </div>

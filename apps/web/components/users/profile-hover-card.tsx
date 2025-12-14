@@ -1,0 +1,360 @@
+"use client";
+
+/**
+ * ProfileHoverCard Component
+ *
+ * Shows a hover tooltip with user profile preview when hovering over user links.
+ * Follows best practices for hover interactions:
+ * - Delayed appearance (avoids accidental triggers)
+ * - Stays open when hovering over the card
+ * - Smooth animations
+ * - Proper positioning with viewport awareness
+ */
+
+import { useState, useRef, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
+import Link from "next/link";
+import { cn } from "@/lib/design-system";
+import { UserAvatar } from "./user-avatar";
+import { ROLE_INFO, type UserRole } from "@/lib/roles";
+
+export interface ProfileHoverCardUser {
+  id: string;
+  name: string;
+  username?: string | null;
+  image?: string | null;
+  bio?: string | null;
+  role?: UserRole;
+  joinedAt?: string;
+  stats?: {
+    followers?: number;
+    following?: number;
+    contributions?: number;
+  };
+}
+
+interface ProfileHoverCardProps {
+  /** User data to display */
+  user: ProfileHoverCardUser;
+  /** Content that triggers the hover */
+  children: React.ReactNode;
+  /** Delay before showing the card (ms) */
+  delayMs?: number;
+  /** Preferred position of the card */
+  side?: "top" | "bottom";
+  /** Additional classes for the trigger element */
+  className?: string;
+  /** Disable the hover functionality */
+  disabled?: boolean;
+  /** Custom link href (defaults to /users/[username]) */
+  href?: string;
+}
+
+interface Position {
+  top: number;
+  left: number;
+  side: "top" | "bottom";
+}
+
+const CARD_WIDTH = 320;
+const CARD_HEIGHT = 220;
+const PADDING = 12;
+
+export function ProfileHoverCard({
+  user,
+  children,
+  delayMs = 300,
+  side = "bottom",
+  className,
+  disabled = false,
+  href,
+}: ProfileHoverCardProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState<Position | null>(null);
+  const triggerRef = useRef<HTMLSpanElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  // Client-side only for portal
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  const calculatePosition = useCallback(() => {
+    if (!triggerRef.current) return null;
+
+    const rect = triggerRef.current.getBoundingClientRect();
+
+    // Calculate horizontal position (center on trigger, but shift if needed)
+    let left = rect.left + rect.width / 2 - CARD_WIDTH / 2;
+
+    // Keep within viewport
+    if (left < PADDING) left = PADDING;
+    if (left + CARD_WIDTH > window.innerWidth - PADDING) {
+      left = window.innerWidth - CARD_WIDTH - PADDING;
+    }
+
+    // Determine vertical position
+    const spaceAbove = rect.top;
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const preferredSide = side;
+
+    let actualSide: "top" | "bottom";
+    let top: number;
+
+    if (preferredSide === "top" && spaceAbove >= CARD_HEIGHT + PADDING) {
+      actualSide = "top";
+      top = rect.top - CARD_HEIGHT - PADDING + window.scrollY;
+    } else if (preferredSide === "bottom" && spaceBelow >= CARD_HEIGHT + PADDING) {
+      actualSide = "bottom";
+      top = rect.bottom + PADDING + window.scrollY;
+    } else if (spaceBelow >= spaceAbove) {
+      actualSide = "bottom";
+      top = rect.bottom + PADDING + window.scrollY;
+    } else {
+      actualSide = "top";
+      top = rect.top - CARD_HEIGHT - PADDING + window.scrollY;
+    }
+
+    return { top, left, side: actualSide };
+  }, [side]);
+
+  const handleMouseEnter = useCallback(() => {
+    if (disabled) return;
+
+    timeoutRef.current = setTimeout(() => {
+      const pos = calculatePosition();
+      if (pos) {
+        setPosition(pos);
+        setIsOpen(true);
+      }
+    }, delayMs);
+  }, [delayMs, calculatePosition, disabled]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setIsOpen(false);
+  }, []);
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Recalculate position on scroll/resize
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleUpdate = () => {
+      const pos = calculatePosition();
+      if (pos) setPosition(pos);
+    };
+
+    window.addEventListener("scroll", handleUpdate, true);
+    window.addEventListener("resize", handleUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", handleUpdate, true);
+      window.removeEventListener("resize", handleUpdate);
+    };
+  }, [isOpen, calculatePosition]);
+
+  const profileUrl = href || (user.username ? `/users/${user.username}` : `/profile`);
+  const roleInfo = user.role ? ROLE_INFO[user.role] : null;
+  const showRoleBadge = user.role && user.role !== "user";
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
+  };
+
+  const card = isOpen && position && mounted && (
+    <div
+      ref={cardRef}
+      className={cn(
+        "fixed z-[100]",
+        "animate-in fade-in-0 zoom-in-95",
+        "duration-200 ease-out",
+        position.side === "top" ? "origin-bottom" : "origin-top"
+      )}
+      style={{
+        top: position.top,
+        left: position.left,
+        width: CARD_WIDTH,
+      }}
+      onMouseEnter={() => {
+        // Keep card open when hovering over it
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+      }}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Arrow indicator */}
+      <div
+        className={cn(
+          "absolute left-1/2 -translate-x-1/2",
+          "w-3 h-3 rotate-45",
+          "bg-white dark:bg-[#111111]",
+          "border border-gray-200 dark:border-[#262626]",
+          position.side === "top"
+            ? "bottom-[-7px] border-t-0 border-l-0"
+            : "top-[-7px] border-b-0 border-r-0"
+        )}
+      />
+
+      {/* Card content */}
+      <div className="relative bg-white dark:bg-[#111111] rounded-xl shadow-xl border border-gray-200 dark:border-[#262626] overflow-hidden">
+        {/* Header with gradient */}
+        <div className="h-16 bg-gradient-to-r from-violet-600/20 via-blue-600/20 to-cyan-600/20" />
+
+        {/* Avatar overlapping header */}
+        <div className="px-4 -mt-8">
+          <Link href={profileUrl} className="block">
+            <UserAvatar
+              src={user.image}
+              name={user.name}
+              size="xl"
+              className="ring-4 ring-white dark:ring-[#111111]"
+            />
+          </Link>
+        </div>
+
+        {/* User info */}
+        <div className="px-4 pb-4 pt-2">
+          <div className="flex items-start justify-between gap-2">
+            <div className="min-w-0">
+              <Link
+                href={profileUrl}
+                className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 truncate block"
+              >
+                {user.name}
+              </Link>
+              {user.username && (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  @{user.username}
+                </p>
+              )}
+            </div>
+
+            {/* Role badge */}
+            {showRoleBadge && roleInfo && (
+              <span
+                className={cn(
+                  "px-2 py-0.5 text-xs font-medium rounded-full flex-shrink-0",
+                  roleInfo.bgColor,
+                  roleInfo.color
+                )}
+              >
+                {roleInfo.label}
+              </span>
+            )}
+          </div>
+
+          {/* Bio */}
+          {user.bio && (
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+              {user.bio}
+            </p>
+          )}
+
+          {/* Stats and join date */}
+          <div className="mt-3 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+            {user.stats?.followers !== undefined && (
+              <span>
+                <strong className="text-gray-900 dark:text-white">
+                  {user.stats.followers}
+                </strong>{" "}
+                followers
+              </span>
+            )}
+            {user.stats?.following !== undefined && (
+              <span>
+                <strong className="text-gray-900 dark:text-white">
+                  {user.stats.following}
+                </strong>{" "}
+                following
+              </span>
+            )}
+            {user.joinedAt && (
+              <span className="flex items-center gap-1">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                Joined {formatDate(user.joinedAt)}
+              </span>
+            )}
+          </div>
+
+          {/* View profile link */}
+          <Link
+            href={profileUrl}
+            className={cn(
+              "mt-3 block w-full text-center px-3 py-1.5 rounded-lg text-sm font-medium",
+              "border border-gray-200 dark:border-[#262626]",
+              "text-gray-700 dark:text-gray-300",
+              "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
+              "transition-colors"
+            )}
+          >
+            View Profile
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <span
+        ref={triggerRef}
+        className={cn("inline cursor-pointer", className)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {children}
+      </span>
+
+      {mounted && createPortal(card, document.body)}
+    </>
+  );
+}
+
+/**
+ * Skeleton placeholder for loading state
+ */
+export function ProfileHoverCardSkeleton() {
+  return (
+    <div
+      className="bg-white dark:bg-[#111111] rounded-xl border border-gray-200 dark:border-[#262626]"
+      style={{ width: CARD_WIDTH }}
+    >
+      <div className="h-16 bg-gray-200 dark:bg-gray-800 animate-pulse" />
+      <div className="px-4 -mt-8">
+        <div className="w-20 h-20 rounded-full bg-gray-200 dark:bg-gray-800 animate-pulse ring-4 ring-white dark:ring-[#111111]" />
+      </div>
+      <div className="px-4 pb-4 pt-2 space-y-2">
+        <div className="h-5 w-32 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+        <div className="h-4 w-24 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+        <div className="h-4 w-full bg-gray-200 dark:bg-gray-800 rounded animate-pulse mt-3" />
+      </div>
+    </div>
+  );
+}

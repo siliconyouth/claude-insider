@@ -6,6 +6,7 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { voteComment, deleteComment, type Comment } from "@/app/actions/comments";
 import { useToast } from "@/components/toast";
 import { CommentForm } from "./comment-form";
+import { UserAvatar, ProfileHoverCard } from "@/components/users";
 import Link from "next/link";
 
 interface CommentItemProps {
@@ -111,14 +112,30 @@ export function CommentItem({
       <div className="flex gap-3">
         {/* Avatar */}
         <div className="flex-shrink-0">
-          <div
-            className={cn(
-              "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
-              "bg-gradient-to-br from-violet-600 to-blue-600 text-white"
-            )}
-          >
-            {comment.user?.name?.[0]?.toUpperCase() || "U"}
-          </div>
+          {comment.user?.username ? (
+            <ProfileHoverCard
+              user={{
+                id: comment.user_id,
+                name: comment.user.name || "Anonymous",
+                username: comment.user.username,
+                image: comment.user.image,
+              }}
+            >
+              <Link href={`/users/${comment.user.username}`}>
+                <UserAvatar
+                  src={comment.user?.image}
+                  name={comment.user?.name}
+                  size="sm"
+                />
+              </Link>
+            </ProfileHoverCard>
+          ) : (
+            <UserAvatar
+              src={comment.user?.image}
+              name={comment.user?.name}
+              size="sm"
+            />
+          )}
         </div>
 
         {/* Content */}
@@ -126,12 +143,21 @@ export function CommentItem({
           {/* Header */}
           <div className="flex items-center gap-2 flex-wrap">
             {comment.user?.username ? (
-              <Link
-                href={`/users/${comment.user.username}`}
-                className="font-medium text-sm text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
+              <ProfileHoverCard
+                user={{
+                  id: comment.user_id,
+                  name: comment.user.name || "Anonymous",
+                  username: comment.user.username,
+                  image: comment.user.image,
+                }}
               >
-                {comment.user.name || "Anonymous"}
-              </Link>
+                <Link
+                  href={`/users/${comment.user.username}`}
+                  className="font-medium text-sm text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
+                >
+                  {comment.user.name || "Anonymous"}
+                </Link>
+              </ProfileHoverCard>
             ) : (
               <span className="font-medium text-sm text-gray-900 dark:text-white">
                 {comment.user?.name || "Anonymous"}

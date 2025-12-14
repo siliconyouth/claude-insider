@@ -13,6 +13,7 @@ import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { signOut } from "@/lib/auth-client";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
+import { UserAvatar } from "@/components/users";
 
 export function UserMenu() {
   const { user, isAuthenticated, isLoading, showSignIn } = useAuth();
@@ -70,13 +71,6 @@ export function UserMenu() {
   }
 
   // Authenticated - show user menu
-  const initials = user?.name
-    ?.split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2) || "U";
-
   return (
     <div ref={menuRef} className="relative">
       <button
@@ -90,22 +84,11 @@ export function UserMenu() {
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        {user?.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={user.image}
-            alt={user.name || "User"}
-            className="w-8 h-8 rounded-full object-cover"
-          />
-        ) : (
-          <div className={cn(
-            "w-8 h-8 rounded-full flex items-center justify-center",
-            "bg-gradient-to-br from-violet-600 to-cyan-600",
-            "text-white text-sm font-medium"
-          )}>
-            {initials}
-          </div>
-        )}
+        <UserAvatar
+          src={user?.image}
+          name={user?.name}
+          size="sm"
+        />
         <svg
           className={cn(
             "w-4 h-4 text-gray-500 transition-transform duration-200",
