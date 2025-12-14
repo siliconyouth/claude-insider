@@ -5,9 +5,12 @@
  *
  * Displays user avatar with fallback to initials.
  * Supports multiple sizes and optional online status indicator.
+ *
+ * Uses a regular <img> tag instead of Next.js Image because user avatars
+ * can come from many external sources (OAuth providers, Supabase storage)
+ * that may not be configured in next.config.js domains.
  */
 
-import Image from "next/image";
 import { cn } from "@/lib/design-system";
 
 export interface UserAvatarProps {
@@ -97,13 +100,11 @@ export function UserAvatar({
         )}
       >
         {hasImage ? (
-          <Image
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
             src={src}
             alt={alt || name || "User avatar"}
-            width={96}
-            height={96}
             className="w-full h-full object-cover"
-            unoptimized={src.startsWith("data:") || src.includes("googleusercontent")}
           />
         ) : (
           <span
