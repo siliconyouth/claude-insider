@@ -2,6 +2,26 @@
  * Keyboard Shortcuts Configuration
  *
  * Defines all available keyboard shortcuts and their metadata.
+ *
+ * Best Practices Applied:
+ * - Cmd/Ctrl+K for search (industry standard)
+ * - Single letters (j/k/s) only work when NOT in text inputs
+ * - Alt/Option used for custom navigation (rarely conflicts with browser)
+ * - Escape for closing modals (universal)
+ * - / for search focus (Unix/Vim standard)
+ * - ? for help (universal)
+ *
+ * Avoided Conflicts:
+ * - Cmd+C/V/X/Z (copy/paste/cut/undo)
+ * - Cmd+R/Shift+R (reload/hard reload)
+ * - Cmd+T/Shift+T (new tab/reopen tab)
+ * - Cmd+W (close tab)
+ * - Cmd+F/Shift+F (find)
+ * - Cmd+D (bookmark)
+ * - Cmd+S (save)
+ * - Cmd+P (print)
+ * - Cmd+L (address bar)
+ * - Cmd+N (new window)
  */
 
 export interface KeyboardShortcut {
@@ -12,10 +32,14 @@ export interface KeyboardShortcut {
   category: "navigation" | "search" | "actions" | "accessibility";
   action: string;
   global?: boolean;
+  /** If true, shortcut only works when NOT in a text input/textarea */
+  nonInputOnly?: boolean;
 }
 
 export const shortcuts: KeyboardShortcut[] = [
-  // Search shortcuts
+  // ============================================
+  // SEARCH SHORTCUTS
+  // ============================================
   {
     id: "open-search",
     key: "k",
@@ -42,12 +66,24 @@ export const shortcuts: KeyboardShortcut[] = [
     action: "closeModal",
     global: true,
   },
+  {
+    id: "focus-search",
+    key: "/",
+    description: "Focus search input",
+    category: "search",
+    action: "focusSearch",
+    global: true,
+    nonInputOnly: true,
+  },
 
-  // Navigation shortcuts
+  // ============================================
+  // NAVIGATION SHORTCUTS
+  // Using Alt/Option modifier (rarely conflicts with browsers)
+  // ============================================
   {
     id: "go-home",
-    key: "g",
-    modifiers: ["shift"],
+    key: "h",
+    modifiers: ["alt"],
     description: "Go to home",
     category: "navigation",
     action: "goHome",
@@ -56,7 +92,7 @@ export const shortcuts: KeyboardShortcut[] = [
   {
     id: "go-docs",
     key: "d",
-    modifiers: ["shift"],
+    modifiers: ["alt", "shift"],
     description: "Go to documentation",
     category: "navigation",
     action: "goDocs",
@@ -65,7 +101,7 @@ export const shortcuts: KeyboardShortcut[] = [
   {
     id: "go-resources",
     key: "r",
-    modifiers: ["shift"],
+    modifiers: ["alt", "shift"],
     description: "Go to resources",
     category: "navigation",
     action: "goResources",
@@ -74,18 +110,20 @@ export const shortcuts: KeyboardShortcut[] = [
   {
     id: "go-favorites",
     key: "f",
-    modifiers: ["shift"],
+    modifiers: ["alt", "shift"],
     description: "Go to favorites",
     category: "navigation",
     action: "goFavorites",
     global: true,
   },
+  // Vim-style navigation (only when not in text input)
   {
     id: "next-item",
     key: "j",
     description: "Next item",
     category: "navigation",
     action: "nextItem",
+    nonInputOnly: true,
   },
   {
     id: "prev-item",
@@ -93,6 +131,7 @@ export const shortcuts: KeyboardShortcut[] = [
     description: "Previous item",
     category: "navigation",
     action: "prevItem",
+    nonInputOnly: true,
   },
   {
     id: "open-item",
@@ -100,30 +139,25 @@ export const shortcuts: KeyboardShortcut[] = [
     description: "Open selected item",
     category: "navigation",
     action: "openItem",
+    nonInputOnly: true,
   },
 
-  // Action shortcuts
+  // ============================================
+  // ACTION SHORTCUTS
+  // ============================================
   {
     id: "toggle-favorite",
     key: "s",
     description: "Save/unsave favorite",
     category: "actions",
     action: "toggleFavorite",
+    nonInputOnly: true,
   },
   {
     id: "copy-link",
-    key: "c",
-    modifiers: ["meta", "shift"],
+    key: "l",
+    modifiers: ["alt", "shift"],
     description: "Copy page link",
-    category: "actions",
-    action: "copyLink",
-    global: true,
-  },
-  {
-    id: "copy-link-alt",
-    key: "c",
-    modifiers: ["ctrl", "shift"],
-    description: "Copy page link (Windows/Linux)",
     category: "actions",
     action: "copyLink",
     global: true,
@@ -131,14 +165,16 @@ export const shortcuts: KeyboardShortcut[] = [
   {
     id: "toggle-theme",
     key: "t",
-    modifiers: ["shift"],
+    modifiers: ["alt"],
     description: "Toggle theme",
     category: "actions",
     action: "toggleTheme",
     global: true,
   },
 
-  // Accessibility shortcuts
+  // ============================================
+  // ACCESSIBILITY SHORTCUTS
+  // ============================================
   {
     id: "show-shortcuts",
     key: "?",
@@ -146,22 +182,15 @@ export const shortcuts: KeyboardShortcut[] = [
     category: "accessibility",
     action: "showHelp",
     global: true,
+    nonInputOnly: true,
   },
   {
     id: "skip-to-content",
-    key: ".",
-    modifiers: ["shift"],
+    key: "0",
+    modifiers: ["alt"],
     description: "Skip to main content",
     category: "accessibility",
     action: "skipToContent",
-    global: true,
-  },
-  {
-    id: "focus-search",
-    key: "/",
-    description: "Focus search input",
-    category: "search",
-    action: "focusSearch",
     global: true,
   },
 ];
@@ -178,15 +207,16 @@ export const shortcutCategories = [
  */
 export function formatShortcutKey(shortcut: KeyboardShortcut): string {
   const parts: string[] = [];
+  const isMac = typeof navigator !== "undefined" && navigator.platform?.includes("Mac");
 
   if (shortcut.modifiers?.includes("meta")) {
-    parts.push(typeof navigator !== "undefined" && navigator.platform?.includes("Mac") ? "⌘" : "Ctrl");
+    parts.push(isMac ? "⌘" : "Ctrl");
   }
   if (shortcut.modifiers?.includes("ctrl")) {
     parts.push("Ctrl");
   }
   if (shortcut.modifiers?.includes("alt")) {
-    parts.push(typeof navigator !== "undefined" && navigator.platform?.includes("Mac") ? "⌥" : "Alt");
+    parts.push(isMac ? "⌥" : "Alt");
   }
   if (shortcut.modifiers?.includes("shift")) {
     parts.push("⇧");
@@ -205,32 +235,84 @@ export function formatShortcutKey(shortcut: KeyboardShortcut): string {
 }
 
 /**
+ * Check if the current focus is in a text input element
+ */
+export function isInTextInput(): boolean {
+  const activeElement = document.activeElement;
+  if (!activeElement) return false;
+
+  const tagName = activeElement.tagName.toLowerCase();
+  if (tagName === "input") {
+    const inputType = (activeElement as HTMLInputElement).type?.toLowerCase();
+    // These input types accept text
+    const textInputTypes = ["text", "password", "email", "number", "search", "tel", "url", "date", "time", "datetime-local"];
+    return textInputTypes.includes(inputType) || !inputType;
+  }
+
+  if (tagName === "textarea") return true;
+  if ((activeElement as HTMLElement).isContentEditable) return true;
+
+  return false;
+}
+
+/**
  * Check if a keyboard event matches a shortcut
+ *
+ * This function ensures EXACT modifier matching:
+ * - If shortcut requires Shift, event must have Shift AND NO extra modifiers
+ * - This prevents Cmd+Shift+R from triggering Shift+R shortcuts
  */
 export function matchesShortcut(event: KeyboardEvent, shortcut: KeyboardShortcut): boolean {
-  // Check modifiers
+  // Check if shortcut should be blocked when in text input
+  if (shortcut.nonInputOnly && isInTextInput()) {
+    return false;
+  }
+
+  // Required modifiers from shortcut definition
   const needsMeta = shortcut.modifiers?.includes("meta") ?? false;
   const needsCtrl = shortcut.modifiers?.includes("ctrl") ?? false;
   const needsAlt = shortcut.modifiers?.includes("alt") ?? false;
   const needsShift = shortcut.modifiers?.includes("shift") ?? false;
 
-  // On Mac, metaKey is ⌘, on Windows it's the Windows key
-  // We treat Ctrl on Windows/Linux as equivalent to Meta on Mac for shortcuts
-  const metaOrCtrl = event.metaKey || (needsMeta && event.ctrlKey);
+  // Actual modifiers pressed
+  const hasMeta = event.metaKey;
+  const hasCtrl = event.ctrlKey;
+  const hasAlt = event.altKey;
+  const hasShift = event.shiftKey;
 
-  if (needsMeta && !metaOrCtrl) return false;
-  if (needsCtrl && !event.ctrlKey) return false;
-  if (needsAlt && !event.altKey) return false;
-  if (needsShift && !event.shiftKey) return false;
+  // For cross-platform: treat Ctrl on Windows/Linux as equivalent to Meta on Mac
+  // But ONLY for shortcuts that specifically request meta
+  const isMac = typeof navigator !== "undefined" && navigator.platform?.includes("Mac");
 
-  // If no modifiers needed, make sure none are pressed (except for ? which needs shift)
-  if (!needsMeta && !needsCtrl && !needsAlt && !needsShift) {
-    if (event.metaKey || event.ctrlKey || event.altKey) return false;
-    // Allow shift for ? since it requires shift to type
-    if (event.shiftKey && shortcut.key !== "?") return false;
+  // Check that required modifiers are pressed
+  if (needsMeta) {
+    // On Mac: require Meta (Cmd)
+    // On Windows/Linux: accept either Meta or Ctrl
+    if (isMac) {
+      if (!hasMeta) return false;
+    } else {
+      if (!hasMeta && !hasCtrl) return false;
+    }
   }
 
-  // Check the key
+  if (needsCtrl && !hasCtrl) return false;
+  if (needsAlt && !hasAlt) return false;
+  if (needsShift && !hasShift) return false;
+
+  // CRITICAL: Check that NO EXTRA modifiers are pressed
+  // This prevents Cmd+Shift+R from triggering an Alt+Shift+R shortcut
+  if (!needsMeta && hasMeta) return false;
+  if (!needsCtrl && hasCtrl) {
+    // Exception: on non-Mac, Ctrl can substitute for Meta
+    if (isMac || !needsMeta) return false;
+  }
+  if (!needsAlt && hasAlt) return false;
+  if (!needsShift && hasShift) {
+    // Exception: ? requires shift to type
+    if (shortcut.key !== "?") return false;
+  }
+
+  // Check the key (case-insensitive)
   const eventKey = event.key.toLowerCase();
   const shortcutKey = shortcut.key.toLowerCase();
 
@@ -250,3 +332,46 @@ export function getShortcutsByCategory(category: KeyboardShortcut["category"]): 
 export function getGlobalShortcuts(): KeyboardShortcut[] {
   return shortcuts.filter((s) => s.global);
 }
+
+/**
+ * Reserved browser/OS shortcuts that should NEVER be overridden
+ * This list is for documentation and testing purposes
+ */
+export const RESERVED_SHORTCUTS = {
+  // Copy/Paste/Undo
+  "meta+c": "Copy",
+  "meta+v": "Paste",
+  "meta+x": "Cut",
+  "meta+z": "Undo",
+  "meta+shift+z": "Redo",
+  "meta+a": "Select all",
+
+  // Browser navigation
+  "meta+r": "Reload",
+  "meta+shift+r": "Hard reload",
+  "meta+t": "New tab",
+  "meta+shift+t": "Reopen closed tab",
+  "meta+w": "Close tab",
+  "meta+n": "New window",
+  "meta+shift+n": "New incognito window",
+  "meta+l": "Focus address bar",
+  "meta+d": "Bookmark",
+
+  // Find
+  "meta+f": "Find in page",
+  "meta+g": "Find next",
+  "meta+shift+g": "Find previous",
+
+  // Other
+  "meta+s": "Save",
+  "meta+p": "Print",
+  "meta+q": "Quit app",
+  "meta+h": "Hide app (Mac)",
+  "meta+m": "Minimize",
+
+  // Function keys
+  "F1": "Help",
+  "F5": "Reload (Windows)",
+  "F11": "Full screen",
+  "F12": "Developer tools",
+} as const;

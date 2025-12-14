@@ -13,7 +13,15 @@ No pending changes.
 
 ### Fixed
 - **Critical: Module Import Bug** - Fixed incorrect import of `authClient` from wrong module (`@/components/providers/auth-provider` → `@/lib/auth-client`) that caused JavaScript bundle to fail, making all UI elements unclickable
-- **Keyboard Shortcut Conflict** - Changed "Copy page link" shortcut from `Cmd+C` to `Cmd+Shift+C` to prevent interference with system copy functionality in text inputs
+- **Keyboard Shortcuts Overhaul** - Complete rewrite to prevent conflicts with browser/OS shortcuts:
+  - Changed navigation shortcuts from `Shift+<letter>` to `Alt/Option+<letter>` pattern
+  - Fixed `matchesShortcut()` to require EXACT modifier matching (prevents `Cmd+Shift+R` from triggering `Shift+R`)
+  - Added `nonInputOnly` flag to disable shortcuts when typing in text fields
+  - Added `isInTextInput()` helper to detect focus in input/textarea/contenteditable
+  - Navigation: `⌥H` (home), `⌥⇧D` (docs), `⌥⇧R` (resources), `⌥⇧F` (favorites)
+  - Actions: `⌥T` (toggle theme), `⌥⇧L` (copy link)
+  - Accessibility: `⌥0` (skip to content)
+  - Added `RESERVED_SHORTCUTS` constant documenting browser shortcuts to never override
 
 ### Changed
 - **Onboarding Wizard Improvements**
