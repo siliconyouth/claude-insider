@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { cn } from "@/lib/design-system";
 
-const APP_VERSION = "0.61.0";
+const APP_VERSION = "0.64.0";
 
 export async function Footer() {
   const t = await getTranslations("footer");

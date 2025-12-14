@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.64.0] - 2025-12-14
+
+### Fixed
+- **Critical: Module Import Bug** - Fixed incorrect import of `authClient` from wrong module (`@/components/providers/auth-provider` → `@/lib/auth-client`) that caused JavaScript bundle to fail, making all UI elements unclickable
+- **Keyboard Shortcut Conflict** - Changed "Copy page link" shortcut from `Cmd+C` to `Cmd+Shift+C` to prevent interference with system copy functionality in text inputs
+
+### Changed
+- **Onboarding Wizard Improvements**
+  - Added options menu (⋮) with "Complete later" and "Sign out" options for user control
+  - Added localStorage persistence for wizard progress (saves steps as you go)
+  - Made wizard responsive with better height handling (`max-h-[95vh]` on mobile, auto on desktop)
+  - Reduced step component sizes for compact 2-column layouts on desktop
+  - Fixed click-outside overlay to use `absolute` instead of `fixed` positioning
+  - Improved `handleComplete` to properly await API response before reloading
+
+- **Environment Configuration**
+  - Fixed `.env.example` to use correct `ELEVENLABS_API_KEY` instead of `OPENAI_API_KEY`
+
 ## [0.63.0] - 2025-12-14
 
 ### Added

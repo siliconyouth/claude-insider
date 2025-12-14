@@ -91,17 +91,13 @@ export function BetaApplyStep() {
 
   return (
     <StepWrapper>
-      <div className="space-y-6">
+      <div className="space-y-3">
         <StepInfoBox>
           <div className="flex items-start gap-2">
-            <span className="text-lg">🚀</span>
-            <div>
-              <p className="font-medium">Join the Beta Program</p>
-              <p className="text-sm opacity-90 mt-1">
-                Get early access to new features and help shape the future of
-                Claude Insider. Beta testers can provide feedback and report bugs.
-              </p>
-            </div>
+            <span className="text-base">🚀</span>
+            <p className="text-xs">
+              <span className="font-medium">Join the Beta Program</span> - Get early access to new features and help shape Claude Insider.
+            </p>
           </div>
         </StepInfoBox>
 
@@ -109,19 +105,18 @@ export function BetaApplyStep() {
         <div>
           <label
             htmlFor="betaMotivation"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-0.5"
           >
-            Why do you want to join the beta program?{" "}
-            <span className="text-red-500">*</span>
+            Why join the beta? <span className="text-red-500">*</span>
           </label>
           <textarea
             id="betaMotivation"
             value={data.betaMotivation}
             onChange={(e) => updateData({ betaMotivation: e.target.value })}
-            rows={4}
+            rows={2}
             maxLength={500}
             className={cn(
-              "w-full px-4 py-2.5 rounded-lg resize-none",
+              "w-full px-3 py-2 rounded-lg resize-none text-sm",
               "bg-white dark:bg-gray-900",
               "border border-gray-200 dark:border-gray-700",
               "text-gray-900 dark:text-white",
@@ -129,76 +124,75 @@ export function BetaApplyStep() {
               "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
               "transition-colors duration-200"
             )}
-            placeholder="Tell us what excites you about testing new features and how you'd contribute to making Claude Insider better..."
+            placeholder="What excites you about testing new features?"
           />
-          <p className="text-xs text-gray-400 mt-1 text-right">
+          <p className="text-xs text-gray-400 text-right">
             {data.betaMotivation.length}/500
           </p>
         </div>
 
-        {/* Experience level */}
-        <div>
-          <label
-            htmlFor="betaExperienceLevel"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-          >
-            Your experience with Claude/AI <span className="text-red-500">*</span>
-          </label>
-          <select
-            id="betaExperienceLevel"
-            value={data.betaExperienceLevel}
-            onChange={(e) =>
-              updateData({
-                betaExperienceLevel: e.target.value as ExperienceLevel | "",
-              })
-            }
-            className={cn(
-              "w-full px-4 py-2.5 rounded-lg",
-              "bg-white dark:bg-gray-900",
-              "border border-gray-200 dark:border-gray-700",
-              "text-gray-900 dark:text-white",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              "transition-colors duration-200"
-            )}
-          >
-            <option value="">Select your experience level</option>
-            {EXPERIENCE_LEVELS.map((level) => (
-              <option key={level.value} value={level.value}>
-                {level.label} - {level.description}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Experience level and Use case in 2-column layout on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* Experience level */}
+          <div>
+            <label
+              htmlFor="betaExperienceLevel"
+              className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-0.5"
+            >
+              Experience level <span className="text-red-500">*</span>
+            </label>
+            <select
+              id="betaExperienceLevel"
+              value={data.betaExperienceLevel}
+              onChange={(e) =>
+                updateData({
+                  betaExperienceLevel: e.target.value as ExperienceLevel | "",
+                })
+              }
+              className={cn(
+                "w-full px-3 py-2 rounded-lg text-sm",
+                "bg-white dark:bg-gray-900",
+                "border border-gray-200 dark:border-gray-700",
+                "text-gray-900 dark:text-white",
+                "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                "transition-colors duration-200"
+              )}
+            >
+              <option value="">Select level</option>
+              {EXPERIENCE_LEVELS.map((level) => (
+                <option key={level.value} value={level.value}>
+                  {level.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* Use case */}
-        <div>
-          <label
-            htmlFor="betaUseCase"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-          >
-            How do you use Claude?{" "}
-            <span className="text-gray-400 font-normal">(optional)</span>
-          </label>
-          <textarea
-            id="betaUseCase"
-            value={data.betaUseCase}
-            onChange={(e) => updateData({ betaUseCase: e.target.value })}
-            rows={3}
-            maxLength={300}
-            className={cn(
-              "w-full px-4 py-2.5 rounded-lg resize-none",
-              "bg-white dark:bg-gray-900",
-              "border border-gray-200 dark:border-gray-700",
-              "text-gray-900 dark:text-white",
-              "placeholder-gray-400 dark:placeholder-gray-500",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              "transition-colors duration-200"
-            )}
-            placeholder="e.g., coding assistance, content writing, research, learning..."
-          />
-          <p className="text-xs text-gray-400 mt-1 text-right">
-            {data.betaUseCase.length}/300
-          </p>
+          {/* Use case */}
+          <div>
+            <label
+              htmlFor="betaUseCase"
+              className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-0.5"
+            >
+              How do you use Claude? <span className="text-gray-400">(optional)</span>
+            </label>
+            <input
+              id="betaUseCase"
+              type="text"
+              value={data.betaUseCase}
+              onChange={(e) => updateData({ betaUseCase: e.target.value })}
+              maxLength={300}
+              className={cn(
+                "w-full px-3 py-2 rounded-lg text-sm",
+                "bg-white dark:bg-gray-900",
+                "border border-gray-200 dark:border-gray-700",
+                "text-gray-900 dark:text-white",
+                "placeholder-gray-400 dark:placeholder-gray-500",
+                "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                "transition-colors duration-200"
+              )}
+              placeholder="Coding, writing, research..."
+            />
+          </div>
         </div>
       </div>
 

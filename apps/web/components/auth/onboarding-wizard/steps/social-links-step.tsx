@@ -70,21 +70,21 @@ export function SocialLinksStep() {
 
   return (
     <StepWrapper>
-      <div className="space-y-5">
+      <div className="space-y-3">
         <StepInfoBox>
           <div className="flex items-start gap-2">
-            <span className="text-lg">💡</span>
-            <p>
-              Add your social links to help others connect with you. All fields are
-              optional - fill in only what you want to share.
+            <span className="text-base">💡</span>
+            <p className="text-xs">
+              Add your social links to connect with others. All fields are optional.
             </p>
           </div>
         </StepInfoBox>
 
-        <div className="space-y-4">
+        {/* Compact 2-column grid on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {SOCIAL_PLATFORMS.map((platform) => (
             <div key={platform.id}>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-0.5">
                 {platform.label}
               </label>
               <SocialInput
