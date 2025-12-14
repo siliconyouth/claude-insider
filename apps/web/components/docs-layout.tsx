@@ -7,6 +7,8 @@ import { ArticleJsonLd } from "@/components/json-ld";
 import { EditOnGitHub } from "@/components/edit-on-github";
 import { SuggestEditButton } from "@/components/interactions/suggest-edit-button";
 import { CommentSection } from "@/components/interactions/comment-section";
+import { FavoriteButton } from "@/components/interactions/favorite-button";
+import { RatingStars } from "@/components/interactions/rating-stars";
 
 interface SidebarSection {
   title: string;
@@ -111,25 +113,44 @@ export function DocsLayout({
 
             <article className="prose dark:prose-invert prose-blue dark:prose-cyan max-w-none">
               <h1 className="text-4xl font-bold mb-2">{title}</h1>
-              {readingTime && (
-                <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 mb-6 not-prose">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              {/* Doc Meta Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6 not-prose">
+                {readingTime && (
+                  <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span>{readingTime}</span>
+                  </div>
+                )}
+
+                {/* User Interaction Controls */}
+                {slug && (
+                  <div className="flex items-center gap-3">
+                    <FavoriteButton
+                      resourceType="doc"
+                      resourceId={slug.join("/")}
+                      size="sm"
                     />
-                  </svg>
-                  <span>{readingTime}</span>
-                </div>
-              )}
+                    <RatingStars
+                      resourceType="doc"
+                      resourceId={slug.join("/")}
+                      size="sm"
+                    />
+                  </div>
+                )}
+              </div>
               {description && (
                 <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
                   {description}
