@@ -15,7 +15,7 @@ export default function AccessibilityStatementPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert max-w-none">
           <h1 className="text-4xl font-bold mb-2">Accessibility Statement</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 12, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 14, 2025</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Our Commitment</h2>
@@ -66,7 +66,16 @@ export default function AccessibilityStatementPage() {
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Interactive Components</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>Search modal:</strong> Accessible dialog with proper focus management and ARIA attributes</li>
+              <li><strong>Unified Search Modal:</strong> Accessible dialog with dual modes:
+                <ul className="list-disc list-inside ml-6 mt-2 text-gray-400">
+                  <li>Quick Mode: Instant fuzzy search for fast navigation</li>
+                  <li>AI Mode: Semantic search with Claude for natural language queries</li>
+                  <li>Voice search: Speak your query in AI Mode (Web Speech API)</li>
+                  <li>Press <code className="bg-gray-800 px-1 rounded">Tab</code> inside the modal to switch between Quick and AI modes</li>
+                  <li>ARIA live regions announce search results and mode changes</li>
+                </ul>
+              </li>
+              <li><strong>Language selector:</strong> 18-language picker in footer with keyboard navigation</li>
               <li><strong>Code blocks:</strong> Copy buttons with accessible labels and feedback</li>
               <li><strong>Theme toggle:</strong> Accessible toggle with proper labeling</li>
               <li><strong>Mobile menu:</strong> Accessible hamburger menu for mobile navigation</li>
@@ -103,7 +112,11 @@ export default function AccessibilityStatementPage() {
                 <tbody>
                   <tr className="border-t border-gray-800">
                     <td className="px-4 py-2 text-sm text-gray-300"><code className="bg-gray-800 px-2 py-1 rounded">Cmd/Ctrl + K</code></td>
-                    <td className="px-4 py-2 text-sm text-gray-300">Open search</td>
+                    <td className="px-4 py-2 text-sm text-gray-300">Open Unified Search Modal</td>
+                  </tr>
+                  <tr className="border-t border-gray-800">
+                    <td className="px-4 py-2 text-sm text-gray-300"><code className="bg-gray-800 px-2 py-1 rounded">Tab</code> (in search)</td>
+                    <td className="px-4 py-2 text-sm text-gray-300">Switch between Quick and AI search modes</td>
                   </tr>
                   <tr className="border-t border-gray-800">
                     <td className="px-4 py-2 text-sm text-gray-300"><code className="bg-gray-800 px-2 py-1 rounded">Escape</code></td>

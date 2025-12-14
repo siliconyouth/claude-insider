@@ -1,0 +1,214 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Er is een fout opgetreden",
+    "retry": "Opnieuw proberen",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "close": "Sluiten",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "search": "Zoeken",
+    "filter": "Filter",
+    "sort": "Sorteren",
+    "clear": "Wissen",
+    "submit": "Verzenden",
+    "confirm": "Bevestigen",
+    "yes": "Ja",
+    "no": "Nee",
+    "or": "of",
+    "and": "en",
+    "all": "Alles",
+    "none": "Geen",
+    "more": "Meer",
+    "less": "Minder",
+    "showMore": "Meer tonen",
+    "showLess": "Minder tonen",
+    "viewAll": "Alles bekijken",
+    "seeAll": "Alles zien",
+    "noResults": "Geen resultaten gevonden",
+    "tryAgain": "Probeer opnieuw"
+  },
+  "navigation": {
+    "home": "Home",
+    "docs": "Documentatie",
+    "resources": "Bronnen",
+    "search": "Zoeken",
+    "favorites": "Favorieten",
+    "collections": "Collecties",
+    "readingLists": "Leeslijsten",
+    "notifications": "Meldingen",
+    "profile": "Profiel",
+    "settings": "Instellingen",
+    "dashboard": "Dashboard",
+    "signIn": "Inloggen",
+    "signOut": "Uitloggen",
+    "getStarted": "Aan de slag"
+  },
+  "home": {
+    "hero": {
+      "title": "Beheers Claude AI",
+      "subtitle": "Jouw complete gids voor Claude Code, configuratie en best practices",
+      "cta": "Verken documentatie",
+      "secondaryCta": "Blader door bronnen"
+    },
+    "features": {
+      "title": "Alles wat je nodig hebt",
+      "subtitle": "Complete bronnen om het meeste uit Claude AI te halen"
+    },
+    "resources": {
+      "title": "Uitgelichte bronnen",
+      "subtitle": "Zorgvuldig geselecteerde tools, templates en community-bijdragen",
+      "categories": "Categorieën",
+      "featured": "Uitgelicht",
+      "popular": "Populair"
+    }
+  },
+  "search": {
+    "placeholder": "Zoek documentatie, bronnen...",
+    "title": "Zoeken",
+    "subtitle": "Zoek documentatie, bronnen en meer",
+    "filters": "Filters",
+    "results": "{count, plural, one {# resultaat} other {# resultaten}} voor \"{query}\"",
+    "noResults": "Geen resultaten voor \"{query}\"",
+    "noResultsHint": "Probeer je zoekopdracht of filters aan te passen",
+    "enterQuery": "Voer een zoekterm in",
+    "savedSearches": "Opgeslagen zoekopdrachten",
+    "recentSearches": "Recente zoekopdrachten",
+    "popularSearches": "Populaire zoekopdrachten",
+    "clearHistory": "Geschiedenis wissen",
+    "saveSearch": "Zoekopdracht opslaan",
+    "contentType": "Contenttype",
+    "category": "Categorie",
+    "sortBy": "Sorteren op",
+    "dateRange": "Datumbereik",
+    "minRating": "Minimale beoordeling",
+    "sortOptions": {
+      "relevance": "Relevantie",
+      "date": "Nieuwste",
+      "rating": "Hoogst beoordeeld",
+      "popularity": "Populairst"
+    },
+    "dateOptions": {
+      "all": "Altijd",
+      "day": "Vandaag",
+      "week": "Deze week",
+      "month": "Deze maand",
+      "year": "Dit jaar"
+    }
+  },
+  "favorites": {
+    "title": "Favorieten",
+    "subtitle": "Jouw opgeslagen items",
+    "empty": "Nog geen favorieten",
+    "emptyHint": "Sla items op die je later wilt terugzien",
+    "addToFavorites": "Toevoegen aan favorieten",
+    "removeFromFavorites": "Verwijderen uit favorieten"
+  },
+  "collections": {
+    "title": "Collecties",
+    "subtitle": "Organiseer je favorieten",
+    "create": "Collectie maken",
+    "empty": "Nog geen collecties",
+    "emptyHint": "Maak collecties om je favorieten te organiseren",
+    "items": "{count, plural, one {# item} other {# items}}"
+  },
+  "readingLists": {
+    "title": "Leeslijsten",
+    "subtitle": "Volg je leesvoortgang",
+    "create": "Lijst maken",
+    "readLater": "Later lezen",
+    "empty": "Nog geen leeslijsten",
+    "emptyHint": "Maak lijsten om te organiseren wat je wilt lezen",
+    "progress": {
+      "unread": "Ongelezen",
+      "reading": "Aan het lezen",
+      "completed": "Voltooid"
+    }
+  },
+  "notifications": {
+    "title": "Meldingen",
+    "empty": "Geen meldingen",
+    "markAllRead": "Alles als gelezen markeren",
+    "markRead": "Als gelezen markeren",
+    "new": "Nieuw"
+  },
+  "profile": {
+    "title": "Profiel",
+    "editProfile": "Profiel bewerken",
+    "stats": "Statistieken",
+    "achievements": "Prestaties",
+    "activity": "Activiteit",
+    "joined": "Lid sinds {date}",
+    "followers": "Volgers",
+    "following": "Volgend",
+    "follow": "Volgen",
+    "unfollow": "Ontvolgen"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "account": "Account",
+    "privacy": "Privacy",
+    "notifications": "Meldingen",
+    "appearance": "Uiterlijk",
+    "language": "Taal",
+    "security": "Beveiliging"
+  },
+  "auth": {
+    "signIn": "Inloggen",
+    "signUp": "Registreren",
+    "signOut": "Uitloggen",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "continueWith": "Doorgaan met {provider}",
+    "noAccount": "Geen account?",
+    "hasAccount": "Heb je al een account?"
+  },
+  "pwa": {
+    "install": {
+      "title": "Installeer Claude Insider",
+      "subtitle": "Voeg toe aan je startscherm voor snelle toegang",
+      "benefits": {
+        "offline": "Werkt offline",
+        "faster": "Sneller laden",
+        "native": "Native app-ervaring"
+      },
+      "button": "Installeren",
+      "later": "Later",
+      "installing": "Installeren..."
+    },
+    "offline": {
+      "title": "Je bent offline",
+      "subtitle": "Sommige functies zijn mogelijk beperkt",
+      "reconnected": "Weer online",
+      "reconnectedSubtitle": "Verbinding hersteld"
+    },
+    "update": {
+      "title": "Update beschikbaar",
+      "subtitle": "Een nieuwe versie is klaar om te gebruiken",
+      "refresh": "Vernieuwen"
+    },
+    "saveOffline": "Offline opslaan",
+    "savedOffline": "Offline opgeslagen"
+  },
+  "errors": {
+    "pageNotFound": "Pagina niet gevonden",
+    "serverError": "Serverfout",
+    "unauthorized": "Niet geautoriseerd",
+    "forbidden": "Toegang geweigerd",
+    "networkError": "Netwerkfout",
+    "generic": "Er ging iets mis"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "privacy": "Privacy",
+    "terms": "Voorwaarden",
+    "disclaimer": "Disclaimer",
+    "accessibility": "Toegankelijkheid",
+    "changelog": "Changelog"
+  }
+}

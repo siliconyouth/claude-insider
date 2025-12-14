@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.64.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.65.0**.
 
 | Link | URL |
 |------|-----|
@@ -83,7 +83,7 @@ claude-insider/
 │   │   ├── globals.css           # Global styles, animations
 │   │   ├── docs/[...slug]/       # Dynamic MDX routes
 │   │   └── api/assistant/        # Chat & TTS endpoints
-│   ├── components/               # 60+ React components
+│   ├── components/               # 65+ React components
 │   │   ├── voice-assistant.tsx   # AI assistant (1500+ LOC)
 │   │   ├── header.tsx, footer.tsx
 │   │   ├── toast.tsx, skeleton.tsx
@@ -103,6 +103,11 @@ claude-insider/
 │   │   ├── achievements/         # Gamification components
 │   │   ├── notifications/        # Notification center
 │   │   ├── analytics/            # User stats dashboards
+│   │   ├── universal-search/     # Unified search modal
+│   │   │   ├── index.tsx         # Main component (Quick + AI modes)
+│   │   │   ├── mode-toggle.tsx   # Quick/AI mode switcher
+│   │   │   └── types.ts          # TypeScript definitions
+│   │   ├── footer-language-selector.tsx # 18-language picker
 │   │   ├── resources/            # Resources components
 │   │   │   └── resource-card.tsx # Card with 3 variants
 │   │   └── home/                 # Homepage components
@@ -155,11 +160,22 @@ claude-insider/
 │   │       ├── sdks.json         # Client libraries
 │   │       ├── showcases.json    # Example projects
 │   │       └── community.json    # Community resources
+│   ├── i18n/                     # Internationalization
+│   │   ├── config.ts             # 18 locales, names, flags, regions
+│   │   ├── index.tsx             # I18nProvider component
+│   │   └── messages/             # Translation JSON files
+│   │       ├── en.json           # English (default)
+│   │       ├── es.json, fr.json  # Spanish, French
+│   │       ├── de.json, ja.json  # German, Japanese
+│   │       ├── zh.json, ko.json  # Chinese, Korean
+│   │       ├── pt.json           # Portuguese
+│   │       └── sr.json ... el.json # 10 European languages
 │   ├── collections/              # Payload CMS collections
 │   │   ├── Users.ts              # CMS users (admin, editor, moderator)
 │   │   ├── EditSuggestions.ts    # Community edit suggestions
 │   │   ├── Media.ts              # File uploads and avatars
-│   │   └── Resources.ts          # Curated resources
+│   │   ├── Resources.ts          # Curated resources
+│   │   └── Translations.ts       # UI translation strings
 │   ├── supabase/                 # Database migrations
 │   │   └── migrations/           # 21 SQL migration files
 │   │       ├── 001_user_data.sql # Profiles, favorites, ratings
@@ -180,6 +196,40 @@ claude-insider/
 - **Styling**: Tailwind CSS only, use `cn()` utility for conditional classes
 - **Files**: PascalCase for components, camelCase for utilities
 - **Pages**: lowercase with hyphens (e.g., `getting-started/page.tsx`)
+
+---
+
+## Internationalization (i18n)
+
+**18 Supported Languages** organized by region:
+
+| Region | Languages |
+|--------|-----------|
+| **Americas** | 🇺🇸 English (en), 🇪🇸 Español (es), 🇧🇷 Português (pt) |
+| **Europe** | 🇫🇷 Français (fr), 🇩🇪 Deutsch (de), 🇮🇹 Italiano (it), 🇳🇱 Nederlands (nl), 🇵🇱 Polski (pl), 🇸🇪 Svenska (sv), 🇳🇴 Norsk (no), 🇩🇰 Dansk (da), 🇫🇮 Suomi (fi), 🇬🇷 Ελληνικά (el), 🇷🇸 Српски (sr), 🇷🇺 Русский (ru) |
+| **Asia** | 🇯🇵 日本語 (ja), 🇨🇳 中文 (zh), 🇰🇷 한국어 (ko) |
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `i18n/config.ts` | Locale definitions, names, flags, regional groupings |
+| `i18n/index.tsx` | `I18nProvider` using `next-intl` |
+| `i18n/messages/*.json` | Translation strings per language |
+| `components/footer-language-selector.tsx` | Language picker in footer |
+| `collections/Translations.ts` | Payload CMS translation management |
+
+### Adding Translations
+
+1. Add key-value pairs to `i18n/messages/en.json` (source of truth)
+2. Copy to other locale files with translated values
+3. Use `useTranslations('namespace')` hook in components
+4. Payload CMS Translations collection available for admin editing
+
+### Locale Detection
+
+- Cookie: `NEXT_LOCALE` (set by language selector)
+- Fallback: Browser `Accept-Language` header → English default
 
 ---
 

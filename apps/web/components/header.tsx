@@ -3,10 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Search } from "@/components/search";
-import { AISearch } from "@/components/ai-search";
+import { UniversalSearch } from "@/components/universal-search";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { LanguageSelector } from "@/components/language-selector";
 import { UserMenu } from "@/components/auth";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { cn } from "@/lib/design-system";
@@ -99,9 +97,7 @@ export function Header({ activePage }: HeaderProps) {
             {/* Divider */}
             <div className="mx-2 h-5 w-px bg-gray-200 dark:bg-[#262626]" />
 
-            <LanguageSelector />
-            <Search />
-            <AISearch />
+            <UniversalSearch />
             <ThemeToggle />
             <NotificationBell />
             <UserMenu />
@@ -109,9 +105,7 @@ export function Header({ activePage }: HeaderProps) {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-1">
-            <LanguageSelector />
-            <Search />
-            <AISearch />
+            <UniversalSearch />
             <ThemeToggle />
             <NotificationBell />
             <UserMenu />

@@ -1,0 +1,214 @@
+{
+  "common": {
+    "loading": "Indlæser...",
+    "error": "Der opstod en fejl",
+    "retry": "Prøv igen",
+    "cancel": "Annuller",
+    "save": "Gem",
+    "delete": "Slet",
+    "edit": "Rediger",
+    "close": "Luk",
+    "back": "Tilbage",
+    "next": "Næste",
+    "previous": "Forrige",
+    "search": "Søg",
+    "filter": "Filtrer",
+    "sort": "Sorter",
+    "clear": "Ryd",
+    "submit": "Send",
+    "confirm": "Bekræft",
+    "yes": "Ja",
+    "no": "Nej",
+    "or": "eller",
+    "and": "og",
+    "all": "Alle",
+    "none": "Ingen",
+    "more": "Mere",
+    "less": "Mindre",
+    "showMore": "Vis mere",
+    "showLess": "Vis mindre",
+    "viewAll": "Se alle",
+    "seeAll": "Se alle",
+    "noResults": "Ingen resultater fundet",
+    "tryAgain": "Prøv igen"
+  },
+  "navigation": {
+    "home": "Hjem",
+    "docs": "Dokumentation",
+    "resources": "Ressourcer",
+    "search": "Søg",
+    "favorites": "Favoritter",
+    "collections": "Samlinger",
+    "readingLists": "Læselister",
+    "notifications": "Notifikationer",
+    "profile": "Profil",
+    "settings": "Indstillinger",
+    "dashboard": "Oversigt",
+    "signIn": "Log ind",
+    "signOut": "Log ud",
+    "getStarted": "Kom i gang"
+  },
+  "home": {
+    "hero": {
+      "title": "Mestr Claude AI",
+      "subtitle": "Din komplette guide til Claude Code, konfiguration og bedste praksis",
+      "cta": "Udforsk dokumentation",
+      "secondaryCta": "Gennemse ressourcer"
+    },
+    "features": {
+      "title": "Alt hvad du behøver",
+      "subtitle": "Omfattende ressourcer til at hjælpe dig med at få mest ud af Claude AI"
+    },
+    "resources": {
+      "title": "Udvalgte ressourcer",
+      "subtitle": "Håndplukkede værktøjer, skabeloner og fællesskabsbidrag",
+      "categories": "Kategorier",
+      "featured": "Udvalgt",
+      "popular": "Populært"
+    }
+  },
+  "search": {
+    "placeholder": "Søg i dokumentation, ressourcer...",
+    "title": "Søg",
+    "subtitle": "Søg i dokumentation, ressourcer og mere",
+    "filters": "Filtre",
+    "results": "{count, plural, one {# resultat} other {# resultater}} for \"{query}\"",
+    "noResults": "Ingen resultater for \"{query}\"",
+    "noResultsHint": "Prøv at justere din søgning eller filtre",
+    "enterQuery": "Indtast et søgeord",
+    "savedSearches": "Gemte søgninger",
+    "recentSearches": "Seneste søgninger",
+    "popularSearches": "Populære søgninger",
+    "clearHistory": "Ryd historik",
+    "saveSearch": "Gem søgning",
+    "contentType": "Indholdstype",
+    "category": "Kategori",
+    "sortBy": "Sorter efter",
+    "dateRange": "Datointerval",
+    "minRating": "Minimumvurdering",
+    "sortOptions": {
+      "relevance": "Relevans",
+      "date": "Nyeste",
+      "rating": "Højest vurderet",
+      "popularity": "Mest populær"
+    },
+    "dateOptions": {
+      "all": "Når som helst",
+      "day": "I dag",
+      "week": "Denne uge",
+      "month": "Denne måned",
+      "year": "I år"
+    }
+  },
+  "favorites": {
+    "title": "Favoritter",
+    "subtitle": "Dine gemte elementer",
+    "empty": "Ingen favoritter endnu",
+    "emptyHint": "Gem elementer du vil besøge igen",
+    "addToFavorites": "Tilføj til favoritter",
+    "removeFromFavorites": "Fjern fra favoritter"
+  },
+  "collections": {
+    "title": "Samlinger",
+    "subtitle": "Organiser dine favoritter",
+    "create": "Opret samling",
+    "empty": "Ingen samlinger endnu",
+    "emptyHint": "Opret samlinger for at organisere favoritter",
+    "items": "{count, plural, one {# element} other {# elementer}}"
+  },
+  "readingLists": {
+    "title": "Læselister",
+    "subtitle": "Følg med i din læsning",
+    "create": "Opret liste",
+    "readLater": "Læs senere",
+    "empty": "Ingen læselister endnu",
+    "emptyHint": "Opret lister for at organisere hvad du vil læse",
+    "progress": {
+      "unread": "Ulæst",
+      "reading": "Læser",
+      "completed": "Fuldført"
+    }
+  },
+  "notifications": {
+    "title": "Notifikationer",
+    "empty": "Ingen notifikationer",
+    "markAllRead": "Marker alle som læst",
+    "markRead": "Marker som læst",
+    "new": "Ny"
+  },
+  "profile": {
+    "title": "Profil",
+    "editProfile": "Rediger profil",
+    "stats": "Statistik",
+    "achievements": "Præstationer",
+    "activity": "Aktivitet",
+    "joined": "Tilmeldte sig {date}",
+    "followers": "Følgere",
+    "following": "Følger",
+    "follow": "Følg",
+    "unfollow": "Stop med at følge"
+  },
+  "settings": {
+    "title": "Indstillinger",
+    "account": "Konto",
+    "privacy": "Privatliv",
+    "notifications": "Notifikationer",
+    "appearance": "Udseende",
+    "language": "Sprog",
+    "security": "Sikkerhed"
+  },
+  "auth": {
+    "signIn": "Log ind",
+    "signUp": "Tilmeld dig",
+    "signOut": "Log ud",
+    "email": "E-mail",
+    "password": "Adgangskode",
+    "forgotPassword": "Glemt adgangskode?",
+    "continueWith": "Fortsæt med {provider}",
+    "noAccount": "Har du ikke en konto?",
+    "hasAccount": "Har du allerede en konto?"
+  },
+  "pwa": {
+    "install": {
+      "title": "Installer Claude Insider",
+      "subtitle": "Tilføj til startskærm for hurtig adgang",
+      "benefits": {
+        "offline": "Virker offline",
+        "faster": "Hurtigere indlæsning",
+        "native": "Indbygget app-oplevelse"
+      },
+      "button": "Installer",
+      "later": "Senere",
+      "installing": "Installerer..."
+    },
+    "offline": {
+      "title": "Du er offline",
+      "subtitle": "Nogle funktioner kan være begrænsede",
+      "reconnected": "Online igen",
+      "reconnectedSubtitle": "Forbindelse genoprettet"
+    },
+    "update": {
+      "title": "Opdatering tilgængelig",
+      "subtitle": "En ny version er klar til brug",
+      "refresh": "Opdater"
+    },
+    "saveOffline": "Gem offline",
+    "savedOffline": "Gemt offline"
+  },
+  "errors": {
+    "pageNotFound": "Siden blev ikke fundet",
+    "serverError": "Serverfejl",
+    "unauthorized": "Ikke autoriseret",
+    "forbidden": "Adgang nægtet",
+    "networkError": "Netværksfejl",
+    "generic": "Noget gik galt"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "privacy": "Privatliv",
+    "terms": "Vilkår",
+    "disclaimer": "Ansvarsfraskrivelse",
+    "accessibility": "Tilgængelighed",
+    "changelog": "Ændringslog"
+  }
+}

@@ -9,6 +9,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.65.0] - 2025-12-14
+
+### Added
+
+#### Unified Search Modal
+- **New Universal Search Component** - Single `⌘K` shortcut replaces separate Search and AI Search
+  - `components/universal-search/index.tsx` - Main modal component (850+ lines)
+  - `components/universal-search/mode-toggle.tsx` - Toggle between Quick and AI modes
+  - `components/universal-search/types.ts` - TypeScript type definitions
+- **Quick Mode**: Instant fuzzy search via Fuse.js (local, 2+ characters)
+- **AI Mode**: Claude-powered semantic search with summaries (3+ characters)
+- Voice search support in AI mode via Web Speech API
+- Keyboard navigation (↑↓ navigate, Enter select, Tab switch modes, Esc close)
+- Search history persistence in Quick mode
+- Related query suggestions in AI mode
+
+#### Language Expansion (18 Total Locales)
+- **10 New European Languages**:
+  - 🇷🇸 Serbian (sr)
+  - 🇷🇺 Russian (ru)
+  - 🇮🇹 Italian (it)
+  - 🇳🇱 Dutch (nl)
+  - 🇵🇱 Polish (pl)
+  - 🇸🇪 Swedish (sv)
+  - 🇳🇴 Norwegian (no)
+  - 🇩🇰 Danish (da)
+  - 🇫🇮 Finnish (fi)
+  - 🇬🇷 Greek (el)
+- Complete translation files for all 10 languages in `i18n/messages/`
+- Updated `i18n/config.ts` with locale names, flags, and regional groupings
+
+#### Footer Language Selector
+- **New FooterLanguageSelector Component** - Relocated from header to footer
+  - `components/footer-language-selector.tsx` - Grid layout with 18 languages
+  - Languages organized by region: Americas, Europe, Asia
+  - Current language highlighted with gradient border
+  - Sets `NEXT_LOCALE` cookie on selection
+
+#### Payload CMS Translation Management
+- **Localization Enabled** - 18 locales configured in `payload.config.ts`
+  - Default locale: English (en)
+  - Fallback enabled for missing translations
+- **New Translations Collection** - `collections/Translations.ts`
+  - Namespace-based organization (common, navigation, home, search, etc.)
+  - Localized `value` field for each language
+  - Context and placeholder documentation fields
+  - CRUD access for authenticated users
+
+### Changed
+- **Header Component** - Replaced `<Search />` and `<AISearch />` with `<UniversalSearch />`
+- **Footer Component** - Added `<FooterLanguageSelector />`, updated to v0.65.0
+- **Removed** `Cmd+Shift+K` shortcut (consolidated into single `Cmd+K`)
+
+### Fixed
+- **TypeScript Errors** - Fixed implicit `any` type in `wizard-context.tsx` (`setCurrentStep` callback)
+- **Nullish Coalescing** - Added `?? []` to `localeRegions` in `FooterLanguageSelector` for type safety
+
 ## [0.64.0] - 2025-12-14
 
 ### Fixed

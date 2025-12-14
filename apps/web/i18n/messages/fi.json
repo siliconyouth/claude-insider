@@ -1,0 +1,214 @@
+{
+  "common": {
+    "loading": "Ladataan...",
+    "error": "Tapahtui virhe",
+    "retry": "Yritä uudelleen",
+    "cancel": "Peruuta",
+    "save": "Tallenna",
+    "delete": "Poista",
+    "edit": "Muokkaa",
+    "close": "Sulje",
+    "back": "Takaisin",
+    "next": "Seuraava",
+    "previous": "Edellinen",
+    "search": "Hae",
+    "filter": "Suodata",
+    "sort": "Lajittele",
+    "clear": "Tyhjennä",
+    "submit": "Lähetä",
+    "confirm": "Vahvista",
+    "yes": "Kyllä",
+    "no": "Ei",
+    "or": "tai",
+    "and": "ja",
+    "all": "Kaikki",
+    "none": "Ei mitään",
+    "more": "Lisää",
+    "less": "Vähemmän",
+    "showMore": "Näytä lisää",
+    "showLess": "Näytä vähemmän",
+    "viewAll": "Näytä kaikki",
+    "seeAll": "Katso kaikki",
+    "noResults": "Tuloksia ei löytynyt",
+    "tryAgain": "Yritä uudelleen"
+  },
+  "navigation": {
+    "home": "Koti",
+    "docs": "Dokumentaatio",
+    "resources": "Resurssit",
+    "search": "Hae",
+    "favorites": "Suosikit",
+    "collections": "Kokoelmat",
+    "readingLists": "Lukulistat",
+    "notifications": "Ilmoitukset",
+    "profile": "Profiili",
+    "settings": "Asetukset",
+    "dashboard": "Hallintapaneeli",
+    "signIn": "Kirjaudu sisään",
+    "signOut": "Kirjaudu ulos",
+    "getStarted": "Aloita"
+  },
+  "home": {
+    "hero": {
+      "title": "Hallitse Claude AI",
+      "subtitle": "Kattava oppaasi Claude Codeen, konfiguraatioon ja parhaisiin käytäntöihin",
+      "cta": "Tutustu dokumentaatioon",
+      "secondaryCta": "Selaa resursseja"
+    },
+    "features": {
+      "title": "Kaikki mitä tarvitset",
+      "subtitle": "Kattavat resurssit auttamaan sinua saamaan eniten irti Claude AI:sta"
+    },
+    "resources": {
+      "title": "Valikoidut resurssit",
+      "subtitle": "Käsin valitut työkalut, mallit ja yhteisön kontribuutiot",
+      "categories": "Kategoriat",
+      "featured": "Esitelty",
+      "popular": "Suosittua"
+    }
+  },
+  "search": {
+    "placeholder": "Hae dokumentaatiosta, resursseista...",
+    "title": "Haku",
+    "subtitle": "Hae dokumentaatiosta, resursseista ja muusta",
+    "filters": "Suodattimet",
+    "results": "{count, plural, one {# tulos} other {# tulosta}} haulla \"{query}\"",
+    "noResults": "Ei tuloksia haulla \"{query}\"",
+    "noResultsHint": "Kokeile muuttaa hakua tai suodattimia",
+    "enterQuery": "Kirjoita hakusana",
+    "savedSearches": "Tallennetut haut",
+    "recentSearches": "Viimeisimmät haut",
+    "popularSearches": "Suositut haut",
+    "clearHistory": "Tyhjennä historia",
+    "saveSearch": "Tallenna haku",
+    "contentType": "Sisältötyyppi",
+    "category": "Kategoria",
+    "sortBy": "Lajittele",
+    "dateRange": "Aikaväli",
+    "minRating": "Vähimmäisarvosana",
+    "sortOptions": {
+      "relevance": "Osuvuus",
+      "date": "Uusimmat",
+      "rating": "Parhaat arvosanat",
+      "popularity": "Suosituimmat"
+    },
+    "dateOptions": {
+      "all": "Milloin tahansa",
+      "day": "Tänään",
+      "week": "Tällä viikolla",
+      "month": "Tässä kuussa",
+      "year": "Tänä vuonna"
+    }
+  },
+  "favorites": {
+    "title": "Suosikit",
+    "subtitle": "Tallennetut kohteet",
+    "empty": "Ei suosikkeja vielä",
+    "emptyHint": "Tallenna kohteita, joihin haluat palata",
+    "addToFavorites": "Lisää suosikkeihin",
+    "removeFromFavorites": "Poista suosikeista"
+  },
+  "collections": {
+    "title": "Kokoelmat",
+    "subtitle": "Järjestä suosikkisi",
+    "create": "Luo kokoelma",
+    "empty": "Ei kokoelmia vielä",
+    "emptyHint": "Luo kokoelmia järjestääksesi suosikkeja",
+    "items": "{count, plural, one {# kohde} other {# kohdetta}}"
+  },
+  "readingLists": {
+    "title": "Lukulistat",
+    "subtitle": "Seuraa lukemistasi",
+    "create": "Luo lista",
+    "readLater": "Lue myöhemmin",
+    "empty": "Ei lukulistoja vielä",
+    "emptyHint": "Luo listoja järjestääksesi luettavaa",
+    "progress": {
+      "unread": "Lukematon",
+      "reading": "Lukemassa",
+      "completed": "Valmis"
+    }
+  },
+  "notifications": {
+    "title": "Ilmoitukset",
+    "empty": "Ei ilmoituksia",
+    "markAllRead": "Merkitse kaikki luetuiksi",
+    "markRead": "Merkitse luetuksi",
+    "new": "Uusi"
+  },
+  "profile": {
+    "title": "Profiili",
+    "editProfile": "Muokkaa profiilia",
+    "stats": "Tilastot",
+    "achievements": "Saavutukset",
+    "activity": "Aktiivisuus",
+    "joined": "Liittyi {date}",
+    "followers": "Seuraajat",
+    "following": "Seuraa",
+    "follow": "Seuraa",
+    "unfollow": "Lopeta seuraaminen"
+  },
+  "settings": {
+    "title": "Asetukset",
+    "account": "Tili",
+    "privacy": "Yksityisyys",
+    "notifications": "Ilmoitukset",
+    "appearance": "Ulkoasu",
+    "language": "Kieli",
+    "security": "Turvallisuus"
+  },
+  "auth": {
+    "signIn": "Kirjaudu sisään",
+    "signUp": "Rekisteröidy",
+    "signOut": "Kirjaudu ulos",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "forgotPassword": "Unohditko salasanan?",
+    "continueWith": "Jatka palvelulla {provider}",
+    "noAccount": "Eikö sinulla ole tiliä?",
+    "hasAccount": "Onko sinulla jo tili?"
+  },
+  "pwa": {
+    "install": {
+      "title": "Asenna Claude Insider",
+      "subtitle": "Lisää kotinäytölle nopeaa pääsyä varten",
+      "benefits": {
+        "offline": "Toimii offline-tilassa",
+        "faster": "Nopeampi lataus",
+        "native": "Natiivi sovelluskokemus"
+      },
+      "button": "Asenna",
+      "later": "Myöhemmin",
+      "installing": "Asennetaan..."
+    },
+    "offline": {
+      "title": "Olet offline-tilassa",
+      "subtitle": "Jotkin ominaisuudet voivat olla rajoitettuja",
+      "reconnected": "Takaisin online-tilassa",
+      "reconnectedSubtitle": "Yhteys palautettu"
+    },
+    "update": {
+      "title": "Päivitys saatavilla",
+      "subtitle": "Uusi versio on valmis käytettäväksi",
+      "refresh": "Päivitä"
+    },
+    "saveOffline": "Tallenna offline-tilaan",
+    "savedOffline": "Tallennettu offline-tilaan"
+  },
+  "errors": {
+    "pageNotFound": "Sivua ei löytynyt",
+    "serverError": "Palvelinvirhe",
+    "unauthorized": "Ei valtuuksia",
+    "forbidden": "Pääsy estetty",
+    "networkError": "Verkkovirhe",
+    "generic": "Jotain meni pieleen"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "privacy": "Yksityisyys",
+    "terms": "Ehdot",
+    "disclaimer": "Vastuuvapauslauseke",
+    "accessibility": "Esteettömyys",
+    "changelog": "Muutosloki"
+  }
+}

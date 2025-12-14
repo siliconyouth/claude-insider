@@ -1,0 +1,214 @@
+{
+  "common": {
+    "loading": "Учитавање...",
+    "error": "Дошло је до грешке",
+    "retry": "Покушај поново",
+    "cancel": "Откажи",
+    "save": "Сачувај",
+    "delete": "Обриши",
+    "edit": "Измени",
+    "close": "Затвори",
+    "back": "Назад",
+    "next": "Следеће",
+    "previous": "Претходно",
+    "search": "Претрага",
+    "filter": "Филтер",
+    "sort": "Сортирај",
+    "clear": "Обриши",
+    "submit": "Пошаљи",
+    "confirm": "Потврди",
+    "yes": "Да",
+    "no": "Не",
+    "or": "или",
+    "and": "и",
+    "all": "Све",
+    "none": "Ништа",
+    "more": "Више",
+    "less": "Мање",
+    "showMore": "Прикажи више",
+    "showLess": "Прикажи мање",
+    "viewAll": "Погледај све",
+    "seeAll": "Види све",
+    "noResults": "Нема резултата",
+    "tryAgain": "Покушај поново"
+  },
+  "navigation": {
+    "home": "Почетна",
+    "docs": "Документација",
+    "resources": "Ресурси",
+    "search": "Претрага",
+    "favorites": "Омиљено",
+    "collections": "Колекције",
+    "readingLists": "Листе за читање",
+    "notifications": "Обавештења",
+    "profile": "Профил",
+    "settings": "Подешавања",
+    "dashboard": "Контролна табла",
+    "signIn": "Пријави се",
+    "signOut": "Одјави се",
+    "getStarted": "Започни"
+  },
+  "home": {
+    "hero": {
+      "title": "Савладајте Claude AI",
+      "subtitle": "Ваш свеобухватни водич за Claude Code, конфигурацију и најбоље праксе",
+      "cta": "Истражите документацију",
+      "secondaryCta": "Прегледајте ресурсе"
+    },
+    "features": {
+      "title": "Све што вам треба",
+      "subtitle": "Свеобухватни ресурси који ће вам помоћи да извучете максимум из Claude AI"
+    },
+    "resources": {
+      "title": "Одабрани ресурси",
+      "subtitle": "Ручно одабрани алати, шаблони и доприноси заједнице",
+      "categories": "Категорије",
+      "featured": "Истакнуто",
+      "popular": "Популарно"
+    }
+  },
+  "search": {
+    "placeholder": "Претражи документацију, ресурсе...",
+    "title": "Претрага",
+    "subtitle": "Претражи документацију, ресурсе и још много тога",
+    "filters": "Филтери",
+    "results": "{count, plural, one {# резултат} few {# резултата} other {# резултата}} за \"{query}\"",
+    "noResults": "Нема резултата за \"{query}\"",
+    "noResultsHint": "Покушајте да прилагодите претрагу или филтере",
+    "enterQuery": "Унесите појам за претрагу",
+    "savedSearches": "Сачуване претраге",
+    "recentSearches": "Недавне претраге",
+    "popularSearches": "Популарне претраге",
+    "clearHistory": "Обриши историју",
+    "saveSearch": "Сачувај претрагу",
+    "contentType": "Тип садржаја",
+    "category": "Категорија",
+    "sortBy": "Сортирај по",
+    "dateRange": "Временски период",
+    "minRating": "Минимална оцена",
+    "sortOptions": {
+      "relevance": "Релевантност",
+      "date": "Најновије",
+      "rating": "Најбоље оцењено",
+      "popularity": "Најпопуларније"
+    },
+    "dateOptions": {
+      "all": "Било када",
+      "day": "Данас",
+      "week": "Ове недеље",
+      "month": "Овог месеца",
+      "year": "Ове године"
+    }
+  },
+  "favorites": {
+    "title": "Омиљено",
+    "subtitle": "Ваше сачуване ставке",
+    "empty": "Још нема омиљених",
+    "emptyHint": "Сачувајте ставке које желите да поново посетите",
+    "addToFavorites": "Додај у омиљено",
+    "removeFromFavorites": "Уклони из омиљеног"
+  },
+  "collections": {
+    "title": "Колекције",
+    "subtitle": "Организујте своје омиљене",
+    "create": "Направи колекцију",
+    "empty": "Још нема колекција",
+    "emptyHint": "Направите колекције да организујете своје омиљене",
+    "items": "{count, plural, one {# ставка} few {# ставке} other {# ставки}}"
+  },
+  "readingLists": {
+    "title": "Листе за читање",
+    "subtitle": "Пратите напредак читања",
+    "create": "Направи листу",
+    "readLater": "Прочитај касније",
+    "empty": "Још нема листа за читање",
+    "emptyHint": "Направите листе да организујете шта желите да читате",
+    "progress": {
+      "unread": "Непрочитано",
+      "reading": "Читам",
+      "completed": "Завршено"
+    }
+  },
+  "notifications": {
+    "title": "Обавештења",
+    "empty": "Нема обавештења",
+    "markAllRead": "Означи све као прочитано",
+    "markRead": "Означи као прочитано",
+    "new": "Ново"
+  },
+  "profile": {
+    "title": "Профил",
+    "editProfile": "Измени профил",
+    "stats": "Статистика",
+    "achievements": "Достигнућа",
+    "activity": "Активност",
+    "joined": "Придружио се {date}",
+    "followers": "Пратиоци",
+    "following": "Прати",
+    "follow": "Прати",
+    "unfollow": "Престани да пратиш"
+  },
+  "settings": {
+    "title": "Подешавања",
+    "account": "Налог",
+    "privacy": "Приватност",
+    "notifications": "Обавештења",
+    "appearance": "Изглед",
+    "language": "Језик",
+    "security": "Безбедност"
+  },
+  "auth": {
+    "signIn": "Пријави се",
+    "signUp": "Региструј се",
+    "signOut": "Одјави се",
+    "email": "Имејл",
+    "password": "Лозинка",
+    "forgotPassword": "Заборавили сте лозинку?",
+    "continueWith": "Настави са {provider}",
+    "noAccount": "Немате налог?",
+    "hasAccount": "Већ имате налог?"
+  },
+  "pwa": {
+    "install": {
+      "title": "Инсталирај Claude Insider",
+      "subtitle": "Додајте на почетни екран за брзи приступ",
+      "benefits": {
+        "offline": "Ради без мреже",
+        "faster": "Брже учитавање",
+        "native": "Искуство попут апликације"
+      },
+      "button": "Инсталирај",
+      "later": "Касније",
+      "installing": "Инсталирање..."
+    },
+    "offline": {
+      "title": "Ван мреже сте",
+      "subtitle": "Неке функције могу бити ограничене",
+      "reconnected": "Поново на мрежи",
+      "reconnectedSubtitle": "Веза је успостављена"
+    },
+    "update": {
+      "title": "Доступно ажурирање",
+      "subtitle": "Нова верзија је спремна за коришћење",
+      "refresh": "Освежи"
+    },
+    "saveOffline": "Сачувај за ван мреже",
+    "savedOffline": "Сачувано за ван мреже"
+  },
+  "errors": {
+    "pageNotFound": "Страница није пронађена",
+    "serverError": "Грешка сервера",
+    "unauthorized": "Неауторизовано",
+    "forbidden": "Приступ одбијен",
+    "networkError": "Грешка мреже",
+    "generic": "Нешто није у реду"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "privacy": "Приватност",
+    "terms": "Услови",
+    "disclaimer": "Одрицање одговорности",
+    "accessibility": "Приступачност",
+    "changelog": "Историја промена"
+  }
+}

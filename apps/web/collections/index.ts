@@ -32,3 +32,6 @@ export { EditSuggestions } from './EditSuggestions';
 
 // Media uploads
 export { Media } from './Media';
+
+// Internationalization
+export { Translations } from './Translations';

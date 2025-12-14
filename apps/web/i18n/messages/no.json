@@ -1,0 +1,214 @@
+{
+  "common": {
+    "loading": "Laster...",
+    "error": "Det oppstod en feil",
+    "retry": "Prøv igjen",
+    "cancel": "Avbryt",
+    "save": "Lagre",
+    "delete": "Slett",
+    "edit": "Rediger",
+    "close": "Lukk",
+    "back": "Tilbake",
+    "next": "Neste",
+    "previous": "Forrige",
+    "search": "Søk",
+    "filter": "Filter",
+    "sort": "Sorter",
+    "clear": "Tøm",
+    "submit": "Send",
+    "confirm": "Bekreft",
+    "yes": "Ja",
+    "no": "Nei",
+    "or": "eller",
+    "and": "og",
+    "all": "Alle",
+    "none": "Ingen",
+    "more": "Mer",
+    "less": "Mindre",
+    "showMore": "Vis mer",
+    "showLess": "Vis mindre",
+    "viewAll": "Se alle",
+    "seeAll": "Se alle",
+    "noResults": "Ingen resultater funnet",
+    "tryAgain": "Prøv igjen"
+  },
+  "navigation": {
+    "home": "Hjem",
+    "docs": "Dokumentasjon",
+    "resources": "Ressurser",
+    "search": "Søk",
+    "favorites": "Favoritter",
+    "collections": "Samlinger",
+    "readingLists": "Leselister",
+    "notifications": "Varsler",
+    "profile": "Profil",
+    "settings": "Innstillinger",
+    "dashboard": "Oversikt",
+    "signIn": "Logg inn",
+    "signOut": "Logg ut",
+    "getStarted": "Kom i gang"
+  },
+  "home": {
+    "hero": {
+      "title": "Mestre Claude AI",
+      "subtitle": "Din komplette guide til Claude Code, konfigurasjon og beste praksis",
+      "cta": "Utforsk dokumentasjon",
+      "secondaryCta": "Bla gjennom ressurser"
+    },
+    "features": {
+      "title": "Alt du trenger",
+      "subtitle": "Omfattende ressurser for å hjelpe deg å få mest mulig ut av Claude AI"
+    },
+    "resources": {
+      "title": "Utvalgte ressurser",
+      "subtitle": "Håndplukkede verktøy, maler og fellesskapsbidrag",
+      "categories": "Kategorier",
+      "featured": "Utvalgt",
+      "popular": "Populært"
+    }
+  },
+  "search": {
+    "placeholder": "Søk i dokumentasjon, ressurser...",
+    "title": "Søk",
+    "subtitle": "Søk i dokumentasjon, ressurser og mer",
+    "filters": "Filtre",
+    "results": "{count, plural, one {# resultat} other {# resultater}} for \"{query}\"",
+    "noResults": "Ingen resultater for \"{query}\"",
+    "noResultsHint": "Prøv å justere søket eller filtrene",
+    "enterQuery": "Skriv inn et søkeord",
+    "savedSearches": "Lagrede søk",
+    "recentSearches": "Nylige søk",
+    "popularSearches": "Populære søk",
+    "clearHistory": "Tøm historikk",
+    "saveSearch": "Lagre søk",
+    "contentType": "Innholdstype",
+    "category": "Kategori",
+    "sortBy": "Sorter etter",
+    "dateRange": "Datointervall",
+    "minRating": "Minimumsvurdering",
+    "sortOptions": {
+      "relevance": "Relevans",
+      "date": "Nyeste",
+      "rating": "Høyest vurdert",
+      "popularity": "Mest populær"
+    },
+    "dateOptions": {
+      "all": "Når som helst",
+      "day": "I dag",
+      "week": "Denne uken",
+      "month": "Denne måneden",
+      "year": "I år"
+    }
+  },
+  "favorites": {
+    "title": "Favoritter",
+    "subtitle": "Dine lagrede elementer",
+    "empty": "Ingen favoritter ennå",
+    "emptyHint": "Lagre elementer du vil besøke igjen",
+    "addToFavorites": "Legg til i favoritter",
+    "removeFromFavorites": "Fjern fra favoritter"
+  },
+  "collections": {
+    "title": "Samlinger",
+    "subtitle": "Organiser favorittene dine",
+    "create": "Opprett samling",
+    "empty": "Ingen samlinger ennå",
+    "emptyHint": "Opprett samlinger for å organisere favoritter",
+    "items": "{count, plural, one {# element} other {# elementer}}"
+  },
+  "readingLists": {
+    "title": "Leselister",
+    "subtitle": "Følg med på lesingen din",
+    "create": "Opprett liste",
+    "readLater": "Les senere",
+    "empty": "Ingen leselister ennå",
+    "emptyHint": "Opprett lister for å organisere hva du vil lese",
+    "progress": {
+      "unread": "Ulest",
+      "reading": "Leser",
+      "completed": "Fullført"
+    }
+  },
+  "notifications": {
+    "title": "Varsler",
+    "empty": "Ingen varsler",
+    "markAllRead": "Merk alle som lest",
+    "markRead": "Merk som lest",
+    "new": "Ny"
+  },
+  "profile": {
+    "title": "Profil",
+    "editProfile": "Rediger profil",
+    "stats": "Statistikk",
+    "achievements": "Prestasjoner",
+    "activity": "Aktivitet",
+    "joined": "Ble med {date}",
+    "followers": "Følgere",
+    "following": "Følger",
+    "follow": "Følg",
+    "unfollow": "Slutt å følge"
+  },
+  "settings": {
+    "title": "Innstillinger",
+    "account": "Konto",
+    "privacy": "Personvern",
+    "notifications": "Varsler",
+    "appearance": "Utseende",
+    "language": "Språk",
+    "security": "Sikkerhet"
+  },
+  "auth": {
+    "signIn": "Logg inn",
+    "signUp": "Registrer deg",
+    "signOut": "Logg ut",
+    "email": "E-post",
+    "password": "Passord",
+    "forgotPassword": "Glemt passord?",
+    "continueWith": "Fortsett med {provider}",
+    "noAccount": "Har du ikke en konto?",
+    "hasAccount": "Har du allerede en konto?"
+  },
+  "pwa": {
+    "install": {
+      "title": "Installer Claude Insider",
+      "subtitle": "Legg til på hjemskjermen for rask tilgang",
+      "benefits": {
+        "offline": "Fungerer offline",
+        "faster": "Raskere lasting",
+        "native": "Innebygd app-opplevelse"
+      },
+      "button": "Installer",
+      "later": "Senere",
+      "installing": "Installerer..."
+    },
+    "offline": {
+      "title": "Du er offline",
+      "subtitle": "Noen funksjoner kan være begrenset",
+      "reconnected": "Online igjen",
+      "reconnectedSubtitle": "Tilkoblingen gjenopprettet"
+    },
+    "update": {
+      "title": "Oppdatering tilgjengelig",
+      "subtitle": "En ny versjon er klar til bruk",
+      "refresh": "Oppdater"
+    },
+    "saveOffline": "Lagre offline",
+    "savedOffline": "Lagret offline"
+  },
+  "errors": {
+    "pageNotFound": "Siden ble ikke funnet",
+    "serverError": "Serverfeil",
+    "unauthorized": "Ikke autorisert",
+    "forbidden": "Tilgang nektet",
+    "networkError": "Nettverksfeil",
+    "generic": "Noe gikk galt"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "privacy": "Personvern",
+    "terms": "Vilkår",
+    "disclaimer": "Ansvarsfraskrivelse",
+    "accessibility": "Tilgjengelighet",
+    "changelog": "Endringslogg"
+  }
+}

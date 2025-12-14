@@ -17,7 +17,7 @@ Follow this systematic approach in order:
 
 ### Phase 1: Documentation Review
 1. Read and internalize CLAUDE.md - this contains critical project guidelines, design system rules, UX pillars, and coding standards that MUST be followed
-2. Read CHANGELOG.md to understand version history, recent changes, and current version (0.62.0)
+2. Read CHANGELOG.md to understand version history, recent changes, and current version
 3. Check for and read docs/REQUIREMENTS.md if it exists
 4. Read README.md for project overview and setup instructions
 5. Scan for any files in a plans/ directory or similar planning documents
@@ -28,7 +28,7 @@ Follow this systematic approach in order:
    - apps/web/ - Main Next.js application
    - packages/ - Shared configurations
    - Key directories: components/, lib/, content/, data/, hooks/
-2. Identify the 40+ React components and their relationships
+2. Identify the 65+ React components and their relationships
 3. Review the 34 MDX documentation pages structure
 4. Understand the voice assistant architecture (voice-assistant.tsx, API routes)
 5. Examine the resources system (122+ entries across 10 categories)

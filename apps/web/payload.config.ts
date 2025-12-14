@@ -22,6 +22,7 @@ import {
   Users,
   EditSuggestions,
   Media,
+  Translations,
 } from './collections';
 import { SiteSettings, CrossLinkSettings } from './globals';
 
@@ -66,6 +67,8 @@ export default buildConfig({
     ProgrammingLanguages,
     // Moderation (Community group)
     EditSuggestions,
+    // Internationalization (Settings group)
+    Translations,
   ],
 
   // Globals (single-instance documents for site-wide config)
@@ -103,8 +106,31 @@ export default buildConfig({
   // Plugins can be added here
   plugins: [],
 
-  // Localization (English only for now)
-  localization: false,
+  // Localization - 18 supported languages
+  localization: {
+    locales: [
+      { label: 'English', code: 'en' },
+      { label: 'Español', code: 'es' },
+      { label: 'Français', code: 'fr' },
+      { label: 'Deutsch', code: 'de' },
+      { label: '日本語', code: 'ja' },
+      { label: '中文', code: 'zh' },
+      { label: '한국어', code: 'ko' },
+      { label: 'Português', code: 'pt' },
+      { label: 'Српски', code: 'sr' },
+      { label: 'Русский', code: 'ru' },
+      { label: 'Italiano', code: 'it' },
+      { label: 'Nederlands', code: 'nl' },
+      { label: 'Polski', code: 'pl' },
+      { label: 'Svenska', code: 'sv' },
+      { label: 'Norsk', code: 'no' },
+      { label: 'Dansk', code: 'da' },
+      { label: 'Suomi', code: 'fi' },
+      { label: 'Ελληνικά', code: 'el' },
+    ],
+    defaultLocale: 'en',
+    fallback: true,
+  },
 
   // CORS for API access
   cors: [

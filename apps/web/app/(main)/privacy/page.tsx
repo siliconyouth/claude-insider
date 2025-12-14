@@ -313,11 +313,45 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
               <li><strong>Theme preference:</strong> Dark/light/system mode</li>
-              <li><strong>Language preference:</strong> Selected UI language</li>
               <li><strong>Voice settings:</strong> TTS voice and auto-speak preferences</li>
               <li><strong>Chat conversations:</strong> AI assistant history</li>
-              <li><strong>Search history:</strong> Recent searches (up to 5)</li>
+              <li><strong>Search history:</strong> Recent searches from Unified Search Modal (up to 5)</li>
             </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Cookies</h2>
+            <p className="text-gray-300 leading-relaxed">
+              We use minimal cookies to enhance your experience:
+            </p>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-700">
+                    <th className="text-left py-2 text-gray-300">Cookie</th>
+                    <th className="text-left py-2 text-gray-300">Purpose</th>
+                    <th className="text-left py-2 text-gray-300">Duration</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-400">
+                  <tr className="border-b border-gray-800">
+                    <td className="py-2 font-mono text-cyan-400">NEXT_LOCALE</td>
+                    <td className="py-2">Stores your selected language preference (18 languages available)</td>
+                    <td className="py-2">1 year</td>
+                  </tr>
+                  <tr className="border-b border-gray-800">
+                    <td className="py-2 font-mono text-cyan-400">better-auth.session_token</td>
+                    <td className="py-2">Authentication session (HTTP-only, secure)</td>
+                    <td className="py-2">Session</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              <strong>Managing cookies:</strong> You can delete cookies anytime through your browser settings.
+              Deleting the <code className="text-cyan-400">NEXT_LOCALE</code> cookie will reset your language to the default (English).
+              Deleting session cookies will sign you out.
+            </p>
           </section>
 
           <section className="mb-8">

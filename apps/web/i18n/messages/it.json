@@ -1,0 +1,214 @@
+{
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Si è verificato un errore",
+    "retry": "Riprova",
+    "cancel": "Annulla",
+    "save": "Salva",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "close": "Chiudi",
+    "back": "Indietro",
+    "next": "Avanti",
+    "previous": "Precedente",
+    "search": "Cerca",
+    "filter": "Filtra",
+    "sort": "Ordina",
+    "clear": "Cancella",
+    "submit": "Invia",
+    "confirm": "Conferma",
+    "yes": "Sì",
+    "no": "No",
+    "or": "o",
+    "and": "e",
+    "all": "Tutto",
+    "none": "Nessuno",
+    "more": "Altro",
+    "less": "Meno",
+    "showMore": "Mostra altro",
+    "showLess": "Mostra meno",
+    "viewAll": "Vedi tutto",
+    "seeAll": "Vedi tutto",
+    "noResults": "Nessun risultato trovato",
+    "tryAgain": "Riprova"
+  },
+  "navigation": {
+    "home": "Home",
+    "docs": "Documentazione",
+    "resources": "Risorse",
+    "search": "Cerca",
+    "favorites": "Preferiti",
+    "collections": "Collezioni",
+    "readingLists": "Liste di lettura",
+    "notifications": "Notifiche",
+    "profile": "Profilo",
+    "settings": "Impostazioni",
+    "dashboard": "Dashboard",
+    "signIn": "Accedi",
+    "signOut": "Esci",
+    "getStarted": "Inizia"
+  },
+  "home": {
+    "hero": {
+      "title": "Padroneggia Claude AI",
+      "subtitle": "La tua guida completa a Claude Code, configurazione e best practice",
+      "cta": "Esplora la documentazione",
+      "secondaryCta": "Sfoglia le risorse"
+    },
+    "features": {
+      "title": "Tutto ciò di cui hai bisogno",
+      "subtitle": "Risorse complete per aiutarti a ottenere il massimo da Claude AI"
+    },
+    "resources": {
+      "title": "Risorse selezionate",
+      "subtitle": "Strumenti, template e contributi della community accuratamente selezionati",
+      "categories": "Categorie",
+      "featured": "In evidenza",
+      "popular": "Popolari"
+    }
+  },
+  "search": {
+    "placeholder": "Cerca documentazione, risorse...",
+    "title": "Cerca",
+    "subtitle": "Cerca documentazione, risorse e altro",
+    "filters": "Filtri",
+    "results": "{count, plural, one {# risultato} other {# risultati}} per \"{query}\"",
+    "noResults": "Nessun risultato per \"{query}\"",
+    "noResultsHint": "Prova a modificare la ricerca o i filtri",
+    "enterQuery": "Inserisci un termine di ricerca",
+    "savedSearches": "Ricerche salvate",
+    "recentSearches": "Ricerche recenti",
+    "popularSearches": "Ricerche popolari",
+    "clearHistory": "Cancella cronologia",
+    "saveSearch": "Salva ricerca",
+    "contentType": "Tipo di contenuto",
+    "category": "Categoria",
+    "sortBy": "Ordina per",
+    "dateRange": "Intervallo date",
+    "minRating": "Valutazione minima",
+    "sortOptions": {
+      "relevance": "Rilevanza",
+      "date": "Più recenti",
+      "rating": "Più votati",
+      "popularity": "Più popolari"
+    },
+    "dateOptions": {
+      "all": "Qualsiasi data",
+      "day": "Oggi",
+      "week": "Questa settimana",
+      "month": "Questo mese",
+      "year": "Quest'anno"
+    }
+  },
+  "favorites": {
+    "title": "Preferiti",
+    "subtitle": "I tuoi elementi salvati",
+    "empty": "Nessun preferito",
+    "emptyHint": "Salva gli elementi che vuoi rivedere in seguito",
+    "addToFavorites": "Aggiungi ai preferiti",
+    "removeFromFavorites": "Rimuovi dai preferiti"
+  },
+  "collections": {
+    "title": "Collezioni",
+    "subtitle": "Organizza i tuoi preferiti",
+    "create": "Crea collezione",
+    "empty": "Nessuna collezione",
+    "emptyHint": "Crea collezioni per organizzare i tuoi preferiti",
+    "items": "{count, plural, one {# elemento} other {# elementi}}"
+  },
+  "readingLists": {
+    "title": "Liste di lettura",
+    "subtitle": "Monitora i tuoi progressi di lettura",
+    "create": "Crea lista",
+    "readLater": "Leggi dopo",
+    "empty": "Nessuna lista di lettura",
+    "emptyHint": "Crea liste per organizzare cosa vuoi leggere",
+    "progress": {
+      "unread": "Non letto",
+      "reading": "In lettura",
+      "completed": "Completato"
+    }
+  },
+  "notifications": {
+    "title": "Notifiche",
+    "empty": "Nessuna notifica",
+    "markAllRead": "Segna tutto come letto",
+    "markRead": "Segna come letto",
+    "new": "Nuovo"
+  },
+  "profile": {
+    "title": "Profilo",
+    "editProfile": "Modifica profilo",
+    "stats": "Statistiche",
+    "achievements": "Traguardi",
+    "activity": "Attività",
+    "joined": "Iscritto il {date}",
+    "followers": "Follower",
+    "following": "Seguiti",
+    "follow": "Segui",
+    "unfollow": "Non seguire più"
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "account": "Account",
+    "privacy": "Privacy",
+    "notifications": "Notifiche",
+    "appearance": "Aspetto",
+    "language": "Lingua",
+    "security": "Sicurezza"
+  },
+  "auth": {
+    "signIn": "Accedi",
+    "signUp": "Registrati",
+    "signOut": "Esci",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Password dimenticata?",
+    "continueWith": "Continua con {provider}",
+    "noAccount": "Non hai un account?",
+    "hasAccount": "Hai già un account?"
+  },
+  "pwa": {
+    "install": {
+      "title": "Installa Claude Insider",
+      "subtitle": "Aggiungi alla schermata home per un accesso rapido",
+      "benefits": {
+        "offline": "Funziona offline",
+        "faster": "Caricamento più veloce",
+        "native": "Esperienza app nativa"
+      },
+      "button": "Installa",
+      "later": "Più tardi",
+      "installing": "Installazione..."
+    },
+    "offline": {
+      "title": "Sei offline",
+      "subtitle": "Alcune funzionalità potrebbero essere limitate",
+      "reconnected": "Di nuovo online",
+      "reconnectedSubtitle": "Connessione ripristinata"
+    },
+    "update": {
+      "title": "Aggiornamento disponibile",
+      "subtitle": "Una nuova versione è pronta",
+      "refresh": "Aggiorna"
+    },
+    "saveOffline": "Salva offline",
+    "savedOffline": "Salvato offline"
+  },
+  "errors": {
+    "pageNotFound": "Pagina non trovata",
+    "serverError": "Errore del server",
+    "unauthorized": "Non autorizzato",
+    "forbidden": "Accesso negato",
+    "networkError": "Errore di rete",
+    "generic": "Qualcosa è andato storto"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "privacy": "Privacy",
+    "terms": "Termini",
+    "disclaimer": "Disclaimer",
+    "accessibility": "Accessibilità",
+    "changelog": "Changelog"
+  }
+}

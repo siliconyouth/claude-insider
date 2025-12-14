@@ -30,7 +30,7 @@ export function FeedbackButton() {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={cn(
-          "fixed bottom-6 right-6 z-40",
+          "fixed bottom-6 right-24 z-40", // Positioned left of VoiceAssistant button
           "flex items-center gap-2",
           "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
           "text-white shadow-lg shadow-blue-500/25",

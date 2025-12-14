@@ -1,0 +1,214 @@
+{
+  "common": {
+    "loading": "Laddar...",
+    "error": "Ett fel uppstod",
+    "retry": "Försök igen",
+    "cancel": "Avbryt",
+    "save": "Spara",
+    "delete": "Radera",
+    "edit": "Redigera",
+    "close": "Stäng",
+    "back": "Tillbaka",
+    "next": "Nästa",
+    "previous": "Föregående",
+    "search": "Sök",
+    "filter": "Filtrera",
+    "sort": "Sortera",
+    "clear": "Rensa",
+    "submit": "Skicka",
+    "confirm": "Bekräfta",
+    "yes": "Ja",
+    "no": "Nej",
+    "or": "eller",
+    "and": "och",
+    "all": "Alla",
+    "none": "Ingen",
+    "more": "Mer",
+    "less": "Mindre",
+    "showMore": "Visa mer",
+    "showLess": "Visa mindre",
+    "viewAll": "Visa alla",
+    "seeAll": "Se alla",
+    "noResults": "Inga resultat hittades",
+    "tryAgain": "Försök igen"
+  },
+  "navigation": {
+    "home": "Hem",
+    "docs": "Dokumentation",
+    "resources": "Resurser",
+    "search": "Sök",
+    "favorites": "Favoriter",
+    "collections": "Samlingar",
+    "readingLists": "Läslistor",
+    "notifications": "Notifikationer",
+    "profile": "Profil",
+    "settings": "Inställningar",
+    "dashboard": "Översikt",
+    "signIn": "Logga in",
+    "signOut": "Logga ut",
+    "getStarted": "Kom igång"
+  },
+  "home": {
+    "hero": {
+      "title": "Bemästra Claude AI",
+      "subtitle": "Din kompletta guide till Claude Code, konfiguration och bästa praxis",
+      "cta": "Utforska dokumentation",
+      "secondaryCta": "Bläddra bland resurser"
+    },
+    "features": {
+      "title": "Allt du behöver",
+      "subtitle": "Omfattande resurser för att få ut det mesta av Claude AI"
+    },
+    "resources": {
+      "title": "Utvalda resurser",
+      "subtitle": "Handplockade verktyg, mallar och community-bidrag",
+      "categories": "Kategorier",
+      "featured": "Utvalda",
+      "popular": "Populärt"
+    }
+  },
+  "search": {
+    "placeholder": "Sök dokumentation, resurser...",
+    "title": "Sök",
+    "subtitle": "Sök dokumentation, resurser och mer",
+    "filters": "Filter",
+    "results": "{count, plural, one {# resultat} other {# resultat}} för \"{query}\"",
+    "noResults": "Inga resultat för \"{query}\"",
+    "noResultsHint": "Försök justera din sökning eller filter",
+    "enterQuery": "Ange ett sökord",
+    "savedSearches": "Sparade sökningar",
+    "recentSearches": "Senaste sökningar",
+    "popularSearches": "Populära sökningar",
+    "clearHistory": "Rensa historik",
+    "saveSearch": "Spara sökning",
+    "contentType": "Innehållstyp",
+    "category": "Kategori",
+    "sortBy": "Sortera efter",
+    "dateRange": "Datumintervall",
+    "minRating": "Minsta betyg",
+    "sortOptions": {
+      "relevance": "Relevans",
+      "date": "Senaste",
+      "rating": "Högst betyg",
+      "popularity": "Populärast"
+    },
+    "dateOptions": {
+      "all": "När som helst",
+      "day": "Idag",
+      "week": "Denna vecka",
+      "month": "Denna månad",
+      "year": "I år"
+    }
+  },
+  "favorites": {
+    "title": "Favoriter",
+    "subtitle": "Dina sparade objekt",
+    "empty": "Inga favoriter än",
+    "emptyHint": "Spara objekt du vill återkomma till",
+    "addToFavorites": "Lägg till i favoriter",
+    "removeFromFavorites": "Ta bort från favoriter"
+  },
+  "collections": {
+    "title": "Samlingar",
+    "subtitle": "Organisera dina favoriter",
+    "create": "Skapa samling",
+    "empty": "Inga samlingar än",
+    "emptyHint": "Skapa samlingar för att organisera favoriter",
+    "items": "{count, plural, one {# objekt} other {# objekt}}"
+  },
+  "readingLists": {
+    "title": "Läslistor",
+    "subtitle": "Följ ditt läsande",
+    "create": "Skapa lista",
+    "readLater": "Läs senare",
+    "empty": "Inga läslistor än",
+    "emptyHint": "Skapa listor för att organisera vad du vill läsa",
+    "progress": {
+      "unread": "Oläst",
+      "reading": "Läser",
+      "completed": "Slutförd"
+    }
+  },
+  "notifications": {
+    "title": "Notifikationer",
+    "empty": "Inga notifikationer",
+    "markAllRead": "Markera alla som lästa",
+    "markRead": "Markera som läst",
+    "new": "Ny"
+  },
+  "profile": {
+    "title": "Profil",
+    "editProfile": "Redigera profil",
+    "stats": "Statistik",
+    "achievements": "Prestationer",
+    "activity": "Aktivitet",
+    "joined": "Gick med {date}",
+    "followers": "Följare",
+    "following": "Följer",
+    "follow": "Följ",
+    "unfollow": "Sluta följa"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "account": "Konto",
+    "privacy": "Integritet",
+    "notifications": "Notifikationer",
+    "appearance": "Utseende",
+    "language": "Språk",
+    "security": "Säkerhet"
+  },
+  "auth": {
+    "signIn": "Logga in",
+    "signUp": "Registrera dig",
+    "signOut": "Logga ut",
+    "email": "E-post",
+    "password": "Lösenord",
+    "forgotPassword": "Glömt lösenord?",
+    "continueWith": "Fortsätt med {provider}",
+    "noAccount": "Har du inget konto?",
+    "hasAccount": "Har du redan ett konto?"
+  },
+  "pwa": {
+    "install": {
+      "title": "Installera Claude Insider",
+      "subtitle": "Lägg till på hemskärmen för snabb åtkomst",
+      "benefits": {
+        "offline": "Fungerar offline",
+        "faster": "Snabbare laddning",
+        "native": "Inbyggd app-upplevelse"
+      },
+      "button": "Installera",
+      "later": "Senare",
+      "installing": "Installerar..."
+    },
+    "offline": {
+      "title": "Du är offline",
+      "subtitle": "Vissa funktioner kan vara begränsade",
+      "reconnected": "Online igen",
+      "reconnectedSubtitle": "Anslutningen återställd"
+    },
+    "update": {
+      "title": "Uppdatering tillgänglig",
+      "subtitle": "En ny version är redo att använda",
+      "refresh": "Uppdatera"
+    },
+    "saveOffline": "Spara offline",
+    "savedOffline": "Sparad offline"
+  },
+  "errors": {
+    "pageNotFound": "Sidan hittades inte",
+    "serverError": "Serverfel",
+    "unauthorized": "Ej auktoriserad",
+    "forbidden": "Åtkomst nekad",
+    "networkError": "Nätverksfel",
+    "generic": "Något gick fel"
+  },
+  "footer": {
+    "copyright": "© {year}",
+    "privacy": "Integritet",
+    "terms": "Villkor",
+    "disclaimer": "Ansvarsfriskrivning",
+    "accessibility": "Tillgänglighet",
+    "changelog": "Ändringslogg"
+  }
+}

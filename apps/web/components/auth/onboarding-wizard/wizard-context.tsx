@@ -150,14 +150,14 @@ export function WizardProvider({ children, onComplete, steps }: WizardProviderPr
 
   const nextStep = useCallback(() => {
     if (currentStep < totalSteps - 1) {
-      setCurrentStep((prev) => prev + 1);
+      setCurrentStep((prev: number) => prev + 1);
       setError(null);
     }
   }, [currentStep, totalSteps]);
 
   const prevStep = useCallback(() => {
     if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
+      setCurrentStep((prev: number) => prev - 1);
       setError(null);
     }
   }, [currentStep]);

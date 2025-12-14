@@ -1,11 +1,14 @@
+"use client";
+
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/design-system";
+import { FooterLanguageSelector } from "@/components/footer-language-selector";
 
-const APP_VERSION = "0.64.0";
+const APP_VERSION = "0.65.0";
 
-export async function Footer() {
-  const t = await getTranslations("footer");
+export function Footer() {
+  const t = useTranslations("footer");
   const currentYear = new Date().getFullYear();
   const buildId = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "dev";
 
@@ -49,6 +52,8 @@ export async function Footer() {
           <Link href="/changelog" className={linkClass}>
             {t("changelog")}
           </Link>
+          <span className={separatorClass}>·</span>
+          <FooterLanguageSelector />
           <span className={separatorClass}>·</span>
           <span className="font-mono text-gray-400 dark:text-gray-600">v{APP_VERSION}-{buildId}</span>
         </div>
