@@ -96,30 +96,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isRefetching, setIsRefetching] = useState(false);
   const hasCheckedSession = useRef(false);
 
-  // Force session fetch on mount to handle OAuth callback scenarios
+  // Force session fetch only for OAuth callback scenarios
   // This works around the Better Auth useSession reactivity issue
+  // Optimized: only call fallback API when useSession definitively returns null
   useEffect(() => {
-    const forceSessionRefresh = async () => {
-      // Only check once per mount, and only if useSession shows no session
-      if (hasCheckedSession.current) return;
-      if (isPending) return; // Wait for initial load to complete
+    // Skip if already checked or still loading
+    if (hasCheckedSession.current || isPending) return;
 
+    // If useSession has data, skip the API call entirely
+    if (sessionData) {
+      hasCheckedSession.current = true;
+      return;
+    }
+
+    // Debounce to let useSession settle (OAuth callback edge case)
+    const timeoutId = setTimeout(async () => {
+      // Double-check still no session after debounce
+      if (hasCheckedSession.current) return;
       hasCheckedSession.current = true;
 
-      // If useSession already has data, we're good
-      if (sessionData) return;
-
-      // Try fetching session directly from API
+      // Only fetch if we still have no session
       setIsRefetching(true);
       try {
         const response = await fetch("/api/auth/get-session", {
           credentials: "include",
+          // Use cache to avoid redundant network requests
+          cache: "no-store",
         });
 
         if (response.ok) {
           const data = await response.json();
           if (data?.session && data?.user) {
-            console.log("[Auth] Session found via direct API call");
+            console.log("[Auth] Session found via fallback API call");
             setManualSession({
               user: data.user,
               session: data.session,
@@ -131,9 +139,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } finally {
         setIsRefetching(false);
       }
-    };
+    }, 100); // 100ms debounce
 
-    forceSessionRefresh();
+    return () => clearTimeout(timeoutId);
   }, [isPending, sessionData]);
 
   // Use sessionData from hook if available, otherwise use manual session

@@ -5,6 +5,10 @@
  *
  * Aggregate functions for the user profile page.
  * Combines favorites, ratings, and collections data.
+ *
+ * Performance optimizations:
+ * - getCompleteProfileData() calls getSession() once and runs all queries in parallel
+ * - Individual functions still available for granular updates
  */
 
 import { getSession } from "@/lib/auth";
@@ -514,5 +518,189 @@ export async function updateUsername(username: string): Promise<{
   } catch (error) {
     console.error("[Profile] Unexpected error:", error);
     return { error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Combined profile data response
+ */
+export interface CompleteProfileData {
+  profile: UserProfile;
+  favorites: FavoriteWithResource[];
+  favoritesTotal: number;
+  ratings: RatingWithResource[];
+  ratingsTotal: number;
+  collections: CollectionWithItems[];
+}
+
+/**
+ * Get all profile data in a single request
+ *
+ * Performance optimization: calls getSession() once and runs all DB queries in parallel.
+ * Use this for initial page load; use individual functions for updates/pagination.
+ */
+export async function getCompleteProfileData(options?: {
+  favoritesLimit?: number;
+  ratingsLimit?: number;
+}): Promise<{
+  data?: CompleteProfileData;
+  error?: string;
+}> {
+  try {
+    // Single session call for all operations
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { error: "You must be signed in to view your profile" };
+    }
+
+    const userId = session.user.id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
+
+    const favLimit = options?.favoritesLimit ?? 20;
+    const ratLimit = options?.ratingsLimit ?? 20;
+
+    // Run ALL queries in parallel - massive performance improvement
+    const [
+      // Stats counts (4 parallel count queries)
+      favoritesCount,
+      ratingsCount,
+      collectionsCount,
+      commentsCount,
+      // Profile data
+      profileData,
+      // Actual list data with pagination
+      favoritesData,
+      ratingsData,
+      collectionsData,
+    ] = await Promise.all([
+      // Count queries (fast, index-only)
+      supabase
+        .from("favorites")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId),
+      supabase
+        .from("ratings")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId),
+      supabase
+        .from("collections")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId),
+      supabase
+        .from("comments")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId),
+      // Profile
+      supabase
+        .from("user_profiles")
+        .select("bio, website, avatar_url")
+        .eq("user_id", userId)
+        .single(),
+      // Favorites list
+      supabase
+        .from("favorites")
+        .select("id, resource_type, resource_id, created_at", { count: "exact" })
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false })
+        .range(0, favLimit - 1),
+      // Ratings list
+      supabase
+        .from("ratings")
+        .select("id, resource_type, resource_id, rating, created_at, updated_at", {
+          count: "exact",
+        })
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false })
+        .range(0, ratLimit - 1),
+      // Collections list
+      supabase
+        .from("collections")
+        .select("id, name, description, is_public, item_count, created_at, updated_at")
+        .eq("user_id", userId)
+        .order("updated_at", { ascending: false }),
+    ]);
+
+    const profile = profileData.data;
+
+    return {
+      data: {
+        profile: {
+          id: userId,
+          name: session.user.name || "Anonymous",
+          email: session.user.email || "",
+          avatarUrl: profile?.avatar_url || session.user.image || undefined,
+          bio: profile?.bio || undefined,
+          website: profile?.website || undefined,
+          joinedAt:
+            session.user.createdAt instanceof Date
+              ? session.user.createdAt.toISOString()
+              : session.user.createdAt || new Date().toISOString(),
+          stats: {
+            favorites: favoritesCount.count || 0,
+            ratings: ratingsCount.count || 0,
+            collections: collectionsCount.count || 0,
+            comments: commentsCount.count || 0,
+          },
+        },
+        favorites:
+          favoritesData.data?.map(
+            (f: {
+              id: string;
+              resource_type: "resource" | "doc";
+              resource_id: string;
+              created_at: string;
+            }) => ({
+              id: f.id,
+              resourceType: f.resource_type,
+              resourceId: f.resource_id,
+              createdAt: f.created_at,
+            })
+          ) || [],
+        favoritesTotal: favoritesData.count || 0,
+        ratings:
+          ratingsData.data?.map(
+            (r: {
+              id: string;
+              resource_type: "resource" | "doc";
+              resource_id: string;
+              rating: number;
+              created_at: string;
+              updated_at?: string;
+            }) => ({
+              id: r.id,
+              resourceType: r.resource_type,
+              resourceId: r.resource_id,
+              rating: r.rating,
+              createdAt: r.created_at,
+              updatedAt: r.updated_at,
+            })
+          ) || [],
+        ratingsTotal: ratingsData.count || 0,
+        collections:
+          collectionsData.data?.map(
+            (c: {
+              id: string;
+              name: string;
+              description?: string;
+              is_public: boolean;
+              item_count: number;
+              created_at: string;
+              updated_at: string;
+            }) => ({
+              id: c.id,
+              name: c.name,
+              description: c.description,
+              isPublic: c.is_public,
+              itemCount: c.item_count,
+              createdAt: c.created_at,
+              updatedAt: c.updated_at,
+            })
+          ) || [],
+      },
+    };
+  } catch (error) {
+    console.error("[Profile] Complete profile data error:", error);
+    return { error: "Failed to load profile data" };
   }
 }

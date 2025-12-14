@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import {
-  getCurrentUserProfile,
+  getCompleteProfileData,
   getUserFavoritesWithDetails,
   getUserRatingsWithDetails,
-  getUserCollectionsWithCounts,
   type UserProfile,
   type FavoriteWithResource,
   type RatingWithResource,
@@ -16,6 +15,48 @@ import {
 import Link from "next/link";
 
 type TabType = "favorites" | "ratings" | "collections";
+
+// Cache key for sessionStorage
+const PROFILE_CACHE_KEY = "ci_profile_cache";
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+interface CachedProfileData {
+  profile: UserProfile;
+  favorites: FavoriteWithResource[];
+  ratings: RatingWithResource[];
+  collections: CollectionWithItems[];
+  timestamp: number;
+}
+
+function getFromCache(): CachedProfileData | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const cached = sessionStorage.getItem(PROFILE_CACHE_KEY);
+    if (!cached) return null;
+
+    const data = JSON.parse(cached) as CachedProfileData;
+    // Check if cache is still valid
+    if (Date.now() - data.timestamp > CACHE_TTL) {
+      sessionStorage.removeItem(PROFILE_CACHE_KEY);
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function setToCache(data: Omit<CachedProfileData, "timestamp">) {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.setItem(
+      PROFILE_CACHE_KEY,
+      JSON.stringify({ ...data, timestamp: Date.now() })
+    );
+  } catch {
+    // Storage full or unavailable, ignore
+  }
+}
 
 export default function ProfilePage() {
   const { isAuthenticated, isLoading: authLoading, showSignIn } = useAuth();
@@ -27,47 +68,73 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Track if we've loaded data (prevents duplicate fetches)
+  const hasFetched = useRef(false);
+
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       showSignIn();
     }
   }, [authLoading, isAuthenticated, showSignIn]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadProfileData();
+  // Use callback to avoid recreating function
+  const loadProfileData = useCallback(async (forceRefresh = false) => {
+    // Try to load from cache first (instant)
+    if (!forceRefresh) {
+      const cached = getFromCache();
+      if (cached) {
+        setProfile(cached.profile);
+        setFavorites(cached.favorites);
+        setRatings(cached.ratings);
+        setCollections(cached.collections);
+        setIsLoading(false);
+        return;
+      }
     }
-  }, [isAuthenticated]);
 
-  const loadProfileData = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const [profileResult, favoritesResult, ratingsResult, collectionsResult] =
-        await Promise.all([
-          getCurrentUserProfile(),
-          getUserFavoritesWithDetails(),
-          getUserRatingsWithDetails(),
-          getUserCollectionsWithCounts(),
-        ]);
+      // Single optimized call that fetches all data at once
+      // - 1 session lookup (instead of 4)
+      // - 8 parallel DB queries
+      const result = await getCompleteProfileData();
 
-      if (profileResult.error) {
-        setError(profileResult.error);
+      if (result.error) {
+        setError(result.error);
         return;
       }
 
-      setProfile(profileResult.data || null);
-      setFavorites(favoritesResult.data || []);
-      setRatings(ratingsResult.data || []);
-      setCollections(collectionsResult.data || []);
+      if (result.data) {
+        setProfile(result.data.profile);
+        setFavorites(result.data.favorites);
+        setRatings(result.data.ratings);
+        setCollections(result.data.collections);
+
+        // Cache the results for future visits
+        setToCache({
+          profile: result.data.profile,
+          favorites: result.data.favorites,
+          ratings: result.data.ratings,
+          collections: result.data.collections,
+        });
+      }
     } catch (err) {
       console.error("[Profile] Load error:", err);
       setError("Failed to load profile data");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Prevent duplicate fetches on auth state changes
+    if (isAuthenticated && !hasFetched.current) {
+      hasFetched.current = true;
+      loadProfileData();
+    }
+  }, [isAuthenticated, loadProfileData]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -142,7 +209,7 @@ export default function ProfilePage() {
         <div className="text-center">
           <p className="text-red-500 mb-4">{error}</p>
           <button
-            onClick={loadProfileData}
+            onClick={() => loadProfileData(true)}
             className="text-blue-600 dark:text-cyan-400 hover:underline"
           >
             Try again
