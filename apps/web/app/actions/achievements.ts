@@ -510,3 +510,157 @@ function mapAchievement(row: {
     isHidden: row.is_hidden,
   };
 }
+
+/**
+ * Combined achievements data response
+ */
+export interface CompleteAchievementsData {
+  earned: UserAchievement[];
+  all: Achievement[];
+  progress: AchievementProgress[];
+  stats: { total: number; points: number; rank: string };
+}
+
+/**
+ * Get all achievements data in a single request
+ *
+ * Performance optimization: calls getSession() once and runs all DB queries in parallel.
+ * Use this for initial achievements page load.
+ */
+export async function getCompleteAchievementsData(): Promise<{
+  data?: CompleteAchievementsData;
+  error?: string;
+}> {
+  try {
+    // Single session call for all operations
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { error: "You must be signed in" };
+    }
+
+    const userId = session.user.id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
+
+    // Run ALL queries in parallel
+    const [
+      // All achievements (public)
+      allAchievementsData,
+      // User's earned achievements
+      earnedData,
+      // User stats
+      statsData,
+      // Progress data
+      progressAchievements,
+      progressData,
+    ] = await Promise.all([
+      supabase
+        .from("achievements")
+        .select("*")
+        .order("category", { ascending: true })
+        .order("points", { ascending: true }),
+      supabase
+        .from("user_achievements")
+        .select(`*, achievement:achievement_id (*)`)
+        .eq("user_id", userId)
+        .order("earned_at", { ascending: false }),
+      supabase
+        .from("user")
+        .select("achievements_count, achievement_points")
+        .eq("id", userId)
+        .single(),
+      supabase
+        .from("achievements")
+        .select("slug, requirement_value")
+        .eq("is_hidden", false),
+      supabase
+        .from("achievement_progress")
+        .select("achievement_slug, current_value")
+        .eq("user_id", userId),
+    ]);
+
+    // Process earned achievements
+    const earnedSlugs = new Set<string>();
+    const earned: UserAchievement[] = (earnedData.data || []).map(
+      (row: {
+        id: string;
+        earned_at: string;
+        progress: number;
+        is_featured: boolean;
+        achievement: {
+          id: string;
+          slug: string;
+          name: string;
+          description: string;
+          icon: string;
+          category: string;
+          points: number;
+          tier: string;
+          requirement_type: string;
+          requirement_value: number;
+          is_hidden: boolean;
+        };
+      }) => {
+        earnedSlugs.add(row.achievement.slug);
+        return {
+          ...mapAchievement(row.achievement),
+          earnedAt: row.earned_at,
+          progress: row.progress,
+          isFeatured: row.is_featured,
+        };
+      }
+    );
+
+    // Process all achievements
+    const all = (allAchievementsData.data || []).map(mapAchievement);
+
+    // Process stats
+    const points = statsData.data?.achievement_points || 0;
+    let rank = "Newcomer";
+    if (points >= 1000) rank = "Legend";
+    else if (points >= 500) rank = "Expert";
+    else if (points >= 250) rank = "Veteran";
+    else if (points >= 100) rank = "Regular";
+    else if (points >= 50) rank = "Member";
+
+    // Process progress
+    const progressMap = new Map<string, number>(
+      (progressData.data || []).map(
+        (p: { achievement_slug: string; current_value: number }) =>
+          [p.achievement_slug, p.current_value] as [string, number]
+      )
+    );
+
+    const progress: AchievementProgress[] = (progressAchievements.data || [])
+      .filter((a: { slug: string }) => !earnedSlugs.has(a.slug))
+      .map((a: { slug: string; requirement_value: number }) => {
+        const current = progressMap.get(a.slug) ?? 0;
+        return {
+          slug: a.slug,
+          currentValue: current,
+          requiredValue: a.requirement_value,
+          percentComplete: Math.min(
+            100,
+            Math.round((current / a.requirement_value) * 100)
+          ),
+        };
+      })
+      .filter((p: AchievementProgress) => p.currentValue > 0);
+
+    return {
+      data: {
+        earned,
+        all,
+        progress,
+        stats: {
+          total: statsData.data?.achievements_count || 0,
+          points,
+          rank,
+        },
+      },
+    };
+  } catch (error) {
+    console.error("[Achievements] Complete data error:", error);
+    return { error: "Failed to load achievements data" };
+  }
+}

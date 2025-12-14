@@ -704,3 +704,168 @@ export async function getCompleteProfileData(options?: {
     return { error: "Failed to load profile data" };
   }
 }
+
+/**
+ * Notification preferences type (imported for settings)
+ */
+export interface NotificationPreferences {
+  in_app_comments: boolean;
+  in_app_replies: boolean;
+  in_app_suggestions: boolean;
+  in_app_follows: boolean;
+  in_app_mentions: boolean;
+  email_comments: boolean;
+  email_replies: boolean;
+  email_suggestions: boolean;
+  email_follows: boolean;
+  email_digest: boolean;
+  email_digest_frequency: "daily" | "weekly" | "monthly";
+}
+
+const defaultNotificationPreferences: NotificationPreferences = {
+  in_app_comments: true,
+  in_app_replies: true,
+  in_app_suggestions: true,
+  in_app_follows: true,
+  in_app_mentions: true,
+  email_comments: false,
+  email_replies: true,
+  email_suggestions: true,
+  email_follows: false,
+  email_digest: false,
+  email_digest_frequency: "weekly",
+};
+
+/**
+ * Combined settings data response
+ */
+export interface CompleteSettingsData {
+  profile: UserProfile;
+  privacy: PrivacySettings & { username?: string };
+  notifications: NotificationPreferences;
+}
+
+/**
+ * Get all settings data in a single request
+ *
+ * Performance optimization: calls getSession() once and runs all DB queries in parallel.
+ * Use this for initial settings page load.
+ */
+export async function getCompleteSettingsData(): Promise<{
+  data?: CompleteSettingsData;
+  error?: string;
+}> {
+  try {
+    // Single session call for all operations
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { error: "You must be signed in to access settings" };
+    }
+
+    const userId = session.user.id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
+
+    // Run ALL queries in parallel
+    const [
+      // Stats counts for profile
+      favoritesCount,
+      ratingsCount,
+      collectionsCount,
+      commentsCount,
+      // Profile data
+      profileData,
+      // Privacy/username from user table
+      userData,
+      // Notification preferences
+      notifData,
+    ] = await Promise.all([
+      // Count queries (fast, index-only)
+      supabase
+        .from("favorites")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId),
+      supabase
+        .from("ratings")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId),
+      supabase
+        .from("collections")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId),
+      supabase
+        .from("comments")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId),
+      // Profile
+      supabase
+        .from("user_profiles")
+        .select("bio, website, avatar_url")
+        .eq("user_id", userId)
+        .single(),
+      // User table for username and privacy settings
+      supabase
+        .from("user")
+        .select("username, profilePrivacy")
+        .eq("id", userId)
+        .single(),
+      // Notification preferences
+      supabase
+        .from("notification_preferences")
+        .select("*")
+        .eq("user_id", userId)
+        .single(),
+    ]);
+
+    const profile = profileData.data;
+    const user = userData.data;
+    const notifPrefs = notifData.data;
+    const privacySettings = (user?.profilePrivacy as PrivacySettings) || defaultPrivacySettings;
+
+    return {
+      data: {
+        profile: {
+          id: userId,
+          name: session.user.name || "Anonymous",
+          email: session.user.email || "",
+          avatarUrl: profile?.avatar_url || session.user.image || undefined,
+          bio: profile?.bio || undefined,
+          website: profile?.website || undefined,
+          joinedAt:
+            session.user.createdAt instanceof Date
+              ? session.user.createdAt.toISOString()
+              : session.user.createdAt || new Date().toISOString(),
+          stats: {
+            favorites: favoritesCount.count || 0,
+            ratings: ratingsCount.count || 0,
+            collections: collectionsCount.count || 0,
+            comments: commentsCount.count || 0,
+          },
+        },
+        privacy: {
+          ...defaultPrivacySettings,
+          ...privacySettings,
+          username: user?.username || undefined,
+        },
+        notifications: notifPrefs
+          ? {
+              in_app_comments: notifPrefs.in_app_comments,
+              in_app_replies: notifPrefs.in_app_replies,
+              in_app_suggestions: notifPrefs.in_app_suggestions,
+              in_app_follows: notifPrefs.in_app_follows,
+              in_app_mentions: notifPrefs.in_app_mentions,
+              email_comments: notifPrefs.email_comments,
+              email_replies: notifPrefs.email_replies,
+              email_suggestions: notifPrefs.email_suggestions,
+              email_follows: notifPrefs.email_follows,
+              email_digest: notifPrefs.email_digest,
+              email_digest_frequency: notifPrefs.email_digest_frequency,
+            }
+          : defaultNotificationPreferences,
+      },
+    };
+  } catch (error) {
+    console.error("[Profile] Complete settings data error:", error);
+    return { error: "Failed to load settings data" };
+  }
+}

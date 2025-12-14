@@ -4,24 +4,63 @@
  * User Achievements Page
  *
  * View all achievements and manage featured ones.
+ * Optimized with combined data endpoint and sessionStorage caching.
  */
 
-import { useState, useEffect, useTransition, useCallback } from "react";
+import { useState, useEffect, useTransition, useCallback, useRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useToast } from "@/components/toast";
 import { AchievementBadge } from "@/components/achievements/achievement-badge";
 import {
-  getUserAchievements,
-  getAllAchievements,
-  getAchievementProgress,
+  getCompleteAchievementsData,
   toggleFeaturedAchievement,
-  getAchievementStats,
   type UserAchievement,
   type Achievement,
   type AchievementProgress,
 } from "@/app/actions/achievements";
+
+// Cache key for sessionStorage
+const ACHIEVEMENTS_CACHE_KEY = "ci_achievements_cache";
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+interface CachedAchievementsData {
+  earned: UserAchievement[];
+  all: Achievement[];
+  progress: AchievementProgress[];
+  stats: { total: number; points: number; rank: string };
+  timestamp: number;
+}
+
+function getFromCache(): CachedAchievementsData | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const cached = sessionStorage.getItem(ACHIEVEMENTS_CACHE_KEY);
+    if (!cached) return null;
+
+    const data = JSON.parse(cached) as CachedAchievementsData;
+    if (Date.now() - data.timestamp > CACHE_TTL) {
+      sessionStorage.removeItem(ACHIEVEMENTS_CACHE_KEY);
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function setToCache(data: Omit<CachedAchievementsData, "timestamp">) {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.setItem(
+      ACHIEVEMENTS_CACHE_KEY,
+      JSON.stringify({ ...data, timestamp: Date.now() })
+    );
+  } catch {
+    // Storage full or unavailable
+  }
+}
 
 type Category = "all" | "contribution" | "engagement" | "milestone" | "special";
 
@@ -38,31 +77,58 @@ export default function AchievementsPage() {
   const [category, setCategory] = useState<Category>("all");
   const [view, setView] = useState<"earned" | "all" | "progress">("earned");
 
+  // Prevent duplicate fetches
+  const hasFetched = useRef(false);
+
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       showSignIn();
     }
   }, [authLoading, isAuthenticated, showSignIn]);
 
-  const loadData = useCallback(async () => {
-    setIsLoading(true);
-    const [earnedResult, allResult, progressResult, statsResult] = await Promise.all([
-      getUserAchievements(),
-      getAllAchievements(),
-      getAchievementProgress(),
-      getAchievementStats(""),
-    ]);
+  const loadData = useCallback(async (forceRefresh = false) => {
+    // Try to load from cache first (instant)
+    if (!forceRefresh) {
+      const cached = getFromCache();
+      if (cached) {
+        setEarned(cached.earned);
+        setAll(cached.all);
+        setProgress(cached.progress);
+        setStats(cached.stats);
+        setIsLoading(false);
+        return;
+      }
+    }
 
-    if (earnedResult.data) setEarned(earnedResult.data);
-    if (allResult.data) setAll(allResult.data);
-    if (progressResult.data) setProgress(progressResult.data);
-    setStats(statsResult);
+    setIsLoading(true);
+
+    // Single optimized call that fetches all data at once
+    // - 1 session lookup (instead of 4)
+    // - 5 parallel DB queries
+    const result = await getCompleteAchievementsData();
+
+    if (result.data) {
+      setEarned(result.data.earned);
+      setAll(result.data.all);
+      setProgress(result.data.progress);
+      setStats(result.data.stats);
+
+      // Cache for future visits
+      setToCache({
+        earned: result.data.earned,
+        all: result.data.all,
+        progress: result.data.progress,
+        stats: result.data.stats,
+      });
+    }
+
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
-          // eslint-disable-next-line react-hooks/set-state-in-effect
+    // Prevent duplicate fetches on auth state changes
+    if (isAuthenticated && !hasFetched.current) {
+      hasFetched.current = true;
       loadData();
     }
   }, [isAuthenticated, loadData]);

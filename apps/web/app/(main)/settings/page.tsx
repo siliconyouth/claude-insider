@@ -1,28 +1,73 @@
 "use client";
 
-import { useState, useEffect, useTransition, useCallback } from "react";
+import { useState, useEffect, useTransition, useCallback, useRef } from "react";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useToast } from "@/components/toast";
 import {
-  getCurrentUserProfile,
+  getCompleteSettingsData,
   updateUserProfile,
-  getPrivacySettings,
   updatePrivacySettings,
   updateUsername,
   type UserProfile,
   type PrivacySettings,
-} from "@/app/actions/profile";
-import {
-  getNotificationPreferences,
-  updateNotificationPreferences,
   type NotificationPreferences,
-} from "@/app/actions/notifications";
+} from "@/app/actions/profile";
+import { updateNotificationPreferences } from "@/app/actions/notifications";
 import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
 import { DataManagement } from "@/components/settings/data-management";
 import { BlockedUsers } from "@/components/settings/blocked-users";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import Link from "next/link";
+
+// Cache key for sessionStorage
+const SETTINGS_CACHE_KEY = "ci_settings_cache";
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+interface CachedSettingsData {
+  profile: UserProfile;
+  privacy: PrivacySettings & { username?: string };
+  notifications: NotificationPreferences;
+  timestamp: number;
+}
+
+function getFromCache(): CachedSettingsData | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const cached = sessionStorage.getItem(SETTINGS_CACHE_KEY);
+    if (!cached) return null;
+
+    const data = JSON.parse(cached) as CachedSettingsData;
+    if (Date.now() - data.timestamp > CACHE_TTL) {
+      sessionStorage.removeItem(SETTINGS_CACHE_KEY);
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function setToCache(data: Omit<CachedSettingsData, "timestamp">) {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.setItem(
+      SETTINGS_CACHE_KEY,
+      JSON.stringify({ ...data, timestamp: Date.now() })
+    );
+  } catch {
+    // Storage full or unavailable
+  }
+}
+
+function clearCache() {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.removeItem(SETTINGS_CACHE_KEY);
+  } catch {
+    // Ignore
+  }
+}
 
 export default function SettingsPage() {
   const { isAuthenticated, isLoading: authLoading, showSignIn, signOut } = useAuth();
@@ -65,52 +110,82 @@ export default function SettingsPage() {
     email_digest_frequency: "weekly",
   });
 
+  // Track if we've loaded data (prevents duplicate fetches)
+  const hasFetched = useRef(false);
+
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
       showSignIn();
     }
   }, [authLoading, isAuthenticated, showSignIn]);
 
-  const loadProfile = useCallback(async () => {
+  const loadSettings = useCallback(async (forceRefresh = false) => {
+    // Try to load from cache first (instant)
+    if (!forceRefresh) {
+      const cached = getFromCache();
+      if (cached) {
+        setProfile(cached.profile);
+        setName(cached.profile.name || "");
+        setBio(cached.profile.bio || "");
+        setWebsite(cached.profile.website || "");
+        setUsername(cached.privacy.username || "");
+        setOriginalUsername(cached.privacy.username || "");
+        setPrivacy({
+          showEmail: cached.privacy.showEmail,
+          showActivity: cached.privacy.showActivity,
+          showCollections: cached.privacy.showCollections,
+          showStats: cached.privacy.showStats,
+        });
+        setNotifPrefs(cached.notifications);
+        setIsLoading(false);
+        return;
+      }
+    }
+
     setIsLoading(true);
 
-    const [profileResult, privacyResult, notifResult] = await Promise.all([
-      getCurrentUserProfile(),
-      getPrivacySettings(),
-      getNotificationPreferences(),
-    ]);
+    // Single optimized call that fetches all data at once
+    // - 1 session lookup (instead of 3)
+    // - 7 parallel DB queries
+    const result = await getCompleteSettingsData();
 
-    if (profileResult.data) {
-      setProfile(profileResult.data);
-      setName(profileResult.data.name || "");
-      setBio(profileResult.data.bio || "");
-      setWebsite(profileResult.data.website || "");
-    }
+    if (result.data) {
+      const { profile: profileData, privacy: privacyData, notifications: notifData } = result.data;
 
-    if (privacyResult.data) {
-      setUsername(privacyResult.data.username || "");
-      setOriginalUsername(privacyResult.data.username || "");
+      setProfile(profileData);
+      setName(profileData.name || "");
+      setBio(profileData.bio || "");
+      setWebsite(profileData.website || "");
+
+      setUsername(privacyData.username || "");
+      setOriginalUsername(privacyData.username || "");
       setPrivacy({
-        showEmail: privacyResult.data.showEmail,
-        showActivity: privacyResult.data.showActivity,
-        showCollections: privacyResult.data.showCollections,
-        showStats: privacyResult.data.showStats,
+        showEmail: privacyData.showEmail,
+        showActivity: privacyData.showActivity,
+        showCollections: privacyData.showCollections,
+        showStats: privacyData.showStats,
       });
-    }
 
-    if (notifResult.data) {
-      setNotifPrefs(notifResult.data);
+      setNotifPrefs(notifData);
+
+      // Cache the results for future visits
+      setToCache({
+        profile: profileData,
+        privacy: privacyData,
+        notifications: notifData,
+      });
     }
 
     setIsLoading(false);
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-      loadProfile();
+    // Prevent duplicate fetches on auth state changes
+    if (isAuthenticated && !hasFetched.current) {
+      hasFetched.current = true;
+      loadSettings();
     }
-  }, [isAuthenticated, loadProfile]);
+  }, [isAuthenticated, loadSettings]);
 
   // Track changes
   useEffect(() => {
@@ -134,8 +209,9 @@ export default function SettingsPage() {
       } else {
         toast.success("Profile updated successfully");
         setHasChanges(false);
-        // Reload profile to get fresh data
-        loadProfile();
+        // Clear cache and reload to get fresh data
+        clearCache();
+        loadSettings(true);
       }
     });
   };
