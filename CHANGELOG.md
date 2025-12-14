@@ -9,6 +9,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No pending changes.
 
+## [0.60.0] - 2025-12-14
+
+### Added
+- **Documentation-Resources Cross-Linking System** - Bidirectional linking between 34 MDX documentation pages and 122+ curated resources
+  - **Auto-Matching Algorithm**: Jaccard similarity with weighted scoring (60% tag overlap, 25% category mapping, 15% title similarity)
+  - **Payload CMS Collections**: Documents, DocumentSections, CodeExamples for granular tagging
+  - **CrossLinkSettings Global**: System-wide matching thresholds and category mappings
+  - **Display Options**: Both hover tooltips and full cards, configurable per-document
+
+### New Collections
+- `documents` - Mirror MDX files in CMS with tags, displayMode, autoMatchEnabled
+- `document-sections` - Section-level tagging for granular cross-linking
+- `code-examples` - Code block tagging with language detection and pattern matching
+
+### New Components
+- `ResourceHoverCard` - Tooltip preview on resource link hover with React portal
+- `RelatedResources` - Card grid section for end of docs with grid/list layouts
+- `RelatedDocuments` - Bidirectional links from resource pages to related docs
+- `InlineResourceLink` - MDX component `<ResourceLink id="...">` with hover preview
+
+### New Scripts
+- `scripts/sync-mdx-to-payload.cjs` - Syncs MDX docs to JSON index (34 docs, 1132 sections, 584 code blocks)
+- `scripts/compute-auto-matches.cjs` - Computes tag-based matches to `cross-links-index.json`
+
+### New API
+- `GET /api/cross-links?doc=<slug>` - Get related resources for a document
+- `GET /api/cross-links?resource=<id>` - Get related documents for a resource
+- `GET /api/cross-links?compute=true` - Recompute all auto-matches
+
+### New Files
+- `apps/web/collections/Documents.ts`
+- `apps/web/collections/DocumentSections.ts`
+- `apps/web/collections/CodeExamples.ts`
+- `apps/web/globals/CrossLinkSettings.ts`
+- `apps/web/lib/cross-linking/auto-match.ts`
+- `apps/web/lib/cross-linking/extract-sections.ts`
+- `apps/web/lib/cross-linking/cache.ts`
+- `apps/web/components/cross-linking/ResourceHoverCard.tsx`
+- `apps/web/components/cross-linking/RelatedResources.tsx`
+- `apps/web/components/cross-linking/RelatedDocuments.tsx`
+- `apps/web/components/mdx/InlineResourceLink.tsx`
+- `apps/web/app/api/cross-links/route.ts`
+- `apps/web/data/documents-index.json`
+- `apps/web/data/cross-links-index.json`
+
+### Modified
+- `apps/web/collections/Resources.ts` - Added relatedDocs, relatedSections, autoMatchedDocs fields
+- `apps/web/mdx-components.tsx` - Added ResourceLink, Resource, RelatedResources exports
+- `apps/web/payload.config.ts` - Registered new collections and global
+
 ## [0.59.0] - 2025-12-14
 
 ### Fixed

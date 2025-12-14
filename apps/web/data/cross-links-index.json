@@ -1,0 +1,207 @@
+{
+  "generatedAt": "2025-12-13T23:56:49.010Z",
+  "settings": {
+    "minTagOverlap": 2,
+    "minScoreThreshold": 0.3,
+    "maxAutoMatches": 5,
+    "tagOverlapWeight": 0.6,
+    "categoryMappingWeight": 0.25,
+    "titleSimilarityWeight": 0.15
+  },
+  "categoryMappings": {
+    "getting-started": [
+      "official",
+      "tools",
+      "tutorials"
+    ],
+    "configuration": [
+      "rules",
+      "tools"
+    ],
+    "tips-and-tricks": [
+      "prompts",
+      "tutorials"
+    ],
+    "api": [
+      "sdks",
+      "official"
+    ],
+    "integrations": [
+      "mcp-servers",
+      "tools",
+      "sdks"
+    ],
+    "tutorials": [
+      "tutorials",
+      "showcases"
+    ],
+    "examples": [
+      "showcases",
+      "community"
+    ]
+  },
+  "stats": {
+    "totalDocuments": 34,
+    "totalResources": 122,
+    "documentsWithMatches": 4,
+    "resourcesWithMatches": 4,
+    "totalDocToResourceLinks": 4,
+    "totalResourceToDocLinks": 4
+  },
+  "docToResources": {
+    "configuration/claude-md": {
+      "docTitle": "CLAUDE.md Guide",
+      "docCategory": "configuration",
+      "displayMode": "both",
+      "autoMatchEnabled": true,
+      "manualResources": [],
+      "autoMatchedResources": [
+        {
+          "resourceId": "rules-go",
+          "resourceTitle": "Go CLAUDE.md Rules",
+          "resourceCategory": "rules",
+          "score": 0.3,
+          "matchedTags": [],
+          "tagScore": 0,
+          "categoryBonus": 1,
+          "titleSimilarity": 0.333
+        }
+      ]
+    },
+    "integrations/mcp-servers": {
+      "docTitle": "MCP Servers",
+      "docCategory": "integrations",
+      "displayMode": "both",
+      "autoMatchEnabled": true,
+      "manualResources": [],
+      "autoMatchedResources": [
+        {
+          "resourceId": "awesome-mcp-servers",
+          "resourceTitle": "Awesome MCP Servers",
+          "resourceCategory": "mcp-servers",
+          "score": 0.35,
+          "matchedTags": [],
+          "tagScore": 0,
+          "categoryBonus": 1,
+          "titleSimilarity": 0.667
+        }
+      ]
+    },
+    "tips-and-tricks/debugging": {
+      "docTitle": "Debugging with Claude Code",
+      "docCategory": "tips-and-tricks",
+      "displayMode": "both",
+      "autoMatchEnabled": true,
+      "manualResources": [],
+      "autoMatchedResources": [
+        {
+          "resourceId": "claude-code-tutorial",
+          "resourceTitle": "Claude Code Getting Started",
+          "resourceCategory": "tutorials",
+          "score": 0.3,
+          "matchedTags": [],
+          "tagScore": 0,
+          "categoryBonus": 1,
+          "titleSimilarity": 0.333
+        }
+      ]
+    },
+    "tips-and-tricks/prompting": {
+      "docTitle": "Prompting Strategies",
+      "docCategory": "tips-and-tricks",
+      "displayMode": "both",
+      "autoMatchEnabled": true,
+      "manualResources": [],
+      "autoMatchedResources": [
+        {
+          "resourceId": "self-reflection",
+          "resourceTitle": "Self-Reflection Prompting",
+          "resourceCategory": "prompts",
+          "score": 0.3,
+          "matchedTags": [],
+          "tagScore": 0,
+          "categoryBonus": 1,
+          "titleSimilarity": 0.333
+        }
+      ]
+    }
+  },
+  "resourceToDocs": {
+    "awesome-mcp-servers": {
+      "resourceTitle": "Awesome MCP Servers",
+      "resourceCategory": "mcp-servers",
+      "relatedDocs": [
+        {
+          "docSlug": "integrations/mcp-servers",
+          "docTitle": "MCP Servers",
+          "docCategory": "integrations",
+          "resourceId": "awesome-mcp-servers",
+          "resourceTitle": "Awesome MCP Servers",
+          "resourceCategory": "mcp-servers",
+          "score": 0.35,
+          "matchedTags": [],
+          "tagScore": 0,
+          "categoryBonus": 1,
+          "titleSimilarity": 0.667
+        }
+      ]
+    },
+    "self-reflection": {
+      "resourceTitle": "Self-Reflection Prompting",
+      "resourceCategory": "prompts",
+      "relatedDocs": [
+        {
+          "docSlug": "tips-and-tricks/prompting",
+          "docTitle": "Prompting Strategies",
+          "docCategory": "tips-and-tricks",
+          "resourceId": "self-reflection",
+          "resourceTitle": "Self-Reflection Prompting",
+          "resourceCategory": "prompts",
+          "score": 0.3,
+          "matchedTags": [],
+          "tagScore": 0,
+          "categoryBonus": 1,
+          "titleSimilarity": 0.333
+        }
+      ]
+    },
+    "rules-go": {
+      "resourceTitle": "Go CLAUDE.md Rules",
+      "resourceCategory": "rules",
+      "relatedDocs": [
+        {
+          "docSlug": "configuration/claude-md",
+          "docTitle": "CLAUDE.md Guide",
+          "docCategory": "configuration",
+          "resourceId": "rules-go",
+          "resourceTitle": "Go CLAUDE.md Rules",
+          "resourceCategory": "rules",
+          "score": 0.3,
+          "matchedTags": [],
+          "tagScore": 0,
+          "categoryBonus": 1,
+          "titleSimilarity": 0.333
+        }
+      ]
+    },
+    "claude-code-tutorial": {
+      "resourceTitle": "Claude Code Getting Started",
+      "resourceCategory": "tutorials",
+      "relatedDocs": [
+        {
+          "docSlug": "tips-and-tricks/debugging",
+          "docTitle": "Debugging with Claude Code",
+          "docCategory": "tips-and-tricks",
+          "resourceId": "claude-code-tutorial",
+          "resourceTitle": "Claude Code Getting Started",
+          "resourceCategory": "tutorials",
+          "score": 0.3,
+          "matchedTags": [],
+          "tagScore": 0,
+          "categoryBonus": 1,
+          "titleSimilarity": 0.333
+        }
+      ]
+    }
+  }
+}

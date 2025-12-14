@@ -182,6 +182,7 @@ export function AskAIWrapper({
   buttonVariant = "icon",
   showOnHover = true,
 }: AskAIWrapperProps) {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div

@@ -73,6 +73,9 @@ export interface Config {
     subcategories: Subcategory;
     tags: Tag;
     resources: Resource;
+    documents: Document;
+    'document-sections': DocumentSection;
+    'code-examples': CodeExample;
     'difficulty-levels': DifficultyLevel;
     'programming-languages': ProgrammingLanguage;
     'edit-suggestions': EditSuggestion;
@@ -89,6 +92,9 @@ export interface Config {
     subcategories: SubcategoriesSelect<false> | SubcategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    'document-sections': DocumentSectionsSelect<false> | DocumentSectionsSelect<true>;
+    'code-examples': CodeExamplesSelect<false> | CodeExamplesSelect<true>;
     'difficulty-levels': DifficultyLevelsSelect<false> | DifficultyLevelsSelect<true>;
     'programming-languages': ProgrammingLanguagesSelect<false> | ProgrammingLanguagesSelect<true>;
     'edit-suggestions': EditSuggestionsSelect<false> | EditSuggestionsSelect<true>;
@@ -103,9 +109,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'site-settings': SiteSetting;
+    'cross-link-settings': CrossLinkSetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'cross-link-settings': CrossLinkSettingsSelect<false> | CrossLinkSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -440,6 +448,23 @@ export interface Resource {
    * Last date this resource was verified as active
    */
   lastVerified: string;
+  /**
+   * Link this resource to related documentation
+   */
+  crossLinking?: {
+    /**
+     * Documentation pages related to this resource
+     */
+    relatedDocs?: (number | Document)[] | null;
+    /**
+     * Specific sections related to this resource
+     */
+    relatedSections?: (number | DocumentSection)[] | null;
+    /**
+     * Auto-matched documents based on shared tags (read-only)
+     */
+    autoMatchedDocs?: (number | Document)[] | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -526,6 +551,218 @@ export interface ProgrammingLanguage {
    * Number of resources using this language (auto-calculated)
    */
   resourceCount?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Documentation pages synced from MDX files
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  /**
+   * URL path slug (e.g., "getting-started/installation")
+   */
+  slug: string;
+  /**
+   * Document title from frontmatter
+   */
+  title: string;
+  /**
+   * Document description from frontmatter
+   */
+  description?: string | null;
+  /**
+   * Documentation category (e.g., "getting-started", "api")
+   */
+  docCategory: string;
+  /**
+   * Tags for auto-matching with resources
+   */
+  tags?: (number | Tag)[] | null;
+  /**
+   * How to display related resources
+   */
+  displayMode?: ('hover' | 'cards' | 'both') | null;
+  /**
+   * Enable automatic tag-based matching
+   */
+  autoMatchEnabled?: boolean | null;
+  /**
+   * Manually linked resources (takes priority over auto-matched)
+   */
+  relatedResources?: (number | Resource)[] | null;
+  /**
+   * Resources to exclude from auto-matching
+   */
+  excludedResources?: (number | Resource)[] | null;
+  /**
+   * Automatically matched based on shared tags (read-only)
+   */
+  autoMatchedResources?: (number | Resource)[] | null;
+  /**
+   * Sync tracking information
+   */
+  syncInfo?: {
+    /**
+     * Path to source MDX file
+     */
+    mdxPath?: string | null;
+    /**
+     * MD5 hash for change detection
+     */
+    contentHash?: string | null;
+    /**
+     * Last sync timestamp
+     */
+    lastSynced?: string | null;
+  };
+  /**
+   * Additional metadata
+   */
+  metadata?: {
+    /**
+     * Estimated reading time
+     */
+    readingTime?: string | null;
+    /**
+     * Word count
+     */
+    wordCount?: number | null;
+    /**
+     * Number of headings/sections
+     */
+    headingCount?: number | null;
+    /**
+     * Number of code blocks
+     */
+    codeBlockCount?: number | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Document sections for granular cross-linking
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "document-sections".
+ */
+export interface DocumentSection {
+  id: number;
+  /**
+   * Parent document this section belongs to
+   */
+  document: number | Document;
+  /**
+   * Anchor ID (e.g., "installation-methods")
+   */
+  headingId: string;
+  /**
+   * Heading text content
+   */
+  headingText: string;
+  /**
+   * Heading level (1-6)
+   */
+  headingLevel: number;
+  /**
+   * Position in document
+   */
+  order: number;
+  /**
+   * Section-specific tags for targeted matching
+   */
+  tags?: (number | Tag)[] | null;
+  /**
+   * Resources specifically related to this section
+   */
+  relatedResources?: (number | Resource)[] | null;
+  /**
+   * Show resources after this section
+   */
+  showRelatedResources?: boolean | null;
+  /**
+   * Display mode override
+   */
+  displayMode?: ('inherit' | 'hover' | 'cards') | null;
+  /**
+   * Preview of section content (first 200 chars)
+   */
+  contentPreview?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Code blocks for targeted resource linking
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "code-examples".
+ */
+export interface CodeExample {
+  id: number;
+  /**
+   * Parent document containing this code block
+   */
+  document: number | Document;
+  /**
+   * Parent section (optional, for nested context)
+   */
+  section?: (number | null) | DocumentSection;
+  /**
+   * Unique identifier for this code block
+   */
+  codeId: string;
+  /**
+   * Optional title for the code block
+   */
+  title?: string | null;
+  /**
+   * Filename if specified (e.g., "settings.json")
+   */
+  filename?: string | null;
+  /**
+   * Programming language
+   */
+  language?: (number | null) | ProgrammingLanguage;
+  /**
+   * Position in document
+   */
+  order: number;
+  /**
+   * First 500 characters of the code
+   */
+  codePreview?: string | null;
+  /**
+   * Tags for this specific code example
+   */
+  tags?: (number | Tag)[] | null;
+  /**
+   * Resources related to this code example
+   */
+  relatedResources?: (number | Resource)[] | null;
+  /**
+   * Code block metadata
+   */
+  metadata?: {
+    /**
+     * Number of lines
+     */
+    lineCount?: number | null;
+    /**
+     * Detected patterns (cli, apiCall, config, etc.)
+     */
+    patterns?:
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | string
+      | number
+      | boolean
+      | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -652,6 +889,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'resources';
         value: number | Resource;
+      } | null)
+    | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'document-sections';
+        value: number | DocumentSection;
+      } | null)
+    | ({
+        relationTo: 'code-examples';
+        value: number | CodeExample;
       } | null)
     | ({
         relationTo: 'difficulty-levels';
@@ -870,6 +1119,88 @@ export interface ResourcesSelect<T extends boolean = true> {
   featuredReason?: T;
   addedDate?: T;
   lastVerified?: T;
+  crossLinking?:
+    | T
+    | {
+        relatedDocs?: T;
+        relatedSections?: T;
+        autoMatchedDocs?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  description?: T;
+  docCategory?: T;
+  tags?: T;
+  displayMode?: T;
+  autoMatchEnabled?: T;
+  relatedResources?: T;
+  excludedResources?: T;
+  autoMatchedResources?: T;
+  syncInfo?:
+    | T
+    | {
+        mdxPath?: T;
+        contentHash?: T;
+        lastSynced?: T;
+      };
+  metadata?:
+    | T
+    | {
+        readingTime?: T;
+        wordCount?: T;
+        headingCount?: T;
+        codeBlockCount?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "document-sections_select".
+ */
+export interface DocumentSectionsSelect<T extends boolean = true> {
+  document?: T;
+  headingId?: T;
+  headingText?: T;
+  headingLevel?: T;
+  order?: T;
+  tags?: T;
+  relatedResources?: T;
+  showRelatedResources?: T;
+  displayMode?: T;
+  contentPreview?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "code-examples_select".
+ */
+export interface CodeExamplesSelect<T extends boolean = true> {
+  document?: T;
+  section?: T;
+  codeId?: T;
+  title?: T;
+  filename?: T;
+  language?: T;
+  order?: T;
+  codePreview?: T;
+  tags?: T;
+  relatedResources?: T;
+  metadata?:
+    | T
+    | {
+        lineCount?: T;
+        patterns?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1095,6 +1426,125 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * Configure cross-linking between documentation and resources
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cross-link-settings".
+ */
+export interface CrossLinkSetting {
+  id: number;
+  /**
+   * Configure automatic tag-based matching algorithm
+   */
+  autoMatching: {
+    /**
+     * Minimum shared tags required for a match
+     */
+    minTagOverlap: number;
+    /**
+     * Minimum match score (0-1)
+     */
+    minScoreThreshold: number;
+    /**
+     * Maximum auto-matched resources per document
+     */
+    maxAutoMatches: number;
+    /**
+     * Enable automatic matching globally
+     */
+    enabled?: boolean | null;
+  };
+  /**
+   * Default display settings for cross-links
+   */
+  displayDefaults: {
+    /**
+     * Default display mode for new documents
+     */
+    defaultDisplayMode: 'hover' | 'cards' | 'both';
+    /**
+     * Hover delay in milliseconds
+     */
+    hoverDelayMs: number;
+    /**
+     * Show resource cards at the end of sections
+     */
+    showResourceCardsAfterSection?: boolean | null;
+    /**
+     * Show aggregated resources at document end
+     */
+    showResourceCardsAtDocumentEnd?: boolean | null;
+    /**
+     * Maximum resource cards to show per section
+     */
+    maxCardsPerSection?: number | null;
+  };
+  /**
+   * Adjust how different factors influence matching scores
+   */
+  scoringWeights: {
+    /**
+     * Tag overlap weight (0-1)
+     */
+    tagOverlapWeight: number;
+    /**
+     * Category mapping weight (0-1)
+     */
+    categoryMappingWeight: number;
+    /**
+     * Title similarity weight (0-1)
+     */
+    titleSimilarityWeight: number;
+  };
+  /**
+   * Map documentation categories to resource categories for boosted matching
+   */
+  categoryMappings?:
+    | {
+        /**
+         * Documentation category (e.g., "getting-started")
+         */
+        docCategory: string;
+        /**
+         * Resource categories that should be boosted
+         */
+        resourceCategories: (number | Category)[];
+        /**
+         * Boost multiplier (1.0 = normal, 2.0 = double)
+         */
+        boostWeight: number;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Enable or disable cross-linking features
+   */
+  features?: {
+    /**
+     * Enable hover preview cards
+     */
+    enableHoverCards?: boolean | null;
+    /**
+     * Enable inline resource cards
+     */
+    enableInlineCards?: boolean | null;
+    /**
+     * Enable section-level linking
+     */
+    enableSectionLinks?: boolean | null;
+    /**
+     * Enable code block linking
+     */
+    enableCodeBlockLinks?: boolean | null;
+    /**
+     * Show related docs on resource pages
+     */
+    enableBidirectionalLinks?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
@@ -1151,6 +1601,56 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         message?: T;
         link?: T;
         type?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cross-link-settings_select".
+ */
+export interface CrossLinkSettingsSelect<T extends boolean = true> {
+  autoMatching?:
+    | T
+    | {
+        minTagOverlap?: T;
+        minScoreThreshold?: T;
+        maxAutoMatches?: T;
+        enabled?: T;
+      };
+  displayDefaults?:
+    | T
+    | {
+        defaultDisplayMode?: T;
+        hoverDelayMs?: T;
+        showResourceCardsAfterSection?: T;
+        showResourceCardsAtDocumentEnd?: T;
+        maxCardsPerSection?: T;
+      };
+  scoringWeights?:
+    | T
+    | {
+        tagOverlapWeight?: T;
+        categoryMappingWeight?: T;
+        titleSimilarityWeight?: T;
+      };
+  categoryMappings?:
+    | T
+    | {
+        docCategory?: T;
+        resourceCategories?: T;
+        boostWeight?: T;
+        id?: T;
+      };
+  features?:
+    | T
+    | {
+        enableHoverCards?: T;
+        enableInlineCards?: T;
+        enableSectionLinks?: T;
+        enableCodeBlockLinks?: T;
+        enableBidirectionalLinks?: T;
       };
   updatedAt?: T;
   createdAt?: T;

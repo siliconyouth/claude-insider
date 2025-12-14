@@ -20,6 +20,7 @@ export function AvatarUpload() {
   const { user } = useAuth();
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Get display avatar: uploaded preview > user avatar > OAuth image > initials

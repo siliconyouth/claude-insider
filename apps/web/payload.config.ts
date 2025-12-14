@@ -11,13 +11,16 @@ import {
   Subcategories,
   Tags,
   Resources,
+  Documents,
+  DocumentSections,
+  CodeExamples,
   DifficultyLevels,
   ProgrammingLanguages,
   Users,
   EditSuggestions,
   Media,
 } from './collections';
-import { SiteSettings } from './globals';
+import { SiteSettings, CrossLinkSettings } from './globals';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -46,6 +49,10 @@ export default buildConfig({
     Subcategories,
     Tags,
     Resources,
+    // Documentation cross-linking (Content group)
+    Documents,
+    DocumentSections,
+    CodeExamples,
     // Reference data (Settings group)
     DifficultyLevels,
     ProgrammingLanguages,
@@ -54,7 +61,7 @@ export default buildConfig({
   ],
 
   // Globals (single-instance documents for site-wide config)
-  globals: [SiteSettings],
+  globals: [SiteSettings, CrossLinkSettings],
 
   // Database - Supabase PostgreSQL via Drizzle
   // Using Session Pooler with PgBouncer compatibility

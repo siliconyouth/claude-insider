@@ -9,6 +9,7 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { FollowButton } from "@/components/users/follow-button";
+import { cn } from "@/lib/design-system";
 
 interface FollowerUser {
   id: string;

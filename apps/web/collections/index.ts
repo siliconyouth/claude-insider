@@ -9,6 +9,11 @@ export { Subcategories } from './Subcategories';
 export { Tags } from './Tags';
 export { Resources } from './Resources';
 
+// Documentation cross-linking
+export { Documents } from './Documents';
+export { DocumentSections } from './DocumentSections';
+export { CodeExamples } from './CodeExamples';
+
 // Reference data collections (lookups)
 export { DifficultyLevels } from './DifficultyLevels';
 export { ProgrammingLanguages } from './ProgrammingLanguages';

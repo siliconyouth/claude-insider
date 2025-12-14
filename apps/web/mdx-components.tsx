@@ -3,6 +3,15 @@ import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
 import { ContentMeta } from "@/components/content-meta";
 import { H1, H2, H3, H4, H5, H6 } from "@/components/mdx/headings";
+import {
+  InlineResourceLink,
+  ResourceEmbed,
+  ResourceGrid,
+} from "@/components/mdx/InlineResourceLink";
+import {
+  RelatedResources,
+  InlineRelatedResources,
+} from "@/components/cross-linking/RelatedResources";
 
 // Custom components for MDX rendering
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -132,6 +141,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     // Content metadata component for sources and generation info
     ContentMeta,
+
+    // Cross-linking components for documentation-resource integration
+    // Usage: <ResourceLink id="anthropic-docs">text</ResourceLink>
+    ResourceLink: InlineResourceLink,
+    // Usage: <Resource id="anthropic-docs" variant="compact" />
+    Resource: ResourceEmbed,
+    // Usage: <ResourceGrid ids={['res1', 'res2']} columns={2} />
+    ResourceGrid,
+    // Usage: <RelatedResources resources={[...]} />
+    RelatedResources,
+    // Usage: <InlineRelatedResources resources={[...]} />
+    InlineRelatedResources,
 
     // Spread any additional components
     ...components,

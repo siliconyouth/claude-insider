@@ -217,6 +217,46 @@ export const Resources: CollectionConfig = {
         description: 'Last date this resource was verified as active',
       },
     },
+
+    // Cross-linking to documentation (bidirectional)
+    {
+      name: 'crossLinking',
+      type: 'group',
+      label: 'Documentation Cross-Linking',
+      admin: {
+        description: 'Link this resource to related documentation',
+      },
+      fields: [
+        {
+          name: 'relatedDocs',
+          type: 'relationship',
+          relationTo: 'documents',
+          hasMany: true,
+          admin: {
+            description: 'Documentation pages related to this resource',
+          },
+        },
+        {
+          name: 'relatedSections',
+          type: 'relationship',
+          relationTo: 'document-sections',
+          hasMany: true,
+          admin: {
+            description: 'Specific sections related to this resource',
+          },
+        },
+        {
+          name: 'autoMatchedDocs',
+          type: 'relationship',
+          relationTo: 'documents',
+          hasMany: true,
+          admin: {
+            description: 'Auto-matched documents based on shared tags (read-only)',
+            readOnly: true,
+          },
+        },
+      ],
+    },
   ],
   timestamps: true,
 };
