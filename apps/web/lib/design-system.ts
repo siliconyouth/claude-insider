@@ -344,6 +344,64 @@ export const designSystem = {
       text: 'animate-pulse rounded h-4 bg-gray-200 dark:bg-ds-surface-3',
       avatar: 'animate-pulse rounded-full bg-gray-200 dark:bg-ds-surface-3',
     },
+
+    // ============================================
+    // HIGH CONTRAST SYNCED COMPONENTS (MANDATORY FOR MODALS)
+    // ============================================
+    // These components maintain EQUAL contrast ratio in both themes.
+    // Use for: Auth modals, onboarding, CTAs, important actions.
+    // Rule: Light and dark should feel equally prominent.
+    // ============================================
+    contrastSynced: {
+      // Primary CTA - Always gradient, always high visibility
+      // Use for: Sign in, Sign up, Submit, Confirm actions
+      buttonPrimary: 'inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500 hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ds-background-1 disabled:opacity-50 disabled:pointer-events-none',
+
+      // Secondary CTA - Bordered with high contrast text
+      // Use for: Cancel, Back, Alternative actions
+      buttonSecondary: 'inline-flex items-center justify-center rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-ds-surface-2 px-6 py-3 text-sm font-semibold text-gray-900 dark:text-white shadow-sm transition-all hover:bg-gray-50 dark:hover:bg-ds-surface-3 hover:border-gray-400 dark:hover:border-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ds-background-1 disabled:opacity-50 disabled:pointer-events-none',
+
+      // Ghost/Tertiary - Subtle but visible in both themes
+      // Use for: Skip, Dismiss, Less important actions
+      buttonGhost: 'inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 transition-all hover:bg-gray-100 dark:hover:bg-ds-surface-2 hover:text-gray-900 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ds-background-1',
+
+      // Destructive - Red gradient, same in both themes
+      // Use for: Delete, Remove, Dangerous actions
+      buttonDestructive: 'inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-red-600 to-red-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-500/25 transition-all hover:from-red-500 hover:to-red-400 hover:shadow-xl hover:shadow-red-500/30 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-ds-background-1',
+
+      // Modal container - Equal prominence in both themes
+      modal: 'rounded-2xl border border-gray-200 dark:border-ds-border-2 bg-white dark:bg-ds-surface-2 shadow-2xl dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)]',
+
+      // Modal header - Subtle gradient that works in both themes
+      modalHeader: 'border-b border-gray-200 dark:border-ds-border-1 bg-gradient-to-r from-gray-50 via-white to-gray-50 dark:from-ds-surface-1 dark:via-ds-surface-2 dark:to-ds-surface-1 px-6 py-4',
+
+      // Input - High contrast border and focus states
+      input: 'flex h-12 w-full rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-ds-background-1 px-4 py-3 text-sm text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:border-blue-400',
+
+      // Input with error
+      inputError: 'flex h-12 w-full rounded-lg border-2 border-red-500 dark:border-red-400 bg-white dark:bg-ds-background-1 px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500',
+
+      // Label - Always visible text
+      label: 'text-sm font-semibold text-gray-900 dark:text-white',
+
+      // Helper text - Muted but readable
+      helperText: 'text-sm text-gray-600 dark:text-gray-400',
+
+      // Error text - Red in both themes
+      errorText: 'text-sm font-medium text-red-600 dark:text-red-400',
+
+      // Link - Accent color that pops in both themes
+      link: 'text-sm font-medium text-blue-600 dark:text-cyan-400 hover:text-blue-700 dark:hover:text-cyan-300 underline-offset-4 hover:underline',
+
+      // Divider with "or" text
+      divider: 'relative flex items-center justify-center text-sm text-gray-500 dark:text-gray-400 before:absolute before:left-0 before:top-1/2 before:h-px before:w-[calc(50%-2rem)] before:bg-gray-300 dark:before:bg-gray-600 after:absolute after:right-0 after:top-1/2 after:h-px after:w-[calc(50%-2rem)] after:bg-gray-300 dark:after:bg-gray-600',
+
+      // Checkbox/Radio - Visible checked state
+      checkbox: 'h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-blue-600 dark:text-cyan-400 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-ds-background-1 bg-white dark:bg-ds-background-1',
+
+      // Social/OAuth buttons - Equal prominence
+      socialButton: 'inline-flex items-center justify-center gap-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-ds-surface-2 px-6 py-3 text-sm font-medium text-gray-900 dark:text-white transition-all hover:bg-gray-50 dark:hover:bg-ds-surface-3 hover:border-gray-400 dark:hover:border-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2',
+    },
   },
 
   // ============================================

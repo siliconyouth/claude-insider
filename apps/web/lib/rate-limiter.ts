@@ -3,11 +3,15 @@
  *
  * Token bucket algorithm for API rate limiting.
  * Supports per-user and per-IP limiting with configurable windows.
+ *
+ * Uses Redis (Vercel KV) for distributed rate limiting across serverless instances.
+ * Falls back to in-memory store when KV is unavailable.
  */
 
 import "server-only";
+import { kv } from "@vercel/kv";
 
-// In-memory store for rate limits (use Redis in production for distributed systems)
+// In-memory fallback store for rate limits
 const rateLimitStore = new Map<
   string,
   {
@@ -15,6 +19,11 @@ const rateLimitStore = new Map<
     lastRefill: number;
   }
 >();
+
+// Check if Vercel KV is available
+function isKvAvailable(): boolean {
+  return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+}
 
 export interface RateLimitConfig {
   /** Maximum tokens in bucket */
@@ -95,19 +104,57 @@ export function getRateLimitKey(
 }
 
 /**
- * Check and consume a rate limit token
+ * Check and consume a rate limit token (async for Redis support)
  */
-export function checkRateLimit(
+export async function checkRateLimit(
   identifier: string | number,
   endpoint: string,
   config?: RateLimitConfig
-): RateLimitResult {
+): Promise<RateLimitResult> {
   const id = String(identifier);
   const key = getRateLimitKey(id, endpoint);
   const limitConfig = config || RATE_LIMITS[endpoint] || RATE_LIMITS.default!;
   const now = Date.now();
+  const windowSeconds = Math.ceil(limitConfig.windowMs / 1000);
 
-  // Get or create bucket
+  // Use Redis if available
+  if (isKvAvailable()) {
+    try {
+      // Use Redis INCR with expiry for atomic rate limiting
+      const count = await kv.incr(key);
+
+      // Set expiry on first request
+      if (count === 1) {
+        await kv.expire(key, windowSeconds);
+      }
+
+      // Get TTL for reset time
+      const ttl = await kv.ttl(key);
+      const resetTime = Math.ceil(now / 1000) + (ttl > 0 ? ttl : windowSeconds);
+
+      if (count <= limitConfig.maxTokens) {
+        return {
+          allowed: true,
+          remaining: limitConfig.maxTokens - count,
+          limit: limitConfig.maxTokens,
+          resetTime,
+        };
+      }
+
+      return {
+        allowed: false,
+        remaining: 0,
+        limit: limitConfig.maxTokens,
+        resetTime,
+        retryAfter: ttl > 0 ? ttl : windowSeconds,
+      };
+    } catch (error) {
+      console.warn("[Rate Limiter] Redis error, falling back to memory:", error);
+      // Fall through to in-memory implementation
+    }
+  }
+
+  // In-memory fallback
   let bucket = rateLimitStore.get(key);
 
   if (!bucket) {
@@ -217,8 +264,8 @@ export function withRateLimit(
         request.headers.get("x-real-ip") ||
         "anonymous";
 
-    // Check rate limit
-    const result = checkRateLimit(identifier, endpoint);
+    // Check rate limit (now async for Redis support)
+    const result = await checkRateLimit(identifier, endpoint);
 
     if (!result.allowed) {
       return createRateLimitResponse(result);
