@@ -178,6 +178,19 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Vercel Cron integration (GET endpoint)
 - [x] CRON_SECRET authentication
 
+### FR-9: Admin Notification Management
+- [x] Admin notifications database tables (admin_notifications, admin_notification_deliveries)
+- [x] CRUD server actions for notifications
+- [x] Admin dashboard page at /dashboard/notifications
+- [x] Target audience options: all users, by role, specific users
+- [x] User search with autocomplete for specific targeting
+- [x] Channel selection: in-app bell, web push, email
+- [x] Scheduling: send immediately or schedule for later
+- [x] Recipient count preview before sending
+- [x] Status tracking: draft, scheduled, sending, sent, failed, cancelled
+- [x] Vercel Cron job for processing scheduled notifications (every minute)
+- [x] Staff alerts via push notifications (admins and moderators)
+
 ---
 
 ## Non-Functional Requirements
@@ -277,7 +290,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.68.0**
+**Version 0.69.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

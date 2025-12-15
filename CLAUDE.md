@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.68.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.69.0**.
 
 | Link | URL |
 |------|-----|
@@ -83,7 +83,9 @@ claude-insider/
 │   │   ├── layout.tsx            # Root layout
 │   │   ├── globals.css           # Global styles, animations
 │   │   ├── docs/[...slug]/       # Dynamic MDX routes
-│   │   └── api/assistant/        # Chat & TTS endpoints
+│   │   ├── api/assistant/        # Chat & TTS endpoints
+│   │   ├── api/cron/             # Scheduled jobs (digests, notifications)
+│   │   └── (main)/dashboard/     # Admin dashboard pages
 │   ├── components/               # 65+ React components
 │   │   ├── voice-assistant.tsx   # AI assistant (1500+ LOC)
 │   │   ├── header.tsx, footer.tsx
@@ -134,6 +136,7 @@ claude-insider/
 │   │   ├── auth-client.ts        # Client-side auth hooks
 │   │   ├── gamification.ts       # Points, levels, streaks
 │   │   ├── email.ts              # Resend email templates
+│   │   ├── admin-notifications.ts # Staff alerts & push notifications
 │   │   ├── supabase/             # Supabase clients
 │   │   │   ├── client.ts         # Browser client
 │   │   │   └── server.ts         # Server client with RLS
@@ -181,10 +184,10 @@ claude-insider/
 │   │   ├── Resources.ts          # Curated resources
 │   │   └── Translations.ts       # UI translation strings
 │   ├── supabase/                 # Database migrations
-│   │   └── migrations/           # 21 SQL migration files
-│   │       ├── 001_user_data.sql # Profiles, favorites, ratings
-│   │       ├── ...               # Comments, collections, activity
-│   │       └── 021_fix_triggers.sql # Latest migration
+│   │   └── migrations/           # 25+ SQL migration files
+│   │       ├── 000_fresh_start.sql # Consolidated base schema
+│   │       ├── ...               # User data, comments, collections
+│   │       └── 025_admin_notifications.sql # Admin broadcast system
 │   └── scripts/                  # Build-time scripts
 ├── packages/                     # Shared configs (ui, eslint, ts, tailwind)
 ├── vercel.json                   # Domain redirects

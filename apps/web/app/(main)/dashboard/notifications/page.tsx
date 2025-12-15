@@ -1,0 +1,827 @@
+"use client";
+
+/**
+ * Admin Notifications Management
+ *
+ * Create, edit, schedule, and manage notifications for users.
+ * Supports multi-channel delivery (in-app, push, email) and targeting.
+ */
+
+import { useEffect, useState, useCallback } from "react";
+import { cn } from "@/lib/design-system";
+import { useToast } from "@/components/toast";
+import {
+  getAdminNotifications,
+  createAdminNotification,
+  updateAdminNotification,
+  scheduleAdminNotification,
+  cancelAdminNotification,
+  deleteAdminNotification,
+  searchUsersForNotification,
+  getRecipientCount,
+  type AdminNotification,
+  type AdminNotificationStatus,
+  type TargetType,
+  type CreateAdminNotificationParams,
+} from "@/app/actions/admin-notifications";
+
+const STATUS_COLORS: Record<AdminNotificationStatus, { bg: string; text: string }> = {
+  draft: { bg: "bg-gray-800", text: "text-gray-400" },
+  scheduled: { bg: "bg-blue-900/30", text: "text-blue-400" },
+  sending: { bg: "bg-yellow-900/30", text: "text-yellow-400" },
+  sent: { bg: "bg-emerald-900/30", text: "text-emerald-400" },
+  failed: { bg: "bg-red-900/30", text: "text-red-400" },
+  cancelled: { bg: "bg-gray-800", text: "text-gray-500" },
+};
+
+const ROLES = [
+  { value: "admin", label: "Admin" },
+  { value: "moderator", label: "Moderator" },
+  { value: "editor", label: "Editor" },
+  { value: "beta_tester", label: "Beta Tester" },
+  { value: "user", label: "User" },
+];
+
+type FilterStatus = "all" | AdminNotificationStatus;
+
+interface SearchedUser {
+  id: string;
+  name: string;
+  email: string;
+  username: string | null;
+  role: string;
+}
+
+export default function NotificationsPage() {
+  const toast = useToast();
+  const [notifications, setNotifications] = useState<AdminNotification[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [statusFilter, setStatusFilter] = useState<FilterStatus>("all");
+  const [total, setTotal] = useState(0);
+
+  // Modal state
+  const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Form state
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+  const [link, setLink] = useState("");
+  const [sendInApp, setSendInApp] = useState(true);
+  const [sendPush, setSendPush] = useState(true);
+  const [sendEmail, setSendEmail] = useState(false);
+  const [targetType, setTargetType] = useState<TargetType>("all");
+  const [targetRoles, setTargetRoles] = useState<string[]>([]);
+  const [targetUserIds, setTargetUserIds] = useState<string[]>([]);
+  const [targetUsers, setTargetUsers] = useState<SearchedUser[]>([]);
+  const [scheduledAt, setScheduledAt] = useState("");
+  const [sendImmediately, setSendImmediately] = useState(true);
+
+  // User search state
+  const [userSearch, setUserSearch] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchedUser[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Recipient count preview
+  const [recipientCount, setRecipientCount] = useState<number | null>(null);
+
+  // Fetch notifications
+  const fetchNotifications = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const result = await getAdminNotifications({
+        status: statusFilter === "all" ? undefined : statusFilter,
+        limit: 50,
+      });
+
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        setNotifications(result.data || []);
+        setTotal(result.total || 0);
+      }
+    } catch {
+      toast.error("Failed to load notifications");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [statusFilter, toast]);
+
+  useEffect(() => {
+    fetchNotifications();
+  }, [fetchNotifications]);
+
+  // Search users with debounce
+  useEffect(() => {
+    if (!userSearch || userSearch.length < 2) {
+      setSearchResults([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setIsSearching(true);
+      try {
+        const result = await searchUsersForNotification(userSearch);
+        if (result.data) {
+          // Filter out already selected users
+          setSearchResults(
+            result.data.filter((u) => !targetUserIds.includes(u.id))
+          );
+        }
+      } catch {
+        // Silently fail
+      } finally {
+        setIsSearching(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [userSearch, targetUserIds]);
+
+  // Update recipient count preview
+  useEffect(() => {
+    const updateCount = async () => {
+      const result = await getRecipientCount({
+        target_type: targetType,
+        target_roles: targetRoles,
+        target_user_ids: targetUserIds,
+      });
+      setRecipientCount(result.count ?? null);
+    };
+
+    updateCount();
+  }, [targetType, targetRoles, targetUserIds]);
+
+  // Reset form
+  const resetForm = () => {
+    setTitle("");
+    setMessage("");
+    setLink("");
+    setSendInApp(true);
+    setSendPush(true);
+    setSendEmail(false);
+    setTargetType("all");
+    setTargetRoles([]);
+    setTargetUserIds([]);
+    setTargetUsers([]);
+    setScheduledAt("");
+    setSendImmediately(true);
+    setUserSearch("");
+    setSearchResults([]);
+    setEditingId(null);
+    setIsEditing(false);
+  };
+
+  // Open create modal
+  const openCreateModal = () => {
+    resetForm();
+    setShowModal(true);
+  };
+
+  // Open edit modal
+  const openEditModal = (notification: AdminNotification) => {
+    setTitle(notification.title);
+    setMessage(notification.message || "");
+    setLink(notification.link || "");
+    setSendInApp(notification.send_in_app);
+    setSendPush(notification.send_push);
+    setSendEmail(notification.send_email);
+    setTargetType(notification.target_type);
+    setTargetRoles(notification.target_roles);
+    setTargetUserIds(notification.target_user_ids);
+    // We don't have user details for existing targets, would need to fetch
+    setTargetUsers([]);
+    setScheduledAt(
+      notification.scheduled_at
+        ? new Date(notification.scheduled_at).toISOString().slice(0, 16)
+        : ""
+    );
+    setSendImmediately(!notification.scheduled_at);
+    setEditingId(notification.id);
+    setIsEditing(true);
+    setShowModal(true);
+  };
+
+  // Handle save
+  const handleSave = async () => {
+    if (!title.trim()) {
+      toast.error("Title is required");
+      return;
+    }
+
+    if (targetType === "role" && targetRoles.length === 0) {
+      toast.error("Please select at least one role");
+      return;
+    }
+
+    if (targetType === "users" && targetUserIds.length === 0) {
+      toast.error("Please select at least one user");
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      const params: CreateAdminNotificationParams = {
+        title: title.trim(),
+        message: message.trim() || undefined,
+        link: link.trim() || undefined,
+        send_in_app: sendInApp,
+        send_push: sendPush,
+        send_email: sendEmail,
+        target_type: targetType,
+        target_roles: targetType === "role" ? targetRoles : undefined,
+        target_user_ids: targetType === "users" ? targetUserIds : undefined,
+        scheduled_at: !sendImmediately && scheduledAt ? scheduledAt : undefined,
+      };
+
+      if (isEditing && editingId) {
+        const result = await updateAdminNotification(editingId, params);
+        if (result.error) {
+          toast.error(result.error);
+        } else {
+          toast.success("Notification updated");
+          setShowModal(false);
+          resetForm();
+          fetchNotifications();
+        }
+      } else {
+        const result = await createAdminNotification(params);
+        if (result.error) {
+          toast.error(result.error);
+        } else {
+          toast.success("Notification created");
+          setShowModal(false);
+          resetForm();
+          fetchNotifications();
+        }
+      }
+    } catch {
+      toast.error("Failed to save notification");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Handle schedule/send
+  const handleSchedule = async (id: string, immediate: boolean) => {
+    try {
+      const result = await scheduleAdminNotification(id, immediate);
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        toast.success(immediate ? "Notification queued for sending" : "Notification scheduled");
+        fetchNotifications();
+      }
+    } catch {
+      toast.error("Failed to schedule notification");
+    }
+  };
+
+  // Handle cancel
+  const handleCancel = async (id: string) => {
+    try {
+      const result = await cancelAdminNotification(id);
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        toast.success("Notification cancelled");
+        fetchNotifications();
+      }
+    } catch {
+      toast.error("Failed to cancel notification");
+    }
+  };
+
+  // Handle delete
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this notification?")) return;
+
+    try {
+      const result = await deleteAdminNotification(id);
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        toast.success("Notification deleted");
+        fetchNotifications();
+      }
+    } catch {
+      toast.error("Failed to delete notification");
+    }
+  };
+
+  // Add user to targets
+  const addUserTarget = (user: SearchedUser) => {
+    setTargetUserIds((prev) => [...prev, user.id]);
+    setTargetUsers((prev) => [...prev, user]);
+    setSearchResults((prev) => prev.filter((u) => u.id !== user.id));
+    setUserSearch("");
+  };
+
+  // Remove user from targets
+  const removeUserTarget = (userId: string) => {
+    setTargetUserIds((prev) => prev.filter((id) => id !== userId));
+    setTargetUsers((prev) => prev.filter((u) => u.id !== userId));
+  };
+
+  // Toggle role
+  const toggleRole = (role: string) => {
+    setTargetRoles((prev) =>
+      prev.includes(role) ? prev.filter((r) => r !== role) : [...prev, role]
+    );
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Notifications</h2>
+          <p className="mt-1 text-sm text-gray-400">
+            Create and manage notifications ({total} total)
+          </p>
+        </div>
+        <button
+          onClick={openCreateModal}
+          className={cn(
+            "px-4 py-2 rounded-lg text-sm font-medium",
+            "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+            "text-white shadow-lg shadow-blue-500/25",
+            "hover:-translate-y-0.5 transition-all"
+          )}
+        >
+          Create Notification
+        </button>
+      </div>
+
+      {/* Status Filters */}
+      <div className="flex gap-2 flex-wrap">
+        {(["all", "draft", "scheduled", "sending", "sent", "failed", "cancelled"] as FilterStatus[]).map(
+          (status) => (
+            <button
+              key={status}
+              onClick={() => setStatusFilter(status)}
+              className={cn(
+                "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
+                statusFilter === status
+                  ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
+                  : "text-gray-400 hover:text-white hover:bg-gray-800"
+              )}
+            >
+              {status === "all" ? "All" : status}
+            </button>
+          )
+        )}
+      </div>
+
+      {/* Notifications List */}
+      <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
+        {isLoading ? (
+          <div className="p-8 space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-24 bg-gray-800 rounded-lg animate-pulse" />
+            ))}
+          </div>
+        ) : notifications.length === 0 ? (
+          <div className="p-8 text-center text-gray-500">
+            No notifications found
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-800">
+            {notifications.map((notification) => (
+              <div
+                key={notification.id}
+                className="p-4 hover:bg-gray-800/50 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-sm font-medium text-white truncate">
+                        {notification.title}
+                      </h3>
+                      <span
+                        className={cn(
+                          "px-2 py-0.5 rounded text-xs font-medium",
+                          STATUS_COLORS[notification.status].bg,
+                          STATUS_COLORS[notification.status].text
+                        )}
+                      >
+                        {notification.status}
+                      </span>
+                    </div>
+
+                    {notification.message && (
+                      <p className="text-sm text-gray-400 truncate mb-2">
+                        {notification.message}
+                      </p>
+                    )}
+
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                      {/* Target */}
+                      <span className="flex items-center gap-1">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        {notification.target_type === "all"
+                          ? "All users"
+                          : notification.target_type === "role"
+                          ? notification.target_roles.join(", ")
+                          : `${notification.target_user_ids.length} users`}
+                      </span>
+
+                      {/* Channels */}
+                      <span className="flex items-center gap-1">
+                        {notification.send_in_app && (
+                          <span className="px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">Bell</span>
+                        )}
+                        {notification.send_push && (
+                          <span className="px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">Push</span>
+                        )}
+                        {notification.send_email && (
+                          <span className="px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">Email</span>
+                        )}
+                      </span>
+
+                      {/* Schedule */}
+                      {notification.scheduled_at && (
+                        <span>
+                          Scheduled: {new Date(notification.scheduled_at).toLocaleString()}
+                        </span>
+                      )}
+
+                      {/* Stats */}
+                      {notification.status === "sent" && (
+                        <span className="text-emerald-400">
+                          {notification.successful_deliveries}/{notification.total_recipients} delivered
+                        </span>
+                      )}
+
+                      {/* Created */}
+                      <span>
+                        Created {new Date(notification.created_at).toLocaleDateString()}
+                        {notification.creator && ` by ${notification.creator.name}`}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2">
+                    {notification.status === "draft" && (
+                      <>
+                        <button
+                          onClick={() => openEditModal(notification)}
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-gray-800"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleSchedule(notification.id, true)}
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600/20 text-blue-400 hover:bg-blue-600/30"
+                        >
+                          Send Now
+                        </button>
+                        {notification.scheduled_at && (
+                          <button
+                            onClick={() => handleSchedule(notification.id, false)}
+                            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-600/20 text-violet-400 hover:bg-violet-600/30"
+                          >
+                            Schedule
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleDelete(notification.id)}
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-red-400 hover:bg-red-900/20"
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
+                    {notification.status === "scheduled" && (
+                      <>
+                        <button
+                          onClick={() => openEditModal(notification)}
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-gray-800"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleCancel(notification.id)}
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-red-400 hover:bg-red-900/20"
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Create/Edit Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setShowModal(false)}
+          />
+          <div className="relative w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-6 flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-white">
+                {isEditing ? "Edit Notification" : "Create Notification"}
+              </h3>
+              <button
+                onClick={() => setShowModal(false)}
+                className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 space-y-6">
+              {/* Title */}
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Title <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Notification title..."
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Message */}
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Message (Optional)
+                </label>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Notification message..."
+                  rows={3}
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                />
+              </div>
+
+              {/* Link */}
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Link URL (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                  placeholder="https://claudeinsider.com/..."
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  Where users will be directed when clicking the notification
+                </p>
+              </div>
+
+              {/* Delivery Channels */}
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Delivery Channels
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={sendInApp}
+                      onChange={(e) => setSendInApp(e.target.checked)}
+                      className="w-4 h-4 rounded bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                    />
+                    <span className="text-sm text-gray-300">In-App (Bell)</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={sendPush}
+                      onChange={(e) => setSendPush(e.target.checked)}
+                      className="w-4 h-4 rounded bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                    />
+                    <span className="text-sm text-gray-300">Web Push</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={sendEmail}
+                      onChange={(e) => setSendEmail(e.target.checked)}
+                      className="w-4 h-4 rounded bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                    />
+                    <span className="text-sm text-gray-300">Email</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Target Type */}
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Target Audience
+                </label>
+                <div className="flex gap-2">
+                  {(["all", "role", "users"] as TargetType[]).map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => setTargetType(type)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
+                        targetType === type
+                          ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
+                          : "text-gray-400 hover:text-white hover:bg-gray-800 border border-transparent"
+                      )}
+                    >
+                      {type === "all"
+                        ? "All Users"
+                        : type === "role"
+                        ? "By Role"
+                        : "Specific Users"}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Role Selection */}
+              {targetType === "role" && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-2">
+                    Select Roles
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {ROLES.map((role) => (
+                      <button
+                        key={role.value}
+                        onClick={() => toggleRole(role.value)}
+                        className={cn(
+                          "px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
+                          targetRoles.includes(role.value)
+                            ? "bg-violet-600/20 text-violet-400 border border-violet-500/30"
+                            : "text-gray-400 hover:text-white hover:bg-gray-800 border border-gray-700"
+                        )}
+                      >
+                        {role.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* User Selection */}
+              {targetType === "users" && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-2">
+                    Search Users
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={userSearch}
+                      onChange={(e) => setUserSearch(e.target.value)}
+                      placeholder="Search by name, email, or username..."
+                      className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    {isSearching && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Search Results */}
+                  {searchResults.length > 0 && (
+                    <div className="mt-2 max-h-40 overflow-y-auto rounded-lg border border-gray-700 bg-gray-800 divide-y divide-gray-700">
+                      {searchResults.map((user) => (
+                        <button
+                          key={user.id}
+                          onClick={() => addUserTarget(user)}
+                          className="w-full px-4 py-2 text-left hover:bg-gray-700 transition-colors"
+                        >
+                          <p className="text-sm text-white">{user.name}</p>
+                          <p className="text-xs text-gray-500">{user.email}</p>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Selected Users */}
+                  {targetUsers.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {targetUsers.map((user) => (
+                        <span
+                          key={user.id}
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-600/20 text-blue-400 text-sm"
+                        >
+                          {user.name}
+                          <button
+                            onClick={() => removeUserTarget(user.id)}
+                            className="hover:text-white"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Show count for users loaded from edit */}
+                  {targetUserIds.length > 0 && targetUsers.length === 0 && (
+                    <p className="mt-2 text-sm text-gray-500">
+                      {targetUserIds.length} user(s) selected
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Recipient Count Preview */}
+              {recipientCount !== null && (
+                <div className="p-3 rounded-lg bg-gray-800 border border-gray-700">
+                  <p className="text-sm text-gray-400">
+                    This notification will be sent to{" "}
+                    <span className="text-white font-medium">{recipientCount}</span>{" "}
+                    {recipientCount === 1 ? "user" : "users"}
+                  </p>
+                </div>
+              )}
+
+              {/* Scheduling */}
+              <div className="pt-4 border-t border-gray-800">
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  When to Send
+                </label>
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={sendImmediately}
+                      onChange={() => setSendImmediately(true)}
+                      className="w-4 h-4 bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                    />
+                    <span className="text-sm text-gray-300">Send immediately when I click &quot;Send Now&quot;</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      checked={!sendImmediately}
+                      onChange={() => setSendImmediately(false)}
+                      className="w-4 h-4 bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                    />
+                    <span className="text-sm text-gray-300">Schedule for later</span>
+                  </label>
+
+                  {!sendImmediately && (
+                    <input
+                      type="datetime-local"
+                      value={scheduledAt}
+                      onChange={(e) => setScheduledAt(e.target.value)}
+                      min={new Date().toISOString().slice(0, 16)}
+                      className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="sticky bottom-0 bg-gray-900 border-t border-gray-800 p-6 flex items-center justify-end gap-3">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={isSaving}
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium",
+                  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                  "text-white shadow-lg shadow-blue-500/25",
+                  "hover:-translate-y-0.5 transition-all",
+                  "disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                )}
+              >
+                {isSaving ? "Saving..." : isEditing ? "Update" : "Create Draft"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

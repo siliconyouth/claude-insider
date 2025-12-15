@@ -23,13 +23,14 @@ export function BrowserNotificationPrompt({
   onClose,
   onPermissionResult,
 }: BrowserNotificationPromptProps) {
-  const { isSupported, permission, isRequesting, requestPermission } = useBrowserNotifications();
+  const { isSupported, permission, requestPermission } = useBrowserNotifications();
   const [step, setStep] = useState<"explain" | "requesting" | "result">("explain");
   const [result, setResult] = useState<"granted" | "denied" | null>(null);
 
-  // Reset state when opening
+  // Reset state when opening - intentional state reset on modal open
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStep("explain");
       setResult(null);
     }

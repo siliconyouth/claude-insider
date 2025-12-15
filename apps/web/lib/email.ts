@@ -51,6 +51,70 @@ export async function sendEmail(params: SendEmailParams): Promise<EmailResult> {
   }
 }
 
+interface BulkEmailParams {
+  emails: string[];
+  subject: string;
+  html: string;
+  text?: string;
+}
+
+interface BulkEmailResult {
+  sent: number;
+  failed: number;
+  errors: string[];
+}
+
+/**
+ * Send bulk emails (for admin notifications)
+ * Uses Resend batch API for efficiency
+ */
+export async function sendBulkEmail(params: BulkEmailParams): Promise<BulkEmailResult> {
+  const result: BulkEmailResult = { sent: 0, failed: 0, errors: [] };
+
+  if (params.emails.length === 0) {
+    return result;
+  }
+
+  try {
+    // Resend batch API supports up to 100 emails per request
+    const batchSize = 100;
+    for (let i = 0; i < params.emails.length; i += batchSize) {
+      const batch = params.emails.slice(i, i + batchSize);
+
+      const emails = batch.map((email) => ({
+        from: FROM_EMAIL,
+        to: email,
+        subject: params.subject,
+        html: params.html,
+        text: params.text,
+      }));
+
+      try {
+        const { data, error } = await resend.batch.send(emails);
+
+        if (error) {
+          console.error("[Email] Batch send error:", error);
+          result.failed += batch.length;
+          result.errors.push(error.message);
+        } else if (data) {
+          result.sent += data.data?.length || batch.length;
+        }
+      } catch (batchError) {
+        console.error("[Email] Batch error:", batchError);
+        result.failed += batch.length;
+        result.errors.push((batchError as Error).message || "Batch send failed");
+      }
+    }
+
+    return result;
+  } catch (error) {
+    console.error("[Email] Bulk email error:", error);
+    result.failed = params.emails.length;
+    result.errors.push((error as Error).message || "Bulk email failed");
+    return result;
+  }
+}
+
 /**
  * Send email verification link
  */

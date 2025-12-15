@@ -158,6 +158,16 @@ export default function PrivacyPolicyPage() {
                     <td className="px-4 py-2">Email digest frequency (daily/weekly/monthly)</td>
                     <td className="px-4 py-2">Until account deleted</td>
                   </tr>
+                  <tr>
+                    <td className="px-4 py-2">Push Notification Subscription</td>
+                    <td className="px-4 py-2">Web push notifications delivery</td>
+                    <td className="px-4 py-2">Until unsubscribed or account deleted</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Admin Notifications Received</td>
+                    <td className="px-4 py-2">Track delivery of site-wide announcements</td>
+                    <td className="px-4 py-2">90 days</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -385,9 +395,38 @@ export default function PrivacyPolicyPage() {
               <li><strong>Security alerts:</strong> Important security notifications (e.g., 2FA changes)</li>
               <li><strong>Notifications:</strong> Comment replies, mentions, suggestion updates (configurable)</li>
               <li><strong>Activity digest:</strong> Optional summary of activity (daily, weekly, or monthly - configurable in Settings)</li>
+              <li><strong>Admin announcements:</strong> Important site-wide updates from administrators (rare)</li>
             </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
               You can manage email preferences in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a>. Transactional emails (verification, password reset, security) cannot be disabled.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Push Notifications</h2>
+            <p className="text-gray-300 leading-relaxed">
+              With your permission, we can send browser push notifications for real-time updates:
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">What We Store</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Push subscription endpoint:</strong> A URL provided by your browser for delivering notifications</li>
+              <li><strong>Encryption keys:</strong> Public keys for securing notification payloads (p256dh and auth)</li>
+              <li><strong>Device/browser identifier:</strong> To manage multiple subscriptions per account</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Types of Push Notifications</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Comment replies:</strong> When someone replies to your comment</li>
+              <li><strong>Mentions:</strong> When you&apos;re mentioned in a comment</li>
+              <li><strong>Suggestion updates:</strong> Status changes on your edit suggestions</li>
+              <li><strong>Admin announcements:</strong> Important site-wide notifications from administrators</li>
+              <li><strong>Staff alerts:</strong> For moderators/admins - new submissions requiring review</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Managing Push Notifications</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You can enable or disable push notifications in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a>. You can also revoke permission through your browser settings at any time. When you disable push notifications or revoke browser permission, we delete your push subscription data.
             </p>
           </section>
 

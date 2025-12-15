@@ -22,7 +22,8 @@ export type NotificationType =
   | "follow"
   | "mention"
   | "welcome"
-  | "system";
+  | "system"
+  | "admin_notification";
 
 export interface Notification {
   id: string;

@@ -1,17 +1,18 @@
 /**
  * Admin Notification System
  *
- * Notifies admin users about important system events:
+ * Notifies admin and moderator users about important system events:
  * - New user signups
  * - New beta applications
  * - New edit suggestions
  * - New resource submissions
  *
- * Sends both in-app notifications and emails.
+ * Sends in-app notifications, emails, and push notifications.
  */
 
 import { createAdminClient } from "@/lib/supabase/server";
 import { sendEmail } from "@/lib/email";
+import { sendPushNotificationToUser, isWebPushConfigured } from "@/lib/web-push";
 
 const APP_NAME = "Claude Insider";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://claudeinsider.com";
@@ -27,10 +28,10 @@ interface AdminNotifyParams {
 }
 
 /**
- * Get all admin users
+ * Get all admin and moderator users
  */
-async function getAdminUsers(): Promise<
-  Array<{ id: string; email: string; name: string | null }>
+async function getAdminAndModeratorUsers(): Promise<
+  Array<{ id: string; email: string; name: string | null; role: string }>
 > {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,11 +39,11 @@ async function getAdminUsers(): Promise<
 
     const { data, error } = await supabase
       .from("user")
-      .select("id, email, name")
-      .eq("role", "admin");
+      .select("id, email, name, role")
+      .in("role", ["admin", "moderator"]);
 
     if (error) {
-      console.error("[AdminNotify] Error fetching admins:", error);
+      console.error("[AdminNotify] Error fetching admins/moderators:", error);
       return [];
     }
 
@@ -219,28 +220,67 @@ async function sendAdminNotificationEmail(
 }
 
 /**
- * Notify all admins about an event
+ * Get push notification URL based on notification type
+ */
+function getPushNotificationUrl(params: AdminNotifyParams): string {
+  switch (params.type) {
+    case "new_user":
+      return `${APP_URL}/dashboard/users`;
+    case "beta_application":
+      return `${APP_URL}/dashboard/beta`;
+    case "edit_suggestion":
+      return `${APP_URL}/dashboard/suggestions`;
+    case "resource_submission":
+      return `${APP_URL}/dashboard/resources/queue`;
+    default:
+      return `${APP_URL}/dashboard`;
+  }
+}
+
+/**
+ * Notify all admins and moderators about an event
  */
 export async function notifyAdmins(params: AdminNotifyParams): Promise<void> {
-  const admins = await getAdminUsers();
+  const staff = await getAdminAndModeratorUsers();
 
-  if (admins.length === 0) {
-    console.log("[AdminNotify] No admin users found to notify");
+  if (staff.length === 0) {
+    console.log("[AdminNotify] No admin/moderator users found to notify");
     return;
   }
 
+  const pushConfigured = isWebPushConfigured();
+  const pushUrl = getPushNotificationUrl(params);
+
   // Send notifications in parallel
   await Promise.all(
-    admins.map(async (admin) => {
+    staff.map(async (user) => {
       // Create in-app notification
-      await createAdminNotification(admin.id, params);
+      await createAdminNotification(user.id, params);
 
       // Send email notification
-      await sendAdminNotificationEmail(admin.email, admin.name, params);
+      await sendAdminNotificationEmail(user.email, user.name, params);
+
+      // Send push notification (if configured)
+      if (pushConfigured) {
+        try {
+          await sendPushNotificationToUser(user.id, {
+            title: `[Admin] ${params.title}`,
+            body: params.message.replace(/<[^>]*>/g, "").substring(0, 200), // Strip HTML, limit length
+            url: pushUrl,
+            tag: `admin-${params.type}-${Date.now()}`,
+          });
+        } catch (err) {
+          console.error(`[AdminNotify] Push notification error for ${user.id}:`, err);
+        }
+      }
     })
   );
 
-  console.log(`[AdminNotify] Notified ${admins.length} admin(s) about: ${params.type}`);
+  const adminCount = staff.filter((u) => u.role === "admin").length;
+  const modCount = staff.filter((u) => u.role === "moderator").length;
+  console.log(
+    `[AdminNotify] Notified ${adminCount} admin(s) and ${modCount} moderator(s) about: ${params.type}`
+  );
 }
 
 /**

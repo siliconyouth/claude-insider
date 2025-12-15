@@ -322,11 +322,16 @@ export default function SettingsPage() {
     handleNotifPrefToggle("browser_notifications");
   };
 
-  // Handle browser notification prompt result
-  const handleBrowserNotifPromptClose = (result?: "granted" | "denied") => {
+  // Handle browser notification prompt close (just close the modal)
+  const handleBrowserNotifPromptClose = () => {
+    setShowBrowserNotifPrompt(false);
+  };
+
+  // Handle browser notification permission result
+  const handleBrowserNotifPermissionResult = (granted: boolean) => {
     setShowBrowserNotifPrompt(false);
 
-    if (result === "granted") {
+    if (granted) {
       // Permission granted, enable the setting
       setNotifPrefs((prev) => ({ ...prev, browser_notifications: true }));
       startTransition(async () => {
@@ -338,7 +343,7 @@ export default function SettingsPage() {
           toast.success("Browser notifications enabled");
         }
       });
-    } else if (result === "denied") {
+    } else {
       toast.error("Browser notifications permission was denied");
     }
   };
@@ -1431,6 +1436,7 @@ export default function SettingsPage() {
       <BrowserNotificationPrompt
         isOpen={showBrowserNotifPrompt}
         onClose={handleBrowserNotifPromptClose}
+        onPermissionResult={handleBrowserNotifPermissionResult}
       />
     </div>
   );

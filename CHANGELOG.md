@@ -7,6 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.69.0] - 2025-12-15
+
+### Added
+
+#### Admin Notification Management System
+- **Admin Notifications Database** (`supabase/migrations/025_admin_notifications.sql`)
+  - `admin_notifications` table for storing broadcast notifications with:
+    - Title, message, and optional custom link
+    - Target audience: all users, specific roles, or individual users
+    - Channel selection: in-app bell, web push, email
+    - Scheduling: immediate or scheduled send
+    - Status tracking: draft, scheduled, sending, sent, failed, cancelled
+  - `admin_notification_deliveries` table for tracking delivery status per user
+  - Proper indexes for efficient querying
+
+- **Admin Notifications Server Actions** (`app/actions/admin-notifications.ts`)
+  - `createAdminNotification` - Create new notifications with validation
+  - `updateAdminNotification` - Edit draft/scheduled notifications
+  - `deleteAdminNotification` - Remove notifications (admins only)
+  - `getAdminNotifications` - List all notifications with pagination
+  - `getAdminNotificationById` - Fetch single notification with delivery stats
+  - `getRecipientCount` - Preview recipient count for targeting options
+  - `cancelScheduledNotification` - Cancel pending scheduled notifications
+
+- **Admin Dashboard Notifications Page** (`app/(main)/dashboard/notifications/page.tsx`)
+  - Admin-only access with role verification
+  - Create new notifications with rich form:
+    - Title and message fields
+    - Optional custom link for CTA
+    - Target audience selector: All Users, By Role (admin, moderator, editor, beta_tester, user), Specific Users
+    - User search with autocomplete for specific user targeting
+    - Channel selection: In-app (bell), Web Push, Email
+    - Scheduling: Send immediately or schedule for later with datetime picker
+  - Notification list with status badges (draft, scheduled, sending, sent, failed, cancelled)
+  - Recipient count preview before sending
+  - Edit/delete actions for draft and scheduled notifications
+
+- **Scheduled Notifications Cron Job** (`app/api/cron/send-notifications/route.ts`)
+  - Vercel Cron job running every minute
+  - Processes scheduled notifications when send time is reached
+  - Sends via selected channels (in-app, push, email)
+  - Updates notification status and delivery tracking
+  - Secured with `CRON_SECRET` environment variable
+
+#### Enhanced Admin Alerts
+- **Push Notifications for Staff** (`lib/admin-notifications.ts`)
+  - Admin notification system now sends web push notifications to staff
+  - Moderators now receive admin alerts (previously admins only)
+  - Edit suggestions and resource submissions notify all staff via:
+    - In-app bell notifications
+    - Email notifications
+    - Web push notifications (new)
+
+### Fixed
+
+- **Push Notifications Settings Toggle** (`components/settings/notification-settings.tsx`)
+  - Fixed push notifications toggle not updating state when permission is granted/denied
+  - Connected `onPermissionResult` callback to properly reflect permission state in UI
+  - Toggle now correctly shows enabled/disabled based on actual browser permission
+
 ## [0.68.0] - 2025-12-15
 
 ### Added
