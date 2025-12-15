@@ -810,6 +810,57 @@ Settings are stored in localStorage under `soundSettings` with structure:
 
 ---
 
+## Status & Diagnostics (MANDATORY)
+
+**Location**: `/dashboard/diagnostics`
+
+Every new feature MUST have a corresponding test in the Diagnostics dashboard. This ensures all features can be verified to work correctly in production.
+
+### What Must Be Added
+
+| Feature Type | Required Test |
+|--------------|---------------|
+| Database table/query | Add connection test in `runDatabaseDiagnostics()` |
+| API endpoint | Add endpoint test in `runApiTests()` |
+| Sound effect | Add to `SOUND_CATEGORIES` in diagnostics page |
+| Achievement | Add sample to `SAMPLE_ACHIEVEMENTS` array |
+| Toast/notification | Already covered by existing test buttons |
+| Animation | Add visual test button if complex |
+
+### Example: Adding a New Feature Test
+
+```typescript
+// In app/(main)/dashboard/diagnostics/page.tsx
+
+// For a new API endpoint:
+const results: DiagnosticResult[] = [];
+try {
+  const response = await fetch("/api/your-new-endpoint");
+  results.push({
+    name: "Your New API",
+    status: response.ok ? "success" : "error",
+    message: response.ok ? "Working" : `Error: ${response.status}`,
+  });
+} catch (error) {
+  results.push({ name: "Your New API", status: "error", message: "Failed" });
+}
+
+// For a new sound:
+const SOUND_CATEGORIES = {
+  // ... existing categories
+  your_category: ["new_sound_1", "new_sound_2"] as SoundType[],
+};
+```
+
+### Checklist for New Features
+
+- [ ] Feature works in production
+- [ ] Diagnostic test added to `/dashboard/diagnostics`
+- [ ] Test button/section is clearly labeled
+- [ ] Error states are handled gracefully
+
+---
+
 ## Updating Guidelines
 
 When modifying any UX pillar or design system:
