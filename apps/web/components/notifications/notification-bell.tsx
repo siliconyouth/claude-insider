@@ -13,6 +13,7 @@ import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
+import { NotificationContent } from "./notification-content";
 
 interface NotificationPreview {
   id: string;
@@ -466,7 +467,10 @@ export function NotificationBell() {
                             : "text-gray-900 dark:text-white font-medium"
                         )}
                       >
-                        {notification.title}
+                        <NotificationContent
+                          content={notification.title}
+                          actor={notification.actor}
+                        />
                       </p>
                       <p className="text-xs text-gray-400 mt-0.5">
                         {formatTime(notification.created_at)}

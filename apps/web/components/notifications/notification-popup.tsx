@@ -11,6 +11,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
+import { NotificationContent } from "./notification-content";
 
 interface NotificationPopupData {
   id: string;
@@ -329,11 +330,17 @@ export function NotificationPopup() {
                   className="block group"
                 >
                   <p className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors line-clamp-2">
-                    {popup.title}
+                    <NotificationContent
+                      content={popup.title}
+                      actor={popup.actor}
+                    />
                   </p>
                   {popup.message && (
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
-                      {popup.message}
+                      <NotificationContent
+                        content={popup.message}
+                        actor={popup.actor}
+                      />
                     </p>
                   )}
                 </Link>

@@ -13,6 +13,7 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { useToast } from "@/components/toast";
+import { NotificationContent } from "@/components/notifications/notification-content";
 
 interface Notification {
   id: string;
@@ -441,11 +442,17 @@ export default function NotificationsPage() {
                       : "text-gray-900 dark:text-white font-medium"
                   )}
                 >
-                  {notification.title}
+                  <NotificationContent
+                    content={notification.title}
+                    actor={notification.actor}
+                  />
                 </p>
                 {notification.message && (
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
-                    {notification.message}
+                    <NotificationContent
+                      content={notification.message}
+                      actor={notification.actor}
+                    />
                   </p>
                 )}
                 <p className="text-xs text-gray-400 mt-1">
