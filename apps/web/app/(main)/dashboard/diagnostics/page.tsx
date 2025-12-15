@@ -49,7 +49,8 @@ interface TestAllProgress {
 
 interface AIAnalysis {
   isLoading: boolean;
-  summary: string;
+  streamingText: string;
+  fullResponse: string;
   issues: string[];
   fixes: string[];
   claudePrompt: string;
@@ -120,14 +121,15 @@ export default function DiagnosticsPage() {
   });
   const [aiAnalysis, setAiAnalysis] = useState<AIAnalysis>({
     isLoading: false,
-    summary: "",
+    streamingText: "",
+    fullResponse: "",
     issues: [],
     fixes: [],
     claudePrompt: "",
   });
   const [consoleLogs, setConsoleLogs] = useState<ConsoleLog[]>([]);
-  const [consoleInput, setConsoleInput] = useState("");
   const consoleLogsRef = useRef<ConsoleLog[]>([]);
+  const streamingRef = useRef<HTMLDivElement>(null);
 
   // Capture console logs
   useEffect(() => {
@@ -537,7 +539,15 @@ export default function DiagnosticsPage() {
       return;
     }
 
-    setAiAnalysis(prev => ({ ...prev, isLoading: true }));
+    // Reset state and start loading
+    setAiAnalysis({
+      isLoading: true,
+      streamingText: "",
+      fullResponse: "",
+      issues: [],
+      fixes: [],
+      claudePrompt: "",
+    });
 
     try {
       // Prepare test results summary
@@ -550,42 +560,57 @@ export default function DiagnosticsPage() {
         details: r.details,
       }));
 
-      // Get recent console logs
-      const recentLogs = consoleLogs.slice(-50).map(log => ({
+      // Get ALL console logs captured during testing
+      const allConsoleLogs = consoleLogsRef.current.map(log => ({
         type: log.type,
-        message: log.message.substring(0, 500),
+        message: log.message,
+        time: new Date(log.timestamp).toISOString(),
       }));
 
-      // Add user-provided console output
-      const userConsoleOutput = consoleInput.trim();
+      // Filter for errors and warnings specifically
+      const errorLogs = allConsoleLogs.filter(l => l.type === "error" || l.type === "warn");
 
-      // Build context for AI
-      const context = `
-## System Diagnostic Results
+      // Build comprehensive context for AI
+      const context = `## System Diagnostic Results - Claude Insider
 
 **Test Run:** ${new Date().toISOString()}
-**User Role:** ${user?.role || "unknown"}
+**User:** ${user?.email || "unknown"} (Role: ${user?.role || "unknown"})
 **Authenticated:** ${isAuthenticated ? "Yes" : "No"}
+**Project:** claude-insider (Next.js + Supabase + Better Auth)
 
-### Test Results
-${testSummary.map(r => `- **${r.test}** [${r.status.toUpperCase()}]: ${r.message}${r.duration ? ` (${r.duration}ms)` : ""}`).join("\n")}
+### Test Results (${testSummary.length} tests)
+${testSummary.map(r => `- **${r.test}** [${r.status.toUpperCase()}]: ${r.message}${r.duration ? ` (${r.duration}ms)` : ""}${r.details ? `\n  Details: ${JSON.stringify(r.details)}` : ""}`).join("\n")}
 
 ### Summary
-- Total: ${testSummary.length} tests
-- Passed: ${testSummary.filter(r => r.status === "success").length}
-- Warnings: ${testSummary.filter(r => r.status === "warning").length}
-- Errors: ${testSummary.filter(r => r.status === "error").length}
+- ✅ Passed: ${testSummary.filter(r => r.status === "success").length}
+- ⚠️ Warnings: ${testSummary.filter(r => r.status === "warning").length}
+- ❌ Errors: ${testSummary.filter(r => r.status === "error").length}
 
-${recentLogs.length > 0 ? `### Recent Console Logs\n\`\`\`\n${recentLogs.map(l => `[${l.type}] ${l.message}`).join("\n")}\n\`\`\`` : ""}
+### Console Output (${allConsoleLogs.length} total logs, ${errorLogs.length} errors/warnings)
+\`\`\`
+${allConsoleLogs.slice(-100).map(l => `[${l.type.toUpperCase()}] ${l.time} - ${l.message}`).join("\n")}
+\`\`\`
 
-${userConsoleOutput ? `### Browser DevTools Console Output (User Provided)\n\`\`\`\n${userConsoleOutput}\n\`\`\`` : ""}
+${errorLogs.length > 0 ? `### Error/Warning Details
+\`\`\`
+${errorLogs.map(l => `[${l.type.toUpperCase()}] ${l.message}`).join("\n")}
+\`\`\`` : ""}
 
-Please analyze these diagnostic results and:
-1. Provide a brief summary of the system health
-2. List any issues found
-3. Suggest specific fixes for each issue
-4. Generate a Claude Code prompt that can be used to fix the errors
-`;
+---
+
+Please analyze these diagnostic results thoroughly and provide:
+
+1. **System Health Summary** - Brief overview of the system status
+2. **Issues Found** - List each issue with severity (critical/warning/info)
+3. **Root Cause Analysis** - What's causing each issue
+4. **Recommended Fixes** - Step-by-step fixes for each issue
+5. **Claude Code Prompt** - Generate a detailed prompt that can be copied and pasted into Claude Code to automatically fix these issues. The prompt should:
+   - Reference specific file paths in the claude-insider project
+   - Include the exact errors and their context
+   - Provide clear instructions for what needs to be fixed
+   - Be ready to copy-paste without modification
+
+Format the Claude Code prompt in a code block with \`\`\`text markers.`;
 
       // Call the chat API
       const response = await fetch("/api/assistant/chat", {
@@ -602,10 +627,10 @@ Please analyze these diagnostic results and:
       });
 
       if (!response.ok) {
-        throw new Error("Failed to get AI analysis");
+        throw new Error(`Failed to get AI analysis: ${response.status}`);
       }
 
-      // Parse streaming response
+      // Parse streaming response with real-time updates
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       let fullResponse = "";
@@ -626,6 +651,15 @@ Please analyze these diagnostic results and:
                 const parsed = JSON.parse(data);
                 if (parsed.text) {
                   fullResponse += parsed.text;
+                  // Update streaming text in real-time
+                  setAiAnalysis(prev => ({
+                    ...prev,
+                    streamingText: fullResponse,
+                  }));
+                  // Auto-scroll to bottom
+                  if (streamingRef.current) {
+                    streamingRef.current.scrollTop = streamingRef.current.scrollHeight;
+                  }
                 }
               } catch {
                 // Skip non-JSON lines
@@ -638,58 +672,79 @@ Please analyze these diagnostic results and:
       // Parse the AI response into sections
       const issues: string[] = [];
       const fixes: string[] = [];
-      let claudePrompt = "";
 
-      // Extract issues (lines starting with - under Issues section)
-      const issuesMatch = fullResponse.match(/(?:issues?|problems?)[:\s]*\n([\s\S]*?)(?=\n##|\n\*\*|$)/i);
+      // Extract issues
+      const issuesMatch = fullResponse.match(/(?:issues?\s*found|problems?)[:\s]*\n([\s\S]*?)(?=\n##|\n\*\*(?:Root|Recommend|Claude)|$)/i);
       if (issuesMatch?.[1]) {
-        const issueLines = issuesMatch[1].split("\n").filter(l => l.trim().startsWith("-") || l.trim().startsWith("•"));
-        issues.push(...issueLines.map(l => l.replace(/^[-•]\s*/, "").trim()).filter(Boolean));
+        const issueLines = issuesMatch[1].split("\n").filter(l => l.trim().match(/^[-•*\d]/));
+        issues.push(...issueLines.map(l => l.replace(/^[-•*\d.)\]]+\s*/, "").trim()).filter(Boolean));
       }
 
       // Extract fixes
-      const fixesMatch = fullResponse.match(/(?:fixes?|solutions?|recommendations?)[:\s]*\n([\s\S]*?)(?=\n##|\n\*\*|$)/i);
+      const fixesMatch = fullResponse.match(/(?:fixes?|solutions?|recommendations?)[:\s]*\n([\s\S]*?)(?=\n##|\n\*\*Claude|$)/i);
       if (fixesMatch?.[1]) {
-        const fixLines = fixesMatch[1].split("\n").filter(l => l.trim().startsWith("-") || l.trim().startsWith("•") || l.trim().match(/^\d+\./));
-        fixes.push(...fixLines.map(l => l.replace(/^[-•\d.]\s*/, "").trim()).filter(Boolean));
+        const fixLines = fixesMatch[1].split("\n").filter(l => l.trim().match(/^[-•*\d]/));
+        fixes.push(...fixLines.map(l => l.replace(/^[-•*\d.)\]]+\s*/, "").trim()).filter(Boolean));
       }
 
-      // Extract or generate Claude Code prompt
-      const promptMatch = fullResponse.match(/```(?:text|prompt|bash)?\n?([\s\S]*?)```/);
+      // Extract Claude Code prompt from code block
+      const promptMatch = fullResponse.match(/```(?:text|prompt|bash|markdown)?\n?([\s\S]*?)```/);
+      let claudePrompt = "";
+
       if (promptMatch?.[1]) {
         claudePrompt = promptMatch[1].trim();
-      } else {
-        // Generate a default prompt based on errors
-        const errorResults = testAllProgress.results.filter(r => r.status === "error");
-        claudePrompt = `Fix the following diagnostic errors in the claude-insider project:
-
-${errorResults.map(r => `- ${r.name}: ${r.message}`).join("\n")}
-
-${userConsoleOutput ? `Browser console errors:\n${userConsoleOutput.substring(0, 1000)}` : ""}
-
-Please investigate and fix these issues. Check the relevant API routes, database connections, and configurations.`;
       }
 
+      // If no prompt found, generate a comprehensive one
+      if (!claudePrompt || claudePrompt.length < 50) {
+        const errorResults = testAllProgress.results.filter(r => r.status === "error");
+        const warningResults = testAllProgress.results.filter(r => r.status === "warning");
+
+        claudePrompt = `Fix the following diagnostic issues in the claude-insider project:
+
+## Test Failures
+${errorResults.length > 0 ? errorResults.map(r => `- ❌ ${r.name}: ${r.message}${r.details ? ` (${JSON.stringify(r.details)})` : ""}`).join("\n") : "No critical errors"}
+
+## Warnings
+${warningResults.length > 0 ? warningResults.map(r => `- ⚠️ ${r.name}: ${r.message}`).join("\n") : "No warnings"}
+
+## Console Errors
+${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.message.substring(0, 200)}`).join("\n") : "No console errors"}
+
+## Instructions
+1. Investigate each error starting with the most critical
+2. Check the relevant files:
+   - API routes: apps/web/app/api/
+   - Database: apps/web/lib/supabase/
+   - Auth: apps/web/lib/auth.ts
+3. Fix the root cause, not just the symptoms
+4. Run \`pnpm check-types\` after each fix
+5. Test the diagnostics page again to verify fixes`;
+      }
+
+      // Final state update
       setAiAnalysis({
         isLoading: false,
-        summary: fullResponse.substring(0, 500),
+        streamingText: "",
+        fullResponse,
         issues,
         fixes,
         claudePrompt,
       });
 
       sounds.play("success");
-      toast.success("AI analysis complete");
+      toast.success("AI analysis complete!");
     } catch (error) {
       console.error("AI analysis error:", error);
       setAiAnalysis(prev => ({
         ...prev,
         isLoading: false,
-        summary: "Failed to analyze results. Please try again.",
+        streamingText: "",
+        fullResponse: `Error: ${error instanceof Error ? error.message : "Analysis failed"}`,
       }));
       toast.error("AI analysis failed");
     }
-  }, [testAllProgress.results, consoleLogs, consoleInput, user, isAuthenticated, sounds, toast]);
+  }, [testAllProgress.results, user, isAuthenticated, sounds, toast]);
 
   // Copy prompt to clipboard
   const copyPromptToClipboard = useCallback(async () => {
@@ -851,32 +906,17 @@ Please investigate and fix these issues. Check the relevant API routes, database
           </div>
         )}
 
-        {/* Console Output Input */}
-        {testAllProgress.results.length > 0 && (
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-400 mb-2">
-              Paste Browser DevTools Console Output (optional)
-            </label>
-            <textarea
-              value={consoleInput}
-              onChange={(e) => setConsoleInput(e.target.value)}
-              placeholder="Paste any console errors from your browser's DevTools here for AI analysis..."
-              className="w-full h-32 px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white text-sm font-mono placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-            />
-          </div>
-        )}
-
         {/* AI Analysis Button */}
         {testAllProgress.results.length > 0 && !testAllProgress.isRunning && (
-          <div className="flex gap-3">
+          <div className="flex gap-3 mb-4">
             <button
               onClick={analyzeWithAI}
               disabled={aiAnalysis.isLoading}
               className={cn(
                 "flex-1 px-4 py-3 text-sm font-semibold rounded-lg transition-all",
                 aiAnalysis.isLoading
-                  ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                  : "bg-violet-600 text-white hover:bg-violet-700"
+                  ? "bg-violet-900/50 text-violet-300 border border-violet-500/50"
+                  : "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white hover:shadow-lg hover:shadow-violet-500/25"
               )}
             >
               {aiAnalysis.isLoading ? (
@@ -885,7 +925,7 @@ Please investigate and fix these issues. Check the relevant API routes, database
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Analyzing with Claude...
+                  Claude Opus 4.5 is analyzing...
                 </span>
               ) : (
                 <span className="flex items-center justify-center gap-2">
@@ -897,59 +937,81 @@ Please investigate and fix these issues. Check the relevant API routes, database
           </div>
         )}
 
-        {/* AI Analysis Results */}
-        {aiAnalysis.summary && (
-          <div className="mt-4 space-y-4">
-            {/* Summary */}
-            <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
-              <h4 className="text-sm font-semibold text-violet-400 mb-2">AI Analysis Summary</h4>
-              <p className="text-gray-300 text-sm whitespace-pre-wrap">{aiAnalysis.summary}</p>
+        {/* Streaming AI Output Window */}
+        {(aiAnalysis.isLoading || aiAnalysis.streamingText) && (
+          <div className="mb-4 rounded-xl border-2 border-violet-500/50 bg-gray-900/80 overflow-hidden">
+            <div className="px-4 py-2 bg-violet-600/20 border-b border-violet-500/30 flex items-center gap-2">
+              <div className="flex gap-1">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+              </div>
+              <span className="text-sm font-medium text-violet-300 ml-2">
+                🤖 Claude Opus 4.5 Analysis
+              </span>
+              {aiAnalysis.isLoading && (
+                <span className="ml-auto text-xs text-violet-400 animate-pulse">
+                  Streaming response...
+                </span>
+              )}
             </div>
+            <div
+              ref={streamingRef}
+              className="p-4 max-h-96 overflow-y-auto font-mono text-sm text-gray-300 whitespace-pre-wrap"
+            >
+              {aiAnalysis.streamingText || "Waiting for response..."}
+              {aiAnalysis.isLoading && (
+                <span className="inline-block w-2 h-4 bg-violet-400 ml-1 animate-pulse" />
+              )}
+            </div>
+          </div>
+        )}
 
-            {/* Issues */}
-            {aiAnalysis.issues.length > 0 && (
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h4 className="text-sm font-semibold text-red-400 mb-2">Issues Found ({aiAnalysis.issues.length})</h4>
-                <ul className="list-disc list-inside space-y-1">
-                  {aiAnalysis.issues.map((issue, i) => (
-                    <li key={i} className="text-gray-300 text-sm">{issue}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Suggested Fixes */}
-            {aiAnalysis.fixes.length > 0 && (
-              <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
-                <h4 className="text-sm font-semibold text-emerald-400 mb-2">Suggested Fixes</h4>
-                <ul className="list-disc list-inside space-y-1">
-                  {aiAnalysis.fixes.map((fix, i) => (
-                    <li key={i} className="text-gray-300 text-sm">{fix}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Claude Code Prompt */}
-            {aiAnalysis.claudePrompt && (
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-sm font-semibold text-blue-400">Claude Code Fix Prompt</h4>
-                  <button
-                    onClick={copyPromptToClipboard}
-                    className="px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                    Copy to Clipboard
-                  </button>
-                </div>
-                <pre className="text-gray-300 text-xs bg-gray-900/50 p-3 rounded overflow-x-auto whitespace-pre-wrap">
-                  {aiAnalysis.claudePrompt}
+        {/* Full AI Response (after streaming completes) */}
+        {aiAnalysis.fullResponse && !aiAnalysis.isLoading && (
+          <div className="mb-4">
+            <details className="group" open>
+              <summary className="cursor-pointer text-sm font-medium text-violet-400 hover:text-violet-300 flex items-center gap-2">
+                <svg className="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                Full AI Analysis ({aiAnalysis.fullResponse.length} chars)
+              </summary>
+              <div className="mt-2 p-4 rounded-lg bg-gray-800/50 border border-gray-700 max-h-64 overflow-y-auto">
+                <pre className="text-gray-300 text-sm whitespace-pre-wrap font-mono">
+                  {aiAnalysis.fullResponse}
                 </pre>
               </div>
-            )}
+            </details>
+          </div>
+        )}
+
+        {/* PROMINENT Claude Code Prompt Window */}
+        {aiAnalysis.claudePrompt && !aiAnalysis.isLoading && (
+          <div className="rounded-xl border-2 border-cyan-500 bg-gradient-to-br from-cyan-900/30 via-blue-900/30 to-violet-900/30 overflow-hidden shadow-lg shadow-cyan-500/20">
+            <div className="px-4 py-3 bg-cyan-600/20 border-b border-cyan-500/50 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">📋</span>
+                <div>
+                  <h4 className="text-lg font-bold text-cyan-300">Claude Code Fix Prompt</h4>
+                  <p className="text-xs text-cyan-400/70">Copy and paste this into Claude Code to fix issues</p>
+                </div>
+              </div>
+              <button
+                onClick={copyPromptToClipboard}
+                className="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-all hover:shadow-lg hover:shadow-cyan-500/25 flex items-center gap-2 font-semibold"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copy to Clipboard
+              </button>
+            </div>
+            <div className="p-4 max-h-80 overflow-y-auto">
+              <pre className="text-cyan-100 text-sm bg-gray-900/70 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap font-mono border border-cyan-500/20">
+                {aiAnalysis.claudePrompt}
+              </pre>
+            </div>
           </div>
         )}
 
