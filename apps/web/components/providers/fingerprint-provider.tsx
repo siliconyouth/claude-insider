@@ -12,8 +12,10 @@ import React, {
   createContext,
   useContext,
   useEffect,
+  useRef,
   type ReactNode,
 } from "react";
+import { usePathname } from "next/navigation";
 import { useFingerprint, type FingerprintResult } from "@/hooks/use-fingerprint";
 
 // Context
@@ -32,6 +34,50 @@ interface FingerprintProviderProps {
  */
 export function FingerprintProvider({ children }: FingerprintProviderProps) {
   const fingerprint = useFingerprint();
+  const pathname = usePathname();
+  const lastTrackedPath = useRef<string | null>(null);
+  const hasTrackedInitial = useRef(false);
+
+  // Track page views
+  useEffect(() => {
+    // Only track when we have a visitorId and haven't tracked this path yet
+    if (
+      !fingerprint.visitorId ||
+      fingerprint.isLoading ||
+      typeof window === "undefined"
+    ) {
+      return;
+    }
+
+    // Avoid duplicate tracking for same path
+    if (lastTrackedPath.current === pathname && hasTrackedInitial.current) {
+      return;
+    }
+
+    lastTrackedPath.current = pathname;
+    hasTrackedInitial.current = true;
+
+    // Send tracking request (fire and forget)
+    fetch("/api/security/track", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        visitorId: fingerprint.visitorId,
+        endpoint: pathname,
+        method: "GET",
+        eventType: "page_view",
+        fingerprint: {
+          confidence: fingerprint.confidence,
+          components: fingerprint.components,
+        },
+        isBot: false,
+      }),
+    }).catch(() => {
+      // Silently ignore tracking errors
+    });
+  }, [fingerprint.visitorId, fingerprint.isLoading, fingerprint.confidence, fingerprint.components, pathname]);
 
   // Set up fetch interceptor when visitorId is available
   useEffect(() => {
