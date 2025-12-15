@@ -15,15 +15,28 @@ export async function GET(request: NextRequest) {
   try {
     // Check authentication
     const session = await getSession();
+    console.log("[Dashboard Users] Session check:", {
+      hasSession: !!session,
+      hasUser: !!session?.user,
+      userId: session?.user?.id?.substring(0, 8) + "...",
+      userRole: (session?.user as Record<string, unknown>)?.role,
+    });
+
     if (!session?.user) {
+      console.log("[Dashboard Users] No session - returning 401");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Check role - admin only for user management
     const userRole = ((session.user as Record<string, unknown>).role as UserRole) || "user";
+    console.log("[Dashboard Users] Role check:", { userRole, requiredRole: "admin" });
+
     if (!hasMinRole(userRole, ROLES.ADMIN)) {
+      console.log("[Dashboard Users] Insufficient role - returning 403");
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
+
+    console.log("[Dashboard Users] Auth passed, proceeding with query");
 
     // Parse query params
     const { searchParams } = new URL(request.url);

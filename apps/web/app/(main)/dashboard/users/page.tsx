@@ -56,13 +56,22 @@ export default function UsersPage() {
       if (roleFilter !== "all") params.set("role", roleFilter);
 
       const response = await fetch(`/api/dashboard/users?${params}`);
+      console.log("[Dashboard Users Page] API response status:", response.status);
+
       if (response.ok) {
         const data: PaginatedResponse<AdminUserListItem> = await response.json();
+        console.log("[Dashboard Users Page] Got data:", { items: data.items?.length, total: data.total });
         setUsers(data.items);
         setTotalPages(data.totalPages);
         setTotal(data.total);
+      } else if (response.status === 401) {
+        toast.error("Please sign in to view users");
       } else if (response.status === 403) {
         toast.error("You don't have permission to view users");
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("[Dashboard Users Page] API error:", response.status, errorData);
+        toast.error(errorData.error || `Failed to load users (${response.status})`);
       }
     } catch (error) {
       console.error("Failed to fetch users:", error);
