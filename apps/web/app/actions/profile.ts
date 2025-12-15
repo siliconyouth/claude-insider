@@ -109,21 +109,23 @@ export async function getCurrentUserProfile(): Promise<{
           .eq("user_id", userId),
       ]);
 
-    // Get user profile data
+    // Get user profile data from user table directly
     const { data: profile } = await supabase
-      .from("user_profiles")
-      .select("bio, website, avatar_url")
-      .eq("user_id", userId)
+      .from("user")
+      .select("bio, avatarUrl, socialLinks")
+      .eq("id", userId)
       .single();
+
+    const socialLinks = profile?.socialLinks as { website?: string } | null;
 
     return {
       data: {
         id: userId,
         name: session.user.name || "Anonymous",
         email: session.user.email || "",
-        avatarUrl: profile?.avatar_url || session.user.image || undefined,
+        avatarUrl: profile?.avatarUrl || session.user.image || undefined,
         bio: profile?.bio || undefined,
-        website: profile?.website || undefined,
+        website: socialLinks?.website || undefined,
         joinedAt: session.user.createdAt instanceof Date
           ? session.user.createdAt.toISOString()
           : (session.user.createdAt || new Date().toISOString()),
@@ -316,6 +318,9 @@ export async function getUserCollectionsWithCounts(): Promise<{
 
 /**
  * Update user profile
+ *
+ * Updates name, bio on the user table directly.
+ * Note: website is stored in socialLinks.website JSON field.
  */
 export async function updateUserProfile(data: {
   name?: string;
@@ -340,18 +345,40 @@ export async function updateUserProfile(data: {
       }
     }
 
-    // Upsert profile data
-    const { error } = await supabase.from("user_profiles").upsert(
-      {
-        user_id: session.user.id,
-        bio: data.bio || null,
+    // Build update object for user table
+    const updateData: Record<string, unknown> = {
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (data.name !== undefined) {
+      updateData.name = data.name || null;
+    }
+
+    if (data.bio !== undefined) {
+      updateData.bio = data.bio || null;
+    }
+
+    // If website is provided, update it in socialLinks JSON
+    if (data.website !== undefined) {
+      // First get current socialLinks
+      const { data: userData } = await supabase
+        .from("user")
+        .select("socialLinks")
+        .eq("id", session.user.id)
+        .single();
+
+      const currentLinks = userData?.socialLinks || {};
+      updateData.socialLinks = {
+        ...currentLinks,
         website: data.website || null,
-        updated_at: new Date().toISOString(),
-      },
-      {
-        onConflict: "user_id",
-      }
-    );
+      };
+    }
+
+    // Update user table directly
+    const { error } = await supabase
+      .from("user")
+      .update(updateData)
+      .eq("id", session.user.id);
 
     if (error) {
       console.error("[Profile] Update error:", error);
@@ -591,11 +618,11 @@ export async function getCompleteProfileData(options?: {
         .from("comments")
         .select("id", { count: "exact", head: true })
         .eq("user_id", userId),
-      // Profile
+      // Profile from user table
       supabase
-        .from("user_profiles")
-        .select("bio, website, avatar_url")
-        .eq("user_id", userId)
+        .from("user")
+        .select("bio, avatarUrl, socialLinks")
+        .eq("id", userId)
         .single(),
       // Favorites list
       supabase
@@ -622,6 +649,7 @@ export async function getCompleteProfileData(options?: {
     ]);
 
     const profile = profileData.data;
+    const socialLinks = profile?.socialLinks as { website?: string } | null;
 
     return {
       data: {
@@ -629,9 +657,9 @@ export async function getCompleteProfileData(options?: {
           id: userId,
           name: session.user.name || "Anonymous",
           email: session.user.email || "",
-          avatarUrl: profile?.avatar_url || session.user.image || undefined,
+          avatarUrl: profile?.avatarUrl || session.user.image || undefined,
           bio: profile?.bio || undefined,
-          website: profile?.website || undefined,
+          website: socialLinks?.website || undefined,
           joinedAt:
             session.user.createdAt instanceof Date
               ? session.user.createdAt.toISOString()
@@ -773,10 +801,8 @@ export async function getCompleteSettingsData(): Promise<{
       ratingsCount,
       collectionsCount,
       commentsCount,
-      // Profile data
+      // Profile data (combined: bio, avatarUrl, socialLinks, username, profilePrivacy)
       profileData,
-      // Privacy/username from user table
-      userData,
       // Notification preferences
       notifData,
     ] = await Promise.all([
@@ -797,16 +823,10 @@ export async function getCompleteSettingsData(): Promise<{
         .from("comments")
         .select("id", { count: "exact", head: true })
         .eq("user_id", userId),
-      // Profile
-      supabase
-        .from("user_profiles")
-        .select("bio, website, avatar_url")
-        .eq("user_id", userId)
-        .single(),
-      // User table for username and privacy settings
+      // User table for profile, username, and privacy settings (all in one query)
       supabase
         .from("user")
-        .select("username, profilePrivacy")
+        .select("bio, avatarUrl, socialLinks, username, profilePrivacy")
         .eq("id", userId)
         .single(),
       // Notification preferences
@@ -817,10 +837,10 @@ export async function getCompleteSettingsData(): Promise<{
         .single(),
     ]);
 
-    const profile = profileData.data;
-    const user = userData.data;
+    const userData = profileData.data; // Now combined: bio, avatarUrl, socialLinks, username, profilePrivacy
     const notifPrefs = notifData.data;
-    const privacySettings = (user?.profilePrivacy as PrivacySettings) || defaultPrivacySettings;
+    const socialLinks = userData?.socialLinks as { website?: string } | null;
+    const privacySettings = (userData?.profilePrivacy as PrivacySettings) || defaultPrivacySettings;
 
     return {
       data: {
@@ -828,9 +848,9 @@ export async function getCompleteSettingsData(): Promise<{
           id: userId,
           name: session.user.name || "Anonymous",
           email: session.user.email || "",
-          avatarUrl: profile?.avatar_url || session.user.image || undefined,
-          bio: profile?.bio || undefined,
-          website: profile?.website || undefined,
+          avatarUrl: userData?.avatarUrl || session.user.image || undefined,
+          bio: userData?.bio || undefined,
+          website: socialLinks?.website || undefined,
           joinedAt:
             session.user.createdAt instanceof Date
               ? session.user.createdAt.toISOString()
@@ -845,7 +865,7 @@ export async function getCompleteSettingsData(): Promise<{
         privacy: {
           ...defaultPrivacySettings,
           ...privacySettings,
-          username: user?.username || undefined,
+          username: userData?.username || undefined,
         },
         notifications: notifPrefs
           ? {
