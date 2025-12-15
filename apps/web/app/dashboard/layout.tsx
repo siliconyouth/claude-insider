@@ -18,6 +18,9 @@ export const metadata = {
   description: "AI-powered resource discovery and management",
 };
 
+// Force dynamic rendering - dashboard requires auth which uses Payload/Postgres
+export const dynamic = "force-dynamic";
+
 export default async function DashboardLayout({
   children,
 }: {

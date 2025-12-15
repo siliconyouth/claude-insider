@@ -12,7 +12,8 @@
     "check-types": "next typegen && tsc --noEmit",
     "payload": "payload",
     "payload:generate": "payload generate:types",
-    "migrate": "tsx scripts/migrate-to-payload.ts"
+    "migrate": "tsx scripts/migrate-to-payload.ts",
+    "db:types": "node scripts/generate-db-types.cjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",

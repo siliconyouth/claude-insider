@@ -23,6 +23,9 @@ export const metadata = {
   },
 };
 
+// Force dynamic rendering - dashboard requires auth
+export const dynamic = "force-dynamic";
+
 export default async function DashboardLayout({
   children,
 }: {
