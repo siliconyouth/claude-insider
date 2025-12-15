@@ -7,6 +7,91 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.74.0] - 2025-12-15
+
+### Added
+
+#### Passkey/WebAuthn Support
+- **WebAuthn Configuration** (`lib/webauthn.ts`)
+  - Full WebAuthn implementation using SimpleWebAuthn library
+  - Relying Party (RP) configuration from environment variables
+  - Support for platform authenticators (Face ID, Touch ID, Windows Hello)
+  - Support for cross-platform security keys (YubiKey, etc.)
+  - Known AAGUID mappings for popular authenticators (Apple, Google, Microsoft, YubiKey, 1Password, Bitwarden, Dashlane)
+  - Device type detection and friendly name derivation
+  - Credential backup status tracking
+
+- **Passkey Server Actions** (`app/actions/passkeys.ts`)
+  - `getPasskeys` - List all user's registered passkeys
+  - `initPasskeyRegistration` - Generate WebAuthn registration options
+  - `completePasskeyRegistration` - Verify and store new passkey
+  - `initPasskeyAuth` - Generate authentication options for passkey login
+  - `completePasskeyAuth` - Verify passkey signature and return user
+  - `renamePasskey` - Update passkey display name
+  - `removePasskey` - Delete a registered passkey
+  - `checkUserHasPasskeys` - Check if user has passkeys (for login flow)
+
+- **Passkey Settings UI** (`components/settings/passkey-settings.tsx`)
+  - View all registered passkeys with device icons
+  - Platform vs cross-platform badge indicators
+  - Cloud backup status indicator
+  - Last used timestamp display
+  - Add new passkey with browser's native WebAuthn prompt
+  - Rename passkeys with inline editing
+  - Remove passkeys with confirmation
+
+- **Passkey Login** (`components/auth/passkey-login-button.tsx`, `app/api/auth/passkey-login/route.ts`)
+  - "Sign in with Passkey" button in auth modal
+  - Uses discoverable credentials for username-less login
+  - API route creates Better Auth session after verification
+  - Graceful fallback message if WebAuthn not supported
+
+#### Multi-Device Two-Factor Authentication
+- **2FA Device Management** (`app/actions/two-factor.ts`)
+  - `get2FADevices` - List all verified authenticator devices
+  - `initAdd2FADevice` - Start adding new authenticator with QR code
+  - `verifyAndAdd2FADevice` - Verify code and activate new device
+  - `rename2FADevice` - Update device display name
+  - `remove2FADevice` - Remove device (requires TOTP verification)
+  - `setPrimary2FADevice` - Set which device is primary
+  - `get2FADeviceCount` - Get count of verified devices
+
+- **2FA Device Settings UI** (`components/settings/two-factor-settings.tsx`)
+  - Multi-device list showing all authenticator apps
+  - Primary device badge and one-click primary selection
+  - Last used timestamp for each device
+  - Add new device flow with QR code display
+  - Remove device with TOTP verification requirement
+  - First device generates backup codes automatically
+
+#### Onboarding Security Step
+- **Security Setup Step** (`components/auth/onboarding-wizard/steps/security-step.tsx`)
+  - New optional step in onboarding wizard
+  - Choose between passkey, 2FA, or both
+  - "Set up both for maximum security" option
+  - Platform authenticator detection (Face ID, Touch ID hints)
+  - Skip option for users who want to set up later
+  - Completion state shows what was configured
+  - Info box linking to settings for future management
+
+- **Onboarding Integration** (`components/auth/onboarding-wizard/index.tsx`)
+  - Security step added between API Key and Preferences steps
+  - Step is fully optional and skippable
+  - Wizard state tracks security setup completion
+
+### Changed
+
+- **Auth Modal** - Added "Sign in with Passkey" option when WebAuthn is supported
+- **Settings Page** - Passkey management section added under Two-Factor Authentication
+- **Two-Factor Settings** - Now displays device list with multi-device support
+- **Onboarding Wizard** - New security step for optional passkey/2FA setup
+
+### Dependencies
+
+- Added `@simplewebauthn/browser` ^13.2.2 - Client-side WebAuthn operations
+- Added `@simplewebauthn/server` ^13.2.2 - Server-side credential verification
+- Added `@simplewebauthn/types` ^12.0.0 (devDependency) - TypeScript definitions
+
 ## [0.73.0] - 2025-12-15
 
 ### Added

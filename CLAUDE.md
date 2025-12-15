@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.73.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.74.0**.
 
 | Link | URL |
 |------|-----|
@@ -86,7 +86,10 @@ claude-insider/
 │   │   ├── globals.css           # Global styles, animations
 │   │   ├── docs/[...slug]/       # Dynamic MDX routes
 │   │   ├── api/assistant/        # Chat & TTS endpoints
+│   │   ├── api/auth/passkey-login/ # Passkey authentication endpoint
 │   │   ├── api/cron/             # Scheduled jobs (digests, notifications)
+│   │   ├── actions/passkeys.ts   # 8 passkey server actions
+│   │   ├── actions/two-factor.ts # 13 2FA server actions (multi-device)
 │   │   └── (main)/dashboard/     # Admin dashboard pages
 │   ├── components/               # 65+ React components
 │   │   ├── voice-assistant.tsx   # AI assistant (1500+ LOC)
@@ -97,13 +100,17 @@ claude-insider/
 │   │   ├── error-*.tsx           # Error handling components
 │   │   ├── device-mockups.tsx    # SVG device frames
 │   │   ├── auth/                 # Authentication components
-│   │   │   ├── auth-modal.tsx    # Sign in/sign up modal
+│   │   │   ├── auth-modal.tsx    # Sign in/sign up modal (passkey support)
+│   │   │   ├── passkey-login-button.tsx # WebAuthn login button
 │   │   │   ├── user-menu.tsx     # User dropdown menu
 │   │   │   └── onboarding-wizard/ # New user onboarding
+│   │   │       └── steps/security-step.tsx # Optional passkey/2FA setup
 │   │   ├── settings/             # Account settings components
 │   │   │   ├── password-settings.tsx  # Change/set password
 │   │   │   ├── connected-accounts.tsx # OAuth provider management
-│   │   │   └── api-key-settings.tsx   # User API key management
+│   │   │   ├── api-key-settings.tsx   # User API key management
+│   │   │   ├── passkey-settings.tsx   # Passkey/WebAuthn management
+│   │   │   └── two-factor-settings.tsx # Multi-device 2FA management
 │   │   ├── interactions/         # User interaction components
 │   │   │   ├── favorite-button.tsx
 │   │   │   ├── rating-stars.tsx
@@ -138,6 +145,7 @@ claude-insider/
 │   │   ├── rag.ts                # RAG with TF-IDF search
 │   │   ├── auth.ts               # Better Auth configuration
 │   │   ├── auth-client.ts        # Client-side auth hooks
+│   │   ├── webauthn.ts           # WebAuthn/Passkey utilities (SimpleWebAuthn)
 │   │   ├── gamification.ts       # Points, levels, streaks
 │   │   ├── email.ts              # Resend email templates
 │   │   ├── admin-notifications.ts # Staff alerts & push notifications

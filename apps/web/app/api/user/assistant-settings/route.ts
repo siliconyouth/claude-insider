@@ -27,8 +27,8 @@ export interface AssistantSettings {
   updatedAt: string;
 }
 
-// Available voices for selection
-export const AVAILABLE_VOICES = [
+// Available voices for selection (internal use only - route files can only export HTTP handlers)
+const AVAILABLE_VOICES = [
   { id: "EXAVITQu4vr4xnSDxMaL", name: "Sarah", accent: "American", gender: "Female", description: "Soft, conversational" },
   { id: "21m00Tcm4TlvDq8ikWAM", name: "Rachel", accent: "American", gender: "Female", description: "Calm, professional" },
   { id: "AZnzlk1XvdvUeBnXmlld", name: "Domi", accent: "American", gender: "Female", description: "Strong, confident" },

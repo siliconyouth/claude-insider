@@ -10,6 +10,7 @@
 import { useState, useTransition, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 import { signIn, signUp } from "@/lib/auth-client";
+import { PasskeyLoginButton } from "./passkey-login-button";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -206,6 +207,15 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
             </svg>
             Continue with Google
           </button>
+
+          {/* Passkey Login - only show on sign in */}
+          {mode === "signin" && (
+            <PasskeyLoginButton
+              onSuccess={onClose}
+              onError={setError}
+              disabled={isPending}
+            />
+          )}
         </div>
 
         {/* Divider */}

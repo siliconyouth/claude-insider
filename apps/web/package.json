@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.73.0",
+  "version": "0.74.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -26,6 +26,8 @@
     "@payloadcms/next": "^3.68.3",
     "@payloadcms/richtext-lexical": "^3.68.3",
     "@repo/ui": "workspace:*",
+    "@simplewebauthn/browser": "^13.2.2",
+    "@simplewebauthn/server": "^13.2.2",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.87.1",
     "@types/pg": "^8.16.0",
@@ -53,6 +55,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@simplewebauthn/types": "^12.0.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/bcryptjs": "^3.0.0",
     "@types/mdx": "^2.0.13",

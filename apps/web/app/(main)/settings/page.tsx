@@ -17,6 +17,7 @@ import {
 } from "@/app/actions/profile";
 import { updateNotificationPreferences } from "@/app/actions/notifications";
 import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
+import { PasskeySettings } from "@/components/settings/passkey-settings";
 import { DataManagement } from "@/components/settings/data-management";
 import { BlockedUsers } from "@/components/settings/blocked-users";
 import { AvatarUpload } from "@/components/settings/avatar-upload";
@@ -963,6 +964,9 @@ export default function SettingsPage() {
 
             {/* Two-Factor Authentication */}
             <TwoFactorSettings />
+
+            {/* Passkeys */}
+            <PasskeySettings />
           </div>
         </section>
 

@@ -26,6 +26,7 @@ import { ProfileBasicsStep } from "./steps/profile-basics-step";
 import { SocialLinksStep } from "./steps/social-links-step";
 import { EmailVerifyStep } from "./steps/email-verify-step";
 import { AddPasswordStep } from "./steps/add-password-step";
+import { SecurityStep } from "./steps/security-step";
 import { BetaApplyStep } from "./steps/beta-apply-step";
 import { NotificationsStep } from "./steps/notifications-step";
 import { ApiKeyStep } from "./steps/api-key-step";
@@ -44,6 +45,7 @@ const StepComponents: Record<WizardStepId, React.ComponentType> = {
   "social-links": SocialLinksStep,
   "email-verify": EmailVerifyStep,
   "add-password": AddPasswordStep,
+  "security": SecurityStep,
   "notifications": NotificationsStep,
   "api-key": ApiKeyStep,
   "beta-apply": BetaApplyStep,
@@ -136,6 +138,15 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
         skippable: true,
       });
     }
+
+    // Always show security setup (optional passkeys and 2FA)
+    steps.push({
+      id: "security",
+      title: "Security",
+      description: "Set up passkeys or two-factor authentication",
+      icon: "🛡️",
+      skippable: true,
+    });
 
     // Always show notifications setup step
     steps.push({

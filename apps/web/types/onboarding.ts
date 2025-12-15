@@ -52,6 +52,7 @@ export type WizardStepId =
   | "social-links"
   | "email-verify"
   | "add-password"
+  | "security"
   | "notifications"
   | "api-key"
   | "beta-apply";
