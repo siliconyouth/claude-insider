@@ -30,11 +30,12 @@ export async function GET() {
     }
 
     // Get user stats
+    // Note: Better Auth uses camelCase column names ("createdAt" not created_at)
     const usersResult = await pool.query(`
       SELECT
         COUNT(*) as total,
-        COUNT(*) FILTER (WHERE created_at > NOW() - INTERVAL '7 days') as new_this_week,
-        COUNT(*) FILTER (WHERE created_at > NOW() - INTERVAL '30 days') as new_this_month,
+        COUNT(*) FILTER (WHERE "createdAt" > NOW() - INTERVAL '7 days') as new_this_week,
+        COUNT(*) FILTER (WHERE "createdAt" > NOW() - INTERVAL '30 days') as new_this_month,
         COUNT(*) FILTER (WHERE role = 'user') as role_user,
         COUNT(*) FILTER (WHERE role = 'editor') as role_editor,
         COUNT(*) FILTER (WHERE role = 'moderator') as role_moderator,
