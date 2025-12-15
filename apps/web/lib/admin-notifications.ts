@@ -414,3 +414,96 @@ export async function notifyAdminsResourceSubmission(resource: {
     },
   });
 }
+
+/**
+ * Notify all users about a new version release
+ * Respects user notification preferences for version_updates
+ */
+export async function notifyVersionUpdate(params: {
+  version: string;
+  title: string;
+  highlights?: string[];
+}): Promise<{ success: boolean; notifiedCount: number; error?: string }> {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
+
+    // Get all users who have in_app_version_updates enabled
+    const { data: preferences, error: prefError } = await supabase
+      .from("notification_preferences")
+      .select("user_id, in_app_version_updates, email_version_updates")
+      .eq("in_app_version_updates", true);
+
+    if (prefError) {
+      console.error("[VersionNotify] Error fetching preferences:", prefError);
+      return { success: false, notifiedCount: 0, error: prefError.message };
+    }
+
+    // If no preferences found, get users without preferences (they use defaults which have it enabled)
+    const { data: allUsers, error: usersError } = await supabase
+      .from("user")
+      .select("id, email, name");
+
+    if (usersError) {
+      console.error("[VersionNotify] Error fetching users:", usersError);
+      return { success: false, notifiedCount: 0, error: usersError.message };
+    }
+
+    // Build set of users with explicit opt-out
+    const userPrefsMap = new Map(
+      (preferences || []).map((p: { user_id: string; in_app_version_updates: boolean; email_version_updates: boolean }) => [p.user_id, p])
+    );
+
+    // Filter users to notify (those with enabled or no preference set)
+    const usersToNotify = (allUsers || []).filter((user: { id: string }) => {
+      const pref = userPrefsMap.get(user.id);
+      // If no preference, default is enabled; if preference exists, check if enabled
+      return !pref || pref.in_app_version_updates === true;
+    });
+
+    if (usersToNotify.length === 0) {
+      console.log("[VersionNotify] No users to notify");
+      return { success: true, notifiedCount: 0 };
+    }
+
+    // Build notification message
+    const highlightsHtml = params.highlights?.length
+      ? `<ul style="margin: 8px 0; padding-left: 16px;">${params.highlights.map((h) => `<li>${h}</li>`).join("")}</ul>`
+      : "";
+
+    // Create notifications in batches
+    const batchSize = 100;
+    let notifiedCount = 0;
+
+    for (let i = 0; i < usersToNotify.length; i += batchSize) {
+      const batch = usersToNotify.slice(i, i + batchSize);
+
+      const notifications = batch.map((user: { id: string }) => ({
+        user_id: user.id,
+        type: "version_update",
+        title: `🎉 ${params.title}`,
+        message: `Version ${params.version} is now available!${highlightsHtml}`,
+        data: {
+          version: params.version,
+          link: `${APP_URL}/changelog`,
+        },
+      }));
+
+      const { error: insertError } = await supabase
+        .from("notifications")
+        .insert(notifications);
+
+      if (insertError) {
+        console.error("[VersionNotify] Error inserting notifications:", insertError);
+      } else {
+        notifiedCount += batch.length;
+      }
+    }
+
+    console.log(`[VersionNotify] Notified ${notifiedCount} users about version ${params.version}`);
+    return { success: true, notifiedCount };
+  } catch (error) {
+    console.error("[VersionNotify] Unexpected error:", error);
+    return { success: false, notifiedCount: 0, error: (error as Error).message };
+  }
+}

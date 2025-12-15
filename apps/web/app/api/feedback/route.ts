@@ -3,12 +3,18 @@
  *
  * Handles feedback submission and retrieval.
  * Only beta testers can submit feedback.
+ * Sends notifications to admins and confirmation to submitter.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { Pool } from "pg";
 import type { FeedbackSubmission } from "@/types/feedback";
+import {
+  sendFeedbackAdminEmail,
+  sendFeedbackConfirmationEmail,
+  type FeedbackEmailParams,
+} from "@/lib/email";
 
 // Create pool for direct database access
 const pool = new Pool({
@@ -86,10 +92,10 @@ export async function POST(request: NextRequest) {
     // Get user agent from request headers
     const userAgent = request.headers.get("user-agent") || null;
 
-    // Insert feedback
+    // Insert feedback with debug info for bug reports
     const result = await pool.query(
-      `INSERT INTO feedback (user_id, feedback_type, title, description, severity, page_url, user_agent)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+      `INSERT INTO feedback (user_id, feedback_type, title, description, severity, page_url, user_agent, console_logs, browser_info)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        RETURNING id, status, created_at`,
       [
         session.user.id,
@@ -99,12 +105,38 @@ export async function POST(request: NextRequest) {
         severity,
         body.pageUrl || null,
         userAgent,
+        body.consoleLogs ? JSON.stringify(body.consoleLogs) : null,
+        body.browserInfo ? JSON.stringify(body.browserInfo) : null,
       ]
     );
 
+    const feedbackId = result.rows[0].id;
+
+    // Build email params for notifications
+    const emailParams: FeedbackEmailParams = {
+      feedbackId,
+      feedbackType: body.feedbackType as "bug" | "feature" | "general",
+      title: body.title.trim(),
+      description: body.description.trim(),
+      severity: severity || undefined,
+      pageUrl: body.pageUrl || undefined,
+      userAgent: userAgent || undefined,
+      consoleLogs: body.consoleLogs,
+      browserInfo: body.browserInfo,
+      submitter: {
+        name: session.user.name || "Beta Tester",
+        email: session.user.email!,
+      },
+    };
+
+    // Send notifications asynchronously (don't block the response)
+    sendFeedbackNotifications(emailParams).catch((err) => {
+      console.error("[Feedback] Notification error:", err);
+    });
+
     return NextResponse.json({
       success: true,
-      feedbackId: result.rows[0].id,
+      feedbackId,
       status: result.rows[0].status,
     });
   } catch (error) {
@@ -154,5 +186,72 @@ export async function GET() {
       { error: error instanceof Error ? error.message : "Failed to get feedback" },
       { status: 500 }
     );
+  }
+}
+
+/**
+ * Send feedback notifications to admins and confirmation to submitter
+ */
+async function sendFeedbackNotifications(params: FeedbackEmailParams): Promise<void> {
+  try {
+    // 1. Get all admin users
+    const adminsResult = await pool.query(
+      `SELECT id, name, email FROM "user" WHERE role IN ('admin', 'moderator') AND email IS NOT NULL`
+    );
+
+    const typeLabel = params.feedbackType === "bug"
+      ? "Bug Report"
+      : params.feedbackType === "feature"
+      ? "Feature Request"
+      : "Feedback";
+
+    // 2. Send email to each admin
+    const adminEmailPromises = adminsResult.rows.map((admin) =>
+      sendFeedbackAdminEmail(admin.email, admin.name, params)
+    );
+
+    // 3. Create in-app notifications for admins
+    const notificationPromises = adminsResult.rows.map((admin) =>
+      pool.query(
+        `INSERT INTO notifications (user_id, type, title, message, link)
+         VALUES ($1, $2, $3, $4, $5)`,
+        [
+          admin.id,
+          "system",
+          `New ${typeLabel}: ${params.title}`,
+          `${params.submitter.name} submitted a ${typeLabel.toLowerCase()}${params.severity ? ` (${params.severity})` : ""}`,
+          `/dashboard/feedback`,
+        ]
+      )
+    );
+
+    // 4. Send confirmation email to submitter
+    const confirmationPromise = sendFeedbackConfirmationEmail(params);
+
+    // 5. Create in-app notification for submitter
+    const submitterNotificationPromise = pool.query(
+      `INSERT INTO notifications (user_id, type, title, message)
+       SELECT id, 'system', $2, $3 FROM "user" WHERE email = $1`,
+      [
+        params.submitter.email,
+        `${typeLabel} Received`,
+        `We've received your ${typeLabel.toLowerCase()} "${params.title}". Our team will review it shortly.`,
+      ]
+    );
+
+    // Execute all in parallel
+    await Promise.allSettled([
+      ...adminEmailPromises,
+      ...notificationPromises,
+      confirmationPromise,
+      submitterNotificationPromise,
+    ]);
+
+    console.log(
+      `[Feedback] Notifications sent: ${adminsResult.rows.length} admins, 1 submitter`
+    );
+  } catch (error) {
+    console.error("[Feedback] sendFeedbackNotifications error:", error);
+    throw error;
   }
 }

@@ -19,6 +19,7 @@ import {
   deleteAdminNotification,
   searchUsersForNotification,
   getRecipientCount,
+  sendVersionNotification,
   type AdminNotification,
   type AdminNotificationStatus,
   type TargetType,
@@ -86,6 +87,13 @@ export default function NotificationsPage() {
 
   // Recipient count preview
   const [recipientCount, setRecipientCount] = useState<number | null>(null);
+
+  // Version notification modal state
+  const [showVersionModal, setShowVersionModal] = useState(false);
+  const [versionNumber, setVersionNumber] = useState("");
+  const [versionTitle, setVersionTitle] = useState("");
+  const [versionHighlights, setVersionHighlights] = useState("");
+  const [isSendingVersion, setIsSendingVersion] = useState(false);
 
   // Fetch notifications
   const fetchNotifications = useCallback(async () => {
@@ -333,6 +341,57 @@ export default function NotificationsPage() {
     );
   };
 
+  // Reset version modal
+  const resetVersionModal = () => {
+    setVersionNumber("");
+    setVersionTitle("");
+    setVersionHighlights("");
+    setShowVersionModal(false);
+  };
+
+  // Handle sending version notification
+  const handleSendVersionNotification = async () => {
+    if (!versionNumber.trim()) {
+      toast.error("Version number is required");
+      return;
+    }
+
+    if (!versionTitle.trim()) {
+      toast.error("Title is required");
+      return;
+    }
+
+    setIsSendingVersion(true);
+
+    try {
+      // Parse highlights (one per line)
+      const highlights = versionHighlights
+        .split("\n")
+        .map((h) => h.trim())
+        .filter((h) => h.length > 0);
+
+      const result = await sendVersionNotification({
+        version: versionNumber.trim(),
+        title: versionTitle.trim(),
+        highlights: highlights.length > 0 ? highlights : undefined,
+      });
+
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        toast.success(
+          `Version update notification sent to ${result.notifiedCount} users!`
+        );
+        resetVersionModal();
+        fetchNotifications();
+      }
+    } catch {
+      toast.error("Failed to send version notification");
+    } finally {
+      setIsSendingVersion(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -343,17 +402,34 @@ export default function NotificationsPage() {
             Create and manage notifications ({total} total)
           </p>
         </div>
-        <button
-          onClick={openCreateModal}
-          className={cn(
-            "px-4 py-2 rounded-lg text-sm font-medium",
-            "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-            "text-white shadow-lg shadow-blue-500/25",
-            "hover:-translate-y-0.5 transition-all"
-          )}
-        >
-          Create Notification
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setShowVersionModal(true)}
+            className={cn(
+              "px-4 py-2 rounded-lg text-sm font-medium",
+              "bg-emerald-600/20 text-emerald-400 border border-emerald-500/30",
+              "hover:bg-emerald-600/30 transition-all"
+            )}
+          >
+            <span className="flex items-center gap-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Send Version Update
+            </span>
+          </button>
+          <button
+            onClick={openCreateModal}
+            className={cn(
+              "px-4 py-2 rounded-lg text-sm font-medium",
+              "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+              "text-white shadow-lg shadow-blue-500/25",
+              "hover:-translate-y-0.5 transition-all"
+            )}
+          >
+            Create Notification
+          </button>
+        </div>
       </div>
 
       {/* Status Filters */}
@@ -817,6 +893,121 @@ export default function NotificationsPage() {
                 )}
               >
                 {isSaving ? "Saving..." : isEditing ? "Update" : "Create Draft"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Version Notification Modal */}
+      {showVersionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={resetVersionModal}
+          />
+          <div className="relative w-full max-w-md bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl">
+            {/* Modal Header */}
+            <div className="border-b border-gray-800 p-6 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-emerald-600/20">
+                  <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-white">Send Version Update</h3>
+              </div>
+              <button
+                onClick={resetVersionModal}
+                className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 space-y-4">
+              <p className="text-sm text-gray-400">
+                Send a version update notification to all users who have opted in to receive version updates.
+              </p>
+
+              {/* Version Number */}
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Version Number <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={versionNumber}
+                  onChange={(e) => setVersionNumber(e.target.value)}
+                  placeholder="e.g., 0.66.0"
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+
+              {/* Title */}
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Title <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={versionTitle}
+                  onChange={(e) => setVersionTitle(e.target.value)}
+                  placeholder="e.g., New Features & Improvements"
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+
+              {/* Highlights */}
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Highlights (one per line, optional)
+                </label>
+                <textarea
+                  value={versionHighlights}
+                  onChange={(e) => setVersionHighlights(e.target.value)}
+                  placeholder="Added dark mode support&#10;Fixed login issues&#10;Improved performance"
+                  rows={4}
+                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  Enter each highlight on a new line. These will appear as bullet points.
+                </p>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="border-t border-gray-800 p-6 flex items-center justify-end gap-3">
+              <button
+                onClick={resetVersionModal}
+                className="px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSendVersionNotification}
+                disabled={isSendingVersion}
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium",
+                  "bg-emerald-600 text-white",
+                  "hover:bg-emerald-500 transition-all",
+                  "disabled:opacity-50 disabled:cursor-not-allowed"
+                )}
+              >
+                {isSendingVersion ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    Sending...
+                  </span>
+                ) : (
+                  "Send to Opted-in Users"
+                )}
               </button>
             </div>
           </div>

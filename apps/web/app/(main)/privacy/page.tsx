@@ -234,6 +234,7 @@ export default function PrivacyPolicyPage() {
                     <li>Achievements</li>
                     <li>Following/followers list</li>
                     <li>Notification preferences</li>
+                    <li>API key usage statistics (key hint only, never the actual key)</li>
                   </ul>
                 </li>
               </ol>
@@ -332,6 +333,82 @@ export default function PrivacyPolicyPage() {
               <li><strong>Guests:</strong> Conversations stored in browser localStorage only</li>
               <li><strong>Logged-in users:</strong> Conversations can optionally be saved to your account for access across devices</li>
               <li><strong>Deletion:</strong> You can delete conversations anytime from the assistant or Settings</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Your API Keys</h2>
+            <p className="text-gray-300 leading-relaxed">
+              You can optionally add your own Anthropic API key to use AI features with your own Claude subscription instead of site credits.
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">How We Protect Your API Key</h3>
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mt-4">
+              <ul className="list-disc list-inside space-y-2 text-gray-300">
+                <li><strong>AES-256-GCM encryption:</strong> Your API key is encrypted before storage using industry-standard encryption</li>
+                <li><strong>Unique encryption per key:</strong> Each key uses a random initialization vector (IV) and authentication tag</li>
+                <li><strong>Key derivation:</strong> Encryption keys are derived using scrypt with a secure salt</li>
+                <li><strong>Never logged:</strong> Plain-text API keys are never written to logs or displayed in full</li>
+                <li><strong>Hint only:</strong> Only the last 8 characters are stored for identification purposes</li>
+              </ul>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">What We Store</h3>
+            <div className="overflow-x-auto mt-4">
+              <table className="min-w-full text-sm text-gray-300">
+                <thead className="bg-gray-800/50">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">Data</th>
+                    <th className="px-4 py-2 text-left font-semibold">Purpose</th>
+                    <th className="px-4 py-2 text-left font-semibold">Retention</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  <tr>
+                    <td className="px-4 py-2">Encrypted API key</td>
+                    <td className="px-4 py-2">Enable AI features with your Claude subscription</td>
+                    <td className="px-4 py-2">Until you delete it</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Key hint (last 8 chars)</td>
+                    <td className="px-4 py-2">Help you identify which key is connected</td>
+                    <td className="px-4 py-2">Until you delete the key</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Available models</td>
+                    <td className="px-4 py-2">Show which Claude models your subscription supports</td>
+                    <td className="px-4 py-2">Until you delete the key</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Usage statistics</td>
+                    <td className="px-4 py-2">Track tokens and requests per month (for your visibility)</td>
+                    <td className="px-4 py-2">Rolling 12 months</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Usage logs</td>
+                    <td className="px-4 py-2">Per-request logging (feature, model, tokens)</td>
+                    <td className="px-4 py-2">90 days</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">How Your API Key Is Used</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>AI Assistant:</strong> Your key is used to make requests to Claude on your behalf</li>
+              <li><strong>Code Playground:</strong> Your key enables access to your preferred Claude model</li>
+              <li><strong>Never shared:</strong> Your API key is never sent to any third party except Anthropic</li>
+              <li><strong>Your responsibility:</strong> Usage and billing with Anthropic is under your account</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Managing Your API Key</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You can add, update, or delete your API key anytime in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a> under &quot;AI Integration&quot;. When you delete your API key:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li>The encrypted key is permanently deleted from our database</li>
+              <li>Usage logs associated with the key are deleted</li>
+              <li>AI features fall back to using site credits</li>
             </ul>
           </section>
 
@@ -506,7 +583,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only.
+              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. If you add your own Anthropic API key, it is encrypted with AES-256-GCM before storage and only used to make Claude API requests on your behalf. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only.
             </p>
           </section>
         </article>

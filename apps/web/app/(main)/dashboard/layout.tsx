@@ -3,7 +3,7 @@
  *
  * Protected layout for admin/moderator dashboard pages.
  * Only moderators and admins can access.
- * Provides consistent navigation and styling.
+ * Provides consistent navigation and styling with site header/footer.
  */
 
 import { redirect } from "next/navigation";
@@ -11,6 +11,8 @@ import Link from "next/link";
 import { getSession } from "@/lib/auth";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 import { DashboardNav } from "./components/dashboard-nav";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
 export const metadata = {
   title: "Dashboard | Claude Insider",
@@ -44,11 +46,14 @@ export default async function DashboardLayout({
   const isAdmin = hasMinRole(userRole, ROLES.ADMIN);
 
   return (
-    <div className="min-h-screen bg-gray-950">
-      {/* Dashboard Header */}
-      <header className="sticky top-0 z-40 border-b border-gray-800 bg-gray-950/80 backdrop-blur-lg">
+    <div className="min-h-screen bg-gray-950 flex flex-col">
+      {/* Site Header */}
+      <Header />
+
+      {/* Dashboard Sub-Header */}
+      <div className="border-b border-gray-800 bg-gray-900/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex h-12 items-center justify-between">
             <div className="flex items-center gap-4">
               <Link
                 href="/"
@@ -64,16 +69,16 @@ export default async function DashboardLayout({
                 </svg>
                 Back to Site
               </Link>
-              <div className="h-6 w-px bg-gray-800" />
-              <h1 className="text-lg font-semibold text-white">Dashboard</h1>
+              <div className="h-4 w-px bg-gray-700" />
+              <h1 className="text-sm font-semibold text-white">Admin Dashboard</h1>
             </div>
 
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-400">
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-gray-400 hidden sm:block">
                 {session.user.name || session.user.email}
               </span>
               <span
-                className={`px-2 py-1 rounded text-xs font-medium ${
+                className={`px-2 py-0.5 rounded text-xs font-medium ${
                   isAdmin
                     ? "bg-cyan-900/30 text-cyan-400"
                     : "bg-violet-900/30 text-violet-400"
@@ -84,19 +89,25 @@ export default async function DashboardLayout({
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Sidebar Navigation */}
-          <aside className="w-full lg:w-64 flex-shrink-0">
-            <DashboardNav isAdmin={isAdmin} />
-          </aside>
+      {/* Dashboard Content */}
+      <div className="flex-1">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Sidebar Navigation */}
+            <aside className="w-full lg:w-64 flex-shrink-0">
+              <DashboardNav isAdmin={isAdmin} />
+            </aside>
 
-          {/* Main Content */}
-          <main className="flex-1 min-w-0">{children}</main>
+            {/* Main Content */}
+            <main className="flex-1 min-w-0">{children}</main>
+          </div>
         </div>
       </div>
+
+      {/* Site Footer */}
+      <Footer />
     </div>
   );
 }

@@ -10,7 +10,7 @@ import { NotificationBell } from "@/components/notifications/notification-bell";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
-  activePage?: "home" | "docs" | "getting-started" | "resources";
+  activePage?: "home" | "docs" | "getting-started" | "resources" | "playground";
 }
 
 export function Header({ activePage }: HeaderProps) {
@@ -79,6 +79,18 @@ export function Header({ activePage }: HeaderProps) {
               )}
             >
               {t("resources")}
+            </Link>
+            <Link
+              href="/playground"
+              className={cn(
+                "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
+                activePage === "playground"
+                  ? "text-gray-900 dark:text-white bg-gray-100 dark:bg-[#1a1a1a]"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+              )}
+            >
+              Playground
             </Link>
             <a
               href="https://github.com/siliconyouth/claude-insider"
@@ -193,6 +205,18 @@ export function Header({ activePage }: HeaderProps) {
                 )}
               >
                 {t("resources")}
+              </Link>
+              <Link
+                href="/playground"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                  activePage === "playground"
+                    ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+                )}
+              >
+                Playground
               </Link>
               <a
                 href="https://github.com/siliconyouth/claude-insider"

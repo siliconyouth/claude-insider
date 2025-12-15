@@ -15,6 +15,7 @@ import { FeedbackButton } from "@/components/feedback/feedback-button";
 import { I18nProvider } from "@/i18n";
 import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
 import { AskAIProvider, AskAIModal } from "@/components/ask-ai";
+import { VersionUpdatePopup } from "@/components/version-update-popup";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -164,6 +165,7 @@ export default async function MainLayout({
                   <OnboardingModalWrapper />
                   <FeedbackButton />
                   <AskAIModal />
+                  <VersionUpdatePopup />
                   <Analytics />
                 </ToastProvider>
               </KeyboardShortcutsProvider>

@@ -4,17 +4,26 @@
  * Feedback Form
  *
  * Form for submitting feedback with type selection, title, description,
- * and severity (for bugs).
+ * and severity (for bugs). Includes console log capture for bug reports.
  */
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/design-system";
 import { FEEDBACK_TYPES, FEEDBACK_SEVERITIES } from "@/types/feedback";
 import type { FeedbackType, FeedbackSeverity } from "@/types/feedback";
 
+interface ConsoleLog {
+  type: "log" | "warn" | "error" | "info";
+  message: string;
+  timestamp: string;
+}
+
 interface FeedbackFormProps {
   onSuccess: () => void;
 }
+
+// Maximum number of console logs to capture
+const MAX_CONSOLE_LOGS = 50;
 
 export function FeedbackForm({ onSuccess }: FeedbackFormProps) {
   const [feedbackType, setFeedbackType] = useState<FeedbackType>("general");
@@ -24,6 +33,59 @@ export function FeedbackForm({ onSuccess }: FeedbackFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [includeConsoleLogs, setIncludeConsoleLogs] = useState(true);
+  const consoleLogsRef = useRef<ConsoleLog[]>([]);
+
+  // Capture console logs
+  useEffect(() => {
+    const originalConsole = {
+      log: console.log,
+      warn: console.warn,
+      error: console.error,
+      info: console.info,
+    };
+
+    const captureLog = (type: ConsoleLog["type"]) => (...args: unknown[]) => {
+      // Call original console method
+      originalConsole[type](...args);
+
+      // Capture the log
+      const message = args
+        .map((arg) => {
+          if (typeof arg === "string") return arg;
+          if (arg instanceof Error) return `${arg.name}: ${arg.message}`;
+          try {
+            return JSON.stringify(arg);
+          } catch {
+            return String(arg);
+          }
+        })
+        .join(" ");
+
+      consoleLogsRef.current = [
+        ...consoleLogsRef.current.slice(-(MAX_CONSOLE_LOGS - 1)),
+        {
+          type,
+          message: message.substring(0, 500), // Limit message length
+          timestamp: new Date().toISOString(),
+        },
+      ];
+    };
+
+    // Override console methods
+    console.log = captureLog("log");
+    console.warn = captureLog("warn");
+    console.error = captureLog("error");
+    console.info = captureLog("info");
+
+    // Restore original console on cleanup
+    return () => {
+      console.log = originalConsole.log;
+      console.warn = originalConsole.warn;
+      console.error = originalConsole.error;
+      console.info = originalConsole.info;
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +119,22 @@ export function FeedbackForm({ onSuccess }: FeedbackFormProps) {
           description: description.trim(),
           severity: feedbackType === "bug" ? severity : undefined,
           pageUrl: window.location.href,
+          // Include console logs for bug reports if user opted in
+          consoleLogs: feedbackType === "bug" && includeConsoleLogs
+            ? consoleLogsRef.current
+            : undefined,
+          // Include browser info for bug reports
+          browserInfo: feedbackType === "bug"
+            ? {
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                platform: navigator.platform,
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+                viewportWidth: window.innerWidth,
+                viewportHeight: window.innerHeight,
+              }
+            : undefined,
         }),
       });
 
@@ -235,6 +313,50 @@ export function FeedbackForm({ onSuccess }: FeedbackFormProps) {
                 {sev.label}
               </button>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Console logs notice (for bugs only) */}
+      {feedbackType === "bug" && (
+        <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 mt-0.5">
+              <svg
+                className="w-5 h-5 text-blue-500 dark:text-blue-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-blue-700 dark:text-blue-300">
+                To help us diagnose the issue, we&apos;ll include:
+              </p>
+              <ul className="mt-1 text-xs text-blue-600 dark:text-blue-400 list-disc list-inside space-y-0.5">
+                <li>Browser console logs (last {MAX_CONSOLE_LOGS} entries)</li>
+                <li>Browser & device information</li>
+                <li>Current page URL</li>
+              </ul>
+              <label className="flex items-center gap-2 mt-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={includeConsoleLogs}
+                  onChange={(e) => setIncludeConsoleLogs(e.target.checked)}
+                  className="w-4 h-4 rounded border-blue-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="text-xs text-blue-700 dark:text-blue-300">
+                  Include console logs
+                </span>
+              </label>
+            </div>
           </div>
         </div>
       )}

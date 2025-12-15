@@ -16,8 +16,15 @@
 import { betterAuth } from 'better-auth';
 import { nextCookies } from 'better-auth/next-js';
 import { Pool } from 'pg';
-import { sendVerificationEmail, sendPasswordResetEmail } from './email';
+import { sendVerificationEmailWithCode, sendPasswordResetEmail } from './email';
 import { notifyAdminsNewUser } from './admin-notifications';
+
+/**
+ * Generate a 6-digit verification code
+ */
+function generateVerificationCode(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 // Create a PostgreSQL pool for Better Auth
 // Supabase requires SSL connections in production
@@ -48,17 +55,34 @@ export const auth = betterAuth({
       user,
       url,
     }: {
-      user: { email: string; name?: string };
+      user: { email: string; name?: string; id?: string };
       url: string;
     }) => {
+      // Generate a 6-digit verification code
+      const code = generateVerificationCode();
+      const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
       // Log in development
       if (process.env.NODE_ENV === 'development') {
         console.log(`[Auth] Verification email for ${user.email}: ${url}`);
+        console.log(`[Auth] Verification code: ${code}`);
+      }
+
+      // Store the code in database (async, don't block)
+      try {
+        await pool.query(
+          `INSERT INTO email_verification_codes (user_id, email, code, expires_at)
+           VALUES ($1, $2, $3, $4)
+           ON CONFLICT DO NOTHING`,
+          [user.id || null, user.email.toLowerCase(), code, expiresAt]
+        );
+      } catch (err) {
+        console.error('[Auth] Failed to store verification code:', err);
       }
 
       // Send via Resend if API key is configured
       if (process.env.RESEND_API_KEY) {
-        const result = await sendVerificationEmail(user.email, url, user.name);
+        const result = await sendVerificationEmailWithCode(user.email, url, code, user.name);
         if (!result.success) {
           console.error('[Auth] Failed to send verification email:', result.error);
         }

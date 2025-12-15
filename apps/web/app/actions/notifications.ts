@@ -23,7 +23,8 @@ export type NotificationType =
   | "mention"
   | "welcome"
   | "system"
-  | "admin_notification";
+  | "admin_notification"
+  | "version_update";
 
 export interface Notification {
   id: string;
@@ -52,10 +53,12 @@ export interface NotificationPreferences {
   in_app_suggestions: boolean;
   in_app_follows: boolean;
   in_app_mentions: boolean;
+  in_app_version_updates: boolean;
   email_comments: boolean;
   email_replies: boolean;
   email_suggestions: boolean;
   email_follows: boolean;
+  email_version_updates: boolean;
   email_digest: boolean;
   email_digest_frequency: "daily" | "weekly" | "monthly";
   browser_notifications: boolean;
@@ -67,10 +70,12 @@ const defaultPreferences: NotificationPreferences = {
   in_app_suggestions: true,
   in_app_follows: true,
   in_app_mentions: true,
+  in_app_version_updates: true,
   email_comments: false,
   email_replies: true,
   email_suggestions: true,
   email_follows: false,
+  email_version_updates: false,
   email_digest: false,
   email_digest_frequency: "weekly",
   browser_notifications: false,
@@ -331,10 +336,12 @@ export async function getNotificationPreferences(): Promise<{
             in_app_suggestions: data.in_app_suggestions ?? defaultPreferences.in_app_suggestions,
             in_app_follows: data.in_app_follows ?? defaultPreferences.in_app_follows,
             in_app_mentions: data.in_app_mentions ?? defaultPreferences.in_app_mentions,
+            in_app_version_updates: data.in_app_version_updates ?? defaultPreferences.in_app_version_updates,
             email_comments: data.email_comments ?? defaultPreferences.email_comments,
             email_replies: data.email_replies ?? defaultPreferences.email_replies,
             email_suggestions: data.email_suggestions ?? defaultPreferences.email_suggestions,
             email_follows: data.email_follows ?? defaultPreferences.email_follows,
+            email_version_updates: data.email_version_updates ?? defaultPreferences.email_version_updates,
             email_digest: data.email_digest ?? defaultPreferences.email_digest,
             email_digest_frequency: data.email_digest_frequency ?? defaultPreferences.email_digest_frequency,
             browser_notifications: data.browser_notifications ?? defaultPreferences.browser_notifications,
@@ -568,6 +575,8 @@ function getInAppPrefKey(type: NotificationType): keyof NotificationPreferences 
       return "in_app_follows";
     case "mention":
       return "in_app_mentions";
+    case "version_update":
+      return "in_app_version_updates";
     default:
       return "in_app_comments"; // Default fallback
   }
@@ -588,6 +597,8 @@ function getEmailPrefKey(type: NotificationType): keyof NotificationPreferences 
       return "email_suggestions";
     case "follow":
       return "email_follows";
+    case "version_update":
+      return "email_version_updates";
     default:
       return "email_comments"; // Default fallback
   }

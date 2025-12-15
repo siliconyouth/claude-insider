@@ -66,10 +66,10 @@ export async function GET(request: NextRequest) {
     const validSortFields: Record<string, string> = {
       name: "name",
       email: "email",
-      createdAt: "created_at",
+      createdAt: '"createdAt"',
       role: "role",
     };
-    const sortField = validSortFields[sortBy] || "created_at";
+    const sortField = validSortFields[sortBy] || '"createdAt"';
     const order = sortOrder === "asc" ? "ASC" : "DESC";
 
     // Get total count
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
         u.role,
         u."isBetaTester",
         u."emailVerified",
-        u.created_at
+        u."createdAt"
       FROM "user" u
       ${whereClause}
       ORDER BY u.${sortField} ${order}
@@ -108,7 +108,7 @@ export async function GET(request: NextRequest) {
       role: row.role || "user",
       isBetaTester: row.isBetaTester || false,
       emailVerified: row.emailVerified || false,
-      createdAt: row.created_at.toISOString(),
+      createdAt: row.createdAt?.toISOString() || new Date().toISOString(),
     }));
 
     const response: PaginatedResponse<AdminUserListItem> = {

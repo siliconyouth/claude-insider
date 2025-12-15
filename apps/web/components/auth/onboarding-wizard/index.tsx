@@ -27,6 +27,8 @@ import { SocialLinksStep } from "./steps/social-links-step";
 import { EmailVerifyStep } from "./steps/email-verify-step";
 import { AddPasswordStep } from "./steps/add-password-step";
 import { BetaApplyStep } from "./steps/beta-apply-step";
+import { NotificationsStep } from "./steps/notifications-step";
+import { ApiKeyStep } from "./steps/api-key-step";
 
 import type { WizardStep, WizardStepId } from "@/types/onboarding";
 
@@ -42,6 +44,8 @@ const StepComponents: Record<WizardStepId, React.ComponentType> = {
   "social-links": SocialLinksStep,
   "email-verify": EmailVerifyStep,
   "add-password": AddPasswordStep,
+  "notifications": NotificationsStep,
+  "api-key": ApiKeyStep,
   "beta-apply": BetaApplyStep,
 };
 
@@ -132,6 +136,24 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
         skippable: true,
       });
     }
+
+    // Always show notifications setup step
+    steps.push({
+      id: "notifications",
+      title: "Notifications",
+      description: "Configure how you want to stay informed",
+      icon: "🔔",
+      skippable: true,
+    });
+
+    // Always show API key setup step (skippable)
+    steps.push({
+      id: "api-key",
+      title: "API Key",
+      description: "Connect your own Anthropic API key",
+      icon: "🔑",
+      skippable: true,
+    });
 
     // Only show beta application if not already a beta tester
     if (!user?.isBetaTester) {

@@ -583,3 +583,32 @@ export async function getRecipientCount(params: {
     return { error: "Failed to get recipient count" };
   }
 }
+
+/**
+ * Send version update notification to all opted-in users
+ */
+export async function sendVersionNotification(params: {
+  version: string;
+  title: string;
+  highlights?: string[];
+}): Promise<{ success?: boolean; notifiedCount?: number; error?: string }> {
+  try {
+    const access = await checkAdminAccess();
+    if ("error" in access) return { error: access.error };
+
+    // Import the notification function
+    const { notifyVersionUpdate } = await import("@/lib/admin-notifications");
+
+    const result = await notifyVersionUpdate(params);
+
+    if (result.success) {
+      revalidatePath("/dashboard/notifications");
+      return { success: true, notifiedCount: result.notifiedCount };
+    }
+
+    return { error: result.error || "Failed to send notifications" };
+  } catch (error) {
+    console.error("[AdminNotifications] Version notify error:", error);
+    return { error: "Failed to send version notification" };
+  }
+}

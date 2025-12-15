@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.69.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.70.0**.
 
 | Link | URL |
 |------|-----|
@@ -63,6 +63,7 @@ pnpm clean            # Remove build artifacts
 | `NEXT_PUBLIC_APP_URL` | Yes | App URL (e.g., https://www.claudeinsider.com) |
 | `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` | Auto | Build versioning |
 | `CRON_SECRET` | Yes | Secret for securing cron job endpoints |
+| `API_KEY_ENCRYPTION_SECRET` | No | Secret for encrypting user API keys (falls back to BETTER_AUTH_SECRET) |
 
 ### Vercel Deployment
 
@@ -100,7 +101,8 @@ claude-insider/
 │   │   │   └── onboarding-wizard/ # New user onboarding
 │   │   ├── settings/             # Account settings components
 │   │   │   ├── password-settings.tsx  # Change/set password
-│   │   │   └── connected-accounts.tsx # OAuth provider management
+│   │   │   ├── connected-accounts.tsx # OAuth provider management
+│   │   │   └── api-key-settings.tsx   # User API key management
 │   │   ├── interactions/         # User interaction components
 │   │   │   ├── favorite-button.tsx
 │   │   │   ├── rating-stars.tsx
@@ -137,6 +139,8 @@ claude-insider/
 │   │   ├── gamification.ts       # Points, levels, streaks
 │   │   ├── email.ts              # Resend email templates
 │   │   ├── admin-notifications.ts # Staff alerts & push notifications
+│   │   ├── api-keys.ts           # API key encryption & validation
+│   │   ├── get-user-api-key.ts   # Retrieve user's API key for AI features
 │   │   ├── supabase/             # Supabase clients
 │   │   │   ├── client.ts         # Browser client
 │   │   │   └── server.ts         # Server client with RLS
@@ -184,10 +188,11 @@ claude-insider/
 │   │   ├── Resources.ts          # Curated resources
 │   │   └── Translations.ts       # UI translation strings
 │   ├── supabase/                 # Database migrations
-│   │   └── migrations/           # 25+ SQL migration files
+│   │   └── migrations/           # 33+ SQL migration files
 │   │       ├── 000_fresh_start.sql # Consolidated base schema
 │   │       ├── ...               # User data, comments, collections
-│   │       └── 025_admin_notifications.sql # Admin broadcast system
+│   │       ├── 025_admin_notifications.sql # Admin broadcast system
+│   │       └── 033_user_api_keys.sql # User API key storage & usage tracking
 │   └── scripts/                  # Build-time scripts
 ├── packages/                     # Shared configs (ui, eslint, ts, tailwind)
 ├── vercel.json                   # Domain redirects

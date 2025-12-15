@@ -260,7 +260,7 @@ function getEmailWrapper(content: string): string {
 }
 
 /**
- * Email verification template
+ * Email verification template (link only - legacy)
  */
 function getVerificationEmailHtml(verificationUrl: string, userName?: string): string {
   const greeting = userName ? `Hi ${userName},` : "Hi there,";
@@ -294,6 +294,98 @@ function getVerificationEmailHtml(verificationUrl: string, userName?: string): s
   `;
 
   return getEmailWrapper(content);
+}
+
+/**
+ * Enhanced email verification template with both link and code
+ */
+function getVerificationEmailWithCodeHtml(verificationUrl: string, code: string, userName?: string): string {
+  const greeting = userName ? `Hi ${userName},` : "Hi there,";
+
+  const content = `
+    <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #18181b;">
+      Verify your email address
+    </h2>
+    <p style="margin: 0 0 24px 0; color: #52525b; line-height: 1.6;">
+      ${greeting}<br><br>
+      Thanks for signing up for ${APP_NAME}! You can verify your email using either method below:
+    </p>
+
+    <!-- Option 1: Click Button -->
+    <div style="padding: 20px; background: #f4f4f5; border-radius: 12px; margin-bottom: 24px;">
+      <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #18181b;">
+        Option 1: Click the button
+      </h3>
+      <table role="presentation" cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="background: linear-gradient(to right, #7c3aed, #2563eb, #06b6d4); border-radius: 8px;">
+            <a href="${verificationUrl}" style="display: inline-block; padding: 12px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">
+              Verify Email
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Option 2: Enter Code -->
+    <div style="padding: 20px; background: #dbeafe; border-radius: 12px; margin-bottom: 24px;">
+      <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #1d4ed8;">
+        Option 2: Enter verification code
+      </h3>
+      <p style="margin: 0 0 16px 0; color: #1e40af; font-size: 14px;">
+        Enter this code on the verification page:
+      </p>
+      <div style="background: #ffffff; border-radius: 8px; padding: 16px; text-align: center;">
+        <span style="font-family: 'SF Mono', Monaco, 'Courier New', monospace; font-size: 32px; font-weight: 700; letter-spacing: 8px; color: #1d4ed8;">
+          ${code}
+        </span>
+      </div>
+      <p style="margin: 16px 0 0 0; color: #1e40af; font-size: 13px; text-align: center;">
+        This code expires in <strong>1 hour</strong>
+      </p>
+    </div>
+
+    <p style="margin: 0 0 16px 0; color: #71717a; font-size: 14px;">
+      Or copy and paste this link into your browser:
+    </p>
+    <p style="margin: 0 0 24px 0; color: #2563eb; font-size: 14px; word-break: break-all;">
+      <a href="${verificationUrl}" style="color: #2563eb; text-decoration: none;">${verificationUrl}</a>
+    </p>
+    <p style="margin: 0; color: #71717a; font-size: 14px;">
+      If you didn't create an account, you can safely ignore this email.
+    </p>
+  `;
+
+  return getEmailWrapper(content);
+}
+
+/**
+ * Send email verification with both link and code
+ */
+export async function sendVerificationEmailWithCode(
+  email: string,
+  verificationUrl: string,
+  code: string,
+  userName?: string
+): Promise<EmailResult> {
+  try {
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: email,
+      subject: `Verify your ${APP_NAME} account - Code: ${code}`,
+      html: getVerificationEmailWithCodeHtml(verificationUrl, code, userName),
+    });
+
+    if (error) {
+      console.error("[Email] Verification with code send error:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Email] Unexpected error:", error);
+    return { success: false, error: "Failed to send email" };
+  }
 }
 
 /**
@@ -1110,6 +1202,292 @@ function getHighPriorityAlertEmailHtml(params: {
         </td>
       </tr>
     </table>
+  `;
+
+  return getEmailWrapper(content);
+}
+
+// ================================
+// Beta Feedback Emails
+// ================================
+
+export interface FeedbackEmailParams {
+  feedbackId: string;
+  feedbackType: "bug" | "feature" | "general";
+  title: string;
+  description: string;
+  severity?: string;
+  pageUrl?: string;
+  userAgent?: string;
+  consoleLogs?: Array<{ type: string; message: string; timestamp: string }>;
+  browserInfo?: {
+    userAgent?: string;
+    platform?: string;
+    language?: string;
+    screenSize?: string;
+    timestamp?: string;
+  };
+  submitter: {
+    name: string;
+    email: string;
+  };
+}
+
+/**
+ * Send feedback notification to admins
+ */
+export async function sendFeedbackAdminEmail(
+  adminEmail: string,
+  adminName: string | undefined,
+  params: FeedbackEmailParams
+): Promise<EmailResult> {
+  try {
+    const typeLabel = params.feedbackType === "bug" ? "🐛 Bug Report" : params.feedbackType === "feature" ? "✨ Feature Request" : "💬 Feedback";
+    const subject = `[${APP_NAME}] ${typeLabel}: ${params.title}`;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: adminEmail,
+      subject,
+      html: getFeedbackAdminEmailHtml(params, adminName),
+    });
+
+    if (error) {
+      console.error("[Email] Feedback admin send error:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Email] Unexpected error:", error);
+    return { success: false, error: "Failed to send email" };
+  }
+}
+
+/**
+ * Send feedback confirmation email to submitter
+ */
+export async function sendFeedbackConfirmationEmail(
+  params: FeedbackEmailParams
+): Promise<EmailResult> {
+  try {
+    const typeLabel = params.feedbackType === "bug" ? "Bug Report" : params.feedbackType === "feature" ? "Feature Request" : "Feedback";
+    const subject = `[${APP_NAME}] Your ${typeLabel} Was Received`;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: params.submitter.email,
+      subject,
+      html: getFeedbackConfirmationEmailHtml(params),
+    });
+
+    if (error) {
+      console.error("[Email] Feedback confirmation send error:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Email] Unexpected error:", error);
+    return { success: false, error: "Failed to send email" };
+  }
+}
+
+/**
+ * Admin feedback notification email template
+ */
+function getFeedbackAdminEmailHtml(params: FeedbackEmailParams, adminName?: string): string {
+  const greeting = adminName ? `Hi ${adminName},` : "Hi Admin,";
+  const typeLabel = params.feedbackType === "bug" ? "Bug Report" : params.feedbackType === "feature" ? "Feature Request" : "General Feedback";
+  const typeColor = params.feedbackType === "bug" ? "#dc2626" : params.feedbackType === "feature" ? "#7c3aed" : "#2563eb";
+  const typeBgColor = params.feedbackType === "bug" ? "#fee2e2" : params.feedbackType === "feature" ? "#ede9fe" : "#dbeafe";
+
+  // Build console logs summary
+  let consoleLogsHtml = "";
+  if (params.consoleLogs && params.consoleLogs.length > 0) {
+    const errorCount = params.consoleLogs.filter(l => l.type === "error").length;
+    const warnCount = params.consoleLogs.filter(l => l.type === "warn").length;
+    const recentErrors = params.consoleLogs
+      .filter(l => l.type === "error" || l.type === "warn")
+      .slice(0, 5)
+      .map(l => `<li style="color: ${l.type === "error" ? "#dc2626" : "#d97706"}; font-size: 12px; word-break: break-all;">[${l.type.toUpperCase()}] ${l.message.slice(0, 200)}${l.message.length > 200 ? "..." : ""}</li>`)
+      .join("");
+
+    consoleLogsHtml = `
+      <div style="margin-top: 16px; padding: 16px; background: #1a1a1a; border-radius: 8px;">
+        <h4 style="margin: 0 0 12px 0; color: #f4f4f5; font-size: 14px; font-weight: 600;">
+          Console Logs (${params.consoleLogs.length} total)
+        </h4>
+        <div style="display: flex; gap: 16px; margin-bottom: 12px;">
+          ${errorCount > 0 ? `<span style="color: #ef4444; font-size: 13px;">🔴 ${errorCount} errors</span>` : ""}
+          ${warnCount > 0 ? `<span style="color: #f59e0b; font-size: 13px;">🟡 ${warnCount} warnings</span>` : ""}
+        </div>
+        ${recentErrors ? `<ul style="margin: 0; padding-left: 16px; list-style-type: disc;">${recentErrors}</ul>` : ""}
+      </div>
+    `;
+  }
+
+  // Build browser info section
+  let browserInfoHtml = "";
+  if (params.browserInfo) {
+    browserInfoHtml = `
+      <div style="margin-top: 16px; padding: 16px; background: #f4f4f5; border-radius: 8px;">
+        <h4 style="margin: 0 0 12px 0; color: #18181b; font-size: 14px; font-weight: 600;">
+          Browser Information
+        </h4>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="font-size: 13px; color: #52525b;">
+          ${params.browserInfo.platform ? `<tr><td style="padding: 4px 0;"><strong>Platform:</strong></td><td style="padding: 4px 0 4px 16px;">${params.browserInfo.platform}</td></tr>` : ""}
+          ${params.browserInfo.screenSize ? `<tr><td style="padding: 4px 0;"><strong>Screen:</strong></td><td style="padding: 4px 0 4px 16px;">${params.browserInfo.screenSize}</td></tr>` : ""}
+          ${params.browserInfo.language ? `<tr><td style="padding: 4px 0;"><strong>Language:</strong></td><td style="padding: 4px 0 4px 16px;">${params.browserInfo.language}</td></tr>` : ""}
+        </table>
+      </div>
+    `;
+  }
+
+  const content = `
+    <div style="text-align: center; margin-bottom: 24px;">
+      <div style="display: inline-block; padding: 8px 16px; background: ${typeBgColor}; border-radius: 24px;">
+        <span style="color: ${typeColor}; font-weight: 600; font-size: 14px;">
+          ${params.feedbackType === "bug" ? "🐛" : params.feedbackType === "feature" ? "✨" : "💬"} ${typeLabel}
+        </span>
+      </div>
+    </div>
+
+    <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #18181b;">
+      ${params.title}
+    </h2>
+    <p style="margin: 0 0 24px 0; color: #52525b; line-height: 1.6;">
+      ${greeting}<br><br>
+      A new feedback submission has been received from a beta tester.
+    </p>
+
+    <!-- Submitter Info -->
+    <div style="padding: 16px; background: #dbeafe; border-radius: 8px; margin-bottom: 16px;">
+      <p style="margin: 0; color: #1d4ed8; font-size: 14px;">
+        <strong>Submitted by:</strong> ${params.submitter.name} (${params.submitter.email})
+      </p>
+    </div>
+
+    ${params.severity ? `
+    <div style="padding: 8px 16px; background: ${params.severity === "critical" ? "#fee2e2" : params.severity === "high" ? "#fef3c7" : "#f4f4f5"}; border-radius: 8px; margin-bottom: 16px; display: inline-block;">
+      <span style="color: ${params.severity === "critical" ? "#dc2626" : params.severity === "high" ? "#d97706" : "#52525b"}; font-weight: 500; font-size: 13px;">
+        Severity: ${params.severity.toUpperCase()}
+      </span>
+    </div>
+    ` : ""}
+
+    <!-- Description -->
+    <div style="padding: 16px; background: #f4f4f5; border-radius: 8px; margin-bottom: 16px;">
+      <h4 style="margin: 0 0 8px 0; color: #18181b; font-size: 14px; font-weight: 600;">
+        Description
+      </h4>
+      <p style="margin: 0; color: #52525b; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">
+        ${params.description}
+      </p>
+    </div>
+
+    ${params.pageUrl ? `
+    <p style="margin: 0 0 16px 0; color: #52525b; font-size: 13px;">
+      <strong>Page URL:</strong> <a href="${params.pageUrl}" style="color: #2563eb;">${params.pageUrl}</a>
+    </p>
+    ` : ""}
+
+    ${browserInfoHtml}
+    ${consoleLogsHtml}
+
+    <!-- CTA -->
+    <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 24px auto 0 auto;">
+      <tr>
+        <td style="background: linear-gradient(to right, #7c3aed, #2563eb, #06b6d4); border-radius: 8px;">
+          <a href="${APP_URL}/dashboard/feedback" style="display: inline-block; padding: 12px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">
+            View in Dashboard
+          </a>
+        </td>
+      </tr>
+    </table>
+  `;
+
+  return getEmailWrapper(content);
+}
+
+/**
+ * Feedback confirmation email template for submitter
+ */
+function getFeedbackConfirmationEmailHtml(params: FeedbackEmailParams): string {
+  const typeLabel = params.feedbackType === "bug" ? "Bug Report" : params.feedbackType === "feature" ? "Feature Request" : "Feedback";
+  const typeIcon = params.feedbackType === "bug" ? "🐛" : params.feedbackType === "feature" ? "✨" : "💬";
+
+  // Build console logs summary for user
+  let consoleLogsSummary = "";
+  if (params.consoleLogs && params.consoleLogs.length > 0) {
+    const errorCount = params.consoleLogs.filter(l => l.type === "error").length;
+    const warnCount = params.consoleLogs.filter(l => l.type === "warn").length;
+    const infoCount = params.consoleLogs.filter(l => l.type === "log" || l.type === "info").length;
+
+    consoleLogsSummary = `
+      <div style="margin-top: 16px; padding: 16px; background: #f4f4f5; border-radius: 8px;">
+        <h4 style="margin: 0 0 8px 0; color: #18181b; font-size: 14px; font-weight: 600;">
+          📋 Debug Information Included
+        </h4>
+        <p style="margin: 0; color: #52525b; font-size: 13px;">
+          ${params.consoleLogs.length} console log entries captured
+          ${errorCount > 0 ? ` (${errorCount} errors)` : ""}${warnCount > 0 ? ` (${warnCount} warnings)` : ""}${infoCount > 0 ? ` (${infoCount} info)` : ""}
+        </p>
+      </div>
+    `;
+  }
+
+  const content = `
+    <div style="text-align: center; margin-bottom: 24px;">
+      <div style="display: inline-block; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(to bottom right, #7c3aed, #2563eb); padding: 14px;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 28px; height: 28px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+    </div>
+
+    <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #18181b; text-align: center;">
+      ${typeIcon} ${typeLabel} Received
+    </h2>
+    <p style="margin: 0 0 24px 0; color: #52525b; line-height: 1.6;">
+      Hi ${params.submitter.name},<br><br>
+      Thank you for your ${typeLabel.toLowerCase()}! We've received your submission and our team will review it shortly.
+    </p>
+
+    <!-- Feedback Summary -->
+    <div style="padding: 20px; background: #f4f4f5; border-radius: 12px; margin-bottom: 24px;">
+      <h3 style="margin: 0 0 12px 0; color: #18181b; font-size: 16px; font-weight: 600;">
+        ${params.title}
+      </h3>
+      <p style="margin: 0; color: #52525b; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">
+        ${params.description.length > 500 ? params.description.slice(0, 500) + "..." : params.description}
+      </p>
+      ${params.severity ? `
+      <p style="margin: 12px 0 0 0; color: #71717a; font-size: 13px;">
+        <strong>Severity:</strong> ${params.severity}
+      </p>
+      ` : ""}
+      ${params.pageUrl ? `
+      <p style="margin: 8px 0 0 0; color: #71717a; font-size: 13px;">
+        <strong>Page:</strong> ${params.pageUrl}
+      </p>
+      ` : ""}
+    </div>
+
+    ${consoleLogsSummary}
+
+    <p style="margin: 0 0 24px 0; color: #52525b; line-height: 1.6;">
+      ${params.feedbackType === "bug" ? "Our team will investigate this issue and work on a fix." : params.feedbackType === "feature" ? "We'll consider your suggestion for future updates." : "We appreciate you taking the time to share your thoughts with us."}
+    </p>
+
+    <p style="margin: 0 0 24px 0; color: #71717a; font-size: 14px;">
+      Reference ID: <code style="background: #f4f4f5; padding: 2px 6px; border-radius: 4px; font-family: monospace;">${params.feedbackId}</code>
+    </p>
+
+    <hr style="border: none; border-top: 1px solid #e4e4e7; margin: 24px 0;" />
+    <p style="margin: 0; color: #71717a; font-size: 13px; text-align: center;">
+      Thank you for being a beta tester and helping us improve ${APP_NAME}! 💜
+    </p>
   `;
 
   return getEmailWrapper(content);

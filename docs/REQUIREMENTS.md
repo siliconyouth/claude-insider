@@ -191,6 +191,19 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Vercel Cron job for processing scheduled notifications (every minute)
 - [x] Staff alerts via push notifications (admins and moderators)
 
+### FR-10: User API Key Integration
+- [x] User API keys database table with encrypted storage (AES-256-GCM)
+- [x] API key usage logs table for tracking per-request usage
+- [x] Encryption library with scrypt key derivation
+- [x] API key validation against Anthropic API
+- [x] Available models detection (Opus, Sonnet, Haiku)
+- [x] Settings UI for adding/removing API keys
+- [x] Model selector with tier badges and pricing
+- [x] Usage statistics display (tokens, requests per month)
+- [x] Onboarding step for optional API key setup
+- [x] Integration with AI Assistant and Playground
+- [x] Fallback to site API key when user key not configured
+
 ---
 
 ## Non-Functional Requirements
@@ -290,7 +303,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.69.0**
+**Version 0.70.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

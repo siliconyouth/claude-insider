@@ -22,6 +22,7 @@ import { BlockedUsers } from "@/components/settings/blocked-users";
 import { AvatarUpload } from "@/components/settings/avatar-upload";
 import { PasswordSettings } from "@/components/settings/password-settings";
 import { ConnectedAccounts } from "@/components/settings/connected-accounts";
+import { ApiKeySettings } from "@/components/settings/api-key-settings";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import { BrowserNotificationPrompt } from "@/components/notifications/browser-notification-prompt";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
@@ -112,10 +113,12 @@ export default function SettingsPage() {
     in_app_suggestions: true,
     in_app_follows: true,
     in_app_mentions: true,
+    in_app_version_updates: true,
     email_comments: false,
     email_replies: true,
     email_suggestions: true,
     email_follows: false,
+    email_version_updates: false,
     email_digest: false,
     email_digest_frequency: "weekly",
     browser_notifications: false,
@@ -506,7 +509,7 @@ export default function SettingsPage() {
               />
             </div>
 
-            {/* Email (readonly) */}
+            {/* Email with verification status */}
             <div>
               <label
                 htmlFor="email"
@@ -514,23 +517,85 @@ export default function SettingsPage() {
               >
                 Email Address
               </label>
-              <input
-                id="email"
-                type="email"
-                value={profile?.email || ""}
-                readOnly
-                disabled
-                className={cn(
-                  "w-full px-4 py-2.5 rounded-lg",
-                  "bg-gray-50 dark:bg-[#0a0a0a]",
-                  "border border-gray-200 dark:border-[#262626]",
-                  "text-gray-500 dark:text-gray-400",
-                  "cursor-not-allowed"
-                )}
-              />
-              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                Email cannot be changed
-              </p>
+              <div className="relative">
+                <input
+                  id="email"
+                  type="email"
+                  value={profile?.email || ""}
+                  readOnly
+                  disabled
+                  className={cn(
+                    "w-full px-4 py-2.5 rounded-lg pr-28",
+                    "bg-gray-50 dark:bg-[#0a0a0a]",
+                    "border border-gray-200 dark:border-[#262626]",
+                    "text-gray-500 dark:text-gray-400",
+                    "cursor-not-allowed"
+                  )}
+                />
+                {/* Verification Badge */}
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  {authUser?.emailVerified ? (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Verified
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      Unverified
+                    </span>
+                  )}
+                </div>
+              </div>
+              {/* Show verification actions if not verified */}
+              {!authUser?.emailVerified && (
+                <div className="mt-2 p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-200 dark:border-yellow-800/30">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300">
+                        Email not verified
+                      </p>
+                      <p className="text-xs text-yellow-700 dark:text-yellow-400/80 mt-0.5">
+                        Please verify your email to access all features.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          try {
+                            const response = await fetch("/api/auth/send-verification-email", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ email: profile?.email }),
+                            });
+                            if (response.ok) {
+                              toast.success("Verification email sent! Check your inbox.");
+                            } else {
+                              toast.error("Failed to send verification email");
+                            }
+                          } catch {
+                            toast.error("Failed to send verification email");
+                          }
+                        }}
+                        className="mt-2 text-sm font-medium text-yellow-800 dark:text-yellow-300 hover:underline"
+                      >
+                        Resend verification email &rarr;
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {authUser?.emailVerified && (
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Email cannot be changed
+                </p>
+              )}
             </div>
 
             {/* Bio */}
@@ -904,6 +969,44 @@ export default function SettingsPage() {
         {/* Divider */}
         <hr className="border-gray-200 dark:border-[#262626] mb-12" />
 
+        {/* AI Integration Section */}
+        <section id="ai" className="scroll-mt-24 mb-12">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-violet-500/10 to-blue-500/10">
+              <svg
+                className="w-5 h-5 text-violet-600 dark:text-violet-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              AI Integration
+            </h2>
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Connect your Anthropic account to use AI features with your own API credits
+          </p>
+
+          <div className={cn(
+            "p-6 rounded-xl",
+            "bg-gray-50 dark:bg-[#111111]",
+            "border border-gray-200 dark:border-[#262626]"
+          )}>
+            <ApiKeySettings />
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
         {/* Blocked Users Section */}
         <section className="mb-12">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
@@ -1153,6 +1256,39 @@ export default function SettingsPage() {
                 />
               </button>
             </div>
+
+            {/* Version Updates */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Version Updates</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  When new versions of Claude Insider are released
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("in_app_version_updates")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.in_app_version_updates
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.in_app_version_updates ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
           </div>
 
           {/* Email Notifications */}
@@ -1287,6 +1423,39 @@ export default function SettingsPage() {
                   className={cn(
                     "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
                     notifPrefs.email_follows ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Email Version Updates */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Version Updates</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Get emails about new Claude Insider releases and features
+                </p>
+              </div>
+              <button
+                onClick={() => handleNotifPrefToggle("email_version_updates")}
+                disabled={isPending}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.email_version_updates
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.email_version_updates ? "left-6" : "left-1"
                   )}
                 />
               </button>

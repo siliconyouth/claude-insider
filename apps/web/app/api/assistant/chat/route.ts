@@ -1,6 +1,9 @@
-import { anthropic, buildSystemPrompt, DEFAULT_MODEL } from "@/lib/claude";
+import { buildSystemPrompt, DEFAULT_MODEL } from "@/lib/claude";
 import type { Message } from "@/lib/claude";
 import { getRAGContext } from "@/lib/rag";
+import { getSession } from "@/lib/auth";
+import { getUserApiKey, logApiUsage } from "@/lib/get-user-api-key";
+import Anthropic from "@anthropic-ai/sdk";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -28,6 +31,17 @@ export async function POST(request: Request) {
   try {
     const body: ChatRequest = await request.json();
     const { messages, currentPage, pageContent, visibleSection, customAssistantName, userName, shouldAskForName, userContext, aiContext } = body;
+
+    // Get user's session and API key
+    const session = await getSession();
+    const userId = session?.user?.id || null;
+    const apiKeyResult = await getUserApiKey(userId);
+
+    // Create Anthropic client with user's key or default
+    const anthropic = new Anthropic({ apiKey: apiKeyResult.apiKey });
+
+    // Use user's preferred model or default
+    const model = apiKeyResult.preferredModel || DEFAULT_MODEL;
 
     if (!messages || messages.length === 0) {
       return new Response(
@@ -64,7 +78,7 @@ export async function POST(request: Request) {
 
     // Create streaming response
     const stream = await anthropic.messages.stream({
-      model: DEFAULT_MODEL,
+      model,
       max_tokens: 2048,
       system: systemPrompt,
       messages: anthropicMessages,
@@ -74,6 +88,9 @@ export async function POST(request: Request) {
     const encoder = new TextEncoder();
     const readableStream = new ReadableStream({
       async start(controller) {
+        let inputTokens = 0;
+        let outputTokens = 0;
+
         try {
           for await (const event of stream) {
             if (
@@ -85,11 +102,40 @@ export async function POST(request: Request) {
               const data = JSON.stringify({ type: "text", content: text });
               controller.enqueue(encoder.encode(`data: ${data}\n\n`));
             }
+
+            // Capture usage info from message_delta events
+            if (event.type === "message_delta" && event.usage) {
+              outputTokens = event.usage.output_tokens;
+            }
           }
 
-          // Send completion event
+          // Get final usage from stream
+          const finalMessage = await stream.finalMessage();
+          if (finalMessage.usage) {
+            inputTokens = finalMessage.usage.input_tokens;
+            outputTokens = finalMessage.usage.output_tokens;
+          }
+
+          // Log usage if user is using their own API key
+          if (apiKeyResult.isUserKey && apiKeyResult.userId && apiKeyResult.apiKeyId) {
+            logApiUsage(
+              apiKeyResult.userId,
+              apiKeyResult.apiKeyId,
+              "assistant",
+              model,
+              inputTokens,
+              outputTokens
+            ).catch((err) => console.error("[Chat] Usage logging error:", err));
+          }
+
+          // Send completion event with usage info
           controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify({ type: "done" })}\n\n`)
+            encoder.encode(`data: ${JSON.stringify({
+              type: "done",
+              usage: { inputTokens, outputTokens },
+              model,
+              usingOwnKey: apiKeyResult.isUserKey,
+            })}\n\n`)
           );
           controller.close();
         } catch (error) {

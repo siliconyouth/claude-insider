@@ -7,6 +7,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.70.0] - 2025-12-15
+
+### Added
+
+#### User API Key Integration
+- **User API Keys Database** (`supabase/migrations/033_user_api_keys.sql`)
+  - `user_api_keys` table for storing encrypted Anthropic API keys with:
+    - AES-256-GCM encryption for secure key storage
+    - API key hint display (last 8 characters) for identification
+    - Validation status and error tracking
+    - Available models detection per API key
+    - Preferred model selection per user
+    - Monthly usage tracking (input/output tokens, request count)
+  - `api_key_usage_logs` table for detailed per-request usage tracking
+  - `log_api_usage` PostgreSQL function for automatic usage aggregation
+  - Row Level Security policies ensuring users can only access their own keys
+  - Added `ai_preferences` JSONB column to user table for AI settings
+
+- **API Key Encryption Library** (`lib/api-keys.ts`)
+  - AES-256-GCM encryption with random IV and authentication tag
+  - Key derivation using scrypt from `API_KEY_ENCRYPTION_SECRET` or `BETTER_AUTH_SECRET`
+  - `encryptApiKey` - Encrypt API key before database storage
+  - `decryptApiKey` - Decrypt API key for use with Anthropic API
+  - `getApiKeyHint` - Generate safe display hint (last 8 chars)
+  - `validateAnthropicApiKey` - Validate key and detect available models
+  - `CLAUDE_MODELS` - Complete model catalog with pricing and capabilities
+  - `getBestAvailableModel` - Select optimal model based on availability
+
+- **API Key Management Endpoints** (`app/api/user/api-keys/`)
+  - `GET /api/user/api-keys` - List user's API keys with masked display
+  - `POST /api/user/api-keys` - Add new API key with encryption
+  - `DELETE /api/user/api-keys` - Remove API key and associated data
+  - `POST /api/user/api-keys/validate` - Validate key and check model access
+  - All endpoints authenticated with Better Auth session validation
+
+- **API Key Settings UI** (`components/settings/api-key-settings.tsx`)
+  - "AI Integration" settings section for managing API keys
+  - Add/remove Anthropic API keys with visual feedback
+  - Real-time validation with model availability detection
+  - Model selector showing all available models for the key
+  - Tier badges (Opus/Sonnet/Haiku) with color coding
+  - Usage statistics display (tokens, requests this month)
+  - Direct links to Anthropic Console for key management
+  - Toggle to enable/disable using own API key
+
+- **Onboarding API Key Step** (`components/auth/onboarding-wizard/steps/api-key-step.tsx`)
+  - New onboarding step explaining API key benefits
+  - Optional setup - users can skip and use site credits
+  - Benefits display: access to all models, usage tracking, no rate limits
+  - Quick setup flow with validation
+  - Links to Anthropic Console for key generation
+
+- **AI Feature Integration** (`lib/get-user-api-key.ts`)
+  - Helper function to retrieve user's API key when available
+  - Falls back to site API key when user key not configured
+  - Used by AI Assistant and Playground for API calls
+  - Automatic usage logging for user API key requests
+
+### Changed
+
+- **AI Assistant** - Now uses user's own API key when configured, enabling access to Opus and other premium models
+- **Code Playground** - Uses user's preferred model when own API key is set
+- **Settings Page** - Added new "AI Integration" section between "Connected Accounts" and "Notifications"
+
 ## [0.69.0] - 2025-12-15
 
 ### Added

@@ -379,6 +379,153 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Code Playground Section */}
+        <div className="border-t border-gray-200 dark:border-[#1a1a1a]">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left - Info */}
+              <div className="animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm mb-6">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                  </svg>
+                  Interactive
+                </div>
+                <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                  Code{" "}
+                  <span className="gradient-text-stripe">Playground</span>
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 text-lg mb-6">
+                  Experiment with code in real-time. Write, run, and share JavaScript, TypeScript, and Python code directly in your browser with AI assistance.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                    <svg className="w-5 h-5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Execute JavaScript, TypeScript & Python
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                    <svg className="w-5 h-5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    AI assistance to explain and improve code
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                    <svg className="w-5 h-5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Share code snippets via URL
+                  </li>
+                  <li className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                    <svg className="w-5 h-5 text-emerald-500 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Claude API examples included
+                  </li>
+                </ul>
+                <Link
+                  href="/playground"
+                  className={cn(
+                    "inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold",
+                    "bg-gradient-to-r from-emerald-600 to-cyan-600",
+                    "text-white shadow-lg shadow-emerald-500/25",
+                    "hover:from-emerald-500 hover:to-cyan-500",
+                    "hover:shadow-xl hover:shadow-emerald-500/30",
+                    "hover:-translate-y-0.5",
+                    "transition-all duration-200"
+                  )}
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                  Open Playground
+                </Link>
+              </div>
+
+              {/* Right - Preview */}
+              <div className="relative animate-fade-in">
+                <div
+                  className={cn(
+                    "rounded-xl overflow-hidden",
+                    "bg-[#1e1e1e] border border-[#3c3c3c]",
+                    "shadow-2xl shadow-black/50"
+                  )}
+                >
+                  {/* Editor Header */}
+                  <div className="flex items-center justify-between px-4 py-3 bg-[#252526] border-b border-[#3c3c3c]">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-1 text-xs font-medium rounded bg-yellow-500/20 text-yellow-400">
+                        JavaScript
+                      </span>
+                      <span className="text-sm text-gray-400">example.js</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button className="p-1.5 rounded hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                      </button>
+                      <button className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                        Run
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Code Area */}
+                  <div className="p-4 font-mono text-sm">
+                    <pre className="text-gray-300 leading-relaxed">
+                      <code>
+                        <span className="text-gray-500">{"// Claude API example"}</span>{"\n"}
+                        <span className="text-purple-400">const</span>{" "}
+                        <span className="text-blue-300">response</span>{" = "}
+                        <span className="text-purple-400">await</span>{" "}
+                        <span className="text-yellow-300">anthropic</span>
+                        <span className="text-white">.messages.</span>
+                        <span className="text-yellow-300">create</span>
+                        <span className="text-white">({"{"}</span>{"\n"}
+                        {"  "}<span className="text-cyan-300">model</span>:{" "}
+                        <span className="text-green-400">{'"claude-sonnet-4"'}</span>,{"\n"}
+                        {"  "}<span className="text-cyan-300">max_tokens</span>:{" "}
+                        <span className="text-orange-400">1024</span>,{"\n"}
+                        {"  "}<span className="text-cyan-300">messages</span>:{" "}
+                        <span className="text-white">[{"{"}</span>{"\n"}
+                        {"    "}<span className="text-cyan-300">role</span>:{" "}
+                        <span className="text-green-400">{'"user"'}</span>,{"\n"}
+                        {"    "}<span className="text-cyan-300">content</span>:{" "}
+                        <span className="text-green-400">{'"Hello!"'}</span>{"\n"}
+                        {"  "}<span className="text-white">{"}]"}</span>{"\n"}
+                        <span className="text-white">{"});"}</span>
+                      </code>
+                    </pre>
+                  </div>
+
+                  {/* Output Area */}
+                  <div className="border-t border-[#3c3c3c] bg-[#1a1a1a] p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs font-medium text-gray-500 uppercase">Output</span>
+                      <span className="px-1.5 py-0.5 text-xs font-medium rounded bg-emerald-500/20 text-emerald-400">
+                        Success
+                      </span>
+                    </div>
+                    <pre className="font-mono text-sm text-emerald-400">
+                      {"{"} content: {'"Hello! How can I help..."'} {"}"}
+                    </pre>
+                  </div>
+                </div>
+
+                {/* Floating badge */}
+                <div className="absolute -top-3 -right-3 px-3 py-1.5 rounded-full bg-gradient-to-r from-violet-600 to-blue-600 text-white text-xs font-medium shadow-lg">
+                  10+ Examples
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Categories Section with Documents */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
           <h2 className="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-white">
@@ -480,6 +627,24 @@ export default function HomePage() {
             Quick Links
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/playground"
+              className={cn(
+                "inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm",
+                "border border-gray-200 dark:border-[#262626]",
+                "text-gray-600 dark:text-gray-400",
+                "bg-white dark:bg-[#111111]",
+                "hover:text-blue-600 dark:hover:text-cyan-400",
+                "hover:border-blue-500/50",
+                "hover:-translate-y-0.5 hover:shadow-md",
+                "transition-all duration-200"
+              )}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+              </svg>
+              Playground
+            </Link>
             <Link
               href="/changelog"
               className={cn(

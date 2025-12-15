@@ -52,6 +52,8 @@ export type WizardStepId =
   | "social-links"
   | "email-verify"
   | "add-password"
+  | "notifications"
+  | "api-key"
   | "beta-apply";
 
 export interface WizardContextValue {
