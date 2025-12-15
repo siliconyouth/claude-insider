@@ -16,6 +16,8 @@ import {
   validateAnthropicApiKey,
   CLAUDE_MODELS,
   type ClaudeModel,
+  type ValidationResult,
+  type AnthropicAccountInfo,
 } from "@/lib/api-keys";
 
 const pool = new Pool({
@@ -188,20 +190,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Basic validation for Anthropic keys
-    if (provider === "anthropic" && !apiKey.startsWith("sk-ant-")) {
-      return NextResponse.json(
-        { error: "Invalid Anthropic API key format. Keys should start with 'sk-ant-'" },
-        { status: 400 }
-      );
-    }
-
-    // Validate the API key
+    // Validate the API key (includes format validation)
     const validation = await validateAnthropicApiKey(apiKey);
 
     if (!validation.valid) {
       return NextResponse.json(
-        { error: validation.error || "Invalid API key" },
+        {
+          error: validation.error || "Invalid API key",
+          errorCode: validation.errorCode,
+          errorDetails: validation.errorDetails,
+          keyHint: validation.keyHint,
+          validatedAt: validation.validatedAt,
+        },
         { status: 400 }
       );
     }
@@ -271,11 +271,17 @@ export async function POST(request: NextRequest) {
       availableModels: validation.availableModels,
       preferredModel: selectedModel,
       accountInfo: validation.accountInfo,
+      validatedAt: validation.validatedAt,
     });
   } catch (error) {
     console.error("[API Keys POST] Error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Failed to save API key" },
+      {
+        error: "Failed to save API key",
+        errorCode: "SERVER_ERROR",
+        errorDetails: `An unexpected error occurred while saving your API key: ${errorMessage}. Please try again.`,
+      },
       { status: 500 }
     );
   }

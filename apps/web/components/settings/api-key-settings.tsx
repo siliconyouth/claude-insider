@@ -5,11 +5,12 @@
  *
  * Allows users to connect their Anthropic/Claude AI accounts
  * by adding their API keys. Supports model selection and usage tracking.
+ * Shows detailed validation results including subscription tier and rate limits.
  */
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
-import { ANTHROPIC_URLS, type ClaudeModel, getBestAvailableModel } from "@/lib/api-keys";
+import { ANTHROPIC_URLS, type ClaudeModel, type AnthropicAccountInfo, getBestAvailableModel } from "@/lib/api-keys";
 
 interface ApiKeyInfo {
   id: string;
@@ -36,6 +37,23 @@ interface AiPreferences {
   autoSelectBestModel: boolean;
 }
 
+interface ValidationError {
+  error: string;
+  errorCode?: string;
+  errorDetails?: string;
+  keyHint?: string;
+}
+
+interface ValidationSuccess {
+  success: true;
+  keyHint: string;
+  isValid: boolean;
+  availableModels: ClaudeModel[];
+  preferredModel: string;
+  accountInfo: AnthropicAccountInfo;
+  validatedAt: string;
+}
+
 export function ApiKeySettings() {
   const [apiKeys, setApiKeys] = useState<ApiKeyInfo[]>([]);
   const [aiPreferences, setAiPreferences] = useState<AiPreferences | null>(null);
@@ -48,6 +66,9 @@ export function ApiKeySettings() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  // Modal-specific state for validation feedback
+  const [modalError, setModalError] = useState<ValidationError | null>(null);
+  const [validationResult, setValidationResult] = useState<ValidationSuccess | null>(null);
 
   useEffect(() => {
     fetchApiKeys();
@@ -71,13 +92,16 @@ export function ApiKeySettings() {
 
   const handleSaveApiKey = async () => {
     if (!apiKeyInput.trim()) {
-      setError("Please enter an API key");
+      setModalError({
+        error: "Please enter an API key",
+        errorDetails: "Paste your Anthropic API key in the field above. You can get one from the Anthropic Console.",
+      });
       return;
     }
 
     setIsSaving(true);
-    setError(null);
-    setSuccess(null);
+    setModalError(null);
+    setValidationResult(null);
 
     try {
       const response = await fetch("/api/user/api-keys", {
@@ -92,16 +116,34 @@ export function ApiKeySettings() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Failed to save API key");
+        // Show detailed error in modal
+        setModalError({
+          error: data.error || "Failed to save API key",
+          errorCode: data.errorCode,
+          errorDetails: data.errorDetails,
+          keyHint: data.keyHint,
+        });
         return;
       }
 
-      setSuccess("API key saved successfully!");
+      // Show success with account info in modal
+      setValidationResult(data as ValidationSuccess);
       setApiKeyInput("");
-      setShowApiKeyInput(false);
-      fetchApiKeys();
+
+      // Auto-close after showing results for 3 seconds, then refresh
+      setTimeout(() => {
+        setShowApiKeyInput(false);
+        setValidationResult(null);
+        fetchApiKeys();
+        setSuccess("API key connected successfully!");
+        setTimeout(() => setSuccess(null), 5000);
+      }, 3000);
     } catch (err) {
-      setError("Failed to save API key");
+      setModalError({
+        error: "Connection failed",
+        errorCode: "NETWORK_ERROR",
+        errorDetails: "Could not connect to the server. Please check your internet connection and try again.",
+      });
     } finally {
       setIsSaving(false);
     }
@@ -524,90 +566,247 @@ export function ApiKeySettings() {
         <>
           <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
-            onClick={() => setShowApiKeyInput(false)}
+            onClick={() => {
+              if (!isSaving && !validationResult) {
+                setShowApiKeyInput(false);
+                setApiKeyInput("");
+                setModalError(null);
+              }
+            }}
           />
           <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
             <div className={cn(
               "w-full max-w-md bg-white dark:bg-[#111111] rounded-2xl",
               "border border-gray-200 dark:border-[#262626]",
-              "shadow-2xl pointer-events-auto p-6"
+              "shadow-2xl pointer-events-auto p-6",
+              "max-h-[90vh] overflow-y-auto"
             )}>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Add Anthropic API Key
-              </h3>
+              {/* Success State - Show validation results */}
+              {validationResult ? (
+                <div className="space-y-4">
+                  {/* Success Header */}
+                  <div className="text-center">
+                    <div className="mx-auto w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mb-3">
+                      <svg className="w-8 h-8 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      API Key Connected!
+                    </h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 font-mono">
+                      {validationResult.keyHint}
+                    </p>
+                  </div>
 
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  API Key
-                </label>
-                <input
-                  type="password"
-                  value={apiKeyInput}
-                  onChange={(e) => setApiKeyInput(e.target.value)}
-                  placeholder="sk-ant-api03-..."
-                  className={cn(
-                    "w-full px-4 py-3 rounded-lg font-mono text-sm",
-                    "bg-gray-50 dark:bg-[#1a1a1a]",
-                    "border border-gray-200 dark:border-[#262626]",
-                    "text-gray-900 dark:text-white",
-                    "placeholder:text-gray-400",
-                    "focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  {/* Account Info */}
+                  {validationResult.accountInfo && (
+                    <div className="space-y-3 pt-2">
+                      {/* Subscription Tier */}
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-[#1a1a1a]">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Subscription</span>
+                        <span className={cn(
+                          "px-2.5 py-1 rounded-full text-xs font-semibold",
+                          validationResult.accountInfo.tier === "scale" && "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300",
+                          validationResult.accountInfo.tier === "build" && "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300",
+                          validationResult.accountInfo.tier === "free" && "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300",
+                          validationResult.accountInfo.tier === "unknown" && "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                        )}>
+                          {validationResult.accountInfo.tier === "unknown" ? "Standard" : validationResult.accountInfo.tier.charAt(0).toUpperCase() + validationResult.accountInfo.tier.slice(1)} Tier
+                        </span>
+                      </div>
+
+                      {/* Model Access */}
+                      <div className="p-3 rounded-lg bg-gray-50 dark:bg-[#1a1a1a]">
+                        <span className="text-sm text-gray-600 dark:text-gray-400 block mb-2">Model Access</span>
+                        <div className="flex flex-wrap gap-2">
+                          {validationResult.accountInfo.hasOpus && (
+                            <span className="px-2 py-1 rounded text-xs font-medium bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300">
+                              Opus 4.5
+                            </span>
+                          )}
+                          {validationResult.accountInfo.hasSonnet && (
+                            <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+                              Sonnet 4
+                            </span>
+                          )}
+                          {validationResult.accountInfo.hasHaiku && (
+                            <span className="px-2 py-1 rounded text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">
+                              Haiku 3.5
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Rate Limits (Credits) */}
+                      {validationResult.accountInfo.rateLimits && (
+                        <div className="p-3 rounded-lg bg-gray-50 dark:bg-[#1a1a1a]">
+                          <span className="text-sm text-gray-600 dark:text-gray-400 block mb-2">Rate Limits</span>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <p className="text-lg font-bold text-gray-900 dark:text-white">
+                                {formatNumber(validationResult.accountInfo.rateLimits.tokensRemaining)}
+                              </p>
+                              <p className="text-xs text-gray-500">tokens remaining</p>
+                            </div>
+                            <div>
+                              <p className="text-lg font-bold text-gray-900 dark:text-white">
+                                {formatNumber(validationResult.accountInfo.rateLimits.requestsRemaining)}
+                              </p>
+                              <p className="text-xs text-gray-500">requests remaining</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-400 mt-2">
+                            Limits reset: {formatResetTime(validationResult.accountInfo.rateLimits.tokensReset)}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Selected Model */}
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
+                        <span className="text-sm text-emerald-700 dark:text-emerald-300">Selected Model</span>
+                        <span className="text-sm font-semibold text-emerald-800 dark:text-emerald-200">
+                          {validationResult.availableModels.find(m => m.id === validationResult.preferredModel)?.name || validationResult.preferredModel}
+                        </span>
+                      </div>
+                    </div>
                   )}
-                />
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                  Your API key is encrypted and stored securely. We never see your full key.
-                </p>
-              </div>
 
-              <div className="flex items-center justify-between mb-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800">
-                <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="text-sm text-blue-700 dark:text-blue-300">
-                    Don&apos;t have an API key?
-                  </span>
+                  {/* Auto-close indicator */}
+                  <p className="text-center text-xs text-gray-400 mt-4">
+                    Closing automatically...
+                  </p>
                 </div>
-                <a
-                  href={ANTHROPIC_URLS.apiKeys}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-blue-600 dark:text-cyan-400 hover:underline"
-                >
-                  Get one here →
-                </a>
-              </div>
+              ) : (
+                /* Input State - Show form */
+                <>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    Add Anthropic API Key
+                  </h3>
 
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    setShowApiKeyInput(false);
-                    setApiKeyInput("");
-                  }}
-                  className={cn(
-                    "flex-1 py-2.5 rounded-lg text-sm font-medium",
-                    "border border-gray-200 dark:border-gray-700",
-                    "text-gray-700 dark:text-gray-300",
-                    "hover:bg-gray-50 dark:hover:bg-gray-800",
-                    "transition-colors"
+                  {/* Validation Error (inside modal) */}
+                  {modalError && (
+                    <div className="mb-4 p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+                      <div className="flex items-start gap-3">
+                        <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-red-700 dark:text-red-300">
+                            {modalError.error}
+                          </p>
+                          {modalError.errorDetails && (
+                            <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                              {modalError.errorDetails}
+                            </p>
+                          )}
+                          {modalError.errorCode && (
+                            <p className="text-xs text-red-500 dark:text-red-500 mt-2 font-mono">
+                              Error code: {modalError.errorCode}
+                            </p>
+                          )}
+                          {modalError.keyHint && (
+                            <p className="text-xs text-red-500 dark:text-red-500 mt-1 font-mono">
+                              Key: {modalError.keyHint}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   )}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSaveApiKey}
-                  disabled={isSaving || !apiKeyInput.trim()}
-                  className={cn(
-                    "flex-1 py-2.5 rounded-lg text-sm font-semibold text-white",
-                    "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-                    "shadow-lg shadow-blue-500/25",
-                    "hover:-translate-y-0.5 transition-all",
-                    "disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                  )}
-                >
-                  {isSaving ? "Validating..." : "Save API Key"}
-                </button>
-              </div>
+
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      API Key
+                    </label>
+                    <input
+                      type="password"
+                      value={apiKeyInput}
+                      onChange={(e) => {
+                        setApiKeyInput(e.target.value);
+                        setModalError(null); // Clear error on input
+                      }}
+                      placeholder="sk-ant-api03-..."
+                      className={cn(
+                        "w-full px-4 py-3 rounded-lg font-mono text-sm",
+                        "bg-gray-50 dark:bg-[#1a1a1a]",
+                        "border",
+                        modalError
+                          ? "border-red-300 dark:border-red-700 focus:ring-red-500"
+                          : "border-gray-200 dark:border-[#262626] focus:ring-blue-500",
+                        "text-gray-900 dark:text-white",
+                        "placeholder:text-gray-400",
+                        "focus:outline-none focus:ring-2"
+                      )}
+                      disabled={isSaving}
+                    />
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                      Your API key is encrypted and stored securely. We never see your full key.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between mb-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-sm text-blue-700 dark:text-blue-300">
+                        Don&apos;t have an API key?
+                      </span>
+                    </div>
+                    <a
+                      href={ANTHROPIC_URLS.apiKeys}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-blue-600 dark:text-cyan-400 hover:underline"
+                    >
+                      Get one here →
+                    </a>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => {
+                        setShowApiKeyInput(false);
+                        setApiKeyInput("");
+                        setModalError(null);
+                      }}
+                      disabled={isSaving}
+                      className={cn(
+                        "flex-1 py-2.5 rounded-lg text-sm font-medium",
+                        "border border-gray-200 dark:border-gray-700",
+                        "text-gray-700 dark:text-gray-300",
+                        "hover:bg-gray-50 dark:hover:bg-gray-800",
+                        "transition-colors",
+                        "disabled:opacity-50"
+                      )}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSaveApiKey}
+                      disabled={isSaving || !apiKeyInput.trim()}
+                      className={cn(
+                        "flex-1 py-2.5 rounded-lg text-sm font-semibold text-white",
+                        "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                        "shadow-lg shadow-blue-500/25",
+                        "hover:-translate-y-0.5 transition-all",
+                        "disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                      )}
+                    >
+                      {isSaving ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          </svg>
+                          Validating...
+                        </span>
+                      ) : "Validate & Save"}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </>
@@ -740,4 +939,43 @@ function formatEstimatedCost(
 
   if (total < 0.01) return "<$0.01";
   return `$${total.toFixed(2)}`;
+}
+
+/**
+ * Format large numbers with K/M suffixes
+ */
+function formatNumber(num: number): string {
+  if (num >= 1_000_000) {
+    return `${(num / 1_000_000).toFixed(1)}M`;
+  }
+  if (num >= 1_000) {
+    return `${(num / 1_000).toFixed(1)}K`;
+  }
+  return num.toLocaleString();
+}
+
+/**
+ * Format rate limit reset time for display
+ */
+function formatResetTime(isoTime: string): string {
+  if (!isoTime) return "Unknown";
+
+  try {
+    const resetDate = new Date(isoTime);
+    const now = new Date();
+    const diffMs = resetDate.getTime() - now.getTime();
+
+    if (diffMs <= 0) return "Now";
+
+    const diffSecs = Math.floor(diffMs / 1000);
+    if (diffSecs < 60) return `${diffSecs}s`;
+
+    const diffMins = Math.floor(diffSecs / 60);
+    if (diffMins < 60) return `${diffMins}m`;
+
+    const diffHours = Math.floor(diffMins / 60);
+    return `${diffHours}h ${diffMins % 60}m`;
+  } catch {
+    return "Unknown";
+  }
 }
