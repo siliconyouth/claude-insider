@@ -19,8 +19,8 @@ import { updateNotificationPreferences } from "@/app/actions/notifications";
 import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
 import { DataManagement } from "@/components/settings/data-management";
 import { BlockedUsers } from "@/components/settings/blocked-users";
+import { AvatarUpload } from "@/components/settings/avatar-upload";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
-import { UserAvatar } from "@/components/users";
 import Link from "next/link";
 
 // Cache key for sessionStorage
@@ -386,23 +386,28 @@ export default function SettingsPage() {
           </h2>
 
           <div className="space-y-6">
-            {/* Avatar Preview */}
-            <div className="flex items-center gap-4">
-              <UserAvatar
-                src={profile?.avatarUrl}
-                name={name || profile?.name}
-                size="lg"
+            {/* Avatar Upload */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                Profile Photo
+              </label>
+              <AvatarUpload
+                currentAvatarUrl={profile?.avatarUrl}
+                userName={name || profile?.name}
+                onUploadSuccess={(url) => {
+                  setProfile((prev) => prev ? { ...prev, avatarUrl: url } : prev);
+                  clearCache();
+                  toast.success("Avatar updated successfully");
+                }}
+                onUploadError={(error) => {
+                  toast.error(error);
+                }}
+                onRemove={() => {
+                  setProfile((prev) => prev ? { ...prev, avatarUrl: undefined } : prev);
+                  clearCache();
+                  toast.success("Avatar removed");
+                }}
               />
-              <div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white">
-                  Profile Photo
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {profile?.avatarUrl
-                    ? "Your profile photo"
-                    : "Avatar is generated from your initials"}
-                </p>
-              </div>
             </div>
 
             {/* Name */}
