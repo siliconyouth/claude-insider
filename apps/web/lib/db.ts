@@ -4,9 +4,10 @@
  * IMPORTANT: This is the ONLY place where a PostgreSQL pool should be created.
  * All modules should import from this file instead of creating their own pools.
  *
- * Supabase's session mode has a limited pool size (typically 15-20 connections).
- * Creating multiple pools across serverless functions quickly exhausts this limit,
- * causing "MaxClientsInSessionMode: max clients reached" errors.
+ * For Supabase in serverless environments (Vercel):
+ * - Use Transaction Pooler (port 6543) for best results
+ * - Session Pooler (port 5432) has limited connections (~15-20)
+ * - This file auto-converts Session Pooler URLs to Transaction Pooler
  *
  * @example
  * ```ts
@@ -22,17 +23,41 @@ import { Pool } from 'pg';
 let poolInstance: Pool | null = null;
 
 /**
+ * Convert Session Pooler URL (port 5432) to Transaction Pooler URL (port 6543)
+ * Transaction pooler handles serverless much better as it releases connections after each transaction
+ */
+function getConnectionString(): string {
+  const url = process.env.DATABASE_URL || '';
+
+  // If already using transaction pooler (6543), return as-is
+  if (url.includes(':6543/')) {
+    return url;
+  }
+
+  // Convert session pooler (5432) to transaction pooler (6543) for Supabase
+  if (url.includes('.pooler.supabase.com:5432/')) {
+    const transactionUrl = url.replace(':5432/', ':6543/');
+    console.log('[DB Pool] Auto-converted to Transaction Pooler (port 6543)');
+    return transactionUrl;
+  }
+
+  return url;
+}
+
+/**
  * Get the shared database pool instance.
  * Creates the pool on first call, returns existing instance on subsequent calls.
  */
 function getPool(): Pool {
   if (!poolInstance) {
     poolInstance = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      // Keep pool size small for serverless - Supabase session mode has limits
-      max: 3,
-      // Release idle connections quickly in serverless environment
-      idleTimeoutMillis: 10000,
+      connectionString: getConnectionString(),
+      // CRITICAL: Keep pool size minimal for serverless
+      // Each Vercel function instance has its own pool
+      // With many instances, even max=1 can add up
+      max: 1,
+      // Release idle connections immediately in serverless
+      idleTimeoutMillis: 1000,
       // Don't wait too long for connections
       connectionTimeoutMillis: 5000,
       // SSL required for Supabase in production
