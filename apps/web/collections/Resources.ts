@@ -57,7 +57,7 @@ export const Resources: CollectionConfig = {
     read: () => true, // Public read
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => hasRole(user, ['admin', 'moderator']),
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']), // Only superadmin can delete
   },
   versions: {
     drafts: true,

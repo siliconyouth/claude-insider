@@ -13,6 +13,7 @@ export const ROLES = {
   EDITOR: "editor",
   MODERATOR: "moderator",
   ADMIN: "admin",
+  SUPERADMIN: "superadmin",
   AI_ASSISTANT: "ai_assistant",
 } as const;
 
@@ -30,6 +31,7 @@ export const ROLE_HIERARCHY: UserRole[] = [
   ROLES.EDITOR,
   ROLES.MODERATOR,
   ROLES.ADMIN,
+  ROLES.SUPERADMIN,
 ];
 
 /**
@@ -67,6 +69,12 @@ export const ROLE_INFO: Record<
     description: "Full administrative access",
     color: "text-cyan-600 dark:text-cyan-400",
     bgColor: "bg-cyan-100 dark:bg-cyan-900/30",
+  },
+  [ROLES.SUPERADMIN]: {
+    label: "Super Admin",
+    description: "Ultimate access with private data visibility and delete powers",
+    color: "text-rose-600 dark:text-rose-400",
+    bgColor: "bg-rose-100 dark:bg-rose-900/30",
   },
   [ROLES.AI_ASSISTANT]: {
     label: "AI Assistant",
@@ -114,6 +122,11 @@ export const ACTIONS = {
   // Admin
   VIEW_ADMIN_DASHBOARD: "view_admin_dashboard",
   VIEW_ADMIN_LOGS: "view_admin_logs",
+
+  // Super Admin exclusive
+  VIEW_PRIVATE_USER_DATA: "view_private_user_data",
+  DELETE_ANYTHING: "delete_anything",
+  MANAGE_SUPERADMINS: "manage_superadmins",
 } as const;
 
 export type Action = (typeof ACTIONS)[keyof typeof ACTIONS];
@@ -150,6 +163,9 @@ export const PERMISSIONS: Record<UserRole, Record<Action, PermissionValue>> = {
     [ACTIONS.BAN_USERS]: false,
     [ACTIONS.VIEW_ADMIN_DASHBOARD]: false,
     [ACTIONS.VIEW_ADMIN_LOGS]: false,
+    [ACTIONS.VIEW_PRIVATE_USER_DATA]: false,
+    [ACTIONS.DELETE_ANYTHING]: false,
+    [ACTIONS.MANAGE_SUPERADMINS]: false,
   },
   [ROLES.EDITOR]: {
     [ACTIONS.VIEW_CONTENT]: true,
@@ -173,6 +189,9 @@ export const PERMISSIONS: Record<UserRole, Record<Action, PermissionValue>> = {
     [ACTIONS.BAN_USERS]: false,
     [ACTIONS.VIEW_ADMIN_DASHBOARD]: false,
     [ACTIONS.VIEW_ADMIN_LOGS]: false,
+    [ACTIONS.VIEW_PRIVATE_USER_DATA]: false,
+    [ACTIONS.DELETE_ANYTHING]: false,
+    [ACTIONS.MANAGE_SUPERADMINS]: false,
   },
   [ROLES.MODERATOR]: {
     [ACTIONS.VIEW_CONTENT]: true,
@@ -196,6 +215,9 @@ export const PERMISSIONS: Record<UserRole, Record<Action, PermissionValue>> = {
     [ACTIONS.BAN_USERS]: true,
     [ACTIONS.VIEW_ADMIN_DASHBOARD]: true,
     [ACTIONS.VIEW_ADMIN_LOGS]: true,
+    [ACTIONS.VIEW_PRIVATE_USER_DATA]: false,
+    [ACTIONS.DELETE_ANYTHING]: false,
+    [ACTIONS.MANAGE_SUPERADMINS]: false,
   },
   [ROLES.ADMIN]: {
     [ACTIONS.VIEW_CONTENT]: true,
@@ -219,6 +241,35 @@ export const PERMISSIONS: Record<UserRole, Record<Action, PermissionValue>> = {
     [ACTIONS.BAN_USERS]: true,
     [ACTIONS.VIEW_ADMIN_DASHBOARD]: true,
     [ACTIONS.VIEW_ADMIN_LOGS]: true,
+    [ACTIONS.VIEW_PRIVATE_USER_DATA]: false, // Super Admin only
+    [ACTIONS.DELETE_ANYTHING]: false, // Super Admin only
+    [ACTIONS.MANAGE_SUPERADMINS]: false, // Super Admin only
+  },
+  [ROLES.SUPERADMIN]: {
+    [ACTIONS.VIEW_CONTENT]: true,
+    [ACTIONS.SUGGEST_EDITS]: true,
+    [ACTIONS.REVIEW_EDITS]: true,
+    [ACTIONS.APPROVE_EDITS]: true,
+    [ACTIONS.CREATE_COMMENT]: true,
+    [ACTIONS.EDIT_OWN_COMMENT]: true,
+    [ACTIONS.DELETE_OWN_COMMENT]: true,
+    [ACTIONS.MODERATE_COMMENTS]: true,
+    [ACTIONS.MANAGE_FAVORITES]: true,
+    [ACTIONS.MANAGE_COLLECTIONS]: true,
+    [ACTIONS.SUBMIT_FEEDBACK]: true,
+    [ACTIONS.VIEW_ALL_FEEDBACK]: true,
+    [ACTIONS.MANAGE_FEEDBACK]: true,
+    [ACTIONS.APPLY_BETA]: true,
+    [ACTIONS.REVIEW_BETA_APPS]: true,
+    [ACTIONS.VIEW_USERS]: true,
+    [ACTIONS.MANAGE_USERS]: true,
+    [ACTIONS.CHANGE_ROLES]: true,
+    [ACTIONS.BAN_USERS]: true,
+    [ACTIONS.VIEW_ADMIN_DASHBOARD]: true,
+    [ACTIONS.VIEW_ADMIN_LOGS]: true,
+    [ACTIONS.VIEW_PRIVATE_USER_DATA]: true, // Can view emails, personal data
+    [ACTIONS.DELETE_ANYTHING]: true, // Can delete any content
+    [ACTIONS.MANAGE_SUPERADMINS]: true, // Can assign superadmin role
   },
   // AI Assistant has minimal permissions - only for system messaging
   [ROLES.AI_ASSISTANT]: {
@@ -243,6 +294,9 @@ export const PERMISSIONS: Record<UserRole, Record<Action, PermissionValue>> = {
     [ACTIONS.BAN_USERS]: false,
     [ACTIONS.VIEW_ADMIN_DASHBOARD]: false,
     [ACTIONS.VIEW_ADMIN_LOGS]: false,
+    [ACTIONS.VIEW_PRIVATE_USER_DATA]: false,
+    [ACTIONS.DELETE_ANYTHING]: false,
+    [ACTIONS.MANAGE_SUPERADMINS]: false,
   },
 };
 
@@ -326,4 +380,31 @@ export function getRoleInfo(role: UserRole | string) {
     return ROLE_INFO[role];
   }
   return ROLE_INFO[ROLES.USER];
+}
+
+/**
+ * Check if a user is a Super Admin
+ * Super Admins have ultimate access including:
+ * - Viewing private user data (emails, personal info)
+ * - Deleting any content in the system
+ * - Managing other Super Admins
+ */
+export function isSuperAdmin(role: UserRole | undefined): boolean {
+  return role === ROLES.SUPERADMIN;
+}
+
+/**
+ * Check if a user can view private user data
+ * Only Super Admins can view emails and personal information
+ */
+export function canViewPrivateData(role: UserRole | undefined): boolean {
+  return canPerformAction(role, ACTIONS.VIEW_PRIVATE_USER_DATA);
+}
+
+/**
+ * Check if a user can delete anything
+ * Only Super Admins can delete any content without restrictions
+ */
+export function canDeleteAnything(role: UserRole | undefined): boolean {
+  return canPerformAction(role, ACTIONS.DELETE_ANYTHING);
 }

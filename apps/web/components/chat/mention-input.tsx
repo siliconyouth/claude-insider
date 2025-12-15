@@ -258,8 +258,12 @@ export const MentionInput = forwardRef<HTMLTextAreaElement, MentionInputProps>(
                     )}
                   >
                     {user.id === "assistant" ? (
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center flex-shrink-0">
-                        <span className="text-sm font-bold text-white">C</span>
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center flex-shrink-0 p-0.5">
+                        <img
+                          src="/icons/icon-192x192.png"
+                          alt="Claude Insider AI"
+                          className="w-full h-full rounded-full object-cover"
+                        />
                       </div>
                     ) : user.avatarUrl ? (
                       <img

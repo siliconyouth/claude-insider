@@ -138,12 +138,39 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'onboardingStep') THEN
     ALTER TABLE public."user" ADD COLUMN "onboardingStep" INTEGER DEFAULT 0;
   END IF;
+
+  -- AI preferences (from migration 033)
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'ai_preferences') THEN
+    ALTER TABLE public."user" ADD COLUMN ai_preferences JSONB DEFAULT '{"useOwnApiKey": false, "preferredProvider": "anthropic", "preferredModel": null, "autoSelectBestModel": true}'::jsonb;
+  END IF;
+
+  -- Banned user fields (from migration 049)
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'banned') THEN
+    ALTER TABLE public."user" ADD COLUMN banned BOOLEAN DEFAULT FALSE;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'banned_at') THEN
+    ALTER TABLE public."user" ADD COLUMN banned_at TIMESTAMPTZ;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'banned_reason') THEN
+    ALTER TABLE public."user" ADD COLUMN banned_reason TEXT;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'banned_by') THEN
+    ALTER TABLE public."user" ADD COLUMN banned_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'ban_expires_at') THEN
+    ALTER TABLE public."user" ADD COLUMN ban_expires_at TIMESTAMPTZ;
+  END IF;
 END $$;
 
 -- Create indexes on user table
 CREATE INDEX IF NOT EXISTS idx_user_username ON public."user"(username);
 CREATE INDEX IF NOT EXISTS idx_user_email ON public."user"(email);
 CREATE INDEX IF NOT EXISTS idx_user_role ON public."user"(role);
+CREATE INDEX IF NOT EXISTS idx_user_banned ON public."user"(banned) WHERE banned = TRUE;
 
 -- Disable RLS on Better Auth tables (they use service role key)
 ALTER TABLE public."user" DISABLE ROW LEVEL SECURITY;
@@ -184,6 +211,7 @@ CREATE TABLE IF NOT EXISTS public.favorites (
   user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
   resource_type TEXT NOT NULL CHECK (resource_type IN ('resource', 'doc')),
   resource_id TEXT NOT NULL,
+  notes TEXT,
   created_at TIMESTAMPTZ DEFAULT now(),
   UNIQUE(user_id, resource_type, resource_id)
 );
@@ -389,20 +417,24 @@ CREATE INDEX IF NOT EXISTS idx_beta_applications_status ON public.beta_applicati
 CREATE TABLE IF NOT EXISTS public.feedback (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
-  type TEXT NOT NULL CHECK (type IN ('bug', 'feature', 'improvement', 'other')),
+  feedback_type TEXT NOT NULL CHECK (feedback_type IN ('bug', 'feature', 'general', 'improvement', 'other')),
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   screenshot_url TEXT,
   page_url TEXT,
-  status TEXT DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'resolved', 'wont_fix')),
-  priority TEXT DEFAULT 'medium' CHECK (priority IN ('low', 'medium', 'high', 'critical')),
+  user_agent TEXT,
+  severity TEXT DEFAULT 'medium' CHECK (severity IS NULL OR severity IN ('low', 'medium', 'high', 'critical')),
+  status TEXT DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'resolved', 'closed', 'wont_fix')),
+  assigned_to TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  resolved_at TIMESTAMPTZ,
+  resolution_notes TEXT,
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now()
 );
 
 CREATE INDEX IF NOT EXISTS idx_feedback_user ON public.feedback(user_id);
 CREATE INDEX IF NOT EXISTS idx_feedback_status ON public.feedback(status);
-CREATE INDEX IF NOT EXISTS idx_feedback_type ON public.feedback(type);
+CREATE INDEX IF NOT EXISTS idx_feedback_feedback_type ON public.feedback(feedback_type);
 
 -- -----------------------------------------------------------------------------
 -- 3.9 ADMIN LOGS
@@ -1692,6 +1724,491 @@ SELECT
   average_rating,
   rating_count
 FROM public.resource_rating_stats;
+
+-- =============================================================================
+-- PART 8: EXTENDED TABLES (Migrations 024-049)
+-- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- 8.1 PUSH SUBSCRIPTIONS (Migration 024)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.push_subscriptions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  endpoint TEXT NOT NULL,
+  p256dh_key TEXT NOT NULL,
+  auth_key TEXT NOT NULL,
+  user_agent TEXT,
+  device_name TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  last_used_at TIMESTAMPTZ,
+  UNIQUE(user_id, endpoint)
+);
+
+CREATE INDEX IF NOT EXISTS idx_push_subscriptions_user_id ON public.push_subscriptions(user_id);
+ALTER TABLE public.push_subscriptions ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "push_subs_all" ON public.push_subscriptions FOR ALL USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 8.2 TWO FACTOR DEVICES (Migration 031)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.two_factor_devices (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  device_name VARCHAR(100) NOT NULL DEFAULT 'Authenticator',
+  device_type VARCHAR(50) NOT NULL DEFAULT 'totp',
+  secret TEXT NOT NULL,
+  is_primary BOOLEAN DEFAULT FALSE,
+  is_verified BOOLEAN DEFAULT FALSE,
+  last_used_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_2fa_devices_user ON public.two_factor_devices(user_id);
+ALTER TABLE public.two_factor_devices ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "2fa_devices_all" ON public.two_factor_devices FOR ALL USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 8.3 PASSKEYS / WEBAUTHN (Migration 032)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.passkeys (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  credential_id TEXT NOT NULL UNIQUE,
+  public_key TEXT NOT NULL,
+  counter BIGINT NOT NULL DEFAULT 0,
+  device_type VARCHAR(50) NOT NULL DEFAULT 'platform',
+  backed_up BOOLEAN DEFAULT FALSE,
+  transports TEXT[],
+  passkey_name VARCHAR(100) NOT NULL DEFAULT 'Passkey',
+  aaguid TEXT,
+  last_used_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_passkeys_user ON public.passkeys(user_id);
+CREATE INDEX IF NOT EXISTS idx_passkeys_credential ON public.passkeys(credential_id);
+ALTER TABLE public.passkeys ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "passkeys_all" ON public.passkeys FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.webauthn_challenges (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT REFERENCES public."user"(id) ON DELETE CASCADE,
+  email TEXT,
+  challenge TEXT NOT NULL UNIQUE,
+  challenge_type VARCHAR(20) NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  expires_at TIMESTAMPTZ NOT NULL,
+  used_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_webauthn_challenges_user ON public.webauthn_challenges(user_id);
+CREATE INDEX IF NOT EXISTS idx_webauthn_challenges_expires ON public.webauthn_challenges(expires_at);
+ALTER TABLE public.webauthn_challenges ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "webauthn_challenges_all" ON public.webauthn_challenges FOR ALL USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 8.4 USER API KEYS (Migration 033)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.user_api_keys (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  provider VARCHAR(50) NOT NULL DEFAULT 'anthropic',
+  api_key_encrypted TEXT NOT NULL,
+  api_key_hint VARCHAR(20),
+  is_valid BOOLEAN DEFAULT NULL,
+  last_validated_at TIMESTAMPTZ,
+  validation_error TEXT,
+  available_models JSONB DEFAULT '[]'::jsonb,
+  preferred_model VARCHAR(100),
+  usage_this_month JSONB DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT unique_user_provider UNIQUE (user_id, provider)
+);
+
+CREATE INDEX IF NOT EXISTS idx_user_api_keys_user ON public.user_api_keys(user_id);
+ALTER TABLE public.user_api_keys ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "user_api_keys_all" ON public.user_api_keys FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.api_key_usage_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  api_key_id UUID NOT NULL REFERENCES public.user_api_keys(id) ON DELETE CASCADE,
+  feature VARCHAR(50) NOT NULL,
+  model VARCHAR(100) NOT NULL,
+  input_tokens INT DEFAULT 0,
+  output_tokens INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_api_usage_user ON public.api_key_usage_logs(user_id);
+CREATE INDEX IF NOT EXISTS idx_api_usage_key ON public.api_key_usage_logs(api_key_id);
+ALTER TABLE public.api_key_usage_logs ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "api_usage_logs_all" ON public.api_key_usage_logs FOR ALL USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 8.5 ASSISTANT SETTINGS (Migration 034)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.assistant_settings (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE UNIQUE,
+  assistant_name TEXT DEFAULT 'Claude',
+  user_display_name TEXT,
+  selected_voice_id TEXT DEFAULT 'EXAVITQu4vr4xnSDxMaL',
+  auto_speak BOOLEAN DEFAULT FALSE,
+  speech_rate DECIMAL(3,2) DEFAULT 1.00,
+  show_suggested_questions BOOLEAN DEFAULT TRUE,
+  show_conversation_history BOOLEAN DEFAULT TRUE,
+  compact_mode BOOLEAN DEFAULT FALSE,
+  enable_voice_input BOOLEAN DEFAULT TRUE,
+  enable_code_highlighting BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_assistant_settings_user_id ON public.assistant_settings(user_id);
+ALTER TABLE public.assistant_settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "assistant_settings_all" ON public.assistant_settings FOR ALL USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 8.6 BAN APPEALS SYSTEM (Migration 041)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.ban_appeals (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  reason TEXT NOT NULL,
+  additional_context TEXT,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  reviewed_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  review_notes TEXT,
+  response_message TEXT,
+  reviewed_at TIMESTAMPTZ,
+  ip_address VARCHAR(45),
+  user_agent TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_ban_appeals_user ON public.ban_appeals(user_id);
+CREATE INDEX IF NOT EXISTS idx_ban_appeals_status ON public.ban_appeals(status);
+ALTER TABLE public.ban_appeals ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "ban_appeals_all" ON public.ban_appeals FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.ban_history (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  action VARCHAR(20) NOT NULL,
+  reason TEXT,
+  performed_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  appeal_id UUID REFERENCES public.ban_appeals(id) ON DELETE SET NULL,
+  ip_address VARCHAR(45),
+  user_agent TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_ban_history_user ON public.ban_history(user_id);
+ALTER TABLE public.ban_history ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "ban_history_all" ON public.ban_history FOR ALL USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 8.7 REPORTS SYSTEM (Migration 042)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.reports (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  reporter_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  report_type VARCHAR(20) NOT NULL,
+  reported_user_id TEXT REFERENCES public."user"(id) ON DELETE CASCADE,
+  reported_comment_id UUID REFERENCES public.comments(id) ON DELETE CASCADE,
+  reason VARCHAR(50) NOT NULL,
+  description TEXT,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  reviewed_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  review_notes TEXT,
+  action_taken TEXT,
+  reporter_message TEXT,
+  reviewed_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT valid_report_type CHECK (report_type IN ('user', 'comment'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_reports_reporter ON public.reports(reporter_id);
+CREATE INDEX IF NOT EXISTS idx_reports_status ON public.reports(status);
+ALTER TABLE public.reports ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "reports_all" ON public.reports FOR ALL USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 8.8 MESSAGING SYSTEM (Migration 043-044)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.user_presence (
+  user_id TEXT PRIMARY KEY REFERENCES public."user"(id) ON DELETE CASCADE,
+  status TEXT NOT NULL DEFAULT 'offline' CHECK (status IN ('online', 'offline', 'idle')),
+  last_seen_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_active_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_user_presence_status ON public.user_presence(status);
+ALTER TABLE public.user_presence ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "user_presence_all" ON public.user_presence FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.dm_conversations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  type TEXT NOT NULL DEFAULT 'direct' CHECK (type IN ('direct', 'group')),
+  name TEXT,
+  description TEXT,
+  avatar_url TEXT,
+  created_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  max_participants INTEGER DEFAULT 50,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_message_at TIMESTAMPTZ,
+  last_message_preview TEXT
+);
+
+ALTER TABLE public.dm_conversations ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "dm_conversations_all" ON public.dm_conversations FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.dm_participants (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  conversation_id UUID NOT NULL REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  role TEXT DEFAULT 'member' CHECK (role IN ('owner', 'admin', 'member')),
+  joined_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_read_at TIMESTAMPTZ,
+  is_muted BOOLEAN DEFAULT FALSE,
+  unread_count INTEGER DEFAULT 0,
+  invited_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  UNIQUE(conversation_id, user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_dm_participants_user ON public.dm_participants(user_id);
+CREATE INDEX IF NOT EXISTS idx_dm_participants_conversation ON public.dm_participants(conversation_id);
+ALTER TABLE public.dm_participants ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "dm_participants_all" ON public.dm_participants FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.dm_messages (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  conversation_id UUID NOT NULL REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  sender_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  content TEXT NOT NULL,
+  mentions TEXT[] DEFAULT '{}',
+  ai_response_to UUID REFERENCES public.dm_messages(id),
+  is_ai_generated BOOLEAN DEFAULT FALSE,
+  metadata JSONB DEFAULT '{}',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  edited_at TIMESTAMPTZ,
+  deleted_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_dm_messages_conversation ON public.dm_messages(conversation_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_dm_messages_sender ON public.dm_messages(sender_id);
+ALTER TABLE public.dm_messages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "dm_messages_all" ON public.dm_messages FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.dm_typing_indicators (
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  conversation_id UUID NOT NULL REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (user_id, conversation_id)
+);
+
+ALTER TABLE public.dm_typing_indicators ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "dm_typing_all" ON public.dm_typing_indicators FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.dm_group_invitations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  conversation_id UUID NOT NULL REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  inviter_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  invitee_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'accepted', 'declined', 'expired')),
+  message TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  responded_at TIMESTAMPTZ,
+  expires_at TIMESTAMPTZ DEFAULT NOW() + INTERVAL '7 days',
+  UNIQUE(conversation_id, invitee_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_dm_invitations_invitee ON public.dm_group_invitations(invitee_id, status);
+ALTER TABLE public.dm_group_invitations ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "dm_invitations_all" ON public.dm_group_invitations FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.user_chat_settings (
+  user_id TEXT PRIMARY KEY REFERENCES public."user"(id) ON DELETE CASCADE,
+  sound_enabled BOOLEAN DEFAULT TRUE,
+  sound_new_message TEXT DEFAULT 'message',
+  sound_typing BOOLEAN DEFAULT FALSE,
+  sound_mention BOOLEAN DEFAULT TRUE,
+  sound_invitation BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE public.user_chat_settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "user_chat_settings_all" ON public.user_chat_settings FOR ALL USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 8.9 SECURITY SYSTEM (Migration 045)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.security_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  request_id VARCHAR(21) NOT NULL,
+  visitor_id VARCHAR(64),
+  user_id TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  ip_address INET,
+  user_agent TEXT,
+  endpoint VARCHAR(500),
+  method VARCHAR(10),
+  referer TEXT,
+  origin TEXT,
+  is_bot BOOLEAN DEFAULT FALSE,
+  is_human BOOLEAN DEFAULT TRUE,
+  is_verified_bot BOOLEAN DEFAULT FALSE,
+  bot_name VARCHAR(100),
+  bot_category VARCHAR(50),
+  bot_bypassed BOOLEAN DEFAULT FALSE,
+  fingerprint_confidence DECIMAL(5,2),
+  fingerprint_components JSONB,
+  event_type VARCHAR(50) NOT NULL,
+  severity VARCHAR(20) DEFAULT 'info',
+  status_code INTEGER,
+  response_time_ms INTEGER,
+  honeypot_served BOOLEAN DEFAULT FALSE,
+  honeypot_config_id UUID,
+  metadata JSONB DEFAULT '{}',
+  geo_country VARCHAR(2),
+  geo_city VARCHAR(100),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_security_logs_created_at ON public.security_logs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_security_logs_visitor_id ON public.security_logs(visitor_id) WHERE visitor_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_security_logs_is_bot ON public.security_logs(is_bot) WHERE is_bot = TRUE;
+CREATE INDEX IF NOT EXISTS idx_security_logs_event_type ON public.security_logs(event_type);
+ALTER TABLE public.security_logs ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "security_logs_all" ON public.security_logs FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.visitor_fingerprints (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  visitor_id VARCHAR(64) UNIQUE NOT NULL,
+  first_seen_at TIMESTAMPTZ DEFAULT NOW(),
+  first_ip INET,
+  first_user_agent TEXT,
+  first_endpoint VARCHAR(500),
+  last_seen_at TIMESTAMPTZ DEFAULT NOW(),
+  last_ip INET,
+  last_user_agent TEXT,
+  last_endpoint VARCHAR(500),
+  total_requests INTEGER DEFAULT 1,
+  bot_requests INTEGER DEFAULT 0,
+  human_requests INTEGER DEFAULT 1,
+  honeypot_triggers INTEGER DEFAULT 0,
+  trust_score DECIMAL(5,2) DEFAULT 50.00,
+  trust_level VARCHAR(20) DEFAULT 'neutral',
+  is_blocked BOOLEAN DEFAULT FALSE,
+  block_reason TEXT,
+  blocked_at TIMESTAMPTZ,
+  blocked_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  auto_blocked BOOLEAN DEFAULT FALSE,
+  auto_block_rule VARCHAR(100),
+  linked_user_id TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  linked_at TIMESTAMPTZ,
+  components JSONB DEFAULT '{}',
+  notes TEXT,
+  tags TEXT[],
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_visitor_fingerprints_visitor_id ON public.visitor_fingerprints(visitor_id);
+CREATE INDEX IF NOT EXISTS idx_visitor_fingerprints_trust_score ON public.visitor_fingerprints(trust_score);
+CREATE INDEX IF NOT EXISTS idx_visitor_fingerprints_is_blocked ON public.visitor_fingerprints(is_blocked) WHERE is_blocked = TRUE;
+ALTER TABLE public.visitor_fingerprints ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "visitor_fingerprints_all" ON public.visitor_fingerprints FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.honeypot_configs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  path_pattern VARCHAR(500) NOT NULL,
+  method VARCHAR(10) DEFAULT 'ALL',
+  priority INTEGER DEFAULT 100,
+  response_type VARCHAR(50) NOT NULL,
+  response_delay_ms INTEGER DEFAULT 0,
+  response_data JSONB,
+  response_template VARCHAR(100),
+  redirect_url VARCHAR(500),
+  status_code INTEGER DEFAULT 200,
+  target_bots_only BOOLEAN DEFAULT TRUE,
+  target_low_trust BOOLEAN DEFAULT FALSE,
+  trust_threshold DECIMAL(5,2) DEFAULT 30.00,
+  target_blocked_visitors BOOLEAN DEFAULT TRUE,
+  trigger_count INTEGER DEFAULT 0,
+  last_triggered_at TIMESTAMPTZ,
+  unique_visitors_triggered INTEGER DEFAULT 0,
+  enabled BOOLEAN DEFAULT TRUE,
+  created_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  updated_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_honeypot_configs_enabled ON public.honeypot_configs(enabled) WHERE enabled = TRUE;
+ALTER TABLE public.honeypot_configs ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "honeypot_configs_all" ON public.honeypot_configs FOR ALL USING (true) WITH CHECK (true);
+
+CREATE TABLE IF NOT EXISTS public.security_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  key VARCHAR(100) UNIQUE NOT NULL,
+  value JSONB NOT NULL,
+  value_type VARCHAR(20) DEFAULT 'string',
+  description TEXT,
+  category VARCHAR(50) DEFAULT 'general',
+  updated_by TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.security_settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "security_settings_all" ON public.security_settings FOR ALL USING (true) WITH CHECK (true);
+
+-- Insert default security settings
+INSERT INTO public.security_settings (key, value, value_type, description, category) VALUES
+  ('security_enabled', '"true"', 'boolean', 'Master switch for security system', 'general'),
+  ('bot_detection_enabled', '"true"', 'boolean', 'Enable Vercel BotID detection', 'bot_detection'),
+  ('bot_detection_mode', '"monitor"', 'string', 'Mode: monitor, protect, honeypot', 'bot_detection'),
+  ('fingerprint_enabled', '"true"', 'boolean', 'Enable FingerprintJS', 'fingerprint'),
+  ('honeypot_enabled', '"true"', 'boolean', 'Enable honeypot system', 'honeypot'),
+  ('honeypot_default_delay_ms', '5000', 'number', 'Default tarpit delay', 'honeypot'),
+  ('log_all_requests', '"false"', 'boolean', 'Log all requests', 'logging'),
+  ('log_bot_requests', '"true"', 'boolean', 'Log bot-detected requests', 'logging'),
+  ('auto_block_enabled', '"true"', 'boolean', 'Enable auto-blocking', 'trust'),
+  ('auto_block_bot_threshold', '10', 'number', 'Auto-block after N bot detections', 'trust')
+ON CONFLICT (key) DO NOTHING;
+
+-- -----------------------------------------------------------------------------
+-- 8.10 SUPERADMIN LOGS (Migration 048)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.superadmin_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  superadmin_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  action TEXT NOT NULL,
+  target_type TEXT NOT NULL,
+  target_id TEXT NOT NULL,
+  details JSONB DEFAULT '{}'::jsonb,
+  ip_address TEXT,
+  user_agent TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_superadmin_logs_superadmin ON public.superadmin_logs(superadmin_id);
+CREATE INDEX IF NOT EXISTS idx_superadmin_logs_created ON public.superadmin_logs(created_at DESC);
+ALTER TABLE public.superadmin_logs ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "superadmin_logs_all" ON public.superadmin_logs FOR ALL USING (true) WITH CHECK (true);
 
 -- =============================================================================
 -- END OF MIGRATION

@@ -9,7 +9,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
-import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
+import { hasMinRole, ROLES, isSuperAdmin, type UserRole } from "@/lib/roles";
+import { maskEmail, maskName } from "@/lib/data-masking";
 import type { AdminUserListItem, PaginatedResponse } from "@/types/admin";
 
 export async function GET(request: NextRequest) {
@@ -107,10 +108,20 @@ export async function GET(request: NextRequest) {
     }
 
     const total = count || 0;
+    const canSeePrivateData = isSuperAdmin(userRole);
+
     const items: AdminUserListItem[] = (data || []).map((row: Record<string, unknown>) => ({
       id: row.id as string,
-      name: row.name as string | null,
-      email: row.email as string,
+      // Mask name for non-superadmins (keep first letter visible)
+      name: canSeePrivateData
+        ? (row.name as string | null)
+        : row.name
+          ? maskName(row.name as string)
+          : null,
+      // Mask email for non-superadmins
+      email: canSeePrivateData
+        ? (row.email as string)
+        : maskEmail(row.email as string),
       image: row.image as string | null,
       role: (row.role as UserRole) || "user",
       isBetaTester: (row.isBetaTester as boolean) || false,

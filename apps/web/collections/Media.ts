@@ -24,16 +24,16 @@ export const Media: CollectionConfig = {
     read: () => true,
     // Authenticated users can upload
     create: ({ req: { user } }) => !!user,
-    // Users can update their own uploads, admins can update any
+    // Users can update their own uploads, superadmins/admins can update any
     update: ({ req: { user } }) => {
       if (!user) return false;
-      if (hasRole(user, ['admin'])) return true;
+      if (hasRole(user, ['superadmin', 'admin'])) return true;
       // For now, allow any authenticated user to update
       // TODO: Add uploadedBy field and check ownership
       return true;
     },
-    // Only admins can delete
-    delete: ({ req: { user } }) => hasRole(user, ['admin']),
+    // Only superadmins can delete
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']),
   },
   upload: {
     // Store in media directory (relative to Next.js public or configured storage)

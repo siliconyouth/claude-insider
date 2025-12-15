@@ -330,7 +330,7 @@ export function ProfileHoverCard({
             <div className="mt-3 flex items-center gap-2">
               <FollowButton
                 userId={user.id}
-                initialIsFollowing={user.isFollowing}
+                isFollowing={user.isFollowing || false}
                 size="sm"
                 className="flex-1"
               />

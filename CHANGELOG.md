@@ -7,6 +7,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.79.0] - 2025-12-15
+
+### Added
+
+#### Data Layer Architecture Documentation
+- **Comprehensive DATA_LAYER.md** (v1.1.0)
+  - Complete documentation of 50 database tables across 8 categories
+  - Table catalog with column specifications, types, and descriptions
+  - Table relationship diagrams showing foreign key connections
+  - Row Level Security (RLS) patterns and policy documentation
+  - Migration patterns with defensive DDL examples
+  - API data access patterns and route templates
+  - Role hierarchy documentation with permission checks
+
+#### Database Schema Consolidation
+- **Fresh Start Migration** (`supabase/migrations/000_fresh_start.sql`)
+  - Consolidated migrations 024-049 into single fresh start file
+  - 22 new tables documented and added:
+    - `push_subscriptions` - Web push notification subscriptions
+    - `two_factor_devices` - Multi-device TOTP authenticators
+    - `passkeys` - WebAuthn/passkey credentials
+    - `webauthn_challenges` - WebAuthn challenge storage
+    - `user_api_keys` - Encrypted user API key storage
+    - `api_key_usage_logs` - API key usage tracking
+    - `assistant_settings` - AI assistant preferences
+    - `ban_appeals` - User ban appeal requests
+    - `ban_history` - Historical ban records
+    - `reports` - User/content reports
+    - `user_presence` - Online/offline status
+    - `dm_conversations` - Direct message threads
+    - `dm_participants` - DM conversation members
+    - `dm_messages` - Direct messages
+    - `dm_typing_indicators` - Real-time typing status
+    - `dm_group_invitations` - Group chat invitations
+    - `user_chat_settings` - Chat sound preferences
+    - `security_logs` - Security event logging
+    - `visitor_fingerprints` - FingerprintJS visitor tracking
+    - `honeypot_configs` - Bot trap configurations
+    - `security_settings` - Global security settings
+    - `superadmin_logs` - Superadmin action audit trail
+
+#### Design System Documentation
+- **Semantic Color Exceptions** (CLAUDE.md update)
+  - Documented allowed uses of orange/amber/yellow for semantic meaning
+  - Warning/status indicators (toasts, alerts, callouts)
+  - Star ratings (universal UI convention)
+  - Gamification tiers (achievement rarities)
+  - Streak indicators (fire/heat metaphor)
+  - Presence status (idle indicator)
+  - Ranking badges (gold/bronze leaderboard)
+  - Pending states (dashboard review items)
+  - Traffic light UI patterns
+  - Character limit warnings
+  - Updated compliance check script to exclude semantic uses
+
+#### RLS Security Documentation
+- **USING(true) Pattern** documented in DATA_LAYER.md
+  - Explanation of open-read RLS policies for public content
+  - Security model diagram showing RLS policy layers
+  - Examples of proper policy combinations (SELECT open, INSERT/UPDATE/DELETE restricted)
+
+### Changed
+
+- **Migration 049** - Added banned user columns (`is_banned`, `banned_at`, `ban_reason`, `banned_by`, `ban_expires_at`) to user table
+- **CLAUDE.md** - Updated Data Layer Architecture section with links to DATA_LAYER.md
+
+### Documentation
+
+- Updated project version to 0.79.0 across all files
+- DATA_LAYER.md now serves as source of truth for all database operations
+- CLAUDE.md references DATA_LAYER.md for detailed schema information
+
 ## [0.78.0] - 2025-12-15
 
 ### Added

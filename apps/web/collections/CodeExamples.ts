@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { createRevalidateHook, createDeleteRevalidateHook } from '../lib/revalidate';
+import { hasRole } from './Users';
 
 /**
  * CodeExamples Collection
@@ -20,7 +21,7 @@ export const CodeExamples: CollectionConfig = {
     read: () => true,
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']), // Only superadmin can delete
   },
   hooks: {
     afterChange: [createRevalidateHook('code-examples')],

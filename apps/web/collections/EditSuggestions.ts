@@ -25,14 +25,14 @@ export const EditSuggestions: CollectionConfig = {
     // Moderators, editors, and admins can read all
     read: ({ req: { user } }) => {
       if (!user) return false;
-      return hasRole(user, ['admin', 'moderator', 'editor']);
+      return hasRole(user, ['superadmin', 'admin', 'moderator', 'editor']);
     },
     // Public creation handled via API route (not admin panel)
-    create: ({ req: { user } }) => hasRole(user, ['admin']),
+    create: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin']),
     // Moderators and admins can update (change status, add notes)
-    update: ({ req: { user } }) => hasRole(user, ['admin', 'moderator']),
-    // Only admins can delete
-    delete: ({ req: { user } }) => hasRole(user, ['admin']),
+    update: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
+    // Only superadmins can delete
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']),
   },
   fields: [
     // Suggestion Details

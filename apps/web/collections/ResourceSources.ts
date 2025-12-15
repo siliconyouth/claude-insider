@@ -23,10 +23,10 @@ export const ResourceSources: CollectionConfig = {
     description: 'Sources for discovering new resources',
   },
   access: {
-    read: ({ req: { user } }) => hasRole(user, ['admin', 'moderator']),
-    create: ({ req: { user } }) => hasRole(user, ['admin']),
-    update: ({ req: { user } }) => hasRole(user, ['admin', 'moderator']),
-    delete: ({ req: { user } }) => hasRole(user, ['admin']),
+    read: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
+    create: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin']),
+    update: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']),
   },
   fields: [
     // Basic Info

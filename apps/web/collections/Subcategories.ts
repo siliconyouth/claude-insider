@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { createRevalidateHook, createDeleteRevalidateHook } from '../lib/revalidate';
+import { hasRole } from './Users';
 
 /**
  * Subcategories Collection
@@ -21,7 +22,7 @@ export const Subcategories: CollectionConfig = {
     read: () => true, // Public read
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']), // Only superadmin can delete
   },
   hooks: {
     afterChange: [createRevalidateHook('subcategories')],

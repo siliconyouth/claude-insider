@@ -29,10 +29,10 @@ export const ResourceDiscoveryQueue: CollectionConfig = {
     listSearchableFields: ['title', 'description', 'url'],
   },
   access: {
-    read: ({ req: { user } }) => hasRole(user, ['admin', 'moderator']),
-    create: ({ req: { user } }) => hasRole(user, ['admin', 'moderator']),
-    update: ({ req: { user } }) => hasRole(user, ['admin', 'moderator']),
-    delete: ({ req: { user } }) => hasRole(user, ['admin']),
+    read: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
+    create: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
+    update: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']),
   },
   fields: [
     // Pre-populated resource fields (from AI analysis)

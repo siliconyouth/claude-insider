@@ -52,7 +52,7 @@ export async function POST(request: Request) {
     }
 
     // Check rate limit
-    const rateLimitResult = checkRateLimit(user.id, "bulk");
+    const rateLimitResult = await checkRateLimit(user.id, "bulk");
     if (!rateLimitResult.allowed) {
       return createRateLimitResponse(rateLimitResult);
     }

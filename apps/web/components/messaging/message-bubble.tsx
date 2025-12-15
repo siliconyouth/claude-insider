@@ -115,7 +115,16 @@ export function MessageBubble({
       {/* Avatar */}
       {showSender && !isOwnMessage && (
         <div className="flex-shrink-0">
-          {message.senderAvatar ? (
+          {isAI ? (
+            // AI Assistant uses website logo
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center p-1">
+              <img
+                src="/icons/icon-192x192.png"
+                alt="Claude Insider AI"
+                className="w-full h-full rounded-full object-cover"
+              />
+            </div>
+          ) : message.senderAvatar ? (
             <img
               src={message.senderAvatar}
               alt={message.senderName || "User"}
@@ -125,12 +134,10 @@ export function MessageBubble({
             <div
               className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium",
-                isAI
-                  ? "bg-gradient-to-br from-emerald-500 to-teal-500 text-white"
-                  : "bg-gradient-to-br from-violet-500 to-blue-500 text-white"
+                "bg-gradient-to-br from-violet-500 to-blue-500 text-white"
               )}
             >
-              {isAI ? "AI" : message.senderName?.charAt(0).toUpperCase() || "?"}
+              {message.senderName?.charAt(0).toUpperCase() || "?"}
             </div>
           )}
         </div>

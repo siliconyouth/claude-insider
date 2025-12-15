@@ -1,14 +1,15 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig, FieldAccess, Access } from 'payload';
 
 /**
  * User Roles for Claude Insider CMS
  *
+ * - superadmin: Ultimate access with private data visibility and delete powers
  * - admin: Full system access, can manage all users and content
  * - editor: Can create/edit content, cannot manage users
  * - moderator: Can approve/reject user submissions and comments
  * - beta_tester: Early access to new features, limited admin access
  */
-export type UserRole = 'admin' | 'editor' | 'moderator' | 'beta_tester';
+export type UserRole = 'superadmin' | 'admin' | 'editor' | 'moderator' | 'beta_tester';
 
 /**
  * Check if user has one of the specified roles
@@ -16,6 +17,37 @@ export type UserRole = 'admin' | 'editor' | 'moderator' | 'beta_tester';
 export const hasRole = (user: { role?: string } | null, roles: UserRole[]): boolean => {
   if (!user?.role) return false;
   return roles.includes(user.role as UserRole);
+};
+
+/**
+ * Field access: Only superadmins can read private user data (email, IP, etc.)
+ * Other admins see masked values
+ */
+const privateFieldAccess: FieldAccess = ({ req: { user }, doc, siblingData }) => {
+  // Superadmins can always read
+  if (hasRole(user, ['superadmin'])) return true;
+  // Users can read their own data
+  if (user && doc && user.id === doc.id) return true;
+  // Others cannot read private fields
+  return false;
+};
+
+/**
+ * Mask email address for non-superadmins
+ * vladimir@example.com -> v*******@e******.com
+ */
+const maskEmail = (email: string): string => {
+  const parts = email.split('@');
+  const local = parts[0];
+  const domain = parts[1];
+  if (!local || !domain) return '***@***.***';
+  const domainParts = domain.split('.');
+  const domainName = domainParts[0];
+  const tld = domainParts.slice(1).join('.');
+  if (!domainName) return '***@***.***';
+  const maskedLocal = local[0] + '*'.repeat(Math.max(local.length - 1, 3));
+  const maskedDomain = domainName[0] + '*'.repeat(Math.max(domainName.length - 1, 3));
+  return `${maskedLocal}@${maskedDomain}.${tld}`;
 };
 
 export const Users: CollectionConfig = {
@@ -35,24 +67,24 @@ export const Users: CollectionConfig = {
     description: 'CMS users who manage content and moderate submissions',
   },
   access: {
-    // Admins see all, others see only themselves
+    // Super Admins and Admins see all, others see only themselves
     read: ({ req: { user } }) => {
       if (!user) return false;
-      if (hasRole(user, ['admin'])) return true;
+      if (hasRole(user, ['superadmin', 'admin'])) return true;
       // Users can read their own profile
       return { id: { equals: user.id } };
     },
-    // Only admins can create users
-    create: ({ req: { user } }) => hasRole(user, ['admin']),
-    // Admins can update anyone, others can update themselves (except role)
+    // Only superadmins and admins can create users
+    create: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin']),
+    // Super Admins and Admins can update anyone, others can update themselves (except role)
     update: ({ req: { user }, id }) => {
       if (!user) return false;
-      if (hasRole(user, ['admin'])) return true;
+      if (hasRole(user, ['superadmin', 'admin'])) return true;
       // Users can update their own profile
       return user.id === id;
     },
-    // Only admins can delete
-    delete: ({ req: { user } }) => hasRole(user, ['admin']),
+    // Only superadmins can delete (ultimate delete power)
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']),
     // Any authenticated user can access admin panel
     admin: ({ req: { user } }) => !!user,
   },
@@ -91,18 +123,30 @@ export const Users: CollectionConfig = {
       required: true,
       defaultValue: 'editor',
       options: [
+        { label: '⚡ Super Admin', value: 'superadmin' },
         { label: 'Admin', value: 'admin' },
         { label: 'Editor', value: 'editor' },
         { label: 'Moderator', value: 'moderator' },
         { label: 'Beta Tester', value: 'beta_tester' },
       ],
       access: {
-        // Only admins can change roles
-        update: ({ req: { user } }) => hasRole(user, ['admin']),
+        // Only superadmins can assign superadmin role, admins can assign other roles
+        update: ({ req: { user }, data }) => {
+          if (!user) return false;
+          // Super Admins can change any role
+          if (hasRole(user, ['superadmin'])) return true;
+          // Admins can change roles but not to/from superadmin
+          if (hasRole(user, ['admin'])) {
+            // Check if trying to set superadmin role
+            if (data?.role === 'superadmin') return false;
+            return true;
+          }
+          return false;
+        },
       },
       admin: {
         position: 'sidebar',
-        description: 'User role determines access level',
+        description: 'User role determines access level. Super Admin has ultimate access.',
       },
     },
     {
@@ -124,7 +168,7 @@ export const Users: CollectionConfig = {
       type: 'group',
       admin: {
         description: 'Fine-grained permissions (for moderators)',
-        condition: (data) => ['admin', 'moderator'].includes(data?.role),
+        condition: (data) => ['superadmin', 'admin', 'moderator'].includes(data?.role),
       },
       fields: [
         {
@@ -184,6 +228,30 @@ export const Users: CollectionConfig = {
     },
   ],
   hooks: {
+    // Mask private data for non-superadmins viewing other users
+    afterRead: [
+      ({ doc, req }) => {
+        if (!doc || !req.user) return doc;
+
+        // Superadmins see everything
+        if (hasRole(req.user, ['superadmin'])) return doc;
+
+        // Users see their own data unmasked
+        if (req.user.id === doc.id) return doc;
+
+        // Mask email for non-superadmins viewing other users
+        if (doc.email) {
+          doc.email = maskEmail(doc.email);
+        }
+
+        // Hide login IP tracking data if it exists
+        if (doc.lastLoginIP) {
+          doc.lastLoginIP = '***.***.***';
+        }
+
+        return doc;
+      },
+    ],
     // Update login tracking on successful authentication
     afterLogin: [
       async ({ user, req }) => {

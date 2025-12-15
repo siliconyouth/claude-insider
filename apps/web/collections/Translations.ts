@@ -12,6 +12,7 @@
  */
 
 import type { CollectionConfig } from 'payload';
+import { hasRole } from './Users';
 
 export const Translations: CollectionConfig = {
   slug: 'translations',
@@ -30,11 +31,9 @@ export const Translations: CollectionConfig = {
     // Read access for authenticated users
     read: ({ req: { user } }) => !!user,
     // Write access for admins and moderators
-    create: ({ req: { user } }) =>
-      !!user && ['admin', 'moderator'].includes(user.role as string),
-    update: ({ req: { user } }) =>
-      !!user && ['admin', 'moderator'].includes(user.role as string),
-    delete: ({ req: { user } }) => user?.role === 'admin',
+    create: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
+    update: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']), // Only superadmin can delete
   },
   fields: [
     {

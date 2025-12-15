@@ -6,6 +6,7 @@
  */
 
 import type { CollectionConfig } from "payload";
+import { hasRole } from "./Users";
 
 export const AuditLogs: CollectionConfig = {
   slug: "audit-logs",
@@ -16,13 +17,8 @@ export const AuditLogs: CollectionConfig = {
     defaultColumns: ["action", "collection", "user", "createdAt"],
   },
   access: {
-    // Only admins can read audit logs
-    read: ({ req }) => {
-      const user = req.user;
-      if (!user) return false;
-      if (user.role === "admin") return true;
-      return false;
-    },
+    // Only superadmins can read audit logs (sensitive data)
+    read: ({ req: { user } }) => hasRole(user, ["superadmin"]),
     // No one can update or delete audit logs
     update: () => false,
     delete: () => false,

@@ -2,13 +2,13 @@
  * Visitor Management API
  *
  * List, block, unblock, and manage visitor fingerprints.
- * Admin only endpoint.
+ * Super Admin only endpoint - contains sensitive IP and fingerprint data.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
-import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
+import { isSuperAdmin, type UserRole } from "@/lib/roles";
 import {
   getVisitors,
   getVisitorByFingerprint,
@@ -25,7 +25,7 @@ import type { TrustLevel } from "@/lib/trust-score";
  */
 export async function GET(request: NextRequest) {
   try {
-    // Check authentication - admin only
+    // Check authentication - superadmin only (contains PII)
     const session = await getSession();
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -36,8 +36,8 @@ export async function GET(request: NextRequest) {
       [session.user.id]
     );
     const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
-    if (!hasMinRole(userRole, ROLES.ADMIN)) {
-      return NextResponse.json({ error: "Forbidden - Admin only" }, { status: 403 });
+    if (!isSuperAdmin(userRole)) {
+      return NextResponse.json({ error: "Forbidden - Super Admin only" }, { status: 403 });
     }
 
     // Parse query parameters
@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
  */
 export async function PATCH(request: NextRequest) {
   try {
-    // Check authentication - admin only
+    // Check authentication - superadmin only (blocking is a critical action)
     const session = await getSession();
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -99,8 +99,8 @@ export async function PATCH(request: NextRequest) {
       [session.user.id]
     );
     const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
-    if (!hasMinRole(userRole, ROLES.ADMIN)) {
-      return NextResponse.json({ error: "Forbidden - Admin only" }, { status: 403 });
+    if (!isSuperAdmin(userRole)) {
+      return NextResponse.json({ error: "Forbidden - Super Admin only" }, { status: 403 });
     }
 
     const body = await request.json();

@@ -49,7 +49,7 @@ export async function GET(request: Request) {
     }
 
     // Check rate limit
-    const rateLimitResult = checkRateLimit(user.id, "queue");
+    const rateLimitResult = await checkRateLimit(user.id, "queue");
     if (!rateLimitResult.allowed) {
       return createRateLimitResponse(rateLimitResult);
     }

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { createRevalidateHook, createDeleteRevalidateHook } from '../lib/revalidate';
+import { hasRole } from './Users';
 
 /**
  * Difficulty Levels Collection
@@ -17,9 +18,9 @@ export const DifficultyLevels: CollectionConfig = {
   },
   access: {
     read: () => true, // Public read for filtering
-    create: ({ req: { user } }) => user?.role === 'admin',
-    update: ({ req: { user } }) => user?.role === 'admin',
-    delete: ({ req: { user } }) => user?.role === 'admin',
+    create: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin']),
+    update: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin']),
+    delete: ({ req: { user } }) => hasRole(user, ['superadmin']), // Only superadmin can delete
   },
   hooks: {
     afterChange: [createRevalidateHook('difficulty-levels')],

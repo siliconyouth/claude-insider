@@ -181,7 +181,7 @@ export async function POST(request: Request) {
     }
 
     // Check rate limit
-    const rateLimitResult = checkRateLimit(user.id, "import");
+    const rateLimitResult = await checkRateLimit(user.id, "import");
     if (!rateLimitResult.allowed) {
       return createRateLimitResponse(rateLimitResult);
     }

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.78.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.79.0**.
 
 | Link | URL |
 |------|-----|
@@ -227,7 +227,7 @@ claude-insider/
 │   │   ├── Resources.ts          # Curated resources
 │   │   └── Translations.ts       # UI translation strings
 │   ├── supabase/                 # Database migrations
-│   │   └── migrations/           # 45 SQL migration files
+│   │   └── migrations/           # 49 SQL migration files (000-048)
 │   │       ├── 000_fresh_start.sql # Consolidated base schema
 │   │       ├── ...               # User data, comments, collections
 │   │       ├── 025_admin_notifications.sql # Admin broadcast system
@@ -336,6 +336,24 @@ All new components MUST implement ALL seven pillars:
 
 **Exception**: Orange/amber allowed ONLY in `code-block.tsx` for syntax highlighting badges.
 
+#### Semantic Color Exceptions (ALLOWED)
+
+The following uses of orange/amber/yellow are permitted because they convey **semantic meaning**:
+
+| Use Case | Allowed Colors | Rationale |
+|----------|----------------|-----------|
+| **Warning/Status Indicators** | `amber-*`, `yellow-*` | Toasts, alerts, callouts, offline states, low-credit warnings |
+| **Star Ratings** | `yellow-400`, `yellow-500` | Universal UI convention for rating stars (GitHub stars, reviews) |
+| **Gamification Tiers** | `amber-*`, `yellow-*`, `orange-*` | Achievement rarities: Epic (violet), Legendary (amber/gold glow) |
+| **Streak Indicators** | `orange-*`, `amber-*` | Fire/heat metaphor for daily streaks and bonuses |
+| **Presence Status** | `orange-500` | "Idle" status in online indicators |
+| **Ranking Badges** | `yellow-*` (gold), `amber-*` (bronze) | Leaderboard positions (#1 gold, #3 bronze) |
+| **Pending States** | `yellow-*`, `amber-*` | Dashboard items awaiting action/review |
+| **Traffic Light UI** | `yellow-500` | Middle indicator in traffic-light patterns |
+| **Character Limits** | `yellow-*` | Approaching limit warnings in text inputs |
+
+**Key Distinction**: Semantic colors convey **meaning** (warning, status, tier). Decorative colors are purely **aesthetic** and should use the violet/blue/cyan gradient system.
+
 #### Gradient System
 
 | Purpose | Tailwind Classes |
@@ -372,10 +390,21 @@ All new components MUST implement ALL seven pillars:
 ### Compliance Check
 
 ```bash
-# Verify no banned colors exist (should return ZERO results)
-grep -r "orange-\|amber-" apps/web/components/ apps/web/app/ \
+# Check for orange/amber/yellow usage (review each for semantic vs decorative)
+# Semantic uses (warnings, ratings, achievements, streaks, status) are ALLOWED
+# Decorative uses (accents, backgrounds, gradients) should use blue/cyan/violet
+grep -r "orange-\|amber-\|yellow-" apps/web/components/ apps/web/app/ \
   --include="*.tsx" --include="*.css" \
-  | grep -v "code-block\|lazy-code"
+  | grep -v "code-block\|lazy-code" | head -20
+
+# Files with ALLOWED semantic usage (do not flag these):
+# - toast.tsx, accessible-modal.tsx (warnings)
+# - rating-stars.tsx, star-rating.tsx, review-*.tsx (star ratings)
+# - achievement-*.tsx, leaderboard.tsx (gamification tiers)
+# - streak-indicator.tsx (fire/heat metaphor)
+# - online-indicator.tsx (presence status)
+# - *-settings.tsx (warning states)
+# - Dashboard pages (pending/warning status indicators)
 ```
 
 ### Typography Scale
@@ -444,42 +473,173 @@ className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 
 ---
 
-## Database Access Patterns
+## Data Layer Architecture (MANDATORY)
 
-### Supabase Clients
+> **CRITICAL**: This section defines mandatory rules for all database operations. Claude Code MUST follow these rules and update `apps/web/DATA_LAYER.md` when making changes to the data layer.
+>
+> **Reference Document**: `apps/web/DATA_LAYER.md` - Complete database schema documentation
+
+### Column Naming Convention (CRITICAL)
+
+| Table Type | Convention | Example | SQL Syntax |
+|------------|------------|---------|------------|
+| **Better Auth tables** (`user`, `session`, `account`, `verification`) | **camelCase** | `createdAt`, `emailVerified` | Must quote: `"createdAt"` |
+| **Custom tables** (all others) | **snake_case** | `created_at`, `user_id` | No quotes needed |
+
+```sql
+-- ✅ CORRECT: Better Auth table (quoted camelCase)
+SELECT id, email, role, "createdAt" FROM "user" WHERE id = $1;
+
+-- ✅ CORRECT: Custom table (snake_case)
+SELECT id, user_id, created_at FROM favorites WHERE user_id = $1;
+
+-- ❌ WRONG: Using snake_case on Better Auth table
+SELECT id, email, created_at FROM "user";  -- FAILS: column doesn't exist
+
+-- ❌ WRONG: Forgetting quotes on camelCase
+SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
+```
+
+### Database Clients
 
 | Client | Location | Use Case |
 |--------|----------|----------|
-| `createClient()` | `lib/supabase/client.ts` | Browser-side, RLS-enforced queries |
+| `pool` | `lib/db.ts` | Direct SQL queries (preferred for writes) |
+| `createClient()` | `lib/supabase/client.ts` | Browser-side, RLS-enforced |
 | `createServerClient()` | `lib/supabase/server.ts` | Server components, RLS-enforced |
-| `createAdminClient()` | `lib/supabase/server.ts` | Server-only, bypasses RLS for admin operations |
+| `createAdminClient()` | `lib/supabase/server.ts` | Server-only, bypasses RLS |
 
-### When to Use Each Client
+### Mandatory Rules for Data Layer Changes
+
+#### Rule 1: Always Use Parameterized Queries
 
 ```typescript
-// Browser component - user can only access their own data
-import { createClient } from "@/lib/supabase/client";
-const supabase = createClient();
+// ✅ CORRECT
+await pool.query('SELECT * FROM favorites WHERE user_id = $1', [userId]);
 
-// Server component - respects user session & RLS
-import { createServerClient } from "@/lib/supabase/server";
-const supabase = await createServerClient();
-
-// Admin API routes - bypass RLS for dashboard/admin features
-import { createAdminClient } from "@/lib/supabase/server";
-const supabase = await createAdminClient();
+// ❌ WRONG - SQL Injection vulnerability
+await pool.query(`SELECT * FROM favorites WHERE user_id = '${userId}'`);
 ```
 
-### Best Practices
+#### Rule 2: Update DATA_LAYER.md When Changing Schema
 
-| Pattern | Client | Example |
-|---------|--------|---------|
-| User reading own data | `createClient` or `createServerClient` | Favorites, settings |
-| Admin listing all users | `createAdminClient` | Dashboard user list |
-| Write operations | Direct `pg` pool | Complex transactions, bulk updates |
-| Real-time subscriptions | `createClient` | Live notifications |
+When adding/modifying tables, columns, or migrations:
+1. Create migration file in `supabase/migrations/`
+2. Update `apps/web/DATA_LAYER.md` Table Catalog section
+3. Update column documentation if adding new columns
+4. Run `pnpm check-types` to verify
 
-**Important**: Admin client bypasses Row Level Security. Only use in admin-protected API routes after verifying user role with `hasMinRole(userRole, ROLES.ADMIN)`.
+#### Rule 3: Defensive Migration Pattern
+
+Always use conditional DDL for migrations:
+
+```sql
+-- Check table exists before creating indexes
+DO $$
+BEGIN
+  IF EXISTS (SELECT FROM pg_tables WHERE tablename = 'mytable') THEN
+    CREATE INDEX IF NOT EXISTS idx_mytable_col ON mytable(col);
+  END IF;
+END $$;
+
+-- Check column exists before referencing
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT FROM information_schema.columns
+    WHERE table_name = 'mytable' AND column_name = 'newcol'
+  ) THEN
+    -- Safe to use column
+  END IF;
+END $$;
+```
+
+#### Rule 4: Better Auth Column Awareness
+
+When querying the `user` table, always quote camelCase columns:
+
+| Column | Correct SQL | Common Mistake |
+|--------|-------------|----------------|
+| Created date | `"createdAt"` | `created_at` |
+| Email verified | `"emailVerified"` | `email_verified` |
+| 2FA enabled | `"twoFactorEnabled"` | `two_factor_enabled` |
+| Onboarding | `"hasCompletedOnboarding"` | `has_completed_onboarding` |
+
+#### Rule 5: Keep Consolidated Migration in Sync
+
+`000_fresh_start.sql` must match the sum of incremental migrations. When adding new tables:
+1. Add to the appropriate incremental migration (e.g., `049_new_feature.sql`)
+2. Also add to `000_fresh_start.sql` for fresh database installs
+
+#### Rule 6: Role Hierarchy (Database Constraint)
+
+```sql
+CHECK (role IN ('user', 'editor', 'moderator', 'admin', 'superadmin', 'ai_assistant'))
+```
+
+| Level | Role | API Route Check |
+|-------|------|-----------------|
+| 0 | `ai_assistant` | Special, non-hierarchical |
+| 1 | `user` | Default |
+| 2 | `editor` | `hasMinRole(userRole, ROLES.EDITOR)` |
+| 3 | `moderator` | `hasMinRole(userRole, ROLES.MODERATOR)` |
+| 4 | `admin` | `hasMinRole(userRole, ROLES.ADMIN)` |
+| 5 | `superadmin` | `isSuperAdmin(userRole)` |
+
+### API Route Template
+
+```typescript
+import { NextRequest, NextResponse } from "next/server";
+import { pool } from "@/lib/db";
+import { getSession } from "@/lib/auth";
+import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
+
+export async function GET(request: NextRequest) {
+  // 1. Check authentication
+  const session = await getSession();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // 2. Check role (if admin/moderator endpoint)
+  const roleResult = await pool.query(
+    `SELECT role FROM "user" WHERE id = $1`,
+    [session.user.id]
+  );
+  const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
+  if (!hasMinRole(userRole, ROLES.MODERATOR)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  // 3. Perform database operation
+  const result = await pool.query(
+    `SELECT * FROM table WHERE user_id = $1`,
+    [session.user.id]
+  );
+
+  return NextResponse.json(result.rows);
+}
+```
+
+### Quick Reference: Table Categories
+
+| Category | Tables | FK Type |
+|----------|--------|---------|
+| **Auth (Better Auth)** | `user`, `session`, `account`, `verification` | TEXT id |
+| **User Data** | `profiles`, `favorites`, `ratings`, `comments`, etc. | `user_id TEXT → user(id)` |
+| **Security** | `security_logs`, `visitor_fingerprints`, `honeypot_configs` | UUID + user refs |
+| **Messaging** | `conversations`, `messages`, `message_groups` | UUID + user refs |
+| **Gamification** | `achievements`, `user_achievements`, `achievement_progress` | UUID + user refs |
+
+### Checklist for Data Layer Changes
+
+- [ ] Column names match convention (camelCase for Better Auth, snake_case for custom)
+- [ ] Migration uses defensive patterns (IF EXISTS, conditional DDL)
+- [ ] `DATA_LAYER.md` updated with new tables/columns
+- [ ] `000_fresh_start.sql` updated (if adding new tables)
+- [ ] Parameterized queries only (no string interpolation)
+- [ ] Run `pnpm check-types` after changes
+- [ ] Test migration with `supabase db push`
 
 ---
 

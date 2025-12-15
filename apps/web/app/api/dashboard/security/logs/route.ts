@@ -2,13 +2,13 @@
  * Security Logs API
  *
  * Returns paginated and filterable security logs.
- * Admin only endpoint.
+ * Super Admin only endpoint - contains sensitive IP and user agent data.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
-import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
+import { isSuperAdmin, type UserRole } from "@/lib/roles";
 import {
   getSecurityLogs,
   type SecurityEventType,
@@ -17,7 +17,7 @@ import {
 
 export async function GET(request: NextRequest) {
   try {
-    // Check authentication - admin only
+    // Check authentication - superadmin only (contains PII)
     const session = await getSession();
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -29,8 +29,8 @@ export async function GET(request: NextRequest) {
       [session.user.id]
     );
     const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
-    if (!hasMinRole(userRole, ROLES.ADMIN)) {
-      return NextResponse.json({ error: "Forbidden - Admin only" }, { status: 403 });
+    if (!isSuperAdmin(userRole)) {
+      return NextResponse.json({ error: "Forbidden - Super Admin only" }, { status: 403 });
     }
 
     // Parse query parameters

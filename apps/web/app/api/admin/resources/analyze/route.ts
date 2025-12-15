@@ -61,7 +61,7 @@ export async function POST(request: Request) {
     }
 
     // Check rate limit
-    const rateLimitResult = checkRateLimit(user.id, "analyze");
+    const rateLimitResult = await checkRateLimit(user.id, "analyze");
     if (!rateLimitResult.allowed) {
       return createRateLimitResponse(rateLimitResult);
     }

@@ -40,6 +40,7 @@ export async function GET() {
         COUNT(*) FILTER (WHERE role = 'editor') as role_editor,
         COUNT(*) FILTER (WHERE role = 'moderator') as role_moderator,
         COUNT(*) FILTER (WHERE role = 'admin') as role_admin,
+        COUNT(*) FILTER (WHERE role = 'superadmin') as role_superadmin,
         COUNT(*) FILTER (WHERE role = 'ai_assistant') as role_ai_assistant
       FROM "user"
     `);
@@ -78,6 +79,7 @@ export async function GET() {
           editor: parseInt(userStats.role_editor) || 0,
           moderator: parseInt(userStats.role_moderator) || 0,
           admin: parseInt(userStats.role_admin) || 0,
+          superadmin: parseInt(userStats.role_superadmin) || 0,
           ai_assistant: parseInt(userStats.role_ai_assistant) || 0,
         },
       },

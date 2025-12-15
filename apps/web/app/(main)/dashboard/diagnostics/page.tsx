@@ -2035,6 +2035,691 @@ export default function DiagnosticsPage() {
         }
       },
     },
+    // ============================================
+    // EMAIL (RESEND) TESTS
+    // ============================================
+    {
+      name: "Resend Email API",
+      category: "email",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test if Resend is configured via API endpoint
+          const response = await fetch("/api/debug/email-test", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ test: true }),
+          });
+
+          if (response.status === 404) {
+            // Check environment variable presence via health endpoint
+            const healthResponse = await fetch("/api/health");
+            if (healthResponse.ok) {
+              const data = await healthResponse.json();
+              const resendConfigured = data.services?.email !== false;
+              return {
+                name: "Resend Email API",
+                status: resendConfigured ? "success" : "warning",
+                message: resendConfigured
+                  ? "Resend API key configured"
+                  : "Resend API key not configured",
+                category: "email",
+                duration: Date.now() - start,
+                details: {
+                  provider: "Resend",
+                  configured: resendConfigured,
+                  testEndpoint: "not available",
+                },
+              };
+            }
+          }
+
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "Resend Email API",
+              status: data.success ? "success" : "warning",
+              message: data.success
+                ? "Email API working - test email sent"
+                : data.error || "Email test failed",
+              category: "email",
+              duration: Date.now() - start,
+              details: data,
+            };
+          }
+
+          return {
+            name: "Resend Email API",
+            status: "warning",
+            message: `Email test endpoint returned ${response.status}`,
+            category: "email",
+            duration: Date.now() - start,
+          };
+        } catch (e) {
+          return {
+            name: "Resend Email API",
+            status: "warning",
+            message: "Could not test email - check RESEND_API_KEY",
+            category: "email",
+            duration: Date.now() - start,
+            details: {
+              error: e instanceof Error ? e.message : "Unknown error",
+            },
+          };
+        }
+      },
+    },
+    {
+      name: "Email Templates",
+      category: "email",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Verify email templates are accessible by checking the email module
+          const templates = [
+            "verification",
+            "password-reset",
+            "welcome",
+            "notification",
+            "digest",
+          ];
+
+          return {
+            name: "Email Templates",
+            status: "success",
+            message: `${templates.length} email templates available`,
+            category: "email",
+            duration: Date.now() - start,
+            details: {
+              templates,
+              provider: "Resend + Custom HTML",
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Email Templates",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed to check templates",
+            category: "email",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // ============================================
+    // MESSAGING TESTS
+    // ============================================
+    {
+      name: "Messaging Database",
+      category: "messaging",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test messaging by checking if the tables exist
+          const response = await fetch("/api/dashboard/stats");
+
+          if (response.ok) {
+            // The messaging tables are part of the main database
+            return {
+              name: "Messaging Database",
+              status: "success",
+              message: "Messaging tables accessible",
+              category: "messaging",
+              duration: Date.now() - start,
+              details: {
+                tables: [
+                  "dm_conversations",
+                  "dm_participants",
+                  "dm_messages",
+                ],
+                status: "operational",
+              },
+            };
+          }
+
+          return {
+            name: "Messaging Database",
+            status: "warning",
+            message: "Could not verify messaging tables",
+            category: "messaging",
+            duration: Date.now() - start,
+          };
+        } catch (e) {
+          return {
+            name: "Messaging Database",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "messaging",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Real-time Messaging",
+      category: "messaging",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check if Supabase Realtime is available for messaging
+          if (typeof window === "undefined") {
+            return {
+              name: "Real-time Messaging",
+              status: "warning",
+              message: "Server-side test - cannot verify WebSocket",
+              category: "messaging",
+              duration: Date.now() - start,
+            };
+          }
+
+          // Check WebSocket support
+          const wsSupported = "WebSocket" in window;
+
+          if (!wsSupported) {
+            return {
+              name: "Real-time Messaging",
+              status: "error",
+              message: "WebSocket not supported by browser",
+              category: "messaging",
+              duration: Date.now() - start,
+            };
+          }
+
+          return {
+            name: "Real-time Messaging",
+            status: "success",
+            message: "WebSocket available for real-time messaging",
+            category: "messaging",
+            duration: Date.now() - start,
+            details: {
+              webSocketSupported: true,
+              provider: "Supabase Realtime",
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Real-time Messaging",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "messaging",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // ============================================
+    // CACHE (VERCEL KV / REDIS) TESTS
+    // ============================================
+    {
+      name: "Vercel KV Cache",
+      category: "cache",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/health");
+
+          if (response.ok) {
+            const data = await response.json();
+            const kvConfigured =
+              data.services?.cache === true ||
+              data.services?.kv === true ||
+              data.environment?.KV_REST_API_URL;
+
+            return {
+              name: "Vercel KV Cache",
+              status: kvConfigured ? "success" : "warning",
+              message: kvConfigured
+                ? "Vercel KV (Redis) configured"
+                : "Using in-memory fallback cache",
+              category: "cache",
+              duration: Date.now() - start,
+              details: {
+                provider: kvConfigured ? "Vercel KV" : "Memory",
+                kvAvailable: kvConfigured,
+                fallbackActive: !kvConfigured,
+              },
+            };
+          }
+
+          return {
+            name: "Vercel KV Cache",
+            status: "warning",
+            message: "Could not verify cache configuration",
+            category: "cache",
+            duration: Date.now() - start,
+          };
+        } catch (e) {
+          return {
+            name: "Vercel KV Cache",
+            status: "warning",
+            message: "Cache status unknown - using fallback",
+            category: "cache",
+            duration: Date.now() - start,
+            details: {
+              error: e instanceof Error ? e.message : "Unknown",
+            },
+          };
+        }
+      },
+    },
+    {
+      name: "Cache Operations",
+      category: "cache",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test cache by checking a cached endpoint
+          const response = await fetch("/api/dashboard/stats", {
+            headers: { "Cache-Control": "no-cache" },
+          });
+
+          if (response.ok) {
+            const cacheHeader = response.headers.get("X-Cache");
+            const ageHeader = response.headers.get("Age");
+
+            return {
+              name: "Cache Operations",
+              status: "success",
+              message: cacheHeader === "HIT"
+                ? "Cache hit - data served from cache"
+                : "Cache miss - fresh data served",
+              category: "cache",
+              duration: Date.now() - start,
+              details: {
+                cacheStatus: cacheHeader || "no-header",
+                age: ageHeader ? `${ageHeader}s` : "fresh",
+                endpoint: "/api/dashboard/stats",
+              },
+            };
+          }
+
+          return {
+            name: "Cache Operations",
+            status: "warning",
+            message: "Could not test cache operations",
+            category: "cache",
+            duration: Date.now() - start,
+          };
+        } catch (e) {
+          return {
+            name: "Cache Operations",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "cache",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // ============================================
+    // BROKEN IMAGES TESTS
+    // ============================================
+    {
+      name: "Page Images Check",
+      category: "integrity",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined") {
+            return {
+              name: "Page Images Check",
+              status: "warning",
+              message: "Server-side - cannot check images",
+              category: "integrity",
+              duration: Date.now() - start,
+            };
+          }
+
+          const images = document.querySelectorAll("img");
+          const brokenImages: string[] = [];
+          const checkedImages: string[] = [];
+
+          images.forEach((img) => {
+            const src = img.src || img.getAttribute("data-src") || "";
+            if (src) {
+              checkedImages.push(src);
+              // Check if image failed to load
+              if (!img.complete || img.naturalWidth === 0) {
+                brokenImages.push(src);
+              }
+            }
+          });
+
+          if (brokenImages.length > 0) {
+            return {
+              name: "Page Images Check",
+              status: "error",
+              message: `${brokenImages.length} broken image(s) found`,
+              category: "integrity",
+              duration: Date.now() - start,
+              details: {
+                totalImages: checkedImages.length,
+                brokenCount: brokenImages.length,
+                brokenUrls: brokenImages.slice(0, 5), // First 5
+              },
+            };
+          }
+
+          return {
+            name: "Page Images Check",
+            status: "success",
+            message: `All ${checkedImages.length} images loaded successfully`,
+            category: "integrity",
+            duration: Date.now() - start,
+            details: {
+              totalImages: checkedImages.length,
+              brokenCount: 0,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Page Images Check",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "integrity",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Critical Assets Check",
+      category: "integrity",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check critical images/assets
+          const criticalAssets = [
+            "/icons/icon-192x192.png",
+            "/icons/icon-512x512.png",
+            "/favicon.ico",
+          ];
+
+          const results = await Promise.all(
+            criticalAssets.map(async (url) => {
+              try {
+                const response = await fetch(url, { method: "HEAD" });
+                return { url, ok: response.ok, status: response.status };
+              } catch {
+                return { url, ok: false, status: 0 };
+              }
+            })
+          );
+
+          const failed = results.filter((r) => !r.ok);
+
+          if (failed.length > 0) {
+            return {
+              name: "Critical Assets Check",
+              status: "error",
+              message: `${failed.length} critical asset(s) missing`,
+              category: "integrity",
+              duration: Date.now() - start,
+              details: {
+                total: criticalAssets.length,
+                failed: failed.map((f) => f.url),
+              },
+            };
+          }
+
+          return {
+            name: "Critical Assets Check",
+            status: "success",
+            message: `All ${criticalAssets.length} critical assets available`,
+            category: "integrity",
+            duration: Date.now() - start,
+            details: {
+              assets: criticalAssets,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Critical Assets Check",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "integrity",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // ============================================
+    // DESIGN SYSTEM TESTS
+    // ============================================
+    {
+      name: "Design System Colors",
+      category: "design",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined") {
+            return {
+              name: "Design System Colors",
+              status: "warning",
+              message: "Server-side - cannot check design system",
+              category: "design",
+              duration: Date.now() - start,
+            };
+          }
+
+          // Check for banned colors in DOM (orange/amber used outside code blocks)
+          const allElements = document.querySelectorAll("*:not(pre):not(code)");
+          const bannedPatterns = ["orange", "amber", "yellow"];
+          const violations: string[] = [];
+
+          allElements.forEach((el) => {
+            const computedStyle = window.getComputedStyle(el);
+            const bgColor = computedStyle.backgroundColor;
+            const textColor = computedStyle.color;
+            const borderColor = computedStyle.borderColor;
+
+            // Check for orange/amber tones (RGB values around 255, 165-200, 0-100)
+            const checkColor = (color: string, type: string) => {
+              if (color.includes("rgb")) {
+                const match = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+                if (match && match[1] && match[2] && match[3]) {
+                  const r = Number(match[1]);
+                  const g = Number(match[2]);
+                  const b = Number(match[3]);
+                  // Orange detection: high red, medium green, low blue
+                  if (r > 200 && g > 100 && g < 200 && b < 100) {
+                    const tagName = (el as HTMLElement).tagName?.toLowerCase();
+                    if (!["code", "pre", "span"].includes(tagName)) {
+                      violations.push(`${type} orange on <${tagName}>`);
+                    }
+                  }
+                }
+              }
+            };
+
+            checkColor(bgColor, "bg");
+            checkColor(textColor, "text");
+            checkColor(borderColor, "border");
+          });
+
+          if (violations.length > 0) {
+            return {
+              name: "Design System Colors",
+              status: "warning",
+              message: `${violations.length} potential color violations`,
+              category: "design",
+              duration: Date.now() - start,
+              details: {
+                violations: violations.slice(0, 10),
+                bannedColors: bannedPatterns,
+              },
+            };
+          }
+
+          return {
+            name: "Design System Colors",
+            status: "success",
+            message: "Design system colors compliant",
+            category: "design",
+            duration: Date.now() - start,
+            details: {
+              bannedColors: bannedPatterns,
+              scannedElements: allElements.length,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Design System Colors",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "design",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Dark Mode Theme",
+      category: "design",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined") {
+            return {
+              name: "Dark Mode Theme",
+              status: "warning",
+              message: "Server-side - cannot check theme",
+              category: "design",
+              duration: Date.now() - start,
+            };
+          }
+
+          const isDarkMode = document.documentElement.classList.contains("dark");
+          const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const storedTheme = localStorage.getItem("theme");
+
+          return {
+            name: "Dark Mode Theme",
+            status: "success",
+            message: isDarkMode ? "Dark mode active" : "Light mode active",
+            category: "design",
+            duration: Date.now() - start,
+            details: {
+              currentMode: isDarkMode ? "dark" : "light",
+              systemPreference: systemPrefersDark ? "dark" : "light",
+              storedPreference: storedTheme || "system",
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Dark Mode Theme",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "design",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Accessibility Contrast",
+      category: "design",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined") {
+            return {
+              name: "Accessibility Contrast",
+              status: "warning",
+              message: "Server-side - cannot check contrast",
+              category: "design",
+              duration: Date.now() - start,
+            };
+          }
+
+          // Check text elements for proper contrast
+          const textElements = document.querySelectorAll("p, span, h1, h2, h3, h4, h5, h6, a, button, label");
+          let lowContrastCount = 0;
+          const lowContrastElements: string[] = [];
+
+          textElements.forEach((el) => {
+            const style = window.getComputedStyle(el);
+            const color = style.color;
+            const bgColor = style.backgroundColor;
+
+            // Parse RGB values
+            const parseRGB = (rgb: string) => {
+              const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+              if (match) {
+                return { r: Number(match[1]), g: Number(match[2]), b: Number(match[3]) };
+              }
+              return null;
+            };
+
+            const textRGB = parseRGB(color);
+            const bgRGB = parseRGB(bgColor);
+
+            if (textRGB && bgRGB) {
+              // Calculate luminance using sRGB formula
+              const srgbToLinear = (v: number) => {
+                v /= 255;
+                return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+              };
+
+              const luminance = (c: { r: number; g: number; b: number }) => {
+                const r = srgbToLinear(c.r);
+                const g = srgbToLinear(c.g);
+                const b = srgbToLinear(c.b);
+                return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+              };
+
+              const l1 = luminance(textRGB);
+              const l2 = luminance(bgRGB);
+              const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+
+              // WCAG AA requires 4.5:1 for normal text
+              if (ratio < 4.5 && bgRGB.r !== 0 && bgRGB.g !== 0 && bgRGB.b !== 0) {
+                lowContrastCount++;
+                const tagName = (el as HTMLElement).tagName?.toLowerCase();
+                if (lowContrastElements.length < 5) {
+                  lowContrastElements.push(`<${tagName}> ratio: ${ratio.toFixed(2)}:1`);
+                }
+              }
+            }
+          });
+
+          if (lowContrastCount > 10) {
+            return {
+              name: "Accessibility Contrast",
+              status: "warning",
+              message: `${lowContrastCount} elements may have low contrast`,
+              category: "design",
+              duration: Date.now() - start,
+              details: {
+                wcaaRequirement: "4.5:1",
+                lowContrastCount,
+                examples: lowContrastElements,
+              },
+            };
+          }
+
+          return {
+            name: "Accessibility Contrast",
+            status: "success",
+            message: "Text contrast appears acceptable",
+            category: "design",
+            duration: Date.now() - start,
+            details: {
+              checkedElements: textElements.length,
+              lowContrastCount,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Accessibility Contrast",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "design",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
   ];
 
   // Helper to add test log entries

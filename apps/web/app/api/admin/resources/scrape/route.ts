@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     }
 
     // Check rate limit
-    const rateLimitResult = checkRateLimit(user.id, "scrape");
+    const rateLimitResult = await checkRateLimit(user.id, "scrape");
     if (!rateLimitResult.allowed) {
       return createRateLimitResponse(rateLimitResult);
     }
