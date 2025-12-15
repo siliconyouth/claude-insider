@@ -26,6 +26,7 @@ import {
   type DonationBankInfo,
   type RecurringFrequency,
 } from '@/lib/donations/types';
+import { PayPalDonateButtons } from './paypal-buttons';
 
 interface DonationSettings {
   preset_amounts: number[];
@@ -620,33 +621,63 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setStep('method')}
-                    className="flex-1 py-3 rounded-xl font-medium border border-gray-200 dark:border-[#262626] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                  >
-                    Back
-                  </button>
-                  <button
-                    onClick={paymentMethod === 'paypal' ? handlePayPalCheckout : handleBankTransfer}
-                    disabled={isProcessing}
-                    className={cn(
-                      'flex-1 py-3 rounded-xl font-semibold text-white',
-                      'bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600',
-                      'hover:shadow-lg hover:shadow-blue-500/25',
-                      'disabled:opacity-50',
-                      'transition-all duration-200'
-                    )}
-                  >
-                    {isProcessing
-                      ? 'Processing...'
-                      : paymentMethod === 'paypal'
-                        ? donationType === 'recurring'
-                          ? 'Subscribe with PayPal'
-                          : 'Pay with PayPal'
-                        : 'View Bank Details'}
-                  </button>
-                </div>
+                {/* PayPal SDK Buttons (inline checkout) */}
+                {paymentMethod === 'paypal' && (
+                  <div className="space-y-4">
+                    <PayPalDonateButtons
+                      amount={selectedAmount}
+                      currency="USD"
+                      isRecurring={donationType === 'recurring'}
+                      frequency={frequency}
+                      message={message || undefined}
+                      isAnonymous={isAnonymous}
+                      onSuccess={(data) => {
+                        setCompletedDonationId(data.donationId);
+                        setStep('success');
+                        onSuccess?.(data.donationId);
+                      }}
+                      onError={(errorMsg) => {
+                        showError(errorMsg);
+                      }}
+                      onCancel={() => {
+                        // User cancelled PayPal popup
+                      }}
+                      disabled={isProcessing}
+                      showPayLater={donationType === 'one-time'}
+                    />
+                    <button
+                      onClick={() => setStep('method')}
+                      className="w-full py-3 rounded-xl font-medium border border-gray-200 dark:border-[#262626] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                    >
+                      ← Back to payment methods
+                    </button>
+                  </div>
+                )}
+
+                {/* Bank Transfer Button */}
+                {paymentMethod === 'bank_transfer' && (
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setStep('method')}
+                      className="flex-1 py-3 rounded-xl font-medium border border-gray-200 dark:border-[#262626] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={handleBankTransfer}
+                      disabled={isProcessing}
+                      className={cn(
+                        'flex-1 py-3 rounded-xl font-semibold text-white',
+                        'bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600',
+                        'hover:shadow-lg hover:shadow-blue-500/25',
+                        'disabled:opacity-50',
+                        'transition-all duration-200'
+                      )}
+                    >
+                      {isProcessing ? 'Loading...' : 'View Bank Details'}
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 

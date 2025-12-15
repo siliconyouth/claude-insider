@@ -28,6 +28,7 @@
     "@payloadcms/email-resend": "^3.68.3",
     "@payloadcms/next": "^3.68.3",
     "@payloadcms/richtext-lexical": "^3.68.3",
+    "@paypal/react-paypal-js": "^8.9.2",
     "@repo/ui": "workspace:*",
     "@simplewebauthn/browser": "^13.2.2",
     "@simplewebauthn/server": "^13.2.2",
