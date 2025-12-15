@@ -158,9 +158,10 @@ export function useApiCredits(pollInterval: number = 30000) {
 
       const result = await response.json();
       const apiKey = result.apiKeys?.[0];
-      const aiPrefs = result.aiPreferences;
 
-      if (apiKey && aiPrefs?.useOwnApiKey) {
+      // Show model selector if user has a valid API key
+      // Don't require aiPreferences.useOwnApiKey - if they have a key, show it
+      if (apiKey && apiKey.isValid) {
         const usage = apiKey.usageThisMonth;
         const model = apiKey.preferredModel;
         const modelInfo = result.allModels?.find((m: { id: string }) => m.id === model);
