@@ -80,8 +80,7 @@ async function checkModelAvailability(apiKey: string): Promise<string[]> {
   );
 
   // Collect successful models (in priority order since CLAUDE_MODELS is ordered)
-  for (let i = 0; i < results.length; i++) {
-    const result = results[i];
+  for (const result of results) {
     if (result.status === "fulfilled") {
       available.push(result.value);
     }
