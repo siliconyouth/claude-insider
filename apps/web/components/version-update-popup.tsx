@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.66.0";
+const APP_VERSION = "0.70.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,37 +24,35 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
-    version: "0.66.0",
+    version: "0.70.0",
     date: "2025-12-15",
     type: "minor",
     highlights: [
-      "Email verification with 6-digit codes",
-      "Multi-device 2FA with custom names",
-      "Passkey (WebAuthn) authentication",
-      "Beta tester feedback management",
-      "Admin notifications and email alerts",
+      "Bring your own Anthropic API key",
+      "Model selection (Opus, Sonnet, Haiku)",
+      "API usage tracking per feature",
+      "API key onboarding step",
+      "Encrypted key storage (AES-256-GCM)",
     ],
   },
   {
-    version: "0.65.0",
+    version: "0.69.0",
+    date: "2025-12-15",
+    type: "minor",
+    highlights: [
+      "Admin notification management",
+      "Email alerts for feedback",
+      "Beta tester management dashboard",
+    ],
+  },
+  {
+    version: "0.68.0",
     date: "2025-12-14",
     type: "minor",
     highlights: [
       "Push notifications support",
       "Browser notification preferences",
       "Deep linking to notifications",
-      "Version update notifications for admins",
-    ],
-  },
-  {
-    version: "0.64.0",
-    date: "2025-12-13",
-    type: "minor",
-    highlights: [
-      "Onboarding wizard improvements",
-      "Beta application flow",
-      "User settings enhancements",
-      "Feedback submission with debug info",
     ],
   },
 ];

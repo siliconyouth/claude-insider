@@ -742,10 +742,12 @@ export interface NotificationPreferences {
   in_app_suggestions: boolean;
   in_app_follows: boolean;
   in_app_mentions: boolean;
+  in_app_version_updates: boolean;
   email_comments: boolean;
   email_replies: boolean;
   email_suggestions: boolean;
   email_follows: boolean;
+  email_version_updates: boolean;
   email_digest: boolean;
   email_digest_frequency: "daily" | "weekly" | "monthly";
   browser_notifications: boolean;
@@ -757,10 +759,12 @@ const defaultNotificationPreferences: NotificationPreferences = {
   in_app_suggestions: true,
   in_app_follows: true,
   in_app_mentions: true,
+  in_app_version_updates: true,
   email_comments: false,
   email_replies: true,
   email_suggestions: true,
   email_follows: false,
+  email_version_updates: false,
   email_digest: false,
   email_digest_frequency: "weekly",
   browser_notifications: false,

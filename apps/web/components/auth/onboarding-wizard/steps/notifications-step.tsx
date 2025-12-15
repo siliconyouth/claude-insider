@@ -22,7 +22,7 @@ interface NotificationToggle {
 }
 
 export function NotificationsStep() {
-  const { nextStep, isLastStep, onComplete, setError, setIsSubmitting, isSubmitting } = useWizard();
+  const { isLastStep, setError } = useWizard();
 
   // Push notification state
   const [pushPermission, setPushPermission] = useState<NotificationPermission>("default");
@@ -128,10 +128,7 @@ export function NotificationsStep() {
     }
   };
 
-  const handleContinue = async () => {
-    setIsSubmitting(true);
-    setError(null);
-
+  const handleContinue = async (): Promise<boolean> => {
     try {
       // Build preferences object
       const preferences: Record<string, boolean> = {
@@ -158,21 +155,15 @@ export function NotificationsStep() {
         throw new Error("Failed to save notification preferences");
       }
 
-      if (isLastStep) {
-        onComplete();
-      } else {
-        nextStep();
-      }
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save preferences");
-    } finally {
-      setIsSubmitting(false);
+      return false;
     }
   };
 
   return (
     <StepWrapper
-      icon="🔔"
       title="Notification Preferences"
       description="Stay informed about activity on Claude Insider"
     >
@@ -295,7 +286,6 @@ export function NotificationsStep() {
       <WizardNavigation
         onNext={handleContinue}
         nextLabel={isLastStep ? "Complete Setup" : "Continue"}
-        isSubmitting={isSubmitting}
       />
     </StepWrapper>
   );
