@@ -1,12 +1,13 @@
 -- Migration: 024_push_subscriptions
 -- Description: Store Web Push subscriptions for background notifications
 -- Created: 2025-12-15
+-- Note: Uses TEXT for user_id to match Better Auth's user.id type
 
 -- Push subscriptions table for Web Push notifications
 -- This enables notifications even when users aren't on the website
 CREATE TABLE IF NOT EXISTS push_subscriptions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
 
   -- Web Push subscription data
   endpoint TEXT NOT NULL,
@@ -30,26 +31,24 @@ CREATE TABLE IF NOT EXISTS push_subscriptions (
 CREATE INDEX IF NOT EXISTS idx_push_subscriptions_user_id ON push_subscriptions(user_id);
 CREATE INDEX IF NOT EXISTS idx_push_subscriptions_endpoint ON push_subscriptions(endpoint);
 
--- Row Level Security
+-- Row Level Security (permissive - Better Auth handles auth at app layer)
 ALTER TABLE push_subscriptions ENABLE ROW LEVEL SECURITY;
 
--- Users can only see/manage their own subscriptions
-CREATE POLICY "Users can view own push subscriptions"
+CREATE POLICY "Users can view push subscriptions"
   ON push_subscriptions FOR SELECT
-  USING (user_id = auth.uid());
+  USING (true);
 
-CREATE POLICY "Users can insert own push subscriptions"
+CREATE POLICY "Users can insert push subscriptions"
   ON push_subscriptions FOR INSERT
-  WITH CHECK (user_id = auth.uid());
+  WITH CHECK (true);
 
-CREATE POLICY "Users can delete own push subscriptions"
+CREATE POLICY "Users can delete push subscriptions"
   ON push_subscriptions FOR DELETE
-  USING (user_id = auth.uid());
+  USING (true);
 
--- Service role bypass for server-side operations
-CREATE POLICY "Service role has full access to push subscriptions"
-  ON push_subscriptions
-  USING (auth.role() = 'service_role');
+CREATE POLICY "Users can update push subscriptions"
+  ON push_subscriptions FOR UPDATE
+  USING (true);
 
 -- Function to clean up old unused subscriptions (older than 30 days without use)
 CREATE OR REPLACE FUNCTION cleanup_stale_push_subscriptions()

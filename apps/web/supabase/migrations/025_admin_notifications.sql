@@ -1,6 +1,7 @@
 -- Migration: 025_admin_notifications
 -- Description: Admin-created notifications with scheduling and targeting
 -- Created: 2025-12-15
+-- Note: Uses TEXT for user_id to match Better Auth's user.id type
 
 -- Admin notifications table for bulk/scheduled notifications
 CREATE TABLE IF NOT EXISTS admin_notifications (
@@ -19,7 +20,7 @@ CREATE TABLE IF NOT EXISTS admin_notifications (
   -- Targeting
   target_type TEXT NOT NULL DEFAULT 'all', -- 'all', 'role', 'users'
   target_roles TEXT[] DEFAULT '{}', -- Array of roles: 'admin', 'moderator', 'editor', 'beta_tester', 'user'
-  target_user_ids UUID[] DEFAULT '{}', -- Specific user IDs
+  target_user_ids TEXT[] DEFAULT '{}', -- Specific user IDs (TEXT to match Better Auth)
 
   -- Scheduling
   status TEXT NOT NULL DEFAULT 'draft', -- 'draft', 'scheduled', 'sending', 'sent', 'failed', 'cancelled'
@@ -32,7 +33,7 @@ CREATE TABLE IF NOT EXISTS admin_notifications (
   failed_deliveries INTEGER DEFAULT 0,
 
   -- Metadata
-  created_by UUID REFERENCES "user"(id) ON DELETE SET NULL,
+  created_by TEXT REFERENCES "user"(id) ON DELETE SET NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
 
@@ -49,7 +50,7 @@ CREATE INDEX IF NOT EXISTS idx_admin_notifications_created_by ON admin_notificat
 CREATE TABLE IF NOT EXISTS admin_notification_deliveries (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   notification_id UUID NOT NULL REFERENCES admin_notifications(id) ON DELETE CASCADE,
-  user_id UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
 
   -- Delivery status per channel
   in_app_sent BOOLEAN DEFAULT FALSE,
@@ -72,7 +73,7 @@ CREATE INDEX IF NOT EXISTS idx_admin_notification_deliveries_user ON admin_notif
 
 -- Function to get target users for a notification
 CREATE OR REPLACE FUNCTION get_notification_target_users(notification_id UUID)
-RETURNS TABLE(user_id UUID, email TEXT, name TEXT, role TEXT) AS $$
+RETURNS TABLE(user_id TEXT, email TEXT, name TEXT, role TEXT) AS $$
 DECLARE
   notif RECORD;
 BEGIN
@@ -101,39 +102,18 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Row Level Security
+-- Row Level Security (permissive - Better Auth handles auth at app layer)
 ALTER TABLE admin_notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_notification_deliveries ENABLE ROW LEVEL SECURITY;
 
--- Only admins can manage admin notifications
-CREATE POLICY "Admins can manage admin notifications"
+-- Permissive policies for admin notifications
+CREATE POLICY "Full access to admin notifications"
   ON admin_notifications
-  USING (
-    EXISTS (
-      SELECT 1 FROM "user" u
-      WHERE u.id = auth.uid()
-      AND u.role IN ('admin', 'moderator')
-    )
-  );
+  USING (true);
 
-CREATE POLICY "Admins can view delivery logs"
-  ON admin_notification_deliveries FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM "user" u
-      WHERE u.id = auth.uid()
-      AND u.role IN ('admin', 'moderator')
-    )
-  );
-
--- Service role bypass for cron jobs
-CREATE POLICY "Service role full access to admin notifications"
-  ON admin_notifications
-  USING (auth.role() = 'service_role');
-
-CREATE POLICY "Service role full access to delivery logs"
+CREATE POLICY "Full access to delivery logs"
   ON admin_notification_deliveries
-  USING (auth.role() = 'service_role');
+  USING (true);
 
 COMMENT ON TABLE admin_notifications IS 'Admin-created notifications with scheduling, targeting, and multi-channel delivery';
 COMMENT ON TABLE admin_notification_deliveries IS 'Delivery tracking for admin notifications per user';

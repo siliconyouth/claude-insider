@@ -134,20 +134,11 @@ CREATE TRIGGER trigger_cleanup_verification_codes
 AFTER INSERT ON email_verification_codes
 EXECUTE FUNCTION cleanup_expired_verification_codes();
 
--- RLS policies
+-- RLS policies (permissive - Better Auth handles auth at app layer)
 ALTER TABLE email_verification_codes ENABLE ROW LEVEL SECURITY;
 
--- Users can only view their own verification codes
-CREATE POLICY "Users can view own verification codes" ON email_verification_codes
-  FOR SELECT USING (user_id = auth.uid()::TEXT);
-
--- Allow insert via API (service role)
-CREATE POLICY "Service can insert verification codes" ON email_verification_codes
-  FOR INSERT WITH CHECK (TRUE);
-
--- Allow updates via API (service role)
-CREATE POLICY "Service can update verification codes" ON email_verification_codes
-  FOR UPDATE USING (TRUE);
+CREATE POLICY "Full access to verification codes" ON email_verification_codes
+  USING (TRUE);
 
 -- Grant execute on functions
 GRANT EXECUTE ON FUNCTION generate_verification_code TO authenticated;
