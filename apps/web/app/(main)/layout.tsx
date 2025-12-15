@@ -16,6 +16,7 @@ import { I18nProvider } from "@/i18n";
 import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
 import { AskAIProvider, AskAIModal } from "@/components/ask-ai";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
+import { NotificationPopup } from "@/components/notifications/notification-popup";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -166,6 +167,7 @@ export default async function MainLayout({
                   <FeedbackButton />
                   <AskAIModal />
                   <VersionUpdatePopup />
+                  <NotificationPopup />
                   <Analytics />
                 </ToastProvider>
               </KeyboardShortcutsProvider>
