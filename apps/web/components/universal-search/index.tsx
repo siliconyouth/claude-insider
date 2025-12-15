@@ -38,7 +38,12 @@ import { SkeletonSearchResult } from "@/components/skeleton";
 import { ModeToggle } from "./mode-toggle";
 import { SearchMode, AISearchResponse } from "./types";
 
-export function UniversalSearch() {
+interface UniversalSearchProps {
+  /** Show expanded search bar with placeholder text */
+  expanded?: boolean;
+}
+
+export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
   // Modal state
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -337,21 +342,21 @@ export function UniversalSearch() {
         ref={triggerButtonRef}
         onClick={() => setIsOpen(true)}
         className={cn(
-          "flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg",
+          "flex items-center gap-2 text-sm rounded-lg",
           "text-gray-600 dark:text-gray-400",
-          "bg-gray-100 dark:bg-[#1a1a1a]",
-          "border border-gray-200 dark:border-[#262626]",
-          "hover:border-gray-300 dark:hover:border-[#404040]",
           "hover:text-gray-900 dark:hover:text-gray-200",
           "transition-all duration-200",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
-          "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]"
+          "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
+          expanded
+            ? "px-3 py-1.5 min-w-[180px] bg-white dark:bg-[#111] border border-gray-200 dark:border-[#333] hover:border-gray-300 dark:hover:border-[#404040]"
+            : "px-3 py-1.5 bg-gray-100 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#262626] hover:border-gray-300 dark:hover:border-[#404040]"
         )}
         aria-label="Search (Ctrl+K or Cmd+K)"
         aria-haspopup="dialog"
       >
         <svg
-          className="w-4 h-4"
+          className="w-4 h-4 flex-shrink-0"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -364,8 +369,15 @@ export function UniversalSearch() {
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           />
         </svg>
-        <span className="hidden sm:inline">Search...</span>
-        <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-medium text-gray-500 bg-gray-200 dark:bg-gray-700 rounded">
+        <span className={cn(
+          expanded ? "inline text-gray-400 dark:text-gray-500" : "hidden sm:inline"
+        )}>
+          {expanded ? "Search docs..." : "Search..."}
+        </span>
+        <kbd className={cn(
+          "items-center gap-0.5 px-1.5 py-0.5 text-xs font-medium text-gray-500 bg-gray-200 dark:bg-gray-700 rounded ml-auto",
+          expanded ? "hidden lg:inline-flex" : "hidden sm:inline-flex"
+        )}>
           <span className="text-xs">⌘</span>K
         </kbd>
       </button>

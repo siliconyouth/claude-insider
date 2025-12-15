@@ -110,8 +110,13 @@ export function Header({ activePage }: HeaderProps) {
             {/* Divider */}
             <div className="mx-2 h-5 w-px bg-gray-200 dark:bg-[#262626]" />
 
-            <ApiCreditsIndicator />
-            <UniversalSearch />
+            {/* Search + API Credits Group */}
+            <div className="flex items-center gap-1.5 px-1.5 py-1 rounded-lg bg-gray-50 dark:bg-[#161616] border border-gray-100 dark:border-[#222]">
+              <UniversalSearch expanded />
+              <div className="w-px h-4 bg-gray-200 dark:bg-[#333]" />
+              <ApiCreditsIndicator />
+            </div>
+
             <ThemeToggle />
             <NotificationBell />
             <UserMenu />
