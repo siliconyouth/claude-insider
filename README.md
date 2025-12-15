@@ -5,7 +5,7 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 **Built entirely with [Claude Code](https://claude.ai/claude-code) powered by Claude Opus 4.5**
 
 [![Live Site](https://img.shields.io/badge/Live-www.claudeinsider.com-blue)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/Version-0.72.0-green)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.73.0-green)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ---
@@ -29,7 +29,9 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 - **PWA Offline Support** — Works without internet
 - **WCAG 2.1 AA** — Fully accessible
 - **Bring Your Own Key** — Use your own Anthropic API key for AI features
+- **Smart Model Selection** — Header dropdown with tier badges and usage stats
 - **Real-time Notifications** — Persistent popup notifications with deep-linking
+- **Type-Safe Database** — 2,660 lines of auto-generated TypeScript types
 
 ---
 
@@ -98,6 +100,7 @@ Plus 6 utility pages: Privacy, Terms, Disclaimer, Accessibility, Changelog, RSS 
 | `pnpm lint` | Lint all packages |
 | `pnpm format` | Format with Prettier |
 | `pnpm check-types` | TypeScript type checking |
+| `pnpm db:types` | Generate Supabase TypeScript types |
 
 ---
 

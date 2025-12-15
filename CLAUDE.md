@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.72.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.73.0**.
 
 | Link | URL |
 |------|-----|
@@ -44,6 +44,7 @@ pnpm lint             # Lint all packages
 pnpm check-types      # TypeScript type checking
 pnpm format           # Format with Prettier
 pnpm clean            # Remove build artifacts
+pnpm db:types         # Generate Supabase TypeScript types
 ```
 
 ### Environment Variables

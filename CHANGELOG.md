@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.73.0] - 2025-12-15
+
+### Added
+
+#### Enhanced Model Selection in Header
+- **Smart API Key Status Indicators** (`components/header.tsx`)
+  - Users WITHOUT API key see "Site API [+]" badge encouraging them to add their own key
+  - Users WITH valid key see model dropdown with full selection capabilities
+  - Invalid key shows warning badge with direct link to settings to fix
+  - Loading state shows skeleton animation for smoother UX
+
+- **Model Dropdown Enhancements**
+  - "BEST" badge highlighting recommended model (Opus 4.5)
+  - Tier-based color coding: violet for Opus, blue for Sonnet, emerald for Haiku
+  - Real-time usage statistics and estimated cost display
+  - Mobile-optimized abbreviated model names (Opus/Sonnet/Haiku)
+  - localStorage cache for instant model display on page load
+
+#### Auto-generated TypeScript Types from Supabase
+- **Database Types Generation** (`scripts/generate-db-types.cjs`)
+  - 2,660 lines of TypeScript covering all 46 database tables
+  - Added `pnpm db:types` script for easy regeneration
+  - Full type coverage for all Supabase queries
+
+### Fixed
+
+- **Vercel Build Compatibility**
+  - Added `force-dynamic` to dashboard layouts to prevent static generation errors
+  - Fixed build failures related to dynamic server-side data fetching
+
 ## [0.72.0] - 2025-12-15
 
 ### Added

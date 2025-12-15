@@ -238,6 +238,23 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] API supports model-only updates
 - [x] Success feedback on model change
 
+### FR-16: Enhanced Header Model Selection
+- [x] Smart API key status indicators in header
+- [x] "Site API [+]" badge for users without API key
+- [x] Model dropdown for users with valid API key
+- [x] Warning badge with fix link for invalid API keys
+- [x] Loading skeleton animation during key validation
+- [x] "BEST" badge on recommended model (Opus 4.5)
+- [x] Tier-based color coding (violet=Opus, blue=Sonnet, emerald=Haiku)
+- [x] Mobile-optimized abbreviated model names
+- [x] localStorage cache for instant display
+
+### FR-17: Auto-generated Database Types
+- [x] TypeScript types generation from Supabase schema
+- [x] `pnpm db:types` script for regeneration
+- [x] 2,660 lines covering all 46 database tables
+- [x] Full type coverage for Supabase queries
+
 ---
 
 ## Non-Functional Requirements
@@ -337,7 +354,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.72.0**
+**Version 0.73.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

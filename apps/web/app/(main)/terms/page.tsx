@@ -207,17 +207,28 @@ export default function TermsOfServicePage() {
               <li><strong>ElevenLabs:</strong> For text-to-speech (subject to <a href="https://elevenlabs.io/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">ElevenLabs&apos; Terms</a>)</li>
             </ul>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">8.2 AI Limitations</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">8.2 Model Selection</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You can select your preferred Claude model (Opus 4.5, Sonnet 4, or Haiku) for AI features:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>Site API users:</strong> Model selection is based on site credit allocation and may be limited</li>
+              <li><strong>Own API key users:</strong> Model selection is based on your Anthropic subscription tier and available models</li>
+              <li><strong>Persistence:</strong> Your model preference is saved to your account (for logged-in users) or browser localStorage (for guests)</li>
+              <li><strong>Availability:</strong> Model availability may change based on your API key permissions or site credit balance</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">8.3 AI Limitations</h3>
             <p className="text-gray-300 leading-relaxed">
               AI responses may be incorrect, incomplete, or outdated. Do not rely on AI for critical decisions. Always verify with official sources.
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">8.3 Code Playground</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">8.4 Code Playground</h3>
             <p className="text-gray-300 leading-relaxed">
               Code executed in the playground runs in a sandboxed browser environment. We are not responsible for any code you execute or its results.
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">8.4 Your Own API Key</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">8.5 Your Own API Key</h3>
             <p className="text-gray-300 leading-relaxed">
               You may optionally provide your own Anthropic API key for AI features. By doing so, you agree:
             </p>
@@ -328,7 +339,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> Claude Insider is free, open-source documentation with user accounts, social features, and AI assistance. You can sign in with email/password or OAuth (GitHub, Google) and manage your connected accounts in Settings. You can optionally add your own Anthropic API key for AI features — you remain responsible for your Anthropic account and billing. Be respectful in comments and discussions. You can export or delete your data anytime from Settings. We&apos;re not affiliated with Anthropic. Content is provided &quot;as is&quot; — always verify with official sources. Serbian law governs these terms, but your local consumer rights are preserved.
+              <strong>In short:</strong> Claude Insider is free, open-source documentation with user accounts, social features, and AI assistance. You can sign in with email/password or OAuth (GitHub, Google) and manage your connected accounts in Settings. You can select your preferred Claude model (Opus 4.5, Sonnet 4, or Haiku) based on your subscription tier. You can optionally add your own Anthropic API key for AI features — you remain responsible for your Anthropic account and billing. Be respectful in comments and discussions. You can export or delete your data anytime from Settings. We&apos;re not affiliated with Anthropic. Content is provided &quot;as is&quot; — always verify with official sources. Serbian law governs these terms, but your local consumer rights are preserved.
             </p>
           </section>
         </article>
