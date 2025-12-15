@@ -7,8 +7,9 @@
  * and information about how donations help the project.
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/design-system';
 import { useToast } from '@/components/toast';
 import {
@@ -19,6 +20,7 @@ import {
   type DonorBadgeTier,
   type DonationBankInfo,
 } from '@/lib/donations/types';
+import { PayPalDonateButtons } from '@/components/donations/paypal-buttons';
 
 interface DonationSettings {
   preset_amounts: number[];
@@ -33,6 +35,7 @@ interface DonationSettings {
 }
 
 export default function DonatePage() {
+  const router = useRouter();
   const [settings, setSettings] = useState<DonationSettings | null>(null);
   const [amount, setAmount] = useState<number>(25);
   const [customAmount, setCustomAmount] = useState<string>('');
@@ -43,7 +46,7 @@ export default function DonatePage() {
   const [bankInfo, setBankInfo] = useState<DonationBankInfo[] | null>(null);
   const [donorName, setDonorName] = useState('');
   const [donorEmail, setDonorEmail] = useState('');
-  const { error: showError } = useToast();
+  const { error: showError, success: showSuccess } = useToast();
 
   // Load settings
   useEffect(() => {
@@ -68,31 +71,15 @@ export default function DonatePage() {
 
   const badgeTier = getBadgeTierForAmount(selectedAmount);
 
-  // PayPal checkout
-  const handlePayPalCheckout = async () => {
-    setIsProcessing(true);
-    try {
-      const response = await fetch('/api/donations/paypal/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: selectedAmount,
-          message: message || undefined,
-          is_anonymous: isAnonymous,
-        }),
-      });
+  // Handle PayPal success
+  const handlePayPalSuccess = (data: { donationId: string; badgeTier?: string }) => {
+    showSuccess('Thank you for your donation!');
+    router.push(`/donate/success?donation_id=${data.donationId}`);
+  };
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to create PayPal order');
-      }
-
-      const data = await response.json();
-      window.location.href = data.approval_url;
-    } catch (error) {
-      showError(error instanceof Error ? error.message : 'Payment failed');
-      setIsProcessing(false);
-    }
+  // Handle PayPal error
+  const handlePayPalError = (errorMsg: string) => {
+    showError(errorMsg);
   };
 
   // Load bank info
@@ -287,28 +274,21 @@ export default function DonatePage() {
 
               <div className="space-y-4">
                 {settings.payment_methods.paypal && (
-                  <button
-                    onClick={handlePayPalCheckout}
-                    disabled={isProcessing || selectedAmount < settings.minimum_amount}
-                    className={cn(
-                      'w-full p-4 rounded-xl flex items-center justify-center gap-3',
-                      'bg-[#0070ba] hover:bg-[#005ea6] text-white',
-                      'font-semibold text-lg',
-                      'disabled:opacity-50 disabled:cursor-not-allowed',
-                      'transition-all duration-200'
-                    )}
-                  >
-                    {isProcessing ? (
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .757-.629h6.393c2.119 0 3.62.487 4.46 1.447.737.845 1.013 2.052.82 3.584-.03.252-.073.512-.127.778l-.004.013v.004c-.56 2.927-2.47 4.94-5.063 5.338-1.11.17-2.226.17-3.332.003l-.077.011a.77.77 0 0 0-.757.63l-1.038 6.438z" />
-                        </svg>
-                        Pay with PayPal - {formatDonationAmount(selectedAmount)}
-                      </>
-                    )}
-                  </button>
+                  <div className="space-y-3">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+                      Donate {formatDonationAmount(selectedAmount)} with PayPal
+                    </p>
+                    <PayPalDonateButtons
+                      amount={selectedAmount}
+                      currency="USD"
+                      message={message || undefined}
+                      isAnonymous={isAnonymous}
+                      onSuccess={handlePayPalSuccess}
+                      onError={handlePayPalError}
+                      disabled={selectedAmount < settings.minimum_amount}
+                      showPayLater={true}
+                    />
+                  </div>
                 )}
 
                 {settings.payment_methods.bank_transfer && !showBankInfo && (

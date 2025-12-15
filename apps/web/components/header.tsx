@@ -92,6 +92,12 @@ const SparklesIcon = () => (
   </svg>
 );
 
+const HeartIcon = () => (
+  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+  </svg>
+);
+
 export function Header({ activePage }: HeaderProps) {
   const t = useTranslations("navigation");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -209,6 +215,22 @@ export function Header({ activePage }: HeaderProps) {
             {/* Simple Links */}
             <NavLink label="Playground" href="/playground" isActive={activePage === "playground"} />
             <NavLink label="GitHub" href="https://github.com/siliconyouth/claude-insider" external />
+
+            {/* Donate Button */}
+            <Link
+              href="/donate"
+              className={cn(
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-lg ml-1",
+                "text-sm font-medium",
+                "bg-gradient-to-r from-pink-500 to-rose-500",
+                "text-white shadow-sm shadow-pink-500/25",
+                "hover:shadow-md hover:shadow-pink-500/30 hover:-translate-y-0.5",
+                "transition-all duration-200"
+              )}
+            >
+              <HeartIcon />
+              <span>Donate</span>
+            </Link>
 
             {/* Divider */}
             <div className="mx-2 h-5 w-px bg-gray-200 dark:bg-[#262626]" />
@@ -345,6 +367,18 @@ export function Header({ activePage }: HeaderProps) {
                 </svg>
                 GitHub
               </a>
+              <Link
+                href="/donate"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "rounded-md px-3 py-2.5 text-sm font-medium transition-colors flex items-center gap-2",
+                  "bg-gradient-to-r from-pink-500 to-rose-500 text-white",
+                  "hover:opacity-90"
+                )}
+              >
+                <HeartIcon />
+                Support Us
+              </Link>
             </div>
           </div>
         )}
