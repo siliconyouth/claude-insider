@@ -5,6 +5,18 @@
     {
       "path": "/api/cron/discover",
       "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/send-digests?frequency=daily",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/send-digests?frequency=weekly",
+      "schedule": "0 9 * * 1"
+    },
+    {
+      "path": "/api/cron/send-digests?frequency=monthly",
+      "schedule": "0 9 1 * *"
     }
   ],
   "redirects": [
