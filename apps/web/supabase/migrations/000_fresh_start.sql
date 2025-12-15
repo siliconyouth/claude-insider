@@ -103,6 +103,15 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'twoFactorVerifiedAt') THEN
     ALTER TABLE public."user" ADD COLUMN "twoFactorVerifiedAt" TIMESTAMPTZ;
   END IF;
+
+  -- Onboarding fields
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'hasCompletedOnboarding') THEN
+    ALTER TABLE public."user" ADD COLUMN "hasCompletedOnboarding" BOOLEAN DEFAULT false;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'onboardingStep') THEN
+    ALTER TABLE public."user" ADD COLUMN "onboardingStep" INTEGER DEFAULT 0;
+  END IF;
 END $$;
 
 -- Create indexes on user table

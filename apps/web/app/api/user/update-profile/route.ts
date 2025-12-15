@@ -3,11 +3,15 @@
  *
  * Updates user profile with additional fields like displayName, bio, and hasCompletedOnboarding.
  * These fields are defined in the Better Auth server config but not typed in the client.
+ *
+ * IMPORTANT: This endpoint clears Better Auth's cookie cache after updates to ensure
+ * the client gets fresh data. Without this, cookie caching (30 min) would return stale values.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { Pool } from "pg";
+import { cookies } from "next/headers";
 
 // Create pool for direct database access
 const pool = new Pool({
@@ -73,6 +77,14 @@ export async function POST(request: NextRequest) {
     // Execute update
     const query = `UPDATE "user" SET ${updates.join(", ")} WHERE id = $${paramIndex}`;
     await pool.query(query, values);
+
+    // Clear Better Auth's session cookie cache to force fresh data fetch
+    // This is crucial for hasCompletedOnboarding to reflect immediately
+    const cookieStore = await cookies();
+    const sessionCacheCookie = cookieStore.get("ci_auth.session_data");
+    if (sessionCacheCookie) {
+      cookieStore.delete("ci_auth.session_data");
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
