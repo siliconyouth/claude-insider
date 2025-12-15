@@ -919,7 +919,7 @@ export default function SettingsPage() {
         <hr className="border-gray-200 dark:border-[#262626] mb-12" />
 
         {/* Security Section */}
-        <section className="mb-12">
+        <section id="security" className="scroll-mt-24 mb-12">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
             Security
           </h2>

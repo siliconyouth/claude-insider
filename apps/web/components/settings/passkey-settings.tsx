@@ -113,14 +113,16 @@ export function PasskeySettings() {
       // If name changed, update it
       if (newPasskeyName.trim() && newPasskeyName !== pendingPasskey.name) {
         await renamePasskey(pendingPasskey.id, newPasskeyName.trim());
-        pendingPasskey.name = newPasskeyName.trim();
       }
 
-      setPasskeys([pendingPasskey, ...passkeys]);
+      // Reset state and refresh from database to ensure sync
       setPendingPasskey(null);
       setNewPasskeyName("");
       setViewState("list");
       toast.success("Passkey added successfully!");
+
+      // Refresh passkeys from database to verify insert worked
+      await loadPasskeys();
     });
   };
 
