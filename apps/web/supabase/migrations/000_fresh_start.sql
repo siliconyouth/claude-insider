@@ -29,6 +29,32 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- =============================================================================
+-- PART 1.5: SCHEMA PERMISSIONS FOR SUPABASE ROLES
+-- =============================================================================
+-- These grants allow Supabase's PostgREST API to access tables via service_role,
+-- authenticated, and anon keys. Without these, you get "permission denied for schema public".
+
+GRANT USAGE ON SCHEMA public TO service_role;
+GRANT USAGE ON SCHEMA public TO authenticated;
+GRANT USAGE ON SCHEMA public TO anon;
+
+-- Grant full access to service_role (admin operations bypass RLS)
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO service_role;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO service_role;
+
+-- Grant CRUD to authenticated users (subject to RLS policies)
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO authenticated;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO authenticated;
+
+-- Grant read access to anon for public data
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon;
+
+-- Set default privileges for tables created in the future
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO anon;
+
+-- =============================================================================
 -- PART 2: BETTER AUTH TABLE EXTENSIONS
 -- =============================================================================
 -- Better Auth creates: user, session, account, verification
