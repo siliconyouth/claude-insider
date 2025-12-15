@@ -10,6 +10,7 @@
  */
 export const ROLES = {
   USER: "user",
+  BETA_TESTER: "beta_tester",
   EDITOR: "editor",
   MODERATOR: "moderator",
   ADMIN: "admin",
@@ -28,6 +29,7 @@ export const AI_ASSISTANT_USER_ID = "ai-assistant-claudeinsider";
  */
 export const ROLE_HIERARCHY: UserRole[] = [
   ROLES.USER,
+  ROLES.BETA_TESTER,
   ROLES.EDITOR,
   ROLES.MODERATOR,
   ROLES.ADMIN,
@@ -51,6 +53,12 @@ export const ROLE_INFO: Record<
     description: "Standard user with basic access",
     color: "text-gray-600 dark:text-gray-400",
     bgColor: "bg-gray-100 dark:bg-gray-800",
+  },
+  [ROLES.BETA_TESTER]: {
+    label: "Beta Tester",
+    description: "Early access to new features and testing capabilities",
+    color: "text-amber-600 dark:text-amber-400",
+    bgColor: "bg-amber-100 dark:bg-amber-900/30",
   },
   [ROLES.EDITOR]: {
     label: "Editor",
@@ -156,6 +164,32 @@ export const PERMISSIONS: Record<UserRole, Record<Action, PermissionValue>> = {
     [ACTIONS.VIEW_ALL_FEEDBACK]: false,
     [ACTIONS.MANAGE_FEEDBACK]: false,
     [ACTIONS.APPLY_BETA]: true,
+    [ACTIONS.REVIEW_BETA_APPS]: false,
+    [ACTIONS.VIEW_USERS]: false,
+    [ACTIONS.MANAGE_USERS]: false,
+    [ACTIONS.CHANGE_ROLES]: false,
+    [ACTIONS.BAN_USERS]: false,
+    [ACTIONS.VIEW_ADMIN_DASHBOARD]: false,
+    [ACTIONS.VIEW_ADMIN_LOGS]: false,
+    [ACTIONS.VIEW_PRIVATE_USER_DATA]: false,
+    [ACTIONS.DELETE_ANYTHING]: false,
+    [ACTIONS.MANAGE_SUPERADMINS]: false,
+  },
+  [ROLES.BETA_TESTER]: {
+    [ACTIONS.VIEW_CONTENT]: true,
+    [ACTIONS.SUGGEST_EDITS]: true,
+    [ACTIONS.REVIEW_EDITS]: false,
+    [ACTIONS.APPROVE_EDITS]: false,
+    [ACTIONS.CREATE_COMMENT]: true,
+    [ACTIONS.EDIT_OWN_COMMENT]: true,
+    [ACTIONS.DELETE_OWN_COMMENT]: true,
+    [ACTIONS.MODERATE_COMMENTS]: false,
+    [ACTIONS.MANAGE_FAVORITES]: true,
+    [ACTIONS.MANAGE_COLLECTIONS]: true,
+    [ACTIONS.SUBMIT_FEEDBACK]: true, // Full feedback access
+    [ACTIONS.VIEW_ALL_FEEDBACK]: false,
+    [ACTIONS.MANAGE_FEEDBACK]: false,
+    [ACTIONS.APPLY_BETA]: false, // Already a beta tester
     [ACTIONS.REVIEW_BETA_APPS]: false,
     [ACTIONS.VIEW_USERS]: false,
     [ACTIONS.MANAGE_USERS]: false,

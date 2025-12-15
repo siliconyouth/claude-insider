@@ -96,7 +96,9 @@ export async function generateAIChatResponse(
     const supabase = await createAdminClient();
 
     // Get the trigger message
-    const { data: triggerMessage, error: msgError } = await supabase
+    // Note: dm_messages table not in generated Supabase types
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: triggerMessage, error: msgError } = await (supabase as any)
       .from("dm_messages")
       .select("content, sender_id")
       .eq("id", triggerMessageId)
@@ -109,7 +111,8 @@ export async function generateAIChatResponse(
     const trigger = triggerMessage as TriggerMessageRow;
 
     // Get recent conversation context (last 5 messages)
-    const { data: recentMessages } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: recentMessages } = await (supabase as any)
       .from("dm_messages")
       .select("content, sender_id, is_ai_generated")
       .eq("conversation_id", conversationId)
@@ -173,7 +176,8 @@ export async function generateAIChatResponse(
     const aiResponseContent = textContent.text;
 
     // Save the AI response as a message
-    const { data: aiMessage, error: insertError } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: aiMessage, error: insertError } = await (supabase as any)
       .from("dm_messages")
       .insert({
         conversation_id: conversationId,

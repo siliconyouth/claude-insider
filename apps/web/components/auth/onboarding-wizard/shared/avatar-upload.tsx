@@ -165,7 +165,7 @@ export function AvatarUpload() {
             isDragging
               ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
               : "border-gray-300 dark:border-gray-700 hover:border-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800/50",
-            isUploading && "pointer-events-none opacity-50"
+            _isUploading && "pointer-events-none opacity-50"
           )}
         >
           <input

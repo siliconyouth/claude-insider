@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.81.0] - 2025-12-15
+
+### Changed
+
+#### RAG Index Generator v6.0 Overhaul
+- **Generate RAG Index Script** (`scripts/generate-rag-index.cjs`) - Major v6.0 update:
+  - Beautiful console UI with boxed headers and progress indicators
+  - Verbose output mode with detailed chunk statistics
+  - Performance timing with total generation time display
+  - Semantic chunking with paragraph-aware splitting
+  - TF-IDF scoring with title/heading/keyword boosts
+  - Claude Opus 4.5 model references throughout
+  - Now generates **1,933 total chunks** (up from ~500)
+
+- **Generate Project Knowledge Script** (`scripts/generate-project-knowledge.cjs`) - Enhanced:
+  - Expanded to **20 knowledge chunks** (up from 12)
+  - Added Claude Opus 4.5 architecture documentation
+  - Added internationalization (18 languages) knowledge
+  - Added gamification and achievements system docs
+  - Added security and authentication knowledge
+  - Added database schema overview (50 tables)
+  - Added real-time features documentation
+  - Added accessibility and UX pillars knowledge
+
+### Documentation
+
+- **CLAUDE.md** - Updated RAG System section with v6.0 statistics:
+  - Updated chunk count from 435 to 1,933 total chunks
+  - Added 3,866 indexed terms statistic
+  - Added Project Knowledge Categories table (10 categories)
+  - Updated project structure to reflect new RAG index size
+- **Version Consistency** - Updated version to 0.81.0 across all files:
+  - `README.md` - Badge and RAG search description
+  - `docs/REQUIREMENTS.md` - Project status section
+  - `apps/web/package.json` - Package version
+  - `apps/web/components/footer.tsx` - Footer display
+  - `apps/web/lib/site-settings.ts` - Default settings
+  - `apps/web/data/system-prompt.ts` - AI assistant metadata
+  - `apps/web/app/api/health/route.ts` - Health endpoint
+  - `apps/web/app/(main)/dashboard/diagnostics/page.tsx` - System info
+  - `apps/web/scripts/generate-project-knowledge.cjs` - Build script
+
 ## [0.80.0] - 2025-12-15
 
 ### Changed

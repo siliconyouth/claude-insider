@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.72.0";
+const APP_VERSION = "0.81.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,39 +24,39 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
-    version: "0.72.0",
+    version: "0.81.0",
     date: "2025-12-15",
     type: "minor",
     highlights: [
-      "Persistent notification popups with deep-linking",
-      "Model selector in settings page",
-      "Fixed database migrations for Better Auth",
-      "Supabase CLI remote-only support",
-      "Added missing notification preference columns",
+      "RAG Index Generator v6.0 with beautiful console UI",
+      "1,933 total chunks (up from ~500) for better search",
+      "20 project knowledge chunks (up from 12)",
+      "Claude Opus 4.5 references throughout codebase",
+      "Semantic chunking with TF-IDF scoring",
     ],
   },
   {
-    version: "0.71.0",
+    version: "0.80.0",
     date: "2025-12-15",
     type: "minor",
     highlights: [
-      "Model selector in header with dropdown",
-      "BEST badge on recommended model (Opus 4.5)",
-      "Real-time API credits display in header",
-      "Enhanced Connect with Anthropic onboarding",
-      "Database-backed AI assistant settings",
+      "Zero ESLint warnings milestone (203 warnings fixed)",
+      "TypeScript type safety with 20+ Supabase row interfaces",
+      "React hooks compliance across all components",
+      "Fixed function ordering and hook dependencies",
+      "Beta tester role system with full RBAC support",
     ],
   },
   {
-    version: "0.70.0",
+    version: "0.79.0",
     date: "2025-12-15",
     type: "minor",
     highlights: [
-      "Bring your own Anthropic API key",
-      "Model selection (Opus, Sonnet, Haiku)",
-      "API usage tracking per feature",
-      "API key onboarding step",
-      "Encrypted key storage (AES-256-GCM)",
+      "Comprehensive DATA_LAYER.md documentation",
+      "50 database tables documented across 8 categories",
+      "RLS security patterns and policy documentation",
+      "Fresh start migration consolidation (024-049)",
+      "22 new tables including DMs, presence, security",
     ],
   },
 ];

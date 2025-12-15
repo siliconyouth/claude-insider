@@ -37,6 +37,7 @@ export async function GET() {
         COUNT(*) FILTER (WHERE "createdAt" > NOW() - INTERVAL '7 days') as new_this_week,
         COUNT(*) FILTER (WHERE "createdAt" > NOW() - INTERVAL '30 days') as new_this_month,
         COUNT(*) FILTER (WHERE role = 'user') as role_user,
+        COUNT(*) FILTER (WHERE role = 'beta_tester') as role_beta_tester,
         COUNT(*) FILTER (WHERE role = 'editor') as role_editor,
         COUNT(*) FILTER (WHERE role = 'moderator') as role_moderator,
         COUNT(*) FILTER (WHERE role = 'admin') as role_admin,
@@ -76,6 +77,7 @@ export async function GET() {
         newThisMonth: parseInt(userStats.new_this_month) || 0,
         byRole: {
           user: parseInt(userStats.role_user) || 0,
+          beta_tester: parseInt(userStats.role_beta_tester) || 0,
           editor: parseInt(userStats.role_editor) || 0,
           moderator: parseInt(userStats.role_moderator) || 0,
           admin: parseInt(userStats.role_admin) || 0,

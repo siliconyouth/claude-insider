@@ -1,14 +1,23 @@
 #!/usr/bin/env node
 
 /**
- * Generates RAG index at build time for faster AI assistant responses
- * This pre-computes the document index and TF-IDF scores
+ * RAG Index Generator for Claude Insider
+ *
+ * Generates the RAG (Retrieval-Augmented Generation) index at build time
+ * for faster AI assistant responses. This pre-computes the document index
+ * and TF-IDF scores.
+ *
+ * Index Sources:
+ * - MDX documentation (34 pages across 7 categories)
+ * - Project knowledge (20 chunks from generate-project-knowledge.cjs)
+ * - Resources (122+ curated tools, SDKs, MCP servers)
+ * - Settings/options (voice assistant configuration)
+ * - External sources (cached reference documentation)
+ * - Code examples (searchable snippets in 16+ languages)
+ *
  * Run with: node scripts/generate-rag-index.cjs
  *
- * Project knowledge is now dynamically generated from source files:
- * - README.md, CLAUDE.md, REQUIREMENTS.md, CHANGELOG.md
- * - Reads fresh data on each build for always up-to-date knowledge
- * - Includes: project overview, author, tech stack, voice features, architecture, etc.
+ * Built with Claude Code powered by Claude Opus 4.5
  */
 
 const fs = require("fs");
@@ -34,7 +43,129 @@ try {
   generateCodeChunks = () => [];
 }
 
-// Resources category metadata
+// ===========================================================================
+// CONFIGURATION
+// ===========================================================================
+
+const VERBOSE = true;
+const VERSION = "6.0"; // Increment when making significant changes
+
+// ===========================================================================
+// CONSOLE STYLING
+// ===========================================================================
+
+const colors = {
+  reset: "\x1b[0m",
+  bright: "\x1b[1m",
+  dim: "\x1b[2m",
+  green: "\x1b[32m",
+  cyan: "\x1b[36m",
+  yellow: "\x1b[33m",
+  blue: "\x1b[34m",
+  magenta: "\x1b[35m",
+  red: "\x1b[31m",
+  white: "\x1b[37m",
+};
+
+function log(message, color = colors.reset) {
+  console.log(`${color}${message}${colors.reset}`);
+}
+
+function logHeader(title) {
+  const width = 70;
+  const padding = Math.floor((width - title.length - 2) / 2);
+  console.log("");
+  log("╔" + "═".repeat(width) + "╗", colors.cyan);
+  log("║" + " ".repeat(padding) + title + " ".repeat(width - padding - title.length) + "║", colors.cyan + colors.bright);
+  log("╚" + "═".repeat(width) + "╝", colors.cyan);
+  console.log("");
+}
+
+function logSection(title) {
+  if (!VERBOSE) return;
+  console.log("");
+  log(`┌${"─".repeat(60)}┐`, colors.dim);
+  log(`│  ${title.padEnd(56)}│`, colors.yellow + colors.bright);
+  log(`└${"─".repeat(60)}┘`, colors.dim);
+}
+
+function logSubsection(title) {
+  if (!VERBOSE) return;
+  log(`  ▸ ${title}`, colors.blue);
+}
+
+function logProgress(current, total, label) {
+  if (!VERBOSE) return;
+  const percentage = Math.round((current / total) * 100);
+  const barLength = 30;
+  const filled = Math.round((current / total) * barLength);
+  const bar = "█".repeat(filled) + "░".repeat(barLength - filled);
+  log(`    [${bar}] ${percentage}% ${label}`, colors.dim);
+}
+
+function logStat(label, value, color = colors.green) {
+  log(`    ${label.padEnd(35)} ${color}${value}${colors.reset}`);
+}
+
+function logTable(title, data) {
+  if (!VERBOSE) return;
+  console.log("");
+  log(`  ${title}`, colors.white + colors.bright);
+  log(`  ${"─".repeat(50)}`, colors.dim);
+  Object.entries(data).forEach(([key, value]) => {
+    const formattedValue = typeof value === "number" ? value.toLocaleString() : value;
+    log(`    ${key.padEnd(30)} ${colors.green}${formattedValue}${colors.reset}`);
+  });
+}
+
+function logFinalStats(stats) {
+  console.log("");
+  log("╔══════════════════════════════════════════════════════════════════════╗", colors.green);
+  log("║                    RAG INDEX GENERATION COMPLETE                     ║", colors.green + colors.bright);
+  log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+  log(`║  Version: ${stats.version.padEnd(58)}║`, colors.white);
+  log(`║  Generated: ${stats.generatedAt.padEnd(55)}║`, colors.white);
+  log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+  log("║  CHUNK BREAKDOWN                                                     ║", colors.yellow + colors.bright);
+  log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+
+  const chunks = [
+    ["Documentation Chunks", stats.documentationChunks],
+    ["Project Knowledge", stats.projectKnowledgeCount],
+    ["Resource Chunks", stats.resourceChunkCount],
+    ["Settings/Options", stats.settingsChunkCount],
+    ["External Sources", stats.externalSourceCount],
+    ["Code Examples", stats.codeExamplesCount],
+  ];
+
+  chunks.forEach(([label, value]) => {
+    const valueStr = value.toLocaleString().padStart(8);
+    log(`║    ${label.padEnd(30)} ${colors.cyan}${valueStr}${colors.reset}                        ║`);
+  });
+
+  log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+  log(`║  TOTAL CHUNKS: ${colors.green + colors.bright}${stats.totalChunks.toLocaleString().padStart(8)}${colors.reset}                                            ║`);
+  log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+  log(`║  TF-IDF Terms: ${stats.tfidfTerms.toLocaleString().padStart(8)}                                            ║`, colors.white);
+  log(`║  File Size: ${stats.fileSizeKB.toLocaleString().padStart(8)} KB                                          ║`, colors.white);
+  log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+  log("║  CATEGORIES                                                          ║", colors.yellow + colors.bright);
+  log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+
+  stats.categories.forEach((cat) => {
+    log(`║    ${cat.padEnd(64)}║`, colors.dim);
+  });
+
+  log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+  log(`║  Output: ${stats.outputPath.padEnd(58)}║`, colors.dim);
+  log("╚══════════════════════════════════════════════════════════════════════╝", colors.green);
+  console.log("");
+}
+
+// ===========================================================================
+// RESOURCE CATEGORIES
+// ===========================================================================
+
 const RESOURCE_CATEGORIES = {
   official: { name: "Official Resources", description: "Anthropic official documentation and tools" },
   tools: { name: "Development Tools", description: "Tools and utilities for Claude development" },
@@ -48,7 +179,10 @@ const RESOURCE_CATEGORIES = {
   community: { name: "Community", description: "Community resources and discussions" },
 };
 
-// Common stop words to filter out
+// ===========================================================================
+// STOP WORDS
+// ===========================================================================
+
 const STOP_WORDS = new Set([
   "the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for",
   "of", "with", "by", "from", "as", "is", "was", "are", "were", "been",
@@ -61,6 +195,10 @@ const STOP_WORDS = new Set([
   "very", "just", "also", "now", "here", "there", "then", "once", "if",
 ]);
 
+// ===========================================================================
+// TOKENIZATION
+// ===========================================================================
+
 /**
  * Tokenize text into words for search
  */
@@ -72,6 +210,10 @@ function tokenize(text) {
     .filter((word) => word.length > 2)
     .filter((word) => !STOP_WORDS.has(word));
 }
+
+// ===========================================================================
+// CHUNK CONTENT
+// ===========================================================================
 
 /**
  * Split content into chunks by sections (headers)
@@ -159,6 +301,10 @@ function chunkContent(content, title, url, category) {
   return chunks;
 }
 
+// ===========================================================================
+// RESOURCE CHUNKS
+// ===========================================================================
+
 /**
  * Generate chunks from resources data
  * This allows the AI assistant to recommend specific resources
@@ -166,14 +312,16 @@ function chunkContent(content, title, url, category) {
 function generateResourceChunks() {
   const resourcesDir = path.join(__dirname, "../data/resources");
   const chunks = [];
+  const stats = { files: 0, resources: 0, byCategory: {} };
 
   if (!fs.existsSync(resourcesDir)) {
-    console.log("  Resources directory not found, skipping...");
-    return chunks;
+    if (VERBOSE) log("    Resources directory not found, skipping...", colors.yellow);
+    return { chunks, stats };
   }
 
   // Read all JSON files in resources directory
   const files = fs.readdirSync(resourcesDir).filter((f) => f.endsWith(".json"));
+  stats.files = files.length;
 
   for (const file of files) {
     const filePath = path.join(resourcesDir, file);
@@ -193,7 +341,7 @@ function generateResourceChunks() {
           resource.featuredReason || "",
         ];
 
-        const content = contentParts.filter(Boolean).join(". ");
+        const contentStr = contentParts.filter(Boolean).join(". ");
 
         // Build keywords from tags and metadata
         const keywords = [
@@ -239,21 +387,31 @@ function generateResourceChunks() {
             github: resource.github || null,
           },
         });
+
+        stats.resources++;
+        stats.byCategory[resource.category] = (stats.byCategory[resource.category] || 0) + 1;
       }
     } catch (error) {
-      console.error(`  Error processing ${file}:`, error.message);
+      if (VERBOSE) log(`    Error processing ${file}: ${error.message}`, colors.red);
     }
   }
 
-  return chunks;
+  return { chunks, stats };
 }
+
+// ===========================================================================
+// TF-IDF INDEX
+// ===========================================================================
 
 /**
  * Build TF-IDF index
  */
 function buildTfidfIndex(chunks) {
+  logSubsection("Computing TF-IDF scores...");
+
   const tfidfIndex = {};
   const docFreq = new Map();
+  let processedCount = 0;
 
   // Calculate term frequency for each document
   for (const chunk of chunks) {
@@ -265,7 +423,7 @@ function buildTfidfIndex(chunks) {
     }
 
     // Normalize by document length
-    const maxFreq = Math.max(...termFreq.values());
+    const maxFreq = Math.max(...termFreq.values()) || 1;
     const normalizedTermFreq = {};
     for (const [term, freq] of termFreq) {
       normalizedTermFreq[term] = freq / maxFreq;
@@ -278,6 +436,11 @@ function buildTfidfIndex(chunks) {
     for (const term of uniqueTerms) {
       docFreq.set(term, (docFreq.get(term) || 0) + 1);
     }
+
+    processedCount++;
+    if (VERBOSE && processedCount % 200 === 0) {
+      logProgress(processedCount, chunks.length, `TF computed for ${processedCount} chunks`);
+    }
   }
 
   // Calculate IDF values
@@ -287,13 +450,28 @@ function buildTfidfIndex(chunks) {
     idfValues[term] = Math.log(numDocs / (1 + freq));
   }
 
-  return { tfidfIndex, idfValues };
+  if (VERBOSE) {
+    logProgress(chunks.length, chunks.length, "TF-IDF computation complete");
+    logStat("Unique terms indexed:", docFreq.size.toLocaleString());
+  }
+
+  return { tfidfIndex, idfValues, termCount: docFreq.size };
 }
+
+// ===========================================================================
+// MAIN GENERATOR
+// ===========================================================================
 
 /**
  * Main function to generate RAG index
  */
 function generateRagIndex() {
+  const startTime = Date.now();
+
+  logHeader("RAG INDEX GENERATOR v" + VERSION);
+  log("  Built with Claude Code powered by Claude Opus 4.5", colors.magenta);
+  log("  Generating searchable knowledge base for AI Assistant\n", colors.dim);
+
   const contentDir = path.join(__dirname, "../content");
   const outputPath = path.join(__dirname, "../data/rag-index.json");
 
@@ -304,8 +482,9 @@ function generateRagIndex() {
   }
 
   const chunks = [];
+  const categoryCounts = {};
 
-  // Category mapping
+  // Category mapping for documentation
   const categories = {
     "getting-started": "Getting Started",
     configuration: "Configuration",
@@ -316,7 +495,14 @@ function generateRagIndex() {
     examples: "Examples",
   };
 
-  // Recursively find all MDX files
+  // =========================================================================
+  // 1. DOCUMENTATION CHUNKS
+  // =========================================================================
+  logSection("DOCUMENTATION CHUNKS");
+  logSubsection("Processing MDX files from content directory...");
+
+  let mdxFileCount = 0;
+
   function walkDir(dir, category = "") {
     if (!fs.existsSync(dir)) return;
 
@@ -346,8 +532,15 @@ function generateRagIndex() {
 
           const fileChunks = chunkContent(mdxContent, title, url, categoryName);
           chunks.push(...fileChunks);
+          mdxFileCount++;
+
+          categoryCounts[categoryName] = (categoryCounts[categoryName] || 0) + fileChunks.length;
+
+          if (VERBOSE && mdxFileCount % 5 === 0) {
+            log(`    Processed ${mdxFileCount} MDX files...`, colors.dim);
+          }
         } catch (error) {
-          console.error(`Error processing ${filePath}:`, error);
+          if (VERBOSE) log(`    Error processing ${filePath}: ${error.message}`, colors.red);
         }
       }
     }
@@ -357,48 +550,119 @@ function generateRagIndex() {
 
   const docsChunkCount = chunks.length;
 
-  // Generate and add project knowledge chunks dynamically from source files
-  console.log("\nGenerating project knowledge from documentation files...");
+  if (VERBOSE) {
+    logStat("MDX files processed:", mdxFileCount.toString());
+    logStat("Documentation chunks:", docsChunkCount.toString());
+    logTable("Chunks by Category", categoryCounts);
+  }
+
+  // =========================================================================
+  // 2. PROJECT KNOWLEDGE CHUNKS
+  // =========================================================================
+  logSection("PROJECT KNOWLEDGE CHUNKS");
+  logSubsection("Generating from source documentation files...");
+
   const projectKnowledge = generateProjectKnowledge();
   chunks.push(...projectKnowledge);
 
   const projectKnowledgeCount = projectKnowledge.length;
 
-  // Generate and add resource chunks for AI assistant recommendations
-  console.log("\nGenerating resource chunks for AI recommendations...");
-  const resourceChunks = generateResourceChunks();
+  // =========================================================================
+  // 3. RESOURCE CHUNKS
+  // =========================================================================
+  logSection("RESOURCE CHUNKS");
+  logSubsection("Processing curated resources for AI recommendations...");
+
+  const { chunks: resourceChunks, stats: resourceStats } = generateResourceChunks();
   chunks.push(...resourceChunks);
 
   const resourceChunkCount = resourceChunks.length;
 
-  // Generate and add settings/options chunks for precise AI answers
-  console.log("\nGenerating settings and options chunks...");
+  if (VERBOSE) {
+    logStat("Resource JSON files:", resourceStats.files.toString());
+    logStat("Total resources:", resourceStats.resources.toString());
+    if (Object.keys(resourceStats.byCategory).length > 0) {
+      logTable("Resources by Category", resourceStats.byCategory);
+    }
+  }
+
+  // =========================================================================
+  // 4. SETTINGS/OPTIONS CHUNKS
+  // =========================================================================
+  logSection("SETTINGS/OPTIONS CHUNKS");
+  logSubsection("Extracting voice assistant settings and options...");
+
   const settingsChunks = generateSettingsChunks();
   chunks.push(...settingsChunks);
 
   const settingsChunkCount = settingsChunks.length;
 
-  // Generate and add external source chunks if cache exists
-  console.log("\nAdding external source chunks (if cached)...");
+  if (VERBOSE) {
+    logStat("Settings chunks:", settingsChunkCount.toString());
+  }
+
+  // =========================================================================
+  // 5. EXTERNAL SOURCE CHUNKS
+  // =========================================================================
+  logSection("EXTERNAL SOURCE CHUNKS");
+  logSubsection("Loading cached external documentation...");
+
   const sourceChunks = generateSourceChunks();
   chunks.push(...sourceChunks);
 
   const sourceChunkCount = sourceChunks.length;
 
-  // Generate and add code examples chunks
-  console.log("\nGenerating code examples index...");
+  if (VERBOSE) {
+    logStat("External source chunks:", sourceChunkCount.toString());
+  }
+
+  // =========================================================================
+  // 6. CODE EXAMPLES CHUNKS
+  // =========================================================================
+  logSection("CODE EXAMPLES CHUNKS");
+  logSubsection("Indexing code snippets from documentation...");
+
   const codeChunks = generateCodeChunks();
   chunks.push(...codeChunks);
 
   const codeChunkCount = codeChunks.length;
 
-  // Build TF-IDF index
-  const { tfidfIndex, idfValues } = buildTfidfIndex(chunks);
+  // Count languages
+  const languageCounts = {};
+  codeChunks.forEach((chunk) => {
+    if (chunk.language) {
+      languageCounts[chunk.language] = (languageCounts[chunk.language] || 0) + 1;
+    }
+  });
 
-  // Create the RAG index object
+  if (VERBOSE) {
+    logStat("Code example chunks:", codeChunkCount.toString());
+    if (Object.keys(languageCounts).length > 0) {
+      const topLanguages = Object.entries(languageCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .reduce((obj, [k, v]) => ({ ...obj, [k]: v }), {});
+      logTable("Top Languages", topLanguages);
+    }
+  }
+
+  // =========================================================================
+  // 7. BUILD TF-IDF INDEX
+  // =========================================================================
+  logSection("TF-IDF INDEX");
+
+  const { tfidfIndex, idfValues, termCount } = buildTfidfIndex(chunks);
+
+  // =========================================================================
+  // 8. CREATE AND WRITE RAG INDEX
+  // =========================================================================
+  logSection("WRITING OUTPUT");
+  logSubsection("Generating JSON output file...");
+
   const ragIndex = {
-    version: "5.0",
+    version: VERSION,
     generatedAt: new Date().toISOString(),
+    builtWith: "Claude Code powered by Claude Opus 4.5",
     documentCount: chunks.length,
     documentationChunks: docsChunkCount,
     projectKnowledgeCount: projectKnowledgeCount,
@@ -412,18 +676,52 @@ function generateRagIndex() {
   };
 
   // Write to JSON file
-  fs.writeFileSync(outputPath, JSON.stringify(ragIndex, null, 2));
+  const jsonOutput = JSON.stringify(ragIndex, null, 2);
+  fs.writeFileSync(outputPath, jsonOutput);
 
-  console.log(`\n✓ Generated RAG index: ${chunks.length} total chunks`);
-  console.log(`  - Documentation chunks: ${docsChunkCount}`);
-  console.log(`  - Project knowledge chunks: ${projectKnowledgeCount} (dynamically generated)`);
-  console.log(`  - Resource chunks: ${resourceChunkCount} (for AI recommendations)`);
-  console.log(`  - Settings/options chunks: ${settingsChunkCount} (for precise answers)`);
-  console.log(`  - External source chunks: ${sourceChunkCount} (cached references)`);
-  console.log(`  - Code examples chunks: ${codeChunkCount} (searchable snippets)`);
-  console.log(`  Output: ${outputPath}`);
-  console.log(`  Categories: ${Object.values(categories).join(", ")}, Project, Resources, Settings, Sources, Code`);
+  const fileSizeBytes = fs.statSync(outputPath).size;
+  const fileSizeKB = Math.round(fileSizeBytes / 1024);
+
+  if (VERBOSE) {
+    logStat("Output file:", outputPath);
+    logStat("File size:", `${fileSizeKB.toLocaleString()} KB`);
+  }
+
+  // =========================================================================
+  // FINAL STATISTICS
+  // =========================================================================
+  const endTime = Date.now();
+  const durationMs = endTime - startTime;
+
+  logFinalStats({
+    version: VERSION,
+    generatedAt: new Date().toISOString(),
+    totalChunks: chunks.length,
+    documentationChunks: docsChunkCount,
+    projectKnowledgeCount: projectKnowledgeCount,
+    resourceChunkCount: resourceChunkCount,
+    settingsChunkCount: settingsChunkCount,
+    externalSourceCount: sourceChunkCount,
+    codeExamplesCount: codeChunkCount,
+    tfidfTerms: termCount,
+    fileSizeKB: fileSizeKB,
+    categories: [
+      ...Object.keys(categoryCounts),
+      "Project",
+      "Resources",
+      "Settings",
+      "Sources",
+      "Code",
+    ],
+    outputPath: outputPath.replace(process.cwd(), "."),
+  });
+
+  log(`  Build completed in ${(durationMs / 1000).toFixed(2)}s`, colors.green + colors.bright);
+  console.log("");
 }
 
-// Run the generator
+// ===========================================================================
+// MAIN EXECUTION
+// ===========================================================================
+
 generateRagIndex();

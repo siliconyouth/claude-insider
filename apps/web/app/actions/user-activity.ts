@@ -220,15 +220,18 @@ export async function getActivityStats(
         .from("user_achievements")
         .select("id", { count: "exact", head: true })
         .eq("user_id", targetUserId),
-      supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any)
         .from("reports")
         .select("id", { count: "exact", head: true })
         .eq("reporter_id", targetUserId),
-      supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any)
         .from("follows")
         .select("id", { count: "exact", head: true })
         .eq("follower_id", targetUserId),
-      supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any)
         .from("follows")
         .select("id", { count: "exact", head: true })
         .eq("following_id", targetUserId),
@@ -384,7 +387,7 @@ async function getUserActivityInternal(
     .limit(limit);
 
   if (achievements) {
-    const achievementRows = achievements as AchievementJoinRow[];
+    const achievementRows = achievements as unknown as AchievementJoinRow[];
     for (const ach of achievementRows) {
       if (ach.achievements) {
         activities.push({
@@ -406,7 +409,8 @@ async function getUserActivityInternal(
 
   // Get reports submitted (private - only for own/admin view)
   if (includePrivate) {
-    const { data: reports } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: reports } = await (supabase as any)
       .from("reports")
       .select("id, report_type, reason, status, created_at")
       .eq("reporter_id", userId)
@@ -414,7 +418,7 @@ async function getUserActivityInternal(
       .limit(limit);
 
     if (reports) {
-      const reportRows = reports as ReportActivityRow[];
+      const reportRows = reports as unknown as ReportActivityRow[];
       for (const report of reportRows) {
         activities.push({
           id: `report-${report.id}`,
@@ -433,7 +437,9 @@ async function getUserActivityInternal(
   }
 
   // Get follows (public activity)
-  const { data: follows } = await supabase
+  // Note: "follows" table not in generated types, cast to bypass
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: follows } = await (supabase as any)
     .from("follows")
     .select(`
       id,
@@ -448,7 +454,7 @@ async function getUserActivityInternal(
     .limit(limit);
 
   if (follows) {
-    const followRows = follows as FollowJoinRow[];
+    const followRows = follows as unknown as FollowJoinRow[];
     for (const follow of followRows) {
       if (follow.following) {
         activities.push({

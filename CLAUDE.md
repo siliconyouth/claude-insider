@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.80.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.81.0**.
 
 | Link | URL |
 |------|-----|
@@ -198,7 +198,7 @@ claude-insider/
 │   │   └── examples/             # 2 pages
 │   ├── data/
 │   │   ├── system-prompt.ts      # AI persona & context
-│   │   ├── rag-index.json        # Pre-computed index (435 chunks)
+│   │   ├── rag-index.json        # Pre-computed RAG index (1,933 chunks, 3,866 terms)
 │   │   └── resources/            # Curated resources (122+ entries)
 │   │       ├── official.json     # Anthropic official resources
 │   │       ├── tools.json        # Development tools
@@ -689,11 +689,30 @@ export async function GET(request: NextRequest) {
 | `/api/debug/api-key-test` | GET/POST | Test Anthropic API keys (admin) |
 | `/api/debug/link-check` | GET | Validate internal links (admin) |
 
-### RAG System
+### RAG System (v6.0)
 
-- 435 pre-computed chunks (423 docs + 12 project knowledge)
-- TF-IDF search with title/section/keyword boosts
+- **1,933 total chunks** (1,913 documentation + 20 project knowledge)
+- **3,866 indexed terms** for TF-IDF search
+- Semantic chunking with paragraph-aware splitting
+- TF-IDF scoring with title/heading/keyword boosts
 - Built at compile time via `scripts/generate-rag-index.cjs`
+
+### Project Knowledge Categories
+
+The RAG system includes 20 specialized knowledge chunks covering:
+
+| Category | Topics |
+|----------|--------|
+| **Platform Overview** | Claude Insider architecture, tech stack, version info |
+| **User Features** | Authentication (OAuth, passkeys, 2FA), gamification, messaging, API keys |
+| **Admin Features** | Security dashboard, diagnostics, user management, CMS |
+| **Security System** | Fingerprinting, trust scores, honeypots, rate limiting |
+| **Internationalization** | 18 languages, locale detection, translation system |
+| **MCP Servers** | Model Context Protocol integration guide |
+| **Database** | 50 tables across 8 categories, RLS policies |
+| **Real-time Features** | Presence, typing indicators, notifications |
+| **Accessibility** | WCAG 2.1 AA compliance, UX seven pillars |
+| **AI Integration** | Claude Opus 4.5 streaming, ElevenLabs TTS |
 
 ---
 

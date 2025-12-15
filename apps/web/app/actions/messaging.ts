@@ -129,7 +129,9 @@ export async function getConversations(): Promise<{
     const supabase = await createAdminClient();
 
     // Get user's conversations with participants
-    const { data: participations, error: partError } = await supabase
+    // Note: dm_participants and dm_conversations not in generated Supabase types
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: participations, error: partError } = await (supabase as any)
       .from("dm_participants")
       .select(`
         conversation_id,
@@ -163,7 +165,8 @@ export async function getConversations(): Promise<{
     }
 
     // Get all participants for these conversations
-    const { data: allParticipants } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: allParticipants } = await (supabase as any)
       .from("dm_participants")
       .select(`
         conversation_id,
@@ -186,7 +189,8 @@ export async function getConversations(): Promise<{
       .in("user_id", otherUserIds);
 
     // Get presence for participants
-    const { data: presences } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: presences } = await (supabase as any)
       .from("user_presence")
       .select("user_id, status")
       .in("user_id", otherUserIds);
@@ -267,7 +271,8 @@ export async function getMessages(
     const supabase = await createAdminClient();
 
     // Verify user is a participant
-    const { data: participant } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: participant } = await (supabase as any)
       .from("dm_participants")
       .select("id")
       .eq("conversation_id", conversationId)
@@ -279,7 +284,8 @@ export async function getMessages(
     }
 
     // Build query
-    let query = supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let query = (supabase as any)
       .from("dm_messages")
       .select(`
         id,
@@ -385,7 +391,8 @@ export async function sendMessage(
     const supabase = await createAdminClient();
 
     // Verify user is a participant
-    const { data: participant } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: participant } = await (supabase as any)
       .from("dm_participants")
       .select("id")
       .eq("conversation_id", conversationId)
@@ -412,7 +419,8 @@ export async function sendMessage(
     }
 
     // Insert message
-    const { data: newMessage, error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: newMessage, error } = await (supabase as any)
       .from("dm_messages")
       .insert({
         conversation_id: conversationId,
@@ -504,10 +512,11 @@ export async function startConversation(
     }
 
     // Use database function to get or create conversation
-    const { data, error } = await supabase.rpc("get_or_create_dm_conversation", {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any).rpc("get_or_create_dm_conversation", {
       p_user1: session.user.id,
       p_user2: targetUserId,
-    } as Record<string, unknown>);
+    });
 
     if (error) {
       console.error("Start conversation error:", error);
@@ -536,10 +545,11 @@ export async function markConversationAsRead(
 
     const supabase = await createAdminClient();
 
-    const { error } = await supabase.rpc("mark_dm_conversation_read", {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any).rpc("mark_dm_conversation_read", {
       p_user_id: session.user.id,
       p_conversation_id: conversationId,
-    } as Record<string, unknown>);
+    });
 
     if (error) {
       console.error("Mark as read error:", error);
@@ -569,7 +579,8 @@ export async function muteConversation(
 
     const supabase = await createAdminClient();
 
-    const { error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any)
       .from("dm_participants")
       .update({ is_muted: muted })
       .eq("conversation_id", conversationId)
@@ -604,9 +615,10 @@ export async function getTotalUnreadCount(): Promise<{
 
     const supabase = await createAdminClient();
 
-    const { data, error } = await supabase.rpc("get_total_unread_dm_count", {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any).rpc("get_total_unread_dm_count", {
       p_user_id: session.user.id,
-    } as Record<string, unknown>);
+    });
 
     if (error) {
       console.error("Get unread count error:", error);
@@ -689,7 +701,8 @@ export async function getUsersForMessaging(
       .in("user_id", userIds);
 
     // Get presence
-    const { data: presences } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: presences } = await (supabase as any)
       .from("user_presence")
       .select("user_id, status")
       .in("user_id", userIds);
@@ -747,7 +760,8 @@ export async function deleteMessage(
     const supabase = await createAdminClient();
 
     // Verify ownership
-    const { data: message } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: message } = await (supabase as any)
       .from("dm_messages")
       .select("id, sender_id")
       .eq("id", messageId)
@@ -763,7 +777,8 @@ export async function deleteMessage(
     }
 
     // Soft delete
-    const { error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any)
       .from("dm_messages")
       .update({ deleted_at: new Date().toISOString() })
       .eq("id", messageId);

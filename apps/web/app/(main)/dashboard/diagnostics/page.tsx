@@ -1640,25 +1640,26 @@ export default function DiagnosticsPage() {
       run: async (): Promise<DiagnosticResult> => {
         const start = Date.now();
         try {
-          const response = await fetch("/api/admin/notifications?limit=5");
+          const response = await fetch("/api/notifications?limit=5");
           if (response.ok) {
             const data = await response.json();
             return {
               name: "Notification System API",
               status: "success",
-              message: `Active - ${data.data?.length || 0} notifications found`,
+              message: `Active - ${data.notifications?.length || 0} notifications found`,
               category: "notifications",
               duration: Date.now() - start,
               details: {
-                notificationsReturned: data.data?.length || 0,
-                hasMore: data.meta?.hasMore,
+                notificationsReturned: data.notifications?.length || 0,
+                total: data.total,
+                unreadCount: data.unreadCount,
               },
             };
           } else if (response.status === 401 || response.status === 403) {
             return {
               name: "Notification System API",
               status: "warning",
-              message: "Admin role required",
+              message: "Authentication required",
               category: "notifications",
               duration: Date.now() - start,
             };
@@ -1688,19 +1689,20 @@ export default function DiagnosticsPage() {
       run: async (): Promise<DiagnosticResult> => {
         const start = Date.now();
         try {
-          const response = await fetch("/api/user/notifications?limit=5");
+          // Uses same endpoint as Notification System API - tests user-level access
+          const response = await fetch("/api/notifications?limit=5&unread=true");
           if (response.ok) {
             const data = await response.json();
             return {
               name: "User Notifications API",
               status: "success",
-              message: `Active - ${data.notifications?.length || 0} notifications, ${data.unreadCount || 0} unread`,
+              message: `Active - ${data.notifications?.length || 0} unread notifications`,
               category: "notifications",
               duration: Date.now() - start,
               details: {
                 notificationsReturned: data.notifications?.length || 0,
                 unreadCount: data.unreadCount,
-                totalCount: data.totalCount,
+                totalCount: data.total,
               },
             };
           } else if (response.status === 401) {
@@ -1737,20 +1739,17 @@ export default function DiagnosticsPage() {
       run: async (): Promise<DiagnosticResult> => {
         const start = Date.now();
         try {
-          const response = await fetch("/api/user/notification-preferences");
+          const response = await fetch("/api/notifications/preferences");
           if (response.ok) {
             const data = await response.json();
             return {
               name: "Notification Preferences",
               status: "success",
-              message: `Active - Email: ${data.preferences?.email_notifications ? "On" : "Off"}, Push: ${data.preferences?.push_notifications ? "On" : "Off"}`,
+              message: `Active - Browser Notifications: ${data.browser_notifications ? "On" : "Off"}`,
               category: "notifications",
               duration: Date.now() - start,
               details: {
-                emailNotifications: data.preferences?.email_notifications,
-                pushNotifications: data.preferences?.push_notifications,
-                achievementAlerts: data.preferences?.achievement_alerts,
-                digestFrequency: data.preferences?.digest_frequency,
+                browserNotifications: data.browser_notifications,
               },
             };
           } else if (response.status === 401) {
@@ -4026,7 +4025,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <label className="text-xs text-gray-500 uppercase">Version</label>
-            <p className="text-white font-mono">0.76.0</p>
+            <p className="text-white font-mono">0.81.0</p>
           </div>
           <div>
             <label className="text-xs text-gray-500 uppercase">Environment</label>

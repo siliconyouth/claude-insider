@@ -57,10 +57,11 @@ export async function updatePresence(
 
     const supabase = await createAdminClient();
 
-    const { error } = await supabase.rpc("update_user_presence", {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any).rpc("update_user_presence", {
       p_user_id: session.user.id,
       p_status: status,
-    } as Record<string, unknown>);
+    });
 
     if (error) {
       console.error("Update presence error:", error);
@@ -88,7 +89,8 @@ export async function heartbeat(): Promise<{ success: boolean; error?: string }>
     const supabase = await createAdminClient();
 
     // Update last_active_at to prevent idle status
-    const { error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any)
       .from("user_presence")
       .upsert({
         user_id: session.user.id,
@@ -129,7 +131,8 @@ export async function getOnlineUsers(
 
     const supabase = await createAdminClient();
 
-    const { data, error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any)
       .from("user_presence")
       .select("user_id, status")
       .in("user_id", userIds);
@@ -173,7 +176,8 @@ export async function getUserPresence(
   try {
     const supabase = await createAdminClient();
 
-    const { data, error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any)
       .from("user_presence")
       .select("user_id, status, last_seen_at, last_active_at")
       .eq("user_id", userId)
@@ -231,7 +235,8 @@ export async function setTyping(
 
     if (isTyping) {
       // Upsert typing indicator
-      const { error } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any)
         .from("dm_typing_indicators")
         .upsert({
           user_id: session.user.id,
@@ -245,7 +250,8 @@ export async function setTyping(
       }
     } else {
       // Remove typing indicator
-      const { error } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any)
         .from("dm_typing_indicators")
         .delete()
         .eq("user_id", session.user.id)
@@ -283,7 +289,8 @@ export async function getTypingUsers(
 
     const supabase = await createAdminClient();
 
-    const { data, error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any)
       .from("dm_typing_indicators")
       .select("user_id")
       .eq("conversation_id", conversationId)
