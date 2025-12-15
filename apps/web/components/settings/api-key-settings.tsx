@@ -151,22 +151,29 @@ export function ApiKeySettings() {
   };
 
   const handleModelChange = async (modelId: string) => {
+    setError(null);
     try {
       const response = await fetch("/api/user/api-keys", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          apiKey: "", // Will be ignored if already set
           preferredModel: modelId,
           provider: "anthropic",
         }),
       });
 
       if (response.ok) {
+        setSuccess("Model preference updated");
         fetchApiKeys();
+        // Clear success message after 3 seconds
+        setTimeout(() => setSuccess(null), 3000);
+      } else {
+        const data = await response.json();
+        setError(data.error || "Failed to update model preference");
       }
     } catch (err) {
       console.error("Failed to update model preference:", err);
+      setError("Failed to update model preference");
     }
   };
 

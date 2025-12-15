@@ -118,7 +118,7 @@ export async function GET() {
 
 /**
  * POST /api/user/api-keys
- * Save or update an API key
+ * Save or update an API key, or just update model preference
  */
 export async function POST(request: NextRequest) {
   try {
@@ -130,6 +130,57 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { apiKey, provider = "anthropic", preferredModel } = body;
 
+    // If only updating model preference (no new API key)
+    if (!apiKey && preferredModel) {
+      // Check if user has an existing API key
+      const existing = await pool.query(
+        `SELECT id, available_models FROM user_api_keys WHERE user_id = $1 AND provider = $2`,
+        [session.user.id, provider]
+      );
+
+      if (existing.rows.length === 0) {
+        return NextResponse.json(
+          { error: "No API key found. Please add an API key first." },
+          { status: 400 }
+        );
+      }
+
+      // Validate model is available
+      const availableModels = existing.rows[0].available_models || [];
+      const modelValid = availableModels.some((m: { id: string }) => m.id === preferredModel);
+
+      if (!modelValid) {
+        return NextResponse.json(
+          { error: "Selected model is not available for your account" },
+          { status: 400 }
+        );
+      }
+
+      // Update just the preferred model
+      await pool.query(
+        `UPDATE user_api_keys SET preferred_model = $1, updated_at = NOW() WHERE user_id = $2 AND provider = $3`,
+        [preferredModel, session.user.id, provider]
+      );
+
+      // Also update user preferences
+      await pool.query(
+        `UPDATE "user"
+         SET ai_preferences = COALESCE(ai_preferences, '{}')::jsonb || $2::jsonb
+         WHERE id = $1`,
+        [
+          session.user.id,
+          JSON.stringify({ preferredModel }),
+        ]
+      );
+
+      return NextResponse.json({
+        success: true,
+        preferredModel,
+        message: "Model preference updated",
+      });
+    }
+
+    // Otherwise, require API key
     if (!apiKey || typeof apiKey !== "string") {
       return NextResponse.json(
         { error: "API key is required" },
