@@ -5,14 +5,124 @@
  *
  * Compact display for the header showing user's API usage and model selection.
  * Shows current model, tokens used, and estimated cost with a dropdown for model switching.
+ *
+ * States:
+ * - Loading: Shows skeleton placeholder
+ * - No API key: Shows "Site API" with link to add key
+ * - Invalid key: Shows warning indicator
+ * - Valid key: Shows model selector dropdown
  */
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
+import { useAuth } from "@/components/providers/auth-provider";
 import { useApiCredits, formatTokens, formatCost, type ModelInfo } from "@/hooks/use-api-credits";
 
+/**
+ * Get abbreviated model name for mobile display
+ */
+function getShortModelName(name: string | null): string {
+  if (!name) return "Model";
+  if (name.includes("Opus")) return "Opus";
+  if (name.includes("Sonnet")) return "Sonnet";
+  if (name.includes("Haiku")) return "Haiku";
+  return name.split(" ")[1] || "Model";
+}
+
+/**
+ * Loading skeleton for the indicator
+ */
+function ModelIndicatorSkeleton() {
+  return (
+    <div className={cn(
+      "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg",
+      "bg-gray-100 dark:bg-gray-800",
+      "border border-gray-200 dark:border-gray-700",
+      "animate-pulse"
+    )}>
+      <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600" />
+      <div className="hidden sm:block w-12 h-3 rounded bg-gray-300 dark:bg-gray-600" />
+      <div className="w-8 h-3 rounded bg-gray-300 dark:bg-gray-600" />
+    </div>
+  );
+}
+
+/**
+ * Indicator for users without their own API key
+ * Shows "Site API" and links to settings to add key
+ */
+function SiteApiIndicator() {
+  return (
+    <Link
+      href="/settings#ai"
+      className={cn(
+        "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg",
+        "text-xs font-medium",
+        "bg-gray-100 dark:bg-gray-800",
+        "border border-gray-200 dark:border-gray-700",
+        "text-gray-600 dark:text-gray-400",
+        "hover:border-blue-500/40 hover:text-blue-600 dark:hover:text-cyan-400",
+        "transition-all duration-200",
+        "group"
+      )}
+      title="Using site's shared API. Add your own key for unlimited access."
+    >
+      {/* Gray indicator dot */}
+      <div className="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-500" />
+
+      {/* Text */}
+      <span className="hidden sm:inline">Site API</span>
+
+      {/* Plus icon to encourage adding key */}
+      <svg
+        className="w-3 h-3 text-gray-400 group-hover:text-blue-500 dark:group-hover:text-cyan-400 transition-colors"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+      </svg>
+    </Link>
+  );
+}
+
+/**
+ * Indicator for users with invalid API key
+ * Shows warning and links to settings to fix
+ */
+function InvalidKeyIndicator() {
+  return (
+    <Link
+      href="/settings#ai"
+      className={cn(
+        "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg",
+        "text-xs font-medium",
+        "bg-amber-50 dark:bg-amber-900/20",
+        "border border-amber-200 dark:border-amber-800",
+        "text-amber-600 dark:text-amber-400",
+        "hover:border-amber-400 dark:hover:border-amber-600",
+        "transition-all duration-200"
+      )}
+      title="Your API key needs attention. Click to fix."
+    >
+      {/* Warning indicator */}
+      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+        />
+      </svg>
+
+      <span className="hidden sm:inline">Key Invalid</span>
+    </Link>
+  );
+}
+
 export function ApiCreditsIndicator() {
+  const { isAuthenticated } = useAuth();
   const {
     hasOwnKey,
     isValid,
@@ -43,9 +153,24 @@ export function ApiCreditsIndicator() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Don't show if user doesn't have their own key active
-  if (!hasOwnKey || !isValid || isLoading) {
+  // Don't show anything if not authenticated
+  if (!isAuthenticated) {
     return null;
+  }
+
+  // Show loading skeleton
+  if (isLoading) {
+    return <ModelIndicatorSkeleton />;
+  }
+
+  // Show "Site API" indicator for users without their own key
+  if (!hasOwnKey) {
+    return <SiteApiIndicator />;
+  }
+
+  // Show warning for invalid keys
+  if (!isValid) {
+    return <InvalidKeyIndicator />;
   }
 
   const totalTokens = (usage?.inputTokens || 0) + (usage?.outputTokens || 0);
@@ -98,9 +223,10 @@ export function ApiCreditsIndicator() {
           <div className={cn("w-2 h-2 rounded-full", tierBgColors[modelTier])} />
         )}
 
-        {/* Model Name (truncated) */}
-        <span className={cn("hidden sm:inline max-w-[80px] truncate", modelTier && tierColors[modelTier])}>
-          {modelName?.replace("Claude ", "") || "Select Model"}
+        {/* Model Name - abbreviated on mobile, full on desktop */}
+        <span className={cn("max-w-[50px] sm:max-w-[80px] truncate", modelTier && tierColors[modelTier])}>
+          <span className="sm:hidden">{getShortModelName(modelName)}</span>
+          <span className="hidden sm:inline">{modelName?.replace("Claude ", "") || "Select Model"}</span>
         </span>
 
         {/* Cost */}

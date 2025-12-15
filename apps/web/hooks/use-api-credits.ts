@@ -5,10 +5,13 @@
  *
  * Provides real-time API usage/credits info for users with their own API key.
  * Polls for updates and can be manually refreshed.
+ * Uses localStorage to cache model preference for instant display on page load.
  */
 
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/components/providers/auth-provider";
+
+const CACHE_KEY = "claude-model-pref";
 
 export interface ApiUsageStats {
   inputTokens: number;
@@ -40,6 +43,46 @@ export interface ApiCreditsData {
   lastUpdated: Date | null;
 }
 
+/**
+ * Cache model preference for instant display on page load
+ */
+interface CachedModelPref {
+  hasOwnKey: boolean;
+  isValid: boolean;
+  preferredModel: string | null;
+  modelName: string | null;
+  modelTier: "opus" | "sonnet" | "haiku" | null;
+}
+
+function getCachedPref(): CachedModelPref | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) return JSON.parse(cached);
+  } catch {
+    // Ignore parse errors
+  }
+  return null;
+}
+
+function setCachedPref(data: CachedModelPref) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+function clearCachedPref() {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(CACHE_KEY);
+  } catch {
+    // Ignore storage errors
+  }
+}
+
 // Pricing per 1M tokens (approximate as of Dec 2024)
 const MODEL_PRICING: Record<string, { input: number; output: number }> = {
   "claude-opus-4-5-20251101": { input: 15, output: 75 },
@@ -67,23 +110,30 @@ function calculateEstimatedCost(
 
 export function useApiCredits(pollInterval: number = 30000) {
   const { isAuthenticated } = useAuth();
-  const [data, setData] = useState<ApiCreditsData>({
-    hasOwnKey: false,
-    isValid: false,
-    keyHint: null,
-    preferredModel: null,
-    modelName: null,
-    modelTier: null,
-    availableModels: [],
-    recommendedModel: null,
-    usage: null,
-    lastUpdated: null,
+
+  // Initialize with cached data for instant display
+  const [data, setData] = useState<ApiCreditsData>(() => {
+    const cached = getCachedPref();
+    return {
+      hasOwnKey: cached?.hasOwnKey ?? false,
+      isValid: cached?.isValid ?? false,
+      keyHint: null,
+      preferredModel: cached?.preferredModel ?? null,
+      modelName: cached?.modelName ?? null,
+      modelTier: cached?.modelTier ?? null,
+      availableModels: [],
+      recommendedModel: null,
+      usage: null,
+      lastUpdated: null,
+    };
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchCredits = useCallback(async () => {
     if (!isAuthenticated) {
+      // Clear cache on logout
+      clearCachedPref();
       setData({
         hasOwnKey: false,
         isValid: false,
@@ -134,13 +184,17 @@ export function useApiCredits(pollInterval: number = 30000) {
           availableModels.find((m: ModelInfo) => m.id === "claude-sonnet-4-20250514") ||
           availableModels[0] || null;
 
+        const newModelName = modelInfo?.name || model?.split("-").slice(0, 2).join(" ") || null;
+        const newModelTier = modelInfo?.tier || null;
+        const newIsValid = apiKey.isValid === true;
+
         setData({
           hasOwnKey: true,
-          isValid: apiKey.isValid === true,
+          isValid: newIsValid,
           keyHint: apiKey.keyHint,
           preferredModel: model,
-          modelName: modelInfo?.name || model?.split("-").slice(0, 2).join(" ") || null,
-          modelTier: modelInfo?.tier || null,
+          modelName: newModelName,
+          modelTier: newModelTier,
           availableModels,
           recommendedModel,
           usage: usage
@@ -157,6 +211,15 @@ export function useApiCredits(pollInterval: number = 30000) {
             : { inputTokens: 0, outputTokens: 0, requests: 0, estimatedCost: 0 },
           lastUpdated: new Date(),
         });
+
+        // Cache for instant display on next page load
+        setCachedPref({
+          hasOwnKey: true,
+          isValid: newIsValid,
+          preferredModel: model,
+          modelName: newModelName,
+          modelTier: newModelTier,
+        });
       } else {
         setData({
           hasOwnKey: !!apiKey,
@@ -170,6 +233,9 @@ export function useApiCredits(pollInterval: number = 30000) {
           usage: null,
           lastUpdated: new Date(),
         });
+
+        // Clear cache when user doesn't have their own key active
+        clearCachedPref();
       }
 
       setError(null);
