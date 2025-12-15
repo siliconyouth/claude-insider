@@ -2,10 +2,12 @@
  * Dashboard User Detail API
  *
  * Get and update individual user (admin only).
+ * Uses Supabase admin client for reliable read access.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { pool } from "@/lib/db";
+import { createAdminClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { hasMinRole, canManageRole, ROLES, isValidRole, type UserRole } from "@/lib/roles";
 import type { UpdateUserRequest } from "@/types/admin";
@@ -32,76 +34,74 @@ export async function GET(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const result = await pool.query(
-      `
-      SELECT
-        u.id,
-        u.name,
-        u.email,
-        u.username,
-        u.image,
-        u.role,
-        u."isBetaTester",
-        u."emailVerified",
-        u.banned,
-        u."banReason",
-        u."bannedAt",
-        u.created_at,
-        u.bio,
-        u."socialLinks",
-        u."hasPassword",
-        (SELECT COUNT(*) FROM feedback WHERE user_id = u.id) as feedback_count,
-        (SELECT provider FROM account WHERE "userId" = u.id LIMIT 1) as provider
-      FROM "user" u
-      WHERE u.id = $1
-    `,
-      [id]
-    );
+    // Use Supabase admin client for reliable access
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
 
-    if (result.rows.length === 0) {
+    // Fetch user
+    const { data: userData, error: userError } = await supabase
+      .from("user")
+      .select("id, name, email, username, image, role, isBetaTester, emailVerified, banned, banReason, bannedAt, createdAt, bio, socialLinks, hasPassword")
+      .eq("id", id)
+      .single();
+
+    if (userError || !userData) {
+      console.error("[Dashboard User Detail] Error:", userError);
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const row = result.rows[0];
+    // Fetch feedback count
+    const { count: feedbackCount } = await supabase
+      .from("feedback")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", id);
 
-    // Get beta application if exists
-    const betaResult = await pool.query(
-      `SELECT id, status, motivation, experience_level, use_case, created_at, reviewed_at, review_notes
-       FROM beta_applications WHERE user_id = $1`,
-      [id]
-    );
+    // Fetch provider from account
+    const { data: accountData } = await supabase
+      .from("account")
+      .select("providerId")
+      .eq("userId", id)
+      .limit(1)
+      .single();
 
-    const betaApplication = betaResult.rows.length > 0 ? {
-      id: betaResult.rows[0].id,
-      status: betaResult.rows[0].status,
-      motivation: betaResult.rows[0].motivation,
-      experienceLevel: betaResult.rows[0].experience_level,
-      useCase: betaResult.rows[0].use_case,
-      submittedAt: betaResult.rows[0].created_at?.toISOString(),
-      reviewedAt: betaResult.rows[0].reviewed_at?.toISOString(),
-      reviewNotes: betaResult.rows[0].review_notes,
+    // Fetch beta application if exists
+    const { data: betaData } = await supabase
+      .from("beta_applications")
+      .select("id, status, motivation, experience_level, use_case, created_at, reviewed_at, review_notes")
+      .eq("user_id", id)
+      .single();
+
+    const betaApplication = betaData ? {
+      id: betaData.id,
+      status: betaData.status,
+      motivation: betaData.motivation,
+      experienceLevel: betaData.experience_level,
+      useCase: betaData.use_case,
+      submittedAt: betaData.created_at,
+      reviewedAt: betaData.reviewed_at,
+      reviewNotes: betaData.review_notes,
     } : undefined;
 
     return NextResponse.json({
-      id: row.id,
-      name: row.name,
-      email: row.email,
-      username: row.username,
-      image: row.image,
-      role: row.role || "user",
-      isBetaTester: row.isBetaTester || false,
-      emailVerified: row.emailVerified || false,
-      banned: row.banned || false,
-      banReason: row.banReason,
-      bannedAt: row.bannedAt?.toISOString(),
-      createdAt: row.created_at.toISOString(),
-      bio: row.bio,
-      socialLinks: row.socialLinks,
-      hasPassword: row.hasPassword || false,
-      provider: row.provider,
-      feedbackCount: parseInt(row.feedback_count) || 0,
-      suggestionsCount: 0, // Will be implemented later
-      commentsCount: 0, // Will be implemented later
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      username: userData.username,
+      image: userData.image,
+      role: userData.role || "user",
+      isBetaTester: userData.isBetaTester || false,
+      emailVerified: userData.emailVerified || false,
+      banned: userData.banned || false,
+      banReason: userData.banReason,
+      bannedAt: userData.bannedAt,
+      createdAt: userData.createdAt || new Date().toISOString(),
+      bio: userData.bio,
+      socialLinks: userData.socialLinks,
+      hasPassword: userData.hasPassword || false,
+      provider: accountData?.providerId,
+      feedbackCount: feedbackCount || 0,
+      suggestionsCount: 0,
+      commentsCount: 0,
       betaApplication,
     });
   } catch (error) {

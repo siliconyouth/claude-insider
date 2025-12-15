@@ -2,10 +2,11 @@
  * Dashboard Users API
  *
  * List users (admin only).
+ * Uses Supabase admin client for reliable access to user data.
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { pool } from "@/lib/db";
+import { createAdminClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 import type { AdminUserListItem, PaginatedResponse } from "@/types/admin";
@@ -35,74 +36,61 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get("limit") || "20"), 100);
     const offset = (page - 1) * limit;
 
-    // Build query
-    let whereClause = "WHERE 1=1";
-    const params: (string | number | boolean)[] = [];
+    // Use Supabase admin client for reliable access
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
 
+    // Build query with filters
+    let query = supabase
+      .from("user")
+      .select("id, name, email, image, role, isBetaTester, emailVerified, banned, createdAt", { count: "exact" });
+
+    // Apply search filter
     if (search) {
-      params.push(`%${search}%`);
-      whereClause += ` AND (u.name ILIKE $${params.length} OR u.email ILIKE $${params.length})`;
+      query = query.or(`name.ilike.%${search}%,email.ilike.%${search}%`);
     }
 
+    // Apply role filter
     if (role !== "all") {
-      params.push(role);
-      whereClause += ` AND u.role = $${params.length}`;
+      query = query.eq("role", role);
     }
 
+    // Apply beta tester filter
     if (isBetaTester === "true") {
-      whereClause += ` AND u."isBetaTester" = TRUE`;
+      query = query.eq("isBetaTester", true);
     } else if (isBetaTester === "false") {
-      whereClause += ` AND (u."isBetaTester" = FALSE OR u."isBetaTester" IS NULL)`;
+      query = query.or("isBetaTester.eq.false,isBetaTester.is.null");
     }
 
-    const validSortFields: Record<string, string> = {
-      name: "name",
-      email: "email",
-      createdAt: '"createdAt"',
-      role: "role",
-    };
-    const sortField = validSortFields[sortBy] || '"createdAt"';
-    const order = sortOrder === "asc" ? "ASC" : "DESC";
+    // Apply sorting
+    const validSortFields = ["name", "email", "createdAt", "role"];
+    const sortField = validSortFields.includes(sortBy) ? sortBy : "createdAt";
+    query = query.order(sortField, { ascending: sortOrder === "asc" });
 
-    // Get total count
-    const countResult = await pool.query(
-      `SELECT COUNT(*) FROM "user" u ${whereClause}`,
-      params
-    );
-    const total = parseInt(countResult.rows[0].count);
+    // Apply pagination
+    query = query.range(offset, offset + limit - 1);
 
-    // Get users
-    params.push(limit, offset);
-    const result = await pool.query(
-      `
-      SELECT
-        u.id,
-        u.name,
-        u.email,
-        u.image,
-        u.role,
-        u."isBetaTester",
-        u."emailVerified",
-        u.banned,
-        u."createdAt"
-      FROM "user" u
-      ${whereClause}
-      ORDER BY u.${sortField} ${order}
-      LIMIT $${params.length - 1} OFFSET $${params.length}
-    `,
-      params
-    );
+    const { data, error, count } = await query;
 
-    const items: AdminUserListItem[] = result.rows.map((row) => ({
-      id: row.id,
-      name: row.name,
-      email: row.email,
-      image: row.image,
-      role: row.role || "user",
-      isBetaTester: row.isBetaTester || false,
-      emailVerified: row.emailVerified || false,
-      banned: row.banned || false,
-      createdAt: row.createdAt?.toISOString() || new Date().toISOString(),
+    if (error) {
+      console.error("[Dashboard Users] Supabase error:", error);
+      return NextResponse.json(
+        { error: "Failed to fetch users" },
+        { status: 500 }
+      );
+    }
+
+    const total = count || 0;
+    const items: AdminUserListItem[] = (data || []).map((row: Record<string, unknown>) => ({
+      id: row.id as string,
+      name: row.name as string | null,
+      email: row.email as string,
+      image: row.image as string | null,
+      role: (row.role as UserRole) || "user",
+      isBetaTester: (row.isBetaTester as boolean) || false,
+      emailVerified: (row.emailVerified as boolean) || false,
+      banned: (row.banned as boolean) || false,
+      createdAt: row.createdAt ? new Date(row.createdAt as string).toISOString() : new Date().toISOString(),
     }));
 
     const response: PaginatedResponse<AdminUserListItem> = {
