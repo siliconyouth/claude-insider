@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.68.0] - 2025-12-15
+
+### Added
+
+#### Email Digest System
+- **Email Digest Toggle** (`components/settings/notification-settings.tsx`)
+  - Enable/disable email digests from Settings page
+  - Fully functional toggle (removed "Coming Soon" status)
+  - Integrated with notification preferences database
+
+- **Digest Frequency Selector**
+  - Daily, Weekly, Monthly frequency options
+  - Contextual help text showing when digests are sent:
+    - Daily: 8:00 AM UTC
+    - Weekly: Monday at 8:00 AM UTC
+    - Monthly: 1st of month at 8:00 AM UTC
+  - Persists to `notification_preferences` table in Supabase
+
+- **Digest Email Template** (`lib/email.ts`)
+  - New `sendDigestEmail()` function for sending digest emails
+  - `DigestEmailParams` interface with stats and highlights
+  - Stats grid showing activity counts (comments, favorites, achievements, etc.)
+  - Highlights section with recent notification summaries
+  - Unsubscribe and change frequency links in email footer
+  - Responsive HTML email template with gradient branding
+
+- **Digest Cron API Route** (`app/api/cron/send-digests/route.ts`)
+  - POST endpoint for manual cron job triggers
+  - GET endpoint for Vercel Cron integration
+  - Secured with `CRON_SECRET` environment variable
+  - Calculates date ranges based on user frequency preference
+  - Fetches user notifications within date range
+  - Aggregates activity stats (comments, favorites, replies, etc.)
+  - Batch sends digest emails to all opted-in users
+
+### Changed
+
+- **Notification Settings UI** - Email digest toggle is now fully functional instead of "Coming Soon"
+
 ## [0.67.0] - 2025-12-15
 
 ### Added

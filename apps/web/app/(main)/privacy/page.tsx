@@ -153,6 +153,11 @@ export default function PrivacyPolicyPage() {
                     <td className="px-4 py-2">Email and in-app notifications</td>
                     <td className="px-4 py-2">Until account deleted</td>
                   </tr>
+                  <tr>
+                    <td className="px-4 py-2">Digest Preferences</td>
+                    <td className="px-4 py-2">Email digest frequency (daily/weekly/monthly)</td>
+                    <td className="px-4 py-2">Until account deleted</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -379,7 +384,7 @@ export default function PrivacyPolicyPage() {
               <li><strong>Account deletion:</strong> Confirmation link for account deletion</li>
               <li><strong>Security alerts:</strong> Important security notifications (e.g., 2FA changes)</li>
               <li><strong>Notifications:</strong> Comment replies, mentions, suggestion updates (configurable)</li>
-              <li><strong>Weekly digest:</strong> Optional summary of activity (opt-in)</li>
+              <li><strong>Activity digest:</strong> Optional summary of activity (daily, weekly, or monthly - configurable in Settings)</li>
             </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
               You can manage email preferences in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a>. Transactional emails (verification, password reset, security) cannot be disabled.

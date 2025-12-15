@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.67.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.68.0**.
 
 | Link | URL |
 |------|-----|
@@ -62,6 +62,7 @@ pnpm clean            # Remove build artifacts
 | `DATABASE_URL` | Yes | PostgreSQL connection string |
 | `NEXT_PUBLIC_APP_URL` | Yes | App URL (e.g., https://www.claudeinsider.com) |
 | `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` | Auto | Build versioning |
+| `CRON_SECRET` | Yes | Secret for securing cron job endpoints |
 
 ### Vercel Deployment
 

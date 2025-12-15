@@ -471,6 +471,231 @@ function getNotificationButtonText(type: NotificationEmailParams["type"]): strin
 }
 
 // ================================
+// User Digest Emails
+// ================================
+
+export interface DigestEmailParams {
+  email: string;
+  userName?: string;
+  frequency: "daily" | "weekly" | "monthly";
+  period: string; // e.g., "Dec 8-15, 2025"
+  stats: {
+    newComments: number;
+    newReplies: number;
+    newFollowers: number;
+    newMentions: number;
+    suggestionsUpdated: number;
+  };
+  highlights: Array<{
+    type: "comment" | "reply" | "follow" | "mention" | "suggestion";
+    title: string;
+    message: string;
+    url?: string;
+    actorName?: string;
+    timestamp: string;
+  }>;
+}
+
+/**
+ * Send activity digest email to user
+ */
+export async function sendDigestEmail(params: DigestEmailParams): Promise<EmailResult> {
+  try {
+    const frequencyLabel = params.frequency.charAt(0).toUpperCase() + params.frequency.slice(1);
+    const subject = `Your ${frequencyLabel} ${APP_NAME} Digest - ${params.period}`;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: params.email,
+      subject,
+      html: getDigestEmailHtml(params),
+    });
+
+    if (error) {
+      console.error("[Email] Digest send error:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("[Email] Unexpected error:", error);
+    return { success: false, error: "Failed to send email" };
+  }
+}
+
+/**
+ * Digest email template
+ */
+function getDigestEmailHtml(params: DigestEmailParams): string {
+  const greeting = params.userName ? `Hi ${params.userName},` : "Hi there,";
+  const frequencyLabel = params.frequency.charAt(0).toUpperCase() + params.frequency.slice(1);
+
+  const totalActivity =
+    params.stats.newComments +
+    params.stats.newReplies +
+    params.stats.newFollowers +
+    params.stats.newMentions +
+    params.stats.suggestionsUpdated;
+
+  // Build highlights list
+  const highlightsList = params.highlights
+    .slice(0, 5)
+    .map((h) => {
+      const icon = getDigestHighlightIcon(h.type);
+      return `
+        <tr>
+          <td style="padding: 12px 0; border-bottom: 1px solid #e4e4e7;">
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="40" valign="top">
+                  <div style="width: 32px; height: 32px; border-radius: 8px; background: #f4f4f5; display: flex; align-items: center; justify-content: center;">
+                    ${icon}
+                  </div>
+                </td>
+                <td style="padding-left: 12px;">
+                  <p style="margin: 0 0 4px 0; color: #18181b; font-weight: 500; font-size: 14px;">
+                    ${h.title}
+                  </p>
+                  <p style="margin: 0; color: #71717a; font-size: 13px;">
+                    ${h.message}
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  const content = `
+    <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #18181b;">
+      Your ${frequencyLabel} Activity Digest
+    </h2>
+    <p style="margin: 0 0 8px 0; color: #71717a; font-size: 14px;">
+      ${params.period}
+    </p>
+    <p style="margin: 0 0 24px 0; color: #52525b; line-height: 1.6;">
+      ${greeting}<br><br>
+      Here's what happened on ${APP_NAME} ${params.frequency === "daily" ? "today" : params.frequency === "weekly" ? "this week" : "this month"}.
+    </p>
+
+    <!-- Stats Grid -->
+    ${totalActivity > 0 ? `
+    <table role="presentation" width="100%" cellspacing="4" cellpadding="0" style="margin-bottom: 24px;">
+      <tr>
+        ${params.stats.newComments > 0 ? `
+        <td style="padding: 16px; background: #dbeafe; border-radius: 8px; text-align: center;">
+          <p style="margin: 0; font-size: 24px; font-weight: 700; color: #2563eb;">
+            ${params.stats.newComments}
+          </p>
+          <p style="margin: 4px 0 0 0; color: #1d4ed8; font-size: 12px;">
+            New Comments
+          </p>
+        </td>
+        ` : ""}
+        ${params.stats.newReplies > 0 ? `
+        <td style="padding: 16px; background: #d1fae5; border-radius: 8px; text-align: center;">
+          <p style="margin: 0; font-size: 24px; font-weight: 700; color: #059669;">
+            ${params.stats.newReplies}
+          </p>
+          <p style="margin: 4px 0 0 0; color: #047857; font-size: 12px;">
+            New Replies
+          </p>
+        </td>
+        ` : ""}
+        ${params.stats.newFollowers > 0 ? `
+        <td style="padding: 16px; background: #fce7f3; border-radius: 8px; text-align: center;">
+          <p style="margin: 0; font-size: 24px; font-weight: 700; color: #db2777;">
+            ${params.stats.newFollowers}
+          </p>
+          <p style="margin: 4px 0 0 0; color: #be185d; font-size: 12px;">
+            New Followers
+          </p>
+        </td>
+        ` : ""}
+        ${params.stats.newMentions > 0 ? `
+        <td style="padding: 16px; background: #fef3c7; border-radius: 8px; text-align: center;">
+          <p style="margin: 0; font-size: 24px; font-weight: 700; color: #d97706;">
+            ${params.stats.newMentions}
+          </p>
+          <p style="margin: 4px 0 0 0; color: #92400e; font-size: 12px;">
+            Mentions
+          </p>
+        </td>
+        ` : ""}
+      </tr>
+    </table>
+    ` : `
+    <div style="padding: 24px; background: #f4f4f5; border-radius: 12px; text-align: center; margin-bottom: 24px;">
+      <p style="margin: 0; color: #52525b; font-size: 14px;">
+        No new activity this ${params.frequency === "daily" ? "day" : params.frequency === "weekly" ? "week" : "month"}. Check back later!
+      </p>
+    </div>
+    `}
+
+    <!-- Highlights -->
+    ${params.highlights.length > 0 ? `
+    <h3 style="margin: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #18181b;">
+      Recent Highlights
+    </h3>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
+      ${highlightsList}
+    </table>
+    ` : ""}
+
+    <!-- CTA -->
+    <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto 24px auto;">
+      <tr>
+        <td style="background: linear-gradient(to right, #7c3aed, #2563eb, #06b6d4); border-radius: 8px;">
+          <a href="${APP_URL}/notifications" style="display: inline-block; padding: 12px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">
+            View All Activity
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <hr style="border: none; border-top: 1px solid #e4e4e7; margin: 24px 0;" />
+    <p style="margin: 0; color: #71717a; font-size: 13px; text-align: center;">
+      You're receiving this digest because you enabled ${params.frequency} email digests.
+      <a href="${APP_URL}/settings" style="color: #2563eb; text-decoration: none;">Change frequency</a> or
+      <a href="${APP_URL}/settings" style="color: #2563eb; text-decoration: none;">unsubscribe</a>
+    </p>
+  `;
+
+  return getEmailWrapper(content);
+}
+
+/**
+ * Get icon for digest highlight type
+ */
+function getDigestHighlightIcon(type: DigestEmailParams["highlights"][0]["type"]): string {
+  switch (type) {
+    case "comment":
+    case "reply":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#2563eb" stroke-width="2" style="width: 16px; height: 16px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>`;
+    case "follow":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#db2777" stroke-width="2" style="width: 16px; height: 16px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+      </svg>`;
+    case "mention":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#d97706" stroke-width="2" style="width: 16px; height: 16px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+      </svg>`;
+    case "suggestion":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#059669" stroke-width="2" style="width: 16px; height: 16px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>`;
+    default:
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#71717a" stroke-width="2" style="width: 16px; height: 16px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+      </svg>`;
+  }
+}
+
+// ================================
 // Admin Notification Emails
 // ================================
 

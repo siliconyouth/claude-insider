@@ -1235,23 +1235,78 @@ export default function SettingsPage() {
               </button>
             </div>
 
-            {/* Email Digest - Coming Soon */}
+            {/* Email Digest */}
             <div
               className={cn(
-                "flex items-center justify-between p-4 rounded-xl opacity-50",
+                "p-4 rounded-xl",
                 "bg-gray-50 dark:bg-[#111111]",
                 "border border-gray-200 dark:border-[#262626]"
               )}
             >
-              <div>
-                <p className="font-medium text-gray-900 dark:text-white">Weekly Digest</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Receive a weekly summary of activity
-                </p>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="font-medium text-gray-900 dark:text-white">Email Digest</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Receive a summary of your activity and notifications
+                  </p>
+                </div>
+                <button
+                  onClick={() => handleNotifPrefToggle("email_digest")}
+                  disabled={isPending}
+                  className={cn(
+                    "relative w-12 h-7 rounded-full transition-colors",
+                    notifPrefs.email_digest
+                      ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                      : "bg-gray-300 dark:bg-[#262626]"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                      notifPrefs.email_digest ? "left-6" : "left-1"
+                    )}
+                  />
+                </button>
               </div>
-              <span className="text-xs text-gray-400 dark:text-gray-500 px-2 py-1 bg-gray-100 dark:bg-[#1a1a1a] rounded">
-                Coming Soon
-              </span>
+
+              {/* Frequency Selector - only show when digest is enabled */}
+              {notifPrefs.email_digest && (
+                <div className="pt-4 border-t border-gray-200 dark:border-[#262626]">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Digest Frequency
+                  </label>
+                  <div className="flex gap-2">
+                    {(["daily", "weekly", "monthly"] as const).map((freq) => (
+                      <button
+                        key={freq}
+                        onClick={() => {
+                          setNotifPrefs((prev) => ({ ...prev, email_digest_frequency: freq }));
+                          startTransition(async () => {
+                            const result = await updateNotificationPreferences({ email_digest_frequency: freq });
+                            if (result.error) {
+                              toast.error(result.error);
+                            }
+                          });
+                        }}
+                        disabled={isPending}
+                        className={cn(
+                          "px-4 py-2 text-sm font-medium rounded-lg transition-all",
+                          notifPrefs.email_digest_frequency === freq
+                            ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white shadow-sm"
+                            : "bg-white dark:bg-[#1a1a1a] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#262626] hover:border-blue-500/50"
+                        )}
+                      >
+                        {freq.charAt(0).toUpperCase() + freq.slice(1)}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                    {notifPrefs.email_digest_frequency === "daily" && "You'll receive a digest every morning at 9 AM"}
+                    {notifPrefs.email_digest_frequency === "weekly" && "You'll receive a digest every Monday at 9 AM"}
+                    {notifPrefs.email_digest_frequency === "monthly" && "You'll receive a digest on the 1st of each month"}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </section>

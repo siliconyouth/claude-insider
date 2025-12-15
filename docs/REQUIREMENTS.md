@@ -167,6 +167,17 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Safety checks preventing removal of last login method
 - [x] Show/hide password toggle
 
+### FR-8: Email Digest System
+- [x] Email digest toggle (enable/disable)
+- [x] Frequency selector (daily, weekly, monthly)
+- [x] Contextual help text for send times
+- [x] Digest email template with stats grid
+- [x] Activity highlights in digest
+- [x] Unsubscribe/change frequency links
+- [x] Cron API route for scheduled sends
+- [x] Vercel Cron integration (GET endpoint)
+- [x] CRON_SECRET authentication
+
 ---
 
 ## Non-Functional Requirements
@@ -266,7 +277,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.67.0**
+**Version 0.68.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 
