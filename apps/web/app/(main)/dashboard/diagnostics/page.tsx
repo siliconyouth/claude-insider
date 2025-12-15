@@ -238,12 +238,6 @@ export default function DiagnosticsPage() {
     toast.success("API tests completed");
   }, [toast]);
 
-  // Auto-run diagnostics on mount
-  useEffect(() => {
-    runDatabaseDiagnostics();
-    runApiTests();
-  }, [runDatabaseDiagnostics, runApiTests]);
-
   // Define all test suites
   const testSuites = [
     {
