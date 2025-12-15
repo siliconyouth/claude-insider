@@ -306,6 +306,35 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Claude Code Fix Prompt window with copy-to-clipboard
 - [x] Manual test trigger (no auto-run on page load)
 
+### FR-24: Anthropic API Key Testing
+- [x] API key test endpoint (`/api/debug/api-key-test`)
+- [x] Tests site API key via GET request (admin only)
+- [x] Tests user-provided keys via POST request
+- [x] Returns rate limit information from response headers
+- [x] Displays token usage statistics (input, output, total)
+- [x] Lists available Claude models for validated key
+- [x] Key format validation (must start with `sk-ant-`)
+- [x] Secure password input for user-provided keys
+- [x] Response time and timestamp tracking
+
+### FR-25: Resources API
+- [x] Public resources endpoint (`/api/resources`)
+- [x] Returns all 122+ curated resources
+- [x] Filter by category via `category` parameter
+- [x] Get featured resources via `featured=true`
+- [x] Limit results via `limit` parameter
+- [x] Include stats via `stats=true`
+- [x] Include categories with counts via `categories=true`
+- [x] Include popular tags via `tags=true`
+- [x] No authentication required
+
+### FR-26: Enhanced Link Checker
+- [x] Connectivity pre-test before route checking
+- [x] Helpful error messages for misconfigurations
+- [x] GET fallback when HEAD returns 405
+- [x] Localhost vs production URL detection
+- [x] All 5 user roles counted in dashboard stats
+
 ---
 
 ## Non-Functional Requirements
@@ -405,7 +434,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.76.0**
+**Version 0.77.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

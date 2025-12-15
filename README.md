@@ -5,7 +5,7 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 **Built entirely with [Claude Code](https://claude.ai/claude-code) powered by Claude Opus 4.5**
 
 [![Live Site](https://img.shields.io/badge/Live-www.claudeinsider.com-blue)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/Version-0.76.0-green)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.77.0-green)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ---
@@ -38,6 +38,8 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 - **Passkey/WebAuthn** — Passwordless authentication with Face ID, Touch ID, and security keys
 - **Multi-device 2FA** — Multiple TOTP authenticator apps per account
 - **Admin Diagnostics** — TEST ALL with AI-powered analysis and Claude Code fix prompts
+- **API Key Testing** — Test Anthropic API keys with rate limit and usage info
+- **Resources API** — Public endpoint for accessing 122+ curated resources
 
 ---
 

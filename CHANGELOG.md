@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.77.0] - 2025-12-15
+
+### Added
+
+#### Anthropic API Key Testing (Diagnostics)
+- **API Key Test Endpoint** (`app/api/debug/api-key-test/route.ts`)
+  - Tests both site API key (GET) and user-provided keys (POST)
+  - Shows subscription information and rate limits from response headers
+  - Displays token usage statistics (input, output, total)
+  - Lists available Claude models for the validated key
+  - Returns response time and test timestamp
+  - Secure admin-only access with role verification
+  - User-provided keys validated with secure password input
+  - Key format validation (must start with `sk-ant-`)
+
+#### Resources API
+- **Public Resources Endpoint** (`app/api/resources/route.ts`)
+  - Returns all 122+ curated resources with optional filtering
+  - Query parameters: `category`, `featured`, `limit`, `stats`, `categories`, `tags`
+  - Filter by category slug (official, tools, mcp-servers, etc.)
+  - Get featured resources with optional limit
+  - Include stats (total count, GitHub stars, categories)
+  - Include category list with resource counts
+  - Include popular tags for filtering
+  - No authentication required - public endpoint
+
+### Fixed
+
+- **Dashboard Stats API** (`app/api/dashboard/stats/route.ts`)
+  - Added missing `ai_assistant` role count to SQL query
+  - Now correctly counts all 5 user roles: user, moderator, editor, admin, ai_assistant
+
+- **Link Checker Diagnostic** (`app/api/debug/link-check/route.ts`)
+  - Added connectivity pre-test before checking all routes
+  - Returns helpful error messages for localhost/production misconfigs
+  - Falls back to GET request if HEAD returns 405 (Method Not Allowed)
+  - Improved error handling with specific hints for common issues
+  - Shows whether running against localhost or production URL
+
 ## [0.76.0] - 2025-12-15
 
 ### Added

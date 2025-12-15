@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.76.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.77.0**.
 
 | Link | URL |
 |------|-----|
@@ -88,6 +88,8 @@ claude-insider/
 │   │   ├── api/assistant/        # Chat & TTS endpoints
 │   │   ├── api/auth/passkey-login/ # Passkey authentication endpoint
 │   │   ├── api/cron/             # Scheduled jobs (digests, notifications)
+│   │   ├── api/debug/            # Diagnostics (api-key-test, link-check)
+│   │   ├── api/resources/        # Public resources API
 │   │   ├── actions/passkeys.ts   # 8 passkey server actions
 │   │   ├── actions/two-factor.ts # 13 2FA server actions (multi-device)
 │   │   ├── actions/group-chat.ts # Group chat management (create, invite, roles)
@@ -474,6 +476,9 @@ const supabase = await createAdminClient();
 |-------|--------|---------|
 | `/api/assistant/chat` | POST | Streaming chat with Claude (SSE) |
 | `/api/assistant/speak` | POST | ElevenLabs TTS (MP3) |
+| `/api/resources` | GET | Public resources API (122+ entries) |
+| `/api/debug/api-key-test` | GET/POST | Test Anthropic API keys (admin) |
+| `/api/debug/link-check` | GET | Validate internal links (admin) |
 
 ### RAG System
 
