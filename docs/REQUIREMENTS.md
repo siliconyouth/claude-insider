@@ -296,6 +296,16 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Member management (promote, demote, kick)
 - [x] Sound preferences per user
 
+### FR-23: Admin Diagnostics Dashboard
+- [x] TEST ALL feature with sequential test execution
+- [x] Visual progress bar during test runs
+- [x] 8 comprehensive test suites (env vars, Supabase, PostgreSQL, RLS, auth, API, sounds, achievements)
+- [x] Real-time streaming AI analysis using Claude Opus 4.5
+- [x] Automatic console log capture (no manual paste needed)
+- [x] Terminal-style streaming output window
+- [x] Claude Code Fix Prompt window with copy-to-clipboard
+- [x] Manual test trigger (no auto-run on page load)
+
 ---
 
 ## Non-Functional Requirements
@@ -395,7 +405,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.75.0**
+**Version 0.76.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

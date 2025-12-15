@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.76.0] - 2025-12-15
+
+### Added
+
+#### Enhanced Diagnostics Dashboard
+- **TEST ALL Feature** (`app/(main)/dashboard/diagnostics/page.tsx`)
+  - Sequential test execution with visual progress bar
+  - Run all 8 test suites with a single click
+  - Real-time progress updates showing current test being executed
+  - Clear progress indicator (e.g., "Testing 3/8: RLS Status...")
+  - Aggregate results summary after completion
+
+- **AI-Powered Analysis**
+  - Real-time streaming AI analysis using Claude Opus 4.5
+  - Automatic console log capture (no manual paste needed)
+  - Terminal-style streaming output window with monospace font
+  - Analysis considers all test results and console logs together
+  - Intelligent root cause analysis and fix suggestions
+
+- **Claude Code Fix Prompt Window**
+  - Prominent window displaying ready-to-use fix commands
+  - One-click copy-to-clipboard functionality
+  - Terminal-formatted output optimized for Claude Code
+  - Includes environment context and specific remediation steps
+
+- **8 Comprehensive Test Suites**
+  - Environment Variables: Validates all required env vars are set
+  - Supabase Admin Client: Tests privileged database access
+  - Direct PostgreSQL Pool: Tests raw database connection
+  - RLS Status: Verifies Row Level Security policies
+  - Auth Session: Validates authentication state
+  - Dashboard Users API: Tests admin API endpoints
+  - Sound Effects System: Tests Web Audio API integration
+  - Achievement System: Tests achievement unlock flow
+
+### Changed
+
+- **Diagnostics Page Behavior**
+  - Removed auto-run behavior on page load
+  - Tests now wait for admin to manually trigger
+  - Improved UX for production debugging scenarios
+
+### Fixed
+
+- **TypeScript Improvements**
+  - Fixed optional chaining on regex matches throughout codebase
+  - Improved type safety for string parsing operations
+
+### Dependencies
+
+- **@vercel/analytics** - Updated to latest version
+
 ## [0.75.0] - 2025-12-15
 
 ### Added

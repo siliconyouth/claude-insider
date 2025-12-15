@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.75.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.76.0**.
 
 | Link | URL |
 |------|-----|
@@ -816,7 +816,29 @@ Settings are stored in localStorage under `soundSettings` with structure:
 
 Every new feature MUST have a corresponding test in the Diagnostics dashboard. This ensures all features can be verified to work correctly in production.
 
-### What Must Be Added
+### Diagnostics Dashboard Features
+
+| Feature | Description |
+|---------|-------------|
+| **TEST ALL** | Run all 8 test suites sequentially with progress bar |
+| **AI Analysis** | Claude Opus 4.5 streaming analysis of test results |
+| **Auto Console Capture** | Automatic capture of console logs (no manual paste) |
+| **Fix Prompt Window** | Ready-to-use Claude Code fix commands with copy-to-clipboard |
+
+### 8 Test Suites
+
+| Suite | Purpose |
+|-------|---------|
+| Environment Variables | Validates all required env vars are configured |
+| Supabase Admin Client | Tests privileged database access |
+| Direct PostgreSQL Pool | Tests raw database connection |
+| RLS Status | Verifies Row Level Security policies |
+| Auth Session | Validates authentication state |
+| Dashboard Users API | Tests admin API endpoints |
+| Sound Effects System | Tests Web Audio API integration |
+| Achievement System | Tests achievement unlock flow |
+
+### What Must Be Added for New Features
 
 | Feature Type | Required Test |
 |--------------|---------------|
@@ -858,6 +880,7 @@ const SOUND_CATEGORIES = {
 - [ ] Diagnostic test added to `/dashboard/diagnostics`
 - [ ] Test button/section is clearly labeled
 - [ ] Error states are handled gracefully
+- [ ] Run TEST ALL to verify no regressions
 
 ---
 

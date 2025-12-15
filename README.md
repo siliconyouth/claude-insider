@@ -5,7 +5,7 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 **Built entirely with [Claude Code](https://claude.ai/claude-code) powered by Claude Opus 4.5**
 
 [![Live Site](https://img.shields.io/badge/Live-www.claudeinsider.com-blue)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/Version-0.75.0-green)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.76.0-green)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ---
@@ -37,6 +37,7 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 - **Group Chat** — Group conversations with roles, invitations, and moderation
 - **Passkey/WebAuthn** — Passwordless authentication with Face ID, Touch ID, and security keys
 - **Multi-device 2FA** — Multiple TOTP authenticator apps per account
+- **Admin Diagnostics** — TEST ALL with AI-powered analysis and Claude Code fix prompts
 
 ---
 
