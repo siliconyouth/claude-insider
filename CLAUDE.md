@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.71.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.72.0**.
 
 | Link | URL |
 |------|-----|
@@ -109,7 +109,8 @@ claude-insider/
 │   │   │   ├── comment-section.tsx
 │   │   │   └── collection-button.tsx
 │   │   ├── achievements/         # Gamification components
-│   │   ├── notifications/        # Notification center
+│   │   ├── notifications/        # Notification center & popups
+│   │   │   ├── notification-popup.tsx # Persistent notification popups
 │   │   ├── analytics/            # User stats dashboards
 │   │   ├── universal-search/     # Unified search modal
 │   │   │   ├── index.tsx         # Main component (Quick + AI modes)
@@ -188,7 +189,7 @@ claude-insider/
 │   │   ├── Resources.ts          # Curated resources
 │   │   └── Translations.ts       # UI translation strings
 │   ├── supabase/                 # Database migrations
-│   │   └── migrations/           # 33+ SQL migration files
+│   │   └── migrations/           # 36 SQL migration files
 │   │       ├── 000_fresh_start.sql # Consolidated base schema
 │   │       ├── ...               # User data, comments, collections
 │   │       ├── 025_admin_notifications.sql # Admin broadcast system

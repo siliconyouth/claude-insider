@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.72.0] - 2025-12-15
+
+### Added
+
+#### Persistent Notification Popups
+- **Notification Popup Component** (`components/notifications/notification-popup.tsx`)
+  - Shows real-time popup notifications when new notifications arrive
+  - Popups persist until dismissed by clicking the X or navigating via the link
+  - Polls for new notifications every 15 seconds
+  - Stacks up to 5 popups with smooth slide-in animations
+  - Deep-links to relevant content based on notification type:
+    - Follow notifications link to user profiles
+    - Comment/reply notifications link to doc comment sections
+    - Suggestion status notifications link to profile suggestions
+    - Admin notifications can include custom links
+    - Version updates link to changelog
+  - Gradient accent bar and icon styling matching design system
+  - Accessible with ARIA regions and keyboard navigation
+  - Listens for custom `notification:new` events for real-time updates
+
+#### Settings Model Selector Enhancement
+- **Model Selection in Settings**
+  - Users can now change their preferred AI model directly from the settings page
+  - API endpoint updated to allow model-only updates without re-entering API key
+  - Success feedback toast when changing model preference
+
+### Fixed
+
+#### Database Migration Compatibility
+- **Better Auth TEXT User IDs**
+  - Fixed all migrations to use TEXT instead of UUID for user_id columns
+  - Ensures compatibility with Better Auth's string-based user identifiers
+  - Applied missing migrations: 024 (push_subscriptions), 025 (admin_notifications), 030 (email_verification_codes), 032 (passkeys_webauthn)
+
+- **Notification Preferences Columns**
+  - Added missing columns to notification_preferences table:
+    - `in_app_version_updates` (boolean, default true)
+    - `email_version_updates` (boolean, default false)
+    - `browser_notifications` (boolean, default false)
+  - Synced Supabase migration tracking table with all 36 migrations
+
+- **Supabase CLI Remote-Only Support**
+  - Project now works with Supabase CLI in remote-only mode
+  - Migration tracking table synchronized with remote database state
+  - No local Supabase container required for development
+
 ## [0.71.0] - 2025-12-15
 
 ### Added

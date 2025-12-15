@@ -224,6 +224,20 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Manual API key entry as alternative option
 - [x] Clear explanation of site credits vs own API key benefits
 
+### FR-14: Persistent Notification Popups
+- [x] Real-time notification popup component
+- [x] Popups persist until dismissed or clicked
+- [x] Polling for new notifications every 15 seconds
+- [x] Stack up to 5 popups with smooth animations
+- [x] Deep-linking to relevant content based on notification type
+- [x] Custom event listener for real-time updates
+- [x] ARIA regions for accessibility
+
+### FR-15: Settings Model Selection
+- [x] Model selector in settings page
+- [x] API supports model-only updates
+- [x] Success feedback on model change
+
 ---
 
 ## Non-Functional Requirements
@@ -323,7 +337,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.71.0**
+**Version 0.72.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

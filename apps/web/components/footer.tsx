@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/design-system";
 import { FooterLanguageSelector } from "@/components/footer-language-selector";
 
-const APP_VERSION = "0.71.0";
+const APP_VERSION = "0.72.0";
 
 export function Footer() {
   const t = useTranslations("footer");
