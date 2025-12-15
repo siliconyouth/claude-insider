@@ -3512,6 +3512,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
             className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="actual">Current Role ({user?.role || "user"})</option>
+            <option value="superadmin">Super Admin (Ultimate Access)</option>
             <option value="admin">Admin (Full Access)</option>
             <option value="moderator">Moderator</option>
             <option value="editor">Editor</option>
@@ -3520,23 +3521,45 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
         </div>
 
         {/* Permission Matrix */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          {/* Super Admin Permissions */}
+          <div className={cn(
+            "p-4 rounded-lg border",
+            simulatedRole === "superadmin" || (simulatedRole === "actual" && user?.role === "superadmin")
+              ? "bg-rose-500/10 border-rose-500/50"
+              : "bg-gray-800/30 border-gray-700"
+          )}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-rose-400 font-bold text-sm">🔱 Super Admin</span>
+              {(simulatedRole === "superadmin" || (simulatedRole === "actual" && user?.role === "superadmin")) && (
+                <span className="px-2 py-0.5 bg-rose-500/30 text-rose-300 text-xs rounded">Selected</span>
+              )}
+            </div>
+            <ul className="space-y-1.5 text-xs">
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> View private user data</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> See emails & names</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Delete anything</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Assign admin roles</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> All admin perms</li>
+            </ul>
+          </div>
+
           {/* Admin Permissions */}
           <div className={cn(
             "p-4 rounded-lg border",
             simulatedRole === "admin" || (simulatedRole === "actual" && user?.role === "admin")
-              ? "bg-red-500/10 border-red-500/50"
+              ? "bg-cyan-500/10 border-cyan-500/50"
               : "bg-gray-800/30 border-gray-700"
           )}>
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-red-400 font-bold text-sm">👑 Admin</span>
+              <span className="text-cyan-400 font-bold text-sm">👑 Admin</span>
               {(simulatedRole === "admin" || (simulatedRole === "actual" && user?.role === "admin")) && (
-                <span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs rounded">Selected</span>
+                <span className="px-2 py-0.5 bg-cyan-500/30 text-cyan-300 text-xs rounded">Selected</span>
               )}
             </div>
             <ul className="space-y-1.5 text-xs">
               <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Manage all users</li>
-              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Delete users</li>
+              <li className="flex items-center gap-2 text-gray-500"><span>✗</span> View private data</li>
               <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> View diagnostics</li>
               <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Send notifications</li>
               <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> All moderator perms</li>
@@ -3622,6 +3645,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
                   <th className="text-center py-2 px-3 text-gray-400 font-medium">Editor</th>
                   <th className="text-center py-2 px-3 text-gray-400 font-medium">Mod</th>
                   <th className="text-center py-2 px-3 text-gray-400 font-medium">Admin</th>
+                  <th className="text-center py-2 px-3 text-rose-400 font-medium">S.Admin</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800">
@@ -3631,6 +3655,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
                   <td className="text-center text-red-400">✗</td>
                   <td className="text-center text-emerald-400">✓</td>
                   <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
                 </tr>
                 <tr>
                   <td className="py-2 px-3 text-gray-300 font-mono">/api/dashboard/users</td>
@@ -3638,6 +3663,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
                   <td className="text-center text-red-400">✗</td>
                   <td className="text-center text-red-400">✗</td>
                   <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓ 🔓</td>
                 </tr>
                 <tr>
                   <td className="py-2 px-3 text-gray-300 font-mono">/api/dashboard/feedback</td>
@@ -3645,9 +3671,11 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
                   <td className="text-center text-red-400">✗</td>
                   <td className="text-center text-emerald-400">✓</td>
                   <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
                 </tr>
                 <tr>
                   <td className="py-2 px-3 text-gray-300 font-mono">/api/notifications</td>
+                  <td className="text-center text-emerald-400">✓</td>
                   <td className="text-center text-emerald-400">✓</td>
                   <td className="text-center text-emerald-400">✓</td>
                   <td className="text-center text-emerald-400">✓</td>
@@ -3659,6 +3687,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
                   <td className="text-center text-emerald-400">✓</td>
                   <td className="text-center text-emerald-400">✓</td>
                   <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
                 </tr>
                 <tr>
                   <td className="py-2 px-3 text-gray-300 font-mono">/api/debug/link-check</td>
@@ -3666,9 +3695,11 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
                   <td className="text-center text-red-400">✗</td>
                   <td className="text-center text-red-400">✗</td>
                   <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
                 </tr>
               </tbody>
             </table>
+            <p className="mt-2 text-xs text-gray-500">🔓 = can view unmasked private data (emails, names)</p>
           </div>
         </div>
       </section>

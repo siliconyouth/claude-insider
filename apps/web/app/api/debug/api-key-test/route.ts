@@ -46,15 +46,49 @@ interface ApiKeyTestResult {
   testedAt: string;
 }
 
-// Available Claude models for testing
+// Available Claude models for testing (ordered by priority - best first)
 const CLAUDE_MODELS = [
-  "claude-sonnet-4-20250514",
-  "claude-opus-4-20250514",
-  "claude-3-5-sonnet-20241022",
-  "claude-3-5-haiku-20241022",
-  "claude-3-opus-20240229",
-  "claude-3-haiku-20240307",
-];
+  { id: "claude-opus-4-20250514", name: "Opus 4.5", tier: "opus" },
+  { id: "claude-sonnet-4-20250514", name: "Sonnet 4", tier: "sonnet" },
+  { id: "claude-3-5-sonnet-20241022", name: "Sonnet 3.5", tier: "sonnet" },
+  { id: "claude-3-opus-20240229", name: "Opus 3", tier: "opus" },
+  { id: "claude-3-5-haiku-20241022", name: "Haiku 3.5", tier: "haiku" },
+  { id: "claude-3-haiku-20240307", name: "Haiku 3", tier: "haiku" },
+] as const;
+
+// Legacy string array for backwards compatibility
+const CLAUDE_MODEL_IDS = CLAUDE_MODELS.map(m => m.id);
+
+/**
+ * Test which models are available to an API key
+ * Tests all models in parallel for efficiency
+ */
+async function checkModelAvailability(apiKey: string): Promise<string[]> {
+  const available: string[] = [];
+
+  // Test models in parallel using Promise.allSettled
+  const results = await Promise.allSettled(
+    CLAUDE_MODELS.map(async (model) => {
+      const client = new Anthropic({ apiKey });
+      await client.messages.create({
+        model: model.id,
+        max_tokens: 5,
+        messages: [{ role: "user", content: "Hi" }],
+      });
+      return model.id;
+    })
+  );
+
+  // Collect successful models (in priority order since CLAUDE_MODELS is ordered)
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i];
+    if (result.status === "fulfilled") {
+      available.push(result.value);
+    }
+  }
+
+  return available;
+}
 
 async function testApiKey(
   apiKey: string,
@@ -64,16 +98,20 @@ async function testApiKey(
   const keyPrefix = apiKey.substring(0, 12) + "..." + apiKey.substring(apiKey.length - 4);
 
   try {
+    // First, check which models are available to this key
+    const modelsAvailable = await checkModelAvailability(apiKey);
+
+    // Use the best available model for the main test (first in list = highest priority)
+    const testModel = modelsAvailable[0] || "claude-3-haiku-20240307";
+
     // Create Anthropic client with the provided key
     const anthropic = new Anthropic({
       apiKey,
     });
 
-    // Make a minimal API call to test the key
-    // Using count_tokens is lightweight but may not be available
-    // So we'll use a minimal message completion
+    // Make a test request with the best available model
     const response = await anthropic.messages.create({
-      model: "claude-3-haiku-20240307", // Use cheapest model for testing
+      model: testModel,
       max_tokens: 10,
       messages: [
         {
@@ -93,15 +131,6 @@ async function testApiKey(
           totalTokens: response.usage.input_tokens + response.usage.output_tokens,
         }
       : undefined;
-
-    // Test which models are available
-    const modelsAvailable: string[] = [];
-
-    // We already know claude-3-haiku works if we got here
-    modelsAvailable.push("claude-3-haiku-20240307");
-
-    // Try to get model availability by testing each (expensive, so skip for now)
-    // In production, you'd want to cache this or use a different approach
 
     return {
       valid: true,
@@ -215,7 +244,9 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       siteKey: siteKeyResult,
-      availableModels: CLAUDE_MODELS,
+      allModels: CLAUDE_MODELS.map(m => ({ id: m.id, name: m.name, tier: m.tier })),
+      availableModels: siteKeyResult.modelsAvailable || [],
+      bestModel: siteKeyResult.modelsAvailable?.[0] || null,
       environment: {
         hasApiKey: !!siteApiKey,
         keyLength: siteApiKey.length,

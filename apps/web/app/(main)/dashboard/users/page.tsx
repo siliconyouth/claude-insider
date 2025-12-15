@@ -10,7 +10,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { cn } from "@/lib/design-system";
 import { useToast } from "@/components/toast";
-import { ROLE_INFO, type UserRole } from "@/lib/roles";
+import { ROLE_INFO, getAssignableRoles, type UserRole } from "@/lib/roles";
+import { useAuth } from "@/components/providers/auth-provider";
 import { banUser, unbanUser } from "@/app/actions/ban-appeals";
 import { getAdminUserActivity, getActivityStats, type ActivityItem, type ActivityStats as ActivityStatsType } from "@/app/actions/user-activity";
 import { ActivityTimeline, ActivityStats } from "@/components/activity";
@@ -21,6 +22,7 @@ type ModalView = "view" | "edit" | "ban" | "delete";
 
 export default function UsersPage() {
   const toast = useToast();
+  const { user: currentUser } = useAuth();
   const [users, setUsers] = useState<AdminUserListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -216,8 +218,8 @@ export default function UsersPage() {
         </div>
 
         {/* Role Filter */}
-        <div className="flex gap-2">
-          {(["all", "user", "editor", "moderator", "admin"] as FilterRole[]).map((role) => (
+        <div className="flex flex-wrap gap-2">
+          {(["all", "user", "beta_tester", "editor", "moderator", "admin", "superadmin"] as FilterRole[]).map((role) => (
             <button
               key={role}
               onClick={() => {
@@ -231,7 +233,7 @@ export default function UsersPage() {
                   : "text-gray-400 hover:text-white hover:bg-gray-800"
               )}
             >
-              {role === "all" ? "All" : role}
+              {role === "all" ? "All" : role === "beta_tester" ? "Beta" : role === "superadmin" ? "Super Admin" : role}
             </button>
           ))}
         </div>
@@ -485,7 +487,7 @@ export default function UsersPage() {
                   <div className="pt-4 border-t border-gray-800">
                     <label className="block text-sm font-medium text-gray-400 mb-3">Change Role</label>
                     <div className="flex flex-wrap gap-2">
-                      {(["user", "editor", "moderator"] as UserRole[]).map((role) => (
+                      {getAssignableRoles(currentUser?.role as UserRole).map((role) => (
                         <button
                           key={role}
                           onClick={() => handleRoleChange(role)}
@@ -497,12 +499,14 @@ export default function UsersPage() {
                               : "bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 disabled:opacity-50"
                           )}
                         >
-                          {role}
+                          {ROLE_INFO[role]?.label || role}
                         </button>
                       ))}
                     </div>
                     <p className="mt-2 text-xs text-gray-500">
-                      Note: Admin role can only be assigned directly in the database for security.
+                      {currentUser?.role === "superadmin"
+                        ? "Super Admins can assign roles up to Admin level."
+                        : "Admins can assign roles up to Moderator level."}
                     </p>
                   </div>
 
