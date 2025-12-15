@@ -108,6 +108,35 @@ interface LinkCheckSummary {
   slowLinks: LinkCheckResult[];
 }
 
+interface ApiKeyTestResult {
+  valid: boolean;
+  keyType: "site" | "user";
+  keyPrefix: string;
+  model?: string;
+  modelsAvailable?: string[];
+  rateLimits?: {
+    requestsLimit?: number;
+    requestsRemaining?: number;
+    requestsReset?: string;
+    tokensLimit?: number;
+    tokensRemaining?: number;
+    tokensReset?: string;
+  };
+  usage?: {
+    inputTokens?: number;
+    outputTokens?: number;
+    totalTokens?: number;
+  };
+  organization?: {
+    id?: string;
+    name?: string;
+  };
+  error?: string;
+  errorType?: string;
+  responseTime: number;
+  testedAt: string;
+}
+
 interface BrowserEnvironment {
   // Browser info
   userAgent: string;
@@ -174,6 +203,11 @@ export default function DiagnosticsPage() {
   const [simulatedRole, setSimulatedRole] = useState<UserRole | "actual">("actual");
   const [browserEnv, setBrowserEnv] = useState<BrowserEnvironment | null>(null);
   const [isLoadingBrowserEnv, setIsLoadingBrowserEnv] = useState(false);
+  const [apiKeyResult, setApiKeyResult] = useState<{ siteKey?: ApiKeyTestResult; availableModels?: string[] } | null>(null);
+  const [isLoadingApiKey, setIsLoadingApiKey] = useState(false);
+  const [userApiKey, setUserApiKey] = useState("");
+  const [userKeyResult, setUserKeyResult] = useState<ApiKeyTestResult | null>(null);
+  const [isTestingUserKey, setIsTestingUserKey] = useState(false);
 
   // TEST ALL state
   const [testAllProgress, setTestAllProgress] = useState<TestAllProgress>({
@@ -459,6 +493,61 @@ export default function DiagnosticsPage() {
       setIsLoadingBrowserEnv(false);
     }
   }, [toast]);
+
+  // Test site API key
+  const testSiteApiKey = useCallback(async () => {
+    setIsLoadingApiKey(true);
+    try {
+      const response = await fetch("/api/debug/api-key-test");
+      const data = await response.json();
+      if (response.ok) {
+        setApiKeyResult(data);
+        if (data.siteKey?.valid) {
+          toast.success("Site API key is valid");
+        } else {
+          toast.error(data.siteKey?.error || "Site API key test failed");
+        }
+      } else {
+        toast.error(data.error || "Failed to test API key");
+      }
+    } catch (error) {
+      console.error("API key test error:", error);
+      toast.error("Failed to test API key");
+    } finally {
+      setIsLoadingApiKey(false);
+    }
+  }, [toast]);
+
+  // Test user-provided API key
+  const testUserApiKey = useCallback(async () => {
+    if (!userApiKey.trim()) {
+      toast.error("Please enter an API key");
+      return;
+    }
+    setIsTestingUserKey(true);
+    setUserKeyResult(null);
+    try {
+      const response = await fetch("/api/debug/api-key-test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ apiKey: userApiKey.trim() }),
+      });
+      const data = await response.json();
+      if (data.userKey) {
+        setUserKeyResult(data.userKey);
+        if (data.userKey.valid) {
+          toast.success("API key is valid");
+        } else {
+          toast.error(data.userKey.error || "API key test failed");
+        }
+      }
+    } catch (error) {
+      console.error("User API key test error:", error);
+      toast.error("Failed to test API key");
+    } finally {
+      setIsTestingUserKey(false);
+    }
+  }, [userApiKey, toast]);
 
   // Define all test suites
   const testSuites = [
@@ -899,6 +988,59 @@ export default function DiagnosticsPage() {
             status: "error",
             message: e instanceof Error ? e.message : "Failed",
             category: "client",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Anthropic API Key",
+      category: "api",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/debug/api-key-test");
+          if (response.ok) {
+            const data = await response.json();
+            setApiKeyResult(data);
+            const siteKey = data.siteKey;
+            return {
+              name: "Anthropic API Key",
+              status: siteKey?.valid ? "success" : "error",
+              message: siteKey?.valid
+                ? `Valid - ${siteKey.model || "API accessible"}`
+                : siteKey?.error || "Invalid key",
+              category: "api",
+              duration: Date.now() - start,
+              details: {
+                keyPrefix: siteKey?.keyPrefix,
+                responseTime: siteKey?.responseTime,
+                errorType: siteKey?.errorType,
+              },
+            };
+          } else if (response.status === 403) {
+            return {
+              name: "Anthropic API Key",
+              status: "warning",
+              message: "Admin role required",
+              category: "api",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Anthropic API Key",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "api",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Anthropic API Key",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "api",
             duration: Date.now() - start,
           };
         }
@@ -2115,6 +2257,245 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
             <label className="text-xs text-gray-500 uppercase">Sound Types</label>
             <p className="text-white">{Object.values(SOUND_CATEGORIES).flat().length}</p>
           </div>
+        </div>
+      </section>
+
+      {/* Anthropic API Key Testing */}
+      <section className="rounded-xl border-2 border-violet-500/30 bg-gradient-to-r from-violet-900/10 via-purple-900/10 to-indigo-900/10 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <span>🔑</span>
+              Anthropic API Key Testing
+            </h3>
+            <p className="text-sm text-gray-400 mt-1">
+              Test API keys, check rate limits, and view usage information
+            </p>
+          </div>
+          <button
+            onClick={testSiteApiKey}
+            disabled={isLoadingApiKey}
+            className="px-4 py-2 text-sm bg-violet-600 text-white rounded-lg hover:bg-violet-700 disabled:opacity-50 transition-colors"
+          >
+            {isLoadingApiKey ? "Testing..." : "Test Site Key"}
+          </button>
+        </div>
+
+        {apiKeyResult?.siteKey && (
+          <div className="space-y-6">
+            {/* Site Key Status */}
+            <div className={cn(
+              "p-4 rounded-lg border",
+              apiKeyResult.siteKey.valid
+                ? "bg-emerald-500/10 border-emerald-500/30"
+                : "bg-red-500/10 border-red-500/30"
+            )}>
+              <h4 className="text-sm font-medium flex items-center gap-2 mb-3">
+                <span className={apiKeyResult.siteKey.valid ? "text-emerald-400" : "text-red-400"}>
+                  {apiKeyResult.siteKey.valid ? "✓" : "✗"}
+                </span>
+                <span className="text-white">Site API Key</span>
+                <span className={cn(
+                  "px-2 py-0.5 rounded text-xs",
+                  apiKeyResult.siteKey.valid
+                    ? "bg-emerald-500/20 text-emerald-400"
+                    : "bg-red-500/20 text-red-400"
+                )}>
+                  {apiKeyResult.siteKey.valid ? "Valid" : "Invalid"}
+                </span>
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Key Prefix</label>
+                  <p className="text-white font-mono text-xs">{apiKeyResult.siteKey.keyPrefix}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Response Time</label>
+                  <p className="text-white">{apiKeyResult.siteKey.responseTime}ms</p>
+                </div>
+                {apiKeyResult.siteKey.model && (
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Model Used</label>
+                    <p className="text-white text-xs">{apiKeyResult.siteKey.model}</p>
+                  </div>
+                )}
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Tested At</label>
+                  <p className="text-white text-xs">{new Date(apiKeyResult.siteKey.testedAt).toLocaleTimeString()}</p>
+                </div>
+              </div>
+              {apiKeyResult.siteKey.error && (
+                <div className="mt-3 p-2 bg-red-500/10 rounded text-red-400 text-sm">
+                  <span className="font-medium">{apiKeyResult.siteKey.errorType}: </span>
+                  {apiKeyResult.siteKey.error}
+                </div>
+              )}
+            </div>
+
+            {/* Usage Info */}
+            {apiKeyResult.siteKey.usage && (
+              <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+                <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
+                  <span>📊</span>
+                  Test Request Usage
+                </h4>
+                <div className="grid grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Input Tokens</label>
+                    <p className="text-white">{apiKeyResult.siteKey.usage.inputTokens}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Output Tokens</label>
+                    <p className="text-white">{apiKeyResult.siteKey.usage.outputTokens}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Total Tokens</label>
+                    <p className="text-white">{apiKeyResult.siteKey.usage.totalTokens}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Rate Limits */}
+            {apiKeyResult.siteKey.rateLimits && (
+              <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+                <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
+                  <span>⏱️</span>
+                  Rate Limits (from error response)
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                  {apiKeyResult.siteKey.rateLimits.requestsLimit && (
+                    <div>
+                      <label className="text-xs text-gray-500 uppercase">Requests Limit</label>
+                      <p className="text-white">{apiKeyResult.siteKey.rateLimits.requestsLimit}</p>
+                    </div>
+                  )}
+                  {apiKeyResult.siteKey.rateLimits.requestsRemaining !== undefined && (
+                    <div>
+                      <label className="text-xs text-gray-500 uppercase">Requests Remaining</label>
+                      <p className={cn(
+                        apiKeyResult.siteKey.rateLimits.requestsRemaining > 10 ? "text-emerald-400" : "text-yellow-400"
+                      )}>{apiKeyResult.siteKey.rateLimits.requestsRemaining}</p>
+                    </div>
+                  )}
+                  {apiKeyResult.siteKey.rateLimits.tokensLimit && (
+                    <div>
+                      <label className="text-xs text-gray-500 uppercase">Tokens Limit</label>
+                      <p className="text-white">{apiKeyResult.siteKey.rateLimits.tokensLimit.toLocaleString()}</p>
+                    </div>
+                  )}
+                  {apiKeyResult.siteKey.rateLimits.tokensRemaining !== undefined && (
+                    <div>
+                      <label className="text-xs text-gray-500 uppercase">Tokens Remaining</label>
+                      <p className={cn(
+                        apiKeyResult.siteKey.rateLimits.tokensRemaining > 1000 ? "text-emerald-400" : "text-yellow-400"
+                      )}>{apiKeyResult.siteKey.rateLimits.tokensRemaining.toLocaleString()}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Available Models */}
+            {apiKeyResult.availableModels && apiKeyResult.availableModels.length > 0 && (
+              <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+                <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
+                  <span>🤖</span>
+                  Available Claude Models
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {apiKeyResult.availableModels.map((model, i) => (
+                    <span key={i} className="px-2 py-1 bg-violet-500/20 text-violet-300 rounded text-xs font-mono">
+                      {model}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {!apiKeyResult && !isLoadingApiKey && (
+          <p className="text-gray-500 text-sm">Click "Test Site Key" to check the configured API key</p>
+        )}
+
+        {isLoadingApiKey && (
+          <div className="flex items-center justify-center py-8">
+            <svg className="animate-spin h-8 w-8 text-violet-500" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            <span className="ml-3 text-gray-400">Testing API key...</span>
+          </div>
+        )}
+
+        {/* User API Key Test */}
+        <div className="mt-6 pt-6 border-t border-gray-700">
+          <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
+            <span>🔐</span>
+            Test Your Own API Key
+          </h4>
+          <div className="flex gap-3">
+            <input
+              type="password"
+              value={userApiKey}
+              onChange={(e) => setUserApiKey(e.target.value)}
+              placeholder="sk-ant-api03-..."
+              className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-violet-500 focus:ring-1 focus:ring-violet-500 text-sm font-mono"
+            />
+            <button
+              onClick={testUserApiKey}
+              disabled={isTestingUserKey || !userApiKey.trim()}
+              className="px-4 py-2 text-sm bg-violet-600 text-white rounded-lg hover:bg-violet-700 disabled:opacity-50 transition-colors whitespace-nowrap"
+            >
+              {isTestingUserKey ? "Testing..." : "Test Key"}
+            </button>
+          </div>
+
+          {userKeyResult && (
+            <div className={cn(
+              "mt-4 p-4 rounded-lg border",
+              userKeyResult.valid
+                ? "bg-emerald-500/10 border-emerald-500/30"
+                : "bg-red-500/10 border-red-500/30"
+            )}>
+              <div className="flex items-center gap-2 mb-3">
+                <span className={userKeyResult.valid ? "text-emerald-400" : "text-red-400"}>
+                  {userKeyResult.valid ? "✓" : "✗"}
+                </span>
+                <span className="text-white font-medium">
+                  {userKeyResult.valid ? "Key is valid!" : "Key validation failed"}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Key Prefix</label>
+                  <p className="text-white font-mono text-xs">{userKeyResult.keyPrefix}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Response Time</label>
+                  <p className="text-white">{userKeyResult.responseTime}ms</p>
+                </div>
+                {userKeyResult.model && (
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Model</label>
+                    <p className="text-white text-xs">{userKeyResult.model}</p>
+                  </div>
+                )}
+              </div>
+              {userKeyResult.error && (
+                <div className="mt-3 p-2 bg-red-500/10 rounded text-red-400 text-sm">
+                  <span className="font-medium">{userKeyResult.errorType}: </span>
+                  {userKeyResult.error}
+                </div>
+              )}
+              {userKeyResult.usage && (
+                <div className="mt-3 text-xs text-gray-400">
+                  Test used {userKeyResult.usage.totalTokens} tokens ({userKeyResult.usage.inputTokens} in, {userKeyResult.usage.outputTokens} out)
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
