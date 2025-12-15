@@ -748,6 +748,7 @@ export interface NotificationPreferences {
   email_follows: boolean;
   email_digest: boolean;
   email_digest_frequency: "daily" | "weekly" | "monthly";
+  browser_notifications: boolean;
 }
 
 const defaultNotificationPreferences: NotificationPreferences = {
@@ -762,6 +763,7 @@ const defaultNotificationPreferences: NotificationPreferences = {
   email_follows: false,
   email_digest: false,
   email_digest_frequency: "weekly",
+  browser_notifications: false,
 };
 
 /**
@@ -880,6 +882,7 @@ export async function getCompleteSettingsData(): Promise<{
               email_follows: notifPrefs.email_follows,
               email_digest: notifPrefs.email_digest,
               email_digest_frequency: notifPrefs.email_digest_frequency,
+              browser_notifications: notifPrefs.browser_notifications ?? false,
             }
           : defaultNotificationPreferences,
       },

@@ -5,12 +5,14 @@
  *
  * Shows unread notification count and dropdown preview.
  * Used in the header for quick access to notifications.
+ * Integrates with browser push notifications when enabled.
  */
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
+import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
 
 interface NotificationPreview {
   id: string;
@@ -19,10 +21,64 @@ interface NotificationPreview {
   message: string | null;
   read: boolean;
   created_at: string;
+  resource_type: string | null;
+  resource_id: string | null;
+  data: Record<string, unknown> | null;
   actor?: {
     name: string;
     username: string | null;
   } | null;
+}
+
+/**
+ * Get the appropriate deep link URL for a notification
+ * Best practice: Link directly to the relevant content, not a generic notifications page
+ */
+function getNotificationUrl(notification: NotificationPreview): string {
+  const { type, resource_type, resource_id, data, actor } = notification;
+
+  switch (type) {
+    case "follow":
+      // Link to the follower's profile
+      if (actor?.username) {
+        return `/users/${actor.username}`;
+      }
+      if (data?.actorUsername) {
+        return `/users/${data.actorUsername}`;
+      }
+      return "/notifications";
+
+    case "comment":
+    case "reply":
+      // Link to the content where the comment was made
+      if (resource_type === "doc" && resource_id) {
+        return `/docs/${resource_id}#comments`;
+      }
+      return "/notifications";
+
+    case "suggestion_approved":
+    case "suggestion_rejected":
+    case "suggestion_merged":
+      // Link to user's suggestions page
+      return "/profile/suggestions";
+
+    case "mention":
+      // Link to the content where mentioned
+      if (resource_type === "doc" && resource_id) {
+        return `/docs/${resource_id}#comments`;
+      }
+      return "/notifications";
+
+    case "system":
+      // Achievement notifications go to profile
+      if (resource_type === "achievement") {
+        return "/profile#achievements";
+      }
+      return "/notifications";
+
+    default:
+      return "/notifications";
+  }
 }
 
 export function NotificationBell() {
@@ -34,7 +90,73 @@ export function NotificationBell() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Fetch unread count
+  // Browser notifications integration
+  const { isEnabled: browserNotifsEnabled, sendNotification } = useBrowserNotifications();
+  const prevUnreadCountRef = useRef<number>(0);
+  const browserNotifsSettingRef = useRef<boolean>(false);
+
+  // Fetch browser notification preference
+  const fetchBrowserNotifSetting = useCallback(async () => {
+    if (!isAuthenticated) return;
+
+    try {
+      const res = await fetch("/api/notifications/preferences");
+      if (res.ok) {
+        const data = await res.json();
+        browserNotifsSettingRef.current = data.browser_notifications ?? false;
+      }
+    } catch (error) {
+      console.error("[NotificationBell] Preferences fetch error:", error);
+    }
+  }, [isAuthenticated]);
+
+  // Fetch latest notification for browser notification
+  const fetchLatestNotification = useCallback(async (): Promise<NotificationPreview | null> => {
+    try {
+      const res = await fetch("/api/notifications?limit=1&unread=true");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.notifications && data.notifications.length > 0) {
+          return data.notifications[0];
+        }
+      }
+    } catch (error) {
+      console.error("[NotificationBell] Latest notification fetch error:", error);
+    }
+    return null;
+  }, []);
+
+  // Send browser notification for new notification
+  const sendBrowserNotification = useCallback(
+    async (newCount: number) => {
+      // Only send if browser notifications are enabled (both browser permission and user setting)
+      if (!browserNotifsEnabled || !browserNotifsSettingRef.current) return;
+
+      // Only send if count increased (new notification arrived)
+      if (newCount <= prevUnreadCountRef.current) return;
+
+      // Fetch the latest notification to show in browser notification
+      const latestNotif = await fetchLatestNotification();
+      if (!latestNotif) return;
+
+      // Use deep linking for browser notifications too
+      const targetUrl = getNotificationUrl(latestNotif);
+
+      sendNotification({
+        title: "Claude Insider",
+        body: latestNotif.title,
+        tag: `notification-${latestNotif.id}`,
+        data: { notificationId: latestNotif.id, url: targetUrl },
+        onClick: () => {
+          window.focus();
+          window.location.href = targetUrl;
+        },
+      });
+    },
+    [browserNotifsEnabled, fetchLatestNotification, sendNotification]
+  );
+
+  // Fetch unread count and trigger browser notification if count increased
   const fetchUnreadCount = useCallback(async () => {
     if (!isAuthenticated) return;
 
@@ -42,12 +164,25 @@ export function NotificationBell() {
       const res = await fetch("/api/notifications?limit=1&unread=true");
       if (res.ok) {
         const data = await res.json();
-        setUnreadCount(data.unreadCount || 0);
+        const newCount = data.unreadCount || 0;
+
+        // Check if we should send a browser notification (new notification arrived)
+        if (newCount > prevUnreadCountRef.current && prevUnreadCountRef.current >= 0) {
+          // Don't send on initial load (when prevUnreadCountRef is 0 and we're initializing)
+          if (prevUnreadCountRef.current > 0 || newCount > 1) {
+            // Trigger browser notification asynchronously
+            sendBrowserNotification(newCount);
+          }
+        }
+
+        // Update state and ref
+        prevUnreadCountRef.current = newCount;
+        setUnreadCount(newCount);
       }
     } catch (error) {
       console.error("[NotificationBell] Count fetch error:", error);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, sendBrowserNotification]);
 
   // Fetch notifications for preview
   const fetchNotifications = useCallback(async () => {
@@ -90,11 +225,14 @@ export function NotificationBell() {
   useEffect(() => {
     if (!isAuthenticated) return;
 
+    // Fetch browser notification preference on mount
+    fetchBrowserNotifSetting();
     fetchUnreadCount();
+
     const interval = setInterval(fetchUnreadCount, 30000); // Every 30 seconds
 
     return () => clearInterval(interval);
-  }, [isAuthenticated, fetchUnreadCount]);
+  }, [isAuthenticated, fetchUnreadCount, fetchBrowserNotifSetting]);
 
   // Fetch when dropdown opens
   useEffect(() => {
@@ -300,7 +438,7 @@ export function NotificationBell() {
                 {notifications.map((notification) => (
                   <Link
                     key={notification.id}
-                    href="/notifications"
+                    href={getNotificationUrl(notification)}
                     onClick={() => setIsOpen(false)}
                     className={cn(
                       "flex items-start gap-3 px-4 py-3 transition-colors",

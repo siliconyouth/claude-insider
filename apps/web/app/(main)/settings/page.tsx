@@ -23,6 +23,8 @@ import { AvatarUpload } from "@/components/settings/avatar-upload";
 import { PasswordSettings } from "@/components/settings/password-settings";
 import { ConnectedAccounts } from "@/components/settings/connected-accounts";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
+import { BrowserNotificationPrompt } from "@/components/notifications/browser-notification-prompt";
+import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
 import Link from "next/link";
 
 // Cache key for sessionStorage
@@ -116,7 +118,12 @@ export default function SettingsPage() {
     email_follows: false,
     email_digest: false,
     email_digest_frequency: "weekly",
+    browser_notifications: false,
   });
+
+  // Browser notifications state
+  const [showBrowserNotifPrompt, setShowBrowserNotifPrompt] = useState(false);
+  const { isSupported: browserNotifSupported, permission: browserNotifPermission, isEnabled: browserNotifEnabled } = useBrowserNotifications();
 
   // Track if we've loaded data (prevents duplicate fetches)
   const hasFetched = useRef(false);
@@ -289,6 +296,51 @@ export default function SettingsPage() {
         toast.error(result.error);
       }
     });
+  };
+
+  // Browser notification toggle handler - shows prompt if permission not granted
+  const handleBrowserNotifToggle = () => {
+    // If trying to enable and permission not granted, show prompt
+    if (!notifPrefs.browser_notifications) {
+      if (!browserNotifSupported) {
+        toast.error("Browser notifications are not supported in your browser");
+        return;
+      }
+      if (browserNotifPermission === "denied") {
+        toast.error("Browser notifications are blocked. Please enable them in your browser settings.");
+        return;
+      }
+      if (browserNotifPermission === "default") {
+        // Show our custom prompt first
+        setShowBrowserNotifPrompt(true);
+        return;
+      }
+      // Already granted, just enable the setting
+    }
+
+    // Toggle the setting
+    handleNotifPrefToggle("browser_notifications");
+  };
+
+  // Handle browser notification prompt result
+  const handleBrowserNotifPromptClose = (result?: "granted" | "denied") => {
+    setShowBrowserNotifPrompt(false);
+
+    if (result === "granted") {
+      // Permission granted, enable the setting
+      setNotifPrefs((prev) => ({ ...prev, browser_notifications: true }));
+      startTransition(async () => {
+        const updateResult = await updateNotificationPreferences({ browser_notifications: true });
+        if (updateResult.error) {
+          setNotifPrefs((prev) => ({ ...prev, browser_notifications: false }));
+          toast.error(updateResult.error);
+        } else {
+          toast.success("Browser notifications enabled");
+        }
+      });
+    } else if (result === "denied") {
+      toast.error("Browser notifications permission was denied");
+    }
   };
 
   if (authLoading || isLoading) {
@@ -1309,10 +1361,77 @@ export default function SettingsPage() {
               )}
             </div>
           </div>
+
+          {/* Browser Notifications */}
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 mt-8">
+            Browser Notifications
+          </h3>
+          <div className="space-y-3">
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div className="flex-1 mr-4">
+                <div className="flex items-center gap-2">
+                  <p className="font-medium text-gray-900 dark:text-white">Push Notifications</p>
+                  {!browserNotifSupported && (
+                    <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-gray-200 dark:bg-[#262626] text-gray-500 dark:text-gray-400">
+                      Not supported
+                    </span>
+                  )}
+                  {browserNotifSupported && browserNotifPermission === "denied" && (
+                    <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400">
+                      Blocked
+                    </span>
+                  )}
+                  {browserNotifSupported && browserNotifEnabled && notifPrefs.browser_notifications && (
+                    <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
+                      Active
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Receive notifications directly in your browser, even when the tab is not active
+                </p>
+                {browserNotifPermission === "denied" && (
+                  <p className="text-xs text-red-500 mt-1">
+                    To enable, click the lock icon in your browser&apos;s address bar and allow notifications
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={handleBrowserNotifToggle}
+                disabled={isPending || !browserNotifSupported || browserNotifPermission === "denied"}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  notifPrefs.browser_notifications && browserNotifEnabled
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]",
+                  (!browserNotifSupported || browserNotifPermission === "denied") && "opacity-50 cursor-not-allowed"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    notifPrefs.browser_notifications && browserNotifEnabled ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+          </div>
         </section>
         </div>
       </main>
       <Footer />
+
+      {/* Browser Notification Permission Prompt */}
+      <BrowserNotificationPrompt
+        isOpen={showBrowserNotifPrompt}
+        onClose={handleBrowserNotifPromptClose}
+      />
     </div>
   );
 }

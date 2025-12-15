@@ -11,6 +11,7 @@ import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { sendNotificationEmail, type NotificationEmailParams } from "@/lib/email";
+import { sendPushNotificationToUser, isWebPushConfigured } from "@/lib/web-push";
 
 export type NotificationType =
   | "comment"
@@ -56,6 +57,7 @@ export interface NotificationPreferences {
   email_follows: boolean;
   email_digest: boolean;
   email_digest_frequency: "daily" | "weekly" | "monthly";
+  browser_notifications: boolean;
 }
 
 const defaultPreferences: NotificationPreferences = {
@@ -70,6 +72,7 @@ const defaultPreferences: NotificationPreferences = {
   email_follows: false,
   email_digest: false,
   email_digest_frequency: "weekly",
+  browser_notifications: false,
 };
 
 /**
@@ -333,6 +336,7 @@ export async function getNotificationPreferences(): Promise<{
             email_follows: data.email_follows ?? defaultPreferences.email_follows,
             email_digest: data.email_digest ?? defaultPreferences.email_digest,
             email_digest_frequency: data.email_digest_frequency ?? defaultPreferences.email_digest_frequency,
+            browser_notifications: data.browser_notifications ?? defaultPreferences.browser_notifications,
           }
         : defaultPreferences,
     };
@@ -505,12 +509,37 @@ export async function createNotification(params: {
             title: params.title,
             message: params.message || params.title,
             actorName,
-            actionUrl: getActionUrl(params.resourceType, params.resourceId),
+            actionUrl: getActionUrl(params.resourceType, params.resourceId, params.data),
           });
         } catch (emailError) {
           console.error("[Notifications] Email send error:", emailError);
           // Don't fail the notification if email fails
         }
+      }
+    }
+
+    // Send push notification if browser notifications are enabled
+    // This allows users to receive notifications even when not on the website
+    const browserNotifsEnabled = prefs ? prefs.browser_notifications === true : false;
+    if (browserNotifsEnabled && isWebPushConfigured()) {
+      try {
+        const pushUrl = getActionUrl(params.resourceType, params.resourceId, params.data) || "/notifications";
+
+        await sendPushNotificationToUser(params.userId, {
+          title: "Claude Insider",
+          body: params.title,
+          url: pushUrl,
+          tag: notificationId ? `notification-${notificationId}` : `notification-${Date.now()}`,
+          data: {
+            notificationId,
+            type: params.type,
+            resourceType: params.resourceType,
+            resourceId: params.resourceId,
+          },
+        });
+      } catch (pushError) {
+        console.error("[Notifications] Push notification error:", pushError);
+        // Don't fail the notification if push fails
       }
     }
 
@@ -565,19 +594,52 @@ function getEmailPrefKey(type: NotificationType): keyof NotificationPreferences 
 
 /**
  * Get action URL based on resource type
+ *
+ * Best practice: Deep link to the specific content where the action occurred,
+ * rather than generic list pages. This provides better UX as users can
+ * immediately see what they were notified about.
  */
-function getActionUrl(resourceType?: string, resourceId?: string): string | undefined {
-  if (!resourceType || !resourceId) return undefined;
+function getActionUrl(
+  resourceType?: string,
+  resourceId?: string,
+  data?: Record<string, unknown>
+): string | undefined {
+  if (!resourceType) return undefined;
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://claudeinsider.com";
 
   switch (resourceType) {
     case "resource":
-      return `${baseUrl}/resources`;
+      // Link to specific resource if ID available
+      return resourceId ? `${baseUrl}/resources#${resourceId}` : `${baseUrl}/resources`;
+
     case "doc":
-      return `${baseUrl}/docs`;
+      // Link to specific doc page - resourceId should be the doc slug
+      return resourceId ? `${baseUrl}/docs/${resourceId}` : `${baseUrl}/docs`;
+
     case "suggestion":
-      return `${baseUrl}/suggestions`;
+      // Link to user's suggestions page - they can see their suggestion status there
+      return `${baseUrl}/profile/suggestions`;
+
+    case "user":
+      // For follow notifications, link to the actor's profile
+      // The username should be passed in data if available
+      if (data?.actorUsername) {
+        return `${baseUrl}/users/${data.actorUsername}`;
+      }
+      return `${baseUrl}/notifications`;
+
+    case "achievement":
+      // Link to profile achievements section
+      return `${baseUrl}/profile#achievements`;
+
+    case "comment":
+      // Link to the content where the comment was made
+      if (data?.docSlug) {
+        return `${baseUrl}/docs/${data.docSlug}#comments`;
+      }
+      return `${baseUrl}/notifications`;
+
     default:
       return `${baseUrl}/notifications`;
   }

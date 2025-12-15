@@ -84,6 +84,9 @@ export async function followUser(userId: string): Promise<{
       actorId: session.user.id,
       resourceType: "user",
       resourceId: session.user.id,
+      data: {
+        actorUsername: follower?.username, // For deep linking to follower's profile
+      },
     });
 
     revalidatePath("/profile");
