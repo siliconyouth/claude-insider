@@ -15,7 +15,7 @@ export default function TermsOfServicePage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert prose-blue max-w-none">
           <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 14, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 15, 2025</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
@@ -79,6 +79,18 @@ export default function TermsOfServicePage() {
               <li>Abusive behavior toward other users</li>
               <li>Spam or automated misuse</li>
               <li>Any illegal activity</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">3.4 Account Security</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You are responsible for maintaining the security of your account:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>Password:</strong> Use a strong password (8+ characters, including uppercase, lowercase, and numbers)</li>
+              <li><strong>Connected accounts:</strong> You may link OAuth providers (GitHub, Google) for convenient sign-in</li>
+              <li><strong>Managing connections:</strong> You can connect or disconnect OAuth providers in Settings</li>
+              <li><strong>Multiple login methods:</strong> We recommend having at least two login methods (password + OAuth or multiple OAuth providers)</li>
+              <li><strong>2FA:</strong> Enable two-factor authentication for enhanced security</li>
             </ul>
           </section>
 
@@ -301,7 +313,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> Claude Insider is free, open-source documentation with user accounts, social features, and AI assistance. Be respectful in comments and discussions. You can export or delete your data anytime from Settings. We&apos;re not affiliated with Anthropic. Content is provided &quot;as is&quot; — always verify with official sources. Serbian law governs these terms, but your local consumer rights are preserved.
+              <strong>In short:</strong> Claude Insider is free, open-source documentation with user accounts, social features, and AI assistance. You can sign in with email/password or OAuth (GitHub, Google) and manage your connected accounts in Settings. Be respectful in comments and discussions. You can export or delete your data anytime from Settings. We&apos;re not affiliated with Anthropic. Content is provided &quot;as is&quot; — always verify with official sources. Serbian law governs these terms, but your local consumer rights are preserved.
             </p>
           </section>
         </article>

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.66.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.67.0**.
 
 | Link | URL |
 |------|-----|
@@ -95,6 +95,9 @@ claude-insider/
 │   │   │   ├── auth-modal.tsx    # Sign in/sign up modal
 │   │   │   ├── user-menu.tsx     # User dropdown menu
 │   │   │   └── onboarding-wizard/ # New user onboarding
+│   │   ├── settings/             # Account settings components
+│   │   │   ├── password-settings.tsx  # Change/set password
+│   │   │   └── connected-accounts.tsx # OAuth provider management
 │   │   ├── interactions/         # User interaction components
 │   │   │   ├── favorite-button.tsx
 │   │   │   ├── rating-stars.tsx

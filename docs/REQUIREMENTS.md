@@ -158,6 +158,15 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Homepage featured section with stats
 - [x] SSG for all category pages
 
+### FR-7: Account Security & Management
+- [x] Password management for email/password users
+- [x] Password setting for OAuth-only users
+- [x] Password validation (8+ chars, uppercase, lowercase, numbers)
+- [x] Connected accounts management (GitHub, Google)
+- [x] Link/unlink OAuth providers
+- [x] Safety checks preventing removal of last login method
+- [x] Show/hide password toggle
+
 ---
 
 ## Non-Functional Requirements
@@ -257,7 +266,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.63.0**
+**Version 0.67.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

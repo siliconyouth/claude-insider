@@ -20,6 +20,8 @@ import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
 import { DataManagement } from "@/components/settings/data-management";
 import { BlockedUsers } from "@/components/settings/blocked-users";
 import { AvatarUpload } from "@/components/settings/avatar-upload";
+import { PasswordSettings } from "@/components/settings/password-settings";
+import { ConnectedAccounts } from "@/components/settings/connected-accounts";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import Link from "next/link";
 
@@ -73,7 +75,7 @@ function clearCache() {
 }
 
 export default function SettingsPage() {
-  const { isAuthenticated, isLoading: authLoading, showSignIn, signOut } = useAuth();
+  const { isAuthenticated, isLoading: authLoading, showSignIn, signOut, user: authUser } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
@@ -89,6 +91,9 @@ export default function SettingsPage() {
   const [username, setUsername] = useState("");
   const [originalUsername, setOriginalUsername] = useState("");
   const [usernameError, setUsernameError] = useState<string | null>(null);
+
+  // Password state (from auth user)
+  const [hasPassword, setHasPassword] = useState(false);
 
   // Privacy settings state
   const [privacy, setPrivacy] = useState<PrivacySettings>({
@@ -121,6 +126,14 @@ export default function SettingsPage() {
       showSignIn();
     }
   }, [authLoading, isAuthenticated, showSignIn]);
+
+  // Sync hasPassword from auth user
+  useEffect(() => {
+    if (authUser) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setHasPassword(authUser.hasPassword ?? false);
+    }
+  }, [authUser]);
 
   const loadSettings = useCallback(async (forceRefresh = false) => {
     // Try to load from cache first (instant)
@@ -791,7 +804,44 @@ export default function SettingsPage() {
             Protect your account with additional security measures
           </p>
 
-          <TwoFactorSettings />
+          <div className="space-y-8">
+            {/* Password Settings */}
+            <div
+              className={cn(
+                "p-6 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <PasswordSettings
+                hasPassword={hasPassword}
+                onSuccess={() => {
+                  // Update hasPassword state after setting password
+                  setHasPassword(true);
+                  clearCache();
+                }}
+              />
+            </div>
+
+            {/* Connected Accounts */}
+            <div
+              className={cn(
+                "p-6 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <ConnectedAccounts
+                hasPassword={hasPassword}
+                onAccountChange={() => {
+                  clearCache();
+                }}
+              />
+            </div>
+
+            {/* Two-Factor Authentication */}
+            <TwoFactorSettings />
+          </div>
         </section>
 
         {/* Divider */}

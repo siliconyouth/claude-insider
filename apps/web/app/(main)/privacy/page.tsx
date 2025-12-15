@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert prose-blue max-w-none">
           <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 14, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 15, 2025</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
@@ -71,6 +71,20 @@ export default function PrivacyPolicyPage() {
               <li><strong>TOTP secret:</strong> Encrypted secret key for authenticator apps</li>
               <li><strong>Backup codes:</strong> Hashed recovery codes (10 single-use codes)</li>
             </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Connected Accounts (OAuth)</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You can link multiple OAuth providers (GitHub, Google) to your account:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>Provider ID:</strong> Identifier of the OAuth provider (github, google)</li>
+              <li><strong>Account ID:</strong> Your unique ID from the OAuth provider</li>
+              <li><strong>Connection date:</strong> When you linked the account</li>
+              <li><strong>Access tokens:</strong> Securely stored, used only for authentication</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              You can view, connect, or disconnect OAuth providers anytime in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a>. We never access your data on connected platforms beyond basic profile information for authentication.
+            </p>
           </section>
 
           <section className="mb-8">
@@ -448,7 +462,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings → Data Management. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only.
+              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only.
             </p>
           </section>
         </article>

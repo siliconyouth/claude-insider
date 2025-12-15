@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.67.0] - 2025-12-15
+
+### Added
+
+#### Password Management
+- **Password Settings Component** (`components/settings/password-settings.tsx`)
+  - Change existing password for users with password authentication
+  - Set initial password for OAuth-only users (enables email+password sign-in)
+  - Password validation: minimum 8 characters, uppercase, lowercase, numbers required
+  - Show/hide password toggle for all fields
+  - Real-time validation feedback with clear error messages
+  - Uses Better Auth `changePassword` client method for existing passwords
+  - Uses server action `setPasswordAction` for OAuth-only users
+
+#### Connected Accounts Management
+- **Connected Accounts Component** (`components/settings/connected-accounts.tsx`)
+  - View all linked OAuth providers (GitHub, Google) with connection dates
+  - Connect new OAuth providers via Better Auth `linkSocial`
+  - Disconnect existing providers with safety checks
+  - Visual indicator for connected vs disconnected state
+  - Safety warning when user has only one login method
+  - Prevents disconnecting last login method (must have password or another provider)
+
+#### Server Actions for Account Security
+- **New Server Actions** (`app/actions/auth.ts`)
+  - `setPasswordAction` - Set password for OAuth-only users using Better Auth admin API
+  - `getLinkedAccountsAction` - Retrieve list of linked OAuth providers for current user
+  - `unlinkAccountAction` - Unlink OAuth provider with validation checks
+  - All actions include proper authentication and error handling
+
 ### Changed
 
 #### Complete Database Reset
