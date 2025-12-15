@@ -3,8 +3,8 @@
 /**
  * Donation Success Page
  *
- * Displayed after successful PayPal payment or bank transfer submission.
- * Handles PayPal callback and captures the order.
+ * Displayed after successful PayPal payment, subscription, or bank transfer submission.
+ * Handles PayPal callback and captures orders/activates subscriptions.
  */
 
 import { useEffect, useState, Suspense } from 'react';
@@ -14,31 +14,44 @@ import { cn } from '@/lib/design-system';
 import { DonorBadge } from '@/components/donations/donor-badge';
 import type { DonorBadgeTier } from '@/lib/donations/types';
 
+type DonationTypeInfo = 'one-time' | 'subscription' | 'bank';
+
 function DonationSuccessContent() {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [badgeTier, setBadgeTier] = useState<DonorBadgeTier | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [donationId, setDonationId] = useState<string | null>(null);
+  const [donationType, setDonationType] = useState<DonationTypeInfo>('one-time');
+  const [nextBillingDate, setNextBillingDate] = useState<string | null>(null);
 
   const source = searchParams.get('source');
   const token = searchParams.get('token'); // PayPal order ID from redirect
+  const type = searchParams.get('type'); // 'subscription' for recurring donations
+  const subscriptionId = searchParams.get('subscription_id');
 
   useEffect(() => {
     // Handle bank transfer (already confirmed on previous page)
     if (source === 'bank') {
+      setDonationType('bank');
       setStatus('success');
       return;
     }
 
-    // Handle PayPal callback
+    // Handle subscription callback
+    if (type === 'subscription' && subscriptionId) {
+      activateSubscription(subscriptionId);
+      return;
+    }
+
+    // Handle PayPal one-time callback
     if (source === 'paypal' && token) {
       capturePayPalOrder(token);
-    } else if (!source) {
+    } else if (!source && !type) {
       // Direct navigation - just show success
       setStatus('success');
     }
-  }, [source, token]);
+  }, [source, token, type, subscriptionId]);
 
   const capturePayPalOrder = async (orderId: string) => {
     try {
@@ -54,6 +67,7 @@ function DonationSuccessContent() {
         throw new Error(data.error || 'Failed to process payment');
       }
 
+      setDonationType('one-time');
       setStatus('success');
       setDonationId(data.donation_id);
       if (data.badge_tier) {
@@ -62,6 +76,39 @@ function DonationSuccessContent() {
     } catch (error) {
       setStatus('error');
       setErrorMessage(error instanceof Error ? error.message : 'Payment processing failed');
+    }
+  };
+
+  const activateSubscription = async (subId: string) => {
+    try {
+      const response = await fetch('/api/donations/paypal/subscribe/activate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subscription_id: subId }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to activate subscription');
+      }
+
+      setDonationType('subscription');
+      setStatus('success');
+      setDonationId(data.donation_id);
+      if (data.next_billing) {
+        setNextBillingDate(new Date(data.next_billing).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }));
+      }
+      if (data.badge?.tier) {
+        setBadgeTier(data.badge.tier);
+      }
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Subscription activation failed');
     }
   };
 
@@ -151,10 +198,31 @@ function DonationSuccessContent() {
         </h1>
 
         <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-          {source === 'bank'
+          {donationType === 'bank'
             ? 'Your bank transfer notification has been received. We\'ll confirm your donation once the transfer is processed.'
-            : 'Your donation has been processed successfully. You\'re awesome!'}
+            : donationType === 'subscription'
+              ? 'Your recurring donation subscription is now active. Thank you for your ongoing support!'
+              : 'Your donation has been processed successfully. You\'re awesome!'}
         </p>
+
+        {/* Subscription info */}
+        {donationType === 'subscription' && nextBillingDate && (
+          <div className={cn(
+            'p-4 rounded-xl mb-8',
+            'bg-cyan-50 dark:bg-cyan-900/20',
+            'border border-cyan-200 dark:border-cyan-800'
+          )}>
+            <div className="flex items-center justify-center gap-2 text-cyan-700 dark:text-cyan-300">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span className="font-medium">Recurring donation active</span>
+            </div>
+            <p className="text-sm text-cyan-600 dark:text-cyan-400 mt-2">
+              Next billing date: <strong>{nextBillingDate}</strong>
+            </p>
+          </div>
+        )}
 
         {/* Badge earned */}
         {badgeTier && (
@@ -186,7 +254,7 @@ function DonationSuccessContent() {
             What happens next?
           </h2>
           <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-            {source === 'bank' ? (
+            {donationType === 'bank' ? (
               <>
                 <li className="flex items-start gap-3">
                   <span className="text-blue-500 mt-0.5">1.</span>
@@ -199,6 +267,25 @@ function DonationSuccessContent() {
                 <li className="flex items-start gap-3">
                   <span className="text-blue-500 mt-0.5">3.</span>
                   <span>You&apos;ll receive a confirmation email with your receipt</span>
+                </li>
+              </>
+            ) : donationType === 'subscription' ? (
+              <>
+                <li className="flex items-start gap-3">
+                  <span className="text-cyan-500 mt-0.5">✓</span>
+                  <span>Your subscription is now active</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-cyan-500 mt-0.5">✓</span>
+                  <span>You&apos;ll be charged automatically on each billing date</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-cyan-500 mt-0.5">✓</span>
+                  <span>A receipt will be sent after each payment</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-cyan-500 mt-0.5">✓</span>
+                  <span>You can cancel anytime from your PayPal account</span>
                 </li>
               </>
             ) : (

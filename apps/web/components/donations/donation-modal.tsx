@@ -4,11 +4,14 @@
  * DonationModal Component
  *
  * A multi-step donation modal supporting PayPal and bank transfer.
+ * Supports both one-time and recurring donations.
+ *
  * Steps:
  * 1. Select amount (preset or custom)
- * 2. Choose payment method
- * 3. Add optional message
- * 4. Complete payment
+ * 2. Choose donation type (one-time or recurring)
+ * 3. Choose payment method
+ * 4. Add optional message
+ * 5. Complete payment
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -21,6 +24,7 @@ import {
   type DonorBadgeTier,
   type PaymentMethod,
   type DonationBankInfo,
+  type RecurringFrequency,
 } from '@/lib/donations/types';
 
 interface DonationSettings {
@@ -41,13 +45,22 @@ interface DonationModalProps {
   onSuccess?: (donationId: string) => void;
 }
 
-type Step = 'amount' | 'method' | 'message' | 'bank-info' | 'processing' | 'success';
+type DonationType = 'one-time' | 'recurring';
+type Step = 'amount' | 'type' | 'method' | 'message' | 'bank-info' | 'processing' | 'success';
+
+const FREQUENCY_OPTIONS: { value: RecurringFrequency; label: string; description: string }[] = [
+  { value: 'monthly', label: 'Monthly', description: 'Billed every month' },
+  { value: 'quarterly', label: 'Quarterly', description: 'Billed every 3 months' },
+  { value: 'yearly', label: 'Yearly', description: 'Billed once a year' },
+];
 
 export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps) {
   const [step, setStep] = useState<Step>('amount');
   const [settings, setSettings] = useState<DonationSettings | null>(null);
   const [amount, setAmount] = useState<number>(25);
   const [customAmount, setCustomAmount] = useState<string>('');
+  const [donationType, setDonationType] = useState<DonationType>('one-time');
+  const [frequency, setFrequency] = useState<RecurringFrequency>('monthly');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('paypal');
   const [message, setMessage] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
@@ -74,6 +87,8 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
     setStep('amount');
     setAmount(25);
     setCustomAmount('');
+    setDonationType('one-time');
+    setFrequency('monthly');
     setMessage('');
     setIsAnonymous(false);
     setIsProcessing(false);
@@ -87,20 +102,34 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
   // Get selected amount
   const selectedAmount = customAmount ? parseFloat(customAmount) : amount;
 
-  // Handle PayPal checkout
+  // Handle PayPal checkout (one-time or subscription)
   const handlePayPalCheckout = async () => {
     setIsProcessing(true);
     setStep('processing');
 
     try {
-      const response = await fetch('/api/donations/paypal/create', {
+      // Choose endpoint based on donation type
+      const endpoint = donationType === 'recurring'
+        ? '/api/donations/paypal/subscribe'
+        : '/api/donations/paypal/create';
+
+      const body = donationType === 'recurring'
+        ? {
+            amount: selectedAmount,
+            frequency,
+            message: message || undefined,
+            is_anonymous: isAnonymous,
+          }
+        : {
+            amount: selectedAmount,
+            message: message || undefined,
+            is_anonymous: isAnonymous,
+          };
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: selectedAmount,
-          message: message || undefined,
-          is_anonymous: isAnonymous,
-        }),
+        body: JSON.stringify(body),
       });
 
       if (!response.ok) {
@@ -221,6 +250,7 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {step === 'amount' && 'Choose your donation amount'}
+                {step === 'type' && 'One-time or recurring?'}
                 {step === 'method' && 'Select payment method'}
                 {step === 'message' && 'Add an optional message'}
                 {step === 'bank-info' && 'Bank transfer details'}
@@ -308,7 +338,7 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
                 )}
 
                 <button
-                  onClick={() => setStep('method')}
+                  onClick={() => setStep(settings.recurring_enabled ? 'type' : 'method')}
                   disabled={selectedAmount < (settings.minimum_amount || 1)}
                   className={cn(
                     'w-full py-3 rounded-xl font-semibold text-white',
@@ -323,9 +353,135 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
               </div>
             )}
 
+            {/* Step: Donation Type (One-time or Recurring) */}
+            {step === 'type' && settings && (
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  {/* One-time option */}
+                  <button
+                    onClick={() => setDonationType('one-time')}
+                    className={cn(
+                      'w-full p-4 rounded-xl border-2 flex items-center gap-4 transition-all text-left',
+                      donationType === 'one-time'
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                        : 'border-gray-200 dark:border-[#262626] hover:border-blue-500/50'
+                    )}
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-blue-500 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900 dark:text-white">One-time Donation</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        Make a single donation of {formatDonationAmount(selectedAmount)}
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Recurring option */}
+                  <button
+                    onClick={() => setDonationType('recurring')}
+                    className={cn(
+                      'w-full p-4 rounded-xl border-2 flex items-center gap-4 transition-all text-left',
+                      donationType === 'recurring'
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                        : 'border-gray-200 dark:border-[#262626] hover:border-blue-500/50'
+                    )}
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900 dark:text-white">
+                        Recurring Donation
+                        <span className="ml-2 text-xs font-normal px-2 py-0.5 bg-cyan-100 dark:bg-cyan-900/50 text-cyan-700 dark:text-cyan-300 rounded-full">
+                          Recommended
+                        </span>
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        Support us with automatic donations
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                {/* Frequency selector (only shown when recurring is selected) */}
+                {donationType === 'recurring' && (
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Billing frequency
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {FREQUENCY_OPTIONS.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => setFrequency(option.value)}
+                          className={cn(
+                            'p-3 rounded-lg border-2 transition-all text-center',
+                            frequency === option.value
+                              ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                              : 'border-gray-200 dark:border-[#262626] hover:border-blue-500/50'
+                          )}
+                        >
+                          <div className="font-medium text-gray-900 dark:text-white text-sm">
+                            {option.label}
+                          </div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                            {option.description}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Yearly savings indicator */}
+                    <div className="p-3 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                      <p className="text-sm text-green-700 dark:text-green-300 text-center">
+                        {frequency === 'monthly' && `${formatDonationAmount(selectedAmount * 12)}/year`}
+                        {frequency === 'quarterly' && `${formatDonationAmount(selectedAmount * 4)}/year`}
+                        {frequency === 'yearly' && `${formatDonationAmount(selectedAmount)}/year - Best value!`}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setStep('amount')}
+                    className="flex-1 py-3 rounded-xl font-medium border border-gray-200 dark:border-[#262626] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                  >
+                    Back
+                  </button>
+                  <button
+                    onClick={() => setStep('method')}
+                    className={cn(
+                      'flex-1 py-3 rounded-xl font-semibold text-white',
+                      'bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600',
+                      'hover:shadow-lg hover:shadow-blue-500/25',
+                      'transition-all duration-200'
+                    )}
+                  >
+                    Continue
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Step: Payment Method */}
             {step === 'method' && settings && (
               <div className="space-y-6">
+                {/* Recurring donation notice */}
+                {donationType === 'recurring' && (
+                  <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+                    <p className="text-sm text-blue-700 dark:text-blue-300">
+                      <strong>Recurring donation:</strong> {formatDonationAmount(selectedAmount)}/{frequency}
+                    </p>
+                  </div>
+                )}
+
                 <div className="space-y-3">
                   {settings.payment_methods.paypal && (
                     <button
@@ -343,13 +499,14 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
                       <div className="text-left">
                         <div className="font-semibold text-gray-900 dark:text-white">PayPal</div>
                         <div className="text-sm text-gray-500 dark:text-gray-400">
-                          Fast and secure payment
+                          {donationType === 'recurring' ? 'Automatic recurring payments' : 'Fast and secure payment'}
                         </div>
                       </div>
                     </button>
                   )}
 
-                  {settings.payment_methods.bank_transfer && (
+                  {/* Bank transfer only available for one-time donations */}
+                  {settings.payment_methods.bank_transfer && donationType === 'one-time' && (
                     <button
                       onClick={() => setPaymentMethod('bank_transfer')}
                       className={cn(
@@ -372,11 +529,18 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
                       </div>
                     </button>
                   )}
+
+                  {/* Show why bank transfer isn't available for recurring */}
+                  {donationType === 'recurring' && settings.payment_methods.bank_transfer && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                      Bank transfers are only available for one-time donations
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex gap-3">
                   <button
-                    onClick={() => setStep('amount')}
+                    onClick={() => setStep(settings.recurring_enabled ? 'type' : 'amount')}
                     className="flex-1 py-3 rounded-xl font-medium border border-gray-200 dark:border-[#262626] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                   >
                     Back
@@ -437,6 +601,15 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
                     <span className="text-gray-600 dark:text-gray-400">Amount:</span>
                     <span className="font-semibold text-gray-900 dark:text-white">
                       {formatDonationAmount(selectedAmount)}
+                      {donationType === 'recurring' && (
+                        <span className="text-gray-500 dark:text-gray-400 font-normal">/{frequency}</span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm mt-1">
+                    <span className="text-gray-600 dark:text-gray-400">Type:</span>
+                    <span className="font-semibold text-gray-900 dark:text-white capitalize">
+                      {donationType === 'recurring' ? `Recurring (${frequency})` : 'One-time'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm mt-1">
@@ -465,7 +638,13 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
                       'transition-all duration-200'
                     )}
                   >
-                    {isProcessing ? 'Processing...' : paymentMethod === 'paypal' ? 'Pay with PayPal' : 'View Bank Details'}
+                    {isProcessing
+                      ? 'Processing...'
+                      : paymentMethod === 'paypal'
+                        ? donationType === 'recurring'
+                          ? 'Subscribe with PayPal'
+                          : 'Pay with PayPal'
+                        : 'View Bank Details'}
                   </button>
                 </div>
               </div>
