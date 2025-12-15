@@ -1,14 +1,14 @@
 {
   "version": "1.0",
-  "generatedAt": "2025-12-15T09:08:02.694Z",
+  "generatedAt": "2025-12-15T10:04:59.531Z",
   "stats": {
-    "totalExamples": 580,
-    "totalCodeBlocks": 580,
+    "totalExamples": 583,
+    "totalCodeBlocks": 583,
     "languages": 16,
     "patterns": 14
   },
   "byLanguage": {
-    "text": 204,
+    "text": 207,
     "bash": 104,
     "python": 11,
     "typescript": 79,
@@ -27,12 +27,12 @@
   },
   "byPattern": {
     "apiCall": 262,
-    "authentication": 145,
+    "authentication": 148,
     "prompt": 110,
     "model": 203,
-    "hooks": 169,
+    "hooks": 170,
     "cli": 287,
-    "configuration": 107,
+    "configuration": 108,
     "import": 34,
     "export": 31,
     "async": 55,
@@ -43,7 +43,7 @@
   },
   "byCategory": {
     "API Reference": 100,
-    "Configuration": 70,
+    "Configuration": 73,
     "Examples": 19,
     "Getting Started": 70,
     "Integrations": 148,
@@ -3682,6 +3682,94 @@
           "prompt"
         ],
         "lineCount": 19,
+        "hasImports": false,
+        "hasExports": false,
+        "isAsync": false
+      }
+    },
+    {
+      "id": "code--docs-configuration-account-security#0",
+      "title": "TEXT Example: Security Features Overview",
+      "section": "Security Features Overview",
+      "content": "Context: 3. Your browser will prompt for biometric authentication 4. Name your passkey (e.g., \"MacBook Pro Face ID\") 5. Complete the verification\nLanguage: text\nCode:\nPasskey Registration Flow:\n┌──────────────────────────────────────────┐\n│  1. Click \"Add Passkey\"                  │\n│  2. Browser requests biometric auth      │\n│  3. Verify with Face ID / Touch ID       │\n│  4. Name your passkey                    │\n│  5. Passkey saved to your device         │\n└──────────────────────────────────────────┘",
+      "url": "/docs/configuration/account-security",
+      "category": "Configuration",
+      "keywords": [
+        "text",
+        "other",
+        "authentication",
+        "code",
+        "example",
+        "snippet"
+      ],
+      "isCodeExample": true,
+      "codeData": {
+        "language": "text",
+        "languageFamily": "other",
+        "patterns": [
+          "authentication"
+        ],
+        "lineCount": 8,
+        "hasImports": false,
+        "hasExports": false,
+        "isAsync": false
+      }
+    },
+    {
+      "id": "code--docs-configuration-account-security#1",
+      "title": "TEXT Example: Security Features Overview",
+      "section": "Security Features Overview",
+      "content": "Context: 3. Scan the QR code with your authenticator app 4. Enter the 6-digit code to verify 5. **Save your backup codes** in a secure location\nLanguage: text\nCode:\n2FA Setup Flow:\n┌──────────────────────────────────────────┐\n│  1. Click \"Enable\" 2FA                   │\n│  2. Scan QR code with authenticator app  │\n│  3. Enter 6-digit verification code      │\n│  4. Download/copy backup codes           │\n│  5. 2FA is now active                    │\n└──────────────────────────────────────────┘",
+      "url": "/docs/configuration/account-security",
+      "category": "Configuration",
+      "keywords": [
+        "text",
+        "other",
+        "authentication",
+        "configuration",
+        "code",
+        "example",
+        "snippet"
+      ],
+      "isCodeExample": true,
+      "codeData": {
+        "language": "text",
+        "languageFamily": "other",
+        "patterns": [
+          "authentication",
+          "configuration"
+        ],
+        "lineCount": 8,
+        "hasImports": false,
+        "hasExports": false,
+        "isAsync": false
+      }
+    },
+    {
+      "id": "code--docs-configuration-account-security#2",
+      "title": "TEXT Example: Security Features Overview",
+      "section": "Security Features Overview",
+      "content": "Context: 3. Click **+ Add** to register another app 4. Use **Set Primary** to choose your default authenticator 5. **Rename** devices for easy identification\nLanguage: text\nCode:\nMulti-Device Example:\n┌────────────────────────────────────────────────┐\n│ Authenticator Apps                             │\n│ ┌────────────────────────────────────────────┐ │\n│ │ 📱 Google Authenticator (iPhone)  PRIMARY  │ │\n│ │    Last used: Just now                     │ │\n│ └────────────────────────────────────────────┘ │\n│ ┌────────────────────────────────────────────┐ │\n│ │ 📱 Authy (Work Phone)                      │ │\n│ │    Last used: 3 days ago                   │ │\n│ └────────────────────────────────────────────┘ │\n│                                                │\n│              [+ Add Authenticator]             │\n└────────────────────────────────────────────────┘",
+      "url": "/docs/configuration/account-security",
+      "category": "Configuration",
+      "keywords": [
+        "text",
+        "other",
+        "authentication",
+        "hooks",
+        "code",
+        "example",
+        "snippet"
+      ],
+      "isCodeExample": true,
+      "codeData": {
+        "language": "text",
+        "languageFamily": "other",
+        "patterns": [
+          "authentication",
+          "hooks"
+        ],
+        "lineCount": 14,
         "hasImports": false,
         "hasExports": false,
         "isAsync": false

@@ -1,0 +1,242 @@
+---
+title: Account Security
+description: Secure your Claude Insider account with passkeys, two-factor authentication, and best practices
+---
+
+Protect your Claude Insider account with modern security features including passwordless authentication with passkeys and multi-device two-factor authentication.
+
+## Security Features Overview
+
+| Feature | Description | Recommendation |
+|---------|-------------|----------------|
+| **Passkeys** | Passwordless login with Face ID, Touch ID, or security keys | Highly recommended |
+| **Two-Factor Authentication** | TOTP codes from authenticator apps | Recommended |
+| **Multi-Device 2FA** | Multiple authenticator apps as backup | For power users |
+| **Backup Codes** | One-time use recovery codes | Essential backup |
+
+## Passkeys (WebAuthn)
+
+Passkeys provide the most secure and convenient authentication method. They use biometrics or hardware security keys to verify your identity without passwords.
+
+### What Are Passkeys?
+
+Passkeys are cryptographic credentials stored securely on your device. They're:
+
+- **Phishing-resistant** - Can't be stolen through fake websites
+- **Unique per site** - Each passkey only works on Claude Insider
+- **Device-bound** - Stored in secure hardware (TPM, Secure Enclave)
+
+### Supported Authenticators
+
+| Platform | Method | Device |
+|----------|--------|--------|
+| Apple | Face ID, Touch ID | iPhone, iPad, Mac |
+| Android | Fingerprint, Face Unlock | Android phones/tablets |
+| Windows | Windows Hello | PCs with compatible hardware |
+| Hardware Keys | Physical button | YubiKey, Titan, SoloKey |
+
+### Setting Up a Passkey
+
+1. Go to **Settings** → **Security** → **Passkeys**
+2. Click **Add Passkey**
+3. Your browser will prompt for biometric authentication
+4. Name your passkey (e.g., "MacBook Pro Face ID")
+5. Complete the verification
+
+```
+Passkey Registration Flow:
+┌──────────────────────────────────────────┐
+│  1. Click "Add Passkey"                  │
+│  2. Browser requests biometric auth      │
+│  3. Verify with Face ID / Touch ID       │
+│  4. Name your passkey                    │
+│  5. Passkey saved to your device         │
+└──────────────────────────────────────────┘
+```
+
+### Signing In with Passkeys
+
+Once registered, you'll see a "Sign in with Passkey" option:
+
+1. Click **Sign in with Passkey**
+2. Authenticate with your biometric
+3. You're logged in instantly - no password needed!
+
+> **Tip**: Passkeys work across devices if you use iCloud Keychain, Google Password Manager, or 1Password.
+
+### Managing Passkeys
+
+In Settings → Security → Passkeys, you can:
+
+- **View** all registered passkeys with last-used timestamps
+- **Rename** passkeys for easier identification
+- **Remove** passkeys you no longer use
+
+## Two-Factor Authentication (2FA)
+
+Add an extra layer of security by requiring a time-based code from an authenticator app when signing in.
+
+### Supported Authenticator Apps
+
+| App | Platform | Features |
+|-----|----------|----------|
+| Google Authenticator | iOS, Android | Simple, reliable |
+| Authy | iOS, Android, Desktop | Cloud backup, multi-device |
+| 1Password | All platforms | Password manager integration |
+| Microsoft Authenticator | iOS, Android | Enterprise features |
+| Bitwarden | All platforms | Open source |
+
+### Enabling 2FA
+
+1. Go to **Settings** → **Security** → **Two-Factor Authentication**
+2. Click **Enable**
+3. Scan the QR code with your authenticator app
+4. Enter the 6-digit code to verify
+5. **Save your backup codes** in a secure location
+
+```
+2FA Setup Flow:
+┌──────────────────────────────────────────┐
+│  1. Click "Enable" 2FA                   │
+│  2. Scan QR code with authenticator app  │
+│  3. Enter 6-digit verification code      │
+│  4. Download/copy backup codes           │
+│  5. 2FA is now active                    │
+└──────────────────────────────────────────┘
+```
+
+### Multi-Device 2FA
+
+For maximum security and convenience, you can register multiple authenticator apps:
+
+**Benefits:**
+- **Redundancy** - Access your account even if you lose one device
+- **Flexibility** - Use different apps on different devices
+- **Primary device** - Set your preferred authenticator
+
+**Managing Multiple Devices:**
+
+1. Go to **Settings** → **Security** → **Two-Factor Authentication**
+2. View your registered authenticators
+3. Click **+ Add** to register another app
+4. Use **Set Primary** to choose your default authenticator
+5. **Rename** devices for easy identification
+
+```
+Multi-Device Example:
+┌────────────────────────────────────────────────┐
+│ Authenticator Apps                             │
+│ ┌────────────────────────────────────────────┐ │
+│ │ 📱 Google Authenticator (iPhone)  PRIMARY  │ │
+│ │    Last used: Just now                     │ │
+│ └────────────────────────────────────────────┘ │
+│ ┌────────────────────────────────────────────┐ │
+│ │ 📱 Authy (Work Phone)                      │ │
+│ │    Last used: 3 days ago                   │ │
+│ └────────────────────────────────────────────┘ │
+│                                                │
+│              [+ Add Authenticator]             │
+└────────────────────────────────────────────────┘
+```
+
+### Backup Codes
+
+When you enable 2FA, you receive 10 one-time backup codes. These are essential for account recovery.
+
+**Important:**
+- Each code can only be used **once**
+- Store them in a **secure location** (password manager, safe)
+- **Regenerate** if you've used several or suspect compromise
+
+To regenerate backup codes:
+1. Go to **Settings** → **Security** → **Two-Factor Authentication**
+2. Click **Regenerate** next to Backup Codes
+3. Enter a 2FA code to confirm
+4. **Download and save** the new codes
+
+> **Warning**: Regenerating backup codes invalidates all previous codes.
+
+## Security During Onboarding
+
+New users can set up security features during the onboarding process:
+
+1. Complete your profile basics
+2. Verify your email
+3. **Security Step** (optional but recommended):
+   - Set up a passkey
+   - Enable two-factor authentication
+   - Or both for maximum security
+
+You can skip this step and configure security later in Settings.
+
+## Best Practices
+
+### Recommended Security Setup
+
+For most users:
+1. **Add at least one passkey** - Your primary login method
+2. **Enable 2FA** - Backup authentication
+3. **Save backup codes** - Emergency recovery
+
+For high-security needs:
+1. **Multiple passkeys** - Different devices
+2. **Multi-device 2FA** - Redundant authenticators
+3. **Hardware security key** - YubiKey or similar
+4. **Regular backup code rotation**
+
+### What to Do If...
+
+**Lost your phone with authenticator app:**
+1. Use a backup code to sign in
+2. Remove the lost device from your 2FA settings
+3. Set up a new authenticator
+
+**Can't access any 2FA method:**
+1. Use a backup code
+2. Contact support if you've lost all backup codes
+
+**Suspect your account is compromised:**
+1. Change your password immediately
+2. Remove all passkeys and 2FA devices
+3. Set up fresh security credentials
+4. Review account activity
+
+## Troubleshooting
+
+### Passkey Issues
+
+**"WebAuthn not supported"**
+- Use a modern browser (Chrome, Safari, Firefox, Edge)
+- Ensure your device has biometric hardware
+
+**"Registration failed"**
+- Check browser permissions for security keys
+- Try a different browser
+- Ensure no other passkey registration is in progress
+
+### 2FA Issues
+
+**"Invalid code"**
+- Verify your device's clock is accurate (sync with network time)
+- Ensure you're using the correct account in your authenticator
+- Wait for a new code (codes refresh every 30 seconds)
+
+**"Can't scan QR code"**
+- Use the manual entry option
+- Copy the secret key and enter it manually
+
+## Next Steps
+
+- [Configure Claude Code settings →](/docs/configuration/settings)
+- [Set up API authentication →](/docs/api/authentication)
+- [Learn about environment variables →](/docs/configuration/environment)
+
+<ContentMeta
+  sources={[
+    { title: "WebAuthn Specification", url: "https://www.w3.org/TR/webauthn-2/" },
+    { title: "FIDO Alliance Passkeys", url: "https://fidoalliance.org/passkeys/" },
+    { title: "TOTP RFC 6238", url: "https://datatracker.ietf.org/doc/html/rfc6238" }
+  ]}
+  generatedDate="2025-12-15"
+  model="Claude Opus 4.5"
+/>
