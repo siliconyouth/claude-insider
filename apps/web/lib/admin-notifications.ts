@@ -4,6 +4,8 @@
  * Notifies admin users about important system events:
  * - New user signups
  * - New beta applications
+ * - New edit suggestions
+ * - New resource submissions
  *
  * Sends both in-app notifications and emails.
  */
@@ -15,7 +17,7 @@ const APP_NAME = "Claude Insider";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://claudeinsider.com";
 
 interface AdminNotifyParams {
-  type: "new_user" | "beta_application";
+  type: "new_user" | "beta_application" | "edit_suggestion" | "resource_submission";
   title: string;
   message: string;
   data?: Record<string, unknown>;
@@ -87,22 +89,47 @@ async function sendAdminNotificationEmail(
 ): Promise<void> {
   const greeting = adminName ? `Hi ${adminName},` : "Hi Admin,";
 
-  const actionUrl =
-    params.type === "new_user"
-      ? `${APP_URL}/dashboard/users`
-      : `${APP_URL}/dashboard/beta`;
+  // Determine action URL based on notification type
+  let actionUrl: string;
+  let buttonText: string;
+  let iconSvg: string;
 
-  const buttonText =
-    params.type === "new_user" ? "View Users" : "Review Applications";
-
-  const iconSvg =
-    params.type === "new_user"
-      ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+  switch (params.type) {
+    case "new_user":
+      actionUrl = `${APP_URL}/dashboard/users`;
+      buttonText = "View Users";
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
           <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-        </svg>`
-      : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+        </svg>`;
+      break;
+    case "beta_application":
+      actionUrl = `${APP_URL}/dashboard/beta`;
+      buttonText = "Review Applications";
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>`;
+      break;
+    case "edit_suggestion":
+      actionUrl = `${APP_URL}/dashboard/suggestions`;
+      buttonText = "Review Suggestions";
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>`;
+      break;
+    case "resource_submission":
+      actionUrl = `${APP_URL}/admin/collections/resources`;
+      buttonText = "Review Resources";
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>`;
+      break;
+    default:
+      actionUrl = `${APP_URL}/dashboard`;
+      buttonText = "View Dashboard";
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>`;
+  }
 
   const html = `
 <!DOCTYPE html>
@@ -264,6 +291,86 @@ export async function notifyAdminsBetaApplication(application: {
       userEmail: application.userEmail,
       userName: application.userName,
       experienceLevel: application.experienceLevel,
+    },
+  });
+}
+
+/**
+ * Notify admins about a new edit suggestion
+ */
+export async function notifyAdminsEditSuggestion(suggestion: {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  title: string;
+  resourceType: "resource" | "doc";
+  resourceId: string;
+  suggestionType: "content" | "metadata" | "typo" | "other";
+}): Promise<void> {
+  const typeLabels: Record<string, string> = {
+    content: "Content Edit",
+    metadata: "Metadata Update",
+    typo: "Typo Fix",
+    other: "Other",
+  };
+
+  const resourceTypeLabel = suggestion.resourceType === "doc" ? "documentation" : "resource";
+
+  await notifyAdmins({
+    type: "edit_suggestion",
+    title: "New Edit Suggestion",
+    message: `<strong>${suggestion.userName}</strong> (${suggestion.userEmail}) has submitted an edit suggestion for a ${resourceTypeLabel}:<br><br><strong>"${suggestion.title}"</strong><br><br>Type: <strong>${typeLabels[suggestion.suggestionType] || suggestion.suggestionType}</strong>. Please review this suggestion.`,
+    actorId: suggestion.userId,
+    resourceType: "edit_suggestion",
+    resourceId: suggestion.id,
+    data: {
+      suggestionId: suggestion.id,
+      userId: suggestion.userId,
+      userEmail: suggestion.userEmail,
+      userName: suggestion.userName,
+      title: suggestion.title,
+      targetResourceType: suggestion.resourceType,
+      targetResourceId: suggestion.resourceId,
+      suggestionType: suggestion.suggestionType,
+    },
+  });
+}
+
+/**
+ * Notify admins about a new resource submission for review
+ */
+export async function notifyAdminsResourceSubmission(resource: {
+  id: string | number;
+  title: string;
+  url: string;
+  category?: string;
+  submittedBy?: {
+    id?: string;
+    email?: string;
+    name?: string;
+  };
+  isNew?: boolean;
+}): Promise<void> {
+  const submitterName = resource.submittedBy?.name || resource.submittedBy?.email?.split("@")[0] || "Unknown user";
+  const submitterEmail = resource.submittedBy?.email || "unknown";
+  const action = resource.isNew ? "submitted a new" : "updated a";
+  const categoryLabel = resource.category ? ` in <strong>${resource.category}</strong>` : "";
+
+  await notifyAdmins({
+    type: "resource_submission",
+    title: "Resource Pending Review",
+    message: `<strong>${submitterName}</strong> (${submitterEmail}) has ${action} resource${categoryLabel}:<br><br><strong>"${resource.title}"</strong><br><br>URL: <a href="${resource.url}" style="color: #2563eb;">${resource.url}</a><br><br>Please review this submission.`,
+    actorId: resource.submittedBy?.id,
+    resourceType: "resource",
+    resourceId: String(resource.id),
+    data: {
+      resourceId: resource.id,
+      resourceTitle: resource.title,
+      resourceUrl: resource.url,
+      category: resource.category,
+      submittedBy: resource.submittedBy,
+      isNew: resource.isNew,
     },
   });
 }

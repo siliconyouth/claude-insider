@@ -10,6 +10,7 @@
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { notifyAdminsEditSuggestion } from "@/lib/admin-notifications";
 
 export type SuggestionStatus = "pending" | "approved" | "rejected" | "merged";
 
@@ -101,6 +102,18 @@ export async function createSuggestion(
       resourceId,
       { suggestion_id: data.id }
     );
+
+    // Notify admins about the new suggestion (async, don't block response)
+    notifyAdminsEditSuggestion({
+      id: data.id,
+      userId: session.user.id,
+      userName: session.user.name || session.user.email?.split("@")[0] || "Unknown",
+      userEmail: session.user.email || "",
+      title: title.trim(),
+      resourceType,
+      resourceId,
+      suggestionType,
+    }).catch((err) => console.error("[Suggestions] Admin notification error:", err));
 
     revalidatePath(`/${resourceType}s`);
 

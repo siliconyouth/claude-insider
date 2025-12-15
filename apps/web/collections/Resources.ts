@@ -1,6 +1,49 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig, CollectionAfterChangeHook } from 'payload';
 import { createRevalidateHook, createDeleteRevalidateHook } from '../lib/revalidate';
 import { hasRole } from './Users';
+import { notifyAdminsResourceSubmission } from '../lib/admin-notifications';
+import type { Resource, Category } from '../payload-types';
+
+/**
+ * Hook to notify admins when a resource is submitted for review
+ */
+const notifyAdminsOnPendingReview: CollectionAfterChangeHook<Resource> = async ({
+  doc,
+  previousDoc,
+  operation,
+  req,
+}) => {
+  // Only notify when status changes to pending_review or when a new resource is created with pending_review
+  const isNewPendingReview = operation === 'create' && doc.publishStatus === 'pending_review';
+  const isStatusChangeToPending = operation === 'update' &&
+    doc.publishStatus === 'pending_review' &&
+    previousDoc?.publishStatus !== 'pending_review';
+
+  if (isNewPendingReview || isStatusChangeToPending) {
+    // Get category name if it's populated
+    const categoryName = typeof doc.category === 'object' && doc.category
+      ? (doc.category as Category).name
+      : undefined;
+
+    // Get user info from the request
+    const user = req.user;
+
+    notifyAdminsResourceSubmission({
+      id: doc.id,
+      title: doc.title,
+      url: doc.url,
+      category: categoryName,
+      submittedBy: user ? {
+        id: String(user.id),
+        email: user.email,
+        name: (user as { name?: string }).name,
+      } : undefined,
+      isNew: operation === 'create',
+    }).catch((err) => console.error('[Resources] Admin notification error:', err));
+  }
+
+  return doc;
+};
 
 export const Resources: CollectionConfig = {
   slug: 'resources',
@@ -21,7 +64,7 @@ export const Resources: CollectionConfig = {
     maxPerDoc: 10,
   },
   hooks: {
-    afterChange: [createRevalidateHook('resources')],
+    afterChange: [createRevalidateHook('resources'), notifyAdminsOnPendingReview],
     afterDelete: [createDeleteRevalidateHook('resources')],
   },
   fields: [
