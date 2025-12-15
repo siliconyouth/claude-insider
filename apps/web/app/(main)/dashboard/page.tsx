@@ -10,6 +10,7 @@ import { useEffect, useState, type JSX } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { StatsCards } from "./components/stats-cards";
+import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import type { AdminStats, AdminBetaApplication, AdminFeedback } from "@/types/admin";
 import { getAdminNotifications, type AdminNotification } from "@/app/actions/admin-notifications";
 
@@ -224,6 +225,18 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Live Activity Feed */}
+      <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <ActivityFeed
+          maxItems={30}
+          showFilters={true}
+          showSearch={true}
+          autoRefresh={true}
+          refreshInterval={30000}
+          enableRealtime={true}
+        />
       </div>
 
       {/* Role Distribution (if stats available) */}

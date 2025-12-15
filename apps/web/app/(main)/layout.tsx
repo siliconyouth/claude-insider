@@ -16,6 +16,7 @@ import { I18nProvider } from "@/i18n";
 import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
 import { AskAIProvider, AskAIModal } from "@/components/ask-ai";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
+import { FingerprintProvider } from "@/components/providers/fingerprint-provider";
 import { NotificationPopup } from "@/components/notifications/notification-popup";
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 
@@ -153,8 +154,9 @@ export default async function MainLayout({
         className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}
       >
         <I18nProvider locale={locale} messages={messages}>
-          <AuthProvider>
-            <AskAIProvider>
+          <FingerprintProvider>
+            <AuthProvider>
+              <AskAIProvider>
               <KeyboardShortcutsProvider>
                 <ToastProvider>
                   <AchievementNotificationProvider>
@@ -175,7 +177,8 @@ export default async function MainLayout({
                 </ToastProvider>
               </KeyboardShortcutsProvider>
             </AskAIProvider>
-          </AuthProvider>
+            </AuthProvider>
+          </FingerprintProvider>
         </I18nProvider>
       </body>
     </html>

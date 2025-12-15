@@ -216,6 +216,29 @@ export default function DiagnosticsPage() {
   const [userApiKey, setUserApiKey] = useState("");
   const [userKeyResult, setUserKeyResult] = useState<ApiKeyTestResult | null>(null);
   const [isTestingUserKey, setIsTestingUserKey] = useState(false);
+  const [botDetectionResult, setBotDetectionResult] = useState<{
+    config?: {
+      enabled: boolean;
+      provider: string;
+      features: string[];
+      protectedRoutes: string[];
+    };
+    test?: {
+      isBot: boolean;
+      isHuman: boolean;
+      isVerifiedBot: boolean;
+      bypassed: boolean;
+      verifiedBotName?: string;
+      verifiedBotCategory?: string;
+      classificationReason?: string;
+      responseTime: number;
+    };
+    environment?: {
+      nodeEnv: string;
+      vercelEnv: string;
+    };
+  } | null>(null);
+  const [isLoadingBotDetection, setIsLoadingBotDetection] = useState(false);
 
   // TEST ALL state
   const [testAllProgress, setTestAllProgress] = useState<TestAllProgress>({
@@ -558,6 +581,30 @@ export default function DiagnosticsPage() {
       setIsTestingUserKey(false);
     }
   }, [userApiKey, toast]);
+
+  // Test bot detection
+  const testBotDetection = useCallback(async () => {
+    setIsLoadingBotDetection(true);
+    try {
+      const response = await fetch("/api/debug/bot-status");
+      const data = await response.json();
+      if (response.ok) {
+        setBotDetectionResult(data);
+        if (data.test?.isBot) {
+          toast.warning("Request detected as bot traffic");
+        } else {
+          toast.success("Bot detection active - you are not a bot");
+        }
+      } else {
+        toast.error(data.error || "Failed to check bot status");
+      }
+    } catch (error) {
+      console.error("Bot detection test error:", error);
+      toast.error("Failed to test bot detection");
+    } finally {
+      setIsLoadingBotDetection(false);
+    }
+  }, [toast]);
 
   // Define all test suites
   const testSuites = [
@@ -1051,6 +1098,540 @@ export default function DiagnosticsPage() {
             status: "error",
             message: e instanceof Error ? e.message : "Failed",
             category: "api",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Bot Detection",
+      category: "security",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/debug/bot-status");
+          if (response.ok) {
+            const data = await response.json();
+            setBotDetectionResult(data);
+            return {
+              name: "Bot Detection",
+              status: data.test?.isBot === false ? "success" : data.test?.isBot ? "warning" : "success",
+              message: data.test?.isBot
+                ? "Request detected as bot"
+                : `Active - ${data.config?.provider || "Vercel BotID"}`,
+              category: "security",
+              duration: Date.now() - start,
+              details: {
+                provider: data.config?.provider,
+                responseTime: data.test?.responseTime,
+                protectedRoutes: data.config?.protectedRoutes?.length,
+              },
+            };
+          } else if (response.status === 403) {
+            return {
+              name: "Bot Detection",
+              status: "warning",
+              message: "Admin role required",
+              category: "security",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Bot Detection",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "security",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Bot Detection",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "security",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // Security System Tests
+    {
+      name: "Security Stats API",
+      category: "security",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/dashboard/security/stats");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "Security Stats API",
+              status: "success",
+              message: `Active - ${data.stats?.totalRequests || 0} total requests logged`,
+              category: "security",
+              duration: Date.now() - start,
+              details: {
+                totalRequests: data.stats?.totalRequests,
+                botRequests: data.stats?.botRequests,
+                honeypotTriggers: data.stats?.honeypotTriggers,
+                blockedVisitors: data.stats?.blockedVisitors,
+              },
+            };
+          } else if (response.status === 403) {
+            return {
+              name: "Security Stats API",
+              status: "warning",
+              message: "Admin role required",
+              category: "security",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Security Stats API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "security",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Security Stats API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "security",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Security Logs API",
+      category: "security",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/dashboard/security/logs?limit=5");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "Security Logs API",
+              status: "success",
+              message: `Active - ${data.total || 0} total log entries`,
+              category: "security",
+              duration: Date.now() - start,
+              details: {
+                logsReturned: data.logs?.length || 0,
+                totalLogs: data.total,
+                hasMore: data.hasMore,
+              },
+            };
+          } else if (response.status === 403) {
+            return {
+              name: "Security Logs API",
+              status: "warning",
+              message: "Admin role required",
+              category: "security",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Security Logs API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "security",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Security Logs API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "security",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Honeypot Config API",
+      category: "security",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/dashboard/security/honeypots");
+          if (response.ok) {
+            const data = await response.json();
+            const activeCount = data.honeypots?.filter((h: { enabled: boolean }) => h.enabled).length || 0;
+            return {
+              name: "Honeypot Config API",
+              status: "success",
+              message: `Active - ${activeCount} honeypot(s) enabled`,
+              category: "security",
+              duration: Date.now() - start,
+              details: {
+                totalHoneypots: data.honeypots?.length || 0,
+                activeHoneypots: activeCount,
+              },
+            };
+          } else if (response.status === 403) {
+            return {
+              name: "Honeypot Config API",
+              status: "warning",
+              message: "Admin role required",
+              category: "security",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Honeypot Config API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "security",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Honeypot Config API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "security",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Visitor Fingerprinting",
+      category: "security",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check if fingerprint is available in window
+          const visitorId = typeof window !== "undefined"
+            ? (window as unknown as { __visitorId?: string }).__visitorId
+            : null;
+
+          if (visitorId) {
+            return {
+              name: "Visitor Fingerprinting",
+              status: "success",
+              message: `Active - ID: ${visitorId.substring(0, 8)}...`,
+              category: "security",
+              duration: Date.now() - start,
+              details: {
+                visitorIdLength: visitorId.length,
+                hasFingerprint: true,
+              },
+            };
+          } else {
+            // Check localStorage for cached fingerprint
+            const cached = localStorage.getItem("fp_visitor_id");
+            if (cached) {
+              const parsed = JSON.parse(cached);
+              return {
+                name: "Visitor Fingerprinting",
+                status: "success",
+                message: `Cached - ID: ${parsed.visitorId?.substring(0, 8) || "unknown"}...`,
+                category: "security",
+                duration: Date.now() - start,
+                details: {
+                  cached: true,
+                  confidence: parsed.confidence,
+                },
+              };
+            }
+            return {
+              name: "Visitor Fingerprinting",
+              status: "warning",
+              message: "Not initialized - fingerprint pending",
+              category: "security",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Visitor Fingerprinting",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "security",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // Speed & Optimization Tests
+    {
+      name: "Page Performance",
+      category: "performance",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined" || !window.performance) {
+            return {
+              name: "Page Performance",
+              status: "warning",
+              message: "Performance API not available",
+              category: "performance",
+              duration: Date.now() - start,
+            };
+          }
+
+          const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
+          const paint = performance.getEntriesByType("paint");
+
+          const fcpEntry = paint.find(p => p.name === "first-contentful-paint");
+          const fcp = fcpEntry ? Math.round(fcpEntry.startTime) : null;
+          const domComplete = navigation ? Math.round(navigation.domComplete) : null;
+          const loadTime = navigation ? Math.round(navigation.loadEventEnd - navigation.startTime) : null;
+
+          const status = (fcp && fcp < 1800) ? "success" : (fcp && fcp < 3000) ? "warning" : "error";
+
+          return {
+            name: "Page Performance",
+            status,
+            message: fcp ? `FCP: ${fcp}ms, Load: ${loadTime}ms` : "Metrics pending",
+            category: "performance",
+            duration: Date.now() - start,
+            details: {
+              firstContentfulPaint: fcp,
+              domComplete,
+              loadTime,
+              transferSize: navigation?.transferSize,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Page Performance",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "performance",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Memory Usage",
+      category: "performance",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check if memory API is available (Chrome only)
+          const perfWithMemory = performance as Performance & {
+            memory?: {
+              usedJSHeapSize: number;
+              totalJSHeapSize: number;
+              jsHeapSizeLimit: number;
+            };
+          };
+
+          if (perfWithMemory.memory) {
+            const usedMB = Math.round(perfWithMemory.memory.usedJSHeapSize / 1024 / 1024);
+            const totalMB = Math.round(perfWithMemory.memory.totalJSHeapSize / 1024 / 1024);
+            const limitMB = Math.round(perfWithMemory.memory.jsHeapSizeLimit / 1024 / 1024);
+            const usagePercent = Math.round((usedMB / limitMB) * 100);
+
+            const status = usagePercent < 50 ? "success" : usagePercent < 75 ? "warning" : "error";
+
+            return {
+              name: "Memory Usage",
+              status,
+              message: `${usedMB}MB / ${totalMB}MB (${usagePercent}% of limit)`,
+              category: "performance",
+              duration: Date.now() - start,
+              details: {
+                usedHeapMB: usedMB,
+                totalHeapMB: totalMB,
+                heapLimitMB: limitMB,
+                usagePercent,
+              },
+            };
+          } else {
+            return {
+              name: "Memory Usage",
+              status: "warning",
+              message: "Memory API not available (Chrome only)",
+              category: "performance",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Memory Usage",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "performance",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "API Latency",
+      category: "performance",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test multiple API endpoints and calculate average latency
+          const endpoints = [
+            "/api/health",
+            "/api/dashboard/stats",
+          ];
+
+          const results: number[] = [];
+
+          for (const endpoint of endpoints) {
+            const endpointStart = Date.now();
+            try {
+              await fetch(endpoint, { method: "GET" });
+              results.push(Date.now() - endpointStart);
+            } catch {
+              // Ignore individual endpoint failures
+            }
+          }
+
+          if (results.length === 0) {
+            return {
+              name: "API Latency",
+              status: "error",
+              message: "No API endpoints responded",
+              category: "performance",
+              duration: Date.now() - start,
+            };
+          }
+
+          const avgLatency = Math.round(results.reduce((a, b) => a + b, 0) / results.length);
+          const status = avgLatency < 100 ? "success" : avgLatency < 300 ? "warning" : "error";
+
+          return {
+            name: "API Latency",
+            status,
+            message: `Avg: ${avgLatency}ms (${results.length} endpoints tested)`,
+            category: "performance",
+            duration: Date.now() - start,
+            details: {
+              averageLatency: avgLatency,
+              endpointsTested: results.length,
+              latencies: results,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "API Latency",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "performance",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Resource Loading",
+      category: "performance",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined" || !window.performance) {
+            return {
+              name: "Resource Loading",
+              status: "warning",
+              message: "Performance API not available",
+              category: "performance",
+              duration: Date.now() - start,
+            };
+          }
+
+          const resources = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
+
+          const scripts = resources.filter(r => r.initiatorType === "script");
+          const styles = resources.filter(r => r.initiatorType === "link" || r.name.endsWith(".css"));
+          const images = resources.filter(r => r.initiatorType === "img");
+
+          const totalTransfer = resources.reduce((sum, r) => sum + (r.transferSize || 0), 0);
+          const totalTransferKB = Math.round(totalTransfer / 1024);
+
+          const slowResources = resources.filter(r => r.duration > 500).length;
+          const status = slowResources === 0 ? "success" : slowResources < 3 ? "warning" : "error";
+
+          return {
+            name: "Resource Loading",
+            status,
+            message: `${resources.length} resources, ${totalTransferKB}KB transferred`,
+            category: "performance",
+            duration: Date.now() - start,
+            details: {
+              totalResources: resources.length,
+              scripts: scripts.length,
+              styles: styles.length,
+              images: images.length,
+              totalTransferKB,
+              slowResources,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Resource Loading",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "performance",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Network Speed",
+      category: "performance",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check Network Information API (Chrome only)
+          const nav = navigator as Navigator & {
+            connection?: {
+              effectiveType: string;
+              downlink: number;
+              rtt: number;
+              saveData: boolean;
+            };
+          };
+
+          if (nav.connection) {
+            const { effectiveType, downlink, rtt, saveData } = nav.connection;
+            const status = effectiveType === "4g" ? "success" : effectiveType === "3g" ? "warning" : "error";
+
+            return {
+              name: "Network Speed",
+              status,
+              message: `${effectiveType.toUpperCase()} - ${downlink}Mbps, RTT: ${rtt}ms`,
+              category: "performance",
+              duration: Date.now() - start,
+              details: {
+                effectiveType,
+                downlinkMbps: downlink,
+                rttMs: rtt,
+                saveData,
+              },
+            };
+          } else {
+            return {
+              name: "Network Speed",
+              status: "warning",
+              message: "Network Info API not available",
+              category: "performance",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Network Speed",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "performance",
             duration: Date.now() - start,
           };
         }
@@ -2619,6 +3200,179 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
             </div>
           )}
         </div>
+      </section>
+
+      {/* Bot Detection */}
+      <section className="rounded-xl border-2 border-rose-500/30 bg-gradient-to-r from-rose-900/10 via-pink-900/10 to-purple-900/10 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <span>🤖</span>
+              Bot Detection (Vercel BotID)
+            </h3>
+            <p className="text-sm text-gray-400 mt-1">
+              Invisible bot protection powered by Kasada
+            </p>
+          </div>
+          <button
+            onClick={testBotDetection}
+            disabled={isLoadingBotDetection}
+            className="px-4 py-2 text-sm bg-rose-600 text-white rounded-lg hover:bg-rose-700 disabled:opacity-50 transition-colors"
+          >
+            {isLoadingBotDetection ? "Testing..." : "Test Detection"}
+          </button>
+        </div>
+
+        {botDetectionResult ? (
+          <div className="space-y-4">
+            {/* Detection Result */}
+            <div className={cn(
+              "p-4 rounded-lg border",
+              botDetectionResult.test?.isBot
+                ? "bg-yellow-500/10 border-yellow-500/30"
+                : "bg-emerald-500/10 border-emerald-500/30"
+            )}>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <span className={cn(
+                    "text-2xl",
+                    botDetectionResult.test?.isBot ? "text-yellow-400" : "text-emerald-400"
+                  )}>
+                    {botDetectionResult.test?.isBot ? "⚠️" : "✓"}
+                  </span>
+                  <div>
+                    <p className={cn(
+                      "font-semibold",
+                      botDetectionResult.test?.isBot ? "text-yellow-400" : "text-emerald-400"
+                    )}>
+                      {botDetectionResult.test?.isBot ? "Bot Detected" : "Human Verified"}
+                    </p>
+                    <p className="text-sm text-gray-400">
+                      {botDetectionResult.test?.isBot
+                        ? "This request appears to be automated"
+                        : "This request passed bot detection"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Response Time</label>
+                  <p className="text-white">{botDetectionResult.test?.responseTime || 0}ms</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Is Human</label>
+                  <p className={botDetectionResult.test?.isHuman ? "text-emerald-400" : "text-red-400"}>
+                    {botDetectionResult.test?.isHuman ? "Yes" : "No"}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Verified Bot</label>
+                  <p className={botDetectionResult.test?.isVerifiedBot ? "text-blue-400" : "text-gray-400"}>
+                    {botDetectionResult.test?.isVerifiedBot ? "Yes" : "No"}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Bypassed</label>
+                  <p className={botDetectionResult.test?.bypassed ? "text-yellow-400" : "text-gray-400"}>
+                    {botDetectionResult.test?.bypassed ? "Yes" : "No"}
+                  </p>
+                </div>
+                {botDetectionResult.test?.verifiedBotName && (
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Bot Name</label>
+                    <p className="text-white text-xs">{botDetectionResult.test.verifiedBotName}</p>
+                  </div>
+                )}
+                {botDetectionResult.test?.verifiedBotCategory && (
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Bot Category</label>
+                    <p className="text-white text-xs">{botDetectionResult.test.verifiedBotCategory}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Configuration */}
+            {botDetectionResult.config && (
+              <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+                <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
+                  <span>⚙️</span>
+                  Configuration
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Status</label>
+                    <p className={botDetectionResult.config.enabled ? "text-emerald-400" : "text-red-400"}>
+                      {botDetectionResult.config.enabled ? "Enabled" : "Disabled"}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Provider</label>
+                    <p className="text-white text-xs">{botDetectionResult.config.provider}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-500 uppercase">Protected Routes</label>
+                    <p className="text-white">{botDetectionResult.config.protectedRoutes?.length || 0}</p>
+                  </div>
+                </div>
+
+                {/* Features */}
+                {botDetectionResult.config.features && botDetectionResult.config.features.length > 0 && (
+                  <div className="mt-4">
+                    <label className="text-xs text-gray-500 uppercase mb-2 block">Features</label>
+                    <div className="flex flex-wrap gap-2">
+                      {botDetectionResult.config.features.map((feature, i) => (
+                        <span key={i} className="px-2 py-1 bg-rose-500/20 text-rose-300 rounded text-xs">
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Protected Routes */}
+                {botDetectionResult.config.protectedRoutes && botDetectionResult.config.protectedRoutes.length > 0 && (
+                  <div className="mt-4">
+                    <label className="text-xs text-gray-500 uppercase mb-2 block">Protected Routes</label>
+                    <div className="flex flex-wrap gap-2">
+                      {botDetectionResult.config.protectedRoutes.map((route, i) => (
+                        <span key={i} className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs font-mono">
+                          {route}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Environment */}
+            {botDetectionResult.environment && (
+              <div className="p-3 rounded-lg bg-gray-800/30 border border-gray-700/50 text-xs">
+                <span className="text-gray-500">Environment: </span>
+                <span className="text-gray-300 font-mono">{botDetectionResult.environment.nodeEnv}</span>
+                {botDetectionResult.environment.vercelEnv && (
+                  <>
+                    <span className="text-gray-500 mx-2">|</span>
+                    <span className="text-gray-300 font-mono">{botDetectionResult.environment.vercelEnv}</span>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        ) : !isLoadingBotDetection ? (
+          <p className="text-gray-500 text-sm">Click "Test Detection" to verify bot protection status</p>
+        ) : (
+          <div className="flex items-center justify-center py-8">
+            <svg className="animate-spin h-8 w-8 text-rose-500" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            <span className="ml-3 text-gray-400">Testing bot detection...</span>
+          </div>
+        )}
       </section>
 
       {/* Browser Environment */}

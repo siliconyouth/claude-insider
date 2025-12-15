@@ -7,6 +7,82 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.78.0] - 2025-12-15
+
+### Added
+
+#### Security Dashboard with Bot Analytics
+- **Browser Fingerprinting** (`lib/fingerprint.ts`)
+  - FingerprintJS integration for client identification
+  - 24-hour browser-side caching for performance
+  - Privacy-preserving visitor tracking
+  - React hook (`hooks/use-fingerprint.ts`) and context provider
+
+- **Request Correlation IDs** (`lib/request-id.ts`)
+  - nanoid-based unique request identifiers
+  - Middleware injection for all requests (`middleware.ts`)
+  - Full request tracing through logs
+
+- **Security Event Logging** (`lib/security-logger.ts`)
+  - Structured security event logging to Supabase
+  - Correlation ID and fingerprint association
+  - Event types: auth, access, suspicious, rate_limit, honeypot
+
+- **Trust Score Algorithm** (`lib/trust-score.ts`)
+  - Rules-based 0-100 visitor trust scoring
+  - Factors: visit history, account linkage, suspicious patterns
+  - Real-time score calculation and updates
+
+- **Honeypot/Tarpit System** (`lib/honeypot.ts`, `lib/honeypot-templates.ts`)
+  - Faker.js-powered fake data generation
+  - Configurable honeypot templates
+  - Bot detection through trap interactions
+  - Delayed responses to slow down scrapers
+
+- **Security Dashboard Pages** (6 new admin pages)
+  - `/dashboard/security` - Overview with stats and charts
+  - `/dashboard/security/analytics` - Bot detection analytics
+  - `/dashboard/security/logs` - Searchable event log viewer
+  - `/dashboard/security/visitors` - Fingerprint browser with trust scores
+  - `/dashboard/security/honeypots` - Honeypot configuration
+  - `/dashboard/security/settings` - Security thresholds and rate limits
+
+- **Comprehensive Activity Feed** (`components/dashboard/activity-feed.tsx`)
+  - Real-time feed with Supabase realtime subscriptions
+  - 7 activity types: security_event, user_action, content_change, system_event, api_request, auth_event, honeypot_trigger
+  - Advanced filtering and search
+  - Linkified entries with deep navigation
+  - Hovercards for quick preview
+  - Realtime hook (`hooks/use-security-realtime.ts`)
+
+- **Security Database Schema** (`supabase/migrations/045_security_system.sql`)
+  - `security_logs` table for event storage
+  - `visitor_fingerprints` table with trust scores
+  - `honeypot_configs` table for trap configurations
+  - `security_settings` table for global settings
+  - Row Level Security policies for admin access
+
+- **Security API Routes** (7 new endpoints)
+  - `/api/dashboard/security/logs` - Fetch logs with pagination
+  - `/api/dashboard/security/visitors` - Fetch fingerprints
+  - `/api/dashboard/security/stats` - Get security statistics
+  - `/api/dashboard/security/honeypots` - CRUD for honeypots
+  - `/api/dashboard/security/settings` - Manage settings
+  - `/api/dashboard/security/trust-score` - Calculate trust score
+  - `/api/dashboard/activity` - Fetch activity feed
+
+- **Diagnostics Tests** (9 new tests)
+  - Security: Fingerprint Provider, Security Logger, Trust Score Calculator, Honeypot System
+  - Performance: Request ID Generation, Fingerprint Caching, Realtime Subscription, Activity Feed Loading, Log Search
+
+### Dependencies
+
+- **@fingerprintjs/fingerprintjs** ^5.0.1 - Browser fingerprinting
+- **nanoid** ^5.1.6 - Request correlation IDs
+- **@faker-js/faker** ^10.1.0 - Honeypot fake data generation
+- **@heroicons/react** ^2.2.0 - Security dashboard icons
+- **date-fns** ^4.1.0 - Date formatting utilities
+
 ## [0.77.0] - 2025-12-15
 
 ### Added

@@ -245,7 +245,41 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">9. Prohibited Conduct</h2>
+            <h2 className="text-2xl font-semibold mb-4">9. Security Monitoring</h2>
+            <p className="text-gray-300 leading-relaxed">
+              To protect our Website and users, we implement security measures including:
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">9.1 Browser Fingerprinting</h3>
+            <p className="text-gray-300 leading-relaxed">
+              We use browser fingerprinting technology (FingerprintJS) to identify and protect against automated bots, scrapers, and malicious actors. By using our Website, you acknowledge that:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li>Your browser&apos;s technical characteristics may be collected to create a unique identifier</li>
+              <li>This identifier is used solely for security purposes (bot detection, fraud prevention)</li>
+              <li>Fingerprint data is retained for 90 days</li>
+              <li>See our <a href="/privacy" className="text-cyan-400 hover:text-cyan-300">Privacy Policy</a> for full details</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">9.2 Trust Scoring</h3>
+            <p className="text-gray-300 leading-relaxed">
+              We calculate a trust score (0-100) for visitors based on behavior patterns. Low trust scores may result in:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li>Additional verification requirements</li>
+              <li>Rate limiting of requests</li>
+              <li>Limited access to certain features</li>
+              <li>Being served honeypot content (fake data designed to waste bot resources)</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">9.3 Honeypot System</h3>
+            <p className="text-gray-300 leading-relaxed">
+              We deploy honeypot traps to detect and deter automated abuse. If you are a legitimate user, you will never encounter these. Automated systems that interact with honeypots will be flagged and may be blocked.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">10. Prohibited Conduct</h2>
             <p className="text-gray-300 leading-relaxed">
               You agree NOT to:
             </p>
@@ -259,12 +293,14 @@ export default function TermsOfServicePage() {
               <li>Post spam, malware, or malicious content</li>
               <li>Impersonate others or provide false information</li>
               <li>Circumvent rate limits or security measures</li>
+              <li>Attempt to defeat or circumvent browser fingerprinting or bot detection</li>
+              <li>Use tools to spoof or mask your browser fingerprint for malicious purposes</li>
               <li>Use the service to generate harmful or illegal content</li>
             </ul>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">10. Disclaimer of Warranties</h2>
+            <h2 className="text-2xl font-semibold mb-4">11. Disclaimer of Warranties</h2>
             <p className="text-gray-300 leading-relaxed">
               THE WEBSITE AND ITS CONTENT ARE PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; WITHOUT ANY WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. We do not guarantee:
             </p>
@@ -277,7 +313,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">11. Limitation of Liability</h2>
+            <h2 className="text-2xl font-semibold mb-4">12. Limitation of Liability</h2>
             <p className="text-gray-300 leading-relaxed">
               TO THE FULLEST EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY:
             </p>
@@ -290,7 +326,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">12. Indemnification</h2>
+            <h2 className="text-2xl font-semibold mb-4">13. Indemnification</h2>
             <p className="text-gray-300 leading-relaxed">
               You agree to indemnify and hold harmless Vladimir Dukelic and any contributors from claims, damages, losses, or expenses arising from:
             </p>
@@ -303,14 +339,14 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">13. Modifications to Terms</h2>
+            <h2 className="text-2xl font-semibold mb-4">14. Modifications to Terms</h2>
             <p className="text-gray-300 leading-relaxed">
               We may modify these Terms at any time. Changes will be posted with an updated &quot;Last updated&quot; date. For material changes affecting registered users, we will provide notice via email or in-app notification. Continued use after changes constitutes acceptance.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">14. Governing Law</h2>
+            <h2 className="text-2xl font-semibold mb-4">15. Governing Law</h2>
             <p className="text-gray-300 leading-relaxed">
               These Terms are governed by the laws of the Republic of Serbia. Any disputes shall be subject to the exclusive jurisdiction of Serbian courts.
             </p>
@@ -323,7 +359,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">15. Contact Information</h2>
+            <h2 className="text-2xl font-semibold mb-4">16. Contact Information</h2>
             <p className="text-gray-300 leading-relaxed">
               If you have questions about these Terms:
             </p>
@@ -339,7 +375,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> Claude Insider is free, open-source documentation with user accounts, social features, and AI assistance. You can sign in with email/password or OAuth (GitHub, Google) and manage your connected accounts in Settings. You can select your preferred Claude model (Opus 4.5, Sonnet 4, or Haiku) based on your subscription tier. You can optionally add your own Anthropic API key for AI features — you remain responsible for your Anthropic account and billing. Be respectful in comments and discussions. You can export or delete your data anytime from Settings. We&apos;re not affiliated with Anthropic. Content is provided &quot;as is&quot; — always verify with official sources. Serbian law governs these terms, but your local consumer rights are preserved.
+              <strong>In short:</strong> Claude Insider is free, open-source documentation with user accounts, social features, and AI assistance. You can sign in with email/password or OAuth (GitHub, Google) and manage your connected accounts in Settings. You can select your preferred Claude model (Opus 4.5, Sonnet 4, or Haiku) based on your subscription tier. You can optionally add your own Anthropic API key for AI features — you remain responsible for your Anthropic account and billing. For security, we use browser fingerprinting to detect bots and automated abuse — legitimate users are never affected. Be respectful in comments and discussions. You can export or delete your data anytime from Settings. We&apos;re not affiliated with Anthropic. Content is provided &quot;as is&quot; — always verify with official sources. Serbian law governs these terms, but your local consumer rights are preserved.
             </p>
           </section>
         </article>

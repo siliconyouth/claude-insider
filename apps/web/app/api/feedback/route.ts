@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
+import { checkForBot, botBlockedResponse } from "@/lib/bot-detection";
 import type { FeedbackSubmission } from "@/types/feedback";
 import {
   sendFeedbackAdminEmail,
@@ -21,6 +22,13 @@ import {
  */
 export async function POST(request: NextRequest) {
   try {
+    // Check for bot traffic
+    const botCheck = await checkForBot();
+    if (botCheck.isBot) {
+      console.warn("[Feedback] Bot blocked:", botCheck);
+      return botBlockedResponse(botCheck);
+    }
+
     // Verify authentication
     const session = await getSession();
     if (!session?.user) {

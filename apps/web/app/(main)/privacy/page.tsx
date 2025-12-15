@@ -375,6 +375,96 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Browser Fingerprinting &amp; Security</h2>
+            <p className="text-gray-300 leading-relaxed">
+              To protect our website from automated abuse, spam, and malicious bots, we use <strong>browser fingerprinting</strong> technology (FingerprintJS).
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">What Is Browser Fingerprinting?</h3>
+            <p className="text-gray-300 leading-relaxed">
+              Browser fingerprinting collects technical information about your browser and device to create a unique identifier. This identifier helps us distinguish between legitimate users and automated bots without requiring cookies or storing personal information.
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">What We Collect</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Browser characteristics:</strong> Browser type, version, installed plugins, language settings</li>
+              <li><strong>Device characteristics:</strong> Screen resolution, color depth, timezone, platform</li>
+              <li><strong>Canvas fingerprint:</strong> How your browser renders graphics</li>
+              <li><strong>Audio fingerprint:</strong> Audio processing characteristics</li>
+              <li><strong>WebGL fingerprint:</strong> Graphics card rendering behavior</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">How We Use Fingerprints</h3>
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mt-4">
+              <ul className="list-disc list-inside space-y-2 text-gray-300">
+                <li><strong>Bot detection:</strong> Identify automated scrapers and spam bots</li>
+                <li><strong>Security monitoring:</strong> Detect suspicious patterns and potential attacks</li>
+                <li><strong>Trust scoring:</strong> Calculate a trust score (0-100) for visitors</li>
+                <li><strong>Honeypot protection:</strong> Serve fake data to detected bots</li>
+                <li><strong>Rate limiting:</strong> Prevent abuse without blocking legitimate users</li>
+              </ul>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">What We Do NOT Do</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>No cross-site tracking:</strong> Fingerprints are not shared with third parties</li>
+              <li><strong>No advertising:</strong> Fingerprints are never used for ads or profiling</li>
+              <li><strong>No personal identification:</strong> Fingerprints cannot identify you as an individual</li>
+              <li><strong>No sale of data:</strong> Fingerprint data is never sold</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Data Storage &amp; Retention</h3>
+            <div className="overflow-x-auto mt-4">
+              <table className="min-w-full text-sm text-gray-300">
+                <thead className="bg-gray-800/50">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">Data</th>
+                    <th className="px-4 py-2 text-left font-semibold">Purpose</th>
+                    <th className="px-4 py-2 text-left font-semibold">Retention</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  <tr>
+                    <td className="px-4 py-2">Fingerprint hash</td>
+                    <td className="px-4 py-2">Visitor identification</td>
+                    <td className="px-4 py-2">90 days</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Trust score</td>
+                    <td className="px-4 py-2">Security assessment</td>
+                    <td className="px-4 py-2">90 days</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Visit count</td>
+                    <td className="px-4 py-2">Behavior analysis</td>
+                    <td className="px-4 py-2">90 days</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Security logs</td>
+                    <td className="px-4 py-2">Incident investigation</td>
+                    <td className="px-4 py-2">90 days</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Client-side cache</td>
+                    <td className="px-4 py-2">Performance optimization</td>
+                    <td className="px-4 py-2">24 hours (browser localStorage)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Legal Basis (GDPR)</h3>
+            <p className="text-gray-300 leading-relaxed">
+              Browser fingerprinting for security purposes is processed under <strong>legitimate interest</strong> (GDPR Article 6(1)(f)). We have a legitimate interest in protecting our website and users from automated abuse, fraud, and security threats. This processing is necessary and proportionate to achieve these security objectives.
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Your Rights</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You have the right to object to fingerprinting under GDPR Article 21. To exercise this right, please contact us at <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">vladimir@dukelic.com</a>. Note that objecting may result in limited functionality or additional verification steps.
+            </p>
+          </section>
+
+          <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">AI Voice Assistant &amp; Chat</h2>
             <p className="text-gray-300 leading-relaxed">
               Our AI features use third-party services:
@@ -648,7 +738,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. For enhanced security, you can register passkeys (Face ID, Touch ID, security keys) for passwordless login and set up multiple 2FA authenticator devices. If you add your own Anthropic API key, it is encrypted with AES-256-GCM before storage and only used to make Claude API requests on your behalf. Your AI assistant settings (model, voice, preferences), model selection preference (Opus/Sonnet/Haiku), and group chat memberships are stored in the database and sync across devices. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only (including cached model selection for faster display).
+              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. For enhanced security, you can register passkeys (Face ID, Touch ID, security keys) for passwordless login and set up multiple 2FA authenticator devices. If you add your own Anthropic API key, it is encrypted with AES-256-GCM before storage and only used to make Claude API requests on your behalf. Your AI assistant settings (model, voice, preferences), model selection preference (Opus/Sonnet/Haiku), and group chat memberships are stored in the database and sync across devices. For security purposes, we use browser fingerprinting (FingerprintJS) to detect bots and protect against automated abuse — this data is used only for security, never for advertising or cross-site tracking, and is retained for 90 days. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only (including cached model selection and fingerprint cache for faster display).
             </p>
           </section>
         </article>

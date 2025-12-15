@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.77.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.78.0**.
 
 | Link | URL |
 |------|-----|
@@ -34,6 +34,10 @@ Claude Insider is a Next.js documentation site for Claude AI. **Version 0.77.0**
 | Payload CMS | 3.68.3 | Content management system |
 | Turborepo | 2.6.3 | Monorepo build system |
 | pnpm | 10.19.0 | Package manager |
+| FingerprintJS | 5.0.1 | Browser fingerprinting for security |
+| nanoid | 5.1.6 | Request correlation IDs |
+| @faker-js/faker | 10.1.0 | Honeypot fake data generation |
+| date-fns | 4.1.0 | Date formatting utilities |
 
 ### Commands
 
@@ -124,6 +128,15 @@ claude-insider/
 │   │   ├── notifications/        # Notification center & popups
 │   │   │   ├── notification-popup.tsx # Persistent notification popups
 │   │   ├── analytics/            # User stats dashboards
+│   │   ├── dashboard/security/   # Security dashboard components
+│   │   │   ├── overview.tsx      # Security overview stats & charts
+│   │   │   ├── analytics.tsx     # Bot/visitor analytics
+│   │   │   ├── logs.tsx          # Security event logs viewer
+│   │   │   ├── visitors.tsx      # Visitor fingerprints browser
+│   │   │   ├── honeypots.tsx     # Honeypot configuration
+│   │   │   └── settings.tsx      # Security settings panel
+│   │   ├── dashboard/activity-feed.tsx # Real-time activity feed with filters
+│   │   ├── providers/fingerprint-provider.tsx # FingerprintJS context
 │   │   ├── universal-search/     # Unified search modal
 │   │   │   ├── index.tsx         # Main component (Quick + AI modes)
 │   │   │   ├── mode-toggle.tsx   # Quick/AI mode switcher
@@ -143,7 +156,9 @@ claude-insider/
 │   │   ├── use-aria-live.tsx
 │   │   ├── use-keyboard-shortcuts.ts
 │   │   ├── use-sound-effects.tsx # Site-wide sound effects (Web Audio API)
-│   │   └── use-chat-sounds.tsx   # Chat-specific sound effects
+│   │   ├── use-chat-sounds.tsx   # Chat-specific sound effects
+│   │   ├── use-fingerprint.ts    # Browser fingerprint management
+│   │   └── use-security-realtime.ts # Supabase realtime security events
 │   ├── lib/
 │   │   ├── design-system.ts      # Design tokens & cn() utility
 │   │   ├── claude.ts             # Server-only Claude client
@@ -159,6 +174,12 @@ claude-insider/
 │   │   ├── admin-notifications.ts # Staff alerts & push notifications
 │   │   ├── api-keys.ts           # API key encryption & validation
 │   │   ├── get-user-api-key.ts   # Retrieve user's API key for AI features
+│   │   ├── fingerprint.ts        # FingerprintJS initialization & caching
+│   │   ├── request-id.ts         # nanoid correlation ID generator
+│   │   ├── security-logger.ts    # Security event logging to Supabase
+│   │   ├── honeypot.ts           # Honeypot/tarpit system for bots
+│   │   ├── honeypot-templates.ts # Faker.js templates for fake data
+│   │   ├── trust-score.ts        # Rules-based visitor trust scoring
 │   │   ├── supabase/             # Supabase clients
 │   │   │   ├── client.ts         # Browser client (RLS-enforced)
 │   │   │   └── server.ts         # Server client (RLS + admin client)
@@ -206,12 +227,13 @@ claude-insider/
 │   │   ├── Resources.ts          # Curated resources
 │   │   └── Translations.ts       # UI translation strings
 │   ├── supabase/                 # Database migrations
-│   │   └── migrations/           # 44 SQL migration files
+│   │   └── migrations/           # 45 SQL migration files
 │   │       ├── 000_fresh_start.sql # Consolidated base schema
 │   │       ├── ...               # User data, comments, collections
 │   │       ├── 025_admin_notifications.sql # Admin broadcast system
 │   │       ├── 033_user_api_keys.sql # User API key storage & usage tracking
-│   │       └── 044_group_chats.sql # Group conversations, invitations, roles
+│   │       ├── 044_group_chats.sql # Group conversations, invitations, roles
+│   │       └── 045_security_system.sql # Security tables (logs, fingerprints, honeypots, settings)
 │   └── scripts/                  # Build-time scripts
 ├── packages/                     # Shared configs (ui, eslint, ts, tailwind)
 ├── vercel.json                   # Domain redirects
@@ -777,6 +799,127 @@ Settings are stored in localStorage under `soundSettings` with structure:
 
 ---
 
+## Security System
+
+**Location**: `lib/fingerprint.ts`, `lib/security-logger.ts`, `lib/honeypot.ts`, `lib/trust-score.ts`, `components/dashboard/security/`
+
+The Security System provides bot detection, visitor tracking, and honeypot protection for the admin dashboard.
+
+### Architecture
+
+| Layer | Location | Purpose |
+|-------|----------|---------|
+| **Database** | `supabase/migrations/045_security_system.sql` | 4 tables: security_logs, visitor_fingerprints, honeypot_configs, security_settings |
+| **Fingerprinting** | `lib/fingerprint.ts` | FingerprintJS initialization with 24-hour browser caching |
+| **Request IDs** | `lib/request-id.ts` | nanoid-based correlation IDs for request tracing |
+| **Logging** | `lib/security-logger.ts` | Security event logging to Supabase |
+| **Honeypots** | `lib/honeypot.ts`, `lib/honeypot-templates.ts` | Tarpit system with faker.js fake data |
+| **Trust Scoring** | `lib/trust-score.ts` | Rules-based 0-100 visitor trust algorithm |
+| **Middleware** | `middleware.ts` | Request ID injection into all requests |
+| **Hooks** | `hooks/use-fingerprint.ts`, `hooks/use-security-realtime.ts` | React hooks for client-side |
+| **Provider** | `components/providers/fingerprint-provider.tsx` | FingerprintJS context provider |
+
+### Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `security_logs` | All security events with correlation IDs, fingerprints, and metadata |
+| `visitor_fingerprints` | Unique visitor fingerprints with trust scores and visit counts |
+| `honeypot_configs` | Honeypot/tarpit configurations and faker.js templates |
+| `security_settings` | Global security settings (rate limits, thresholds) |
+
+### Security Dashboard Pages
+
+| Route | Purpose |
+|-------|---------|
+| `/dashboard/security` | Overview with stats, charts, and recent events |
+| `/dashboard/security/analytics` | Bot detection analytics and visitor patterns |
+| `/dashboard/security/logs` | Searchable security event log viewer |
+| `/dashboard/security/visitors` | Visitor fingerprint browser with trust scores |
+| `/dashboard/security/honeypots` | Honeypot configuration and template editor |
+| `/dashboard/security/settings` | Security thresholds and rate limit settings |
+
+### Trust Score Algorithm
+
+The trust score (0-100) is calculated based on:
+
+| Factor | Impact | Description |
+|--------|--------|-------------|
+| Known fingerprint | +20 | Returning visitor with history |
+| Account linked | +30 | Fingerprint associated with user account |
+| Suspicious patterns | -20 | High request rate, bot-like behavior |
+| Honeypot triggered | -50 | Visitor interacted with honeypot |
+| JavaScript disabled | -15 | Common bot indicator |
+| Headless browser | -30 | Automated browser detected |
+
+### Activity Feed
+
+**Location**: `components/dashboard/activity-feed.tsx`
+
+Real-time activity feed with 7 activity types, filters, search, and hovercards:
+
+| Activity Type | Description |
+|---------------|-------------|
+| `security_event` | Security-related events (login attempts, rate limits) |
+| `user_action` | User actions (profile updates, settings changes) |
+| `content_change` | Content modifications (comments, suggestions) |
+| `system_event` | System events (cron jobs, background tasks) |
+| `api_request` | API endpoint calls with response times |
+| `auth_event` | Authentication events (login, logout, 2FA) |
+| `honeypot_trigger` | Bot interactions with honeypot traps |
+
+### Diagnostics Tests
+
+The security system adds 9 new diagnostic tests:
+
+**Security Tests (4)**
+- Fingerprint Provider: Tests FingerprintJS initialization
+- Security Logger: Tests event logging to Supabase
+- Trust Score Calculator: Tests score algorithm
+- Honeypot System: Tests fake data generation
+
+**Performance Tests (5)**
+- Request ID Generation: Tests nanoid performance
+- Fingerprint Caching: Tests 24-hour cache validity
+- Realtime Subscription: Tests Supabase realtime connection
+- Activity Feed Loading: Tests feed query performance
+- Log Search: Tests security log search performance
+
+### API Routes
+
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/dashboard/security/logs` | GET | Fetch security logs with pagination |
+| `/api/dashboard/security/visitors` | GET | Fetch visitor fingerprints |
+| `/api/dashboard/security/stats` | GET | Get security statistics |
+| `/api/dashboard/security/honeypots` | GET/POST/PUT/DELETE | Manage honeypot configs |
+| `/api/dashboard/security/settings` | GET/PUT | Manage security settings |
+| `/api/dashboard/security/trust-score` | POST | Calculate trust score for fingerprint |
+| `/api/dashboard/activity` | GET | Fetch activity feed with filters |
+
+### Usage
+
+```tsx
+// Get browser fingerprint
+import { useFingerprint } from "@/hooks/use-fingerprint";
+const { fingerprint, isLoading } = useFingerprint();
+
+// Log security event
+import { logSecurityEvent } from "@/lib/security-logger";
+await logSecurityEvent({
+  type: "suspicious_activity",
+  fingerprint: visitorId,
+  requestId: correlationId,
+  metadata: { reason: "high_request_rate" }
+});
+
+// Calculate trust score
+import { calculateTrustScore } from "@/lib/trust-score";
+const score = calculateTrustScore(visitorData);
+```
+
+---
+
 ## Content Guidelines
 
 ### Adding New Documentation
@@ -825,12 +968,12 @@ Every new feature MUST have a corresponding test in the Diagnostics dashboard. T
 
 | Feature | Description |
 |---------|-------------|
-| **TEST ALL** | Run all 8 test suites sequentially with progress bar |
+| **TEST ALL** | Run all 17 test suites sequentially with progress bar |
 | **AI Analysis** | Claude Opus 4.5 streaming analysis of test results |
 | **Auto Console Capture** | Automatic capture of console logs (no manual paste) |
 | **Fix Prompt Window** | Ready-to-use Claude Code fix commands with copy-to-clipboard |
 
-### 8 Test Suites
+### 17 Test Suites
 
 | Suite | Purpose |
 |-------|---------|
@@ -842,6 +985,15 @@ Every new feature MUST have a corresponding test in the Diagnostics dashboard. T
 | Dashboard Users API | Tests admin API endpoints |
 | Sound Effects System | Tests Web Audio API integration |
 | Achievement System | Tests achievement unlock flow |
+| Fingerprint Provider | Tests FingerprintJS initialization |
+| Security Logger | Tests event logging to Supabase |
+| Trust Score Calculator | Tests scoring algorithm |
+| Honeypot System | Tests fake data generation |
+| Request ID Generation | Tests nanoid performance |
+| Fingerprint Caching | Tests 24-hour cache validity |
+| Realtime Subscription | Tests Supabase realtime connection |
+| Activity Feed Loading | Tests feed query performance |
+| Log Search | Tests security log search performance |
 
 ### What Must Be Added for New Features
 

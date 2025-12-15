@@ -80,6 +80,16 @@ All technologies are **free and/or open source** (except hosting services with f
 | elevenlabs-js | latest | MIT | ElevenLabs TTS (42 premium voices) |
 | Web Speech API | - | W3C | Browser-native speech recognition |
 
+### Security & Analytics
+
+| Technology | Version | License | Description |
+|------------|---------|---------|-------------|
+| @fingerprintjs/fingerprintjs | 5.0.1 | MIT | Browser fingerprinting for visitor identification |
+| nanoid | 5.1.6 | MIT | Request correlation ID generation |
+| @faker-js/faker | 10.1.0 | MIT | Fake data generation for honeypot system |
+| botid | 1.5.10 | MIT | Bot detection utilities |
+| date-fns | 4.1.0 | MIT | Date formatting and manipulation |
+
 ### Hosting
 
 | Technology | Tier | Description |
@@ -335,6 +345,23 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Localhost vs production URL detection
 - [x] All 5 user roles counted in dashboard stats
 
+### FR-27: Security Dashboard with Bot Analytics
+- [x] Browser fingerprinting with FingerprintJS (24-hour client caching)
+- [x] Request correlation IDs using nanoid for request tracing
+- [x] Security event logging to Supabase with structured data
+- [x] Trust score algorithm (0-100) with rules-based calculation
+- [x] Honeypot/tarpit system with faker.js fake data templates
+- [x] Security dashboard overview page with stats and charts
+- [x] Bot detection analytics page with visitor patterns
+- [x] Searchable security event log viewer
+- [x] Visitor fingerprint browser with trust scores
+- [x] Honeypot configuration and template editor
+- [x] Security settings panel for thresholds and rate limits
+- [x] Real-time activity feed with 7 activity types
+- [x] Activity feed filters, search, and hovercards
+- [x] Supabase realtime subscriptions for live updates
+- [x] 9 new diagnostic tests (4 security + 5 performance)
+
 ---
 
 ## Non-Functional Requirements
@@ -434,7 +461,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.77.0**
+**Version 0.78.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 
