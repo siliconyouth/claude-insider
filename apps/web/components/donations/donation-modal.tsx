@@ -27,6 +27,7 @@ import {
   type RecurringFrequency,
 } from '@/lib/donations/types';
 import { PayPalDonateButtons } from './paypal-buttons';
+import { BankTransferInstructions } from './bank-transfer-instructions';
 
 interface DonationSettings {
   preset_amounts: number[];
@@ -681,131 +682,50 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
               </div>
             )}
 
-            {/* Step: Bank Info */}
+            {/* Step: Bank Info - Enhanced with BankTransferInstructions */}
             {step === 'bank-info' && bankInfo && (
-              <div className="space-y-6">
-                <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-                  <p className="text-sm text-amber-800 dark:text-amber-200">
-                    Please transfer <strong>{formatDonationAmount(selectedAmount)}</strong> to one of the accounts below.
-                    Include your email in the transfer reference so we can match your donation.
-                  </p>
-                </div>
+              <BankTransferInstructions
+                bankAccounts={bankInfo}
+                amount={selectedAmount}
+                onBack={() => setStep('message')}
+                onSubmit={async (data) => {
+                  setDonorName(data.donorName);
+                  setDonorEmail(data.donorEmail);
+                  setReferenceNumber(data.referenceNumber || '');
 
-                {bankInfo.map((account) => (
-                  <div
-                    key={account.id}
-                    className="p-4 rounded-xl border border-gray-200 dark:border-[#262626] space-y-2"
-                  >
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
-                      {account.bank_name}
-                    </h3>
-                    {account.account_holder && (
-                      <div className="text-sm">
-                        <span className="text-gray-500">Account Holder:</span>{' '}
-                        <span className="text-gray-900 dark:text-white">{account.account_holder}</span>
-                      </div>
-                    )}
-                    {account.iban && (
-                      <div className="text-sm">
-                        <span className="text-gray-500">IBAN:</span>{' '}
-                        <code className="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-gray-900 dark:text-white">
-                          {account.iban}
-                        </code>
-                      </div>
-                    )}
-                    {account.swift_bic && (
-                      <div className="text-sm">
-                        <span className="text-gray-500">SWIFT/BIC:</span>{' '}
-                        <span className="text-gray-900 dark:text-white">{account.swift_bic}</span>
-                      </div>
-                    )}
-                    {account.account_number && !account.iban && (
-                      <div className="text-sm">
-                        <span className="text-gray-500">Account Number:</span>{' '}
-                        <span className="text-gray-900 dark:text-white">{account.account_number}</span>
-                      </div>
-                    )}
-                    {account.routing_number && (
-                      <div className="text-sm">
-                        <span className="text-gray-500">Routing Number:</span>{' '}
-                        <span className="text-gray-900 dark:text-white">{account.routing_number}</span>
-                      </div>
-                    )}
-                    {account.instructions && (
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                        {account.instructions}
-                      </p>
-                    )}
-                  </div>
-                ))}
+                  // Submit the bank transfer notification
+                  setIsProcessing(true);
+                  try {
+                    const response = await fetch('/api/donations/bank', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        amount: selectedAmount,
+                        donor_name: data.donorName,
+                        donor_email: data.donorEmail,
+                        message: message || undefined,
+                        is_anonymous: isAnonymous,
+                        reference_number: data.referenceNumber || undefined,
+                      }),
+                    });
 
-                <div className="space-y-4 pt-4 border-t border-gray-200 dark:border-[#262626]">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    After making the transfer, fill in your details below so we can confirm your donation:
-                  </p>
+                    if (!response.ok) {
+                      const error = await response.json();
+                      throw new Error(error.error || 'Failed to submit notification');
+                    }
 
-                  <input
-                    type="text"
-                    value={donorName}
-                    onChange={(e) => setDonorName(e.target.value)}
-                    placeholder="Your name"
-                    className={cn(
-                      'w-full px-4 py-3 rounded-xl',
-                      'bg-white dark:bg-[#0a0a0a]',
-                      'border border-gray-200 dark:border-[#262626]',
-                      'focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    )}
-                  />
-
-                  <input
-                    type="email"
-                    value={donorEmail}
-                    onChange={(e) => setDonorEmail(e.target.value)}
-                    placeholder="Your email"
-                    className={cn(
-                      'w-full px-4 py-3 rounded-xl',
-                      'bg-white dark:bg-[#0a0a0a]',
-                      'border border-gray-200 dark:border-[#262626]',
-                      'focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    )}
-                  />
-
-                  <input
-                    type="text"
-                    value={referenceNumber}
-                    onChange={(e) => setReferenceNumber(e.target.value)}
-                    placeholder="Transfer reference number (optional)"
-                    className={cn(
-                      'w-full px-4 py-3 rounded-xl',
-                      'bg-white dark:bg-[#0a0a0a]',
-                      'border border-gray-200 dark:border-[#262626]',
-                      'focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    )}
-                  />
-                </div>
-
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setStep('message')}
-                    className="flex-1 py-3 rounded-xl font-medium border border-gray-200 dark:border-[#262626] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                  >
-                    Back
-                  </button>
-                  <button
-                    onClick={handleBankTransferSubmit}
-                    disabled={isProcessing || !donorName || !donorEmail}
-                    className={cn(
-                      'flex-1 py-3 rounded-xl font-semibold text-white',
-                      'bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600',
-                      'hover:shadow-lg hover:shadow-blue-500/25',
-                      'disabled:opacity-50',
-                      'transition-all duration-200'
-                    )}
-                  >
-                    {isProcessing ? 'Submitting...' : 'Confirm Transfer'}
-                  </button>
-                </div>
-              </div>
+                    const result = await response.json();
+                    setCompletedDonationId(result.donation_id);
+                    setStep('success');
+                    onSuccess?.(result.donation_id);
+                  } catch (error) {
+                    showError(error instanceof Error ? error.message : 'Submission failed');
+                  } finally {
+                    setIsProcessing(false);
+                  }
+                }}
+                isProcessing={isProcessing}
+              />
             )}
 
             {/* Step: Processing */}
