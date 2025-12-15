@@ -172,6 +172,53 @@ export async function GET() {
 
     // Get base URL from environment or use localhost for development
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+    const isLocalhost = baseUrl.includes("localhost") || baseUrl.includes("127.0.0.1");
+
+    // First, test connectivity to the base URL
+    let connectivityOk = false;
+    let connectivityError = "";
+    try {
+      const testController = new AbortController();
+      const testTimeout = setTimeout(() => testController.abort(), 5000);
+      const testResponse = await fetch(baseUrl, {
+        method: "GET",
+        signal: testController.signal,
+        headers: { "User-Agent": "Claude-Insider-Link-Checker/1.0" },
+      });
+      clearTimeout(testTimeout);
+      connectivityOk = testResponse.status < 500;
+    } catch (e) {
+      connectivityError = e instanceof Error ? e.message : "Unknown error";
+    }
+
+    // If connectivity test failed, return early with helpful info
+    if (!connectivityOk) {
+      return NextResponse.json({
+        success: false,
+        error: "Cannot reach base URL",
+        details: {
+          baseUrl,
+          isLocalhost,
+          connectivityError,
+          hint: isLocalhost
+            ? "Localhost check requires the dev server to be running on port 3001"
+            : "Ensure NEXT_PUBLIC_APP_URL is correctly configured and the site is accessible",
+        },
+        summary: {
+          totalLinks: INTERNAL_ROUTES.length,
+          checkedLinks: 0,
+          successfulLinks: 0,
+          failedLinks: INTERNAL_ROUTES.length,
+          redirects: 0,
+          errorRate: 100,
+          averageResponseTime: 0,
+          results: [],
+          brokenLinks: [],
+          slowLinks: [],
+        },
+        checkedAt: new Date().toISOString(),
+      });
+    }
 
     const results: LinkCheckResult[] = [];
     const startTime = Date.now();
@@ -185,14 +232,30 @@ export async function GET() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-        const response = await fetch(fullUrl, {
-          method: "HEAD", // Use HEAD for faster checks
-          redirect: "manual", // Don't follow redirects automatically
+        // Try HEAD first, fallback to GET if HEAD fails
+        let response = await fetch(fullUrl, {
+          method: "HEAD",
+          redirect: "manual",
           signal: controller.signal,
           headers: {
             "User-Agent": "Claude-Insider-Link-Checker/1.0",
           },
         });
+
+        // Some servers don't support HEAD properly, try GET
+        if (response.status === 405) {
+          const getController = new AbortController();
+          const getTimeout = setTimeout(() => getController.abort(), 10000);
+          response = await fetch(fullUrl, {
+            method: "GET",
+            redirect: "manual",
+            signal: getController.signal,
+            headers: {
+              "User-Agent": "Claude-Insider-Link-Checker/1.0",
+            },
+          });
+          clearTimeout(getTimeout);
+        }
 
         clearTimeout(timeoutId);
 
@@ -207,12 +270,13 @@ export async function GET() {
         });
       } catch (error) {
         const responseTime = Date.now() - checkStart;
+        const errorMessage = error instanceof Error ? error.message : "Unknown error";
         results.push({
           url: route,
           status: 0,
           statusText: "Network Error",
           responseTime,
-          error: error instanceof Error ? error.message : "Unknown error",
+          error: errorMessage.includes("abort") ? "Request timeout" : errorMessage,
           category: categorizeUrl(route),
         });
       }
@@ -252,6 +316,8 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
+      baseUrl,
+      isLocalhost,
       summary,
       duration: totalTime,
       checkedAt: new Date().toISOString(),

@@ -38,7 +38,8 @@ export async function GET() {
         COUNT(*) FILTER (WHERE role = 'user') as role_user,
         COUNT(*) FILTER (WHERE role = 'editor') as role_editor,
         COUNT(*) FILTER (WHERE role = 'moderator') as role_moderator,
-        COUNT(*) FILTER (WHERE role = 'admin') as role_admin
+        COUNT(*) FILTER (WHERE role = 'admin') as role_admin,
+        COUNT(*) FILTER (WHERE role = 'ai_assistant') as role_ai_assistant
       FROM "user"
     `);
 
