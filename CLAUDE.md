@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.74.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.75.0**.
 
 | Link | URL |
 |------|-----|
@@ -90,6 +90,7 @@ claude-insider/
 │   │   ├── api/cron/             # Scheduled jobs (digests, notifications)
 │   │   ├── actions/passkeys.ts   # 8 passkey server actions
 │   │   ├── actions/two-factor.ts # 13 2FA server actions (multi-device)
+│   │   ├── actions/group-chat.ts # Group chat management (create, invite, roles)
 │   │   └── (main)/dashboard/     # Admin dashboard pages
 │   ├── components/               # 65+ React components
 │   │   ├── voice-assistant.tsx   # AI assistant (1500+ LOC)
@@ -117,6 +118,7 @@ claude-insider/
 │   │   │   ├── comment-section.tsx
 │   │   │   └── collection-button.tsx
 │   │   ├── achievements/         # Gamification components
+│   │   │   └── achievement-notification.tsx # Achievement unlock modal
 │   │   ├── notifications/        # Notification center & popups
 │   │   │   ├── notification-popup.tsx # Persistent notification popups
 │   │   ├── analytics/            # User stats dashboards
@@ -137,7 +139,9 @@ claude-insider/
 │   │   ├── use-animations.ts
 │   │   ├── use-focus-trap.ts
 │   │   ├── use-aria-live.tsx
-│   │   └── use-keyboard-shortcuts.ts
+│   │   ├── use-keyboard-shortcuts.ts
+│   │   ├── use-sound-effects.tsx # Site-wide sound effects (Web Audio API)
+│   │   └── use-chat-sounds.tsx   # Chat-specific sound effects
 │   ├── lib/
 │   │   ├── design-system.ts      # Design tokens & cn() utility
 │   │   ├── claude.ts             # Server-only Claude client
@@ -147,6 +151,8 @@ claude-insider/
 │   │   ├── auth-client.ts        # Client-side auth hooks
 │   │   ├── webauthn.ts           # WebAuthn/Passkey utilities (SimpleWebAuthn)
 │   │   ├── gamification.ts       # Points, levels, streaks
+│   │   ├── achievements.ts       # 50+ achievement definitions (Lucide icons)
+│   │   ├── achievement-queue.ts  # localStorage queue for achievements
 │   │   ├── email.ts              # Resend email templates
 │   │   ├── admin-notifications.ts # Staff alerts & push notifications
 │   │   ├── api-keys.ts           # API key encryption & validation
@@ -198,11 +204,12 @@ claude-insider/
 │   │   ├── Resources.ts          # Curated resources
 │   │   └── Translations.ts       # UI translation strings
 │   ├── supabase/                 # Database migrations
-│   │   └── migrations/           # 36 SQL migration files
+│   │   └── migrations/           # 44 SQL migration files
 │   │       ├── 000_fresh_start.sql # Consolidated base schema
 │   │       ├── ...               # User data, comments, collections
 │   │       ├── 025_admin_notifications.sql # Admin broadcast system
-│   │       └── 033_user_api_keys.sql # User API key storage & usage tracking
+│   │       ├── 033_user_api_keys.sql # User API key storage & usage tracking
+│   │       └── 044_group_chats.sql # Group conversations, invitations, roles
 │   └── scripts/                  # Build-time scripts
 ├── packages/                     # Shared configs (ui, eslint, ts, tailwind)
 ├── vercel.json                   # Domain redirects
@@ -587,6 +594,142 @@ Colors organized by family:
 | JVM | java, kotlin, scala | red-600, violet-600, rose-500 |
 
 See `code-block.tsx` for full `languageConfig`.
+
+---
+
+## Achievement System
+
+**Location**: `lib/achievements.ts`, `lib/achievement-queue.ts`, `components/achievements/`
+
+The achievement system provides gamification through 50+ achievements with Lucide icons.
+
+### Achievement Categories
+
+| Category | Description | Example Achievements |
+|----------|-------------|---------------------|
+| `onboarding` | First-time user milestones | Welcome Aboard, Looking Good, Fort Knox |
+| `engagement` | Community participation | Ice Breaker, Conversation Starter, Change Maker |
+| `learning` | Documentation exploration | Curious Mind, Foundation Builder, Tutorial Graduate |
+| `social` | Following, followers, connections | Social Butterfly, Rising Star, Influencer |
+| `content` | Creating and sharing | Editor's Eye, Code Explorer, Prompt Artist |
+| `streak` | Daily activity | Week Warrior, Monthly Master, Centurion |
+| `collector` | Favorites, collections | Bookmark Beginner, Curator, Librarian |
+| `expert` | Mastery achievements | Power User, Master Achiever, Completionist |
+| `special` | Unique milestones | Early Adopter, Night Owl, Coffee Break |
+
+### Rarity Tiers
+
+| Rarity | XP Range | Visual Style |
+|--------|----------|--------------|
+| Common | 10-50 XP | Gray background, no glow |
+| Rare | 75-150 XP | Blue glow, confetti |
+| Epic | 200-500 XP | Violet glow, more confetti |
+| Legendary | 500-2500 XP | Amber glow rings, shimmer effect, star burst |
+
+### Triggering Achievements
+
+```tsx
+// Using the queue (survives page reloads)
+import { queueAchievement } from "@/lib/achievement-queue";
+queueAchievement("welcome_aboard");
+
+// Using the hook (immediate display)
+import { useAchievementNotification } from "@/components/achievements/achievement-notification";
+const { showAchievement } = useAchievementNotification();
+showAchievement("welcome_aboard");
+```
+
+### Achievement Notification Features
+
+- Confetti particles with rarity-specific colors
+- Glow rings animation for legendary achievements
+- Sound effects by rarity (Web Audio API)
+- Auto-dismiss (5s common, 6s epic, 7s legendary)
+- Queue system for multiple achievements
+- Portal-based rendering
+- Keyboard accessible (Escape to close)
+
+---
+
+## Sound Effects System
+
+**Location**: `hooks/use-sound-effects.tsx`, `hooks/use-chat-sounds.tsx`
+
+Site-wide sound effects using Web Audio API (no audio files required).
+
+### Sound Categories
+
+| Category | Sounds | Default |
+|----------|--------|---------|
+| Notifications | notification, badge, urgent | Enabled |
+| Feedback | success, error, warning, info | Enabled |
+| UI | click, toggle, hover, navigation | Disabled |
+| Chat | message, typing, mention, invitation | Enabled |
+| Achievements | achievement, level_up, complete | Enabled |
+
+### Usage
+
+```tsx
+import { useSoundEffects } from "@/hooks/use-sound-effects";
+
+const sounds = useSoundEffects();
+
+// Play specific sounds
+sounds.playSuccess();
+sounds.playNotification();
+sounds.playAchievement();
+sounds.playMessageReceived();
+
+// Or use the generic play method
+sounds.play("success");
+
+// Update settings
+sounds.updateSettings({ enabled: false, volume: 0.5 });
+```
+
+### Sound Settings Persistence
+
+Settings are stored in localStorage under `soundSettings` with structure:
+- `enabled`: Master toggle
+- `volume`: 0.0 to 1.0
+- `notifications`, `feedback`, `ui`, `chat`, `achievements`: Category toggles
+
+---
+
+## Group Chat System
+
+**Location**: `app/actions/group-chat.ts`, `supabase/migrations/044_group_chats.sql`
+
+### Database Schema
+
+| Table | Purpose |
+|-------|---------|
+| `dm_conversations` | Extended with group fields (description, avatar, created_by) |
+| `dm_participants` | Added role column (owner, admin, member) |
+| `dm_group_invitations` | Invitation tracking with expiration |
+| `user_chat_settings` | Sound preferences per user |
+
+### Server Actions
+
+| Action | Purpose |
+|--------|---------|
+| `createGroupConversation` | Create new group |
+| `inviteToGroup` | Send invitation |
+| `acceptGroupInvitation` | Join group |
+| `declineGroupInvitation` | Reject invitation |
+| `leaveGroupConversation` | Leave with ownership transfer |
+| `updateGroupMemberRole` | Promote/demote members |
+| `removeFromGroup` | Kick members |
+| `getGroupMembers` | List members with presence |
+| `updateGroupSettings` | Update name, description, avatar |
+
+### Role Permissions
+
+| Role | Can Invite | Can Kick | Can Manage Roles | Can Edit Settings |
+|------|-----------|----------|------------------|-------------------|
+| Owner | Yes | Yes (except self) | Yes (all) | Yes |
+| Admin | Yes | Yes (members only) | No | Yes |
+| Member | No | No | No | No |
 
 ---
 

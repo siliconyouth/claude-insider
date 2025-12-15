@@ -1,0 +1,722 @@
+"use server";
+
+/**
+ * Messaging Server Actions
+ *
+ * Handles direct messaging between users including:
+ * - Conversation management
+ * - Message sending/receiving
+ * - @mention detection for AI assistant
+ * - Unread counts and read receipts
+ */
+
+import { getSession } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/server";
+import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
+
+// ============================================
+// TYPES
+// ============================================
+
+export interface Conversation {
+  id: string;
+  type: "direct" | "group";
+  name?: string;
+  lastMessageAt?: string;
+  lastMessagePreview?: string;
+  createdAt: string;
+  updatedAt: string;
+  unreadCount: number;
+  isMuted: boolean;
+  participants: ConversationParticipant[];
+}
+
+export interface ConversationParticipant {
+  userId: string;
+  name?: string;
+  email?: string;
+  avatarUrl?: string;
+  displayName?: string;
+  isOnline?: boolean;
+  status?: "online" | "offline" | "idle";
+}
+
+export interface Message {
+  id: string;
+  conversationId: string;
+  senderId: string;
+  senderName?: string;
+  senderAvatar?: string;
+  content: string;
+  mentions: string[];
+  isAiGenerated: boolean;
+  aiResponseTo?: string;
+  metadata?: Record<string, unknown>;
+  createdAt: string;
+  editedAt?: string;
+  deletedAt?: string;
+}
+
+// ============================================
+// GET CONVERSATIONS
+// ============================================
+
+export async function getConversations(): Promise<{
+  success: boolean;
+  conversations?: Conversation[];
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Get user's conversations with participants
+    const { data: participations, error: partError } = await supabase
+      .from("dm_participants" as any)
+      .select(`
+        conversation_id,
+        unread_count,
+        is_muted,
+        last_read_at,
+        dm_conversations (
+          id,
+          type,
+          name,
+          last_message_at,
+          last_message_preview,
+          created_at,
+          updated_at
+        )
+      `)
+      .eq("user_id", session.user.id)
+      .order("last_read_at", { ascending: false });
+
+    if (partError) {
+      console.error("Get conversations error:", partError);
+      return { success: false, error: "Failed to fetch conversations" };
+    }
+
+    // Get all conversation IDs
+    const conversationIds = (participations as any[])?.map((p: any) => p.conversation_id) || [];
+
+    if (conversationIds.length === 0) {
+      return { success: true, conversations: [] };
+    }
+
+    // Get all participants for these conversations
+    const { data: allParticipants } = await supabase
+      .from("dm_participants" as any)
+      .select(`
+        conversation_id,
+        user_id,
+        user:user_id (
+          id,
+          name,
+          email
+        )
+      `)
+      .in("conversation_id", conversationIds)
+      .neq("user_id", session.user.id);
+
+    // Get profiles for participants
+    const otherUserIds = (allParticipants as any[])?.map((p: any) => p.user_id) || [];
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("user_id, display_name, avatar_url")
+      .in("user_id", otherUserIds);
+
+    // Get presence for participants
+    const { data: presences } = await supabase
+      .from("user_presence" as any)
+      .select("user_id, status")
+      .in("user_id", otherUserIds);
+
+    // Build profile and presence maps
+    const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
+    const presenceMap = new Map((presences as any[])?.map((p: any) => [p.user_id, p.status]) || []);
+
+    // Build conversations with participants
+    const conversations: Conversation[] = ((participations || []) as any[]).map((p: any) => {
+      const conv = p.dm_conversations as any;
+      const convParticipants = (allParticipants as any[])?.filter(
+        (ap: any) => ap.conversation_id === p.conversation_id
+      ) || [];
+
+      return {
+        id: conv.id,
+        type: conv.type,
+        name: conv.name,
+        lastMessageAt: conv.last_message_at,
+        lastMessagePreview: conv.last_message_preview,
+        createdAt: conv.created_at,
+        updatedAt: conv.updated_at,
+        unreadCount: p.unread_count || 0,
+        isMuted: p.is_muted || false,
+        participants: convParticipants.map((cp: any) => {
+          const user = cp.user as any;
+          const profile = profileMap.get(cp.user_id);
+          const status = presenceMap.get(cp.user_id) || "offline";
+          return {
+            userId: cp.user_id,
+            name: user?.name,
+            email: user?.email,
+            avatarUrl: profile?.avatar_url ?? undefined,
+            displayName: profile?.display_name ?? undefined,
+            isOnline: status === "online",
+            status: status as "online" | "offline" | "idle",
+          };
+        }),
+      };
+    });
+
+    // Sort by last message time (newest first)
+    conversations.sort((a, b) => {
+      const timeA = a.lastMessageAt ? new Date(a.lastMessageAt).getTime() : 0;
+      const timeB = b.lastMessageAt ? new Date(b.lastMessageAt).getTime() : 0;
+      return timeB - timeA;
+    });
+
+    return { success: true, conversations };
+  } catch (error) {
+    console.error("Get conversations error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// GET MESSAGES
+// ============================================
+
+export async function getMessages(
+  conversationId: string,
+  limit: number = 50,
+  before?: string
+): Promise<{
+  success: boolean;
+  messages?: Message[];
+  hasMore?: boolean;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify user is a participant
+    const { data: participant } = await supabase
+      .from("dm_participants" as any)
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    if (!participant) {
+      return { success: false, error: "You are not a participant in this conversation" };
+    }
+
+    // Build query
+    let query = supabase
+      .from("dm_messages" as any)
+      .select(`
+        id,
+        conversation_id,
+        sender_id,
+        content,
+        mentions,
+        is_ai_generated,
+        ai_response_to,
+        metadata,
+        created_at,
+        edited_at,
+        deleted_at,
+        sender:sender_id (
+          id,
+          name
+        )
+      `)
+      .eq("conversation_id", conversationId)
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false })
+      .limit(limit + 1); // Get one extra to check if there are more
+
+    if (before) {
+      query = query.lt("created_at", before);
+    }
+
+    const { data: messages, error } = await query;
+
+    if (error) {
+      console.error("Get messages error:", error);
+      return { success: false, error: "Failed to fetch messages" };
+    }
+
+    // Check if there are more messages
+    const hasMore = messages && messages.length > limit;
+    const resultMessages = messages?.slice(0, limit) || [];
+
+    // Get sender profiles
+    const senderIds = [...new Set((resultMessages as any[]).map((m: any) => m.sender_id))];
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("user_id, display_name, avatar_url")
+      .in("user_id", senderIds);
+
+    const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
+
+    // Transform messages
+    const transformedMessages: Message[] = (resultMessages as any[]).map((m: any) => {
+      const sender = m.sender as any;
+      const profile = profileMap.get(m.sender_id);
+      return {
+        id: m.id,
+        conversationId: m.conversation_id,
+        senderId: m.sender_id,
+        senderName: profile?.display_name || sender?.name || "Unknown",
+        senderAvatar: profile?.avatar_url ?? undefined,
+        content: m.content,
+        mentions: m.mentions || [],
+        isAiGenerated: m.is_ai_generated || false,
+        aiResponseTo: m.ai_response_to,
+        metadata: m.metadata as Record<string, unknown>,
+        createdAt: m.created_at,
+        editedAt: m.edited_at,
+        deletedAt: m.deleted_at,
+      };
+    });
+
+    // Reverse to get chronological order
+    transformedMessages.reverse();
+
+    return { success: true, messages: transformedMessages, hasMore };
+  } catch (error) {
+    console.error("Get messages error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// SEND MESSAGE
+// ============================================
+
+export async function sendMessage(
+  conversationId: string,
+  content: string
+): Promise<{
+  success: boolean;
+  message?: Message;
+  aiMentioned?: boolean;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    if (!content.trim()) {
+      return { success: false, error: "Message cannot be empty" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify user is a participant
+    const { data: participant } = await supabase
+      .from("dm_participants" as any)
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    if (!participant) {
+      return { success: false, error: "You are not a participant in this conversation" };
+    }
+
+    // Detect @mentions in the message
+    const mentionRegex = /@(\w+)/g;
+    const mentionMatches = content.match(mentionRegex) || [];
+    const mentions: string[] = [];
+    let aiMentioned = false;
+
+    // Check for @claudeinsider mention
+    for (const match of mentionMatches) {
+      const username = match.slice(1).toLowerCase();
+      if (username === "claudeinsider") {
+        aiMentioned = true;
+        mentions.push(AI_ASSISTANT_USER_ID);
+      }
+    }
+
+    // Insert message
+    const { data: newMessage, error } = await supabase
+      .from("dm_messages" as any)
+      .insert({
+        conversation_id: conversationId,
+        sender_id: session.user.id,
+        content: content.trim(),
+        mentions,
+        is_ai_generated: false,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Send message error:", error);
+      return { success: false, error: "Failed to send message" };
+    }
+
+    // Get sender info for response
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("display_name, avatar_url")
+      .eq("user_id", session.user.id)
+      .single();
+
+    const msg = newMessage as any;
+    const message: Message = {
+      id: msg.id,
+      conversationId: msg.conversation_id,
+      senderId: msg.sender_id,
+      senderName: profile?.display_name || session.user.name || "You",
+      senderAvatar: profile?.avatar_url ?? undefined,
+      content: msg.content,
+      mentions: msg.mentions || [],
+      isAiGenerated: false,
+      createdAt: msg.created_at,
+    };
+
+    return { success: true, message, aiMentioned };
+  } catch (error) {
+    console.error("Send message error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// START CONVERSATION
+// ============================================
+
+export async function startConversation(
+  targetUserId: string
+): Promise<{
+  success: boolean;
+  conversationId?: string;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    if (targetUserId === session.user.id) {
+      return { success: false, error: "Cannot start conversation with yourself" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Check if target user exists
+    const { data: targetUser } = await supabase
+      .from("user")
+      .select("id, role")
+      .eq("id", targetUserId)
+      .single();
+
+    if (!targetUser) {
+      return { success: false, error: "User not found" };
+    }
+
+    // Check if blocked (either direction)
+    const { data: block } = await supabase
+      .from("user_blocks")
+      .select("id")
+      .or(`blocker_id.eq.${session.user.id},blocker_id.eq.${targetUserId}`)
+      .or(`blocked_id.eq.${session.user.id},blocked_id.eq.${targetUserId}`)
+      .limit(1)
+      .single();
+
+    if (block) {
+      return { success: false, error: "Cannot message this user" };
+    }
+
+    // Use database function to get or create conversation
+    const { data, error } = await (supabase.rpc as any)("get_or_create_dm_conversation", {
+      p_user1: session.user.id,
+      p_user2: targetUserId,
+    });
+
+    if (error) {
+      console.error("Start conversation error:", error);
+      return { success: false, error: "Failed to start conversation" };
+    }
+
+    return { success: true, conversationId: data as string };
+  } catch (error) {
+    console.error("Start conversation error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// MARK AS READ
+// ============================================
+
+export async function markConversationAsRead(
+  conversationId: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    const { error } = await (supabase.rpc as any)("mark_dm_conversation_read", {
+      p_user_id: session.user.id,
+      p_conversation_id: conversationId,
+    });
+
+    if (error) {
+      console.error("Mark as read error:", error);
+      return { success: false, error: "Failed to mark as read" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Mark as read error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// MUTE/UNMUTE CONVERSATION
+// ============================================
+
+export async function muteConversation(
+  conversationId: string,
+  muted: boolean
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    const { error } = await supabase
+      .from("dm_participants" as any)
+      .update({ is_muted: muted })
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id);
+
+    if (error) {
+      console.error("Mute conversation error:", error);
+      return { success: false, error: "Failed to update mute status" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Mute conversation error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// GET TOTAL UNREAD COUNT
+// ============================================
+
+export async function getTotalUnreadCount(): Promise<{
+  success: boolean;
+  count?: number;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: true, count: 0 };
+    }
+
+    const supabase = await createAdminClient();
+
+    const { data, error } = await (supabase.rpc as any)("get_total_unread_dm_count", {
+      p_user_id: session.user.id,
+    });
+
+    if (error) {
+      console.error("Get unread count error:", error);
+      return { success: false, error: "Failed to get unread count" };
+    }
+
+    return { success: true, count: (data as number) || 0 };
+  } catch (error) {
+    console.error("Get unread count error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// GET USERS FOR NEW CONVERSATION
+// ============================================
+
+export async function getUsersForMessaging(
+  search?: string,
+  limit: number = 20
+): Promise<{
+  success: boolean;
+  users?: Array<{
+    id: string;
+    name?: string;
+    email?: string;
+    displayName?: string;
+    avatarUrl?: string;
+    status: "online" | "offline" | "idle";
+    isAiAssistant: boolean;
+  }>;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Get blocked users to exclude
+    const { data: blocks } = await supabase
+      .from("user_blocks")
+      .select("blocked_id, blocker_id")
+      .or(`blocker_id.eq.${session.user.id},blocked_id.eq.${session.user.id}`);
+
+    const blockedIds = new Set<string>();
+    blocks?.forEach((b) => {
+      if (b.blocker_id === session.user.id) blockedIds.add(b.blocked_id);
+      if (b.blocked_id === session.user.id) blockedIds.add(b.blocker_id);
+    });
+
+    // Build user query
+    let query = supabase
+      .from("user")
+      .select("id, name, email, role")
+      .neq("id", session.user.id)
+      .limit(limit);
+
+    if (search) {
+      query = query.or(`name.ilike.%${search}%,email.ilike.%${search}%`);
+    }
+
+    const { data: users, error } = await query;
+
+    if (error) {
+      console.error("Get users error:", error);
+      return { success: false, error: "Failed to fetch users" };
+    }
+
+    // Filter out blocked users
+    const filteredUsers = users?.filter((u) => !blockedIds.has(u.id)) || [];
+
+    // Get profiles
+    const userIds = filteredUsers.map((u) => u.id);
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("user_id, display_name, avatar_url")
+      .in("user_id", userIds);
+
+    // Get presence
+    const { data: presences } = await supabase
+      .from("user_presence" as any)
+      .select("user_id, status")
+      .in("user_id", userIds);
+
+    const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
+    const presenceMap = new Map((presences as any[])?.map((p: any) => [p.user_id, p.status]) || []);
+
+    // Transform and sort (online first, then AI assistant)
+    const result = filteredUsers.map((u) => {
+      const profile = profileMap.get(u.id);
+      const status = (presenceMap.get(u.id) || "offline") as "online" | "offline" | "idle";
+      return {
+        id: u.id,
+        name: u.name ?? undefined,
+        email: u.email ?? undefined,
+        displayName: profile?.display_name ?? undefined,
+        avatarUrl: profile?.avatar_url ?? undefined,
+        status,
+        isAiAssistant: u.role === "ai_assistant",
+      };
+    });
+
+    // Sort: online users first, then AI assistant, then others
+    result.sort((a, b) => {
+      // AI assistant always at top
+      if (a.isAiAssistant && !b.isAiAssistant) return -1;
+      if (!a.isAiAssistant && b.isAiAssistant) return 1;
+
+      // Then by online status
+      const statusOrder = { online: 0, idle: 1, offline: 2 };
+      return statusOrder[a.status] - statusOrder[b.status];
+    });
+
+    return { success: true, users: result };
+  } catch (error) {
+    console.error("Get users error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// DELETE MESSAGE (soft delete)
+// ============================================
+
+export async function deleteMessage(
+  messageId: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify ownership
+    const { data: message } = await supabase
+      .from("dm_messages" as any)
+      .select("id, sender_id")
+      .eq("id", messageId)
+      .single();
+
+    if (!message) {
+      return { success: false, error: "Message not found" };
+    }
+
+    const msg = message as any;
+    if (msg.sender_id !== session.user.id) {
+      return { success: false, error: "You can only delete your own messages" };
+    }
+
+    // Soft delete
+    const { error } = await supabase
+      .from("dm_messages" as any)
+      .update({ deleted_at: new Date().toISOString() })
+      .eq("id", messageId);
+
+    if (error) {
+      console.error("Delete message error:", error);
+      return { success: false, error: "Failed to delete message" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Delete message error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}

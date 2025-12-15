@@ -91,6 +91,7 @@ export interface AdminUserListItem {
   role: UserRole;
   isBetaTester: boolean;
   emailVerified: boolean;
+  banned: boolean;
   createdAt: string;
   lastActiveAt?: string;
 }
@@ -99,10 +100,14 @@ export interface AdminUserListItem {
  * User detail for admin view
  */
 export interface AdminUserDetail extends AdminUserListItem {
+  username?: string;
   bio?: string;
   socialLinks?: Record<string, string>;
   hasPassword: boolean;
   provider?: string;
+  banned: boolean;
+  banReason?: string;
+  bannedAt?: string;
   feedbackCount: number;
   suggestionsCount: number;
   commentsCount: number;
@@ -214,6 +219,10 @@ export interface PaginatedResponse<T> {
  */
 export interface UpdateUserRequest {
   role?: UserRole;
+  name?: string;
+  bio?: string;
+  username?: string;
+  isBetaTester?: boolean;
   isBanned?: boolean;
   banReason?: string;
 }

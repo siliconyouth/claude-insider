@@ -23,12 +23,18 @@ import {
   setPrimary2FADevice,
   type TwoFactorDevice,
 } from "@/app/actions/two-factor";
+import {
+  getEmail2FAStatus,
+  enableEmail2FA,
+  sendEmail2FACode,
+  verifyEmail2FACode,
+} from "@/app/actions/email-2fa";
 import { formatLastUsed } from "@/lib/webauthn";
 
 type SetupStep = "initial" | "scan" | "verify" | "backup" | "complete";
 
-// Device management steps
-type DeviceStep = "list" | "add-scan" | "add-verify" | "add-backup" | "rename" | "remove";
+// Device management steps - includes email 2FA enablement flow for last device removal
+type DeviceStep = "list" | "add-scan" | "add-verify" | "add-backup" | "rename" | "remove" | "enable-email-2fa" | "verify-email-code";
 
 export function TwoFactorSettings() {
   const [isPending, startTransition] = useTransition();
@@ -63,6 +69,11 @@ export function TwoFactorSettings() {
   const [newName, setNewName] = useState("");
   const [removeCode, setRemoveCode] = useState("");
 
+  // Email 2FA state (for mandatory MFA enforcement)
+  const [email2FAEnabled, setEmail2FAEnabled] = useState(false);
+  const [emailVerificationCode, setEmailVerificationCode] = useState("");
+  const [emailCodeSent, setEmailCodeSent] = useState(false);
+
   const loadStatus = async () => {
     setIsLoading(true);
     const result = await getTwoFactorStatus();
@@ -79,6 +90,13 @@ export function TwoFactorSettings() {
         }
       }
     }
+
+    // Also load email 2FA status (for mandatory MFA enforcement)
+    const emailStatus = await getEmail2FAStatus();
+    if (!emailStatus.error) {
+      setEmail2FAEnabled(emailStatus.enabled || false);
+    }
+
     setIsLoading(false);
   };
 
@@ -152,10 +170,20 @@ export function TwoFactorSettings() {
         toast.error(result.error);
         return;
       }
-      setIsEnabled(false);
+
+      // Clear devices but keep 2FA enabled if email 2FA is active
+      setDevices([]);
       setShowDisableModal(false);
       setDisableCode("");
-      toast.success("Two-factor authentication disabled");
+
+      if (email2FAEnabled) {
+        toast.success("Authenticator apps disabled. Your account is still protected with Email 2FA.");
+        // Keep isEnabled true since email 2FA is active
+      } else {
+        // Shouldn't happen with mandatory MFA, but handle it
+        setIsEnabled(false);
+        toast.success("Two-factor authentication disabled");
+      }
     });
   };
 
@@ -272,10 +300,22 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
         toast.error(result.error);
         return;
       }
-      if (result.twoFactorDisabled) {
-        toast.success("Last device removed. Two-factor authentication disabled.");
-        setIsEnabled(false);
-        setDevices([]);
+
+      // Check if this was the last device
+      const wasLastDevice = devices.length === 1;
+
+      if (wasLastDevice) {
+        // Last device removed - but email 2FA should be enabled
+        if (email2FAEnabled) {
+          toast.success("Authenticator removed. Your account is still protected with Email 2FA.");
+          setDevices([]);
+          // Keep isEnabled true since email 2FA is active
+        } else if (result.twoFactorDisabled) {
+          // Fallback: 2FA was disabled (shouldn't happen with mandatory MFA, but handle it)
+          toast.success("Last device removed. Two-factor authentication disabled.");
+          setIsEnabled(false);
+          setDevices([]);
+        }
       } else {
         toast.success("Device removed");
         await loadDevices();
@@ -307,6 +347,63 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
     setNewDeviceCode("");
   };
 
+  // Email 2FA handlers for mandatory MFA enforcement
+  const handleStartEnableEmail2FA = () => {
+    setEmailVerificationCode("");
+    setEmailCodeSent(false);
+    setDeviceStep("enable-email-2fa");
+  };
+
+  const handleSendEmailCode = async () => {
+    startTransition(async () => {
+      const result = await sendEmail2FACode({ type: "verify_device" });
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+      setEmailCodeSent(true);
+      toast.success("Verification code sent to your email");
+      setDeviceStep("verify-email-code");
+    });
+  };
+
+  const handleVerifyAndEnableEmail2FA = async () => {
+    if (emailVerificationCode.length !== 6) {
+      toast.error("Please enter a 6-digit code");
+      return;
+    }
+
+    startTransition(async () => {
+      // First verify the code
+      const verifyResult = await verifyEmail2FACode(emailVerificationCode, "verify_device");
+      if (!verifyResult.success) {
+        toast.error(verifyResult.error || "Invalid code");
+        return;
+      }
+
+      // Then enable email 2FA
+      const enableResult = await enableEmail2FA();
+      if (enableResult.error) {
+        toast.error(enableResult.error);
+        return;
+      }
+
+      setEmail2FAEnabled(true);
+      toast.success("Email 2FA enabled! You can now remove the authenticator.");
+      setEmailVerificationCode("");
+      setEmailCodeSent(false);
+      // Go back to remove step with email 2FA now enabled
+      setDeviceStep("remove");
+    });
+  };
+
+  const resetEmailSetupState = () => {
+    setEmailVerificationCode("");
+    setEmailCodeSent(false);
+    setDeviceStep("list");
+    setEditingDevice(null);
+  };
+
   const handleNewDeviceComplete = () => {
     toast.success("Authenticator added successfully!");
     loadDevices();
@@ -324,6 +421,83 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
 
   // Disable Modal
   if (showDisableModal) {
+    // If email 2FA is not enabled, show prompt to enable it first
+    if (!email2FAEnabled) {
+      return (
+        <div
+          className={cn(
+            "p-6 rounded-xl",
+            "bg-gray-50 dark:bg-[#111111]",
+            "border border-gray-200 dark:border-[#262626]"
+          )}
+        >
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Enable Email 2FA First
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            You must have at least one MFA method enabled. Before disabling your authenticator apps,
+            please enable Email 2FA as a fallback.
+          </p>
+
+          <div
+            className={cn(
+              "p-4 rounded-lg mb-6",
+              "bg-blue-50 dark:bg-blue-900/20",
+              "border border-blue-200 dark:border-blue-800"
+            )}
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-800/50 flex items-center justify-center flex-shrink-0">
+                <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-medium text-blue-800 dark:text-blue-200 text-sm">
+                  Email Two-Factor Authentication
+                </p>
+                <p className="text-blue-700 dark:text-blue-300 text-xs mt-1">
+                  Receive verification codes via email when signing in. This ensures you can still access your account securely.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => {
+                setShowDisableModal(false);
+                setDisableCode("");
+              }}
+              className={cn(
+                "flex-1 px-4 py-2 rounded-lg text-sm font-medium",
+                "border border-gray-200 dark:border-[#262626]",
+                "text-gray-700 dark:text-gray-300",
+                "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+              )}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                // Go to settings page email 2FA section (handled by parent)
+                setShowDisableModal(false);
+                toast.info("Please enable Email 2FA in your security settings first.");
+              }}
+              className={cn(
+                "flex-1 px-4 py-2 rounded-lg text-sm font-medium",
+                "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                "text-white"
+              )}
+            >
+              Set Up Email 2FA
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // Email 2FA is enabled, show normal disable flow
     return (
       <div
         className={cn(
@@ -333,26 +507,42 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
         )}
       >
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-          Disable Two-Factor Authentication
+          Disable Authenticator App
         </h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-          Enter a verification code from your authenticator app to disable 2FA.
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+          Remove all authenticator apps from your account.
         </p>
+        <div
+          className={cn(
+            "p-3 rounded-lg mb-4",
+            "bg-green-50 dark:bg-green-900/20",
+            "border border-green-200 dark:border-green-800"
+          )}
+        >
+          <p className="text-sm text-green-700 dark:text-green-300">
+            ✓ Email 2FA is enabled. You can still sign in using email verification codes.
+          </p>
+        </div>
 
         <div className="space-y-4">
-          <input
-            type="text"
-            value={disableCode}
-            onChange={(e) => setDisableCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-            placeholder="000000"
-            className={cn(
-              "w-full px-4 py-3 rounded-lg text-center text-2xl font-mono tracking-widest",
-              "bg-white dark:bg-[#0a0a0a]",
-              "border border-gray-200 dark:border-[#262626]",
-              "text-gray-900 dark:text-white",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500"
-            )}
-          />
+          <div>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">
+              Enter a verification code to confirm:
+            </label>
+            <input
+              type="text"
+              value={disableCode}
+              onChange={(e) => setDisableCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+              placeholder="000000"
+              className={cn(
+                "w-full px-4 py-3 rounded-lg text-center text-2xl font-mono tracking-widest",
+                "bg-white dark:bg-[#0a0a0a]",
+                "border border-gray-200 dark:border-[#262626]",
+                "text-gray-900 dark:text-white",
+                "focus:outline-none focus:ring-2 focus:ring-blue-500"
+              )}
+            />
+          </div>
 
           <div className="flex gap-3">
             <button
@@ -379,7 +569,7 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
             >
-              {isPending ? "..." : "Disable 2FA"}
+              {isPending ? "..." : "Disable Authenticator"}
             </button>
           </div>
         </div>
@@ -759,6 +949,83 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
 
   // Remove Device Modal
   if (deviceStep === "remove" && editingDevice) {
+    const isLastDevice = devices.length === 1;
+    const needsEmailFallback = isLastDevice && !email2FAEnabled;
+
+    // If this is the last device and email 2FA is not enabled, show email 2FA requirement
+    if (needsEmailFallback) {
+      return (
+        <div
+          className={cn(
+            "p-6 rounded-xl",
+            "bg-gray-50 dark:bg-[#111111]",
+            "border border-gray-200 dark:border-[#262626]"
+          )}
+        >
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Enable Email 2FA First
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            You must have at least one MFA method enabled. Before removing your last authenticator app,
+            please enable Email 2FA as a fallback.
+          </p>
+
+          <div
+            className={cn(
+              "p-4 rounded-lg mb-6",
+              "bg-blue-50 dark:bg-blue-900/20",
+              "border border-blue-200 dark:border-blue-800"
+            )}
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-800/50 flex items-center justify-center flex-shrink-0">
+                <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-medium text-blue-800 dark:text-blue-200 text-sm">
+                  Email Two-Factor Authentication
+                </p>
+                <p className="text-blue-700 dark:text-blue-300 text-xs mt-1">
+                  Receive verification codes via email when signing in. This provides a backup if you lose access to your authenticator app.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => {
+                setDeviceStep("list");
+                setEditingDevice(null);
+                setRemoveCode("");
+              }}
+              className={cn(
+                "flex-1 px-4 py-2 rounded-lg text-sm font-medium",
+                "border border-gray-200 dark:border-[#262626]",
+                "text-gray-700 dark:text-gray-300",
+                "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+              )}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleStartEnableEmail2FA}
+              className={cn(
+                "flex-1 px-4 py-2 rounded-lg text-sm font-medium",
+                "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                "text-white"
+              )}
+            >
+              Enable Email 2FA
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // Normal remove flow (either not last device, or email 2FA is already enabled)
     return (
       <div
         className={cn(
@@ -773,10 +1040,18 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
           Remove &quot;{editingDevice.name}&quot; from your account.
         </p>
-        {devices.length === 1 && (
-          <p className="text-sm text-amber-600 dark:text-amber-400 mb-4">
-            ⚠️ This is your only authenticator. Removing it will disable two-factor authentication.
-          </p>
+        {isLastDevice && email2FAEnabled && (
+          <div
+            className={cn(
+              "p-3 rounded-lg mb-4",
+              "bg-green-50 dark:bg-green-900/20",
+              "border border-green-200 dark:border-green-800"
+            )}
+          >
+            <p className="text-sm text-green-700 dark:text-green-300">
+              ✓ Email 2FA is enabled. You can safely remove this authenticator and still sign in using email verification codes.
+            </p>
+          </div>
         )}
 
         <div className="space-y-4">
@@ -826,6 +1101,150 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
               )}
             >
               {isPending ? "..." : "Remove"}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Enable Email 2FA Step (for removing last authenticator)
+  if (deviceStep === "enable-email-2fa" && editingDevice) {
+    return (
+      <div
+        className={cn(
+          "p-6 rounded-xl",
+          "bg-gray-50 dark:bg-[#111111]",
+          "border border-gray-200 dark:border-[#262626]"
+        )}
+      >
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          Set Up Email 2FA
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+          We&apos;ll send a verification code to your email address. This enables Email 2FA as your backup authentication method.
+        </p>
+
+        <div
+          className={cn(
+            "p-4 rounded-lg mb-6",
+            "bg-gray-100 dark:bg-[#0a0a0a]",
+            "border border-gray-200 dark:border-[#262626]"
+          )}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <p className="font-medium text-gray-900 dark:text-white text-sm">
+                Email Verification Codes
+              </p>
+              <p className="text-gray-500 dark:text-gray-400 text-xs">
+                Receive 6-digit codes via email when signing in
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-3">
+          <button
+            onClick={resetEmailSetupState}
+            className={cn(
+              "flex-1 px-4 py-2 rounded-lg text-sm font-medium",
+              "border border-gray-200 dark:border-[#262626]",
+              "text-gray-700 dark:text-gray-300",
+              "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+            )}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSendEmailCode}
+            disabled={isPending}
+            className={cn(
+              "flex-1 px-4 py-2 rounded-lg text-sm font-medium",
+              "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+              "text-white",
+              "disabled:opacity-50 disabled:cursor-not-allowed"
+            )}
+          >
+            {isPending ? "Sending..." : "Send Verification Code"}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Verify Email Code Step
+  if (deviceStep === "verify-email-code" && editingDevice) {
+    return (
+      <div
+        className={cn(
+          "p-6 rounded-xl",
+          "bg-gray-50 dark:bg-[#111111]",
+          "border border-gray-200 dark:border-[#262626]"
+        )}
+      >
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+          Enter Verification Code
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+          Enter the 6-digit code we sent to your email address.
+        </p>
+
+        <div className="space-y-4">
+          <input
+            type="text"
+            value={emailVerificationCode}
+            onChange={(e) => setEmailVerificationCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+            placeholder="000000"
+            autoFocus
+            className={cn(
+              "w-full px-4 py-3 rounded-lg text-center text-2xl font-mono tracking-widest",
+              "bg-white dark:bg-[#0a0a0a]",
+              "border border-gray-200 dark:border-[#262626]",
+              "text-gray-900 dark:text-white",
+              "focus:outline-none focus:ring-2 focus:ring-blue-500"
+            )}
+          />
+
+          <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+            Didn&apos;t receive the code?{" "}
+            <button
+              onClick={handleSendEmailCode}
+              disabled={isPending}
+              className="text-blue-600 dark:text-cyan-400 hover:underline disabled:opacity-50"
+            >
+              Resend
+            </button>
+          </p>
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => setDeviceStep("enable-email-2fa")}
+              className={cn(
+                "flex-1 px-4 py-2 rounded-lg text-sm font-medium",
+                "border border-gray-200 dark:border-[#262626]",
+                "text-gray-700 dark:text-gray-300",
+                "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+              )}
+            >
+              Back
+            </button>
+            <button
+              onClick={handleVerifyAndEnableEmail2FA}
+              disabled={isPending || emailVerificationCode.length !== 6}
+              className={cn(
+                "flex-1 px-4 py-2 rounded-lg text-sm font-medium",
+                "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                "text-white",
+                "disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+            >
+              {isPending ? "Verifying..." : "Enable Email 2FA"}
             </button>
           </div>
         </div>

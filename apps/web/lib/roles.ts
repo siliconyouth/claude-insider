@@ -13,9 +13,13 @@ export const ROLES = {
   EDITOR: "editor",
   MODERATOR: "moderator",
   ADMIN: "admin",
+  AI_ASSISTANT: "ai_assistant",
 } as const;
 
 export type UserRole = (typeof ROLES)[keyof typeof ROLES];
+
+// Special system user ID for the AI assistant
+export const AI_ASSISTANT_USER_ID = "ai-assistant-claudeinsider";
 
 /**
  * Role hierarchy (index determines privilege level)
@@ -63,6 +67,12 @@ export const ROLE_INFO: Record<
     description: "Full administrative access",
     color: "text-cyan-600 dark:text-cyan-400",
     bgColor: "bg-cyan-100 dark:bg-cyan-900/30",
+  },
+  [ROLES.AI_ASSISTANT]: {
+    label: "AI Assistant",
+    description: "System AI assistant that responds to @mentions",
+    color: "text-emerald-600 dark:text-emerald-400",
+    bgColor: "bg-emerald-100 dark:bg-emerald-900/30",
   },
 };
 
@@ -209,6 +219,30 @@ export const PERMISSIONS: Record<UserRole, Record<Action, PermissionValue>> = {
     [ACTIONS.BAN_USERS]: true,
     [ACTIONS.VIEW_ADMIN_DASHBOARD]: true,
     [ACTIONS.VIEW_ADMIN_LOGS]: true,
+  },
+  // AI Assistant has minimal permissions - only for system messaging
+  [ROLES.AI_ASSISTANT]: {
+    [ACTIONS.VIEW_CONTENT]: true,
+    [ACTIONS.SUGGEST_EDITS]: false,
+    [ACTIONS.REVIEW_EDITS]: false,
+    [ACTIONS.APPROVE_EDITS]: false,
+    [ACTIONS.CREATE_COMMENT]: false,
+    [ACTIONS.EDIT_OWN_COMMENT]: false,
+    [ACTIONS.DELETE_OWN_COMMENT]: false,
+    [ACTIONS.MODERATE_COMMENTS]: false,
+    [ACTIONS.MANAGE_FAVORITES]: false,
+    [ACTIONS.MANAGE_COLLECTIONS]: false,
+    [ACTIONS.SUBMIT_FEEDBACK]: false,
+    [ACTIONS.VIEW_ALL_FEEDBACK]: false,
+    [ACTIONS.MANAGE_FEEDBACK]: false,
+    [ACTIONS.APPLY_BETA]: false,
+    [ACTIONS.REVIEW_BETA_APPS]: false,
+    [ACTIONS.VIEW_USERS]: false,
+    [ACTIONS.MANAGE_USERS]: false,
+    [ACTIONS.CHANGE_ROLES]: false,
+    [ACTIONS.BAN_USERS]: false,
+    [ACTIONS.VIEW_ADMIN_DASHBOARD]: false,
+    [ACTIONS.VIEW_ADMIN_LOGS]: false,
   },
 };
 

@@ -151,15 +151,20 @@ export async function disableTwoFactor(code: string): Promise<{
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const supabase = (await createAdminClient()) as any;
 
-    // Get the current secret
+    // Get the current user data including email 2FA status
     const { data: user } = await supabase
       .from("user")
-      .select("twoFactorSecret, twoFactorEnabled")
+      .select("twoFactorSecret, twoFactorEnabled, email2FAEnabled")
       .eq("id", session.user.id)
       .single();
 
     if (!user?.twoFactorEnabled) {
       return { error: "Two-factor authentication is not enabled" };
+    }
+
+    // MANDATORY MFA: Check if email 2FA is enabled before allowing TOTP disable
+    if (!user.email2FAEnabled) {
+      return { error: "You must enable Email 2FA before disabling your authenticator app. At least one MFA method is required." };
     }
 
     // Verify the code
@@ -172,16 +177,23 @@ export async function disableTwoFactor(code: string): Promise<{
       return { error: "Invalid verification code" };
     }
 
-    // Disable 2FA
+    // Disable TOTP 2FA but keep overall 2FA enabled via email 2FA
+    // Clear TOTP-specific fields but keep twoFactorEnabled true
     const { error } = await supabase
       .from("user")
       .update({
-        twoFactorEnabled: false,
+        // Keep twoFactorEnabled true since email 2FA is active
         twoFactorSecret: null,
         twoFactorBackupCodes: null,
-        twoFactorVerifiedAt: null,
+        // Keep twoFactorVerifiedAt as record of when 2FA was first set up
       })
       .eq("id", session.user.id);
+
+    // Also delete all TOTP devices
+    await supabase
+      .from("two_factor_devices")
+      .delete()
+      .eq("user_id", session.user.id);
 
     if (error) {
       console.error("[2FA] Disable error:", error);
@@ -739,18 +751,32 @@ export async function remove2FADevice(
     const remainingCount = devices.length - 1;
 
     if (remainingCount === 0) {
-      // No devices left, disable 2FA
+      // Check if email 2FA is enabled before allowing complete 2FA disable
+      const { data: user } = await supabase
+        .from("user")
+        .select("email2FAEnabled")
+        .eq("id", session.user.id)
+        .single();
+
+      if (!user?.email2FAEnabled) {
+        // No email 2FA backup - this should have been blocked by the frontend
+        // But block it here too for safety (mandatory MFA enforcement)
+        return { error: "You must enable Email 2FA before removing your last authenticator" };
+      }
+
+      // Email 2FA is enabled, so we can remove the last TOTP device
+      // Clear TOTP-specific fields but keep twoFactorEnabled via email 2FA
       await supabase
         .from("user")
         .update({
-          twoFactorEnabled: false,
           twoFactorSecret: null,
           twoFactorBackupCodes: null,
-          twoFactorVerifiedAt: null,
+          // Keep twoFactorEnabled true since email 2FA is active
+          // twoFactorVerifiedAt stays as record of when 2FA was first set up
         })
         .eq("id", session.user.id);
 
-      return { success: true, twoFactorDisabled: true };
+      return { success: true, twoFactorDisabled: false }; // 2FA is NOT disabled, email 2FA is still active
     }
 
     // If primary was removed, make another device primary

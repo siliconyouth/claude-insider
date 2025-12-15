@@ -24,6 +24,7 @@ import { AvatarUpload } from "@/components/settings/avatar-upload";
 import { PasswordSettings } from "@/components/settings/password-settings";
 import { ConnectedAccounts } from "@/components/settings/connected-accounts";
 import { ApiKeySettings } from "@/components/settings/api-key-settings";
+import { ActivitySettings } from "@/components/settings/activity-settings";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import { BrowserNotificationPrompt } from "@/components/notifications/browser-notification-prompt";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
@@ -1062,6 +1063,21 @@ export default function SettingsPage() {
             </div>
 
           </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
+        {/* Activity & History Section */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Activity & History
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            View your activity stats and recent history
+          </p>
+
+          <ActivitySettings />
         </section>
 
         {/* Divider */}

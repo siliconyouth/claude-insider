@@ -83,6 +83,7 @@ export async function GET(request: NextRequest) {
         u.role,
         u."isBetaTester",
         u."emailVerified",
+        u.banned,
         u."createdAt"
       FROM "user" u
       ${whereClause}
@@ -100,6 +101,7 @@ export async function GET(request: NextRequest) {
       role: row.role || "user",
       isBetaTester: row.isBetaTester || false,
       emailVerified: row.emailVerified || false,
+      banned: row.banned || false,
       createdAt: row.createdAt?.toISOString() || new Date().toISOString(),
     }));
 

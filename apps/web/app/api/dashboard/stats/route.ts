@@ -72,6 +72,7 @@ export async function GET() {
           editor: parseInt(userStats.role_editor) || 0,
           moderator: parseInt(userStats.role_moderator) || 0,
           admin: parseInt(userStats.role_admin) || 0,
+          ai_assistant: parseInt(userStats.role_ai_assistant) || 0,
         },
       },
       beta: {

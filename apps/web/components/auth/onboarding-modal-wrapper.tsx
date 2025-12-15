@@ -7,11 +7,13 @@
  * completed their profile setup yet.
  *
  * Now uses the multi-step OnboardingWizard for enhanced onboarding flow.
+ * Triggers the "Welcome Aboard" achievement on completion.
  */
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/components/providers/auth-provider";
 import { OnboardingWizard } from "./onboarding-wizard";
+import { queueAchievement } from "@/lib/achievement-queue";
 
 export function OnboardingModalWrapper() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -36,6 +38,8 @@ export function OnboardingModalWrapper() {
 
   const handleComplete = () => {
     setShowOnboarding(false);
+    // Queue the "Welcome Aboard" achievement to show after page reload
+    queueAchievement("welcome_aboard");
     // Refresh the page to update user data
     window.location.reload();
   };

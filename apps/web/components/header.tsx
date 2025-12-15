@@ -7,6 +7,7 @@ import { UniversalSearch } from "@/components/universal-search";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserMenu } from "@/components/auth";
 import { NotificationBell } from "@/components/notifications/notification-bell";
+import { InboxButton } from "@/components/messaging";
 import { ApiCreditsIndicator } from "@/components/api-credits-indicator";
 import { NavDropdown, NavLink } from "@/components/nav-dropdown";
 import { cn } from "@/lib/design-system";
@@ -220,6 +221,7 @@ export function Header({ activePage }: HeaderProps) {
             </div>
 
             <ThemeToggle />
+            <InboxButton />
             <NotificationBell />
             <UserMenu />
           </div>
@@ -228,6 +230,7 @@ export function Header({ activePage }: HeaderProps) {
           <div className="flex md:hidden items-center gap-1">
             <UniversalSearch />
             <ThemeToggle />
+            <InboxButton />
             <NotificationBell />
             <UserMenu />
             <button

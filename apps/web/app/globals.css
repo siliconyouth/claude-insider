@@ -2225,3 +2225,106 @@ code {
 .animate-burst {
   animation: burst 0.4s ease-out forwards;
 }
+
+/* ============================================
+   ACHIEVEMENT NOTIFICATION ANIMATIONS
+   ============================================ */
+
+/* Confetti falling animation */
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(25vh) rotate(180deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(50vh) rotate(360deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(75vh) rotate(540deg);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.animate-confetti {
+  animation: confetti var(--duration, 3s) ease-out forwards;
+}
+
+/* Gentle bounce for achievement icon */
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 1s ease-in-out infinite;
+}
+
+/* Shimmer effect for legendary achievements */
+@keyframes shimmer-achievement {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer-achievement 1.5s infinite;
+}
+
+/* Star burst for legendary unlocks */
+@keyframes star-burst {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-star-burst {
+  animation: star-burst 0.6s ease-out forwards;
+}
+
+/* Pulse ring for notification badges */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1s ease-out infinite;
+}

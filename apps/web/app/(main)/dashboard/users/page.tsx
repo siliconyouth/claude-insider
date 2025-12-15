@@ -4,15 +4,20 @@
  * Users Management Page
  *
  * Admin-only page for viewing and managing users.
+ * Supports editing, banning, and deleting users.
  */
 
 import { useEffect, useState, useCallback } from "react";
 import { cn } from "@/lib/design-system";
 import { useToast } from "@/components/toast";
 import { ROLE_INFO, type UserRole } from "@/lib/roles";
-import type { AdminUserListItem, AdminUserDetail, PaginatedResponse } from "@/types/admin";
+import { banUser, unbanUser } from "@/app/actions/ban-appeals";
+import { getAdminUserActivity, getActivityStats, type ActivityItem, type ActivityStats as ActivityStatsType } from "@/app/actions/user-activity";
+import { ActivityTimeline, ActivityStats } from "@/components/activity";
+import type { AdminUserListItem, AdminUserDetail, PaginatedResponse, UpdateUserRequest } from "@/types/admin";
 
 type FilterRole = "all" | UserRole;
+type ModalView = "view" | "edit" | "ban" | "delete";
 
 export default function UsersPage() {
   const toast = useToast();
@@ -26,6 +31,19 @@ export default function UsersPage() {
   const [selectedUser, setSelectedUser] = useState<AdminUserDetail | null>(null);
   const [isLoadingUser, setIsLoadingUser] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [modalView, setModalView] = useState<ModalView>("view");
+
+  // Edit form state
+  const [editName, setEditName] = useState("");
+  const [editUsername, setEditUsername] = useState("");
+  const [editBio, setEditBio] = useState("");
+  const [banReason, setBanReason] = useState("");
+
+  // Activity state
+  const [userActivity, setUserActivity] = useState<ActivityItem[]>([]);
+  const [activityStats, setActivityStats] = useState<ActivityStatsType | null>(null);
+  const [isLoadingActivity, setIsLoadingActivity] = useState(false);
+  const [showActivity, setShowActivity] = useState(false);
 
   const fetchUsers = useCallback(async () => {
     setIsLoading(true);
@@ -76,6 +94,27 @@ export default function UsersPage() {
     }
   };
 
+  const loadUserActivity = async (userId: string) => {
+    setIsLoadingActivity(true);
+    try {
+      const [activityResult, statsResult] = await Promise.all([
+        getAdminUserActivity(userId, 50),
+        getActivityStats(userId),
+      ]);
+
+      if (activityResult.success && activityResult.activities) {
+        setUserActivity(activityResult.activities);
+      }
+      if (statsResult.success && statsResult.stats) {
+        setActivityStats(statsResult.stats);
+      }
+    } catch {
+      toast.error("Failed to load user activity");
+    } finally {
+      setIsLoadingActivity(false);
+    }
+  };
+
   const handleRoleChange = async (newRole: UserRole) => {
     if (!selectedUser) return;
 
@@ -97,6 +136,48 @@ export default function UsersPage() {
       }
     } catch {
       toast.error("Failed to update role");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleBan = async () => {
+    if (!selectedUser || !banReason.trim()) return;
+
+    setIsUpdating(true);
+    try {
+      const result = await banUser(selectedUser.id, banReason.trim());
+      if (result.success) {
+        toast.success("User banned successfully");
+        setSelectedUser({ ...selectedUser, banned: true, banReason: banReason.trim() });
+        setBanReason("");
+        setModalView("view");
+        fetchUsers();
+      } else {
+        toast.error(result.error || "Failed to ban user");
+      }
+    } catch {
+      toast.error("Failed to ban user");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleUnban = async () => {
+    if (!selectedUser) return;
+
+    setIsUpdating(true);
+    try {
+      const result = await unbanUser(selectedUser.id);
+      if (result.success) {
+        toast.success("User unbanned successfully");
+        setSelectedUser({ ...selectedUser, banned: false, banReason: undefined });
+        fetchUsers();
+      } else {
+        toast.error(result.error || "Failed to unban user");
+      }
+    } catch {
+      toast.error("Failed to unban user");
     } finally {
       setIsUpdating(false);
     }
@@ -213,6 +294,11 @@ export default function UsersPage() {
                     </td>
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-2">
+                        {user.banned && (
+                          <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-900/30 text-red-400">
+                            Banned
+                          </span>
+                        )}
                         {user.isBetaTester && (
                           <span className="px-2 py-0.5 rounded text-xs font-medium bg-emerald-900/30 text-emerald-400">
                             Beta
@@ -264,7 +350,12 @@ export default function UsersPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setSelectedUser(null)}
+            onClick={() => {
+              setSelectedUser(null);
+              setShowActivity(false);
+              setUserActivity([]);
+              setActivityStats(null);
+            }}
           />
           <div className="relative w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             {isLoadingUser ? (
@@ -294,7 +385,12 @@ export default function UsersPage() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setSelectedUser(null)}
+                    onClick={() => {
+                      setSelectedUser(null);
+                      setShowActivity(false);
+                      setUserActivity([]);
+                      setActivityStats(null);
+                    }}
                     className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -308,6 +404,11 @@ export default function UsersPage() {
                   {/* Badges */}
                   <div className="flex items-center gap-2 flex-wrap">
                     <RoleBadge role={selectedUser.role} />
+                    {selectedUser.banned && (
+                      <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-900/30 text-red-400">
+                        Banned
+                      </span>
+                    )}
                     {selectedUser.isBetaTester && (
                       <span className="px-2 py-0.5 rounded text-xs font-medium bg-emerald-900/30 text-emerald-400">
                         Beta Tester
@@ -397,6 +498,117 @@ export default function UsersPage() {
                     <p className="mt-2 text-xs text-gray-500">
                       Note: Admin role can only be assigned directly in the database for security.
                     </p>
+                  </div>
+
+                  {/* Ban Status & Actions */}
+                  <div className="pt-4 border-t border-gray-800">
+                    <label className="block text-sm font-medium text-gray-400 mb-3">Ban Management</label>
+
+                    {modalView === "ban" ? (
+                      <div className="space-y-4">
+                        <div className="p-4 rounded-lg bg-red-900/20 border border-red-500/30">
+                          <p className="text-sm text-red-400 mb-3">
+                            You are about to ban <span className="font-semibold">{selectedUser.name || selectedUser.email}</span>.
+                            They will be logged out and unable to access their account.
+                          </p>
+                          <textarea
+                            value={banReason}
+                            onChange={(e) => setBanReason(e.target.value)}
+                            placeholder="Enter the reason for banning this user..."
+                            rows={3}
+                            className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={handleBan}
+                            disabled={isUpdating || !banReason.trim()}
+                            className="px-4 py-2 rounded-lg bg-red-600 text-white text-sm font-medium hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {isUpdating ? "Banning..." : "Confirm Ban"}
+                          </button>
+                          <button
+                            onClick={() => {
+                              setModalView("view");
+                              setBanReason("");
+                            }}
+                            className="px-4 py-2 rounded-lg bg-gray-800 text-gray-400 text-sm font-medium hover:text-white hover:bg-gray-700"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : selectedUser.banned ? (
+                      <div className="space-y-3">
+                        <div className="p-3 rounded-lg bg-red-900/20 border border-red-500/30">
+                          <p className="text-sm text-red-400">
+                            <span className="font-semibold">Ban Reason:</span> {selectedUser.banReason || "No reason provided"}
+                          </p>
+                        </div>
+                        <button
+                          onClick={handleUnban}
+                          disabled={isUpdating}
+                          className="px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50"
+                        >
+                          {isUpdating ? "Unbanning..." : "Unban User"}
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setModalView("ban")}
+                        disabled={isUpdating}
+                        className="px-4 py-2 rounded-lg bg-red-600/20 text-red-400 text-sm font-medium border border-red-500/30 hover:bg-red-600/30 disabled:opacity-50"
+                      >
+                        Ban User
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Activity Section */}
+                  <div className="pt-4 border-t border-gray-800">
+                    <div className="flex items-center justify-between mb-3">
+                      <label className="text-sm font-medium text-gray-400">Activity & History</label>
+                      <button
+                        onClick={() => {
+                          if (!showActivity && selectedUser) {
+                            loadUserActivity(selectedUser.id);
+                          }
+                          setShowActivity(!showActivity);
+                        }}
+                        className="text-sm text-blue-400 hover:text-blue-300"
+                      >
+                        {showActivity ? "Hide" : "Show"}
+                      </button>
+                    </div>
+
+                    {showActivity && (
+                      <div className="space-y-4">
+                        {isLoadingActivity ? (
+                          <div className="flex items-center justify-center py-8">
+                            <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                          </div>
+                        ) : (
+                          <>
+                            {/* Activity Stats */}
+                            {activityStats && (
+                              <div className="bg-gray-800/50 rounded-lg p-4">
+                                <ActivityStats stats={activityStats} showPrivate={true} />
+                              </div>
+                            )}
+
+                            {/* Activity Timeline */}
+                            <div className="bg-gray-800/50 rounded-lg p-4 max-h-[300px] overflow-y-auto">
+                              <h4 className="text-sm font-medium text-gray-400 mb-3">Recent Activity</h4>
+                              <ActivityTimeline
+                                activities={userActivity}
+                                emptyMessage="No activity recorded"
+                                compact={true}
+                              />
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </>

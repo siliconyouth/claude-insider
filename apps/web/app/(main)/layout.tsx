@@ -17,6 +17,7 @@ import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
 import { AskAIProvider, AskAIModal } from "@/components/ask-ai";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
 import { NotificationPopup } from "@/components/notifications/notification-popup";
+import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -156,19 +157,21 @@ export default async function MainLayout({
             <AskAIProvider>
               <KeyboardShortcutsProvider>
                 <ToastProvider>
-                  <SkipLink />
-                  <ServiceWorkerRegister />
-                  {children}
-                  <VoiceAssistantErrorBoundary>
-                    <VoiceAssistant />
-                  </VoiceAssistantErrorBoundary>
-                  <AuthModalWrapper />
-                  <OnboardingModalWrapper />
-                  <FeedbackButton />
-                  <AskAIModal />
-                  <VersionUpdatePopup />
-                  <NotificationPopup />
-                  <Analytics />
+                  <AchievementNotificationProvider>
+                    <SkipLink />
+                    <ServiceWorkerRegister />
+                    {children}
+                    <VoiceAssistantErrorBoundary>
+                      <VoiceAssistant />
+                    </VoiceAssistantErrorBoundary>
+                    <AuthModalWrapper />
+                    <OnboardingModalWrapper />
+                    <FeedbackButton />
+                    <AskAIModal />
+                    <VersionUpdatePopup />
+                    <NotificationPopup />
+                    <Analytics />
+                  </AchievementNotificationProvider>
                 </ToastProvider>
               </KeyboardShortcutsProvider>
             </AskAIProvider>

@@ -7,6 +7,110 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.75.0] - 2025-12-15
+
+### Added
+
+#### Achievement System with Lucide Icons
+- **Achievement Definitions** (`lib/achievements.ts`)
+  - 50+ achievement definitions using Lucide React icons
+  - 9 categories: onboarding, engagement, learning, social, content, streak, collector, expert, special
+  - 4 rarity tiers with XP values: common (10-50 XP), rare (75-150 XP), epic (200-500 XP), legendary (500-2500 XP)
+  - Rarity-specific styling: colors, backgrounds, borders, glow effects
+  - Helper functions: getAchievement, getAchievementsByCategory, getAchievementsByRarity, getAllAchievements, getVisibleAchievements, getTotalPossiblePoints
+  - Example achievements: "Welcome Aboard" (onboarding), "Week Warrior" (7-day streak), "Centurion" (100-day streak), "Completionist" (unlock all)
+
+- **Achievement Notification Modal** (`components/achievements/achievement-notification.tsx`)
+  - Celebratory modal with animated entrance (scale + opacity transitions)
+  - Confetti particle effects with rarity-specific colors and particle counts
+  - Glow rings animation for legendary achievements
+  - Sound effects by rarity using Web Audio API
+  - Portal-based rendering into document body
+  - Auto-dismiss with rarity-based timing (5s common, 6s epic, 7s legendary)
+  - Keyboard accessible (Escape to close)
+  - Queue system for multiple simultaneous achievements
+  - AchievementNotificationProvider context for app-wide access
+  - useAchievementNotification hook for triggering achievements
+
+- **Achievement Queue Utility** (`lib/achievement-queue.ts`)
+  - localStorage persistence for achievements across page reloads
+  - Queued achievements survive navigation and refresh
+  - Auto-cleanup of stale entries older than 1 hour
+  - Functions: queueAchievement, queueAchievements, getPendingAchievements, clearAchievement, clearAllAchievements, isAchievementPending
+
+- **Onboarding Achievement Integration**
+  - "Welcome Aboard" achievement triggers when user completes onboarding wizard
+  - Uses localStorage queue to persist achievement across page reload
+
+#### Site-wide Sound Effects System
+- **Sound Effects Hook** (`hooks/use-sound-effects.tsx`)
+  - Web Audio API-based sound generation (no audio files required)
+  - 24 sound types across 6 categories:
+    - Notifications: notification, notification_badge, notification_urgent
+    - Feedback: success, error, warning, info
+    - UI Interactions: click, toggle_on, toggle_off, hover, navigation, open, close
+    - Chat: message_received, message_sent, typing, mention, invitation, user_join, user_leave
+    - Achievements: achievement, level_up, complete, progress
+    - Special: welcome, goodbye
+  - Musical note frequencies for pleasant tones
+  - User-configurable settings with localStorage persistence
+  - Category-level enable/disable controls
+  - Master volume control
+  - SoundProvider context and useSound hook
+
+- **Chat Sound Effects Hook** (`hooks/use-chat-sounds.tsx`)
+  - Chat-specific sound effects with fallback to Web Audio API
+  - Support for external sound files with generated fallbacks
+  - Per-category settings: typing, mentions, invitations
+  - Integration with chat settings UI
+
+#### CSS Animations for Achievements
+- **New CSS Animations** (`app/globals.css`)
+  - `animate-confetti` - Falling confetti particles with configurable duration
+  - `animate-bounce-gentle` - Subtle icon bounce animation
+  - `animate-shimmer` - Legendary achievement shimmer effect
+  - `animate-star-burst` - Legendary unlock burst animation
+  - `animate-pulse-ring` - Notification badge pulse effect
+
+#### Group Chat System
+- **Database Schema** (`supabase/migrations/044_group_chats.sql`)
+  - Extended dm_conversations with group fields: description, avatar_url, created_by, max_participants
+  - Added role column to dm_participants: owner, admin, member
+  - New dm_group_invitations table with status tracking (pending, accepted, declined, expired)
+  - user_chat_settings table for sound preferences
+  - Row Level Security policies for all new tables
+  - PostgreSQL functions:
+    - `create_group_conversation` - Create new group with creator as owner
+    - `invite_to_group` - Send invitation with admin/owner check
+    - `accept_group_invitation` - Join group from invitation
+    - `decline_group_invitation` - Decline invitation
+    - `leave_group_conversation` - Leave with ownership transfer logic
+    - `update_group_member_role` - Promote/demote members
+    - `remove_from_group` - Kick users from group
+    - `get_pending_invitations` - List user's pending invitations
+  - Notification trigger for group invitations
+  - Realtime enabled for dm_group_invitations
+
+- **Group Chat Server Actions** (`app/actions/group-chat.ts`)
+  - Full TypeScript interfaces: GroupConversation, GroupMember, GroupInvitation
+  - Server actions with session validation:
+    - `createGroupConversation` - Create group with name, description, avatar
+    - `inviteToGroup` - Send invitation with optional message
+    - `acceptGroupInvitation` / `declineGroupInvitation` - Respond to invitations
+    - `leaveGroupConversation` - Leave with auto-ownership transfer
+    - `updateGroupMemberRole` - Promote to admin or demote to member
+    - `transferGroupOwnership` - Transfer owner role
+    - `removeFromGroup` - Remove member (admin/owner only)
+    - `getPendingInvitations` - Get user's pending group invitations
+    - `getGroupMembers` - List all members with profiles and presence
+    - `updateGroupSettings` - Update group name, description, avatar
+    - `getChatSoundSettings` / `updateChatSoundSettings` - Manage sound preferences
+
+### Changed
+
+- **Main Layout** (`app/(main)/layout.tsx`) - Added AchievementNotificationProvider to wrap application
+- **Onboarding Modal Wrapper** (`components/auth/onboarding-modal-wrapper.tsx`) - Triggers welcome achievement on completion
+
 ## [0.74.0] - 2025-12-15
 
 ### Added

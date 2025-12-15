@@ -38,10 +38,14 @@ export async function GET(
         u.id,
         u.name,
         u.email,
+        u.username,
         u.image,
         u.role,
         u."isBetaTester",
         u."emailVerified",
+        u.banned,
+        u."banReason",
+        u."bannedAt",
         u.created_at,
         u.bio,
         u."socialLinks",
@@ -82,10 +86,14 @@ export async function GET(
       id: row.id,
       name: row.name,
       email: row.email,
+      username: row.username,
       image: row.image,
       role: row.role || "user",
       isBetaTester: row.isBetaTester || false,
       emailVerified: row.emailVerified || false,
+      banned: row.banned || false,
+      banReason: row.banReason,
+      bannedAt: row.bannedAt?.toISOString(),
       createdAt: row.created_at.toISOString(),
       bio: row.bio,
       socialLinks: row.socialLinks,
@@ -158,7 +166,7 @@ export async function PATCH(
     }
 
     const updates: string[] = [];
-    const values: (string | boolean)[] = [];
+    const values: (string | boolean | null)[] = [];
     const details: Record<string, unknown> = {};
 
     // Handle role change
@@ -179,6 +187,81 @@ export async function PATCH(
       updates.push(`role = $${values.length}`);
       details.previousRole = targetRole;
       details.newRole = body.role;
+    }
+
+    // Handle name change
+    if (body.name !== undefined) {
+      const name = body.name.trim();
+      if (name.length < 1 || name.length > 100) {
+        return NextResponse.json({ error: "Name must be 1-100 characters" }, { status: 400 });
+      }
+      values.push(name);
+      updates.push(`name = $${values.length}`);
+      details.nameUpdated = true;
+    }
+
+    // Handle bio change
+    if (body.bio !== undefined) {
+      const bio = body.bio.trim() || null;
+      if (bio && bio.length > 500) {
+        return NextResponse.json({ error: "Bio must be under 500 characters" }, { status: 400 });
+      }
+      values.push(bio);
+      updates.push(`bio = $${values.length}`);
+      details.bioUpdated = true;
+    }
+
+    // Handle username change
+    if (body.username !== undefined) {
+      const username = body.username.trim().toLowerCase() || null;
+      if (username) {
+        if (!/^[a-z0-9_-]{3,30}$/.test(username)) {
+          return NextResponse.json(
+            { error: "Username must be 3-30 characters, lowercase letters, numbers, hyphens, underscores" },
+            { status: 400 }
+          );
+        }
+        // Check uniqueness
+        const existing = await pool.query(
+          `SELECT id FROM "user" WHERE LOWER(username) = $1 AND id != $2`,
+          [username, id]
+        );
+        if (existing.rows.length > 0) {
+          return NextResponse.json({ error: "Username already taken" }, { status: 400 });
+        }
+      }
+      values.push(username);
+      updates.push(`username = $${values.length}`);
+      details.usernameUpdated = true;
+    }
+
+    // Handle beta tester toggle
+    if (body.isBetaTester !== undefined) {
+      values.push(body.isBetaTester);
+      updates.push(`"isBetaTester" = $${values.length}`);
+      details.betaTesterStatus = body.isBetaTester ? "added" : "removed";
+    }
+
+    // Handle ban/unban
+    if (body.isBanned !== undefined) {
+      values.push(body.isBanned);
+      updates.push(`banned = $${values.length}`);
+
+      if (body.isBanned && body.banReason) {
+        values.push(body.banReason);
+        updates.push(`"banReason" = $${values.length}`);
+        values.push(new Date().toISOString());
+        updates.push(`"bannedAt" = $${values.length}`);
+      } else if (!body.isBanned) {
+        // Clear ban reason when unbanning
+        values.push(null as unknown as string);
+        updates.push(`"banReason" = $${values.length}`);
+        values.push(null as unknown as string);
+        updates.push(`"bannedAt" = $${values.length}`);
+      }
+
+      details.banStatus = body.isBanned ? "banned" : "unbanned";
+      if (body.banReason) details.banReason = body.banReason;
     }
 
     if (updates.length === 0) {
@@ -210,6 +293,87 @@ export async function PATCH(
     console.error("[Dashboard User Update Error]:", error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Failed to update user" },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * Delete a user (admin only)
+ */
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+
+    // Check authentication
+    const session = await getSession();
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Check role - admin only
+    const adminRole = ((session.user as Record<string, unknown>).role as UserRole) || "user";
+    if (!hasMinRole(adminRole, ROLES.ADMIN)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    // Cannot delete yourself
+    if (id === session.user.id) {
+      return NextResponse.json(
+        { error: "Cannot delete your own account" },
+        { status: 400 }
+      );
+    }
+
+    // Get target user's info for logging
+    const targetResult = await pool.query(
+      `SELECT name, email, role FROM "user" WHERE id = $1`,
+      [id]
+    );
+
+    if (targetResult.rows.length === 0) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const target = targetResult.rows[0];
+    const targetRole = (target.role || "user") as UserRole;
+
+    // Cannot delete users with equal or higher role
+    if (!canManageRole(adminRole, targetRole)) {
+      return NextResponse.json(
+        { error: "Cannot delete a user with equal or higher role" },
+        { status: 403 }
+      );
+    }
+
+    // Delete user (cascade will handle related records)
+    await pool.query(`DELETE FROM "user" WHERE id = $1`, [id]);
+
+    // Log the action
+    await pool.query(
+      `
+      INSERT INTO admin_logs (admin_id, action, target_type, target_id, details)
+      VALUES ($1, 'delete_user', 'user', $2, $3)
+    `,
+      [
+        session.user.id,
+        id,
+        JSON.stringify({
+          deletedUserName: target.name,
+          deletedUserEmail: target.email,
+          deletedUserRole: targetRole,
+        }),
+      ]
+    );
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("[Dashboard User Delete Error]:", error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Failed to delete user" },
       { status: 500 }
     );
   }

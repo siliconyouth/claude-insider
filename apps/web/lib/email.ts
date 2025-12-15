@@ -1602,3 +1602,124 @@ function getImportCompleteEmailHtml(params: {
 
   return getEmailWrapper(content);
 }
+
+// ================================
+// Report Email Templates
+// ================================
+
+/**
+ * Email templates for moderation and reporting
+ */
+export const emailTemplates = {
+  /**
+   * Report outcome notification to the reporter
+   */
+  reportOutcome(params: {
+    reporterName: string;
+    reportType: string;
+    status: string;
+    actionMessage: string;
+  }): string {
+    const content = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="display: inline-block; width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(to bottom right, #2563eb, #06b6d4); padding: 12px;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      </div>
+
+      <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #18181b; text-align: center;">
+        Report Update: ${params.status}
+      </h2>
+      <p style="margin: 0 0 24px 0; color: #52525b; line-height: 1.6;">
+        Hi ${params.reporterName},<br><br>
+        Thank you for your ${params.reportType} report. Our moderation team has reviewed it.
+      </p>
+
+      <div style="padding: 20px; background: #f4f4f5; border-radius: 12px; margin-bottom: 24px;">
+        <h3 style="margin: 0 0 12px 0; color: #18181b; font-size: 16px; font-weight: 600;">
+          Outcome
+        </h3>
+        <p style="margin: 0; color: #52525b; font-size: 14px; line-height: 1.6;">
+          ${params.actionMessage}
+        </p>
+      </div>
+
+      <p style="margin: 0 0 24px 0; color: #71717a; font-size: 14px;">
+        We appreciate you helping keep our community safe. Your reports make a real difference.
+      </p>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto;">
+        <tr>
+          <td style="background: linear-gradient(to right, #7c3aed, #2563eb, #06b6d4); border-radius: 8px;">
+            <a href="${APP_URL}" style="display: inline-block; padding: 12px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">
+              Continue Exploring
+            </a>
+          </td>
+        </tr>
+      </table>
+    `;
+
+    return getEmailWrapper(content);
+  },
+
+  /**
+   * Content moderation notification to the reported user
+   */
+  contentModerated(params: {
+    userName: string;
+    contentType: string;
+    reason: string;
+    actionTaken: string;
+  }): string {
+    const content = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="display: inline-block; width: 48px; height: 48px; border-radius: 50%; background: #fef3c7; padding: 12px;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#d97706" stroke-width="2" style="width: 24px; height: 24px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+      </div>
+
+      <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #18181b; text-align: center;">
+        Your ${params.contentType} Has Been Reviewed
+      </h2>
+      <p style="margin: 0 0 24px 0; color: #52525b; line-height: 1.6;">
+        Hi ${params.userName},<br><br>
+        We've reviewed your ${params.contentType} and found that it may have violated our community guidelines.
+      </p>
+
+      <div style="padding: 20px; background: #fef3c7; border-radius: 12px; margin-bottom: 24px;">
+        <h3 style="margin: 0 0 8px 0; color: #92400e; font-size: 14px; font-weight: 600;">
+          Reason: ${params.reason.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
+        </h3>
+        <p style="margin: 0; color: #92400e; font-size: 14px; line-height: 1.6;">
+          Action: ${params.actionTaken}
+        </p>
+      </div>
+
+      <p style="margin: 0 0 24px 0; color: #52525b; font-size: 14px; line-height: 1.6;">
+        Please review our <a href="${APP_URL}/terms" style="color: #2563eb; text-decoration: none;">Terms of Service</a>
+        and <a href="${APP_URL}/guidelines" style="color: #2563eb; text-decoration: none;">Community Guidelines</a>
+        to ensure future content complies with our policies.
+      </p>
+
+      <p style="margin: 0 0 24px 0; color: #71717a; font-size: 14px;">
+        If you believe this was a mistake, you can contact our support team.
+      </p>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto;">
+        <tr>
+          <td style="background: linear-gradient(to right, #7c3aed, #2563eb, #06b6d4); border-radius: 8px;">
+            <a href="${APP_URL}/settings" style="display: inline-block; padding: 12px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">
+              View Settings
+            </a>
+          </td>
+        </tr>
+      </table>
+    `;
+
+    return getEmailWrapper(content);
+  },
+};
