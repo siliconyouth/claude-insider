@@ -168,6 +168,11 @@ export default function PrivacyPolicyPage() {
                     <td className="px-4 py-2">Track delivery of site-wide announcements</td>
                     <td className="px-4 py-2">90 days</td>
                   </tr>
+                  <tr>
+                    <td className="px-4 py-2">AI Assistant Settings</td>
+                    <td className="px-4 py-2">Preferred model, voice, auto-speak preferences</td>
+                    <td className="px-4 py-2">Until account deleted</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -234,6 +239,7 @@ export default function PrivacyPolicyPage() {
                     <li>Achievements</li>
                     <li>Following/followers list</li>
                     <li>Notification preferences</li>
+                    <li>AI assistant settings (model, voice, preferences)</li>
                     <li>API key usage statistics (key hint only, never the actual key)</li>
                   </ul>
                 </li>
@@ -272,6 +278,7 @@ export default function PrivacyPolicyPage() {
               <li>All achievements and progress</li>
               <li>All following/follower relationships</li>
               <li>All notification preferences</li>
+              <li>All AI assistant settings</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">What May Be Retained</h3>
@@ -583,7 +590,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. If you add your own Anthropic API key, it is encrypted with AES-256-GCM before storage and only used to make Claude API requests on your behalf. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only.
+              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. If you add your own Anthropic API key, it is encrypted with AES-256-GCM before storage and only used to make Claude API requests on your behalf. Your AI assistant settings (model, voice, preferences) are stored in the database and sync across devices. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only.
             </p>
           </section>
         </article>

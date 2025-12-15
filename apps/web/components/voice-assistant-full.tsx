@@ -17,6 +17,7 @@ import {
   VoiceRecognizer,
   isSpeechRecognitionSupported,
 } from "@/lib/speech-recognition";
+import { triggerCreditsRefresh } from "@/hooks/use-api-credits";
 
 interface StreamEvent {
   type: "text" | "done" | "error";
@@ -393,6 +394,8 @@ export function VoiceAssistantFull() {
           }
         }
         streamingCompleteRef.current = true;
+        // Trigger credits refresh after AI response
+        triggerCreditsRefresh();
         if (autoSpeakRef.current && assistantContent.trim()) {
           const sentences = splitIntoSentences(assistantContent);
           const remainingSentences = sentences.slice(lastSpokenIndexRef.current);

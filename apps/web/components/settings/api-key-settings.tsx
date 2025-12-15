@@ -9,7 +9,7 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
-import { ANTHROPIC_URLS, type ClaudeModel } from "@/lib/api-keys";
+import { ANTHROPIC_URLS, type ClaudeModel, getBestAvailableModel } from "@/lib/api-keys";
 
 interface ApiKeyInfo {
   id: string;
@@ -307,48 +307,69 @@ export function ApiKeySettings() {
           {/* Available Models */}
           {anthropicKey.availableModels.length > 0 && (
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-                Preferred Model
-              </label>
+              <div className="flex items-center justify-between mb-3">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Preferred Model
+                </label>
+                {getBestAvailableModel(anthropicKey.availableModels) && (
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    Recommended: <span className="font-medium text-violet-600 dark:text-violet-400">
+                      {getBestAvailableModel(anthropicKey.availableModels)?.name}
+                    </span>
+                  </span>
+                )}
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {anthropicKey.availableModels.map((model) => (
-                  <button
-                    key={model.id}
-                    onClick={() => handleModelChange(model.id)}
-                    className={cn(
-                      "flex items-start gap-3 p-4 rounded-lg text-left",
-                      "border transition-all",
-                      anthropicKey.preferredModel === model.id
-                        ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                        : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
-                    )}
-                  >
-                    <div className={cn(
-                      "w-3 h-3 rounded-full mt-1 flex-shrink-0",
-                      model.tier === "opus" ? "bg-violet-500" :
-                      model.tier === "sonnet" ? "bg-blue-500" :
-                      "bg-emerald-500"
-                    )} />
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-900 dark:text-white">
-                          {model.name}
-                        </span>
-                        {model.tier === "opus" && (
-                          <span className="px-1.5 py-0.5 text-xs font-medium rounded bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300">
-                            Best
+                {anthropicKey.availableModels.map((model) => {
+                  const isSelected = anthropicKey.preferredModel === model.id;
+                  const bestModel = getBestAvailableModel(anthropicKey.availableModels);
+                  const isRecommended = bestModel?.id === model.id;
+
+                  return (
+                    <button
+                      key={model.id}
+                      onClick={() => handleModelChange(model.id)}
+                      className={cn(
+                        "flex items-start gap-3 p-4 rounded-lg text-left",
+                        "border transition-all",
+                        isSelected
+                          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-sm"
+                          : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600",
+                        isRecommended && !isSelected && "border-violet-200 dark:border-violet-800/50"
+                      )}
+                    >
+                      <div className={cn(
+                        "w-3 h-3 rounded-full mt-1 flex-shrink-0",
+                        model.tier === "opus" ? "bg-violet-500" :
+                        model.tier === "sonnet" ? "bg-blue-500" :
+                        "bg-emerald-500"
+                      )} />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-medium text-gray-900 dark:text-white">
+                            {model.name}
                           </span>
-                        )}
+                          {isRecommended && (
+                            <span className="px-1.5 py-0.5 text-[10px] font-semibold rounded bg-gradient-to-r from-violet-500 to-blue-500 text-white">
+                              RECOMMENDED
+                            </span>
+                          )}
+                          {isSelected && (
+                            <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {model.description}
+                        </p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                          ${model.inputPrice}/M input • ${model.outputPrice}/M output
+                        </p>
                       </div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        {model.description}
-                      </p>
-                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
-                        ${model.inputPrice}/M input • ${model.outputPrice}/M output
-                      </p>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -359,7 +380,7 @@ export function ApiKeySettings() {
               <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 This Month&apos;s Usage
               </h4>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
                     {anthropicKey.usageThisMonth.requests.toLocaleString()}
@@ -368,15 +389,26 @@ export function ApiKeySettings() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {(anthropicKey.usageThisMonth.inputTokens / 1000).toFixed(1)}K
+                    {formatTokenCount(anthropicKey.usageThisMonth.inputTokens)}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">Input Tokens</p>
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {(anthropicKey.usageThisMonth.outputTokens / 1000).toFixed(1)}K
+                    {formatTokenCount(anthropicKey.usageThisMonth.outputTokens)}
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">Output Tokens</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                    {formatEstimatedCost(
+                      anthropicKey.usageThisMonth.inputTokens,
+                      anthropicKey.usageThisMonth.outputTokens,
+                      anthropicKey.preferredModel,
+                      allModels
+                    )}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Est. Cost</p>
                 </div>
               </div>
             </div>
@@ -668,4 +700,37 @@ export function ApiKeySettings() {
       </div>
     </div>
   );
+}
+
+/**
+ * Format token count for display
+ */
+function formatTokenCount(tokens: number): string {
+  if (tokens >= 1_000_000) {
+    return `${(tokens / 1_000_000).toFixed(1)}M`;
+  }
+  if (tokens >= 1_000) {
+    return `${(tokens / 1_000).toFixed(1)}K`;
+  }
+  return tokens.toString();
+}
+
+/**
+ * Calculate and format estimated cost based on model pricing
+ */
+function formatEstimatedCost(
+  inputTokens: number,
+  outputTokens: number,
+  modelId: string | null,
+  allModels: ClaudeModel[]
+): string {
+  const model = allModels.find((m) => m.id === modelId);
+  if (!model) return "$0.00";
+
+  const inputCost = (inputTokens / 1_000_000) * model.inputPrice;
+  const outputCost = (outputTokens / 1_000_000) * model.outputPrice;
+  const total = inputCost + outputCost;
+
+  if (total < 0.01) return "<$0.01";
+  return `$${total.toFixed(2)}`;
 }

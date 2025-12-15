@@ -7,6 +7,7 @@ import { UniversalSearch } from "@/components/universal-search";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { UserMenu } from "@/components/auth";
 import { NotificationBell } from "@/components/notifications/notification-bell";
+import { ApiCreditsIndicator } from "@/components/api-credits-indicator";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
@@ -109,6 +110,7 @@ export function Header({ activePage }: HeaderProps) {
             {/* Divider */}
             <div className="mx-2 h-5 w-px bg-gray-200 dark:bg-[#262626]" />
 
+            <ApiCreditsIndicator />
             <UniversalSearch />
             <ThemeToggle />
             <NotificationBell />

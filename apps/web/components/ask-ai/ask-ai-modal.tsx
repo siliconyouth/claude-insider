@@ -11,6 +11,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/design-system";
 import { useAskAI } from "./ask-ai-provider";
 import { useAuth } from "@/components/providers/auth-provider";
+import { triggerCreditsRefresh } from "@/hooks/use-api-credits";
 import type { AIConversation } from "@/app/actions/ai-conversations";
 
 interface Message {
@@ -222,6 +223,9 @@ export function AskAIModal() {
       if (convId && assistantMessage) {
         saveMessage(convId, "assistant", assistantMessage);
       }
+
+      // Trigger credits refresh after AI response
+      triggerCreditsRefresh();
     } catch (error) {
       console.error("Chat error:", error);
       setMessages((prev) => [

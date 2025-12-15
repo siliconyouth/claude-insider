@@ -26,6 +26,20 @@ export interface Feedback {
   updatedAt: Date;
 }
 
+export interface ConsoleLogEntry {
+  type: string;
+  message: string;
+  timestamp: string;
+}
+
+export interface BrowserInfo {
+  userAgent?: string;
+  platform?: string;
+  language?: string;
+  screenSize?: string;
+  timestamp?: string;
+}
+
 export interface FeedbackSubmission {
   feedbackType: FeedbackType;
   title: string;
@@ -33,6 +47,8 @@ export interface FeedbackSubmission {
   severity?: FeedbackSeverity;
   pageUrl?: string;
   screenshot?: File;
+  consoleLogs?: ConsoleLogEntry[];
+  browserInfo?: BrowserInfo;
 }
 
 export interface FeedbackUpdate {

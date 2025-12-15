@@ -6,7 +6,7 @@
  * Main dashboard page showing key statistics and quick actions.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { StatsCards } from "./components/stats-cards";

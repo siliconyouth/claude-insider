@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.70.0";
+const APP_VERSION = "0.71.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "0.71.0",
+    date: "2025-12-15",
+    type: "minor",
+    highlights: [
+      "Model selector in header with dropdown",
+      "BEST badge on recommended model (Opus 4.5)",
+      "Real-time API credits display in header",
+      "Enhanced Connect with Anthropic onboarding",
+      "Database-backed AI assistant settings",
+    ],
+  },
   {
     version: "0.70.0",
     date: "2025-12-15",
@@ -43,16 +55,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "Admin notification management",
       "Email alerts for feedback",
       "Beta tester management dashboard",
-    ],
-  },
-  {
-    version: "0.68.0",
-    date: "2025-12-14",
-    type: "minor",
-    highlights: [
-      "Push notifications support",
-      "Browser notification preferences",
-      "Deep linking to notifications",
     ],
   },
 ];

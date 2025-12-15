@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.71.0] - 2025-12-15
+
+### Added
+
+#### Model Selection & API Credits Display
+- **Header Model Selector** (`components/header.tsx`)
+  - New dropdown in header showing current AI model selection
+  - Model options: Claude Opus 4.5, Claude Sonnet 4, Claude Haiku
+  - "BEST" badge highlighting recommended model (Opus 4.5 or best available)
+  - Model switching persists to user settings
+
+- **Real-time API Credits Display**
+  - Token usage counter in header showing current session usage
+  - Estimated cost display based on model pricing
+  - Visual indicator for API quota status
+
+- **Enhanced Onboarding Flow** (`components/auth/onboarding-wizard/`)
+  - "Connect with Anthropic" popup explaining API key benefits
+  - Manual API key entry as alternative connection method
+  - Clearer explanation of site credits vs own API key
+
+#### Database-Backed AI Assistant Settings
+- **Assistant Settings Table** (`supabase/migrations/034_assistant_settings.sql`)
+  - `assistant_settings` table for storing user AI preferences
+  - Selected model preference (opus, sonnet, haiku)
+  - Voice settings (voice ID, auto-speak toggle)
+  - Chat behavior preferences
+  - Row Level Security for user data isolation
+
+- **Settings Sync Across Devices**
+  - Authenticated users' AI settings now stored in database
+  - Settings automatically sync when logging in on new device
+  - Falls back to localStorage for guest users
+  - Migration path from localStorage to database on first login
+
+### Changed
+
+- **AI Assistant** - Settings now persist to database for authenticated users instead of localStorage only
+- **Header** - Added model selector dropdown and API credits display
+- **Onboarding** - Enhanced API key step with "Connect with Anthropic" popup option
+
 ## [0.70.0] - 2025-12-15
 
 ### Added

@@ -450,8 +450,13 @@ export async function notifyVersionUpdate(params: {
     }
 
     // Build set of users with explicit opt-out
-    const userPrefsMap = new Map(
-      (preferences || []).map((p: { user_id: string; in_app_version_updates: boolean; email_version_updates: boolean }) => [p.user_id, p])
+    interface UserPref {
+      user_id: string;
+      in_app_version_updates: boolean;
+      email_version_updates: boolean;
+    }
+    const userPrefsMap = new Map<string, UserPref>(
+      (preferences || []).map((p: UserPref) => [p.user_id, p])
     );
 
     // Filter users to notify (those with enabled or no preference set)

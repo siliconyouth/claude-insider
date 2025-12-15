@@ -204,6 +204,26 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Integration with AI Assistant and Playground
 - [x] Fallback to site API key when user key not configured
 
+### FR-11: Model Selection & API Credits Display
+- [x] Header model selector dropdown (Opus 4.5, Sonnet 4, Haiku)
+- [x] "BEST" badge on recommended model
+- [x] Real-time token usage counter in header
+- [x] Estimated cost display based on model pricing
+- [x] Model preference persistence per user
+
+### FR-12: Database-Backed AI Assistant Settings
+- [x] `assistant_settings` database table for user preferences
+- [x] Selected model persistence (opus, sonnet, haiku)
+- [x] Voice settings storage (voice ID, auto-speak)
+- [x] Settings sync across devices for authenticated users
+- [x] Migration from localStorage to database on login
+- [x] Fallback to localStorage for guest users
+
+### FR-13: Enhanced Onboarding
+- [x] "Connect with Anthropic" popup in onboarding flow
+- [x] Manual API key entry as alternative option
+- [x] Clear explanation of site credits vs own API key benefits
+
 ---
 
 ## Non-Functional Requirements
@@ -303,7 +323,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.70.0**
+**Version 0.71.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

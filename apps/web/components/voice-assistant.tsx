@@ -34,6 +34,7 @@ import {
 } from "@/lib/speech-recognition";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
 import { useAnnouncer } from "@/hooks/use-aria-live";
+import { triggerCreditsRefresh } from "@/hooks/use-api-credits";
 import { LinkifiedText } from "./linkified-text";
 
 // Extend window for quota warning tracking
@@ -807,6 +808,9 @@ export function VoiceAssistant() {
 
         // Mark streaming as complete
         streamingCompleteRef.current = true;
+
+        // Trigger credits refresh after AI response
+        triggerCreditsRefresh();
 
         console.log('[TTS] Streaming complete', {
           autoSpeak: autoSpeakRef.current,
