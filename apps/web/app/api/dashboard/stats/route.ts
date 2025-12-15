@@ -15,12 +15,16 @@ export async function GET() {
   try {
     // Check authentication
     const session = await getSession();
-    if (!session?.user) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check role
-    const userRole = ((session.user as Record<string, unknown>).role as UserRole) || "user";
+    // Get role directly from database (session cookie cache may be stale)
+    const roleResult = await pool.query(
+      `SELECT role FROM "user" WHERE id = $1`,
+      [session.user.id]
+    );
+    const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
     if (!hasMinRole(userRole, ROLES.MODERATOR)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }

@@ -28,6 +28,7 @@ import { useSoundEffects, type SoundType } from "@/hooks/use-sound-effects";
 import { useAchievementNotification } from "@/components/achievements/achievement-notification";
 import { useAuth } from "@/components/providers/auth-provider";
 import { ACHIEVEMENTS, RARITY_CONFIG, type AchievementRarity } from "@/lib/achievements";
+import { type UserRole } from "@/lib/roles";
 
 interface DiagnosticResult {
   name: string;
@@ -85,6 +86,64 @@ interface DatabaseCheck {
   };
 }
 
+interface LinkCheckResult {
+  url: string;
+  status: number;
+  statusText: string;
+  responseTime: number;
+  error?: string;
+  category: string;
+}
+
+interface LinkCheckSummary {
+  totalLinks: number;
+  checkedLinks: number;
+  successfulLinks: number;
+  failedLinks: number;
+  redirects: number;
+  errorRate: number;
+  averageResponseTime: number;
+  results: LinkCheckResult[];
+  brokenLinks: LinkCheckResult[];
+  slowLinks: LinkCheckResult[];
+}
+
+interface BrowserEnvironment {
+  // Browser info
+  userAgent: string;
+  platform: string;
+  language: string;
+  languages: string[];
+  cookiesEnabled: boolean;
+  doNotTrack: string | null;
+  onLine: boolean;
+  hardwareConcurrency: number;
+  maxTouchPoints: number;
+  // Screen info
+  screenWidth: number;
+  screenHeight: number;
+  windowWidth: number;
+  windowHeight: number;
+  pixelRatio: number;
+  colorDepth: number;
+  // Storage
+  cookies: { name: string; value: string; }[];
+  localStorage: { key: string; value: string; size: number; }[];
+  sessionStorage: { key: string; value: string; size: number; }[];
+  localStorageSize: number;
+  sessionStorageSize: number;
+  // Permissions
+  permissions: { name: string; state: string; }[];
+  // Timestamps
+  timezone: string;
+  timezoneOffset: number;
+  // Features
+  serviceWorker: boolean;
+  webGL: boolean;
+  webGLRenderer: string | null;
+  indexedDB: boolean;
+}
+
 const SOUND_CATEGORIES = {
   notifications: ["notification", "notification_badge", "notification_urgent"] as SoundType[],
   feedback: ["success", "error", "warning", "info"] as SoundType[],
@@ -110,6 +169,11 @@ export default function DiagnosticsPage() {
   const [isLoadingDb, setIsLoadingDb] = useState(false);
   const [apiResults, setApiResults] = useState<DiagnosticResult[]>([]);
   const [isLoadingApi, setIsLoadingApi] = useState(false);
+  const [linkCheckResults, setLinkCheckResults] = useState<LinkCheckSummary | null>(null);
+  const [isLoadingLinkCheck, setIsLoadingLinkCheck] = useState(false);
+  const [simulatedRole, setSimulatedRole] = useState<UserRole | "actual">("actual");
+  const [browserEnv, setBrowserEnv] = useState<BrowserEnvironment | null>(null);
+  const [isLoadingBrowserEnv, setIsLoadingBrowserEnv] = useState(false);
 
   // TEST ALL state
   const [testAllProgress, setTestAllProgress] = useState<TestAllProgress>({
@@ -238,6 +302,162 @@ export default function DiagnosticsPage() {
     setApiResults(results);
     setIsLoadingApi(false);
     toast.success("API tests completed");
+  }, [toast]);
+
+  // Run link check
+  const runLinkCheck = useCallback(async () => {
+    setIsLoadingLinkCheck(true);
+    try {
+      const response = await fetch("/api/debug/link-check");
+      if (response.ok) {
+        const data = await response.json();
+        setLinkCheckResults(data.summary as LinkCheckSummary);
+        const brokenCount = data.summary.brokenLinks?.length || 0;
+        if (brokenCount > 0) {
+          toast.warning(`Link check found ${brokenCount} broken links`);
+        } else {
+          toast.success("All links validated successfully");
+        }
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || "Link check failed");
+      }
+    } catch (error) {
+      console.error("Link check error:", error);
+      toast.error("Link check failed");
+    } finally {
+      setIsLoadingLinkCheck(false);
+    }
+  }, [toast]);
+
+  // Collect browser environment data
+  const collectBrowserEnvironment = useCallback(async () => {
+    setIsLoadingBrowserEnv(true);
+    try {
+      // Parse cookies
+      const cookies = document.cookie.split(";").filter(c => c.trim()).map(cookie => {
+        const [name, ...valueParts] = cookie.trim().split("=");
+        return {
+          name: name || "",
+          value: valueParts.join("=") || "",
+        };
+      });
+
+      // Parse localStorage
+      const localStorageItems: { key: string; value: string; size: number; }[] = [];
+      let localStorageSize = 0;
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key) {
+          const value = localStorage.getItem(key) || "";
+          const size = new Blob([value]).size;
+          localStorageSize += size;
+          localStorageItems.push({
+            key,
+            value: value.length > 200 ? value.substring(0, 200) + "..." : value,
+            size,
+          });
+        }
+      }
+
+      // Parse sessionStorage
+      const sessionStorageItems: { key: string; value: string; size: number; }[] = [];
+      let sessionStorageSize = 0;
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key) {
+          const value = sessionStorage.getItem(key) || "";
+          const size = new Blob([value]).size;
+          sessionStorageSize += size;
+          sessionStorageItems.push({
+            key,
+            value: value.length > 200 ? value.substring(0, 200) + "..." : value,
+            size,
+          });
+        }
+      }
+
+      // Check permissions
+      const permissionNames = [
+        "notifications",
+        "geolocation",
+        "camera",
+        "microphone",
+        "clipboard-read",
+        "clipboard-write",
+      ] as const;
+
+      const permissions: { name: string; state: string; }[] = [];
+      for (const name of permissionNames) {
+        try {
+          const result = await navigator.permissions.query({ name: name as PermissionName });
+          permissions.push({ name, state: result.state });
+        } catch {
+          permissions.push({ name, state: "unsupported" });
+        }
+      }
+
+      // Check WebGL
+      let webGLRenderer: string | null = null;
+      let webGL = false;
+      try {
+        const canvas = document.createElement("canvas");
+        const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        if (gl) {
+          webGL = true;
+          const debugInfo = (gl as WebGLRenderingContext).getExtension("WEBGL_debug_renderer_info");
+          if (debugInfo) {
+            webGLRenderer = (gl as WebGLRenderingContext).getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          }
+        }
+      } catch {
+        // WebGL not available
+      }
+
+      const env: BrowserEnvironment = {
+        // Browser info
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        languages: [...navigator.languages],
+        cookiesEnabled: navigator.cookieEnabled,
+        doNotTrack: navigator.doNotTrack,
+        onLine: navigator.onLine,
+        hardwareConcurrency: navigator.hardwareConcurrency || 0,
+        maxTouchPoints: navigator.maxTouchPoints || 0,
+        // Screen info
+        screenWidth: screen.width,
+        screenHeight: screen.height,
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
+        pixelRatio: window.devicePixelRatio,
+        colorDepth: screen.colorDepth,
+        // Storage
+        cookies,
+        localStorage: localStorageItems,
+        sessionStorage: sessionStorageItems,
+        localStorageSize,
+        sessionStorageSize,
+        // Permissions
+        permissions,
+        // Timestamps
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        timezoneOffset: new Date().getTimezoneOffset(),
+        // Features
+        serviceWorker: "serviceWorker" in navigator,
+        webGL,
+        webGLRenderer,
+        indexedDB: "indexedDB" in window,
+      };
+
+      setBrowserEnv(env);
+      toast.success("Browser environment collected");
+    } catch (error) {
+      console.error("Browser environment collection error:", error);
+      toast.error("Failed to collect browser environment");
+    } finally {
+      setIsLoadingBrowserEnv(false);
+    }
   }, [toast]);
 
   // Define all test suites
@@ -421,6 +641,125 @@ export default function DiagnosticsPage() {
       },
     },
     {
+      name: "Dashboard Stats API",
+      category: "api",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/dashboard/stats");
+          const data = response.ok ? await response.json() : null;
+          return {
+            name: "Dashboard Stats API",
+            status: response.ok ? "success" : response.status === 403 ? "warning" : "error",
+            message: response.ok
+              ? `${data?.users?.total || 0} users, ${data?.feedback?.total || 0} feedback`
+              : response.status === 403
+                ? "Access denied (requires moderator role)"
+                : `Error: ${response.status}`,
+            category: "api",
+            duration: Date.now() - start,
+            details: response.ok ? data : { status: response.status },
+          };
+        } catch (e) {
+          return {
+            name: "Dashboard Stats API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Request failed",
+            category: "api",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Resources API",
+      category: "api",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/resources");
+          const data = response.ok ? await response.json() : null;
+          return {
+            name: "Resources API",
+            status: response.ok ? "success" : "error",
+            message: response.ok
+              ? `${data?.resources?.length || 0} resources available`
+              : `Error: ${response.status}`,
+            category: "api",
+            duration: Date.now() - start,
+            details: { status: response.status, count: data?.resources?.length || 0 },
+          };
+        } catch (e) {
+          return {
+            name: "Resources API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Request failed",
+            category: "api",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Notifications API",
+      category: "api",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/notifications");
+          return {
+            name: "Notifications API",
+            status: response.ok ? "success" : response.status === 401 ? "warning" : "error",
+            message: response.ok
+              ? "API accessible"
+              : response.status === 401
+                ? "Auth required"
+                : `Error: ${response.status}`,
+            category: "api",
+            duration: Date.now() - start,
+            details: { status: response.status },
+          };
+        } catch (e) {
+          return {
+            name: "Notifications API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Request failed",
+            category: "api",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "AI Assistant API",
+      category: "api",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test chat API availability (without sending a real request)
+          const response = await fetch("/api/assistant/chat", {
+            method: "OPTIONS",
+          });
+          return {
+            name: "AI Assistant API",
+            status: response.status !== 500 ? "success" : "error",
+            message: response.status !== 500 ? "Chat endpoint available" : "Server error",
+            category: "api",
+            duration: Date.now() - start,
+            details: { status: response.status },
+          };
+        } catch (e) {
+          return {
+            name: "AI Assistant API",
+            status: "warning",
+            message: "Endpoint configured but not tested",
+            category: "api",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
       name: "Sound Effects System",
       category: "features",
       run: async (): Promise<DiagnosticResult> => {
@@ -468,6 +807,98 @@ export default function DiagnosticsPage() {
             status: "error",
             message: e instanceof Error ? e.message : "Failed",
             category: "features",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Website Links",
+      category: "integrity",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/debug/link-check");
+          if (response.ok) {
+            const data = await response.json();
+            const summary = data.summary;
+            const brokenCount = summary?.brokenLinks?.length || 0;
+            const totalLinks = summary?.totalLinks || 0;
+
+            // Store results for detailed display
+            setLinkCheckResults(summary);
+
+            return {
+              name: "Website Links",
+              status: brokenCount === 0 ? "success" : brokenCount > 3 ? "error" : "warning",
+              message: brokenCount === 0
+                ? `All ${totalLinks} links valid`
+                : `${brokenCount}/${totalLinks} links broken`,
+              category: "integrity",
+              duration: Date.now() - start,
+              details: {
+                totalLinks,
+                successfulLinks: summary?.successfulLinks || 0,
+                brokenLinks: brokenCount,
+                avgResponseTime: summary?.averageResponseTime || 0,
+              },
+            };
+          } else if (response.status === 403) {
+            return {
+              name: "Website Links",
+              status: "warning",
+              message: "Admin role required for link check",
+              category: "integrity",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Website Links",
+              status: "error",
+              message: `Link check failed: ${response.status}`,
+              category: "integrity",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Website Links",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "integrity",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Browser Environment",
+      category: "client",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Collect browser environment data
+          await collectBrowserEnvironment();
+
+          return {
+            name: "Browser Environment",
+            status: "success",
+            message: `${navigator.userAgent.includes("Chrome") ? "Chrome" : navigator.userAgent.includes("Firefox") ? "Firefox" : navigator.userAgent.includes("Safari") ? "Safari" : "Browser"} | ${screen.width}x${screen.height}`,
+            category: "client",
+            duration: Date.now() - start,
+            details: {
+              platform: navigator.platform,
+              cookiesEnabled: navigator.cookieEnabled,
+              onLine: navigator.onLine,
+              language: navigator.language,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Browser Environment",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "client",
             duration: Date.now() - start,
           };
         }
@@ -571,13 +1002,45 @@ export default function DiagnosticsPage() {
       const errorLogs = allConsoleLogs.filter(l => l.type === "error" || l.type === "warn");
 
       // Build comprehensive context for AI
+      const browserInfo = browserEnv ? `
+### Browser Environment
+- **Browser:** ${browserEnv.userAgent.includes("Chrome") ? "Chrome" : browserEnv.userAgent.includes("Firefox") ? "Firefox" : browserEnv.userAgent.includes("Safari") ? "Safari" : "Unknown"}
+- **Platform:** ${browserEnv.platform}
+- **Screen:** ${browserEnv.screenWidth}x${browserEnv.screenHeight} (Window: ${browserEnv.windowWidth}x${browserEnv.windowHeight})
+- **Language:** ${browserEnv.language}
+- **Timezone:** ${browserEnv.timezone}
+- **Online:** ${browserEnv.onLine ? "Yes" : "No"}
+- **Cookies Enabled:** ${browserEnv.cookiesEnabled ? "Yes" : "No"}
+- **CPU Cores:** ${browserEnv.hardwareConcurrency}
+- **Pixel Ratio:** ${browserEnv.pixelRatio}x
+
+### Storage Data
+- **Cookies:** ${browserEnv.cookies.length} (${browserEnv.cookies.map(c => c.name).join(", ") || "none"})
+- **LocalStorage:** ${browserEnv.localStorage.length} items (${(browserEnv.localStorageSize / 1024).toFixed(2)} KB)
+  ${browserEnv.localStorage.map(i => `- ${i.key}: ${(i.size / 1024).toFixed(2)} KB`).join("\n  ")}
+- **SessionStorage:** ${browserEnv.sessionStorage.length} items (${(browserEnv.sessionStorageSize / 1024).toFixed(2)} KB)
+  ${browserEnv.sessionStorage.map(i => `- ${i.key}: ${(i.size / 1024).toFixed(2)} KB`).join("\n  ")}
+
+### Permissions
+${browserEnv.permissions.map(p => `- **${p.name}:** ${p.state}`).join("\n")}
+
+### Browser Capabilities
+- Service Worker: ${browserEnv.serviceWorker ? "✓" : "✗"}
+- WebGL: ${browserEnv.webGL ? "✓" : "✗"}
+- IndexedDB: ${browserEnv.indexedDB ? "✓" : "✗"}
+${browserEnv.webGLRenderer ? `- GPU: ${browserEnv.webGLRenderer}` : ""}
+
+### User Agent
+\`${browserEnv.userAgent}\`
+` : "";
+
       const context = `## System Diagnostic Results - Claude Insider
 
 **Test Run:** ${new Date().toISOString()}
 **User:** ${user?.email || "unknown"} (Role: ${user?.role || "unknown"})
 **Authenticated:** ${isAuthenticated ? "Yes" : "No"}
 **Project:** claude-insider (Next.js + Supabase + Better Auth)
-
+${browserInfo}
 ### Test Results (${testSummary.length} tests)
 ${testSummary.map(r => `- **${r.test}** [${r.status.toUpperCase()}]: ${r.message}${r.duration ? ` (${r.duration}ms)` : ""}${r.details ? `\n  Details: ${JSON.stringify(r.details)}` : ""}`).join("\n")}
 
@@ -1079,6 +1542,185 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
         )}
       </section>
 
+      {/* Role Simulator */}
+      <section className="rounded-xl border-2 border-violet-500/30 bg-gradient-to-r from-violet-900/10 via-blue-900/10 to-cyan-900/10 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <span>🎭</span>
+              Role Permission Simulator
+            </h3>
+            <p className="text-sm text-gray-400 mt-1">
+              View what each role can access across the application
+            </p>
+          </div>
+          <select
+            value={simulatedRole}
+            onChange={(e) => setSimulatedRole(e.target.value as UserRole | "actual")}
+            className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="actual">Current Role ({user?.role || "user"})</option>
+            <option value="admin">Admin (Full Access)</option>
+            <option value="moderator">Moderator</option>
+            <option value="editor">Editor</option>
+            <option value="user">User (Basic)</option>
+          </select>
+        </div>
+
+        {/* Permission Matrix */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Admin Permissions */}
+          <div className={cn(
+            "p-4 rounded-lg border",
+            simulatedRole === "admin" || (simulatedRole === "actual" && user?.role === "admin")
+              ? "bg-red-500/10 border-red-500/50"
+              : "bg-gray-800/30 border-gray-700"
+          )}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-red-400 font-bold text-sm">👑 Admin</span>
+              {(simulatedRole === "admin" || (simulatedRole === "actual" && user?.role === "admin")) && (
+                <span className="px-2 py-0.5 bg-red-500/30 text-red-300 text-xs rounded">Selected</span>
+              )}
+            </div>
+            <ul className="space-y-1.5 text-xs">
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Manage all users</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Delete users</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> View diagnostics</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Send notifications</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> All moderator perms</li>
+            </ul>
+          </div>
+
+          {/* Moderator Permissions */}
+          <div className={cn(
+            "p-4 rounded-lg border",
+            simulatedRole === "moderator" || (simulatedRole === "actual" && user?.role === "moderator")
+              ? "bg-violet-500/10 border-violet-500/50"
+              : "bg-gray-800/30 border-gray-700"
+          )}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-violet-400 font-bold text-sm">🛡️ Moderator</span>
+              {(simulatedRole === "moderator" || (simulatedRole === "actual" && user?.role === "moderator")) && (
+                <span className="px-2 py-0.5 bg-violet-500/30 text-violet-300 text-xs rounded">Selected</span>
+              )}
+            </div>
+            <ul className="space-y-1.5 text-xs">
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> View dashboard stats</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Manage feedback</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Review beta apps</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Moderate comments</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> All editor perms</li>
+            </ul>
+          </div>
+
+          {/* Editor Permissions */}
+          <div className={cn(
+            "p-4 rounded-lg border",
+            simulatedRole === "editor" || (simulatedRole === "actual" && user?.role === "editor")
+              ? "bg-blue-500/10 border-blue-500/50"
+              : "bg-gray-800/30 border-gray-700"
+          )}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-blue-400 font-bold text-sm">✏️ Editor</span>
+              {(simulatedRole === "editor" || (simulatedRole === "actual" && user?.role === "editor")) && (
+                <span className="px-2 py-0.5 bg-blue-500/30 text-blue-300 text-xs rounded">Selected</span>
+              )}
+            </div>
+            <ul className="space-y-1.5 text-xs">
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Edit suggestions</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Manage FAQ</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Add resources</li>
+              <li className="flex items-center gap-2 text-gray-500"><span>✗</span> No dashboard access</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> All user perms</li>
+            </ul>
+          </div>
+
+          {/* User Permissions */}
+          <div className={cn(
+            "p-4 rounded-lg border",
+            simulatedRole === "user" || (simulatedRole === "actual" && (user?.role === "user" || !user?.role))
+              ? "bg-gray-500/10 border-gray-500/50"
+              : "bg-gray-800/30 border-gray-700"
+          )}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-gray-400 font-bold text-sm">👤 User</span>
+              {(simulatedRole === "user" || (simulatedRole === "actual" && (user?.role === "user" || !user?.role))) && (
+                <span className="px-2 py-0.5 bg-gray-500/30 text-gray-300 text-xs rounded">Selected</span>
+              )}
+            </div>
+            <ul className="space-y-1.5 text-xs">
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> View docs & resources</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Favorites & ratings</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Submit feedback</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Leave comments</li>
+              <li className="flex items-center gap-2 text-emerald-400"><span>✓</span> Use AI assistant</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* API Access Table */}
+        <div className="mt-6">
+          <h4 className="text-sm font-medium text-gray-300 mb-3">API Endpoint Access by Role</h4>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b border-gray-700">
+                  <th className="text-left py-2 px-3 text-gray-400 font-medium">Endpoint</th>
+                  <th className="text-center py-2 px-3 text-gray-400 font-medium">User</th>
+                  <th className="text-center py-2 px-3 text-gray-400 font-medium">Editor</th>
+                  <th className="text-center py-2 px-3 text-gray-400 font-medium">Mod</th>
+                  <th className="text-center py-2 px-3 text-gray-400 font-medium">Admin</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-800">
+                <tr>
+                  <td className="py-2 px-3 text-gray-300 font-mono">/api/dashboard/stats</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-3 text-gray-300 font-mono">/api/dashboard/users</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-3 text-gray-300 font-mono">/api/dashboard/feedback</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-3 text-gray-300 font-mono">/api/notifications</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-3 text-gray-300 font-mono">/api/resources</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-3 text-gray-300 font-mono">/api/debug/link-check</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-red-400">✗</td>
+                  <td className="text-center text-emerald-400">✓</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       {/* Database Diagnostics */}
       <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
         <div className="flex items-center justify-between mb-4">
@@ -1228,39 +1870,198 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
         </div>
       </section>
 
-      {/* Achievement Notifications Test */}
+      {/* Website Link Integrity */}
       <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Achievement Notifications</h3>
-        <p className="text-sm text-gray-400 mb-4">
-          Test achievement popups by rarity level. Each will show with appropriate animations, colors, and sounds.
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {SAMPLE_ACHIEVEMENTS.map(({ id, rarity }) => {
-            const achievement = ACHIEVEMENTS[id];
-            const config = RARITY_CONFIG[rarity];
-            return (
-              <button
-                key={id}
-                onClick={() => testAchievement(id)}
-                className={cn(
-                  "p-4 rounded-xl border-2 text-left transition-all hover:scale-105",
-                  config.bgColor,
-                  config.borderColor
-                )}
-              >
-                <div className={cn("text-xs font-bold uppercase mb-1", config.color)}>
-                  {rarity}
-                </div>
-                <div className="text-white font-medium text-sm">
-                  {achievement?.name || id}
-                </div>
-                <div className="text-gray-400 text-xs mt-1">
-                  +{achievement?.points || 0} XP
-                </div>
-              </button>
-            );
-          })}
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white">Website Link Integrity</h3>
+          <button
+            onClick={runLinkCheck}
+            disabled={isLoadingLinkCheck}
+            className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          >
+            {isLoadingLinkCheck ? "Checking..." : "Check All Links"}
+          </button>
         </div>
+
+        {linkCheckResults ? (
+          <div className="space-y-4">
+            {/* Summary Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              <div className="p-3 rounded-lg bg-gray-800/50 text-center">
+                <div className="text-2xl font-bold text-white">{linkCheckResults.totalLinks}</div>
+                <div className="text-xs text-gray-400">Total Links</div>
+              </div>
+              <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-center">
+                <div className="text-2xl font-bold text-emerald-400">{linkCheckResults.successfulLinks}</div>
+                <div className="text-xs text-emerald-400/70">Successful</div>
+              </div>
+              <div className={cn(
+                "p-3 rounded-lg text-center",
+                linkCheckResults.failedLinks > 0
+                  ? "bg-red-500/10 border border-red-500/30"
+                  : "bg-gray-800/50"
+              )}>
+                <div className={cn("text-2xl font-bold", linkCheckResults.failedLinks > 0 ? "text-red-400" : "text-gray-400")}>
+                  {linkCheckResults.failedLinks}
+                </div>
+                <div className="text-xs text-gray-400">Failed</div>
+              </div>
+              <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-center">
+                <div className="text-2xl font-bold text-yellow-400">{linkCheckResults.redirects}</div>
+                <div className="text-xs text-yellow-400/70">Redirects</div>
+              </div>
+              <div className="p-3 rounded-lg bg-gray-800/50 text-center">
+                <div className="text-2xl font-bold text-cyan-400">{linkCheckResults.averageResponseTime}ms</div>
+                <div className="text-xs text-gray-400">Avg Response</div>
+              </div>
+            </div>
+
+            {/* Broken Links List */}
+            {linkCheckResults.brokenLinks.length > 0 && (
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                <h4 className="text-sm font-medium text-red-400 mb-3 flex items-center gap-2">
+                  <span>❌</span>
+                  Broken Links ({linkCheckResults.brokenLinks.length})
+                </h4>
+                <div className="space-y-2 max-h-60 overflow-y-auto">
+                  {linkCheckResults.brokenLinks.map((link, i) => (
+                    <div key={i} className="flex items-center justify-between p-2 bg-gray-900/50 rounded text-sm">
+                      <div className="flex items-center gap-3">
+                        <span className="px-2 py-0.5 rounded bg-red-600 text-white text-xs font-mono">
+                          {link.status || "ERR"}
+                        </span>
+                        <span className="text-gray-300 font-mono">{link.url}</span>
+                      </div>
+                      <span className="text-gray-500 text-xs">{link.category}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Slow Links List */}
+            {linkCheckResults.slowLinks.length > 0 && (
+              <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
+                <h4 className="text-sm font-medium text-yellow-400 mb-3 flex items-center gap-2">
+                  <span>⏱️</span>
+                  Slow Links (&gt;2s) ({linkCheckResults.slowLinks.length})
+                </h4>
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {linkCheckResults.slowLinks.map((link, i) => (
+                    <div key={i} className="flex items-center justify-between p-2 bg-gray-900/50 rounded text-sm">
+                      <div className="flex items-center gap-3">
+                        <span className="px-2 py-0.5 rounded bg-yellow-600 text-white text-xs font-mono">
+                          {link.responseTime}ms
+                        </span>
+                        <span className="text-gray-300 font-mono">{link.url}</span>
+                      </div>
+                      <span className="text-gray-500 text-xs">{link.category}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* All Links Expandable */}
+            <details className="group">
+              <summary className="cursor-pointer text-sm text-gray-400 hover:text-white flex items-center gap-2">
+                <svg className="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                View All {linkCheckResults.results.length} Links
+              </summary>
+              <div className="mt-3 space-y-1 max-h-80 overflow-y-auto">
+                {linkCheckResults.results.map((link, i) => (
+                  <div key={i} className={cn(
+                    "flex items-center justify-between p-2 rounded text-xs font-mono",
+                    link.status >= 200 && link.status < 300 && "bg-emerald-500/5",
+                    link.status >= 300 && link.status < 400 && "bg-yellow-500/5",
+                    (link.status === 0 || link.status >= 400) && "bg-red-500/5"
+                  )}>
+                    <div className="flex items-center gap-2">
+                      <span className={cn(
+                        "px-1.5 py-0.5 rounded text-[10px]",
+                        link.status >= 200 && link.status < 300 && "bg-emerald-600 text-white",
+                        link.status >= 300 && link.status < 400 && "bg-yellow-600 text-white",
+                        (link.status === 0 || link.status >= 400) && "bg-red-600 text-white"
+                      )}>
+                        {link.status || "ERR"}
+                      </span>
+                      <span className="text-gray-300">{link.url}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-500">
+                      <span>{link.responseTime}ms</span>
+                      <span className="text-gray-600">|</span>
+                      <span>{link.category}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </details>
+          </div>
+        ) : isLoadingLinkCheck ? (
+          <div className="flex items-center justify-center py-8">
+            <svg className="animate-spin h-8 w-8 text-blue-500" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            <span className="ml-3 text-gray-400">Checking all links (this may take a minute)...</span>
+          </div>
+        ) : (
+          <p className="text-gray-500 text-sm">Click "Check All Links" to validate all website URLs</p>
+        )}
+      </section>
+
+      {/* All Achievements Test */}
+      <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4">Achievement Notifications Test</h3>
+        <p className="text-sm text-gray-400 mb-4">
+          Click any achievement to test its notification popup. Each rarity has unique animations, colors, and sounds.
+        </p>
+
+        {/* Group achievements by rarity */}
+        {(["legendary", "epic", "rare", "common"] as AchievementRarity[]).map(rarity => {
+          const achievementsInRarity = Object.entries(ACHIEVEMENTS).filter(
+            ([, a]) => a.rarity === rarity
+          );
+          const config = RARITY_CONFIG[rarity];
+
+          return (
+            <div key={rarity} className="mb-6 last:mb-0">
+              <h4 className={cn("text-sm font-bold uppercase mb-3 flex items-center gap-2", config.color)}>
+                <span>{rarity === "legendary" ? "⭐" : rarity === "epic" ? "💎" : rarity === "rare" ? "🔮" : "🏅"}</span>
+                {rarity} ({achievementsInRarity.length})
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                {achievementsInRarity.map(([id, achievement]) => (
+                  <button
+                    key={id}
+                    onClick={() => {
+                      console.log(`Testing achievement: ${id}`);
+                      testAchievement(id);
+                    }}
+                    className={cn(
+                      "p-3 rounded-lg border text-left transition-all hover:scale-105 hover:shadow-lg",
+                      config.bgColor,
+                      config.borderColor
+                    )}
+                    title={achievement.description}
+                  >
+                    <div className="text-lg mb-1">
+                      {achievement.icon && <achievement.icon className="w-5 h-5" />}
+                    </div>
+                    <div className="text-white font-medium text-xs truncate">
+                      {achievement.name}
+                    </div>
+                    <div className="text-gray-400 text-[10px] mt-0.5">
+                      +{achievement.points} XP
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </section>
 
       {/* Toast Notifications Test */}
@@ -1300,7 +2101,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <label className="text-xs text-gray-500 uppercase">Version</label>
-            <p className="text-white font-mono">0.75.0</p>
+            <p className="text-white font-mono">0.76.0</p>
           </div>
           <div>
             <label className="text-xs text-gray-500 uppercase">Environment</label>
@@ -1315,6 +2116,256 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
             <p className="text-white">{Object.values(SOUND_CATEGORIES).flat().length}</p>
           </div>
         </div>
+      </section>
+
+      {/* Browser Environment */}
+      <section className="rounded-xl border-2 border-cyan-500/30 bg-gradient-to-r from-cyan-900/10 via-blue-900/10 to-violet-900/10 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <span>🖥️</span>
+              Browser Environment
+            </h3>
+            <p className="text-sm text-gray-400 mt-1">
+              Cookies, storage, permissions, and browser capabilities
+            </p>
+          </div>
+          <button
+            onClick={collectBrowserEnvironment}
+            disabled={isLoadingBrowserEnv}
+            className="px-4 py-2 text-sm bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 disabled:opacity-50 transition-colors"
+          >
+            {isLoadingBrowserEnv ? "Collecting..." : "Collect Data"}
+          </button>
+        </div>
+
+        {browserEnv ? (
+          <div className="space-y-6">
+            {/* Testing Environment Summary */}
+            <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-500/30">
+              <h4 className="text-sm font-medium text-cyan-400 mb-3 flex items-center gap-2">
+                <span>📋</span>
+                Testing Environment Summary
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Browser</label>
+                  <p className="text-white">
+                    {browserEnv.userAgent.includes("Chrome") ? "Chrome" :
+                     browserEnv.userAgent.includes("Firefox") ? "Firefox" :
+                     browserEnv.userAgent.includes("Safari") ? "Safari" :
+                     browserEnv.userAgent.includes("Edge") ? "Edge" : "Unknown"}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Platform</label>
+                  <p className="text-white">{browserEnv.platform}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Screen</label>
+                  <p className="text-white">{browserEnv.screenWidth}x{browserEnv.screenHeight}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Window</label>
+                  <p className="text-white">{browserEnv.windowWidth}x{browserEnv.windowHeight}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Language</label>
+                  <p className="text-white">{browserEnv.language}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Timezone</label>
+                  <p className="text-white">{browserEnv.timezone}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Online</label>
+                  <p className={browserEnv.onLine ? "text-emerald-400" : "text-red-400"}>
+                    {browserEnv.onLine ? "Yes" : "No"}
+                  </p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 uppercase">Pixel Ratio</label>
+                  <p className="text-white">{browserEnv.pixelRatio}x</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Cookies */}
+            <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+              <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <span>🍪</span>
+                  Cookies ({browserEnv.cookies.length})
+                </span>
+                <span className={cn(
+                  "px-2 py-0.5 rounded text-xs",
+                  browserEnv.cookiesEnabled ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400"
+                )}>
+                  {browserEnv.cookiesEnabled ? "Enabled" : "Disabled"}
+                </span>
+              </h4>
+              {browserEnv.cookies.length > 0 ? (
+                <div className="space-y-1 max-h-40 overflow-y-auto">
+                  {browserEnv.cookies.map((cookie, i) => (
+                    <div key={i} className="flex items-center justify-between p-2 bg-gray-900/50 rounded text-xs font-mono">
+                      <span className="text-cyan-400">{cookie.name}</span>
+                      <span className="text-gray-500 truncate max-w-[200px]" title={cookie.value}>
+                        {cookie.value.length > 50 ? cookie.value.substring(0, 50) + "..." : cookie.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-sm">No cookies found</p>
+              )}
+            </div>
+
+            {/* Local Storage */}
+            <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+              <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <span>💾</span>
+                  Local Storage ({browserEnv.localStorage.length} items)
+                </span>
+                <span className="text-xs text-gray-500">
+                  {(browserEnv.localStorageSize / 1024).toFixed(2)} KB
+                </span>
+              </h4>
+              {browserEnv.localStorage.length > 0 ? (
+                <div className="space-y-1 max-h-40 overflow-y-auto">
+                  {browserEnv.localStorage.map((item, i) => (
+                    <div key={i} className="p-2 bg-gray-900/50 rounded text-xs">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-blue-400 font-mono">{item.key}</span>
+                        <span className="text-gray-600">{(item.size / 1024).toFixed(2)} KB</span>
+                      </div>
+                      <div className="text-gray-500 font-mono text-[10px] truncate" title={item.value}>
+                        {item.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-sm">No localStorage data</p>
+              )}
+            </div>
+
+            {/* Session Storage */}
+            <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+              <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <span>📦</span>
+                  Session Storage ({browserEnv.sessionStorage.length} items)
+                </span>
+                <span className="text-xs text-gray-500">
+                  {(browserEnv.sessionStorageSize / 1024).toFixed(2)} KB
+                </span>
+              </h4>
+              {browserEnv.sessionStorage.length > 0 ? (
+                <div className="space-y-1 max-h-40 overflow-y-auto">
+                  {browserEnv.sessionStorage.map((item, i) => (
+                    <div key={i} className="p-2 bg-gray-900/50 rounded text-xs">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-violet-400 font-mono">{item.key}</span>
+                        <span className="text-gray-600">{(item.size / 1024).toFixed(2)} KB</span>
+                      </div>
+                      <div className="text-gray-500 font-mono text-[10px] truncate" title={item.value}>
+                        {item.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-sm">No sessionStorage data</p>
+              )}
+            </div>
+
+            {/* Permissions */}
+            <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+              <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
+                <span>🔐</span>
+                Browser Permissions
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {browserEnv.permissions.map((perm, i) => (
+                  <div key={i} className="flex items-center justify-between p-2 bg-gray-900/50 rounded text-xs">
+                    <span className="text-gray-300">{perm.name}</span>
+                    <span className={cn(
+                      "px-2 py-0.5 rounded font-medium",
+                      perm.state === "granted" && "bg-emerald-500/20 text-emerald-400",
+                      perm.state === "denied" && "bg-red-500/20 text-red-400",
+                      perm.state === "prompt" && "bg-yellow-500/20 text-yellow-400",
+                      perm.state === "unsupported" && "bg-gray-500/20 text-gray-400"
+                    )}>
+                      {perm.state}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Browser Capabilities */}
+            <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
+              <h4 className="text-sm font-medium text-gray-300 mb-3 flex items-center gap-2">
+                <span>⚡</span>
+                Browser Capabilities
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className={browserEnv.serviceWorker ? "text-emerald-400" : "text-red-400"}>
+                    {browserEnv.serviceWorker ? "✓" : "✗"}
+                  </span>
+                  <span className="text-gray-300">Service Worker</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={browserEnv.webGL ? "text-emerald-400" : "text-red-400"}>
+                    {browserEnv.webGL ? "✓" : "✗"}
+                  </span>
+                  <span className="text-gray-300">WebGL</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={browserEnv.indexedDB ? "text-emerald-400" : "text-red-400"}>
+                    {browserEnv.indexedDB ? "✓" : "✗"}
+                  </span>
+                  <span className="text-gray-300">IndexedDB</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-cyan-400">{browserEnv.hardwareConcurrency}</span>
+                  <span className="text-gray-300">CPU Cores</span>
+                </div>
+              </div>
+              {browserEnv.webGLRenderer && (
+                <div className="mt-3 p-2 bg-gray-900/50 rounded text-xs">
+                  <span className="text-gray-500">GPU: </span>
+                  <span className="text-gray-300">{browserEnv.webGLRenderer}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Full User Agent */}
+            <details className="group">
+              <summary className="cursor-pointer text-sm text-gray-400 hover:text-white flex items-center gap-2">
+                <svg className="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                Full User Agent String
+              </summary>
+              <div className="mt-2 p-3 bg-gray-900/50 rounded-lg">
+                <code className="text-xs text-gray-400 break-all">{browserEnv.userAgent}</code>
+              </div>
+            </details>
+          </div>
+        ) : isLoadingBrowserEnv ? (
+          <div className="flex items-center justify-center py-8">
+            <svg className="animate-spin h-8 w-8 text-cyan-500" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            <span className="ml-3 text-gray-400">Collecting browser data...</span>
+          </div>
+        ) : (
+          <p className="text-gray-500 text-sm">Click "Collect Data" to gather browser environment information</p>
+        )}
       </section>
     </div>
   );

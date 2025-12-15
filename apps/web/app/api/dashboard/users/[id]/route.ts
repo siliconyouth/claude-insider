@@ -24,12 +24,16 @@ export async function GET(
 
     // Check authentication
     const session = await getSession();
-    if (!session?.user) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check role - admin only
-    const userRole = ((session.user as Record<string, unknown>).role as UserRole) || "user";
+    // Get role directly from database (session cookie cache may be stale)
+    const roleResult = await pool.query(
+      `SELECT role FROM "user" WHERE id = $1`,
+      [session.user.id]
+    );
+    const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
     if (!hasMinRole(userRole, ROLES.ADMIN)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
@@ -129,8 +133,12 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check role - admin only
-    const adminRole = ((session.user as Record<string, unknown>).role as UserRole) || "user";
+    // Get role directly from database (session cookie cache may be stale)
+    const adminRoleResult = await pool.query(
+      `SELECT role FROM "user" WHERE id = $1`,
+      [session.user.id]
+    );
+    const adminRole = (adminRoleResult.rows[0]?.role as UserRole) || "user";
     if (!hasMinRole(adminRole, ROLES.ADMIN)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
@@ -314,8 +322,12 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check role - admin only
-    const adminRole = ((session.user as Record<string, unknown>).role as UserRole) || "user";
+    // Get role directly from database (session cookie cache may be stale)
+    const adminRoleResult = await pool.query(
+      `SELECT role FROM "user" WHERE id = $1`,
+      [session.user.id]
+    );
+    const adminRole = (adminRoleResult.rows[0]?.role as UserRole) || "user";
     if (!hasMinRole(adminRole, ROLES.ADMIN)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }

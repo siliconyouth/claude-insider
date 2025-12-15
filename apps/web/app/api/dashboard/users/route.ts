@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { getSession } from "@/lib/auth";
+import { pool } from "@/lib/db";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 import type { AdminUserListItem, PaginatedResponse } from "@/types/admin";
 
@@ -19,17 +20,20 @@ export async function GET(request: NextRequest) {
       hasSession: !!session,
       hasUser: !!session?.user,
       userId: session?.user?.id?.substring(0, 8) + "...",
-      userRole: (session?.user as Record<string, unknown>)?.role,
     });
 
-    if (!session?.user) {
+    if (!session?.user?.id) {
       console.log("[Dashboard Users] No session - returning 401");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check role - admin only for user management
-    const userRole = ((session.user as Record<string, unknown>).role as UserRole) || "user";
-    console.log("[Dashboard Users] Role check:", { userRole, requiredRole: "admin" });
+    // Get role directly from database (session cookie cache may be stale)
+    const roleResult = await pool.query(
+      `SELECT role FROM "user" WHERE id = $1`,
+      [session.user.id]
+    );
+    const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
+    console.log("[Dashboard Users] Role check from DB:", { userRole, requiredRole: "admin" });
 
     if (!hasMinRole(userRole, ROLES.ADMIN)) {
       console.log("[Dashboard Users] Insufficient role - returning 403");
