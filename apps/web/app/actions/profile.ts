@@ -493,14 +493,14 @@ export async function updateUsername(username: string): Promise<{
     const supabase = (await createAdminClient()) as any;
 
     // Check if username is already taken
+    // Note: Don't use .single() here - it throws when no rows found
     const { data: existing } = await supabase
       .from("user")
       .select("id")
       .eq("username", cleanUsername)
-      .neq("id", session.user.id)
-      .single();
+      .neq("id", session.user.id);
 
-    if (existing) {
+    if (existing && existing.length > 0) {
       return { error: "This username is already taken" };
     }
 
