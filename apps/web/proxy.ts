@@ -1,11 +1,14 @@
 /**
- * Security Middleware
+ * Security Proxy
  *
  * Handles request correlation IDs and visitor tracking.
- * Runs on Edge runtime for all requests.
+ * Runs on all requests as a network-level proxy.
  *
  * NOTE: Honeypot and database operations are handled in API routes,
- * not in middleware (Edge runtime can't use node-postgres).
+ * not in proxy (Edge runtime can't use node-postgres).
+ *
+ * Migrated from middleware.ts to proxy.ts for Next.js 16 compatibility.
+ * See: https://nextjs.org/docs/messages/middleware-to-proxy
  */
 
 import { NextResponse } from "next/server";
@@ -29,7 +32,7 @@ const SKIP_PATHS = [
   "/.well-known",
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Skip static assets and system paths
@@ -66,7 +69,7 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-// Configure which paths the middleware runs on
+// Configure which paths the proxy runs on
 export const config = {
   matcher: [
     /*
