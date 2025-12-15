@@ -4,7 +4,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { Pool } from 'pg';
+import { pool } from '@/lib/db';
 
 export async function GET() {
   const diagnostics: Record<string, unknown> = {
@@ -21,20 +21,10 @@ export async function GET() {
     },
   };
 
-  // Test database connection
+  // Test database connection using shared pool
   if (process.env.DATABASE_URL) {
-    const pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      max: 1,
-      connectionTimeoutMillis: 5000,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-    });
-
     try {
-      const client = await pool.connect();
-      const result = await client.query('SELECT current_database(), current_user, version()');
-      client.release();
-      await pool.end();
+      const result = await pool.query('SELECT current_database(), current_user, version()');
 
       diagnostics.database = {
         status: 'connected',
@@ -44,22 +34,12 @@ export async function GET() {
       };
 
       // Check if Better Auth tables exist
-      const tablesPool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-        max: 1,
-        connectionTimeoutMillis: 5000,
-        ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-      });
-
       try {
-        const tablesClient = await tablesPool.connect();
-        const tables = await tablesClient.query(`
+        const tables = await pool.query(`
           SELECT table_name FROM information_schema.tables
           WHERE table_schema = 'public'
           AND table_name IN ('user', 'session', 'account', 'verification')
         `);
-        tablesClient.release();
-        await tablesPool.end();
 
         diagnostics.betterAuthTables = {
           found: tables.rows.map(r => r.table_name),

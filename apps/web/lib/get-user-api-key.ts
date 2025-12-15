@@ -5,16 +5,8 @@
  * for use in AI features. Falls back to site's API key if not available.
  */
 
-import { Pool } from "pg";
+import { pool } from "./db";
 import { decryptApiKey } from "./api-keys";
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 5,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
 
 export interface UserApiKeyResult {
   apiKey: string;

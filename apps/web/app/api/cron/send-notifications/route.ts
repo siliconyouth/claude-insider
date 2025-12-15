@@ -12,7 +12,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { Pool } from "pg";
+import { pool } from "@/lib/db";
 import { createNotification } from "@/app/actions/notifications";
 import {
   sendPushNotificationToUsers,
@@ -22,14 +22,6 @@ import { sendEmail } from "@/lib/email";
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const CRON_SECRET = process.env.CRON_SECRET;
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 5,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
 
 interface TargetUser {
   user_id: string;

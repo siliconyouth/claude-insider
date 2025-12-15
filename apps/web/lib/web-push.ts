@@ -8,7 +8,7 @@
  */
 
 import webPush, { PushSubscription } from "web-push";
-import { Pool } from "pg";
+import { pool } from "./db";
 
 // Initialize web-push with VAPID keys
 // VAPID keys should be generated once and stored as environment variables
@@ -22,15 +22,6 @@ if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   );
 }
 /* eslint-enable turbo/no-undeclared-env-vars */
-
-// Database pool for subscription management
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 5,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
 
 export interface PushNotificationPayload {
   title: string;

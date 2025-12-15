@@ -5,18 +5,10 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { Pool } from "pg";
+import { pool } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { hasMinRole, canManageRole, ROLES, isValidRole, type UserRole } from "@/lib/roles";
 import type { UpdateUserRequest } from "@/types/admin";
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 5,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
 
 /**
  * Get a single user's details

@@ -6,18 +6,10 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { Pool } from "pg";
+import { pool } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 import { createNotification } from "@/app/actions/notifications";
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 5,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
 
 interface UpdateSuggestionRequest {
   status: "approved" | "rejected" | "merged";

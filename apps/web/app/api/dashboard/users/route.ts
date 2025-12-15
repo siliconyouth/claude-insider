@@ -5,18 +5,10 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { Pool } from "pg";
+import { pool } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 import type { AdminUserListItem, PaginatedResponse } from "@/types/admin";
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 5,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
 
 export async function GET(request: NextRequest) {
   try {

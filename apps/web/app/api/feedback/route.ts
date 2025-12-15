@@ -8,22 +8,13 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
-import { Pool } from "pg";
+import { pool } from "@/lib/db";
 import type { FeedbackSubmission } from "@/types/feedback";
 import {
   sendFeedbackAdminEmail,
   sendFeedbackConfirmationEmail,
   type FeedbackEmailParams,
 } from "@/lib/email";
-
-// Create pool for direct database access
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 5,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
 
 /**
  * Submit feedback

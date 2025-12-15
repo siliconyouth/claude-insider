@@ -15,9 +15,9 @@
 
 import { betterAuth } from 'better-auth';
 import { nextCookies } from 'better-auth/next-js';
-import { Pool } from 'pg';
 import { sendVerificationEmailWithCode, sendPasswordResetEmail } from './email';
 import { notifyAdminsNewUser } from './admin-notifications';
+import { getDbPool, pool } from './db';
 
 /**
  * Generate a 6-digit verification code
@@ -26,20 +26,10 @@ function generateVerificationCode(): string {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-// Create a PostgreSQL pool for Better Auth
-// Supabase requires SSL connections in production
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 10,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  // SSL is required for Supabase connections
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-});
-
 export const auth = betterAuth({
-  // Database configuration - pass Pool directly for PostgreSQL
-  database: pool,
+  // Database configuration - use centralized pool from lib/db.ts
+  // This prevents connection exhaustion in serverless environments
+  database: getDbPool(),
 
   // Application info
   appName: 'Claude Insider',

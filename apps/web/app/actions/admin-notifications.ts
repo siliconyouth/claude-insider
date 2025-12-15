@@ -8,16 +8,8 @@
  */
 
 import { getSession } from "@/lib/auth";
-import { Pool } from "pg";
+import { pool } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  max: 5,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-});
 
 export type AdminNotificationStatus = "draft" | "scheduled" | "sending" | "sent" | "failed" | "cancelled";
 export type TargetType = "all" | "role" | "users";
