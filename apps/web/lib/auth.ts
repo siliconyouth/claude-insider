@@ -17,6 +17,7 @@ import { betterAuth } from 'better-auth';
 import { nextCookies } from 'better-auth/next-js';
 import { Pool } from 'pg';
 import { sendVerificationEmail, sendPasswordResetEmail } from './email';
+import { notifyAdminsNewUser } from './admin-notifications';
 
 // Create a PostgreSQL pool for Better Auth
 // Supabase requires SSL connections in production
@@ -163,6 +164,22 @@ export const auth = betterAuth({
   advanced: {
     useSecureCookies: process.env.NODE_ENV === 'production',
     cookiePrefix: 'ci_auth',
+  },
+
+  // Database hooks for lifecycle events
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          // Notify admins about new user signup (async, don't block)
+          notifyAdminsNewUser({
+            id: user.id,
+            email: user.email,
+            name: user.name,
+          }).catch((err) => console.error('[Auth] Admin notification error:', err));
+        },
+      },
+    },
   },
 
   // Plugins - nextCookies must be last for server action cookie support

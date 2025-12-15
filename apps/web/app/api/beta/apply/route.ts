@@ -10,6 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { Pool } from "pg";
 import type { BetaApplicationSubmission } from "@/types/beta";
+import { notifyAdminsBetaApplication } from "@/lib/admin-notifications";
 
 // Create pool for direct database access
 const pool = new Pool({
@@ -110,6 +111,15 @@ export async function POST(request: NextRequest) {
         body.useCase?.trim() || null,
       ]
     );
+
+    // Notify admins about the new application (async, don't block response)
+    notifyAdminsBetaApplication({
+      id: result.rows[0].id,
+      userId: session.user.id,
+      userName: session.user.name || session.user.email?.split("@")[0] || "Unknown",
+      userEmail: session.user.email || "",
+      experienceLevel: body.experienceLevel,
+    }).catch((err) => console.error("[Beta Apply] Admin notification error:", err));
 
     return NextResponse.json({
       success: true,
