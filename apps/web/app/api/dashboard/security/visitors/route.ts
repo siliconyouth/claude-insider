@@ -177,7 +177,7 @@ export async function PATCH(request: NextRequest) {
           visitorId,
         });
 
-      case "recalculate_trust":
+      case "recalculate_trust": {
         const trustResult = await updateVisitorTrustScore(visitorId);
         return NextResponse.json({
           success: true,
@@ -187,6 +187,7 @@ export async function PATCH(request: NextRequest) {
           trustLevel: trustResult?.level,
           factors: trustResult?.factors,
         });
+      }
 
       default:
         return NextResponse.json(

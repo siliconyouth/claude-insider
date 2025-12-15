@@ -22,12 +22,9 @@ import {
   createConversation,
   updateConversationMessages,
   deleteConversation,
-  clearAllConversations,
   getActiveConversationId,
   setActiveConversationId,
-  getAssistantName,
   formatConversationTime,
-  DEFAULT_ASSISTANT_NAME,
   type Conversation,
 } from "@/lib/assistant-storage";
 import {

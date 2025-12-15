@@ -14,7 +14,7 @@ import { ROLE_INFO, type UserRole } from "@/lib/roles";
 import { banUser, unbanUser } from "@/app/actions/ban-appeals";
 import { getAdminUserActivity, getActivityStats, type ActivityItem, type ActivityStats as ActivityStatsType } from "@/app/actions/user-activity";
 import { ActivityTimeline, ActivityStats } from "@/components/activity";
-import type { AdminUserListItem, AdminUserDetail, PaginatedResponse, UpdateUserRequest } from "@/types/admin";
+import type { AdminUserListItem, AdminUserDetail, PaginatedResponse } from "@/types/admin";
 
 type FilterRole = "all" | UserRole;
 type ModalView = "view" | "edit" | "ban" | "delete";
@@ -33,10 +33,7 @@ export default function UsersPage() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [modalView, setModalView] = useState<ModalView>("view");
 
-  // Edit form state
-  const [editName, setEditName] = useState("");
-  const [editUsername, setEditUsername] = useState("");
-  const [editBio, setEditBio] = useState("");
+  // Ban form state
   const [banReason, setBanReason] = useState("");
 
   // Activity state

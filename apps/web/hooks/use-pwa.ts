@@ -48,7 +48,7 @@ export function usePWA(): PWAState & PWAActions {
       window.matchMedia("(display-mode: standalone)").matches ||
       // @ts-expect-error - iOS Safari specific
       window.navigator.standalone === true;
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+         
     setIsInstalled(isStandalone);
 
     // Listen for display mode changes
@@ -85,7 +85,7 @@ export function usePWA(): PWAState & PWAActions {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setIsOnline(navigator.onLine);
 
     const handleOnline = () => setIsOnline(true);

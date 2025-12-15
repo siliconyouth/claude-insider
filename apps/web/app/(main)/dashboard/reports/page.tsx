@@ -388,7 +388,7 @@ export default function ReportsPage() {
               {/* Description */}
               {selectedReport.description && (
                 <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Reporter's Description</h4>
+                  <h4 className="text-sm font-medium text-gray-400 mb-2">Reporter&apos;s Description</h4>
                   <p className="text-white whitespace-pre-wrap">{selectedReport.description}</p>
                 </div>
               )}

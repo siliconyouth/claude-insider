@@ -147,7 +147,6 @@ export async function GET(request: NextRequest) {
       // Find documents that might relate to this resource
       const allDocs = await getAllDocsMeta();
       // Reserved for future tag-based matching enhancement
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const _resourceTags = new Set(resource.tags?.map((t) => t.toLowerCase()) || []);
       const categoryMapping = Object.entries(DEFAULT_CATEGORY_MAPPINGS).filter(
         ([, categories]) => categories.includes(resource.category)

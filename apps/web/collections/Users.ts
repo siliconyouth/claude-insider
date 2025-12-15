@@ -1,4 +1,4 @@
-import type { CollectionConfig, FieldAccess, Access } from 'payload';
+import type { CollectionConfig } from 'payload';
 
 /**
  * User Roles for Claude Insider CMS
@@ -19,18 +19,8 @@ export const hasRole = (user: { role?: string } | null, roles: UserRole[]): bool
   return roles.includes(user.role as UserRole);
 };
 
-/**
- * Field access: Only superadmins can read private user data (email, IP, etc.)
- * Other admins see masked values
- */
-const privateFieldAccess: FieldAccess = ({ req: { user }, doc, siblingData }) => {
-  // Superadmins can always read
-  if (hasRole(user, ['superadmin'])) return true;
-  // Users can read their own data
-  if (user && doc && user.id === doc.id) return true;
-  // Others cannot read private fields
-  return false;
-};
+// Note: Field-level access control can be implemented with FieldAccess type
+// Currently using afterRead hooks for masking private data instead
 
 /**
  * Mask email address for non-superadmins

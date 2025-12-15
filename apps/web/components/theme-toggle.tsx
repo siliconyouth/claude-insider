@@ -10,7 +10,7 @@ export function ThemeToggle() {
 
   // Load theme from localStorage on mount
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setMounted(true);
     const savedTheme = localStorage.getItem("theme") as Theme | null;
     if (savedTheme) {

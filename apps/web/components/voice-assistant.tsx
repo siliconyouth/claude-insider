@@ -616,7 +616,6 @@ export function VoiceAssistant() {
   }, []);
 
   // Add text to speech queue (splits by sentences) - reserved for future use
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _queueSpeech = useCallback((text: string) => {
     const sentences = splitIntoSentences(text);
     sentences.forEach(sentence => {

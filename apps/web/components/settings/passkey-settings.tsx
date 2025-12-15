@@ -54,7 +54,6 @@ export function PasskeySettings() {
   useEffect(() => {
     // Check WebAuthn support
     setIsSupported(isWebAuthnSupported());
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadPasskeys();
   }, []);
 

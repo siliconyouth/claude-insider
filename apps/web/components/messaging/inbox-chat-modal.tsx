@@ -93,6 +93,8 @@ export function InboxChatModal({
         ref={(node) => {
           modalRef.current = node;
           if (focusTrapRef && "current" in focusTrapRef) {
+            // Intentional ref forwarding to external focus trap
+            // eslint-disable-next-line react-hooks/immutability
             (focusTrapRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
           }
         }}
@@ -120,6 +122,7 @@ export function InboxChatModal({
             {/* Avatar */}
             <div className="relative">
               {otherParticipant?.avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={otherParticipant.avatarUrl}
                   alt={otherParticipant.displayName || otherParticipant.name || "User"}

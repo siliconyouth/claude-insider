@@ -119,7 +119,7 @@ export async function reportUser(
 
     // Check if already reported this user recently (within 24 hours)
     const { data: existingReport } = await supabase
-      .from("reports" as any)
+      .from("reports")
       .select("id")
       .eq("reporter_id", session.user.id)
       .eq("reported_user_id", userId)
@@ -131,7 +131,7 @@ export async function reportUser(
     }
 
     // Create the report
-    const { error: insertError } = await supabase.from("reports" as any).insert({
+    const { error: insertError } = await supabase.from("reports").insert({
       reporter_id: session.user.id,
       report_type: "user",
       reported_user_id: userId,
@@ -185,7 +185,7 @@ export async function reportComment(
 
     // Check if already reported this comment recently
     const { data: existingReport } = await supabase
-      .from("reports" as any)
+      .from("reports")
       .select("id")
       .eq("reporter_id", session.user.id)
       .eq("reported_comment_id", commentId)
@@ -197,7 +197,7 @@ export async function reportComment(
     }
 
     // Create the report
-    const { error: insertError } = await supabase.from("reports" as any).insert({
+    const { error: insertError } = await supabase.from("reports").insert({
       reporter_id: session.user.id,
       report_type: "comment",
       reported_comment_id: commentId,
@@ -234,7 +234,7 @@ export async function getMyReports(): Promise<{
     const supabase = await createAdminClient();
 
     const { data, error } = await supabase
-      .from("reports" as any)
+      .from("reports")
       .select(`
         id,
         report_type,
@@ -321,7 +321,7 @@ export async function getReports(options?: {
     const offset = (page - 1) * limit;
 
     let query = supabase
-      .from("reports" as any)
+      .from("reports")
       .select(`
         id,
         reporter_id,
@@ -453,7 +453,7 @@ export async function reviewReport(
 
     // Get the report
     const { data: report, error: reportError } = await supabase
-      .from("reports" as any)
+      .from("reports")
       .select(`
         id,
         reporter_id,
@@ -475,7 +475,7 @@ export async function reviewReport(
 
     // Update the report
     const { error: updateError } = await supabase
-      .from("reports" as any)
+      .from("reports")
       .update({
         status: decision,
         reviewed_by: session.user.id,
@@ -615,7 +615,7 @@ export async function getReportStats(): Promise<{
       return { success: false, error: "You do not have permission to view report statistics" };
     }
 
-    const { data, error } = await supabase.from("reports" as any).select("status, report_type, reason");
+    const { data, error } = await supabase.from("reports").select("status, report_type, reason");
 
     if (error) {
       console.error("Failed to get report stats:", error);

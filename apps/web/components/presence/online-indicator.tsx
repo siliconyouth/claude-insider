@@ -149,6 +149,7 @@ export function AvatarWithStatus({
   return (
     <div className={cn("relative inline-block", className)}>
       {src ? (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={src}
           alt={alt || name || "User avatar"}

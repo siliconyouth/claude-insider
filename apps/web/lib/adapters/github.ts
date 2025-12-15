@@ -181,7 +181,6 @@ export class GitHubAdapter extends BaseAdapter {
   private async discoverOrgRepos(
     org: string,
     limit: number,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _options?: DiscoverOptions
   ): Promise<DiscoveredResource[]> {
     try {

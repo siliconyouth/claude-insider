@@ -51,7 +51,7 @@ export function ResourceHoverCard({
 
   // Client-side only for portal - setMounted is intentional for hydration
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setMounted(true);
     return () => setMounted(false);
   }, []);

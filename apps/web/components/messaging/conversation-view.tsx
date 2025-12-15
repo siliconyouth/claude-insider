@@ -34,6 +34,11 @@ interface ConversationViewProps {
   className?: string;
 }
 
+// Type for realtime message payload
+interface RealtimeMessagePayload {
+  sender_id: string;
+}
+
 export function ConversationView({
   conversationId,
   currentUserId,
@@ -46,7 +51,7 @@ export function ConversationView({
   const [isSending, setIsSending] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
-  const [hasMore, setHasMore] = useState(false);
+  const [_hasMore, setHasMore] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -103,7 +108,7 @@ export function ConversationView({
         },
         async (payload) => {
           // Add new message to state
-          const newMsg = payload.new as any;
+          const newMsg = payload.new as RealtimeMessagePayload;
           if (newMsg.sender_id !== currentUserId) {
             // Fetch full message with sender info
             const result = await getMessages(conversationId, 1);

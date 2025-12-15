@@ -13,7 +13,6 @@ import {
   getResourceStats,
   getCategoriesWithCounts,
   getPopularTags,
-  filterResources,
   type ResourceCategorySlug,
 } from "@/data/resources";
 

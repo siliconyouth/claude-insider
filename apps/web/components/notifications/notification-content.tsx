@@ -30,18 +30,13 @@ interface NotificationContentProps {
   } | null;
 }
 
-interface UserMention {
-  username: string;
-  user?: ProfileHoverCardUser;
-}
-
 // Cache for fetched user data
 const userCache = new Map<string, ProfileHoverCardUser>();
 
 /**
  * Parse text and extract user mentions (@username)
  */
-function extractMentions(text: string): string[] {
+function _extractMentions(text: string): string[] {
   const mentionRegex = /@([a-zA-Z0-9_-]+)/g;
   const mentions: string[] = [];
   let match;

@@ -61,6 +61,38 @@ export interface ActivityStats {
 }
 
 // ============================================
+// DATABASE ROW TYPES
+// ============================================
+
+interface AchievementJoinRow {
+  id: string;
+  earned_at: string;
+  achievements: {
+    name: string;
+    description: string;
+    icon: string;
+    tier: string;
+  } | null;
+}
+
+interface ReportActivityRow {
+  id: string;
+  report_type: string;
+  reason: string;
+  status: string;
+  created_at: string;
+}
+
+interface FollowJoinRow {
+  id: string;
+  created_at: string;
+  following: {
+    name?: string;
+    username?: string;
+  } | null;
+}
+
+// ============================================
 // GET OWN ACTIVITY (for settings page)
 // ============================================
 
@@ -189,15 +221,15 @@ export async function getActivityStats(
         .select("id", { count: "exact", head: true })
         .eq("user_id", targetUserId),
       supabase
-        .from("reports" as any)
+        .from("reports")
         .select("id", { count: "exact", head: true })
         .eq("reporter_id", targetUserId),
       supabase
-        .from("follows" as any)
+        .from("follows")
         .select("id", { count: "exact", head: true })
         .eq("follower_id", targetUserId),
       supabase
-        .from("follows" as any)
+        .from("follows")
         .select("id", { count: "exact", head: true })
         .eq("following_id", targetUserId),
     ]);
@@ -352,7 +384,8 @@ async function getUserActivityInternal(
     .limit(limit);
 
   if (achievements) {
-    for (const ach of achievements as any[]) {
+    const achievementRows = achievements as AchievementJoinRow[];
+    for (const ach of achievementRows) {
       if (ach.achievements) {
         activities.push({
           id: `achievement-${ach.id}`,
@@ -374,14 +407,15 @@ async function getUserActivityInternal(
   // Get reports submitted (private - only for own/admin view)
   if (includePrivate) {
     const { data: reports } = await supabase
-      .from("reports" as any)
+      .from("reports")
       .select("id, report_type, reason, status, created_at")
       .eq("reporter_id", userId)
       .order("created_at", { ascending: false })
       .limit(limit);
 
     if (reports) {
-      for (const report of reports as any[]) {
+      const reportRows = reports as ReportActivityRow[];
+      for (const report of reportRows) {
         activities.push({
           id: `report-${report.id}`,
           type: "report_submitted",
@@ -400,7 +434,7 @@ async function getUserActivityInternal(
 
   // Get follows (public activity)
   const { data: follows } = await supabase
-    .from("follows" as any)
+    .from("follows")
     .select(`
       id,
       created_at,
@@ -414,7 +448,8 @@ async function getUserActivityInternal(
     .limit(limit);
 
   if (follows) {
-    for (const follow of follows as any[]) {
+    const followRows = follows as FollowJoinRow[];
+    for (const follow of followRows) {
       if (follow.following) {
         activities.push({
           id: `follow-${follow.id}`,

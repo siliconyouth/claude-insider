@@ -271,7 +271,7 @@ export function ActivityFeed({
   });
 
   // Get activity icon
-  const getActivityIcon = (type: ActivityType, severity?: string): React.ReactNode => {
+  const getActivityIcon = (type: ActivityType, _severity?: string): React.ReactNode => {
     const filter = ACTIVITY_FILTERS.find((f) => f.type === type);
     if (filter) return filter.icon;
     return null;
@@ -538,6 +538,7 @@ export function ActivityFeed({
                           onMouseLeave={() => setHoveredUser(null)}
                         >
                           {activity.user.image ? (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img
                               src={activity.user.image}
                               alt={activity.user.name}
@@ -608,6 +609,7 @@ export function ActivityFeed({
         >
           <div className="flex items-center gap-3">
             {hoveredUser.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={hoveredUser.image}
                 alt={hoveredUser.name}

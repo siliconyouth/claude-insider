@@ -36,7 +36,7 @@ export default function BannedUsersPage() {
   // Appeals state
   const [appeals, setAppeals] = useState<BanAppeal[]>([]);
   const [appealsLoading, setAppealsLoading] = useState(true);
-  const [appealsTotal, setAppealsTotal] = useState(0);
+  const [, setAppealsTotal] = useState(0); // Total tracked but UI shows computed count
   const [appealFilter, setAppealFilter] = useState<AppealFilter>("pending");
 
   // Modal state

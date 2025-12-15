@@ -11,13 +11,10 @@ import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
 import {
   encryptApiKey,
-  decryptApiKey,
   getApiKeyHint,
   validateAnthropicApiKey,
   CLAUDE_MODELS,
   type ClaudeModel,
-  type ValidationResult,
-  type AnthropicAccountInfo,
 } from "@/lib/api-keys";
 
 export interface ApiKeyInfo {

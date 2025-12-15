@@ -189,12 +189,8 @@ const SOUND_CATEGORIES = {
   achievements: ["achievement", "level_up", "complete", "progress"] as SoundType[],
 };
 
-const SAMPLE_ACHIEVEMENTS = [
-  { id: "welcome_aboard", rarity: "common" as AchievementRarity },
-  { id: "bookworm", rarity: "rare" as AchievementRarity },
-  { id: "knowledge_seeker", rarity: "epic" as AchievementRarity },
-  { id: "claude_master", rarity: "legendary" as AchievementRarity },
-];
+// Sample achievements for testing - defined directly in the achievement test UI section
+// using ACHIEVEMENTS from lib/achievements instead
 
 export default function DiagnosticsPage() {
   const toast = useToast();
@@ -358,7 +354,7 @@ export default function DiagnosticsPage() {
         message: data?.user ? `Logged in as ${data.user.email}` : "No active session",
         details: data?.user ? { role: data.user.role, id: data.user.id?.substring(0, 8) + "..." } : undefined,
       });
-    } catch (error) {
+    } catch {
       results.push({
         name: "Auth Session",
         status: "error",
@@ -894,7 +890,7 @@ export default function DiagnosticsPage() {
             duration: Date.now() - start,
             details: { status: response.status },
           };
-        } catch (e) {
+        } catch {
           return {
             name: "AI Assistant API",
             status: "warning",
@@ -2803,7 +2799,6 @@ export default function DiagnosticsPage() {
 
     // Log completion
     const hasErrors = results.some(r => r.status === "error");
-    const hasWarnings = results.some(r => r.status === "warning");
     const successCount = results.filter(r => r.status === "success").length;
     const errorCount = results.filter(r => r.status === "error").length;
     const warningCount = results.filter(r => r.status === "warning").length;
@@ -2816,6 +2811,7 @@ export default function DiagnosticsPage() {
     // Play completion sound
     sounds.play(hasErrors ? "error" : "success");
     toast.success(`All ${testSuites.length} tests completed`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- testSuites is static
   }, [sounds, toast, addTestLog]);
 
   // Analyze results with Claude AI
@@ -3062,6 +3058,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
       }));
       toast.error("AI analysis failed");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- browserEnv is static environment object
   }, [testAllProgress.results, user, isAuthenticated, sounds, toast]);
 
   // Copy prompt to clipboard
@@ -3936,7 +3933,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
             <span className="ml-3 text-gray-400">Checking all links (this may take a minute)...</span>
           </div>
         ) : (
-          <p className="text-gray-500 text-sm">Click "Check All Links" to validate all website URLs</p>
+          <p className="text-gray-500 text-sm">Click &quot;Check All Links&quot; to validate all website URLs</p>
         )}
       </section>
 
@@ -4202,7 +4199,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
         )}
 
         {!apiKeyResult && !isLoadingApiKey && (
-          <p className="text-gray-500 text-sm">Click "Test Site Key" to check the configured API key</p>
+          <p className="text-gray-500 text-sm">Click &quot;Test Site Key&quot; to check the configured API key</p>
         )}
 
         {isLoadingApiKey && (
@@ -4446,7 +4443,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
             )}
           </div>
         ) : !isLoadingBotDetection ? (
-          <p className="text-gray-500 text-sm">Click "Test Detection" to verify bot protection status</p>
+          <p className="text-gray-500 text-sm">Click &quot;Test Detection&quot; to verify bot protection status</p>
         ) : (
           <div className="flex items-center justify-center py-8">
             <svg className="animate-spin h-8 w-8 text-rose-500" viewBox="0 0 24 24">
@@ -4704,7 +4701,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
             <span className="ml-3 text-gray-400">Collecting browser data...</span>
           </div>
         ) : (
-          <p className="text-gray-500 text-sm">Click "Collect Data" to gather browser environment information</p>
+          <p className="text-gray-500 text-sm">Click &quot;Collect Data&quot; to gather browser environment information</p>
         )}
       </section>
     </div>

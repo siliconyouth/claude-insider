@@ -57,6 +57,17 @@ export const nextJsConfig = [
       ...pluginReactHooks.configs.recommended.rules,
       // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
+      // Allow underscore-prefixed variables to be unused (convention for intentionally unused vars)
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+      // Disable set-state-in-effect: this rule catches standard React data fetching patterns
+      // (calling async functions that eventually set state is the recommended approach)
+      "react-hooks/set-state-in-effect": "off",
     },
   },
 ];

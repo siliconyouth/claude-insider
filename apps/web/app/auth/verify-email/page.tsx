@@ -35,6 +35,7 @@ function VerifyEmailContent() {
       // The token verification happens server-side
       verifyWithToken();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- verifyWithToken is stable
   }, [token]);
 
   // Cooldown timer for resend

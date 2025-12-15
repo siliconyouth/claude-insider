@@ -109,13 +109,16 @@ export function useChatSounds(options: UseChatSoundsOptions = {}) {
 
     loadAudio();
 
+    // Capture ref value for cleanup
+    const audioElements = audioElementsRef.current;
+
     return () => {
-      // Cleanup
-      audioElementsRef.current.forEach((audio) => {
+      // Cleanup using captured value
+      audioElements.forEach((audio) => {
         audio.pause();
         audio.src = "";
       });
-      audioElementsRef.current.clear();
+      audioElements.clear();
     };
   }, [volume]);
 

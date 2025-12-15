@@ -209,7 +209,7 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
         if (language && language !== "plaintext" && hljs.getLanguage(language)) {
           hljs.highlightElement(codeRef.current);
         }
-        // eslint-disable-next-line react-hooks/set-state-in-effect
+         
         setHighlighted(true);
       } catch (e) {
         // Silently fail if highlighting doesn't work

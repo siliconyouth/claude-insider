@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.79.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.80.0**.
 
 | Link | URL |
 |------|-----|
@@ -249,6 +249,33 @@ claude-insider/
 - **Styling**: Tailwind CSS only, use `cn()` utility for conditional classes
 - **Files**: PascalCase for components, camelCase for utilities
 - **Pages**: lowercase with hyphens (e.g., `getting-started/page.tsx`)
+
+### ESLint Configuration
+
+**Zero warnings policy**: `pnpm lint` enforces `--max-warnings 0`
+
+| Convention | Example | Purpose |
+|------------|---------|---------|
+| Unused variables | `_unused` | Prefix with underscore |
+| Unused function args | `(_event)` | Prefix with underscore |
+| External image URLs | `{/* eslint-disable-next-line */}` | OAuth avatars need `<img>` |
+| Hook dependencies | Use `useMemo` for objects | Prevent infinite re-renders |
+| Effect cleanup | `const ref = someRef.current` | Capture refs before cleanup |
+
+**Supabase Query Types**: Always define row interfaces for query results:
+
+```typescript
+// Define typed row interfaces instead of using 'any'
+interface MessageRow {
+  id: string;
+  content: string;
+  created_at: string;
+  sender: { id: string; name: string } | null;
+}
+
+const { data } = await supabase.from('messages').select('*, sender:profiles(*)');
+const messages = (data as MessageRow[]) || [];
+```
 
 ---
 

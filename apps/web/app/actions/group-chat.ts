@@ -54,6 +54,50 @@ export interface GroupInvitation {
 }
 
 // ============================================
+// DATABASE ROW TYPES (for Supabase queries)
+// ============================================
+
+interface InvitationRow {
+  id: string;
+  conversation_id: string;
+  conversation_name?: string;
+  inviter_id: string;
+  inviter_name?: string;
+  message?: string;
+  created_at: string;
+  expires_at?: string;
+}
+
+interface ParticipantRow {
+  id: string;
+  user_id: string;
+  role?: string;
+  joined_at: string;
+  invited_by?: string;
+  user?: { id: string; name?: string };
+}
+
+interface ProfileRow {
+  user_id: string;
+  display_name?: string;
+  avatar_url?: string;
+}
+
+interface PresenceRow {
+  user_id: string;
+  status: string;
+}
+
+interface ChatSettingsRow {
+  user_id: string;
+  sound_enabled?: boolean;
+  sound_new_message?: string;
+  sound_typing?: boolean;
+  sound_mention?: boolean;
+  sound_invitation?: boolean;
+}
+
+// ============================================
 // CREATE GROUP
 // ============================================
 
@@ -82,12 +126,12 @@ export async function createGroupConversation(
 
     const supabase = await createAdminClient();
 
-    const { data, error } = await (supabase.rpc as any)("create_group_conversation", {
+    const { data, error } = await supabase.rpc("create_group_conversation", {
       p_creator_id: session.user.id,
       p_name: name.trim(),
       p_description: description?.trim() || null,
       p_avatar_url: avatarUrl || null,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Create group error:", error);
@@ -122,12 +166,12 @@ export async function inviteToGroup(
 
     const supabase = await createAdminClient();
 
-    const { data, error } = await (supabase.rpc as any)("invite_to_group", {
+    const { data, error } = await supabase.rpc("invite_to_group", {
       p_inviter_id: session.user.id,
       p_invitee_id: inviteeId,
       p_conversation_id: conversationId,
       p_message: message?.trim() || null,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Invite to group error:", error);
@@ -163,10 +207,10 @@ export async function acceptGroupInvitation(
 
     const supabase = await createAdminClient();
 
-    const { error } = await (supabase.rpc as any)("accept_group_invitation", {
+    const { error } = await supabase.rpc("accept_group_invitation", {
       p_user_id: session.user.id,
       p_invitation_id: invitationId,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Accept invitation error:", error);
@@ -198,10 +242,10 @@ export async function declineGroupInvitation(
 
     const supabase = await createAdminClient();
 
-    const { error } = await (supabase.rpc as any)("decline_group_invitation", {
+    const { error } = await supabase.rpc("decline_group_invitation", {
       p_user_id: session.user.id,
       p_invitation_id: invitationId,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Decline invitation error:", error);
@@ -230,10 +274,10 @@ export async function leaveGroupConversation(
 
     const supabase = await createAdminClient();
 
-    const { error } = await (supabase.rpc as any)("leave_group_conversation", {
+    const { error } = await supabase.rpc("leave_group_conversation", {
       p_user_id: session.user.id,
       p_conversation_id: conversationId,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Leave group error:", error);
@@ -264,12 +308,12 @@ export async function updateGroupMemberRole(
 
     const supabase = await createAdminClient();
 
-    const { error } = await (supabase.rpc as any)("update_group_member_role", {
+    const { error } = await supabase.rpc("update_group_member_role", {
       p_admin_id: session.user.id,
       p_target_user_id: targetUserId,
       p_conversation_id: conversationId,
       p_new_role: newRole,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Update role error:", error);
@@ -304,12 +348,12 @@ export async function transferGroupOwnership(
 
     const supabase = await createAdminClient();
 
-    const { error } = await (supabase.rpc as any)("update_group_member_role", {
+    const { error } = await supabase.rpc("update_group_member_role", {
       p_admin_id: session.user.id,
       p_target_user_id: newOwnerId,
       p_conversation_id: conversationId,
       p_new_role: "owner",
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Transfer ownership error:", error);
@@ -339,11 +383,11 @@ export async function removeFromGroup(
 
     const supabase = await createAdminClient();
 
-    const { error } = await (supabase.rpc as any)("remove_from_group", {
+    const { error } = await supabase.rpc("remove_from_group", {
       p_admin_id: session.user.id,
       p_target_user_id: targetUserId,
       p_conversation_id: conversationId,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Remove from group error:", error);
@@ -379,16 +423,17 @@ export async function getPendingInvitations(): Promise<{
 
     const supabase = await createAdminClient();
 
-    const { data, error } = await (supabase.rpc as any)("get_pending_invitations", {
+    const { data, error } = await supabase.rpc("get_pending_invitations", {
       p_user_id: session.user.id,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Get invitations error:", error);
       return { success: false, error: "Failed to fetch invitations" };
     }
 
-    const invitations: GroupInvitation[] = ((data || []) as any[]).map((inv: any) => ({
+    const rows = (data || []) as InvitationRow[];
+    const invitations: GroupInvitation[] = rows.map((inv) => ({
       id: inv.id,
       conversationId: inv.conversation_id,
       conversationName: inv.conversation_name,
@@ -426,9 +471,9 @@ export async function getGroupMembers(
 
     const supabase = await createAdminClient();
 
-    // Verify user is a participant
+    // Verify user is a participant (dm_participants is a custom table)
     const { data: participant } = await supabase
-      .from("dm_participants" as any)
+      .from("dm_participants")
       .select("id")
       .eq("conversation_id", conversationId)
       .eq("user_id", session.user.id)
@@ -440,7 +485,7 @@ export async function getGroupMembers(
 
     // Get all members with their info
     const { data: members, error } = await supabase
-      .from("dm_participants" as any)
+      .from("dm_participants")
       .select(`
         id,
         user_id,
@@ -462,18 +507,20 @@ export async function getGroupMembers(
     }
 
     // Get profiles and presence
-    const userIds = ((members || []) as any[]).map((m: any) => m.user_id);
+    const memberRows = (members || []) as ParticipantRow[];
+    const userIds = memberRows.map((m) => m.user_id);
 
     const [{ data: profiles }, { data: presences }] = await Promise.all([
       supabase.from("profiles").select("user_id, display_name, avatar_url").in("user_id", userIds),
-      supabase.from("user_presence" as any).select("user_id, status").in("user_id", userIds),
+      supabase.from("user_presence").select("user_id, status").in("user_id", userIds),
     ]);
 
-    const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
-    const presenceMap = new Map((presences as any[])?.map((p: any) => [p.user_id, p.status]) || []);
+    const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
+    const presenceRows = (presences || []) as PresenceRow[];
+    const presenceMap = new Map(presenceRows.map((p) => [p.user_id, p.status]));
 
-    const memberList: GroupMember[] = ((members || []) as any[]).map((m: any) => {
-      const user = m.user as any;
+    const memberList: GroupMember[] = memberRows.map((m) => {
+      const user = m.user;
       const profile = profileMap.get(m.user_id);
       const status = (presenceMap.get(m.user_id) || "offline") as "online" | "offline" | "idle";
 
@@ -519,13 +566,14 @@ export async function updateGroupSettings(
 
     // Verify user is owner or admin
     const { data: participant } = await supabase
-      .from("dm_participants" as any)
+      .from("dm_participants")
       .select("role")
       .eq("conversation_id", conversationId)
       .eq("user_id", session.user.id)
       .single();
 
-    const role = (participant as any)?.role;
+    const participantRow = participant as { role?: string } | null;
+    const role = participantRow?.role;
     if (!role || !["owner", "admin"].includes(role)) {
       return { success: false, error: "You don't have permission to update settings" };
     }
@@ -546,7 +594,7 @@ export async function updateGroupSettings(
     }
 
     const { error } = await supabase
-      .from("dm_conversations" as any)
+      .from("dm_conversations")
       .update(updates)
       .eq("id", conversationId)
       .eq("type", "group");
@@ -596,7 +644,7 @@ export async function getChatSoundSettings(): Promise<{
     const supabase = await createAdminClient();
 
     const { data, error } = await supabase
-      .from("user_chat_settings" as any)
+      .from("user_chat_settings")
       .select("*")
       .eq("user_id", session.user.id)
       .single();
@@ -606,7 +654,7 @@ export async function getChatSoundSettings(): Promise<{
       return { success: false, error: "Failed to fetch settings" };
     }
 
-    const settings = data as any;
+    const settings = data as ChatSettingsRow | null;
     return {
       success: true,
       settings: {
@@ -650,7 +698,7 @@ export async function updateChatSoundSettings(settings: {
     if (settings.soundInvitation !== undefined) updates.sound_invitation = settings.soundInvitation;
 
     const { error } = await supabase
-      .from("user_chat_settings" as any)
+      .from("user_chat_settings")
       .upsert({
         user_id: session.user.id,
         ...updates,

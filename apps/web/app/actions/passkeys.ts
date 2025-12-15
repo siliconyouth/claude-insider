@@ -27,7 +27,7 @@ import type {
   PublicKeyCredentialCreationOptionsJSON,
   PublicKeyCredentialRequestOptionsJSON,
 } from "@simplewebauthn/types";
-import crypto from "crypto";
+// crypto import removed - using built-in crypto from webauthn lib
 
 /**
  * Passkey data returned to client
@@ -147,19 +147,14 @@ export async function completePasskeyRegistration(
       return { error: "You must be signed in" };
     }
 
-    // Get and verify the challenge
-    const challengeResult = await pool.query(
-      `SELECT * FROM verify_webauthn_challenge($1)`,
-      [credential.response.clientDataJSON]
-    );
-
-    // Actually we need to decode the clientDataJSON to get the challenge
+    // Decode the clientDataJSON to extract challenge
     // The clientDataJSON is base64url encoded
     const clientDataBuffer = Buffer.from(
       credential.response.clientDataJSON,
       "base64url"
     );
-    const clientData = JSON.parse(clientDataBuffer.toString());
+    // Parse but we don't need the result - verification uses stored challenge
+    JSON.parse(clientDataBuffer.toString());
 
     // Verify challenge exists and is valid
     const storedChallengeResult = await pool.query(
@@ -444,16 +439,8 @@ export async function removePasskey(passkeyId: string): Promise<{
       return { error: "You must be signed in" };
     }
 
-    // Check how many passkeys the user has
-    const countResult = await pool.query(
-      `SELECT COUNT(*) as count FROM passkeys WHERE user_id = $1`,
-      [session.user.id]
-    );
-
-    const count = parseInt(countResult.rows[0].count);
-
     // Allow removal even if it's the last passkey (they still have email/password)
-    // But warn in the UI
+    // The UI warns the user about this
 
     const result = await pool.query(
       `DELETE FROM passkeys WHERE id = $1 AND user_id = $2 RETURNING id`,

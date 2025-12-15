@@ -7,11 +7,10 @@
 
 import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from "crypto";
 
-// Encryption settings
+// Encryption settings for AES-256-GCM
 const ALGORITHM = "aes-256-gcm";
-const IV_LENGTH = 16;
-const AUTH_TAG_LENGTH = 16;
-const SALT_LENGTH = 32;
+const IV_LENGTH = 16; // 128-bit IV
+// Note: Auth tag (16 bytes) and salt (32 bytes) sizes are standard for this algorithm
 
 // Get encryption key from environment
 function getEncryptionKey(): Buffer {

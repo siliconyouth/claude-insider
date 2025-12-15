@@ -118,6 +118,7 @@ export function MessageBubble({
           {isAI ? (
             // AI Assistant uses website logo
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center p-1">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/icons/icon-192x192.png"
                 alt="Claude Insider AI"
@@ -125,6 +126,7 @@ export function MessageBubble({
               />
             </div>
           ) : message.senderAvatar ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={message.senderAvatar}
               alt={message.senderName || "User"}

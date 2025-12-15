@@ -26,6 +26,23 @@ export interface UserPresence {
 }
 
 // ============================================
+// DATABASE ROW TYPES
+// ============================================
+
+interface PresenceRow {
+  user_id: string;
+  status: string;
+  last_seen_at?: string;
+  last_active_at?: string;
+}
+
+interface TypingIndicatorRow {
+  user_id: string;
+  conversation_id: string;
+  started_at: string;
+}
+
+// ============================================
 // UPDATE PRESENCE
 // ============================================
 
@@ -40,10 +57,10 @@ export async function updatePresence(
 
     const supabase = await createAdminClient();
 
-    const { error } = await (supabase.rpc as any)("update_user_presence", {
+    const { error } = await supabase.rpc("update_user_presence", {
       p_user_id: session.user.id,
       p_status: status,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Update presence error:", error);
@@ -72,7 +89,7 @@ export async function heartbeat(): Promise<{ success: boolean; error?: string }>
 
     // Update last_active_at to prevent idle status
     const { error } = await supabase
-      .from("user_presence" as any)
+      .from("user_presence")
       .upsert({
         user_id: session.user.id,
         status: "online",
@@ -113,7 +130,7 @@ export async function getOnlineUsers(
     const supabase = await createAdminClient();
 
     const { data, error } = await supabase
-      .from("user_presence" as any)
+      .from("user_presence")
       .select("user_id, status")
       .in("user_id", userIds);
 
@@ -130,7 +147,8 @@ export async function getOnlineUsers(
     });
 
     // Update with actual status
-    (data as any[])?.forEach((p: any) => {
+    const presenceRows = (data || []) as PresenceRow[];
+    presenceRows.forEach((p) => {
       presences[p.user_id] = p.status as PresenceStatus;
     });
 
@@ -156,7 +174,7 @@ export async function getUserPresence(
     const supabase = await createAdminClient();
 
     const { data, error } = await supabase
-      .from("user_presence" as any)
+      .from("user_presence")
       .select("user_id, status, last_seen_at, last_active_at")
       .eq("user_id", userId)
       .single();
@@ -179,14 +197,14 @@ export async function getUserPresence(
       };
     }
 
-    const d = data as any;
+    const row = data as PresenceRow;
     return {
       success: true,
       presence: {
-        userId: d.user_id,
-        status: d.status as PresenceStatus,
-        lastSeenAt: d.last_seen_at,
-        lastActiveAt: d.last_active_at,
+        userId: row.user_id,
+        status: row.status as PresenceStatus,
+        lastSeenAt: row.last_seen_at || new Date().toISOString(),
+        lastActiveAt: row.last_active_at || new Date().toISOString(),
       },
     };
   } catch (error) {
@@ -214,7 +232,7 @@ export async function setTyping(
     if (isTyping) {
       // Upsert typing indicator
       const { error } = await supabase
-        .from("dm_typing_indicators" as any)
+        .from("dm_typing_indicators")
         .upsert({
           user_id: session.user.id,
           conversation_id: conversationId,
@@ -228,7 +246,7 @@ export async function setTyping(
     } else {
       // Remove typing indicator
       const { error } = await supabase
-        .from("dm_typing_indicators" as any)
+        .from("dm_typing_indicators")
         .delete()
         .eq("user_id", session.user.id)
         .eq("conversation_id", conversationId);
@@ -266,7 +284,7 @@ export async function getTypingUsers(
     const supabase = await createAdminClient();
 
     const { data, error } = await supabase
-      .from("dm_typing_indicators" as any)
+      .from("dm_typing_indicators")
       .select("user_id")
       .eq("conversation_id", conversationId)
       .neq("user_id", session.user.id)
@@ -277,7 +295,8 @@ export async function getTypingUsers(
       return { success: false, error: "Failed to get typing users" };
     }
 
-    return { success: true, typingUserIds: (data as any[])?.map((d: any) => d.user_id) || [] };
+    const typingRows = (data || []) as TypingIndicatorRow[];
+    return { success: true, typingUserIds: typingRows.map((d) => d.user_id) };
   } catch (error) {
     console.error("Get typing users error:", error);
     return { success: false, error: "An unexpected error occurred" };

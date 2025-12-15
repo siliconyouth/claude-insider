@@ -37,7 +37,7 @@ export function PerformanceProvider({ children, enabled = true }: PerformancePro
 
     // Initialize performance observer
     const cleanup = initPerformanceObserver();
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setIsMonitoring(true);
 
     // Wrap global fetch for API timing

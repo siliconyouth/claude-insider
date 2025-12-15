@@ -65,11 +65,6 @@ export function VersionUpdatePopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [changelog, setChangelog] = useState<ChangelogEntry | null>(null);
 
-  useEffect(() => {
-    // Check on mount if we should show the popup
-    checkVersion();
-  }, []);
-
   const checkVersion = () => {
     try {
       const lastSeenVersion = localStorage.getItem(STORAGE_KEY);
@@ -88,6 +83,11 @@ export function VersionUpdatePopup() {
       // localStorage not available
     }
   };
+
+  // Check on mount if we should show the popup
+  useEffect(() => {
+    checkVersion();
+  }, []);
 
   const handleDismiss = () => {
     try {

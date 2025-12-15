@@ -58,6 +58,60 @@ export interface Message {
 }
 
 // ============================================
+// DATABASE ROW TYPES
+// ============================================
+
+interface ParticipationRow {
+  conversation_id: string;
+  unread_count?: number;
+  is_muted?: boolean;
+  last_read_at?: string;
+  dm_conversations?: ConversationRow;
+}
+
+interface ConversationRow {
+  id: string;
+  type: string;
+  name?: string;
+  last_message_at?: string;
+  last_message_preview?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ParticipantRow {
+  conversation_id: string;
+  user_id: string;
+  user?: { id: string; name?: string; email?: string };
+}
+
+interface ProfileRow {
+  user_id: string;
+  display_name?: string;
+  avatar_url?: string;
+}
+
+interface PresenceRow {
+  user_id: string;
+  status: string;
+}
+
+interface MessageRow {
+  id: string;
+  conversation_id: string;
+  sender_id: string;
+  content: string;
+  mentions?: string[];
+  is_ai_generated?: boolean;
+  ai_response_to?: string;
+  metadata?: Record<string, unknown>;
+  created_at: string;
+  edited_at?: string;
+  deleted_at?: string;
+  sender?: { id: string; name?: string };
+}
+
+// ============================================
 // GET CONVERSATIONS
 // ============================================
 
@@ -76,7 +130,7 @@ export async function getConversations(): Promise<{
 
     // Get user's conversations with participants
     const { data: participations, error: partError } = await supabase
-      .from("dm_participants" as any)
+      .from("dm_participants")
       .select(`
         conversation_id,
         unread_count,
@@ -101,7 +155,8 @@ export async function getConversations(): Promise<{
     }
 
     // Get all conversation IDs
-    const conversationIds = (participations as any[])?.map((p: any) => p.conversation_id) || [];
+    const participationRows = (participations || []) as ParticipationRow[];
+    const conversationIds = participationRows.map((p) => p.conversation_id);
 
     if (conversationIds.length === 0) {
       return { success: true, conversations: [] };
@@ -109,7 +164,7 @@ export async function getConversations(): Promise<{
 
     // Get all participants for these conversations
     const { data: allParticipants } = await supabase
-      .from("dm_participants" as any)
+      .from("dm_participants")
       .select(`
         conversation_id,
         user_id,
@@ -123,7 +178,8 @@ export async function getConversations(): Promise<{
       .neq("user_id", session.user.id);
 
     // Get profiles for participants
-    const otherUserIds = (allParticipants as any[])?.map((p: any) => p.user_id) || [];
+    const participantRows = (allParticipants || []) as ParticipantRow[];
+    const otherUserIds = participantRows.map((p) => p.user_id);
     const { data: profiles } = await supabase
       .from("profiles")
       .select("user_id, display_name, avatar_url")
@@ -131,33 +187,34 @@ export async function getConversations(): Promise<{
 
     // Get presence for participants
     const { data: presences } = await supabase
-      .from("user_presence" as any)
+      .from("user_presence")
       .select("user_id, status")
       .in("user_id", otherUserIds);
 
     // Build profile and presence maps
-    const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
-    const presenceMap = new Map((presences as any[])?.map((p: any) => [p.user_id, p.status]) || []);
+    const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
+    const presenceRows = (presences || []) as PresenceRow[];
+    const presenceMap = new Map(presenceRows.map((p) => [p.user_id, p.status]));
 
     // Build conversations with participants
-    const conversations: Conversation[] = ((participations || []) as any[]).map((p: any) => {
-      const conv = p.dm_conversations as any;
-      const convParticipants = (allParticipants as any[])?.filter(
-        (ap: any) => ap.conversation_id === p.conversation_id
-      ) || [];
+    const conversations: Conversation[] = participationRows.map((p) => {
+      const conv = p.dm_conversations;
+      const convParticipants = participantRows.filter(
+        (ap) => ap.conversation_id === p.conversation_id
+      );
 
       return {
-        id: conv.id,
-        type: conv.type,
-        name: conv.name,
-        lastMessageAt: conv.last_message_at,
-        lastMessagePreview: conv.last_message_preview,
-        createdAt: conv.created_at,
-        updatedAt: conv.updated_at,
+        id: conv?.id || "",
+        type: (conv?.type || "direct") as "direct" | "group",
+        name: conv?.name,
+        lastMessageAt: conv?.last_message_at,
+        lastMessagePreview: conv?.last_message_preview,
+        createdAt: conv?.created_at || "",
+        updatedAt: conv?.updated_at || "",
         unreadCount: p.unread_count || 0,
         isMuted: p.is_muted || false,
-        participants: convParticipants.map((cp: any) => {
-          const user = cp.user as any;
+        participants: convParticipants.map((cp) => {
+          const user = cp.user;
           const profile = profileMap.get(cp.user_id);
           const status = presenceMap.get(cp.user_id) || "offline";
           return {
@@ -211,7 +268,7 @@ export async function getMessages(
 
     // Verify user is a participant
     const { data: participant } = await supabase
-      .from("dm_participants" as any)
+      .from("dm_participants")
       .select("id")
       .eq("conversation_id", conversationId)
       .eq("user_id", session.user.id)
@@ -223,7 +280,7 @@ export async function getMessages(
 
     // Build query
     let query = supabase
-      .from("dm_messages" as any)
+      .from("dm_messages")
       .select(`
         id,
         conversation_id,
@@ -262,17 +319,18 @@ export async function getMessages(
     const resultMessages = messages?.slice(0, limit) || [];
 
     // Get sender profiles
-    const senderIds = [...new Set((resultMessages as any[]).map((m: any) => m.sender_id))];
+    const messageRows = resultMessages as MessageRow[];
+    const senderIds = [...new Set(messageRows.map((m) => m.sender_id))];
     const { data: profiles } = await supabase
       .from("profiles")
       .select("user_id, display_name, avatar_url")
       .in("user_id", senderIds);
 
-    const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
+    const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
 
     // Transform messages
-    const transformedMessages: Message[] = (resultMessages as any[]).map((m: any) => {
-      const sender = m.sender as any;
+    const transformedMessages: Message[] = messageRows.map((m) => {
+      const sender = m.sender;
       const profile = profileMap.get(m.sender_id);
       return {
         id: m.id,
@@ -328,7 +386,7 @@ export async function sendMessage(
 
     // Verify user is a participant
     const { data: participant } = await supabase
-      .from("dm_participants" as any)
+      .from("dm_participants")
       .select("id")
       .eq("conversation_id", conversationId)
       .eq("user_id", session.user.id)
@@ -355,7 +413,7 @@ export async function sendMessage(
 
     // Insert message
     const { data: newMessage, error } = await supabase
-      .from("dm_messages" as any)
+      .from("dm_messages")
       .insert({
         conversation_id: conversationId,
         sender_id: session.user.id,
@@ -378,7 +436,7 @@ export async function sendMessage(
       .eq("user_id", session.user.id)
       .single();
 
-    const msg = newMessage as any;
+    const msg = newMessage as MessageRow;
     const message: Message = {
       id: msg.id,
       conversationId: msg.conversation_id,
@@ -446,10 +504,10 @@ export async function startConversation(
     }
 
     // Use database function to get or create conversation
-    const { data, error } = await (supabase.rpc as any)("get_or_create_dm_conversation", {
+    const { data, error } = await supabase.rpc("get_or_create_dm_conversation", {
       p_user1: session.user.id,
       p_user2: targetUserId,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Start conversation error:", error);
@@ -478,10 +536,10 @@ export async function markConversationAsRead(
 
     const supabase = await createAdminClient();
 
-    const { error } = await (supabase.rpc as any)("mark_dm_conversation_read", {
+    const { error } = await supabase.rpc("mark_dm_conversation_read", {
       p_user_id: session.user.id,
       p_conversation_id: conversationId,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Mark as read error:", error);
@@ -512,7 +570,7 @@ export async function muteConversation(
     const supabase = await createAdminClient();
 
     const { error } = await supabase
-      .from("dm_participants" as any)
+      .from("dm_participants")
       .update({ is_muted: muted })
       .eq("conversation_id", conversationId)
       .eq("user_id", session.user.id);
@@ -546,9 +604,9 @@ export async function getTotalUnreadCount(): Promise<{
 
     const supabase = await createAdminClient();
 
-    const { data, error } = await (supabase.rpc as any)("get_total_unread_dm_count", {
+    const { data, error } = await supabase.rpc("get_total_unread_dm_count", {
       p_user_id: session.user.id,
-    });
+    } as Record<string, unknown>);
 
     if (error) {
       console.error("Get unread count error:", error);
@@ -632,12 +690,13 @@ export async function getUsersForMessaging(
 
     // Get presence
     const { data: presences } = await supabase
-      .from("user_presence" as any)
+      .from("user_presence")
       .select("user_id, status")
       .in("user_id", userIds);
 
-    const profileMap = new Map(profiles?.map((p) => [p.user_id, p]) || []);
-    const presenceMap = new Map((presences as any[])?.map((p: any) => [p.user_id, p.status]) || []);
+    const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
+    const presenceRows = (presences || []) as PresenceRow[];
+    const presenceMap = new Map(presenceRows.map((p) => [p.user_id, p.status]));
 
     // Transform and sort (online first, then AI assistant)
     const result = filteredUsers.map((u) => {
@@ -689,7 +748,7 @@ export async function deleteMessage(
 
     // Verify ownership
     const { data: message } = await supabase
-      .from("dm_messages" as any)
+      .from("dm_messages")
       .select("id, sender_id")
       .eq("id", messageId)
       .single();
@@ -698,14 +757,14 @@ export async function deleteMessage(
       return { success: false, error: "Message not found" };
     }
 
-    const msg = message as any;
+    const msg = message as MessageRow;
     if (msg.sender_id !== session.user.id) {
       return { success: false, error: "You can only delete your own messages" };
     }
 
     // Soft delete
     const { error } = await supabase
-      .from("dm_messages" as any)
+      .from("dm_messages")
       .update({ deleted_at: new Date().toISOString() })
       .eq("id", messageId);
 

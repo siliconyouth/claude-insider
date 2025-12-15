@@ -27,6 +27,23 @@ interface AIResponseResult {
   error?: string;
 }
 
+interface TriggerMessageRow {
+  content: string;
+  sender_id: string;
+}
+
+interface ConversationMessageRow {
+  content: string;
+  sender_id: string;
+  is_ai_generated?: boolean;
+}
+
+interface SavedMessageRow {
+  id: string;
+  content: string;
+  created_at: string;
+}
+
 // ============================================
 // SYSTEM PROMPT FOR DM RESPONSES
 // ============================================
@@ -73,14 +90,14 @@ You are responding to a @mention in a direct message conversation. Your role is 
 export async function generateAIChatResponse(
   conversationId: string,
   triggerMessageId: string,
-  conversationContext?: string[]
+  _conversationContext?: string[]
 ): Promise<AIResponseResult> {
   try {
     const supabase = await createAdminClient();
 
     // Get the trigger message
     const { data: triggerMessage, error: msgError } = await supabase
-      .from("dm_messages" as any)
+      .from("dm_messages")
       .select("content, sender_id")
       .eq("id", triggerMessageId)
       .single();
@@ -89,11 +106,11 @@ export async function generateAIChatResponse(
       return { success: false, error: "Trigger message not found" };
     }
 
-    const trigger = triggerMessage as any;
+    const trigger = triggerMessage as TriggerMessageRow;
 
     // Get recent conversation context (last 5 messages)
     const { data: recentMessages } = await supabase
-      .from("dm_messages" as any)
+      .from("dm_messages")
       .select("content, sender_id, is_ai_generated")
       .eq("conversation_id", conversationId)
       .is("deleted_at", null)
@@ -101,7 +118,7 @@ export async function generateAIChatResponse(
       .limit(6);
 
     // Build conversation context
-    const contextMessages = ((recentMessages || []) as any[]).reverse();
+    const contextMessages = ((recentMessages || []) as ConversationMessageRow[]).reverse();
 
     // Extract the user's question (remove @claudeinsider mention)
     const userQuestion = (trigger.content as string)
@@ -157,7 +174,7 @@ export async function generateAIChatResponse(
 
     // Save the AI response as a message
     const { data: aiMessage, error: insertError } = await supabase
-      .from("dm_messages" as any)
+      .from("dm_messages")
       .insert({
         conversation_id: conversationId,
         sender_id: AI_ASSISTANT_USER_ID,
@@ -174,7 +191,7 @@ export async function generateAIChatResponse(
       return { success: false, error: "Failed to save response" };
     }
 
-    const savedMessage = aiMessage as any;
+    const savedMessage = aiMessage as SavedMessageRow;
     return {
       success: true,
       message: {

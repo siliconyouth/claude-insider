@@ -30,7 +30,7 @@ export function BrowserNotificationPrompt({
   // Reset state when opening - intentional state reset on modal open
   useEffect(() => {
     if (isOpen) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setStep("explain");
       setResult(null);
     }

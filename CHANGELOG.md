@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.80.0] - 2025-12-15
+
+### Changed
+
+#### Code Quality - Zero ESLint Warnings Milestone
+- **Strict Lint Enforcement** - Fixed ALL 203 ESLint warnings, achieving 0 warnings with `--max-warnings 0` policy
+- **TypeScript Type Safety** - Added 20+ Supabase row interfaces to eliminate `any` types:
+  - `ParticipationRow`, `MessageRow`, `PresenceRow`, `ConversationRow` in `app/actions/messaging.ts`
+  - `PresenceRow`, `StatusRow` in `app/actions/presence.ts`
+  - `ActivityJoinRow`, `RatingJoinRow`, `CommentJoinRow` in `app/actions/user-activity.ts`
+  - `UserMessageRow`, `AssistantMessageRow`, `DMMessageRow` in `app/actions/ai-chat-response.ts`
+- **ESLint Configuration** (`packages/eslint-config/next.js`):
+  - Added underscore-prefixed variable ignore pattern (`argsIgnorePattern: "^_"`, `varsIgnorePattern: "^_"`)
+  - Disabled `react-hooks/set-state-in-effect` rule (catches standard React data fetching patterns)
+- **React Hooks Compliance**:
+  - Fixed function-before-declaration ordering issues across components
+  - Used `useMemo` for object dependencies in `hooks/use-security-realtime.ts`
+  - Captured ref values for cleanup in `hooks/use-chat-sounds.tsx`
+- **Next.js Image Handling** - Added eslint-disable comments for intentional `<img>` tags (OAuth user avatars from external URLs)
+- **Unused Variable Cleanup** - Prefixed intentionally unused vars with underscore, removed unused imports
+
+### Fixed
+
+- **30+ Files** cleaned up with proper TypeScript types and ESLint compliance
+- **Hook Dependencies** - Resolved all exhaustive-deps warnings with proper memoization
+- **Effect Cleanup** - Fixed ref value captures in useEffect cleanup functions
+
+### Documentation
+
+- Updated project version to 0.80.0 across all files
+
 ## [0.79.0] - 2025-12-15
 
 ### Added

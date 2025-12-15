@@ -230,7 +230,6 @@ export class NpmAdapter extends BaseAdapter {
   private async searchPackages(
     query: string,
     limit: number,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _options?: DiscoverOptions
   ): Promise<DiscoveredResource[]> {
     try {

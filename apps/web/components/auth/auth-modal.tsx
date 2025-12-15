@@ -30,7 +30,7 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
   // Reset form when modal opens/closes
   useEffect(() => {
     if (isOpen) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setMode(initialMode);
       setEmail("");
       setPassword("");

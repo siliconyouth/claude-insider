@@ -61,7 +61,7 @@ export function TwoFactorSettings() {
   const [devices, setDevices] = useState<TwoFactorDevice[]>([]);
   const [deviceStep, setDeviceStep] = useState<DeviceStep>("list");
   const [newDeviceId, setNewDeviceId] = useState("");
-  const [newDeviceName, setNewDeviceName] = useState("");
+  const [_newDeviceName, setNewDeviceName] = useState("");
   const [newDeviceSecret, setNewDeviceSecret] = useState("");
   const [newDeviceQr, setNewDeviceQr] = useState("");
   const [newDeviceCode, setNewDeviceCode] = useState("");
@@ -72,7 +72,7 @@ export function TwoFactorSettings() {
   // Email 2FA state (for mandatory MFA enforcement)
   const [email2FAEnabled, setEmail2FAEnabled] = useState(false);
   const [emailVerificationCode, setEmailVerificationCode] = useState("");
-  const [emailCodeSent, setEmailCodeSent] = useState(false);
+  const [_emailCodeSent, setEmailCodeSent] = useState(false);
 
   const loadStatus = async () => {
     setIsLoading(true);
@@ -108,7 +108,7 @@ export function TwoFactorSettings() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     loadStatus();
   }, []);
 

@@ -29,7 +29,9 @@ interface BanAppealModalProps {
 
 type View = "info" | "appeal" | "history" | "add-context";
 
-export function BanAppealModal({ isOpen, onClose, onSignOut }: BanAppealModalProps) {
+export function BanAppealModal({ isOpen, onClose: _onClose, onSignOut }: BanAppealModalProps) {
+  // Note: onClose is passed but modal dismissal is handled via parent state
+  void _onClose;
   const [isPending, startTransition] = useTransition();
   const toast = useToast();
 
@@ -49,13 +51,6 @@ export function BanAppealModal({ isOpen, onClose, onSignOut }: BanAppealModalPro
   const [reason, setReason] = useState("");
   const [additionalContext, setAdditionalContext] = useState("");
 
-  // Load ban status on mount
-  useEffect(() => {
-    if (isOpen) {
-      loadBanStatus();
-    }
-  }, [isOpen]);
-
   const loadBanStatus = async () => {
     const result = await checkBanStatus();
     if (result.banned) {
@@ -71,6 +66,13 @@ export function BanAppealModal({ isOpen, onClose, onSignOut }: BanAppealModalPro
       setAppeals(result.appeals);
     }
   };
+
+  // Load ban status on mount
+  useEffect(() => {
+    if (isOpen) {
+      loadBanStatus();
+    }
+  }, [isOpen]);
 
   const handleSubmitAppeal = () => {
     if (reason.trim().length < 20) {

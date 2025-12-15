@@ -7,7 +7,7 @@
 
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { cn } from "@/lib/design-system";
 import {
   useSecurityRealtime,

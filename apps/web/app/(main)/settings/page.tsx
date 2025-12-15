@@ -142,7 +142,7 @@ export default function SettingsPage() {
   // Sync hasPassword from auth user
   useEffect(() => {
     if (authUser) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setHasPassword(authUser.hasPassword ?? false);
     }
   }, [authUser]);
@@ -211,7 +211,7 @@ export default function SettingsPage() {
     // Prevent duplicate fetches on auth state changes
     if (isAuthenticated && !hasFetched.current) {
       hasFetched.current = true;
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       loadSettings();
     }
   }, [isAuthenticated, loadSettings]);
@@ -225,7 +225,7 @@ export default function SettingsPage() {
       bio !== (profile.bio || "") ||
       website !== (profile.website || "");
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setHasChanges(changed);
   }, [name, bio, website, profile]);
 

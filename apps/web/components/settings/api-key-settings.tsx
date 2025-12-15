@@ -56,7 +56,7 @@ interface ValidationSuccess {
 
 export function ApiKeySettings() {
   const [apiKeys, setApiKeys] = useState<ApiKeyInfo[]>([]);
-  const [aiPreferences, setAiPreferences] = useState<AiPreferences | null>(null);
+  const [_aiPreferences, setAiPreferences] = useState<AiPreferences | null>(null);
   const [allModels, setAllModels] = useState<ClaudeModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -138,7 +138,7 @@ export function ApiKeySettings() {
         setSuccess("API key connected successfully!");
         setTimeout(() => setSuccess(null), 5000);
       }, 3000);
-    } catch (err) {
+    } catch {
       setModalError({
         error: "Connection failed",
         errorCode: "NETWORK_ERROR",
@@ -169,7 +169,7 @@ export function ApiKeySettings() {
 
       setSuccess("API key validated successfully!");
       fetchApiKeys();
-    } catch (err) {
+    } catch {
       setError("Failed to validate API key");
     } finally {
       setIsValidating(false);
@@ -187,7 +187,7 @@ export function ApiKeySettings() {
         setShowDeleteConfirm(false);
         fetchApiKeys();
       }
-    } catch (err) {
+    } catch {
       setError("Failed to delete API key");
     }
   };

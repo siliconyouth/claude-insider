@@ -226,7 +226,7 @@ export function useTableOfContents(selector = "article") {
       stack.push({ item, level });
     });
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setItems(tocItems);
   }, [selector]);
 

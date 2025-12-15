@@ -173,7 +173,8 @@ export function ActivityTimeline({
             {dateActivities.map((activity: ActivityItem) => {
               const { relative, absolute } = formatActivityDate(activity.createdAt);
               const isExpanded = expandedItems.has(activity.id);
-              const config = activityConfig[activity.type] || activityConfig.view_doc;
+              // Config used for icon/label via ActivityIcon component
+              void (activityConfig[activity.type] || activityConfig.view_doc);
 
               return (
                 <div

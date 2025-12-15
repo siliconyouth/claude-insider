@@ -10,7 +10,6 @@ import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 import {
-  getEnabledHoneypots,
   getHoneypotById,
   createHoneypot,
   updateHoneypot,

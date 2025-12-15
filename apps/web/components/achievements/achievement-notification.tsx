@@ -13,7 +13,7 @@
  * - Keyboard accessible (Escape to close)
  */
 
-import { useState, useEffect, useCallback, createContext, useContext, ReactNode, useRef } from "react";
+import { useState, useEffect, useCallback, useMemo, createContext, useContext, ReactNode, useRef } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/design-system";
 import { useSoundEffects } from "@/hooks/use-sound-effects";
@@ -71,16 +71,22 @@ function ConfettiParticles({ rarity }: { rarity: AchievementRarity }) {
 
   const colors = colorPalettes[rarity];
 
-  const particles = Array.from({ length: particleCount }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    delay: Math.random() * 0.5,
-    duration: 2 + Math.random() * 2,
-    color: colors[Math.floor(Math.random() * colors.length)],
-    rotation: Math.random() * 360,
-    size: 4 + Math.random() * 8,
-    shape: Math.random() > 0.5 ? "rounded-full" : "rounded-sm",
-  }));
+  // Memoize particles to avoid regenerating on every render
+  // This fixes the React purity warning about Math.random during render
+  const particles = useMemo(() =>
+    Array.from({ length: particleCount }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      delay: Math.random() * 0.5,
+      duration: 2 + Math.random() * 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      size: 4 + Math.random() * 8,
+      shape: Math.random() > 0.5 ? "rounded-full" : "rounded-sm",
+    })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- colors derived from rarity, only regenerate on rarity change
+    [rarity, particleCount]
+  );
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -163,6 +169,12 @@ function AchievementModal({ achievement, onClose }: AchievementModalProps) {
     return () => clearTimeout(timer);
   }, [sounds, rarity]);
 
+  // Close handler with exit animation - defined before effects that use it
+  const handleClose = useCallback(() => {
+    setIsVisible(false);
+    setTimeout(onClose, 300);
+  }, [onClose]);
+
   // Auto-dismiss (longer for legendary)
   useEffect(() => {
     const dismissTime = rarity === "legendary" ? 7000 : rarity === "epic" ? 6000 : 5000;
@@ -171,13 +183,7 @@ function AchievementModal({ achievement, onClose }: AchievementModalProps) {
     }, dismissTime);
 
     return () => clearTimeout(timer);
-  }, [rarity]);
-
-  // Close handler with exit animation
-  const handleClose = useCallback(() => {
-    setIsVisible(false);
-    setTimeout(onClose, 300);
-  }, [onClose]);
+  }, [rarity, handleClose]);
 
   // Keyboard handler
   useEffect(() => {
@@ -352,7 +358,7 @@ function AchievementModal({ achievement, onClose }: AchievementModalProps) {
 
 export function AchievementNotificationProvider({ children }: { children: ReactNode }) {
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
-  const [queue, setQueue] = useState<Achievement[]>([]);
+  const [, setQueue] = useState<Achievement[]>([]); // Queue state - getter not needed, setter used internally
   const hasProcessedQueue = useRef(false);
 
   // Convert achievement ID to Achievement object

@@ -105,7 +105,7 @@ export function PageTransitionProvider({
   useEffect(() => {
     if (prefersReducedMotion) return;
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setIsTransitioning(true);
     const timer = setTimeout(() => {
       setIsTransitioning(false);
@@ -178,7 +178,7 @@ export function PageTransition({
   // Handle route changes
   useEffect(() => {
     if (prefersReducedMotion) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setDisplayChildren(children);
       return;
     }
@@ -405,7 +405,7 @@ export function AnimatePresence({
 
   useEffect(() => {
     if (show) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setShouldRender(true);
       setIsAnimating(true);
       const timer = setTimeout(() => setIsAnimating(false), duration);
@@ -503,7 +503,7 @@ export function NavigationProgress({
 
   useEffect(() => {
     if (isNavigating) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setVisible(true);
       setProgress(0);
 
@@ -557,7 +557,7 @@ export function useNavigationProgress() {
 
   useEffect(() => {
     // Start progress on route change
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setIsNavigating(true);
 
     // End progress after a short delay

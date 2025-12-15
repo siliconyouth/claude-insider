@@ -7,7 +7,7 @@
 
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 
@@ -103,7 +103,10 @@ export function useSecurityRealtime(
   clearLogs: () => void;
   clearStats: () => void;
 } {
-  const opts = { ...DEFAULT_OPTIONS, ...options };
+  const opts = useMemo(
+    () => ({ ...DEFAULT_OPTIONS, ...options }),
+    [options]
+  );
 
   const [recentLogs, setRecentLogs] = useState<SecurityLogEntry[]>([]);
   const [recentVisitors, setRecentVisitors] = useState<VisitorEntry[]>([]);

@@ -151,7 +151,7 @@ function LinkPreview({ url, children, isInternalPath = false }: LinkPreviewProps
   const externalInfo = !internalInfo ? getExternalLinkInfo(url) : null;
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     setMounted(true);
     return () => {
       if (timeoutRef.current) {

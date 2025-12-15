@@ -11,7 +11,6 @@ import { getSession } from "@/lib/auth";
 import {
   cacheGetOrSet,
   notificationsKey,
-  notificationCountKey,
   invalidateNotificationCache,
   CACHE_TTL,
 } from "@/lib/cache";

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* global process */
 
 /**
  * Run Migration 034: Assistant Settings
