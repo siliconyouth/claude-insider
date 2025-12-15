@@ -198,15 +198,10 @@ export function UserDisplay({
         />
       )}
       <div className="flex flex-col min-w-0">
+        {/* Display name only (privacy: real name is hidden) */}
         <span className="font-medium text-gray-900 dark:text-white truncate">
           {displayName}
         </span>
-        {/* Show actual name if display name is different */}
-        {user.displayName && user.name && user.displayName !== user.name && (
-          <span className="text-xs text-gray-500 dark:text-gray-400 truncate">
-            {user.name}
-          </span>
-        )}
         {showUsername && user.username && (
           <span className="text-xs text-gray-500 dark:text-gray-400 truncate">
             @{user.username}

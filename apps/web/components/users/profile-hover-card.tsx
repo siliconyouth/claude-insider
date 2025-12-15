@@ -256,19 +256,13 @@ export function ProfileHoverCard({
         <div className="px-4 pb-4 pt-2">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
-              {/* Display name (bold) */}
+              {/* Display name only (privacy: real name is hidden) */}
               <Link
                 href={profileUrl}
                 className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 truncate block"
               >
                 {displayName}
               </Link>
-              {/* Name if different from display name */}
-              {user.displayName && user.name && user.displayName !== user.name && (
-                <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
-                  {user.name}
-                </p>
-              )}
               {/* Username */}
               {user.username && (
                 <p className="text-sm text-gray-500 dark:text-gray-400">
