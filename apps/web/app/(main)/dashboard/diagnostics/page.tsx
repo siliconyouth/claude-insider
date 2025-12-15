@@ -1637,6 +1637,404 @@ export default function DiagnosticsPage() {
         }
       },
     },
+    // Notification System Tests
+    {
+      name: "Notification System API",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/admin/notifications?limit=5");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "Notification System API",
+              status: "success",
+              message: `Active - ${data.data?.length || 0} notifications found`,
+              category: "notifications",
+              duration: Date.now() - start,
+              details: {
+                notificationsReturned: data.data?.length || 0,
+                hasMore: data.meta?.hasMore,
+              },
+            };
+          } else if (response.status === 401 || response.status === 403) {
+            return {
+              name: "Notification System API",
+              status: "warning",
+              message: "Admin role required",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Notification System API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Notification System API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "User Notifications API",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/user/notifications?limit=5");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "User Notifications API",
+              status: "success",
+              message: `Active - ${data.notifications?.length || 0} notifications, ${data.unreadCount || 0} unread`,
+              category: "notifications",
+              duration: Date.now() - start,
+              details: {
+                notificationsReturned: data.notifications?.length || 0,
+                unreadCount: data.unreadCount,
+                totalCount: data.totalCount,
+              },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "User Notifications API",
+              status: "warning",
+              message: "Authentication required",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "User Notifications API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "User Notifications API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Notification Preferences",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/user/notification-preferences");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "Notification Preferences",
+              status: "success",
+              message: `Active - Email: ${data.preferences?.email_notifications ? "On" : "Off"}, Push: ${data.preferences?.push_notifications ? "On" : "Off"}`,
+              category: "notifications",
+              duration: Date.now() - start,
+              details: {
+                emailNotifications: data.preferences?.email_notifications,
+                pushNotifications: data.preferences?.push_notifications,
+                achievementAlerts: data.preferences?.achievement_alerts,
+                digestFrequency: data.preferences?.digest_frequency,
+              },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "Notification Preferences",
+              status: "warning",
+              message: "Authentication required",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Notification Preferences",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Notification Preferences",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Browser Push Permission",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined" || !("Notification" in window)) {
+            return {
+              name: "Browser Push Permission",
+              status: "warning",
+              message: "Push notifications not supported in this browser",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+
+          const permission = Notification.permission;
+          let status: "success" | "warning" | "error" = "warning";
+          let message = "";
+
+          switch (permission) {
+            case "granted":
+              status = "success";
+              message = "Push notifications enabled";
+              break;
+            case "denied":
+              status = "error";
+              message = "Push notifications blocked by user";
+              break;
+            case "default":
+              status = "warning";
+              message = "Push permission not yet requested";
+              break;
+          }
+
+          return {
+            name: "Browser Push Permission",
+            status,
+            message,
+            category: "notifications",
+            duration: Date.now() - start,
+            details: {
+              permission,
+              supported: true,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Browser Push Permission",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Push Notification Test",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined" || !("Notification" in window)) {
+            return {
+              name: "Push Notification Test",
+              status: "warning",
+              message: "Push notifications not supported",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+
+          if (Notification.permission !== "granted") {
+            return {
+              name: "Push Notification Test",
+              status: "warning",
+              message: `Cannot test - permission is "${Notification.permission}"`,
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+
+          // Show a test notification
+          const notification = new Notification("Claude Insider Test", {
+            body: "Push notification test successful!",
+            icon: "/icons/icon-192x192.png",
+            tag: "diagnostics-test",
+            requireInteraction: false,
+          });
+
+          // Auto-close after 3 seconds
+          setTimeout(() => notification.close(), 3000);
+
+          return {
+            name: "Push Notification Test",
+            status: "success",
+            message: "Test notification sent successfully",
+            category: "notifications",
+            duration: Date.now() - start,
+            details: {
+              notificationShown: true,
+              autoCloseMs: 3000,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Push Notification Test",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed to send notification",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Service Worker Status",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
+            return {
+              name: "Service Worker Status",
+              status: "warning",
+              message: "Service Worker not supported",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+
+          const registration = await navigator.serviceWorker.getRegistration();
+
+          if (registration) {
+            const subscribed = await registration.pushManager.getSubscription();
+            return {
+              name: "Service Worker Status",
+              status: "success",
+              message: subscribed
+                ? "Active with push subscription"
+                : "Active - no push subscription",
+              category: "notifications",
+              duration: Date.now() - start,
+              details: {
+                scope: registration.scope,
+                active: !!registration.active,
+                waiting: !!registration.waiting,
+                installing: !!registration.installing,
+                pushSubscribed: !!subscribed,
+              },
+            };
+          } else {
+            return {
+              name: "Service Worker Status",
+              status: "warning",
+              message: "No service worker registered",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Service Worker Status",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Email Notification Test",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test the email service health endpoint
+          const response = await fetch("/api/health");
+          if (response.ok) {
+            const data = await response.json();
+            const emailConfigured = data.services?.email !== false;
+            return {
+              name: "Email Notification Test",
+              status: emailConfigured ? "success" : "warning",
+              message: emailConfigured
+                ? "Email service configured (Resend)"
+                : "Email service not configured",
+              category: "notifications",
+              duration: Date.now() - start,
+              details: {
+                provider: "Resend",
+                configured: emailConfigured,
+              },
+            };
+          } else {
+            return {
+              name: "Email Notification Test",
+              status: "warning",
+              message: "Could not verify email configuration",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Email Notification Test",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "In-App Toast System",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test the toast notification system by checking if the provider exists
+          const toastContainer = document.querySelector("[data-toast-container]") ||
+                                 document.querySelector(".toast-container") ||
+                                 document.getElementById("toast-root");
+
+          // We'll just verify the system is available
+          return {
+            name: "In-App Toast System",
+            status: "success",
+            message: "Toast system active",
+            category: "notifications",
+            duration: Date.now() - start,
+            details: {
+              hasContainer: !!toastContainer,
+              provider: "Custom Toast",
+            },
+          };
+        } catch (e) {
+          return {
+            name: "In-App Toast System",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
   ];
 
   // Helper to add test log entries

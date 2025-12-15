@@ -16,16 +16,21 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { UserAvatar } from "./user-avatar";
+import { FollowButton } from "./follow-button";
 import { ROLE_INFO, type UserRole } from "@/lib/roles";
+import { useSession } from "@/lib/auth-client";
 
 export interface ProfileHoverCardUser {
   id: string;
   name: string;
+  displayName?: string | null;
   username?: string | null;
   image?: string | null;
+  avatarUrl?: string | null;
   bio?: string | null;
   role?: UserRole;
   joinedAt?: string;
+  isFollowing?: boolean;
   stats?: {
     followers?: number;
     following?: number;
@@ -48,6 +53,12 @@ interface ProfileHoverCardProps {
   disabled?: boolean;
   /** Custom link href (defaults to /users/[username]) */
   href?: string;
+  /** Show action buttons (follow, invite, report) */
+  showActions?: boolean;
+  /** Callback when invite to group is clicked */
+  onInviteToGroup?: (userId: string) => void;
+  /** Callback when report is clicked */
+  onReport?: (userId: string) => void;
 }
 
 interface Position {
@@ -68,7 +79,11 @@ export function ProfileHoverCard({
   className,
   disabled = false,
   href,
+  showActions = true,
+  onInviteToGroup,
+  onReport,
 }: ProfileHoverCardProps) {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState<Position | null>(null);
   const triggerRef = useRef<HTMLSpanElement>(null);
@@ -172,6 +187,10 @@ export function ProfileHoverCard({
   const profileUrl = href || (user.username ? `/users/${user.username}` : `/profile`);
   const roleInfo = user.role ? ROLE_INFO[user.role] : null;
   const showRoleBadge = user.role && user.role !== "user";
+  const displayName = user.displayName || user.name;
+  const avatarSrc = user.avatarUrl || user.image;
+  const isOwnProfile = session?.user?.id === user.id;
+  const canShowActions = showActions && !isOwnProfile && session?.user;
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -225,8 +244,8 @@ export function ProfileHoverCard({
         <div className="px-4 -mt-8">
           <Link href={profileUrl} className="block">
             <UserAvatar
-              src={user.image}
-              name={user.name}
+              src={avatarSrc}
+              name={displayName}
               size="xl"
               className="ring-4 ring-white dark:ring-[#111111]"
             />
@@ -237,12 +256,20 @@ export function ProfileHoverCard({
         <div className="px-4 pb-4 pt-2">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
+              {/* Display name (bold) */}
               <Link
                 href={profileUrl}
                 className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 truncate block"
               >
-                {user.name}
+                {displayName}
               </Link>
+              {/* Name if different from display name */}
+              {user.displayName && user.name && user.displayName !== user.name && (
+                <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                  {user.name}
+                </p>
+              )}
+              {/* Username */}
               {user.username && (
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   @{user.username}
@@ -303,6 +330,72 @@ export function ProfileHoverCard({
               </span>
             )}
           </div>
+
+          {/* Action buttons */}
+          {canShowActions && (
+            <div className="mt-3 flex items-center gap-2">
+              <FollowButton
+                userId={user.id}
+                initialIsFollowing={user.isFollowing}
+                size="sm"
+                className="flex-1"
+              />
+              {onInviteToGroup && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onInviteToGroup(user.id);
+                  }}
+                  className={cn(
+                    "p-1.5 rounded-lg",
+                    "border border-gray-200 dark:border-[#262626]",
+                    "text-gray-500 dark:text-gray-400",
+                    "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
+                    "hover:text-blue-600 dark:hover:text-cyan-400",
+                    "transition-colors"
+                  )}
+                  title="Invite to group"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    />
+                  </svg>
+                </button>
+              )}
+              {onReport && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onReport(user.id);
+                  }}
+                  className={cn(
+                    "p-1.5 rounded-lg",
+                    "border border-gray-200 dark:border-[#262626]",
+                    "text-gray-500 dark:text-gray-400",
+                    "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
+                    "hover:text-red-500 dark:hover:text-red-400",
+                    "transition-colors"
+                  )}
+                  title="Report user"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    />
+                  </svg>
+                </button>
+              )}
+            </div>
+          )}
 
           {/* View profile link */}
           <Link
