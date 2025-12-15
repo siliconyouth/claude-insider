@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS security_logs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   request_id VARCHAR(21) NOT NULL,           -- nanoid correlation ID
   visitor_id VARCHAR(64),                    -- FingerprintJS visitorId
-  user_id UUID REFERENCES "user"(id) ON DELETE SET NULL,
+  user_id TEXT REFERENCES "user"(id) ON DELETE SET NULL,
 
   -- Request details
   ip_address INET,
@@ -94,14 +94,14 @@ CREATE TABLE IF NOT EXISTS visitor_fingerprints (
   is_blocked BOOLEAN DEFAULT FALSE,
   block_reason TEXT,
   blocked_at TIMESTAMPTZ,
-  blocked_by UUID REFERENCES "user"(id) ON DELETE SET NULL,
+  blocked_by TEXT REFERENCES "user"(id) ON DELETE SET NULL,
 
   -- Auto-block tracking
   auto_blocked BOOLEAN DEFAULT FALSE,
   auto_block_rule VARCHAR(100),
 
   -- Linked authenticated user (if ever logged in with this fingerprint)
-  linked_user_id UUID REFERENCES "user"(id) ON DELETE SET NULL,
+  linked_user_id TEXT REFERENCES "user"(id) ON DELETE SET NULL,
   linked_at TIMESTAMPTZ,
 
   -- Fingerprint component details
@@ -158,8 +158,8 @@ CREATE TABLE IF NOT EXISTS honeypot_configs (
 
   -- Status
   enabled BOOLEAN DEFAULT TRUE,
-  created_by UUID REFERENCES "user"(id) ON DELETE SET NULL,
-  updated_by UUID REFERENCES "user"(id) ON DELETE SET NULL,
+  created_by TEXT REFERENCES "user"(id) ON DELETE SET NULL,
+  updated_by TEXT REFERENCES "user"(id) ON DELETE SET NULL,
 
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS security_settings (
   value_type VARCHAR(20) DEFAULT 'string',   -- string, number, boolean, json
   description TEXT,
   category VARCHAR(50) DEFAULT 'general',    -- general, bot_detection, fingerprint, honeypot, logging
-  updated_by UUID REFERENCES "user"(id) ON DELETE SET NULL,
+  updated_by TEXT REFERENCES "user"(id) ON DELETE SET NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   created_at TIMESTAMPTZ DEFAULT NOW()
 );

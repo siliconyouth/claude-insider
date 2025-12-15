@@ -274,16 +274,22 @@ BEGIN
     IF v_remaining_admins > 0 THEN
       -- Promote first admin to owner
       UPDATE dm_participants SET role = 'owner'
-      WHERE conversation_id = p_conversation_id
-        AND user_id != p_user_id
-        AND role = 'admin'
-      LIMIT 1;
+      WHERE ctid = (
+        SELECT ctid FROM dm_participants
+        WHERE conversation_id = p_conversation_id
+          AND user_id != p_user_id
+          AND role = 'admin'
+        LIMIT 1
+      );
     ELSE
       -- Promote first member to owner
       UPDATE dm_participants SET role = 'owner'
-      WHERE conversation_id = p_conversation_id
-        AND user_id != p_user_id
-      LIMIT 1;
+      WHERE ctid = (
+        SELECT ctid FROM dm_participants
+        WHERE conversation_id = p_conversation_id
+          AND user_id != p_user_id
+        LIMIT 1
+      );
     END IF;
   END IF;
 
