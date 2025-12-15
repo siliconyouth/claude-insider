@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Suppress SCSS deprecation warnings from PayloadCMS dependencies
+  sassOptions: {
+    silenceDeprecations: ["legacy-js-api", "import", "global-builtin"],
+    quietDeps: true,
+  },
   // Performance optimizations
   poweredByHeader: false,
   compress: true,
