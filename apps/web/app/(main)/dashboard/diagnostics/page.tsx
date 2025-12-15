@@ -63,6 +63,14 @@ interface ConsoleLog {
   timestamp: number;
 }
 
+interface TestLogEntry {
+  timestamp: number;
+  type: "start" | "running" | "success" | "error" | "warning" | "complete";
+  message: string;
+  testName?: string;
+  duration?: number;
+}
+
 interface DatabaseCheck {
   env: {
     hasSupabaseUrl: boolean;
@@ -228,6 +236,8 @@ export default function DiagnosticsPage() {
   const [consoleLogs, setConsoleLogs] = useState<ConsoleLog[]>([]);
   const consoleLogsRef = useRef<ConsoleLog[]>([]);
   const streamingRef = useRef<HTMLDivElement>(null);
+  const [testLogs, setTestLogs] = useState<TestLogEntry[]>([]);
+  const testLogsRef = useRef<HTMLDivElement>(null);
 
   // Capture console logs
   useEffect(() => {
@@ -1048,8 +1058,20 @@ export default function DiagnosticsPage() {
     },
   ];
 
+  // Helper to add test log entries
+  const addTestLog = useCallback((entry: Omit<TestLogEntry, "timestamp">) => {
+    setTestLogs(prev => [...prev, { ...entry, timestamp: Date.now() }]);
+    // Auto-scroll to bottom
+    setTimeout(() => {
+      testLogsRef.current?.scrollTo({ top: testLogsRef.current.scrollHeight, behavior: "smooth" });
+    }, 50);
+  }, []);
+
   // Run all tests sequentially
   const runAllTests = useCallback(async () => {
+    // Clear previous logs
+    setTestLogs([]);
+
     setTestAllProgress({
       isRunning: true,
       currentTest: "",
@@ -1062,6 +1084,9 @@ export default function DiagnosticsPage() {
     const results: DiagnosticResult[] = [];
     sounds.play("notification");
 
+    // Log start
+    addTestLog({ type: "start", message: `Starting ${testSuites.length} diagnostic tests...` });
+
     for (let i = 0; i < testSuites.length; i++) {
       const suite = testSuites[i];
       if (!suite) continue;
@@ -1072,11 +1097,24 @@ export default function DiagnosticsPage() {
         completedTests: i,
       }));
 
-      // Small delay for visual feedback
-      await new Promise(r => setTimeout(r, 300));
+      // Log running
+      addTestLog({ type: "running", message: `[${i + 1}/${testSuites.length}] Running...`, testName: suite.name });
 
+      // Small delay for visual feedback
+      await new Promise(r => setTimeout(r, 100));
+
+      const startTime = Date.now();
       const result = await suite.run();
+      const duration = Date.now() - startTime;
       results.push(result);
+
+      // Log result
+      addTestLog({
+        type: result.status === "success" ? "success" : result.status === "error" ? "error" : "warning",
+        message: result.message,
+        testName: suite.name,
+        duration,
+      });
 
       setTestAllProgress(prev => ({
         ...prev,
@@ -1099,11 +1137,22 @@ export default function DiagnosticsPage() {
       results,
     }));
 
-    // Play completion sound
+    // Log completion
     const hasErrors = results.some(r => r.status === "error");
+    const hasWarnings = results.some(r => r.status === "warning");
+    const successCount = results.filter(r => r.status === "success").length;
+    const errorCount = results.filter(r => r.status === "error").length;
+    const warningCount = results.filter(r => r.status === "warning").length;
+
+    addTestLog({
+      type: "complete",
+      message: `Completed: ${successCount} passed, ${errorCount} failed, ${warningCount} warnings`,
+    });
+
+    // Play completion sound
     sounds.play(hasErrors ? "error" : "success");
     toast.success(`All ${testSuites.length} tests completed`);
-  }, [sounds, toast]);
+  }, [sounds, toast, addTestLog]);
 
   // Analyze results with Claude AI
   const analyzeWithAI = useCallback(async () => {
@@ -1468,6 +1517,79 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
                   width: `${(testAllProgress.completedTests / testAllProgress.totalTests) * 100}%`,
                 }}
               />
+            </div>
+          </div>
+        )}
+
+        {/* Verbose Console Output */}
+        {testLogs.length > 0 && (
+          <div className="mb-4 rounded-lg border border-gray-700 bg-gray-900/80 overflow-hidden font-mono text-xs">
+            <div className="px-3 py-1.5 bg-gray-800 border-b border-gray-700 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                </div>
+                <span className="text-gray-400 text-xs">Test Console</span>
+              </div>
+              <span className="text-gray-500 text-xs">
+                {testLogs.length} {testLogs.length === 1 ? "entry" : "entries"}
+              </span>
+            </div>
+            <div
+              ref={testLogsRef}
+              className="p-3 max-h-48 overflow-y-auto space-y-0.5 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent"
+            >
+              {testLogs.map((log, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className="text-gray-600 shrink-0">
+                    {new Date(log.timestamp).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+                  </span>
+                  <span className={cn(
+                    "shrink-0",
+                    log.type === "start" && "text-blue-400",
+                    log.type === "running" && "text-cyan-400",
+                    log.type === "success" && "text-emerald-400",
+                    log.type === "error" && "text-red-400",
+                    log.type === "warning" && "text-yellow-400",
+                    log.type === "complete" && "text-violet-400"
+                  )}>
+                    {log.type === "start" && "▶"}
+                    {log.type === "running" && "●"}
+                    {log.type === "success" && "✓"}
+                    {log.type === "error" && "✗"}
+                    {log.type === "warning" && "⚠"}
+                    {log.type === "complete" && "■"}
+                  </span>
+                  {log.testName && (
+                    <span className="text-white shrink-0">{log.testName}</span>
+                  )}
+                  <span className={cn(
+                    "truncate",
+                    log.type === "start" && "text-blue-300",
+                    log.type === "running" && "text-gray-400",
+                    log.type === "success" && "text-emerald-300",
+                    log.type === "error" && "text-red-300",
+                    log.type === "warning" && "text-yellow-300",
+                    log.type === "complete" && "text-violet-300"
+                  )}>
+                    {log.message}
+                  </span>
+                  {log.duration !== undefined && (
+                    <span className="text-gray-600 shrink-0 ml-auto">{log.duration}ms</span>
+                  )}
+                </div>
+              ))}
+              {testAllProgress.isRunning && (
+                <div className="flex items-center gap-2 text-cyan-400 animate-pulse">
+                  <span className="text-gray-600">
+                    {new Date().toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+                  </span>
+                  <span>●</span>
+                  <span>{testAllProgress.currentTest || "Waiting..."}</span>
+                </div>
+              )}
             </div>
           </div>
         )}
