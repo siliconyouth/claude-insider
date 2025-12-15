@@ -15,7 +15,7 @@ export default function DisclaimerPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert max-w-none">
           <h1 className="text-4xl font-bold mb-2">Disclaimer</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 13, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 15, 2025</p>
 
           <section className="mb-8 p-6 bg-violet-500/10 border border-violet-500/30 rounded-lg">
             <h2 className="text-xl font-semibold mb-4 text-violet-400">Important Notice</h2>

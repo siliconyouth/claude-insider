@@ -158,8 +158,8 @@ claude-insider/
 │   │   ├── api-keys.ts           # API key encryption & validation
 │   │   ├── get-user-api-key.ts   # Retrieve user's API key for AI features
 │   │   ├── supabase/             # Supabase clients
-│   │   │   ├── client.ts         # Browser client
-│   │   │   └── server.ts         # Server client with RLS
+│   │   │   ├── client.ts         # Browser client (RLS-enforced)
+│   │   │   └── server.ts         # Server client (RLS + admin client)
 │   │   └── resources/            # Resources library
 │   │       ├── types.ts          # ResourceEntry schema
 │   │       ├── data.ts           # Data loaders & utilities
@@ -417,6 +417,45 @@ className={cn(
 ```tsx
 className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 ```
+
+---
+
+## Database Access Patterns
+
+### Supabase Clients
+
+| Client | Location | Use Case |
+|--------|----------|----------|
+| `createClient()` | `lib/supabase/client.ts` | Browser-side, RLS-enforced queries |
+| `createServerClient()` | `lib/supabase/server.ts` | Server components, RLS-enforced |
+| `createAdminClient()` | `lib/supabase/server.ts` | Server-only, bypasses RLS for admin operations |
+
+### When to Use Each Client
+
+```typescript
+// Browser component - user can only access their own data
+import { createClient } from "@/lib/supabase/client";
+const supabase = createClient();
+
+// Server component - respects user session & RLS
+import { createServerClient } from "@/lib/supabase/server";
+const supabase = await createServerClient();
+
+// Admin API routes - bypass RLS for dashboard/admin features
+import { createAdminClient } from "@/lib/supabase/server";
+const supabase = await createAdminClient();
+```
+
+### Best Practices
+
+| Pattern | Client | Example |
+|---------|--------|---------|
+| User reading own data | `createClient` or `createServerClient` | Favorites, settings |
+| Admin listing all users | `createAdminClient` | Dashboard user list |
+| Write operations | Direct `pg` pool | Complex transactions, bulk updates |
+| Real-time subscriptions | `createClient` | Live notifications |
+
+**Important**: Admin client bypasses Row Level Security. Only use in admin-protected API routes after verifying user role with `hasMinRole(userRole, ROLES.ADMIN)`.
 
 ---
 

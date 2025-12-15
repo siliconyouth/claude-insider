@@ -70,7 +70,25 @@ export default function PrivacyPolicyPage() {
             <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
               <li><strong>TOTP secret:</strong> Encrypted secret key for authenticator apps</li>
               <li><strong>Backup codes:</strong> Hashed recovery codes (10 single-use codes)</li>
+              <li><strong>Multiple devices:</strong> You can add multiple authenticator apps per account</li>
+              <li><strong>Device metadata:</strong> Device name and last used timestamp for each authenticator</li>
             </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Passkeys (WebAuthn)</h3>
+            <p className="text-gray-300 leading-relaxed">
+              If you register passkeys for passwordless authentication:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>Credential ID:</strong> Public identifier for your passkey</li>
+              <li><strong>Public key:</strong> Cryptographic public key (private key stays on your device)</li>
+              <li><strong>Device type:</strong> Platform (Face ID, Touch ID, Windows Hello) or cross-platform (security key)</li>
+              <li><strong>Backup status:</strong> Whether your passkey is backed up to a cloud provider</li>
+              <li><strong>Device name:</strong> A friendly name you can set to identify your passkey</li>
+              <li><strong>Last used:</strong> Timestamp of last authentication with this passkey</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              Passkeys use public-key cryptography. Your private key never leaves your device. We only store the public key for verification.
+            </p>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Connected Accounts (OAuth)</h3>
             <p className="text-gray-300 leading-relaxed">
@@ -178,6 +196,31 @@ export default function PrivacyPolicyPage() {
                     <td className="px-4 py-2">Selected Claude model (Opus/Sonnet/Haiku) for AI features</td>
                     <td className="px-4 py-2">Until account deleted or changed</td>
                   </tr>
+                  <tr>
+                    <td className="px-4 py-2">Group Chat Messages</td>
+                    <td className="px-4 py-2">Group conversations with other users</td>
+                    <td className="px-4 py-2">Until deleted by user or group deleted</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Group Memberships</td>
+                    <td className="px-4 py-2">Groups you own, administer, or belong to</td>
+                    <td className="px-4 py-2">Until you leave or account deleted</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Group Invitations</td>
+                    <td className="px-4 py-2">Pending and historical group invitations</td>
+                    <td className="px-4 py-2">Pending: until accepted/declined/expired; Historical: 30 days</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Chat Sound Preferences</td>
+                    <td className="px-4 py-2">Sound effect settings for notifications and interactions</td>
+                    <td className="px-4 py-2">Until account deleted</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Passkeys</td>
+                    <td className="px-4 py-2">Registered WebAuthn credentials for passwordless login</td>
+                    <td className="px-4 py-2">Until removed by user or account deleted</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -247,6 +290,9 @@ export default function PrivacyPolicyPage() {
                     <li>AI assistant settings (model, voice, preferences)</li>
                     <li>Model selection preference (Opus/Sonnet/Haiku)</li>
                     <li>API key usage statistics (key hint only, never the actual key)</li>
+                    <li>Registered passkeys (public identifiers and metadata only)</li>
+                    <li>2FA device names (secrets are excluded for security)</li>
+                    <li>Group chat messages and memberships</li>
                   </ul>
                 </li>
               </ol>
@@ -286,6 +332,10 @@ export default function PrivacyPolicyPage() {
               <li>All notification preferences</li>
               <li>All AI assistant settings</li>
               <li>All model selection preferences</li>
+              <li>All registered passkeys</li>
+              <li>All 2FA devices and backup codes</li>
+              <li>All group chat messages and memberships (you leave all groups)</li>
+              <li>All pending group invitations</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">What May Be Retained</h3>
@@ -598,7 +648,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. If you add your own Anthropic API key, it is encrypted with AES-256-GCM before storage and only used to make Claude API requests on your behalf. Your AI assistant settings (model, voice, preferences) and model selection preference (Opus/Sonnet/Haiku) are stored in the database and sync across devices. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only (including cached model selection for faster display).
+              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. For enhanced security, you can register passkeys (Face ID, Touch ID, security keys) for passwordless login and set up multiple 2FA authenticator devices. If you add your own Anthropic API key, it is encrypted with AES-256-GCM before storage and only used to make Claude API requests on your behalf. Your AI assistant settings (model, voice, preferences), model selection preference (Opus/Sonnet/Haiku), and group chat memberships are stored in the database and sync across devices. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only (including cached model selection for faster display).
             </p>
           </section>
         </article>

@@ -255,6 +255,47 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] 2,660 lines covering all 46 database tables
 - [x] Full type coverage for Supabase queries
 
+### FR-18: Passkey/WebAuthn Support
+- [x] Full WebAuthn implementation using SimpleWebAuthn
+- [x] Platform authenticators (Face ID, Touch ID, Windows Hello)
+- [x] Cross-platform security keys (YubiKey, etc.)
+- [x] Discoverable credentials for username-less login
+- [x] Passkey management in settings (add, rename, remove)
+- [x] Device type detection and friendly name derivation
+- [x] Known AAGUID mappings for popular authenticators
+
+### FR-19: Multi-Device Two-Factor Authentication
+- [x] Multiple authenticator apps per account
+- [x] Primary device selection
+- [x] Per-device last used tracking
+- [x] Add new device flow with QR code
+- [x] Remove device with TOTP verification
+- [x] First device generates backup codes automatically
+
+### FR-20: Achievement System
+- [x] 50+ achievement definitions using Lucide React icons
+- [x] 9 categories: onboarding, engagement, learning, social, content, streak, collector, expert, special
+- [x] 4 rarity tiers with XP values (common, rare, epic, legendary)
+- [x] Animated celebration modal with confetti effects
+- [x] Sound effects by rarity using Web Audio API
+- [x] Queue system for multiple simultaneous achievements
+- [x] localStorage persistence across page reloads
+
+### FR-21: Site-wide Sound Effects
+- [x] Web Audio API-based sound generation (no audio files)
+- [x] 24 sound types across 6 categories
+- [x] Category-level enable/disable controls
+- [x] Master volume control
+- [x] User-configurable settings with localStorage persistence
+
+### FR-22: Group Chat System
+- [x] Group conversations with description and avatar
+- [x] Role system: owner, admin, member
+- [x] Invitation system with status tracking
+- [x] Ownership transfer on leave
+- [x] Member management (promote, demote, kick)
+- [x] Sound preferences per user
+
 ---
 
 ## Non-Functional Requirements
@@ -354,7 +395,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.73.0**
+**Version 0.75.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

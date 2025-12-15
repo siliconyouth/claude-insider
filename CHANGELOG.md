@@ -106,6 +106,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `updateGroupSettings` - Update group name, description, avatar
     - `getChatSoundSettings` / `updateChatSoundSettings` - Manage sound preferences
 
+### Fixed
+
+- **Admin Dashboard Users API** (`app/api/dashboard/users/route.ts`, `app/api/dashboard/users/[id]/route.ts`)
+  - Fixed admin dashboard not showing users due to direct PostgreSQL pool connection issues
+  - Switched GET endpoints from direct `pg` pool to Supabase admin client for reliable access
+  - User list and user detail endpoints now use `createAdminClient()` for consistent database access
+  - PATCH and DELETE operations continue using direct pool for write operations with proper transaction support
+
 ### Changed
 
 - **Main Layout** (`app/(main)/layout.tsx`) - Added AchievementNotificationProvider to wrap application

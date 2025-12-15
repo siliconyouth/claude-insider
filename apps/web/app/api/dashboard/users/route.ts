@@ -40,10 +40,13 @@ export async function GET(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const supabase = (await createAdminClient()) as any;
 
-    // Build query with filters
+    console.log("[Dashboard Users] Starting query with params:", { search, role, page, limit, sortBy, sortOrder });
+
+    // Build query with filters - select only columns guaranteed to exist
+    // Note: banned column may not exist if migration 041 wasn't applied
     let query = supabase
       .from("user")
-      .select("id, name, email, image, role, isBetaTester, emailVerified, banned, createdAt", { count: "exact" });
+      .select("*", { count: "exact" });
 
     // Apply search filter
     if (search) {
@@ -72,10 +75,16 @@ export async function GET(request: NextRequest) {
 
     const { data, error, count } = await query;
 
+    console.log("[Dashboard Users] Query result:", {
+      dataLength: data?.length || 0,
+      count,
+      error: error ? { message: error.message, code: error.code, details: error.details } : null
+    });
+
     if (error) {
       console.error("[Dashboard Users] Supabase error:", error);
       return NextResponse.json(
-        { error: "Failed to fetch users" },
+        { error: `Failed to fetch users: ${error.message}` },
         { status: 500 }
       );
     }
@@ -92,6 +101,8 @@ export async function GET(request: NextRequest) {
       banned: (row.banned as boolean) || false,
       createdAt: row.createdAt ? new Date(row.createdAt as string).toISOString() : new Date().toISOString(),
     }));
+
+    console.log("[Dashboard Users] Returning", items.length, "users out of", total, "total");
 
     const response: PaginatedResponse<AdminUserListItem> = {
       items,

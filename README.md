@@ -5,7 +5,7 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 **Built entirely with [Claude Code](https://claude.ai/claude-code) powered by Claude Opus 4.5**
 
 [![Live Site](https://img.shields.io/badge/Live-www.claudeinsider.com-blue)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/Version-0.73.0-green)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.75.0-green)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ---
@@ -32,6 +32,11 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 - **Smart Model Selection** — Header dropdown with tier badges and usage stats
 - **Real-time Notifications** — Persistent popup notifications with deep-linking
 - **Type-Safe Database** — 2,660 lines of auto-generated TypeScript types
+- **Achievement System** — 50+ achievements across 9 categories with animated notifications
+- **Sound Effects** — Web Audio API powered sounds for notifications and interactions
+- **Group Chat** — Group conversations with roles, invitations, and moderation
+- **Passkey/WebAuthn** — Passwordless authentication with Face ID, Touch ID, and security keys
+- **Multi-device 2FA** — Multiple TOTP authenticator apps per account
 
 ---
 
@@ -64,8 +69,8 @@ Open [http://localhost:3001](http://localhost:3001) to view the app.
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| [Next.js](https://nextjs.org/) | 16.0.7 | React framework (App Router) |
-| [TypeScript](https://www.typescriptlang.org/) | 5.9.2 | Type-safe JavaScript |
+| [Next.js](https://nextjs.org/) | 16.0.10 | React framework (App Router) |
+| [TypeScript](https://www.typescriptlang.org/) | 5.9.3 | Type-safe JavaScript |
 | [Tailwind CSS](https://tailwindcss.com/) | 4.1.5 | Utility-first styling |
 | [MDX](https://mdxjs.com/) | 3.x | Markdown + React |
 | [Fuse.js](https://fusejs.io/) | 7.1.0 | Fuzzy search |
