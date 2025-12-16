@@ -8,7 +8,7 @@
  * or the conversation view when one is selected.
  */
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { cn } from "@/lib/design-system";
 import { createBrowserClient } from "@supabase/ssr";
 import { useUnifiedChat } from "../unified-chat-provider";
@@ -243,10 +243,14 @@ function ConversationView({
   // Get other participant
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
 
-  // Create Supabase client
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  // Memoize Supabase client to prevent recreation on every render
+  const supabase = useMemo(
+    () =>
+      createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      ),
+    []
   );
 
   // Scroll to bottom
@@ -274,7 +278,7 @@ function ConversationView({
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
-  // Subscribe to new messages
+  // Subscribe to new messages - APPEND instead of full reload for performance
   useEffect(() => {
     const channel = supabase
       .channel(`conversation:${conversationId}`)
@@ -286,13 +290,46 @@ function ConversationView({
           table: "dm_messages",
           filter: `conversation_id=eq.${conversationId}`,
         },
-        async () => {
-          // Reload messages
-          const result = await getMessages(conversationId);
-          if (result.success && result.messages) {
-            setMessages(result.messages);
-            await markConversationAsRead(conversationId);
-          }
+        async (payload) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const newMsg = payload.new as any;
+
+          // Skip if message already exists (deduplication)
+          setMessages((prev) => {
+            if (prev.some((m) => m.id === newMsg.id)) return prev;
+
+            // Get sender info from participants or fetch minimal profile
+            const participant = participants.find((p) => p.userId === newMsg.sender_id);
+
+            // Construct message object from payload (no API call needed!)
+            const message: Message = {
+              id: newMsg.id,
+              conversationId: newMsg.conversation_id,
+              senderId: newMsg.sender_id,
+              senderName: participant?.displayName || participant?.name || "Unknown",
+              senderUsername: participant?.username,
+              senderAvatar: participant?.avatarUrl,
+              content: newMsg.content,
+              mentions: newMsg.mentions || [],
+              isAiGenerated: newMsg.is_ai_generated || false,
+              aiResponseTo: newMsg.ai_response_to,
+              metadata: newMsg.metadata,
+              createdAt: newMsg.created_at,
+              editedAt: newMsg.edited_at,
+              deletedAt: newMsg.deleted_at,
+              encryptedContent: newMsg.encrypted_content,
+              isEncrypted: newMsg.is_encrypted || false,
+              encryptionAlgorithm: newMsg.encryption_algorithm,
+              senderDeviceId: newMsg.sender_device_id,
+              senderKey: newMsg.sender_key,
+              sessionId: newMsg.session_id,
+            };
+
+            return [...prev, message];
+          });
+
+          // Mark as read in background (non-blocking)
+          markConversationAsRead(conversationId);
         }
       )
       .subscribe();
@@ -300,7 +337,7 @@ function ConversationView({
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase, conversationId]);
+  }, [supabase, conversationId, participants]);
 
   // Subscribe to typing
   useEffect(() => {

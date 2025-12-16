@@ -197,20 +197,24 @@ export async function getConversations(): Promise<{
       .in("conversation_id", conversationIds)
       .neq("user_id", session.user.id);
 
-    // Get profiles for participants (including username for hovercards)
+    // Get profiles and presence in PARALLEL (performance optimization)
     const participantRows = (allParticipants || []) as unknown as ParticipantRow[];
     const otherUserIds = participantRows.map((p) => p.user_id);
-    const { data: profiles } = await supabase
-      .from("profiles")
-      .select("user_id, display_name, avatar_url, username")
-      .in("user_id", otherUserIds);
 
-    // Get presence for participants
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: presences } = await supabase
-      .from("user_presence")
-      .select("user_id, status")
-      .in("user_id", otherUserIds);
+    // Run both queries simultaneously instead of sequentially
+    const [profilesResult, presencesResult] = await Promise.all([
+      supabase
+        .from("profiles")
+        .select("user_id, display_name, avatar_url, username")
+        .in("user_id", otherUserIds),
+      supabase
+        .from("user_presence")
+        .select("user_id, status")
+        .in("user_id", otherUserIds),
+    ]);
+
+    const profiles = profilesResult.data;
+    const presences = presencesResult.data;
 
     // Build profile and presence maps
     const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
@@ -729,19 +733,21 @@ export async function getUsersForMessaging(
     // Filter out blocked users
     const filteredUsers = users?.filter((u) => !blockedIds.has(u.id)) || [];
 
-    // Get profiles
+    // Get profiles and presence in PARALLEL (performance optimization)
     const userIds = filteredUsers.map((u) => u.id);
-    const { data: profiles } = await supabase
-      .from("profiles")
-      .select("user_id, display_name, avatar_url")
-      .in("user_id", userIds);
+    const [profilesResult, presencesResult] = await Promise.all([
+      supabase
+        .from("profiles")
+        .select("user_id, display_name, avatar_url")
+        .in("user_id", userIds),
+      supabase
+        .from("user_presence")
+        .select("user_id, status")
+        .in("user_id", userIds),
+    ]);
 
-    // Get presence
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: presences } = await supabase
-      .from("user_presence")
-      .select("user_id, status")
-      .in("user_id", userIds);
+    const profiles = profilesResult.data;
+    const presences = presencesResult.data;
 
     const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
     const presenceRows = (presences || []) as PresenceRow[];
