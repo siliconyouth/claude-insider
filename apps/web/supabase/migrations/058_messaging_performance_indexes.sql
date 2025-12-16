@@ -28,9 +28,10 @@ CREATE INDEX IF NOT EXISTS idx_user_presence_status
   ON user_presence(user_id, status);
 
 -- Index for profiles commonly looked up by user_id
+-- Note: username is in "user" table, not profiles
 CREATE INDEX IF NOT EXISTS idx_profiles_user_lookup
   ON profiles(user_id)
-  INCLUDE (display_name, avatar_url, username);
+  INCLUDE (display_name, avatar_url);
 
 -- Analyze tables to update statistics for query planner
 ANALYZE dm_participants;
