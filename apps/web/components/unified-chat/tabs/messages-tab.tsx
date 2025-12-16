@@ -253,15 +253,24 @@ function ConversationView({
     []
   );
 
-  // Scroll to bottom
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // Scroll to bottom - instant for initial load, smooth for new messages
+  const scrollToBottom = useCallback((instant = false) => {
+    // Use requestAnimationFrame to ensure DOM is rendered
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: instant ? "instant" : "smooth",
+      });
+    });
   }, []);
+
+  // Track if this is initial load
+  const isInitialLoadRef = useRef(true);
 
   // Load messages
   useEffect(() => {
     const loadMessages = async () => {
       setIsLoading(true);
+      isInitialLoadRef.current = true;
       const result = await getMessages(conversationId);
       if (result.success && result.messages) {
         setMessages(result.messages);
@@ -273,9 +282,12 @@ function ConversationView({
     loadMessages();
   }, [conversationId]);
 
-  // Scroll on new messages
+  // Scroll on messages change - instant on initial load, smooth on new messages
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > 0) {
+      scrollToBottom(isInitialLoadRef.current);
+      isInitialLoadRef.current = false;
+    }
   }, [messages, scrollToBottom]);
 
   // Subscribe to new messages - APPEND instead of full reload for performance
