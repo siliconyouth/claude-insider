@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.83.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.86.0**.
 
 | Link | URL |
 |------|-----|
@@ -12,32 +12,58 @@ Claude Insider is a Next.js documentation site for Claude AI. **Version 0.83.0**
 
 **Built entirely with Claude Code powered by Claude Opus 4.5.**
 
+### Goals
+
+1. **Centralize Claude Knowledge** - Single source of truth for Claude AI documentation
+2. **Improve Discoverability** - Easy navigation for finding relevant information
+3. **Community Resource** - Help users maximize productivity with Claude AI
+4. **Always Current** - Keep content updated with latest Claude features
+
+### Target Audience
+
+- Developers using Claude Code CLI
+- Users of Claude.ai web interface
+- Teams integrating Claude API into applications
+- Anyone looking to improve their Claude AI workflow
+
 ---
 
 ## Quick Reference
 
 ### Tech Stack
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Next.js | 16.0.10 | React framework (App Router) |
-| React | 19.2.3 | UI library |
-| TypeScript | 5.9.3 | Type-safe JavaScript (strict mode) |
-| Tailwind CSS | 4.1.5 | Utility-first CSS |
-| MDX | 3.x | Markdown with React components |
-| Fuse.js | 7.1.0 | Fuzzy search |
-| highlight.js | 11.x | Syntax highlighting (33 languages) |
-| Anthropic SDK | latest | Claude Sonnet 4 streaming chat |
-| ElevenLabs SDK | latest | Text-to-Speech (42 voices) |
-| Better Auth | 1.4.6 | User authentication (OAuth, 2FA) |
-| Supabase | 2.87.1 | PostgreSQL with RLS |
-| Payload CMS | 3.68.3 | Content management system |
-| Turborepo | 2.6.3 | Monorepo build system |
-| pnpm | 10.19.0 | Package manager |
-| FingerprintJS | 5.0.1 | Browser fingerprinting for security |
-| nanoid | 5.1.6 | Request correlation IDs |
-| @faker-js/faker | 10.1.0 | Honeypot fake data generation |
-| date-fns | 4.1.0 | Date formatting utilities |
+All technologies are **free and/or open source** (except hosting services with free tiers).
+
+| Technology | Version | License | Purpose |
+|------------|---------|---------|---------|
+| Next.js | 16.0.10 | MIT | React framework (App Router) |
+| React | 19.2.3 | MIT | UI library |
+| TypeScript | 5.9.3 | Apache-2.0 | Type-safe JavaScript (strict mode) |
+| Tailwind CSS | 4.1.5 | MIT | Utility-first CSS |
+| MDX | 3.x | MIT | Markdown with React components |
+| Fuse.js | 7.1.0 | Apache-2.0 | Fuzzy search |
+| highlight.js | 11.x | BSD-3-Clause | Syntax highlighting (33 languages) |
+| Anthropic SDK | latest | Proprietary | Claude Sonnet 4 streaming chat |
+| ElevenLabs SDK | latest | MIT | Text-to-Speech (42 voices) |
+| Better Auth | 1.4.6 | MIT | User authentication (OAuth, 2FA) |
+| Supabase | 2.87.1 | MIT | PostgreSQL with RLS |
+| Payload CMS | 3.68.3 | MIT | Content management system |
+| Turborepo | 2.6.3 | MIT | Monorepo build system |
+| pnpm | 10.19.0 | MIT | Package manager |
+| FingerprintJS | 5.0.1 | MIT | Browser fingerprinting |
+| nanoid | 5.1.6 | MIT | Request correlation IDs |
+| @faker-js/faker | 10.1.0 | MIT | Honeypot fake data |
+| date-fns | 4.1.0 | MIT | Date formatting |
+| @matrix-org/matrix-sdk-crypto-wasm | 16.0.0 | Apache-2.0 | E2EE implementation |
+| @paypal/react-paypal-js | 8.9.2 | Apache-2.0 | PayPal integration |
+
+### Development Environment
+
+| Requirement | Minimum Version |
+|-------------|-----------------|
+| Node.js | 18.x LTS or higher |
+| pnpm | 9.x or higher |
+| Git | 2.x |
 
 ### Commands
 
@@ -66,9 +92,8 @@ pnpm db:types         # Generate Supabase TypeScript types
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Supabase anonymous key |
 | `DATABASE_URL` | Yes | PostgreSQL connection string |
 | `NEXT_PUBLIC_APP_URL` | Yes | App URL (e.g., https://www.claudeinsider.com) |
-| `NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA` | Auto | Build versioning |
-| `CRON_SECRET` | Yes | Secret for securing cron job endpoints |
-| `API_KEY_ENCRYPTION_SECRET` | No | Secret for encrypting user API keys (falls back to BETTER_AUTH_SECRET) |
+| `CRON_SECRET` | Yes | Secret for cron job endpoints |
+| `API_KEY_ENCRYPTION_SECRET` | No | User API key encryption (falls back to BETTER_AUTH_SECRET) |
 
 ### Vercel Deployment
 
@@ -76,6 +101,64 @@ pnpm db:types         # Generate Supabase TypeScript types
 |---------|-------|
 | Root Directory | `apps/web` |
 | Framework | Next.js (auto-detected) |
+
+Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` → `www.claudeinsider.com`
+
+---
+
+## Feature Requirements Summary
+
+### Implemented Features (32 total)
+
+| ID | Feature | Key Capabilities |
+|----|---------|------------------|
+| FR-1 | Content Management | MDX, syntax highlighting (33 languages), copy-to-clipboard, ToC with scroll spy |
+| FR-2 | Navigation | 7 categories, breadcrumbs, prev/next navigation, sidebar |
+| FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
+| FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
+| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (1,933 chunks), ElevenLabs TTS (42 voices), speech-to-text |
+| FR-6 | Resources Section | 122+ curated resources, 10 categories, search, GitHub integration |
+| FR-7 | Account Security | Password management, OAuth linking, safety checks |
+| FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |
+| FR-9 | Admin Notifications | In-app, push, email channels; scheduling; targeting by role |
+| FR-10 | User API Keys | AES-256-GCM encryption, model detection, usage tracking |
+| FR-11 | Model Selection | Header dropdown, tier badges, real-time token counter |
+| FR-12 | Assistant Settings | Database-backed preferences, cross-device sync |
+| FR-13 | Enhanced Onboarding | API key setup, credits explanation |
+| FR-14 | Notification Popups | Persistent until dismissed, deep-linking, ARIA regions |
+| FR-15 | Settings Model | Model selector in settings with feedback |
+| FR-16 | Header Model Display | Smart API key indicators, BEST badge, tier colors |
+| FR-17 | Database Types | 73 tables, auto-generated TypeScript types |
+| FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
+| FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
+| FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
+| FR-21 | Sound Effects | Web Audio API, 24 sound types, 6 categories |
+| FR-22 | Group Chat | Roles (owner/admin/member), invitations, ownership transfer |
+| FR-23 | Admin Diagnostics | TEST ALL, streaming AI analysis, fix prompts |
+| FR-24 | API Key Testing | Validate keys, rate limits, model availability |
+| FR-25 | Resources API | Public endpoint, filtering, stats |
+| FR-26 | Link Checker | Connectivity tests, error handling |
+| FR-27 | Security Dashboard | Fingerprinting, trust scores, honeypots, activity feed |
+| FR-28 | E2EE | Matrix Olm/Megolm, device verification, cloud backup |
+| FR-29 | Unified Chat | AI + Messages tabs, portal-rendered, focus trap |
+| FR-30 | Donation System | PayPal, bank transfer, donor badges, receipts |
+| FR-31 | PWA Enhancements | 15 icons, service worker, push notifications |
+| FR-32 | ProfileHoverCard | Touch-friendly previews, two-touch navigation |
+
+### Non-Functional Requirements
+
+| ID | Category | Requirements |
+|----|----------|--------------|
+| NFR-1 | Performance | Static generation, FCP < 1.5s, Turborepo caching, Lighthouse > 90 |
+| NFR-2 | Accessibility | WCAG 2.1 AA, keyboard navigation, screen reader support, skip-to-content |
+| NFR-3 | SEO | SSR, meta tags, Open Graph, sitemap.xml, robots.txt, JSON-LD |
+| NFR-4 | Security | HTTPS only, CSP headers, Permissions-Policy, privacy-first |
+
+### Browser Support
+
+| Browser | Versions |
+|---------|----------|
+| Chrome, Firefox, Safari, Edge | Last 2 versions |
 
 ---
 
@@ -90,190 +173,45 @@ claude-insider/
 │   │   ├── globals.css           # Global styles, animations
 │   │   ├── docs/[...slug]/       # Dynamic MDX routes
 │   │   ├── api/assistant/        # Chat & TTS endpoints
-│   │   ├── api/auth/passkey-login/ # Passkey authentication endpoint
-│   │   ├── api/cron/             # Scheduled jobs (digests, notifications)
-│   │   ├── api/debug/            # Diagnostics (api-key-test, link-check)
+│   │   ├── api/auth/             # Authentication endpoints
+│   │   ├── api/cron/             # Scheduled jobs
+│   │   ├── api/debug/            # Diagnostics
 │   │   ├── api/resources/        # Public resources API
 │   │   ├── api/e2ee/             # E2EE API (12 endpoints)
-│   │   │   ├── keys/             # Device public keys
-│   │   │   ├── prekeys/          # One-time prekeys & claim
-│   │   │   ├── backup/           # Cloud key backup
-│   │   │   ├── sessions/         # Session data
-│   │   │   ├── devices/          # Device management
-│   │   │   ├── verification/     # Device verification (5 endpoints)
-│   │   │   └── ai-consent/       # AI consent management
-│   │   ├── actions/passkeys.ts   # 8 passkey server actions
-│   │   ├── actions/two-factor.ts # 13 2FA server actions (multi-device)
-│   │   ├── actions/group-chat.ts # Group chat management (create, invite, roles)
+│   │   ├── actions/              # Server actions (passkeys, 2FA, group-chat)
 │   │   └── (main)/dashboard/     # Admin dashboard pages
 │   ├── components/               # 70+ React components
-│   │   ├── unified-chat/         # Unified Chat Window (AI + Messages)
-│   │   │   ├── index.ts          # Public exports
-│   │   │   ├── unified-chat-provider.tsx # Global context
-│   │   │   ├── unified-chat-window.tsx   # Portal-rendered window
-│   │   │   ├── unified-chat-header.tsx   # Tab bar
-│   │   │   ├── floating-chat-button.tsx  # Bottom-right FAB (Cmd + .)
-│   │   │   └── tabs/             # AI Assistant & Messages tabs
-│   │   ├── header.tsx, footer.tsx
-│   │   ├── toast.tsx, skeleton.tsx
-│   │   ├── animated-*.tsx        # Micro-interaction components
-│   │   ├── lazy-*.tsx            # Lazy loading components
-│   │   ├── error-*.tsx           # Error handling components
-│   │   ├── device-mockups.tsx    # SVG device frames
+│   │   ├── unified-chat/         # Unified Chat Window
 │   │   ├── auth/                 # Authentication components
-│   │   │   ├── auth-modal.tsx    # Sign in/sign up modal (passkey support)
-│   │   │   ├── passkey-login-button.tsx # WebAuthn login button
-│   │   │   ├── user-menu.tsx     # User dropdown menu
-│   │   │   └── onboarding-wizard/ # New user onboarding
-│   │   │       └── steps/security-step.tsx # Optional passkey/2FA setup
-│   │   ├── settings/             # Account settings components
-│   │   │   ├── password-settings.tsx  # Change/set password
-│   │   │   ├── connected-accounts.tsx # OAuth provider management
-│   │   │   ├── api-key-settings.tsx   # User API key management
-│   │   │   ├── passkey-settings.tsx   # Passkey/WebAuthn management
-│   │   │   └── two-factor-settings.tsx # Multi-device 2FA management
-│   │   ├── interactions/         # User interaction components
-│   │   │   ├── favorite-button.tsx
-│   │   │   ├── rating-stars.tsx
-│   │   │   ├── comment-section.tsx
-│   │   │   └── collection-button.tsx
-│   │   ├── achievements/         # Gamification components
-│   │   │   └── achievement-notification.tsx # Achievement unlock modal
-│   │   ├── notifications/        # Notification center & popups
-│   │   │   ├── notification-popup.tsx # Persistent notification popups
-│   │   ├── analytics/            # User stats dashboards
-│   │   ├── dashboard/security/   # Security dashboard components
-│   │   │   ├── overview.tsx      # Security overview stats & charts
-│   │   │   ├── analytics.tsx     # Bot/visitor analytics
-│   │   │   ├── logs.tsx          # Security event logs viewer
-│   │   │   ├── visitors.tsx      # Visitor fingerprints browser
-│   │   │   ├── honeypots.tsx     # Honeypot configuration
-│   │   │   └── settings.tsx      # Security settings panel
-│   │   ├── dashboard/activity-feed.tsx # Real-time activity feed with filters
-│   │   ├── providers/fingerprint-provider.tsx # FingerprintJS context
-│   │   ├── providers/e2ee-provider.tsx  # E2EE context provider
+│   │   ├── settings/             # Account settings
+│   │   ├── interactions/         # Favorites, ratings, comments
+│   │   ├── achievements/         # Gamification
+│   │   ├── notifications/        # Notification center
+│   │   ├── dashboard/security/   # Security dashboard
 │   │   ├── donations/            # Donation components
-│   │   │   ├── paypal-buttons.tsx # PayPal checkout integration
-│   │   │   └── donor-badge-modal.tsx # Donor recognition
 │   │   ├── pwa/                  # PWA components
-│   │   │   └── push-notification-prompt.tsx # Notification permission
-│   │   ├── universal-search/     # Unified search modal
-│   │   │   ├── index.tsx         # Main component (Quick + AI modes)
-│   │   │   ├── mode-toggle.tsx   # Quick/AI mode switcher
-│   │   │   └── types.ts          # TypeScript definitions
-│   │   ├── footer-language-selector.tsx # 18-language picker
-│   │   ├── resources/            # Resources components
-│   │   │   └── resource-card.tsx # Card with 3 variants
-│   │   └── home/                 # Homepage components
-│   │       └── resources-section.tsx # Resources showcase
+│   │   ├── universal-search/     # Search modal
+│   │   └── resources/            # Resources components
 │   ├── hooks/                    # Custom React hooks
-│   │   ├── use-optimistic-update.ts
-│   │   ├── use-intersection-observer.ts
-│   │   ├── use-prefetch.ts
-│   │   ├── use-error-recovery.ts
-│   │   ├── use-animations.ts
-│   │   ├── use-focus-trap.ts
-│   │   ├── use-aria-live.tsx
-│   │   ├── use-keyboard-shortcuts.ts
-│   │   ├── use-sound-effects.tsx # Site-wide sound effects (Web Audio API)
-│   │   ├── use-chat-sounds.tsx   # Chat-specific sound effects
-│   │   ├── use-fingerprint.ts    # Browser fingerprint management
-│   │   ├── use-security-realtime.ts # Supabase realtime security events
-│   │   ├── use-e2ee.ts           # E2EE key management hook
-│   │   └── use-browser-notifications.ts # Push notification hook
-│   ├── lib/
-│   │   ├── design-system.ts      # Design tokens & cn() utility
-│   │   ├── claude.ts             # Server-only Claude client
-│   │   ├── claude-utils.ts       # Client-safe utilities
-│   │   ├── rag.ts                # RAG with TF-IDF search
-│   │   ├── auth.ts               # Better Auth configuration
-│   │   ├── auth-client.ts        # Client-side auth hooks
-│   │   ├── webauthn.ts           # WebAuthn/Passkey utilities (SimpleWebAuthn)
-│   │   ├── gamification.ts       # Points, levels, streaks
-│   │   ├── achievements.ts       # 50+ achievement definitions (Lucide icons)
-│   │   ├── achievement-queue.ts  # localStorage queue for achievements
-│   │   ├── email.ts              # Resend email templates
-│   │   ├── admin-notifications.ts # Staff alerts & push notifications
-│   │   ├── api-keys.ts           # API key encryption & validation
-│   │   ├── get-user-api-key.ts   # Retrieve user's API key for AI features
-│   │   ├── fingerprint.ts        # FingerprintJS initialization & caching
-│   │   ├── request-id.ts         # nanoid correlation ID generator
-│   │   ├── security-logger.ts    # Security event logging to Supabase
-│   │   ├── honeypot.ts           # Honeypot/tarpit system for bots
-│   │   ├── honeypot-templates.ts # Faker.js templates for fake data
-│   │   ├── trust-score.ts        # Rules-based visitor trust scoring
-│   │   ├── supabase/             # Supabase clients
-│   │   │   ├── client.ts         # Browser client (RLS-enforced)
-│   │   │   └── server.ts         # Server client (RLS + admin client)
-│   │   ├── e2ee/                 # E2EE library (Matrix Olm/Megolm)
-│   │   │   ├── vodozemac.ts      # WASM loader with Web Crypto fallback
-│   │   │   ├── key-storage.ts    # IndexedDB private key storage
-│   │   │   ├── key-backup.ts     # Password-protected cloud backup
-│   │   │   ├── message-crypto.ts # Encrypt/decrypt with Double Ratchet
-│   │   │   ├── device-verification.ts # Emoji-based device verification
-│   │   │   ├── ai-consent.ts     # AI access consent management
-│   │   │   └── types.ts          # TypeScript definitions
-│   │   ├── web-push.ts           # Web Push API integration
+│   ├── lib/                      # Core libraries
+│   │   ├── design-system.ts      # Design tokens & cn()
+│   │   ├── supabase/             # Database clients
+│   │   ├── e2ee/                 # E2EE library
 │   │   └── resources/            # Resources library
-│   │       ├── types.ts          # ResourceEntry schema
-│   │       ├── data.ts           # Data loaders & utilities
-│   │       ├── search.ts         # Fuse.js search
-│   │       └── index.ts          # Public exports
 │   ├── content/                  # 34 MDX documentation pages
-│   │   ├── getting-started/      # 4 pages
-│   │   ├── configuration/        # 5 pages
-│   │   ├── tips-and-tricks/      # 5 pages
-│   │   ├── api/                  # 7 pages
-│   │   ├── integrations/         # 7 pages
-│   │   ├── tutorials/            # 4 pages
-│   │   └── examples/             # 2 pages
-│   ├── data/
-│   │   ├── system-prompt.ts      # AI persona & context
-│   │   ├── rag-index.json        # Pre-computed RAG index (1,933 chunks, 3,866 terms)
-│   │   └── resources/            # Curated resources (122+ entries)
-│   │       ├── official.json     # Anthropic official resources
-│   │       ├── tools.json        # Development tools
-│   │       ├── mcp-servers.json  # MCP server implementations
-│   │       ├── rules.json        # CLAUDE.md templates
-│   │       ├── prompts.json      # System prompts library
-│   │       ├── agents.json       # AI agent frameworks
-│   │       ├── tutorials.json    # Learning resources
-│   │       ├── sdks.json         # Client libraries
-│   │       ├── showcases.json    # Example projects
-│   │       └── community.json    # Community resources
-│   ├── i18n/                     # Internationalization
-│   │   ├── config.ts             # 18 locales, names, flags, regions
-│   │   ├── index.tsx             # I18nProvider component
-│   │   └── messages/             # Translation JSON files
-│   │       ├── en.json           # English (default)
-│   │       ├── es.json, fr.json  # Spanish, French
-│   │       ├── de.json, ja.json  # German, Japanese
-│   │       ├── zh.json, ko.json  # Chinese, Korean
-│   │       ├── pt.json           # Portuguese
-│   │       └── sr.json ... el.json # 10 European languages
+│   ├── data/                     # System prompt, RAG index, resources
+│   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   │   ├── Users.ts              # CMS users (admin, editor, moderator)
-│   │   ├── EditSuggestions.ts    # Community edit suggestions
-│   │   ├── Media.ts              # File uploads and avatars
-│   │   ├── Resources.ts          # Curated resources
-│   │   └── Translations.ts       # UI translation strings
-│   ├── supabase/                 # Database migrations
-│   │   └── migrations/           # 58 SQL migration files (000-057)
-│   │       ├── 000_fresh_start.sql # Consolidated base schema
-│   │       ├── ...               # User data, comments, collections
-│   │       ├── 025_admin_notifications.sql # Admin broadcast system
-│   │       ├── 033_user_api_keys.sql # User API key storage & usage tracking
-│   │       ├── 044_group_chats.sql # Group conversations, invitations, roles
-│   │       ├── 045_security_system.sql # Security tables
-│   │       ├── 051_donation_system.sql # Donation records
-│   │       ├── 054_e2ee_device_keys.sql # E2EE device keys & prekeys
-│   │       ├── 055_e2ee_messages.sql # Encrypted message storage
-│   │       ├── 056_e2ee_device_verification.sql # Device verification
-│   │       └── 057_e2ee_ai_consent.sql # AI consent records
-│   └── scripts/                  # Build-time scripts
-├── packages/                     # Shared configs (ui, eslint, ts, tailwind)
-├── vercel.json                   # Domain redirects
-└── CHANGELOG.md                  # Version history
+│   └── supabase/migrations/      # 58 SQL migration files
+├── packages/                     # Shared configs
+├── docs/                         # Documentation
+│   ├── archive/                  # Archived implementation plans
+│   └── CHANGELOG-ARCHIVE.md      # Detailed version history
+├── CLAUDE.md                     # Single source of truth (this file)
+├── CHANGELOG.md                  # Concise version history
+├── ROADMAP.md                    # Future feature planning
+├── README.md                     # Project introduction
+└── vercel.json                   # Domain redirects
 ```
 
 ---
@@ -298,10 +236,9 @@ claude-insider/
 | Hook dependencies | Use `useMemo` for objects | Prevent infinite re-renders |
 | Effect cleanup | `const ref = someRef.current` | Capture refs before cleanup |
 
-**Supabase Query Types**: Always define row interfaces for query results:
+**Supabase Query Types**: Always define row interfaces:
 
 ```typescript
-// Define typed row interfaces instead of using 'any'
 interface MessageRow {
   id: string;
   content: string;
@@ -315,40 +252,6 @@ const messages = (data as MessageRow[]) || [];
 
 ---
 
-## Internationalization (i18n)
-
-**18 Supported Languages** organized by region:
-
-| Region | Languages |
-|--------|-----------|
-| **Americas** | 🇺🇸 English (en), 🇪🇸 Español (es), 🇧🇷 Português (pt) |
-| **Europe** | 🇫🇷 Français (fr), 🇩🇪 Deutsch (de), 🇮🇹 Italiano (it), 🇳🇱 Nederlands (nl), 🇵🇱 Polski (pl), 🇸🇪 Svenska (sv), 🇳🇴 Norsk (no), 🇩🇰 Dansk (da), 🇫🇮 Suomi (fi), 🇬🇷 Ελληνικά (el), 🇷🇸 Српски (sr), 🇷🇺 Русский (ru) |
-| **Asia** | 🇯🇵 日本語 (ja), 🇨🇳 中文 (zh), 🇰🇷 한국어 (ko) |
-
-### Key Files
-
-| File | Purpose |
-|------|---------|
-| `i18n/config.ts` | Locale definitions, names, flags, regional groupings |
-| `i18n/index.tsx` | `I18nProvider` using `next-intl` |
-| `i18n/messages/*.json` | Translation strings per language |
-| `components/footer-language-selector.tsx` | Language picker in footer |
-| `collections/Translations.ts` | Payload CMS translation management |
-
-### Adding Translations
-
-1. Add key-value pairs to `i18n/messages/en.json` (source of truth)
-2. Copy to other locale files with translated values
-3. Use `useTranslations('namespace')` hook in components
-4. Payload CMS Translations collection available for admin editing
-
-### Locale Detection
-
-- Cookie: `NEXT_LOCALE` (set by language selector)
-- Fallback: Browser `Accept-Language` header → English default
-
----
-
 ## UX System (MANDATORY - Seven Pillars)
 
 All new components MUST implement ALL seven pillars:
@@ -356,7 +259,7 @@ All new components MUST implement ALL seven pillars:
 | Pillar | Purpose | Key Files |
 |--------|---------|-----------|
 | **Design System** | Visual consistency | `lib/design-system.ts`, `globals.css` |
-| **Optimistic UI** | Instant feedback | `use-optimistic-update.ts`, `toast.tsx`, `skeleton.tsx` |
+| **Optimistic UI** | Instant feedback | `use-optimistic-update.ts`, `toast.tsx` |
 | **Content-Aware Loading** | Lazy loading | `use-intersection-observer.ts`, `lazy-*.tsx` |
 | **Smart Prefetching** | Preload before click | `prefetch-queue.ts`, `use-prefetch.ts` |
 | **Error Boundaries** | Graceful errors | `error-boundary.tsx`, `use-error-recovery.ts` |
@@ -401,21 +304,17 @@ All new components MUST implement ALL seven pillars:
 
 #### Semantic Color Exceptions (ALLOWED)
 
-The following uses of orange/amber/yellow are permitted because they convey **semantic meaning**:
-
 | Use Case | Allowed Colors | Rationale |
 |----------|----------------|-----------|
-| **Warning/Status Indicators** | `amber-*`, `yellow-*` | Toasts, alerts, callouts, offline states, low-credit warnings |
-| **Star Ratings** | `yellow-400`, `yellow-500` | Universal UI convention for rating stars (GitHub stars, reviews) |
-| **Gamification Tiers** | `amber-*`, `yellow-*`, `orange-*` | Achievement rarities: Epic (violet), Legendary (amber/gold glow) |
-| **Streak Indicators** | `orange-*`, `amber-*` | Fire/heat metaphor for daily streaks and bonuses |
-| **Presence Status** | `orange-500` | "Idle" status in online indicators |
-| **Ranking Badges** | `yellow-*` (gold), `amber-*` (bronze) | Leaderboard positions (#1 gold, #3 bronze) |
-| **Pending States** | `yellow-*`, `amber-*` | Dashboard items awaiting action/review |
-| **Traffic Light UI** | `yellow-500` | Middle indicator in traffic-light patterns |
-| **Character Limits** | `yellow-*` | Approaching limit warnings in text inputs |
+| Warning/Status Indicators | `amber-*`, `yellow-*` | Toasts, alerts, offline states |
+| Star Ratings | `yellow-400`, `yellow-500` | Universal rating convention |
+| Gamification Tiers | `amber-*`, `yellow-*`, `orange-*` | Achievement rarities |
+| Streak Indicators | `orange-*`, `amber-*` | Fire/heat metaphor |
+| Presence Status | `orange-500` | "Idle" status |
+| Ranking Badges | `yellow-*` (gold), `amber-*` (bronze) | Leaderboard positions |
+| Pending States | `yellow-*`, `amber-*` | Dashboard items awaiting action |
 
-**Key Distinction**: Semantic colors convey **meaning** (warning, status, tier). Decorative colors are purely **aesthetic** and should use the violet/blue/cyan gradient system.
+**Key Distinction**: Semantic colors convey **meaning**. Decorative colors should use violet/blue/cyan.
 
 #### Gradient System
 
@@ -450,26 +349,6 @@ The following uses of orange/amber/yellow are permitted because they convey **se
 <article className="prose prose-invert">
 ```
 
-### Compliance Check
-
-```bash
-# Check for orange/amber/yellow usage (review each for semantic vs decorative)
-# Semantic uses (warnings, ratings, achievements, streaks, status) are ALLOWED
-# Decorative uses (accents, backgrounds, gradients) should use blue/cyan/violet
-grep -r "orange-\|amber-\|yellow-" apps/web/components/ apps/web/app/ \
-  --include="*.tsx" --include="*.css" \
-  | grep -v "code-block\|lazy-code" | head -20
-
-# Files with ALLOWED semantic usage (do not flag these):
-# - toast.tsx, accessible-modal.tsx (warnings)
-# - rating-stars.tsx, star-rating.tsx, review-*.tsx (star ratings)
-# - achievement-*.tsx, leaderboard.tsx (gamification tiers)
-# - streak-indicator.tsx (fire/heat metaphor)
-# - online-indicator.tsx (presence status)
-# - *-settings.tsx (warning states)
-# - Dashboard pages (pending/warning status indicators)
-```
-
 ### Typography Scale
 
 | Level | Class |
@@ -484,7 +363,6 @@ grep -r "orange-\|amber-\|yellow-" apps/web/components/ apps/web/app/ \
 ### Key Utilities
 
 ```tsx
-// cn() for conditional classes
 import { cn } from "@/lib/design-system";
 className={cn("base-classes", condition && "conditional-classes")}
 
@@ -534,13 +412,43 @@ className={cn(
 className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
 ```
 
+### ProfileHoverCard
+
+**Location**: `components/users/profile-hover-card.tsx`
+
+| Feature | Behavior |
+|---------|----------|
+| Desktop | Shows on hover, click navigates to profile |
+| Mobile/Tablet | First touch shows card, second touch navigates |
+| Keyboard | Focus shows card, Enter navigates |
+
+```tsx
+import { ProfileHoverCard } from "@/components/users/profile-hover-card";
+
+<ProfileHoverCard
+  user={{ id, name, username, image, bio, isFollowing }}
+  side="bottom"
+>
+  <span className="cursor-pointer">{user.name}</span>
+</ProfileHoverCard>
+```
+
+**Integrated in**: Leaderboard, ReviewCard, UserSearch, Followers/Following lists, ConversationView
+
 ---
 
 ## Data Layer Architecture (MANDATORY)
 
-> **CRITICAL**: This section defines mandatory rules for all database operations. Claude Code MUST follow these rules and update `apps/web/DATA_LAYER.md` when making changes to the data layer.
->
-> **Reference Document**: `apps/web/DATA_LAYER.md` - Complete database schema documentation
+### Overview
+
+Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **57 migrations** define **73 tables** across 13 categories.
+
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Database** | PostgreSQL 15+ (Supabase) | Primary data store |
+| **Authentication** | Better Auth 1.4.6 | User accounts, sessions, OAuth |
+| **ORM/Client** | `pg` Pool | Direct SQL queries |
+| **Migrations** | Supabase CLI | Manual SQL files in `supabase/migrations/` |
 
 ### Column Naming Convention (CRITICAL)
 
@@ -572,9 +480,125 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 | `createServerClient()` | `lib/supabase/server.ts` | Server components, RLS-enforced |
 | `createAdminClient()` | `lib/supabase/server.ts` | Server-only, bypasses RLS |
 
-### Mandatory Rules for Data Layer Changes
+### Table Catalog (73 Tables)
 
-#### Rule 1: Always Use Parameterized Queries
+#### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
+
+| Table | PK Type | Description |
+|-------|---------|-------------|
+| `user` | TEXT | User accounts with extended columns |
+| `session` | TEXT | Active sessions |
+| `account` | TEXT | OAuth accounts |
+| `verification` | TEXT | Email verification tokens |
+
+**Extended `user` Columns** (added by us):
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `username` | TEXT | Unique username |
+| `role` | TEXT | user/editor/moderator/admin/superadmin/ai_assistant |
+| `"twoFactorEnabled"` | BOOLEAN | 2FA status (camelCase!) |
+| `"hasCompletedOnboarding"` | BOOLEAN | Onboarding status (camelCase!) |
+| `banned`, `banned_at`, `banned_reason` | BOOLEAN/TIMESTAMPTZ/TEXT | Ban status |
+| `followers_count`, `following_count` | INTEGER | Denormalized counts |
+| `achievement_points` | INTEGER | Gamification points |
+
+#### User Data (14 tables)
+
+`profiles`, `favorites`, `ratings`, `reviews`, `review_helpful_votes`, `comments`, `comment_votes`, `collections`, `collection_items`, `user_activity`, `notifications`, `notification_preferences`, `user_follows`, `user_blocks`
+
+#### Gamification (3 tables)
+
+`achievements`, `user_achievements`, `achievement_progress`
+
+#### Messaging (7 tables)
+
+`user_presence`, `dm_conversations`, `dm_participants`, `dm_messages`, `dm_typing_indicators`, `dm_group_invitations`, `user_chat_settings`
+
+#### Security (4 tables)
+
+`security_logs`, `visitor_fingerprints`, `honeypot_configs`, `security_settings`
+
+#### E2EE (13 tables)
+
+`device_keys`, `one_time_prekeys`, `e2ee_key_backups`, `megolm_session_shares`, `e2ee_message_keys`, `e2ee_conversation_settings`, `e2ee_sas_verifications`, `e2ee_cross_signing_keys`, `e2ee_device_signatures`, `e2ee_user_trust`, `e2ee_ai_consent`, `e2ee_ai_access_log`, `e2ee_conversation_ai_settings`
+
+#### Donations (5 tables)
+
+`donations`, `donor_badges`, `donation_receipts`, `donation_bank_info`, `donation_settings`
+
+#### Auth Extensions (9 tables)
+
+`two_factor_sessions`, `two_factor_devices`, `email_verification_codes`, `passkeys`, `webauthn_challenges`, `user_api_keys`, `api_key_usage_logs`, `push_subscriptions`, `assistant_settings`
+
+#### Reports & Appeals (3 tables)
+
+`reports`, `ban_appeals`, `ban_history`
+
+#### Content & Moderation (4 tables)
+
+`edit_suggestions`, `beta_applications`, `feedback`, `admin_logs`
+
+#### Reading & Search (7 tables)
+
+`reading_lists`, `reading_list_items`, `view_history`, `resource_views`, `resource_view_stats`, `saved_searches`, `search_history`, `search_analytics`
+
+#### AI Conversations (2 tables)
+
+`ai_conversations`, `ai_messages`
+
+### Role Hierarchy
+
+```sql
+CHECK (role IN ('user', 'editor', 'moderator', 'admin', 'superadmin', 'ai_assistant'))
+```
+
+| Level | Role | API Check |
+|-------|------|-----------|
+| 0 | `ai_assistant` | Special non-hierarchical |
+| 1 | `user` | Default |
+| 2 | `editor` | `hasMinRole(userRole, ROLES.EDITOR)` |
+| 3 | `moderator` | `hasMinRole(userRole, ROLES.MODERATOR)` |
+| 4 | `admin` | `hasMinRole(userRole, ROLES.ADMIN)` |
+| 5 | `superadmin` | `isSuperAdmin(userRole)` |
+
+### RLS Security Model
+
+RLS policies use `USING (true)` because the app uses the **service_role** key (bypasses RLS). Access control is enforced at the **API route level**:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                   API Route Layer                        │
+│   ✓ Session validation (Better Auth getSession())       │
+│   ✓ Role checks (hasMinRole, ROLES)                     │
+│   ✓ Ownership verification (WHERE user_id = session.id) │
+└─────────────────────────────────────────────────────────┘
+                          │
+                          ▼
+┌─────────────────────────────────────────────────────────┐
+│                   Database Layer                         │
+│   RLS: USING(true) - service_role bypasses              │
+│   Constraints: FK, CHECK, UNIQUE enforced               │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Migration Structure
+
+```
+supabase/migrations/
+├── 000_fresh_start.sql          # Consolidated schema (fresh installs)
+├── 001-022                      # Core user data tables
+├── 023-030                      # Notifications, email verification
+├── 031-034                      # 2FA, passkeys, API keys, assistant settings
+├── 041-044                      # Reports, bans, messaging, group chats
+├── 045-049                      # Security system, materialized views, superadmin
+├── 050-053                      # Beta tester role, donation system
+└── 054-057                      # E2EE (device keys, messages, verification, AI consent)
+```
+
+### Mandatory Rules
+
+#### Rule 1: Parameterized Queries Only
 
 ```typescript
 // ✅ CORRECT
@@ -584,42 +608,24 @@ await pool.query('SELECT * FROM favorites WHERE user_id = $1', [userId]);
 await pool.query(`SELECT * FROM favorites WHERE user_id = '${userId}'`);
 ```
 
-#### Rule 2: Update DATA_LAYER.md When Changing Schema
+#### Rule 2: Update Schema Documentation
 
-When adding/modifying tables, columns, or migrations:
 1. Create migration file in `supabase/migrations/`
-2. Update `apps/web/DATA_LAYER.md` Table Catalog section
-3. Update column documentation if adding new columns
-4. Run `pnpm check-types` to verify
+2. Update `000_fresh_start.sql` (if adding tables)
+3. Run `pnpm check-types` to verify
 
 #### Rule 3: Defensive Migration Pattern
 
-Always use conditional DDL for migrations:
-
 ```sql
--- Check table exists before creating indexes
 DO $$
 BEGIN
   IF EXISTS (SELECT FROM pg_tables WHERE tablename = 'mytable') THEN
     CREATE INDEX IF NOT EXISTS idx_mytable_col ON mytable(col);
   END IF;
 END $$;
-
--- Check column exists before referencing
-DO $$
-BEGIN
-  IF EXISTS (
-    SELECT FROM information_schema.columns
-    WHERE table_name = 'mytable' AND column_name = 'newcol'
-  ) THEN
-    -- Safe to use column
-  END IF;
-END $$;
 ```
 
 #### Rule 4: Better Auth Column Awareness
-
-When querying the `user` table, always quote camelCase columns:
 
 | Column | Correct SQL | Common Mistake |
 |--------|-------------|----------------|
@@ -627,27 +633,6 @@ When querying the `user` table, always quote camelCase columns:
 | Email verified | `"emailVerified"` | `email_verified` |
 | 2FA enabled | `"twoFactorEnabled"` | `two_factor_enabled` |
 | Onboarding | `"hasCompletedOnboarding"` | `has_completed_onboarding` |
-
-#### Rule 5: Keep Consolidated Migration in Sync
-
-`000_fresh_start.sql` must match the sum of incremental migrations. When adding new tables:
-1. Add to the appropriate incremental migration (e.g., `049_new_feature.sql`)
-2. Also add to `000_fresh_start.sql` for fresh database installs
-
-#### Rule 6: Role Hierarchy (Database Constraint)
-
-```sql
-CHECK (role IN ('user', 'editor', 'moderator', 'admin', 'superadmin', 'ai_assistant'))
-```
-
-| Level | Role | API Route Check |
-|-------|------|-----------------|
-| 0 | `ai_assistant` | Special, non-hierarchical |
-| 1 | `user` | Default |
-| 2 | `editor` | `hasMinRole(userRole, ROLES.EDITOR)` |
-| 3 | `moderator` | `hasMinRole(userRole, ROLES.MODERATOR)` |
-| 4 | `admin` | `hasMinRole(userRole, ROLES.ADMIN)` |
-| 5 | `superadmin` | `isSuperAdmin(userRole)` |
 
 ### API Route Template
 
@@ -658,13 +643,11 @@ import { getSession } from "@/lib/auth";
 import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 
 export async function GET(request: NextRequest) {
-  // 1. Check authentication
   const session = await getSession();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  // 2. Check role (if admin/moderator endpoint)
   const roleResult = await pool.query(
     `SELECT role FROM "user" WHERE id = $1`,
     [session.user.id]
@@ -674,7 +657,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  // 3. Perform database operation
   const result = await pool.query(
     `SELECT * FROM table WHERE user_id = $1`,
     [session.user.id]
@@ -684,636 +666,154 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-### Quick Reference: Table Categories
+### Common Queries Reference
 
-| Category | Tables | FK Type |
-|----------|--------|---------|
-| **Auth (Better Auth)** | `user`, `session`, `account`, `verification` | TEXT id |
-| **User Data** | `profiles`, `favorites`, `ratings`, `comments`, etc. | `user_id TEXT → user(id)` |
-| **Security** | `security_logs`, `visitor_fingerprints`, `honeypot_configs` | UUID + user refs |
-| **Messaging** | `conversations`, `messages`, `message_groups` | UUID + user refs |
-| **Gamification** | `achievements`, `user_achievements`, `achievement_progress` | UUID + user refs |
+```sql
+-- Get user with role (Better Auth - must quote camelCase)
+SELECT id, email, role, "createdAt" FROM "user" WHERE id = $1;
+
+-- Get user favorites (custom table - snake_case)
+SELECT * FROM favorites WHERE user_id = $1 ORDER BY created_at DESC;
+
+-- Join user and custom table
+SELECT f.*, u.name FROM favorites f JOIN "user" u ON f.user_id = u.id;
+
+-- Check online status
+SELECT * FROM user_presence WHERE user_id = $1;
+
+-- Get conversations with unread count
+SELECT c.*, p.unread_count FROM dm_conversations c
+JOIN dm_participants p ON p.conversation_id = c.id
+WHERE p.user_id = $1;
+```
 
 ### Checklist for Data Layer Changes
 
 - [ ] Column names match convention (camelCase for Better Auth, snake_case for custom)
 - [ ] Migration uses defensive patterns (IF EXISTS, conditional DDL)
-- [ ] `DATA_LAYER.md` updated with new tables/columns
-- [ ] `000_fresh_start.sql` updated (if adding new tables)
+- [ ] `000_fresh_start.sql` updated (if adding tables)
 - [ ] Parameterized queries only (no string interpolation)
 - [ ] Run `pnpm check-types` after changes
-- [ ] Test migration with `supabase db push`
 
 ---
 
-## Unified Chat Window
+## Internationalization (i18n)
 
-### Architecture
+**18 Supported Languages**:
 
-The Unified Chat Window consolidates AI Assistant, Ask AI, and User Messaging into a single tabbed interface.
+| Region | Languages |
+|--------|-----------|
+| Americas | 🇺🇸 English, 🇪🇸 Español, 🇧🇷 Português |
+| Europe | 🇫🇷 Français, 🇩🇪 Deutsch, 🇮🇹 Italiano, 🇳🇱 Nederlands, 🇵🇱 Polski, 🇸🇪 Svenska, 🇳🇴 Norsk, 🇩🇰 Dansk, 🇫🇮 Suomi, 🇬🇷 Ελληνικά, 🇷🇸 Српски, 🇷🇺 Русский |
+| Asia | 🇯🇵 日本語, 🇨🇳 中文, 🇰🇷 한국어 |
+
+**Key Files**: `i18n/config.ts`, `i18n/messages/*.json`, `components/footer-language-selector.tsx`
+
+**Locale Detection**: Cookie `NEXT_LOCALE` → Browser `Accept-Language` → English default
+
+---
+
+## Feature Documentation
+
+### Unified Chat Window
 
 **Location**: `components/unified-chat/`
 
-| File | Purpose |
-|------|---------|
-| `index.ts` | Public exports (`openAIAssistant`, `openMessages`, `openAssistant`) |
-| `unified-chat-provider.tsx` | Global React context for state management |
-| `unified-chat-window.tsx` | Portal-rendered window with focus trap |
-| `unified-chat-header.tsx` | Tab bar ("AI Assistant" | "Messages") + controls |
-| `floating-chat-button.tsx` | Bottom-right FAB with Cmd + . shortcut, tab persistence |
-| `tabs/ai-assistant-tab.tsx` | AI chat with Claude streaming, TTS, speech recognition |
-| `tabs/messages-tab.tsx` | User-to-user messaging with real-time updates |
-
-### Features
-
 | Tab | Features |
 |-----|----------|
-| **AI Assistant** | Claude streaming, ElevenLabs TTS (42 voices), speech recognition, conversation history (localStorage), settings panel |
-| **Messages** | Supabase real-time, typing indicators, E2EE indicators, unread badges, conversation list |
-
-### Global Functions
+| **AI Assistant** | Claude streaming, ElevenLabs TTS (42 voices), speech recognition, localStorage history |
+| **Messages** | Supabase real-time, typing indicators, E2EE indicators, unread badges |
 
 ```typescript
-import { openAIAssistant, openMessages, openAssistant } from "@/components/unified-chat";
+import { openAIAssistant, openMessages } from "@/components/unified-chat";
 
-// Open AI tab with optional context
 openAIAssistant({ context: AIContext, question: string });
-
-// Open Messages tab with optional conversation
 openMessages({ conversationId: string, userId: string });
-
-// Legacy - opens AI tab
-openAssistant();
 ```
-
-### API Routes
-
-| Route | Method | Purpose |
-|-------|--------|---------|
-| `/api/assistant/chat` | POST | Streaming chat with Claude (SSE) |
-| `/api/assistant/speak` | POST | ElevenLabs TTS (MP3) |
-| `/api/resources` | GET | Public resources API (122+ entries) |
-| `/api/debug/api-key-test` | GET/POST | Test Anthropic API keys (admin) |
-| `/api/debug/link-check` | GET | Validate internal links (admin) |
 
 ### RAG System (v6.0)
 
-- **1,933 total chunks** (1,913 documentation + 20 project knowledge)
+- **1,933 chunks** (1,913 docs + 20 project knowledge)
 - **3,866 indexed terms** for TF-IDF search
-- Semantic chunking with paragraph-aware splitting
-- TF-IDF scoring with title/heading/keyword boosts
 - Built at compile time via `scripts/generate-rag-index.cjs`
 
-### Project Knowledge Categories
+### End-to-End Encryption (E2EE)
 
-The RAG system includes 20 specialized knowledge chunks covering:
+**Location**: `lib/e2ee/`, `app/api/e2ee/`
 
-| Category | Topics |
-|----------|--------|
-| **Platform Overview** | Claude Insider architecture, tech stack, version info |
-| **User Features** | Authentication (OAuth, passkeys, 2FA), gamification, messaging, API keys |
-| **Admin Features** | Security dashboard, diagnostics, user management, CMS |
-| **Security System** | Fingerprinting, trust scores, honeypots, rate limiting |
-| **Internationalization** | 18 languages, locale detection, translation system |
-| **MCP Servers** | Model Context Protocol integration guide |
-| **Database** | 73 tables across 13 categories, RLS policies |
-| **Real-time Features** | Presence, typing indicators, notifications |
-| **Accessibility** | WCAG 2.1 AA compliance, UX seven pillars |
-| **AI Integration** | Claude Opus 4.5 streaming, ElevenLabs TTS |
+Matrix Olm/Megolm protocol with Double Ratchet algorithm.
 
----
+| Component | Purpose |
+|-----------|---------|
+| `vodozemac.ts` | WASM crypto with Web Crypto fallback |
+| `key-storage.ts` | IndexedDB for private keys |
+| `key-backup.ts` | Password-protected cloud backup |
+| `device-verification.ts` | Emoji-based verification (SAS) |
 
-## End-to-End Encryption (E2EE)
+**Security Model**: Private keys never leave device. Cloud backup uses AES-256-GCM.
 
-**Location**: `lib/e2ee/`, `app/api/e2ee/`, `components/providers/e2ee-provider.tsx`
+### Donation System
 
-The E2EE system implements Matrix Olm/Megolm protocol for secure messaging with Double Ratchet algorithm.
+**Location**: `app/donate/`, `components/donate/`
 
-### Architecture
+| Tier | Threshold | Color |
+|------|-----------|-------|
+| Bronze | $10+ | amber-600 |
+| Silver | $50+ | gray-400 |
+| Gold | $100+ | yellow-500 |
+| Platinum | $500+ | gradient |
 
-| Layer | Location | Purpose |
-|-------|----------|---------|
-| **WASM** | `lib/e2ee/vodozemac.ts` | @matrix-org/matrix-sdk-crypto-wasm with Web Crypto fallback |
-| **Storage** | `lib/e2ee/key-storage.ts` | IndexedDB for private keys (never leave device) |
-| **Crypto** | `lib/e2ee/message-crypto.ts` | Encrypt/decrypt messages using Olm/Megolm |
-| **Backup** | `lib/e2ee/key-backup.ts` | Password-protected cloud key backup |
-| **Verification** | `lib/e2ee/device-verification.ts` | Emoji-based device verification (SAS) |
-| **AI Consent** | `lib/e2ee/ai-consent.ts` | Consent for AI access to encrypted conversations |
+### Resources Section
 
-### E2EE API Routes
+**Location**: `lib/resources/`, `data/resources/`, `app/resources/`
 
-| Route | Method | Purpose |
-|-------|--------|---------|
-| `/api/e2ee/keys` | GET/POST | Upload/fetch device public keys |
-| `/api/e2ee/prekeys` | POST | Upload one-time prekeys |
-| `/api/e2ee/prekeys/claim` | POST | Claim prekeys for session establishment |
-| `/api/e2ee/backup` | GET/POST/DELETE | Cloud key backup management |
-| `/api/e2ee/sessions` | POST | Session data storage |
-| `/api/e2ee/devices` | GET/DELETE | Device management |
-| `/api/e2ee/verification/*` | POST | Device verification flow (5 endpoints) |
-| `/api/e2ee/ai-consent` | GET/POST | AI consent management |
+122+ curated resources across 10 categories: official, tools, mcp-servers, rules, prompts, agents, tutorials, sdks, showcases, community.
 
-### Database Tables
+### Achievement System
 
-| Table | Purpose |
-|-------|---------|
-| `device_keys` | Device public keys (Curve25519, Ed25519) |
-| `one_time_prekeys` | Ephemeral keys for session establishment |
-| `key_backups` | Password-encrypted cloud backups |
-| `device_verifications` | Verification request tracking |
-| `ai_consents` | Per-user AI access consent records |
+**Location**: `lib/achievements.ts`, `components/achievements/`
 
-### Security Model
-
-- **Private keys**: Stored in IndexedDB, never sent to server
-- **Public keys**: Uploaded to server for discovery
-- **Cloud backup**: AES-256-GCM encrypted with user password
-- **Session protocol**: Olm for 1:1, Megolm for groups
-- **Forward secrecy**: One-time prekeys consumed on use
-
----
-
-## Donation System
-
-**Location**: `app/api/dashboard/donations/`, `app/donate/`, `components/donate/`, `supabase/migrations/051_donation_system.sql`
-
-The Donation System provides a complete fundraising platform with multiple payment methods and donor recognition.
-
-### Features
-
-| Feature | Description |
-|---------|-------------|
-| **PayPal Integration** | One-time and recurring donations via PayPal Checkout SDK |
-| **Bank Transfer** | Admin-configurable bank details with multi-currency support |
-| **Donor Badges** | Four tiers: Bronze ($10+), Silver ($50+), Gold ($100+), Platinum ($500+) |
-| **Donor Wall** | Public recognition page with anonymity options |
-| **Tax Receipts** | Auto-generated receipt numbers (CI-YYYY-NNNNNN format) |
-| **Email Notifications** | Automated thank-you emails via Resend |
-
-### Database Tables
-
-| Table | Purpose |
-|-------|---------|
-| `donations` | Transaction records (PayPal, bank transfer, metadata) |
-| `donor_badges` | User tier tracking with visibility preferences |
-| `donation_receipts` | Tax receipt generation and download tracking |
-| `donation_bank_info` | Admin-managed bank account details |
-| `donation_settings` | System configuration (amounts, thresholds, features) |
-
-### API Routes
-
-| Route | Method | Purpose |
-|-------|--------|---------|
-| `/api/dashboard/donations` | GET | Donation statistics for admin dashboard |
-| `/api/donations/create` | POST | Create new donation |
-| `/api/donations/paypal/capture` | POST | Capture PayPal payment |
-| `/api/donations/bank-info` | GET | Get bank transfer details |
-| `/api/donations/donor-wall` | GET | Public donor wall data |
-
-### Badge Tier System
-
-| Tier | Threshold | Color | Features |
-|------|-----------|-------|----------|
-| Bronze | $10+ | amber-600 | Basic badge |
-| Silver | $50+ | gray-400 | Enhanced badge |
-| Gold | $100+ | yellow-500 | Gold badge, priority support |
-| Platinum | $500+ | gradient | Special recognition, beta access |
-
----
-
-## Resources Section
-
-**Location**: `lib/resources/`, `data/resources/`, `components/resources/`, `app/resources/`
-
-The Resources section provides a curated knowledge base of 122+ tools, templates, and community contributions for Claude AI development.
-
-### Architecture
-
-| Layer | Location | Purpose |
-|-------|----------|---------|
-| **Data** | `data/resources/*.json` | 10 JSON files with resource entries |
-| **Types** | `lib/resources/types.ts` | TypeScript interfaces (ResourceEntry, Category) |
-| **Utilities** | `lib/resources/data.ts` | Loaders, filters, stats, category helpers |
-| **Search** | `lib/resources/search.ts` | Fuse.js with weighted fields |
-| **Components** | `components/resources/` | ResourceCard with 3 variants |
-| **Pages** | `app/resources/` | Index page + [category] dynamic routes |
-
-### Categories (10 total)
-
-| Category | Slug | Description |
-|----------|------|-------------|
-| Official | `official` | Anthropic documentation & SDKs |
-| Tools | `tools` | Development utilities |
-| MCP Servers | `mcp-servers` | Model Context Protocol servers |
-| Rules | `rules` | CLAUDE.md templates & configs |
-| Prompts | `prompts` | System prompt library |
-| Agents | `agents` | AI agent frameworks |
-| Tutorials | `tutorials` | Learning resources & guides |
-| SDKs | `sdks` | Client libraries & integrations |
-| Showcases | `showcases` | Example projects |
-| Community | `community` | Discussions, Discord, resources |
-
-### ResourceEntry Schema
-
-```typescript
-interface ResourceEntry {
-  id: string;                    // Unique identifier
-  title: string;                 // Display name
-  description: string;           // Short description
-  url: string;                   // Primary link
-  category: ResourceCategorySlug;
-  subcategory?: string;
-  tags: string[];
-  featured?: boolean;            // Show in featured section
-  status?: 'stable' | 'beta' | 'experimental' | 'deprecated';
-  difficulty?: 'beginner' | 'intermediate' | 'advanced';
-  addedDate: string;             // ISO date
-  lastUpdated?: string;
-  github?: {                     // Optional GitHub metadata
-    owner: string;
-    repo: string;
-    stars?: number;
-    forks?: number;
-    language?: string;
-    lastCommit?: string;
-  };
-  author?: { name: string; url?: string; };
-  license?: string;
-  image?: string;
-}
-```
-
-### Search Configuration
-
-Fuse.js with weighted fields:
-
-| Field | Weight | Purpose |
-|-------|--------|---------|
-| title | 0.4 | Primary match |
-| description | 0.3 | Context match |
-| tags | 0.15 | Tag filtering |
-| subcategory | 0.1 | Subcategory match |
-| github.owner | 0.03 | Author lookup |
-| github.repo | 0.02 | Repo name match |
-
-### Routes
-
-| Route | Type | Description |
-|-------|------|-------------|
-| `/resources` | Static | Search, filter, browse all resources |
-| `/resources/[category]` | SSG | Category-specific listing (10 paths) |
-
-### Homepage Integration
-
-The `ResourcesSection` component appears after the hero with:
-- **StatsBar**: Total resources, categories, GitHub stars
-- **CategoryGrid**: 10 category cards with icons
-- **FeaturedResources**: Top 6 featured entries
-- **PopularTags**: Tag cloud (top 12)
-- **TopByStars**: Resources sorted by GitHub stars
-
-### Adding New Resources
-
-1. Edit the appropriate JSON file in `data/resources/`
-2. Add entry following `ResourceEntry` schema
-3. Run `pnpm build` to verify
-4. Featured entries show on homepage and category page headers
-
-### Component Variants
-
-| Variant | Usage | Features |
-|---------|-------|----------|
-| `default` | General listing | Full card with tags, badges |
-| `compact` | Dense lists | Smaller, minimal info |
-| `featured` | Homepage/headers | Larger with gradient border |
-
----
-
-## Device Mockups
-
-**Location**: `components/device-mockups.tsx`
-
-Use pure SVG with foreignObject for React content embedding.
-
-### iPhone 17 Pro Max Specs
-
-| Property | Value |
-|----------|-------|
-| SVG viewBox | `0 0 236 480` |
-| Frame width | `6px` titanium |
-| Screen area | `224 × 468` at (6, 6) |
-| Dynamic Island | `60 × 18` centered |
-
-### Container Queries
+50+ achievements across 9 categories with 4 rarity tiers (Common, Rare, Epic, Legendary).
 
 ```tsx
-// Inside foreignObject, use cqw units for responsive sizing
-<div style={{ fontSize: '4cqw', padding: '3cqw' }}>
-  {children}
-</div>
-```
-
----
-
-## Code Block Languages (33)
-
-Colors organized by family:
-
-| Family | Languages | Color |
-|--------|-----------|-------|
-| JavaScript | js, jsx | yellow-500, amber-500 |
-| TypeScript | ts, tsx | blue-600, sky-500 |
-| Python | py | emerald-500 |
-| Shell | bash, sh | teal-600 |
-| Data | json, yaml, toml | lime-500, pink-500, orange-600 |
-| Web | html, css, xml | orange-500, purple-500, cyan-600 |
-| Systems | go, rust, c, cpp | cyan-500, amber-700, blue-700/500 |
-| JVM | java, kotlin, scala | red-600, violet-600, rose-500 |
-
-See `code-block.tsx` for full `languageConfig`.
-
----
-
-## Achievement System
-
-**Location**: `lib/achievements.ts`, `lib/achievement-queue.ts`, `components/achievements/`
-
-The achievement system provides gamification through 50+ achievements with Lucide icons.
-
-### Achievement Categories
-
-| Category | Description | Example Achievements |
-|----------|-------------|---------------------|
-| `onboarding` | First-time user milestones | Welcome Aboard, Looking Good, Fort Knox |
-| `engagement` | Community participation | Ice Breaker, Conversation Starter, Change Maker |
-| `learning` | Documentation exploration | Curious Mind, Foundation Builder, Tutorial Graduate |
-| `social` | Following, followers, connections | Social Butterfly, Rising Star, Influencer |
-| `content` | Creating and sharing | Editor's Eye, Code Explorer, Prompt Artist |
-| `streak` | Daily activity | Week Warrior, Monthly Master, Centurion |
-| `collector` | Favorites, collections | Bookmark Beginner, Curator, Librarian |
-| `expert` | Mastery achievements | Power User, Master Achiever, Completionist |
-| `special` | Unique milestones | Early Adopter, Night Owl, Coffee Break |
-
-### Rarity Tiers
-
-| Rarity | XP Range | Visual Style |
-|--------|----------|--------------|
-| Common | 10-50 XP | Gray background, no glow |
-| Rare | 75-150 XP | Blue glow, confetti |
-| Epic | 200-500 XP | Violet glow, more confetti |
-| Legendary | 500-2500 XP | Amber glow rings, shimmer effect, star burst |
-
-### Triggering Achievements
-
-```tsx
-// Using the queue (survives page reloads)
 import { queueAchievement } from "@/lib/achievement-queue";
 queueAchievement("welcome_aboard");
-
-// Using the hook (immediate display)
-import { useAchievementNotification } from "@/components/achievements/achievement-notification";
-const { showAchievement } = useAchievementNotification();
-showAchievement("welcome_aboard");
 ```
 
-### Achievement Notification Features
+### Sound Effects System
 
-- Confetti particles with rarity-specific colors
-- Glow rings animation for legendary achievements
-- Sound effects by rarity (Web Audio API)
-- Auto-dismiss (5s common, 6s epic, 7s legendary)
-- Queue system for multiple achievements
-- Portal-based rendering
-- Keyboard accessible (Escape to close)
+**Location**: `hooks/use-sound-effects.tsx`
 
----
-
-## Sound Effects System
-
-**Location**: `hooks/use-sound-effects.tsx`, `hooks/use-chat-sounds.tsx`
-
-Site-wide sound effects using Web Audio API (no audio files required).
-
-### Sound Categories
-
-| Category | Sounds | Default |
-|----------|--------|---------|
-| Notifications | notification, badge, urgent | Enabled |
-| Feedback | success, error, warning, info | Enabled |
-| UI | click, toggle, hover, navigation | Disabled |
-| Chat | message, typing, mention, invitation | Enabled |
-| Achievements | achievement, level_up, complete | Enabled |
-
-### Usage
+Web Audio API-based, no audio files. 24 sound types across 6 categories.
 
 ```tsx
-import { useSoundEffects } from "@/hooks/use-sound-effects";
-
 const sounds = useSoundEffects();
-
-// Play specific sounds
 sounds.playSuccess();
 sounds.playNotification();
-sounds.playAchievement();
-sounds.playMessageReceived();
-
-// Or use the generic play method
-sounds.play("success");
-
-// Update settings
-sounds.updateSettings({ enabled: false, volume: 0.5 });
 ```
 
-### Sound Settings Persistence
+### Security System
 
-Settings are stored in localStorage under `soundSettings` with structure:
-- `enabled`: Master toggle
-- `volume`: 0.0 to 1.0
-- `notifications`, `feedback`, `ui`, `chat`, `achievements`: Category toggles
+**Location**: `lib/fingerprint.ts`, `lib/security-logger.ts`, `lib/honeypot.ts`, `lib/trust-score.ts`
+
+| Component | Purpose |
+|-----------|---------|
+| Fingerprinting | FingerprintJS with 24-hour caching |
+| Trust Scoring | 0-100 rules-based algorithm |
+| Honeypots | Faker.js fake data traps |
+| Activity Feed | 7 activity types with real-time updates |
+
+### Group Chat
+
+**Location**: `app/actions/group-chat.ts`
+
+Roles: owner, admin, member. Features: invitations, ownership transfer, member management.
 
 ---
 
-## Group Chat System
+## Content Structure
 
-**Location**: `app/actions/group-chat.ts`, `supabase/migrations/044_group_chats.sql`
-
-### Database Schema
-
-| Table | Purpose |
-|-------|---------|
-| `dm_conversations` | Extended with group fields (description, avatar, created_by) |
-| `dm_participants` | Added role column (owner, admin, member) |
-| `dm_group_invitations` | Invitation tracking with expiration |
-| `user_chat_settings` | Sound preferences per user |
-
-### Server Actions
-
-| Action | Purpose |
-|--------|---------|
-| `createGroupConversation` | Create new group |
-| `inviteToGroup` | Send invitation |
-| `acceptGroupInvitation` | Join group |
-| `declineGroupInvitation` | Reject invitation |
-| `leaveGroupConversation` | Leave with ownership transfer |
-| `updateGroupMemberRole` | Promote/demote members |
-| `removeFromGroup` | Kick members |
-| `getGroupMembers` | List members with presence |
-| `updateGroupSettings` | Update name, description, avatar |
-
-### Role Permissions
-
-| Role | Can Invite | Can Kick | Can Manage Roles | Can Edit Settings |
-|------|-----------|----------|------------------|-------------------|
-| Owner | Yes | Yes (except self) | Yes (all) | Yes |
-| Admin | Yes | Yes (members only) | No | Yes |
-| Member | No | No | No | No |
-
----
-
-## Security System
-
-**Location**: `lib/fingerprint.ts`, `lib/security-logger.ts`, `lib/honeypot.ts`, `lib/trust-score.ts`, `components/dashboard/security/`
-
-The Security System provides bot detection, visitor tracking, and honeypot protection for the admin dashboard.
-
-### Architecture
-
-| Layer | Location | Purpose |
-|-------|----------|---------|
-| **Database** | `supabase/migrations/045_security_system.sql` | 4 tables: security_logs, visitor_fingerprints, honeypot_configs, security_settings |
-| **Fingerprinting** | `lib/fingerprint.ts` | FingerprintJS initialization with 24-hour browser caching |
-| **Request IDs** | `lib/request-id.ts` | nanoid-based correlation IDs for request tracing |
-| **Logging** | `lib/security-logger.ts` | Security event logging to Supabase |
-| **Honeypots** | `lib/honeypot.ts`, `lib/honeypot-templates.ts` | Tarpit system with faker.js fake data |
-| **Trust Scoring** | `lib/trust-score.ts` | Rules-based 0-100 visitor trust algorithm |
-| **Middleware** | `middleware.ts` | Request ID injection into all requests |
-| **Hooks** | `hooks/use-fingerprint.ts`, `hooks/use-security-realtime.ts` | React hooks for client-side |
-| **Provider** | `components/providers/fingerprint-provider.tsx` | FingerprintJS context provider |
-
-### Database Tables
-
-| Table | Purpose |
-|-------|---------|
-| `security_logs` | All security events with correlation IDs, fingerprints, and metadata |
-| `visitor_fingerprints` | Unique visitor fingerprints with trust scores and visit counts |
-| `honeypot_configs` | Honeypot/tarpit configurations and faker.js templates |
-| `security_settings` | Global security settings (rate limits, thresholds) |
-
-### Security Dashboard Pages
-
-| Route | Purpose |
-|-------|---------|
-| `/dashboard/security` | Overview with stats, charts, and recent events |
-| `/dashboard/security/analytics` | Bot detection analytics and visitor patterns |
-| `/dashboard/security/logs` | Searchable security event log viewer |
-| `/dashboard/security/visitors` | Visitor fingerprint browser with trust scores |
-| `/dashboard/security/honeypots` | Honeypot configuration and template editor |
-| `/dashboard/security/settings` | Security thresholds and rate limit settings |
-
-### Trust Score Algorithm
-
-The trust score (0-100) is calculated based on:
-
-| Factor | Impact | Description |
-|--------|--------|-------------|
-| Known fingerprint | +20 | Returning visitor with history |
-| Account linked | +30 | Fingerprint associated with user account |
-| Suspicious patterns | -20 | High request rate, bot-like behavior |
-| Honeypot triggered | -50 | Visitor interacted with honeypot |
-| JavaScript disabled | -15 | Common bot indicator |
-| Headless browser | -30 | Automated browser detected |
-
-### Activity Feed
-
-**Location**: `components/dashboard/activity-feed.tsx`
-
-Real-time activity feed with 7 activity types, filters, search, and hovercards:
-
-| Activity Type | Description |
-|---------------|-------------|
-| `security_event` | Security-related events (login attempts, rate limits) |
-| `user_action` | User actions (profile updates, settings changes) |
-| `content_change` | Content modifications (comments, suggestions) |
-| `system_event` | System events (cron jobs, background tasks) |
-| `api_request` | API endpoint calls with response times |
-| `auth_event` | Authentication events (login, logout, 2FA) |
-| `honeypot_trigger` | Bot interactions with honeypot traps |
-
-### Diagnostics Tests
-
-The security system adds 9 new diagnostic tests:
-
-**Security Tests (4)**
-- Fingerprint Provider: Tests FingerprintJS initialization
-- Security Logger: Tests event logging to Supabase
-- Trust Score Calculator: Tests score algorithm
-- Honeypot System: Tests fake data generation
-
-**Performance Tests (5)**
-- Request ID Generation: Tests nanoid performance
-- Fingerprint Caching: Tests 24-hour cache validity
-- Realtime Subscription: Tests Supabase realtime connection
-- Activity Feed Loading: Tests feed query performance
-- Log Search: Tests security log search performance
-
-### API Routes
-
-| Route | Method | Purpose |
-|-------|--------|---------|
-| `/api/dashboard/security/logs` | GET | Fetch security logs with pagination |
-| `/api/dashboard/security/visitors` | GET | Fetch visitor fingerprints |
-| `/api/dashboard/security/stats` | GET | Get security statistics |
-| `/api/dashboard/security/honeypots` | GET/POST/PUT/DELETE | Manage honeypot configs |
-| `/api/dashboard/security/settings` | GET/PUT | Manage security settings |
-| `/api/dashboard/security/trust-score` | POST | Calculate trust score for fingerprint |
-| `/api/dashboard/activity` | GET | Fetch activity feed with filters |
-
-### Usage
-
-```tsx
-// Get browser fingerprint
-import { useFingerprint } from "@/hooks/use-fingerprint";
-const { fingerprint, isLoading } = useFingerprint();
-
-// Log security event
-import { logSecurityEvent } from "@/lib/security-logger";
-await logSecurityEvent({
-  type: "suspicious_activity",
-  fingerprint: visitorId,
-  requestId: correlationId,
-  metadata: { reason: "high_request_rate" }
-});
-
-// Calculate trust score
-import { calculateTrustScore } from "@/lib/trust-score";
-const score = calculateTrustScore(visitorData);
-```
-
----
-
-## Content Guidelines
-
-### Adding New Documentation
-
-1. Create MDX in `apps/web/content/[category]/`
-2. Add frontmatter: `title`, `description`
-3. Update `lib/search.ts` index
-4. Add `<ContentMeta>` at bottom (MANDATORY)
-5. Run `pnpm build` to regenerate RAG index
-
-### ContentMeta (Required on all pages)
-
-```mdx
-<ContentMeta
-  sources={[
-    { title: "Source", url: "https://..." }
-  ]}
-  generatedDate="YYYY-MM-DD"
-  model="Claude Opus 4.5"
-/>
-```
-
-### Documentation Categories
+### Documentation (34 pages)
 
 | Category | Route | Pages |
 |----------|-------|-------|
@@ -1325,7 +825,39 @@ const score = calculateTrustScore(visitorData);
 | Tutorials | `/docs/tutorials` | 4 |
 | Examples | `/docs/examples` | 2 |
 
-**Total: 34 documentation pages + 7 utility pages** (resources, privacy, terms, disclaimer, accessibility, changelog, RSS)
+### Resources (11 pages)
+
+`/resources` index + 10 category pages
+
+### Utility Pages (6)
+
+Privacy, Terms, Disclaimer, Accessibility, Changelog, RSS Feed
+
+**Legal Pages Compliance** (updated v0.86.0):
+
+| Page | Lines | Key Features |
+|------|-------|--------------|
+| Privacy Policy | 848 | Multi-jurisdictional (Serbia, EU, US), E2EE, donations, GDPR/CCPA rights |
+| Terms of Service | 729 | DSA compliance, E2EE terms, donation terms, MIT license details |
+| Disclaimer | 442 | E2EE key warnings, donation tax disclaimer, AI disclaimer |
+| Accessibility | 352 | Unified Chat, E2EE, donation forms, expanded keyboard shortcuts |
+
+**Jurisdictional Compliance**: Serbian law (primary), GDPR, CCPA/CPRA, Digital Services Act
+
+### Adding Documentation
+
+1. Create MDX in `apps/web/content/[category]/`
+2. Add frontmatter: `title`, `description`
+3. Add `<ContentMeta>` at bottom (MANDATORY)
+4. Run `pnpm build` to regenerate RAG index
+
+```mdx
+<ContentMeta
+  sources={[{ title: "Source", url: "https://..." }]}
+  generatedDate="YYYY-MM-DD"
+  model="Claude Opus 4.5"
+/>
+```
 
 ---
 
@@ -1333,94 +865,42 @@ const score = calculateTrustScore(visitorData);
 
 **Location**: `/dashboard/diagnostics`
 
-Every new feature MUST have a corresponding test in the Diagnostics dashboard. This ensures all features can be verified to work correctly in production.
-
-### Diagnostics Dashboard Features
-
-| Feature | Description |
-|---------|-------------|
-| **TEST ALL** | Run all 17 test suites sequentially with progress bar |
-| **AI Analysis** | Claude Opus 4.5 streaming analysis of test results |
-| **Auto Console Capture** | Automatic capture of console logs (no manual paste) |
-| **Fix Prompt Window** | Ready-to-use Claude Code fix commands with copy-to-clipboard |
+Every new feature MUST have a corresponding diagnostic test.
 
 ### 17 Test Suites
 
-| Suite | Purpose |
-|-------|---------|
-| Environment Variables | Validates all required env vars are configured |
-| Supabase Admin Client | Tests privileged database access |
-| Direct PostgreSQL Pool | Tests raw database connection |
-| RLS Status | Verifies Row Level Security policies |
-| Auth Session | Validates authentication state |
-| Dashboard Users API | Tests admin API endpoints |
-| Sound Effects System | Tests Web Audio API integration |
-| Achievement System | Tests achievement unlock flow |
-| Fingerprint Provider | Tests FingerprintJS initialization |
-| Security Logger | Tests event logging to Supabase |
-| Trust Score Calculator | Tests scoring algorithm |
-| Honeypot System | Tests fake data generation |
-| Request ID Generation | Tests nanoid performance |
-| Fingerprint Caching | Tests 24-hour cache validity |
-| Realtime Subscription | Tests Supabase realtime connection |
-| Activity Feed Loading | Tests feed query performance |
-| Log Search | Tests security log search performance |
+Environment Variables, Supabase Admin, PostgreSQL Pool, RLS Status, Auth Session, Dashboard API, Sound Effects, Achievements, Fingerprint, Security Logger, Trust Score, Honeypot, Request ID, Fingerprint Cache, Realtime, Activity Feed, Log Search
 
-### What Must Be Added for New Features
+### Adding Tests for New Features
 
-| Feature Type | Required Test |
-|--------------|---------------|
-| Database table/query | Add connection test in `runDatabaseDiagnostics()` |
-| API endpoint | Add endpoint test in `runApiTests()` |
-| Sound effect | Add to `SOUND_CATEGORIES` in diagnostics page |
-| Achievement | Add sample to `SAMPLE_ACHIEVEMENTS` array |
-| Toast/notification | Already covered by existing test buttons |
-| Animation | Add visual test button if complex |
+| Feature Type | Add To |
+|--------------|--------|
+| Database table/query | `runDatabaseDiagnostics()` |
+| API endpoint | `runApiTests()` |
+| Sound effect | `SOUND_CATEGORIES` |
+| Achievement | `SAMPLE_ACHIEVEMENTS` |
 
-### Example: Adding a New Feature Test
+---
 
-```typescript
-// In app/(main)/dashboard/diagnostics/page.tsx
+## Success Metrics
 
-// For a new API endpoint:
-const results: DiagnosticResult[] = [];
-try {
-  const response = await fetch("/api/your-new-endpoint");
-  results.push({
-    name: "Your New API",
-    status: response.ok ? "success" : "error",
-    message: response.ok ? "Working" : `Error: ${response.status}`,
-  });
-} catch (error) {
-  results.push({ name: "Your New API", status: "error", message: "Failed" });
-}
-
-// For a new sound:
-const SOUND_CATEGORIES = {
-  // ... existing categories
-  your_category: ["new_sound_1", "new_sound_2"] as SoundType[],
-};
-```
-
-### Checklist for New Features
-
-- [ ] Feature works in production
-- [ ] Diagnostic test added to `/dashboard/diagnostics`
-- [ ] Test button/section is clearly labeled
-- [ ] Error states are handled gracefully
-- [ ] Run TEST ALL to verify no regressions
+- User engagement (time on site, pages per session)
+- Search usage and success rate
+- Content coverage: 34 docs + 122+ resources
+- Core Web Vitals performance
+- GitHub stars and contributions
 
 ---
 
 ## Updating Guidelines
 
-When modifying any UX pillar or design system:
+When modifying UX or design system:
 
-1. Update the relevant source files
+1. Update source files
 2. Add CSS animations to `globals.css` if needed
 3. Update this CLAUDE.md
 4. Update CHANGELOG.md
-5. Test in both light and dark modes
+5. Test in light and dark modes
 6. Test with slow network (DevTools throttling)
 7. Test with `prefers-reduced-motion`
 8. Run compliance check for banned colors
@@ -1433,6 +913,6 @@ When modifying any UX pillar or design system:
 
 Copyright (c) 2025 Vladimir Dukelic (vladimir@dukelic.com)
 
-When using this software, you must:
+When using this software:
 1. Link to: https://github.com/siliconyouth/claude-insider
 2. Credit: Vladimir Dukelic (vladimir@dukelic.com)

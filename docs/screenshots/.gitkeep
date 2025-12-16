@@ -1,0 +1,31 @@
+# Screenshots Directory
+
+Screenshots for the README.md file (Dark Theme, 1920x1080).
+
+## Saved Screenshots
+
+| File | Size | Status |
+|------|------|--------|
+| `homepage-hero.png` | 422 KB | Saved via Firecrawl |
+| `documentation.png` | 204 KB | Saved via Firecrawl |
+| `resources.png` | 283 KB | Saved via Firecrawl |
+| `ai-assistant.png` | - | Save from conversation |
+
+## AI Assistant Screenshot
+
+The AI Assistant screenshot was captured via Puppeteer showing a conversation about "What is Claude Code?".
+
+To save it:
+1. Find the screenshot labeled "ai-assistant-full" in the Claude Code conversation
+2. Right-click the image and select "Save Image As..."
+3. Save as `ai-assistant.png` in this directory
+
+## Recapturing Screenshots
+
+If you need to recapture:
+
+1. Open https://www.claudeinsider.com
+2. Use dark theme (default)
+3. Set viewport to 1920x1080
+4. Use Puppeteer or browser DevTools for screenshots
+5. For AI Assistant: Open the chat panel and have a conversation first

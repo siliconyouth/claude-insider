@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.83.0";
+const APP_VERSION = "0.86.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,6 +24,38 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.86.0",
+    date: "2025-12-16",
+    type: "minor",
+    highlights: [
+      "Legal pages compliance update (GDPR, CCPA, DSA, Serbian law)",
+      "Privacy Policy expanded with E2EE, donations, international transfers",
+      "Terms of Service with DSA compliance and MIT license details",
+      "Accessibility Statement with Unified Chat and E2EE features",
+    ],
+  },
+  {
+    version: "0.85.0",
+    date: "2025-12-16",
+    type: "minor",
+    highlights: [
+      "Documentation consolidation - single source of truth",
+      "CLAUDE.md now contains all project guidelines",
+      "Archived completed implementation plans",
+      "Removed custom Claude agent definitions",
+    ],
+  },
+  {
+    version: "0.84.0",
+    date: "2025-12-16",
+    type: "minor",
+    highlights: [
+      "Touch screen ProfileHoverCard support",
+      "Two-touch navigation pattern for mobile",
+      "Site-wide ProfileHoverCard integration",
+    ],
+  },
+  {
     version: "0.83.0",
     date: "2025-12-16",
     type: "minor",
@@ -31,8 +63,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "Floating Chat Button with Cmd + . keyboard shortcut",
       "AI Assistant audio refactored with semaphore-based queue system",
       "Sentence-splitting for natural TTS streaming",
-      "Audio caching for replay without re-fetching",
-      "Mobile/Safari-safe TTS strategy",
     ],
   },
   {
@@ -75,8 +105,8 @@ const CHANGELOG: ChangelogEntry[] = [
     date: "2025-12-15",
     type: "minor",
     highlights: [
-      "Comprehensive DATA_LAYER.md documentation",
-      "50 database tables documented across 8 categories",
+      "Comprehensive Data Layer documentation (consolidated in CLAUDE.md)",
+      "73 database tables documented across 13 categories",
       "RLS security patterns and policy documentation",
       "Fresh start migration consolidation (024-049)",
       "22 new tables including DMs, presence, security",

@@ -15,7 +15,7 @@ export default function DisclaimerPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert max-w-none">
           <h1 className="text-4xl font-bold mb-2">Disclaimer</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 15, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 16, 2025</p>
 
           <section className="mb-8 p-6 bg-violet-500/10 border border-violet-500/30 rounded-lg">
             <h2 className="text-xl font-semibold mb-4 text-violet-400">Important Notice</h2>
@@ -81,6 +81,121 @@ export default function DisclaimerPage() {
           </section>
 
           <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">End-to-End Encryption (E2EE) Disclaimer</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Claude Insider offers end-to-end encrypted direct messaging. Important disclaimers regarding this feature:
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Key Management</h3>
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mt-4">
+              <p className="text-gray-300 leading-relaxed">
+                <strong className="text-amber-400">Critical Warning:</strong> Your private encryption keys are stored <em>only</em> on your device(s). We cannot access, recover, or reset your encryption keys. If you lose all your devices without having enabled cloud key backup, your encrypted messages will be <strong>permanently and irreversibly lost</strong>.
+              </p>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">No Liability for Lost Keys or Messages</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>We are <strong>not responsible</strong> for lost encryption keys due to device loss, theft, damage, or software issues</li>
+              <li>We are <strong>not responsible</strong> for lost or unrecoverable messages resulting from key loss</li>
+              <li>We are <strong>not responsible</strong> for forgotten cloud backup passwords — there is no &quot;forgot password&quot; recovery</li>
+              <li>We <strong>cannot</strong> decrypt your messages under any circumstances, even by legal request</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Security Limitations</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Device security:</strong> E2EE only protects data in transit; if your device is compromised, your messages may be accessed</li>
+              <li><strong>Endpoint security:</strong> We cannot guarantee the security of devices you or your contacts use</li>
+              <li><strong>Metadata:</strong> While message content is encrypted, metadata (who you message, when, how often) is visible to us</li>
+              <li><strong>Implementation:</strong> While we use industry-standard protocols (Matrix Olm/Megolm), no encryption is 100% guaranteed secure</li>
+              <li><strong>Third-party devices:</strong> Your contacts&apos; device security affects your communication security</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Cloud Backup Disclaimer</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>Cloud key backup is encrypted with your password using AES-256-GCM</li>
+              <li>A weak password may compromise your backup security</li>
+              <li>We cannot recover backups if you forget your password</li>
+              <li>You are responsible for keeping your backup password secure</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Direct Messaging Disclaimer</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Claude Insider offers user-to-user direct messaging. Important disclaimers:
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">User-Generated Content</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>We are <strong>not responsible</strong> for the content of messages sent between users</li>
+              <li>Messages may contain inaccurate, offensive, or harmful content</li>
+              <li>You are solely responsible for the messages you send</li>
+              <li>Report abusive users via Settings or by emailing vladimir@dukelic.com</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Message Delivery</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>We <strong>do not guarantee</strong> message delivery or delivery timing</li>
+              <li>Messages may be delayed, lost, or fail to send due to network issues</li>
+              <li>Real-time features (typing indicators, presence) may not always be accurate</li>
+              <li>Do not rely on our messaging for time-critical or mission-critical communications</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Group Conversations</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>Group owners and admins control group membership and settings</li>
+              <li>We are not responsible for actions taken by group administrators</li>
+              <li>Group invitations may be revoked or expired</li>
+              <li>You may be removed from groups at the owner&apos;s discretion</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Donation Disclaimer</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Claude Insider accepts voluntary donations to support development. Important disclaimers:
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Tax Information</h3>
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mt-4">
+              <p className="text-gray-300 leading-relaxed">
+                <strong className="text-blue-400">Important:</strong> Claude Insider is <strong>not a registered charity or non-profit organization</strong>. Donations to Claude Insider are <strong>not tax-deductible</strong> in any jurisdiction. We provide donation receipts for your records only — these are not tax documents. Consult a qualified tax professional regarding any tax implications.
+              </p>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Receipt Accuracy</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>Donation receipts are provided for record-keeping purposes only</li>
+              <li>While we strive for accuracy, receipt details may contain errors</li>
+              <li>You are responsible for maintaining your own financial records</li>
+              <li>We do not provide corrected or amended receipts for tax purposes</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Payment Processor Limitations</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>PayPal:</strong> Subject to PayPal&apos;s terms, fees, and limitations. We are not responsible for PayPal account issues, chargebacks, or disputes</li>
+              <li><strong>Bank transfers:</strong> Subject to your bank&apos;s terms, fees, and processing times. International transfers may incur additional fees</li>
+              <li><strong>Currency conversion:</strong> Exchange rates and conversion fees are determined by payment processors, not by us</li>
+              <li><strong>Failed payments:</strong> We are not responsible for declined payments, insufficient funds, or bank errors</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Refund Limitations</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>Donations are generally non-refundable voluntary contributions</li>
+              <li>Refund processing may take 5-10 business days</li>
+              <li>Payment processor fees may not be refundable</li>
+              <li>See our <a href="/terms" className="text-blue-400 hover:text-cyan-300">Terms of Service</a> for full refund policy</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Donor Badges</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>Donor badges are cosmetic recognition only — they grant no additional features, services, or rights</li>
+              <li>Badge tiers may be modified, renamed, or discontinued at any time</li>
+              <li>Badges do not represent an investment, ownership stake, or equity in Claude Insider</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">AI Voice Assistant Disclaimer</h2>
             <p className="text-gray-300 leading-relaxed">
               This website includes an AI Voice Assistant feature powered by third-party services. Important disclaimers regarding this feature:
@@ -92,6 +207,7 @@ export default function DisclaimerPage() {
               <li>The assistant may &quot;hallucinate&quot; or provide incorrect information</li>
               <li>Responses should be verified against official documentation</li>
               <li>The assistant is not a substitute for professional advice</li>
+              <li>AI responses may not reflect the most current Claude AI features or capabilities</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Third-Party Services</h3>
@@ -99,6 +215,15 @@ export default function DisclaimerPage() {
               <li><strong>Anthropic:</strong> We are not affiliated with Anthropic. Using the assistant involves Anthropic&apos;s API and their terms</li>
               <li><strong>ElevenLabs:</strong> Text-to-speech is provided by ElevenLabs. Voice output may not perfectly match written text</li>
               <li><strong>Browser Speech API:</strong> Voice input quality depends on your browser and device capabilities</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">AI and Encrypted Messages</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li>By default, AI cannot access your encrypted messages</li>
+              <li>If you grant AI access to encrypted conversations, messages are decrypted in memory only</li>
+              <li>AI-analyzed content is not stored permanently or used for training</li>
+              <li>You can revoke AI access at any time</li>
+              <li>AI responses about your encrypted messages may reveal information in an unencrypted response</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">No Guarantees</h3>
@@ -169,6 +294,8 @@ export default function DisclaimerPage() {
               <li>Comments, reviews, and edit suggestions</li>
               <li>Favorites, collections, and reading lists</li>
               <li>Activity data (logins, sessions)</li>
+              <li>Encrypted messages (we cannot read these)</li>
+              <li>Donation history and receipts</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">Your Data Rights</h3>
@@ -246,6 +373,24 @@ export default function DisclaimerPage() {
               <li>Any errors or omissions in the content</li>
               <li>Any interruption or cessation of the website</li>
               <li>Any viruses or other harmful components transmitted through the website</li>
+              <li>Lost encryption keys or unrecoverable encrypted messages</li>
+              <li>Issues with third-party payment processors</li>
+              <li>AI-generated inaccuracies or hallucinations</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              <strong>EU/EEA consumers:</strong> This limitation does not affect your statutory rights under EU consumer protection law.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Governing Law</h2>
+            <p className="text-gray-300 leading-relaxed">
+              This disclaimer is governed by the laws of the Republic of Serbia. For users in other jurisdictions, your local mandatory consumer protection rights are preserved.
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li><strong>EU/EEA residents:</strong> Your rights under the Consumer Rights Directive and GDPR are not affected</li>
+              <li><strong>California residents:</strong> Your CCPA rights remain in effect</li>
+              <li><strong>Other jurisdictions:</strong> Local non-waivable statutory protections apply</li>
             </ul>
           </section>
 
@@ -270,7 +415,16 @@ export default function DisclaimerPage() {
               <strong>In short:</strong> Claude Insider is an unofficial, independent resource. We&apos;re not affiliated with Anthropic. Information may be outdated or inaccurate. Always verify with official sources. Use code examples at your own risk.
             </p>
             <p className="text-gray-300 leading-relaxed mt-3">
-              <strong>Regarding your data:</strong> Anonymous users have data stored locally in the browser. Registered users have profile and activity data stored on our servers with industry-standard security. You can export or delete all your data at any time from Settings.
+              <strong>E2EE messaging:</strong> Your encryption keys exist only on your devices. We cannot recover lost keys or messages. Back up your keys — this is your responsibility.
+            </p>
+            <p className="text-gray-300 leading-relaxed mt-3">
+              <strong>Donations:</strong> Not tax-deductible. Receipts are for your records only. Badges are cosmetic. Payment processor issues are outside our control.
+            </p>
+            <p className="text-gray-300 leading-relaxed mt-3">
+              <strong>AI Assistant:</strong> Responses may be inaccurate. Verify with official docs. AI cannot read encrypted messages unless you explicitly grant access.
+            </p>
+            <p className="text-gray-300 leading-relaxed mt-3">
+              <strong>Your data:</strong> Anonymous users have data stored locally in the browser. Registered users have profile and activity data stored on our servers with industry-standard security. You can export or delete all your data at any time from Settings.
             </p>
             <p className="text-gray-300 leading-relaxed mt-3">
               For official documentation, visit <a href="https://docs.anthropic.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-cyan-300">docs.anthropic.com</a>.

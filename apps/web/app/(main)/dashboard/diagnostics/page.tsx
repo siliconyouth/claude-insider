@@ -5546,7 +5546,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <label className="text-xs text-gray-500 uppercase">Version</label>
-            <p className="text-white font-mono">0.83.0</p>
+            <p className="text-white font-mono">0.86.0</p>
           </div>
           <div>
             <label className="text-xs text-gray-500 uppercase">Environment</label>

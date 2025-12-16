@@ -4,7 +4,7 @@ import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Privacy Policy - Claude Insider",
-  description: "Privacy Policy for Claude Insider - how we handle your data and protect your privacy.",
+  description: "Privacy Policy for Claude Insider - how we handle your data and protect your privacy across all jurisdictions.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -15,15 +15,65 @@ export default function PrivacyPolicyPage() {
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <article className="prose prose-invert prose-blue max-w-none">
           <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-          <p className="text-gray-400 text-sm mb-8">Last updated: December 15, 2025</p>
+          <p className="text-gray-400 text-sm mb-8">Last updated: December 16, 2025</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
             <p className="text-gray-300 leading-relaxed">
-              This Privacy Policy explains how Claude Insider (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, and protects your information when you visit our website at www.claudeinsider.com (the &quot;Website&quot;). Claude Insider is a personal project operated by Vladimir Dukelic.
+              This Privacy Policy explains how Claude Insider (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, and protects your information when you visit our website at www.claudeinsider.com (the &quot;Website&quot;). Claude Insider is a personal project operated by Vladimir Dukelic from the Republic of Serbia.
             </p>
             <p className="text-gray-300 leading-relaxed mt-4">
-              We are committed to protecting your privacy and being transparent about our practices. This policy complies with applicable privacy laws including the EU General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), and the Serbian Law on Personal Data Protection.
+              We are committed to protecting your privacy as a fundamental human right, as recognized by Article 12 of the Universal Declaration of Human Rights. This policy complies with applicable privacy laws including the Serbian Law on Personal Data Protection (Zakon o zaštiti podataka o ličnosti), the EU General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA/CPRA), and international privacy frameworks.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Legal Framework</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Claude Insider operates under a multi-jurisdictional legal framework to ensure all users are protected regardless of their location:
+            </p>
+
+            <div className="overflow-x-auto mt-4">
+              <table className="min-w-full text-sm text-gray-300">
+                <thead className="bg-gray-800/50">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">Jurisdiction</th>
+                    <th className="px-4 py-2 text-left font-semibold">Applicable Law</th>
+                    <th className="px-4 py-2 text-left font-semibold">Your Rights</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  <tr>
+                    <td className="px-4 py-2">Serbia (Primary)</td>
+                    <td className="px-4 py-2">Zakon o zaštiti podataka o ličnosti</td>
+                    <td className="px-4 py-2">Full GDPR-equivalent rights</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">European Union/EEA</td>
+                    <td className="px-4 py-2">GDPR, ePrivacy Directive</td>
+                    <td className="px-4 py-2">8 data subject rights</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">California, USA</td>
+                    <td className="px-4 py-2">CCPA/CPRA</td>
+                    <td className="px-4 py-2">Right to know, delete, opt-out</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Other US States</td>
+                    <td className="px-4 py-2">State consumer laws</td>
+                    <td className="px-4 py-2">Applicable state rights</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">International</td>
+                    <td className="px-4 py-2">OECD Privacy Guidelines, UN Consumer Protection Guidelines</td>
+                    <td className="px-4 py-2">Universal privacy principles</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p className="text-gray-300 leading-relaxed mt-4">
+              We adhere to the OECD Privacy Principles: Collection Limitation, Data Quality, Purpose Specification, Use Limitation, Security Safeguards, Openness, Individual Participation, and Accountability.
             </p>
           </section>
 
@@ -35,8 +85,76 @@ export default function PrivacyPolicyPage() {
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300">
                 <strong>Vladimir Dukelic</strong><br />
-                Email: <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">vladimir@dukelic.com</a>
+                Email: <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">vladimir@dukelic.com</a><br />
+                Location: Republic of Serbia
               </p>
+            </div>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              <strong>Serbian Supervisory Authority:</strong><br />
+              Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti<br />
+              Bulevar kralja Aleksandra 15, 11000 Belgrade, Serbia<br />
+              Website: <a href="https://www.poverenik.rs" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">www.poverenik.rs</a>
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Legal Basis for Processing</h2>
+            <p className="text-gray-300 leading-relaxed">
+              We process your personal data only when we have a valid legal basis. Under Serbian law and GDPR, we rely on the following:
+            </p>
+
+            <div className="overflow-x-auto mt-4">
+              <table className="min-w-full text-sm text-gray-300">
+                <thead className="bg-gray-800/50">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">Processing Activity</th>
+                    <th className="px-4 py-2 text-left font-semibold">Legal Basis</th>
+                    <th className="px-4 py-2 text-left font-semibold">GDPR Article</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  <tr>
+                    <td className="px-4 py-2">Account creation &amp; management</td>
+                    <td className="px-4 py-2">Contract performance</td>
+                    <td className="px-4 py-2">Art. 6(1)(b)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Security monitoring, fingerprinting</td>
+                    <td className="px-4 py-2">Legitimate interest</td>
+                    <td className="px-4 py-2">Art. 6(1)(f)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Marketing emails, newsletters</td>
+                    <td className="px-4 py-2">Consent</td>
+                    <td className="px-4 py-2">Art. 6(1)(a)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">AI assistant conversations</td>
+                    <td className="px-4 py-2">Contract performance</td>
+                    <td className="px-4 py-2">Art. 6(1)(b)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Direct messaging (E2EE)</td>
+                    <td className="px-4 py-2">Contract performance</td>
+                    <td className="px-4 py-2">Art. 6(1)(b)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Donation processing</td>
+                    <td className="px-4 py-2">Contract performance</td>
+                    <td className="px-4 py-2">Art. 6(1)(b)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Tax receipt generation</td>
+                    <td className="px-4 py-2">Legal obligation</td>
+                    <td className="px-4 py-2">Art. 6(1)(c)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Analytics (Vercel)</td>
+                    <td className="px-4 py-2">Legitimate interest</td>
+                    <td className="px-4 py-2">Art. 6(1)(f)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </section>
 
@@ -102,6 +220,194 @@ export default function PrivacyPolicyPage() {
             </ul>
             <p className="text-gray-300 leading-relaxed mt-4">
               You can view, connect, or disconnect OAuth providers anytime in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a>. We never access your data on connected platforms beyond basic profile information for authentication.
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">End-to-End Encryption (E2EE)</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Claude Insider offers end-to-end encrypted messaging using the Matrix Olm/Megolm protocol with Double Ratchet algorithm. Here&apos;s how your encryption data is handled:
+            </p>
+
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mt-4">
+              <h4 className="font-semibold text-emerald-400 mb-2">What We CANNOT See</h4>
+              <ul className="list-disc list-inside space-y-1 text-gray-300 text-sm">
+                <li>The content of your encrypted messages</li>
+                <li>Your private encryption keys</li>
+                <li>Your cloud backup password</li>
+                <li>Decrypted message history</li>
+              </ul>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Device Keys</h3>
+            <div className="overflow-x-auto mt-4">
+              <table className="min-w-full text-sm text-gray-300">
+                <thead className="bg-gray-800/50">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">Data</th>
+                    <th className="px-4 py-2 text-left font-semibold">Storage</th>
+                    <th className="px-4 py-2 text-left font-semibold">Purpose</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  <tr>
+                    <td className="px-4 py-2">Private keys (Curve25519, Ed25519)</td>
+                    <td className="px-4 py-2">Your device only (IndexedDB)</td>
+                    <td className="px-4 py-2">Decrypt messages, sign data</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Public keys</td>
+                    <td className="px-4 py-2">Our servers</td>
+                    <td className="px-4 py-2">Allow others to encrypt messages to you</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">One-time prekeys</td>
+                    <td className="px-4 py-2">Our servers (consumed on use)</td>
+                    <td className="px-4 py-2">Establish secure sessions</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Device ID &amp; metadata</td>
+                    <td className="px-4 py-2">Our servers</td>
+                    <td className="px-4 py-2">Device management</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Cloud Key Backup</h3>
+            <p className="text-gray-300 leading-relaxed">
+              You can optionally back up your encryption keys to our servers:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>Encryption:</strong> Your backup is encrypted with AES-256-GCM using a password you choose</li>
+              <li><strong>We never store your password:</strong> If you forget it, your backup cannot be recovered</li>
+              <li><strong>Deletion:</strong> You can delete your backup anytime from Settings</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Device Verification</h3>
+            <p className="text-gray-300 leading-relaxed">
+              We store device verification status to help you trust your own devices:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>SAS verification records:</strong> Emoji-based verification completion status</li>
+              <li><strong>Cross-signing keys:</strong> Public keys for verifying your other devices</li>
+              <li><strong>Trust relationships:</strong> Which devices you&apos;ve verified</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">AI Assistant Access to Encrypted Messages</h3>
+            <p className="text-gray-300 leading-relaxed">
+              With your explicit consent, you can allow our AI assistant to access decrypted message content for features like summarization:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
+              <li><strong>Consent required:</strong> AI access is strictly opt-in per conversation</li>
+              <li><strong>Consent records:</strong> We store your consent preferences</li>
+              <li><strong>Access logs:</strong> We log when AI accesses encrypted content (for your transparency)</li>
+              <li><strong>Revocation:</strong> You can revoke AI access anytime</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Direct Messaging</h2>
+            <p className="text-gray-300 leading-relaxed">
+              When you use direct messaging features (1:1 or group chats), we collect:
+            </p>
+
+            <div className="overflow-x-auto mt-4">
+              <table className="min-w-full text-sm text-gray-300">
+                <thead className="bg-gray-800/50">
+                  <tr>
+                    <th className="px-4 py-2 text-left font-semibold">Data Type</th>
+                    <th className="px-4 py-2 text-left font-semibold">Purpose</th>
+                    <th className="px-4 py-2 text-left font-semibold">Retention</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  <tr>
+                    <td className="px-4 py-2">Message content (if not E2EE)</td>
+                    <td className="px-4 py-2">Deliver messages</td>
+                    <td className="px-4 py-2">Until deleted by user</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Encrypted message blobs (if E2EE)</td>
+                    <td className="px-4 py-2">Store/relay encrypted data</td>
+                    <td className="px-4 py-2">Until deleted by user</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Message metadata</td>
+                    <td className="px-4 py-2">Timestamp, sender, recipient</td>
+                    <td className="px-4 py-2">Until conversation deleted</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Typing indicators</td>
+                    <td className="px-4 py-2">Real-time typing status</td>
+                    <td className="px-4 py-2">Not persisted (real-time only)</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Online/presence status</td>
+                    <td className="px-4 py-2">Show who is online</td>
+                    <td className="px-4 py-2">Real-time + last seen timestamp</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Read receipts</td>
+                    <td className="px-4 py-2">Show when messages are read</td>
+                    <td className="px-4 py-2">Until conversation deleted</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Group memberships</td>
+                    <td className="px-4 py-2">Track group participants &amp; roles</td>
+                    <td className="px-4 py-2">Until you leave or group deleted</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">Group invitations</td>
+                    <td className="px-4 py-2">Pending invites to groups</td>
+                    <td className="px-4 py-2">Until accepted/declined/expired</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">Donation System</h2>
+            <p className="text-gray-300 leading-relaxed">
+              If you choose to support Claude Insider through donations, we collect:
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">PayPal Donations</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Transaction ID:</strong> PayPal order/capture ID for reference</li>
+              <li><strong>Amount &amp; currency:</strong> Donation amount</li>
+              <li><strong>Payer email:</strong> As provided by PayPal (for receipts)</li>
+              <li><strong>Payer name:</strong> As provided by PayPal</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-2">
+              PayPal processes your payment. See <a href="https://www.paypal.com/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">PayPal&apos;s Privacy Policy</a>.
+            </p>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Bank Transfer Donations</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Reference code:</strong> Unique donation reference</li>
+              <li><strong>Amount &amp; currency:</strong> As manually confirmed</li>
+              <li><strong>Donor information:</strong> As you provide when notifying us</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Donor Badges &amp; Recognition</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Total donated:</strong> Sum of all donations (for badge tier calculation)</li>
+              <li><strong>Badge tier:</strong> Bronze ($10+), Silver ($50+), Gold ($100+), Platinum ($500+)</li>
+              <li><strong>Public display:</strong> Optional donor wall listing (you choose visibility)</li>
+              <li><strong>Anonymous option:</strong> You can donate anonymously</li>
+            </ul>
+
+            <h3 className="text-xl font-semibold mt-6 mb-3">Tax Receipts</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Receipt number:</strong> Unique receipt ID (CI-YYYY-NNNNNN format)</li>
+              <li><strong>Donor details:</strong> Name, email, address (as provided)</li>
+              <li><strong>Donation details:</strong> Amount, date, payment method</li>
+              <li><strong>Download tracking:</strong> When you downloaded the receipt</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              <strong>Retention:</strong> Donation records are retained for 7 years for tax compliance under Serbian law.
             </p>
           </section>
 
@@ -172,54 +478,9 @@ export default function PrivacyPolicyPage() {
                     <td className="px-4 py-2">Until account deleted</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2">Digest Preferences</td>
-                    <td className="px-4 py-2">Email digest frequency (daily/weekly/monthly)</td>
-                    <td className="px-4 py-2">Until account deleted</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Push Notification Subscription</td>
-                    <td className="px-4 py-2">Web push notifications delivery</td>
-                    <td className="px-4 py-2">Until unsubscribed or account deleted</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Admin Notifications Received</td>
-                    <td className="px-4 py-2">Track delivery of site-wide announcements</td>
-                    <td className="px-4 py-2">90 days</td>
-                  </tr>
-                  <tr>
                     <td className="px-4 py-2">AI Assistant Settings</td>
-                    <td className="px-4 py-2">Preferred model, voice, auto-speak preferences</td>
+                    <td className="px-4 py-2">Model, voice, preferences</td>
                     <td className="px-4 py-2">Until account deleted</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Model Selection Preference</td>
-                    <td className="px-4 py-2">Selected Claude model (Opus/Sonnet/Haiku) for AI features</td>
-                    <td className="px-4 py-2">Until account deleted or changed</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Group Chat Messages</td>
-                    <td className="px-4 py-2">Group conversations with other users</td>
-                    <td className="px-4 py-2">Until deleted by user or group deleted</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Group Memberships</td>
-                    <td className="px-4 py-2">Groups you own, administer, or belong to</td>
-                    <td className="px-4 py-2">Until you leave or account deleted</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Group Invitations</td>
-                    <td className="px-4 py-2">Pending and historical group invitations</td>
-                    <td className="px-4 py-2">Pending: until accepted/declined/expired; Historical: 30 days</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Chat Sound Preferences</td>
-                    <td className="px-4 py-2">Sound effect settings for notifications and interactions</td>
-                    <td className="px-4 py-2">Until account deleted</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Passkeys</td>
-                    <td className="px-4 py-2">Registered WebAuthn credentials for passwordless login</td>
-                    <td className="px-4 py-2">Until removed by user or account deleted</td>
                   </tr>
                 </tbody>
               </table>
@@ -229,7 +490,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">How We Keep Your Data Safe</h2>
             <p className="text-gray-300 leading-relaxed">
-              We implement comprehensive security measures to protect your data:
+              We implement comprehensive security measures to protect your data, in compliance with the Serbian Law on Information Security (Zakon o informacionoj bezbednosti):
             </p>
 
             <div className="grid gap-4 mt-4">
@@ -261,13 +522,22 @@ export default function PrivacyPolicyPage() {
                   <li><strong>Input validation:</strong> All user inputs are validated and sanitized</li>
                 </ul>
               </div>
+
+              <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4">
+                <h4 className="font-semibold text-cyan-400 mb-2">Encryption</h4>
+                <ul className="list-disc list-inside space-y-1 text-gray-300 text-sm">
+                  <li><strong>E2EE messaging:</strong> Matrix Olm/Megolm with Double Ratchet</li>
+                  <li><strong>API key encryption:</strong> AES-256-GCM with unique IVs</li>
+                  <li><strong>Cloud backup:</strong> User password-based encryption</li>
+                </ul>
+              </div>
             </div>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Download Your Data</h2>
             <p className="text-gray-300 leading-relaxed">
-              You have the right to download all data we have about you. To export your data:
+              You have the right to download all data we have about you. This right is guaranteed under Serbian law, GDPR Article 20 (data portability), and CCPA. To export your data:
             </p>
 
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
@@ -275,38 +545,19 @@ export default function PrivacyPolicyPage() {
                 <li>Go to <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a></li>
                 <li>Scroll to the <strong>&quot;Data Management&quot;</strong> section</li>
                 <li>Click <strong>&quot;Export All Data&quot;</strong></li>
-                <li>A JSON file will download containing:
-                  <ul className="list-disc list-inside ml-6 mt-2 text-gray-400">
-                    <li>Your profile information</li>
-                    <li>Comments and replies</li>
-                    <li>Favorites and collections</li>
-                    <li>Edit suggestions</li>
-                    <li>Ratings and reviews</li>
-                    <li>Reading lists and history</li>
-                    <li>AI conversation history</li>
-                    <li>Achievements</li>
-                    <li>Following/followers list</li>
-                    <li>Notification preferences</li>
-                    <li>AI assistant settings (model, voice, preferences)</li>
-                    <li>Model selection preference (Opus/Sonnet/Haiku)</li>
-                    <li>API key usage statistics (key hint only, never the actual key)</li>
-                    <li>Registered passkeys (public identifiers and metadata only)</li>
-                    <li>2FA device names (secrets are excluded for security)</li>
-                    <li>Group chat messages and memberships</li>
-                  </ul>
-                </li>
+                <li>A JSON file will download containing all your data</li>
               </ol>
             </div>
 
             <p className="text-gray-300 leading-relaxed mt-4">
-              The export is provided in a machine-readable JSON format for data portability (GDPR Article 20).
+              The export is provided in a machine-readable JSON format for data portability.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Delete Your Account &amp; Data</h2>
             <p className="text-gray-300 leading-relaxed">
-              You can permanently delete your account and all associated data at any time:
+              You can permanently delete your account and all associated data at any time. This right is guaranteed under Serbian law, GDPR Article 17 (right to erasure), and CCPA:
             </p>
 
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mt-4">
@@ -321,39 +572,23 @@ export default function PrivacyPolicyPage() {
             </div>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">What Gets Deleted</h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li>Your profile and all personal information</li>
-              <li>All comments and replies</li>
-              <li>All favorites, collections, and reading lists</li>
-              <li>All ratings and reviews</li>
-              <li>All AI conversation history</li>
-              <li>All achievements and progress</li>
-              <li>All following/follower relationships</li>
-              <li>All notification preferences</li>
-              <li>All AI assistant settings</li>
-              <li>All model selection preferences</li>
-              <li>All registered passkeys</li>
-              <li>All 2FA devices and backup codes</li>
-              <li>All group chat messages and memberships (you leave all groups)</li>
-              <li>All pending group invitations</li>
-            </ul>
+            <p className="text-gray-300 leading-relaxed">
+              All personal data including profile, messages, E2EE keys, achievements, and preferences.
+            </p>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">What May Be Retained</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>Edit suggestions:</strong> May be retained anonymously if approved and merged into content</li>
+              <li><strong>Edit suggestions:</strong> May be retained anonymously if merged into content</li>
+              <li><strong>Donation records:</strong> Retained 7 years for tax compliance (Serbian law)</li>
+              <li><strong>Security logs:</strong> Retained if related to ongoing security investigations</li>
               <li><strong>Anonymized analytics:</strong> Aggregate statistics (no personal identifiers)</li>
-              <li><strong>Legal requirements:</strong> Data required to be kept by law</li>
             </ul>
-
-            <p className="text-gray-300 leading-relaxed mt-4">
-              <strong>Note:</strong> Account deletion is irreversible. We recommend exporting your data first.
-            </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Analytics</h2>
             <p className="text-gray-300 leading-relaxed">
-              We use <strong>Vercel Analytics</strong>, a privacy-focused analytics service, to understand how visitors use our website.
+              We use <strong>Vercel Analytics</strong>, a privacy-focused analytics service:
             </p>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">What Vercel Analytics Collects</h3>
@@ -362,7 +597,6 @@ export default function PrivacyPolicyPage() {
               <li><strong>Referrers:</strong> How visitors found our site</li>
               <li><strong>Geographic location:</strong> Country-level only</li>
               <li><strong>Device information:</strong> Device type, browser, OS</li>
-              <li><strong>Web Vitals:</strong> Performance metrics</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">What Vercel Analytics Does NOT Collect</h3>
@@ -377,90 +611,29 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Browser Fingerprinting &amp; Security</h2>
             <p className="text-gray-300 leading-relaxed">
-              To protect our website from automated abuse, spam, and malicious bots, we use <strong>browser fingerprinting</strong> technology (FingerprintJS).
-            </p>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">What Is Browser Fingerprinting?</h3>
-            <p className="text-gray-300 leading-relaxed">
-              Browser fingerprinting collects technical information about your browser and device to create a unique identifier. This identifier helps us distinguish between legitimate users and automated bots without requiring cookies or storing personal information.
+              To protect our website from automated abuse, we use browser fingerprinting (FingerprintJS).
             </p>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">What We Collect</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>Browser characteristics:</strong> Browser type, version, installed plugins, language settings</li>
-              <li><strong>Device characteristics:</strong> Screen resolution, color depth, timezone, platform</li>
-              <li><strong>Canvas fingerprint:</strong> How your browser renders graphics</li>
-              <li><strong>Audio fingerprint:</strong> Audio processing characteristics</li>
-              <li><strong>WebGL fingerprint:</strong> Graphics card rendering behavior</li>
+              <li>Browser characteristics, screen resolution, timezone</li>
+              <li>Canvas, audio, WebGL fingerprints</li>
             </ul>
 
             <h3 className="text-xl font-semibold mt-6 mb-3">How We Use Fingerprints</h3>
-            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mt-4">
-              <ul className="list-disc list-inside space-y-2 text-gray-300">
-                <li><strong>Bot detection:</strong> Identify automated scrapers and spam bots</li>
-                <li><strong>Security monitoring:</strong> Detect suspicious patterns and potential attacks</li>
-                <li><strong>Trust scoring:</strong> Calculate a trust score (0-100) for visitors</li>
-                <li><strong>Honeypot protection:</strong> Serve fake data to detected bots</li>
-                <li><strong>Rate limiting:</strong> Prevent abuse without blocking legitimate users</li>
-              </ul>
-            </div>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">What We Do NOT Do</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>No cross-site tracking:</strong> Fingerprints are not shared with third parties</li>
-              <li><strong>No advertising:</strong> Fingerprints are never used for ads or profiling</li>
-              <li><strong>No personal identification:</strong> Fingerprints cannot identify you as an individual</li>
-              <li><strong>No sale of data:</strong> Fingerprint data is never sold</li>
+              <li>Bot detection and security monitoring</li>
+              <li>Trust scoring (0-100) for visitors</li>
+              <li>Rate limiting and honeypot protection</li>
             </ul>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">Data Storage &amp; Retention</h3>
-            <div className="overflow-x-auto mt-4">
-              <table className="min-w-full text-sm text-gray-300">
-                <thead className="bg-gray-800/50">
-                  <tr>
-                    <th className="px-4 py-2 text-left font-semibold">Data</th>
-                    <th className="px-4 py-2 text-left font-semibold">Purpose</th>
-                    <th className="px-4 py-2 text-left font-semibold">Retention</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-800">
-                  <tr>
-                    <td className="px-4 py-2">Fingerprint hash</td>
-                    <td className="px-4 py-2">Visitor identification</td>
-                    <td className="px-4 py-2">90 days</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Trust score</td>
-                    <td className="px-4 py-2">Security assessment</td>
-                    <td className="px-4 py-2">90 days</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Visit count</td>
-                    <td className="px-4 py-2">Behavior analysis</td>
-                    <td className="px-4 py-2">90 days</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Security logs</td>
-                    <td className="px-4 py-2">Incident investigation</td>
-                    <td className="px-4 py-2">90 days</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Client-side cache</td>
-                    <td className="px-4 py-2">Performance optimization</td>
-                    <td className="px-4 py-2">24 hours (browser localStorage)</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">Legal Basis (GDPR)</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">Legal Basis</h3>
             <p className="text-gray-300 leading-relaxed">
-              Browser fingerprinting for security purposes is processed under <strong>legitimate interest</strong> (GDPR Article 6(1)(f)). We have a legitimate interest in protecting our website and users from automated abuse, fraud, and security threats. This processing is necessary and proportionate to achieve these security objectives.
+              Browser fingerprinting is processed under <strong>legitimate interest</strong> (GDPR Article 6(1)(f)) for security purposes. You may object under Article 21 by contacting us.
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">Your Rights</h3>
-            <p className="text-gray-300 leading-relaxed">
-              You have the right to object to fingerprinting under GDPR Article 21. To exercise this right, please contact us at <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">vladimir@dukelic.com</a>. Note that objecting may result in limited functionality or additional verification steps.
+            <p className="text-gray-300 leading-relaxed mt-4">
+              <strong>Retention:</strong> Fingerprint data is retained for 90 days.
             </p>
           </section>
 
@@ -470,120 +643,90 @@ export default function PrivacyPolicyPage() {
               Our AI features use third-party services:
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">Third-Party AI Services</h3>
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300 leading-relaxed mb-4">
                 <strong className="text-cyan-400">Anthropic (Claude AI)</strong><br />
-                Chat messages are sent to Anthropic&apos;s Claude API. Messages are processed in real-time and not used for model training. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">Anthropic&apos;s Privacy Policy</a>.
+                Chat messages are sent to Anthropic&apos;s Claude API. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">Anthropic&apos;s Privacy Policy</a>.
               </p>
               <p className="text-gray-300 leading-relaxed">
                 <strong className="text-cyan-400">ElevenLabs (Text-to-Speech)</strong><br />
                 Voice output is generated by ElevenLabs. See <a href="https://elevenlabs.io/privacy" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">ElevenLabs&apos; Privacy Policy</a>.
               </p>
             </div>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">AI Conversation Storage</h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>Guests:</strong> Conversations stored in browser localStorage only</li>
-              <li><strong>Logged-in users:</strong> Conversations can optionally be saved to your account for access across devices</li>
-              <li><strong>Deletion:</strong> You can delete conversations anytime from the assistant or Settings</li>
-            </ul>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Your API Keys</h2>
             <p className="text-gray-300 leading-relaxed">
-              You can optionally add your own Anthropic API key to use AI features with your own Claude subscription instead of site credits.
+              If you add your own Anthropic API key:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li><strong>Encryption:</strong> AES-256-GCM with unique IV per key</li>
+              <li><strong>Storage:</strong> Only encrypted key and last 8 chars (hint) stored</li>
+              <li><strong>Usage:</strong> Only used to make Claude API requests on your behalf</li>
+              <li><strong>Deletion:</strong> Permanently deleted when you remove it</li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">International Data Transfers</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Your data may be transferred to and processed in countries outside Serbia and the EU/EEA:
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">How We Protect Your API Key</h3>
-            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mt-4">
-              <ul className="list-disc list-inside space-y-2 text-gray-300">
-                <li><strong>AES-256-GCM encryption:</strong> Your API key is encrypted before storage using industry-standard encryption</li>
-                <li><strong>Unique encryption per key:</strong> Each key uses a random initialization vector (IV) and authentication tag</li>
-                <li><strong>Key derivation:</strong> Encryption keys are derived using scrypt with a secure salt</li>
-                <li><strong>Never logged:</strong> Plain-text API keys are never written to logs or displayed in full</li>
-                <li><strong>Hint only:</strong> Only the last 8 characters are stored for identification purposes</li>
-              </ul>
-            </div>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">What We Store</h3>
             <div className="overflow-x-auto mt-4">
               <table className="min-w-full text-sm text-gray-300">
                 <thead className="bg-gray-800/50">
                   <tr>
-                    <th className="px-4 py-2 text-left font-semibold">Data</th>
-                    <th className="px-4 py-2 text-left font-semibold">Purpose</th>
-                    <th className="px-4 py-2 text-left font-semibold">Retention</th>
+                    <th className="px-4 py-2 text-left font-semibold">Service</th>
+                    <th className="px-4 py-2 text-left font-semibold">Location</th>
+                    <th className="px-4 py-2 text-left font-semibold">Safeguard</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-800">
                   <tr>
-                    <td className="px-4 py-2">Encrypted API key</td>
-                    <td className="px-4 py-2">Enable AI features with your Claude subscription</td>
-                    <td className="px-4 py-2">Until you delete it</td>
+                    <td className="px-4 py-2">Vercel (Hosting)</td>
+                    <td className="px-4 py-2">Global CDN, US headquarters</td>
+                    <td className="px-4 py-2">Standard Contractual Clauses</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2">Key hint (last 8 chars)</td>
-                    <td className="px-4 py-2">Help you identify which key is connected</td>
-                    <td className="px-4 py-2">Until you delete the key</td>
+                    <td className="px-4 py-2">Supabase (Database)</td>
+                    <td className="px-4 py-2">AWS infrastructure</td>
+                    <td className="px-4 py-2">Standard Contractual Clauses</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2">Available models</td>
-                    <td className="px-4 py-2">Show which Claude models your subscription supports</td>
-                    <td className="px-4 py-2">Until you delete the key</td>
+                    <td className="px-4 py-2">Anthropic (AI)</td>
+                    <td className="px-4 py-2">United States</td>
+                    <td className="px-4 py-2">Standard Contractual Clauses</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2">Usage statistics</td>
-                    <td className="px-4 py-2">Track tokens and requests per month (for your visibility)</td>
-                    <td className="px-4 py-2">Rolling 12 months</td>
+                    <td className="px-4 py-2">ElevenLabs (TTS)</td>
+                    <td className="px-4 py-2">United States</td>
+                    <td className="px-4 py-2">Standard Contractual Clauses</td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-2">Usage logs</td>
-                    <td className="px-4 py-2">Per-request logging (feature, model, tokens)</td>
-                    <td className="px-4 py-2">90 days</td>
+                    <td className="px-4 py-2">Resend (Email)</td>
+                    <td className="px-4 py-2">United States</td>
+                    <td className="px-4 py-2">Standard Contractual Clauses</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2">PayPal (Payments)</td>
+                    <td className="px-4 py-2">Global</td>
+                    <td className="px-4 py-2">BCR, Standard Contractual Clauses</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">How Your API Key Is Used</h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>AI Assistant:</strong> Your key is used to make requests to Claude on your behalf</li>
-              <li><strong>Code Playground:</strong> Your key enables access to your preferred Claude model</li>
-              <li><strong>Never shared:</strong> Your API key is never sent to any third party except Anthropic</li>
-              <li><strong>Your responsibility:</strong> Usage and billing with Anthropic is under your account</li>
-            </ul>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">Managing Your API Key</h3>
-            <p className="text-gray-300 leading-relaxed">
-              You can add, update, or delete your API key anytime in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a> under &quot;AI Integration&quot;. When you delete your API key:
+            <p className="text-gray-300 leading-relaxed mt-4">
+              Serbia is recognized by the EU as providing an adequate level of data protection. For transfers to other countries, we rely on Standard Contractual Clauses approved by the European Commission.
             </p>
-            <ul className="list-disc list-inside space-y-2 mt-2 text-gray-300">
-              <li>The encrypted key is permanently deleted from our database</li>
-              <li>Usage logs associated with the key are deleted</li>
-              <li>AI features fall back to using site credits</li>
-            </ul>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Local Storage (Non-Authenticated Users)</h2>
+            <h2 className="text-2xl font-semibold mb-4">Cookies &amp; Local Storage</h2>
             <p className="text-gray-300 leading-relaxed">
-              For visitors without accounts, we use browser localStorage. <strong>This data never leaves your device</strong>:
-            </p>
-            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li><strong>Theme preference:</strong> Dark/light/system mode</li>
-              <li><strong>Voice settings:</strong> TTS voice and auto-speak preferences</li>
-              <li><strong>Chat conversations:</strong> AI assistant history</li>
-              <li><strong>Search history:</strong> Recent searches from Unified Search Modal (up to 5)</li>
-              <li><strong>Model selection:</strong> Cached model preference for faster display on page load</li>
-            </ul>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Cookies</h2>
-            <p className="text-gray-300 leading-relaxed">
-              We use minimal cookies to enhance your experience:
+              We use minimal cookies:
             </p>
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <table className="w-full text-sm">
@@ -597,68 +740,19 @@ export default function PrivacyPolicyPage() {
                 <tbody className="text-gray-400">
                   <tr className="border-b border-gray-800">
                     <td className="py-2 font-mono text-cyan-400">NEXT_LOCALE</td>
-                    <td className="py-2">Stores your selected language preference (18 languages available)</td>
+                    <td className="py-2">Language preference</td>
                     <td className="py-2">1 year</td>
                   </tr>
                   <tr className="border-b border-gray-800">
                     <td className="py-2 font-mono text-cyan-400">better-auth.session_token</td>
-                    <td className="py-2">Authentication session (HTTP-only, secure)</td>
+                    <td className="py-2">Authentication session</td>
                     <td className="py-2">Session</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <p className="text-gray-300 leading-relaxed mt-4">
-              <strong>Managing cookies:</strong> You can delete cookies anytime through your browser settings.
-              Deleting the <code className="text-cyan-400">NEXT_LOCALE</code> cookie will reset your language to the default (English).
-              Deleting session cookies will sign you out.
-            </p>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Email Communications</h2>
-            <p className="text-gray-300 leading-relaxed">
-              We may send you emails for:
-            </p>
-            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li><strong>Account verification:</strong> Email confirmation when you register</li>
-              <li><strong>Password reset:</strong> When you request a password reset</li>
-              <li><strong>Account deletion:</strong> Confirmation link for account deletion</li>
-              <li><strong>Security alerts:</strong> Important security notifications (e.g., 2FA changes)</li>
-              <li><strong>Notifications:</strong> Comment replies, mentions, suggestion updates (configurable)</li>
-              <li><strong>Activity digest:</strong> Optional summary of activity (daily, weekly, or monthly - configurable in Settings)</li>
-              <li><strong>Admin announcements:</strong> Important site-wide updates from administrators (rare)</li>
-            </ul>
-            <p className="text-gray-300 leading-relaxed mt-4">
-              You can manage email preferences in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a>. Transactional emails (verification, password reset, security) cannot be disabled.
-            </p>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Push Notifications</h2>
-            <p className="text-gray-300 leading-relaxed">
-              With your permission, we can send browser push notifications for real-time updates:
-            </p>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">What We Store</h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>Push subscription endpoint:</strong> A URL provided by your browser for delivering notifications</li>
-              <li><strong>Encryption keys:</strong> Public keys for securing notification payloads (p256dh and auth)</li>
-              <li><strong>Device/browser identifier:</strong> To manage multiple subscriptions per account</li>
-            </ul>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">Types of Push Notifications</h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>Comment replies:</strong> When someone replies to your comment</li>
-              <li><strong>Mentions:</strong> When you&apos;re mentioned in a comment</li>
-              <li><strong>Suggestion updates:</strong> Status changes on your edit suggestions</li>
-              <li><strong>Admin announcements:</strong> Important site-wide notifications from administrators</li>
-              <li><strong>Staff alerts:</strong> For moderators/admins - new submissions requiring review</li>
-            </ul>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">Managing Push Notifications</h3>
-            <p className="text-gray-300 leading-relaxed">
-              You can enable or disable push notifications in <a href="/settings" className="text-cyan-400 hover:text-cyan-300">Settings</a>. You can also revoke permission through your browser settings at any time. When you disable push notifications or revoke browser permission, we delete your push subscription data.
+              <strong>Local Storage:</strong> Theme, voice settings, AI history, and fingerprint cache are stored locally and never sent to our servers.
             </p>
           </section>
 
@@ -668,52 +762,55 @@ export default function PrivacyPolicyPage() {
               Depending on your location, you have the following rights:
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">Under GDPR (EU/EEA residents)</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">Under Serbian Law &amp; GDPR</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>Access:</strong> Download all your data (Settings → Data Management)</li>
-              <li><strong>Rectification:</strong> Update your profile information anytime</li>
-              <li><strong>Erasure:</strong> Delete your account and all data</li>
-              <li><strong>Portability:</strong> Export data in machine-readable JSON format</li>
-              <li><strong>Restriction:</strong> Contact us to restrict processing</li>
-              <li><strong>Objection:</strong> Contact us to object to processing</li>
-              <li><strong>Complaint:</strong> Lodge a complaint with your local supervisory authority</li>
+              <li><strong>Access (Art. 15):</strong> Download all your data</li>
+              <li><strong>Rectification (Art. 16):</strong> Update your information</li>
+              <li><strong>Erasure (Art. 17):</strong> Delete your account and data</li>
+              <li><strong>Restriction (Art. 18):</strong> Limit processing</li>
+              <li><strong>Portability (Art. 20):</strong> Export in machine-readable format</li>
+              <li><strong>Objection (Art. 21):</strong> Object to processing</li>
+              <li><strong>Automated decisions (Art. 22):</strong> Challenge automated decisions</li>
+              <li><strong>Complaint:</strong> Lodge complaint with supervisory authority</li>
             </ul>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">Under CCPA (California residents)</h3>
+            <h3 className="text-xl font-semibold mt-6 mb-3">Under CCPA/CPRA (California)</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-300">
               <li>Right to know what personal information is collected</li>
               <li>Right to delete personal information</li>
-              <li>Right to opt-out of sale (we do NOT sell your data)</li>
-              <li>Right to non-discrimination</li>
+              <li>Right to opt-out of sale (<strong>We do NOT sell your data</strong>)</li>
+              <li>Right to non-discrimination for exercising rights</li>
+              <li>Right to correct inaccurate information</li>
+              <li>Right to limit use of sensitive personal information</li>
             </ul>
-          </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4">Hosting &amp; Data Location</h2>
-            <p className="text-gray-300 leading-relaxed">
-              Your data is processed by:
-            </p>
-            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
-              <li><strong>Vercel:</strong> Website hosting (global CDN)</li>
-              <li><strong>Supabase:</strong> Database and authentication (AWS infrastructure)</li>
-              <li><strong>Resend:</strong> Email delivery</li>
+            <h3 className="text-xl font-semibold mt-6 mb-3">Supervisory Authorities</h3>
+            <ul className="list-disc list-inside space-y-2 text-gray-300">
+              <li><strong>Serbia:</strong> Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti (<a href="https://www.poverenik.rs" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300">www.poverenik.rs</a>)</li>
+              <li><strong>EU/EEA:</strong> Your national data protection authority</li>
+              <li><strong>US:</strong> FTC, California AG (CCPA), or state attorney general</li>
             </ul>
-            <p className="text-gray-300 leading-relaxed mt-4">
-              These services may process data in the United States. For EU users, appropriate safeguards (Standard Contractual Clauses) are in place.
-            </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Children&apos;s Privacy</h2>
             <p className="text-gray-300 leading-relaxed">
-              Our website is not directed at children under 16 years of age. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us for deletion.
+              Our website is not directed at children. Minimum age requirements:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-4 text-gray-300">
+              <li><strong>Serbia:</strong> 15 years</li>
+              <li><strong>EU/EEA:</strong> 16 years (or lower per member state, minimum 13)</li>
+              <li><strong>United States:</strong> 13 years (COPPA)</li>
+            </ul>
+            <p className="text-gray-300 leading-relaxed mt-4">
+              We do not knowingly collect personal information from children below these ages. If you believe a child has provided us with personal information, please contact us for deletion.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Changes to This Policy</h2>
             <p className="text-gray-300 leading-relaxed">
-              We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated &quot;Last updated&quot; date. For significant changes, we may notify registered users via email.
+              We may update this Privacy Policy from time to time. Changes will be posted with an updated date. For significant changes, we will notify registered users via email. Your continued use after changes constitutes acceptance.
             </p>
           </section>
 
@@ -724,21 +821,19 @@ export default function PrivacyPolicyPage() {
             </p>
             <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 mt-4">
               <p className="text-gray-300">
-                <strong>Email:</strong>{" "}
-                <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">
-                  vladimir@dukelic.com
-                </a>
+                <strong>Vladimir Dukelic</strong><br />
+                Email: <a href="mailto:vladimir@dukelic.com" className="text-cyan-400 hover:text-cyan-300">vladimir@dukelic.com</a>
               </p>
             </div>
             <p className="text-gray-300 leading-relaxed mt-4">
-              We will respond within 30 days as required by applicable law.
+              We will respond within 30 days as required by Serbian law and GDPR.
             </p>
           </section>
 
           <section className="mb-8 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <p className="text-gray-300 leading-relaxed">
-              <strong>In short:</strong> If you create an account, we store your profile, comments, favorites, and activity data in a secure PostgreSQL database with Row Level Security. Your password is hashed with bcrypt. You can link multiple OAuth providers (GitHub, Google) and manage them in Settings. For enhanced security, you can register passkeys (Face ID, Touch ID, security keys) for passwordless login and set up multiple 2FA authenticator devices. If you add your own Anthropic API key, it is encrypted with AES-256-GCM before storage and only used to make Claude API requests on your behalf. Your AI assistant settings (model, voice, preferences), model selection preference (Opus/Sonnet/Haiku), and group chat memberships are stored in the database and sync across devices. For security purposes, we use browser fingerprinting (FingerprintJS) to detect bots and protect against automated abuse — this data is used only for security, never for advertising or cross-site tracking, and is retained for 90 days. You can <strong>download all your data</strong> or <strong>delete your account</strong> anytime from Settings. We use privacy-focused analytics (no cookies, no personal data). AI chat uses Anthropic&apos;s Claude API. We never sell your data. Guest visitors&apos; data stays in their browser only (including cached model selection and fingerprint cache for faster display).
+              <strong>In short:</strong> Claude Insider operates under Serbian law (GDPR-equivalent), with full compliance for EU and US users. We collect account data, activity, and optionally: encrypted messages (E2EE), donations, and API keys. Private encryption keys never leave your device. We use fingerprinting for security only, never for ads. You can <strong>download</strong> or <strong>delete</strong> all your data anytime. We never sell your data. Serbian law and GDPR govern this policy, with your local consumer rights preserved.
             </p>
           </section>
         </article>

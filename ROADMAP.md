@@ -1,32 +1,44 @@
 # Claude Insider Roadmap
 
-**Version:** 1.0.0
-**Last Updated:** 2025-12-15
+**Version:** 1.2.0
+**Last Updated:** 2025-12-16
+**Current Release:** v0.86.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-This roadmap outlines the development path from **v0.82.0** to **v1.0.0**, introducing 36 new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+This roadmap outlines the development path from **v0.86.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
 ---
 
-## Version Summary
+## Recent Releases (Completed)
+
+| Version | Date | Highlights |
+|---------|------|------------|
+| 0.86.0 | Dec 16 | Legal pages compliance (GDPR, CCPA, DSA, Serbian law) |
+| 0.85.0 | Dec 16 | Documentation consolidation, single source of truth |
+| 0.84.0 | Dec 16 | Touch screen ProfileHoverCard support |
+| 0.83.0 | Dec 16 | Floating Chat Button, audio refactor |
+| 0.82.0 | Dec 16 | E2EE, Unified Chat, Donation System |
+
+---
+
+## Future Version Summary
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 0.82.0 | Foundation | 4 | Q1 2025 | Core Infrastructure |
-| 0.83.0 | Creator | 4 | Q1 2025 | Content Creation Tools |
-| 0.84.0 | Analytics | 4 | Q1 2025 | Data & Insights |
-| 0.85.0 | Developer | 4 | Q1 2025 | Developer Tooling |
-| 0.86.0 | Social | 4 | Q2 2025 | Community Features |
-| 0.87.0 | Enterprise | 4 | Q2 2025 | Business Features |
-| 0.88.0 | Platform | 4 | Q2 2025 | Platform Expansion |
-| 0.89.0 | Integration | 4 | Q2 2025 | External Integrations |
-| 0.90.0 | Innovation | 4 | Q3 2025 | Experimental Features |
+| 0.86.0 | Creator | 4 | Q1 2025 | Content Creation Tools |
+| 0.87.0 | Analytics | 4 | Q1 2025 | Data & Insights |
+| 0.88.0 | Developer | 4 | Q1 2025 | Developer Tooling |
+| 0.89.0 | Social | 4 | Q2 2025 | Community Features |
+| 0.90.0 | Enterprise | 4 | Q2 2025 | Business Features |
+| 0.91.0 | Platform | 4 | Q2 2025 | Platform Expansion |
+| 0.92.0 | Integration | 4 | Q2 2025 | External Integrations |
+| 0.93.0 | Innovation | 4 | Q3 2025 | Experimental Features |
 | 1.0.0 | Milestone | - | Q3 2025 | Stable Release |
 
 ---
@@ -51,7 +63,7 @@ This roadmap outlines the development path from **v0.82.0** to **v1.0.0**, intro
 
 - **Priority:** P0 (Critical)
 - **Complexity:** M (Medium)
-- **Status:** Planned
+- **Status:** Released (v0.82.0)
 
 #### Description
 
@@ -59,16 +71,16 @@ Implement a donation system supporting PayPal and direct bank transfers, allowin
 
 #### Acceptance Criteria
 
-- [ ] PayPal donation button with configurable amounts ($5, $10, $25, $50, custom)
-- [ ] One-time and recurring (monthly) donation options
-- [ ] Direct bank payment information display with copy-to-clipboard
-- [ ] Donation history tracking for authenticated users
-- [ ] Donor badge system (Bronze: $10+, Silver: $50+, Gold: $100+, Platinum: $500+)
-- [ ] Public donor wall with opt-in recognition
-- [ ] Thank you email sent after donation
-- [ ] Admin dashboard for donation analytics
-- [ ] Tax receipt generation (PDF) for qualifying donations
-- [ ] GDPR-compliant donor data handling
+- [x] PayPal donation button with configurable amounts ($5, $10, $25, $50, custom)
+- [x] One-time and recurring (monthly) donation options
+- [x] Direct bank payment information display with copy-to-clipboard
+- [x] Donation history tracking for authenticated users
+- [x] Donor badge system (Bronze: $10+, Silver: $50+, Gold: $100+, Platinum: $500+)
+- [x] Public donor wall with opt-in recognition
+- [x] Thank you email sent after donation
+- [x] Admin dashboard for donation analytics
+- [x] Tax receipt generation (PDF) for qualifying donations
+- [x] GDPR-compliant donor data handling
 
 #### Technical Approach
 
