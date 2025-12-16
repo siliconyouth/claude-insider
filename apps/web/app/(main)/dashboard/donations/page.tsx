@@ -13,7 +13,7 @@
  * - Pending bank transfer confirmation
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/design-system';
 import { useToast } from '@/components/toast';
@@ -46,6 +46,7 @@ interface DonationStats {
     payment_method: string;
     status: string;
     donor_name: string;
+    donor_email?: string | null;
     is_anonymous: boolean;
     message: string | null;
     created_at: string;
@@ -61,11 +62,42 @@ interface DonationStats {
   }>;
 }
 
+interface ResendModalState {
+  isOpen: boolean;
+  donationId: string;
+  donorName: string;
+  donorEmail: string;
+  amount: number;
+  currency: string;
+}
+
 export default function DonationsDashboardPage() {
   const [stats, setStats] = useState<DonationStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
+  const [actionMenuId, setActionMenuId] = useState<string | null>(null);
+  const [resendModal, setResendModal] = useState<ResendModalState>({
+    isOpen: false,
+    donationId: '',
+    donorName: '',
+    donorEmail: '',
+    amount: 0,
+    currency: 'USD',
+  });
+  const [resending, setResending] = useState(false);
+  const actionMenuRef = useRef<HTMLDivElement>(null);
   const { success, error: showError } = useToast();
+
+  // Close action menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (actionMenuRef.current && !actionMenuRef.current.contains(event.target as Node)) {
+        setActionMenuId(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     fetchStats();
@@ -105,6 +137,58 @@ export default function DonationsDashboardPage() {
     } finally {
       setProcessingId(null);
     }
+  };
+
+  const openResendModal = (donation: DonationStats['recent_donations'][0]) => {
+    setResendModal({
+      isOpen: true,
+      donationId: donation.id,
+      donorName: donation.is_anonymous ? '' : donation.donor_name,
+      donorEmail: donation.donor_email || '',
+      amount: donation.amount,
+      currency: donation.currency,
+    });
+    setActionMenuId(null);
+  };
+
+  const handleResendThankYou = async () => {
+    if (!resendModal.donorEmail) {
+      showError('Please enter a valid email address');
+      return;
+    }
+
+    setResending(true);
+    try {
+      const response = await fetch('/api/dashboard/donations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'resend_thank_you',
+          donation_id: resendModal.donationId,
+          donor_email: resendModal.donorEmail,
+          donor_name: resendModal.donorName || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to send email');
+      }
+
+      success(`Thank you email queued for ${resendModal.donorEmail}`);
+      setResendModal({ ...resendModal, isOpen: false });
+      fetchStats(); // Refresh to show updated donor info
+    } catch (err) {
+      showError(err instanceof Error ? err.message : 'Failed to send email');
+    } finally {
+      setResending(false);
+    }
+  };
+
+  const handleCopyDonationId = (id: string) => {
+    navigator.clipboard.writeText(id);
+    success('Donation ID copied to clipboard');
+    setActionMenuId(null);
   };
 
   // Calculate max for chart scaling
@@ -359,6 +443,7 @@ export default function DonationsDashboardPage() {
                 <th className="pb-3 font-medium">Method</th>
                 <th className="pb-3 font-medium">Status</th>
                 <th className="pb-3 font-medium">Date</th>
+                <th className="pb-3 font-medium text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-800">
@@ -399,11 +484,46 @@ export default function DonationsDashboardPage() {
                   <td className="py-3 text-gray-400">
                     {new Date(donation.created_at).toLocaleDateString()}
                   </td>
+                  <td className="py-3 text-right">
+                    <div className="relative inline-block" ref={actionMenuId === donation.id ? actionMenuRef : null}>
+                      <button
+                        onClick={() => setActionMenuId(actionMenuId === donation.id ? null : donation.id)}
+                        className="p-1.5 rounded-lg hover:bg-gray-700 transition-colors"
+                        title="Actions"
+                      >
+                        <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                        </svg>
+                      </button>
+                      {actionMenuId === donation.id && (
+                        <div className="absolute right-0 mt-1 w-48 rounded-lg bg-gray-800 border border-gray-700 shadow-xl z-10">
+                          <button
+                            onClick={() => openResendModal(donation)}
+                            className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 rounded-t-lg flex items-center gap-2"
+                          >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            {donation.donor_email ? 'Resend Thank You' : 'Send Thank You'}
+                          </button>
+                          <button
+                            onClick={() => handleCopyDonationId(donation.id)}
+                            className="w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 rounded-b-lg flex items-center gap-2"
+                          >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            Copy Donation ID
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </td>
                 </tr>
               ))}
               {stats.recent_donations.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-gray-500">
+                  <td colSpan={6} className="py-8 text-center text-gray-500">
                     No donations yet
                   </td>
                 </tr>
@@ -412,6 +532,89 @@ export default function DonationsDashboardPage() {
           </table>
         </div>
       </div>
+
+      {/* Resend Thank You Modal */}
+      {resendModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl bg-gray-900 border border-gray-800 p-6 shadow-2xl">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-600 to-blue-600 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Send Thank You Email</h3>
+                <p className="text-sm text-gray-400">
+                  Donation: {formatDonationAmount(resendModal.amount, resendModal.currency)}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                  Donor Email <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="email"
+                  value={resendModal.donorEmail}
+                  onChange={(e) => setResendModal({ ...resendModal, donorEmail: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="donor@example.com"
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  This will also update the donation record with this email.
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                  Donor Name (optional)
+                </label>
+                <input
+                  type="text"
+                  value={resendModal.donorName}
+                  onChange={(e) => setResendModal({ ...resendModal, donorName: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Jane Doe"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 mt-6">
+              <button
+                onClick={() => setResendModal({ ...resendModal, isOpen: false })}
+                className="flex-1 px-4 py-2.5 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleResendThankYou}
+                disabled={resending || !resendModal.donorEmail}
+                className={cn(
+                  'flex-1 px-4 py-2.5 rounded-lg font-medium transition-all',
+                  'bg-gradient-to-r from-violet-600 to-blue-600 text-white',
+                  'hover:from-violet-500 hover:to-blue-500',
+                  'disabled:opacity-50 disabled:cursor-not-allowed'
+                )}
+              >
+                {resending ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="opacity-25" />
+                      <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" className="opacity-75" />
+                    </svg>
+                    Sending...
+                  </span>
+                ) : (
+                  'Send Email'
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

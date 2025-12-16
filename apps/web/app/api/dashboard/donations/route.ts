@@ -221,6 +221,7 @@ export async function GET(request: NextRequest) {
         payment_method: d.payment_method,
         status: d.status,
         donor_name: d.is_anonymous ? 'Anonymous' : (d.donor_name || d.user_name || 'Unknown'),
+        donor_email: d.donor_email,
         is_anonymous: d.is_anonymous,
         message: d.message,
         created_at: d.created_at,
