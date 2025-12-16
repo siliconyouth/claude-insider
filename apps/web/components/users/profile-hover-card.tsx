@@ -55,6 +55,8 @@ interface ProfileHoverCardProps {
   href?: string;
   /** Show action buttons (follow, invite, report) */
   showActions?: boolean;
+  /** Compact mode for smaller cards (e.g., in message bubbles) */
+  compact?: boolean;
   /** Callback when invite to group is clicked */
   onInviteToGroup?: (userId: string) => void;
   /** Callback when report is clicked */
@@ -68,7 +70,9 @@ interface Position {
 }
 
 const CARD_WIDTH = 320;
+const CARD_WIDTH_COMPACT = 260;
 const CARD_HEIGHT = 220;
+const CARD_HEIGHT_COMPACT = 140;
 const PADDING = 12;
 
 export function ProfileHoverCard({
@@ -80,9 +84,13 @@ export function ProfileHoverCard({
   disabled = false,
   href,
   showActions = true,
+  compact = false,
   onInviteToGroup,
   onReport,
 }: ProfileHoverCardProps) {
+  // Use compact dimensions when compact mode is enabled
+  const cardWidth = compact ? CARD_WIDTH_COMPACT : CARD_WIDTH;
+  const cardHeight = compact ? CARD_HEIGHT_COMPACT : CARD_HEIGHT;
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState<Position | null>(null);
@@ -104,12 +112,12 @@ export function ProfileHoverCard({
     const rect = triggerRef.current.getBoundingClientRect();
 
     // Calculate horizontal position (center on trigger, but shift if needed)
-    let left = rect.left + rect.width / 2 - CARD_WIDTH / 2;
+    let left = rect.left + rect.width / 2 - cardWidth / 2;
 
     // Keep within viewport
     if (left < PADDING) left = PADDING;
-    if (left + CARD_WIDTH > window.innerWidth - PADDING) {
-      left = window.innerWidth - CARD_WIDTH - PADDING;
+    if (left + cardWidth > window.innerWidth - PADDING) {
+      left = window.innerWidth - cardWidth - PADDING;
     }
 
     // Determine vertical position
@@ -120,10 +128,10 @@ export function ProfileHoverCard({
     let actualSide: "top" | "bottom";
     let top: number;
 
-    if (preferredSide === "top" && spaceAbove >= CARD_HEIGHT + PADDING) {
+    if (preferredSide === "top" && spaceAbove >= cardHeight + PADDING) {
       actualSide = "top";
-      top = rect.top - CARD_HEIGHT - PADDING + window.scrollY;
-    } else if (preferredSide === "bottom" && spaceBelow >= CARD_HEIGHT + PADDING) {
+      top = rect.top - cardHeight - PADDING + window.scrollY;
+    } else if (preferredSide === "bottom" && spaceBelow >= cardHeight + PADDING) {
       actualSide = "bottom";
       top = rect.bottom + PADDING + window.scrollY;
     } else if (spaceBelow >= spaceAbove) {
@@ -131,11 +139,11 @@ export function ProfileHoverCard({
       top = rect.bottom + PADDING + window.scrollY;
     } else {
       actualSide = "top";
-      top = rect.top - CARD_HEIGHT - PADDING + window.scrollY;
+      top = rect.top - cardHeight - PADDING + window.scrollY;
     }
 
     return { top, left, side: actualSide };
-  }, [side]);
+  }, [side, cardWidth, cardHeight]);
 
   const handleMouseEnter = useCallback(() => {
     if (disabled) return;
@@ -211,7 +219,7 @@ export function ProfileHoverCard({
       style={{
         top: position.top,
         left: position.left,
-        width: CARD_WIDTH,
+        width: cardWidth,
       }}
       onMouseEnter={() => {
         // Keep card open when hovering over it
@@ -237,42 +245,54 @@ export function ProfileHoverCard({
 
       {/* Card content */}
       <div className="relative bg-white dark:bg-[#111111] rounded-xl shadow-xl border border-gray-200 dark:border-[#262626] overflow-hidden">
-        {/* Header with gradient */}
-        <div className="h-16 bg-gradient-to-r from-violet-600/20 via-blue-600/20 to-cyan-600/20" />
+        {/* Header with gradient - smaller in compact mode */}
+        <div className={cn(
+          "bg-gradient-to-r from-violet-600/20 via-blue-600/20 to-cyan-600/20",
+          compact ? "h-10" : "h-16"
+        )} />
 
-        {/* Avatar overlapping header */}
-        <div className="px-4 -mt-8">
+        {/* Avatar overlapping header - smaller in compact mode */}
+        <div className={cn("px-3", compact ? "-mt-5" : "px-4 -mt-8")}>
           <Link href={profileUrl} className="block">
             <UserAvatar
               src={avatarSrc}
               name={displayName}
-              size="xl"
-              className="ring-4 ring-white dark:ring-[#111111]"
+              size={compact ? "md" : "xl"}
+              className={cn(
+                "ring-2 ring-white dark:ring-[#111111]",
+                !compact && "ring-4"
+              )}
             />
           </Link>
         </div>
 
         {/* User info */}
-        <div className="px-4 pb-4 pt-2">
+        <div className={cn(compact ? "px-3 pb-3 pt-1" : "px-4 pb-4 pt-2")}>
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
               {/* Display name only (privacy: real name is hidden) */}
               <Link
                 href={profileUrl}
-                className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 truncate block"
+                className={cn(
+                  "font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 truncate block",
+                  compact && "text-sm"
+                )}
               >
                 {displayName}
               </Link>
               {/* Username */}
               {user.username && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className={cn(
+                  "text-gray-500 dark:text-gray-400",
+                  compact ? "text-xs" : "text-sm"
+                )}>
                   @{user.username}
                 </p>
               )}
             </div>
 
-            {/* Role badge */}
-            {showRoleBadge && roleInfo && (
+            {/* Role badge - hide in compact mode */}
+            {!compact && showRoleBadge && roleInfo && (
               <span
                 className={cn(
                   "px-2 py-0.5 text-xs font-medium rounded-full flex-shrink-0",
@@ -285,48 +305,50 @@ export function ProfileHoverCard({
             )}
           </div>
 
-          {/* Bio */}
-          {user.bio && (
+          {/* Bio - hide in compact mode */}
+          {!compact && user.bio && (
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
               {user.bio}
             </p>
           )}
 
-          {/* Stats and join date */}
-          <div className="mt-3 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-            {user.stats?.followers !== undefined && (
-              <span>
-                <strong className="text-gray-900 dark:text-white">
-                  {user.stats.followers}
-                </strong>{" "}
-                followers
-              </span>
-            )}
-            {user.stats?.following !== undefined && (
-              <span>
-                <strong className="text-gray-900 dark:text-white">
-                  {user.stats.following}
-                </strong>{" "}
-                following
-              </span>
-            )}
-            {user.joinedAt && (
-              <span className="flex items-center gap-1">
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                Joined {formatDate(user.joinedAt)}
-              </span>
-            )}
-          </div>
+          {/* Stats and join date - hide in compact mode */}
+          {!compact && (
+            <div className="mt-3 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+              {user.stats?.followers !== undefined && (
+                <span>
+                  <strong className="text-gray-900 dark:text-white">
+                    {user.stats.followers}
+                  </strong>{" "}
+                  followers
+                </span>
+              )}
+              {user.stats?.following !== undefined && (
+                <span>
+                  <strong className="text-gray-900 dark:text-white">
+                    {user.stats.following}
+                  </strong>{" "}
+                  following
+                </span>
+              )}
+              {user.joinedAt && (
+                <span className="flex items-center gap-1">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                  Joined {formatDate(user.joinedAt)}
+                </span>
+              )}
+            </div>
+          )}
 
-          {/* Action buttons */}
-          {canShowActions && (
+          {/* Action buttons - hide in compact mode */}
+          {!compact && canShowActions && (
             <div className="mt-3 flex items-center gap-2">
               <FollowButton
                 userId={user.id}
@@ -391,18 +413,19 @@ export function ProfileHoverCard({
             </div>
           )}
 
-          {/* View profile link */}
+          {/* View profile link - smaller in compact mode */}
           <Link
             href={profileUrl}
             className={cn(
-              "mt-3 block w-full text-center px-3 py-1.5 rounded-lg text-sm font-medium",
+              "block w-full text-center rounded-lg font-medium",
               "border border-gray-200 dark:border-[#262626]",
               "text-gray-700 dark:text-gray-300",
               "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
-              "transition-colors"
+              "transition-colors",
+              compact ? "mt-2 px-2 py-1 text-xs" : "mt-3 px-3 py-1.5 text-sm"
             )}
           >
-            View Profile
+            {compact ? "View" : "View Profile"}
           </Link>
         </div>
       </div>

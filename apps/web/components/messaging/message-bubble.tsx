@@ -172,7 +172,7 @@ export function MessageBubble({
       {showSender && !isOwnMessage && (
         <div className="flex-shrink-0">
           {senderUser ? (
-            <ProfileHoverCard user={senderUser} side="bottom">
+            <ProfileHoverCard user={senderUser} side="top" compact>
               {renderAvatar()}
             </ProfileHoverCard>
           ) : (
@@ -191,7 +191,7 @@ export function MessageBubble({
         {/* Sender name with hover card for non-AI users */}
         {showSender && !isOwnMessage && (
           senderUser ? (
-            <ProfileHoverCard user={senderUser} side="bottom">
+            <ProfileHoverCard user={senderUser} side="top" compact>
               <span
                 className={cn(
                   "text-xs font-medium mb-0.5 ml-1 cursor-pointer hover:underline",
