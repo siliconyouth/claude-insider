@@ -26,6 +26,7 @@ import { cn } from "@/lib/design-system";
 import { useToast } from "@/components/toast";
 import { useSoundEffects, type SoundType } from "@/hooks/use-sound-effects";
 import { useAchievementNotification } from "@/components/achievements/achievement-notification";
+import { useDonorBadge, type DonorTier } from "@/components/donations/donor-badge-modal";
 import { useAuth } from "@/components/providers/auth-provider";
 import { ACHIEVEMENTS, RARITY_CONFIG, type AchievementRarity } from "@/lib/achievements";
 import { type UserRole } from "@/lib/roles";
@@ -196,6 +197,7 @@ export default function DiagnosticsPage() {
   const toast = useToast();
   const sounds = useSoundEffects();
   const { showAchievement } = useAchievementNotification();
+  const { showDonorBadge } = useDonorBadge();
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
 
   const [dbResults, setDbResults] = useState<DatabaseCheck | null>(null);
@@ -235,6 +237,14 @@ export default function DiagnosticsPage() {
     };
   } | null>(null);
   const [isLoadingBotDetection, setIsLoadingBotDetection] = useState(false);
+  const [isLoadingEmailTest, setIsLoadingEmailTest] = useState(false);
+  const [emailTestResult, setEmailTestResult] = useState<{
+    success: boolean;
+    type: string;
+    recipient: string;
+    error?: string;
+    timestamp: string;
+  } | null>(null);
 
   // TEST ALL state
   const [testAllProgress, setTestAllProgress] = useState<TestAllProgress>({
@@ -599,6 +609,39 @@ export default function DiagnosticsPage() {
       toast.error("Failed to test bot detection");
     } finally {
       setIsLoadingBotDetection(false);
+    }
+  }, [toast]);
+
+  // Test email sending
+  const sendTestEmail = useCallback(async (type: "donation" | "welcome") => {
+    setIsLoadingEmailTest(true);
+    setEmailTestResult(null);
+    try {
+      const response = await fetch("/api/debug/email-test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type }),
+      });
+      const data = await response.json();
+      if (response.status === 401) {
+        toast.error("Please sign in to test emails");
+        return;
+      }
+      if (response.status === 403) {
+        toast.error("Admin role required to send test emails");
+        return;
+      }
+      setEmailTestResult(data);
+      if (data.success) {
+        toast.success(`${type === "donation" ? "Donation receipt" : "Welcome"} email sent to ${data.recipient}`);
+      } else {
+        toast.error(data.error || "Failed to send email");
+      }
+    } catch (error) {
+      console.error("Email test error:", error);
+      toast.error("Failed to send test email");
+    } finally {
+      setIsLoadingEmailTest(false);
     }
   }, [toast]);
 
@@ -2743,6 +2786,128 @@ export default function DiagnosticsPage() {
         }
       },
     },
+    {
+      name: "Donation Bank Info",
+      category: "donations",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/donations/bank-info");
+          const data = await response.json();
+          if (!response.ok) {
+            return {
+              name: "Donation Bank Info",
+              status: "error",
+              message: data.error || "Failed to fetch bank info",
+              category: "donations",
+              duration: Date.now() - start,
+            };
+          }
+          const count = data.accounts?.length || 0;
+          return {
+            name: "Donation Bank Info",
+            status: count > 0 ? "success" : "warning",
+            message: count > 0 ? `${count} bank account(s) configured` : "No bank accounts configured",
+            category: "donations",
+            duration: Date.now() - start,
+            details: {
+              accountCount: count,
+              currencies: data.accounts?.map((a: { currency: string }) => a.currency) || [],
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Donation Bank Info",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "donations",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Donation Page Route",
+      category: "donations",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/donate", { method: "HEAD" });
+          return {
+            name: "Donation Page Route",
+            status: response.ok ? "success" : "error",
+            message: response.ok ? "Donate page is accessible" : `HTTP ${response.status}`,
+            category: "donations",
+            duration: Date.now() - start,
+            details: { statusCode: response.status },
+          };
+        } catch (e) {
+          return {
+            name: "Donation Page Route",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "donations",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Email Service Configuration",
+      category: "email",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/debug/email-test");
+          const data = await response.json();
+          if (response.status === 401) {
+            return {
+              name: "Email Service Configuration",
+              status: "warning",
+              message: "Auth required to check email config",
+              category: "email",
+              duration: Date.now() - start,
+            };
+          }
+          if (response.status === 403) {
+            return {
+              name: "Email Service Configuration",
+              status: "warning",
+              message: "Admin role required",
+              category: "email",
+              duration: Date.now() - start,
+            };
+          }
+          if (!response.ok) {
+            return {
+              name: "Email Service Configuration",
+              status: "error",
+              message: data.error || "Failed to check email config",
+              category: "email",
+              duration: Date.now() - start,
+            };
+          }
+          return {
+            name: "Email Service Configuration",
+            status: data.configured ? "success" : "error",
+            message: data.configured
+              ? "All email settings configured"
+              : "Missing email configuration",
+            category: "email",
+            duration: Date.now() - start,
+            details: data.checks,
+          };
+        } catch (e) {
+          return {
+            name: "Email Service Configuration",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "email",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
   ];
 
   // Helper to add test log entries
@@ -4045,6 +4210,135 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
             </div>
           );
         })}
+      </section>
+
+      {/* Donor Badge Test */}
+      <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+          <span className="text-pink-500">💜</span>
+          Donor Badge Notifications Test
+        </h3>
+        <p className="text-sm text-gray-400 mb-4">
+          Click any tier to test the donor badge modal with heart particle animations and thank you message.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {([
+            { tier: "bronze" as DonorTier, amount: 15, icon: "🥉", color: "border-amber-500 bg-amber-500/10" },
+            { tier: "silver" as DonorTier, amount: 75, icon: "🥈", color: "border-gray-400 bg-gray-400/10" },
+            { tier: "gold" as DonorTier, amount: 150, icon: "🥇", color: "border-yellow-500 bg-yellow-500/10" },
+            { tier: "platinum" as DonorTier, amount: 750, icon: "💎", color: "border-violet-500 bg-violet-500/10" },
+          ]).map(({ tier, amount, icon, color }) => (
+            <button
+              key={tier}
+              onClick={() => {
+                console.log(`Testing donor badge: ${tier}`);
+                showDonorBadge({ tier, amount, isFirstDonation: tier === "bronze" });
+              }}
+              className={cn(
+                "p-4 rounded-lg border-2 text-center transition-all hover:scale-105 hover:shadow-lg",
+                color
+              )}
+            >
+              <span className="text-3xl block mb-2">{icon}</span>
+              <span className="text-white font-semibold capitalize">{tier}</span>
+              <span className="text-gray-400 text-sm block">${amount}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Email Sending Test */}
+      <section className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+          <span className="text-blue-500">✉️</span>
+          Email Sending Test
+        </h3>
+        <p className="text-sm text-gray-400 mb-4">
+          Send test emails to your account to verify email configuration. Requires admin role.
+        </p>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <button
+            onClick={() => sendTestEmail("donation")}
+            disabled={isLoadingEmailTest}
+            className={cn(
+              "px-4 py-2.5 rounded-lg font-medium transition-all",
+              "bg-gradient-to-r from-pink-600 to-rose-600",
+              "hover:from-pink-700 hover:to-rose-700",
+              "text-white shadow-lg shadow-pink-500/20",
+              "disabled:opacity-50 disabled:cursor-not-allowed",
+              "flex items-center gap-2"
+            )}
+          >
+            {isLoadingEmailTest ? (
+              <>
+                <span className="animate-spin">⏳</span>
+                Sending...
+              </>
+            ) : (
+              <>
+                <span>💜</span>
+                Send Donation Receipt
+              </>
+            )}
+          </button>
+          <button
+            onClick={() => sendTestEmail("welcome")}
+            disabled={isLoadingEmailTest}
+            className={cn(
+              "px-4 py-2.5 rounded-lg font-medium transition-all",
+              "bg-gradient-to-r from-violet-600 to-blue-600",
+              "hover:from-violet-700 hover:to-blue-700",
+              "text-white shadow-lg shadow-violet-500/20",
+              "disabled:opacity-50 disabled:cursor-not-allowed",
+              "flex items-center gap-2"
+            )}
+          >
+            {isLoadingEmailTest ? (
+              <>
+                <span className="animate-spin">⏳</span>
+                Sending...
+              </>
+            ) : (
+              <>
+                <span>👋</span>
+                Send Welcome Email
+              </>
+            )}
+          </button>
+        </div>
+        {emailTestResult && (
+          <div className={cn(
+            "p-4 rounded-lg text-sm",
+            emailTestResult.success
+              ? "bg-emerald-500/10 border border-emerald-500/30"
+              : "bg-red-500/10 border border-red-500/30"
+          )}>
+            <div className="flex items-start gap-3">
+              <span className={cn(
+                "text-lg",
+                emailTestResult.success ? "text-emerald-400" : "text-red-400"
+              )}>
+                {emailTestResult.success ? "✓" : "✗"}
+              </span>
+              <div>
+                <p className={cn(
+                  "font-medium",
+                  emailTestResult.success ? "text-emerald-300" : "text-red-300"
+                )}>
+                  {emailTestResult.success ? "Email sent successfully!" : "Failed to send email"}
+                </p>
+                <p className="text-gray-400 mt-1">
+                  {emailTestResult.success
+                    ? `${emailTestResult.type === "donation" ? "Donation receipt" : "Welcome email"} sent to ${emailTestResult.recipient}`
+                    : emailTestResult.error}
+                </p>
+                <p className="text-gray-500 text-xs mt-2">
+                  {new Date(emailTestResult.timestamp).toLocaleString()}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Toast Notifications Test */}

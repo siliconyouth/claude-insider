@@ -19,6 +19,7 @@ import { VersionUpdatePopup } from "@/components/version-update-popup";
 import { FingerprintProvider } from "@/components/providers/fingerprint-provider";
 import { NotificationPopup } from "@/components/notifications/notification-popup";
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
+import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -160,6 +161,7 @@ export default async function MainLayout({
               <KeyboardShortcutsProvider>
                 <ToastProvider>
                   <AchievementNotificationProvider>
+                  <DonorBadgeProvider>
                     <SkipLink />
                     <ServiceWorkerRegister />
                     {children}
@@ -173,6 +175,7 @@ export default async function MainLayout({
                     <VersionUpdatePopup />
                     <NotificationPopup />
                     <Analytics />
+                  </DonorBadgeProvider>
                   </AchievementNotificationProvider>
                 </ToastProvider>
               </KeyboardShortcutsProvider>

@@ -30,6 +30,7 @@ import { SecurityStep } from "./steps/security-step";
 import { BetaApplyStep } from "./steps/beta-apply-step";
 import { NotificationsStep } from "./steps/notifications-step";
 import { ApiKeyStep } from "./steps/api-key-step";
+import { SupportStep } from "./steps/support-step";
 
 import type { WizardStep, WizardStepId } from "@/types/onboarding";
 
@@ -48,6 +49,7 @@ const StepComponents: Record<WizardStepId, React.ComponentType> = {
   "security": SecurityStep,
   "notifications": NotificationsStep,
   "api-key": ApiKeyStep,
+  "support": SupportStep,
   "beta-apply": BetaApplyStep,
 };
 
@@ -163,6 +165,15 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
       title: "API Key",
       description: "Connect your own Anthropic API key",
       icon: "🔑",
+      skippable: true,
+    });
+
+    // Always show support step (skippable)
+    steps.push({
+      id: "support",
+      title: "Support Us",
+      description: "Help keep Claude Insider free and growing",
+      icon: "💜",
       skippable: true,
     });
 

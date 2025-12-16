@@ -27,6 +27,7 @@ export default function UsersPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState<FilterRole>("all");
+  const [betaFilter, setBetaFilter] = useState<"all" | "yes" | "no">("all");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
@@ -53,6 +54,7 @@ export default function UsersPage() {
       });
       if (search) params.set("search", search);
       if (roleFilter !== "all") params.set("role", roleFilter);
+      if (betaFilter !== "all") params.set("isBetaTester", betaFilter === "yes" ? "true" : "false");
 
       const response = await fetch(`/api/dashboard/users?${params}`);
       console.log("[Dashboard Users Page] API response status:", response.status);
@@ -78,7 +80,7 @@ export default function UsersPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [search, roleFilter, page, toast]);
+  }, [search, roleFilter, betaFilter, page, toast]);
 
   useEffect(() => {
     const debounce = setTimeout(fetchUsers, search ? 300 : 0);
@@ -217,9 +219,9 @@ export default function UsersPage() {
           />
         </div>
 
-        {/* Role Filter */}
+        {/* Role Filter - Hierarchy roles only (beta_tester is separate) */}
         <div className="flex flex-wrap gap-2">
-          {(["all", "user", "beta_tester", "editor", "moderator", "admin", "superadmin"] as FilterRole[]).map((role) => (
+          {(["all", "user", "editor", "moderator", "admin", "superadmin"] as FilterRole[]).map((role) => (
             <button
               key={role}
               onClick={() => {
@@ -233,9 +235,33 @@ export default function UsersPage() {
                   : "text-gray-400 hover:text-white hover:bg-gray-800"
               )}
             >
-              {role === "all" ? "All" : role === "beta_tester" ? "Beta" : role === "superadmin" ? "Super Admin" : role}
+              {role === "all" ? "All Roles" : role === "superadmin" ? "Super Admin" : role}
             </button>
           ))}
+        </div>
+
+        {/* Beta Tester Filter - Separate from role hierarchy */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-500">Beta:</span>
+          <div className="flex gap-1">
+            {(["all", "yes", "no"] as const).map((value) => (
+              <button
+                key={value}
+                onClick={() => {
+                  setBetaFilter(value);
+                  setPage(1);
+                }}
+                className={cn(
+                  "px-2.5 py-1 rounded-lg text-xs font-medium transition-all",
+                  betaFilter === value
+                    ? "bg-emerald-600/20 text-emerald-400 border border-emerald-500/30"
+                    : "text-gray-400 hover:text-white hover:bg-gray-800"
+                )}
+              >
+                {value === "all" ? "All" : value === "yes" ? "✓ Beta" : "No Beta"}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

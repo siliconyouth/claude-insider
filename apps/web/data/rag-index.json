@@ -1,6 +1,6 @@
 {
   "version": "6.0",
-  "generatedAt": "2025-12-15T23:48:00.847Z",
+  "generatedAt": "2025-12-16T00:22:52.419Z",
   "builtWith": "Claude Code powered by Claude Opus 4.5",
   "documentCount": 1933,
   "documentationChunks": 443,
@@ -8450,7 +8450,7 @@
       "id": "project-overview",
       "title": "About Claude Insider",
       "section": "Project Overview",
-      "content": "Claude Insider is a comprehensive documentation website for Claude AI, Claude Code, and the Anthropic ecosystem. Version 0.81.0 (2025-12-15). Built by Vladimir Dukelic (@siliconyouth) using Claude Code powered by Claude Opus 4.5. Live at https://www.claudeinsider.com. Repository at https://github.com/siliconyouth/claude-insider. The site features 34 documentation pages across 7 categories, a voice-powered AI assistant with 42 premium voices, fuzzy search with Cmd/Ctrl+K, dark/light themes, and WCAG 2.1 AA accessibility compliance. The site supports 18 languages. MIT License with Attribution.",
+      "content": "Claude Insider is a comprehensive documentation website for Claude AI, Claude Code, and the Anthropic ecosystem. Version 0.81.0 (2025-12-16). Built by Vladimir Dukelic (@siliconyouth) using Claude Code powered by Claude Opus 4.5. Live at https://www.claudeinsider.com. Repository at https://github.com/siliconyouth/claude-insider. The site features 34 documentation pages across 7 categories, a voice-powered AI assistant with 42 premium voices, fuzzy search with Cmd/Ctrl+K, dark/light themes, and WCAG 2.1 AA accessibility compliance. The site supports 18 languages. MIT License with Attribution.",
       "url": "/",
       "category": "Project",
       "keywords": [
@@ -8750,7 +8750,7 @@
       "id": "project-versions",
       "title": "Version History",
       "section": "Recent Updates",
-      "content": "Claude Insider version history. Current: v0.81.0 (2025-12-15).\n\nRecent Releases:\nv0.81.0 (2025-12-15): Changed\nv0.80.0 (2025-12-15): Changed\nv0.79.0 (2025-12-15): Added\nv0.78.0 (2025-12-15): Added\nv0.77.0 (2025-12-15): Added\n\nMajor Milestones:\n- v0.81.0 - RAG Index Generator v6.0 (1,933 chunks, 20 knowledge categories)\n- v0.80.0 - Zero ESLint warnings, TypeScript type safety improvements\n- v0.79.0 - Security dashboard, fingerprinting, honeypot system\n- v0.70.x - Achievements, gamification, XP system\n- v0.60.x - Messaging, group chats, AI mentions\n- v0.50.x - Authentication, Better Auth, passkeys\n- v0.40.x - User profiles, favorites, ratings, comments\n- v0.30.x - Resources section with 122+ curated entries\n- v0.20.x - Voice assistant, ElevenLabs TTS, 42 voices\n- v0.10.x - Initial release, documentation, search\n\nFull changelog at /changelog or CHANGELOG.md",
+      "content": "Claude Insider version history. Current: v0.81.0 (2025-12-16).\n\nRecent Releases:\nv0.81.0 (2025-12-15): Changed\nv0.80.0 (2025-12-15): Changed\nv0.79.0 (2025-12-15): Added\nv0.78.0 (2025-12-15): Added\nv0.77.0 (2025-12-15): Added\n\nMajor Milestones:\n- v0.81.0 - RAG Index Generator v6.0 (1,933 chunks, 20 knowledge categories)\n- v0.80.0 - Zero ESLint warnings, TypeScript type safety improvements\n- v0.79.0 - Security dashboard, fingerprinting, honeypot system\n- v0.70.x - Achievements, gamification, XP system\n- v0.60.x - Messaging, group chats, AI mentions\n- v0.50.x - Authentication, Better Auth, passkeys\n- v0.40.x - User profiles, favorites, ratings, comments\n- v0.30.x - Resources section with 122+ curated entries\n- v0.20.x - Voice assistant, ElevenLabs TTS, 42 voices\n- v0.10.x - Initial release, documentation, search\n\nFull changelog at /changelog or CHANGELOG.md",
       "url": "/changelog",
       "category": "Project",
       "keywords": [

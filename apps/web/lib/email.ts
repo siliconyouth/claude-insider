@@ -1527,6 +1527,58 @@ export async function sendImportCompleteEmail(
   }
 }
 
+// ================================
+// Donation Emails
+// ================================
+
+export interface DonationReceiptParams {
+  email: string;
+  donorName: string;
+  amount: number;
+  currency: string;
+  paymentMethod: string;
+  donationId: string;
+  badgeTier: string | null;
+  isFirstDonation: boolean;
+  transactionDate: Date;
+}
+
+/**
+ * Send donation receipt email to donor
+ */
+export async function sendDonationReceiptEmail(
+  params: DonationReceiptParams
+): Promise<EmailResult> {
+  try {
+    const formattedAmount = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: params.currency,
+    }).format(params.amount);
+
+    const subject = params.isFirstDonation
+      ? `Thank you for your first donation to ${APP_NAME}! 💜`
+      : `Thank you for supporting ${APP_NAME}! 💜 - ${formattedAmount}`;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: params.email,
+      subject,
+      html: emailTemplates.donationReceipt(params),
+    });
+
+    if (error) {
+      console.error("[Email] Donation receipt send error:", error);
+      return { success: false, error: error.message };
+    }
+
+    console.log("[Email] Donation receipt sent to:", params.email);
+    return { success: true };
+  } catch (error) {
+    console.error("[Email] Unexpected error:", error);
+    return { success: false, error: "Failed to send email" };
+  }
+}
+
 /**
  * Import completion email template
  */
@@ -1667,6 +1719,139 @@ export const emailTemplates = {
   /**
    * Content moderation notification to the reported user
    */
+  /**
+   * Donation receipt email to donor
+   */
+  donationReceipt(params: {
+    donorName: string;
+    amount: number;
+    currency: string;
+    paymentMethod: string;
+    donationId: string;
+    badgeTier: string | null;
+    isFirstDonation: boolean;
+    transactionDate: Date;
+  }): string {
+    const formattedAmount = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: params.currency,
+    }).format(params.amount);
+
+    const tierEmoji: Record<string, string> = {
+      bronze: "🥉",
+      silver: "🥈",
+      gold: "🥇",
+      platinum: "💎",
+    };
+
+    const tierBadge = params.badgeTier
+      ? `
+        <div style="padding: 16px; background: linear-gradient(to right, #fce7f3, #fbcfe8); border-radius: 12px; margin-bottom: 24px; text-align: center;">
+          <p style="margin: 0 0 8px 0; font-size: 32px;">
+            ${tierEmoji[params.badgeTier] || "💜"}
+          </p>
+          <p style="margin: 0; color: #be185d; font-size: 14px; font-weight: 600;">
+            You&apos;ve earned the ${params.badgeTier.charAt(0).toUpperCase() + params.badgeTier.slice(1)} Supporter badge!
+          </p>
+          <p style="margin: 8px 0 0 0; color: #9d174d; font-size: 13px;">
+            This badge is now visible on your profile.
+          </p>
+        </div>
+      `
+      : "";
+
+    const firstDonationMessage = params.isFirstDonation
+      ? `
+        <div style="padding: 12px 16px; background: #d1fae5; border-radius: 8px; margin-bottom: 24px;">
+          <p style="margin: 0; color: #047857; font-size: 14px;">
+            🎉 <strong>First donation bonus!</strong> You&apos;ve also earned the "Heart of Gold" achievement!
+          </p>
+        </div>
+      `
+      : "";
+
+    const content = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="display: inline-block; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(to bottom right, #ec4899, #f43f5e); padding: 14px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width: 28px; height: 28px;">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+      </div>
+
+      <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 600; color: #18181b; text-align: center;">
+        Thank You For Your Donation! 💜
+      </h2>
+
+      ${tierBadge}
+      ${firstDonationMessage}
+
+      <!-- Receipt Card -->
+      <div style="padding: 24px; background: #f4f4f5; border-radius: 12px; margin-bottom: 24px;">
+        <h3 style="margin: 0 0 16px 0; font-size: 14px; font-weight: 600; color: #71717a; text-transform: uppercase; letter-spacing: 0.05em;">
+          Donation Receipt
+        </h3>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="font-size: 14px;">
+          <tr>
+            <td style="padding: 8px 0; color: #52525b;">Amount</td>
+            <td style="padding: 8px 0; text-align: right; font-weight: 600; color: #18181b; font-size: 18px;">
+              ${formattedAmount}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #52525b; border-top: 1px solid #e4e4e7;">Payment Method</td>
+            <td style="padding: 8px 0; text-align: right; color: #18181b; border-top: 1px solid #e4e4e7;">
+              ${params.paymentMethod.replace("_", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #52525b; border-top: 1px solid #e4e4e7;">Date</td>
+            <td style="padding: 8px 0; text-align: right; color: #18181b; border-top: 1px solid #e4e4e7;">
+              ${params.transactionDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #52525b; border-top: 1px solid #e4e4e7;">Reference</td>
+            <td style="padding: 8px 0; text-align: right; color: #71717a; font-family: monospace; font-size: 12px; border-top: 1px solid #e4e4e7;">
+              ${params.donationId}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Personal Message -->
+      <div style="padding: 24px; background: linear-gradient(to br, #fdf4ff, #fce7f3); border-radius: 12px; margin-bottom: 24px; border-left: 4px solid #ec4899;">
+        <p style="margin: 0 0 16px 0; color: #831843; font-size: 15px; line-height: 1.7; font-style: italic;">
+          "Dear ${params.donorName},<br><br>
+          Thank you from the bottom of my heart for supporting Claude Insider. Your generosity means the world to me and helps keep this project free and growing for everyone.<br><br>
+          Every donation goes directly toward hosting costs, new features, and making Claude Insider better for our community. You're not just a donor—you're a vital part of what makes this project possible."
+        </p>
+        <p style="margin: 0; color: #9d174d; font-weight: 600;">
+          — Vladimir Dukelic<br>
+          <span style="font-weight: 400; font-size: 13px; color: #be185d;">Creator of Claude Insider</span>
+        </p>
+      </div>
+
+      <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto 24px auto;">
+        <tr>
+          <td style="background: linear-gradient(to right, #ec4899, #f43f5e); border-radius: 8px;">
+            <a href="${APP_URL}/profile" style="display: inline-block; padding: 12px 32px; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px;">
+              View Your Profile
+            </a>
+          </td>
+        </tr>
+      </table>
+
+      <hr style="border: none; border-top: 1px solid #e4e4e7; margin: 24px 0;" />
+      <p style="margin: 0; color: #71717a; font-size: 12px; text-align: center;">
+        This receipt is for your records. If you have any questions, please contact<br>
+        <a href="mailto:vladimir@dukelic.com" style="color: #ec4899; text-decoration: none;">vladimir@dukelic.com</a>
+      </p>
+    `;
+
+    return getEmailWrapper(content);
+  },
+
   contentModerated(params: {
     userName: string;
     contentType: string;

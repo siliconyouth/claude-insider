@@ -17,7 +17,7 @@ import {
   usePayPalScriptReducer,
   FUNDING,
 } from '@paypal/react-paypal-js';
-import type { CreateOrderActions, OnApproveActions, OnApproveData } from '@paypal/paypal-js';
+import type { OnApproveData } from '@paypal/paypal-js';
 import { cn } from '@/lib/design-system';
 import type { RecurringFrequency } from '@/lib/donations/types';
 
@@ -216,7 +216,7 @@ function PayPalButtonsInner({
       const result = await response.json();
       onSuccess({
         donationId: result.donation_id,
-        subscriptionId: data.subscriptionID,
+        subscriptionId: data.subscriptionID || undefined,
         badgeTier: result.badge?.tier,
       });
     } catch (error) {

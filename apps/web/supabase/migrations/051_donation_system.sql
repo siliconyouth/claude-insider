@@ -53,11 +53,11 @@ CREATE TABLE IF NOT EXISTS donations (
 );
 
 -- Indexes for donations
-CREATE INDEX idx_donations_user_id ON donations(user_id);
-CREATE INDEX idx_donations_status ON donations(status);
-CREATE INDEX idx_donations_payment_method ON donations(payment_method);
-CREATE INDEX idx_donations_created_at ON donations(created_at DESC);
-CREATE INDEX idx_donations_paypal_order_id ON donations(paypal_order_id) WHERE paypal_order_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_donations_user_id ON donations(user_id);
+CREATE INDEX IF NOT EXISTS idx_donations_status ON donations(status);
+CREATE INDEX IF NOT EXISTS idx_donations_payment_method ON donations(payment_method);
+CREATE INDEX IF NOT EXISTS idx_donations_created_at ON donations(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_donations_paypal_order_id ON donations(paypal_order_id) WHERE paypal_order_id IS NOT NULL;
 
 -- ============================================================================
 -- DONOR BADGES TABLE
@@ -91,9 +91,9 @@ CREATE TABLE IF NOT EXISTS donor_badges (
 );
 
 -- Index for donor wall queries
-CREATE INDEX idx_donor_badges_tier ON donor_badges(tier);
-CREATE INDEX idx_donor_badges_total_donated ON donor_badges(total_donated DESC);
-CREATE INDEX idx_donor_badges_show_on_wall ON donor_badges(show_on_donor_wall) WHERE show_on_donor_wall = TRUE;
+CREATE INDEX IF NOT EXISTS idx_donor_badges_tier ON donor_badges(tier);
+CREATE INDEX IF NOT EXISTS idx_donor_badges_total_donated ON donor_badges(total_donated DESC);
+CREATE INDEX IF NOT EXISTS idx_donor_badges_show_on_wall ON donor_badges(show_on_donor_wall) WHERE show_on_donor_wall = TRUE;
 
 -- ============================================================================
 -- DONATION RECEIPTS TABLE
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS donation_receipts (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_donation_receipts_donation_id ON donation_receipts(donation_id);
+CREATE INDEX IF NOT EXISTS idx_donation_receipts_donation_id ON donation_receipts(donation_id);
 
 -- ============================================================================
 -- BANK TRANSFER INFO TABLE (configurable by admin)
@@ -275,21 +275,25 @@ ALTER TABLE donation_bank_info ENABLE ROW LEVEL SECURITY;
 ALTER TABLE donation_settings ENABLE ROW LEVEL SECURITY;
 
 -- Donations: Users can see their own, admins can see all
+DROP POLICY IF EXISTS donations_select_own ON donations;
 CREATE POLICY donations_select_own ON donations
   FOR SELECT USING (
     user_id = auth.uid()::TEXT OR
     EXISTS (SELECT 1 FROM "user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
   );
 
+DROP POLICY IF EXISTS donations_insert ON donations;
 CREATE POLICY donations_insert ON donations
   FOR INSERT WITH CHECK (TRUE);
 
+DROP POLICY IF EXISTS donations_update_admin ON donations;
 CREATE POLICY donations_update_admin ON donations
   FOR UPDATE USING (
     EXISTS (SELECT 1 FROM "user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
   );
 
 -- Donor badges: Public read for donor wall, users can update their own visibility
+DROP POLICY IF EXISTS donor_badges_select ON donor_badges;
 CREATE POLICY donor_badges_select ON donor_badges
   FOR SELECT USING (
     show_on_donor_wall = TRUE OR
@@ -297,10 +301,12 @@ CREATE POLICY donor_badges_select ON donor_badges
     EXISTS (SELECT 1 FROM "user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
   );
 
+DROP POLICY IF EXISTS donor_badges_update_own ON donor_badges;
 CREATE POLICY donor_badges_update_own ON donor_badges
   FOR UPDATE USING (user_id = auth.uid()::TEXT);
 
 -- Receipts: Users can see their own
+DROP POLICY IF EXISTS donation_receipts_select ON donation_receipts;
 CREATE POLICY donation_receipts_select ON donation_receipts
   FOR SELECT USING (
     EXISTS (
@@ -313,15 +319,18 @@ CREATE POLICY donation_receipts_select ON donation_receipts
   );
 
 -- Bank info: Public read for active accounts
+DROP POLICY IF EXISTS donation_bank_info_select ON donation_bank_info;
 CREATE POLICY donation_bank_info_select ON donation_bank_info
   FOR SELECT USING (is_active = TRUE);
 
+DROP POLICY IF EXISTS donation_bank_info_admin ON donation_bank_info;
 CREATE POLICY donation_bank_info_admin ON donation_bank_info
   FOR ALL USING (
     EXISTS (SELECT 1 FROM "user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
   );
 
 -- Settings: Admin only
+DROP POLICY IF EXISTS donation_settings_admin ON donation_settings;
 CREATE POLICY donation_settings_admin ON donation_settings
   FOR ALL USING (
     EXISTS (SELECT 1 FROM "user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))

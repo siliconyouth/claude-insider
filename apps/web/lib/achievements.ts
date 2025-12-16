@@ -88,6 +88,7 @@ export type AchievementCategory =
   | "streak"
   | "collector"
   | "expert"
+  | "supporter"
   | "special";
 
 export interface AchievementDefinition {
@@ -205,6 +206,11 @@ export const CATEGORY_CONFIG: Record<
     label: "Expert",
     description: "Mastery achievements",
     icon: Crown,
+  },
+  supporter: {
+    label: "Supporter",
+    description: "Community contributions",
+    icon: Heart,
   },
   special: {
     label: "Special",
@@ -643,6 +649,69 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     category: "expert",
     points: 500,
     criteria: "Earn 5000 points",
+  },
+
+  // ========== SUPPORTER ==========
+  bronze_supporter: {
+    id: "bronze_supporter",
+    name: "Bronze Supporter",
+    description: "Support Claude Insider with a donation of $10+",
+    icon: Heart,
+    rarity: "common",
+    category: "supporter",
+    points: 100,
+    criteria: "Donate $10+",
+  },
+  silver_supporter: {
+    id: "silver_supporter",
+    name: "Silver Supporter",
+    description: "Support Claude Insider with a donation of $50+",
+    icon: Heart,
+    rarity: "rare",
+    category: "supporter",
+    points: 250,
+    criteria: "Donate $50+",
+  },
+  gold_supporter: {
+    id: "gold_supporter",
+    name: "Gold Supporter",
+    description: "Support Claude Insider with a donation of $100+",
+    icon: Medal,
+    rarity: "epic",
+    category: "supporter",
+    points: 500,
+    criteria: "Donate $100+",
+  },
+  platinum_supporter: {
+    id: "platinum_supporter",
+    name: "Platinum Supporter",
+    description: "Support Claude Insider with a donation of $500+",
+    icon: Gem,
+    rarity: "legendary",
+    category: "supporter",
+    points: 1500,
+    criteria: "Donate $500+",
+  },
+  first_donation: {
+    id: "first_donation",
+    name: "Heart of Gold",
+    description: "Make your first donation to support the project",
+    icon: Gift,
+    rarity: "rare",
+    category: "supporter",
+    points: 150,
+    criteria: "Make any donation",
+  },
+  recurring_supporter: {
+    id: "recurring_supporter",
+    name: "Patron Saint",
+    description: "Become a monthly recurring supporter",
+    icon: Crown,
+    rarity: "legendary",
+    category: "supporter",
+    points: 1000,
+    criteria: "Set up recurring donations",
+    hidden: true,
   },
 
   // ========== SPECIAL ==========

@@ -55,6 +55,7 @@ export type WizardStepId =
   | "security"
   | "notifications"
   | "api-key"
+  | "support"
   | "beta-apply";
 
 export interface WizardContextValue {
@@ -181,6 +182,13 @@ export const WIZARD_STEPS: readonly WizardStep[] = [
     title: "Add Password",
     description: "Enable email/password login",
     icon: "🔐",
+    skippable: true,
+  },
+  {
+    id: "support",
+    title: "Support Us",
+    description: "Help keep Claude Insider free and growing",
+    icon: "💜",
     skippable: true,
   },
   {

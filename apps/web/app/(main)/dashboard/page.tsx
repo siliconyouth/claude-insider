@@ -227,6 +227,9 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      {/* Donations Overview */}
+      <DonationsOverview />
+
       {/* Live Activity Feed */}
       <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
         <ActivityFeed
@@ -355,5 +358,149 @@ function NotificationStatusBadge({ status }: { status: string }) {
     <span className={cn("px-2 py-0.5 rounded text-xs font-medium", styles[status] || styles.draft)}>
       {status}
     </span>
+  );
+}
+
+interface DonationOverviewStats {
+  total_raised: number;
+  completed_donations: number;
+  pending_donations: number;
+  unique_donors: number;
+  recent_donations: Array<{
+    id: string;
+    amount: number;
+    donor_name: string;
+    is_anonymous: boolean;
+    created_at: string;
+  }>;
+}
+
+function DonationsOverview() {
+  const [stats, setStats] = useState<DonationOverviewStats | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDonationStats = async () => {
+      try {
+        const response = await fetch("/api/dashboard/donations");
+        if (response.ok) {
+          const data = await response.json();
+          setStats({
+            total_raised: data.overview?.total_raised || 0,
+            completed_donations: data.overview?.completed_donations || 0,
+            pending_donations: data.overview?.pending_donations || 0,
+            unique_donors: data.overview?.unique_donors || 0,
+            recent_donations: data.recent_donations?.slice(0, 3) || [],
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch donation stats:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDonationStats();
+  }, []);
+
+  const formatAmount = (amount: number) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  return (
+    <div className="rounded-xl border border-pink-900/30 bg-gradient-to-br from-pink-900/10 to-rose-900/10 p-6">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">💜</span>
+          <h3 className="text-lg font-semibold text-white">Donations Overview</h3>
+        </div>
+        <Link
+          href="/dashboard/donations"
+          className="text-sm text-pink-400 hover:text-pink-300 transition-colors"
+        >
+          View details →
+        </Link>
+      </div>
+
+      {isLoading ? (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-20 bg-gray-800 rounded-lg animate-pulse" />
+          ))}
+        </div>
+      ) : (
+        <>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+            <div className="rounded-lg bg-gray-900/50 p-4 border border-gray-800">
+              <p className="text-sm text-gray-400">Total Raised</p>
+              <p className="text-2xl font-bold text-white">
+                {formatAmount(stats?.total_raised || 0)}
+              </p>
+            </div>
+            <div className="rounded-lg bg-gray-900/50 p-4 border border-gray-800">
+              <p className="text-sm text-gray-400">Completed</p>
+              <p className="text-2xl font-bold text-emerald-400">
+                {stats?.completed_donations || 0}
+              </p>
+            </div>
+            <div className="rounded-lg bg-gray-900/50 p-4 border border-gray-800">
+              <p className="text-sm text-gray-400">Pending</p>
+              <p className="text-2xl font-bold text-amber-400">
+                {stats?.pending_donations || 0}
+              </p>
+            </div>
+            <div className="rounded-lg bg-gray-900/50 p-4 border border-gray-800">
+              <p className="text-sm text-gray-400">Unique Donors</p>
+              <p className="text-2xl font-bold text-blue-400">
+                {stats?.unique_donors || 0}
+              </p>
+            </div>
+          </div>
+
+          {/* Recent Donations */}
+          {stats?.recent_donations && stats.recent_donations.length > 0 ? (
+            <div className="space-y-2">
+              <p className="text-sm text-gray-400">Recent Donations</p>
+              {stats.recent_donations.map((donation) => (
+                <div
+                  key={donation.id}
+                  className="flex items-center justify-between p-3 rounded-lg bg-gray-900/50 border border-gray-800"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-pink-900/30 flex items-center justify-center">
+                      <span className="text-sm">💝</span>
+                    </div>
+                    <span className={cn(
+                      "text-sm text-white",
+                      donation.is_anonymous && "italic text-gray-400"
+                    )}>
+                      {donation.donor_name}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-semibold text-white">
+                      {formatAmount(donation.amount)}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {new Date(donation.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500 text-center py-4">
+              No donations yet. Be the first to support!
+            </p>
+          )}
+        </>
+      )}
+    </div>
   );
 }
