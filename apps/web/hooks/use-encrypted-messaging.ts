@@ -187,6 +187,37 @@ async function fetchPendingSessions(
   return data.sessions || [];
 }
 
+/**
+ * Fetch identity key for a specific device from device_keys table.
+ * Required for verifying Megolm session shares.
+ */
+async function fetchDeviceIdentityKey(
+  deviceId: string
+): Promise<string | null> {
+  try {
+    const response = await fetch("/api/e2ee/devices", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ deviceId }),
+    });
+
+    if (!response.ok) {
+      console.error("Failed to fetch device identity key");
+      return null;
+    }
+
+    const data = await response.json();
+    // Find the specific device in the response
+    const device = data.devices?.find(
+      (d: { deviceId: string; identityKey: string }) => d.deviceId === deviceId
+    );
+    return device?.identityKey || null;
+  } catch (err) {
+    console.error("Error fetching device identity key:", err);
+    return null;
+  }
+}
+
 // ============================================================================
 // HOOK
 // ============================================================================
@@ -393,11 +424,23 @@ export function useEncryptedMessaging(): UseEncryptedMessagingReturn {
 
       for (const session of sessions) {
         try {
+          // Fetch the sender's identity key for verification
+          const senderIdentityKey = await fetchDeviceIdentityKey(
+            session.senderDeviceId
+          );
+
+          if (!senderIdentityKey) {
+            console.warn(
+              `Could not fetch identity key for device ${session.senderDeviceId}, skipping session ${session.sessionId}`
+            );
+            continue;
+          }
+
           // Decrypt the session key with Olm and import the Megolm session
           await processMegolmSessionShare(
             session.conversationId,
             session.senderDeviceId,
-            "", // Identity key - needs to be fetched
+            senderIdentityKey,
             session.encryptedSessionKey
           );
         } catch (err) {

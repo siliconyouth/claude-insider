@@ -58,6 +58,8 @@ export function ConversationView({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // Track seen message IDs to prevent duplicates from realtime + optimistic updates
+  const seenMessageIdsRef = useRef<Set<string>>(new Set());
 
   // Get other participant for DM header
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
@@ -68,10 +70,15 @@ export function ConversationView({
     [participants, currentUserId]
   );
 
-  // Create Supabase client
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  // Create Supabase client - memoized to prevent recreation on every render
+  // Each createBrowserClient() call creates a new WebSocket connection
+  const supabase = useMemo(
+    () =>
+      createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      ),
+    []
   );
 
   // Scroll to bottom
@@ -86,6 +93,8 @@ export function ConversationView({
     if (result.success && result.messages) {
       setMessages(result.messages);
       setHasMore(result.hasMore || false);
+      // Populate seen message IDs for deduplication
+      seenMessageIdsRef.current = new Set(result.messages.map((m) => m.id));
       // Mark as read
       await markConversationAsRead(conversationId);
     }
@@ -116,15 +125,23 @@ export function ConversationView({
         },
         async (payload) => {
           // Add new message to state
-          const newMsg = payload.new as RealtimeMessagePayload;
+          const newMsg = payload.new as RealtimeMessagePayload & { id: string };
+
+          // Skip if we've already seen this message (deduplication)
+          if (seenMessageIdsRef.current.has(newMsg.id)) {
+            return;
+          }
+
           if (newMsg.sender_id !== currentUserId) {
             // Fetch full message with sender info
             const result = await getMessages(conversationId, 1);
             if (result.success && result.messages && result.messages.length > 0) {
               const latestMsg = result.messages[result.messages.length - 1];
-              if (latestMsg) {
+              if (latestMsg && !seenMessageIdsRef.current.has(latestMsg.id)) {
+                // Mark as seen before adding to prevent race conditions
+                seenMessageIdsRef.current.add(latestMsg.id);
                 setMessages((prev) => {
-                  // Avoid duplicates
+                  // Double-check in state for extra safety
                   if (prev.some((m) => m.id === latestMsg.id)) return prev;
                   return [...prev, latestMsg];
                 });

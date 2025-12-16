@@ -51,7 +51,9 @@ export async function POST(request: Request) {
       outputFormat: "mp3_44100_128", // High quality MP3
     });
 
-    // Collect stream chunks into a buffer
+    // Buffer the complete audio before sending
+    // Note: Streaming MP3 causes playback issues because chunk boundaries
+    // don't align with MP3 frame boundaries, causing audio artifacts
     const chunks: Uint8Array[] = [];
     const reader = audioStream.getReader();
     while (true) {
@@ -61,7 +63,7 @@ export async function POST(request: Request) {
     }
     const audioBuffer = Buffer.concat(chunks);
 
-    // Return audio as response
+    // Return complete audio as response
     return new Response(audioBuffer, {
       headers: {
         "Content-Type": "audio/mpeg",

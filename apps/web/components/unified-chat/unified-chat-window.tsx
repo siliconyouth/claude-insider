@@ -15,6 +15,7 @@ import { UnifiedChatHeader } from "./unified-chat-header";
 import { AIAssistantTab } from "./tabs/ai-assistant-tab";
 import { MessagesTab } from "./tabs/messages-tab";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 export function UnifiedChatWindow() {
   const {
@@ -88,13 +89,22 @@ export function UnifiedChatWindow() {
         {/* Header with tabs */}
         <UnifiedChatHeader />
 
-        {/* Tab content */}
+        {/* Tab content with error boundary for graceful error handling */}
         <div className="flex-1 overflow-hidden">
-          {activeTab === "ai" ? (
-            <AIAssistantTab />
-          ) : (
-            <MessagesTab />
-          )}
+          <ErrorBoundary
+            category="render"
+            severity="error"
+            onReset={() => {
+              // Reset handled by ErrorBoundary internally
+              console.log("[Chat] Error boundary reset triggered");
+            }}
+          >
+            {activeTab === "ai" ? (
+              <AIAssistantTab />
+            ) : (
+              <MessagesTab />
+            )}
+          </ErrorBoundary>
         </div>
       </div>
     </div>

@@ -49,6 +49,53 @@ interface Message {
   content: string;
 }
 
+// ============================================================================
+// Retry Helper
+// ============================================================================
+
+/**
+ * Fetch with exponential backoff retry logic.
+ * Retries on network errors and 5xx server errors.
+ */
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  maxRetries = 3,
+  baseDelay = 1000
+): Promise<Response> {
+  let lastError: Error | null = null;
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+
+      // Don't retry on client errors (4xx) - those won't improve
+      if (response.status >= 400 && response.status < 500) {
+        return response;
+      }
+
+      // Retry on server errors (5xx)
+      if (response.status >= 500) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      return response;
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+
+      // Don't retry on last attempt
+      if (attempt === maxRetries - 1) break;
+
+      // Exponential backoff: 1s, 2s, 4s
+      const delay = baseDelay * Math.pow(2, attempt);
+      console.log(`[Chat] Retry ${attempt + 1}/${maxRetries} after ${delay}ms`);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+  }
+
+  throw lastError || new Error("Max retries exceeded");
+}
+
 interface Voice {
   id: string;
   name: string;
@@ -208,8 +255,11 @@ export function AIAssistantTab() {
     setSuggestions(pageSuggestions.slice(0, 3));
   }, [pathname]);
 
-  // Cleanup audio on unmount (prevents zombie audio)
+  // Cleanup audio on unmount (prevents zombie audio and memory leaks)
   useEffect(() => {
+    // Capture ref for cleanup
+    const audioCache = audioCacheRef.current;
+
     return () => {
       // Stop audio
       if (audioRef.current) {
@@ -228,6 +278,12 @@ export function AIAssistantTab() {
         recognizerRef.current.abort();
         recognizerRef.current = null;
       }
+      // CRITICAL: Revoke all cached blob URLs to prevent memory leaks
+      // Each URL.createObjectURL() holds a reference to the blob in memory
+      audioCache.forEach((url) => {
+        URL.revokeObjectURL(url);
+      });
+      audioCache.clear();
     };
   }, []);
 
@@ -643,17 +699,22 @@ export function AIAssistantTab() {
       const pageContent = getPageContent();
       const visibleSection = getVisibleSection();
 
-      const response = await fetch("/api/assistant/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [...messages, userMessage],
-          currentPage: pathname,
-          pageContent,
-          visibleSection,
-          aiContext: aiContext || undefined,
-        }),
-      });
+      const response = await fetchWithRetry(
+        "/api/assistant/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: [...messages, userMessage],
+            currentPage: pathname,
+            pageContent,
+            visibleSection,
+            aiContext: aiContext || undefined,
+          }),
+        },
+        3, // Max 3 retries
+        1000 // 1 second base delay
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);

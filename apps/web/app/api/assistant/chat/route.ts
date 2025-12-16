@@ -27,10 +27,58 @@ interface ChatRequest {
   };
 }
 
+// SSE streaming timeout (30 seconds of inactivity)
+const STREAM_TIMEOUT_MS = 30000;
+
+// Message validation helper
+function isValidMessage(msg: unknown): msg is Message {
+  if (!msg || typeof msg !== "object") return false;
+  const m = msg as Record<string, unknown>;
+  return (
+    typeof m.role === "string" &&
+    (m.role === "user" || m.role === "assistant") &&
+    typeof m.content === "string" &&
+    m.content.length > 0 &&
+    m.content.length <= 100000 // Reasonable max length
+  );
+}
+
 export async function POST(request: Request) {
   try {
     const body: ChatRequest = await request.json();
     const { messages, currentPage, pageContent, visibleSection, customAssistantName, userName, shouldAskForName, userContext, aiContext } = body;
+
+    // Input validation for messages array
+    if (!messages || !Array.isArray(messages)) {
+      return new Response(
+        JSON.stringify({ error: "Messages must be an array" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (messages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Messages array cannot be empty" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (messages.length > 100) {
+      return new Response(
+        JSON.stringify({ error: "Too many messages (max 100)" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate each message structure
+    for (let i = 0; i < messages.length; i++) {
+      if (!isValidMessage(messages[i])) {
+        return new Response(
+          JSON.stringify({ error: `Invalid message at index ${i}` }),
+          { status: 400, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
 
     // Get user's session and API key
     const session = await getSession();
@@ -42,13 +90,6 @@ export async function POST(request: Request) {
 
     // Use user's preferred model or default
     const model = apiKeyResult.preferredModel || DEFAULT_MODEL;
-
-    if (!messages || messages.length === 0) {
-      return new Response(
-        JSON.stringify({ error: "Messages are required" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
-    }
 
     // Get the latest user message for RAG search
     const latestUserMessage = messages
@@ -90,9 +131,37 @@ export async function POST(request: Request) {
       async start(controller) {
         let inputTokens = 0;
         let outputTokens = 0;
+        let lastActivityTime = Date.now();
+        let timeoutId: NodeJS.Timeout | null = null;
+        let isTimedOut = false;
+
+        // Setup timeout checker
+        const checkTimeout = () => {
+          if (Date.now() - lastActivityTime > STREAM_TIMEOUT_MS) {
+            isTimedOut = true;
+            controller.enqueue(
+              encoder.encode(
+                `data: ${JSON.stringify({
+                  type: "error",
+                  content: "Stream timeout - no data received for 30 seconds",
+                })}\n\n`
+              )
+            );
+            controller.close();
+          } else {
+            timeoutId = setTimeout(checkTimeout, 5000); // Check every 5 seconds
+          }
+        };
+        timeoutId = setTimeout(checkTimeout, STREAM_TIMEOUT_MS);
 
         try {
           for await (const event of stream) {
+            // Check if we've timed out
+            if (isTimedOut) break;
+
+            // Update last activity time
+            lastActivityTime = Date.now();
+
             if (
               event.type === "content_block_delta" &&
               event.delta.type === "text_delta"
@@ -108,6 +177,9 @@ export async function POST(request: Request) {
               outputTokens = event.usage.output_tokens;
             }
           }
+
+          // Clear timeout on successful completion
+          if (timeoutId) clearTimeout(timeoutId);
 
           // Get final usage from stream
           const finalMessage = await stream.finalMessage();
@@ -139,6 +211,9 @@ export async function POST(request: Request) {
           );
           controller.close();
         } catch (error) {
+          // Clear timeout on error
+          if (timeoutId) clearTimeout(timeoutId);
+
           const errorMessage =
             error instanceof Error ? error.message : "Unknown error";
           controller.enqueue(
