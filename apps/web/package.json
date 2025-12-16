@@ -81,6 +81,7 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "sass": "^1.96.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
     "typescript": "5.9.3"

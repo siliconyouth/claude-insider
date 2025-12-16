@@ -8,3 +8,4 @@ export { InstallPrompt, InstallButton } from "./install-prompt";
 export { OfflineIndicator, OfflineStatusBadge } from "./offline-indicator";
 export { UpdateNotification } from "./update-notification";
 export { SaveOfflineButton, SaveAllOfflineButton } from "./save-offline-button";
+export { PushNotificationPrompt } from "./push-notification-prompt";

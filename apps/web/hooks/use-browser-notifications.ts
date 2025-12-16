@@ -48,7 +48,7 @@ interface UseBrowserNotificationsReturn {
 }
 
 const APP_ICON = "/icons/icon-192x192.png";
-const APP_BADGE = "/icons/icon-72x72.png";
+const APP_BADGE = "/icons/icon-96x96.png";
 
 /**
  * Convert a base64 string to Uint8Array (for VAPID key)

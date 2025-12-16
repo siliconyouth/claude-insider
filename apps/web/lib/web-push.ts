@@ -147,7 +147,7 @@ async function sendToSubscription(
         url: payload.url || "/notifications",
         tag: payload.tag || `notification-${Date.now()}`,
         icon: payload.icon || "/icons/icon-192x192.png",
-        badge: payload.badge || "/icons/icon-72x72.png",
+        badge: payload.badge || "/icons/icon-96x96.png",
         actions: payload.actions,
         ...payload.data,
       })

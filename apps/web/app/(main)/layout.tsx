@@ -20,6 +20,8 @@ import { FingerprintProvider } from "@/components/providers/fingerprint-provider
 import { NotificationPopup } from "@/components/notifications/notification-popup";
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
+import { InstallPrompt } from "@/components/pwa/install-prompt";
+import { PushNotificationPrompt } from "@/components/pwa/push-notification-prompt";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -142,10 +144,43 @@ export default async function MainLayout({
   return (
     <html lang={locale} className="dark">
       <head>
+        {/* DNS Prefetch and Preconnect */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+        {/* Favicon and Icons */}
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/icons/icon-96x96.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+
+        {/* Apple Touch Icons */}
         <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-167x167.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+
+        {/* Safari Pinned Tab */}
+        <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#3b82f6" />
+
+        {/* Microsoft Tiles */}
+        <meta name="msapplication-TileColor" content="#0a0a0a" />
+        <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+
+        {/* Mobile App Meta */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Claude Insider" />
+        <meta name="application-name" content="Claude Insider" />
+        <meta name="format-detection" content="telephone=no" />
+
+        {/* RSS Feed */}
         <link rel="alternate" type="application/rss+xml" title="Claude Insider RSS Feed" href="/feed.xml" />
+
+        {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -174,6 +209,8 @@ export default async function MainLayout({
                     <AskAIModal />
                     <VersionUpdatePopup />
                     <NotificationPopup />
+                    <InstallPrompt />
+                    <PushNotificationPrompt />
                     <Analytics />
                   </DonorBadgeProvider>
                   </AchievementNotificationProvider>

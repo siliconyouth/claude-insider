@@ -3,8 +3,8 @@
 /**
  * Notifications Step
  *
- * Onboarding step for configuring notification preferences
- * and requesting push notification permission.
+ * Onboarding step for configuring notification preferences,
+ * requesting push notification permission, and PWA installation.
  */
 
 import { useState, useEffect } from "react";
@@ -12,6 +12,7 @@ import { cn } from "@/lib/design-system";
 import { useWizard } from "../wizard-context";
 import { StepWrapper } from "../shared/step-wrapper";
 import { WizardNavigation } from "../wizard-navigation";
+import { usePWA } from "@/hooks/use-pwa";
 
 interface NotificationToggle {
   key: string;
@@ -23,6 +24,11 @@ interface NotificationToggle {
 
 export function NotificationsStep() {
   const { isLastStep, setError } = useWizard();
+  const { isInstallable, isInstalled, promptInstall } = usePWA();
+
+  // PWA install state
+  const [isInstallingApp, setIsInstallingApp] = useState(false);
+  const [installDismissed, setInstallDismissed] = useState(false);
 
   // Push notification state
   const [pushPermission, setPushPermission] = useState<NotificationPermission>("default");
@@ -128,6 +134,20 @@ export function NotificationsStep() {
     }
   };
 
+  const handleInstallApp = async () => {
+    setIsInstallingApp(true);
+    try {
+      const accepted = await promptInstall();
+      if (!accepted) {
+        setInstallDismissed(true);
+      }
+    } catch (err) {
+      console.error("[Onboarding] Install error:", err);
+    } finally {
+      setIsInstallingApp(false);
+    }
+  };
+
   const handleContinue = async (): Promise<boolean> => {
     try {
       // Build preferences object
@@ -164,10 +184,80 @@ export function NotificationsStep() {
 
   return (
     <StepWrapper
-      title="Notification Preferences"
-      description="Stay informed about activity on Claude Insider"
+      title="Notifications & App"
+      description="Stay informed and get the best experience"
     >
       <div className="space-y-4">
+        {/* PWA Install Prompt */}
+        {isInstallable && !isInstalled && !installDismissed && (
+          <div
+            className={cn(
+              "p-4 rounded-xl",
+              "bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-violet-500/10",
+              "border border-cyan-500/20"
+            )}
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3v11.25" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h4 className="font-medium text-gray-900 dark:text-white">Install App</h4>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                  Add to your home screen for offline access &amp; faster loading
+                </p>
+                <div className="flex items-center gap-2 mt-3">
+                  <button
+                    type="button"
+                    onClick={handleInstallApp}
+                    disabled={isInstallingApp}
+                    className={cn(
+                      "px-4 py-2 rounded-lg text-sm font-medium",
+                      "bg-gradient-to-r from-cyan-600 via-blue-600 to-violet-600",
+                      "text-white shadow-lg shadow-blue-500/25",
+                      "hover:opacity-90 transition-all duration-200",
+                      "disabled:opacity-50 disabled:cursor-not-allowed"
+                    )}
+                  >
+                    {isInstallingApp ? (
+                      <span className="flex items-center gap-2">
+                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Installing...
+                      </span>
+                    ) : (
+                      "Install Now"
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setInstallDismissed(true)}
+                    className="px-4 py-2 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors"
+                  >
+                    Later
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Already Installed Badge */}
+        {isInstalled && (
+          <div className="p-3 rounded-lg bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800">
+            <div className="flex items-center gap-2 text-cyan-700 dark:text-cyan-400">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              <span className="text-sm font-medium">App installed</span>
+            </div>
+          </div>
+        )}
+
         {/* Push Notification Request */}
         {pushPermission === "default" && (
           <div

@@ -150,11 +150,11 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
       skippable: true,
     });
 
-    // Always show notifications setup step
+    // Always show notifications and PWA setup step
     steps.push({
       id: "notifications",
-      title: "Notifications",
-      description: "Configure how you want to stay informed",
+      title: "Notifications & App",
+      description: "Enable notifications and install the app",
       icon: "🔔",
       skippable: true,
     });

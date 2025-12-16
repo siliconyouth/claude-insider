@@ -1,5 +1,5 @@
 // Cache version - UPDATE THIS ON EACH DEPLOY to bust old caches
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 const STATIC_CACHE = `claude-insider-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `claude-insider-dynamic-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `claude-insider-offline-${CACHE_VERSION}`;
@@ -12,9 +12,26 @@ const STATIC_ASSETS = [
   '/resources',
   '/search',
   '/manifest.json',
+  '/favicon.ico',
+  // All PWA icons
+  '/icons/favicon-16x16.png',
+  '/icons/favicon-32x32.png',
+  '/icons/icon-48x48.png',
+  '/icons/icon-72x72.png',
+  '/icons/icon-96x96.png',
+  '/icons/icon-120x120.png',
+  '/icons/icon-128x128.png',
+  '/icons/icon-144x144.png',
+  '/icons/icon-152x152.png',
+  '/icons/icon-167x167.png',
   '/icons/apple-touch-icon.png',
   '/icons/icon-192x192.png',
+  '/icons/icon-192x192-maskable.png',
+  '/icons/icon-256x256.png',
+  '/icons/icon-384x384.png',
   '/icons/icon-512x512.png',
+  '/icons/icon-512x512-maskable.png',
+  '/icons/safari-pinned-tab.svg',
 ];
 
 // Pages that should work offline (cached more aggressively)
