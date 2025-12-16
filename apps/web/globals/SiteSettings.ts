@@ -15,7 +15,7 @@ export const SiteSettings: GlobalConfig = {
   },
   access: {
     read: () => true, // Public read for frontend
-    update: ({ req: { user } }) => user?.role === 'admin', // Only admins can edit
+    update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'superadmin', // Admins and superadmins can edit
   },
   hooks: {
     afterChange: [createGlobalRevalidateHook('site-settings')],

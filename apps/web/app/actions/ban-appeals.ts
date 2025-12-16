@@ -359,8 +359,8 @@ export async function banUser(
       return { error: "User is already banned" };
     }
 
-    // Can't ban admins
-    if (targetUser.role === "admin") {
+    // Can't ban admins or superadmins
+    if (targetUser.role === "admin" || targetUser.role === "superadmin") {
       return { error: "Cannot ban admin users" };
     }
 

@@ -75,12 +75,14 @@ export interface Config {
     resources: Resource;
     'resource-sources': ResourceSource;
     'resource-discovery-queue': ResourceDiscoveryQueue;
+    'audit-logs': AuditLog;
     documents: Document;
     'document-sections': DocumentSection;
     'code-examples': CodeExample;
     'difficulty-levels': DifficultyLevel;
     'programming-languages': ProgrammingLanguage;
     'edit-suggestions': EditSuggestion;
+    translations: Translation;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,12 +98,14 @@ export interface Config {
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
     'resource-sources': ResourceSourcesSelect<false> | ResourceSourcesSelect<true>;
     'resource-discovery-queue': ResourceDiscoveryQueueSelect<false> | ResourceDiscoveryQueueSelect<true>;
+    'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     'document-sections': DocumentSectionsSelect<false> | DocumentSectionsSelect<true>;
     'code-examples': CodeExamplesSelect<false> | CodeExamplesSelect<true>;
     'difficulty-levels': DifficultyLevelsSelect<false> | DifficultyLevelsSelect<true>;
     'programming-languages': ProgrammingLanguagesSelect<false> | ProgrammingLanguagesSelect<true>;
     'edit-suggestions': EditSuggestionsSelect<false> | EditSuggestionsSelect<true>;
+    translations: TranslationsSelect<false> | TranslationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -110,7 +114,50 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale:
+    | ('false' | 'none' | 'null')
+    | false
+    | null
+    | (
+        | 'en'
+        | 'es'
+        | 'fr'
+        | 'de'
+        | 'ja'
+        | 'zh'
+        | 'ko'
+        | 'pt'
+        | 'sr'
+        | 'ru'
+        | 'it'
+        | 'nl'
+        | 'pl'
+        | 'sv'
+        | 'no'
+        | 'da'
+        | 'fi'
+        | 'el'
+      )
+    | (
+        | 'en'
+        | 'es'
+        | 'fr'
+        | 'de'
+        | 'ja'
+        | 'zh'
+        | 'ko'
+        | 'pt'
+        | 'sr'
+        | 'ru'
+        | 'it'
+        | 'nl'
+        | 'pl'
+        | 'sv'
+        | 'no'
+        | 'da'
+        | 'fi'
+        | 'el'
+      )[];
   globals: {
     'site-settings': SiteSetting;
     'cross-link-settings': CrossLinkSetting;
@@ -119,7 +166,25 @@ export interface Config {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     'cross-link-settings': CrossLinkSettingsSelect<false> | CrossLinkSettingsSelect<true>;
   };
-  locale: null;
+  locale:
+    | 'en'
+    | 'es'
+    | 'fr'
+    | 'de'
+    | 'ja'
+    | 'zh'
+    | 'ko'
+    | 'pt'
+    | 'sr'
+    | 'ru'
+    | 'it'
+    | 'nl'
+    | 'pl'
+    | 'sv'
+    | 'no'
+    | 'da'
+    | 'fi'
+    | 'el';
   user: User & {
     collection: 'users';
   };
@@ -163,9 +228,9 @@ export interface User {
    */
   bio?: string | null;
   /**
-   * User role determines access level
+   * User role determines access level. Super Admin has ultimate access.
    */
-  role: 'admin' | 'editor' | 'moderator' | 'beta_tester';
+  role: 'superadmin' | 'admin' | 'editor' | 'moderator';
   /**
    * Inactive users cannot log in
    */
@@ -1078,6 +1143,117 @@ export interface ResourceDiscoveryQueue {
   createdAt: string;
 }
 /**
+ * Immutable audit trail of all admin actions
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-logs".
+ */
+export interface AuditLog {
+  id: number;
+  /**
+   * Type of action performed
+   */
+  action:
+    | 'create'
+    | 'update'
+    | 'delete'
+    | 'approve'
+    | 'reject'
+    | 'discover'
+    | 'scrape'
+    | 'analyze'
+    | 'import'
+    | 'export'
+    | 'login'
+    | 'logout'
+    | 'settings'
+    | 'bulk';
+  /**
+   * Collection/entity type affected
+   */
+  collection?: string | null;
+  /**
+   * ID of the affected document
+   */
+  documentId?: string | null;
+  /**
+   * User who performed this action
+   */
+  user: number | User;
+  /**
+   * Snapshot of user details at time of action
+   */
+  userSnapshot?: {
+    email?: string | null;
+    name?: string | null;
+    role?: string | null;
+  };
+  /**
+   * JSON diff of changes (before/after)
+   */
+  changes?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  metadata?: {
+    /**
+     * Client IP address
+     */
+    ipAddress?: string | null;
+    /**
+     * Browser/client user agent
+     */
+    userAgent?: string | null;
+    /**
+     * API endpoint called
+     */
+    endpoint?: string | null;
+    /**
+     * HTTP method
+     */
+    method?: string | null;
+    /**
+     * Request duration in ms
+     */
+    duration?: number | null;
+    /**
+     * HTTP response status code
+     */
+    statusCode?: number | null;
+  };
+  context?: {
+    /**
+     * Reason for action (if provided)
+     */
+    reason?: string | null;
+    /**
+     * Additional notes
+     */
+    notes?: string | null;
+    /**
+     * Number of items affected (for bulk ops)
+     */
+    affectedCount?: number | null;
+    /**
+     * Source URL (for discover/scrape actions)
+     */
+    sourceUrl?: string | null;
+  };
+  status: 'success' | 'failed' | 'partial';
+  error?: {
+    message?: string | null;
+    code?: string | null;
+    stack?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Code blocks for targeted resource linking
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1226,6 +1402,63 @@ export interface EditSuggestion {
   createdAt: string;
 }
 /**
+ * Manage UI translation strings across all supported languages.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "translations".
+ */
+export interface Translation {
+  id: number;
+  /**
+   * The translation namespace (matches JSON file structure)
+   */
+  namespace:
+    | 'common'
+    | 'navigation'
+    | 'home'
+    | 'search'
+    | 'favorites'
+    | 'collections'
+    | 'readingLists'
+    | 'notifications'
+    | 'profile'
+    | 'settings'
+    | 'auth'
+    | 'pwa'
+    | 'errors'
+    | 'footer';
+  /**
+   * The translation key (e.g., "loading", "hero.title", "search.results")
+   */
+  key: string;
+  /**
+   * The translated string for each language
+   */
+  value: string;
+  /**
+   * Optional context to help translators understand where this string appears
+   */
+  context?: string | null;
+  /**
+   * Dynamic placeholders used in the string (e.g., {count}, {query})
+   */
+  placeholders?:
+    | {
+        /**
+         * Placeholder name without braces (e.g., "count", "query")
+         */
+        name: string;
+        /**
+         * What this placeholder represents
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -1282,6 +1515,10 @@ export interface PayloadLockedDocument {
         value: number | ResourceDiscoveryQueue;
       } | null)
     | ({
+        relationTo: 'audit-logs';
+        value: number | AuditLog;
+      } | null)
+    | ({
         relationTo: 'documents';
         value: number | Document;
       } | null)
@@ -1304,6 +1541,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'edit-suggestions';
         value: number | EditSuggestion;
+      } | null)
+    | ({
+        relationTo: 'translations';
+        value: number | Translation;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1648,6 +1889,52 @@ export interface ResourceDiscoveryQueueSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-logs_select".
+ */
+export interface AuditLogsSelect<T extends boolean = true> {
+  action?: T;
+  collection?: T;
+  documentId?: T;
+  user?: T;
+  userSnapshot?:
+    | T
+    | {
+        email?: T;
+        name?: T;
+        role?: T;
+      };
+  changes?: T;
+  metadata?:
+    | T
+    | {
+        ipAddress?: T;
+        userAgent?: T;
+        endpoint?: T;
+        method?: T;
+        duration?: T;
+        statusCode?: T;
+      };
+  context?:
+    | T
+    | {
+        reason?: T;
+        notes?: T;
+        affectedCount?: T;
+        sourceUrl?: T;
+      };
+  status?: T;
+  error?:
+    | T
+    | {
+        message?: T;
+        code?: T;
+        stack?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents_select".
  */
 export interface DocumentsSelect<T extends boolean = true> {
@@ -1783,6 +2070,25 @@ export interface EditSuggestionsSelect<T extends boolean = true> {
   reviewNotes?: T;
   rejectionReason?: T;
   reviewedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "translations_select".
+ */
+export interface TranslationsSelect<T extends boolean = true> {
+  namespace?: T;
+  key?: T;
+  value?: T;
+  context?: T;
+  placeholders?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

@@ -15,7 +15,7 @@ export const CrossLinkSettings: GlobalConfig = {
   },
   access: {
     read: () => true, // Needed for frontend
-    update: ({ req: { user } }) => user?.role === 'admin',
+    update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'superadmin',
   },
   hooks: {
     afterChange: [createGlobalRevalidateHook('cross-link-settings')],
