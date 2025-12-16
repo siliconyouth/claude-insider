@@ -108,8 +108,14 @@ function calculateEstimatedCost(
   return Math.round((inputCost + outputCost) * 100) / 100;
 }
 
+// Debug: Instance counter for tracking multiple hook instances
+let instanceCounter = 0;
+
 export function useApiCredits(pollInterval: number = 30000) {
   const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
+
+  // Debug: Track instance ID
+  const [instanceId] = useState(() => ++instanceCounter);
 
   // Initialize with cached data for instant display
   const [data, setData] = useState<ApiCreditsData>(() => {
@@ -132,11 +138,11 @@ export function useApiCredits(pollInterval: number = 30000) {
 
   const fetchCredits = useCallback(async () => {
     // Debug logging - remove after fixing
-    console.log("[useApiCredits] fetchCredits called:", { isAuthLoading, isAuthenticated });
+    console.log(`[useApiCredits #${instanceId}] fetchCredits called:`, { isAuthLoading, isAuthenticated });
 
     // Wait for auth to be determined before doing anything
     if (isAuthLoading) {
-      console.log("[useApiCredits] Auth still loading, waiting...");
+      console.log(`[useApiCredits #${instanceId}] Auth still loading, waiting...`);
       return; // Keep showing cached data while auth loads
     }
 
@@ -169,7 +175,7 @@ export function useApiCredits(pollInterval: number = 30000) {
       const apiKey = result.apiKeys?.[0];
 
       // Debug logging - remove after fixing
-      console.log("[useApiCredits] API Response:", {
+      console.log(`[useApiCredits #${instanceId}] API Response:`, {
         hasApiKeys: !!result.apiKeys?.length,
         apiKey: apiKey ? { isValid: apiKey.isValid, keyHint: apiKey.keyHint, preferredModel: apiKey.preferredModel } : null,
         aiPreferences: result.aiPreferences,
@@ -205,7 +211,7 @@ export function useApiCredits(pollInterval: number = 30000) {
         const newModelTier = modelInfo?.tier || null;
         const newIsValid = apiKey.isValid === true;
 
-        setData({
+        const newData = {
           hasOwnKey: true,
           isValid: newIsValid,
           keyHint: apiKey.keyHint,
@@ -227,7 +233,9 @@ export function useApiCredits(pollInterval: number = 30000) {
               }
             : { inputTokens: 0, outputTokens: 0, requests: 0, estimatedCost: 0 },
           lastUpdated: new Date(),
-        });
+        };
+        console.log(`[useApiCredits #${instanceId}] Setting valid key data:`, { hasOwnKey: newData.hasOwnKey, isValid: newData.isValid, modelName: newData.modelName });
+        setData(newData);
 
         // Cache for instant display on next page load
         setCachedPref({
@@ -239,7 +247,7 @@ export function useApiCredits(pollInterval: number = 30000) {
         });
       } else {
         // Debug logging - remove after fixing
-        console.log("[useApiCredits] Key not valid or missing:", {
+        console.log(`[useApiCredits #${instanceId}] Key not valid or missing:`, {
           hasApiKey: !!apiKey,
           isValidValue: apiKey?.isValid,
           isValidType: typeof apiKey?.isValid,
@@ -268,7 +276,7 @@ export function useApiCredits(pollInterval: number = 30000) {
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated, isAuthLoading]);
+  }, [isAuthenticated, isAuthLoading, instanceId]);
 
   // Initial fetch - runs when auth state is determined
   useEffect(() => {
