@@ -90,15 +90,19 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              // PayPal SDK requires scripts from paypal.com and paypalobjects.com
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://*.paypal.com https://*.paypalobjects.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: https:",
-              "media-src 'self' blob:",
-              "connect-src 'self' https://vitals.vercel-insights.com",
+              "img-src 'self' data: https: blob:",
+              "media-src 'self' blob: https://*.elevenlabs.io",
+              // PayPal, ElevenLabs, and Vercel analytics connections
+              "connect-src 'self' https://vitals.vercel-insights.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io",
+              // PayPal buttons render in iframes
+              "frame-src 'self' https://*.paypal.com https://*.paypalobjects.com",
               "frame-ancestors 'none'",
               "base-uri 'self'",
-              "form-action 'self'",
+              "form-action 'self' https://*.paypal.com",
               "upgrade-insecure-requests",
             ].join("; "),
           },
