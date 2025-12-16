@@ -115,15 +115,20 @@ export function MessageBubble({
       {/* Avatar */}
       {showSender && !isOwnMessage && (
         <div className="flex-shrink-0">
-          {isAI ? (
-            // AI Assistant uses website logo
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center p-1">
+          {isAI && message.senderAvatar ? (
+            // AI Assistant avatar from database (Supabase storage)
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/icons/icon-192x192.png"
+                src={message.senderAvatar}
                 alt="Claude Insider AI"
-                className="w-full h-full rounded-full object-cover"
+                className="w-full h-full object-cover"
               />
+            </div>
+          ) : isAI ? (
+            // AI Assistant fallback (gradient with initials)
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center">
+              <span className="text-white text-xs font-bold">CI</span>
             </div>
           ) : message.senderAvatar ? (
             // eslint-disable-next-line @next/next/no-img-element

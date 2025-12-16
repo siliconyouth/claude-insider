@@ -23,10 +23,12 @@ import {
   createConversation,
   updateConversationMessages,
   deleteConversation,
+  clearAllConversations,
   getActiveConversationId,
   setActiveConversationId,
   getAssistantName,
   getUserName,
+  formatConversationTime,
   DEFAULT_ASSISTANT_NAME,
   type Conversation,
 } from "@/lib/assistant-storage";
@@ -109,6 +111,11 @@ export function AIAssistantTab() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversationId, setActiveConvId] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  // Smart recommendations after AI response
+  const [recommendations, setRecommendations] = useState<string[]>([]);
+  const [recommendationPool, setRecommendationPool] = useState<string[]>([]);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   // Names (loaded for Settings panel - prefixed as unused for now)
   const [_assistantName, setAssistantNameState] = useState(DEFAULT_ASSISTANT_NAME);
@@ -532,15 +539,84 @@ export function AIAssistantTab() {
   }, []);
 
   // ============================================================================
+  // Smart Recommendations
+  // ============================================================================
+
+  /**
+   * Generate context-aware follow-up questions based on page and conversation.
+   * Returns pool of recommendations - first 3 shown, rest available via "Something else"
+   */
+  const generateRecommendations = useCallback((): string[] => {
+    const baseRecommendations = [
+      "Can you explain this in more detail?",
+      "What are the best practices for this?",
+      "Are there any common mistakes to avoid?",
+      "Can you show me a code example?",
+      "How does this compare to alternatives?",
+      "What are the performance considerations?",
+    ];
+
+    // Add context-aware recommendations based on page
+    const contextRecommendations: string[] = [];
+
+    if (pathname?.includes("/docs/getting-started")) {
+      contextRecommendations.push(
+        "What should I configure first?",
+        "How do I verify my setup is correct?",
+        "What are the minimum requirements?"
+      );
+    } else if (pathname?.includes("/docs/configuration")) {
+      contextRecommendations.push(
+        "What's the recommended configuration?",
+        "How do I customize this for my project?",
+        "Are there any security considerations?"
+      );
+    } else if (pathname?.includes("/docs/api")) {
+      contextRecommendations.push(
+        "What are the rate limits?",
+        "How do I handle errors?",
+        "Can you show the request/response format?"
+      );
+    } else if (pathname?.includes("/docs/tips")) {
+      contextRecommendations.push(
+        "What are the most useful tips?",
+        "How can I be more productive?",
+        "What features are often overlooked?"
+      );
+    }
+
+    // Combine and shuffle for variety
+    const all = [...contextRecommendations, ...baseRecommendations];
+    return all.sort(() => Math.random() - 0.5);
+  }, [pathname]);
+
+  /**
+   * Cycle to next set of recommendations from pool
+   */
+  const handleSomethingElse = useCallback(() => {
+    if (recommendationPool.length > 0) {
+      const nextBatch = recommendationPool.slice(0, 3);
+      const remainingPool = recommendationPool.slice(3);
+      setRecommendations(nextBatch);
+      setRecommendationPool(remainingPool);
+      track("assistant_something_else_clicked");
+    }
+  }, [recommendationPool]);
+
+  // ============================================================================
   // Chat
   // ============================================================================
 
-  const sendMessage = useCallback(async () => {
-    const messageText = input.trim();
+  const sendMessage = useCallback(async (messageOverride?: string) => {
+    const messageText = (messageOverride ?? input).trim();
     if (!messageText || isLoading) return;
 
     // CRITICAL: Stop any playing audio before new message
     stopSpeaking();
+
+    // Hide previous recommendations
+    setShowRecommendations(false);
+    setRecommendations([]);
 
     // Create new conversation if needed
     let convId = activeConversationId;
@@ -624,6 +700,14 @@ export function AIAssistantTab() {
         speakText(fullContent);
       }
 
+      // Show smart recommendations after response
+      setTimeout(() => {
+        const pool = generateRecommendations();
+        setRecommendationPool(pool.slice(3));
+        setRecommendations(pool.slice(0, 3));
+        setShowRecommendations(true);
+      }, 300);
+
       // Refresh credits
       triggerCreditsRefresh();
 
@@ -650,6 +734,7 @@ export function AIAssistantTab() {
     stopSpeaking,
     clearAIContext,
     announce,
+    generateRecommendations,
   ]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -658,6 +743,16 @@ export function AIAssistantTab() {
       sendMessage();
     }
   };
+
+  /**
+   * Handle clicking a recommendation - sends immediately and hides recommendations
+   */
+  const handleRecommendationClick = useCallback((recommendation: string) => {
+    setShowRecommendations(false);
+    setRecommendations([]);
+    sendMessage(recommendation);
+    track("assistant_recommendation_clicked", { recommendation: recommendation.substring(0, 50) });
+  }, [sendMessage]);
 
   // ============================================================================
   // Conversation Management
@@ -687,6 +782,17 @@ export function AIAssistantTab() {
       setActiveConvId(null);
     }
   }, [activeConversationId]);
+
+  const handleClearAllConversations = useCallback(() => {
+    if (confirm("Are you sure you want to delete all conversations? This cannot be undone.")) {
+      clearAllConversations();
+      setConversations([]);
+      setMessages([]);
+      setActiveConvId(null);
+      setShowHistory(false);
+      announce("All conversations cleared");
+    }
+  }, [announce]);
 
   // ============================================================================
   // Render
@@ -727,47 +833,119 @@ export function AIAssistantTab() {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 overflow-hidden flex">
-        {/* History sidebar */}
+      <div className="flex-1 overflow-hidden flex relative">
+        {/* History Panel - Full screen overlay */}
         {showHistory && (
-          <div className="w-64 border-r border-gray-200 dark:border-[#262626] overflow-y-auto">
-            <div className="p-2">
-              <button
-                onClick={startNewConversation}
-                className={cn(
-                  "w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg",
-                  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-                  "text-white text-sm font-medium",
-                  "hover:shadow-lg hover:shadow-blue-500/25",
-                  "transition-all duration-200"
-                )}
-              >
-                <PlusIcon className="h-4 w-4" />
-                New Chat
-              </button>
-            </div>
-            <div className="px-2 pb-2 space-y-1">
-              {conversations.map((conv) => (
-                <div
-                  key={conv.id}
-                  onClick={() => loadConversation(conv)}
+          <div className="absolute inset-0 z-10 flex flex-col bg-white dark:bg-gray-900">
+            {/* History Header */}
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+              <h3 className="font-semibold text-gray-900 dark:text-white">Conversations</h3>
+              <div className="flex items-center gap-2">
+                {/* New conversation button */}
+                <button
+                  onClick={startNewConversation}
                   className={cn(
-                    "group flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer",
-                    "text-sm text-gray-700 dark:text-gray-300",
-                    "hover:bg-gray-100 dark:hover:bg-gray-800",
-                    activeConversationId === conv.id && "bg-blue-50 dark:bg-blue-900/20"
+                    "flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium text-white",
+                    "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                    "hover:scale-105 transition-all"
+                  )}
+                  title="Start new conversation"
+                >
+                  <PlusIcon className="h-4 w-4" />
+                  New
+                </button>
+                {/* Close button */}
+                <button
+                  onClick={() => setShowHistory(false)}
+                  className={cn(
+                    "rounded-lg p-2 transition-colors",
+                    "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white",
+                    "hover:bg-gray-100 dark:hover:bg-gray-800"
+                  )}
+                  title="Back to chat"
+                >
+                  <CloseIcon className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* History Content */}
+            <div className="flex-1 overflow-y-auto p-4">
+              {conversations.length === 0 ? (
+                <div className="flex h-full flex-col items-center justify-center text-center">
+                  <div className="mb-4 rounded-full bg-gray-100 dark:bg-gray-800 p-4">
+                    <ChatIcon className="h-8 w-8 text-gray-400" />
+                  </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">No conversations yet</p>
+                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                    Start a new conversation to get started
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {conversations.map((conv) => (
+                    <button
+                      key={conv.id}
+                      onClick={() => loadConversation(conv)}
+                      className={cn(
+                        "group w-full rounded-lg border p-3 text-left transition-all",
+                        "hover:border-blue-500/50 hover:shadow-md",
+                        activeConversationId === conv.id
+                          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                          : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750"
+                      )}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <p className={cn(
+                            "truncate text-sm font-medium",
+                            activeConversationId === conv.id
+                              ? "text-blue-600 dark:text-cyan-400"
+                              : "text-gray-900 dark:text-white"
+                          )}>
+                            {conv.title}
+                          </p>
+                          <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+                            {conv.messages.length} message{conv.messages.length !== 1 ? "s" : ""} · {formatConversationTime(conv.updatedAt)}
+                          </p>
+                        </div>
+                        <button
+                          onClick={(e) => deleteConv(conv.id, e)}
+                          className={cn(
+                            "rounded p-1 opacity-0 transition-all group-hover:opacity-100",
+                            "text-gray-400 hover:text-red-500",
+                            "hover:bg-red-100 dark:hover:bg-red-900/30"
+                          )}
+                          title="Delete conversation"
+                        >
+                          <TrashIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* History Footer - Clear All */}
+            {conversations.length > 0 && (
+              <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-3">
+                <button
+                  onClick={handleClearAllConversations}
+                  className={cn(
+                    "w-full flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm",
+                    "border border-red-200 dark:border-red-900/50",
+                    "bg-white dark:bg-gray-800",
+                    "text-red-600 dark:text-red-400",
+                    "hover:bg-red-50 dark:hover:bg-red-900/20",
+                    "transition-colors"
                   )}
                 >
-                  <span className="truncate flex-1">{conv.title}</span>
-                  <button
-                    onClick={(e) => deleteConv(conv.id, e)}
-                    className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-red-100 dark:hover:bg-red-900/20 text-red-500"
-                  >
-                    <TrashIcon className="h-3 w-3" />
-                  </button>
-                </div>
-              ))}
-            </div>
+                  <TrashIcon className="h-4 w-4" />
+                  Clear all conversations
+                </button>
+              </div>
+            )}
           </div>
         )}
 
@@ -833,8 +1011,9 @@ export function AIAssistantTab() {
                     <button
                       key={i}
                       onClick={() => {
-                        setInput(suggestion);
-                        inputRef.current?.focus();
+                        // Send immediately - don't just copy to input
+                        sendMessage(suggestion);
+                        track("assistant_suggestion_clicked", { suggestion: suggestion.substring(0, 50) });
                       }}
                       className={cn(
                         "px-3 py-1.5 rounded-lg text-sm",
@@ -882,17 +1061,23 @@ export function AIAssistantTab() {
                           }
                         }}
                         className={cn(
-                          "p-1 rounded transition-colors",
+                          "flex items-center gap-1 px-2 py-1 rounded transition-colors text-sm",
                           speakingMessageIdx === i && isSpeaking
-                            ? "text-blue-500 dark:text-cyan-400"
-                            : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                            ? "text-blue-500 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
+                            : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                         )}
                         title={speakingMessageIdx === i && isSpeaking ? "Stop speaking" : "Speak this message"}
                       >
                         {speakingMessageIdx === i && isSpeaking ? (
-                          <StopIcon className="h-4 w-4" />
+                          <>
+                            <StopIcon className="h-4 w-4" />
+                            <span>Stop</span>
+                          </>
                         ) : (
-                          <SpeakerIcon className="h-4 w-4" />
+                          <>
+                            <SpeakerIcon className="h-4 w-4" />
+                            <span>Listen</span>
+                          </>
                         )}
                       </button>
                       <button
@@ -900,10 +1085,11 @@ export function AIAssistantTab() {
                           navigator.clipboard.writeText(msg.content);
                           announce("Copied to clipboard");
                         }}
-                        className="p-1 rounded text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                        title="Copy"
+                        className="flex items-center gap-1 px-2 py-1 rounded text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        title="Copy to clipboard"
                       >
                         <CopyIcon className="h-4 w-4" />
+                        <span>Copy</span>
                       </button>
                     </div>
                   )}
@@ -940,6 +1126,49 @@ export function AIAssistantTab() {
               <div className="flex justify-center">
                 <div className="px-4 py-2 rounded-lg bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm">
                   {error}
+                </div>
+              </div>
+            )}
+
+            {/* Smart Recommendations */}
+            {showRecommendations && recommendations.length > 0 && !isLoading && (
+              <div className="mt-4 space-y-2">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Suggested follow-ups:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {recommendations.map((rec, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleRecommendationClick(rec)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-lg text-sm",
+                        "bg-gray-100 dark:bg-gray-800",
+                        "text-gray-700 dark:text-gray-300",
+                        "hover:bg-blue-100 dark:hover:bg-blue-900/30",
+                        "border border-transparent hover:border-blue-300 dark:hover:border-blue-700",
+                        "transition-all duration-200"
+                      )}
+                    >
+                      {rec}
+                    </button>
+                  ))}
+                  {recommendationPool.length > 0 && (
+                    <button
+                      onClick={handleSomethingElse}
+                      className={cn(
+                        "px-3 py-1.5 rounded-lg text-sm",
+                        "bg-gradient-to-r from-violet-100 to-blue-100",
+                        "dark:from-violet-900/30 dark:to-blue-900/30",
+                        "text-violet-700 dark:text-violet-300",
+                        "hover:from-violet-200 hover:to-blue-200",
+                        "dark:hover:from-violet-800/40 dark:hover:to-blue-800/40",
+                        "transition-all duration-200"
+                      )}
+                    >
+                      Something else →
+                    </button>
+                  )}
                 </div>
               </div>
             )}
@@ -989,7 +1218,7 @@ export function AIAssistantTab() {
 
               {/* Send button */}
               <button
-                onClick={sendMessage}
+                onClick={() => sendMessage()}
                 disabled={!input.trim() || isLoading}
                 className={cn(
                   "p-3 rounded-xl transition-all",
@@ -1084,6 +1313,22 @@ function CopyIcon({ className }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
       <rect x="9" y="9" width="13" height="13" rx="2" />
       <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+    </svg>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  );
+}
+
+function ChatIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
     </svg>
   );
 }
