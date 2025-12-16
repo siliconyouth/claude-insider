@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
+import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -26,13 +27,13 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check role
+    // Check role - use hasMinRole to include superadmin
     const roleResult = await pool.query(
       `SELECT role FROM "user" WHERE id = $1`,
       [session.user.id]
     );
-    const role = roleResult.rows[0]?.role;
-    if (!role || !["admin", "moderator"].includes(role)) {
+    const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
+    if (!hasMinRole(userRole, ROLES.MODERATOR)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
