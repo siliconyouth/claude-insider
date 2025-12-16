@@ -37,6 +37,7 @@ export interface ConversationParticipant {
   email?: string;
   avatarUrl?: string;
   displayName?: string;
+  username?: string;
   isOnline?: boolean;
   status?: "online" | "offline" | "idle";
 }
@@ -46,6 +47,7 @@ export interface Message {
   conversationId: string;
   senderId: string;
   senderName?: string;
+  senderUsername?: string;
   senderAvatar?: string;
   content: string;
   mentions: string[];
@@ -96,6 +98,7 @@ interface ProfileRow {
   user_id: string;
   display_name?: string;
   avatar_url?: string;
+  username?: string;
 }
 
 interface PresenceRow {
@@ -194,12 +197,12 @@ export async function getConversations(): Promise<{
       .in("conversation_id", conversationIds)
       .neq("user_id", session.user.id);
 
-    // Get profiles for participants
+    // Get profiles for participants (including username for hovercards)
     const participantRows = (allParticipants || []) as unknown as ParticipantRow[];
     const otherUserIds = participantRows.map((p) => p.user_id);
     const { data: profiles } = await supabase
       .from("profiles")
-      .select("user_id, display_name, avatar_url")
+      .select("user_id, display_name, avatar_url, username")
       .in("user_id", otherUserIds);
 
     // Get presence for participants
@@ -241,6 +244,7 @@ export async function getConversations(): Promise<{
             email: user?.email,
             avatarUrl: profile?.avatar_url ?? undefined,
             displayName: profile?.display_name ?? undefined,
+            username: profile?.username ?? undefined,
             isOnline: status === "online",
             status: status as "online" | "offline" | "idle",
           };
@@ -344,12 +348,12 @@ export async function getMessages(
     const hasMore = messages && messages.length > limit;
     const resultMessages = messages?.slice(0, limit) || [];
 
-    // Get sender profiles
+    // Get sender profiles (including username for hovercards)
     const messageRows = resultMessages as MessageRow[];
     const senderIds = [...new Set(messageRows.map((m) => m.sender_id))];
     const { data: profiles } = await supabase
       .from("profiles")
-      .select("user_id, display_name, avatar_url")
+      .select("user_id, display_name, avatar_url, username")
       .in("user_id", senderIds);
 
     const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
@@ -363,6 +367,7 @@ export async function getMessages(
         conversationId: m.conversation_id,
         senderId: m.sender_id,
         senderName: profile?.display_name || sender?.name || "Unknown",
+        senderUsername: profile?.username ?? undefined,
         senderAvatar: profile?.avatar_url ?? undefined,
         content: m.content,
         mentions: m.mentions || [],
@@ -464,12 +469,15 @@ export async function sendMessage(
       return { success: false, error: "Failed to send message" };
     }
 
-    // Get sender info for response
-    const { data: profile } = await supabase
+    // Get sender info for response (including username for hovercards)
+    const { data: profileData } = await supabase
       .from("profiles")
-      .select("display_name, avatar_url")
+      .select("display_name, avatar_url, username")
       .eq("user_id", session.user.id)
       .single();
+
+    // Cast to ProfileRow since Supabase types may be out of sync
+    const profile = profileData as ProfileRow | null;
 
     const msg = newMessage as MessageRow;
     const message: Message = {
@@ -477,6 +485,7 @@ export async function sendMessage(
       conversationId: msg.conversation_id,
       senderId: msg.sender_id,
       senderName: profile?.display_name || session.user.name || "You",
+      senderUsername: profile?.username ?? undefined,
       senderAvatar: profile?.avatar_url ?? undefined,
       content: msg.content,
       mentions: msg.mentions || [],

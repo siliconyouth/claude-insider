@@ -24,6 +24,8 @@ interface User {
   username: string;
   avatarUrl?: string | null;
   displayName?: string | null;
+  /** True if this user is a participant in the current chat */
+  isParticipant?: boolean;
 }
 
 interface MentionInputProps {
@@ -33,10 +35,12 @@ interface MentionInputProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  /** IDs of chat participants to prioritize in autocomplete (like WhatsApp) */
+  participantIds?: string[];
 }
 
 export const MentionInput = forwardRef<HTMLTextAreaElement, MentionInputProps>(
-  ({ value, onChange, onSubmit, placeholder, disabled, className }, ref) => {
+  ({ value, onChange, onSubmit, placeholder, disabled, className, participantIds = [] }, ref) => {
     const [showMentions, setShowMentions] = useState(false);
     const [mentionSearch, setMentionSearch] = useState("");
     const [mentionPosition, setMentionPosition] = useState({ top: 0, left: 0 });
@@ -60,7 +64,16 @@ export const MentionInput = forwardRef<HTMLTextAreaElement, MentionInputProps>(
       const searchUsers = async () => {
         setIsSearching(true);
         try {
-          const response = await fetch(`/api/users/search?q=${encodeURIComponent(mentionSearch)}&limit=5`);
+          // Build URL with priority for chat participants (WhatsApp-style)
+          const searchParams = new URLSearchParams({
+            q: mentionSearch,
+            limit: "5",
+          });
+          if (participantIds.length > 0) {
+            searchParams.set("prioritize", participantIds.join(","));
+          }
+
+          const response = await fetch(`/api/users/search?${searchParams.toString()}`);
           if (response.ok) {
             const data = await response.json();
             // Add Claude Insider assistant as a special mention
@@ -87,7 +100,7 @@ export const MentionInput = forwardRef<HTMLTextAreaElement, MentionInputProps>(
 
       const debounce = setTimeout(searchUsers, 150);
       return () => clearTimeout(debounce);
-    }, [mentionSearch, showMentions]);
+    }, [mentionSearch, showMentions, participantIds]);
 
     // Handle input changes
     const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -281,11 +294,19 @@ export const MentionInput = forwardRef<HTMLTextAreaElement, MentionInputProps>(
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
-                      <div className="font-medium text-sm text-gray-900 dark:text-white truncate">
+                      <div className="font-medium text-sm text-gray-900 dark:text-white truncate flex items-center gap-1.5">
                         {user.displayName || user.name}
+                        {user.isParticipant && (
+                          <span className="inline-flex items-center text-xs text-emerald-600 dark:text-emerald-400">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                          </span>
+                        )}
                       </div>
                       <div className="text-xs text-gray-500 dark:text-gray-400 truncate">
                         @{user.username}
+                        {user.isParticipant && <span className="ml-1 text-emerald-600 dark:text-emerald-400">• In this chat</span>}
                       </div>
                     </div>
                     {user.id === "assistant" && (

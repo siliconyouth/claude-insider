@@ -10,11 +10,12 @@
  * - Typing indicators
  */
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { cn } from "@/lib/design-system";
 import { createBrowserClient } from "@supabase/ssr";
 import { MessageBubble, TypingIndicator, DateSeparator } from "./message-bubble";
 import { AvatarWithStatus } from "@/components/presence";
+import { MentionInput } from "@/components/chat/mention-input";
 import {
   getMessages,
   sendMessage,
@@ -59,6 +60,12 @@ export function ConversationView({
 
   // Get other participant for DM header
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
+
+  // Get participant IDs for mention autocomplete prioritization (WhatsApp-style)
+  const participantIds = useMemo(
+    () => participants.map((p) => p.userId).filter((id) => id !== currentUserId),
+    [participants, currentUserId]
+  );
 
   // Create Supabase client
   const supabase = createBrowserClient(
@@ -165,8 +172,8 @@ export function ConversationView({
   }, [supabase, conversationId, currentUserId]);
 
   // Handle input change with typing indicator
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(e.target.value);
+  const handleInputChange = useCallback((value: string) => {
+    setInputValue(value);
 
     // Update typing indicator
     if (typingTimeoutRef.current) {
@@ -178,7 +185,7 @@ export function ConversationView({
     typingTimeoutRef.current = setTimeout(() => {
       setTyping(conversationId, false);
     }, 3000);
-  };
+  }, [conversationId]);
 
   // Send message
   const handleSend = async () => {
@@ -216,14 +223,6 @@ export function ConversationView({
 
     setIsSending(false);
     inputRef.current?.focus();
-  };
-
-  // Handle key press
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
   };
 
   // Get typing user names
@@ -332,31 +331,24 @@ export function ConversationView({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
+      {/* Input with mention autocomplete */}
       <div className="p-4 border-t border-gray-200 dark:border-[#262626]">
         <div className="flex items-end gap-2">
-          <textarea
+          <MentionInput
             ref={inputRef}
             value={inputValue}
             onChange={handleInputChange}
-            onKeyDown={handleKeyPress}
+            onSubmit={handleSend}
             placeholder="Type a message... (@ to mention)"
-            rows={1}
-            className={cn(
-              "flex-1 resize-none rounded-xl px-4 py-2.5",
-              "bg-gray-100 dark:bg-[#1a1a1a]",
-              "border border-gray-200 dark:border-[#262626]",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500",
-              "text-gray-900 dark:text-white",
-              "placeholder:text-gray-500 dark:placeholder:text-gray-400"
-            )}
-            style={{ maxHeight: "120px" }}
+            disabled={isSending}
+            participantIds={participantIds}
+            className="flex-1"
           />
           <button
             onClick={handleSend}
             disabled={!inputValue.trim() || isSending}
             className={cn(
-              "p-2.5 rounded-xl transition-colors",
+              "p-2.5 rounded-xl transition-colors flex-shrink-0",
               inputValue.trim() && !isSending
                 ? "bg-blue-600 text-white hover:bg-blue-700"
                 : "bg-gray-200 dark:bg-[#262626] text-gray-400 cursor-not-allowed"
@@ -377,7 +369,7 @@ export function ConversationView({
           </button>
         </div>
         <p className="text-xs text-gray-400 mt-1 ml-1">
-          Type @claudeinsider to get AI help
+          Type @claudeinsider to get AI help • Chat members appear first
         </p>
       </div>
     </div>

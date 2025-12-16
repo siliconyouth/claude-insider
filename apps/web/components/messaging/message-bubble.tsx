@@ -4,7 +4,7 @@
  * Message Bubble Component
  *
  * Displays a single message in a conversation with:
- * - Sender avatar and name
+ * - Sender avatar and name with hovercards
  * - Message content with linkified URLs
  * - Special styling for AI-generated messages
  * - Timestamp
@@ -14,6 +14,7 @@ import { cn } from "@/lib/design-system";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
 import type { Message } from "@/app/actions/messaging";
 import Link from "next/link";
+import { ProfileHoverCard, type ProfileHoverCardUser } from "@/components/users/profile-hover-card";
 
 interface MessageBubbleProps {
   message: Message;
@@ -104,6 +105,61 @@ export function MessageBubble({
 }: MessageBubbleProps) {
   const isAI = message.senderId === AI_ASSISTANT_USER_ID || message.isAiGenerated;
 
+  // Build user data for hover card
+  const senderUser: ProfileHoverCardUser | null = !isOwnMessage && !isAI ? {
+    id: message.senderId,
+    name: message.senderName || "Unknown",
+    displayName: message.senderName,
+    username: message.senderUsername,
+    avatarUrl: message.senderAvatar,
+    image: message.senderAvatar,
+  } : null;
+
+  // Avatar component for reuse
+  const renderAvatar = () => {
+    if (isAI && message.senderAvatar) {
+      // AI Assistant avatar from database (Supabase storage)
+      return (
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center overflow-hidden cursor-default">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={message.senderAvatar}
+            alt="Claude Insider AI"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      );
+    }
+    if (isAI) {
+      // AI Assistant fallback (gradient with initials)
+      return (
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center cursor-default">
+          <span className="text-white text-xs font-bold">CI</span>
+        </div>
+      );
+    }
+    if (message.senderAvatar) {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={message.senderAvatar}
+          alt={message.senderName || "User"}
+          className="w-8 h-8 rounded-full object-cover cursor-pointer"
+        />
+      );
+    }
+    return (
+      <div
+        className={cn(
+          "w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium cursor-pointer",
+          "bg-gradient-to-br from-violet-500 to-blue-500 text-white"
+        )}
+      >
+        {message.senderName?.charAt(0).toUpperCase() || "?"}
+      </div>
+    );
+  };
+
   return (
     <div
       className={cn(
@@ -112,40 +168,15 @@ export function MessageBubble({
         className
       )}
     >
-      {/* Avatar */}
+      {/* Avatar with hover card for non-AI users */}
       {showSender && !isOwnMessage && (
         <div className="flex-shrink-0">
-          {isAI && message.senderAvatar ? (
-            // AI Assistant avatar from database (Supabase storage)
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={message.senderAvatar}
-                alt="Claude Insider AI"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ) : isAI ? (
-            // AI Assistant fallback (gradient with initials)
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 flex items-center justify-center">
-              <span className="text-white text-xs font-bold">CI</span>
-            </div>
-          ) : message.senderAvatar ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={message.senderAvatar}
-              alt={message.senderName || "User"}
-              className="w-8 h-8 rounded-full object-cover"
-            />
+          {senderUser ? (
+            <ProfileHoverCard user={senderUser} side="bottom">
+              {renderAvatar()}
+            </ProfileHoverCard>
           ) : (
-            <div
-              className={cn(
-                "w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium",
-                "bg-gradient-to-br from-violet-500 to-blue-500 text-white"
-              )}
-            >
-              {message.senderName?.charAt(0).toUpperCase() || "?"}
-            </div>
+            renderAvatar()
           )}
         </div>
       )}
@@ -157,18 +188,34 @@ export function MessageBubble({
           isOwnMessage ? "items-end" : "items-start"
         )}
       >
-        {/* Sender name */}
+        {/* Sender name with hover card for non-AI users */}
         {showSender && !isOwnMessage && (
-          <span
-            className={cn(
-              "text-xs font-medium mb-0.5 ml-1",
-              isAI
-                ? "text-emerald-600 dark:text-emerald-400"
-                : "text-gray-600 dark:text-gray-400"
-            )}
-          >
-            {isAI ? "Claude Insider" : message.senderName || "Unknown"}
-          </span>
+          senderUser ? (
+            <ProfileHoverCard user={senderUser} side="bottom">
+              <span
+                className={cn(
+                  "text-xs font-medium mb-0.5 ml-1 cursor-pointer hover:underline",
+                  "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-cyan-400"
+                )}
+              >
+                {message.senderName || "Unknown"}
+                {message.senderUsername && (
+                  <span className="ml-1 text-gray-400 dark:text-gray-500">@{message.senderUsername}</span>
+                )}
+              </span>
+            </ProfileHoverCard>
+          ) : (
+            <span
+              className={cn(
+                "text-xs font-medium mb-0.5 ml-1",
+                isAI
+                  ? "text-emerald-600 dark:text-emerald-400"
+                  : "text-gray-600 dark:text-gray-400"
+              )}
+            >
+              {isAI ? "Claude Insider" : message.senderName || "Unknown"}
+            </span>
+          )
         )}
 
         {/* Bubble */}
