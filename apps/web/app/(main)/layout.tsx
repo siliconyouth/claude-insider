@@ -13,6 +13,7 @@ import { FeedbackButton } from "@/components/feedback/feedback-button";
 import { I18nProvider } from "@/i18n";
 import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
 import { UnifiedChatProvider, UnifiedChatWindow, FloatingChatButton } from "@/components/unified-chat";
+import { AskAIProvider } from "@/components/ask-ai";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
 import { FingerprintProvider } from "@/components/providers/fingerprint-provider";
@@ -216,6 +217,7 @@ export default async function MainLayout({
             <AuthProvider>
               <E2EEProvider>
               <UnifiedChatProvider>
+              <AskAIProvider>
               <KeyboardShortcutsProvider>
                 <ToastProvider>
                   <AchievementNotificationProvider>
@@ -239,6 +241,7 @@ export default async function MainLayout({
                   </AchievementNotificationProvider>
                 </ToastProvider>
               </KeyboardShortcutsProvider>
+              </AskAIProvider>
               </UnifiedChatProvider>
               </E2EEProvider>
             </AuthProvider>
