@@ -118,7 +118,16 @@ export async function GET(request: NextRequest) {
             )
           );
 
-          // Track delivery status
+          // Collect all delivery records for batch INSERT
+          // This reduces 50 DB round-trips to 1 per batch
+          const deliveryRecords: Array<{
+            userId: string;
+            inApp: boolean;
+            push: boolean;
+            email: boolean;
+            error: string | null;
+          }> = [];
+
           for (let j = 0; j < results.length; j++) {
             const settledResult = results[j];
             const targetUser = batch[j];
@@ -138,11 +147,49 @@ export async function GET(request: NextRequest) {
               };
             }
 
-            // Record delivery
+            deliveryRecords.push({
+              userId: targetUser.user_id,
+              inApp: deliveryResult.in_app,
+              push: deliveryResult.push,
+              email: deliveryResult.email,
+              error: deliveryResult.error || null,
+            });
+
+            if (deliveryResult.in_app || deliveryResult.push || deliveryResult.email) {
+              successCount++;
+            } else {
+              failCount++;
+            }
+          }
+
+          // Batch INSERT all delivery records in a single query
+          if (deliveryRecords.length > 0) {
+            const now = new Date();
+            const valuesClauses: string[] = [];
+            const params: (string | boolean | Date | null)[] = [];
+
+            deliveryRecords.forEach((record, idx) => {
+              const base = idx * 9;
+              valuesClauses.push(
+                `($${base + 1}, $${base + 2}, $${base + 3}, $${base + 4}, $${base + 5}, $${base + 6}, $${base + 7}, $${base + 8}, $${base + 9})`
+              );
+              params.push(
+                notification.id,
+                record.userId,
+                record.inApp,
+                record.inApp ? now : null,
+                record.push,
+                record.push ? now : null,
+                record.email,
+                record.email ? now : null,
+                record.error
+              );
+            });
+
             await pool.query(
               `INSERT INTO admin_notification_deliveries
                (notification_id, user_id, in_app_sent, in_app_sent_at, push_sent, push_sent_at, email_sent, email_sent_at, error)
-               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+               VALUES ${valuesClauses.join(", ")}
                ON CONFLICT (notification_id, user_id) DO UPDATE SET
                  in_app_sent = EXCLUDED.in_app_sent,
                  in_app_sent_at = EXCLUDED.in_app_sent_at,
@@ -151,24 +198,8 @@ export async function GET(request: NextRequest) {
                  email_sent = EXCLUDED.email_sent,
                  email_sent_at = EXCLUDED.email_sent_at,
                  error = EXCLUDED.error`,
-              [
-                notification.id,
-                targetUser.user_id,
-                deliveryResult.in_app,
-                deliveryResult.in_app ? new Date() : null,
-                deliveryResult.push,
-                deliveryResult.push ? new Date() : null,
-                deliveryResult.email,
-                deliveryResult.email ? new Date() : null,
-                deliveryResult.error || null,
-              ]
+              params
             );
-
-            if (deliveryResult.in_app || deliveryResult.push || deliveryResult.email) {
-              successCount++;
-            } else {
-              failCount++;
-            }
           }
         }
 

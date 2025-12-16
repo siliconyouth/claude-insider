@@ -181,10 +181,12 @@ $$ LANGUAGE plpgsql;
 ALTER TABLE job_queue ENABLE ROW LEVEL SECURITY;
 
 -- Only allow server-side access (no direct client access)
+DROP POLICY IF EXISTS "Job queue is server-only" ON job_queue;
 CREATE POLICY "Job queue is server-only" ON job_queue
   FOR ALL USING (false);
 
 -- Service role can do everything
+DROP POLICY IF EXISTS "Service role has full access" ON job_queue;
 CREATE POLICY "Service role has full access" ON job_queue
   FOR ALL
   TO service_role

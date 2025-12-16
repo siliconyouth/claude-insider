@@ -8,7 +8,7 @@
  * 2. User mentions (@username) linkified with hover cards
  */
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, memo } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import {
@@ -51,8 +51,9 @@ function _extractMentions(text: string): string[] {
 
 /**
  * Renders a user mention with hover card
+ * Memoized to prevent unnecessary re-renders and duplicate API calls
  */
-function UserMentionLink({
+const UserMentionLink = memo(function UserMentionLink({
   username,
   user,
 }: {
@@ -131,7 +132,14 @@ function UserMentionLink({
 
   // Just show the link while loading or if fetch failed
   return linkContent;
-}
+}, (prevProps, nextProps) => {
+  // Custom comparison for memo - compare username and user.id
+  // This prevents re-renders when parent creates new user objects with same data
+  return (
+    prevProps.username === nextProps.username &&
+    prevProps.user?.id === nextProps.user?.id
+  );
+});
 
 /**
  * Parse and render content with HTML and mentions

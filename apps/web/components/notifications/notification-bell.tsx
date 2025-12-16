@@ -13,6 +13,7 @@ import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
+import { useRealtimeNotifications } from "@/hooks/use-realtime-notifications";
 import { NotificationContent } from "./notification-content";
 
 interface NotificationPreview {
@@ -85,7 +86,6 @@ function getNotificationUrl(notification: NotificationPreview): string {
 export function NotificationBell() {
   const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
   const [notifications, setNotifications] = useState<NotificationPreview[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -93,8 +93,24 @@ export function NotificationBell() {
 
   // Browser notifications integration
   const { isEnabled: browserNotifsEnabled, sendNotification } = useBrowserNotifications();
-  const prevUnreadCountRef = useRef<number>(0);
+  const prevUnreadCountRef = useRef<number>(-1); // -1 = uninitialized
   const browserNotifsSettingRef = useRef<boolean>(false);
+  const isInitializedRef = useRef(false);
+
+  // Real-time notifications - replaces polling for live updates
+  // Note: recentNotifications available for future dropdown enhancement
+  const { unreadCount, recentNotifications: _recentNotifications, refreshCount } = useRealtimeNotifications({
+    enabled: isAuthenticated,
+    showBrowserNotifications: false, // We handle browser notifications separately with deep links
+    onNewNotification: (notification) => {
+      // Dispatch event for NotificationPopup component
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("notification:new", { detail: notification })
+        );
+      }
+    },
+  });
 
   // Fetch browser notification preference
   const fetchBrowserNotifSetting = useCallback(async () => {
@@ -157,33 +173,25 @@ export function NotificationBell() {
     [browserNotifsEnabled, fetchLatestNotification, sendNotification]
   );
 
-  // Fetch unread count and trigger browser notification if count increased
-  const fetchUnreadCount = useCallback(async () => {
+  // Handle browser notifications when unread count changes
+  // Uses a ref to track initialization and prevent duplicate notifications
+  useEffect(() => {
     if (!isAuthenticated) return;
 
-    try {
-      const res = await fetch("/api/notifications?limit=1&unread=true");
-      if (res.ok) {
-        const data = await res.json();
-        const newCount = data.unreadCount || 0;
-
-        // Check if we should send a browser notification (new notification arrived)
-        if (newCount > prevUnreadCountRef.current && prevUnreadCountRef.current >= 0) {
-          // Don't send on initial load (when prevUnreadCountRef is 0 and we're initializing)
-          if (prevUnreadCountRef.current > 0 || newCount > 1) {
-            // Trigger browser notification asynchronously
-            sendBrowserNotification(newCount);
-          }
-        }
-
-        // Update state and ref
-        prevUnreadCountRef.current = newCount;
-        setUnreadCount(newCount);
-      }
-    } catch (error) {
-      console.error("[NotificationBell] Count fetch error:", error);
+    // Skip sending browser notification on initial load
+    if (!isInitializedRef.current) {
+      isInitializedRef.current = true;
+      prevUnreadCountRef.current = unreadCount;
+      return;
     }
-  }, [isAuthenticated, sendBrowserNotification]);
+
+    // Send browser notification if count increased (new notification arrived)
+    if (unreadCount > prevUnreadCountRef.current && prevUnreadCountRef.current !== -1) {
+      sendBrowserNotification(unreadCount);
+    }
+
+    prevUnreadCountRef.current = unreadCount;
+  }, [isAuthenticated, unreadCount, sendBrowserNotification]);
 
   // Fetch notifications for preview
   const fetchNotifications = useCallback(async () => {
@@ -195,7 +203,7 @@ export function NotificationBell() {
       if (res.ok) {
         const data = await res.json();
         setNotifications(data.notifications || []);
-        setUnreadCount(data.unreadCount || 0);
+        // Note: unreadCount is managed by useRealtimeNotifications hook
       }
     } catch (error) {
       console.error("[NotificationBell] Fetch error:", error);
@@ -214,7 +222,8 @@ export function NotificationBell() {
       });
 
       if (res.ok) {
-        setUnreadCount(0);
+        // Refresh count from server to sync with realtime state
+        await refreshCount();
         setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
       }
     } catch (error) {
@@ -222,18 +231,11 @@ export function NotificationBell() {
     }
   };
 
-  // Poll for new notifications
+  // Fetch browser notification preference on mount (no polling needed - realtime handles updates)
   useEffect(() => {
     if (!isAuthenticated) return;
-
-    // Fetch browser notification preference on mount
     fetchBrowserNotifSetting();
-    fetchUnreadCount();
-
-    const interval = setInterval(fetchUnreadCount, 30000); // Every 30 seconds
-
-    return () => clearInterval(interval);
-  }, [isAuthenticated, fetchUnreadCount, fetchBrowserNotifSetting]);
+  }, [isAuthenticated, fetchBrowserNotifSetting]);
 
   // Fetch when dropdown opens
   useEffect(() => {

@@ -7,7 +7,7 @@
 
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useSession } from "@/lib/auth-client";
 import type { RealtimeChannel } from "@supabase/supabase-js";
@@ -66,7 +66,21 @@ export function useRealtimeNotifications(
   const [recentNotifications, setRecentNotifications] = useState<Notification[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
-  // Fetch current unread count
+  // Store callback refs to avoid triggering effect re-runs when callbacks change
+  // This prevents memory leaks from repeated subscription/cleanup cycles
+  const onNewNotificationRef = useRef(onNewNotification);
+  const onCountChangeRef = useRef(onCountChange);
+
+  // Sync refs when callbacks change (no effect re-run needed)
+  useEffect(() => {
+    onNewNotificationRef.current = onNewNotification;
+  }, [onNewNotification]);
+
+  useEffect(() => {
+    onCountChangeRef.current = onCountChange;
+  }, [onCountChange]);
+
+  // Fetch current unread count - uses ref to avoid circular dependency
   const refreshCount = useCallback(async () => {
     if (!session?.user?.id) return;
 
@@ -76,12 +90,12 @@ export function useRealtimeNotifications(
         const data = await response.json();
         const newCount = data.unreadCount || 0;
         setUnreadCount(newCount);
-        onCountChange?.(newCount);
+        onCountChangeRef.current?.(newCount);
       }
     } catch (err) {
       console.error("[Realtime Notifications] Failed to fetch count:", err);
     }
-  }, [session?.user?.id, onCountChange]);
+  }, [session?.user?.id]);
 
   // Show browser notification
   const showBrowserNotification = useCallback((notification: Notification) => {
@@ -140,13 +154,13 @@ export function useRealtimeNotifications(
               if (!notification.read) {
                 setUnreadCount((prev) => {
                   const newCount = prev + 1;
-                  onCountChange?.(newCount);
+                  onCountChangeRef.current?.(newCount);
                   return newCount;
                 });
               }
 
-              // Trigger callbacks
-              onNewNotification?.(notification);
+              // Trigger callbacks (using refs for stability)
+              onNewNotificationRef.current?.(notification);
               showBrowserNotification(notification);
             }
           )
@@ -166,7 +180,7 @@ export function useRealtimeNotifications(
               if (!oldNotification.read && notification.read) {
                 setUnreadCount((prev) => {
                   const newCount = Math.max(0, prev - 1);
-                  onCountChange?.(newCount);
+                  onCountChangeRef.current?.(newCount);
                   return newCount;
                 });
               }
@@ -228,9 +242,9 @@ export function useRealtimeNotifications(
     enabled,
     session?.user?.id,
     refreshCount,
-    onNewNotification,
-    onCountChange,
     showBrowserNotification,
+    // Note: onNewNotification and onCountChange are accessed via refs
+    // to prevent subscription churn when parent re-renders with new callbacks
   ]);
 
   return {

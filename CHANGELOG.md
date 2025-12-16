@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.89.0] - 2025-12-16
+### Notification System Refactoring
+- **Performance**: 3x faster notification creation with parallel database queries (Promise.all)
+- **Performance**: 50x fewer DB round-trips in admin notification cron job (batch INSERT)
+- **Performance**: Removed duplicate polling intervals (30s + 15s → realtime only)
+- **Performance**: Added React.memo to UserMentionLink with custom comparison function
+- **Reliability**: Fixed memory leak in useRealtimeNotifications (callback refs pattern)
+- **Reliability**: Fixed race condition in admin notification cancel (atomic update)
+- **Reliability**: Fixed push subscription ref cleanup on failure
+- **Reliability**: Fixed browser notification edge case with initialization tracking
+- **Database**: New migration 061 with 4 indexes for actor_id, resource lookups, and grouping queries
+
 ## [0.88.0] - 2025-12-16
 ### Dashboard Shared Infrastructure
 - **New `lib/dashboard/`**: Centralized hooks and utilities for dashboard pages

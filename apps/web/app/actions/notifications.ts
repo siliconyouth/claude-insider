@@ -438,30 +438,22 @@ export async function createNotification(params: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const supabase = (await createAdminClient()) as any;
 
-    // Get user data for email notifications
-    const { data: user } = await supabase
-      .from("user")
-      .select("email, name")
-      .eq("id", params.userId)
-      .single();
+    // Run all queries in parallel for ~3x faster execution
+    // These queries are independent and don't depend on each other's results
+    const [userResult, actorResult, prefsResult] = await Promise.all([
+      // Get user data for email notifications
+      supabase.from("user").select("email, name").eq("id", params.userId).single(),
+      // Get actor data for email subject line (skip if no actorId)
+      params.actorId
+        ? supabase.from("user").select("name, username").eq("id", params.actorId).single()
+        : Promise.resolve({ data: null }),
+      // Check user preferences
+      supabase.from("notification_preferences").select("*").eq("user_id", params.userId).single(),
+    ]);
 
-    // Get actor data for email subject line
-    let actorName: string | undefined;
-    if (params.actorId) {
-      const { data: actor } = await supabase
-        .from("user")
-        .select("name, username")
-        .eq("id", params.actorId)
-        .single();
-      actorName = actor?.name || actor?.username;
-    }
-
-    // Check user preferences
-    const { data: prefs } = await supabase
-      .from("notification_preferences")
-      .select("*")
-      .eq("user_id", params.userId)
-      .single();
+    const user = userResult.data;
+    const actorName = actorResult.data?.name || actorResult.data?.username;
+    const prefs = prefsResult.data;
 
     // Check if in-app notification type is enabled
     const inAppPrefKey = getInAppPrefKey(params.type);

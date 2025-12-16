@@ -150,6 +150,9 @@ export function useBrowserNotifications(): UseBrowserNotificationsReturn {
         console.error("[BrowserNotifications] Failed to save subscription");
         // Unsubscribe since we couldn't save it
         await subscription.unsubscribe();
+        // Reset ref and state to reflect the failed subscription
+        pushSubscriptionRef.current = null;
+        setIsSubscribed(false);
         return false;
       }
 
@@ -159,6 +162,9 @@ export function useBrowserNotifications(): UseBrowserNotificationsReturn {
       return true;
     } catch (error) {
       console.error("[BrowserNotifications] Push subscription error:", error);
+      // Ensure state is consistent on error
+      pushSubscriptionRef.current = null;
+      setIsSubscribed(false);
       return false;
     }
   }, [isPushSupported]);

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.88.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.89.0**.
 
 | Link | URL |
 |------|-----|
@@ -204,7 +204,7 @@ claude-insider/
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 58 SQL migration files
+│   └── supabase/migrations/      # 62 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -443,7 +443,7 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 ### Overview
 
-Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **57 migrations** define **73 tables** across 13 categories.
+Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **62 migrations** define **73 tables** across 13 categories.
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -595,7 +595,8 @@ supabase/migrations/
 ├── 041-044                      # Reports, bans, messaging, group chats
 ├── 045-049                      # Security system, materialized views, superadmin
 ├── 050-053                      # Beta tester role, donation system
-└── 054-057                      # E2EE (device keys, messages, verification, AI consent)
+├── 054-057                      # E2EE (device keys, messages, verification, AI consent)
+└── 058-061                      # Messaging indexes, job queue, donations, notification indexes
 ```
 
 ### Mandatory Rules

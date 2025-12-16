@@ -244,17 +244,13 @@ export function NotificationPopup() {
     }
   }, [isAuthenticated]);
 
-  // Poll for new notifications
+  // Initial check for notifications on mount (no polling - realtime handles new ones via events)
   useEffect(() => {
     if (!isAuthenticated) return;
-
-    // Initial check
+    // Fetch once on mount to initialize seenNotificationIds
     checkForNewNotifications();
-
-    // Poll every 15 seconds
-    const interval = setInterval(checkForNewNotifications, 15000);
-
-    return () => clearInterval(interval);
+    // Note: No polling interval - NotificationBell dispatches 'notification:new' events
+    // via useRealtimeNotifications hook when new notifications arrive
   }, [isAuthenticated, checkForNewNotifications]);
 
   // Listen for custom notification events (e.g., from real-time updates)

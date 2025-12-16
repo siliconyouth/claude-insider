@@ -428,7 +428,8 @@ export async function scheduleAdminNotification(
 }
 
 /**
- * Cancel a scheduled notification
+ * Cancel a scheduled or draft notification
+ * Uses atomic update to handle race conditions with cron job
  */
 export async function cancelAdminNotification(id: string): Promise<{
   success?: boolean;
@@ -438,13 +439,35 @@ export async function cancelAdminNotification(id: string): Promise<{
     const access = await checkAdminAccess();
     if ("error" in access) return { error: access.error };
 
-    const result = await pool.query(
-      `UPDATE admin_notifications SET status = 'cancelled', updated_at = NOW() WHERE id = $1 AND status = 'scheduled' RETURNING id`,
+    // Atomic update that returns the old status for error handling
+    // This prevents TOCTOU race conditions where status changes between check and update
+    const result = await pool.query<{ id: string; old_status: string }>(
+      `UPDATE admin_notifications
+       SET status = 'cancelled', updated_at = NOW()
+       WHERE id = $1 AND status IN ('draft', 'scheduled')
+       RETURNING id, (SELECT status FROM admin_notifications WHERE id = $1) as old_status`,
       [id]
     );
 
     if (result.rows.length === 0) {
-      return { error: "Notification not found or cannot be cancelled" };
+      // Check why it failed - notification doesn't exist or wrong status
+      const checkResult = await pool.query<{ status: string }>(
+        `SELECT status FROM admin_notifications WHERE id = $1`,
+        [id]
+      );
+
+      if (checkResult.rows.length === 0) {
+        return { error: "Notification not found" };
+      }
+
+      const currentStatus = checkResult.rows[0]?.status;
+      if (currentStatus === "sending" || currentStatus === "sent") {
+        return { error: `Cannot cancel notification that is already ${currentStatus}` };
+      }
+      if (currentStatus === "cancelled") {
+        return { error: "Notification is already cancelled" };
+      }
+      return { error: `Cannot cancel notification with status: ${currentStatus}` };
     }
 
     revalidatePath("/dashboard/notifications");
