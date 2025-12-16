@@ -12,6 +12,7 @@ import { cn } from "@/lib/design-system";
 import { searchUsers, type SearchUserResult } from "@/app/actions/users";
 import { FollowButton } from "@/components/users/follow-button";
 import { BlockButton } from "@/components/users/block-button";
+import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 interface UserSearchProps {
   onSelect?: (user: SearchUserResult) => void;
@@ -130,65 +131,85 @@ export function UserSearch({
             </div>
           ) : (
             <ul>
-              {results.map((user) => (
-                <li
-                  key={user.id}
-                  className={cn(
-                    "flex items-center gap-3 p-3",
-                    "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
-                    "border-b border-gray-100 dark:border-[#262626] last:border-0",
-                    "transition-colors"
-                  )}
-                >
-                  {/* Avatar */}
-                  <Link
-                    href={user.username ? `/users/${user.username}` : "#"}
-                    onClick={() => handleSelect(user)}
-                    className="flex-shrink-0"
+              {results.map((user) => {
+                // Build user data for hover card
+                const searchUser = {
+                  id: user.id,
+                  name: user.name,
+                  username: user.username,
+                  image: user.image,
+                  bio: user.bio,
+                  isFollowing: user.isFollowing,
+                };
+
+                // Render avatar for reuse
+                const renderAvatar = () => (
+                  user.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={user.image}
+                      alt={user.name}
+                      className="w-10 h-10 rounded-full object-cover cursor-pointer"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 flex items-center justify-center text-white font-medium cursor-pointer">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                  )
+                );
+
+                return (
+                  <li
+                    key={user.id}
+                    className={cn(
+                      "flex items-center gap-3 p-3",
+                      "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
+                      "border-b border-gray-100 dark:border-[#262626] last:border-0",
+                      "transition-colors"
+                    )}
                   >
-                    {user.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={user.image}
-                        alt={user.name}
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 flex items-center justify-center text-white font-medium">
-                        {user.name.charAt(0).toUpperCase()}
+                    {/* Avatar with hover card */}
+                    <div className="flex-shrink-0">
+                      <ProfileHoverCard user={searchUser} side="bottom">
+                        <div onClick={() => handleSelect(user)}>
+                          {renderAvatar()}
+                        </div>
+                      </ProfileHoverCard>
+                    </div>
+
+                    {/* Info with hover card */}
+                    <div className="flex-1 min-w-0">
+                      <ProfileHoverCard user={searchUser} side="bottom">
+                        <div
+                          onClick={() => handleSelect(user)}
+                          className="cursor-pointer"
+                        >
+                          <p className="font-medium text-gray-900 dark:text-white truncate hover:text-blue-600 dark:hover:text-cyan-400">
+                            {user.name}
+                          </p>
+                          {user.username && (
+                            <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                              @{user.username}
+                            </p>
+                          )}
+                        </div>
+                      </ProfileHoverCard>
+                    </div>
+
+                    {/* Actions */}
+                    {showActions && (
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <FollowButton
+                          userId={user.id}
+                          isFollowing={user.isFollowing ?? false}
+                          size="sm"
+                        />
+                        <BlockButton userId={user.id} size="sm" />
                       </div>
                     )}
-                  </Link>
-
-                  {/* Info */}
-                  <Link
-                    href={user.username ? `/users/${user.username}` : "#"}
-                    onClick={() => handleSelect(user)}
-                    className="flex-1 min-w-0"
-                  >
-                    <p className="font-medium text-gray-900 dark:text-white truncate">
-                      {user.name}
-                    </p>
-                    {user.username && (
-                      <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                        @{user.username}
-                      </p>
-                    )}
-                  </Link>
-
-                  {/* Actions */}
-                  {showActions && (
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      <FollowButton
-                        userId={user.id}
-                        isFollowing={user.isFollowing ?? false}
-                        size="sm"
-                      />
-                      <BlockButton userId={user.id} size="sm" />
-                    </div>
-                  )}
-                </li>
-              ))}
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>

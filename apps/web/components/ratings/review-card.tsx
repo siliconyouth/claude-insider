@@ -13,6 +13,7 @@ import { voteHelpful, reportReview, type Review } from "@/app/actions/ratings";
 import { useToast } from "@/components/toast";
 import { useAuth } from "@/components/providers/auth-provider";
 import { StarDisplay } from "./star-rating";
+import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 interface ReviewCardProps {
   review: Review;
@@ -69,6 +70,30 @@ export function ReviewCard({ review, onDelete, className }: ReviewCardProps) {
 
   const timeAgo = getTimeAgo(new Date(review.createdAt));
 
+  // Build user data for hover card
+  const reviewerUser = {
+    id: review.userId,
+    name: review.userName,
+    username: review.userUsername,
+    image: review.userImage,
+  };
+
+  // Render avatar for reuse
+  const renderAvatar = () => (
+    review.userImage ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={review.userImage}
+        alt={review.userName}
+        className="w-10 h-10 rounded-full object-cover cursor-pointer"
+      />
+    ) : (
+      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 flex items-center justify-center text-white font-medium cursor-pointer">
+        {review.userName.charAt(0).toUpperCase()}
+      </div>
+    )
+  );
+
   return (
     <div
       className={cn(
@@ -81,34 +106,21 @@ export function ReviewCard({ review, onDelete, className }: ReviewCardProps) {
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
-          {/* Avatar */}
-          <Link
-            href={review.userUsername ? `/users/${review.userUsername}` : "#"}
-            className="flex-shrink-0"
-          >
-            {review.userImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={review.userImage}
-                alt={review.userName}
-                className="w-10 h-10 rounded-full object-cover"
-              />
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 flex items-center justify-center text-white font-medium">
-                {review.userName.charAt(0).toUpperCase()}
-              </div>
-            )}
-          </Link>
+          {/* Avatar with hover card */}
+          <div className="flex-shrink-0">
+            <ProfileHoverCard user={reviewerUser} side="top">
+              {renderAvatar()}
+            </ProfileHoverCard>
+          </div>
 
           {/* User info */}
           <div>
             <div className="flex items-center gap-2">
-              <Link
-                href={review.userUsername ? `/users/${review.userUsername}` : "#"}
-                className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400"
-              >
-                {review.userName}
-              </Link>
+              <ProfileHoverCard user={reviewerUser} side="top">
+                <span className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 cursor-pointer">
+                  {review.userName}
+                </span>
+              </ProfileHoverCard>
               {review.isOwn && (
                 <span className="text-xs px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
                   You

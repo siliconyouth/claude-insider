@@ -8,6 +8,7 @@
 
 import { cn } from "@/lib/design-system";
 import { getLevelFromPoints, type LeaderboardEntry } from "@/lib/gamification";
+import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 interface LeaderboardProps {
   entries: LeaderboardEntry[];
@@ -47,6 +48,14 @@ export function Leaderboard({
             const level = getLevelFromPoints(entry.points);
             const isCurrentUser = entry.user_id === currentUserId;
 
+            // Build user data for hover card
+            const entryUser = {
+              id: entry.user_id,
+              name: entry.username,
+              username: entry.username,
+              image: entry.avatar,
+            };
+
             return (
               <div
                 key={entry.user_id}
@@ -60,14 +69,16 @@ export function Leaderboard({
                   {entry.rank <= 3 ? rank.icon : rank.icon}
                 </span>
                 <span className="text-sm">{level.icon}</span>
-                <span
-                  className={cn(
-                    "flex-1 text-sm truncate",
-                    isCurrentUser ? "font-semibold text-blue-600 dark:text-blue-400" : "text-gray-700 dark:text-gray-300"
-                  )}
-                >
-                  {entry.username}
-                </span>
+                <ProfileHoverCard user={entryUser} side="bottom" compact>
+                  <span
+                    className={cn(
+                      "flex-1 text-sm truncate cursor-pointer hover:text-blue-600 dark:hover:text-cyan-400",
+                      isCurrentUser ? "font-semibold text-blue-600 dark:text-blue-400" : "text-gray-700 dark:text-gray-300"
+                    )}
+                  >
+                    {entry.username}
+                  </span>
+                </ProfileHoverCard>
                 <span className="text-xs font-medium text-gray-500">
                   {entry.points.toLocaleString()}
                 </span>
@@ -99,6 +110,30 @@ export function Leaderboard({
           const level = getLevelFromPoints(entry.points);
           const isCurrentUser = entry.user_id === currentUserId;
 
+          // Build user data for hover card
+          const entryUser = {
+            id: entry.user_id,
+            name: entry.username,
+            username: entry.username,
+            image: entry.avatar,
+          };
+
+          // Render avatar for reuse
+          const renderAvatar = () => (
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center text-white font-semibold cursor-pointer">
+              {entry.avatar ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={entry.avatar}
+                  alt={entry.username}
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                (entry.username[0] || "?").toUpperCase()
+              )}
+            </div>
+          );
+
           return (
             <div
               key={entry.user_id}
@@ -119,33 +154,26 @@ export function Leaderboard({
                 )}
               </div>
 
-              {/* Avatar */}
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center text-white font-semibold">
-                {entry.avatar ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={entry.avatar}
-                    alt={entry.username}
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                ) : (
-                  (entry.username[0] || "?").toUpperCase()
-                )}
-              </div>
+              {/* Avatar with hover card */}
+              <ProfileHoverCard user={entryUser} side="bottom">
+                {renderAvatar()}
+              </ProfileHoverCard>
 
               {/* User info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span
-                    className={cn(
-                      "font-medium truncate",
-                      isCurrentUser
-                        ? "text-blue-600 dark:text-blue-400"
-                        : "text-gray-900 dark:text-white"
-                    )}
-                  >
-                    {entry.username}
-                  </span>
+                  <ProfileHoverCard user={entryUser} side="bottom">
+                    <span
+                      className={cn(
+                        "font-medium truncate cursor-pointer hover:text-blue-600 dark:hover:text-cyan-400",
+                        isCurrentUser
+                          ? "text-blue-600 dark:text-blue-400"
+                          : "text-gray-900 dark:text-white"
+                      )}
+                    >
+                      {entry.username}
+                    </span>
+                  </ProfileHoverCard>
                   <span className="text-sm">{level.icon}</span>
                 </div>
                 <div className="flex items-center gap-3 text-xs text-gray-500">

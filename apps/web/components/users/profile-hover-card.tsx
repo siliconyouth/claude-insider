@@ -4,16 +4,20 @@
  * ProfileHoverCard Component
  *
  * Shows a hover tooltip with user profile preview when hovering over user links.
- * Follows best practices for hover interactions:
+ * Follows best practices for hover and touch interactions:
+ * - Desktop: hover shows card, click navigates
+ * - Touch: first touch shows card, second touch navigates
  * - Delayed appearance (avoids accidental triggers)
  * - Stays open when hovering over the card
  * - Smooth animations
  * - Proper positioning with viewport awareness
+ * - Dark/light mode support
  */
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/design-system";
 import { UserAvatar } from "./user-avatar";
 import { FollowButton } from "./follow-button";
@@ -92,6 +96,7 @@ export function ProfileHoverCard({
   const cardWidth = compact ? CARD_WIDTH_COMPACT : CARD_WIDTH;
   const cardHeight = compact ? CARD_HEIGHT_COMPACT : CARD_HEIGHT;
   const { data: session } = useSession();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState<Position | null>(null);
   const triggerRef = useRef<HTMLSpanElement>(null);
@@ -99,10 +104,15 @@ export function ProfileHoverCard({
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [mounted, setMounted] = useState(false);
 
+  // Touch device detection and handling
+  const isTouchDevice = useRef(false);
+  const touchOpenedRef = useRef(false);
+
   // Client-side only for portal
   useEffect(() => {
-     
     setMounted(true);
+    // Detect touch device
+    isTouchDevice.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     return () => setMounted(false);
   }, []);
 
@@ -163,7 +173,31 @@ export function ProfileHoverCard({
       timeoutRef.current = null;
     }
     setIsOpen(false);
+    touchOpenedRef.current = false;
   }, []);
+
+  // Handle touch: first touch opens card, second touch navigates
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (disabled) return;
+
+    // If already open from touch, navigate on second touch
+    if (isOpen && touchOpenedRef.current) {
+      e.preventDefault();
+      router.push(href || (user.username ? `/users/${user.username}` : `/profile`));
+      setIsOpen(false);
+      touchOpenedRef.current = false;
+      return;
+    }
+
+    // First touch: show the card
+    e.preventDefault();
+    const pos = calculatePosition();
+    if (pos) {
+      setPosition(pos);
+      setIsOpen(true);
+      touchOpenedRef.current = true;
+    }
+  }, [disabled, isOpen, calculatePosition, router, href, user.username]);
 
   // Clean up timeout on unmount
   useEffect(() => {
@@ -191,6 +225,34 @@ export function ProfileHoverCard({
       window.removeEventListener("resize", handleUpdate);
     };
   }, [isOpen, calculatePosition]);
+
+  // Close on click/touch outside for touch devices
+  useEffect(() => {
+    if (!isOpen || !touchOpenedRef.current) return;
+
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node;
+      const isInTrigger = triggerRef.current?.contains(target);
+      const isInCard = cardRef.current?.contains(target);
+
+      if (!isInTrigger && !isInCard) {
+        setIsOpen(false);
+        touchOpenedRef.current = false;
+      }
+    };
+
+    // Small delay to prevent immediate close
+    const timer = setTimeout(() => {
+      document.addEventListener("touchstart", handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("touchstart", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const profileUrl = href || (user.username ? `/users/${user.username}` : `/profile`);
   const roleInfo = user.role ? ROLE_INFO[user.role] : null;
@@ -439,6 +501,7 @@ export function ProfileHoverCard({
         className={cn("inline cursor-pointer", className)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
       >
         {children}
       </span>

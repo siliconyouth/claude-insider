@@ -16,6 +16,7 @@ import { createBrowserClient } from "@supabase/ssr";
 import { MessageBubble, TypingIndicator, DateSeparator } from "./message-bubble";
 import { AvatarWithStatus } from "@/components/presence";
 import { MentionInput } from "@/components/chat/mention-input";
+import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 import {
   getMessages,
   sendMessage,
@@ -258,26 +259,57 @@ export function ConversationView({
         )}
 
         {otherParticipant && (
-          <>
-            <AvatarWithStatus
-              src={otherParticipant.avatarUrl}
-              name={otherParticipant.displayName || otherParticipant.name}
-              status={otherParticipant.status || "offline"}
-              size="md"
-            />
-            <div className="flex-1 min-w-0">
-              <h2 className="font-medium text-gray-900 dark:text-white truncate">
+          (() => {
+            const isAI = otherParticipant.userId === AI_ASSISTANT_USER_ID;
+            const participantUser = !isAI ? {
+              id: otherParticipant.userId,
+              name: otherParticipant.displayName || otherParticipant.name || "Unknown",
+              username: otherParticipant.username,
+              image: otherParticipant.avatarUrl,
+            } : null;
+
+            const avatarElement = (
+              <AvatarWithStatus
+                src={otherParticipant.avatarUrl}
+                name={otherParticipant.displayName || otherParticipant.name}
+                status={otherParticipant.status || "offline"}
+                size="md"
+              />
+            );
+
+            const nameElement = (
+              <h2 className={cn(
+                "font-medium text-gray-900 dark:text-white truncate",
+                !isAI && "hover:text-blue-600 dark:hover:text-cyan-400 cursor-pointer"
+              )}>
                 {otherParticipant.displayName || otherParticipant.name || "Unknown"}
               </h2>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                {otherParticipant.status === "online"
-                  ? "Online"
-                  : otherParticipant.status === "idle"
-                  ? "Away"
-                  : "Offline"}
-              </p>
-            </div>
-          </>
+            );
+
+            return (
+              <>
+                {participantUser ? (
+                  <ProfileHoverCard user={participantUser} side="bottom">
+                    {avatarElement}
+                  </ProfileHoverCard>
+                ) : avatarElement}
+                <div className="flex-1 min-w-0">
+                  {participantUser ? (
+                    <ProfileHoverCard user={participantUser} side="bottom">
+                      {nameElement}
+                    </ProfileHoverCard>
+                  ) : nameElement}
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {otherParticipant.status === "online"
+                      ? "Online"
+                      : otherParticipant.status === "idle"
+                      ? "Away"
+                      : "Offline"}
+                  </p>
+                </div>
+              </>
+            );
+          })()
         )}
       </div>
 

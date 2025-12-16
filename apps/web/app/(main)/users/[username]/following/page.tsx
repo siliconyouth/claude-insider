@@ -10,6 +10,7 @@ import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { FollowButton } from "@/components/users/follow-button";
+import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 interface FollowingUser {
   id: string;
@@ -119,65 +120,83 @@ export default function FollowingPage({
         </div>
       ) : (
         <div className="space-y-3">
-          {following.map((user) => (
-            <div
-              key={user.id}
-              className={cn(
-                "flex items-center gap-4 p-4 rounded-xl",
-                "bg-gray-50 dark:bg-[#111111]",
-                "border border-gray-200 dark:border-[#262626]",
-                "hover:border-blue-500/30 transition-colors"
-              )}
-            >
-              {/* Avatar */}
-              <Link href={user.username ? `/users/${user.username}` : "#"}>
-                {user.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={user.image}
-                    alt={user.name}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                ) : (
-                  <div
-                    className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold",
-                      "bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white"
-                    )}
-                  >
-                    {user.name?.[0]?.toUpperCase() || "U"}
-                  </div>
-                )}
-              </Link>
+          {following.map((user) => {
+            // Build user data for hover card
+            const followingUser = {
+              id: user.id,
+              name: user.name,
+              username: user.username,
+              image: user.image,
+              bio: user.bio,
+              isFollowing: user.isFollowing,
+            };
 
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <Link
-                  href={user.username ? `/users/${user.username}` : "#"}
-                  className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400"
+            // Render avatar for reuse
+            const renderAvatar = () => (
+              user.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={user.image}
+                  alt={user.name}
+                  className="w-12 h-12 rounded-full object-cover cursor-pointer"
+                />
+              ) : (
+                <div
+                  className={cn(
+                    "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold cursor-pointer",
+                    "bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white"
+                  )}
                 >
-                  {user.name}
-                </Link>
-                {user.username && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    @{user.username}
-                  </p>
-                )}
-                {user.bio && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-1">
-                    {user.bio}
-                  </p>
-                )}
-              </div>
+                  {user.name?.[0]?.toUpperCase() || "U"}
+                </div>
+              )
+            );
 
-              {/* Follow Button */}
-              <FollowButton
-                userId={user.id}
-                isFollowing={user.isFollowing}
-                size="sm"
-              />
-            </div>
-          ))}
+            return (
+              <div
+                key={user.id}
+                className={cn(
+                  "flex items-center gap-4 p-4 rounded-xl",
+                  "bg-gray-50 dark:bg-[#111111]",
+                  "border border-gray-200 dark:border-[#262626]",
+                  "hover:border-blue-500/30 transition-colors"
+                )}
+              >
+                {/* Avatar with hover card */}
+                <ProfileHoverCard user={followingUser} side="bottom">
+                  {renderAvatar()}
+                </ProfileHoverCard>
+
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  <ProfileHoverCard user={followingUser} side="bottom">
+                    <span className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 cursor-pointer">
+                      {user.name}
+                    </span>
+                  </ProfileHoverCard>
+                  {user.username && (
+                    <ProfileHoverCard user={followingUser} side="bottom">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 cursor-pointer hover:text-blue-600 dark:hover:text-cyan-400">
+                        @{user.username}
+                      </p>
+                    </ProfileHoverCard>
+                  )}
+                  {user.bio && (
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-1">
+                      {user.bio}
+                    </p>
+                  )}
+                </div>
+
+                {/* Follow Button */}
+                <FollowButton
+                  userId={user.id}
+                  isFollowing={user.isFollowing}
+                  size="sm"
+                />
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
