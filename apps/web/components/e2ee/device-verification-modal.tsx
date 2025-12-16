@@ -1,0 +1,824 @@
+/**
+ * Device Verification Modal
+ *
+ * Interactive verification flow for establishing trust between devices.
+ * Supports two verification methods:
+ * 1. SAS (Short Authentication String) - Compare emojis
+ * 2. QR Code - Scan to verify (requires camera access)
+ *
+ * Based on Matrix specification for device verification.
+ */
+
+"use client";
+
+import { useState, useEffect, useCallback, useRef } from "react";
+import { cn } from "@/lib/design-system";
+import { useToast } from "@/components/toast";
+import {
+  startVerification,
+  acceptVerification,
+  calculateSAS,
+  confirmVerification,
+  cancelVerification,
+  getPendingVerifications,
+  SAS_EMOJIS,
+  type VerificationState,
+} from "@/lib/e2ee/device-verification";
+import {
+  ShieldCheck,
+  ShieldAlert,
+  ShieldQuestion,
+  X,
+  Loader2,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  QrCode,
+  Camera,
+  Smile,
+} from "lucide-react";
+
+// ============================================================================
+// QR CODE GENERATOR (Simple SVG-based)
+// ============================================================================
+
+function generateQRCodeData(
+  data: string
+): { size: number; modules: boolean[][] } {
+  const size = 21; // Version 1 QR code
+  const modules: boolean[][] = [];
+
+  for (let i = 0; i < size; i++) {
+    modules[i] = new Array(size).fill(false);
+  }
+
+  // Add finder patterns (corners)
+  const addFinderPattern = (row: number, col: number) => {
+    for (let r = 0; r < 7; r++) {
+      for (let c = 0; c < 7; c++) {
+        const isOuter = r === 0 || r === 6 || c === 0 || c === 6;
+        const isInner = r >= 2 && r <= 4 && c >= 2 && c <= 4;
+        if (isOuter || isInner) {
+          const targetRow = modules[row + r];
+          if (targetRow) targetRow[col + c] = true;
+        }
+      }
+    }
+  };
+
+  addFinderPattern(0, 0);
+  addFinderPattern(0, 14);
+  addFinderPattern(14, 0);
+
+  // Add data pattern based on hash
+  let hash = 0;
+  for (let i = 0; i < data.length; i++) {
+    hash = ((hash << 5) - hash + data.charCodeAt(i)) | 0;
+  }
+
+  for (let r = 8; r < 13; r++) {
+    for (let c = 8; c < 13; c++) {
+      const bit = ((hash >> ((r - 8) * 5 + (c - 8))) & 1) === 1;
+      const targetRow = modules[r];
+      if (targetRow) targetRow[c] = bit;
+    }
+  }
+
+  return { size, modules };
+}
+
+function QRCodeDisplay({ data, size = 180 }: { data: string; size?: number }) {
+  const { size: qrSize, modules } = generateQRCodeData(data);
+  const cellSize = size / qrSize;
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      className="rounded-lg"
+    >
+      <rect width={size} height={size} fill="white" />
+      {modules.map((row, r) =>
+        row.map((cell, c) =>
+          cell ? (
+            <rect
+              key={`${r}-${c}`}
+              x={c * cellSize}
+              y={r * cellSize}
+              width={cellSize}
+              height={cellSize}
+              fill="black"
+            />
+          ) : null
+        )
+      )}
+    </svg>
+  );
+}
+
+type VerificationMethod = "sas" | "qr";
+
+// ============================================================================
+// TYPES
+// ============================================================================
+
+interface DeviceVerificationModalProps {
+  /** Whether the modal is open */
+  isOpen: boolean;
+  /** Callback when modal closes */
+  onClose: () => void;
+  /** Target user to verify (if initiating) */
+  targetUserId?: string;
+  /** Target device to verify (if initiating) */
+  targetDeviceId?: string;
+  /** Target user name for display */
+  targetUserName?: string;
+  /** Pending verification to respond to */
+  pendingVerification?: VerificationState;
+  /** Callback on successful verification */
+  onSuccess?: () => void;
+}
+
+type VerificationStep =
+  | "method-select"
+  | "idle"
+  | "starting"
+  | "waiting"
+  | "qr-show"
+  | "qr-scan"
+  | "comparing"
+  | "confirming"
+  | "success"
+  | "failed"
+  | "cancelled";
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+export function DeviceVerificationModal({
+  isOpen,
+  onClose,
+  targetUserId,
+  targetDeviceId,
+  targetUserName,
+  pendingVerification,
+  onSuccess,
+}: DeviceVerificationModalProps) {
+  const toast = useToast();
+  const [step, setStep] = useState<VerificationStep>("method-select");
+  const [method, setMethod] = useState<VerificationMethod>("sas");
+  const [verification, setVerification] = useState<VerificationState | null>(
+    pendingVerification || null
+  );
+  const [emojis, setEmojis] = useState<Array<{ emoji: string; name: string }>>(
+    []
+  );
+  const [error, setError] = useState<string | null>(null);
+  const [qrData, setQrData] = useState<string>("");
+
+  // Video ref for QR scanning
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  // Stop camera helper
+  const stopCamera = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+  }, []);
+
+  // Reset state when modal opens/closes
+  useEffect(() => {
+    if (!isOpen) {
+      setStep("method-select");
+      setMethod("sas");
+      setVerification(null);
+      setEmojis([]);
+      setError(null);
+      setQrData("");
+      stopCamera();
+    } else if (pendingVerification) {
+      setVerification(pendingVerification);
+      setStep("waiting");
+    }
+  }, [isOpen, pendingVerification, stopCamera]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => stopCamera();
+  }, [stopCamera]);
+
+  // Start verification
+  const handleStart = useCallback(async () => {
+    if (!targetUserId || !targetDeviceId) return;
+
+    try {
+      setStep("starting");
+      setError(null);
+
+      const result = await startVerification(targetUserId, targetDeviceId);
+      setVerification({
+        verificationId: result.verificationId,
+        transactionId: result.transactionId,
+        status: "started",
+        isInitiator: true,
+        targetUserId,
+        targetDeviceId,
+        targetUserName,
+      });
+
+      if (method === "qr") {
+        // Generate QR code with verification data
+        setQrData(
+          JSON.stringify({
+            v: 1,
+            id: result.verificationId,
+            pk: result.publicKey,
+          })
+        );
+        setStep("qr-show");
+      } else {
+        setStep("waiting");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to start");
+      setStep("failed");
+    }
+  }, [targetUserId, targetDeviceId, targetUserName, method]);
+
+  // Start QR scanning
+  const handleStartScan = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+      });
+      streamRef.current = stream;
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        await videoRef.current.play();
+      }
+
+      setStep("qr-scan");
+      toast.info("Point your camera at the QR code");
+    } catch {
+      toast.error("Camera access denied");
+    }
+  }, [toast]);
+
+  // Accept verification (as target)
+  const handleAccept = useCallback(async () => {
+    if (!verification) return;
+
+    try {
+      setStep("starting");
+      setError(null);
+
+      await acceptVerification(verification.verificationId);
+
+      // Get verification details to calculate SAS
+      const pending = await getPendingVerifications();
+      const updated = pending.find(
+        (v) => v.verificationId === verification.verificationId
+      );
+
+      if (updated && updated.status === "key_exchanged") {
+        // Calculate SAS emojis
+        const sas = await calculateSAS(
+          verification.verificationId,
+          (updated as VerificationState & { initiatorPublicKey?: string }).initiatorPublicKey || "",
+          (updated as VerificationState & { targetPublicKey?: string }).targetPublicKey || "",
+          verification.transactionId,
+          verification.isInitiator
+        );
+        setEmojis(sas.emojis);
+        setStep("comparing");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to accept");
+      setStep("failed");
+    }
+  }, [verification]);
+
+  // Check for updates (polling for now, could use realtime)
+  useEffect(() => {
+    if (step !== "waiting" || !verification) return;
+
+    const interval = setInterval(async () => {
+      try {
+        const pending = await getPendingVerifications();
+        const updated = pending.find(
+          (v) => v.verificationId === verification.verificationId
+        );
+
+        if (updated) {
+          if (updated.status === "key_exchanged" && verification.isInitiator) {
+            // Calculate SAS emojis
+            const sas = await calculateSAS(
+              verification.verificationId,
+              (updated as VerificationState & { initiatorPublicKey?: string }).initiatorPublicKey || "",
+              (updated as VerificationState & { targetPublicKey?: string }).targetPublicKey || "",
+              verification.transactionId,
+              verification.isInitiator
+            );
+            setEmojis(sas.emojis);
+            setStep("comparing");
+          } else if (updated.status === "verified") {
+            setStep("success");
+          } else if (
+            updated.status === "cancelled" ||
+            updated.status === "expired"
+          ) {
+            setStep("cancelled");
+          }
+        }
+      } catch {
+        // Ignore polling errors
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [step, verification]);
+
+  // Confirm match
+  const handleConfirmMatch = useCallback(async () => {
+    if (!verification || emojis.length === 0) return;
+
+    try {
+      setStep("confirming");
+      const emojiIndices = emojis.map((e) =>
+        SAS_EMOJIS.findIndex((s) => s.emoji === e.emoji)
+      );
+      await confirmVerification(verification.verificationId, emojiIndices, true);
+      setStep("success");
+      onSuccess?.();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Confirmation failed");
+      setStep("failed");
+    }
+  }, [verification, emojis, onSuccess]);
+
+  // Confirm no match
+  const handleConfirmNoMatch = useCallback(async () => {
+    if (!verification) return;
+
+    try {
+      setStep("confirming");
+      await confirmVerification(verification.verificationId, [], false);
+      setStep("cancelled");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Cancellation failed");
+      setStep("failed");
+    }
+  }, [verification]);
+
+  // Cancel verification
+  const handleCancel = useCallback(async () => {
+    if (verification) {
+      await cancelVerification(verification.verificationId);
+    }
+    stopCamera();
+    onClose();
+  }, [verification, stopCamera, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={handleCancel}
+      />
+
+      {/* Modal */}
+      <div
+        className={cn(
+          "relative z-10 w-full max-w-md",
+          "rounded-xl bg-gray-900 border border-gray-800",
+          "shadow-2xl shadow-black/50",
+          "p-6"
+        )}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            {step === "success" ? (
+              <ShieldCheck className="h-6 w-6 text-emerald-500" />
+            ) : step === "failed" || step === "cancelled" ? (
+              <ShieldAlert className="h-6 w-6 text-red-500" />
+            ) : (
+              <ShieldQuestion className="h-6 w-6 text-blue-500" />
+            )}
+            <h2 className="text-xl font-semibold text-white">
+              Device Verification
+            </h2>
+          </div>
+          <button
+            onClick={handleCancel}
+            className="p-1 rounded-lg hover:bg-gray-800 transition-colors"
+          >
+            <X className="h-5 w-5 text-gray-400" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="space-y-6">
+          {/* Method Selection */}
+          {step === "method-select" && targetUserId && (
+            <div className="space-y-4">
+              <p className="text-gray-300">
+                Verify{" "}
+                <span className="font-semibold text-white">
+                  {targetUserName || targetUserId}
+                </span>
+                &apos;s device to ensure your messages are secure.
+              </p>
+
+              <div className="space-y-3">
+                {/* SAS Option */}
+                <button
+                  onClick={() => setMethod("sas")}
+                  className={cn(
+                    "w-full p-4 rounded-xl border-2 text-left transition-all",
+                    method === "sas"
+                      ? "border-blue-500 bg-blue-500/10"
+                      : "border-gray-700 hover:border-gray-600"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <Smile className="h-6 w-6 text-blue-400" />
+                    <div>
+                      <div className="font-medium text-white">Compare Emojis</div>
+                      <div className="text-sm text-gray-400">
+                        Compare 7 emojis with the other device
+                      </div>
+                    </div>
+                  </div>
+                </button>
+
+                {/* QR Option */}
+                <button
+                  onClick={() => setMethod("qr")}
+                  className={cn(
+                    "w-full p-4 rounded-xl border-2 text-left transition-all",
+                    method === "qr"
+                      ? "border-blue-500 bg-blue-500/10"
+                      : "border-gray-700 hover:border-gray-600"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <QrCode className="h-6 w-6 text-blue-400" />
+                    <div>
+                      <div className="font-medium text-white">Scan QR Code</div>
+                      <div className="text-sm text-gray-400">
+                        Scan a code from the other device
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
+              <button
+                onClick={handleStart}
+                className={cn(
+                  "w-full rounded-lg px-4 py-3",
+                  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                  "text-white font-medium",
+                  "hover:shadow-lg hover:shadow-blue-500/25",
+                  "transition-all"
+                )}
+              >
+                Start Verification
+              </button>
+            </div>
+          )}
+
+          {/* Idle / Start state (legacy, fallback) */}
+          {step === "idle" && targetUserId && (
+            <div className="space-y-4">
+              <p className="text-gray-300">
+                Verify{" "}
+                <span className="font-semibold text-white">
+                  {targetUserName || targetUserId}
+                </span>
+                &apos;s device to ensure your messages are secure.
+              </p>
+              <p className="text-sm text-gray-400">
+                You&apos;ll both see the same 7 emojis. Compare them over a call or
+                in person to verify.
+              </p>
+              <button
+                onClick={handleStart}
+                className={cn(
+                  "w-full rounded-lg px-4 py-3",
+                  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                  "text-white font-medium",
+                  "hover:shadow-lg hover:shadow-blue-500/25",
+                  "transition-all"
+                )}
+              >
+                Start Verification
+              </button>
+            </div>
+          )}
+
+          {/* Waiting for other party (as initiator) */}
+          {step === "waiting" && verification?.isInitiator && (
+            <div className="space-y-4 text-center">
+              <Clock className="h-12 w-12 mx-auto text-blue-500 animate-pulse" />
+              <p className="text-gray-300">
+                Waiting for{" "}
+                <span className="font-semibold text-white">
+                  {verification.targetUserName}
+                </span>{" "}
+                to accept...
+              </p>
+              <p className="text-sm text-gray-400">
+                Ask them to check their verification requests.
+              </p>
+            </div>
+          )}
+
+          {/* Incoming request (as target) */}
+          {step === "waiting" && !verification?.isInitiator && (
+            <div className="space-y-4">
+              <p className="text-gray-300">
+                <span className="font-semibold text-white">
+                  {verification?.targetUserName}
+                </span>{" "}
+                wants to verify your device.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleAccept}
+                  className={cn(
+                    "flex-1 rounded-lg px-4 py-3",
+                    "bg-emerald-600 hover:bg-emerald-500",
+                    "text-white font-medium",
+                    "transition-colors"
+                  )}
+                >
+                  Accept
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className={cn(
+                    "flex-1 rounded-lg px-4 py-3",
+                    "bg-gray-700 hover:bg-gray-600",
+                    "text-white font-medium",
+                    "transition-colors"
+                  )}
+                >
+                  Decline
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Starting */}
+          {step === "starting" && (
+            <div className="space-y-4 text-center">
+              <Loader2 className="h-12 w-12 mx-auto text-blue-500 animate-spin" />
+              <p className="text-gray-300">Setting up verification...</p>
+            </div>
+          )}
+
+          {/* QR Code Display (as initiator) */}
+          {step === "qr-show" && qrData && (
+            <div className="space-y-6 text-center">
+              <div>
+                <h3 className="text-lg font-medium text-white mb-2">
+                  Scan This Code
+                </h3>
+                <p className="text-sm text-gray-400">
+                  Ask {verification?.targetUserName || "the other device"} to scan this QR code
+                </p>
+              </div>
+
+              <div className="flex justify-center">
+                <div className="p-4 bg-white rounded-xl">
+                  <QRCodeDisplay data={qrData} size={180} />
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={handleCancel}
+                  className={cn(
+                    "flex-1 rounded-lg px-4 py-3",
+                    "bg-gray-700 hover:bg-gray-600",
+                    "text-white font-medium",
+                    "transition-colors"
+                  )}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleStartScan}
+                  className={cn(
+                    "flex-1 flex items-center justify-center gap-2",
+                    "rounded-lg px-4 py-3",
+                    "bg-blue-600 hover:bg-blue-500",
+                    "text-white font-medium",
+                    "transition-colors"
+                  )}
+                >
+                  <Camera className="h-5 w-5" />
+                  Scan Instead
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* QR Code Scanning */}
+          {step === "qr-scan" && (
+            <div className="space-y-6 text-center">
+              <div>
+                <h3 className="text-lg font-medium text-white mb-2">
+                  Scan QR Code
+                </h3>
+                <p className="text-sm text-gray-400">
+                  Point your camera at the QR code on the other device
+                </p>
+              </div>
+
+              <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-black">
+                <video
+                  ref={videoRef}
+                  className="w-full h-full object-cover"
+                  playsInline
+                  muted
+                />
+                {/* Scanning overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative w-48 h-48 border-2 border-white/30 rounded-lg">
+                    <div className="absolute -top-0.5 -left-0.5 w-5 h-5 border-t-2 border-l-2 border-blue-500" />
+                    <div className="absolute -top-0.5 -right-0.5 w-5 h-5 border-t-2 border-r-2 border-blue-500" />
+                    <div className="absolute -bottom-0.5 -left-0.5 w-5 h-5 border-b-2 border-l-2 border-blue-500" />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 border-b-2 border-r-2 border-blue-500" />
+                    {/* Scanning line animation */}
+                    <div className="absolute inset-x-0 top-0 h-0.5 bg-blue-500 animate-pulse" />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={handleCancel}
+                className={cn(
+                  "rounded-lg px-6 py-3",
+                  "bg-gray-700 hover:bg-gray-600",
+                  "text-white font-medium",
+                  "transition-colors"
+                )}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+
+          {/* Comparing emojis */}
+          {step === "comparing" && emojis.length > 0 && (
+            <div className="space-y-6">
+              <p className="text-gray-300 text-center">
+                Compare these emojis with{" "}
+                <span className="font-semibold text-white">
+                  {verification?.targetUserName}
+                </span>
+              </p>
+
+              {/* Emoji grid */}
+              <div className="grid grid-cols-7 gap-2">
+                {emojis.map((e, i) => (
+                  <div key={i} className="text-center">
+                    <div className="text-3xl mb-1">{e.emoji}</div>
+                    <div className="text-[10px] text-gray-400">{e.name}</div>
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-sm text-gray-400 text-center">
+                Do the emojis match on both devices?
+              </p>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={handleConfirmMatch}
+                  className={cn(
+                    "flex-1 flex items-center justify-center gap-2",
+                    "rounded-lg px-4 py-3",
+                    "bg-emerald-600 hover:bg-emerald-500",
+                    "text-white font-medium",
+                    "transition-colors"
+                  )}
+                >
+                  <CheckCircle2 className="h-5 w-5" />
+                  They Match
+                </button>
+                <button
+                  onClick={handleConfirmNoMatch}
+                  className={cn(
+                    "flex-1 flex items-center justify-center gap-2",
+                    "rounded-lg px-4 py-3",
+                    "bg-red-600 hover:bg-red-500",
+                    "text-white font-medium",
+                    "transition-colors"
+                  )}
+                >
+                  <XCircle className="h-5 w-5" />
+                  They Don&apos;t Match
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Confirming */}
+          {step === "confirming" && (
+            <div className="space-y-4 text-center">
+              <Loader2 className="h-12 w-12 mx-auto text-blue-500 animate-spin" />
+              <p className="text-gray-300">Completing verification...</p>
+            </div>
+          )}
+
+          {/* Success */}
+          {step === "success" && (
+            <div className="space-y-4 text-center">
+              <ShieldCheck className="h-16 w-16 mx-auto text-emerald-500" />
+              <h3 className="text-xl font-semibold text-white">Verified!</h3>
+              <p className="text-gray-300">
+                <span className="font-semibold text-white">
+                  {verification?.targetUserName}
+                </span>
+                &apos;s device is now verified. Your messages are secure.
+              </p>
+              <button
+                onClick={onClose}
+                className={cn(
+                  "w-full rounded-lg px-4 py-3",
+                  "bg-emerald-600 hover:bg-emerald-500",
+                  "text-white font-medium",
+                  "transition-colors"
+                )}
+              >
+                Done
+              </button>
+            </div>
+          )}
+
+          {/* Failed */}
+          {step === "failed" && (
+            <div className="space-y-4 text-center">
+              <ShieldAlert className="h-16 w-16 mx-auto text-red-500" />
+              <h3 className="text-xl font-semibold text-white">
+                Verification Failed
+              </h3>
+              <p className="text-gray-300">{error || "Something went wrong."}</p>
+              <button
+                onClick={onClose}
+                className={cn(
+                  "w-full rounded-lg px-4 py-3",
+                  "bg-gray-700 hover:bg-gray-600",
+                  "text-white font-medium",
+                  "transition-colors"
+                )}
+              >
+                Close
+              </button>
+            </div>
+          )}
+
+          {/* Cancelled */}
+          {step === "cancelled" && (
+            <div className="space-y-4 text-center">
+              <XCircle className="h-16 w-16 mx-auto text-gray-500" />
+              <h3 className="text-xl font-semibold text-white">
+                Verification Cancelled
+              </h3>
+              <p className="text-gray-300">
+                The emojis didn&apos;t match or the verification was cancelled.
+              </p>
+              <p className="text-sm text-amber-400">
+                ⚠️ If you didn&apos;t cancel this, someone may be trying to
+                intercept your messages.
+              </p>
+              <button
+                onClick={onClose}
+                className={cn(
+                  "w-full rounded-lg px-4 py-3",
+                  "bg-gray-700 hover:bg-gray-600",
+                  "text-white font-medium",
+                  "transition-colors"
+                )}
+              >
+                Close
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

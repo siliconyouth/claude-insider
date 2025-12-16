@@ -7,7 +7,7 @@
  * This script reads project files and generates detailed knowledge chunks
  * that help the AI Assistant answer questions about Claude Insider.
  *
- * Knowledge Categories (v0.81.0):
+ * Knowledge Categories (v0.82.0):
  * - Project Overview & Author
  * - Tech Stack (frameworks, libraries, versions)
  * - Documentation Structure
@@ -112,9 +112,9 @@ function readFileSafe(filePath) {
 function getVersion() {
   try {
     const pkg = JSON.parse(fs.readFileSync(path.join(WEB_ROOT, "package.json"), "utf-8"));
-    return pkg.version || "0.81.0";
+    return pkg.version || "0.82.0";
   } catch {
-    return "0.81.0";
+    return "0.82.0";
   }
 }
 
@@ -212,7 +212,7 @@ function generateProjectKnowledge() {
     id: "project-tech-stack",
     title: "Technical Architecture",
     section: "Tech Stack",
-    content: `Claude Insider is built with Next.js 16.0.10 using App Router, API Routes, Server Components, SSR, ISR. TypeScript 5.9.3 with strict mode. React 19.2.3 for UI. Tailwind CSS 4.1.5 with dark mode, glass morphism, violet-blue-cyan gradient system. Turborepo 2.6.3 for monorepo. pnpm 10.19.0 package manager. AI features use @anthropic-ai/sdk with Claude Sonnet 4 for the assistant. Voice uses ElevenLabs with 42 voices and eleven_turbo_v2_5 model. Search uses Fuse.js 7.1.0 for fuzzy search. RAG uses TF-IDF with 435+ indexed chunks. Authentication via Better Auth 1.4.6 with OAuth, passkeys, 2FA. Database is Supabase 2.87.1 with PostgreSQL 15+, 50 tables, RLS. CMS is Payload CMS 3.68.3. Hosted on Vercel.`,
+    content: `Claude Insider is built with Next.js 16.0.10 using App Router, API Routes, Server Components, SSR, ISR. TypeScript 5.9.3 with strict mode. React 19.2.3 for UI. Tailwind CSS 4.1.5 with dark mode, glass morphism, violet-blue-cyan gradient system. Turborepo 2.6.3 for monorepo. pnpm 10.19.0 package manager. AI features use @anthropic-ai/sdk with Claude Sonnet 4 for the assistant. Voice uses ElevenLabs with 42 voices and eleven_turbo_v2_5 model. Search uses Fuse.js 7.1.0 for fuzzy search. RAG uses TF-IDF with 1,933 indexed chunks and 3,866 terms. Authentication via Better Auth 1.4.6 with OAuth, passkeys, 2FA. Database is Supabase 2.87.1 with PostgreSQL 15+, 73 tables across 13 categories, RLS. End-to-end encryption via Matrix Olm/Megolm protocol with vodozemac WASM. CMS is Payload CMS 3.68.3. Hosted on Vercel.`,
     url: "/",
     category: "Project",
     keywords: ["next.js", "typescript", "react", "tailwind", "turborepo", "anthropic", "elevenlabs", "vercel", "supabase", "better auth", "tech stack"]
@@ -242,7 +242,7 @@ function generateProjectKnowledge() {
     id: "project-assistant",
     title: "Voice Assistant Features",
     section: "AI Assistant",
-    content: `The Claude Insider Assistant is powered by Claude Sonnet 4 (claude-sonnet-4-20250514) - NOT Opus, the website was built with Opus but the assistant runs on Sonnet for speed. Speech-to-text uses Web Speech API. Text-to-speech uses ElevenLabs Turbo v2.5 model with 42 premium voices (17 female, 25 male). Default voice is Sarah (soft, young female). Audio format is MP3 44100Hz 128kbps. Features include: Streaming responses with SSE, voice starts after first sentence for fast feedback, 42 voice options with preview, auto-speak toggle for hands-free use, conversation export, context-aware responses using RAG (435 chunks), model selection (Opus, Sonnet, Haiku), custom assistant name personalization, user name personalization. Available in popup window and fullscreen overlay modes. Settings in-window panel (not modal).`,
+    content: `The Claude Insider Assistant is powered by Claude Sonnet 4 (claude-sonnet-4-20250514) - NOT Opus, the website was built with Opus but the assistant runs on Sonnet for speed. Speech-to-text uses Web Speech API. Text-to-speech uses ElevenLabs Turbo v2.5 model with 42 premium voices (17 female, 25 male). Default voice is Sarah (soft, young female). Audio format is MP3 44100Hz 128kbps. Features include: Streaming responses with SSE, voice starts after first sentence for fast feedback, 42 voice options with preview, auto-speak toggle for hands-free use, conversation export, context-aware responses using RAG (1,933 chunks), model selection (Opus, Sonnet, Haiku), custom assistant name personalization, user name personalization. Available in unified chat window with tabs for AI Assistant and Messages. Settings in-window panel (not modal).`,
     url: "/assistant",
     category: "Project",
     keywords: ["voice assistant", "elevenlabs", "claude sonnet", "streaming", "tts", "speech", "sarah", "voices"]
@@ -434,6 +434,7 @@ Recent Releases:
 ${versionSummary || "See CHANGELOG.md for full history"}
 
 Major Milestones:
+- v0.82.0 - Unified Chat Window (AI + Messages in tabbed interface)
 - v0.81.0 - RAG Index Generator v6.0 (1,933 chunks, 20 knowledge categories)
 - v0.80.0 - Zero ESLint warnings, TypeScript type safety improvements
 - v0.79.0 - Security dashboard, fingerprinting, honeypot system
@@ -473,7 +474,7 @@ Full changelog at /changelog or CHANGELOG.md`,
     id: "project-deployment",
     title: "Deployment Configuration",
     section: "Vercel Deployment",
-    content: `Claude Insider is deployed on Vercel. Settings: Root Directory apps/web, Framework Next.js (auto-detected). Primary domain: www.claudeinsider.com. Redirects: claudeinsider.com, claude-insider.com, www.claude-insider.com, claude-insider.vercel.app all redirect to www.claudeinsider.com. Environment Variables: ANTHROPIC_API_KEY (Claude AI), ELEVENLABS_API_KEY (TTS), BETTER_AUTH_SECRET (auth), GITHUB_CLIENT_ID/SECRET (OAuth), GOOGLE_CLIENT_ID/SECRET (OAuth), NEXT_PUBLIC_SUPABASE_URL/ANON_KEY (database), DATABASE_URL (PostgreSQL), NEXT_PUBLIC_APP_URL. Build Process: Prebuild generates RAG index (1925+ chunks), Next.js builds with static generation, Edge deployment via Vercel CDN. Automatic deployments: main branch to production, PRs to preview.`,
+    content: `Claude Insider is deployed on Vercel. Settings: Root Directory apps/web, Framework Next.js (auto-detected). Primary domain: www.claudeinsider.com. Redirects: claudeinsider.com, claude-insider.com, www.claude-insider.com, claude-insider.vercel.app all redirect to www.claudeinsider.com. Environment Variables: ANTHROPIC_API_KEY (Claude AI), ELEVENLABS_API_KEY (TTS), BETTER_AUTH_SECRET (auth), GITHUB_CLIENT_ID/SECRET (OAuth), GOOGLE_CLIENT_ID/SECRET (OAuth), NEXT_PUBLIC_SUPABASE_URL/ANON_KEY (database), DATABASE_URL (PostgreSQL), NEXT_PUBLIC_APP_URL. Build Process: Prebuild generates RAG index (1,933 chunks, 3,866 terms), Next.js builds with static generation, Edge deployment via Vercel CDN. Automatic deployments: main branch to production, PRs to preview.`,
     url: "/",
     category: "Project",
     keywords: ["deployment", "vercel", "hosting", "domains", "configuration", "environment", "build", "cdn"]

@@ -55,6 +55,13 @@ export interface Message {
   createdAt: string;
   editedAt?: string;
   deletedAt?: string;
+  // E2EE fields
+  encryptedContent?: string;
+  isEncrypted?: boolean;
+  encryptionAlgorithm?: "olm.v1" | "megolm.v1";
+  senderDeviceId?: string;
+  senderKey?: string;
+  sessionId?: string;
 }
 
 // ============================================
@@ -109,6 +116,13 @@ interface MessageRow {
   edited_at?: string;
   deleted_at?: string;
   sender?: { id: string; name?: string };
+  // E2EE fields
+  encrypted_content?: string;
+  is_encrypted?: boolean;
+  encryption_algorithm?: string;
+  sender_device_id?: string;
+  sender_key?: string;
+  session_id?: string;
 }
 
 // ============================================
@@ -131,7 +145,7 @@ export async function getConversations(): Promise<{
     // Get user's conversations with participants
     // Note: dm_participants and dm_conversations not in generated Supabase types
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: participations, error: partError } = await (supabase as any)
+    const { data: participations, error: partError } = await supabase
       .from("dm_participants")
       .select(`
         conversation_id,
@@ -166,7 +180,7 @@ export async function getConversations(): Promise<{
 
     // Get all participants for these conversations
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: allParticipants } = await (supabase as any)
+    const { data: allParticipants } = await supabase
       .from("dm_participants")
       .select(`
         conversation_id,
@@ -181,7 +195,7 @@ export async function getConversations(): Promise<{
       .neq("user_id", session.user.id);
 
     // Get profiles for participants
-    const participantRows = (allParticipants || []) as ParticipantRow[];
+    const participantRows = (allParticipants || []) as unknown as ParticipantRow[];
     const otherUserIds = participantRows.map((p) => p.user_id);
     const { data: profiles } = await supabase
       .from("profiles")
@@ -190,7 +204,7 @@ export async function getConversations(): Promise<{
 
     // Get presence for participants
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: presences } = await (supabase as any)
+    const { data: presences } = await supabase
       .from("user_presence")
       .select("user_id, status")
       .in("user_id", otherUserIds);
@@ -272,7 +286,7 @@ export async function getMessages(
 
     // Verify user is a participant
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: participant } = await (supabase as any)
+    const { data: participant } = await supabase
       .from("dm_participants")
       .select("id")
       .eq("conversation_id", conversationId)
@@ -285,7 +299,7 @@ export async function getMessages(
 
     // Build query
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let query = (supabase as any)
+    let query = supabase
       .from("dm_messages")
       .select(`
         id,
@@ -299,6 +313,12 @@ export async function getMessages(
         created_at,
         edited_at,
         deleted_at,
+        encrypted_content,
+        is_encrypted,
+        encryption_algorithm,
+        sender_device_id,
+        sender_key,
+        session_id,
         sender:sender_id (
           id,
           name
@@ -352,6 +372,13 @@ export async function getMessages(
         createdAt: m.created_at,
         editedAt: m.edited_at,
         deletedAt: m.deleted_at,
+        // E2EE fields
+        encryptedContent: m.encrypted_content,
+        isEncrypted: m.is_encrypted || false,
+        encryptionAlgorithm: m.encryption_algorithm as "olm.v1" | "megolm.v1" | undefined,
+        senderDeviceId: m.sender_device_id,
+        senderKey: m.sender_key,
+        sessionId: m.session_id,
       };
     });
 
@@ -392,7 +419,7 @@ export async function sendMessage(
 
     // Verify user is a participant
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: participant } = await (supabase as any)
+    const { data: participant } = await supabase
       .from("dm_participants")
       .select("id")
       .eq("conversation_id", conversationId)
@@ -420,7 +447,7 @@ export async function sendMessage(
 
     // Insert message
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: newMessage, error } = await (supabase as any)
+    const { data: newMessage, error } = await supabase
       .from("dm_messages")
       .insert({
         conversation_id: conversationId,
@@ -513,7 +540,7 @@ export async function startConversation(
 
     // Use database function to get or create conversation
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any).rpc("get_or_create_dm_conversation", {
+    const { data, error } = await supabase.rpc("get_or_create_dm_conversation", {
       p_user1: session.user.id,
       p_user2: targetUserId,
     });
@@ -546,7 +573,7 @@ export async function markConversationAsRead(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).rpc("mark_dm_conversation_read", {
+    const { error } = await supabase.rpc("mark_dm_conversation_read", {
       p_user_id: session.user.id,
       p_conversation_id: conversationId,
     });
@@ -580,7 +607,7 @@ export async function muteConversation(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any)
+    const { error } = await supabase
       .from("dm_participants")
       .update({ is_muted: muted })
       .eq("conversation_id", conversationId)
@@ -616,7 +643,7 @@ export async function getTotalUnreadCount(): Promise<{
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any).rpc("get_total_unread_dm_count", {
+    const { data, error } = await supabase.rpc("get_total_unread_dm_count", {
       p_user_id: session.user.id,
     });
 
@@ -702,7 +729,7 @@ export async function getUsersForMessaging(
 
     // Get presence
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: presences } = await (supabase as any)
+    const { data: presences } = await supabase
       .from("user_presence")
       .select("user_id, status")
       .in("user_id", userIds);
@@ -761,7 +788,7 @@ export async function deleteMessage(
 
     // Verify ownership
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: message } = await (supabase as any)
+    const { data: message } = await supabase
       .from("dm_messages")
       .select("id, sender_id")
       .eq("id", messageId)
@@ -778,7 +805,7 @@ export async function deleteMessage(
 
     // Soft delete
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any)
+    const { error } = await supabase
       .from("dm_messages")
       .update({ deleted_at: new Date().toISOString() })
       .eq("id", messageId);

@@ -1,6 +1,6 @@
 "use client";
 
-import { openAssistant } from "./voice-assistant";
+import { openAssistant } from "./unified-chat";
 
 export function OpenAssistantButton() {
   return (

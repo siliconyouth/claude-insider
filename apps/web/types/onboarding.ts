@@ -55,6 +55,7 @@ export type WizardStepId =
   | "security"
   | "notifications"
   | "api-key"
+  | "e2ee-setup"
   | "support"
   | "beta-apply";
 

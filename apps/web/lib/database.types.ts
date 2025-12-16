@@ -892,6 +892,84 @@ export type Database = {
           },
         ]
       }
+      device_keys: {
+        Row: {
+          created_at: string
+          cross_sign_signature: string | null
+          device_id: string
+          device_name: string | null
+          device_type: string | null
+          id: string
+          identity_key: string
+          is_verified: boolean | null
+          last_seen_at: string
+          signed_prekey: string
+          signed_prekey_id: number
+          signed_prekey_signature: string
+          signing_key: string
+          user_id: string
+          verification_method: string | null
+          verified_at: string | null
+          verified_by_device_id: string | null
+          verified_by_user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          cross_sign_signature?: string | null
+          device_id: string
+          device_name?: string | null
+          device_type?: string | null
+          id?: string
+          identity_key: string
+          is_verified?: boolean | null
+          last_seen_at?: string
+          signed_prekey?: string
+          signed_prekey_id?: number
+          signed_prekey_signature?: string
+          signing_key: string
+          user_id: string
+          verification_method?: string | null
+          verified_at?: string | null
+          verified_by_device_id?: string | null
+          verified_by_user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          cross_sign_signature?: string | null
+          device_id?: string
+          device_name?: string | null
+          device_type?: string | null
+          id?: string
+          identity_key?: string
+          is_verified?: boolean | null
+          last_seen_at?: string
+          signed_prekey?: string
+          signed_prekey_id?: number
+          signed_prekey_signature?: string
+          signing_key?: string
+          user_id?: string
+          verification_method?: string | null
+          verified_at?: string | null
+          verified_by_device_id?: string | null
+          verified_by_user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "device_keys_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "device_keys_verified_by_user_id_fkey"
+            columns: ["verified_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dm_conversations: {
         Row: {
           avatar_url: string | null
@@ -1015,11 +1093,17 @@ export type Database = {
           created_at: string
           deleted_at: string | null
           edited_at: string | null
+          encrypted_content: string | null
+          encryption_algorithm: string | null
           id: string
           is_ai_generated: boolean | null
+          is_encrypted: boolean | null
           mentions: string[] | null
           metadata: Json | null
+          sender_device_id: string | null
           sender_id: string
+          sender_key: string | null
+          session_id: string | null
         }
         Insert: {
           ai_response_to?: string | null
@@ -1028,11 +1112,17 @@ export type Database = {
           created_at?: string
           deleted_at?: string | null
           edited_at?: string | null
+          encrypted_content?: string | null
+          encryption_algorithm?: string | null
           id?: string
           is_ai_generated?: boolean | null
+          is_encrypted?: boolean | null
           mentions?: string[] | null
           metadata?: Json | null
+          sender_device_id?: string | null
           sender_id: string
+          sender_key?: string | null
+          session_id?: string | null
         }
         Update: {
           ai_response_to?: string | null
@@ -1041,11 +1131,17 @@ export type Database = {
           created_at?: string
           deleted_at?: string | null
           edited_at?: string | null
+          encrypted_content?: string | null
+          encryption_algorithm?: string | null
           id?: string
           is_ai_generated?: boolean | null
+          is_encrypted?: boolean | null
           mentions?: string[] | null
           metadata?: Json | null
+          sender_device_id?: string | null
           sender_id?: string
+          sender_key?: string | null
+          session_id?: string | null
         }
         Relationships: [
           {
@@ -1081,6 +1177,9 @@ export type Database = {
       dm_participants: {
         Row: {
           conversation_id: string
+          e2ee_enabled: boolean | null
+          e2ee_verified: boolean | null
+          e2ee_verified_at: string | null
           id: string
           invited_by: string | null
           is_muted: boolean | null
@@ -1092,6 +1191,9 @@ export type Database = {
         }
         Insert: {
           conversation_id: string
+          e2ee_enabled?: boolean | null
+          e2ee_verified?: boolean | null
+          e2ee_verified_at?: string | null
           id?: string
           invited_by?: string | null
           is_muted?: boolean | null
@@ -1103,6 +1205,9 @@ export type Database = {
         }
         Update: {
           conversation_id?: string
+          e2ee_enabled?: boolean | null
+          e2ee_verified?: boolean | null
+          e2ee_verified_at?: string | null
           id?: string
           invited_by?: string | null
           is_muted?: boolean | null
@@ -1460,6 +1565,516 @@ export type Database = {
             foreignKeyName: "donor_badges_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: true
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_ai_access_log: {
+        Row: {
+          accessed_at: string
+          ai_model_used: string | null
+          authorizing_device_id: string
+          authorizing_user_id: string
+          content_hash: string | null
+          conversation_id: string
+          feature_used: string
+          id: string
+          message_id: string | null
+        }
+        Insert: {
+          accessed_at?: string
+          ai_model_used?: string | null
+          authorizing_device_id: string
+          authorizing_user_id: string
+          content_hash?: string | null
+          conversation_id: string
+          feature_used: string
+          id?: string
+          message_id?: string | null
+        }
+        Update: {
+          accessed_at?: string
+          ai_model_used?: string | null
+          authorizing_device_id?: string
+          authorizing_user_id?: string
+          content_hash?: string | null
+          conversation_id?: string
+          feature_used?: string
+          id?: string
+          message_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_ai_access_log_authorizing_user_id_fkey"
+            columns: ["authorizing_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_ai_access_log_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_ai_access_log_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "user_dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_ai_access_log_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "dm_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_ai_consent: {
+        Row: {
+          allowed_features: Json
+          consent_expires_at: string | null
+          consent_given_at: string | null
+          consent_reason: string | null
+          consent_status: string
+          conversation_id: string
+          created_at: string
+          device_id: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          allowed_features?: Json
+          consent_expires_at?: string | null
+          consent_given_at?: string | null
+          consent_reason?: string | null
+          consent_status?: string
+          conversation_id: string
+          created_at?: string
+          device_id?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          allowed_features?: Json
+          consent_expires_at?: string | null
+          consent_given_at?: string | null
+          consent_reason?: string | null
+          consent_status?: string
+          conversation_id?: string
+          created_at?: string
+          device_id?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_ai_consent_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_ai_consent_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "user_dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_ai_consent_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_conversation_ai_settings: {
+        Row: {
+          ai_allowed: boolean
+          consent_expiry_days: number | null
+          conversation_id: string
+          created_at: string
+          enabled_features: Json
+          require_unanimous_consent: boolean
+          updated_at: string
+        }
+        Insert: {
+          ai_allowed?: boolean
+          consent_expiry_days?: number | null
+          conversation_id: string
+          created_at?: string
+          enabled_features?: Json
+          require_unanimous_consent?: boolean
+          updated_at?: string
+        }
+        Update: {
+          ai_allowed?: boolean
+          consent_expiry_days?: number | null
+          conversation_id?: string
+          created_at?: string
+          enabled_features?: Json
+          require_unanimous_consent?: boolean
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_conversation_ai_settings_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: true
+            referencedRelation: "dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_conversation_ai_settings_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: true
+            referencedRelation: "user_dm_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_conversation_settings: {
+        Row: {
+          conversation_id: string
+          created_at: string
+          current_session_created_at: string | null
+          current_session_id: string | null
+          e2ee_required: boolean
+          session_message_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string
+          current_session_created_at?: string | null
+          current_session_id?: string | null
+          e2ee_required?: boolean
+          session_message_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string
+          current_session_created_at?: string | null
+          current_session_id?: string | null
+          e2ee_required?: boolean
+          session_message_count?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_conversation_settings_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: true
+            referencedRelation: "dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_conversation_settings_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: true
+            referencedRelation: "user_dm_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_cross_signing_keys: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean | null
+          key_type: string
+          public_key: string
+          revoked_at: string | null
+          signatures: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          key_type: string
+          public_key: string
+          revoked_at?: string | null
+          signatures?: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean | null
+          key_type?: string
+          public_key?: string
+          revoked_at?: string | null
+          signatures?: Json
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_cross_signing_keys_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_device_signatures: {
+        Row: {
+          created_at: string
+          device_key_id: string
+          id: string
+          signature: string
+          signer_key_id: string
+          signer_key_type: string
+          signer_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_key_id: string
+          id?: string
+          signature: string
+          signer_key_id: string
+          signer_key_type: string
+          signer_user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_key_id?: string
+          id?: string
+          signature?: string
+          signer_key_id?: string
+          signer_key_type?: string
+          signer_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_device_signatures_device_key_id_fkey"
+            columns: ["device_key_id"]
+            isOneToOne: false
+            referencedRelation: "device_keys"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_device_signatures_signer_user_id_fkey"
+            columns: ["signer_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_key_backups: {
+        Row: {
+          backup_auth_tag: string
+          backup_iv: string
+          backup_version: number
+          created_at: string
+          device_count: number
+          encrypted_backup: string
+          id: string
+          iterations: number
+          salt: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          backup_auth_tag: string
+          backup_iv: string
+          backup_version?: number
+          created_at?: string
+          device_count?: number
+          encrypted_backup: string
+          id?: string
+          iterations?: number
+          salt: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          backup_auth_tag?: string
+          backup_iv?: string
+          backup_version?: number
+          created_at?: string
+          device_count?: number
+          encrypted_backup?: string
+          id?: string
+          iterations?: number
+          salt?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_key_backups_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_message_keys: {
+        Row: {
+          created_at: string
+          encrypted_key: string
+          id: string
+          message_id: string
+          olm_message_type: number
+          recipient_device_id: string
+        }
+        Insert: {
+          created_at?: string
+          encrypted_key: string
+          id?: string
+          message_id: string
+          olm_message_type?: number
+          recipient_device_id: string
+        }
+        Update: {
+          created_at?: string
+          encrypted_key?: string
+          id?: string
+          message_id?: string
+          olm_message_type?: number
+          recipient_device_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_message_keys_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "dm_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_sas_verifications: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          initiator_commitment: string | null
+          initiator_device_id: string
+          initiator_public_key: string | null
+          initiator_user_id: string
+          sas_decimal: string | null
+          sas_emoji_indices: string | null
+          status: string
+          target_device_id: string
+          target_public_key: string | null
+          target_user_id: string
+          transaction_id: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          initiator_commitment?: string | null
+          initiator_device_id: string
+          initiator_public_key?: string | null
+          initiator_user_id: string
+          sas_decimal?: string | null
+          sas_emoji_indices?: string | null
+          status?: string
+          target_device_id: string
+          target_public_key?: string | null
+          target_user_id: string
+          transaction_id: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          initiator_commitment?: string | null
+          initiator_device_id?: string
+          initiator_public_key?: string | null
+          initiator_user_id?: string
+          sas_decimal?: string | null
+          sas_emoji_indices?: string | null
+          status?: string
+          target_device_id?: string
+          target_public_key?: string | null
+          target_user_id?: string
+          transaction_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_sas_verifications_initiator_user_id_fkey"
+            columns: ["initiator_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_sas_verifications_target_user_id_fkey"
+            columns: ["target_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      e2ee_user_trust: {
+        Row: {
+          created_at: string
+          id: string
+          trust_level: string
+          trusted_master_key: string
+          trusted_user_id: string
+          truster_user_id: string
+          updated_at: string
+          verification_method: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          trust_level?: string
+          trusted_master_key: string
+          trusted_user_id: string
+          truster_user_id: string
+          updated_at?: string
+          verification_method?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          trust_level?: string
+          trusted_master_key?: string
+          trusted_user_id?: string
+          truster_user_id?: string
+          updated_at?: string
+          verification_method?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "e2ee_user_trust_trusted_user_id_fkey"
+            columns: ["trusted_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "e2ee_user_trust_truster_user_id_fkey"
+            columns: ["truster_user_id"]
+            isOneToOne: false
             referencedRelation: "user"
             referencedColumns: ["id"]
           },
@@ -1845,6 +2460,83 @@ export type Database = {
           },
         ]
       }
+      megolm_session_shares: {
+        Row: {
+          claimed_at: string | null
+          conversation_id: string
+          created_at: string
+          encrypted_session_key: string
+          first_known_index: number
+          forwarded_count: number
+          id: string
+          key_algorithm: string
+          recipient_device_id: string
+          recipient_user_id: string
+          sender_device_id: string
+          sender_user_id: string
+          session_id: string
+        }
+        Insert: {
+          claimed_at?: string | null
+          conversation_id: string
+          created_at?: string
+          encrypted_session_key: string
+          first_known_index?: number
+          forwarded_count?: number
+          id?: string
+          key_algorithm?: string
+          recipient_device_id: string
+          recipient_user_id: string
+          sender_device_id: string
+          sender_user_id: string
+          session_id: string
+        }
+        Update: {
+          claimed_at?: string | null
+          conversation_id?: string
+          created_at?: string
+          encrypted_session_key?: string
+          first_known_index?: number
+          forwarded_count?: number
+          id?: string
+          key_algorithm?: string
+          recipient_device_id?: string
+          recipient_user_id?: string
+          sender_device_id?: string
+          sender_user_id?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "megolm_session_shares_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "megolm_session_shares_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "user_dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "megolm_session_shares_recipient_user_id_fkey"
+            columns: ["recipient_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "megolm_session_shares_sender_user_id_fkey"
+            columns: ["sender_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notification_preferences: {
         Row: {
           browser_notifications: boolean | null
@@ -1972,6 +2664,47 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      one_time_prekeys: {
+        Row: {
+          claimed_at: string | null
+          claimed_by_device: string | null
+          claimed_by_user: string | null
+          created_at: string
+          device_key_id: string
+          id: string
+          key_id: number
+          public_key: string
+        }
+        Insert: {
+          claimed_at?: string | null
+          claimed_by_device?: string | null
+          claimed_by_user?: string | null
+          created_at?: string
+          device_key_id: string
+          id?: string
+          key_id: number
+          public_key: string
+        }
+        Update: {
+          claimed_at?: string | null
+          claimed_by_device?: string | null
+          claimed_by_user?: string | null
+          created_at?: string
+          device_key_id?: string
+          id?: string
+          key_id?: number
+          public_key?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "one_time_prekeys_device_key_id_fkey"
+            columns: ["device_key_id"]
+            isOneToOne: false
+            referencedRelation: "device_keys"
             referencedColumns: ["id"]
           },
         ]
@@ -3847,9 +4580,52 @@ export type Database = {
         Args: { p_invitation_id: string; p_user_id: string }
         Returns: undefined
       }
+      accept_sas_verification: {
+        Args: { p_target_public_key: string; p_verification_id: string }
+        Returns: boolean
+      }
+      check_ai_consent: {
+        Args: { p_conversation_id: string; p_feature?: string }
+        Returns: boolean
+      }
+      claim_megolm_sessions: {
+        Args: { p_device_id: string; p_user_id: string }
+        Returns: {
+          conversation_id: string
+          encrypted_session_key: string
+          first_known_index: number
+          sender_device_id: string
+          session_id: string
+        }[]
+      }
+      claim_one_time_prekey: {
+        Args: {
+          p_claimer_device_id: string
+          p_claimer_user_id: string
+          p_target_device_id: string
+          p_target_user_id: string
+        }
+        Returns: {
+          key_id: number
+          public_key: string
+        }[]
+      }
       cleanup_expired_2fa_codes: { Args: never; Returns: undefined }
+      cleanup_expired_sas_verifications: { Args: never; Returns: number }
       cleanup_stale_push_subscriptions: { Args: never; Returns: undefined }
       cleanup_typing_indicators: { Args: never; Returns: undefined }
+      complete_sas_verification: {
+        Args: {
+          p_is_match: boolean
+          p_sas_emoji_indices: string
+          p_verification_id: string
+        }
+        Returns: boolean
+      }
+      count_available_prekeys: {
+        Args: { p_device_key_id: string }
+        Returns: number
+      }
       create_group_conversation: {
         Args: {
           p_avatar_url?: string
@@ -3895,6 +4671,26 @@ export type Database = {
         Returns: string
       }
       generate_verification_code: { Args: never; Returns: string }
+      get_conversation_consent_status: {
+        Args: { p_conversation_id: string }
+        Returns: {
+          allowed_features: Json
+          consent_given_at: string
+          consent_status: string
+          user_id: string
+        }[]
+      }
+      get_device_keys_for_users: {
+        Args: { p_user_ids: string[] }
+        Returns: {
+          device_id: string
+          identity_key: string
+          signed_prekey: string
+          signed_prekey_signature: string
+          signing_key: string
+          user_id: string
+        }[]
+      }
       get_favorites_count: { Args: { p_user_id: string }; Returns: number }
       get_notification_target_users: {
         Args: { notification_id: string }
@@ -3951,6 +4747,15 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: number
       }
+      grant_ai_consent: {
+        Args: {
+          p_conversation_id: string
+          p_device_id: string
+          p_features?: Json
+          p_user_id: string
+        }
+        Returns: boolean
+      }
       invite_to_group: {
         Args: {
           p_conversation_id: string
@@ -3979,6 +4784,18 @@ export type Database = {
       leave_group_conversation: {
         Args: { p_conversation_id: string; p_user_id: string }
         Returns: undefined
+      }
+      log_ai_access: {
+        Args: {
+          p_ai_model?: string
+          p_content_hash: string
+          p_conversation_id: string
+          p_device_id: string
+          p_feature: string
+          p_message_id: string
+          p_user_id: string
+        }
+        Returns: string
       }
       log_superadmin_action: {
         Args: {
@@ -4027,6 +4844,39 @@ export type Database = {
       rename_passkey: {
         Args: { p_new_name: string; p_passkey_id: string; p_user_id: string }
         Returns: boolean
+      }
+      revoke_ai_consent: {
+        Args: {
+          p_conversation_id: string
+          p_reason?: string
+          p_user_id: string
+        }
+        Returns: boolean
+      }
+      rotate_megolm_session: {
+        Args: { p_conversation_id: string; p_new_session_id: string }
+        Returns: undefined
+      }
+      share_megolm_session: {
+        Args: {
+          p_conversation_id: string
+          p_sender_device_id: string
+          p_sender_user_id: string
+          p_session_id: string
+          p_shares: Json
+        }
+        Returns: undefined
+      }
+      start_sas_verification: {
+        Args: {
+          p_initiator_commitment: string
+          p_initiator_device_id: string
+          p_initiator_public_key: string
+          p_initiator_user_id: string
+          p_target_device_id: string
+          p_target_user_id: string
+        }
+        Returns: string
       }
       update_group_member_role: {
         Args: {

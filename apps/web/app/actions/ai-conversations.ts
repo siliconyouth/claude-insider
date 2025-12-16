@@ -47,7 +47,7 @@ export async function getConversations(options?: {
 
     const supabase = await createClient();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let query = (supabase as any)
+    let query = supabase
       .from("ai_conversations")
       .select("*")
       .eq("user_id", session.user.id)
@@ -95,7 +95,7 @@ export async function getConversation(
 
     // Get conversation
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: conversation, error: convError } = await (supabase as any)
+    const { data: conversation, error: convError } = await supabase
       .from("ai_conversations")
       .select("*")
       .eq("id", conversationId)
@@ -108,7 +108,7 @@ export async function getConversation(
 
     // Get messages
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: messages, error: msgError } = await (supabase as any)
+    const { data: messages, error: msgError } = await supabase
       .from("ai_messages")
       .select("*")
       .eq("conversation_id", conversationId)
@@ -147,7 +147,7 @@ export async function createConversation(
     const supabase = await createClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabase
       .from("ai_conversations")
       .insert({
         user_id: session.user.id,
@@ -188,7 +188,7 @@ export async function addMessage(
 
     // Verify ownership
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: conv } = await (supabase as any)
+    const { data: conv } = await supabase
       .from("ai_conversations")
       .select("id")
       .eq("id", conversationId)
@@ -200,7 +200,7 @@ export async function addMessage(
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabase
       .from("ai_messages")
       .insert({
         conversation_id: conversationId,
@@ -239,7 +239,7 @@ export async function toggleConversationStar(
 
     // Get current status
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: conv } = await (supabase as any)
+    const { data: conv } = await supabase
       .from("ai_conversations")
       .select("is_starred")
       .eq("id", conversationId)
@@ -252,7 +252,7 @@ export async function toggleConversationStar(
 
     // Toggle
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabase
       .from("ai_conversations")
       .update({ is_starred: !conv.is_starred })
       .eq("id", conversationId)
@@ -264,7 +264,7 @@ export async function toggleConversationStar(
       return { data: null, error: "Failed to update conversation" };
     }
 
-    return { data: { is_starred: data.is_starred }, error: null };
+    return { data: { is_starred: data.is_starred ?? false }, error: null };
   } catch (error) {
     console.error("Error in toggleConversationStar:", error);
     return { data: null, error: "Failed to update conversation" };
@@ -291,7 +291,7 @@ export async function updateConversationTitle(
     const supabase = await createClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabase
       .from("ai_conversations")
       .update({ title: title.trim() })
       .eq("id", conversationId)
@@ -326,7 +326,7 @@ export async function deleteConversation(
     const supabase = await createClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any)
+    const { error } = await supabase
       .from("ai_conversations")
       .delete()
       .eq("id", conversationId)

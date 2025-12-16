@@ -90,6 +90,20 @@ All technologies are **free and/or open source** (except hosting services with f
 | botid | 1.5.10 | MIT | Bot detection utilities |
 | date-fns | 4.1.0 | MIT | Date formatting and manipulation |
 
+### Encryption & Security
+
+| Technology | Version | License | Description |
+|------------|---------|---------|-------------|
+| @matrix-org/matrix-sdk-crypto-wasm | 16.0.0 | Apache-2.0 | Matrix Olm/Megolm E2EE implementation |
+| idb | 8.0.3 | ISC | IndexedDB promise wrapper for key storage |
+
+### Payments
+
+| Technology | Version | License | Description |
+|------------|---------|---------|-------------|
+| @paypal/paypal-js | 9.0.1 | Apache-2.0 | PayPal JavaScript SDK |
+| @paypal/react-paypal-js | 8.9.2 | Apache-2.0 | React components for PayPal |
+
 ### Hosting
 
 | Technology | Tier | Description |
@@ -152,7 +166,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ### FR-5: AI Voice Assistant
 - [x] Streaming chat with Claude AI (SSE)
-- [x] RAG-based documentation retrieval (435 chunks)
+- [x] RAG-based documentation retrieval (1,933 chunks, 3,866 terms)
 - [x] ElevenLabs TTS with 42 voices
 - [x] Speech-to-text via Web Speech API
 
@@ -262,7 +276,7 @@ All technologies are **free and/or open source** (except hosting services with f
 ### FR-17: Auto-generated Database Types
 - [x] TypeScript types generation from Supabase schema
 - [x] `pnpm db:types` script for regeneration
-- [x] 2,660 lines covering all 46 database tables
+- [x] 73 database tables across 13 categories
 - [x] Full type coverage for Supabase queries
 
 ### FR-18: Passkey/WebAuthn Support
@@ -361,6 +375,53 @@ All technologies are **free and/or open source** (except hosting services with f
 - [x] Activity feed filters, search, and hovercards
 - [x] Supabase realtime subscriptions for live updates
 - [x] 9 new diagnostic tests (4 security + 5 performance)
+
+### FR-28: End-to-End Encryption (E2EE)
+- [x] Matrix Olm/Megolm protocol with Double Ratchet algorithm
+- [x] vodozemac WASM integration (@matrix-org/matrix-sdk-crypto-wasm)
+- [x] IndexedDB storage for private keys (never leave device)
+- [x] Password-protected cloud key backup and restoration
+- [x] Emoji-based device verification (SAS)
+- [x] AI consent management for encrypted conversation access
+- [x] 12 API endpoints for key and session management
+- [x] E2EE context provider with React integration
+- [x] Visual E2EE indicator in chat interface
+- [x] E2EE setup step in onboarding wizard
+
+### FR-29: Unified Chat Window
+- [x] Consolidated AI Assistant and User Messages in single window
+- [x] Tab-based navigation ("AI Assistant" | "Messages")
+- [x] Portal-rendered window with focus trap and accessibility
+- [x] Claude streaming via /api/assistant/chat
+- [x] ElevenLabs TTS with voice selection
+- [x] Speech recognition for voice input
+- [x] Supabase real-time for user messaging
+- [x] Typing indicators and E2EE indicators
+- [x] Conversation history in localStorage (AI) and database (Messages)
+- [x] Backward compatible openAssistant() function
+
+### FR-30: Donation System
+- [x] PayPal one-time and recurring subscription support
+- [x] Bank transfer instructions (Serbian & international)
+- [x] Donation page with multiple payment methods
+- [x] Email receipts via Resend
+- [x] Donor badges and recognition
+- [x] Donor achievements integration
+- [x] Webhook support for PayPal subscription updates
+- [x] "Support Us" button in navigation header
+- [x] Support step in onboarding wizard
+
+### FR-31: PWA Enhancements
+- [x] 15 PNG icons (48x48 to 512x512) with maskable variants
+- [x] Apple touch icon and Safari pinned tab SVG
+- [x] Favicon package (16x16, 32x32, ICO)
+- [x] browserconfig.xml for Windows tiles
+- [x] Service worker with offline caching strategy
+- [x] Push notification handling
+- [x] Complete manifest.json with icon definitions
+- [x] Browser notification hook (use-browser-notifications.ts)
+- [x] Push notification permission request UI
+- [x] Notification opt-in in onboarding flow
 
 ---
 
@@ -461,7 +522,7 @@ All technologies are **free and/or open source** (except hosting services with f
 
 ## Project Status
 
-**Version 0.81.0**
+**Version 0.82.0**
 
 All planned features have been implemented. See [CHANGELOG.md](../CHANGELOG.md) for version history.
 

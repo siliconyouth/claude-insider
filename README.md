@@ -5,7 +5,7 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 **Built entirely with [Claude Code](https://claude.ai/claude-code) powered by Claude Opus 4.5**
 
 [![Live Site](https://img.shields.io/badge/Live-www.claudeinsider.com-blue)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/Version-0.81.0-green)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-0.82.0-green)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ---
@@ -43,6 +43,10 @@ A comprehensive documentation hub for Claude AI — tips, tricks, configuration 
 - **Security Dashboard** — Bot analytics, honeypots, trust scoring, and activity feed
 - **Browser Fingerprinting** — FingerprintJS visitor identification with 24-hour caching
 - **Honeypot System** — Faker.js-powered tarpit traps for bot detection
+- **End-to-End Encryption** — Matrix Olm/Megolm protocol for secure messaging
+- **Unified Chat Window** — Single tabbed interface for AI Assistant and Messages
+- **Donation System** — PayPal integration, bank transfer, email receipts, donor badges
+- **PWA Enhancements** — 15 icons, service worker, push notifications, offline support
 
 ---
 

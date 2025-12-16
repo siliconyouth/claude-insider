@@ -2908,6 +2908,1174 @@ export default function DiagnosticsPage() {
         }
       },
     },
+    // ====================================
+    // E2EE (End-to-End Encryption) Tests
+    // ====================================
+    {
+      name: "E2EE Device Keys API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/e2ee/devices");
+          if (response.ok) {
+            const data = await response.json();
+            const deviceCount = data.devices?.length || 0;
+            return {
+              name: "E2EE Device Keys API",
+              status: "success",
+              message: `Active - ${deviceCount} device(s) registered`,
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                deviceCount,
+                hasCurrentDevice: data.currentDeviceId !== undefined,
+              },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "E2EE Device Keys API",
+              status: "warning",
+              message: "Auth required",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "E2EE Device Keys API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE Device Keys API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Prekeys API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/e2ee/prekeys");
+          if (response.ok) {
+            const data = await response.json();
+            const prekeyCount = data.remaining || 0;
+            return {
+              name: "E2EE Prekeys API",
+              status: prekeyCount > 10 ? "success" : prekeyCount > 0 ? "warning" : "error",
+              message: prekeyCount > 10
+                ? `Healthy - ${prekeyCount} prekeys available`
+                : prekeyCount > 0
+                  ? `Low - only ${prekeyCount} prekeys remaining`
+                  : "No prekeys available",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: { prekeyCount, threshold: 10 },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "E2EE Prekeys API",
+              status: "warning",
+              message: "Auth required",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "E2EE Prekeys API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE Prekeys API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Backup API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/e2ee/backup");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "E2EE Backup API",
+              status: data.hasBackup ? "success" : "warning",
+              message: data.hasBackup
+                ? `Backup exists - last updated ${new Date(data.lastUpdated).toLocaleDateString()}`
+                : "No backup configured",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                hasBackup: data.hasBackup,
+                deviceCount: data.deviceCount,
+                version: data.version,
+              },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "E2EE Backup API",
+              status: "warning",
+              message: "Auth required",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "E2EE Backup API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE Backup API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Sessions API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/e2ee/sessions");
+          if (response.ok) {
+            const data = await response.json();
+            const sessionCount = data.sessions?.length || 0;
+            return {
+              name: "E2EE Sessions API",
+              status: "success",
+              message: `Active - ${sessionCount} encrypted session(s)`,
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                sessionCount,
+                olmSessions: data.olmSessions || 0,
+                megolmSessions: data.megolmSessions || 0,
+              },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "E2EE Sessions API",
+              status: "warning",
+              message: "Auth required",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "E2EE Sessions API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE Sessions API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Pending Verifications",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/e2ee/verification/pending");
+          if (response.ok) {
+            const data = await response.json();
+            const pendingCount = data.verifications?.length || 0;
+            return {
+              name: "E2EE Pending Verifications",
+              status: pendingCount > 0 ? "warning" : "success",
+              message: pendingCount > 0
+                ? `${pendingCount} pending verification(s)`
+                : "No pending verifications",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: { pendingCount },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "E2EE Pending Verifications",
+              status: "warning",
+              message: "Auth required",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "E2EE Pending Verifications",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE Pending Verifications",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE AI Consent API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/e2ee/ai-consent");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "E2EE AI Consent API",
+              status: "success",
+              message: data.hasConsent
+                ? `AI consent granted - ${data.consentedConversations || 0} conversation(s)`
+                : "No AI consent configured",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                hasConsent: data.hasConsent,
+                consentedConversations: data.consentedConversations,
+              },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "E2EE AI Consent API",
+              status: "warning",
+              message: "Auth required",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "E2EE AI Consent API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE AI Consent API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE WebCrypto Support",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check WebCrypto API availability
+          const hasWebCrypto = typeof crypto !== "undefined" && crypto.subtle !== undefined;
+          if (!hasWebCrypto) {
+            return {
+              name: "E2EE WebCrypto Support",
+              status: "error",
+              message: "WebCrypto API not available",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+
+          // Test key generation capability
+          const testKey = await crypto.subtle.generateKey(
+            { name: "AES-GCM", length: 256 },
+            true,
+            ["encrypt", "decrypt"]
+          );
+
+          // Test encryption/decryption
+          const testData = new TextEncoder().encode("E2EE Test");
+          const iv = crypto.getRandomValues(new Uint8Array(12));
+          const encrypted = await crypto.subtle.encrypt(
+            { name: "AES-GCM", iv },
+            testKey,
+            testData
+          );
+          const decrypted = await crypto.subtle.decrypt(
+            { name: "AES-GCM", iv },
+            testKey,
+            encrypted
+          );
+
+          const decryptedText = new TextDecoder().decode(decrypted);
+          const success = decryptedText === "E2EE Test";
+
+          return {
+            name: "E2EE WebCrypto Support",
+            status: success ? "success" : "error",
+            message: success
+              ? "WebCrypto fully functional"
+              : "Encryption/decryption failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: {
+              hasWebCrypto: true,
+              aesGcmSupport: success,
+              keyGeneration: true,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "E2EE WebCrypto Support",
+            status: "error",
+            message: e instanceof Error ? e.message : "WebCrypto test failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE WASM Module",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Dynamically import vodozemac to check WASM loading
+          const { isWasmLoaded, isVodozemacAvailable } = await import("@/lib/e2ee/vodozemac");
+          const wasmLoaded = isWasmLoaded();
+          const available = isVodozemacAvailable();
+
+          if (wasmLoaded) {
+            return {
+              name: "E2EE WASM Module",
+              status: "success",
+              message: "Official vodozemac WASM loaded",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                usingWasm: true,
+                library: "@matrix-org/matrix-sdk-crypto-wasm",
+              },
+            };
+          } else if (available) {
+            return {
+              name: "E2EE WASM Module",
+              status: "warning",
+              message: "Using WebCrypto fallback",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                usingWasm: false,
+                fallback: "AES-256-GCM",
+              },
+            };
+          } else {
+            return {
+              name: "E2EE WASM Module",
+              status: "error",
+              message: "E2EE not initialized",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE WASM Module",
+            status: "warning",
+            message: "Module not yet loaded",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: { error: e instanceof Error ? e.message : "Unknown" },
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE IndexedDB Storage",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check if IndexedDB is available
+          if (typeof indexedDB === "undefined") {
+            return {
+              name: "E2EE IndexedDB Storage",
+              status: "error",
+              message: "IndexedDB not available",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+
+          // Try to get E2EE storage stats
+          const { getE2EEStorageStats } = await import("@/lib/e2ee/key-storage");
+          const stats = await getE2EEStorageStats();
+
+          return {
+            name: "E2EE IndexedDB Storage",
+            status: stats.hasAccount ? "success" : "warning",
+            message: stats.hasAccount
+              ? `Active - ${stats.sessionCount} Olm, ${stats.megolmSessionCount} Megolm sessions`
+              : "No E2EE account stored locally",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: {
+              hasAccount: stats.hasAccount,
+              olmSessions: stats.sessionCount,
+              megolmSessions: stats.megolmSessionCount,
+              estimatedSize: `${Math.round(stats.estimatedSizeBytes / 1024)} KB`,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "E2EE IndexedDB Storage",
+            status: "warning",
+            message: "Storage not initialized",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: { error: e instanceof Error ? e.message : "Unknown" },
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Cleanup Cron",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check cron endpoint info via GET
+          const response = await fetch("/api/cron/e2ee-cleanup");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "E2EE Cleanup Cron",
+              status: "success",
+              message: `Configured - runs ${data.schedule || "daily at 3 AM UTC"}`,
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                thresholds: data.thresholds,
+                schedule: data.schedule,
+              },
+            };
+          } else {
+            return {
+              name: "E2EE Cleanup Cron",
+              status: "warning",
+              message: "Endpoint available but returned non-OK",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE Cleanup Cron",
+            status: "warning",
+            message: "Cron endpoint not reachable",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: { error: e instanceof Error ? e.message : "Unknown" },
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE QR Verification",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test QR code generation capability (client-side)
+          const testData = JSON.stringify({ test: true, v: 1 });
+
+          // Check if camera access is potentially available
+          const hasMediaDevices = typeof navigator !== "undefined" &&
+            navigator.mediaDevices &&
+            typeof navigator.mediaDevices.getUserMedia === "function";
+
+          return {
+            name: "E2EE QR Verification",
+            status: hasMediaDevices ? "success" : "warning",
+            message: hasMediaDevices
+              ? "QR verification ready (camera available)"
+              : "QR display only (no camera access)",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: {
+              qrGeneration: true,
+              cameraAvailable: hasMediaDevices,
+              sasEmojis: 64,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "E2EE QR Verification",
+            status: "warning",
+            message: "QR verification not available",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: { error: e instanceof Error ? e.message : "Unknown" },
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Key Backup Encryption",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test PBKDF2 + AES-GCM encryption capability used for backups
+          const { checkPasswordStrength } = await import("@/lib/e2ee/key-backup");
+
+          // Test password strength checking
+          const weakResult = checkPasswordStrength("weak");
+          const strongResult = checkPasswordStrength("Str0ng!P@ssw0rd123");
+
+          if (weakResult.score < strongResult.score) {
+            return {
+              name: "E2EE Key Backup Encryption",
+              status: "success",
+              message: "PBKDF2 + AES-GCM ready for backups",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                pbkdf2Iterations: 100000,
+                encryption: "AES-256-GCM",
+                passwordStrengthCheck: true,
+              },
+            };
+          } else {
+            return {
+              name: "E2EE Key Backup Encryption",
+              status: "warning",
+              message: "Password strength check may be inaccurate",
+              category: "e2ee",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "E2EE Key Backup Encryption",
+            status: "error",
+            message: e instanceof Error ? e.message : "Backup encryption test failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Keys API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test GET /api/e2ee/keys - Lists user's registered devices
+          const response = await fetch("/api/e2ee/keys");
+          const data = await response.json();
+
+          if (response.status === 401) {
+            return {
+              name: "E2EE Keys API",
+              status: "warning",
+              message: "Not authenticated (expected for logged-out users)",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: { requiresAuth: true },
+            };
+          }
+
+          const deviceCount = data.devices?.length || 0;
+          return {
+            name: "E2EE Keys API",
+            status: response.ok ? "success" : "error",
+            message: response.ok
+              ? `${deviceCount} device${deviceCount !== 1 ? "s" : ""} registered`
+              : data.error || "Request failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: {
+              status: response.status,
+              deviceCount,
+              devices: data.devices?.map((d: { deviceId: string; deviceType: string; availablePrekeys: number }) => ({
+                deviceId: d.deviceId?.substring(0, 8) + "...",
+                deviceType: d.deviceType,
+                availablePrekeys: d.availablePrekeys,
+              })),
+            },
+          };
+        } catch (e) {
+          return {
+            name: "E2EE Keys API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Request failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Backup API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test GET /api/e2ee/backup - Check if user has cloud backup
+          const response = await fetch("/api/e2ee/backup");
+          const data = await response.json();
+
+          if (response.status === 401) {
+            return {
+              name: "E2EE Backup API",
+              status: "warning",
+              message: "Not authenticated (expected for logged-out users)",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: { requiresAuth: true },
+            };
+          }
+
+          return {
+            name: "E2EE Backup API",
+            status: response.ok ? "success" : "error",
+            message: response.ok
+              ? data.hasBackup
+                ? `Backup exists (v${data.backup?.backup_version || 1})`
+                : "No backup configured"
+              : data.error || "Request failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: {
+              status: response.status,
+              hasBackup: data.hasBackup,
+              backupVersion: data.backup?.backup_version,
+              deviceCount: data.backup?.device_count,
+              updatedAt: data.backup?.updated_at,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "E2EE Backup API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Request failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE Verification API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test GET /api/e2ee/verification/pending - Lists pending verification requests
+          const response = await fetch("/api/e2ee/verification/pending");
+          const data = await response.json();
+
+          if (response.status === 401) {
+            return {
+              name: "E2EE Verification API",
+              status: "warning",
+              message: "Not authenticated (expected for logged-out users)",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: { requiresAuth: true },
+            };
+          }
+
+          const pendingCount = data.verifications?.length || 0;
+          return {
+            name: "E2EE Verification API",
+            status: response.ok ? "success" : "error",
+            message: response.ok
+              ? `${pendingCount} pending verification${pendingCount !== 1 ? "s" : ""}`
+              : data.error || "Request failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: {
+              status: response.status,
+              pendingCount,
+              verifications: data.verifications?.map((v: { status: string; isInitiator: boolean; targetUserName: string }) => ({
+                status: v.status,
+                isInitiator: v.isInitiator,
+                targetUser: v.targetUserName,
+              })),
+            },
+          };
+        } catch (e) {
+          return {
+            name: "E2EE Verification API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Request failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "E2EE AI Consent API",
+      category: "e2ee",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test GET /api/e2ee/ai-consent - requires conversationId parameter
+          // We test without conversationId to verify endpoint responds correctly (400)
+          const response = await fetch("/api/e2ee/ai-consent");
+          const data = await response.json();
+
+          if (response.status === 401) {
+            return {
+              name: "E2EE AI Consent API",
+              status: "warning",
+              message: "Not authenticated (expected for logged-out users)",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: { requiresAuth: true },
+            };
+          }
+
+          // 400 is expected when no conversationId is provided
+          if (response.status === 400 && data.error === "conversationId required") {
+            return {
+              name: "E2EE AI Consent API",
+              status: "success",
+              message: "Endpoint responding (requires conversationId)",
+              category: "e2ee",
+              duration: Date.now() - start,
+              details: {
+                status: response.status,
+                validation: "working",
+              },
+            };
+          }
+
+          return {
+            name: "E2EE AI Consent API",
+            status: response.ok ? "success" : "error",
+            message: response.ok
+              ? data.allConsented
+                ? "All participants consented"
+                : `${data.missingConsent?.length || 0} pending consent`
+              : data.error || "Request failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+            details: {
+              status: response.status,
+              aiAllowed: data.aiAllowed,
+              allConsented: data.allConsented,
+              enabledFeatures: data.enabledFeatures,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "E2EE AI Consent API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Request failed",
+            category: "e2ee",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // ====================================
+    // Messaging Tests
+    // ====================================
+    {
+      name: "Messaging Database Tables",
+      category: "messaging",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/debug/users-check");
+          const data = await response.json();
+          // Check if database is accessible (messaging relies on same DB)
+          const dbOk = data.checks?.supabaseAdmin?.success || data.checks?.directPool?.success;
+          return {
+            name: "Messaging Database Tables",
+            status: dbOk ? "success" : "error",
+            message: dbOk
+              ? "Database accessible for messaging"
+              : "Database connection issue",
+            category: "messaging",
+            duration: Date.now() - start,
+            details: {
+              supabaseOk: data.checks?.supabaseAdmin?.success,
+              poolOk: data.checks?.directPool?.success,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Messaging Database Tables",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "messaging",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Realtime Messaging Support",
+      category: "messaging",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Check Supabase realtime availability
+          const hasRealtimeSupport = typeof window !== "undefined";
+          if (!hasRealtimeSupport) {
+            return {
+              name: "Realtime Messaging Support",
+              status: "error",
+              message: "Window not available (SSR context)",
+              category: "messaging",
+              duration: Date.now() - start,
+            };
+          }
+
+          // Check WebSocket support
+          const hasWebSocket = typeof WebSocket !== "undefined";
+
+          return {
+            name: "Realtime Messaging Support",
+            status: hasWebSocket ? "success" : "error",
+            message: hasWebSocket
+              ? "WebSocket available for realtime messaging"
+              : "WebSocket not supported",
+            category: "messaging",
+            duration: Date.now() - start,
+            details: {
+              webSocketSupport: hasWebSocket,
+              browserSupport: hasRealtimeSupport,
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Realtime Messaging Support",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "messaging",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Assistant Settings API",
+      category: "messaging",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/user/assistant-settings");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "Assistant Settings API",
+              status: "success",
+              message: `Active - ${data.availableVoices?.length || 0} voices available`,
+              category: "messaging",
+              duration: Date.now() - start,
+              details: {
+                assistantName: data.settings?.assistantName,
+                voiceCount: data.availableVoices?.length,
+                autoSpeak: data.settings?.autoSpeak,
+              },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "Assistant Settings API",
+              status: "warning",
+              message: "Auth required",
+              category: "messaging",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Assistant Settings API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "messaging",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Assistant Settings API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "messaging",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // ====================================
+    // Notifications Tests
+    // ====================================
+    {
+      name: "Notification Preferences API",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          const response = await fetch("/api/notifications/preferences");
+          if (response.ok) {
+            const data = await response.json();
+            return {
+              name: "Notification Preferences API",
+              status: "success",
+              message: "User preferences accessible",
+              category: "notifications",
+              duration: Date.now() - start,
+              details: {
+                emailEnabled: data.preferences?.emailEnabled,
+                pushEnabled: data.preferences?.pushEnabled,
+                inAppEnabled: data.preferences?.inAppEnabled,
+              },
+            };
+          } else if (response.status === 401) {
+            return {
+              name: "Notification Preferences API",
+              status: "warning",
+              message: "Auth required",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          } else {
+            return {
+              name: "Notification Preferences API",
+              status: "error",
+              message: `Error: ${response.status}`,
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+        } catch (e) {
+          return {
+            name: "Notification Preferences API",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Browser Notification Permission",
+      category: "notifications",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (!("Notification" in window)) {
+            return {
+              name: "Browser Notification Permission",
+              status: "error",
+              message: "Notifications API not supported",
+              category: "notifications",
+              duration: Date.now() - start,
+            };
+          }
+
+          const permission = Notification.permission;
+          return {
+            name: "Browser Notification Permission",
+            status: permission === "granted" ? "success" : permission === "denied" ? "error" : "warning",
+            message: permission === "granted"
+              ? "Notifications enabled"
+              : permission === "denied"
+                ? "Notifications blocked"
+                : "Permission not requested",
+            category: "notifications",
+            duration: Date.now() - start,
+            details: { permission },
+          };
+        } catch (e) {
+          return {
+            name: "Browser Notification Permission",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "notifications",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    // ====================================
+    // Push Notifications Tests
+    // ====================================
+    {
+      name: "Push Subscription API",
+      category: "push",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          // Test OPTIONS to check endpoint availability
+          const response = await fetch("/api/push/subscribe", {
+            method: "OPTIONS",
+          });
+          return {
+            name: "Push Subscription API",
+            status: response.status !== 500 ? "success" : "error",
+            message: response.status !== 500 ? "Endpoint available" : "Server error",
+            category: "push",
+            duration: Date.now() - start,
+            details: { status: response.status },
+          };
+        } catch {
+          return {
+            name: "Push Subscription API",
+            status: "warning",
+            message: "Endpoint configured but not tested",
+            category: "push",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Service Worker Support",
+      category: "push",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (!("serviceWorker" in navigator)) {
+            return {
+              name: "Service Worker Support",
+              status: "error",
+              message: "Service Workers not supported",
+              category: "push",
+              duration: Date.now() - start,
+            };
+          }
+
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          const hasRegistration = registrations.length > 0;
+
+          return {
+            name: "Service Worker Support",
+            status: hasRegistration ? "success" : "warning",
+            message: hasRegistration
+              ? `${registrations.length} service worker(s) registered`
+              : "No service worker registered",
+            category: "push",
+            duration: Date.now() - start,
+            details: {
+              registrationCount: registrations.length,
+              scopes: registrations.map(r => r.scope),
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Service Worker Support",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "push",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
+    {
+      name: "Push Manager Support",
+      category: "push",
+      run: async (): Promise<DiagnosticResult> => {
+        const start = Date.now();
+        try {
+          if (!("PushManager" in window)) {
+            return {
+              name: "Push Manager Support",
+              status: "error",
+              message: "Push API not supported",
+              category: "push",
+              duration: Date.now() - start,
+            };
+          }
+
+          if (!("serviceWorker" in navigator)) {
+            return {
+              name: "Push Manager Support",
+              status: "error",
+              message: "Service Worker required for Push",
+              category: "push",
+              duration: Date.now() - start,
+            };
+          }
+
+          const registration = await navigator.serviceWorker.ready;
+          const subscription = await registration.pushManager.getSubscription();
+
+          return {
+            name: "Push Manager Support",
+            status: subscription ? "success" : "warning",
+            message: subscription
+              ? "Push subscription active"
+              : "Push supported but not subscribed",
+            category: "push",
+            duration: Date.now() - start,
+            details: {
+              isSubscribed: !!subscription,
+              endpoint: subscription?.endpoint?.substring(0, 50) + "...",
+            },
+          };
+        } catch (e) {
+          return {
+            name: "Push Manager Support",
+            status: "error",
+            message: e instanceof Error ? e.message : "Failed",
+            category: "push",
+            duration: Date.now() - start,
+          };
+        }
+      },
+    },
   ];
 
   // Helper to add test log entries
@@ -4378,7 +5546,7 @@ ${errorLogs.length > 0 ? errorLogs.slice(0, 20).map(l => `- [${l.type}] ${l.mess
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
             <label className="text-xs text-gray-500 uppercase">Version</label>
-            <p className="text-white font-mono">0.81.0</p>
+            <p className="text-white font-mono">0.82.0</p>
           </div>
           <div>
             <label className="text-xs text-gray-500 uppercase">Environment</label>

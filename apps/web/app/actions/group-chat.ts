@@ -128,11 +128,11 @@ export async function createGroupConversation(
 
     // Note: RPC function not in generated Supabase types
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any).rpc("create_group_conversation", {
+    const { data, error } = await supabase.rpc("create_group_conversation", {
       p_creator_id: session.user.id,
       p_name: name.trim(),
-      p_description: description?.trim() || null,
-      p_avatar_url: avatarUrl || null,
+      p_description: description?.trim() ?? undefined,
+      p_avatar_url: avatarUrl ?? undefined,
     });
 
     if (error) {
@@ -169,11 +169,11 @@ export async function inviteToGroup(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any).rpc("invite_to_group", {
+    const { data, error } = await supabase.rpc("invite_to_group", {
       p_inviter_id: session.user.id,
       p_invitee_id: inviteeId,
       p_conversation_id: conversationId,
-      p_message: message?.trim() || null,
+      p_message: message?.trim() ?? undefined,
     });
 
     if (error) {
@@ -211,7 +211,7 @@ export async function acceptGroupInvitation(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).rpc("accept_group_invitation", {
+    const { error } = await supabase.rpc("accept_group_invitation", {
       p_user_id: session.user.id,
       p_invitation_id: invitationId,
     });
@@ -247,7 +247,7 @@ export async function declineGroupInvitation(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).rpc("decline_group_invitation", {
+    const { error } = await supabase.rpc("decline_group_invitation", {
       p_user_id: session.user.id,
       p_invitation_id: invitationId,
     });
@@ -280,7 +280,7 @@ export async function leaveGroupConversation(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).rpc("leave_group_conversation", {
+    const { error } = await supabase.rpc("leave_group_conversation", {
       p_user_id: session.user.id,
       p_conversation_id: conversationId,
     });
@@ -315,7 +315,7 @@ export async function updateGroupMemberRole(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).rpc("update_group_member_role", {
+    const { error } = await supabase.rpc("update_group_member_role", {
       p_admin_id: session.user.id,
       p_target_user_id: targetUserId,
       p_conversation_id: conversationId,
@@ -356,7 +356,7 @@ export async function transferGroupOwnership(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).rpc("update_group_member_role", {
+    const { error } = await supabase.rpc("update_group_member_role", {
       p_admin_id: session.user.id,
       p_target_user_id: newOwnerId,
       p_conversation_id: conversationId,
@@ -392,7 +392,7 @@ export async function removeFromGroup(
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).rpc("remove_from_group", {
+    const { error } = await supabase.rpc("remove_from_group", {
       p_admin_id: session.user.id,
       p_target_user_id: targetUserId,
       p_conversation_id: conversationId,
@@ -433,7 +433,7 @@ export async function getPendingInvitations(): Promise<{
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any).rpc("get_pending_invitations", {
+    const { data, error } = await supabase.rpc("get_pending_invitations", {
       p_user_id: session.user.id,
     });
 
@@ -483,7 +483,7 @@ export async function getGroupMembers(
 
     // Verify user is a participant (dm_participants is a custom table)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: participant } = await (supabase as any)
+    const { data: participant } = await supabase
       .from("dm_participants")
       .select("id")
       .eq("conversation_id", conversationId)
@@ -496,7 +496,7 @@ export async function getGroupMembers(
 
     // Get all members with their info
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: members, error } = await (supabase as any)
+    const { data: members, error } = await supabase
       .from("dm_participants")
       .select(`
         id,
@@ -519,13 +519,13 @@ export async function getGroupMembers(
     }
 
     // Get profiles and presence
-    const memberRows = (members || []) as ParticipantRow[];
+    const memberRows = (members || []) as unknown as ParticipantRow[];
     const userIds = memberRows.map((m) => m.user_id);
 
     const [{ data: profiles }, { data: presences }] = await Promise.all([
       supabase.from("profiles").select("user_id, display_name, avatar_url").in("user_id", userIds),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (supabase as any).from("user_presence").select("user_id, status").in("user_id", userIds),
+      supabase.from("user_presence").select("user_id, status").in("user_id", userIds),
     ]);
 
     const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
@@ -579,7 +579,7 @@ export async function updateGroupSettings(
 
     // Verify user is owner or admin
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: participant } = await (supabase as any)
+    const { data: participant } = await supabase
       .from("dm_participants")
       .select("role")
       .eq("conversation_id", conversationId)
@@ -608,7 +608,7 @@ export async function updateGroupSettings(
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any)
+    const { error } = await supabase
       .from("dm_conversations")
       .update(updates)
       .eq("id", conversationId)
@@ -659,7 +659,7 @@ export async function getChatSoundSettings(): Promise<{
     const supabase = await createAdminClient();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabase
       .from("user_chat_settings")
       .select("*")
       .eq("user_id", session.user.id)
@@ -714,7 +714,7 @@ export async function updateChatSoundSettings(settings: {
     if (settings.soundInvitation !== undefined) updates.sound_invitation = settings.soundInvitation;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any)
+    const { error } = await supabase
       .from("user_chat_settings")
       .upsert({
         user_id: session.user.id,

@@ -17,9 +17,9 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/design-system";
 import { getConversations, type Conversation } from "@/app/actions/messaging";
 import { useRealtimeMessages } from "@/hooks/use-realtime-messages";
-import { useIsAuthenticated, useSession } from "@/lib/auth-client";
+import { useIsAuthenticated } from "@/lib/auth-client";
 import { AvatarWithStatus } from "@/components/presence";
-import { InboxChatModal } from "./inbox-chat-modal";
+import { openMessages, useUnifiedChat } from "@/components/unified-chat";
 import Link from "next/link";
 
 // Format relative time
@@ -47,12 +47,10 @@ function truncatePreview(text: string | undefined, maxLength: number = 50): stri
 
 export function InboxDropdown() {
   const { isAuthenticated, isLoading: authLoading } = useIsAuthenticated();
-  const { data: session } = useSession();
+  const { setUnreadCount } = useUnifiedChat();
   const [isOpen, setIsOpen] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [isLoadingConversations, setIsLoadingConversations] = useState(false);
-  const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Real-time message updates
@@ -63,6 +61,11 @@ export function InboxDropdown() {
       loadConversations();
     },
   });
+
+  // Sync unread count with unified chat provider
+  useEffect(() => {
+    setUnreadCount(unreadCount);
+  }, [unreadCount, setUnreadCount]);
 
   // Load conversations
   const loadConversations = useCallback(async () => {
@@ -114,21 +117,16 @@ export function InboxDropdown() {
     };
   }, [isOpen]);
 
-  // Handle conversation click
+  // Handle conversation click - open in unified chat window
   const handleConversationClick = (conversation: Conversation) => {
-    setSelectedConversation(conversation);
-    setIsChatOpen(true);
+    openMessages({ conversationId: conversation.id });
     setIsOpen(false);
+    // The unified chat will handle refreshing after close
   };
 
-  // Handle chat close
-  const handleChatClose = () => {
-    setIsChatOpen(false);
-    setSelectedConversation(null);
-    // Refresh conversations to update read status
-    loadConversations();
-    refreshCount();
-  };
+  // Note: loadConversations and refreshCount are exposed for potential use by unified chat
+  void loadConversations;
+  void refreshCount;
 
   // Don't render if not authenticated
   if (authLoading || !isAuthenticated) {
@@ -372,15 +370,6 @@ export function InboxDropdown() {
         )}
       </div>
 
-      {/* Chat Modal */}
-      {selectedConversation && session?.user?.id && (
-        <InboxChatModal
-          isOpen={isChatOpen}
-          onClose={handleChatClose}
-          conversation={selectedConversation}
-          currentUserId={session.user.id}
-        />
-      )}
     </>
   );
 }

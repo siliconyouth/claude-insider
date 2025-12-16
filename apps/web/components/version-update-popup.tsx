@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.81.0";
+const APP_VERSION = "0.82.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "0.82.0",
+    date: "2025-12-16",
+    type: "minor",
+    highlights: [
+      "End-to-End Encryption (E2EE) using Matrix Olm/Megolm protocol",
+      "Unified Chat Window with AI Assistant and Messages tabs",
+      "Donation system with PayPal and bank transfer support",
+      "PWA enhancements with comprehensive icon set and push notifications",
+      "12 new E2EE API endpoints for secure messaging",
+    ],
+  },
   {
     version: "0.81.0",
     date: "2025-12-15",

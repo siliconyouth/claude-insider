@@ -6,17 +6,17 @@ import { Analytics } from "@vercel/analytics/next";
 import { getLocale, getMessages } from "next-intl/server";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { SkipLink } from "@/components/skip-link";
-import { VoiceAssistant } from "@/components/voice-assistant";
-import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { ToastProvider } from "@/components/toast";
 import { AuthProvider } from "@/components/providers/auth-provider";
 import { AuthModalWrapper, OnboardingModalWrapper } from "@/components/auth";
 import { FeedbackButton } from "@/components/feedback/feedback-button";
 import { I18nProvider } from "@/i18n";
 import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
-import { AskAIProvider, AskAIModal } from "@/components/ask-ai";
+import { UnifiedChatProvider, UnifiedChatWindow } from "@/components/unified-chat";
+import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
 import { FingerprintProvider } from "@/components/providers/fingerprint-provider";
+import { E2EEProvider } from "@/components/providers/e2ee-provider";
 import { NotificationPopup } from "@/components/notifications/notification-popup";
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
@@ -192,7 +192,8 @@ export default async function MainLayout({
         <I18nProvider locale={locale} messages={messages}>
           <FingerprintProvider>
             <AuthProvider>
-              <AskAIProvider>
+              <E2EEProvider>
+              <UnifiedChatProvider>
               <KeyboardShortcutsProvider>
                 <ToastProvider>
                   <AchievementNotificationProvider>
@@ -201,12 +202,11 @@ export default async function MainLayout({
                     <ServiceWorkerRegister />
                     {children}
                     <VoiceAssistantErrorBoundary>
-                      <VoiceAssistant />
+                      <UnifiedChatWindow />
                     </VoiceAssistantErrorBoundary>
                     <AuthModalWrapper />
                     <OnboardingModalWrapper />
                     <FeedbackButton />
-                    <AskAIModal />
                     <VersionUpdatePopup />
                     <NotificationPopup />
                     <InstallPrompt />
@@ -216,7 +216,8 @@ export default async function MainLayout({
                   </AchievementNotificationProvider>
                 </ToastProvider>
               </KeyboardShortcutsProvider>
-            </AskAIProvider>
+              </UnifiedChatProvider>
+              </E2EEProvider>
             </AuthProvider>
           </FingerprintProvider>
         </I18nProvider>

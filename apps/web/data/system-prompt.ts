@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-15 for v0.81.0
+ * Updated: 2025-12-16 for v0.82.0
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "0.81.0",
+  version: "0.82.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v0.81.0 - updated 2025-12-15)
+// TECH STACK KNOWLEDGE (v0.82.0 - updated 2025-12-16)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -109,7 +109,7 @@ export const TECH_STACK = {
     type: "Fuzzy search with Cmd/Ctrl+K",
     features: ["Recent history", "Category filtering", "Quick + AI modes"],
   },
-  rag: { method: "TF-IDF", chunkCount: 435, sources: "423 docs + 12 project knowledge" },
+  rag: { method: "TF-IDF", chunkCount: 1933, sources: "1,913 docs + 20 project knowledge" },
   auth: {
     library: "Better Auth",
     version: "1.4.6",
@@ -119,8 +119,9 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.87.1",
     engine: "PostgreSQL 15+",
-    tables: 50,
-    features: ["RLS policies", "Realtime subscriptions", "Edge functions"],
+    tables: 73,
+    categories: 13,
+    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage"],
   },
   cms: {
     provider: "Payload CMS",
@@ -325,7 +326,7 @@ export const VOICE_CAPABILITIES = {
     "42 premium voice options with preview",
     "Auto-speak toggle for hands-free use",
     "Conversation export",
-    "Context-aware responses using RAG (435 chunks)",
+    "Context-aware responses using RAG (1,933 chunks)",
     "Model selection (Opus, Sonnet, Haiku)",
     "Custom assistant name personalization",
     "User name personalization",
@@ -516,7 +517,7 @@ AI & Voice:
 
 Authentication & Database:
 - Auth: ${TECH_STACK.auth.library} ${TECH_STACK.auth.version} - ${TECH_STACK.auth.features.join(", ")}
-- Database: ${TECH_STACK.database.provider} ${TECH_STACK.database.version} (${TECH_STACK.database.engine}) - ${TECH_STACK.database.tables} tables
+- Database: ${TECH_STACK.database.provider} ${TECH_STACK.database.version} (${TECH_STACK.database.engine}) - ${TECH_STACK.database.tables} tables across ${TECH_STACK.database.categories} categories
 - CMS: ${TECH_STACK.cms.provider} ${TECH_STACK.cms.version}
 
 Security:
@@ -726,7 +727,7 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     id: "project-tech-stack",
     title: "Technical Architecture",
     section: "Tech Stack",
-    content: `Claude Insider is built with ${TECH_STACK.framework.name} ${TECH_STACK.framework.version} using ${TECH_STACK.framework.features.join(", ")}. The codebase is written in ${TECH_STACK.language.name} ${TECH_STACK.language.version} with ${TECH_STACK.ui.name} ${TECH_STACK.ui.version} for the UI. Styling uses ${TECH_STACK.styling.name} ${TECH_STACK.styling.version}. The monorepo is managed with ${TECH_STACK.monorepo.name} ${TECH_STACK.monorepo.version}. AI features use ${TECH_STACK.ai.sdk} from ${TECH_STACK.ai.provider}. Voice features powered by ${TECH_STACK.voice.provider} with ${TECH_STACK.voice.voiceCount} voices. Search uses ${TECH_STACK.search.library} for ${TECH_STACK.search.type}. RAG system uses ${TECH_STACK.rag.method} with ${TECH_STACK.rag.chunkCount} indexed chunks. Authentication via ${TECH_STACK.auth.library} ${TECH_STACK.auth.version} with ${TECH_STACK.auth.features.join(", ")}. Database is ${TECH_STACK.database.provider} with ${TECH_STACK.database.tables} tables. Hosted on ${TECH_STACK.hosting}.`,
+    content: `Claude Insider is built with ${TECH_STACK.framework.name} ${TECH_STACK.framework.version} using ${TECH_STACK.framework.features.join(", ")}. The codebase is written in ${TECH_STACK.language.name} ${TECH_STACK.language.version} with ${TECH_STACK.ui.name} ${TECH_STACK.ui.version} for the UI. Styling uses ${TECH_STACK.styling.name} ${TECH_STACK.styling.version}. The monorepo is managed with ${TECH_STACK.monorepo.name} ${TECH_STACK.monorepo.version}. AI features use ${TECH_STACK.ai.sdk} from ${TECH_STACK.ai.provider}. Voice features powered by ${TECH_STACK.voice.provider} with ${TECH_STACK.voice.voiceCount} voices. Search uses ${TECH_STACK.search.library} for ${TECH_STACK.search.type}. RAG system uses ${TECH_STACK.rag.method} with ${TECH_STACK.rag.chunkCount} indexed chunks. Authentication via ${TECH_STACK.auth.library} ${TECH_STACK.auth.version} with ${TECH_STACK.auth.features.join(", ")}. Database is ${TECH_STACK.database.provider} with ${TECH_STACK.database.tables} tables across ${TECH_STACK.database.categories} categories. End-to-end encryption via Matrix Olm/Megolm protocol. Hosted on ${TECH_STACK.hosting}.`,
     url: "/",
     category: "Project",
     keywords: [

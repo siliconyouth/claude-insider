@@ -8,9 +8,8 @@
 
 import { useCallback, useRef, useState } from "react";
 import { cn } from "@/lib/design-system";
-import { useAskAI } from "./ask-ai-provider";
+import { openAIAssistant, type AIContext } from "@/components/unified-chat";
 import {
-  type AIContext,
   extractContextFromElement,
   getPageContext,
 } from "@/lib/ai-context";
@@ -43,13 +42,13 @@ export function AskAIButton({
   position = "top-right",
   label = "Ask AI",
 }: AskAIButtonProps) {
-  const { openWithContext, openWithQuestion } = useAskAI();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isVisible, setIsVisible] = useState(!showOnHover);
 
   const handleClick = useCallback(() => {
     if (question) {
-      openWithQuestion(question);
+      // Open with pre-filled question
+      openAIAssistant({ question });
       return;
     }
 
@@ -66,8 +65,9 @@ export function AskAIButton({
       }
     }
 
-    openWithContext(fullContext);
-  }, [context, question, openWithContext, openWithQuestion]);
+    // Open unified chat with AI context
+    openAIAssistant({ context: fullContext });
+  }, [context, question]);
 
   const sizeClasses = {
     sm: variant === "icon" ? "w-6 h-6" : "px-2 py-1 text-xs",

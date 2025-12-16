@@ -105,10 +105,10 @@ export async function GET(request: NextRequest) {
         COUNT(*) as count
       FROM donations
       WHERE status = 'completed'
-        AND created_at >= CURRENT_DATE - INTERVAL '${days} days'
+        AND created_at >= CURRENT_DATE - $1 * INTERVAL '1 day'
       GROUP BY DATE(created_at)
       ORDER BY date ASC
-    `);
+    `, [days]);
 
     // By payment method
     const methodResult = await pool.query(`

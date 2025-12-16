@@ -31,6 +31,7 @@ import { BetaApplyStep } from "./steps/beta-apply-step";
 import { NotificationsStep } from "./steps/notifications-step";
 import { ApiKeyStep } from "./steps/api-key-step";
 import { SupportStep } from "./steps/support-step";
+import { E2EESetupStep } from "./steps/e2ee-setup-step";
 
 import type { WizardStep, WizardStepId } from "@/types/onboarding";
 
@@ -49,6 +50,7 @@ const StepComponents: Record<WizardStepId, React.ComponentType> = {
   "security": SecurityStep,
   "notifications": NotificationsStep,
   "api-key": ApiKeyStep,
+  "e2ee-setup": E2EESetupStep,
   "support": SupportStep,
   "beta-apply": BetaApplyStep,
 };
@@ -165,6 +167,15 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
       title: "API Key",
       description: "Connect your own Anthropic API key",
       icon: "🔑",
+      skippable: true,
+    });
+
+    // Always show E2EE setup step (skippable but recommended)
+    steps.push({
+      id: "e2ee-setup",
+      title: "Secure Messaging",
+      description: "Enable end-to-end encrypted messages",
+      icon: "🔐",
       skippable: true,
     });
 

@@ -1,8 +1,8 @@
 -- =============================================================================
 -- CLAUDE INSIDER - FRESH DATABASE SCHEMA
 -- =============================================================================
--- Version: 1.0.0
--- Date: 2025-12-14
+-- Version: 1.2.0
+-- Date: 2025-12-16
 --
 -- This is a consolidated migration that sets up the entire database schema.
 -- Run this on a fresh Supabase database AFTER Better Auth creates its tables.
@@ -2209,6 +2209,569 @@ CREATE INDEX IF NOT EXISTS idx_superadmin_logs_superadmin ON public.superadmin_l
 CREATE INDEX IF NOT EXISTS idx_superadmin_logs_created ON public.superadmin_logs(created_at DESC);
 ALTER TABLE public.superadmin_logs ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "superadmin_logs_all" ON public.superadmin_logs FOR ALL USING (true) WITH CHECK (true);
+
+-- =============================================================================
+-- PART 9: DONATION SYSTEM (Migration 051)
+-- =============================================================================
+
+CREATE TABLE IF NOT EXISTS public.donations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
+  amount DECIMAL(10,2) NOT NULL CHECK (amount > 0),
+  currency VARCHAR(3) DEFAULT 'USD' NOT NULL,
+  payment_method VARCHAR(20) NOT NULL CHECK (payment_method IN ('paypal', 'bank_transfer', 'other')),
+  transaction_id VARCHAR(255),
+  paypal_order_id VARCHAR(255),
+  paypal_payer_id VARCHAR(255),
+  status VARCHAR(20) DEFAULT 'pending' NOT NULL CHECK (status IN ('pending', 'completed', 'failed', 'refunded', 'cancelled')),
+  is_recurring BOOLEAN DEFAULT FALSE,
+  recurring_frequency VARCHAR(20) CHECK (recurring_frequency IN ('monthly', 'quarterly', 'yearly')),
+  subscription_id VARCHAR(255),
+  donor_name VARCHAR(255),
+  donor_email VARCHAR(255),
+  is_anonymous BOOLEAN DEFAULT FALSE,
+  message TEXT,
+  admin_notes TEXT,
+  confirmed_by TEXT REFERENCES public."user"(id),
+  confirmed_at TIMESTAMPTZ,
+  ip_address INET,
+  user_agent TEXT,
+  metadata JSONB DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_donations_user_id ON public.donations(user_id);
+CREATE INDEX IF NOT EXISTS idx_donations_status ON public.donations(status);
+CREATE INDEX IF NOT EXISTS idx_donations_payment_method ON public.donations(payment_method);
+CREATE INDEX IF NOT EXISTS idx_donations_created_at ON public.donations(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_donations_paypal_order_id ON public.donations(paypal_order_id) WHERE paypal_order_id IS NOT NULL;
+
+ALTER TABLE public.donations ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "donations_select_own" ON public.donations FOR SELECT USING (
+  user_id = auth.uid()::TEXT OR
+  EXISTS (SELECT 1 FROM public."user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
+);
+CREATE POLICY "donations_insert" ON public.donations FOR INSERT WITH CHECK (TRUE);
+CREATE POLICY "donations_update_admin" ON public.donations FOR UPDATE USING (
+  EXISTS (SELECT 1 FROM public."user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
+);
+
+CREATE TABLE IF NOT EXISTS public.donor_badges (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT REFERENCES public."user"(id) ON DELETE CASCADE UNIQUE NOT NULL,
+  tier VARCHAR(20) NOT NULL CHECK (tier IN ('bronze', 'silver', 'gold', 'platinum')),
+  total_donated DECIMAL(10,2) DEFAULT 0 NOT NULL,
+  donation_count INTEGER DEFAULT 0 NOT NULL,
+  has_active_subscription BOOLEAN DEFAULT FALSE,
+  show_on_donor_wall BOOLEAN DEFAULT TRUE,
+  show_badge_on_profile BOOLEAN DEFAULT TRUE,
+  display_name VARCHAR(255),
+  first_donation_at TIMESTAMPTZ,
+  last_donation_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_donor_badges_tier ON public.donor_badges(tier);
+CREATE INDEX IF NOT EXISTS idx_donor_badges_total_donated ON public.donor_badges(total_donated DESC);
+CREATE INDEX IF NOT EXISTS idx_donor_badges_show_on_wall ON public.donor_badges(show_on_donor_wall) WHERE show_on_donor_wall = TRUE;
+
+ALTER TABLE public.donor_badges ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "donor_badges_select" ON public.donor_badges FOR SELECT USING (
+  show_on_donor_wall = TRUE OR
+  user_id = auth.uid()::TEXT OR
+  EXISTS (SELECT 1 FROM public."user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
+);
+CREATE POLICY "donor_badges_update_own" ON public.donor_badges FOR UPDATE USING (user_id = auth.uid()::TEXT);
+
+CREATE TABLE IF NOT EXISTS public.donation_receipts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  donation_id UUID REFERENCES public.donations(id) ON DELETE CASCADE NOT NULL,
+  receipt_number VARCHAR(50) UNIQUE NOT NULL,
+  pdf_url VARCHAR(500),
+  generated_at TIMESTAMPTZ DEFAULT NOW(),
+  downloaded_at TIMESTAMPTZ,
+  download_count INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_donation_receipts_donation_id ON public.donation_receipts(donation_id);
+
+ALTER TABLE public.donation_receipts ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "donation_receipts_select" ON public.donation_receipts FOR SELECT USING (
+  EXISTS (
+    SELECT 1 FROM public.donations d
+    WHERE d.id = donation_id AND (
+      d.user_id = auth.uid()::TEXT OR
+      EXISTS (SELECT 1 FROM public."user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
+    )
+  )
+);
+
+CREATE TABLE IF NOT EXISTS public.donation_bank_info (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  bank_name VARCHAR(255) NOT NULL,
+  account_holder VARCHAR(255) NOT NULL,
+  account_number VARCHAR(50),
+  iban VARCHAR(50),
+  swift_bic VARCHAR(20),
+  routing_number VARCHAR(20),
+  bank_address TEXT,
+  currency VARCHAR(3) DEFAULT 'USD',
+  region VARCHAR(50),
+  is_active BOOLEAN DEFAULT TRUE,
+  display_order INTEGER DEFAULT 0,
+  instructions TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.donation_bank_info ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "donation_bank_info_select" ON public.donation_bank_info FOR SELECT USING (is_active = TRUE);
+CREATE POLICY "donation_bank_info_admin" ON public.donation_bank_info FOR ALL USING (
+  EXISTS (SELECT 1 FROM public."user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
+);
+
+CREATE TABLE IF NOT EXISTS public.donation_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  key VARCHAR(100) UNIQUE NOT NULL,
+  value JSONB NOT NULL,
+  description TEXT,
+  updated_by TEXT REFERENCES public."user"(id),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.donation_settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "donation_settings_admin" ON public.donation_settings FOR ALL USING (
+  EXISTS (SELECT 1 FROM public."user" WHERE id = auth.uid()::TEXT AND role IN ('admin', 'superadmin'))
+);
+
+-- Insert default donation settings
+INSERT INTO public.donation_settings (key, value, description) VALUES
+  ('paypal_enabled', 'true', 'Enable PayPal donations'),
+  ('bank_transfer_enabled', 'true', 'Enable bank transfer donations'),
+  ('preset_amounts', '[5, 10, 25, 50, 100]', 'Preset donation amounts in USD'),
+  ('minimum_amount', '1', 'Minimum donation amount'),
+  ('maximum_amount', '10000', 'Maximum donation amount'),
+  ('recurring_enabled', 'true', 'Enable recurring donations'),
+  ('donor_wall_enabled', 'true', 'Show public donor wall'),
+  ('tax_receipts_enabled', 'true', 'Generate tax receipts'),
+  ('thank_you_email_enabled', 'true', 'Send thank you emails'),
+  ('badge_thresholds', '{"bronze": 10, "silver": 50, "gold": 100, "platinum": 500}', 'Donation thresholds for badge tiers')
+ON CONFLICT (key) DO NOTHING;
+
+-- =============================================================================
+-- PART 10: E2EE SYSTEM (Migrations 054-057)
+-- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- 10.1 DEVICE KEYS (Migration 054)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.device_keys (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  device_id TEXT NOT NULL,
+  identity_key TEXT NOT NULL,
+  signing_key TEXT NOT NULL,
+  signed_prekey TEXT NOT NULL DEFAULT '',
+  signed_prekey_id INTEGER NOT NULL DEFAULT 0,
+  signed_prekey_signature TEXT NOT NULL DEFAULT '',
+  device_name TEXT,
+  device_type TEXT CHECK (device_type IN ('web', 'mobile', 'desktop')),
+  is_verified BOOLEAN DEFAULT FALSE,
+  verified_at TIMESTAMPTZ,
+  verified_by_user_id TEXT REFERENCES public."user"(id),
+  verified_by_device_id TEXT,
+  verification_method TEXT CHECK (verification_method IN ('sas', 'cross_sign', 'admin', 'qr')),
+  cross_sign_signature TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  last_seen_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(user_id, device_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_device_keys_user ON public.device_keys(user_id);
+CREATE INDEX IF NOT EXISTS idx_device_keys_identity ON public.device_keys(identity_key);
+CREATE INDEX IF NOT EXISTS idx_device_keys_verified ON public.device_keys(user_id, is_verified) WHERE is_verified = TRUE;
+
+ALTER TABLE public.device_keys ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "device_keys_select_all" ON public.device_keys FOR SELECT USING (true);
+CREATE POLICY "device_keys_insert_own" ON public.device_keys FOR INSERT WITH CHECK (
+  user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "device_keys_update_own" ON public.device_keys FOR UPDATE USING (
+  user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "device_keys_delete_own" ON public.device_keys FOR DELETE USING (
+  user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "device_keys_service_role" ON public.device_keys FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.2 ONE-TIME PREKEYS (Migration 054)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.one_time_prekeys (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  device_key_id UUID NOT NULL REFERENCES public.device_keys(id) ON DELETE CASCADE,
+  key_id INTEGER NOT NULL,
+  public_key TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  claimed_at TIMESTAMPTZ,
+  claimed_by_user TEXT,
+  claimed_by_device TEXT,
+  UNIQUE(device_key_id, key_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_one_time_prekeys_device ON public.one_time_prekeys(device_key_id);
+CREATE INDEX IF NOT EXISTS idx_one_time_prekeys_unclaimed ON public.one_time_prekeys(device_key_id) WHERE claimed_at IS NULL;
+
+ALTER TABLE public.one_time_prekeys ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "one_time_prekeys_select_all" ON public.one_time_prekeys FOR SELECT USING (true);
+CREATE POLICY "one_time_prekeys_insert_owner" ON public.one_time_prekeys FOR INSERT WITH CHECK (
+  device_key_id IN (
+    SELECT id FROM public.device_keys
+    WHERE user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "one_time_prekeys_update_claim" ON public.one_time_prekeys FOR UPDATE USING (claimed_at IS NULL);
+CREATE POLICY "one_time_prekeys_service_role" ON public.one_time_prekeys FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.3 E2EE KEY BACKUPS (Migration 054)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_key_backups (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  encrypted_backup TEXT NOT NULL,
+  backup_iv TEXT NOT NULL,
+  backup_auth_tag TEXT NOT NULL,
+  salt TEXT NOT NULL,
+  iterations INTEGER NOT NULL DEFAULT 100000,
+  device_count INTEGER NOT NULL DEFAULT 1,
+  backup_version INTEGER NOT NULL DEFAULT 1,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_e2ee_key_backups_user ON public.e2ee_key_backups(user_id);
+
+ALTER TABLE public.e2ee_key_backups ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "e2ee_key_backups_manage_own" ON public.e2ee_key_backups FOR ALL USING (
+  user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "e2ee_key_backups_service_role" ON public.e2ee_key_backups FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.4 MEGOLM SESSION SHARES (Migration 055)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.megolm_session_shares (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  conversation_id UUID NOT NULL REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  session_id TEXT NOT NULL,
+  sender_user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  sender_device_id TEXT NOT NULL,
+  recipient_user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  recipient_device_id TEXT NOT NULL,
+  encrypted_session_key TEXT NOT NULL,
+  key_algorithm TEXT NOT NULL DEFAULT 'olm.v1',
+  first_known_index INTEGER NOT NULL DEFAULT 0,
+  forwarded_count INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  claimed_at TIMESTAMPTZ,
+  UNIQUE(session_id, recipient_device_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_megolm_shares_recipient ON public.megolm_session_shares(recipient_user_id, recipient_device_id);
+CREATE INDEX IF NOT EXISTS idx_megolm_shares_conversation ON public.megolm_session_shares(conversation_id);
+CREATE INDEX IF NOT EXISTS idx_megolm_shares_session ON public.megolm_session_shares(session_id);
+
+ALTER TABLE public.megolm_session_shares ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "megolm_shares_select_recipient" ON public.megolm_session_shares FOR SELECT USING (
+  recipient_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "megolm_shares_insert_sender" ON public.megolm_session_shares FOR INSERT WITH CHECK (
+  sender_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "megolm_shares_update_recipient" ON public.megolm_session_shares FOR UPDATE USING (
+  recipient_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "megolm_shares_service_role" ON public.megolm_session_shares FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.5 E2EE MESSAGE KEYS (Migration 055)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_message_keys (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  message_id UUID NOT NULL REFERENCES public.dm_messages(id) ON DELETE CASCADE,
+  recipient_device_id TEXT NOT NULL,
+  encrypted_key TEXT NOT NULL,
+  olm_message_type INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(message_id, recipient_device_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_e2ee_message_keys_recipient ON public.e2ee_message_keys(recipient_device_id);
+
+ALTER TABLE public.e2ee_message_keys ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "e2ee_message_keys_select_recipient" ON public.e2ee_message_keys FOR SELECT USING (
+  EXISTS (
+    SELECT 1 FROM public.device_keys dk
+    WHERE dk.device_id = e2ee_message_keys.recipient_device_id
+      AND dk.user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "e2ee_message_keys_insert_participant" ON public.e2ee_message_keys FOR INSERT WITH CHECK (
+  EXISTS (
+    SELECT 1 FROM public.dm_messages m
+    JOIN public.dm_participants p ON p.conversation_id = m.conversation_id
+    WHERE m.id = e2ee_message_keys.message_id
+      AND p.user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "e2ee_message_keys_service_role" ON public.e2ee_message_keys FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.6 E2EE CONVERSATION SETTINGS (Migration 055)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_conversation_settings (
+  conversation_id UUID PRIMARY KEY REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  e2ee_required BOOLEAN NOT NULL DEFAULT FALSE,
+  current_session_id TEXT,
+  current_session_created_at TIMESTAMPTZ,
+  session_message_count INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE public.e2ee_conversation_settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "e2ee_conversation_settings_select_participant" ON public.e2ee_conversation_settings FOR SELECT USING (
+  conversation_id IN (
+    SELECT conversation_id FROM public.dm_participants
+    WHERE user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "e2ee_conversation_settings_manage_participant" ON public.e2ee_conversation_settings FOR ALL USING (
+  conversation_id IN (
+    SELECT conversation_id FROM public.dm_participants
+    WHERE user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "e2ee_conversation_settings_service_role" ON public.e2ee_conversation_settings FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.7 SAS VERIFICATIONS (Migration 056)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_sas_verifications (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  initiator_user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  initiator_device_id TEXT NOT NULL,
+  target_user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  target_device_id TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending' CHECK (
+    status IN ('pending', 'started', 'key_exchanged', 'sas_ready', 'sas_match', 'verified', 'cancelled', 'expired')
+  ),
+  initiator_public_key TEXT,
+  target_public_key TEXT,
+  initiator_commitment TEXT,
+  sas_emoji_indices TEXT,
+  sas_decimal TEXT,
+  transaction_id TEXT NOT NULL UNIQUE,
+  expires_at TIMESTAMPTZ NOT NULL DEFAULT NOW() + INTERVAL '10 minutes',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  completed_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_sas_verifications_initiator ON public.e2ee_sas_verifications(initiator_user_id, initiator_device_id);
+CREATE INDEX IF NOT EXISTS idx_sas_verifications_target ON public.e2ee_sas_verifications(target_user_id, target_device_id);
+CREATE INDEX IF NOT EXISTS idx_sas_verifications_transaction ON public.e2ee_sas_verifications(transaction_id);
+CREATE INDEX IF NOT EXISTS idx_sas_verifications_pending ON public.e2ee_sas_verifications(status) WHERE status NOT IN ('verified', 'cancelled', 'expired');
+
+ALTER TABLE public.e2ee_sas_verifications ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "sas_verifications_select_participant" ON public.e2ee_sas_verifications FOR SELECT USING (
+  initiator_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  OR target_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "sas_verifications_insert_initiator" ON public.e2ee_sas_verifications FOR INSERT WITH CHECK (
+  initiator_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "sas_verifications_update_participant" ON public.e2ee_sas_verifications FOR UPDATE USING (
+  initiator_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  OR target_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "sas_verifications_service_role" ON public.e2ee_sas_verifications FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.8 CROSS-SIGNING KEYS (Migration 056)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_cross_signing_keys (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  key_type TEXT NOT NULL CHECK (key_type IN ('master', 'self_signing', 'user_signing')),
+  public_key TEXT NOT NULL,
+  signatures JSONB NOT NULL DEFAULT '{}',
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  revoked_at TIMESTAMPTZ,
+  UNIQUE(user_id, key_type, is_active)
+);
+
+CREATE INDEX IF NOT EXISTS idx_cross_signing_keys_user ON public.e2ee_cross_signing_keys(user_id);
+CREATE INDEX IF NOT EXISTS idx_cross_signing_keys_active ON public.e2ee_cross_signing_keys(user_id, key_type) WHERE is_active = TRUE;
+
+ALTER TABLE public.e2ee_cross_signing_keys ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "cross_signing_keys_select_all" ON public.e2ee_cross_signing_keys FOR SELECT USING (true);
+CREATE POLICY "cross_signing_keys_manage_own" ON public.e2ee_cross_signing_keys FOR ALL USING (
+  user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "cross_signing_keys_service_role" ON public.e2ee_cross_signing_keys FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.9 DEVICE SIGNATURES (Migration 056)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_device_signatures (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  device_key_id UUID NOT NULL REFERENCES public.device_keys(id) ON DELETE CASCADE,
+  signer_user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  signer_key_type TEXT NOT NULL CHECK (signer_key_type IN ('master', 'self_signing', 'user_signing', 'device')),
+  signer_key_id TEXT NOT NULL,
+  signature TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(device_key_id, signer_key_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_device_signatures_device ON public.e2ee_device_signatures(device_key_id);
+
+ALTER TABLE public.e2ee_device_signatures ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "device_signatures_select_all" ON public.e2ee_device_signatures FOR SELECT USING (true);
+CREATE POLICY "device_signatures_insert_signer" ON public.e2ee_device_signatures FOR INSERT WITH CHECK (
+  signer_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "device_signatures_service_role" ON public.e2ee_device_signatures FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.10 USER TRUST RELATIONSHIPS (Migration 056)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_user_trust (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  truster_user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  trusted_user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  trusted_master_key TEXT NOT NULL,
+  trust_level TEXT NOT NULL DEFAULT 'verified' CHECK (trust_level IN ('verified', 'tofu', 'blocked')),
+  verification_method TEXT CHECK (verification_method IN ('sas', 'cross_sign', 'qr', 'admin')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(truster_user_id, trusted_user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_user_trust_truster ON public.e2ee_user_trust(truster_user_id);
+CREATE INDEX IF NOT EXISTS idx_user_trust_trusted ON public.e2ee_user_trust(trusted_user_id);
+
+ALTER TABLE public.e2ee_user_trust ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "user_trust_select_truster" ON public.e2ee_user_trust FOR SELECT USING (
+  truster_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "user_trust_select_trusted" ON public.e2ee_user_trust FOR SELECT USING (
+  trusted_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "user_trust_manage_own" ON public.e2ee_user_trust FOR ALL USING (
+  truster_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "user_trust_service_role" ON public.e2ee_user_trust FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.11 AI CONSENT (Migration 057)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_ai_consent (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  conversation_id UUID NOT NULL REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  consent_status TEXT NOT NULL DEFAULT 'pending' CHECK (
+    consent_status IN ('pending', 'granted', 'denied', 'revoked')
+  ),
+  allowed_features JSONB NOT NULL DEFAULT '[]',
+  consent_given_at TIMESTAMPTZ,
+  consent_expires_at TIMESTAMPTZ,
+  consent_reason TEXT,
+  device_id TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(conversation_id, user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_ai_consent_conversation ON public.e2ee_ai_consent(conversation_id);
+CREATE INDEX IF NOT EXISTS idx_ai_consent_user ON public.e2ee_ai_consent(user_id);
+CREATE INDEX IF NOT EXISTS idx_ai_consent_granted ON public.e2ee_ai_consent(conversation_id) WHERE consent_status = 'granted';
+
+ALTER TABLE public.e2ee_ai_consent ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "ai_consent_manage_own" ON public.e2ee_ai_consent FOR ALL USING (
+  user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+);
+CREATE POLICY "ai_consent_select_conversation" ON public.e2ee_ai_consent FOR SELECT USING (
+  conversation_id IN (
+    SELECT conversation_id FROM public.dm_participants
+    WHERE user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "ai_consent_service_role" ON public.e2ee_ai_consent FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.12 AI ACCESS LOG (Migration 057)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_ai_access_log (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  conversation_id UUID NOT NULL REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  message_id UUID REFERENCES public.dm_messages(id) ON DELETE SET NULL,
+  authorizing_user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  authorizing_device_id TEXT NOT NULL,
+  feature_used TEXT NOT NULL,
+  content_hash TEXT,
+  ai_model_used TEXT,
+  accessed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_ai_access_conversation ON public.e2ee_ai_access_log(conversation_id);
+CREATE INDEX IF NOT EXISTS idx_ai_access_user ON public.e2ee_ai_access_log(authorizing_user_id);
+CREATE INDEX IF NOT EXISTS idx_ai_access_time ON public.e2ee_ai_access_log(accessed_at DESC);
+
+ALTER TABLE public.e2ee_ai_access_log ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "ai_access_log_select" ON public.e2ee_ai_access_log FOR SELECT USING (
+  authorizing_user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  OR conversation_id IN (
+    SELECT conversation_id FROM public.dm_participants
+    WHERE user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "ai_access_log_service_role" ON public.e2ee_ai_access_log FOR ALL TO service_role USING (true) WITH CHECK (true);
+
+-- -----------------------------------------------------------------------------
+-- 10.13 CONVERSATION AI SETTINGS (Migration 057)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS public.e2ee_conversation_ai_settings (
+  conversation_id UUID PRIMARY KEY REFERENCES public.dm_conversations(id) ON DELETE CASCADE,
+  ai_allowed BOOLEAN NOT NULL DEFAULT FALSE,
+  require_unanimous_consent BOOLEAN NOT NULL DEFAULT TRUE,
+  enabled_features JSONB NOT NULL DEFAULT '["mention_response"]',
+  consent_expiry_days INTEGER,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE public.e2ee_conversation_ai_settings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "conversation_ai_settings_select_participant" ON public.e2ee_conversation_ai_settings FOR SELECT USING (
+  conversation_id IN (
+    SELECT conversation_id FROM public.dm_participants
+    WHERE user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "conversation_ai_settings_manage_participant" ON public.e2ee_conversation_ai_settings FOR ALL USING (
+  conversation_id IN (
+    SELECT conversation_id FROM public.dm_participants
+    WHERE user_id = current_setting('request.jwt.claims', true)::json->>'sub'
+  )
+);
+CREATE POLICY "conversation_ai_settings_service_role" ON public.e2ee_conversation_ai_settings FOR ALL TO service_role USING (true) WITH CHECK (true);
 
 -- =============================================================================
 -- END OF MIGRATION

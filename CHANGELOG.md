@@ -7,6 +7,134 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.82.0] - 2025-12-16
+
+### Added
+
+#### End-to-End Encryption (E2EE) - Matrix Olm/Megolm Protocol
+- **Complete E2EE Library** (`lib/e2ee/`) - 8 modules for cryptographic operations:
+  - `vodozemac.ts` - WASM loader using @matrix-org/matrix-sdk-crypto-wasm with Web Crypto fallback
+  - `key-storage.ts` - IndexedDB storage for private keys (never leave device)
+  - `key-backup.ts` - Password-protected cloud backup creation/restoration
+  - `message-crypto.ts` - Encrypt/decrypt messages with Double Ratchet algorithm
+  - `device-verification.ts` - Emoji-based device verification (SAS)
+  - `ai-consent.ts` - Consent management for AI access to encrypted conversations
+  - `types.ts` - TypeScript definitions for E2EE operations
+  - `index.ts` - Public exports
+
+- **E2EE API Routes** (`app/api/e2ee/`) - 12 endpoints for key management:
+  - `keys/route.ts` - Upload/fetch device public keys
+  - `prekeys/route.ts` - Upload one-time prekeys
+  - `prekeys/claim/route.ts` - Claim prekeys for session establishment
+  - `backup/route.ts` - Cloud key backup (encrypted with user password)
+  - `sessions/route.ts` - Session data storage
+  - `devices/route.ts` - Device management and listing
+  - `verification/start|accept|confirm|cancel|pending` - Device verification flow
+  - `ai-consent/route.ts` - AI access consent management
+
+- **E2EE React Integration**:
+  - `hooks/use-e2ee.ts` - Main hook for E2EE operations
+  - `components/providers/e2ee-provider.tsx` - App-wide E2EE context
+  - `components/settings/e2ee-settings.tsx` - Settings panel for E2EE management
+  - `components/messaging/e2ee-indicator.tsx` - Visual indicator in chat
+  - `components/auth/onboarding-wizard/steps/e2ee-setup-step.tsx` - Onboarding step
+
+- **E2EE Database Migrations** (`supabase/migrations/`):
+  - `054_e2ee_device_keys.sql` - Device keys and one-time prekeys
+  - `055_e2ee_messages.sql` - Encrypted message storage
+  - `056_e2ee_device_verification.sql` - Device verification requests
+  - `057_e2ee_ai_consent.sql` - AI consent records
+
+#### Unified Chat Window - Complete UI Consolidation
+- **New Unified Chat System** (`components/unified-chat/`) - Consolidates 3 separate chat systems into one:
+  - `unified-chat-provider.tsx` - Global context managing AI Assistant and Messages state
+  - `unified-chat-window.tsx` - Portal-rendered window with focus trap and accessibility
+  - `unified-chat-header.tsx` - Tab bar with "AI Assistant" and "Messages" tabs
+  - `tabs/ai-assistant-tab.tsx` - AI chat with Claude streaming, TTS, speech recognition
+  - `tabs/messages-tab.tsx` - User-to-user messaging with real-time updates
+  - `index.ts` - Public exports including `openAIAssistant()`, `openMessages()`, `openAssistant()`
+
+#### Donation System - PayPal & Bank Transfer Support
+- **Donation Infrastructure**:
+  - `app/(main)/donate/page.tsx` - Donation page with multiple payment methods
+  - `components/donations/paypal-buttons.tsx` - In-page PayPal checkout
+  - `components/donations/donor-badge-modal.tsx` - Donor recognition badges
+  - `components/auth/onboarding-wizard/steps/support-step.tsx` - Onboarding donation prompt
+  - `supabase/migrations/051_donation_system.sql` - Donation records
+  - `supabase/migrations/053_enable_paypal_settings.sql` - PayPal settings
+- **Donation Features**:
+  - PayPal one-time and recurring subscriptions
+  - Bank transfer instructions (Serbian & international)
+  - Email receipts via Resend
+  - Donor badges and achievements
+  - Webhook support for subscription updates
+- **Header Integration**: "Support Us" button in navigation
+
+#### PWA Enhancements
+- **Comprehensive Icon Set** (`public/icons/`):
+  - 15 PNG icons (48x48 to 512x512) with maskable variants
+  - Apple touch icon, Safari pinned tab SVG
+  - Favicon package (16x16, 32x32, ICO)
+  - `browserconfig.xml` for Windows tiles
+- **Service Worker** (`public/sw.js`):
+  - Offline caching strategy
+  - Push notification handling
+- **Manifest Update** (`public/manifest.json`):
+  - Complete icon definitions with purposes
+  - PWA display settings
+- **Push Notifications**:
+  - `lib/web-push.ts` - Web Push API integration
+  - `hooks/use-browser-notifications.ts` - Browser notification hook
+  - `components/pwa/push-notification-prompt.tsx` - Permission request UI
+  - Onboarding integration for notification opt-in
+
+### Changed
+
+- **Layout Provider Hierarchy** (`app/(main)/layout.tsx`):
+  - Replaced `AskAIProvider` + `VoiceAssistant` with `UnifiedChatProvider` + `UnifiedChatWindow`
+  - Removed `AskAIModal` (functionality now in unified window)
+  - Added E2EEProvider to provider hierarchy
+- **Inbox Dropdown** (`components/messaging/inbox-dropdown.tsx`):
+  - Now calls `openMessages()` instead of opening separate `InboxChatModal`
+  - Syncs unread count with unified chat provider
+- **Ask AI Button** (`components/ask-ai/ask-ai-button.tsx`):
+  - Now calls `openAIAssistant()` with context instead of using `useAskAI` hook
+- **Open Assistant Button** (`components/open-assistant-button.tsx`):
+  - Imports from `unified-chat` instead of `voice-assistant`
+- **Realtime Messages Hook** (`hooks/use-realtime-messages.ts`):
+  - Fixed Supabase subscription cleanup
+  - Improved error handling
+
+### Fixed
+
+- **Content Security Policy** (`next.config.ts`):
+  - Added PayPal domains for checkout SDK
+  - Added ElevenLabs streaming domains
+  - Added Supabase realtime domains
+  - Added Vercel Live feedback domains
+- **Diagnostics** (`app/(main)/dashboard/diagnostics/page.tsx`):
+  - Adjusted thresholds for production-realistic benchmarks
+  - Improved API performance testing accuracy
+
+### Architecture
+
+- **Single Window UX**: All chat functionality (AI Assistant, Ask AI context, User Messages) now in one unified window
+- **Tab Navigation**: Users switch between "AI Assistant" and "Messages (unread)" tabs
+- **E2EE Security Model**:
+  - Private keys never leave device (IndexedDB)
+  - Public keys uploaded for discovery
+  - Password-protected cloud backups
+  - Olm for 1:1 sessions, Megolm for groups
+  - Device verification with emoji codes
+- **Preserved Features**:
+  - Claude streaming via `/api/assistant/chat`
+  - ElevenLabs TTS with voice selection
+  - Speech recognition for voice input
+  - Supabase real-time for messaging
+  - Typing indicators and E2EE indicators
+  - Conversation history in localStorage (AI) and database (Messages)
+- **Backward Compatibility**: `openAssistant()` function still works for existing code
+
 ## [0.81.0] - 2025-12-15
 
 ### Changed

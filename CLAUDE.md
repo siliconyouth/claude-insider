@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.81.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.82.0**.
 
 | Link | URL |
 |------|-----|
@@ -94,12 +94,25 @@ claude-insider/
 │   │   ├── api/cron/             # Scheduled jobs (digests, notifications)
 │   │   ├── api/debug/            # Diagnostics (api-key-test, link-check)
 │   │   ├── api/resources/        # Public resources API
+│   │   ├── api/e2ee/             # E2EE API (12 endpoints)
+│   │   │   ├── keys/             # Device public keys
+│   │   │   ├── prekeys/          # One-time prekeys & claim
+│   │   │   ├── backup/           # Cloud key backup
+│   │   │   ├── sessions/         # Session data
+│   │   │   ├── devices/          # Device management
+│   │   │   ├── verification/     # Device verification (5 endpoints)
+│   │   │   └── ai-consent/       # AI consent management
 │   │   ├── actions/passkeys.ts   # 8 passkey server actions
 │   │   ├── actions/two-factor.ts # 13 2FA server actions (multi-device)
 │   │   ├── actions/group-chat.ts # Group chat management (create, invite, roles)
 │   │   └── (main)/dashboard/     # Admin dashboard pages
-│   ├── components/               # 65+ React components
-│   │   ├── voice-assistant.tsx   # AI assistant (1500+ LOC)
+│   ├── components/               # 70+ React components
+│   │   ├── unified-chat/         # Unified Chat Window (AI + Messages)
+│   │   │   ├── index.ts          # Public exports
+│   │   │   ├── unified-chat-provider.tsx # Global context
+│   │   │   ├── unified-chat-window.tsx   # Portal-rendered window
+│   │   │   ├── unified-chat-header.tsx   # Tab bar
+│   │   │   └── tabs/             # AI Assistant & Messages tabs
 │   │   ├── header.tsx, footer.tsx
 │   │   ├── toast.tsx, skeleton.tsx
 │   │   ├── animated-*.tsx        # Micro-interaction components
@@ -137,6 +150,12 @@ claude-insider/
 │   │   │   └── settings.tsx      # Security settings panel
 │   │   ├── dashboard/activity-feed.tsx # Real-time activity feed with filters
 │   │   ├── providers/fingerprint-provider.tsx # FingerprintJS context
+│   │   ├── providers/e2ee-provider.tsx  # E2EE context provider
+│   │   ├── donations/            # Donation components
+│   │   │   ├── paypal-buttons.tsx # PayPal checkout integration
+│   │   │   └── donor-badge-modal.tsx # Donor recognition
+│   │   ├── pwa/                  # PWA components
+│   │   │   └── push-notification-prompt.tsx # Notification permission
 │   │   ├── universal-search/     # Unified search modal
 │   │   │   ├── index.tsx         # Main component (Quick + AI modes)
 │   │   │   ├── mode-toggle.tsx   # Quick/AI mode switcher
@@ -158,7 +177,9 @@ claude-insider/
 │   │   ├── use-sound-effects.tsx # Site-wide sound effects (Web Audio API)
 │   │   ├── use-chat-sounds.tsx   # Chat-specific sound effects
 │   │   ├── use-fingerprint.ts    # Browser fingerprint management
-│   │   └── use-security-realtime.ts # Supabase realtime security events
+│   │   ├── use-security-realtime.ts # Supabase realtime security events
+│   │   ├── use-e2ee.ts           # E2EE key management hook
+│   │   └── use-browser-notifications.ts # Push notification hook
 │   ├── lib/
 │   │   ├── design-system.ts      # Design tokens & cn() utility
 │   │   ├── claude.ts             # Server-only Claude client
@@ -183,6 +204,15 @@ claude-insider/
 │   │   ├── supabase/             # Supabase clients
 │   │   │   ├── client.ts         # Browser client (RLS-enforced)
 │   │   │   └── server.ts         # Server client (RLS + admin client)
+│   │   ├── e2ee/                 # E2EE library (Matrix Olm/Megolm)
+│   │   │   ├── vodozemac.ts      # WASM loader with Web Crypto fallback
+│   │   │   ├── key-storage.ts    # IndexedDB private key storage
+│   │   │   ├── key-backup.ts     # Password-protected cloud backup
+│   │   │   ├── message-crypto.ts # Encrypt/decrypt with Double Ratchet
+│   │   │   ├── device-verification.ts # Emoji-based device verification
+│   │   │   ├── ai-consent.ts     # AI access consent management
+│   │   │   └── types.ts          # TypeScript definitions
+│   │   ├── web-push.ts           # Web Push API integration
 │   │   └── resources/            # Resources library
 │   │       ├── types.ts          # ResourceEntry schema
 │   │       ├── data.ts           # Data loaders & utilities
@@ -227,13 +257,18 @@ claude-insider/
 │   │   ├── Resources.ts          # Curated resources
 │   │   └── Translations.ts       # UI translation strings
 │   ├── supabase/                 # Database migrations
-│   │   └── migrations/           # 49 SQL migration files (000-048)
+│   │   └── migrations/           # 58 SQL migration files (000-057)
 │   │       ├── 000_fresh_start.sql # Consolidated base schema
 │   │       ├── ...               # User data, comments, collections
 │   │       ├── 025_admin_notifications.sql # Admin broadcast system
 │   │       ├── 033_user_api_keys.sql # User API key storage & usage tracking
 │   │       ├── 044_group_chats.sql # Group conversations, invitations, roles
-│   │       └── 045_security_system.sql # Security tables (logs, fingerprints, honeypots, settings)
+│   │       ├── 045_security_system.sql # Security tables
+│   │       ├── 051_donation_system.sql # Donation records
+│   │       ├── 054_e2ee_device_keys.sql # E2EE device keys & prekeys
+│   │       ├── 055_e2ee_messages.sql # Encrypted message storage
+│   │       ├── 056_e2ee_device_verification.sql # Device verification
+│   │       └── 057_e2ee_ai_consent.sql # AI consent records
 │   └── scripts/                  # Build-time scripts
 ├── packages/                     # Shared configs (ui, eslint, ts, tailwind)
 ├── vercel.json                   # Domain redirects
@@ -670,14 +705,44 @@ export async function GET(request: NextRequest) {
 
 ---
 
-## Voice Assistant
+## Unified Chat Window
 
 ### Architecture
 
-- **Main Component**: `voice-assistant.tsx` (popup + fullscreen modes)
-- **Chat**: SSE streaming from Claude AI with RAG context
-- **TTS**: ElevenLabs with 42 voices, streaming sentence-by-sentence
-- **Settings**: In-window panel (not modal) with voice selector, auto-speak toggle
+The Unified Chat Window consolidates AI Assistant, Ask AI, and User Messaging into a single tabbed interface.
+
+**Location**: `components/unified-chat/`
+
+| File | Purpose |
+|------|---------|
+| `index.ts` | Public exports (`openAIAssistant`, `openMessages`, `openAssistant`) |
+| `unified-chat-provider.tsx` | Global React context for state management |
+| `unified-chat-window.tsx` | Portal-rendered window with focus trap |
+| `unified-chat-header.tsx` | Tab bar ("AI Assistant" | "Messages") + controls |
+| `tabs/ai-assistant-tab.tsx` | AI chat with Claude streaming, TTS, speech recognition |
+| `tabs/messages-tab.tsx` | User-to-user messaging with real-time updates |
+
+### Features
+
+| Tab | Features |
+|-----|----------|
+| **AI Assistant** | Claude streaming, ElevenLabs TTS (42 voices), speech recognition, conversation history (localStorage), settings panel |
+| **Messages** | Supabase real-time, typing indicators, E2EE indicators, unread badges, conversation list |
+
+### Global Functions
+
+```typescript
+import { openAIAssistant, openMessages, openAssistant } from "@/components/unified-chat";
+
+// Open AI tab with optional context
+openAIAssistant({ context: AIContext, question: string });
+
+// Open Messages tab with optional conversation
+openMessages({ conversationId: string, userId: string });
+
+// Legacy - opens AI tab
+openAssistant();
+```
 
 ### API Routes
 
@@ -709,10 +774,108 @@ The RAG system includes 20 specialized knowledge chunks covering:
 | **Security System** | Fingerprinting, trust scores, honeypots, rate limiting |
 | **Internationalization** | 18 languages, locale detection, translation system |
 | **MCP Servers** | Model Context Protocol integration guide |
-| **Database** | 50 tables across 8 categories, RLS policies |
+| **Database** | 73 tables across 13 categories, RLS policies |
 | **Real-time Features** | Presence, typing indicators, notifications |
 | **Accessibility** | WCAG 2.1 AA compliance, UX seven pillars |
 | **AI Integration** | Claude Opus 4.5 streaming, ElevenLabs TTS |
+
+---
+
+## End-to-End Encryption (E2EE)
+
+**Location**: `lib/e2ee/`, `app/api/e2ee/`, `components/providers/e2ee-provider.tsx`
+
+The E2EE system implements Matrix Olm/Megolm protocol for secure messaging with Double Ratchet algorithm.
+
+### Architecture
+
+| Layer | Location | Purpose |
+|-------|----------|---------|
+| **WASM** | `lib/e2ee/vodozemac.ts` | @matrix-org/matrix-sdk-crypto-wasm with Web Crypto fallback |
+| **Storage** | `lib/e2ee/key-storage.ts` | IndexedDB for private keys (never leave device) |
+| **Crypto** | `lib/e2ee/message-crypto.ts` | Encrypt/decrypt messages using Olm/Megolm |
+| **Backup** | `lib/e2ee/key-backup.ts` | Password-protected cloud key backup |
+| **Verification** | `lib/e2ee/device-verification.ts` | Emoji-based device verification (SAS) |
+| **AI Consent** | `lib/e2ee/ai-consent.ts` | Consent for AI access to encrypted conversations |
+
+### E2EE API Routes
+
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/e2ee/keys` | GET/POST | Upload/fetch device public keys |
+| `/api/e2ee/prekeys` | POST | Upload one-time prekeys |
+| `/api/e2ee/prekeys/claim` | POST | Claim prekeys for session establishment |
+| `/api/e2ee/backup` | GET/POST/DELETE | Cloud key backup management |
+| `/api/e2ee/sessions` | POST | Session data storage |
+| `/api/e2ee/devices` | GET/DELETE | Device management |
+| `/api/e2ee/verification/*` | POST | Device verification flow (5 endpoints) |
+| `/api/e2ee/ai-consent` | GET/POST | AI consent management |
+
+### Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `device_keys` | Device public keys (Curve25519, Ed25519) |
+| `one_time_prekeys` | Ephemeral keys for session establishment |
+| `key_backups` | Password-encrypted cloud backups |
+| `device_verifications` | Verification request tracking |
+| `ai_consents` | Per-user AI access consent records |
+
+### Security Model
+
+- **Private keys**: Stored in IndexedDB, never sent to server
+- **Public keys**: Uploaded to server for discovery
+- **Cloud backup**: AES-256-GCM encrypted with user password
+- **Session protocol**: Olm for 1:1, Megolm for groups
+- **Forward secrecy**: One-time prekeys consumed on use
+
+---
+
+## Donation System
+
+**Location**: `app/api/dashboard/donations/`, `app/donate/`, `components/donate/`, `supabase/migrations/051_donation_system.sql`
+
+The Donation System provides a complete fundraising platform with multiple payment methods and donor recognition.
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| **PayPal Integration** | One-time and recurring donations via PayPal Checkout SDK |
+| **Bank Transfer** | Admin-configurable bank details with multi-currency support |
+| **Donor Badges** | Four tiers: Bronze ($10+), Silver ($50+), Gold ($100+), Platinum ($500+) |
+| **Donor Wall** | Public recognition page with anonymity options |
+| **Tax Receipts** | Auto-generated receipt numbers (CI-YYYY-NNNNNN format) |
+| **Email Notifications** | Automated thank-you emails via Resend |
+
+### Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `donations` | Transaction records (PayPal, bank transfer, metadata) |
+| `donor_badges` | User tier tracking with visibility preferences |
+| `donation_receipts` | Tax receipt generation and download tracking |
+| `donation_bank_info` | Admin-managed bank account details |
+| `donation_settings` | System configuration (amounts, thresholds, features) |
+
+### API Routes
+
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/dashboard/donations` | GET | Donation statistics for admin dashboard |
+| `/api/donations/create` | POST | Create new donation |
+| `/api/donations/paypal/capture` | POST | Capture PayPal payment |
+| `/api/donations/bank-info` | GET | Get bank transfer details |
+| `/api/donations/donor-wall` | GET | Public donor wall data |
+
+### Badge Tier System
+
+| Tier | Threshold | Color | Features |
+|------|-----------|-------|----------|
+| Bronze | $10+ | amber-600 | Basic badge |
+| Silver | $50+ | gray-400 | Enhanced badge |
+| Gold | $100+ | yellow-500 | Gold badge, priority support |
+| Platinum | $500+ | gradient | Special recognition, beta access |
 
 ---
 

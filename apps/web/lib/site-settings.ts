@@ -21,7 +21,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSetting = {
     siteName: "Claude Insider",
     tagline: "Your Guide to Mastering Claude AI",
     description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
-    version: "0.81.0",
+    version: "0.82.0",
   },
   social: {
     github: "https://github.com/siliconyouth/claude-insider",

@@ -72,7 +72,7 @@ export async function GET() {
 
     // Get or create settings (returns array from SETOF function)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any).rpc("get_or_create_assistant_settings", {
+    const { data, error } = await supabase.rpc("get_or_create_assistant_settings", {
       p_user_id: session.user.id,
     });
 
@@ -83,6 +83,10 @@ export async function GET() {
 
     // RPC with SETOF returns an array, take the first element
     const settings = Array.isArray(data) ? data[0] : data;
+
+    if (!settings) {
+      return NextResponse.json({ error: "Settings not found" }, { status: 404 });
+    }
 
     return NextResponse.json({
       settings: mapDbToSettings(settings),
@@ -150,13 +154,13 @@ export async function POST(request: NextRequest) {
 
     // First ensure settings exist
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase as any).rpc("get_or_create_assistant_settings", {
+    await supabase.rpc("get_or_create_assistant_settings", {
       p_user_id: session.user.id,
     });
 
     // Then update
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error } = await (supabase as any)
+    const { data, error } = await supabase
       .from("assistant_settings")
       .update(updates)
       .eq("user_id", session.user.id)

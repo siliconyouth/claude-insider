@@ -52,6 +52,6 @@ export async function GET() {
     timestamp: new Date().toISOString(),
     responseTime: Date.now() - start,
     services,
-    version: "0.81.0",
+    version: "0.82.0",
   });
 }
