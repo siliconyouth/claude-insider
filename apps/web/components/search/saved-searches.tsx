@@ -83,7 +83,7 @@ export function SavedSearches({ onSelect, className }: SavedSearchesProps) {
         <p className="text-sm text-gray-500 dark:text-gray-400">
           No saved searches yet
         </p>
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
           Save your frequent searches for quick access
         </p>
       </div>
@@ -137,7 +137,7 @@ export function SavedSearches({ onSelect, className }: SavedSearchesProps) {
           </div>
 
           {/* Use count */}
-          <span className="text-xs text-gray-400 dark:text-gray-500">
+          <span className="text-xs text-gray-500 dark:text-gray-400">
             {search.use_count} uses
           </span>
 

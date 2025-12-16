@@ -121,7 +121,7 @@ export function BlockButton({
         sizeClasses[size],
         isBlocked
           ? "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-          : "text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400",
+          : "text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400",
         "disabled:opacity-50 disabled:cursor-not-allowed",
         className
       )}

@@ -224,7 +224,7 @@ function PopularTags() {
             style={{ animationDelay: `${index * 20}ms` }}
           >
             {tag.name}
-            <span className="ml-1 text-gray-400 dark:text-gray-500 text-[10px]">
+            <span className="ml-1 text-gray-500 dark:text-gray-400 text-[10px]">
               {tag.count}
             </span>
           </Link>

@@ -179,7 +179,7 @@ export function NavDropdown({
               {sections.map((section, idx) => (
                 <div key={idx} className={layout === "list" ? "" : "space-y-2"}>
                   {section.title && layout !== "list" && (
-                    <h4 className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider px-2 mb-2">
+                    <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider px-2 mb-2">
                       {section.title}
                     </h4>
                   )}

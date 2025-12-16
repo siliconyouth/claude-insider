@@ -1534,7 +1534,7 @@ ${backupCodes.map((code, i) => `${i + 1}. ${code}`).join("\n")}
               <p className="text-sm text-green-600 dark:text-green-400">
                 Enabled
                 {verifiedAt && (
-                  <span className="text-gray-400 dark:text-gray-500">
+                  <span className="text-gray-500 dark:text-gray-400">
                     {" "}
                     · since {new Date(verifiedAt).toLocaleDateString()}
                   </span>

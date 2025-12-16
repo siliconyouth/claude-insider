@@ -370,7 +370,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
           />
         </svg>
         <span className={cn(
-          expanded ? "inline text-gray-400 dark:text-gray-500" : "hidden sm:inline"
+          expanded ? "inline text-gray-500 dark:text-gray-400" : "hidden sm:inline"
         )}>
           {expanded ? "Search docs..." : "Search..."}
         </span>

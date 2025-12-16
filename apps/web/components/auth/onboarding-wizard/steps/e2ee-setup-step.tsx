@@ -294,7 +294,7 @@ export function E2EESetupStep() {
           <p className="text-gray-500 dark:text-gray-400 text-center">
             Generating secure encryption keys...
           </p>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
             This may take a few seconds
           </p>
         </div>

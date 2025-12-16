@@ -185,7 +185,7 @@ export function MessageBubble({
         {/* Timestamp */}
         <span
           className={cn(
-            "text-xs text-gray-400 dark:text-gray-500 mt-0.5",
+            "text-xs text-gray-500 dark:text-gray-400 mt-0.5",
             isOwnMessage ? "mr-1" : "ml-1"
           )}
         >

@@ -359,7 +359,7 @@ function SearchPageContent() {
                 <p className="text-gray-500 dark:text-gray-400">
                   No results found for &quot;{query}&quot;
                 </p>
-                <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                   Try adjusting your search or filters
                 </p>
               </div>

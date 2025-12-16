@@ -121,12 +121,12 @@ export function AchievementBadge({
             >
               {tier}
             </span>
-            <span className="text-xs text-gray-400 dark:text-gray-500">
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               +{points} pts
             </span>
           </div>
           {earnedAt && (
-            <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               Earned {new Date(earnedAt).toLocaleDateString()}
             </p>
           )}

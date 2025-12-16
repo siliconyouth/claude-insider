@@ -226,7 +226,7 @@ export function ResourceCard({
                 </p>
               )}
             </div>
-            <ExternalLinkIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+            <ExternalLinkIcon className="w-5 h-5 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
           </div>
 
           {/* Description */}
@@ -375,7 +375,7 @@ export function ResourceCard({
         )}
 
         {/* External Link Icon */}
-        <ExternalLinkIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+        <ExternalLinkIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
       </a>
     );
   }
@@ -416,7 +416,7 @@ export function ResourceCard({
               {resource.title}
             </h4>
             {resource.github && (
-              <GitHubIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+              <GitHubIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0" />
             )}
           </div>
           {showCategory && category && (
@@ -425,7 +425,7 @@ export function ResourceCard({
             </p>
           )}
         </div>
-        <ExternalLinkIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1" />
+        <ExternalLinkIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1" />
       </div>
 
       {/* Description */}

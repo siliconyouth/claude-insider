@@ -313,7 +313,7 @@ export default function FeedPage() {
                     </p>
                   )}
 
-                  <p className="mt-2 text-xs text-gray-400 dark:text-gray-500">
+                  <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                     {formatDate(activity.createdAt)}
                   </p>
                 </div>

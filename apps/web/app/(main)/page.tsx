@@ -326,7 +326,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Trust badge */}
-                <p className="mt-6 text-xs text-gray-400 dark:text-gray-500">
+                <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
                   Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
                 </p>
               </div>

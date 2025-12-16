@@ -152,18 +152,18 @@ export function ReadingListItemCard({
             </span>
 
             {/* Resource type */}
-            <span className="text-xs text-gray-400 dark:text-gray-500">
+            <span className="text-xs text-gray-500 dark:text-gray-400">
               {item.resource_type}
             </span>
 
             {/* Dates */}
             {localStatus === "completed" && item.completed_at && (
-              <span className="text-xs text-gray-400 dark:text-gray-500">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
                 Completed {new Date(item.completed_at).toLocaleDateString()}
               </span>
             )}
             {localStatus === "reading" && item.started_at && (
-              <span className="text-xs text-gray-400 dark:text-gray-500">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
                 Started {new Date(item.started_at).toLocaleDateString()}
               </span>
             )}

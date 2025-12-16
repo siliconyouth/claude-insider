@@ -341,7 +341,7 @@ export function NotificationsStep() {
               )}
             >
               <div className="flex items-center gap-3">
-                <div className="text-gray-400 dark:text-gray-500">{notification.icon}</div>
+                <div className="text-gray-500 dark:text-gray-400">{notification.icon}</div>
                 <div>
                   <p className="text-sm font-medium text-gray-900 dark:text-white">{notification.label}</p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">{notification.description}</p>
@@ -368,7 +368,7 @@ export function NotificationsStep() {
           ))}
         </div>
 
-        <p className="text-xs text-gray-400 dark:text-gray-500 text-center">
+        <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
           You can change these settings anytime in your profile
         </p>
       </div>

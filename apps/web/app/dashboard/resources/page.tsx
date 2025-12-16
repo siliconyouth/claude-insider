@@ -266,7 +266,7 @@ function StatCard({
       )}
     >
       <div className="flex items-center justify-between">
-        <div className="text-gray-400 dark:text-gray-500">{icon}</div>
+        <div className="text-gray-500 dark:text-gray-400">{icon}</div>
         {highlight && (
           <span className="flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-blue-400 opacity-75" />

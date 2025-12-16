@@ -246,7 +246,7 @@ export function InboxDropdown() {
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     No conversations yet
                   </p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     Start a conversation from a user profile
                   </p>
                 </div>
@@ -291,7 +291,7 @@ export function InboxDropdown() {
                                 otherParticipant?.name ||
                                 "Unknown"}
                             </span>
-                            <span className="text-xs text-gray-400 dark:text-gray-500 flex-shrink-0">
+                            <span className="text-xs text-gray-500 dark:text-gray-400 flex-shrink-0">
                               {conversation.lastMessageAt
                                 ? formatRelativeTime(conversation.lastMessageAt)
                                 : ""}

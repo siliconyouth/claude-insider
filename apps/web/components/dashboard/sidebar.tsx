@@ -104,7 +104,7 @@ export function DashboardSidebar() {
                     "h-5 w-5 flex-shrink-0",
                     isActive
                       ? "text-blue-600 dark:text-cyan-400"
-                      : "text-gray-400 dark:text-gray-500"
+                      : "text-gray-500 dark:text-gray-400"
                   )}
                 />
                 <span className="flex-1">{item.name}</span>
@@ -136,7 +136,7 @@ export function DashboardSidebar() {
                 "hover:text-gray-900 dark:hover:text-white"
               )}
             >
-              <item.icon className="h-5 w-5 flex-shrink-0 text-gray-400 dark:text-gray-500" />
+              <item.icon className="h-5 w-5 flex-shrink-0 text-gray-500 dark:text-gray-400" />
               <span className="flex-1">{item.name}</span>
               {item.external && (
                 <ExternalIcon className="h-4 w-4 text-gray-400" />

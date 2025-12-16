@@ -240,7 +240,7 @@ function LinkPreview({ url, children, isInternalPath = false }: LinkPreviewProps
                 <span className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/30 px-2 py-0.5 text-xs font-medium text-blue-700 dark:text-blue-300">
                   {internalInfo.category}
                 </span>
-                <span className="text-xs text-gray-400 dark:text-gray-500">
+                <span className="text-xs text-gray-500 dark:text-gray-400">
                   claudeinsider.com
                 </span>
               </div>
@@ -266,7 +266,7 @@ function LinkPreview({ url, children, isInternalPath = false }: LinkPreviewProps
               <p className="font-medium text-gray-900 dark:text-white text-sm">
                 {externalInfo.domain}
               </p>
-              <p className="text-xs text-gray-400 dark:text-gray-500 truncate mt-0.5">
+              <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">
                 {url}
               </p>
             </div>

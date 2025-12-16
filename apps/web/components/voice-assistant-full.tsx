@@ -746,7 +746,7 @@ export function VoiceAssistantFull() {
             <h3 className="mb-2 font-medium text-gray-900 dark:text-white">How can I help you?</h3>
             <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">Ask me anything about Claude AI, Claude Code, or the documentation</p>
             <div className="w-full max-w-md space-y-2">
-              <p className="text-xs font-medium text-gray-400 dark:text-gray-500">Suggested questions:</p>
+              <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Suggested questions:</p>
               {suggestedQuestions.map((question, index) => (
                 <button
                   key={index}

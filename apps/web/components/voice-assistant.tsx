@@ -1929,7 +1929,7 @@ export function VoiceAssistant() {
 
             {/* Settings Footer */}
             <div className="border-t border-gray-200 px-4 py-3 dark:border-gray-700">
-              <p className="text-center text-xs text-gray-400 dark:text-gray-500">
+              <p className="text-center text-xs text-gray-500 dark:text-gray-400">
                 Powered by Claude AI
               </p>
             </div>
@@ -1977,7 +1977,7 @@ export function VoiceAssistant() {
                     </svg>
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">No conversations yet</p>
-                  <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">Start a new conversation to get started</p>
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Start a new conversation to get started</p>
                 </div>
               ) : (
                 <div className="space-y-2">
@@ -2065,7 +2065,7 @@ export function VoiceAssistant() {
 
               {/* Suggested Questions */}
               <div className="w-full space-y-2">
-                <p className="text-xs font-medium text-gray-400 dark:text-gray-500">
+                <p className="text-xs font-medium text-gray-500 dark:text-gray-400">
                   Suggested questions:
                 </p>
                 {suggestedQuestions.map((question, index) => (
@@ -2348,7 +2348,7 @@ export function VoiceAssistant() {
             </button>
           </form>
 
-          <div className="mt-2 flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+          <div className="mt-2 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>Powered by Claude AI</span>
             <span>
               <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs dark:bg-gray-800">

@@ -97,7 +97,7 @@ export function ViewHistory({
           />
         </svg>
         <p className="text-gray-500 dark:text-gray-400">No viewing history yet</p>
-        <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
           Resources you view will appear here
         </p>
       </div>

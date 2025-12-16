@@ -518,7 +518,7 @@ function ResourcesContent() {
                 >
                   <span>{cat.icon}</span>
                   <span className="text-sm font-medium">{cat.shortName || cat.name}</span>
-                  <span className="text-xs text-gray-400 dark:text-gray-500">({cat.count})</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">({cat.count})</span>
                 </Link>
               ))}
             </div>

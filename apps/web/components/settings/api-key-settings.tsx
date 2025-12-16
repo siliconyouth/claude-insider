@@ -412,7 +412,7 @@ export function ApiKeySettings() {
                         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           {model.description}
                         </p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           ${model.inputPrice}/M input • ${model.outputPrice}/M output
                         </p>
                       </div>

@@ -112,7 +112,7 @@ export function ContentMeta({
                 Anthropic
               </a>
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
               Model: {model} · Generated: {generatedDate} · Build: v{APP_VERSION}-{buildId}
             </p>
           </div>

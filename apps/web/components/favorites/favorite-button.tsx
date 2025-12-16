@@ -148,7 +148,7 @@ export function FavoriteButton({
             "transition-all duration-200",
             status.isFavorited
               ? "text-transparent"
-              : "text-gray-400 dark:text-gray-500 group-hover:text-rose-400"
+              : "text-gray-500 dark:text-gray-400 group-hover:text-rose-400"
           )}
           fill="none"
           stroke="currentColor"

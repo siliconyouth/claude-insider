@@ -218,7 +218,7 @@ export function ReviewCard({ review, onDelete, className }: ReviewCardProps) {
         </button>
 
         {review.updatedAt !== review.createdAt && (
-          <span className="text-xs text-gray-400 dark:text-gray-500">
+          <span className="text-xs text-gray-500 dark:text-gray-400">
             Edited
           </span>
         )}

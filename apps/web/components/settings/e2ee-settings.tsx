@@ -665,7 +665,7 @@ export function E2EESettings() {
                           <div className="text-sm text-gray-500 dark:text-gray-400">
                             ID: {device.device_id.substring(0, 8)}...
                           </div>
-                          <div className="text-xs text-gray-400 dark:text-gray-500">
+                          <div className="text-xs text-gray-500 dark:text-gray-400">
                             Last seen: {formatDate(device.last_seen_at)}
                           </div>
                         </div>

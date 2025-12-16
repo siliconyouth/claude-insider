@@ -203,7 +203,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
             <span
               className={cn(
                 "absolute left-4 top-1/2 -translate-y-1/2",
-                "text-gray-400 dark:text-gray-500",
+                "text-gray-500 dark:text-gray-400",
                 "transition-colors duration-200",
                 isFocused && "text-blue-500",
                 error && "text-red-500",
@@ -271,7 +271,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
             <span
               className={cn(
                 "absolute right-4 top-1/2 -translate-y-1/2",
-                "text-gray-400 dark:text-gray-500",
+                "text-gray-500 dark:text-gray-400",
                 iconSizes[size]
               )}
             >
@@ -311,7 +311,7 @@ export const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(
                 "text-xs",
                 charCount >= maxLength
                   ? "text-red-500"
-                  : "text-gray-400 dark:text-gray-500"
+                  : "text-gray-500 dark:text-gray-400"
               )}
             >
               {charCount}/{maxLength}
@@ -522,7 +522,7 @@ export const AnimatedTextarea = forwardRef<
                 "text-xs",
                 charCount >= maxLength
                   ? "text-red-500"
-                  : "text-gray-400 dark:text-gray-500"
+                  : "text-gray-500 dark:text-gray-400"
               )}
             >
               {charCount}/{maxLength}

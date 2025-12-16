@@ -259,7 +259,7 @@ export function BrowserNotificationPrompt({
               </div>
 
               {/* Note */}
-              <p className="text-xs text-gray-400 dark:text-gray-500 text-center mb-6">
+              <p className="text-xs text-gray-500 dark:text-gray-400 text-center mb-6">
                 You can change this anytime in your settings. We&apos;ll never spam you.
               </p>
 

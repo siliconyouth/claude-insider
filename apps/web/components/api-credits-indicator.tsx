@@ -329,7 +329,7 @@ export function ApiCreditsIndicator() {
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">
                       {model.description}
                     </p>
-                    <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">
+                    <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-1">
                       ${model.inputPrice}/M input • ${model.outputPrice}/M output
                     </p>
                   </div>
