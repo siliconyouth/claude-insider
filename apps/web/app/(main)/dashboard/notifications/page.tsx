@@ -39,7 +39,6 @@ const ROLES = [
   { value: "admin", label: "Admin" },
   { value: "moderator", label: "Moderator" },
   { value: "editor", label: "Editor" },
-  { value: "beta_tester", label: "Beta Tester" },
   { value: "user", label: "User" },
 ];
 

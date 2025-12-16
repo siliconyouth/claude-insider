@@ -64,6 +64,7 @@ export interface AdminStats {
     total: number;
     newThisWeek: number;
     newThisMonth: number;
+    betaTesters: number; // Count of users with is_beta_tester flag (not a role)
     byRole: Record<UserRole, number>;
   };
   beta: {

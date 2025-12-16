@@ -7,9 +7,10 @@ import type { CollectionConfig } from 'payload';
  * - admin: Full system access, can manage all users and content
  * - editor: Can create/edit content, cannot manage users
  * - moderator: Can approve/reject user submissions and comments
- * - beta_tester: Early access to new features, limited admin access
+ *
+ * Note: Beta tester is NOT a role - it's a boolean flag (is_beta_tester) on the main user table.
  */
-export type UserRole = 'superadmin' | 'admin' | 'editor' | 'moderator' | 'beta_tester';
+export type UserRole = 'superadmin' | 'admin' | 'editor' | 'moderator';
 
 /**
  * Check if user has one of the specified roles
@@ -117,7 +118,6 @@ export const Users: CollectionConfig = {
         { label: 'Admin', value: 'admin' },
         { label: 'Editor', value: 'editor' },
         { label: 'Moderator', value: 'moderator' },
-        { label: 'Beta Tester', value: 'beta_tester' },
       ],
       access: {
         // Only superadmins can assign superadmin role, admins can assign other roles

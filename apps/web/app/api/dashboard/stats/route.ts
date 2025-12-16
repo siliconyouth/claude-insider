@@ -37,18 +37,19 @@ export async function GET() {
     const [usersResult, betaResult, feedbackResult] = await Promise.all([
       // Get user stats
       // Note: Better Auth uses camelCase column names ("createdAt" not created_at)
+      // Note: beta_tester is no longer a role - use is_beta_tester flag instead
       pool.query(`
         SELECT
           COUNT(*) as total,
           COUNT(*) FILTER (WHERE "createdAt" > NOW() - INTERVAL '7 days') as new_this_week,
           COUNT(*) FILTER (WHERE "createdAt" > NOW() - INTERVAL '30 days') as new_this_month,
           COUNT(*) FILTER (WHERE role = 'user') as role_user,
-          COUNT(*) FILTER (WHERE role = 'beta_tester') as role_beta_tester,
           COUNT(*) FILTER (WHERE role = 'editor') as role_editor,
           COUNT(*) FILTER (WHERE role = 'moderator') as role_moderator,
           COUNT(*) FILTER (WHERE role = 'admin') as role_admin,
           COUNT(*) FILTER (WHERE role = 'superadmin') as role_superadmin,
-          COUNT(*) FILTER (WHERE role = 'ai_assistant') as role_ai_assistant
+          COUNT(*) FILTER (WHERE role = 'ai_assistant') as role_ai_assistant,
+          COUNT(*) FILTER (WHERE "isBetaTester" = true) as beta_testers
         FROM "user"
       `),
       // Get beta application stats
@@ -80,9 +81,9 @@ export async function GET() {
         total: parseInt(userStats.total) || 0,
         newThisWeek: parseInt(userStats.new_this_week) || 0,
         newThisMonth: parseInt(userStats.new_this_month) || 0,
+        betaTesters: parseInt(userStats.beta_testers) || 0,
         byRole: {
           user: parseInt(userStats.role_user) || 0,
-          beta_tester: parseInt(userStats.role_beta_tester) || 0,
           editor: parseInt(userStats.role_editor) || 0,
           moderator: parseInt(userStats.role_moderator) || 0,
           admin: parseInt(userStats.role_admin) || 0,
