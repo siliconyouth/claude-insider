@@ -141,14 +141,6 @@ export function ApiCreditsIndicator() {
   const [isChanging, setIsChanging] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Debug logging - remove after fixing
-  console.log("[ApiCreditsIndicator] Render:", { isAuthenticated, isLoading, hasOwnKey, isValid, modelName });
-
-  // Debug: Track state changes
-  useEffect(() => {
-    console.log("[ApiCreditsIndicator] State changed:", { hasOwnKey, isValid, isLoading, modelName });
-  }, [hasOwnKey, isValid, isLoading, modelName]);
-
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
