@@ -96,8 +96,8 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
               "media-src 'self' blob: https://*.elevenlabs.io",
-              // PayPal, ElevenLabs, and Vercel analytics connections
-              "connect-src 'self' https://vitals.vercel-insights.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io",
+              // Supabase (REST API + Realtime WebSocket), PayPal, ElevenLabs, Vercel analytics
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io",
               // PayPal buttons render in iframes
               "frame-src 'self' https://*.paypal.com https://*.paypalobjects.com",
               "frame-ancestors 'none'",

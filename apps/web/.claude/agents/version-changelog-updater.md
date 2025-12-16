@@ -47,7 +47,7 @@ The version appears in the Overview section as:
 ```markdown
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.66.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.81.0**.
 ```
 
 Update ONLY the version number, preserving the exact format.
@@ -56,7 +56,7 @@ Update ONLY the version number, preserving the exact format.
 
 Follow Keep a Changelog format:
 ```markdown
-## [0.67.0] - 2025-01-15
+## [0.82.0] - 2025-12-16
 
 ### Added
 - New feature description

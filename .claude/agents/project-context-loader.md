@@ -33,7 +33,8 @@ Follow this systematic approach in order:
 4. Understand the voice assistant architecture (voice-assistant.tsx, API routes)
 5. Examine the resources system (122+ entries across 10 categories)
 6. Check the design system implementation in lib/design-system.ts
-7. Review the RAG system setup in lib/rag.ts and data/rag-index.json
+7. Review the RAG system setup in lib/rag.ts and data/rag-index.json (1,933 chunks, 3,866 terms)
+8. Check the database schema (53 migrations, 50+ tables)
 
 ### Phase 3: Repository Status Check
 1. Run `git status` to see current working tree state

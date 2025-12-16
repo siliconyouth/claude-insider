@@ -95,18 +95,27 @@ export function useRealtimeMessages(
   const [error, setError] = useState<Error | null>(null);
   const channelRef = useRef<RealtimeChannel | null>(null);
 
-  // Fetch current unread count
+  // Fetch current unread count directly from Supabase using RPC function
   const refreshCount = useCallback(async () => {
     if (!session?.user?.id) return;
 
     try {
-      const response = await fetch("/api/inbox?countOnly=true");
-      if (response.ok) {
-        const data = await response.json();
-        const newCount = data.unreadCount || 0;
-        setUnreadCount(newCount);
-        onUnreadCountChange?.(newCount);
+      const supabase = createClient();
+      const userId = session.user.id;
+
+      // Use the database function to get total unread count
+      const { data, error } = await supabase.rpc("get_total_unread_dm_count", {
+        p_user_id: userId,
+      });
+
+      if (error) {
+        console.error("[Realtime Messages] RPC error:", error);
+        return;
       }
+
+      const totalUnread = data ?? 0;
+      setUnreadCount(totalUnread);
+      onUnreadCountChange?.(totalUnread);
     } catch (err) {
       console.error("[Realtime Messages] Failed to fetch count:", err);
     }
@@ -202,11 +211,14 @@ export function useRealtimeMessages(
 
               // Only process messages for conversations we're part of
               if (!conversationId) {
-                // Check if this message is for us
-                const convResponse = await fetch(
-                  `/api/inbox/conversations/${message.conversation_id}`
-                );
-                if (!convResponse.ok) return;
+                // Check if this message is for us via dm_participants table
+                const { data: participantData, error: participantError } = await supabase
+                  .from("dm_participants")
+                  .select("id")
+                  .eq("conversation_id", message.conversation_id)
+                  .eq("user_id", userId)
+                  .maybeSingle();
+                if (participantError || !participantData) return;
               }
 
               // Update recent messages

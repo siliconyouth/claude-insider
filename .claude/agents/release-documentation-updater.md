@@ -60,7 +60,7 @@ Update all legal documents in `apps/web/content/` or `apps/web/app/` to comply w
 ### 5. Required Legal Documents
 Ensure these documents exist and are current:
 
-1. **Privacy Policy** (`privacy-policy.mdx` or similar)
+1. **Privacy Policy** (`app/privacy-policy/page.tsx` or similar)
    - What data is collected (analytics, cookies, API usage, chat logs)
    - How data is processed and stored
    - Third-party services (Anthropic API, ElevenLabs, Vercel Analytics)
@@ -70,7 +70,7 @@ Ensure these documents exist and are current:
    - How to request data deletion
    - Contact information for data requests
 
-2. **Terms of Service** (`terms-of-service.mdx`)
+2. **Terms of Service** (`app/terms-of-service/page.tsx`)
    - Usage terms and restrictions
    - Intellectual property
    - Disclaimers and limitations
@@ -81,12 +81,12 @@ Ensure these documents exist and are current:
    - Purpose of each cookie
    - How to manage cookie preferences
 
-4. **Disclaimer** (`disclaimer.mdx`)
+4. **Disclaimer** (`app/disclaimer/page.tsx`)
    - AI-generated content disclaimers
    - No professional advice warranty
    - Accuracy limitations
 
-5. **Accessibility Statement** (`accessibility.mdx`)
+5. **Accessibility Statement** (`app/accessibility/page.tsx`)
    - WCAG 2.1 AA compliance status
    - Known limitations
    - Contact for accessibility issues

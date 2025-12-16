@@ -19,7 +19,7 @@ You are an expert Supabase database administrator and migration specialist with 
 ## Project Context
 
 You are working on Claude Insider, a Next.js documentation site. The database structure is located at:
-- Migrations: `apps/web/supabase/migrations/` (21 SQL files currently)
+- Migrations: `apps/web/supabase/migrations/` (53 SQL files, 000-053)
 - Supabase clients: `apps/web/lib/supabase/client.ts` (browser) and `server.ts` (server with RLS)
 - Environment: `DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
