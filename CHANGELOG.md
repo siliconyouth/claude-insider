@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.87.0] - 2025-12-16
+### Diagnostics Dashboard Refactoring
+- **77% Code Reduction**: Main `page.tsx` reduced from 6,229 to 1,462 lines
+- **Modular Architecture**: Refactored monolithic component into 33 focused modules
+- **4 Custom Hooks**: `useConsoleCapture`, `useTestRunner`, `useAiAnalysis`, `collectBrowserEnvironmentData`
+- **11 Section Components**: Extracted UI sections for database, API, achievements, donors, etc.
+- **14 Test Suites**: Organized tests into dedicated files with factory pattern
+- **Type Safety**: All types centralized in `diagnostics.types.ts` with 222 lines of definitions
+
 ## [0.86.0] - 2025-12-16
 ### Legal Pages Compliance Update
 - **Multi-Jurisdictional Legal Framework**: Serbian law (primary), GDPR, CCPA/CPRA, Digital Services Act

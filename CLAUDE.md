@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.86.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.87.0**.
 
 | Link | URL |
 |------|-----|
@@ -867,18 +867,43 @@ Privacy, Terms, Disclaimer, Accessibility, Changelog, RSS Feed
 
 Every new feature MUST have a corresponding diagnostic test.
 
-### 17 Test Suites
+### Modular Architecture (v0.87.0)
 
-Environment Variables, Supabase Admin, PostgreSQL Pool, RLS Status, Auth Session, Dashboard API, Sound Effects, Achievements, Fingerprint, Security Logger, Trust Score, Honeypot, Request ID, Fingerprint Cache, Realtime, Activity Feed, Log Search
+The diagnostics dashboard was refactored from a 6,229-line monolith to 33 focused modules:
+
+```
+diagnostics/
+├── page.tsx                    # 1,462 lines (orchestrator)
+├── diagnostics.types.ts        # 222 lines (types & constants)
+├── hooks/                      # 812 lines (4 hooks)
+│   ├── use-console-capture.ts  # Console interception
+│   ├── use-test-runner.ts      # TEST ALL orchestration
+│   ├── use-ai-analysis.ts      # Claude AI streaming
+│   └── collect-browser-environment.ts
+├── sections/                   # 1,247 lines (11 components)
+│   ├── current-user-section.tsx
+│   ├── role-simulator-section.tsx
+│   ├── database-section.tsx
+│   ├── api-section.tsx
+│   └── ... (7 more)
+└── tests/                      # 1,815 lines (14 test suites)
+    ├── index.ts                # Factory with createTestSuites()
+    ├── infrastructure-tests.ts
+    ├── database-tests.ts
+    ├── security-tests.ts
+    └── ... (10 more)
+```
 
 ### Adding Tests for New Features
 
 | Feature Type | Add To |
 |--------------|--------|
-| Database table/query | `runDatabaseDiagnostics()` |
-| API endpoint | `runApiTests()` |
-| Sound effect | `SOUND_CATEGORIES` |
-| Achievement | `SAMPLE_ACHIEVEMENTS` |
+| Database table/query | `tests/database-tests.ts` |
+| API endpoint | `tests/api-tests.ts` |
+| Security feature | `tests/security-tests.ts` |
+| Sound effect | `sections/sound-effects-section.tsx` |
+| Achievement | `sections/achievements-section.tsx` |
+| New test category | Create new file in `tests/`, add to `tests/index.ts` |
 
 ---
 
