@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.88.0] - 2025-12-16
+### Dashboard Shared Infrastructure
+- **New `lib/dashboard/`**: Centralized hooks and utilities for dashboard pages
+  - `usePaginatedList`: Generic fetch hook with pagination, search, filters
+  - `useDashboardAction`: Action hooks for CRUD operations with toast feedback
+  - `status-config.ts`: 8 status configurations (moderation, feedback, severity, reports, etc.)
+  - `types.ts`: Shared TypeScript interfaces for dashboard components
+- **New `components/dashboard/shared/`**: Reusable dashboard UI components
+  - `PageHeader`, `StatusBadge`, `EmptyState`, `ReviewModal`, `ConfirmModal`
+  - `FilterBar`, `StatCard`, `StatGrid`, `NotesField`, `DetailRow`
+- **7 Pages Refactored**: beta-testers, comments, feedback, suggestions, banned-users, users
+- **Improved Maintainability**: Consistent patterns across all dashboard moderation pages
+
 ## [0.87.0] - 2025-12-16
 ### Diagnostics Dashboard Refactoring
 - **77% Code Reduction**: Main `page.tsx` reduced from 6,229 to 1,462 lines

@@ -6,134 +6,105 @@
  * Moderators and admins can view and manage feedback from beta testers.
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
-import type { AdminFeedback, PaginatedResponse } from "@/types/admin";
+import {
+  usePaginatedList,
+  useStatusAction,
+  FEEDBACK_STATUS,
+  FEEDBACK_TYPE,
+  SEVERITY,
+  type FeedbackStatus,
+  type FeedbackType,
+  type Severity,
+} from "@/lib/dashboard";
+import {
+  PageHeader,
+  StatusBadge,
+  ReviewModal,
+  DetailRow,
+} from "@/components/dashboard/shared";
+import type { AdminFeedback } from "@/types/admin";
 
-type FilterStatus = "all" | "open" | "in_progress" | "resolved" | "closed" | "wont_fix";
-type FilterType = "all" | "bug" | "feature" | "general";
+type FilterStatus = FeedbackStatus | "all";
+type FilterType = FeedbackType | "all";
 
 export default function FeedbackPage() {
-  const toast = useToast();
-  const [feedback, setFeedback] = useState<AdminFeedback[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<FilterStatus>("open");
   const [typeFilter, setTypeFilter] = useState<FilterType>("all");
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [selectedItem, setSelectedItem] = useState<AdminFeedback | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
 
-  const fetchFeedback = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams({
-        status: statusFilter,
-        feedbackType: typeFilter,
-        page: page.toString(),
-        limit: "20",
-      });
-      const response = await fetch(`/api/dashboard/feedback?${params}`);
-      if (response.ok) {
-        const data: PaginatedResponse<AdminFeedback> = await response.json();
-        setFeedback(data.items);
-        setTotalPages(data.totalPages);
+  // Fetch feedback with pagination
+  const {
+    items: feedback,
+    isLoading,
+    page,
+    totalPages,
+    setPage,
+    refetch,
+  } = usePaginatedList<AdminFeedback>("feedback", {
+    limit: 20,
+    initialFilters: { status: statusFilter, feedbackType: typeFilter },
+  });
+
+  // Status update action
+  const { updateStatus, isLoading: isUpdating } = useStatusAction("feedback", {
+    successMessage: "Status updated successfully",
+    onSuccess: () => {
+      if (selectedItem) {
+        refetch();
       }
-    } catch (error) {
-      console.error("Failed to fetch feedback:", error);
-      toast.error("Failed to load feedback");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [statusFilter, typeFilter, page, toast]);
+    },
+  });
 
-  useEffect(() => {
-    fetchFeedback();
-  }, [fetchFeedback]);
+  const handleStatusUpdate = useCallback(
+    async (newStatus: string) => {
+      if (!selectedItem) return;
+      const result = await updateStatus(selectedItem.id, newStatus);
+      if (result.success) {
+        setSelectedItem({ ...selectedItem, status: newStatus as FeedbackStatus });
+      }
+    },
+    [selectedItem, updateStatus]
+  );
 
-  const handleStatusUpdate = async (newStatus: string) => {
-    if (!selectedItem) return;
-
-    setIsUpdating(true);
-    try {
-      const response = await fetch(`/api/dashboard/feedback/${selectedItem.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
-      });
-
-      if (response.ok) {
-        toast.success("Status updated successfully");
-        setSelectedItem({ ...selectedItem, status: newStatus as AdminFeedback["status"] });
-        fetchFeedback();
+  const handleFilterChange = useCallback(
+    (type: "status" | "type", value: string) => {
+      if (type === "status") {
+        setStatusFilter(value as FilterStatus);
       } else {
-        const data = await response.json();
-        toast.error(data.error || "Failed to update status");
+        setTypeFilter(value as FilterType);
       }
-    } catch {
-      toast.error("Failed to update status");
-    } finally {
-      setIsUpdating(false);
-    }
-  };
+      setPage(1);
+    },
+    [setPage]
+  );
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-white">Feedback</h2>
-        <p className="mt-1 text-sm text-gray-400">
-          Manage bug reports, feature requests, and general feedback
-        </p>
-      </div>
+      <PageHeader
+        title="Feedback"
+        description="Manage bug reports, feature requests, and general feedback"
+      />
 
       {/* Filters */}
       <div className="flex flex-wrap gap-4">
-        {/* Status Filter */}
-        <div className="flex gap-2">
-          {(["all", "open", "in_progress", "resolved", "closed"] as FilterStatus[]).map((status) => (
-            <button
-              key={status}
-              onClick={() => {
-                setStatusFilter(status);
-                setPage(1);
-              }}
-              className={cn(
-                "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
-                statusFilter === status
-                  ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                  : "text-gray-400 hover:text-white hover:bg-gray-800"
-              )}
-            >
-              {status.replace("_", " ")}
-            </button>
-          ))}
-        </div>
+        <FilterButtons
+          options={["all", "open", "in_progress", "resolved", "closed"]}
+          value={statusFilter}
+          onChange={(v) => handleFilterChange("status", v)}
+          getLabel={(s) => (s === "all" ? "All" : FEEDBACK_STATUS[s as FeedbackStatus]?.label || s)}
+          variant="blue"
+        />
 
-        {/* Type Filter */}
-        <div className="flex gap-2">
-          {(["all", "bug", "feature", "general"] as FilterType[]).map((type) => (
-            <button
-              key={type}
-              onClick={() => {
-                setTypeFilter(type);
-                setPage(1);
-              }}
-              className={cn(
-                "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
-                typeFilter === type
-                  ? "bg-violet-600/20 text-violet-400 border border-violet-500/30"
-                  : "text-gray-400 hover:text-white hover:bg-gray-800"
-              )}
-            >
-              {type === "bug" && "🐛 "}
-              {type === "feature" && "💡 "}
-              {type === "general" && "💬 "}
-              {type}
-            </button>
-          ))}
-        </div>
+        <FilterButtons
+          options={["all", "bug", "feature", "general"]}
+          value={typeFilter}
+          onChange={(v) => handleFilterChange("type", v)}
+          getLabel={(t) => (t === "all" ? "All" : FEEDBACK_TYPE[t as FeedbackType]?.label || t)}
+          getIcon={(t) => (t === "bug" ? "🐛 " : t === "feature" ? "💡 " : t === "general" ? "💬 " : "")}
+          variant="violet"
+        />
       </div>
 
       {/* Feedback List */}
@@ -149,32 +120,12 @@ export default function FeedbackPage() {
         ) : (
           <div className="divide-y divide-gray-800">
             {feedback.map((item) => (
-              <div
+              <FeedbackRow
                 key={item.id}
-                className={cn(
-                  "p-4 hover:bg-gray-800/50 transition-colors cursor-pointer",
-                  selectedItem?.id === item.id && "bg-gray-800/50"
-                )}
-                onClick={() => setSelectedItem(item)}
-              >
-                <div className="flex items-start gap-4">
-                  <FeedbackTypeIcon type={item.feedbackType} />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-sm font-medium text-white">{item.title}</h3>
-                      <StatusBadge status={item.status} />
-                      {item.severity && <SeverityBadge severity={item.severity} />}
-                    </div>
-                    <p className="text-xs text-gray-500 mt-0.5">
-                      by {item.userName || item.userEmail}
-                    </p>
-                    <p className="text-sm text-gray-400 mt-2 line-clamp-2">{item.description}</p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      {new Date(item.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              </div>
+                item={item}
+                isSelected={selectedItem?.id === item.id}
+                onSelect={() => setSelectedItem(item)}
+              />
             ))}
           </div>
         )}
@@ -184,7 +135,7 @@ export default function FeedbackPage() {
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">
           <button
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            onClick={() => setPage(Math.max(1, page - 1))}
             disabled={page === 1}
             className="px-3 py-1 rounded text-sm text-gray-400 hover:text-white disabled:opacity-50"
           >
@@ -194,7 +145,7 @@ export default function FeedbackPage() {
             Page {page} of {totalPages}
           </span>
           <button
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            onClick={() => setPage(Math.min(totalPages, page + 1))}
             disabled={page === totalPages}
             className="px-3 py-1 rounded text-sm text-gray-400 hover:text-white disabled:opacity-50"
           >
@@ -205,147 +156,203 @@ export default function FeedbackPage() {
 
       {/* Detail Modal */}
       {selectedItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setSelectedItem(null)}
+        <ReviewModal
+          isOpen={true}
+          onClose={() => setSelectedItem(null)}
+          title={selectedItem.title}
+          size="lg"
+          isLoading={isUpdating}
+        >
+          <FeedbackDetail
+            item={selectedItem}
+            onStatusUpdate={handleStatusUpdate}
+            isUpdating={isUpdating}
           />
-          <div className="relative w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            {/* Modal Header */}
-            <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-6 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <FeedbackTypeIcon type={selectedItem.feedbackType} />
-                <div>
-                  <h3 className="text-lg font-semibold text-white">{selectedItem.title}</h3>
-                  <p className="text-xs text-gray-400">
-                    by {selectedItem.userName} • {new Date(selectedItem.createdAt).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedItem(null)}
-                className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Modal Content */}
-            <div className="p-6 space-y-6">
-              {/* Badges */}
-              <div className="flex items-center gap-2">
-                <StatusBadge status={selectedItem.status} />
-                {selectedItem.severity && <SeverityBadge severity={selectedItem.severity} />}
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="text-sm font-medium text-gray-400">Description</label>
-                <p className="mt-2 text-white whitespace-pre-wrap">{selectedItem.description}</p>
-              </div>
-
-              {/* Page URL */}
-              {selectedItem.pageUrl && (
-                <div>
-                  <label className="text-sm font-medium text-gray-400">Page URL</label>
-                  <a
-                    href={selectedItem.pageUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-1 block text-cyan-400 hover:text-cyan-300 text-sm truncate"
-                  >
-                    {selectedItem.pageUrl}
-                  </a>
-                </div>
-              )}
-
-              {/* User Agent */}
-              {selectedItem.userAgent && (
-                <div>
-                  <label className="text-sm font-medium text-gray-400">User Agent</label>
-                  <p className="mt-1 text-xs text-gray-500 break-all">{selectedItem.userAgent}</p>
-                </div>
-              )}
-
-              {/* Status Update */}
-              <div className="pt-4 border-t border-gray-800">
-                <label className="block text-sm font-medium text-gray-400 mb-3">Update Status</label>
-                <div className="flex flex-wrap gap-2">
-                  {["open", "in_progress", "resolved", "closed", "wont_fix"].map((status) => (
-                    <button
-                      key={status}
-                      onClick={() => handleStatusUpdate(status)}
-                      disabled={isUpdating || selectedItem.status === status}
-                      className={cn(
-                        "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
-                        selectedItem.status === status
-                          ? "bg-blue-600 text-white cursor-default"
-                          : "bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 disabled:opacity-50"
-                      )}
-                    >
-                      {status.replace("_", " ")}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </ReviewModal>
       )}
     </div>
   );
 }
 
-function FeedbackTypeIcon({ type }: { type: string }) {
-  const icons: Record<string, React.ReactNode> = {
-    bug: (
-      <div className="w-10 h-10 rounded-full bg-red-900/30 flex items-center justify-center flex-shrink-0">
-        <span className="text-lg">🐛</span>
-      </div>
-    ),
-    feature: (
-      <div className="w-10 h-10 rounded-full bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
-        <span className="text-lg">💡</span>
-      </div>
-    ),
-    general: (
-      <div className="w-10 h-10 rounded-full bg-blue-900/30 flex items-center justify-center flex-shrink-0">
-        <span className="text-lg">💬</span>
-      </div>
-    ),
-  };
-  return icons[type] || icons.general;
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const styles: Record<string, string> = {
-    open: "bg-yellow-900/30 text-yellow-400",
-    in_progress: "bg-blue-900/30 text-blue-400",
-    resolved: "bg-emerald-900/30 text-emerald-400",
-    closed: "bg-gray-800 text-gray-400",
-    wont_fix: "bg-gray-800 text-gray-500",
-  };
+// Filter buttons component
+function FilterButtons({
+  options,
+  value,
+  onChange,
+  getLabel,
+  getIcon,
+  variant,
+}: {
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+  getLabel: (value: string) => string;
+  getIcon?: (value: string) => string;
+  variant: "blue" | "violet";
+}) {
+  const activeClass = variant === "blue"
+    ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
+    : "bg-violet-600/20 text-violet-400 border border-violet-500/30";
 
   return (
-    <span className={cn("px-2 py-0.5 rounded text-xs font-medium", styles[status] || styles.open)}>
-      {status.replace("_", " ")}
-    </span>
+    <div className="flex gap-2">
+      {options.map((option) => (
+        <button
+          key={option}
+          onClick={() => onChange(option)}
+          className={cn(
+            "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
+            value === option ? activeClass : "text-gray-400 hover:text-white hover:bg-gray-800"
+          )}
+        >
+          {getIcon?.(option)}
+          {getLabel(option)}
+        </button>
+      ))}
+    </div>
   );
 }
 
-function SeverityBadge({ severity }: { severity: string }) {
-  const styles: Record<string, string> = {
-    low: "bg-gray-800 text-gray-400",
-    medium: "bg-yellow-900/30 text-yellow-400",
-    high: "bg-orange-900/30 text-orange-400",
-    critical: "bg-red-900/30 text-red-400",
+// Feedback row component
+function FeedbackRow({
+  item,
+  isSelected,
+  onSelect,
+}: {
+  item: AdminFeedback;
+  isSelected: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <div
+      className={cn(
+        "p-4 hover:bg-gray-800/50 transition-colors cursor-pointer",
+        isSelected && "bg-gray-800/50"
+      )}
+      onClick={onSelect}
+    >
+      <div className="flex items-start gap-4">
+        <FeedbackTypeIcon type={item.feedbackType} />
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="text-sm font-medium text-white">{item.title}</h3>
+            <StatusBadge style={FEEDBACK_STATUS[item.status as FeedbackStatus] || FEEDBACK_STATUS.open} />
+            {item.severity && (
+              <StatusBadge style={SEVERITY[item.severity as Severity] || SEVERITY.low} />
+            )}
+          </div>
+          <p className="text-xs text-gray-500 mt-0.5">
+            by {item.userName || item.userEmail}
+          </p>
+          <p className="text-sm text-gray-400 mt-2 line-clamp-2">{item.description}</p>
+          <p className="text-xs text-gray-500 mt-2">
+            {new Date(item.createdAt).toLocaleString()}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Feedback detail component
+function FeedbackDetail({
+  item,
+  onStatusUpdate,
+  isUpdating,
+}: {
+  item: AdminFeedback;
+  onStatusUpdate: (status: string) => void;
+  isUpdating: boolean;
+}) {
+  return (
+    <div className="space-y-6">
+      {/* Header with type icon */}
+      <div className="flex items-center gap-3">
+        <FeedbackTypeIcon type={item.feedbackType} />
+        <div>
+          <p className="text-xs text-gray-400">
+            by {item.userName} • {new Date(item.createdAt).toLocaleString()}
+          </p>
+        </div>
+      </div>
+
+      {/* Badges */}
+      <div className="flex items-center gap-2">
+        <StatusBadge style={FEEDBACK_STATUS[item.status as FeedbackStatus] || FEEDBACK_STATUS.open} />
+        {item.severity && (
+          <StatusBadge style={SEVERITY[item.severity as Severity] || SEVERITY.low} />
+        )}
+      </div>
+
+      {/* Description */}
+      <div>
+        <label className="text-sm font-medium text-gray-400">Description</label>
+        <p className="mt-2 text-white whitespace-pre-wrap">{item.description}</p>
+      </div>
+
+      {/* Page URL */}
+      {item.pageUrl && (
+        <DetailRow
+          label="Page URL"
+          value={
+            <a
+              href={item.pageUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan-400 hover:text-cyan-300 text-sm truncate"
+            >
+              {item.pageUrl}
+            </a>
+          }
+        />
+      )}
+
+      {/* User Agent */}
+      {item.userAgent && (
+        <div>
+          <label className="text-sm font-medium text-gray-400">User Agent</label>
+          <p className="mt-1 text-xs text-gray-500 break-all">{item.userAgent}</p>
+        </div>
+      )}
+
+      {/* Status Update */}
+      <div className="pt-4 border-t border-gray-800">
+        <label className="block text-sm font-medium text-gray-400 mb-3">Update Status</label>
+        <div className="flex flex-wrap gap-2">
+          {["open", "in_progress", "resolved", "closed", "wont_fix"].map((status) => (
+            <button
+              key={status}
+              onClick={() => onStatusUpdate(status)}
+              disabled={isUpdating || item.status === status}
+              className={cn(
+                "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
+                item.status === status
+                  ? "bg-blue-600 text-white cursor-default"
+                  : "bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 disabled:opacity-50"
+              )}
+            >
+              {status.replace("_", " ")}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Feedback type icon
+function FeedbackTypeIcon({ type }: { type: string }) {
+  const defaultIcon = { bg: "bg-blue-900/30", emoji: "💬" };
+  const icons: Record<string, { bg: string; emoji: string }> = {
+    bug: { bg: "bg-red-900/30", emoji: "🐛" },
+    feature: { bg: "bg-emerald-900/30", emoji: "💡" },
+    general: defaultIcon,
   };
+  const config = icons[type] ?? defaultIcon;
 
   return (
-    <span className={cn("px-2 py-0.5 rounded text-xs font-medium", styles[severity] || styles.low)}>
-      {severity}
-    </span>
+    <div className={cn("w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0", config.bg)}>
+      <span className="text-lg">{config.emoji}</span>
+    </div>
   );
 }

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.87.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.88.0**.
 
 | Link | URL |
 |------|-----|
@@ -188,6 +188,7 @@ claude-insider/
 │   │   ├── achievements/         # Gamification
 │   │   ├── notifications/        # Notification center
 │   │   ├── dashboard/security/   # Security dashboard
+│   │   ├── dashboard/shared/     # Shared dashboard components
 │   │   ├── donations/            # Donation components
 │   │   ├── pwa/                  # PWA components
 │   │   ├── universal-search/     # Search modal
@@ -196,6 +197,7 @@ claude-insider/
 │   ├── lib/                      # Core libraries
 │   │   ├── design-system.ts      # Design tokens & cn()
 │   │   ├── supabase/             # Database clients
+│   │   ├── dashboard/            # Dashboard hooks & utilities
 │   │   ├── e2ee/                 # E2EE library
 │   │   └── resources/            # Resources library
 │   ├── content/                  # 34 MDX documentation pages
@@ -808,6 +810,65 @@ sounds.playNotification();
 **Location**: `app/actions/group-chat.ts`
 
 Roles: owner, admin, member. Features: invitations, ownership transfer, member management.
+
+### Dashboard Shared Infrastructure
+
+**Location**: `lib/dashboard/`, `components/dashboard/shared/`
+
+Centralized hooks, utilities, and components for dashboard moderation pages.
+
+**Hooks (`lib/dashboard/`):**
+
+| Hook | Purpose |
+|------|---------|
+| `usePaginatedList<T>` | Generic fetch with pagination, search, filters |
+| `useDashboardAction` | CRUD operations with loading/toast feedback |
+| `useStatusAction` | Status update actions |
+| `useEntityAction` | Entity-specific actions (approve, reject, delete) |
+| `useModerationAction` | Moderation workflow actions |
+| `useBulkAction` | Bulk operations on multiple items |
+
+**Status Configs (`status-config.ts`):**
+
+| Config | Statuses |
+|--------|----------|
+| `MODERATION_STATUS` | pending, approved, rejected, flagged |
+| `FEEDBACK_STATUS` | open, in_progress, resolved, closed, wont_fix |
+| `SEVERITY` | low, medium, high, critical |
+| `REPORT_STATUS` | pending, investigating, action_taken, dismissed |
+| `USER_ROLE` | user, editor, moderator, admin, superadmin |
+| `TRUST_LEVEL` | untrusted, suspicious, neutral, trusted, verified |
+
+**Shared Components (`components/dashboard/shared/`):**
+
+| Component | Purpose |
+|-----------|---------|
+| `PageHeader` | Consistent page titles with optional badge |
+| `StatusBadge` | Color-coded status indicators |
+| `EmptyState` | Empty list displays with icon/message |
+| `ReviewModal` | Modal for review/moderation actions |
+| `ConfirmModal` | Confirmation dialogs for destructive actions |
+| `FilterBar` | Search input with filter buttons |
+| `StatCard` / `StatGrid` | Metric display cards |
+| `NotesField` | Textarea for moderation notes |
+| `DetailRow` | Key-value display in modals |
+
+**Usage Example:**
+
+```tsx
+import { usePaginatedList, MODERATION_STATUS } from "@/lib/dashboard";
+import { PageHeader, StatusBadge, EmptyState } from "@/components/dashboard/shared";
+
+function MyPage() {
+  const { items, isLoading, page, totalPages, setPage } = usePaginatedList<Item>("endpoint");
+  return (
+    <div>
+      <PageHeader title="My Page" description="Description" />
+      {items.map(item => <StatusBadge style={MODERATION_STATUS[item.status]} />)}
+    </div>
+  );
+}
+```
 
 ---
 
