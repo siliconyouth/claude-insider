@@ -91,13 +91,14 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               // PayPal SDK requires scripts from paypal.com and paypalobjects.com
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://*.paypal.com https://*.paypalobjects.com",
+              // Vercel Live is used for preview deployments and feedback
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://*.paypal.com https://*.paypalobjects.com https://vercel.live https://*.vercel.live",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
               "media-src 'self' blob: https://*.elevenlabs.io",
-              // Supabase (REST API + Realtime WebSocket), PayPal, ElevenLabs, Vercel analytics
-              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io",
+              // Supabase (REST API + Realtime WebSocket), PayPal, ElevenLabs, Vercel analytics/live
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io https://vercel.live https://*.vercel.live wss://vercel.live wss://*.vercel.live",
               // PayPal buttons render in iframes
               "frame-src 'self' https://*.paypal.com https://*.paypalobjects.com",
               "frame-ancestors 'none'",

@@ -1,5 +1,5 @@
 // Cache version - UPDATE THIS ON EACH DEPLOY to bust old caches
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const STATIC_CACHE = `claude-insider-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `claude-insider-dynamic-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `claude-insider-offline-${CACHE_VERSION}`;
@@ -12,7 +12,7 @@ const STATIC_ASSETS = [
   '/resources',
   '/search',
   '/manifest.json',
-  '/icons/icon.svg',
+  '/icons/apple-touch-icon.png',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
 ];
@@ -67,7 +67,7 @@ self.addEventListener('push', (event) => {
     const options = {
       body: data.body || 'You have a new notification',
       icon: '/icons/icon-192x192.png',
-      badge: '/icons/icon-72x72.png',
+      badge: '/icons/icon-192x192.png',
       tag: data.tag || 'claude-insider-notification',
       renotify: true,
       data: {
