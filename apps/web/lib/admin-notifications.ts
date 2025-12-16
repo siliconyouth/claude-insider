@@ -18,7 +18,7 @@ const APP_NAME = "Claude Insider";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://claudeinsider.com";
 
 interface AdminNotifyParams {
-  type: "new_user" | "beta_application" | "edit_suggestion" | "resource_submission";
+  type: "new_user" | "beta_application" | "edit_suggestion" | "resource_submission" | "donation";
   title: string;
   message: string;
   data?: Record<string, unknown>;
@@ -122,6 +122,13 @@ async function sendAdminNotificationEmail(
       buttonText = "Review Resources";
       iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>`;
+      break;
+    case "donation":
+      actionUrl = `${APP_URL}/dashboard/donations`;
+      buttonText = "View Donations";
+      iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
         </svg>`;
       break;
     default:
@@ -232,6 +239,8 @@ function getPushNotificationUrl(params: AdminNotifyParams): string {
       return `${APP_URL}/dashboard/suggestions`;
     case "resource_submission":
       return `${APP_URL}/dashboard/resources/queue`;
+    case "donation":
+      return `${APP_URL}/dashboard/donations`;
     default:
       return `${APP_URL}/dashboard`;
   }
@@ -411,6 +420,51 @@ export async function notifyAdminsResourceSubmission(resource: {
       category: resource.category,
       submittedBy: resource.submittedBy,
       isNew: resource.isNew,
+    },
+  });
+}
+
+/**
+ * Notify admins about a new donation
+ */
+export async function notifyAdminsDonation(donation: {
+  id: string;
+  amount: number;
+  currency: string;
+  donorName?: string | null;
+  donorEmail?: string | null;
+  userId?: string | null;
+  paymentMethod: string;
+  isRecurring?: boolean;
+  message?: string | null;
+}): Promise<void> {
+  const donorDisplay = donation.donorName || donation.donorEmail?.split("@")[0] || "Anonymous";
+  const formattedAmount = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: donation.currency,
+  }).format(donation.amount);
+
+  const recurringLabel = donation.isRecurring ? " (recurring)" : "";
+  const messageSnippet = donation.message
+    ? `<br><br>Message: <em>"${donation.message.substring(0, 100)}${donation.message.length > 100 ? "..." : ""}"</em>`
+    : "";
+
+  await notifyAdmins({
+    type: "donation",
+    title: `💝 New Donation: ${formattedAmount}`,
+    message: `<strong>${donorDisplay}</strong>${donation.donorEmail ? ` (${donation.donorEmail})` : ""} has made a ${formattedAmount}${recurringLabel} donation via ${donation.paymentMethod}!${messageSnippet}<br><br>Thank you for supporting Claude Insider! 🎉`,
+    actorId: donation.userId || undefined,
+    resourceType: "donation",
+    resourceId: donation.id,
+    data: {
+      donationId: donation.id,
+      amount: donation.amount,
+      currency: donation.currency,
+      donorName: donation.donorName,
+      donorEmail: donation.donorEmail,
+      userId: donation.userId,
+      paymentMethod: donation.paymentMethod,
+      isRecurring: donation.isRecurring,
     },
   });
 }

@@ -15,6 +15,7 @@ import {
   getDonorBadge,
 } from '@/lib/donations/server';
 import { queueDonationReceipt, queueDonationThankYou } from '@/lib/job-queue';
+import { notifyAdminsDonation } from '@/lib/admin-notifications';
 import type { CapturePayPalOrderRequest, CapturePayPalOrderResponse } from '@/lib/donations/types';
 
 export async function POST(request: NextRequest) {
@@ -58,12 +59,14 @@ export async function POST(request: NextRequest) {
     // Capture the PayPal order
     const capture = await capturePayPalOrder(order_id);
 
-    // Update donation status
+    // Update donation status with payer info from PayPal
     const updatedDonation = await updateDonationStatus(
       donation.id,
       capture.status,
       capture.transactionId,
-      capture.payerId
+      capture.payerId,
+      capture.payerEmail,  // Save donor email from PayPal
+      capture.payerName    // Save donor name from PayPal
     );
 
     if (!updatedDonation) {
@@ -88,6 +91,19 @@ export async function POST(request: NextRequest) {
           donation.is_recurring || false
         );
       }
+
+      // Notify admins about the donation (in-app, email, and push)
+      await notifyAdminsDonation({
+        id: donation.id,
+        amount: donation.amount,
+        currency: donation.currency || 'USD',
+        donorName: capture.payerName,
+        donorEmail: capture.payerEmail,
+        userId: donation.user_id,
+        paymentMethod: 'PayPal',
+        isRecurring: donation.is_recurring || false,
+        message: donation.message,
+      });
 
       // Check if user has a badge (if they're logged in)
       if (donation.user_id) {

@@ -2,8 +2,13 @@
  * Admin Donations API
  *
  * GET /api/dashboard/donations
+ *   Returns comprehensive donation statistics for the admin dashboard.
  *
- * Returns comprehensive donation statistics for the admin dashboard.
+ * POST /api/dashboard/donations
+ *   Perform actions on donations:
+ *   - resend_thank_you: Resend thank you email to a donor
+ *   - update_donor_info: Update donor email/name for a donation
+ *
  * Requires admin or superadmin role.
  */
 
@@ -12,6 +17,8 @@ import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { pool } from '@/lib/db';
 import { hasMinRole, type UserRole } from '@/lib/roles';
+import { queueDonationThankYou } from '@/lib/job-queue';
+import { notifyAdminsDonation } from '@/lib/admin-notifications';
 
 interface DonationTrend {
   date: string;
@@ -224,6 +231,164 @@ export async function GET(request: NextRequest) {
     console.error('Donations stats error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch donation statistics' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * POST /api/dashboard/donations
+ *
+ * Perform actions on donations (admin only)
+ */
+export async function POST(request: NextRequest) {
+  try {
+    // Auth check
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Role check
+    const userRole = session.user.role as UserRole;
+    if (!hasMinRole(userRole, 'admin')) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    const body = await request.json();
+    const { action, donation_id, donor_email, donor_name } = body;
+
+    if (!action) {
+      return NextResponse.json({ error: 'Action is required' }, { status: 400 });
+    }
+
+    switch (action) {
+      case 'resend_thank_you': {
+        // Get the donation
+        const donationResult = await pool.query(
+          'SELECT * FROM donations WHERE id = $1',
+          [donation_id]
+        );
+        const donation = donationResult.rows[0];
+
+        if (!donation) {
+          return NextResponse.json({ error: 'Donation not found' }, { status: 404 });
+        }
+
+        // Use provided email or fall back to stored email
+        const emailToUse = donor_email || donation.donor_email;
+        if (!emailToUse) {
+          return NextResponse.json(
+            { error: 'No email address available. Please provide donor_email.' },
+            { status: 400 }
+          );
+        }
+
+        // Queue the thank you email
+        const jobId = await queueDonationThankYou(
+          emailToUse,
+          donor_name || donation.donor_name,
+          donation.amount,
+          donation.currency || 'USD',
+          donation.is_recurring || false
+        );
+
+        // If a new email was provided, update the donation record
+        if (donor_email && donor_email !== donation.donor_email) {
+          await pool.query(
+            `UPDATE donations SET donor_email = $1, donor_name = COALESCE($2, donor_name), updated_at = NOW() WHERE id = $3`,
+            [donor_email, donor_name || null, donation_id]
+          );
+        }
+
+        console.log(`[Admin] Resent thank you email for donation ${donation_id} to ${emailToUse} (job: ${jobId})`);
+
+        return NextResponse.json({
+          success: true,
+          message: `Thank you email queued for ${emailToUse}`,
+          job_id: jobId,
+        });
+      }
+
+      case 'update_donor_info': {
+        if (!donation_id) {
+          return NextResponse.json({ error: 'donation_id is required' }, { status: 400 });
+        }
+
+        if (!donor_email && !donor_name) {
+          return NextResponse.json(
+            { error: 'At least donor_email or donor_name is required' },
+            { status: 400 }
+          );
+        }
+
+        // Update the donation record
+        const updateResult = await pool.query(
+          `UPDATE donations
+           SET donor_email = COALESCE($1, donor_email),
+               donor_name = COALESCE($2, donor_name),
+               updated_at = NOW()
+           WHERE id = $3
+           RETURNING id, donor_email, donor_name`,
+          [donor_email || null, donor_name || null, donation_id]
+        );
+
+        if (updateResult.rowCount === 0) {
+          return NextResponse.json({ error: 'Donation not found' }, { status: 404 });
+        }
+
+        console.log(`[Admin] Updated donor info for donation ${donation_id}`);
+
+        return NextResponse.json({
+          success: true,
+          message: 'Donor info updated',
+          donation: updateResult.rows[0],
+        });
+      }
+
+      case 'send_admin_notification': {
+        // Get the donation
+        const donationResult = await pool.query(
+          'SELECT * FROM donations WHERE id = $1',
+          [donation_id]
+        );
+        const donation = donationResult.rows[0];
+
+        if (!donation) {
+          return NextResponse.json({ error: 'Donation not found' }, { status: 404 });
+        }
+
+        // Send admin notification
+        await notifyAdminsDonation({
+          id: donation.id,
+          amount: donation.amount,
+          currency: donation.currency || 'USD',
+          donorName: donor_name || donation.donor_name,
+          donorEmail: donor_email || donation.donor_email,
+          userId: donation.user_id,
+          paymentMethod: donation.payment_method,
+          isRecurring: donation.is_recurring || false,
+          message: donation.message,
+        });
+
+        console.log(`[Admin] Sent admin notification for donation ${donation_id}`);
+
+        return NextResponse.json({
+          success: true,
+          message: 'Admin notification sent',
+        });
+      }
+
+      default:
+        return NextResponse.json(
+          { error: `Unknown action: ${action}` },
+          { status: 400 }
+        );
+    }
+  } catch (error) {
+    console.error('Donation action error:', error);
+    return NextResponse.json(
+      { error: 'Failed to perform donation action' },
       { status: 500 }
     );
   }

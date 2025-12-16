@@ -66,15 +66,21 @@ export async function updateDonationStatus(
   donationId: string,
   status: string,
   transactionId?: string,
-  paypalPayerId?: string
+  paypalPayerId?: string,
+  donorEmail?: string,
+  donorName?: string
 ): Promise<Donation | null> {
   const result = await pool.query(
     `UPDATE donations
-     SET status = $2, transaction_id = COALESCE($3, transaction_id),
-         paypal_payer_id = COALESCE($4, paypal_payer_id), updated_at = NOW()
+     SET status = $2,
+         transaction_id = COALESCE($3, transaction_id),
+         paypal_payer_id = COALESCE($4, paypal_payer_id),
+         donor_email = COALESCE($5, donor_email),
+         donor_name = COALESCE($6, donor_name),
+         updated_at = NOW()
      WHERE id = $1
      RETURNING *`,
-    [donationId, status, transactionId || null, paypalPayerId || null]
+    [donationId, status, transactionId || null, paypalPayerId || null, donorEmail || null, donorName || null]
   );
   return result.rows[0] || null;
 }
