@@ -11,6 +11,7 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 import { ANTHROPIC_URLS, type ClaudeModel, type AnthropicAccountInfo, getBestAvailableModel } from "@/lib/api-keys";
+import { triggerCreditsRefresh } from "@/hooks/use-api-credits";
 
 interface ApiKeyInfo {
   id: string;
@@ -135,6 +136,7 @@ export function ApiKeySettings() {
         setShowApiKeyInput(false);
         setValidationResult(null);
         fetchApiKeys();
+        triggerCreditsRefresh(); // Update header indicator
         setSuccess("API key connected successfully!");
         setTimeout(() => setSuccess(null), 5000);
       }, 3000);
@@ -169,6 +171,7 @@ export function ApiKeySettings() {
 
       setSuccess("API key validated successfully!");
       fetchApiKeys();
+      triggerCreditsRefresh(); // Update header indicator
     } catch {
       setError("Failed to validate API key");
     } finally {
@@ -186,6 +189,7 @@ export function ApiKeySettings() {
         setSuccess("API key removed");
         setShowDeleteConfirm(false);
         fetchApiKeys();
+        triggerCreditsRefresh(); // Update header indicator
       }
     } catch {
       setError("Failed to delete API key");
@@ -207,6 +211,7 @@ export function ApiKeySettings() {
       if (response.ok) {
         setSuccess("Model preference updated");
         fetchApiKeys();
+        triggerCreditsRefresh(); // Update header indicator
         // Clear success message after 3 seconds
         setTimeout(() => setSuccess(null), 3000);
       } else {
