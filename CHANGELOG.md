@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.90.0] - 2025-12-16
+### Chat UI Redesign
+- **Shared ChatMessage Component**: New `components/chat/chat-message.tsx` with unified styling
+- **AI Avatar**: Claude sparkle icon next to all AI messages (emerald-themed)
+- **Modern Bubble Styling**: User messages with gradient, AI with emerald accent + tail cutoffs
+- **Entrance Animations**: Subtle fade-in-up for new messages (respects reduced-motion)
+- **Code Reduction**: ~80% less message rendering code across 4 chat interfaces
+- **Files Updated**: `ai-assistant-tab.tsx`, `chat-page-content.tsx`, `ask-ai-modal.tsx`, `voice-assistant-full.tsx`
+- **New Files**: `chat-message.tsx` (229 lines), `chat-message-styles.ts` (120 lines)
+
 ## [0.89.0] - 2025-12-16
 ### Notification System Refactoring
 - **Performance**: 3x faster notification creation with parallel database queries (Promise.all)

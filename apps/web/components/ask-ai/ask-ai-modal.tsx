@@ -10,6 +10,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/design-system";
 import { useAskAI } from "./ask-ai-provider";
+import { ChatMessage, ChatMessageLoading } from "@/components/chat/chat-message";
 import { useAuth } from "@/components/providers/auth-provider";
 import { triggerCreditsRefresh } from "@/hooks/use-api-credits";
 import type { AIConversation } from "@/app/actions/ai-conversations";
@@ -446,34 +447,17 @@ export function AskAIModal() {
                 </div>
               )}
 
-              {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={cn(
-                    "flex",
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  )}
-                >
-                  <div
-                    className={cn(
-                      "max-w-[85%] rounded-2xl px-4 py-3",
-                      message.role === "user"
-                        ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white"
-                        : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-                    )}
-                  >
-                    <div className="prose prose-sm dark:prose-invert max-w-none">
-                      {message.content || (
-                        <span className="inline-flex gap-1">
-                          <span className="animate-bounce">●</span>
-                          <span className="animate-bounce" style={{ animationDelay: "0.1s" }}>●</span>
-                          <span className="animate-bounce" style={{ animationDelay: "0.2s" }}>●</span>
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {messages.map((message, index) =>
+                message.content ? (
+                  <ChatMessage
+                    key={index}
+                    role={message.role}
+                    content={message.content}
+                  />
+                ) : (
+                  <ChatMessageLoading key={index} />
+                )
+              )}
               <div ref={messagesEndRef} />
             </>
           )}

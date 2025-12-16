@@ -12,7 +12,7 @@ import { usePathname } from "next/navigation";
 import { track } from "@vercel/analytics";
 import { cn } from "@/lib/design-system";
 import { useUnifiedChat } from "../unified-chat-provider";
-import { markdownToSpeakableText, markdownToDisplayText } from "@/lib/claude-utils";
+import { markdownToSpeakableText } from "@/lib/claude-utils";
 import {
   getPageContent,
   getVisibleSection,
@@ -38,7 +38,12 @@ import {
 } from "@/lib/speech-recognition";
 import { useAnnouncer } from "@/hooks/use-aria-live";
 import { triggerCreditsRefresh } from "@/hooks/use-api-credits";
-import { LinkifiedText } from "@/components/linkified-text";
+import {
+  ChatMessage,
+  ChatMessageLoading,
+  ChatMessageStreaming,
+  ChatMessageAction,
+} from "@/components/chat/chat-message";
 
 // ============================================================================
 // Types
@@ -1092,42 +1097,23 @@ export function AIAssistantTab() {
             )}
 
             {messages.map((msg, i) => (
-              <div
+              <ChatMessage
                 key={i}
-                className={cn(
-                  "flex",
-                  msg.role === "user" ? "justify-end" : "justify-start"
-                )}
-              >
-                <div
-                  className={cn(
-                    "max-w-[85%] rounded-2xl px-4 py-3",
-                    msg.role === "user"
-                      ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white"
-                      : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
-                  )}
-                >
-                  <div className="prose prose-sm dark:prose-invert max-w-none">
-                    <LinkifiedText text={markdownToDisplayText(msg.content)} />
-                  </div>
-                  {msg.role === "assistant" && (
-                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-                      <button
+                role={msg.role}
+                content={msg.content}
+                actions={
+                  msg.role === "assistant" ? (
+                    <>
+                      <ChatMessageAction
                         onClick={() => {
-                          // Toggle: if speaking THIS message, stop; else play this message
                           if (speakingMessageIdx === i && isSpeaking) {
                             stopSpeaking();
                           } else {
                             speakText(msg.content, i);
                           }
                         }}
-                        className={cn(
-                          "flex items-center gap-1 px-2 py-1 rounded transition-colors text-sm",
-                          speakingMessageIdx === i && isSpeaking
-                            ? "text-blue-500 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
-                            : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                        )}
-                        title={speakingMessageIdx === i && isSpeaking ? "Stop speaking" : "Speak this message"}
+                        isActive={speakingMessageIdx === i && isSpeaking}
+                        ariaLabel={speakingMessageIdx === i && isSpeaking ? "Stop speaking" : "Listen to message"}
                       >
                         {speakingMessageIdx === i && isSpeaking ? (
                           <>
@@ -1140,46 +1126,31 @@ export function AIAssistantTab() {
                             <span>Listen</span>
                           </>
                         )}
-                      </button>
-                      <button
+                      </ChatMessageAction>
+                      <ChatMessageAction
                         onClick={() => {
                           navigator.clipboard.writeText(msg.content);
                           announce("Copied to clipboard");
                         }}
-                        className="flex items-center gap-1 px-2 py-1 rounded text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                        title="Copy to clipboard"
+                        ariaLabel="Copy message to clipboard"
                       >
                         <CopyIcon className="h-4 w-4" />
                         <span>Copy</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
+                      </ChatMessageAction>
+                    </>
+                  ) : undefined
+                }
+              />
             ))}
 
             {/* Streaming content */}
             {streamingContent && (
-              <div className="flex justify-start">
-                <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-gray-100 dark:bg-gray-800">
-                  <div className="prose prose-sm dark:prose-invert max-w-none">
-                    <LinkifiedText text={markdownToDisplayText(streamingContent)} />
-                  </div>
-                </div>
-              </div>
+              <ChatMessageStreaming content={streamingContent} />
             )}
 
             {/* Loading indicator */}
             {isLoading && !streamingContent && (
-              <div className="flex justify-start">
-                <div className="rounded-2xl px-4 py-3 bg-gray-100 dark:bg-gray-800">
-                  <span className="inline-flex gap-1 text-gray-400">
-                    <span className="animate-bounce">●</span>
-                    <span className="animate-bounce" style={{ animationDelay: "0.1s" }}>●</span>
-                    <span className="animate-bounce" style={{ animationDelay: "0.2s" }}>●</span>
-                  </span>
-                </div>
-              </div>
+              <ChatMessageLoading />
             )}
 
             {/* Error */}

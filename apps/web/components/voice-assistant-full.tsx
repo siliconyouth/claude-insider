@@ -4,7 +4,13 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { track } from "@vercel/analytics";
 import type { Message } from "@/lib/claude-utils";
-import { markdownToSpeakableText, markdownToDisplayText } from "@/lib/claude-utils";
+import { markdownToSpeakableText } from "@/lib/claude-utils";
+import {
+  ChatMessage,
+  ChatMessageLoading,
+  ChatMessageStreaming,
+  ChatMessageAction,
+} from "@/components/chat/chat-message";
 import {
   getConversationHistory,
   saveConversationHistory,
@@ -761,22 +767,22 @@ export function VoiceAssistantFull() {
         ) : (
           <div className="space-y-4">
             {messages.map((message, index) => (
-              <div key={index} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                  message.role === "user"
-                    ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white"
-                    : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
-                }`}>
-                  <p className="whitespace-pre-wrap text-sm">
-                    {message.role === "assistant" ? markdownToDisplayText(message.content) : message.content}
-                  </p>
-                  {message.role === "assistant" && (
-                    <button
+              <ChatMessage
+                key={index}
+                role={message.role}
+                content={message.content}
+                actions={
+                  message.role === "assistant" ? (
+                    <ChatMessageAction
                       onClick={() => speakMessage(message.content, index)}
-                      disabled={isTTSLoading && speakingMessageIndex !== index}
-                      className={`mt-2 flex items-center gap-1 text-xs transition-colors ${
-                        speakingMessageIndex === index ? "text-cyan-500" : "text-gray-400 hover:text-cyan-500"
-                      }`}
+                      isActive={speakingMessageIndex === index}
+                      ariaLabel={
+                        speakingMessageIndex === index && isTTSLoading
+                          ? "Loading audio"
+                          : speakingMessageIndex === index
+                            ? "Stop speaking"
+                            : "Listen to message"
+                      }
                     >
                       {speakingMessageIndex === index && isTTSLoading ? (
                         <>
@@ -788,7 +794,9 @@ export function VoiceAssistantFull() {
                         </>
                       ) : speakingMessageIndex === index ? (
                         <>
-                          <svg className="h-4 w-4 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
+                          <svg className="h-4 w-4 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                          </svg>
                           <span>Stop</span>
                         </>
                       ) : (
@@ -799,29 +807,13 @@ export function VoiceAssistantFull() {
                           <span>Listen</span>
                         </>
                       )}
-                    </button>
-                  )}
-                </div>
-              </div>
+                    </ChatMessageAction>
+                  ) : undefined
+                }
+              />
             ))}
-            {streamingContent && (
-              <div className="flex justify-start">
-                <div className="max-w-[80%] rounded-2xl bg-gray-100 px-4 py-2 dark:bg-gray-800">
-                  <p className="whitespace-pre-wrap text-sm text-gray-900 dark:text-white">{markdownToDisplayText(streamingContent)}</p>
-                </div>
-              </div>
-            )}
-            {isLoading && !streamingContent && (
-              <div className="flex justify-start">
-                <div className="rounded-2xl bg-gray-100 px-4 py-3 dark:bg-gray-800">
-                  <div className="flex space-x-1">
-                    <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]"></div>
-                    <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]"></div>
-                    <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400"></div>
-                  </div>
-                </div>
-              </div>
-            )}
+            {streamingContent && <ChatMessageStreaming content={streamingContent} />}
+            {isLoading && !streamingContent && <ChatMessageLoading />}
             <div ref={messagesEndRef} />
           </div>
         )}

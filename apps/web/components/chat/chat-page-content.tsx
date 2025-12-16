@@ -11,7 +11,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { track } from "@vercel/analytics";
 import type { Message } from "@/lib/claude-utils";
-import { markdownToSpeakableText, markdownToDisplayText } from "@/lib/claude-utils";
+import { markdownToSpeakableText } from "@/lib/claude-utils";
 import {
   getPageContent,
   getVisibleSection,
@@ -32,9 +32,14 @@ import {
   isSpeechRecognitionSupported,
 } from "@/lib/speech-recognition";
 import { triggerCreditsRefresh } from "@/hooks/use-api-credits";
-import { LinkifiedText } from "@/components/linkified-text";
 import { MentionInput } from "./mention-input";
 import { cn } from "@/lib/design-system";
+import {
+  ChatMessage,
+  ChatMessageLoading,
+  ChatMessageStreaming,
+  chatMessageStyles,
+} from "@/components/chat/chat-message";
 
 interface StreamEvent {
   type: "text" | "done" | "error";
@@ -923,36 +928,20 @@ export function ChatPageContent() {
           ) : (
             <div className="max-w-3xl mx-auto space-y-6">
               {messages.map((message, index) => (
-                <div
+                <ChatMessage
                   key={index}
-                  className={cn(
-                    "flex",
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  )}
-                >
-                  <div
-                    className={cn(
-                      "max-w-[80%] rounded-2xl px-4 py-3",
-                      message.role === "user"
-                        ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white"
-                        : "bg-gray-100 dark:bg-[#111111] text-gray-900 dark:text-white border border-gray-200 dark:border-[#262626]"
-                    )}
-                  >
-                    <div className="text-sm whitespace-pre-wrap break-words">
-                      {message.role === "assistant" ? (
-                        <LinkifiedText text={markdownToDisplayText(message.content)} />
-                      ) : (
-                        message.content
-                      )}
-                    </div>
-                    {message.role === "assistant" && (
-                      <div className="flex items-center gap-3 mt-3 pt-2 border-t border-gray-200 dark:border-gray-700">
+                  role={message.role}
+                  content={message.content}
+                  actions={
+                    message.role === "assistant" ? (
+                      <>
                         <button
                           onClick={() => copyToClipboard(message.content, index)}
                           className={cn(
-                            "flex items-center gap-1 text-xs transition-colors",
-                            copiedMessageIndex === index ? "text-green-500" : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            chatMessageStyles.actions.button,
+                            copiedMessageIndex === index && "text-green-500 dark:text-green-400"
                           )}
+                          aria-label="Copy message"
                         >
                           {copiedMessageIndex === index ? (
                             <>
@@ -974,9 +963,11 @@ export function ChatPageContent() {
                           onClick={() => speakMessage(message.content, index)}
                           disabled={isTTSLoading && speakingMessageIndex !== index}
                           className={cn(
-                            "flex items-center gap-1 text-xs transition-colors",
-                            speakingMessageIndex === index ? "text-cyan-500" : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 disabled:opacity-50"
+                            chatMessageStyles.actions.button,
+                            speakingMessageIndex === index && chatMessageStyles.actions.buttonActive,
+                            "disabled:opacity-50"
                           )}
+                          aria-label={speakingMessageIndex === index ? "Stop speaking" : "Listen to message"}
                         >
                           {speakingMessageIndex === index && isTTSLoading ? (
                             <>
@@ -1000,34 +991,20 @@ export function ChatPageContent() {
                             </>
                           )}
                         </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                      </>
+                    ) : undefined
+                  }
+                />
               ))}
 
               {/* Streaming response */}
               {streamingContent && (
-                <div className="flex justify-start">
-                  <div className="max-w-[80%] rounded-2xl px-4 py-3 bg-gray-100 dark:bg-[#111111] border border-gray-200 dark:border-[#262626]">
-                    <div className="text-sm text-gray-900 dark:text-white whitespace-pre-wrap break-words">
-                      <LinkifiedText text={markdownToDisplayText(streamingContent)} />
-                    </div>
-                  </div>
-                </div>
+                <ChatMessageStreaming content={streamingContent} />
               )}
 
               {/* Loading indicator */}
               {isLoading && !streamingContent && (
-                <div className="flex justify-start">
-                  <div className="rounded-2xl px-4 py-3 bg-gray-100 dark:bg-[#111111] border border-gray-200 dark:border-[#262626]">
-                    <div className="flex space-x-1">
-                      <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.3s]" />
-                      <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:-0.15s]" />
-                      <div className="h-2 w-2 animate-bounce rounded-full bg-gray-400" />
-                    </div>
-                  </div>
-                </div>
+                <ChatMessageLoading />
               )}
 
               <div ref={messagesEndRef} />
