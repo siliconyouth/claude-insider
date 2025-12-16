@@ -81,11 +81,17 @@ export async function POST(request: NextRequest) {
       // Queue receipt generation (processed in background)
       await queueDonationReceipt(donation.id);
 
+      // Determine best email to use:
+      // 1. User's account email (stored at donation creation if logged in)
+      // 2. PayPal payer email as fallback
+      const emailForThankYou = donation.donor_email || capture.payerEmail;
+      const nameForThankYou = donation.donor_name || capture.payerName;
+
       // Queue thank you email (processed in background)
-      if (capture.payerEmail) {
+      if (emailForThankYou) {
         await queueDonationThankYou(
-          capture.payerEmail,
-          capture.payerName,
+          emailForThankYou,
+          nameForThankYou,
           donation.amount,
           donation.currency || 'USD',
           donation.is_recurring || false
@@ -93,12 +99,13 @@ export async function POST(request: NextRequest) {
       }
 
       // Notify admins about the donation (in-app, email, and push)
+      // Include both user account info and PayPal payer info for completeness
       await notifyAdminsDonation({
         id: donation.id,
         amount: donation.amount,
         currency: donation.currency || 'USD',
-        donorName: capture.payerName,
-        donorEmail: capture.payerEmail,
+        donorName: nameForThankYou || capture.payerName,
+        donorEmail: emailForThankYou || capture.payerEmail,
         userId: donation.user_id,
         paymentMethod: 'PayPal',
         isRecurring: donation.is_recurring || false,

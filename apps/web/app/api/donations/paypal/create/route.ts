@@ -10,6 +10,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import { pool } from '@/lib/db';
 import { createPayPalOrder, isPayPalConfigured } from '@/lib/donations/paypal';
 import { createDonation, getDonationSettings } from '@/lib/donations/server';
 import type { CreatePayPalOrderRequest, CreatePayPalOrderResponse } from '@/lib/donations/types';
@@ -56,6 +57,20 @@ export async function POST(request: NextRequest) {
     const session = await auth.api.getSession({ headers: await headers() });
     const userId = session?.user?.id || null;
 
+    // If user is logged in, fetch their email and name from the database
+    let userEmail: string | null = null;
+    let userName: string | null = null;
+    if (userId) {
+      const userResult = await pool.query(
+        `SELECT email, name FROM "user" WHERE id = $1`,
+        [userId]
+      );
+      if (userResult.rows[0]) {
+        userEmail = userResult.rows[0].email;
+        userName = userResult.rows[0].name;
+      }
+    }
+
     // Get client info for audit trail
     const forwardedFor = request.headers.get('x-forwarded-for');
     const ipAddress = forwardedFor?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || null;
@@ -78,6 +93,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Create pending donation record in database
+    // Store user's account email/name (will be supplemented with PayPal info on capture)
     await createDonation({
       user_id: userId,
       amount,
@@ -86,6 +102,8 @@ export async function POST(request: NextRequest) {
       paypal_order_id: orderId,
       is_recurring: is_recurring || false,
       recurring_frequency: recurring_frequency || undefined,
+      donor_name: is_anonymous ? undefined : (userName || undefined),
+      donor_email: userEmail || undefined,
       is_anonymous: is_anonymous || false,
       message: message || undefined,
       ip_address: ipAddress || undefined,

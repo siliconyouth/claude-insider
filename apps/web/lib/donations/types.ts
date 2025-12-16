@@ -27,12 +27,14 @@ export interface Donation {
   transaction_id: string | null;
   paypal_order_id: string | null;
   paypal_payer_id: string | null;
+  paypal_payer_email: string | null;  // Email from PayPal transaction
+  paypal_payer_name: string | null;   // Name from PayPal transaction
   status: DonationStatus;
   is_recurring: boolean;
   recurring_frequency: RecurringFrequency | null;
   subscription_id: string | null;
-  donor_name: string | null;
-  donor_email: string | null;
+  donor_name: string | null;          // From user account (for logged-in users)
+  donor_email: string | null;         // From user account (for logged-in users)
   is_anonymous: boolean;
   message: string | null;
   admin_notes: string | null;

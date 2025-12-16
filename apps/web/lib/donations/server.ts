@@ -67,20 +67,25 @@ export async function updateDonationStatus(
   status: string,
   transactionId?: string,
   paypalPayerId?: string,
-  donorEmail?: string,
-  donorName?: string
+  paypalPayerEmail?: string,
+  paypalPayerName?: string
 ): Promise<Donation | null> {
+  // Note: PayPal payer info goes to paypal_payer_email/paypal_payer_name columns
+  // The donor_email/donor_name columns should contain the user's account info (set at creation)
+  // We also update donor_email/donor_name as fallbacks if they weren't set
   const result = await pool.query(
     `UPDATE donations
      SET status = $2,
          transaction_id = COALESCE($3, transaction_id),
          paypal_payer_id = COALESCE($4, paypal_payer_id),
-         donor_email = COALESCE($5, donor_email),
-         donor_name = COALESCE($6, donor_name),
+         paypal_payer_email = COALESCE($5, paypal_payer_email),
+         paypal_payer_name = COALESCE($6, paypal_payer_name),
+         donor_email = COALESCE(donor_email, $5),
+         donor_name = COALESCE(donor_name, $6),
          updated_at = NOW()
      WHERE id = $1
      RETURNING *`,
-    [donationId, status, transactionId || null, paypalPayerId || null, donorEmail || null, donorName || null]
+    [donationId, status, transactionId || null, paypalPayerId || null, paypalPayerEmail || null, paypalPayerName || null]
   );
   return result.rows[0] || null;
 }
