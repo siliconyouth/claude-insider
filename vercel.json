@@ -23,6 +23,10 @@
       "schedule": "* * * * *"
     },
     {
+      "path": "/api/cron/process-jobs",
+      "schedule": "* * * * *"
+    },
+    {
       "path": "/api/cron/e2ee-cleanup",
       "schedule": "0 3 * * *"
     }

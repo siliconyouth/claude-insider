@@ -12,9 +12,9 @@ import { capturePayPalOrder, isPayPalConfigured } from '@/lib/donations/paypal';
 import {
   getDonationByPayPalOrderId,
   updateDonationStatus,
-  createDonationReceipt,
   getDonorBadge,
 } from '@/lib/donations/server';
+import { queueDonationReceipt, queueDonationThankYou } from '@/lib/job-queue';
 import type { CapturePayPalOrderRequest, CapturePayPalOrderResponse } from '@/lib/donations/types';
 
 export async function POST(request: NextRequest) {
@@ -70,13 +70,24 @@ export async function POST(request: NextRequest) {
       throw new Error('Failed to update donation status');
     }
 
-    // If completed, generate receipt and check badge
+    // If completed, queue receipt generation and thank you email
     let badgeTier: string | undefined;
     let badgeUpgraded = false;
 
     if (capture.status === 'completed') {
-      // Generate receipt
-      await createDonationReceipt(donation.id);
+      // Queue receipt generation (processed in background)
+      await queueDonationReceipt(donation.id);
+
+      // Queue thank you email (processed in background)
+      if (capture.payerEmail) {
+        await queueDonationThankYou(
+          capture.payerEmail,
+          capture.payerName,
+          donation.amount,
+          donation.currency || 'USD',
+          donation.is_recurring || false
+        );
+      }
 
       // Check if user has a badge (if they're logged in)
       if (donation.user_id) {
@@ -88,12 +99,6 @@ export async function POST(request: NextRequest) {
           badgeUpgraded = true; // TODO: Compare with previous tier
         }
       }
-
-      // TODO: Send thank you email if enabled
-      // const settings = await getDonationSettings();
-      // if (settings.thank_you_email_enabled && capture.payerEmail) {
-      //   await sendThankYouEmail(capture.payerEmail, updatedDonation);
-      // }
     }
 
     const response: CapturePayPalOrderResponse = {
