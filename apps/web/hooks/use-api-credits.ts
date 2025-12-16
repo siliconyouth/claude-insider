@@ -131,8 +131,12 @@ export function useApiCredits(pollInterval: number = 30000) {
   const [error, setError] = useState<string | null>(null);
 
   const fetchCredits = useCallback(async () => {
+    // Debug logging - remove after fixing
+    console.log("[useApiCredits] fetchCredits called:", { isAuthLoading, isAuthenticated });
+
     // Wait for auth to be determined before doing anything
     if (isAuthLoading) {
+      console.log("[useApiCredits] Auth still loading, waiting...");
       return; // Keep showing cached data while auth loads
     }
 
@@ -163,6 +167,13 @@ export function useApiCredits(pollInterval: number = 30000) {
 
       const result = await response.json();
       const apiKey = result.apiKeys?.[0];
+
+      // Debug logging - remove after fixing
+      console.log("[useApiCredits] API Response:", {
+        hasApiKeys: !!result.apiKeys?.length,
+        apiKey: apiKey ? { isValid: apiKey.isValid, keyHint: apiKey.keyHint, preferredModel: apiKey.preferredModel } : null,
+        aiPreferences: result.aiPreferences,
+      });
 
       // Show model selector if user has a valid API key
       // Don't require aiPreferences.useOwnApiKey - if they have a key, show it
@@ -227,6 +238,13 @@ export function useApiCredits(pollInterval: number = 30000) {
           modelTier: newModelTier,
         });
       } else {
+        // Debug logging - remove after fixing
+        console.log("[useApiCredits] Key not valid or missing:", {
+          hasApiKey: !!apiKey,
+          isValidValue: apiKey?.isValid,
+          isValidType: typeof apiKey?.isValid,
+        });
+
         setData({
           hasOwnKey: !!apiKey,
           isValid: apiKey?.isValid === true,
