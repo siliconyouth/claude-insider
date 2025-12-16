@@ -109,7 +109,7 @@ function calculateEstimatedCost(
 }
 
 export function useApiCredits(pollInterval: number = 30000) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
 
   // Initialize with cached data for instant display
   const [data, setData] = useState<ApiCreditsData>(() => {
@@ -131,8 +131,13 @@ export function useApiCredits(pollInterval: number = 30000) {
   const [error, setError] = useState<string | null>(null);
 
   const fetchCredits = useCallback(async () => {
+    // Wait for auth to be determined before doing anything
+    if (isAuthLoading) {
+      return; // Keep showing cached data while auth loads
+    }
+
     if (!isAuthenticated) {
-      // Clear cache on logout
+      // Only clear cache when definitively logged out (not just loading)
       clearCachedPref();
       setData({
         hasOwnKey: false,
@@ -245,20 +250,20 @@ export function useApiCredits(pollInterval: number = 30000) {
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isAuthLoading]);
 
-  // Initial fetch
+  // Initial fetch - runs when auth state is determined
   useEffect(() => {
     fetchCredits();
   }, [fetchCredits]);
 
-  // Poll for updates
+  // Poll for updates - only when authenticated and auth is not loading
   useEffect(() => {
-    if (!isAuthenticated || pollInterval <= 0) return;
+    if (isAuthLoading || !isAuthenticated || pollInterval <= 0) return;
 
     const interval = setInterval(fetchCredits, pollInterval);
     return () => clearInterval(interval);
-  }, [isAuthenticated, pollInterval, fetchCredits]);
+  }, [isAuthenticated, isAuthLoading, pollInterval, fetchCredits]);
 
   // Listen for usage updates via custom events
   useEffect(() => {
@@ -299,7 +304,8 @@ export function useApiCredits(pollInterval: number = 30000) {
 
   return {
     ...data,
-    isLoading,
+    // Show loading while auth is pending OR while fetching credits
+    isLoading: isAuthLoading || isLoading,
     error,
     refresh,
     changeModel,
