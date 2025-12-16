@@ -6,5 +6,6 @@
 
 export { UnifiedChatProvider, useUnifiedChat } from "./unified-chat-provider";
 export { UnifiedChatWindow } from "./unified-chat-window";
+export { FloatingChatButton } from "./floating-chat-button";
 export { openUnifiedChat, openAIAssistant, openMessages, openAssistant } from "./unified-chat-provider";
 export type { UnifiedChatState, AIContext, OpenOptions } from "./unified-chat-provider";

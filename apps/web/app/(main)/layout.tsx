@@ -12,7 +12,7 @@ import { AuthModalWrapper, OnboardingModalWrapper } from "@/components/auth";
 import { FeedbackButton } from "@/components/feedback/feedback-button";
 import { I18nProvider } from "@/i18n";
 import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
-import { UnifiedChatProvider, UnifiedChatWindow } from "@/components/unified-chat";
+import { UnifiedChatProvider, UnifiedChatWindow, FloatingChatButton } from "@/components/unified-chat";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
 import { FingerprintProvider } from "@/components/providers/fingerprint-provider";
@@ -203,6 +203,7 @@ export default async function MainLayout({
                     {children}
                     <VoiceAssistantErrorBoundary>
                       <UnifiedChatWindow />
+                      <FloatingChatButton />
                     </VoiceAssistantErrorBoundary>
                     <AuthModalWrapper />
                     <OnboardingModalWrapper />

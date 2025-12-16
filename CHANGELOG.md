@@ -7,6 +7,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.83.0] - 2025-12-16
+
+### Added
+
+#### Floating Chat Button
+- **New Component** (`components/unified-chat/floating-chat-button.tsx`):
+  - Bottom-right fixed positioning with z-index 40
+  - Gradient styling using design system tokens (violet-blue-cyan)
+  - Glass morphism tooltip with backdrop-blur effect
+  - localStorage persistence for last opened tab ("ai" or "messages")
+  - Keyboard shortcut support (Cmd/Ctrl + .)
+  - Pulse ring animation with gradient background
+  - Secondary glow ring for visual emphasis
+  - Hover effects with scale, translate, and shadow transitions
+  - Focus states with ring offset for accessibility
+  - Vercel Analytics tracking on open
+  - ARIA live announcements for screen readers
+
+### Changed
+
+#### AI Assistant Audio System Refactored
+- **Semaphore-Based Queue System** (`components/unified-chat/tabs/ai-assistant-tab.tsx`):
+  - Added `isSpeakingRef` and `speakingMessageIndexRef` semaphores to prevent overlapping audio
+  - Added `audioCacheRef` for replay without re-fetching TTS
+  - Added `speechQueueRef` and `isProcessingQueueRef` for queue management
+  - Mobile detection (`isMobileRef`) for Safari-safe TTS strategy
+
+- **Sentence Splitting for Natural TTS**:
+  - New `splitIntoSentences()` function with smart boundary detection
+  - Avoids splitting on file extensions (.md, .ts, .tsx, etc.)
+  - Avoids splitting on domains (.com, .org, .io, etc.)
+  - Avoids splitting on abbreviations (e.g., i.e., etc., vs.)
+  - Handles version numbers, paths, and code references
+  - Respects paragraph breaks and list items as natural pauses
+
+- **Queue-Based Audio Playback**:
+  - `processSpeechQueue()` plays sentences sequentially for natural reading
+  - On mobile/Safari: joins all sentences to avoid audio.play() restrictions
+  - Audio caching prevents redundant TTS API calls on replay
+  - Graceful error handling with queue continuation
+
+- **Cleanup on Unmount**:
+  - Stops audio element on unmount
+  - Cancels browser speechSynthesis
+  - Clears speech queue and processing flags
+  - Aborts speech recognition if active
+
+### Fixed
+
+- Audio overlap issue when clicking speak on multiple messages rapidly
+- Memory leaks from orphaned audio elements
+- Safari mobile TTS blocking due to chained audio.play() calls
+
 ## [0.82.0] - 2025-12-16
 
 ### Added

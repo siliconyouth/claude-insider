@@ -98,6 +98,7 @@ export function AIAssistantTab() {
   const [selectedVoice, setSelectedVoice] = useState<string>("sarah");
   const [autoSpeak, setAutoSpeak] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speakingMessageIdx, setSpeakingMessageIdx] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState("");
   const [speechSupported, setSpeechSupported] = useState(false);
@@ -119,6 +120,16 @@ export function AIAssistantTab() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const recognizerRef = useRef<VoiceRecognizer | null>(null);
   const selectedVoiceRef = useRef(selectedVoice);
+
+  // Audio semaphore refs (prevents overlapping audio)
+  const isSpeakingRef = useRef(false);
+  const speakingMessageIndexRef = useRef<number | null>(null);
+
+  // Phase 3: Audio caching and queue system
+  const audioCacheRef = useRef<Map<string, string>>(new Map());
+  const speechQueueRef = useRef<string[]>([]);
+  const isProcessingQueueRef = useRef(false);
+  const isMobileRef = useRef(false);
 
   // ============================================================================
   // Initialization
@@ -149,6 +160,12 @@ export function AIAssistantTab() {
 
     // Check speech support
     setSpeechSupported(isSpeechRecognitionSupported());
+
+    // Detect mobile for TTS strategy (Safari blocks chained audio.play())
+    const ua = navigator.userAgent;
+    const isMobileDevice = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+    const isIOSSafari = /iPad|iPhone|iPod/.test(ua) && !("MSStream" in window);
+    isMobileRef.current = isMobileDevice || isIOSSafari;
   }, []);
 
   // Update voice ref
@@ -184,6 +201,29 @@ export function AIAssistantTab() {
     setSuggestions(pageSuggestions.slice(0, 3));
   }, [pathname]);
 
+  // Cleanup audio on unmount (prevents zombie audio)
+  useEffect(() => {
+    return () => {
+      // Stop audio
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      // Cancel browser TTS
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      // Clear speech queue
+      speechQueueRef.current = [];
+      isProcessingQueueRef.current = false;
+      // Stop speech recognition
+      if (recognizerRef.current) {
+        recognizerRef.current.abort();
+        recognizerRef.current = null;
+      }
+    };
+  }, []);
+
   // Handle AI context from Ask AI
   useEffect(() => {
     if (aiQuestion && aiContext) {
@@ -194,65 +234,256 @@ export function AIAssistantTab() {
   }, [aiContext, aiQuestion]);
 
   // ============================================================================
-  // TTS
+  // TTS - Phase 3: Queue-based streaming with caching
   // ============================================================================
 
-  const speakText = useCallback(async (text: string) => {
-    if (!text.trim()) return;
+  /**
+   * Split text into natural sentences for TTS streaming.
+   * Avoids splitting on technical dots (file extensions, URLs, abbreviations).
+   */
+  const splitIntoSentences = useCallback((text: string): string[] => {
+    const sentences: string[] = [];
+    let current = "";
+    let i = 0;
 
-    setIsSpeaking(true);
-    try {
-      const response = await fetch("/api/assistant/speak", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          text: markdownToSpeakableText(text),
-          voice: selectedVoiceRef.current,
-        }),
-      });
+    const pushCurrent = () => {
+      const trimmed = current.trim();
+      if (trimmed.length > 0) {
+        sentences.push(trimmed);
+      }
+      current = "";
+    };
 
-      if (!response.ok) {
-        // Fallback to browser TTS
-        if ("speechSynthesis" in window) {
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.onend = () => setIsSpeaking(false);
-          utterance.onerror = () => setIsSpeaking(false);
-          window.speechSynthesis.speak(utterance);
-          return;
-        }
-        throw new Error("TTS failed");
+    while (i < text.length) {
+      const char = text[i];
+      const nextChar = text[i + 1];
+
+      // Paragraph breaks create natural pauses
+      if (char === "\n" && nextChar === "\n") {
+        current += char;
+        pushCurrent();
+        while (text[i + 1] === "\n") i++;
+        i++;
+        continue;
       }
 
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
+      // List items start new sentences
+      if (char === "\n") {
+        const afterNewline = text.slice(i + 1, i + 5);
+        const isListItem = /^(\d+[.)]\s|[-*•]\s)/.test(afterNewline);
+        if (isListItem && current.trim().length > 0) {
+          pushCurrent();
+        }
+        current += char;
+        i++;
+        continue;
+      }
+
+      current += char;
+
+      // Colon followed by newline (introduces list)
+      if (char === ":" && nextChar === "\n") {
+        pushCurrent();
+        i++;
+        continue;
+      }
+
+      // Check for sentence-ending punctuation
+      if (char === "." || char === "!" || char === "?") {
+        // Skip dots that are NOT sentence endings
+        const isFileExtension = /\.(md|ts|tsx|js|jsx|json|py|go|rs|yaml|yml|env|css|html|xml|txt|sh|bash|toml|sql)$/i.test(current);
+        const isDomain = /\.(com|org|io|dev|ai|net|edu|gov|co|app)$/i.test(current);
+        const isAbbreviation = /(e\.g|i\.e|etc|vs|mr|mrs|dr|sr|jr)\.$/i.test(current);
+        const isVersionOrNumber = /\d\.$/.test(current) || /v\d+\.$/.test(current.toLowerCase());
+        const isPath = current.includes("/") && !nextChar?.match(/\s/);
+        const isCodeRef = /[a-z_]\.[a-z_]/i.test(current.slice(-5));
+        const hasNoSpaceAfter = nextChar && !nextChar.match(/\s/) && nextChar !== undefined;
+
+        const isRealSentenceEnd =
+          !isFileExtension &&
+          !isDomain &&
+          !isAbbreviation &&
+          !isVersionOrNumber &&
+          !isPath &&
+          !isCodeRef &&
+          !hasNoSpaceAfter &&
+          (nextChar === undefined || nextChar === " " || nextChar === "\n");
+
+        if (isRealSentenceEnd) {
+          while (text[i + 1] === " ") i++;
+          pushCurrent();
+        }
+      }
+      i++;
+    }
+
+    pushCurrent();
+    return sentences;
+  }, []);
+
+  /**
+   * Process speech queue - plays sentences sequentially for natural reading.
+   * On mobile, plays all at once to avoid Safari's audio.play() restrictions.
+   */
+  const processSpeechQueue = useCallback(async () => {
+    // Guard: Only one audio at a time
+    if (isProcessingQueueRef.current) return;
+    if (speechQueueRef.current.length === 0) {
+      isSpeakingRef.current = false;
+      setIsSpeaking(false);
+      setSpeakingMessageIdx(null);
+      return;
+    }
+
+    // On mobile, join all sentences and play as one (Safari restrictions)
+    const textToSpeak = isMobileRef.current
+      ? speechQueueRef.current.join(" ")
+      : speechQueueRef.current.shift()!;
+
+    if (isMobileRef.current) {
+      speechQueueRef.current = [];
+    }
+
+    if (!textToSpeak.trim()) {
+      if (speechQueueRef.current.length > 0) {
+        processSpeechQueue();
+      } else {
+        isSpeakingRef.current = false;
+        setIsSpeaking(false);
+        setSpeakingMessageIdx(null);
+      }
+      return;
+    }
+
+    isProcessingQueueRef.current = true;
+
+    try {
+      // Check cache first
+      const cacheKey = `${selectedVoiceRef.current}:${textToSpeak}`;
+      let audioUrl = audioCacheRef.current.get(cacheKey);
+
+      if (!audioUrl) {
+        const response = await fetch("/api/assistant/speak", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text: markdownToSpeakableText(textToSpeak),
+            voice: selectedVoiceRef.current,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("TTS API failed");
+        }
+
+        const audioBlob = await response.blob();
+        audioUrl = URL.createObjectURL(audioBlob);
+        // Cache for replay (don't revoke these URLs)
+        audioCacheRef.current.set(cacheKey, audioUrl);
+      }
+
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
 
       audio.onended = () => {
-        setIsSpeaking(false);
-        URL.revokeObjectURL(audioUrl);
+        isProcessingQueueRef.current = false;
+        // Process next sentence (desktop only - mobile plays all at once)
+        if (!isMobileRef.current && speechQueueRef.current.length > 0) {
+          processSpeechQueue();
+        } else {
+          isSpeakingRef.current = false;
+          setIsSpeaking(false);
+          setSpeakingMessageIdx(null);
+        }
       };
+
       audio.onerror = () => {
-        setIsSpeaking(false);
-        URL.revokeObjectURL(audioUrl);
+        isProcessingQueueRef.current = false;
+        // Try next sentence on error
+        if (speechQueueRef.current.length > 0) {
+          processSpeechQueue();
+        } else {
+          isSpeakingRef.current = false;
+          setIsSpeaking(false);
+          setSpeakingMessageIdx(null);
+        }
       };
 
       await audio.play();
     } catch (err) {
-      console.error("TTS error:", err);
-      setIsSpeaking(false);
+      console.error("[TTS Queue] Error:", err);
+      isProcessingQueueRef.current = false;
+      // Continue with next sentence
+      if (speechQueueRef.current.length > 0) {
+        processSpeechQueue();
+      } else {
+        isSpeakingRef.current = false;
+        setIsSpeaking(false);
+        setSpeakingMessageIdx(null);
+      }
     }
   }, []);
 
-  const stopSpeaking = useCallback(() => {
+  /**
+   * Speak text using queue system for natural sentence-by-sentence reading.
+   * Waits for full response, then streams sentences with best quality.
+   */
+  const speakText = useCallback(async (text: string, messageIndex?: number) => {
+    if (!text.trim()) return;
+
+    // Stop any previous audio
     if (audioRef.current) {
       audioRef.current.pause();
+      audioRef.current.currentTime = 0;
       audioRef.current = null;
     }
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
+    speechQueueRef.current = [];
+    isProcessingQueueRef.current = false;
+
+    // Set speaking state
+    isSpeakingRef.current = true;
+    if (messageIndex !== undefined) {
+      speakingMessageIndexRef.current = messageIndex;
+      setSpeakingMessageIdx(messageIndex);
+    }
+    setIsSpeaking(true);
+
+    // Split into sentences and queue
+    const sentences = splitIntoSentences(markdownToSpeakableText(text));
+    speechQueueRef.current = sentences;
+
+    // Start processing queue
+    processSpeechQueue();
+  }, [splitIntoSentences, processSpeechQueue]);
+
+  /**
+   * Stop all audio playback and clear queue.
+   */
+  const stopSpeaking = useCallback(() => {
+    // Stop audio element
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    // Stop browser TTS fallback
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    // Clear queue
+    speechQueueRef.current = [];
+    isProcessingQueueRef.current = false;
+
+    // Release semaphore and reset state
+    isSpeakingRef.current = false;
+    speakingMessageIndexRef.current = null;
     setIsSpeaking(false);
+    setSpeakingMessageIdx(null);
   }, []);
 
   // ============================================================================
@@ -307,6 +538,9 @@ export function AIAssistantTab() {
   const sendMessage = useCallback(async () => {
     const messageText = input.trim();
     if (!messageText || isLoading) return;
+
+    // CRITICAL: Stop any playing audio before new message
+    stopSpeaking();
 
     // Create new conversation if needed
     let convId = activeConversationId;
@@ -413,6 +647,7 @@ export function AIAssistantTab() {
     aiContext,
     autoSpeak,
     speakText,
+    stopSpeaking,
     clearAIContext,
     announce,
   ]);
@@ -638,11 +873,23 @@ export function AIAssistantTab() {
                   {msg.role === "assistant" && (
                     <div className="flex items-center gap-2 mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
                       <button
-                        onClick={() => isSpeaking ? stopSpeaking() : speakText(msg.content)}
-                        className="p-1 rounded text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                        title={isSpeaking ? "Stop" : "Speak"}
+                        onClick={() => {
+                          // Toggle: if speaking THIS message, stop; else play this message
+                          if (speakingMessageIdx === i && isSpeaking) {
+                            stopSpeaking();
+                          } else {
+                            speakText(msg.content, i);
+                          }
+                        }}
+                        className={cn(
+                          "p-1 rounded transition-colors",
+                          speakingMessageIdx === i && isSpeaking
+                            ? "text-blue-500 dark:text-cyan-400"
+                            : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                        )}
+                        title={speakingMessageIdx === i && isSpeaking ? "Stop speaking" : "Speak this message"}
                       >
-                        {isSpeaking ? (
+                        {speakingMessageIdx === i && isSpeaking ? (
                           <StopIcon className="h-4 w-4" />
                         ) : (
                           <SpeakerIcon className="h-4 w-4" />

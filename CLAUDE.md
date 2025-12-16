@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation site for Claude AI. **Version 0.82.0**.
+Claude Insider is a Next.js documentation site for Claude AI. **Version 0.83.0**.
 
 | Link | URL |
 |------|-----|
@@ -112,6 +112,7 @@ claude-insider/
 │   │   │   ├── unified-chat-provider.tsx # Global context
 │   │   │   ├── unified-chat-window.tsx   # Portal-rendered window
 │   │   │   ├── unified-chat-header.tsx   # Tab bar
+│   │   │   ├── floating-chat-button.tsx  # Bottom-right FAB (Cmd + .)
 │   │   │   └── tabs/             # AI Assistant & Messages tabs
 │   │   ├── header.tsx, footer.tsx
 │   │   ├── toast.tsx, skeleton.tsx
@@ -719,6 +720,7 @@ The Unified Chat Window consolidates AI Assistant, Ask AI, and User Messaging in
 | `unified-chat-provider.tsx` | Global React context for state management |
 | `unified-chat-window.tsx` | Portal-rendered window with focus trap |
 | `unified-chat-header.tsx` | Tab bar ("AI Assistant" | "Messages") + controls |
+| `floating-chat-button.tsx` | Bottom-right FAB with Cmd + . shortcut, tab persistence |
 | `tabs/ai-assistant-tab.tsx` | AI chat with Claude streaming, TTS, speech recognition |
 | `tabs/messages-tab.tsx` | User-to-user messaging with real-time updates |
 

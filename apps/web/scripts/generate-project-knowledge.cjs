@@ -7,7 +7,7 @@
  * This script reads project files and generates detailed knowledge chunks
  * that help the AI Assistant answer questions about Claude Insider.
  *
- * Knowledge Categories (v0.82.0):
+ * Knowledge Categories (v0.83.0):
  * - Project Overview & Author
  * - Tech Stack (frameworks, libraries, versions)
  * - Documentation Structure
@@ -112,9 +112,9 @@ function readFileSafe(filePath) {
 function getVersion() {
   try {
     const pkg = JSON.parse(fs.readFileSync(path.join(WEB_ROOT, "package.json"), "utf-8"));
-    return pkg.version || "0.82.0";
+    return pkg.version || "0.83.0";
   } catch {
-    return "0.82.0";
+    return "0.83.0";
   }
 }
 
