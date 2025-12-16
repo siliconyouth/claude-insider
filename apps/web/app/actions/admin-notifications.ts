@@ -10,6 +10,7 @@
 import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 
 export type AdminNotificationStatus = "draft" | "scheduled" | "sending" | "sent" | "failed" | "cancelled";
 export type TargetType = "all" | "role" | "users";
@@ -57,6 +58,7 @@ export interface CreateAdminNotificationParams {
 
 /**
  * Check if user has admin privileges
+ * Requires at least MODERATOR role (which includes admin and superadmin)
  */
 async function checkAdminAccess(): Promise<{ userId: string } | { error: string }> {
   const session = await getSession();
@@ -69,8 +71,8 @@ async function checkAdminAccess(): Promise<{ userId: string } | { error: string 
     [session.user.id]
   );
 
-  const role = result.rows[0]?.role;
-  if (!role || !["admin", "moderator"].includes(role)) {
+  const role = result.rows[0]?.role as UserRole | undefined;
+  if (!hasMinRole(role, ROLES.MODERATOR)) {
     return { error: "You don't have permission to manage notifications" };
   }
 
