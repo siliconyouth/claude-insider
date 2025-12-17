@@ -1,6 +1,8 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "daemon": true,
+  "cacheDir": ".turbo/cache",
   "globalEnv": [
     "ANTHROPIC_API_KEY",
     "ELEVENLABS_API_KEY",
@@ -32,14 +34,47 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "!.env.local"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**",
+        "build/**"
+      ],
+      "env": ["NODE_ENV", "VERCEL_ENV"]
+    },
+    "web#build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "!.env.local",
+        "content/**",
+        "data/**"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "data/rag-index.json",
+        "data/build-info.json"
+      ],
+      "env": ["NODE_ENV", "VERCEL_ENV"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": [],
+      "inputs": ["$TURBO_DEFAULT$", "eslint.config.*"],
+      "outputs": [],
+      "cache": true
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": [],
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig.json"],
+      "outputs": [],
+      "cache": true
     },
     "dev": {
       "cache": false,

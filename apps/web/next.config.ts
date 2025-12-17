@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  eslint: {
+    // Skip ESLint during build (run separately in CI)
+    ignoreDuringBuilds: true,
+  },
   // Suppress SCSS deprecation warnings from PayloadCMS dependencies
   sassOptions: {
     silenceDeprecations: ["legacy-js-api", "import", "global-builtin"],
@@ -20,7 +24,27 @@ const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizeCss: true,
+    // Faster builds with parallel routes
+    parallelServerCompiles: true,
+    parallelServerBuildTraces: true,
   },
+  // Tree-shake large icon libraries
+  modularizeImports: {
+    "lucide-react": {
+      transform: "lucide-react/dist/esm/icons/{{ kebabCase member }}",
+    },
+    "@heroicons/react/24/outline": {
+      transform: "@heroicons/react/24/outline/{{ member }}",
+    },
+    "@heroicons/react/24/solid": {
+      transform: "@heroicons/react/24/solid/{{ member }}",
+    },
+  },
+  // Transpile packages for faster compilation
+  transpilePackages: [
+    "@repo/ui",
+    "lucide-react",
+  ],
   // Image optimization
   images: {
     formats: ["image/avif", "image/webp"],
