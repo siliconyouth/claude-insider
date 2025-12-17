@@ -146,8 +146,15 @@ function AchievementModal({ achievement, onClose }: AchievementModalProps) {
   const styles = RARITY_CONFIG[rarity];
 
   // Get icon component
+  // Lucide icons are forwardRef components (typeof === "object" with $$typeof, render, displayName)
+  // Regular functions are typeof === "function"
+  // Emojis are typeof === "string"
   const IconComponent = achievement.icon;
-  const isLucideIcon = typeof IconComponent === "function";
+  const isReactComponent =
+    typeof IconComponent === "function" ||
+    (typeof IconComponent === "object" &&
+      IconComponent !== null &&
+      "$$typeof" in IconComponent);
 
   // Animate in
   useEffect(() => {
@@ -272,7 +279,7 @@ function AchievementModal({ achievement, onClose }: AchievementModalProps) {
               "animate-bounce-gentle"
             )}
           >
-            {isLucideIcon ? (
+            {isReactComponent ? (
               <IconComponent
                 className={cn(
                   "w-12 h-12",
@@ -287,7 +294,7 @@ function AchievementModal({ achievement, onClose }: AchievementModalProps) {
                 strokeWidth={1.5}
               />
             ) : (
-              <span className="text-5xl">{IconComponent || "🏆"}</span>
+              <span className="text-5xl">{typeof IconComponent === "string" ? IconComponent : "🏆"}</span>
             )}
           </div>
 
