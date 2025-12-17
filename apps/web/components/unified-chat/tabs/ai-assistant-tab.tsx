@@ -44,6 +44,7 @@ import {
   ChatMessageStreaming,
   ChatMessageAction,
 } from "@/components/chat/chat-message";
+import { VirtualizedAIMessageList } from "@/components/messaging/virtualized-ai-message-list";
 
 // ============================================================================
 // Types
@@ -174,7 +175,6 @@ export function AIAssistantTab() {
   const [_userName, setUserNameState] = useState("");
 
   // Refs
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const recognizerRef = useRef<VoiceRecognizer | null>(null);
@@ -248,11 +248,6 @@ export function AIAssistantTab() {
       setConversations(getAllConversations());
     }
   }, [messages, activeConversationId]);
-
-  // Scroll to bottom
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, streamingContent]);
 
   // Generate suggestions based on context
   useEffect(() => {
@@ -820,6 +815,51 @@ export function AIAssistantTab() {
     track("assistant_recommendation_clicked", { recommendation: recommendation.substring(0, 50) });
   }, [sendMessage]);
 
+  /**
+   * Render actions (Listen/Copy buttons) for assistant messages in virtualized list
+   */
+  const renderMessageActions = useCallback((msg: Message, index: number) => {
+    if (msg.role !== "assistant") return null;
+
+    return (
+      <>
+        <ChatMessageAction
+          onClick={() => {
+            if (speakingMessageIdx === index && isSpeaking) {
+              stopSpeaking();
+            } else {
+              speakText(msg.content, index);
+            }
+          }}
+          isActive={speakingMessageIdx === index && isSpeaking}
+          ariaLabel={speakingMessageIdx === index && isSpeaking ? "Stop speaking" : "Listen to message"}
+        >
+          {speakingMessageIdx === index && isSpeaking ? (
+            <>
+              <StopIcon className="h-4 w-4" />
+              <span>Stop</span>
+            </>
+          ) : (
+            <>
+              <SpeakerIcon className="h-4 w-4" />
+              <span>Listen</span>
+            </>
+          )}
+        </ChatMessageAction>
+        <ChatMessageAction
+          onClick={() => {
+            navigator.clipboard.writeText(msg.content);
+            announce("Copied to clipboard");
+          }}
+          ariaLabel="Copy message to clipboard"
+        >
+          <CopyIcon className="h-4 w-4" />
+          <span>Copy</span>
+        </ChatMessageAction>
+      </>
+    );
+  }, [speakingMessageIdx, isSpeaking, speakText, stopSpeaking, announce]);
+
   // ============================================================================
   // Conversation Management
   // ============================================================================
@@ -1067,146 +1107,87 @@ export function AIAssistantTab() {
 
         {/* Chat area */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.length === 0 && suggestions.length > 0 && (
-              <div className="space-y-3">
-                <p className="text-sm text-gray-500">Suggested questions:</p>
-                <div className="flex flex-wrap gap-2">
-                  {suggestions.map((suggestion, i) => (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        // Send immediately - don't just copy to input
-                        sendMessage(suggestion);
-                        track("assistant_suggestion_clicked", { suggestion: suggestion.substring(0, 50) });
-                      }}
-                      className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm",
-                        "bg-gray-100 dark:bg-gray-800",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:bg-blue-100 dark:hover:bg-blue-900/30",
-                        "transition-colors"
-                      )}
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
+          {/* Suggestions - shown only when no messages */}
+          {messages.length === 0 && !isLoading && suggestions.length > 0 && (
+            <div className="p-4 space-y-3">
+              <p className="text-sm text-gray-500">Suggested questions:</p>
+              <div className="flex flex-wrap gap-2">
+                {suggestions.map((suggestion, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      sendMessage(suggestion);
+                      track("assistant_suggestion_clicked", { suggestion: suggestion.substring(0, 50) });
+                    }}
+                    className={cn(
+                      "px-3 py-1.5 rounded-lg text-sm",
+                      "bg-gray-100 dark:bg-gray-800",
+                      "text-gray-700 dark:text-gray-300",
+                      "hover:bg-blue-100 dark:hover:bg-blue-900/30",
+                      "transition-colors"
+                    )}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
               </div>
-            )}
+            </div>
+          )}
 
-            {messages.map((msg, i) => (
-              <ChatMessage
-                key={i}
-                role={msg.role}
-                content={msg.content}
-                actions={
-                  msg.role === "assistant" ? (
-                    <>
-                      <ChatMessageAction
-                        onClick={() => {
-                          if (speakingMessageIdx === i && isSpeaking) {
-                            stopSpeaking();
-                          } else {
-                            speakText(msg.content, i);
-                          }
-                        }}
-                        isActive={speakingMessageIdx === i && isSpeaking}
-                        ariaLabel={speakingMessageIdx === i && isSpeaking ? "Stop speaking" : "Listen to message"}
-                      >
-                        {speakingMessageIdx === i && isSpeaking ? (
-                          <>
-                            <StopIcon className="h-4 w-4" />
-                            <span>Stop</span>
-                          </>
-                        ) : (
-                          <>
-                            <SpeakerIcon className="h-4 w-4" />
-                            <span>Listen</span>
-                          </>
-                        )}
-                      </ChatMessageAction>
-                      <ChatMessageAction
-                        onClick={() => {
-                          navigator.clipboard.writeText(msg.content);
-                          announce("Copied to clipboard");
-                        }}
-                        ariaLabel="Copy message to clipboard"
-                      >
-                        <CopyIcon className="h-4 w-4" />
-                        <span>Copy</span>
-                      </ChatMessageAction>
-                    </>
-                  ) : undefined
-                }
-              />
-            ))}
+          {/* Virtualized Message List */}
+          {(messages.length > 0 || isLoading) && (
+            <VirtualizedAIMessageList
+              messages={messages}
+              streamingContent={streamingContent}
+              isLoading={isLoading}
+              error={error}
+              renderActions={renderMessageActions}
+              className="p-4"
+            />
+          )}
 
-            {/* Streaming content */}
-            {streamingContent && (
-              <ChatMessageStreaming content={streamingContent} />
-            )}
-
-            {/* Loading indicator */}
-            {isLoading && !streamingContent && (
-              <ChatMessageLoading />
-            )}
-
-            {/* Error */}
-            {error && (
-              <div className="flex justify-center">
-                <div className="px-4 py-2 rounded-lg bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm">
-                  {error}
-                </div>
+          {/* Smart Recommendations - shown after AI response */}
+          {showRecommendations && recommendations.length > 0 && !isLoading && messages.length > 0 && (
+            <div className="px-4 pb-2 space-y-2 border-t border-gray-100 dark:border-gray-800 pt-3">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Suggested follow-ups:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {recommendations.map((rec, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleRecommendationClick(rec)}
+                    className={cn(
+                      "px-3 py-1.5 rounded-lg text-sm",
+                      "bg-gray-100 dark:bg-gray-800",
+                      "text-gray-700 dark:text-gray-300",
+                      "hover:bg-blue-100 dark:hover:bg-blue-900/30",
+                      "border border-transparent hover:border-blue-300 dark:hover:border-blue-700",
+                      "transition-all duration-200"
+                    )}
+                  >
+                    {rec}
+                  </button>
+                ))}
+                {recommendationPool.length > 0 && (
+                  <button
+                    onClick={handleSomethingElse}
+                    className={cn(
+                      "px-3 py-1.5 rounded-lg text-sm",
+                      "bg-gradient-to-r from-violet-100 to-blue-100",
+                      "dark:from-violet-900/30 dark:to-blue-900/30",
+                      "text-violet-700 dark:text-violet-300",
+                      "hover:from-violet-200 hover:to-blue-200",
+                      "dark:hover:from-violet-800/40 dark:hover:to-blue-800/40",
+                      "transition-all duration-200"
+                    )}
+                  >
+                    Something else →
+                  </button>
+                )}
               </div>
-            )}
-
-            {/* Smart Recommendations */}
-            {showRecommendations && recommendations.length > 0 && !isLoading && (
-              <div className="mt-4 space-y-2">
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Suggested follow-ups:
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {recommendations.map((rec, i) => (
-                    <button
-                      key={i}
-                      onClick={() => handleRecommendationClick(rec)}
-                      className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm",
-                        "bg-gray-100 dark:bg-gray-800",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:bg-blue-100 dark:hover:bg-blue-900/30",
-                        "border border-transparent hover:border-blue-300 dark:hover:border-blue-700",
-                        "transition-all duration-200"
-                      )}
-                    >
-                      {rec}
-                    </button>
-                  ))}
-                  {recommendationPool.length > 0 && (
-                    <button
-                      onClick={handleSomethingElse}
-                      className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm",
-                        "bg-gradient-to-r from-violet-100 to-blue-100",
-                        "dark:from-violet-900/30 dark:to-blue-900/30",
-                        "text-violet-700 dark:text-violet-300",
-                        "hover:from-violet-200 hover:to-blue-200",
-                        "dark:hover:from-violet-800/40 dark:hover:to-blue-800/40",
-                        "transition-all duration-200"
-                      )}
-                    >
-                      Something else →
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
+            </div>
+          )}
 
           {/* Input */}
           <div className="p-4 border-t border-gray-200 dark:border-[#262626]">
