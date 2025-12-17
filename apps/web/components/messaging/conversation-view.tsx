@@ -31,14 +31,18 @@ import {
   getMessages,
   sendMessage,
   markConversationAsRead,
+  markMessagesAsRead,
+  getReadReceipts,
   searchUsersForMention,
   type Message,
   type ConversationParticipant,
+  type ReadReceipt,
 } from "@/app/actions/messaging";
 import { generateAIChatResponse } from "@/app/actions/ai-chat-response";
 import {
   useConversationRealtime,
   type MessagePayload,
+  type ReadReceiptPayload,
 } from "@/lib/realtime/realtime-context";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
 
@@ -73,11 +77,15 @@ export function ConversationView({
   const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null);
   const [showVerificationModal, setShowVerificationModal] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  // Read receipts state: messageId -> ReadReceipt[]
+  const [readReceipts, setReadReceipts] = useState<Record<string, ReadReceipt[]>>({});
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const prevTypingUsersCount = useRef(0);
+  // Queue for messages that need read receipt broadcast (to avoid circular dependency)
+  const pendingReadReceiptIdsRef = useRef<string[]>([]);
 
   // Sound effects for chat
   const { playMessageReceived, playMessageSent, playTyping, playMention } = useSound();
@@ -207,6 +215,10 @@ export function ConversationView({
 
       // Mark as read in background (non-blocking)
       markConversationAsRead(conversationId);
+      // Also mark messages as read for read receipts
+      markMessagesAsRead(conversationId, payload.id);
+      // Queue read receipt broadcast (processed by useEffect to avoid circular dependency)
+      pendingReadReceiptIdsRef.current.push(payload.id);
     },
     [conversationId, participants, currentUserId, playMessageReceived, playMention]
   );
@@ -221,17 +233,62 @@ export function ConversationView({
     setTypingUsers(userIds);
   }, [playTyping]);
 
+  // Handle incoming read receipts from realtime subscription
+  const handleReadReceipt = useCallback((payload: ReadReceiptPayload) => {
+    // Update read receipts state for the messages that were read
+    setReadReceipts((prev) => {
+      const updated = { ...prev };
+      for (const messageId of payload.messageIds) {
+        const existing = updated[messageId] || [];
+        // Avoid duplicate read receipts from the same user
+        if (!existing.some((r) => r.userId === payload.userId)) {
+          updated[messageId] = [
+            ...existing,
+            {
+              userId: payload.userId,
+              userName: payload.userName,
+              userAvatar: payload.userAvatar,
+              readAt: payload.readAt,
+            },
+          ];
+        }
+      }
+      return updated;
+    });
+  }, []);
+
   // Use optimized realtime hook - pools subscriptions, uses Broadcast for typing
   // This replaces the old postgres_changes subscriptions (7.6x faster for typing)
-  const { sendTyping } = useConversationRealtime({
+  const { sendTyping, sendReadReceipt } = useConversationRealtime({
     conversationId,
     currentUserId,
     onMessage: handleRealtimeMessage,
     onTypingChange: handleTypingChange,
+    onReadReceipt: handleReadReceipt,
     enabled: !isLoading, // Only subscribe after initial load
   });
 
-  // Load initial messages
+  // Get current user's profile info for read receipt broadcasts
+  const currentUserProfile = useMemo(() => {
+    // Try to find current user in participants (they might be there as a member)
+    const self = participants.find((p) => p.userId === currentUserId);
+    return {
+      name: self?.displayName || self?.name,
+      avatar: self?.avatarUrl,
+    };
+  }, [participants, currentUserId]);
+
+  // Process pending read receipt broadcasts (avoids circular dependency with handleRealtimeMessage)
+  // This useEffect runs after new messages are added and broadcasts read receipts to other participants
+  useEffect(() => {
+    if (pendingReadReceiptIdsRef.current.length > 0 && !isLoading) {
+      const pendingIds = [...pendingReadReceiptIdsRef.current];
+      pendingReadReceiptIdsRef.current = []; // Clear the queue
+      sendReadReceipt(pendingIds, currentUserProfile.name, currentUserProfile.avatar);
+    }
+  }, [messages.length, isLoading, sendReadReceipt, currentUserProfile]);
+
+  // Load initial messages and read receipts
   useEffect(() => {
     const loadMessages = async () => {
       setIsLoading(true);
@@ -239,13 +296,37 @@ export function ConversationView({
       if (result.success && result.messages) {
         setMessages(result.messages);
         setHasMore(result.hasMore || false);
+
+        // Fetch read receipts for the sender's own messages
+        const ownMessageIds = result.messages
+          .filter((m) => m.senderId === currentUserId)
+          .map((m) => m.id);
+
+        if (ownMessageIds.length > 0) {
+          const receiptsResult = await getReadReceipts(ownMessageIds);
+          if (receiptsResult.success && receiptsResult.receipts) {
+            setReadReceipts(receiptsResult.receipts);
+          }
+        }
+
+        // Mark messages as read and broadcast to others
+        const otherMessageIds = result.messages
+          .filter((m) => m.senderId !== currentUserId)
+          .map((m) => m.id);
+
+        if (otherMessageIds.length > 0) {
+          await markMessagesAsRead(conversationId);
+          // Broadcast read receipt to other participants
+          sendReadReceipt(otherMessageIds, currentUserProfile.name, currentUserProfile.avatar);
+        }
+
         await markConversationAsRead(conversationId);
       }
       setIsLoading(false);
     };
 
     loadMessages();
-  }, [conversationId]);
+  }, [conversationId, currentUserId, currentUserProfile, sendReadReceipt]);
 
   // Scroll to target message when deep linking from notifications
   useEffect(() => {
@@ -502,6 +583,8 @@ export function ConversationView({
         onLoadMore={handleLoadMore}
         isGroupChat={false}
         highlightedMessageId={highlightedMessageId}
+        readReceipts={readReceipts}
+        participantCount={participants.length - 1}
         className="p-4"
       />
 

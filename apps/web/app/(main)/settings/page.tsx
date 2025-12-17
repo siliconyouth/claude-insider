@@ -29,7 +29,7 @@ import { ActivitySettings } from "@/components/settings/activity-settings";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import { BrowserNotificationPrompt } from "@/components/notifications/browser-notification-prompt";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
-import { useSound, type SoundSettings } from "@/hooks/use-sound-effects";
+import { useSound, type SoundSettings, THEME_LIST } from "@/hooks/use-sound-effects";
 import Link from "next/link";
 
 // Cache key for sessionStorage
@@ -1209,6 +1209,67 @@ export default function SettingsPage() {
                     "[&::-moz-range-thumb]:cursor-pointer"
                   )}
                 />
+              </div>
+            )}
+
+            {/* Sound Theme Selector - only show when enabled */}
+            {soundSettings.enabled && (
+              <div
+                className={cn(
+                  "p-4 rounded-xl",
+                  "bg-gray-50 dark:bg-[#111111]",
+                  "border border-gray-200 dark:border-[#262626]"
+                )}
+              >
+                <div className="mb-4">
+                  <p className="font-medium text-gray-900 dark:text-white">Sound Theme</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Choose a sound style that fits your preference
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+                  {THEME_LIST.map((theme) => (
+                    <button
+                      key={theme.id}
+                      onClick={async () => {
+                        updateSoundSettings({ theme: theme.id });
+                        // Play a preview sound with the new theme
+                        setTimeout(() => playSuccess(), 50);
+                        // Persist to database for authenticated users
+                        try {
+                          await fetch("/api/user/assistant-settings", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ soundTheme: theme.id }),
+                          });
+                        } catch {
+                          // Silently fail - localStorage is the primary storage
+                        }
+                      }}
+                      className={cn(
+                        "flex flex-col items-center gap-1.5 p-3 rounded-lg border transition-all",
+                        soundSettings.theme === theme.id
+                          ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-sm"
+                          : "border-gray-200 dark:border-[#262626] hover:border-blue-300 dark:hover:border-blue-700"
+                      )}
+                    >
+                      <span className="text-2xl" role="img" aria-label={theme.name}>
+                        {theme.icon}
+                      </span>
+                      <span className={cn(
+                        "text-xs font-medium truncate w-full text-center",
+                        soundSettings.theme === theme.id
+                          ? "text-blue-700 dark:text-blue-300"
+                          : "text-gray-700 dark:text-gray-300"
+                      )}>
+                        {theme.name}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+                  Click a theme to preview its sound style. Each theme has unique characteristics.
+                </p>
               </div>
             )}
 

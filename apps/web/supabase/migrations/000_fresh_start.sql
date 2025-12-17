@@ -2041,11 +2041,13 @@ CREATE TABLE IF NOT EXISTS public.assistant_settings (
   compact_mode BOOLEAN DEFAULT FALSE,
   enable_voice_input BOOLEAN DEFAULT TRUE,
   enable_code_highlighting BOOLEAN DEFAULT TRUE,
+  sound_theme VARCHAR(50) DEFAULT 'claude-insider',
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_assistant_settings_user_id ON public.assistant_settings(user_id);
+CREATE INDEX IF NOT EXISTS idx_assistant_settings_sound_theme ON public.assistant_settings(sound_theme);
 ALTER TABLE public.assistant_settings ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "assistant_settings_all" ON public.assistant_settings FOR ALL USING (true) WITH CHECK (true);
 
@@ -2184,6 +2186,21 @@ CREATE INDEX IF NOT EXISTS idx_dm_messages_conversation ON public.dm_messages(co
 CREATE INDEX IF NOT EXISTS idx_dm_messages_sender ON public.dm_messages(sender_id);
 ALTER TABLE public.dm_messages ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "dm_messages_all" ON public.dm_messages FOR ALL USING (true) WITH CHECK (true);
+
+-- Message Read Receipts (for "Seen" feature)
+CREATE TABLE IF NOT EXISTS public.dm_message_read_receipts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  message_id UUID NOT NULL REFERENCES public.dm_messages(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  read_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(message_id, user_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_read_receipts_message ON public.dm_message_read_receipts(message_id);
+CREATE INDEX IF NOT EXISTS idx_read_receipts_user ON public.dm_message_read_receipts(user_id);
+CREATE INDEX IF NOT EXISTS idx_read_receipts_message_time ON public.dm_message_read_receipts(message_id, read_at DESC);
+ALTER TABLE public.dm_message_read_receipts ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "read_receipts_all" ON public.dm_message_read_receipts FOR ALL USING (true) WITH CHECK (true);
 
 CREATE TABLE IF NOT EXISTS public.dm_typing_indicators (
   user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,

@@ -12,7 +12,7 @@
 
 import { cn } from "@/lib/design-system";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
-import type { Message } from "@/app/actions/messaging";
+import type { Message, ReadReceipt } from "@/app/actions/messaging";
 import Link from "next/link";
 import { ProfileHoverCard, type ProfileHoverCardUser } from "@/components/users/profile-hover-card";
 
@@ -26,6 +26,12 @@ interface MessageBubbleProps {
   isFirstInGroup?: boolean;
   /** Whether this is the last message in a consecutive sender group */
   isLastInGroup?: boolean;
+  /** Read receipts for this message (only relevant for own messages) */
+  readReceipts?: ReadReceipt[];
+  /** Conversation type: 'direct' for 1:1, 'group' for group chats */
+  conversationType?: "direct" | "group";
+  /** Total number of participants in the conversation (excluding sender) */
+  participantCount?: number;
   className?: string;
 }
 
@@ -103,6 +109,32 @@ function formatTime(dateString: string): string {
   });
 }
 
+// Format read receipt status for display
+function formatReadStatus(
+  readReceipts: ReadReceipt[] | undefined,
+  conversationType: "direct" | "group",
+  participantCount: number
+): { status: "delivered" | "seen" | "seen_by"; seenBy?: string[] } {
+  if (!readReceipts || readReceipts.length === 0) {
+    return { status: "delivered" };
+  }
+
+  if (conversationType === "direct") {
+    // For 1:1 conversations, just show "Seen" if the other person has read it
+    return { status: "seen" };
+  }
+
+  // For group conversations, show who has seen it
+  const seenByNames = readReceipts
+    .map((r) => r.userName || r.userUsername || "Someone")
+    .slice(0, 3); // Limit to first 3 names
+
+  return {
+    status: "seen_by",
+    seenBy: seenByNames,
+  };
+}
+
 export function MessageBubble({
   message,
   isOwnMessage,
@@ -110,9 +142,17 @@ export function MessageBubble({
   showAvatar = true,
   isFirstInGroup = true,
   isLastInGroup = true,
+  readReceipts,
+  conversationType = "direct",
+  participantCount = 1,
   className,
 }: MessageBubbleProps) {
   const isAI = message.senderId === AI_ASSISTANT_USER_ID || message.isAiGenerated;
+
+  // Calculate read status for own messages
+  const readStatus = isOwnMessage
+    ? formatReadStatus(readReceipts, conversationType, participantCount)
+    : null;
 
   // Build user data for hover card
   const senderUser: ProfileHoverCardUser | null = !isOwnMessage && !isAI ? {
@@ -285,17 +325,75 @@ export function MessageBubble({
           </p>
         </div>
 
-        {/* Timestamp - only show for last message in group */}
+        {/* Timestamp and read status - only show for last message in group */}
         {isLastInGroup && (
-          <span
+          <div
             className={cn(
-              "text-xs text-gray-500 dark:text-gray-400 mt-0.5",
-              isOwnMessage ? "mr-1" : "ml-1"
+              "flex items-center gap-1.5 mt-0.5",
+              isOwnMessage ? "mr-1 flex-row-reverse" : "ml-1"
             )}
           >
-            {formatTime(message.createdAt)}
-            {message.editedAt && " (edited)"}
-          </span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {formatTime(message.createdAt)}
+              {message.editedAt && " (edited)"}
+            </span>
+
+            {/* Read status for own messages */}
+            {isOwnMessage && readStatus && (
+              <span className="flex items-center gap-1 text-xs">
+                {readStatus.status === "delivered" && (
+                  <>
+                    {/* Single check mark for delivered */}
+                    <svg
+                      className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-400 dark:text-gray-500">Delivered</span>
+                  </>
+                )}
+                {readStatus.status === "seen" && (
+                  <>
+                    {/* Double check mark for seen (1:1 conversation) */}
+                    <svg
+                      className="w-4 h-4 text-blue-500 dark:text-cyan-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M5 13l4 4L19 7" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 13l4 4L23 7" transform="translate(-7, 0)" />
+                    </svg>
+                    <span className="text-blue-500 dark:text-cyan-400">Seen</span>
+                  </>
+                )}
+                {readStatus.status === "seen_by" && readStatus.seenBy && (
+                  <>
+                    {/* Double check mark for seen (group conversation) */}
+                    <svg
+                      className="w-4 h-4 text-blue-500 dark:text-cyan-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M5 13l4 4L19 7" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 13l4 4L23 7" transform="translate(-7, 0)" />
+                    </svg>
+                    <span className="text-blue-500 dark:text-cyan-400">
+                      Seen by {readStatus.seenBy.join(", ")}
+                      {readReceipts && readReceipts.length > 3 && ` +${readReceipts.length - 3}`}
+                    </span>
+                  </>
+                )}
+              </span>
+            )}
+          </div>
         )}
       </div>
     </div>

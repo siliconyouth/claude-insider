@@ -64,6 +64,16 @@ export interface Message {
   senderDeviceId?: string;
   senderKey?: string;
   sessionId?: string;
+  // Read receipts (populated separately)
+  readReceipts?: ReadReceipt[];
+}
+
+export interface ReadReceipt {
+  userId: string;
+  userName?: string;
+  userUsername?: string;
+  userAvatar?: string;
+  readAt: string;
 }
 
 // ============================================
@@ -126,6 +136,15 @@ interface MessageRow {
   sender_device_id?: string;
   sender_key?: string;
   session_id?: string;
+}
+
+interface ReadReceiptRow {
+  message_id: string;
+  user_id: string;
+  user_name: string | null;
+  user_username: string | null;
+  user_image: string | null;
+  read_at: string;
 }
 
 // ============================================
@@ -1191,4 +1210,301 @@ export async function deleteMessage(
     console.error("Delete message error:", error);
     return { success: false, error: "An unexpected error occurred" };
   }
+}
+
+// ============================================
+// READ RECEIPTS (Seen Feature)
+// ============================================
+
+/**
+ * Mark messages as read (seen) by the current user.
+ * This inserts read receipts for all messages in a conversation
+ * that the user hasn't already marked as read.
+ *
+ * @param conversationId - The conversation to mark messages as read
+ * @param upToMessageId - Optional: Only mark messages up to this message ID
+ * @returns Number of messages marked as read
+ */
+export async function markMessagesAsRead(
+  conversationId: string,
+  upToMessageId?: string
+): Promise<{
+  success: boolean;
+  markedCount?: number;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify user is a participant
+    const { data: participant } = await supabase
+      .from("dm_participants")
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    if (!participant) {
+      return { success: false, error: "You are not a participant in this conversation" };
+    }
+
+    // Use RPC function for efficient bulk insert
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any).rpc("mark_messages_read", {
+      p_user_id: session.user.id,
+      p_conversation_id: conversationId,
+      p_up_to_message_id: upToMessageId || null,
+    });
+
+    if (error) {
+      // If RPC doesn't exist, fall back to manual implementation
+      if (error.code === "42883") {
+        return await markMessagesAsReadFallback(session.user.id, conversationId, upToMessageId, supabase);
+      }
+      console.error("Mark messages read error:", error);
+      return { success: false, error: "Failed to mark messages as read" };
+    }
+
+    return { success: true, markedCount: data as number };
+  } catch (error) {
+    console.error("Mark messages read error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Fallback implementation when RPC function doesn't exist
+ */
+async function markMessagesAsReadFallback(
+  userId: string,
+  conversationId: string,
+  upToMessageId: string | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any
+): Promise<{ success: boolean; markedCount?: number; error?: string }> {
+  // Get messages that need to be marked as read
+  let query = supabase
+    .from("dm_messages")
+    .select("id, created_at")
+    .eq("conversation_id", conversationId)
+    .neq("sender_id", userId)
+    .is("deleted_at", null);
+
+  if (upToMessageId) {
+    // Get the timestamp of the target message to use as cutoff
+    const { data: targetMsg } = await supabase
+      .from("dm_messages")
+      .select("created_at")
+      .eq("id", upToMessageId)
+      .single();
+
+    if (targetMsg) {
+      query = query.lte("created_at", targetMsg.created_at);
+    }
+  }
+
+  const { data: messages, error: msgError } = await query;
+
+  if (msgError) {
+    console.error("Get messages for read receipts error:", msgError);
+    return { success: false, error: "Failed to get messages" };
+  }
+
+  if (!messages || messages.length === 0) {
+    return { success: true, markedCount: 0 };
+  }
+
+  // Get existing read receipts to avoid duplicates
+  const messageIds = messages.map((m: { id: string }) => m.id);
+  const { data: existingReceipts } = await supabase
+    .from("dm_message_read_receipts")
+    .select("message_id")
+    .eq("user_id", userId)
+    .in("message_id", messageIds);
+
+  const existingIds = new Set((existingReceipts || []).map((r: { message_id: string }) => r.message_id));
+
+  // Filter out already read messages
+  const unreadMessageIds = messageIds.filter((id: string) => !existingIds.has(id));
+
+  if (unreadMessageIds.length === 0) {
+    return { success: true, markedCount: 0 };
+  }
+
+  // Insert read receipts
+  const receiptsToInsert = unreadMessageIds.map((messageId: string) => ({
+    message_id: messageId,
+    user_id: userId,
+  }));
+
+  const { error: insertError } = await supabase
+    .from("dm_message_read_receipts")
+    .insert(receiptsToInsert);
+
+  if (insertError) {
+    console.error("Insert read receipts error:", insertError);
+    return { success: false, error: "Failed to mark messages as read" };
+  }
+
+  return { success: true, markedCount: unreadMessageIds.length };
+}
+
+/**
+ * Get read receipts for a list of messages.
+ * Returns a map of message ID → array of read receipts.
+ *
+ * @param messageIds - Array of message IDs to get receipts for
+ * @returns Map of message ID to read receipts
+ */
+export async function getReadReceipts(
+  messageIds: string[]
+): Promise<{
+  success: boolean;
+  receipts?: Record<string, ReadReceipt[]>;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    if (!messageIds || messageIds.length === 0) {
+      return { success: true, receipts: {} };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Try RPC function first for efficiency
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await (supabase as any).rpc("get_message_read_receipts", {
+      p_message_ids: messageIds,
+    });
+
+    if (error) {
+      // Fallback if RPC doesn't exist
+      if (error.code === "42883") {
+        return await getReadReceiptsFallback(messageIds, supabase);
+      }
+      console.error("Get read receipts error:", error);
+      return { success: false, error: "Failed to get read receipts" };
+    }
+
+    // Transform into map
+    const rows = (data || []) as ReadReceiptRow[];
+    const receiptsMap: Record<string, ReadReceipt[]> = {};
+
+    for (const row of rows) {
+      if (!receiptsMap[row.message_id]) {
+        receiptsMap[row.message_id] = [];
+      }
+      const arr = receiptsMap[row.message_id];
+      if (arr) {
+        arr.push({
+          userId: row.user_id,
+          userName: row.user_name ?? undefined,
+          userUsername: row.user_username ?? undefined,
+          userAvatar: row.user_image ?? undefined,
+          readAt: row.read_at,
+        });
+      }
+    }
+
+    return { success: true, receipts: receiptsMap };
+  } catch (error) {
+    console.error("Get read receipts error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Fallback implementation when RPC function doesn't exist
+ */
+async function getReadReceiptsFallback(
+  messageIds: string[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any
+): Promise<{ success: boolean; receipts?: Record<string, ReadReceipt[]>; error?: string }> {
+  // Get read receipts with user info
+  const { data: receipts, error } = await supabase
+    .from("dm_message_read_receipts")
+    .select(`
+      message_id,
+      user_id,
+      read_at,
+      user:user_id (
+        id,
+        name,
+        image
+      )
+    `)
+    .in("message_id", messageIds)
+    .order("read_at", { ascending: true });
+
+  if (error) {
+    console.error("Get read receipts fallback error:", error);
+    return { success: false, error: "Failed to get read receipts" };
+  }
+
+  // Get profiles for usernames
+  const userIds = [...new Set((receipts || []).map((r: { user_id: string }) => r.user_id))];
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("user_id, display_name, avatar_url, username")
+    .in("user_id", userIds);
+
+  const profileMap = new Map<string, ProfileRow>(
+    (profiles || []).map((p: ProfileRow) => [p.user_id, p])
+  );
+
+  // Transform into map
+  const receiptsMap: Record<string, ReadReceipt[]> = {};
+
+  for (const row of receipts || []) {
+    const profile = profileMap.get(row.user_id);
+    const user = row.user as { id: string; name?: string; image?: string } | null;
+
+    if (!receiptsMap[row.message_id]) {
+      receiptsMap[row.message_id] = [];
+    }
+    const arr = receiptsMap[row.message_id];
+    if (arr) {
+      arr.push({
+        userId: row.user_id,
+        userName: profile?.display_name || user?.name || undefined,
+        userUsername: profile?.username || undefined,
+        userAvatar: profile?.avatar_url || user?.image || undefined,
+        readAt: row.read_at,
+      });
+    }
+  }
+
+  return { success: true, receipts: receiptsMap };
+}
+
+/**
+ * Get read receipts for the sender's own messages in a conversation.
+ * This is optimized for the common case where we want to show
+ * "Seen" status on the sender's messages.
+ *
+ * @param conversationId - The conversation to get receipts for
+ * @param senderMessageIds - Message IDs sent by the current user
+ * @returns Map of message ID to read receipts
+ */
+export async function getSenderMessageReadReceipts(
+  conversationId: string,
+  senderMessageIds: string[]
+): Promise<{
+  success: boolean;
+  receipts?: Record<string, ReadReceipt[]>;
+  error?: string;
+}> {
+  // This is just an alias to getReadReceipts but could be optimized
+  // in the future to only fetch receipts for the sender's messages
+  return getReadReceipts(senderMessageIds);
 }

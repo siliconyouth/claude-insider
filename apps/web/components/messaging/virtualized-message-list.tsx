@@ -17,7 +17,7 @@ import { useRef, useEffect, useCallback, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
 import { MessageBubble, TypingIndicator, DateSeparator } from "./message-bubble";
-import type { Message } from "@/app/actions/messaging";
+import type { Message, ReadReceipt } from "@/app/actions/messaging";
 
 // ============================================================================
 // Types
@@ -35,6 +35,10 @@ interface VirtualizedMessageListProps {
   isGroupChat?: boolean;
   /** Message ID to highlight (for deep linking) */
   highlightedMessageId?: string | null;
+  /** Read receipts map: messageId -> ReadReceipt[] */
+  readReceipts?: Record<string, ReadReceipt[]>;
+  /** Number of participants in the conversation (excluding current user) */
+  participantCount?: number;
   className?: string;
 }
 
@@ -119,6 +123,8 @@ export function VirtualizedMessageList({
   onLoadMore,
   isGroupChat = false,
   highlightedMessageId,
+  readReceipts = {},
+  participantCount = 1,
   className,
 }: VirtualizedMessageListProps) {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -335,6 +341,10 @@ export function VirtualizedMessageList({
                   // Use tighter spacing for grouped messages
                   isFirstInGroup={item.isFirstInGroup}
                   isLastInGroup={item.isLastInGroup}
+                  // Read receipts for own messages
+                  readReceipts={isOwn ? readReceipts[msg.id] : undefined}
+                  conversationType={isGroupChat ? "group" : "direct"}
+                  participantCount={participantCount}
                 />
               </div>
             );

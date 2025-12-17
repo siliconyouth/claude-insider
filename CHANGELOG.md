@@ -9,6 +9,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.99.0] - 2025-12-17
+### Sound Themes System
+- **10 Built-In Sound Themes**: Each with unique audio characteristics
+  - Claude Insider (default): Warm, professional tri-tone sequences
+  - Anthropic: Soft, AI-focused perfect fifths
+  - Apple: Crystal clear, glass-like pure sine waves
+  - Microsoft: Orchestral hints, warm brass-like tones
+  - Google: Material Design playful, bouncy blips
+  - Linux: Functional, utility-focused simple tones
+  - WhatsApp: Messaging-style two-tone pops
+  - Telegram: Quick, sharp modern notifications
+  - GitHub: Developer mechanical, keyboard-esque clicks
+  - Vercel: Futuristic, minimal sweeps
+- **Theme Architecture**: New `hooks/sound-themes.ts` (2000+ lines)
+  - `SoundThemeDefinition` interface with metadata (icon, colorScheme, mood)
+  - 26 sounds per theme with unique frequency patterns
+  - ADSR envelope support (Attack, Decay, Sustain, Release)
+  - `getTheme()` and `getThemeSoundDefinition()` utilities
+- **Settings Integration**: Theme selector in Sound & Audio section
+  - Visual grid of theme icons with names
+  - Click-to-preview sound playback
+  - Database persistence for authenticated users
+- **Footer Sound Toggle**: Quick access sound control
+  - Speaker icon with "Sound System" / "Sounds Muted" label
+  - Dropdown with master toggle and theme quick-switch
+  - Available to all users (authenticated and unauthenticated)
+- **Diagnostics Testing**: Enhanced sound effects section
+  - Theme preview dropdown with metadata display
+  - "Play All" button for theme audition
+  - Quick theme grid for rapid switching
+- **Database Migration**: `072_sound_themes.sql`
+  - `sound_theme` column in `assistant_settings` table
+  - Default: 'claude-insider'
+
+## [0.98.0] - 2025-12-17
+### Message Read Receipts (Seen Feature)
+- **Per-Message Read Tracking**: New `dm_message_read_receipts` database table
+  - Tracks individual message read status per user
+  - Junction table with `(message_id, user_id)` unique constraint
+  - RPC functions for efficient batch operations
+- **1:1 Conversation Status**: Shows "Delivered" and "Seen" indicators
+  - Single checkmark (✓) for delivered messages
+  - Double checkmark (✓✓) in cyan/blue for seen messages
+  - Appears below sender's own messages only
+- **Group Conversation Status**: Shows "Seen by [names]" with display names
+  - Lists up to 3 names with "+N more" for larger groups
+  - Real-time updates when group members read messages
+- **Real-Time Broadcasts**: Instant read receipt delivery via Supabase channels
+  - Broadcasts read events without database round-trip
+  - Recipient sees "Seen" status within milliseconds
+  - Queue-based approach avoids React hook circular dependencies
+- **Server Actions**: New messaging functions for read receipts
+  - `markMessagesAsRead()`: Marks messages as read in database
+  - `getReadReceipts()`: Fetches read receipts for own messages
+  - `getSenderMessageReadReceipts()`: Gets receipts for specific sender
+- **UI Components Updated**: Both Messages Tab and Conversation View
+  - VirtualizedMessageList: New `readReceipts` and `participantCount` props
+  - MessageBubble: New read status display with checkmark icons
+  - Consistent styling across unified chat and standalone inbox
+
 ## [0.97.0] - 2025-12-17
 ### Site-Wide Sound Effects System
 - **SoundProvider Integration**: Added to main layout for app-wide sound access

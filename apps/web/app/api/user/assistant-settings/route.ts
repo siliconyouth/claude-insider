@@ -23,9 +23,24 @@ export interface AssistantSettings {
   compactMode: boolean;
   enableVoiceInput: boolean;
   enableCodeHighlighting: boolean;
+  soundTheme: string;
   createdAt: string;
   updatedAt: string;
 }
+
+// Valid sound themes
+const VALID_SOUND_THEMES = [
+  "claude-insider",
+  "anthropic",
+  "apple",
+  "microsoft",
+  "google",
+  "linux",
+  "whatsapp",
+  "telegram",
+  "github",
+  "vercel",
+];
 
 // Available voices for selection (internal use only - route files can only export HTTP handlers)
 const AVAILABLE_VOICES = [
@@ -53,6 +68,7 @@ function mapDbToSettings(row: Record<string, unknown>): AssistantSettings {
     compactMode: row.compact_mode as boolean,
     enableVoiceInput: row.enable_voice_input as boolean,
     enableCodeHighlighting: row.enable_code_highlighting as boolean,
+    soundTheme: (row.sound_theme as string) || "claude-insider",
     createdAt: row.created_at as string,
     updatedAt: row.updated_at as string,
   };
@@ -150,6 +166,12 @@ export async function POST(request: NextRequest) {
     }
     if (body.enableCodeHighlighting !== undefined) {
       updates.enable_code_highlighting = Boolean(body.enableCodeHighlighting);
+    }
+    if (body.soundTheme !== undefined) {
+      // Validate sound theme
+      if (VALID_SOUND_THEMES.includes(body.soundTheme)) {
+        updates.sound_theme = body.soundTheme;
+      }
     }
 
     // First ensure settings exist

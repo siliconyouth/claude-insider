@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.97.0";
+const APP_VERSION = "0.99.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,28 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "0.99.0",
+    date: "2025-12-17",
+    type: "minor",
+    highlights: [
+      "10 Sound Themes: Claude Insider, Anthropic, Apple, Microsoft, Google, Linux, WhatsApp, Telegram, GitHub, Vercel",
+      "Theme selector in Settings with click-to-preview",
+      "Footer SoundToggle for quick sound control",
+      "Database persistence for authenticated users",
+    ],
+  },
+  {
+    version: "0.98.0",
+    date: "2025-12-17",
+    type: "minor",
+    highlights: [
+      "Message Read Receipts with ✓ (delivered) and ✓✓ (seen) indicators",
+      "Group conversations show 'Seen by [names]' with +N more",
+      "Real-time broadcast delivery for instant status updates",
+      "New messaging server actions for read receipt tracking",
+    ],
+  },
   {
     version: "0.97.0",
     date: "2025-12-17",
@@ -53,46 +75,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "Educational security content explaining MITM attacks",
       "Collapsible \"Why does this matter?\" explanation section",
       "Clear messaging that E2EE works even without verification",
-    ],
-  },
-  {
-    version: "0.94.0",
-    date: "2025-12-17",
-    type: "minor",
-    highlights: [
-      "Profile Cover Photos: Custom cover images with 3:1 aspect ratio",
-      "Client-side image cropping with react-image-crop",
-      "Animated default cover with lens flare gradient effect",
-    ],
-  },
-  {
-    version: "0.93.0",
-    date: "2025-12-17",
-    type: "minor",
-    highlights: [
-      "User Directory page with 7 list types and search filters",
-      "@Mention deep linking to jump to specific messages",
-      "Message grouping for cleaner chat UI",
-    ],
-  },
-  {
-    version: "0.92.0",
-    date: "2025-12-17",
-    type: "minor",
-    highlights: [
-      "Realtime Context Provider with connection pooling",
-      "Broadcast typing indicators (7.6x faster latency)",
-      "Virtual scrolling for message lists",
-    ],
-  },
-  {
-    version: "0.91.0",
-    date: "2025-12-17",
-    type: "minor",
-    highlights: [
-      "Profile page redesign with gradient cover banner",
-      "Header/Footer added to 14 missing pages",
-      "ProfileHoverCard redesign with badges and stats",
     ],
   },
 ];

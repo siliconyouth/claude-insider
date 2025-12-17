@@ -53,9 +53,18 @@ export interface MessagePayload {
   [key: string]: any;
 }
 
+export interface ReadReceiptPayload {
+  messageIds: string[];
+  userId: string;
+  userName?: string;
+  userAvatar?: string;
+  readAt: string;
+}
+
 export interface ChannelHandlers {
   onMessage?: (payload: MessagePayload) => void;
   onTyping?: (payload: TypingPayload) => void;
+  onReadReceipt?: (payload: ReadReceiptPayload) => void;
   onPresenceSync?: (state: Record<string, PresenceState[]>) => void;
   onPresenceJoin?: (key: string, state: PresenceState) => void;
   onPresenceLeave?: (key: string, state: PresenceState) => void;
@@ -71,6 +80,7 @@ interface ChannelState {
 interface RealtimeContextValue {
   subscribe: (conversationId: string, handlers: ChannelHandlers) => () => void;
   sendTyping: (conversationId: string, userId: string, isTyping: boolean) => void;
+  sendReadReceipt: (conversationId: string, payload: ReadReceiptPayload) => void;
   trackPresence: (conversationId: string, userId: string, status: PresenceState["status"]) => void;
   isConnected: (conversationId: string) => boolean;
 }
@@ -156,6 +166,12 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
       channel.on("broadcast", { event: "typing" }, ({ payload }) => {
         const typingPayload = payload as TypingPayload;
         state.handlers.forEach((h) => h.onTyping?.(typingPayload));
+      });
+
+      // Subscribe to read receipts via broadcast (for "Seen" indicators)
+      channel.on("broadcast", { event: "read_receipt" }, ({ payload }) => {
+        const receiptPayload = payload as ReadReceiptPayload;
+        state.handlers.forEach((h) => h.onReadReceipt?.(receiptPayload));
       });
 
       // Subscribe to presence for online/away status
@@ -299,6 +315,21 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
     []
   );
 
+  // Send read receipt via broadcast (for "Seen" indicators)
+  const sendReadReceipt = useCallback(
+    (conversationId: string, payload: ReadReceiptPayload) => {
+      const state = channelsRef.current.get(conversationId);
+      if (!state) return;
+
+      state.channel.send({
+        type: "broadcast",
+        event: "read_receipt",
+        payload,
+      });
+    },
+    []
+  );
+
   // Track presence (online/away status)
   const trackPresence = useCallback(
     (conversationId: string, userId: string, status: PresenceState["status"]) => {
@@ -339,6 +370,7 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
   const value: RealtimeContextValue = {
     subscribe,
     sendTyping,
+    sendReadReceipt,
     trackPresence,
     isConnected,
   };
@@ -369,6 +401,7 @@ interface UseConversationRealtimeOptions {
   currentUserId: string;
   onMessage?: (payload: MessagePayload) => void;
   onTypingChange?: (typingUserIds: string[]) => void;
+  onReadReceipt?: (payload: ReadReceiptPayload) => void;
   enabled?: boolean;
 }
 
@@ -377,9 +410,10 @@ export function useConversationRealtime({
   currentUserId,
   onMessage,
   onTypingChange,
+  onReadReceipt,
   enabled = true,
 }: UseConversationRealtimeOptions) {
-  const { subscribe, sendTyping, trackPresence, isConnected } = useRealtime();
+  const { subscribe, sendTyping, sendReadReceipt, trackPresence, isConnected } = useRealtime();
   const typingUsersRef = useRef<Map<string, number>>(new Map()); // userId -> timestamp
 
   useEffect(() => {
@@ -412,6 +446,11 @@ export function useConversationRealtime({
 
         onTypingChange?.(Array.from(typingUsersRef.current.keys()));
       },
+      onReadReceipt: (payload) => {
+        // Skip own read receipts
+        if (payload.userId === currentUserId) return;
+        onReadReceipt?.(payload);
+      },
     };
 
     const unsubscribe = subscribe(conversationId, handlers);
@@ -431,6 +470,7 @@ export function useConversationRealtime({
     trackPresence,
     onMessage,
     onTypingChange,
+    onReadReceipt,
   ]);
 
   // Expose sendTyping for the current user
@@ -443,8 +483,25 @@ export function useConversationRealtime({
     [conversationId, currentUserId, sendTyping]
   );
 
+  // Expose sendReadReceipt for the current user
+  const broadcastReadReceipt = useCallback(
+    (messageIds: string[], userName?: string, userAvatar?: string) => {
+      if (conversationId && currentUserId && messageIds.length > 0) {
+        sendReadReceipt(conversationId, {
+          messageIds,
+          userId: currentUserId,
+          userName,
+          userAvatar,
+          readAt: new Date().toISOString(),
+        });
+      }
+    },
+    [conversationId, currentUserId, sendReadReceipt]
+  );
+
   return {
     sendTyping: sendTypingIndicator,
+    sendReadReceipt: broadcastReadReceipt,
     isConnected: isConnected(conversationId),
   };
 }

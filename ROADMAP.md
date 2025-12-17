@@ -2,14 +2,14 @@
 
 **Version:** 1.3.0
 **Last Updated:** 2025-12-17
-**Current Release:** v0.96.0
+**Current Release:** v0.99.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-This roadmap outlines the development path from **v0.96.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+This roadmap outlines the development path from **v0.99.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,9 @@ This roadmap outlines the development path from **v0.96.0** (current) to **v1.0.
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 0.99.0 | Dec 17 | Sound Themes System: 10 themes (Claude Insider, Anthropic, Apple, Microsoft, Google, Linux, WhatsApp, Telegram, GitHub, Vercel) |
+| 0.98.0 | Dec 17 | Message Read Receipts: ✓/✓✓ indicators, "Seen by" in groups, real-time broadcasts |
+| 0.97.0 | Dec 17 | Site-wide Sound Effects: 24 sounds, 5 categories, Settings UI, CLAUDE.md docs |
 | 0.96.0 | Dec 17 | Unread Indicator Bug Fixes: Notification read state, message count sync |
 | 0.95.0 | Dec 17 | E2EE Verification: Auto-fetch device ID, educational security content |
 | 0.94.0 | Dec 17 | Profile Cover Photos: Custom images, client-side cropping, animated default |
@@ -37,10 +40,7 @@ This roadmap outlines the development path from **v0.96.0** (current) to **v1.0.
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 0.97.0 | Enterprise | 4 | Q1 2025 | Business Features |
-| 0.98.0 | Platform | 4 | Q1 2025 | Platform Expansion |
-| 0.99.0 | Innovation | 4 | Q2 2025 | Experimental Features |
-| 1.0.0 | Milestone | - | Q2 2025 | Stable Release |
+| 1.0.0 | Milestone | - | Q1 2025 | Stable Release |
 
 ---
 

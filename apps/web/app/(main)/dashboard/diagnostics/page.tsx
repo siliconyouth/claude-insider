@@ -768,7 +768,11 @@ export default function DiagnosticsPage() {
       />
 
       {/* Sound Effects Test */}
-      <SoundEffectsSection playSound={playSound} />
+      <SoundEffectsSection
+        playSound={playSound}
+        currentTheme={sounds.settings.theme}
+        onThemeChange={(themeId) => sounds.updateSettings({ theme: themeId })}
+      />
 
       {/* Website Link Integrity */}
       <LinkIntegritySection

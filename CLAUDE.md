@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.96.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.99.0**.
 
 | Link | URL |
 |------|-----|
@@ -134,7 +134,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
 | FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
 | FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
-| FR-21 | Sound Effects | Web Audio API, 24 sound types, 6 categories |
+| FR-21 | Sound Effects | Web Audio API, 26 sound types, 10 themes, 6 categories |
 | FR-22 | Group Chat | Roles (owner/admin/member), invitations, ownership transfer |
 | FR-23 | Admin Diagnostics | TEST ALL, streaming AI analysis, fix prompts |
 | FR-24 | API Key Testing | Validate keys, rate limits, model availability |
@@ -916,14 +916,30 @@ queueAchievement("welcome_aboard");
 
 ### Sound Effects System
 
-**Location**: `hooks/use-sound-effects.tsx`
+**Location**: `hooks/use-sound-effects.tsx`, `hooks/sound-themes.ts`
 
-Web Audio API-based, no audio files. 24 sound types across 6 categories.
+Web Audio API-based synthesis, no audio files. 26 sound types across 6 categories with 10 built-in themes.
+
+| Theme | Icon | Inspiration |
+|-------|------|-------------|
+| Claude Insider | 🎵 | Warm, professional (default) |
+| Anthropic | 🤖 | Soft, AI-focused |
+| Apple | 🍎 | Crystal clear, glass-like |
+| Microsoft | 🪟 | Orchestral warmth |
+| Google | 🔍 | Material Design playful |
+| Linux | 🐧 | Functional utility |
+| WhatsApp | 💬 | Messaging pop |
+| Telegram | ✈️ | Quick, sharp |
+| GitHub | 🐙 | Developer mechanical |
+| Vercel | ▲ | Futuristic minimal |
 
 ```tsx
 const sounds = useSoundEffects();
 sounds.playSuccess();
 sounds.playNotification();
+// Access current theme
+sounds.currentTheme // { id, name, icon, description, ... }
+sounds.availableThemes // THEME_LIST array
 ```
 
 ### Security System

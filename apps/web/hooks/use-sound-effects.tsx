@@ -12,9 +12,21 @@
  *
  * Uses Web Audio API to generate pleasant tones without
  * requiring audio files.
+ *
+ * Supports 10 built-in sound themes:
+ * - Claude Insider (default), Anthropic, Apple, Microsoft, Google
+ * - Linux, WhatsApp, Telegram, GitHub, Vercel
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  getTheme,
+  getThemeSoundDefinition,
+  DEFAULT_THEME_ID,
+  THEME_LIST,
+  BUILT_IN_THEMES,
+  type SoundThemeDefinition,
+} from "./sound-themes";
 
 // ============================================
 // SOUND TYPES
@@ -59,7 +71,7 @@ export type SoundType =
 // SOUND DEFINITIONS
 // ============================================
 
-interface SoundDefinition {
+export interface SoundDefinition {
   frequencies: number[];
   duration: number;
   type: OscillatorType;
@@ -70,188 +82,8 @@ interface SoundDefinition {
   release?: number;
 }
 
-// Musical note frequencies for reference
-const NOTES = {
-  C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88,
-  C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99, A5: 880.00, B5: 987.77,
-  C6: 1046.50,
-};
-
-const SOUND_DEFINITIONS: Record<SoundType, SoundDefinition> = {
-  // Notifications - attention-grabbing but not harsh
-  notification: {
-    frequencies: [NOTES.E5, NOTES.G5],
-    duration: 0.15,
-    type: "sine",
-    volume: 0.4,
-  },
-  notification_badge: {
-    frequencies: [NOTES.C5, NOTES.E5],
-    duration: 0.12,
-    type: "sine",
-    volume: 0.3,
-  },
-  notification_urgent: {
-    frequencies: [NOTES.A5, NOTES.E5, NOTES.A5],
-    duration: 0.12,
-    type: "triangle",
-    volume: 0.5,
-  },
-
-  // Feedback sounds
-  success: {
-    frequencies: [NOTES.C5, NOTES.E5, NOTES.G5],
-    duration: 0.12,
-    type: "sine",
-    volume: 0.35,
-  },
-  error: {
-    frequencies: [NOTES.E4, NOTES.C4],
-    duration: 0.18,
-    type: "triangle",
-    volume: 0.4,
-  },
-  warning: {
-    frequencies: [NOTES.F4, NOTES.D4],
-    duration: 0.15,
-    type: "triangle",
-    volume: 0.35,
-  },
-  info: {
-    frequencies: [NOTES.G4, NOTES.E4],
-    duration: 0.12,
-    type: "sine",
-    volume: 0.25,
-  },
-
-  // UI Interactions - subtle and non-intrusive
-  click: {
-    frequencies: [NOTES.C5],
-    duration: 0.05,
-    type: "sine",
-    volume: 0.15,
-  },
-  toggle_on: {
-    frequencies: [NOTES.C5, NOTES.E5],
-    duration: 0.08,
-    type: "sine",
-    volume: 0.2,
-  },
-  toggle_off: {
-    frequencies: [NOTES.E5, NOTES.C5],
-    duration: 0.08,
-    type: "sine",
-    volume: 0.2,
-  },
-  hover: {
-    frequencies: [NOTES.E5],
-    duration: 0.03,
-    type: "sine",
-    volume: 0.1,
-  },
-  navigation: {
-    frequencies: [NOTES.G4],
-    duration: 0.06,
-    type: "sine",
-    volume: 0.15,
-  },
-  open: {
-    frequencies: [NOTES.C5, NOTES.G5],
-    duration: 0.1,
-    type: "sine",
-    volume: 0.2,
-  },
-  close: {
-    frequencies: [NOTES.G5, NOTES.C5],
-    duration: 0.1,
-    type: "sine",
-    volume: 0.2,
-  },
-
-  // Chat sounds
-  message_received: {
-    frequencies: [NOTES.A4, NOTES.C5],
-    duration: 0.12,
-    type: "sine",
-    volume: 0.35,
-  },
-  message_sent: {
-    frequencies: [NOTES.C5, NOTES.E5],
-    duration: 0.1,
-    type: "sine",
-    volume: 0.25,
-  },
-  typing: {
-    frequencies: [NOTES.F4],
-    duration: 0.05,
-    type: "sine",
-    volume: 0.08,
-  },
-  mention: {
-    frequencies: [NOTES.E5, NOTES.G5, NOTES.A5],
-    duration: 0.15,
-    type: "sine",
-    volume: 0.5,
-  },
-  invitation: {
-    frequencies: [NOTES.C5, NOTES.E5, NOTES.G5, NOTES.C6],
-    duration: 0.15,
-    type: "sine",
-    volume: 0.45,
-  },
-  user_join: {
-    frequencies: [NOTES.G4, NOTES.C5],
-    duration: 0.12,
-    type: "sine",
-    volume: 0.25,
-  },
-  user_leave: {
-    frequencies: [NOTES.C5, NOTES.G4],
-    duration: 0.12,
-    type: "sine",
-    volume: 0.2,
-  },
-
-  // Achievements & Progress - celebratory
-  achievement: {
-    frequencies: [NOTES.C5, NOTES.E5, NOTES.G5, NOTES.C6],
-    duration: 0.2,
-    type: "sine",
-    volume: 0.5,
-  },
-  level_up: {
-    frequencies: [NOTES.C4, NOTES.E4, NOTES.G4, NOTES.C5, NOTES.E5],
-    duration: 0.18,
-    type: "sine",
-    volume: 0.55,
-  },
-  complete: {
-    frequencies: [NOTES.G4, NOTES.C5, NOTES.E5],
-    duration: 0.12,
-    type: "sine",
-    volume: 0.35,
-  },
-  progress: {
-    frequencies: [NOTES.C5, NOTES.D5],
-    duration: 0.08,
-    type: "sine",
-    volume: 0.2,
-  },
-
-  // Special
-  welcome: {
-    frequencies: [NOTES.C5, NOTES.E5, NOTES.G5],
-    duration: 0.2,
-    type: "sine",
-    volume: 0.4,
-  },
-  goodbye: {
-    frequencies: [NOTES.G5, NOTES.E5, NOTES.C5],
-    duration: 0.2,
-    type: "sine",
-    volume: 0.3,
-  },
-};
+// Re-export theme utilities for convenience
+export { THEME_LIST, DEFAULT_THEME_ID, BUILT_IN_THEMES, getTheme, type SoundThemeDefinition };
 
 // ============================================
 // SETTINGS INTERFACE
@@ -260,6 +92,7 @@ const SOUND_DEFINITIONS: Record<SoundType, SoundDefinition> = {
 export interface SoundSettings {
   enabled: boolean;
   volume: number;
+  theme: string; // Sound theme ID (e.g., 'claude-insider', 'apple', etc.)
   notifications: boolean;
   feedback: boolean;
   ui: boolean;
@@ -270,6 +103,7 @@ export interface SoundSettings {
 const DEFAULT_SETTINGS: SoundSettings = {
   enabled: true,
   volume: 0.5,
+  theme: DEFAULT_THEME_ID, // 'claude-insider'
   notifications: true,
   feedback: true,
   ui: false, // Subtle UI sounds off by default
@@ -345,7 +179,7 @@ export function useSoundEffects() {
     [settings]
   );
 
-  // Play a sound effect
+  // Play a sound effect using current theme
   const play = useCallback(
     (type: SoundType) => {
       if (!isReady || !isCategoryEnabled(type)) return;
@@ -358,12 +192,19 @@ export function useSoundEffects() {
           ctx.resume();
         }
 
-        const definition = SOUND_DEFINITIONS[type];
+        // Get sound definition from the current theme
+        const definition = getThemeSoundDefinition(settings.theme, type);
         if (!definition) return;
 
         const now = ctx.currentTime;
-        const { frequencies, duration, type: oscType, volume } = definition;
+        const { frequencies, duration, type: oscType, volume, attack, decay, sustain, release } = definition;
         const finalVolume = volume * settings.volume;
+
+        // Use ADSR envelope values or defaults
+        const attackTime = attack ?? 0.01;
+        const decayTime = decay ?? 0;
+        const sustainLevel = sustain ?? 1;
+        const releaseTime = release ?? duration * 0.3;
 
         // Create gain node for volume control
         const masterGain = ctx.createGain();
@@ -380,15 +221,17 @@ export function useSoundEffects() {
           oscillator.connect(gainNode);
           gainNode.connect(masterGain);
 
-          // Envelope for smooth sound
+          // ADSR envelope for smooth, theme-specific sound
           const startTime = now + i * duration * 0.8;
-          const attackTime = startTime + 0.01;
-          const releaseStart = startTime + duration * 0.7;
+          const attackEnd = startTime + attackTime;
+          const decayEnd = attackEnd + decayTime;
+          const sustainEnd = startTime + duration - releaseTime;
           const endTime = startTime + duration;
 
           gainNode.gain.setValueAtTime(0, startTime);
-          gainNode.gain.linearRampToValueAtTime(1, attackTime);
-          gainNode.gain.setValueAtTime(1, releaseStart);
+          gainNode.gain.linearRampToValueAtTime(1, attackEnd);
+          gainNode.gain.linearRampToValueAtTime(sustainLevel, decayEnd);
+          gainNode.gain.setValueAtTime(sustainLevel, sustainEnd);
           gainNode.gain.exponentialRampToValueAtTime(0.001, endTime);
 
           oscillator.start(startTime);
@@ -399,7 +242,7 @@ export function useSoundEffects() {
         console.debug("Sound playback failed:", error);
       }
     },
-    [isReady, isCategoryEnabled, getAudioContext, settings.volume]
+    [isReady, isCategoryEnabled, getAudioContext, settings.volume, settings.theme]
   );
 
   // Update settings
@@ -454,12 +297,19 @@ export function useSoundEffects() {
   const playWelcome = useCallback(() => play("welcome"), [play]);
   const playGoodbye = useCallback(() => play("goodbye"), [play]);
 
+  // Get current theme definition
+  const currentTheme = getTheme(settings.theme);
+
   return {
     // Core
     play,
     settings,
     updateSettings,
     isReady,
+
+    // Theme
+    currentTheme,
+    availableThemes: THEME_LIST,
 
     // Notifications
     playNotification,
@@ -524,6 +374,8 @@ export function useSound() {
       settings: DEFAULT_SETTINGS,
       updateSettings: () => {},
       isReady: false,
+      currentTheme: getTheme(DEFAULT_THEME_ID),
+      availableThemes: THEME_LIST,
       playNotification: () => {},
       playNotificationBadge: () => {},
       playNotificationUrgent: () => {},

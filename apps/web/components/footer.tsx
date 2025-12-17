@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/design-system";
 import { FooterLanguageSelector } from "@/components/footer-language-selector";
+import { SoundToggle } from "@/components/sound-toggle";
 
-const APP_VERSION = "0.88.0";
+const APP_VERSION = "0.99.0";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -64,6 +65,8 @@ export function Footer() {
           </Link>
           <span className={separatorClass}>·</span>
           <FooterLanguageSelector />
+          <span className={separatorClass}>·</span>
+          <SoundToggle />
           <span className={separatorClass}>·</span>
           <span className="font-mono text-gray-400 dark:text-gray-600">v{APP_VERSION}-{buildId}</span>
         </div>
