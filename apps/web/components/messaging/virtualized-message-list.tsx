@@ -31,6 +31,8 @@ interface VirtualizedMessageListProps {
   isLoading?: boolean;
   hasMore?: boolean;
   onLoadMore?: () => void;
+  /** Whether this is a group chat (shows avatars) or 1:1 DM (hides avatars) */
+  isGroupChat?: boolean;
   className?: string;
 }
 
@@ -113,6 +115,7 @@ export function VirtualizedMessageList({
   isLoading = false,
   hasMore = false,
   onLoadMore,
+  isGroupChat = false,
   className,
 }: VirtualizedMessageListProps) {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -316,8 +319,10 @@ export function VirtualizedMessageList({
                 <MessageBubble
                   message={msg}
                   isOwnMessage={isOwn}
-                  // Only show sender info for first message in a consecutive group
-                  showSender={!isOwn && item.isFirstInGroup}
+                  // Only show sender info for first message in a consecutive group (and only in group chats)
+                  showSender={!isOwn && item.isFirstInGroup && isGroupChat}
+                  // Show avatars only in group chats
+                  showAvatar={isGroupChat}
                   // Use tighter spacing for grouped messages
                   isFirstInGroup={item.isFirstInGroup}
                   isLastInGroup={item.isLastInGroup}

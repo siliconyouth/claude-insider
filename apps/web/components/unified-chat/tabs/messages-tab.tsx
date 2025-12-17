@@ -83,6 +83,7 @@ export function MessagesTab() {
           conversationId={selectedConversationId}
           currentUserId={currentUserId}
           participants={conversation.participants}
+          isGroupChat={conversation.type === "group"}
           onBack={() => selectConversation(null)}
         />
       );
@@ -226,6 +227,7 @@ interface ConversationViewProps {
   conversationId: string;
   currentUserId: string;
   participants: Conversation["participants"];
+  isGroupChat: boolean;
   onBack: () => void;
 }
 
@@ -233,6 +235,7 @@ function ConversationView({
   conversationId,
   currentUserId,
   participants,
+  isGroupChat,
   onBack,
 }: ConversationViewProps) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -430,6 +433,7 @@ function ConversationView({
         isLoading={isLoading || isLoadingMore}
         hasMore={hasMore}
         onLoadMore={handleLoadMore}
+        isGroupChat={isGroupChat}
         className="p-4"
       />
 

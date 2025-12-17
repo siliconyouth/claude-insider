@@ -20,6 +20,8 @@ interface MessageBubbleProps {
   message: Message;
   isOwnMessage: boolean;
   showSender?: boolean;
+  /** Whether to show avatar (typically only in group chats) */
+  showAvatar?: boolean;
   /** Whether this is the first message in a consecutive sender group */
   isFirstInGroup?: boolean;
   /** Whether this is the last message in a consecutive sender group */
@@ -105,6 +107,7 @@ export function MessageBubble({
   message,
   isOwnMessage,
   showSender = true,
+  showAvatar = true,
   isFirstInGroup = true,
   isLastInGroup = true,
   className,
@@ -182,8 +185,8 @@ export function MessageBubble({
         className
       )}
     >
-      {/* Avatar column - maintains alignment for grouped messages */}
-      {!isOwnMessage && (
+      {/* Avatar column - only shown in group chats */}
+      {!isOwnMessage && showAvatar && (
         <div className="flex-shrink-0 w-8">
           {showSender && isFirstInGroup ? (
             senderUser ? (
@@ -194,7 +197,7 @@ export function MessageBubble({
               renderAvatar()
             )
           ) : (
-            // Empty placeholder to maintain alignment
+            // Empty placeholder to maintain alignment in groups
             <div className="w-8 h-8" />
           )}
         </div>
