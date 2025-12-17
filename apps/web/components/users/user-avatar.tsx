@@ -90,7 +90,7 @@ export function UserAvatar({
   const hasImage = !!src;
 
   return (
-    <div className={cn("relative inline-flex flex-shrink-0", className)}>
+    <div className={cn("relative inline-flex flex-shrink-0 rounded-full", className)}>
       {/* Avatar container */}
       <div
         className={cn(
