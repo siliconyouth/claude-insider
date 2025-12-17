@@ -230,7 +230,7 @@ export default function HomePage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
                   </span>
-                  34 Guides • 7 Categories • AI Voice Assistant
+                  34 Guides • 122+ Resources • AI Assistant
                 </div>
 
                 {/* Headline - Stripe-style large typography */}
@@ -243,8 +243,8 @@ export default function HomePage() {
 
                 {/* Subheadline */}
                 <p className="mt-6 text-xl sm:text-2xl leading-relaxed text-gray-700 dark:text-gray-300 max-w-xl">
-                  From setup to production. API integration, MCP servers,
-                  IDE plugins, and advanced prompting techniques.
+                  Comprehensive docs, curated resources, and tools for Claude AI.
+                  From setup to production-ready applications.
                 </p>
 
                 {/* Feature list */}
@@ -253,13 +253,7 @@ export default function HomePage() {
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Installation & Setup
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    API & Streaming
+                    Documentation
                   </span>
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -271,7 +265,13 @@ export default function HomePage() {
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Hooks & Actions
+                    Tools & SDKs
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    CLAUDE.md Rules
                   </span>
                 </div>
 
@@ -292,22 +292,22 @@ export default function HomePage() {
                     Getting Started
                   </Link>
                   <Link
-                    href="/donate"
+                    href="/resources"
                     className={cn(
-                      "rounded-xl px-6 py-4 text-base font-semibold text-white",
-                      "bg-gradient-to-r from-pink-500 to-rose-500",
-                      "shadow-lg shadow-pink-500/25",
-                      "hover:from-pink-400 hover:to-rose-400",
-                      "hover:shadow-xl hover:shadow-pink-500/30",
+                      "rounded-xl px-6 py-4 text-base font-semibold",
+                      "border-2 border-gray-300 dark:border-[#333]",
+                      "text-gray-700 dark:text-gray-300",
+                      "bg-white/50 dark:bg-white/5",
+                      "hover:border-blue-500/50 hover:bg-blue-500/5",
                       "hover:-translate-y-0.5",
                       "transition-all duration-200",
                       "flex items-center gap-2"
                     )}
                   >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
-                    Support Us
+                    Browse Resources
                   </Link>
                 </div>
 
@@ -596,7 +596,7 @@ export default function HomePage() {
         {/* Stats Section */}
         <div className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gray-50 dark:bg-[#0a0a0a]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
               <div className="group">
                 <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">34</div>
                 <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
@@ -604,9 +604,15 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="group">
-                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">7</div>
+                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">122+</div>
                 <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
-                  Categories
+                  Curated Resources
+                </div>
+              </div>
+              <div className="group">
+                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">10</div>
+                <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
+                  Resource Categories
                 </div>
               </div>
               <div className="group">

@@ -16,6 +16,22 @@ interface PrivacySettings {
   showStats: boolean;
 }
 
+// Donor tier thresholds
+const DONOR_TIERS = {
+  platinum: 500,
+  gold: 100,
+  silver: 50,
+  bronze: 10,
+} as const;
+
+function getDonorTier(totalAmount: number): "platinum" | "gold" | "silver" | "bronze" | null {
+  if (totalAmount >= DONOR_TIERS.platinum) return "platinum";
+  if (totalAmount >= DONOR_TIERS.gold) return "gold";
+  if (totalAmount >= DONOR_TIERS.silver) return "silver";
+  if (totalAmount >= DONOR_TIERS.bronze) return "bronze";
+  return null;
+}
+
 /**
  * Get public profile by username
  */
@@ -54,7 +70,8 @@ export async function GET(
         role,
         "profilePrivacy",
         "socialLinks",
-        "createdAt"
+        "createdAt",
+        achievement_points
       FROM "user"
       WHERE username = $1
     `,
@@ -100,6 +117,48 @@ export async function GET(
       isFollowing = followCheckResult.rows.length > 0;
     }
 
+    // Get donor tier from total donations
+    const donationResult = await pool.query(
+      `
+      SELECT COALESCE(SUM(amount), 0) as total_amount
+      FROM donations
+      WHERE user_id = $1 AND status = 'completed'
+    `,
+      [user.id]
+    );
+    const totalDonated = parseFloat(donationResult.rows[0]?.total_amount || "0");
+    const donorTier = getDonorTier(totalDonated);
+
+    // Get online status
+    const presenceResult = await pool.query(
+      `
+      SELECT status, last_seen
+      FROM user_presence
+      WHERE user_id = $1
+    `,
+      [user.id]
+    );
+    const presence = presenceResult.rows[0];
+    const isOnline = presence?.status === "online";
+    const lastSeen = presence?.last_seen?.toISOString();
+
+    // Get user achievements (unlocked ones)
+    const achievementsResult = await pool.query(
+      `
+      SELECT
+        achievement_id,
+        unlocked_at
+      FROM user_achievements
+      WHERE user_id = $1
+      ORDER BY unlocked_at DESC
+    `,
+      [user.id]
+    );
+    const userAchievements = achievementsResult.rows.map((a) => ({
+      id: a.achievement_id,
+      unlockedAt: a.unlocked_at?.toISOString(),
+    }));
+
     // Build public profile response
     const publicProfile: Record<string, unknown> = {
       id: user.id,
@@ -116,6 +175,12 @@ export async function GET(
       isFollowing,
       followersCount,
       followingCount,
+      // New fields
+      donorTier,
+      achievementPoints: user.achievement_points || 0,
+      achievements: userAchievements,
+      isOnline,
+      lastSeen,
     };
 
     // Include email if allowed or own profile
