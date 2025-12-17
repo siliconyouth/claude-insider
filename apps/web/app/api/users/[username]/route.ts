@@ -142,21 +142,22 @@ export async function GET(
     const isOnline = presence?.status === "online";
     const lastSeen = presence?.last_seen_at?.toISOString();
 
-    // Get user achievements (unlocked ones)
+    // Get user achievements (unlocked ones) - join with achievements to get slug
     const achievementsResult = await pool.query(
       `
       SELECT
-        achievement_id,
-        unlocked_at
-      FROM user_achievements
-      WHERE user_id = $1
-      ORDER BY unlocked_at DESC
+        a.slug,
+        ua.earned_at
+      FROM user_achievements ua
+      JOIN achievements a ON a.id = ua.achievement_id
+      WHERE ua.user_id = $1
+      ORDER BY ua.earned_at DESC
     `,
       [user.id]
     );
     const userAchievements = achievementsResult.rows.map((a) => ({
-      id: a.achievement_id,
-      unlockedAt: a.unlocked_at?.toISOString(),
+      id: a.slug, // Use slug to match ACHIEVEMENTS constant keys
+      unlockedAt: a.earned_at?.toISOString(),
     }));
 
     // Build public profile response
