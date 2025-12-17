@@ -342,15 +342,15 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
         ref={triggerButtonRef}
         onClick={() => setIsOpen(true)}
         className={cn(
-          "flex items-center gap-2 text-sm rounded-lg",
+          "flex items-center gap-2 h-8 text-xs rounded-lg",
           "text-gray-600 dark:text-gray-400",
           "hover:text-gray-900 dark:hover:text-gray-200",
           "transition-all duration-200",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
           "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
           expanded
-            ? "px-3 py-1.5 w-[160px] lg:w-[200px] bg-white dark:bg-[#111] border border-gray-200 dark:border-[#333] hover:border-gray-300 dark:hover:border-[#404040]"
-            : "px-3 py-1.5 bg-gray-100 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#262626] hover:border-gray-300 dark:hover:border-[#404040]"
+            ? "px-2.5 w-[160px] lg:w-[200px] bg-white dark:bg-[#111] border border-gray-200 dark:border-[#333] hover:border-gray-300 dark:hover:border-[#404040]"
+            : "px-2.5 bg-gray-100 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#262626] hover:border-gray-300 dark:hover:border-[#404040]"
         )}
         aria-label="Search (Ctrl+K or Cmd+K)"
         aria-haspopup="dialog"
@@ -372,7 +372,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
         <span className={cn(
           expanded ? "inline text-gray-500 dark:text-gray-400" : "hidden sm:inline"
         )}>
-          {expanded ? "Search docs..." : "Search..."}
+          Search
         </span>
         <kbd className={cn(
           "items-center gap-0.5 px-1.5 py-0.5 text-xs font-medium text-gray-500 bg-gray-200 dark:bg-gray-700 rounded ml-auto",
@@ -483,7 +483,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                       isListening
                         ? "Listening..."
                         : mode === "quick"
-                        ? "Search documentation..."
+                        ? "Search..."
                         : "Ask anything about Claude Code..."
                     }
                     value={isListening ? interimTranscript || query : query}
@@ -765,7 +765,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                             Type at least 2 characters to search
                           </p>
                           <p className="text-xs text-gray-500 mt-2">
-                            Fast fuzzy search across documentation
+                            Search docs, resources, and pages
                           </p>
                         </>
                       ) : (

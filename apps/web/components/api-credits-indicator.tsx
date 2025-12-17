@@ -36,7 +36,7 @@ function getShortModelName(name: string | null): string {
 function ModelIndicatorSkeleton() {
   return (
     <div className={cn(
-      "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg",
+      "flex items-center gap-1.5 h-8 px-2.5 rounded-lg",
       "bg-gray-100 dark:bg-gray-800",
       "border border-gray-200 dark:border-gray-700",
       "animate-pulse"
@@ -57,7 +57,7 @@ function SiteApiIndicator() {
     <Link
       href="/settings#ai"
       className={cn(
-        "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg",
+        "flex items-center gap-1.5 h-8 px-2.5 rounded-lg",
         "text-xs font-medium",
         "bg-gray-100 dark:bg-gray-800",
         "border border-gray-200 dark:border-gray-700",
@@ -96,7 +96,7 @@ function InvalidKeyIndicator() {
     <Link
       href="/settings#ai"
       className={cn(
-        "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg",
+        "flex items-center gap-1.5 h-8 px-2.5 rounded-lg",
         "text-xs font-medium",
         "bg-amber-50 dark:bg-amber-900/20",
         "border border-amber-200 dark:border-amber-800",
@@ -206,7 +206,7 @@ export function ApiCreditsIndicator() {
         onMouseEnter={() => !showDropdown && setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         className={cn(
-          "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg",
+          "flex items-center gap-1.5 h-8 px-2.5 rounded-lg",
           "text-xs font-medium",
           "bg-gradient-to-r from-violet-500/10 via-blue-500/10 to-cyan-500/10",
           "border border-violet-500/20",

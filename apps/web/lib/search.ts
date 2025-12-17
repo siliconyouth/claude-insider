@@ -8,10 +8,10 @@ export interface SearchDocument {
   category: string;
 }
 
-// Build search index from all documentation pages
+// Build search index from all website pages
 export function buildSearchIndex(): SearchDocument[] {
-  // This is a static list of all documentation pages
-  // In a more dynamic setup, this could be generated at build time
+  // This is a static list of all searchable pages
+  // Includes documentation, resources, legal pages, and other site pages
   return [
     // Getting Started
     {
@@ -305,6 +305,164 @@ export function buildSearchIndex(): SearchDocument[] {
         "Real-world projects, case studies, e-commerce API, CLI tools, component library, data pipeline, production, success stories.",
       url: "/docs/examples/real-world-projects",
       category: "Examples",
+    },
+
+    // Resources
+    {
+      title: "Resources",
+      description: "Curated collection of Claude Code resources",
+      content:
+        "Resources, MCP servers, tools, SDKs, tutorials, showcases, community, prompts, agents, rules, CLAUDE.md templates.",
+      url: "/resources",
+      category: "Resources",
+    },
+    {
+      title: "MCP Servers",
+      description: "Model Context Protocol servers for Claude Code",
+      content:
+        "MCP servers, Model Context Protocol, filesystem, PostgreSQL, SQLite, Git, GitHub, Slack, Google Drive, Puppeteer, Brave Search.",
+      url: "/resources/mcp-servers",
+      category: "Resources",
+    },
+    {
+      title: "Tools & SDKs",
+      description: "Development tools and SDKs for Claude",
+      content:
+        "Tools, SDKs, development utilities, libraries, frameworks, integrations, Anthropic SDK, TypeScript SDK, Python SDK.",
+      url: "/resources/tools",
+      category: "Resources",
+    },
+    {
+      title: "CLAUDE.md Rules",
+      description: "Project configuration templates and rules",
+      content:
+        "CLAUDE.md rules, templates, project configuration, coding standards, best practices, conventions, workflows.",
+      url: "/resources/rules",
+      category: "Resources",
+    },
+    {
+      title: "Prompts",
+      description: "Effective prompts and prompt libraries for Claude",
+      content:
+        "Prompts, prompt engineering, prompt templates, effective prompts, prompt libraries, Claude prompts, AI prompts.",
+      url: "/resources/prompts",
+      category: "Resources",
+    },
+    {
+      title: "Agents",
+      description: "AI agents and autonomous systems built with Claude",
+      content:
+        "Agents, AI agents, autonomous systems, agent frameworks, multi-agent, Claude agents, agentic workflows.",
+      url: "/resources/agents",
+      category: "Resources",
+    },
+    {
+      title: "Tutorials",
+      description: "Step-by-step tutorials and learning resources",
+      content:
+        "Tutorials, guides, learning resources, step-by-step, walkthroughs, Claude tutorials, coding tutorials.",
+      url: "/resources/tutorials",
+      category: "Resources",
+    },
+    {
+      title: "Showcases",
+      description: "Example projects and showcases built with Claude",
+      content:
+        "Showcases, example projects, demos, sample code, real-world examples, Claude projects, inspiration.",
+      url: "/resources/showcases",
+      category: "Resources",
+    },
+    {
+      title: "Community",
+      description: "Community forums, Discord, and discussion groups",
+      content:
+        "Community, forums, Discord, discussions, support, help, Claude community, user groups, social.",
+      url: "/resources/community",
+      category: "Resources",
+    },
+    {
+      title: "Official Resources",
+      description: "Official Anthropic documentation and resources",
+      content:
+        "Official resources, Anthropic documentation, official docs, API reference, official guides, announcements.",
+      url: "/resources/official",
+      category: "Resources",
+    },
+
+    // Site Pages
+    {
+      title: "AI Assistant",
+      description: "Chat with Claude about Claude Code",
+      content:
+        "AI assistant, chat, Claude AI, documentation assistant, ask questions, voice search, natural language.",
+      url: "/assistant",
+      category: "Site",
+    },
+    {
+      title: "Playground",
+      description: "Interactive Claude Code playground",
+      content:
+        "Playground, interactive, sandbox, experiment, try Claude, test prompts, live demo.",
+      url: "/playground",
+      category: "Site",
+    },
+    {
+      title: "Donate",
+      description: "Support Claude Insider development",
+      content:
+        "Donate, support, contribution, PayPal, bank transfer, funding, sponsor, help maintain.",
+      url: "/donate",
+      category: "Site",
+    },
+    {
+      title: "Changelog",
+      description: "Version history and release notes",
+      content:
+        "Changelog, version history, release notes, updates, new features, bug fixes, improvements.",
+      url: "/changelog",
+      category: "Site",
+    },
+    {
+      title: "Settings",
+      description: "Account and application settings",
+      content:
+        "Settings, account, preferences, API key, theme, notifications, profile, security, two-factor authentication.",
+      url: "/settings",
+      category: "Site",
+    },
+
+    // Legal Pages
+    {
+      title: "Privacy Policy",
+      description: "How we handle your data and privacy",
+      content:
+        "Privacy policy, data protection, GDPR, CCPA, cookies, personal information, data handling, privacy rights.",
+      url: "/privacy",
+      category: "Legal",
+    },
+    {
+      title: "Terms of Service",
+      description: "Terms and conditions for using Claude Insider",
+      content:
+        "Terms of service, terms and conditions, user agreement, acceptable use, legal terms, service agreement.",
+      url: "/terms",
+      category: "Legal",
+    },
+    {
+      title: "Disclaimer",
+      description: "Important disclaimers and limitations",
+      content:
+        "Disclaimer, limitations, liability, warranty, accuracy, third-party content, professional advice.",
+      url: "/disclaimer",
+      category: "Legal",
+    },
+    {
+      title: "Accessibility",
+      description: "Accessibility features and standards",
+      content:
+        "Accessibility, WCAG, screen reader, keyboard navigation, accessible, inclusive design, a11y.",
+      url: "/accessibility",
+      category: "Legal",
     },
   ];
 }
