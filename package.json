@@ -1,6 +1,6 @@
 {
   "name": "claude-insider",
-  "version": "0.90.0",
+  "version": "0.94.0",
   "private": true,
   "scripts": {
     "build": "turbo run build",

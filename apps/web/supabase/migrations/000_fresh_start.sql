@@ -137,6 +137,15 @@ BEGIN
     ALTER TABLE public."user" ADD COLUMN "avatarUrl" TEXT;
   END IF;
 
+  -- Cover photo fields
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'coverPhotoUrl') THEN
+    ALTER TABLE public."user" ADD COLUMN "coverPhotoUrl" TEXT;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'coverPhotoPath') THEN
+    ALTER TABLE public."user" ADD COLUMN "coverPhotoPath" TEXT;
+  END IF;
+
   -- Role field (user hierarchy: user < editor < moderator < admin < superadmin, plus ai_assistant)
   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'role') THEN
     ALTER TABLE public."user" ADD COLUMN role TEXT DEFAULT 'user' CHECK (role IN ('user', 'editor', 'moderator', 'admin', 'superadmin', 'ai_assistant'));

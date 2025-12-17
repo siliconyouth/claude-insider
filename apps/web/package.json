@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.93.0",
+  "version": "0.94.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -60,6 +60,7 @@
     "qrcode": "^1.5.4",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-image-crop": "^11.0.10",
     "resend": "^6.6.0",
     "web-push": "^3.6.7"
   },

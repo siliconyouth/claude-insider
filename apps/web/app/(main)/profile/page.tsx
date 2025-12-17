@@ -12,6 +12,7 @@ import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { DefaultCover } from "@/components/profile";
 import {
   getCompleteProfileData,
   type UserProfile,
@@ -166,6 +167,7 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [isHoveringCover, setIsHoveringCover] = useState(false);
 
   // Track if we've loaded data (prevents duplicate fetches)
   const hasFetched = useRef(false);
@@ -251,6 +253,12 @@ export default function ProfilePage() {
     } catch {
       // Fallback
     }
+  };
+
+  const handleEditCover = () => {
+    // TODO: Open cover photo cropper modal
+    // For now, we'll navigate to settings where the cover photo section will be
+    window.location.href = "/settings#cover-photo";
   };
 
   // Get achievement details from IDs
@@ -375,23 +383,69 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex flex-col">
       <Header />
       <main id="main-content" className="flex-1">
-        {/* Cover/Header */}
+        {/* Cover/Header - Click to edit */}
         <div
           className={cn(
-            "h-48 sm:h-56 relative overflow-hidden",
-            "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600"
+            "h-48 sm:h-56 relative overflow-hidden cursor-pointer group"
           )}
+          onClick={handleEditCover}
+          onMouseEnter={() => setIsHoveringCover(true)}
+          onMouseLeave={() => setIsHoveringCover(false)}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleEditCover();
+            }
+          }}
+          aria-label="Edit cover photo"
         >
-          {/* Dot pattern overlay */}
+          {/* Custom Cover or Default Animated */}
+          {profile?.coverPhotoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={profile.coverPhotoUrl}
+              alt="Profile cover"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <DefaultCover className="w-full h-full" />
+          )}
+
+          {/* Edit overlay */}
           <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 1px)",
-              backgroundSize: "16px 16px",
-            }}
-          />
-          {/* Gradient overlay for depth */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            className={cn(
+              "absolute inset-0 flex items-center justify-center",
+              "bg-black/40 transition-opacity duration-200",
+              isHoveringCover ? "opacity-100" : "opacity-0"
+            )}
+          >
+            <div className="flex items-center gap-2 text-white">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              <span className="text-sm font-medium">
+                {profile?.coverPhotoUrl ? "Change cover" : "Add cover photo"}
+              </span>
+            </div>
+          </div>
         </div>
 
         <div className="max-w-5xl mx-auto px-4 -mt-24 sm:-mt-28 relative z-10">

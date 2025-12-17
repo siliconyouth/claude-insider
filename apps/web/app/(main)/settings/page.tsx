@@ -21,6 +21,7 @@ import { PasskeySettings } from "@/components/settings/passkey-settings";
 import { DataManagement } from "@/components/settings/data-management";
 import { BlockedUsers } from "@/components/settings/blocked-users";
 import { AvatarUpload } from "@/components/settings/avatar-upload";
+import { CoverPhotoSection } from "@/components/settings/cover-photo-section";
 import { PasswordSettings } from "@/components/settings/password-settings";
 import { ConnectedAccounts } from "@/components/settings/connected-accounts";
 import { ApiKeySettings } from "@/components/settings/api-key-settings";
@@ -484,6 +485,17 @@ export default function SettingsPage() {
                 }}
               />
             </div>
+
+            {/* Cover Photo */}
+            <CoverPhotoSection
+              currentCoverUrl={profile?.coverPhotoUrl}
+              avatarUrl={profile?.avatarUrl}
+              userName={name || profile?.name}
+              onCoverPhotoChange={(url) => {
+                setProfile((prev) => prev ? { ...prev, coverPhotoUrl: url } : prev);
+                clearCache();
+              }}
+            />
 
             {/* Name */}
             <div>

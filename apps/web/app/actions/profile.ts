@@ -20,6 +20,7 @@ export interface UserProfile {
   email: string;
   username?: string;
   avatarUrl?: string;
+  coverPhotoUrl?: string | null;
   bio?: string;
   website?: string;
   joinedAt: string;
@@ -653,7 +654,7 @@ export async function getCompleteProfileData(options?: {
       // Extended profile from user table
       supabase
         .from("user")
-        .select("username, bio, avatarUrl, socialLinks, role, isBetaTester, isVerified, achievement_points, followers_count, following_count")
+        .select("username, bio, avatarUrl, coverPhotoUrl, socialLinks, role, isBetaTester, isVerified, achievement_points, followers_count, following_count")
         .eq("id", userId)
         .single(),
       // Favorites list
@@ -729,6 +730,7 @@ export async function getCompleteProfileData(options?: {
           email: session.user.email || "",
           username: profile?.username || undefined,
           avatarUrl: profile?.avatarUrl || session.user.image || undefined,
+          coverPhotoUrl: profile?.coverPhotoUrl || null,
           bio: profile?.bio || undefined,
           website: socialLinks?.website || undefined,
           // Extended fields
@@ -915,7 +917,7 @@ export async function getCompleteSettingsData(): Promise<{
       // User table for profile, username, and privacy settings (all in one query)
       supabase
         .from("user")
-        .select("bio, avatarUrl, socialLinks, username, profilePrivacy")
+        .select("bio, avatarUrl, coverPhotoUrl, socialLinks, username, profilePrivacy")
         .eq("id", userId)
         .single(),
       // Notification preferences
@@ -938,6 +940,7 @@ export async function getCompleteSettingsData(): Promise<{
           name: session.user.name || "Anonymous",
           email: session.user.email || "",
           avatarUrl: userData?.avatarUrl || session.user.image || undefined,
+          coverPhotoUrl: userData?.coverPhotoUrl || null,
           bio: userData?.bio || undefined,
           website: socialLinks?.website || undefined,
           joinedAt:

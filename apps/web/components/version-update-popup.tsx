@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.86.0";
+const APP_VERSION = "0.94.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,92 +24,55 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
-    version: "0.86.0",
+    version: "0.94.0",
+    date: "2025-12-17",
+    type: "minor",
+    highlights: [
+      "Profile Cover Photos: Custom cover images with 3:1 aspect ratio",
+      "Client-side image cropping with react-image-crop",
+      "Animated default cover with lens flare gradient effect",
+      "Click-to-edit cover on profile page + settings integration",
+    ],
+  },
+  {
+    version: "0.93.0",
+    date: "2025-12-17",
+    type: "minor",
+    highlights: [
+      "User Directory page with 7 list types and search filters",
+      "@Mention deep linking to jump to specific messages",
+      "Message grouping for cleaner chat UI",
+    ],
+  },
+  {
+    version: "0.92.0",
+    date: "2025-12-17",
+    type: "minor",
+    highlights: [
+      "Realtime Context Provider with connection pooling",
+      "Broadcast typing indicators (7.6x faster latency)",
+      "Virtual scrolling for message lists",
+      "6 new database performance indexes",
+    ],
+  },
+  {
+    version: "0.91.0",
+    date: "2025-12-17",
+    type: "minor",
+    highlights: [
+      "Profile page redesign with gradient cover banner",
+      "Header/Footer added to 14 missing pages",
+      "ProfileHoverCard redesign with badges and stats",
+    ],
+  },
+  {
+    version: "0.90.0",
     date: "2025-12-16",
     type: "minor",
     highlights: [
-      "Legal pages compliance update (GDPR, CCPA, DSA, Serbian law)",
-      "Privacy Policy expanded with E2EE, donations, international transfers",
-      "Terms of Service with DSA compliance and MIT license details",
-      "Accessibility Statement with Unified Chat and E2EE features",
-    ],
-  },
-  {
-    version: "0.85.0",
-    date: "2025-12-16",
-    type: "minor",
-    highlights: [
-      "Documentation consolidation - single source of truth",
-      "CLAUDE.md now contains all project guidelines",
-      "Archived completed implementation plans",
-      "Removed custom Claude agent definitions",
-    ],
-  },
-  {
-    version: "0.84.0",
-    date: "2025-12-16",
-    type: "minor",
-    highlights: [
-      "Touch screen ProfileHoverCard support",
-      "Two-touch navigation pattern for mobile",
-      "Site-wide ProfileHoverCard integration",
-    ],
-  },
-  {
-    version: "0.83.0",
-    date: "2025-12-16",
-    type: "minor",
-    highlights: [
-      "Floating Chat Button with Cmd + . keyboard shortcut",
-      "AI Assistant audio refactored with semaphore-based queue system",
-      "Sentence-splitting for natural TTS streaming",
-    ],
-  },
-  {
-    version: "0.82.0",
-    date: "2025-12-16",
-    type: "minor",
-    highlights: [
-      "End-to-End Encryption (E2EE) using Matrix Olm/Megolm protocol",
-      "Unified Chat Window with AI Assistant and Messages tabs",
-      "Donation system with PayPal and bank transfer support",
-      "PWA enhancements with comprehensive icon set and push notifications",
-    ],
-  },
-  {
-    version: "0.81.0",
-    date: "2025-12-15",
-    type: "minor",
-    highlights: [
-      "RAG Index Generator v6.0 with beautiful console UI",
-      "1,933 total chunks (up from ~500) for better search",
-      "20 project knowledge chunks (up from 12)",
-      "Claude Opus 4.5 references throughout codebase",
-      "Semantic chunking with TF-IDF scoring",
-    ],
-  },
-  {
-    version: "0.80.0",
-    date: "2025-12-15",
-    type: "minor",
-    highlights: [
-      "Zero ESLint warnings milestone (203 warnings fixed)",
-      "TypeScript type safety with 20+ Supabase row interfaces",
-      "React hooks compliance across all components",
-      "Fixed function ordering and hook dependencies",
-      "Beta tester role system with full RBAC support",
-    ],
-  },
-  {
-    version: "0.79.0",
-    date: "2025-12-15",
-    type: "minor",
-    highlights: [
-      "Comprehensive Data Layer documentation (consolidated in CLAUDE.md)",
-      "73 database tables documented across 13 categories",
-      "RLS security patterns and policy documentation",
-      "Fresh start migration consolidation (024-049)",
-      "22 new tables including DMs, presence, security",
+      "ChatMessage shared component with unified styling",
+      "Claude sparkle avatar icon for AI messages",
+      "Modern bubble styling with gradient and entrance animations",
     ],
   },
 ];

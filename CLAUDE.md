@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.93.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.94.0**.
 
 | Link | URL |
 |------|-----|
@@ -57,6 +57,7 @@ All technologies are **free and/or open source** (except hosting services with f
 | @matrix-org/matrix-sdk-crypto-wasm | 16.0.0 | Apache-2.0 | E2EE implementation |
 | @paypal/react-paypal-js | 8.9.2 | Apache-2.0 | PayPal integration |
 | @tanstack/react-virtual | 3.13.2 | MIT | Virtual scrolling for message lists |
+| react-image-crop | 11.x | ISC | Client-side image cropping |
 
 ### Development Environment
 
@@ -109,7 +110,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (33 total)
+### Implemented Features (34 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -146,6 +147,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-31 | PWA Enhancements | 15 icons, service worker, push notifications |
 | FR-32 | ProfileHoverCard | Touch-friendly previews, two-touch navigation |
 | FR-33 | User Directory | `/users` page with 7 list types, search, filters, deep linking to messages |
+| FR-34 | Profile Cover Photos | Custom covers (3:1 ratio), animated default, react-image-crop, settings integration |
 
 ### Non-Functional Requirements
 
@@ -208,7 +210,7 @@ claude-insider/
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 63 SQL migration files
+│   └── supabase/migrations/      # 70+ SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans

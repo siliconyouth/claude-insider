@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.94.0] - 2025-12-17
+### Profile Cover Photos
+- **Customizable Cover Photos**: Upload custom cover images for user profiles
+  - 3:1 aspect ratio (1500×500px recommended, Twitter/LinkedIn style)
+  - Client-side cropping with react-image-crop library
+  - Live preview showing how cover will look with avatar overlay
+  - Max 5MB file size, supports JPEG, PNG, WebP
+- **Animated Default Cover**: Lens flare gradient when no custom cover is set
+  - 3 animated orbs (violet, blue, cyan) with drift and pulse animations
+  - Respects `prefers-reduced-motion` for accessibility
+- **Click-to-Edit**: Click cover photo on profile page to open cropper modal
+- **Settings Integration**: Cover photo section in account settings
+- **Database**: New `coverPhotoUrl` and `coverPhotoPath` columns in user table
+- **Files Created**: `default-cover.tsx`, `profile-cover.tsx`, `cover-photo-cropper.tsx`, `cover-photo-section.tsx`, `070_cover_photo.sql`
+
 ## [0.93.0] - 2025-12-17
 ### User Directory & Mention System
 - **User Directory Page** (`/users`): Public user directory with 7 list types
@@ -478,7 +493,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Range | Count | Period | Highlights |
 |-------|-------|--------|------------|
-| 0.87-0.93 | 7 | Dec 16-17 | User Directory, Chat Performance, Dashboard |
+| 0.87-0.94 | 8 | Dec 16-17 | Cover Photos, User Directory, Chat Performance |
 | 0.80-0.86 | 7 | Dec 15-16 | E2EE, Unified Chat, Legal Compliance |
 | 0.70-0.79 | 10 | Dec 14-15 | Security Dashboard, Auth, Admin |
 | 0.60-0.69 | 10 | Dec 13-14 | Messaging, Notifications, Profiles |
@@ -489,7 +504,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | 0.10-0.19 | 10 | Dec 9 | AI Assistant, Design System |
 | 0.1-0.9 | 9 | Dec 8-9 | Foundation, Docs, SEO |
 
-**Total: 88 versions in 10 days** (Dec 8-17, 2025)
+**Total: 89 versions in 10 days** (Dec 8-17, 2025)
 
 ---
 
