@@ -3,7 +3,6 @@ import { getSession } from "@/lib/auth";
 import { Inbox } from "@/components/messaging";
 import { updatePresence } from "@/app/actions/presence";
 import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
 
 export const metadata = {
   title: "Messages | Claude Insider",
@@ -21,12 +20,13 @@ export default async function InboxPage() {
   await updatePresence("online");
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+    <div className="h-screen flex flex-col overflow-hidden bg-white dark:bg-[#0a0a0a]">
       <Header />
-      <div className="flex-1">
+      {/* min-h-0 is critical: allows flex child to shrink below content size */}
+      <div className="flex-1 min-h-0">
         <Inbox currentUserId={session.user.id} />
       </div>
-      <Footer />
+      {/* Footer intentionally omitted - chat interface takes full height */}
     </div>
   );
 }

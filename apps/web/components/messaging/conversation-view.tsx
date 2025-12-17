@@ -351,9 +351,9 @@ export function ConversationView({
   });
 
   return (
-    <div className={cn("flex flex-col h-full", className)}>
-      {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-[#262626]">
+    <div className={cn("flex flex-col h-full min-h-0 overflow-hidden", className)}>
+      {/* Header - flex-shrink-0 ensures this stays fixed at top */}
+      <div className="flex-shrink-0 flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-[#262626]">
         {onBack && (
           <button
             onClick={onBack}
@@ -478,8 +478,8 @@ export function ConversationView({
         className="p-4"
       />
 
-      {/* Input */}
-      <div className="p-4 border-t border-gray-200 dark:border-[#262626]">
+      {/* Input - flex-shrink-0 ensures this stays fixed at bottom */}
+      <div className="flex-shrink-0 p-4 border-t border-gray-200 dark:border-[#262626]">
         <div ref={inputWrapperRef} className="relative flex items-end gap-2">
           {/* Mention Autocomplete - positioned above input */}
           <MentionAutocomplete

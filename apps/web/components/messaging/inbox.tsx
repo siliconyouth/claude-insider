@@ -157,12 +157,12 @@ export function Inbox({
   }, []);
 
   return (
-    <div className={cn("flex h-full", className)}>
+    <div className={cn("flex h-full overflow-hidden", className)}>
       {/* Sidebar - Conversation List */}
       <div
         className={cn(
           "w-full lg:w-80 flex-shrink-0 border-r border-gray-200 dark:border-[#262626]",
-          "flex flex-col bg-white dark:bg-[#0a0a0a]",
+          "flex flex-col min-h-0 bg-white dark:bg-[#0a0a0a]",
           selectedConversation ? "hidden lg:flex" : "flex"
         )}
       >
@@ -393,7 +393,7 @@ export function Inbox({
       {/* Main Content - Conversation View */}
       <div
         className={cn(
-          "flex-1 flex flex-col bg-white dark:bg-[#0a0a0a]",
+          "flex-1 flex flex-col min-h-0 bg-white dark:bg-[#0a0a0a]",
           !selectedConversation ? "hidden lg:flex" : "flex"
         )}
       >
