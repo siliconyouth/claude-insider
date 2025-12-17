@@ -55,10 +55,67 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE O
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO anon;
 
 -- =============================================================================
--- PART 2: BETTER AUTH TABLE EXTENSIONS
+-- PART 2: BETTER AUTH BASE TABLES
 -- =============================================================================
--- Better Auth creates: user, session, account, verification
--- We add additional columns and disable RLS on auth tables
+-- Better Auth creates these tables on first app run, but for local development
+-- with `supabase start`, we need to create them here first.
+-- Using CREATE TABLE IF NOT EXISTS ensures this works for both scenarios.
+
+-- User table (Better Auth core)
+CREATE TABLE IF NOT EXISTS public."user" (
+  id TEXT PRIMARY KEY,
+  name TEXT,
+  email TEXT NOT NULL UNIQUE,
+  "emailVerified" BOOLEAN DEFAULT FALSE,
+  image TEXT,
+  "createdAt" TIMESTAMPTZ DEFAULT NOW(),
+  "updatedAt" TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Session table (Better Auth core)
+CREATE TABLE IF NOT EXISTS public.session (
+  id TEXT PRIMARY KEY,
+  "userId" TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  token TEXT NOT NULL UNIQUE,
+  "expiresAt" TIMESTAMPTZ NOT NULL,
+  "ipAddress" TEXT,
+  "userAgent" TEXT,
+  "createdAt" TIMESTAMPTZ DEFAULT NOW(),
+  "updatedAt" TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Account table (Better Auth core - for OAuth)
+CREATE TABLE IF NOT EXISTS public.account (
+  id TEXT PRIMARY KEY,
+  "userId" TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
+  "accountId" TEXT NOT NULL,
+  "providerId" TEXT NOT NULL,
+  "accessToken" TEXT,
+  "refreshToken" TEXT,
+  "accessTokenExpiresAt" TIMESTAMPTZ,
+  "refreshTokenExpiresAt" TIMESTAMPTZ,
+  scope TEXT,
+  "idToken" TEXT,
+  password TEXT,
+  "createdAt" TIMESTAMPTZ DEFAULT NOW(),
+  "updatedAt" TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE("providerId", "accountId")
+);
+
+-- Verification table (Better Auth core - for email verification)
+CREATE TABLE IF NOT EXISTS public.verification (
+  id TEXT PRIMARY KEY,
+  identifier TEXT NOT NULL,
+  value TEXT NOT NULL,
+  "expiresAt" TIMESTAMPTZ NOT NULL,
+  "createdAt" TIMESTAMPTZ DEFAULT NOW(),
+  "updatedAt" TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- =============================================================================
+-- PART 2.5: BETTER AUTH TABLE EXTENSIONS
+-- =============================================================================
+-- Now add our additional columns to the Better Auth tables
 
 -- Add additional columns to user table (Better Auth creates basic columns)
 DO $$
@@ -66,6 +123,36 @@ BEGIN
   -- Profile fields
   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'username') THEN
     ALTER TABLE public."user" ADD COLUMN username TEXT UNIQUE;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'displayName') THEN
+    ALTER TABLE public."user" ADD COLUMN "displayName" TEXT;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'bio') THEN
+    ALTER TABLE public."user" ADD COLUMN bio TEXT;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'avatarUrl') THEN
+    ALTER TABLE public."user" ADD COLUMN "avatarUrl" TEXT;
+  END IF;
+
+  -- Role field (user hierarchy: user < editor < moderator < admin < superadmin, plus ai_assistant)
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'role') THEN
+    ALTER TABLE public."user" ADD COLUMN role TEXT DEFAULT 'user' CHECK (role IN ('user', 'editor', 'moderator', 'admin', 'superadmin', 'ai_assistant'));
+  END IF;
+
+  -- Status flags
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'isBetaTester') THEN
+    ALTER TABLE public."user" ADD COLUMN "isBetaTester" BOOLEAN DEFAULT false;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'isVerified') THEN
+    ALTER TABLE public."user" ADD COLUMN "isVerified" BOOLEAN DEFAULT false;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'hasPassword') THEN
+    ALTER TABLE public."user" ADD COLUMN "hasPassword" BOOLEAN DEFAULT false;
   END IF;
 
   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'socialLinks') THEN
