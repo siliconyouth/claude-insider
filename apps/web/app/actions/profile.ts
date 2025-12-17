@@ -23,6 +23,18 @@ export interface UserProfile {
   bio?: string;
   website?: string;
   joinedAt: string;
+  // Extended profile fields
+  role?: string;
+  isBetaTester?: boolean;
+  isVerified?: boolean;
+  socialLinks?: Record<string, string>;
+  followersCount?: number;
+  followingCount?: number;
+  achievementPoints?: number;
+  donorTier?: "bronze" | "silver" | "gold" | "platinum" | null;
+  achievements?: Array<{ id: string; unlockedAt: string }>;
+  isOnline?: boolean;
+  lastSeen?: string;
   stats: {
     favorites: number;
     ratings: number;
@@ -560,6 +572,22 @@ export interface CompleteProfileData {
   collections: CollectionWithItems[];
 }
 
+// Donor tier thresholds (same as in /api/users/[username]/route.ts)
+const DONOR_TIERS = {
+  platinum: 500,
+  gold: 100,
+  silver: 50,
+  bronze: 10,
+} as const;
+
+function getDonorTier(totalAmount: number): "platinum" | "gold" | "silver" | "bronze" | null {
+  if (totalAmount >= DONOR_TIERS.platinum) return "platinum";
+  if (totalAmount >= DONOR_TIERS.gold) return "gold";
+  if (totalAmount >= DONOR_TIERS.silver) return "silver";
+  if (totalAmount >= DONOR_TIERS.bronze) return "bronze";
+  return null;
+}
+
 /**
  * Get all profile data in a single request
  *
@@ -594,12 +622,16 @@ export async function getCompleteProfileData(options?: {
       ratingsCount,
       collectionsCount,
       commentsCount,
-      // Profile data
+      // Extended profile data from user table
       profileData,
       // Actual list data with pagination
       favoritesData,
       ratingsData,
       collectionsData,
+      // Additional data for enhanced profile
+      donationsData,
+      achievementsData,
+      presenceData,
     ] = await Promise.all([
       // Count queries (fast, index-only)
       supabase
@@ -618,10 +650,10 @@ export async function getCompleteProfileData(options?: {
         .from("comments")
         .select("id", { count: "exact", head: true })
         .eq("user_id", userId),
-      // Profile from user table
+      // Extended profile from user table
       supabase
         .from("user")
-        .select("bio, avatarUrl, socialLinks")
+        .select("username, bio, avatarUrl, socialLinks, role, isBetaTester, isVerified, achievement_points, followers_count, following_count")
         .eq("id", userId)
         .single(),
       // Favorites list
@@ -646,10 +678,48 @@ export async function getCompleteProfileData(options?: {
         .select("id, name, description, is_public, item_count, created_at, updated_at")
         .eq("user_id", userId)
         .order("updated_at", { ascending: false }),
+      // Donations total for donor tier
+      supabase
+        .from("donations")
+        .select("amount")
+        .eq("user_id", userId)
+        .eq("status", "completed"),
+      // Achievements with slug from join
+      supabase
+        .from("user_achievements")
+        .select("earned_at, achievements(slug)")
+        .eq("user_id", userId)
+        .order("earned_at", { ascending: false }),
+      // Presence status
+      supabase
+        .from("user_presence")
+        .select("status, last_seen_at")
+        .eq("user_id", userId)
+        .single(),
     ]);
 
     const profile = profileData.data;
-    const socialLinks = profile?.socialLinks as { website?: string } | null;
+    const socialLinks = profile?.socialLinks as Record<string, string> | null;
+
+    // Calculate donor tier from total donations
+    const totalDonated = (donationsData.data || []).reduce(
+      (sum: number, d: { amount: number }) => sum + (d.amount || 0),
+      0
+    );
+    const donorTier = getDonorTier(totalDonated);
+
+    // Map achievements to expected format
+    const achievements = (achievementsData.data || [])
+      .filter((a: { achievements?: { slug?: string } }) => a.achievements?.slug)
+      .map((a: { earned_at: string; achievements: { slug: string } }) => ({
+        id: a.achievements.slug,
+        unlockedAt: a.earned_at,
+      }));
+
+    // Get presence status
+    const presence = presenceData.data;
+    const isOnline = presence?.status === "online";
+    const lastSeen = presence?.last_seen_at;
 
     return {
       data: {
@@ -657,9 +727,22 @@ export async function getCompleteProfileData(options?: {
           id: userId,
           name: session.user.name || "Anonymous",
           email: session.user.email || "",
+          username: profile?.username || undefined,
           avatarUrl: profile?.avatarUrl || session.user.image || undefined,
           bio: profile?.bio || undefined,
           website: socialLinks?.website || undefined,
+          // Extended fields
+          role: profile?.role || "user",
+          isBetaTester: profile?.isBetaTester || false,
+          isVerified: profile?.isVerified || false,
+          socialLinks: socialLinks || {},
+          followersCount: profile?.followers_count || 0,
+          followingCount: profile?.following_count || 0,
+          achievementPoints: profile?.achievement_points || 0,
+          donorTier,
+          achievements,
+          isOnline,
+          lastSeen,
           joinedAt:
             session.user.createdAt instanceof Date
               ? session.user.createdAt.toISOString()
