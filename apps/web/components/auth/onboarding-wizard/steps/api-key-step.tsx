@@ -18,6 +18,53 @@ import { ANTHROPIC_URLS } from "@/lib/api-keys";
 
 type ConnectionMethod = "popup" | "manual" | null;
 
+// Model info returned from API
+interface AvailableModel {
+  id: string;
+  name: string;
+  tier: "opus" | "sonnet" | "haiku";
+}
+
+/**
+ * Select the best available model based on tier hierarchy:
+ * 1. Opus 4.5 (newest, if available)
+ * 2. Opus 4 (if Opus 4.5 not available)
+ * 3. Best Sonnet (if no Opus)
+ * 4. First available model
+ */
+function selectBestModel(models: AvailableModel[]): string {
+  // Priority order for Opus models (newest first)
+  const opus45 = models.find(m => m.id.includes("opus-4-5") || m.id.includes("opus-4.5"));
+  if (opus45) return opus45.id;
+
+  const opus4 = models.find(m => m.tier === "opus" && !m.id.includes("opus-4-5"));
+  if (opus4) return opus4.id;
+
+  // Then Sonnet 4 (newest), then any Sonnet
+  const sonnet4 = models.find(m => m.id.includes("sonnet-4-") && !m.id.includes("sonnet-4."));
+  if (sonnet4) return sonnet4.id;
+
+  const anySonnet = models.find(m => m.tier === "sonnet");
+  if (anySonnet) return anySonnet.id;
+
+  // Fall back to first available
+  return models[0]?.id || "";
+}
+
+/**
+ * Get tier badge styling
+ */
+function getTierBadgeStyle(tier: "opus" | "sonnet" | "haiku") {
+  switch (tier) {
+    case "opus":
+      return "bg-gradient-to-r from-violet-600 to-purple-600 text-white";
+    case "sonnet":
+      return "bg-gradient-to-r from-blue-600 to-cyan-600 text-white";
+    case "haiku":
+      return "bg-gray-500 text-white";
+  }
+}
+
 export function ApiKeyStep() {
   const { setError, isLastStep } = useWizard();
 
@@ -30,9 +77,11 @@ export function ApiKeyStep() {
   const [popupWindow, setPopupWindow] = useState<Window | null>(null);
   const [validationResult, setValidationResult] = useState<{
     valid: boolean;
-    models?: string[];
+    models?: AvailableModel[];
     error?: string;
   } | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string | null>(null);
+  const [isSavingModel, setIsSavingModel] = useState(false);
 
   // Check if user already has an API key connected
   useEffect(() => {
@@ -42,11 +91,19 @@ export function ApiKeyStep() {
         if (response.ok) {
           const data = await response.json();
           if (data.apiKeys?.[0]?.isValid) {
+            const apiKeyData = data.apiKeys[0];
+            const models: AvailableModel[] = apiKeyData.availableModels || [];
             setHasExistingKey(true);
             setValidationResult({
               valid: true,
-              models: data.apiKeys[0].availableModels?.map((m: { name: string }) => m.name) || [],
+              models,
             });
+            // Set selected model from existing preference or auto-select best
+            if (apiKeyData.preferredModel) {
+              setSelectedModel(apiKeyData.preferredModel);
+            } else if (models.length > 0) {
+              setSelectedModel(selectBestModel(models));
+            }
           }
         }
       } catch (err) {
@@ -122,9 +179,10 @@ export function ApiKeyStep() {
         throw new Error(data.error || "Failed to save API key");
       }
 
+      const models: AvailableModel[] = data.availableModels || [];
       setValidationResult({
         valid: data.isValid,
-        models: data.availableModels?.map((m: { name: string }) => m.name) || [],
+        models,
         error: data.validationError,
       });
 
@@ -133,6 +191,10 @@ export function ApiKeyStep() {
         setApiKey("");
         setConnectionMethod(null);
         setPopupStep(0);
+        // Auto-select the best available model
+        if (models.length > 0) {
+          setSelectedModel(selectBestModel(models));
+        }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to validate API key");
@@ -157,6 +219,27 @@ export function ApiKeyStep() {
   };
 
   const handleContinue = async (): Promise<boolean> => {
+    // If we have a valid API key and selected model, save the preference
+    if (hasExistingKey && selectedModel) {
+      setIsSavingModel(true);
+      try {
+        const response = await fetch("/api/user/api-keys", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ preferredModel: selectedModel }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || "Failed to save model preference");
+        }
+      } catch (err) {
+        console.error("[Onboarding] Failed to save model preference:", err);
+        // Continue anyway, user can change it later in settings
+      } finally {
+        setIsSavingModel(false);
+      }
+    }
     return true;
   };
 
@@ -206,25 +289,122 @@ export function ApiKeyStep() {
           </ul>
         </div>
 
-        {/* Existing Key Status */}
+        {/* Existing Key Status + Model Selection */}
         {hasExistingKey && validationResult?.valid && (
-          <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-full bg-emerald-100 dark:bg-emerald-800/50">
-                <CheckIcon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <div>
-                <p className="font-medium text-emerald-700 dark:text-emerald-400">
-                  API Key Connected
-                </p>
-                {validationResult.models && validationResult.models.length > 0 && (
-                  <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-0.5">
-                    Available: {validationResult.models.slice(0, 3).join(", ")}
-                    {validationResult.models.length > 3 && ` +${validationResult.models.length - 3} more`}
+          <div className="space-y-4">
+            {/* Success Banner */}
+            <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-emerald-100 dark:bg-emerald-800/50">
+                  <CheckIcon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <div>
+                  <p className="font-medium text-emerald-700 dark:text-emerald-400">
+                    API Key Connected
                   </p>
-                )}
+                  <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-0.5">
+                    {validationResult.models?.length || 0} models available
+                  </p>
+                </div>
               </div>
             </div>
+
+            {/* Model Selection */}
+            {validationResult.models && validationResult.models.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-white">
+                    Choose Your Default Model
+                  </h4>
+                  {selectedModel && (
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      You can change this anytime in Settings
+                    </span>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  {/* Sort models by tier (opus first, then sonnet, then haiku) */}
+                  {[...validationResult.models]
+                    .sort((a, b) => {
+                      const tierOrder = { opus: 0, sonnet: 1, haiku: 2 };
+                      return tierOrder[a.tier] - tierOrder[b.tier];
+                    })
+                    .map((model) => {
+                      const isSelected = selectedModel === model.id;
+                      const isBestModel = model.id === selectBestModel(validationResult.models!);
+
+                      return (
+                        <button
+                          key={model.id}
+                          type="button"
+                          onClick={() => setSelectedModel(model.id)}
+                          className={cn(
+                            "w-full flex items-center justify-between p-3 rounded-xl",
+                            "border-2 transition-all duration-200",
+                            isSelected
+                              ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                              : "border-gray-200 dark:border-[#333] hover:border-gray-300 dark:hover:border-[#444]",
+                            "bg-white dark:bg-[#111]"
+                          )}
+                        >
+                          <div className="flex items-center gap-3">
+                            {/* Radio indicator */}
+                            <div
+                              className={cn(
+                                "w-5 h-5 rounded-full border-2 flex items-center justify-center",
+                                isSelected
+                                  ? "border-blue-500 bg-blue-500"
+                                  : "border-gray-300 dark:border-gray-600"
+                              )}
+                            >
+                              {isSelected && (
+                                <div className="w-2 h-2 rounded-full bg-white" />
+                              )}
+                            </div>
+
+                            {/* Model info */}
+                            <div className="text-left">
+                              <div className="flex items-center gap-2">
+                                <span
+                                  className={cn(
+                                    "font-medium",
+                                    isSelected
+                                      ? "text-blue-700 dark:text-blue-300"
+                                      : "text-gray-900 dark:text-white"
+                                  )}
+                                >
+                                  {model.name}
+                                </span>
+                                {isBestModel && (
+                                  <span className="px-1.5 py-0.5 text-[10px] font-bold rounded bg-gradient-to-r from-amber-500 to-orange-500 text-white uppercase">
+                                    Best
+                                  </span>
+                                )}
+                              </div>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                {model.tier === "opus" && "Most powerful, best for complex tasks"}
+                                {model.tier === "sonnet" && "Balanced speed and intelligence"}
+                                {model.tier === "haiku" && "Fast and cost-effective"}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Tier badge */}
+                          <span
+                            className={cn(
+                              "px-2 py-1 text-xs font-semibold rounded-full capitalize",
+                              getTierBadgeStyle(model.tier)
+                            )}
+                          >
+                            {model.tier}
+                          </span>
+                        </button>
+                      );
+                    })}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
