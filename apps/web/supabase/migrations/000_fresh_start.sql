@@ -2579,7 +2579,7 @@ CREATE POLICY "device_keys_service_role" ON public.device_keys FOR ALL TO servic
 CREATE TABLE IF NOT EXISTS public.one_time_prekeys (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   device_key_id UUID NOT NULL REFERENCES public.device_keys(id) ON DELETE CASCADE,
-  key_id INTEGER NOT NULL,
+  key_id TEXT NOT NULL, -- Base64-encoded key ID from vodozemac
   public_key TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   claimed_at TIMESTAMPTZ,

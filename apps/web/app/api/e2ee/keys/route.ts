@@ -91,7 +91,8 @@ export async function POST(request: NextRequest) {
 
       const prekeyParams = [deviceKeyId];
       for (const [keyId, publicKey] of oneTimeKeys) {
-        prekeyParams.push(parseInt(String(keyId)), publicKey);
+        // keyId is a base64-encoded string from vodozemac, store as-is
+        prekeyParams.push(String(keyId), publicKey);
       }
 
       await pool.query(

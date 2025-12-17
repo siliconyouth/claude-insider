@@ -53,7 +53,8 @@ export async function POST(request: NextRequest) {
 
       oneTimeKeys.forEach(([keyId, publicKey]: [number | string, string], index: number) => {
         values.push(`($1, $${index * 2 + 2}, $${index * 2 + 3})`);
-        params.push(parseInt(String(keyId)), publicKey);
+        // keyId is a base64-encoded string from vodozemac, store as-is
+        params.push(String(keyId), publicKey);
       });
 
       await pool.query(
