@@ -234,16 +234,15 @@ export function Header({ activePage }: HeaderProps) {
             {/* Divider */}
             <div className="mx-2 h-5 w-px bg-gray-200 dark:bg-[#262626]" />
 
-            {/* Search */}
-            <UniversalSearch expanded />
-
-            {/* API Credits - separate from search */}
-            <ApiCreditsIndicator />
-
-            <ThemeToggle />
-            <InboxDropdown />
-            <NotificationBell />
-            <UserMenu />
+            {/* Right side utilities - consistent gap */}
+            <div className="flex items-center gap-2">
+              <UniversalSearch expanded />
+              <ApiCreditsIndicator />
+              <ThemeToggle />
+              <InboxDropdown />
+              <NotificationBell />
+              <UserMenu />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
