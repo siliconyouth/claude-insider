@@ -3,9 +3,13 @@
  *
  * Helper functions for managing file uploads to Supabase Storage.
  * Used for avatar uploads, cover photos, and feedback screenshots.
+ *
+ * NOTE: Uses createAdminClient() to bypass RLS policies because
+ * the app uses Better Auth instead of Supabase Auth. Authentication
+ * is verified at the API route level before these functions are called.
  */
 
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 
 // Avatar configuration
 const AVATAR_BUCKET = "avatars";
@@ -49,7 +53,7 @@ export async function uploadAvatar(userId: string, file: File): Promise<UploadRe
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
 
     // Generate unique filename
     const ext = file.name.split(".").pop() || "jpg";
@@ -107,7 +111,7 @@ export async function uploadAvatar(userId: string, file: File): Promise<UploadRe
  */
 export async function deleteAvatar(path: string): Promise<{ success: boolean; error?: string }> {
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
 
     const { error } = await supabase.storage.from(AVATAR_BUCKET).remove([path]);
 
@@ -137,7 +141,7 @@ export async function deleteAvatar(path: string): Promise<{ success: boolean; er
  */
 export async function getAvatarPublicUrl(path: string): Promise<string | null> {
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
 
     const { data } = supabase.storage.from(AVATAR_BUCKET).getPublicUrl(path);
 
@@ -156,7 +160,7 @@ export async function getAvatarPublicUrl(path: string): Promise<string | null> {
  */
 export async function listUserAvatars(userId: string): Promise<string[]> {
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
 
     const { data, error } = await supabase.storage.from(AVATAR_BUCKET).list(userId);
 
@@ -184,7 +188,7 @@ export async function cleanupOldAvatars(userId: string, keepPath: string): Promi
     const toDelete = avatars.filter((path) => path !== keepPath);
 
     if (toDelete.length > 0) {
-      const supabase = await createClient();
+      const supabase = await createAdminClient();
       await supabase.storage.from(AVATAR_BUCKET).remove(toDelete);
     }
   } catch (error) {
@@ -215,7 +219,7 @@ export async function uploadFeedbackScreenshot(
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
 
     const ext = file.name.split(".").pop() || "png";
     const path = `${userId}/${feedbackId}.${ext}`;
@@ -280,7 +284,7 @@ export async function uploadCoverPhoto(userId: string, file: File): Promise<Uplo
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
 
     // Generate unique filename
     const ext = file.name.split(".").pop() || "jpg";
@@ -338,7 +342,7 @@ export async function uploadCoverPhoto(userId: string, file: File): Promise<Uplo
  */
 export async function deleteCoverPhoto(path: string): Promise<{ success: boolean; error?: string }> {
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
 
     const { error } = await supabase.storage.from(COVER_PHOTO_BUCKET).remove([path]);
 
@@ -368,7 +372,7 @@ export async function deleteCoverPhoto(path: string): Promise<{ success: boolean
  */
 export async function listUserCoverPhotos(userId: string): Promise<string[]> {
   try {
-    const supabase = await createClient();
+    const supabase = await createAdminClient();
 
     const { data, error } = await supabase.storage.from(COVER_PHOTO_BUCKET).list(userId);
 
@@ -396,7 +400,7 @@ export async function cleanupOldCoverPhotos(userId: string, keepPath: string): P
     const toDelete = coverPhotos.filter((path) => path !== keepPath);
 
     if (toDelete.length > 0) {
-      const supabase = await createClient();
+      const supabase = await createAdminClient();
       await supabase.storage.from(COVER_PHOTO_BUCKET).remove(toDelete);
     }
   } catch (error) {
