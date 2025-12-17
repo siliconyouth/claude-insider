@@ -13,6 +13,7 @@ import { useWizard } from "../wizard-context";
 import { StepWrapper } from "../shared/step-wrapper";
 import { WizardNavigation } from "../wizard-navigation";
 import { usePWA } from "@/hooks/use-pwa";
+import { updateNotificationPreferences } from "@/app/actions/notifications";
 
 interface NotificationToggle {
   key: string;
@@ -164,15 +165,11 @@ export function NotificationsStep() {
         }
       });
 
-      // Save preferences
-      const response = await fetch("/api/user/notification-preferences", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(preferences),
-      });
+      // Save preferences using server action
+      const result = await updateNotificationPreferences(preferences);
 
-      if (!response.ok) {
-        throw new Error("Failed to save notification preferences");
+      if (result.error) {
+        throw new Error(result.error);
       }
 
       return true;
