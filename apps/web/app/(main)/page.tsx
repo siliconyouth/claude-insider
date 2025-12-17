@@ -289,21 +289,7 @@ export default function HomePage() {
                       "transition-all duration-200"
                     )}
                   >
-                    Start Learning
-                  </Link>
-                  <Link
-                    href="/docs/api"
-                    className={cn(
-                      "rounded-xl px-8 py-4 text-base font-semibold",
-                      "text-gray-700 dark:text-gray-200",
-                      "bg-white dark:bg-white/10",
-                      "border border-gray-200 dark:border-white/20",
-                      "hover:bg-gray-50 dark:hover:bg-white/20",
-                      "hover:-translate-y-0.5",
-                      "transition-all duration-200"
-                    )}
-                  >
-                    API Reference
+                    Getting Started
                   </Link>
                   <Link
                     href="/donate"
