@@ -103,7 +103,9 @@ function computeContentHash() {
   for (const file of inputFiles) {
     try {
       const content = fs.readFileSync(file);
-      hash.update(file); // Include path in hash
+      // Use relative path to ensure consistent hash across environments
+      const relativePath = path.relative(baseDir, file);
+      hash.update(relativePath);
       hash.update(content);
     } catch {
       // Skip files that can't be read
