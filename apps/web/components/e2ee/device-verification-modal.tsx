@@ -211,22 +211,53 @@ export function DeviceVerificationModal({
     return () => stopCamera();
   }, [stopCamera]);
 
+  // Fetch target user's device ID
+  const fetchTargetDeviceId = useCallback(async (userId: string): Promise<string | null> => {
+    try {
+      const response = await fetch(`/api/e2ee/devices?userIds=${userId}`);
+      if (!response.ok) return null;
+
+      const data = await response.json();
+      const userDevices = data.devices?.[userId];
+
+      // Return the most recently active device ID
+      if (userDevices && userDevices.length > 0) {
+        return userDevices[0].deviceId;
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  }, []);
+
   // Start verification
   const handleStart = useCallback(async () => {
-    if (!targetUserId || !targetDeviceId) return;
+    if (!targetUserId) return;
 
     try {
       setStep("starting");
       setError(null);
 
-      const result = await startVerification(targetUserId, targetDeviceId);
+      // Fetch device ID if not provided
+      let deviceId: string | undefined = targetDeviceId;
+      if (!deviceId) {
+        const fetchedId = await fetchTargetDeviceId(targetUserId);
+        if (!fetchedId) {
+          setError("User has no registered E2EE devices. They need to enable E2EE first.");
+          setStep("failed");
+          return;
+        }
+        deviceId = fetchedId;
+      }
+
+      const result = await startVerification(targetUserId, deviceId);
       setVerification({
         verificationId: result.verificationId,
         transactionId: result.transactionId,
         status: "started",
         isInitiator: true,
         targetUserId,
-        targetDeviceId,
+        targetDeviceId: deviceId,
         targetUserName,
       });
 
@@ -247,7 +278,7 @@ export function DeviceVerificationModal({
       setError(err instanceof Error ? err.message : "Failed to start");
       setStep("failed");
     }
-  }, [targetUserId, targetDeviceId, targetUserName, method]);
+  }, [targetUserId, targetDeviceId, targetUserName, method, fetchTargetDeviceId]);
 
   // Start QR scanning
   const handleStartScan = useCallback(async () => {
