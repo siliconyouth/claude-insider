@@ -38,27 +38,64 @@ interface MessageGroup {
   type: "date" | "message";
   date?: Date;
   message?: Message;
+  /** Whether this is the first message in a consecutive sequence from the same sender */
+  isFirstInGroup?: boolean;
+  /** Whether this is the last message in a consecutive sequence from the same sender */
+  isLastInGroup?: boolean;
 }
 
 // ============================================================================
-// Helper: Group messages by date
+// Helper: Group messages by date with sender grouping
 // ============================================================================
 
+/**
+ * Groups messages by date AND by consecutive sender.
+ * This enables a cleaner UI where avatar/name only shows once per sender group.
+ *
+ * Example:
+ * - Alice sends 3 messages → only first shows avatar/name
+ * - Bob sends 2 messages → only first shows avatar/name
+ * - Alice sends 1 message → shows avatar/name (different group)
+ */
 function groupMessagesWithDates(messages: Message[]): MessageGroup[] {
   const groups: MessageGroup[] = [];
   let currentDateKey = "";
+  let previousSenderId = "";
 
-  for (const msg of messages) {
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    // Guard against undefined (TypeScript strict mode)
+    if (!msg) continue;
+
     const msgDate = new Date(msg.createdAt);
     const dateKey = msgDate.toDateString();
 
-    // Add date separator if new day
+    // Add date separator if new day (also resets sender grouping)
     if (dateKey !== currentDateKey) {
       currentDateKey = dateKey;
+      previousSenderId = ""; // Reset sender tracking on new day
       groups.push({ type: "date", date: msgDate });
     }
 
-    groups.push({ type: "message", message: msg });
+    // Check if this is first message in a sender group
+    const isFirstInGroup = msg.senderId !== previousSenderId;
+
+    // Look ahead to check if this is the last message from this sender
+    const nextMsg = messages[i + 1];
+    const nextMsgDate = nextMsg ? new Date(nextMsg.createdAt).toDateString() : "";
+    const isLastInGroup =
+      !nextMsg || // No next message
+      nextMsg.senderId !== msg.senderId || // Different sender
+      nextMsgDate !== dateKey; // Different day
+
+    groups.push({
+      type: "message",
+      message: msg,
+      isFirstInGroup,
+      isLastInGroup,
+    });
+
+    previousSenderId = msg.senderId;
   }
 
   return groups;
@@ -262,6 +299,7 @@ export function VirtualizedMessageList({
           // Message bubble
           if (item.type === "message" && item.message) {
             const msg = item.message;
+            const isOwn = msg.senderId === currentUserId;
             return (
               <div
                 key={msg.id}
@@ -277,8 +315,12 @@ export function VirtualizedMessageList({
               >
                 <MessageBubble
                   message={msg}
-                  isOwnMessage={msg.senderId === currentUserId}
-                  showSender={msg.senderId !== currentUserId}
+                  isOwnMessage={isOwn}
+                  // Only show sender info for first message in a consecutive group
+                  showSender={!isOwn && item.isFirstInGroup}
+                  // Use tighter spacing for grouped messages
+                  isFirstInGroup={item.isFirstInGroup}
+                  isLastInGroup={item.isLastInGroup}
                 />
               </div>
             );

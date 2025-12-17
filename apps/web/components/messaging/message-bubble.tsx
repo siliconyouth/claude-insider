@@ -20,6 +20,10 @@ interface MessageBubbleProps {
   message: Message;
   isOwnMessage: boolean;
   showSender?: boolean;
+  /** Whether this is the first message in a consecutive sender group */
+  isFirstInGroup?: boolean;
+  /** Whether this is the last message in a consecutive sender group */
+  isLastInGroup?: boolean;
   className?: string;
 }
 
@@ -101,6 +105,8 @@ export function MessageBubble({
   message,
   isOwnMessage,
   showSender = true,
+  isFirstInGroup = true,
+  isLastInGroup = true,
   className,
 }: MessageBubbleProps) {
   const isAI = message.senderId === AI_ASSISTANT_USER_ID || message.isAiGenerated;
@@ -160,23 +166,36 @@ export function MessageBubble({
     );
   };
 
+  // Determine vertical spacing based on grouping
+  // First in group: more top margin, Last in group: more bottom margin
+  const groupSpacingClass = cn(
+    isFirstInGroup ? "mt-3" : "mt-0.5",
+    isLastInGroup ? "mb-1" : "mb-0"
+  );
+
   return (
     <div
       className={cn(
         "flex gap-2",
         isOwnMessage ? "flex-row-reverse" : "flex-row",
+        groupSpacingClass,
         className
       )}
     >
-      {/* Avatar with hover card for non-AI users */}
-      {showSender && !isOwnMessage && (
-        <div className="flex-shrink-0">
-          {senderUser ? (
-            <ProfileHoverCard user={senderUser} side="top" compact>
-              {renderAvatar()}
-            </ProfileHoverCard>
+      {/* Avatar column - maintains alignment for grouped messages */}
+      {!isOwnMessage && (
+        <div className="flex-shrink-0 w-8">
+          {showSender && isFirstInGroup ? (
+            senderUser ? (
+              <ProfileHoverCard user={senderUser} side="top" compact>
+                {renderAvatar()}
+              </ProfileHoverCard>
+            ) : (
+              renderAvatar()
+            )
           ) : (
-            renderAvatar()
+            // Empty placeholder to maintain alignment
+            <div className="w-8 h-8" />
           )}
         </div>
       )}
@@ -188,8 +207,8 @@ export function MessageBubble({
           isOwnMessage ? "items-end" : "items-start"
         )}
       >
-        {/* Sender name with hover card for non-AI users */}
-        {showSender && !isOwnMessage && (
+        {/* Sender name with hover card - only show for first message in group */}
+        {showSender && isFirstInGroup && !isOwnMessage && (
           senderUser ? (
             <ProfileHoverCard user={senderUser} side="top" compact>
               <span
@@ -218,15 +237,44 @@ export function MessageBubble({
           )
         )}
 
-        {/* Bubble */}
+        {/* Bubble - rounded corners vary based on position in group */}
         <div
           className={cn(
-            "rounded-2xl px-4 py-2",
+            "px-4 py-2",
             isOwnMessage
-              ? "bg-blue-600 text-white rounded-br-sm"
+              ? cn(
+                  "bg-blue-600 text-white",
+                  // Rounded corners based on position in group
+                  isFirstInGroup && isLastInGroup
+                    ? "rounded-2xl rounded-br-md"
+                    : isFirstInGroup
+                    ? "rounded-2xl rounded-br-md rounded-bl-2xl"
+                    : isLastInGroup
+                    ? "rounded-2xl rounded-br-md rounded-tr-md"
+                    : "rounded-2xl rounded-r-md"
+                )
               : isAI
-              ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-gray-900 dark:text-gray-100 rounded-bl-sm"
-              : "bg-gray-100 dark:bg-[#1a1a1a] text-gray-900 dark:text-gray-100 rounded-bl-sm"
+              ? cn(
+                  "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-gray-900 dark:text-gray-100",
+                  isFirstInGroup && isLastInGroup
+                    ? "rounded-2xl rounded-bl-md"
+                    : isFirstInGroup
+                    ? "rounded-2xl rounded-bl-md rounded-br-2xl"
+                    : isLastInGroup
+                    ? "rounded-2xl rounded-bl-md rounded-tl-md"
+                    : "rounded-2xl rounded-l-md"
+                )
+              : cn(
+                  "bg-gray-100 dark:bg-[#1a1a1a] text-gray-900 dark:text-gray-100",
+                  // Rounded corners based on position in group
+                  isFirstInGroup && isLastInGroup
+                    ? "rounded-2xl rounded-bl-md"
+                    : isFirstInGroup
+                    ? "rounded-2xl rounded-bl-md rounded-br-2xl"
+                    : isLastInGroup
+                    ? "rounded-2xl rounded-bl-md rounded-tl-md"
+                    : "rounded-2xl rounded-l-md"
+                )
           )}
         >
           <p className="text-sm whitespace-pre-wrap break-words">
@@ -234,16 +282,18 @@ export function MessageBubble({
           </p>
         </div>
 
-        {/* Timestamp */}
-        <span
-          className={cn(
-            "text-xs text-gray-500 dark:text-gray-400 mt-0.5",
-            isOwnMessage ? "mr-1" : "ml-1"
-          )}
-        >
-          {formatTime(message.createdAt)}
-          {message.editedAt && " (edited)"}
-        </span>
+        {/* Timestamp - only show for last message in group */}
+        {isLastInGroup && (
+          <span
+            className={cn(
+              "text-xs text-gray-500 dark:text-gray-400 mt-0.5",
+              isOwnMessage ? "mr-1" : "ml-1"
+            )}
+          >
+            {formatTime(message.createdAt)}
+            {message.editedAt && " (edited)"}
+          </span>
+        )}
       </div>
     </div>
   );
