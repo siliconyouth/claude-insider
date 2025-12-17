@@ -17,7 +17,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
-import { useApiCredits, formatTokens, formatCost, type ModelInfo } from "@/hooks/use-api-credits";
+import { useApiCredits, type ModelInfo } from "@/hooks/use-api-credits";
 
 /**
  * Get abbreviated model name for mobile display
@@ -126,7 +126,6 @@ export function ApiCreditsIndicator() {
   const {
     hasOwnKey,
     isValid,
-    usage,
     modelName,
     modelTier,
     availableModels,
@@ -172,8 +171,6 @@ export function ApiCreditsIndicator() {
   if (!isValid) {
     return <InvalidKeyIndicator />;
   }
-
-  const totalTokens = (usage?.inputTokens || 0) + (usage?.outputTokens || 0);
 
   const handleModelChange = async (model: ModelInfo) => {
     if (model.id === preferredModel) {
@@ -224,14 +221,9 @@ export function ApiCreditsIndicator() {
         )}
 
         {/* Model Name - abbreviated on mobile, full on desktop */}
-        <span className={cn("max-w-[50px] sm:max-w-[80px] truncate", modelTier && tierColors[modelTier])}>
+        <span className={cn("max-w-[60px] sm:max-w-[100px] truncate", modelTier && tierColors[modelTier])}>
           <span className="sm:hidden">{getShortModelName(modelName)}</span>
           <span className="hidden sm:inline">{modelName?.replace("Claude ", "") || "Select Model"}</span>
-        </span>
-
-        {/* Cost */}
-        <span className="text-gray-500 dark:text-gray-400">
-          {formatCost(usage?.estimatedCost || 0)}
         </span>
 
         {/* Dropdown Arrow */}
@@ -255,7 +247,7 @@ export function ApiCreditsIndicator() {
             "animate-fade-in"
           )}
         >
-          {modelName} • {formatTokens(totalTokens)} tokens
+          {modelName || "Select Model"}
         </div>
       )}
 
@@ -338,23 +330,8 @@ export function ApiCreditsIndicator() {
             })}
           </div>
 
-          {/* Usage Stats */}
-          <div className="px-4 py-3 border-t border-gray-200 dark:border-[#262626] bg-gray-50 dark:bg-gray-900/50 rounded-b-xl">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500 dark:text-gray-400">This month</span>
-              <div className="flex items-center gap-3">
-                <span className="text-gray-600 dark:text-gray-300">
-                  {formatTokens(totalTokens)} tokens
-                </span>
-                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                  {formatCost(usage?.estimatedCost || 0)}
-                </span>
-              </div>
-            </div>
-          </div>
-
           {/* Footer Link */}
-          <div className="px-4 py-2 border-t border-gray-200 dark:border-[#262626]">
+          <div className="px-4 py-2 border-t border-gray-200 dark:border-[#262626] rounded-b-xl">
             <Link
               href="/settings#ai"
               onClick={() => setShowDropdown(false)}
