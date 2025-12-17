@@ -11,6 +11,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
+import { useSound } from "@/hooks/use-sound-effects";
 import { NotificationContent } from "./notification-content";
 
 interface NotificationPopupData {
@@ -177,6 +178,9 @@ export function NotificationPopup() {
   const lastCheckRef = useRef<string | null>(null);
   const isInitialLoad = useRef(true);
 
+  // Sound effects
+  const { playNotificationBadge } = useSound();
+
   // Dismiss a popup with animation
   const dismissPopup = useCallback((popupId: string) => {
     setPopups((prev) =>
@@ -274,13 +278,16 @@ export function NotificationPopup() {
         const combined = [newPopup, ...prev];
         return combined.slice(0, 5);
       });
+
+      // Play notification badge sound for popup appearance
+      playNotificationBadge();
     };
 
     window.addEventListener("notification:new" as string, handleNewNotification as EventListener);
     return () => {
       window.removeEventListener("notification:new" as string, handleNewNotification as EventListener);
     };
-  }, []);
+  }, [playNotificationBadge]);
 
   if (!isAuthenticated || popups.length === 0) {
     return null;

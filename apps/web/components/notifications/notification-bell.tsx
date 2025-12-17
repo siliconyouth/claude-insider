@@ -14,6 +14,7 @@ import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
 import { useRealtimeNotifications } from "@/hooks/use-realtime-notifications";
+import { useSound } from "@/hooks/use-sound-effects";
 import { NotificationContent } from "./notification-content";
 
 interface NotificationPreview {
@@ -94,6 +95,9 @@ export function NotificationBell() {
   const [isLoading, setIsLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Sound effects
+  const { playNotification, playComplete } = useSound();
 
   // Browser notifications integration
   const { isEnabled: browserNotifsEnabled, sendNotification } = useBrowserNotifications();
@@ -189,13 +193,15 @@ export function NotificationBell() {
       return;
     }
 
-    // Send browser notification if count increased (new notification arrived)
+    // Send browser notification and play sound if count increased (new notification arrived)
     if (unreadCount > prevUnreadCountRef.current && prevUnreadCountRef.current !== -1) {
       sendBrowserNotification(unreadCount);
+      // Play notification sound for new notification
+      playNotification();
     }
 
     prevUnreadCountRef.current = unreadCount;
-  }, [isAuthenticated, unreadCount, sendBrowserNotification]);
+  }, [isAuthenticated, unreadCount, sendBrowserNotification, playNotification]);
 
   // Fetch notifications for preview
   const fetchNotifications = useCallback(async () => {
@@ -229,6 +235,8 @@ export function NotificationBell() {
         // Refresh count from server to sync with realtime state
         await refreshCount();
         setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+        // Play completion sound
+        playComplete();
       }
     } catch (error) {
       console.error("[NotificationBell] Mark read error:", error);

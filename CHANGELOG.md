@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.97.0] - 2025-12-17
+### Site-Wide Sound Effects System
+- **SoundProvider Integration**: Added to main layout for app-wide sound access
+  - Wraps entire app in SoundProvider context
+  - Web Audio API-based, no audio files (0 bytes additional payload)
+  - 24 unique sound types across 5 categories
+- **Sound Settings UI**: New section in Settings page
+  - Master enable/disable toggle
+  - Volume slider (0-100%) with live preview
+  - Category toggles: Notifications, Feedback, Chat, Achievements, UI (off by default)
+  - Info note about browser push notification sound limitations
+- **Notification Sounds**: Integrated throughout notification system
+  - `playNotification()` when new notifications arrive
+  - `playNotificationBadge()` when popup notifications appear
+  - `playComplete()` when marking all as read
+- **Messaging Sounds**: Full chat sound integration
+  - `playMessageSent()` on successful message send
+  - `playMessageReceived()` for incoming messages (not from self)
+  - `playMention()` when current user is @mentioned (higher priority)
+  - `playTyping()` once when typing indicator appears (debounced, not continuous)
+- **AI Assistant Sounds**: Voice assistant audio feedback
+  - `playMessageSent()` when user sends message
+  - `playMessageReceived()` on first streaming chunk from AI
+  - `playToggleOn()/playToggleOff()` for speech recognition start/stop
+- **Mandatory CLAUDE.md Section**: Added comprehensive Sound Design System documentation
+  - Sound categories with default states
+  - When to trigger each sound with volume guidelines
+  - Implementation pattern with useSound() hook
+  - Best practices and checklist for new features
+
 ## [0.96.0] - 2025-12-17
 ### Unread Indicator Bug Fixes
 - **Notification Read State**: Clicking a notification now marks it as read immediately

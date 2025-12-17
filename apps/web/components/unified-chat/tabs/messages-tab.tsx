@@ -18,6 +18,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { cn } from "@/lib/design-system";
 import { useUnifiedChat } from "../unified-chat-provider";
 import { useSession } from "@/lib/auth-client";
+import { useSound } from "@/hooks/use-sound-effects";
 import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
@@ -339,6 +340,10 @@ function ConversationView({
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const messageListRef = useRef<HTMLDivElement>(null);
+  const prevTypingUsersCount = useRef(0);
+
+  // Sound effects for chat
+  const { playMessageReceived, playMessageSent, playTyping, playMention } = useSound();
 
   // E2EE context for encryption status
   const e2ee = useE2EEContext();
@@ -406,8 +411,11 @@ function ConversationView({
   const handleRealtimeMessage = useCallback(
     (payload: MessagePayload) => {
       // Skip if message already exists (deduplication)
+      let isNew = false;
       setMessages((prev) => {
         if (prev.some((m) => m.id === payload.id)) return prev;
+
+        isNew = true;
 
         // Get sender info from participants
         const participant = participants.find((p) => p.userId === payload.sender_id);
@@ -439,16 +447,33 @@ function ConversationView({
         return [...prev, message];
       });
 
+      // Play sound for new messages from others
+      if (isNew && payload.sender_id !== currentUserId) {
+        // Check if current user is mentioned
+        const mentions = payload.mentions as Array<{ userId: string }> | undefined;
+        const isMentioned = mentions?.some((m) => m.userId === currentUserId);
+        if (isMentioned) {
+          playMention();
+        } else {
+          playMessageReceived();
+        }
+      }
+
       // Mark as read in background (non-blocking)
       markConversationAsRead(conversationId);
     },
-    [conversationId, participants]
+    [conversationId, participants, currentUserId, playMessageReceived, playMention]
   );
 
-  // Handle typing indicator changes
+  // Handle typing indicator changes - play sound once when typing starts
   const handleTypingChange = useCallback((userIds: string[]) => {
+    // Play sound when typing users goes from 0 to 1+ (once, not continuous)
+    if (userIds.length > 0 && prevTypingUsersCount.current === 0) {
+      playTyping();
+    }
+    prevTypingUsersCount.current = userIds.length;
     setTypingUsers(userIds);
-  }, []);
+  }, [playTyping]);
 
   // Use optimized realtime hook - pools subscriptions, uses Broadcast for typing
   // This replaces the old postgres_changes subscriptions (7.6x faster for typing)
@@ -567,6 +592,8 @@ function ConversationView({
 
     if (result.success && result.message) {
       setMessages((prev) => [...prev, result.message!]);
+      // Play sent sound on success
+      playMessageSent();
     }
 
     setIsSending(false);

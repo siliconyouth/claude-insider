@@ -29,6 +29,7 @@ import { ActivitySettings } from "@/components/settings/activity-settings";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import { BrowserNotificationPrompt } from "@/components/notifications/browser-notification-prompt";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
+import { useSound, type SoundSettings } from "@/hooks/use-sound-effects";
 import Link from "next/link";
 
 // Cache key for sessionStorage
@@ -130,6 +131,10 @@ export default function SettingsPage() {
   // Browser notifications state
   const [showBrowserNotifPrompt, setShowBrowserNotifPrompt] = useState(false);
   const { isSupported: browserNotifSupported, permission: browserNotifPermission, isEnabled: browserNotifEnabled } = useBrowserNotifications();
+
+  // Sound settings
+  const sounds = useSound();
+  const { settings: soundSettings, updateSettings: updateSoundSettings, playSuccess, playToggleOn, playToggleOff } = sounds;
 
   // Track if we've loaded data (prevents duplicate fetches)
   const hasFetched = useRef(false);
@@ -1074,6 +1079,349 @@ export default function SettingsPage() {
               </button>
             </div>
 
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
+        {/* Sound & Audio Section */}
+        <section id="sound" className="scroll-mt-24 mb-12">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-violet-500/10 to-blue-500/10">
+              <svg
+                className="w-5 h-5 text-violet-600 dark:text-violet-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+              Sound & Audio
+            </h2>
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Control sound effects for interactions and notifications
+          </p>
+
+          <div className="space-y-4">
+            {/* Master Enable */}
+            <div
+              className={cn(
+                "flex items-center justify-between p-4 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Enable Sound Effects</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Master toggle for all sound effects
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  const newValue = !soundSettings.enabled;
+                  updateSoundSettings({ enabled: newValue });
+                  if (newValue) {
+                    playToggleOn();
+                  }
+                }}
+                className={cn(
+                  "relative w-12 h-7 rounded-full transition-colors",
+                  soundSettings.enabled
+                    ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                    : "bg-gray-300 dark:bg-[#262626]"
+                )}
+              >
+                <span
+                  className={cn(
+                    "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                    soundSettings.enabled ? "left-6" : "left-1"
+                  )}
+                />
+              </button>
+            </div>
+
+            {/* Volume Slider */}
+            {soundSettings.enabled && (
+              <div
+                className={cn(
+                  "p-4 rounded-xl",
+                  "bg-gray-50 dark:bg-[#111111]",
+                  "border border-gray-200 dark:border-[#262626]"
+                )}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">Volume</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {Math.round(soundSettings.volume * 100)}%
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => playSuccess()}
+                    className={cn(
+                      "px-3 py-1.5 text-xs font-medium rounded-lg",
+                      "border border-gray-200 dark:border-[#262626]",
+                      "text-gray-700 dark:text-gray-300",
+                      "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]",
+                      "transition-colors"
+                    )}
+                  >
+                    Test Sound
+                  </button>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={Math.round(soundSettings.volume * 100)}
+                  onChange={(e) => {
+                    updateSoundSettings({ volume: parseInt(e.target.value) / 100 });
+                  }}
+                  className={cn(
+                    "w-full h-2 rounded-full appearance-none cursor-pointer",
+                    "bg-gray-200 dark:bg-[#262626]",
+                    "[&::-webkit-slider-thumb]:appearance-none",
+                    "[&::-webkit-slider-thumb]:w-4",
+                    "[&::-webkit-slider-thumb]:h-4",
+                    "[&::-webkit-slider-thumb]:rounded-full",
+                    "[&::-webkit-slider-thumb]:bg-gradient-to-r",
+                    "[&::-webkit-slider-thumb]:from-violet-600",
+                    "[&::-webkit-slider-thumb]:to-blue-600",
+                    "[&::-webkit-slider-thumb]:shadow-md",
+                    "[&::-webkit-slider-thumb]:cursor-pointer",
+                    "[&::-moz-range-thumb]:w-4",
+                    "[&::-moz-range-thumb]:h-4",
+                    "[&::-moz-range-thumb]:rounded-full",
+                    "[&::-moz-range-thumb]:bg-gradient-to-r",
+                    "[&::-moz-range-thumb]:from-violet-600",
+                    "[&::-moz-range-thumb]:to-blue-600",
+                    "[&::-moz-range-thumb]:border-0",
+                    "[&::-moz-range-thumb]:cursor-pointer"
+                  )}
+                />
+              </div>
+            )}
+
+            {/* Category Toggles - only show when enabled */}
+            {soundSettings.enabled && (
+              <>
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mt-6 mb-3">
+                  Sound Categories
+                </h3>
+
+                {/* Notifications */}
+                <div
+                  className={cn(
+                    "flex items-center justify-between p-4 rounded-xl",
+                    "bg-gray-50 dark:bg-[#111111]",
+                    "border border-gray-200 dark:border-[#262626]"
+                  )}
+                >
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">Notifications</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Sound when notifications arrive
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newValue = !soundSettings.notifications;
+                      updateSoundSettings({ notifications: newValue });
+                      if (newValue) playToggleOn();
+                      else playToggleOff();
+                    }}
+                    className={cn(
+                      "relative w-12 h-7 rounded-full transition-colors",
+                      soundSettings.notifications
+                        ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                        : "bg-gray-300 dark:bg-[#262626]"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                        soundSettings.notifications ? "left-6" : "left-1"
+                      )}
+                    />
+                  </button>
+                </div>
+
+                {/* Feedback */}
+                <div
+                  className={cn(
+                    "flex items-center justify-between p-4 rounded-xl",
+                    "bg-gray-50 dark:bg-[#111111]",
+                    "border border-gray-200 dark:border-[#262626]"
+                  )}
+                >
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">Feedback</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Success, error, and warning sounds
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newValue = !soundSettings.feedback;
+                      updateSoundSettings({ feedback: newValue });
+                      if (newValue) playToggleOn();
+                      else playToggleOff();
+                    }}
+                    className={cn(
+                      "relative w-12 h-7 rounded-full transition-colors",
+                      soundSettings.feedback
+                        ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                        : "bg-gray-300 dark:bg-[#262626]"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                        soundSettings.feedback ? "left-6" : "left-1"
+                      )}
+                    />
+                  </button>
+                </div>
+
+                {/* Chat */}
+                <div
+                  className={cn(
+                    "flex items-center justify-between p-4 rounded-xl",
+                    "bg-gray-50 dark:bg-[#111111]",
+                    "border border-gray-200 dark:border-[#262626]"
+                  )}
+                >
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">Chat & Messaging</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Message sounds, typing indicators, mentions
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newValue = !soundSettings.chat;
+                      updateSoundSettings({ chat: newValue });
+                      if (newValue) playToggleOn();
+                      else playToggleOff();
+                    }}
+                    className={cn(
+                      "relative w-12 h-7 rounded-full transition-colors",
+                      soundSettings.chat
+                        ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                        : "bg-gray-300 dark:bg-[#262626]"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                        soundSettings.chat ? "left-6" : "left-1"
+                      )}
+                    />
+                  </button>
+                </div>
+
+                {/* Achievements */}
+                <div
+                  className={cn(
+                    "flex items-center justify-between p-4 rounded-xl",
+                    "bg-gray-50 dark:bg-[#111111]",
+                    "border border-gray-200 dark:border-[#262626]"
+                  )}
+                >
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">Achievements</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Level up, achievement unlocks, progress
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newValue = !soundSettings.achievements;
+                      updateSoundSettings({ achievements: newValue });
+                      if (newValue) playToggleOn();
+                      else playToggleOff();
+                    }}
+                    className={cn(
+                      "relative w-12 h-7 rounded-full transition-colors",
+                      soundSettings.achievements
+                        ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                        : "bg-gray-300 dark:bg-[#262626]"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                        soundSettings.achievements ? "left-6" : "left-1"
+                      )}
+                    />
+                  </button>
+                </div>
+
+                {/* UI Interactions */}
+                <div
+                  className={cn(
+                    "flex items-center justify-between p-4 rounded-xl",
+                    "bg-gray-50 dark:bg-[#111111]",
+                    "border border-gray-200 dark:border-[#262626]"
+                  )}
+                >
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-white">UI Interactions</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Subtle clicks, toggles, navigation sounds (power users)
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newValue = !soundSettings.ui;
+                      updateSoundSettings({ ui: newValue });
+                      if (newValue) playToggleOn();
+                      else playToggleOff();
+                    }}
+                    className={cn(
+                      "relative w-12 h-7 rounded-full transition-colors",
+                      soundSettings.ui
+                        ? "bg-gradient-to-r from-violet-600 to-blue-600"
+                        : "bg-gray-300 dark:bg-[#262626]"
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform",
+                        soundSettings.ui ? "left-6" : "left-1"
+                      )}
+                    />
+                  </button>
+                </div>
+
+                {/* Info note about browser push notification sounds */}
+                <div className="mt-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800/30">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-blue-800 dark:text-blue-300">
+                        Browser Push Notifications
+                      </p>
+                      <p className="text-xs text-blue-700 dark:text-blue-400/80 mt-0.5">
+                        Push notifications use your browser&apos;s default system sound. Custom sounds play when you interact with notifications.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </section>
 

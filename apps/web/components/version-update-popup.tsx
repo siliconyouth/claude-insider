@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.96.0";
+const APP_VERSION = "0.97.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,17 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "0.97.0",
+    date: "2025-12-17",
+    type: "minor",
+    highlights: [
+      "Site-wide sound effects system with 5 category controls",
+      "Sound Settings UI in settings page with volume slider",
+      "Notification, messaging, and AI assistant sounds",
+      "Mandatory Sound Design section added to CLAUDE.md",
+    ],
+  },
   {
     version: "0.96.0",
     date: "2025-12-17",

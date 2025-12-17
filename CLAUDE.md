@@ -286,6 +286,90 @@ All new components MUST implement ALL seven pillars:
 
 ---
 
+## Sound Design System (MANDATORY)
+
+**Location**: `hooks/use-sound-effects.tsx`
+
+All interactions that provide user feedback SHOULD have corresponding sounds. Sound effects enhance UX by providing audio confirmation of actions.
+
+### Core Principles
+
+1. **User Control First**: All sounds respect the master `enabled` toggle in settings
+2. **Category Control**: Users can disable sound categories independently
+3. **Non-Intrusive**: Default volumes are subtle, not jarring
+4. **Accessibility**: Respects system preferences, no sounds that block interaction
+5. **No Audio Files**: Uses Web Audio API to generate tones programmatically (0 bytes payload)
+
+### Sound Categories & Defaults
+
+| Category | Default | Use For |
+|----------|---------|---------|
+| `notifications` | ON | New notifications, badges, alerts |
+| `feedback` | ON | Success/error/warning responses |
+| `ui` | **OFF** | Clicks, toggles, hover (optional, power users) |
+| `chat` | ON | Messages sent/received, typing, mentions |
+| `achievements` | ON | Unlocks, level ups, progress |
+
+### When to Trigger Sounds
+
+| Event Type | Sound Method | Volume | Notes |
+|------------|--------------|--------|-------|
+| New notification | `playNotification()` | 0.4 | Attention-grabbing but not harsh |
+| Message received | `playMessageReceived()` | 0.35 | Only if sender != current user |
+| Message sent | `playMessageSent()` | 0.25 | Subtle confirmation |
+| Typing starts | `playTyping()` | 0.08 | Very subtle, **single trigger** only |
+| @Mention received | `playMention()` | 0.5 | Higher priority, multi-tone |
+| Achievement unlock | `playAchievement()` | 0.5 | Celebratory, longer duration |
+| Error occurred | `playError()` | 0.4 | Distinct descending tone |
+| Success action | `playSuccess()` | 0.35 | Pleasant ascending tone |
+| Toggle on | `playToggleOn()` | 0.2 | UI category (off by default) |
+| Toggle off | `playToggleOff()` | 0.2 | UI category (off by default) |
+| User joins chat | `playUserJoin()` | 0.25 | Presence indicator |
+| User leaves chat | `playUserLeave()` | 0.2 | Presence indicator |
+
+### Implementation Pattern
+
+```tsx
+import { useSound } from "@/hooks/use-sound-effects";
+
+function MyComponent() {
+  const { playSuccess, playError, playNotification } = useSound();
+
+  const handleAction = async () => {
+    const result = await someAction();
+    if (result.success) {
+      playSuccess();
+    } else {
+      playError();
+    }
+  };
+}
+```
+
+### Best Practices
+
+1. **One sound per action** - Don't stack multiple sounds simultaneously
+2. **Debounce rapid events** - Typing sounds should have 500ms minimum gap
+3. **Context matters** - Don't play `playMessageReceived()` for own messages
+4. **Volume hierarchy** - Mentions > Notifications > Messages > UI
+5. **Test with sounds off** - Ensure functionality works without sounds
+6. **Use `useSound()` hook** - NOT `useSoundEffects()` directly (ensures context)
+
+### Browser Push Notification Limitation
+
+**Important**: The Web Push API does not support custom audio files. Push notifications use the browser's default system sound. Custom sounds only play when the user interacts with the notification.
+
+### Checklist for New Features with Sounds
+
+- [ ] Identify all interaction points that need feedback
+- [ ] Map each interaction to appropriate sound method
+- [ ] Use `useSound()` hook from context
+- [ ] Verify sounds work with master toggle enabled/disabled
+- [ ] Test that feature works normally when sounds are off
+- [ ] Add sound test to diagnostics page if new sound type
+
+---
+
 ## Design System (MANDATORY)
 
 **Location**: `lib/design-system.ts`

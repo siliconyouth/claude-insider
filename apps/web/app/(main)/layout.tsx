@@ -22,6 +22,7 @@ import { E2EEProvider } from "@/components/providers/e2ee-provider";
 import { NotificationPopup } from "@/components/notifications/notification-popup";
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
+import { SoundProvider } from "@/hooks/use-sound-effects";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { PushNotificationPrompt } from "@/components/pwa/push-notification-prompt";
 
@@ -221,6 +222,7 @@ export default async function MainLayout({
               <UnifiedChatProvider>
               <AskAIProvider>
               <KeyboardShortcutsProvider>
+              <SoundProvider>
                 <ToastProvider>
                   <AchievementNotificationProvider>
                   <DonorBadgeProvider>
@@ -242,6 +244,7 @@ export default async function MainLayout({
                   </DonorBadgeProvider>
                   </AchievementNotificationProvider>
                 </ToastProvider>
+              </SoundProvider>
               </KeyboardShortcutsProvider>
               </AskAIProvider>
               </UnifiedChatProvider>

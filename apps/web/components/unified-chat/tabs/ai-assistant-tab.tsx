@@ -11,6 +11,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { track } from "@vercel/analytics";
 import { cn } from "@/lib/design-system";
+import { useSound } from "@/hooks/use-sound-effects";
 import { useUnifiedChat } from "../unified-chat-provider";
 import { markdownToSpeakableText } from "@/lib/claude-utils";
 import {
@@ -142,6 +143,9 @@ export function AIAssistantTab() {
   const { announce } = useAnnouncer();
   const pathname = usePathname();
 
+  // Sound effects for AI chat
+  const { playMessageSent, playMessageReceived, playComplete, playToggleOn, playToggleOff } = useSound();
+
   // Core state
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -189,6 +193,9 @@ export function AIAssistantTab() {
   const speechQueueRef = useRef<string[]>([]);
   const isProcessingQueueRef = useRef(false);
   const isMobileRef = useRef(false);
+
+  // Track if we've played the first response sound (plays once per response)
+  const hasPlayedFirstChunkRef = useRef(false);
 
   // ============================================================================
   // Initialization
@@ -581,10 +588,12 @@ export function AIAssistantTab() {
       recognizerRef.current.start();
       setIsListening(true);
       announce("Listening for voice input");
+      // Play sound for starting listening
+      playToggleOn();
     } catch (err) {
       console.error("Failed to start listening:", err);
     }
-  }, [speechSupported, announce]);
+  }, [speechSupported, announce, playToggleOn]);
 
   const stopListening = useCallback(() => {
     if (recognizerRef.current) {
@@ -592,7 +601,9 @@ export function AIAssistantTab() {
     }
     setIsListening(false);
     setInterimTranscript("");
-  }, []);
+    // Play sound for stopping listening
+    playToggleOff();
+  }, [playToggleOff]);
 
   // ============================================================================
   // Smart Recommendations
@@ -691,6 +702,12 @@ export function AIAssistantTab() {
     setError(null);
     setStreamingContent("");
 
+    // Play sent sound
+    playMessageSent();
+
+    // Reset first chunk tracking for this response
+    hasPlayedFirstChunkRef.current = false;
+
     // Track analytics
     track("assistant_message_sent", { page: pathname });
 
@@ -743,6 +760,12 @@ export function AIAssistantTab() {
               if (parsed.content) {
                 fullContent += parsed.content;
                 setStreamingContent(fullContent);
+
+                // Play received sound on first chunk
+                if (!hasPlayedFirstChunkRef.current) {
+                  hasPlayedFirstChunkRef.current = true;
+                  playMessageReceived();
+                }
               }
             } catch {
               // Ignore parse errors
@@ -796,6 +819,8 @@ export function AIAssistantTab() {
     clearAIContext,
     announce,
     generateRecommendations,
+    playMessageSent,
+    playMessageReceived,
   ]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
