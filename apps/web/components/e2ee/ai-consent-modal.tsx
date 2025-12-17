@@ -143,7 +143,7 @@ export function AIConsentModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -156,6 +156,7 @@ export function AIConsentModal({
           "relative z-10 w-full max-w-lg",
           "rounded-xl bg-gray-900 border border-gray-800",
           "shadow-2xl shadow-black/50",
+          "max-h-[90vh] overflow-y-auto",
           "p-6"
         )}
       >

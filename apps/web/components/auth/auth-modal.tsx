@@ -110,7 +110,7 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -121,10 +121,11 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
       {/* Modal */}
       <div
         className={cn(
-          "relative w-full max-w-md mx-4 p-6",
+          "relative w-full max-w-md p-6",
           "bg-white dark:bg-[#111111]",
           "border border-gray-200 dark:border-[#262626]",
           "rounded-2xl shadow-2xl",
+          "max-h-[90vh] overflow-y-auto",
           "animate-in fade-in zoom-in-95 duration-200"
         )}
         role="dialog"

@@ -421,7 +421,7 @@ export function NotificationBell() {
         <div
           ref={dropdownRef}
           className={cn(
-            "absolute right-0 mt-2 w-80 sm:w-96",
+            "absolute right-0 mt-2 w-80 sm:w-96 max-w-[calc(100vw-2rem)]",
             "bg-white dark:bg-[#111111]",
             "border border-gray-200 dark:border-[#262626]",
             "rounded-xl shadow-xl",

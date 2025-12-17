@@ -39,9 +39,10 @@ export function UnifiedChatWindow() {
     setMounted(true);
   }, []);
 
-  // Prevent body scroll when open
+  // Prevent body scroll when open (always on mobile, only fullscreen on desktop)
   useEffect(() => {
-    if (isOpen && isFullscreen) {
+    const isMobile = window.innerWidth < 640; // sm breakpoint
+    if (isOpen && (isFullscreen || isMobile)) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -59,7 +60,14 @@ export function UnifiedChatWindow() {
         "fixed z-50",
         isFullscreen
           ? "inset-0"
-          : "bottom-4 right-4 w-[420px] h-[600px] max-h-[calc(100vh-2rem)]"
+          : cn(
+              // Mobile: full screen with safe area insets
+              "inset-0 sm:inset-auto",
+              // Desktop: positioned bottom-right with fixed dimensions
+              "sm:bottom-4 sm:right-4 sm:w-[420px] sm:h-[600px]",
+              // Height constraints that work with mobile viewport
+              "h-[100dvh] sm:h-[600px] sm:max-h-[calc(100vh-2rem)]"
+            )
       )}
       role="dialog"
       aria-modal="true"
@@ -78,12 +86,12 @@ export function UnifiedChatWindow() {
         ref={windowRef}
         className={cn(
           "relative flex flex-col bg-white dark:bg-[#0a0a0a]",
-          "border border-gray-200 dark:border-[#262626]",
+          "border-0 sm:border border-gray-200 dark:border-[#262626]",
           "shadow-2xl shadow-black/20",
           "overflow-hidden",
           isFullscreen
             ? "w-full h-full max-w-4xl mx-auto my-8 rounded-2xl"
-            : "w-full h-full rounded-2xl"
+            : "w-full h-full rounded-none sm:rounded-2xl"
         )}
       >
         {/* Header with tabs */}

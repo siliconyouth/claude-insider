@@ -107,6 +107,7 @@ export function ReviewModal({
           "relative w-full rounded-xl",
           "bg-gray-900 border border-gray-800",
           "shadow-2xl",
+          "max-h-[90vh] overflow-hidden flex flex-col",
           sizeStyles[size]
         )}
         role="dialog"

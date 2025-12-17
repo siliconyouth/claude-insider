@@ -138,6 +138,7 @@ export function KeyBackupModal({
           "bg-white dark:bg-[#111111]",
           "border border-gray-200 dark:border-[#262626]",
           "shadow-2xl shadow-black/20",
+          "max-h-[90vh] overflow-y-auto",
           "animate-in fade-in zoom-in-95 duration-200"
         )}
       >

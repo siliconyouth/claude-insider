@@ -126,6 +126,7 @@ export function NavDropdown({
               "bg-white dark:bg-[#111111]",
               "shadow-xl shadow-gray-200/50 dark:shadow-black/50",
               "overflow-hidden",
+              "max-w-[calc(100vw-2rem)]",
               layout === "mega" && "min-w-[600px]",
               layout === "grid" && "min-w-[480px]",
               layout === "list" && "min-w-[240px]"

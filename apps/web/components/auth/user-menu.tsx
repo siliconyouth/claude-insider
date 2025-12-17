@@ -106,7 +106,7 @@ export function UserMenu() {
       {isOpen && (
         <div
           className={cn(
-            "absolute right-0 mt-2 w-56",
+            "absolute right-0 mt-2 w-56 max-w-[calc(100vw-2rem)]",
             "bg-white dark:bg-[#111111]",
             "border border-gray-200 dark:border-[#262626]",
             "rounded-xl shadow-lg",

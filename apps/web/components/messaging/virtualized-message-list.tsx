@@ -249,12 +249,13 @@ export function VirtualizedMessageList({
         </div>
       )}
 
-      {/* Virtual list container */}
+      {/* Virtual list container - extra padding at bottom for read receipts visibility */}
       <div
         style={{
           height: `${virtualizer.getTotalSize()}px`,
           width: "100%",
           position: "relative",
+          paddingBottom: "24px", // Space for read status on last message
         }}
       >
         {virtualItems.map((virtualRow) => {

@@ -77,7 +77,7 @@ export function ReportModal({ isOpen, onClose, type, targetId, targetName }: Rep
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-lg max-h-[90vh] overflow-hidden flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl">
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
           <div className="flex items-center justify-between">

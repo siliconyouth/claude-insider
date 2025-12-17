@@ -81,7 +81,7 @@ export function CollectionModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
@@ -89,10 +89,11 @@ export function CollectionModal({
       <div
         ref={modalRef}
         className={cn(
-          "relative w-full max-w-md mx-4",
+          "relative w-full max-w-md",
           "bg-white dark:bg-[#111111]",
           "border border-gray-200 dark:border-[#262626]",
           "rounded-xl shadow-2xl",
+          "max-h-[90vh] overflow-hidden flex flex-col",
           "animate-scale-in"
         )}
       >

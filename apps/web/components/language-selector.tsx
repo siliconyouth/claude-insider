@@ -76,7 +76,7 @@ export function LanguageSelector() {
       {/* Dropdown menu (only shown when multiple locales are available) */}
       {isOpen && multipleLocalesAvailable && (
         <div
-          className="absolute right-0 mt-1 py-1 w-48 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50"
+          className="absolute right-0 mt-1 py-1 w-48 max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50"
           role="listbox"
           aria-label="Select language"
         >

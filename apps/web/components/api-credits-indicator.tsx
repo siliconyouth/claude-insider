@@ -255,7 +255,7 @@ export function ApiCreditsIndicator() {
       {showDropdown && (
         <div
           className={cn(
-            "absolute top-full right-0 mt-2 w-80 rounded-xl z-50",
+            "absolute top-full right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-xl z-50",
             "bg-white dark:bg-[#111111]",
             "border border-gray-200 dark:border-[#262626]",
             "shadow-lg",
