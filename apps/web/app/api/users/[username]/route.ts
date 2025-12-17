@@ -222,9 +222,8 @@ export async function GET(
           name,
           description,
           slug,
-          color,
-          icon,
           is_public,
+          cover_image_url,
           item_count,
           created_at
         FROM collections
@@ -241,9 +240,8 @@ export async function GET(
         name: c.name,
         description: c.description,
         slug: c.slug,
-        color: c.color,
-        icon: c.icon,
         isPublic: c.is_public,
+        coverImageUrl: c.cover_image_url,
         itemCount: c.item_count,
         createdAt: c.created_at?.toISOString(),
       }));
