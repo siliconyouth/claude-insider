@@ -1,50 +1,13 @@
--- Migration: Chat Performance Optimizations
--- Description: Add indexes and optimized RPC function for chat performance
+-- Migration: Fix RPC Functions - Remove deleted_at references
+-- Description: Remove deleted_at column references from dm_participants (column doesn't exist)
 --
--- Optimizations:
--- 1. Composite indexes on dm_participants for faster conversation lookups
--- 2. Indexes on dm_messages for faster message retrieval
--- 3. Index on user_presence for real-time status
--- 4. Optimized RPC function that uses JOINs instead of multiple queries
+-- Bug: The RPC functions reference my_dp.deleted_at and my_p.deleted_at,
+-- but dm_participants table does NOT have a deleted_at column.
+-- This causes a SQL error when the function is called.
 
 -- ============================================================================
--- Performance Indexes
+-- Fix: get_conversations_optimized
 -- ============================================================================
-
--- dm_participants: Fast lookup by user_id with conversation data
-CREATE INDEX IF NOT EXISTS idx_dm_participants_user_conversation
-ON dm_participants(user_id, conversation_id, last_read_at, unread_count);
-
--- dm_participants: Fast lookup by conversation_id
-CREATE INDEX IF NOT EXISTS idx_dm_participants_conversation
-ON dm_participants(conversation_id)
-INCLUDE (user_id, last_read_at, unread_count);
-
--- dm_messages: Fast retrieval of recent messages per conversation
-CREATE INDEX IF NOT EXISTS idx_dm_messages_conversation_created
-ON dm_messages(conversation_id, created_at DESC);
-
--- dm_messages: Sender lookups
-CREATE INDEX IF NOT EXISTS idx_dm_messages_sender
-ON dm_messages(sender_id, created_at DESC);
-
--- user_presence: Fast status lookups for online indicators
-CREATE INDEX IF NOT EXISTS idx_user_presence_user_status
-ON user_presence(user_id, status, last_seen_at);
-
--- dm_conversations: Updated at for sorting
-CREATE INDEX IF NOT EXISTS idx_dm_conversations_updated
-ON dm_conversations(updated_at DESC);
-
--- ============================================================================
--- Optimized RPC Function: get_conversations_optimized
--- ============================================================================
-
--- This function returns conversations with all needed data in a SINGLE query
--- using JOINs instead of multiple round-trips
---
--- IMPORTANT: Uses ORDER BY in ARRAY_AGG to maintain array correlation
--- and joins profiles table for username/avatar data
 
 CREATE OR REPLACE FUNCTION get_conversations_optimized(p_user_id TEXT)
 RETURNS TABLE (
@@ -81,7 +44,7 @@ BEGIN
     FROM dm_participants dp
     JOIN dm_participants my_dp ON my_dp.conversation_id = dp.conversation_id
       AND my_dp.user_id = p_user_id
-      -- Note: dm_participants does NOT have deleted_at column
+      -- REMOVED: AND my_dp.deleted_at IS NULL (column doesn't exist)
     LEFT JOIN "user" u ON u.id = dp.user_id
     LEFT JOIN profiles p ON p.user_id = dp.user_id
     LEFT JOIN user_presence pr ON pr.user_id = dp.user_id
@@ -106,7 +69,7 @@ BEGIN
   FROM dm_conversations c
   JOIN dm_participants my_p ON my_p.conversation_id = c.id AND my_p.user_id = p_user_id
   LEFT JOIN conversation_participants cp ON cp.conversation_id = c.id
-  -- Note: dm_participants does NOT have deleted_at column
+  -- REMOVED: WHERE my_p.deleted_at IS NULL (column doesn't exist)
   GROUP BY c.id, c.is_group, c.group_name, c.group_avatar, c.created_at, c.updated_at,
            c.last_message_at, c.last_message_preview, my_p.unread_count
   ORDER BY c.last_message_at DESC NULLS LAST, c.updated_at DESC;
@@ -114,11 +77,8 @@ END;
 $$;
 
 -- ============================================================================
--- Optimized RPC Function: get_messages_paginated
+-- Fix: get_messages_paginated (for completeness, verify it doesn't have the issue)
 -- ============================================================================
-
--- This function returns messages with pagination for virtual scrolling
--- Returns messages in batches for efficient loading
 
 CREATE OR REPLACE FUNCTION get_messages_paginated(
   p_conversation_id UUID,
@@ -154,9 +114,8 @@ SECURITY DEFINER
 AS $$
 DECLARE
   v_total_count INTEGER;
-  v_returned_count INTEGER;
 BEGIN
-  -- Verify user is a participant
+  -- Verify user is a participant (no deleted_at check since column doesn't exist)
   IF NOT EXISTS (
     SELECT 1 FROM dm_participants
     WHERE conversation_id = p_conversation_id AND user_id = p_user_id
@@ -213,10 +172,6 @@ BEGIN
 END;
 $$;
 
--- Grant execute permissions
-GRANT EXECUTE ON FUNCTION get_conversations_optimized(TEXT) TO authenticated;
-GRANT EXECUTE ON FUNCTION get_messages_paginated(UUID, TEXT, INTEGER, UUID) TO authenticated;
-
--- Comment on functions for documentation
-COMMENT ON FUNCTION get_conversations_optimized IS 'Returns all conversations for a user with participant data in a single optimized query';
-COMMENT ON FUNCTION get_messages_paginated IS 'Returns paginated messages for virtual scrolling with cursor-based pagination';
+-- Comment on fix
+COMMENT ON FUNCTION get_conversations_optimized IS 'Returns all conversations for a user - FIXED: removed non-existent deleted_at column references';
+COMMENT ON FUNCTION get_messages_paginated IS 'Returns paginated messages with sender info from profiles table';

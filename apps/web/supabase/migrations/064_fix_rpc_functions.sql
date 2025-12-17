@@ -44,7 +44,7 @@ BEGIN
     FROM dm_participants dp
     JOIN dm_participants my_dp ON my_dp.conversation_id = dp.conversation_id
       AND my_dp.user_id = p_user_id
-      AND my_dp.deleted_at IS NULL
+      -- Note: dm_participants does NOT have deleted_at column
     LEFT JOIN "user" u ON u.id = dp.user_id
     LEFT JOIN profiles p ON p.user_id = dp.user_id
     LEFT JOIN user_presence pr ON pr.user_id = dp.user_id
@@ -69,7 +69,7 @@ BEGIN
   FROM dm_conversations c
   JOIN dm_participants my_p ON my_p.conversation_id = c.id AND my_p.user_id = p_user_id
   LEFT JOIN conversation_participants cp ON cp.conversation_id = c.id
-  WHERE my_p.deleted_at IS NULL
+  -- Note: dm_participants does NOT have deleted_at column
   GROUP BY c.id, c.is_group, c.group_name, c.group_avatar, c.created_at, c.updated_at,
            c.last_message_at, c.last_message_preview, my_p.unread_count
   ORDER BY c.last_message_at DESC NULLS LAST, c.updated_at DESC;
