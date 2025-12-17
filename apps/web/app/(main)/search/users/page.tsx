@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { cn } from "@/lib/design-system";
 import { UserSearch } from "@/components/users/user-search";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: "Search Users | Claude Insider",
@@ -17,7 +19,10 @@ export default async function SearchUsersPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto py-8 px-4">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <div className="max-w-2xl mx-auto py-8 px-4">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
@@ -110,6 +115,9 @@ export default async function SearchUsersPage() {
           </p>
         </div>
       </div>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

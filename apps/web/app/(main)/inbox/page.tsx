@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { Inbox } from "@/components/messaging";
 import { updatePresence } from "@/app/actions/presence";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export const metadata = {
   title: "Messages | Claude Insider",
@@ -19,8 +21,12 @@ export default async function InboxPage() {
   await updatePresence("online");
 
   return (
-    <div className="h-[calc(100vh-64px)]">
-      <Inbox currentUserId={session.user.id} />
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <Inbox currentUserId={session.user.id} />
+      </div>
+      <Footer />
     </div>
   );
 }

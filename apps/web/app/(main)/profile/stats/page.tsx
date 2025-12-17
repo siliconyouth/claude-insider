@@ -10,11 +10,15 @@ import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { UserStatsDashboard } from "@/components/analytics/user-stats-dashboard";
 import { PopularResources } from "@/components/analytics/popular-resources";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export default function ProfileStatsPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
         {/* Breadcrumb */}
         <Link
           href="/profile"
@@ -74,6 +78,8 @@ export default function ProfileStatsPage() {
           </div>
         </div>
       </div>
+        </div>
+      <Footer />
     </div>
   );
 }

@@ -12,6 +12,8 @@ import { cn } from "@/lib/design-system";
 import { getReadingListBySlug } from "@/app/actions/reading-lists";
 import { ReadingListItemCard } from "@/components/reading-lists/reading-list-item-card";
 import type { ReadingList, ReadingListItem } from "@/app/actions/reading-lists";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export default function ReadingListDetailPage({
   params,
@@ -66,8 +68,10 @@ export default function ReadingListDetailPage({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+        <Header />
+        <div className="flex-1">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
           <div className="animate-pulse space-y-4">
             <div className="h-8 bg-gray-200 dark:bg-gray-800 rounded w-1/3" />
             <div className="h-4 bg-gray-200 dark:bg-gray-800 rounded w-1/2" />
@@ -83,13 +87,17 @@ export default function ReadingListDetailPage({
             </div>
           </div>
         </div>
+          </div>
+        <Footer />
       </div>
     );
   }
 
   if (!list) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex items-center justify-center">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+        <Header />
+        <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">List not found</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-2">
@@ -105,13 +113,17 @@ export default function ReadingListDetailPage({
             Back to lists
           </Link>
         </div>
+        </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
         {/* Breadcrumb */}
         <Link
           href="/reading-lists"
@@ -257,7 +269,9 @@ export default function ReadingListDetailPage({
             ))}
           </div>
         )}
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -11,6 +11,8 @@ import Link from "next/link";
 import { FollowButton } from "@/components/users/follow-button";
 import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 import { cn } from "@/lib/design-system";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 interface FollowerUser {
   id: string;
@@ -53,7 +55,10 @@ export default function FollowersPage({
   }, [username]);
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <div className="max-w-2xl mx-auto px-4 py-12">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
@@ -199,6 +204,9 @@ export default function FollowersPage({
           })}
         </div>
       )}
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

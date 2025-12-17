@@ -32,8 +32,9 @@ export default function SearchPage() {
 
 function SearchPageSkeleton() {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <div className="flex-1">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
         {/* Header skeleton */}
         <div className="mb-8">
           <div className="h-9 w-32 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
@@ -64,6 +65,7 @@ function SearchPageSkeleton() {
           </div>
         </div>
       </div>
+        </div>
     </div>
   );
 }
@@ -189,8 +191,9 @@ function SearchPageContent() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <div className="flex-1">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -483,6 +486,7 @@ function SearchPageContent() {
           />
         )}
       </div>
+        </div>
     </div>
   );
 }

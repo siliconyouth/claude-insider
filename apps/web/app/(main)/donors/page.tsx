@@ -10,6 +10,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/design-system';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 import { DonorCard } from '@/components/donations/donor-badge';
 import {
   BADGE_CONFIG,
@@ -70,9 +72,10 @@ export default function DonorWallPage() {
   const tierOrder: DonorBadgeTier[] = ['platinum', 'gold', 'silver', 'bronze'];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Page Title */}
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Donor Wall
@@ -307,6 +310,7 @@ export default function DonorWallPage() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

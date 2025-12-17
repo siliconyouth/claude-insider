@@ -14,6 +14,8 @@ import { CollectionCard, CollectionCardSkeleton } from "@/components/favorites";
 import { useToast } from "@/components/toast";
 import type { CollectionWithCount, CollectionColor, CollectionIcon } from "@/types/favorites";
 import { COLLECTION_COLORS, COLLECTION_ICONS, COLLECTION_COLOR_STYLES } from "@/types/favorites";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export default function CollectionsPage() {
   const [collections, setCollections] = useState<CollectionWithCount[]>([]);
@@ -112,7 +114,10 @@ export default function CollectionsPage() {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
@@ -386,6 +391,9 @@ export default function CollectionsPage() {
           ))}
         </div>
       )}
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

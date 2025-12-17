@@ -11,6 +11,8 @@ import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { getUserSuggestions, deleteSuggestion, type Suggestion, type SuggestionStatus } from "@/app/actions/suggestions";
 import { useToast } from "@/components/toast";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 const STATUS_STYLES: Record<SuggestionStatus, { bg: string; text: string; label: string }> = {
   pending: {
@@ -97,7 +99,10 @@ export default function SuggestionsPage() {
   );
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -337,6 +342,9 @@ export default function SuggestionsPage() {
           })}
         </div>
       )}
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

@@ -10,6 +10,8 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 interface ActivityItem {
   id: string;
@@ -145,7 +147,10 @@ export default function FeedPage() {
   // Show sign-in prompt if not authenticated
   if (!authLoading && !isAuthenticated) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-12">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+        <Header />
+        <div className="flex-1">
+          <div className="max-w-2xl mx-auto px-4 py-12">
         <div className="text-center py-16">
           <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-violet-600/20 via-blue-600/20 to-cyan-600/20 flex items-center justify-center">
             <svg className="w-10 h-10 text-blue-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -179,11 +184,17 @@ export default function FeedPage() {
           </Link>
         </div>
       </div>
+        </div>
+        <Footer />
+      </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <div className="max-w-2xl mx-auto px-4 py-12">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
@@ -341,6 +352,9 @@ export default function FeedPage() {
           )}
         </div>
       )}
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

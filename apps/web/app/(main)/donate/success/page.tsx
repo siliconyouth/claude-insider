@@ -13,6 +13,8 @@ import Link from 'next/link';
 import { cn } from '@/lib/design-system';
 import { DonorBadge } from '@/components/donations/donor-badge';
 import type { DonorBadgeTier } from '@/lib/donations/types';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 type DonationTypeInfo = 'one-time' | 'subscription' | 'bank';
 
@@ -114,65 +116,75 @@ function DonationSuccessContent() {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0a]">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Processing your donation...</p>
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+        <Header />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-gray-600 dark:text-gray-400">Processing your donation...</p>
+          </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   if (status === 'error') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0a] px-4">
-        <div className="text-center max-w-md">
-          <div className="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-10 h-10 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </div>
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+        <Header />
+        <div className="flex-1 flex items-center justify-center px-4">
+          <div className="text-center max-w-md">
+            <div className="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-10 h-10 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
 
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Something Went Wrong
-          </h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Something Went Wrong
+            </h1>
 
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            {errorMessage || 'There was an error processing your donation. Please try again.'}
-          </p>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              {errorMessage || 'There was an error processing your donation. Please try again.'}
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/donate"
-              className={cn(
-                'px-6 py-3 rounded-xl font-semibold text-white',
-                'bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600',
-                'hover:shadow-lg hover:shadow-blue-500/25',
-                'transition-all duration-200'
-              )}
-            >
-              Try Again
-            </Link>
-            <Link
-              href="/"
-              className={cn(
-                'px-6 py-3 rounded-xl font-medium',
-                'border border-gray-200 dark:border-[#262626]',
-                'hover:bg-gray-50 dark:hover:bg-gray-800',
-                'transition-all duration-200'
-              )}
-            >
-              Go Home
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/donate"
+                className={cn(
+                  'px-6 py-3 rounded-xl font-semibold text-white',
+                  'bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600',
+                  'hover:shadow-lg hover:shadow-blue-500/25',
+                  'transition-all duration-200'
+                )}
+              >
+                Try Again
+              </Link>
+              <Link
+                href="/"
+                className={cn(
+                  'px-6 py-3 rounded-xl font-medium',
+                  'border border-gray-200 dark:border-[#262626]',
+                  'hover:bg-gray-50 dark:hover:bg-gray-800',
+                  'transition-all duration-200'
+                )}
+              >
+                Go Home
+              </Link>
+            </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0a] px-4">
-      <div className="text-center max-w-lg">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1 flex items-center justify-center px-4">
+        <div className="text-center max-w-lg">
         {/* Success animation */}
         <div className="relative w-24 h-24 mx-auto mb-8">
           <div className="absolute inset-0 bg-green-100 dark:bg-green-900/30 rounded-full animate-ping opacity-75" />
@@ -361,7 +373,9 @@ function DonationSuccessContent() {
             </a>
           </div>
         </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }
@@ -370,8 +384,12 @@ export default function DonationSuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0a]">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+          <Header />
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+          <Footer />
         </div>
       }
     >

@@ -14,6 +14,8 @@ import { getCollection, getCollectionItems, removeFromCollection, updateCollecti
 import { useToast } from "@/components/toast";
 import type { CollectionWithCount, FavoriteWithDetails, CollectionColor, CollectionIcon } from "@/types/favorites";
 import { COLLECTION_COLORS, COLLECTION_COLOR_STYLES } from "@/types/favorites";
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -144,7 +146,10 @@ export default function CollectionDetailPage({ params }: PageProps) {
 
   if (isLoading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+        <Header />
+        <div className="flex-1">
+          <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-8 h-8 rounded bg-gray-200 dark:bg-[#262626] animate-pulse" />
           <div className="h-8 w-48 bg-gray-200 dark:bg-[#262626] rounded animate-pulse" />
@@ -163,6 +168,9 @@ export default function CollectionDetailPage({ params }: PageProps) {
             </div>
           ))}
         </div>
+          </div>
+        </div>
+        <Footer />
       </div>
     );
   }
@@ -172,7 +180,10 @@ export default function CollectionDetailPage({ params }: PageProps) {
   const colorStyles = COLLECTION_COLOR_STYLES[collection.color];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#0a0a0a]">
+      <Header />
+      <div className="flex-1">
+        <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-8">
         <div className="flex items-start gap-4">
@@ -459,6 +470,9 @@ export default function CollectionDetailPage({ params }: PageProps) {
           ))}
         </div>
       )}
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }
