@@ -93,6 +93,17 @@ export async function initPasskeyRegistration(): Promise<{
       return { error: "You must be signed in" };
     }
 
+    // Log WebAuthn config for debugging
+    const { getWebAuthnConfig } = await import("@/lib/webauthn");
+    const config = getWebAuthnConfig();
+    console.log("[Passkey] WebAuthn config:", {
+      rpID: config.rpID,
+      rpName: config.rpName,
+      origin: config.origin,
+      NODE_ENV: process.env.NODE_ENV,
+      NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || "NOT SET",
+    });
+
     // Get existing passkeys to exclude
     const existingResult = await pool.query(
       `SELECT credential_id, transports FROM passkeys WHERE user_id = $1`,
@@ -116,6 +127,7 @@ export async function initPasskeyRegistration(): Promise<{
 
     // Store the challenge for verification
     const challenge = options.challenge;
+    console.log("[Passkey] Storing challenge for user:", session.user.id);
     await pool.query(
       `SELECT create_webauthn_challenge($1, NULL, $2, 'registration', 5)`,
       [session.user.id, challenge]
@@ -124,7 +136,8 @@ export async function initPasskeyRegistration(): Promise<{
     return { options };
   } catch (error) {
     console.error("[Passkey] Init registration error:", error);
-    return { error: "Failed to start passkey registration" };
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return { error: `Failed to start passkey registration: ${errorMessage}` };
   }
 }
 
@@ -239,7 +252,10 @@ export async function completePasskeyRegistration(
     };
   } catch (error) {
     console.error("[Passkey] Complete registration error:", error);
-    return { error: "Failed to complete passkey registration" };
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorName = error instanceof Error ? error.name : "Unknown";
+    console.error("[Passkey] Error details:", { name: errorName, message: errorMessage });
+    return { error: `Failed to complete passkey registration: ${errorMessage}` };
   }
 }
 

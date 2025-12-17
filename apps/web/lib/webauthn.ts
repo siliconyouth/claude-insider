@@ -30,7 +30,14 @@ import type {
  * authenticator to verify the user's identity. These settings must match your domain.
  */
 export function getWebAuthnConfig() {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+  // CRITICAL: NEXT_PUBLIC_APP_URL must be set in production for WebAuthn to work.
+  // Passkeys are cryptographically bound to the rpID (domain), so using the wrong
+  // domain will cause all passkey operations to fail.
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    (process.env.NODE_ENV === "production"
+      ? "https://www.claudeinsider.com"
+      : "http://localhost:3001");
   const url = new URL(appUrl);
 
   return {
