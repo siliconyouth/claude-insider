@@ -72,16 +72,34 @@ async function getCroppedImage(
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
 
+  // Validate crop values
+  if (!crop || crop.width <= 0 || crop.height <= 0) {
+    console.error("[CoverPhotoCropper] Invalid crop dimensions");
+    return null;
+  }
+
   // Calculate the actual pixel values from percentage
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
 
-  const pixelCrop = {
-    x: (crop.x / 100) * image.width * scaleX,
-    y: (crop.y / 100) * image.height * scaleY,
-    width: (crop.width / 100) * image.width * scaleX,
-    height: (crop.height / 100) * image.height * scaleY,
+  // Clamp crop values to valid range
+  const clampedCrop = {
+    x: Math.max(0, Math.min(100, crop.x)),
+    y: Math.max(0, Math.min(100, crop.y)),
+    width: Math.max(1, Math.min(100, crop.width)),
+    height: Math.max(1, Math.min(100, crop.height)),
   };
+
+  const pixelCrop = {
+    x: Math.max(0, (clampedCrop.x / 100) * image.width * scaleX),
+    y: Math.max(0, (clampedCrop.y / 100) * image.height * scaleY),
+    width: Math.max(1, (clampedCrop.width / 100) * image.width * scaleX),
+    height: Math.max(1, (clampedCrop.height / 100) * image.height * scaleY),
+  };
+
+  // Ensure we don't exceed image bounds
+  pixelCrop.x = Math.min(pixelCrop.x, image.naturalWidth - pixelCrop.width);
+  pixelCrop.y = Math.min(pixelCrop.y, image.naturalHeight - pixelCrop.height);
 
   // Determine output size (respect max dimensions)
   let outputWidth = pixelCrop.width;
@@ -232,9 +250,12 @@ export function CoverPhotoCropper({
     }
   };
 
-  // Handle backdrop click
+  // Track if user is currently dragging the crop area
+  const [isDragging, setIsDragging] = useState(false);
+
+  // Handle backdrop click - but not during crop dragging
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && !isUploading) {
+    if (e.target === e.currentTarget && !isUploading && !isDragging) {
       onClose();
     }
   };
@@ -318,30 +339,53 @@ export function CoverPhotoCropper({
                       if (!ctx) return;
 
                       const image = imgRef.current;
+
+                      // Validate completed crop
+                      if (!completedCrop.width || !completedCrop.height ||
+                          completedCrop.width <= 0 || completedCrop.height <= 0) {
+                        return;
+                      }
+
                       const scaleX = image.naturalWidth / image.width;
                       const scaleY = image.naturalHeight / image.height;
 
-                      const pixelCrop = {
-                        x: (completedCrop.x / 100) * image.width * scaleX,
-                        y: (completedCrop.y / 100) * image.height * scaleY,
-                        width: (completedCrop.width / 100) * image.width * scaleX,
-                        height: (completedCrop.height / 100) * image.height * scaleY,
+                      // Clamp values to valid range
+                      const clampedCrop = {
+                        x: Math.max(0, Math.min(100, completedCrop.x)),
+                        y: Math.max(0, Math.min(100, completedCrop.y)),
+                        width: Math.max(1, Math.min(100, completedCrop.width)),
+                        height: Math.max(1, Math.min(100, completedCrop.height)),
                       };
+
+                      const pixelCrop = {
+                        x: Math.max(0, (clampedCrop.x / 100) * image.width * scaleX),
+                        y: Math.max(0, (clampedCrop.y / 100) * image.height * scaleY),
+                        width: Math.max(1, (clampedCrop.width / 100) * image.width * scaleX),
+                        height: Math.max(1, (clampedCrop.height / 100) * image.height * scaleY),
+                      };
+
+                      // Ensure we don't exceed image bounds
+                      pixelCrop.x = Math.min(pixelCrop.x, image.naturalWidth - pixelCrop.width);
+                      pixelCrop.y = Math.min(pixelCrop.y, image.naturalHeight - pixelCrop.height);
 
                       canvas.width = canvas.offsetWidth * 2;
                       canvas.height = canvas.offsetHeight * 2;
 
-                      ctx.drawImage(
-                        image,
-                        pixelCrop.x,
-                        pixelCrop.y,
-                        pixelCrop.width,
-                        pixelCrop.height,
-                        0,
-                        0,
-                        canvas.width,
-                        canvas.height
-                      );
+                      try {
+                        ctx.drawImage(
+                          image,
+                          pixelCrop.x,
+                          pixelCrop.y,
+                          pixelCrop.width,
+                          pixelCrop.height,
+                          0,
+                          0,
+                          canvas.width,
+                          canvas.height
+                        );
+                      } catch (e) {
+                        console.error("[CoverPhotoCropper] Canvas draw error:", e);
+                      }
                     }
                   }}
                   className="w-full h-full object-cover"
@@ -382,11 +426,39 @@ export function CoverPhotoCropper({
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Drag to adjust crop area
               </label>
-              <div className="flex justify-center bg-gray-100 dark:bg-[#0a0a0a] rounded-xl p-4">
+              <div
+                className="flex justify-center bg-gray-100 dark:bg-[#0a0a0a] rounded-xl p-4"
+                onMouseDown={() => setIsDragging(true)}
+                onMouseUp={() => setIsDragging(false)}
+                onMouseLeave={() => setIsDragging(false)}
+              >
                 <ReactCrop
                   crop={crop}
-                  onChange={(_, percentCrop) => setCrop(percentCrop)}
-                  onComplete={(_, percentCrop) => setCompletedCrop(percentCrop)}
+                  onChange={(_, percentCrop) => {
+                    // Clamp values to valid range to prevent out-of-bounds issues
+                    const clampedCrop = {
+                      ...percentCrop,
+                      x: Math.max(0, Math.min(100 - percentCrop.width, percentCrop.x)),
+                      y: Math.max(0, Math.min(100 - percentCrop.height, percentCrop.y)),
+                      width: Math.max(1, Math.min(100, percentCrop.width)),
+                      height: Math.max(1, Math.min(100, percentCrop.height)),
+                    };
+                    setCrop(clampedCrop);
+                  }}
+                  onComplete={(_, percentCrop) => {
+                    // Clamp completed crop values as well
+                    const clampedCrop = {
+                      ...percentCrop,
+                      x: Math.max(0, Math.min(100 - percentCrop.width, percentCrop.x)),
+                      y: Math.max(0, Math.min(100 - percentCrop.height, percentCrop.y)),
+                      width: Math.max(1, Math.min(100, percentCrop.width)),
+                      height: Math.max(1, Math.min(100, percentCrop.height)),
+                    };
+                    setCompletedCrop(clampedCrop);
+                    setIsDragging(false);
+                  }}
+                  onDragStart={() => setIsDragging(true)}
+                  onDragEnd={() => setIsDragging(false)}
                   aspect={ASPECT_RATIO}
                   className="max-h-[300px]"
                 >
