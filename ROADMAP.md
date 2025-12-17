@@ -1,15 +1,15 @@
 # Claude Insider Roadmap
 
-**Version:** 1.2.0
-**Last Updated:** 2025-12-16
-**Current Release:** v0.86.0
+**Version:** 1.3.0
+**Last Updated:** 2025-12-17
+**Current Release:** v0.91.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-This roadmap outlines the development path from **v0.86.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+This roadmap outlines the development path from **v0.91.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,11 @@ This roadmap outlines the development path from **v0.86.0** (current) to **v1.0.
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 0.91.0 | Dec 17 | Profile & Navigation Overhaul, Header/Footer to 14 pages |
+| 0.90.0 | Dec 16 | Chat UI Redesign, shared ChatMessage component |
+| 0.89.0 | Dec 16 | Notification system refactoring, 3x performance |
+| 0.88.0 | Dec 16 | Dashboard shared infrastructure, 7 pages refactored |
+| 0.87.0 | Dec 16 | Diagnostics dashboard refactoring, 77% code reduction |
 | 0.86.0 | Dec 16 | Legal pages compliance (GDPR, CCPA, DSA, Serbian law) |
 | 0.85.0 | Dec 16 | Documentation consolidation, single source of truth |
 | 0.84.0 | Dec 16 | Touch screen ProfileHoverCard support |
@@ -31,14 +36,14 @@ This roadmap outlines the development path from **v0.86.0** (current) to **v1.0.
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 0.86.0 | Creator | 4 | Q1 2025 | Content Creation Tools |
-| 0.87.0 | Analytics | 4 | Q1 2025 | Data & Insights |
-| 0.88.0 | Developer | 4 | Q1 2025 | Developer Tooling |
-| 0.89.0 | Social | 4 | Q2 2025 | Community Features |
-| 0.90.0 | Enterprise | 4 | Q2 2025 | Business Features |
-| 0.91.0 | Platform | 4 | Q2 2025 | Platform Expansion |
-| 0.92.0 | Integration | 4 | Q2 2025 | External Integrations |
-| 0.93.0 | Innovation | 4 | Q3 2025 | Experimental Features |
+| 0.92.0 | Integration | 4 | Q1 2025 | External Integrations |
+| 0.93.0 | Creator | 4 | Q1 2025 | Content Creation Tools |
+| 0.94.0 | Analytics | 4 | Q1 2025 | Data & Insights |
+| 0.95.0 | Developer | 4 | Q2 2025 | Developer Tooling |
+| 0.96.0 | Social | 4 | Q2 2025 | Community Features |
+| 0.97.0 | Enterprise | 4 | Q2 2025 | Business Features |
+| 0.98.0 | Platform | 4 | Q2 2025 | Platform Expansion |
+| 0.99.0 | Innovation | 4 | Q3 2025 | Experimental Features |
 | 1.0.0 | Milestone | - | Q3 2025 | Stable Release |
 
 ---
