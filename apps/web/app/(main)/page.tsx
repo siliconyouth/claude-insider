@@ -217,8 +217,8 @@ export default function HomePage() {
           {/* Animated lens flare background */}
           <HeroBackground className="-z-10" />
 
-          {/* Subtle dot pattern overlay */}
-          <div className="absolute inset-0 -z-10 pattern-dots opacity-30 dark:opacity-20" />
+          {/* Subtle dot pattern overlay - consistent visibility in both themes */}
+          <div className="absolute inset-0 -z-10 pattern-dots opacity-[0.15] dark:opacity-[0.08]" />
 
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -242,13 +242,13 @@ export default function HomePage() {
                 </h1>
 
                 {/* Subheadline */}
-                <p className="mt-6 text-xl sm:text-2xl leading-relaxed text-gray-600 dark:text-gray-300 max-w-xl">
+                <p className="mt-6 text-xl sm:text-2xl leading-relaxed text-gray-700 dark:text-gray-300 max-w-xl">
                   From setup to production. API integration, MCP servers,
                   IDE plugins, and advanced prompting techniques.
                 </p>
 
                 {/* Feature list */}
-                <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-gray-500 dark:text-gray-400">
+                <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-gray-600 dark:text-gray-400">
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

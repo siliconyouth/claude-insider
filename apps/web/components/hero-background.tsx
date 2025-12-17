@@ -70,13 +70,13 @@ export function HeroBackground({
       className={`hero-background absolute inset-0 overflow-hidden ${className}`}
       aria-hidden="true"
     >
-      {/* Base gradient layer */}
+      {/* Base gradient layer - consistent between themes */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-white dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#111111]"
+        className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-gray-100 dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#0f0f0f]"
         style={{ opacity: intensity }}
       />
 
-      {/* Stripe-style diagonal gradient band */}
+      {/* Stripe-style diagonal gradient band - consistent treatment */}
       <div
         className="absolute inset-x-0 bottom-0 h-[60%] origin-bottom-left"
         style={{
@@ -84,9 +84,9 @@ export function HeroBackground({
           transformOrigin: "bottom left",
         }}
       >
-        {/* Dark base for the diagonal section */}
+        {/* Dark base for the diagonal section - same style both themes */}
         <div
-          className="absolute inset-0 bg-gradient-to-t from-[#0f0f23] via-[#13132b] to-transparent dark:from-[#0a0a15] dark:via-[#0f0f20]"
+          className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-[#0f0f25] to-transparent dark:from-[#050510] dark:via-[#0a0a18]"
           style={{ opacity: intensity }}
         />
 
@@ -118,28 +118,34 @@ export function HeroBackground({
         }}
       />
 
-      {/* Subtle top gradient for text area contrast - Stripe-style clean text area */}
+      {/* Subtle top gradient for text area contrast - consistent both themes */}
       <div
-        className="absolute inset-x-0 top-0 h-[55%] dark:hidden"
+        className="absolute inset-x-0 top-0 h-[55%]"
         style={{
-          background: `linear-gradient(to bottom,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 0.9) 60%,
-            transparent 100%)`,
           opacity: intensity,
         }}
-      />
-      {/* Dark mode version */}
-      <div
-        className="absolute inset-x-0 top-0 h-[55%] hidden dark:block"
-        style={{
-          background: `linear-gradient(to bottom,
-            rgba(10, 10, 10, 1) 0%,
-            rgba(10, 10, 10, 0.9) 60%,
-            transparent 100%)`,
-          opacity: intensity,
-        }}
-      />
+      >
+        {/* Light mode overlay */}
+        <div
+          className="absolute inset-0 dark:hidden"
+          style={{
+            background: `linear-gradient(to bottom,
+              rgba(255, 255, 255, 0.95) 0%,
+              rgba(255, 255, 255, 0.8) 50%,
+              transparent 100%)`,
+          }}
+        />
+        {/* Dark mode overlay */}
+        <div
+          className="absolute inset-0 hidden dark:block"
+          style={{
+            background: `linear-gradient(to bottom,
+              rgba(10, 10, 10, 0.95) 0%,
+              rgba(10, 10, 10, 0.8) 50%,
+              transparent 100%)`,
+          }}
+        />
+      </div>
     </div>
   );
 }
