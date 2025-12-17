@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.96.0] - 2025-12-17
+### Unread Indicator Bug Fixes
+- **Notification Read State**: Clicking a notification now marks it as read immediately
+  - Added `markAsRead()` function to notification bell component
+  - API call fires on click before navigation (non-blocking)
+  - Visual state updates instantly (background color, unread dot)
+- **Message Unread Count Sync**: Opening a conversation updates global unread count
+  - Messages Tab: Decrements `unreadCount` in unified chat provider
+  - Inbox: Updates local conversation state to reflect read status
+  - Optimistic UI pattern for instant feedback
+- **State Synchronization**: Fixed gap between UI state and database state
+  - Previously, counts only updated on page refresh
+  - Now uses optimistic updates with background database sync
+
 ## [0.95.0] - 2025-12-17
 ### E2EE Verification Improvements
 - **Auto-fetch Device ID**: Verification modal now automatically fetches target user's device ID

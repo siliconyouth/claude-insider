@@ -2,14 +2,14 @@
 
 **Version:** 1.3.0
 **Last Updated:** 2025-12-17
-**Current Release:** v0.92.0
+**Current Release:** v0.96.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-This roadmap outlines the development path from **v0.92.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+This roadmap outlines the development path from **v0.96.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,10 @@ This roadmap outlines the development path from **v0.92.0** (current) to **v1.0.
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 0.96.0 | Dec 17 | Unread Indicator Bug Fixes: Notification read state, message count sync |
+| 0.95.0 | Dec 17 | E2EE Verification: Auto-fetch device ID, educational security content |
+| 0.94.0 | Dec 17 | Profile Cover Photos: Custom images, client-side cropping, animated default |
+| 0.93.0 | Dec 17 | User Directory, @Mention deep linking, message grouping |
 | 0.92.0 | Dec 17 | Chat Performance: Broadcast typing, Virtual scrolling, RPC optimization |
 | 0.91.0 | Dec 17 | Profile & Navigation Overhaul, Header/Footer to 14 pages |
 | 0.90.0 | Dec 16 | Chat UI Redesign, shared ChatMessage component |
@@ -26,10 +30,6 @@ This roadmap outlines the development path from **v0.92.0** (current) to **v1.0.
 | 0.88.0 | Dec 16 | Dashboard shared infrastructure, 7 pages refactored |
 | 0.87.0 | Dec 16 | Diagnostics dashboard refactoring, 77% code reduction |
 | 0.86.0 | Dec 16 | Legal pages compliance (GDPR, CCPA, DSA, Serbian law) |
-| 0.85.0 | Dec 16 | Documentation consolidation, single source of truth |
-| 0.84.0 | Dec 16 | Touch screen ProfileHoverCard support |
-| 0.83.0 | Dec 16 | Floating Chat Button, audio refactor |
-| 0.82.0 | Dec 16 | E2EE, Unified Chat, Donation System |
 
 ---
 
@@ -37,15 +37,10 @@ This roadmap outlines the development path from **v0.92.0** (current) to **v1.0.
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 0.92.0 | Integration | 4 | Q1 2025 | External Integrations |
-| 0.93.0 | Creator | 4 | Q1 2025 | Content Creation Tools |
-| 0.94.0 | Analytics | 4 | Q1 2025 | Data & Insights |
-| 0.95.0 | Developer | 4 | Q2 2025 | Developer Tooling |
-| 0.96.0 | Social | 4 | Q2 2025 | Community Features |
-| 0.97.0 | Enterprise | 4 | Q2 2025 | Business Features |
-| 0.98.0 | Platform | 4 | Q2 2025 | Platform Expansion |
-| 0.99.0 | Innovation | 4 | Q3 2025 | Experimental Features |
-| 1.0.0 | Milestone | - | Q3 2025 | Stable Release |
+| 0.97.0 | Enterprise | 4 | Q1 2025 | Business Features |
+| 0.98.0 | Platform | 4 | Q1 2025 | Platform Expansion |
+| 0.99.0 | Innovation | 4 | Q2 2025 | Experimental Features |
+| 1.0.0 | Milestone | - | Q2 2025 | Stable Release |
 
 ---
 
