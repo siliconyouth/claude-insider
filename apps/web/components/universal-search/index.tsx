@@ -37,6 +37,26 @@ import { VoiceRecognizer, isSpeechRecognitionSupported } from "@/lib/speech-reco
 import { SkeletonSearchResult } from "@/components/skeleton";
 import { ModeToggle } from "./mode-toggle";
 import { SearchMode, AISearchResponse } from "./types";
+import { searchUsersForMention } from "@/app/actions/messaging";
+
+// Extended result type that can be document or user
+interface UserSearchResult {
+  resultType: "user";
+  id: string;
+  name: string;
+  username?: string;
+  avatarUrl?: string;
+  url: string;
+  title: string;
+  description: string;
+  category: "Users";
+}
+
+interface DocumentSearchResult extends SearchDocument {
+  resultType: "document";
+}
+
+type UnifiedSearchResult = UserSearchResult | DocumentSearchResult;
 
 interface UniversalSearchProps {
   /** Show expanded search bar with placeholder text */
@@ -55,10 +75,11 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
   const [isNavigating, setIsNavigating] = useState(false);
 
   // Quick search state
-  const [quickResults, setQuickResults] = useState<SearchDocument[]>([]);
+  const [quickResults, setQuickResults] = useState<UnifiedSearchResult[]>([]);
   const [isQuickSearching, startQuickSearchTransition] = useTransition();
   const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
   const fuseRef = useRef<Fuse<SearchDocument> | null>(null);
+  const userSearchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // AI search state
   const [aiResponse, setAiResponse] = useState<AISearchResponse | null>(null);
@@ -192,27 +213,91 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
     }
   }, [isOpen]);
 
-  // Quick search when query changes
+  // Quick search when query changes (includes user search with @ trigger)
   useEffect(() => {
     if (mode !== "quick") return;
 
-    if (!fuseRef.current || !query || query.length < 2) {
+    // Clear any pending user search
+    if (userSearchTimeoutRef.current) {
+      clearTimeout(userSearchTimeoutRef.current);
+    }
+
+    if (!query || query.length < 2) {
       setQuickResults([]);
       return;
     }
 
-    startQuickSearchTransition(() => {
-      const searchResults = fuseRef.current!.search(query, { limit: 8 });
-      const mappedResults = searchResults.map((r) => r.item);
-      setQuickResults(mappedResults);
+    // Check if query starts with @ for user-only search
+    const isUserSearch = query.startsWith("@");
+    const userQuery = isUserSearch ? query.slice(1) : query;
+
+    startQuickSearchTransition(async () => {
+      const results: UnifiedSearchResult[] = [];
+
+      // Search users if @ prefix or query is 2+ chars (mix users with docs)
+      if (isUserSearch || query.length >= 2) {
+        // Debounce user search slightly
+        userSearchTimeoutRef.current = setTimeout(async () => {
+          try {
+            const userResult = await searchUsersForMention(userQuery || query, 5);
+            if (userResult.success && userResult.users) {
+              const userResults: UserSearchResult[] = userResult.users.map((u) => ({
+                resultType: "user" as const,
+                id: u.id,
+                name: u.displayName || u.name || "Unknown",
+                username: u.username,
+                avatarUrl: u.avatarUrl,
+                url: `/u/${u.username || u.id}`,
+                title: u.displayName || u.name || "Unknown",
+                description: u.username ? `@${u.username}` : "User",
+                category: "Users" as const,
+              }));
+
+              // If user-only search, show only users
+              if (isUserSearch) {
+                setQuickResults(userResults);
+                setSelectedIndex(0);
+                announce(`${userResults.length} ${userResults.length === 1 ? "user" : "users"} found`);
+              } else {
+                // Mix users with document results
+                setQuickResults((prev) => {
+                  // Remove old user results, add new ones at top
+                  const docResults = prev.filter((r) => r.resultType !== "user");
+                  return [...userResults, ...docResults].slice(0, 10);
+                });
+              }
+            }
+          } catch {
+            // Silently fail user search
+          }
+        }, 200);
+      }
+
+      // Search documents (skip if @ prefix)
+      if (!isUserSearch && fuseRef.current) {
+        const searchResults = fuseRef.current.search(query, { limit: 8 });
+        const docResults: DocumentSearchResult[] = searchResults.map((r) => ({
+          ...r.item,
+          resultType: "document" as const,
+        }));
+        results.push(...docResults);
+      }
+
+      setQuickResults(results);
       setSelectedIndex(0);
 
-      if (mappedResults.length > 0) {
-        announce(`${mappedResults.length} ${mappedResults.length === 1 ? "result" : "results"} found`);
-      } else {
+      if (results.length > 0) {
+        announce(`${results.length} ${results.length === 1 ? "result" : "results"} found`);
+      } else if (!isUserSearch) {
         announce("No results found");
       }
     });
+
+    return () => {
+      if (userSearchTimeoutRef.current) {
+        clearTimeout(userSearchTimeoutRef.current);
+      }
+    };
   }, [query, mode, announce]);
 
   // AI search with debounce
@@ -272,7 +357,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
 
   // Get current results based on mode (memoized to prevent recreation on every render)
   const currentResults = useMemo(
-    () => mode === "quick" ? quickResults : (aiResponse?.results || []),
+    () => mode === "quick" ? quickResults : (aiResponse?.results || []).map((r) => ({ ...r, resultType: "document" as const })),
     [mode, quickResults, aiResponse?.results]
   );
   const isSearching = mode === "quick" ? isQuickSearching : isAISearching;
@@ -625,7 +710,23 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                           disabled={isNavigating}
                         >
                           <div className="flex-shrink-0 mt-0.5">
-                            {mode === "quick" ? (
+                            {/* User avatar for user results */}
+                            {result.resultType === "user" ? (
+                              (result as UserSearchResult).avatarUrl ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={(result as UserSearchResult).avatarUrl}
+                                  alt={(result as UserSearchResult).name}
+                                  className="w-8 h-8 rounded-full object-cover"
+                                />
+                              ) : (
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center">
+                                  <span className="text-white text-xs font-medium">
+                                    {(result as UserSearchResult).name.charAt(0).toUpperCase()}
+                                  </span>
+                                </div>
+                              )
+                            ) : mode === "quick" ? (
                               <span
                                 className={cn(
                                   "inline-flex items-center justify-center w-6 h-6 rounded text-xs font-medium",

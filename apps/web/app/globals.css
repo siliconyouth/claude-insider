@@ -778,6 +778,27 @@ code {
   }
 }
 
+/* Message highlight animation for deep links */
+@keyframes highlight-message {
+  0% {
+    background-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    background-color: rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.animate-highlight-message {
+  animation: highlight-message 2s ease-out forwards;
+  border-radius: 0.75rem;
+}
+
 @keyframes shimmer {
   0% {
     background-position: -200% 0;

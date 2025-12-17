@@ -478,6 +478,7 @@ export async function sendMessage(
   success: boolean;
   message?: Message;
   aiMentioned?: boolean;
+  mentionedUserIds?: string[];
   error?: string;
 }> {
   try {
@@ -508,16 +509,53 @@ export async function sendMessage(
     // Detect @mentions in the message
     const mentionRegex = /@(\w+)/g;
     const mentionMatches = content.match(mentionRegex) || [];
-    const mentions: string[] = [];
+    const mentionUsernames: string[] = [];
     let aiMentioned = false;
 
-    // Check for @claudeinsider mention
+    // Extract usernames from mentions
     for (const match of mentionMatches) {
       const username = match.slice(1).toLowerCase();
       if (username === "claudeinsider") {
         aiMentioned = true;
-        mentions.push(AI_ASSISTANT_USER_ID);
+      } else {
+        mentionUsernames.push(username);
       }
+    }
+
+    // Look up user IDs for mentioned usernames
+    const mentionedUserIds: string[] = aiMentioned ? [AI_ASSISTANT_USER_ID] : [];
+    if (mentionUsernames.length > 0) {
+      // Get user IDs from profiles by username (cast due to types being out of sync)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: mentionedProfiles } = await (supabase as any)
+        .from("profiles")
+        .select("user_id, username")
+        .in("username", mentionUsernames);
+
+      // Also check user table for usernames
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: mentionedUsers } = await (supabase as any)
+        .from("user")
+        .select("id, username")
+        .in("username", mentionUsernames);
+
+      // Collect user IDs from both sources
+      const userIdSet = new Set<string>();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (mentionedProfiles || []).forEach((p: any) => {
+        if (p.user_id) userIdSet.add(p.user_id);
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (mentionedUsers || []).forEach((u: any) => {
+        if (u.id) userIdSet.add(u.id);
+      });
+
+      // Add to mentionedUserIds (excluding sender)
+      userIdSet.forEach((id) => {
+        if (id !== session.user.id) {
+          mentionedUserIds.push(id);
+        }
+      });
     }
 
     // Insert message
@@ -528,7 +566,7 @@ export async function sendMessage(
         conversation_id: conversationId,
         sender_id: session.user.id,
         content: content.trim(),
-        mentions,
+        mentions: mentionedUserIds,
         is_ai_generated: false,
       })
       .select()
@@ -538,6 +576,8 @@ export async function sendMessage(
       console.error("Send message error:", error);
       return { success: false, error: "Failed to send message" };
     }
+
+    const msg = newMessage as MessageRow;
 
     // Get sender info for response (including username for hovercards)
     const { data: profileData } = await supabase
@@ -549,7 +589,35 @@ export async function sendMessage(
     // Cast to ProfileRow since Supabase types may be out of sync
     const profile = profileData as ProfileRow | null;
 
-    const msg = newMessage as MessageRow;
+    // Create notifications for mentioned users (excluding AI and sender)
+    const humanMentions = mentionedUserIds.filter((id) => id !== AI_ASSISTANT_USER_ID);
+    if (humanMentions.length > 0) {
+      // Import dynamically to avoid circular dependency
+      const { createNotification } = await import("./notifications");
+
+      const senderName = profile?.display_name || session.user.name || "Someone";
+      const preview = content.length > 50 ? content.slice(0, 50) + "..." : content;
+
+      // Create notifications in parallel
+      await Promise.all(
+        humanMentions.map((userId) =>
+          createNotification({
+            userId,
+            type: "mention",
+            title: `${senderName} mentioned you`,
+            message: preview,
+            actorId: session.user.id,
+            resourceType: "dm_message",
+            resourceId: msg.id,
+            data: {
+              conversationId,
+              messageId: msg.id,
+            },
+          })
+        )
+      );
+    }
+
     const message: Message = {
       id: msg.id,
       conversationId: msg.conversation_id,
@@ -563,7 +631,7 @@ export async function sendMessage(
       createdAt: msg.created_at,
     };
 
-    return { success: true, message, aiMentioned };
+    return { success: true, message, aiMentioned, mentionedUserIds };
   } catch (error) {
     console.error("Send message error:", error);
     return { success: false, error: "An unexpected error occurred" };
@@ -848,6 +916,228 @@ export async function getUsersForMessaging(
     return { success: true, users: result };
   } catch (error) {
     console.error("Get users error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// SEARCH USERS FOR MENTION (prioritized)
+// ============================================
+
+/**
+ * Search users with priority ranking for mention autocomplete (like Telegram):
+ * 1. Exact match (username or name)
+ * 2. Users you follow
+ * 3. Users following you
+ * 4. Other users
+ */
+export async function searchUsersForMention(
+  query: string,
+  limit: number = 10
+): Promise<{
+  success: boolean;
+  users?: Array<{
+    id: string;
+    name?: string;
+    displayName?: string;
+    username?: string;
+    avatarUrl?: string;
+    status: "online" | "offline" | "idle";
+    isFollowing: boolean;
+    isFollower: boolean;
+    isExactMatch: boolean;
+  }>;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    if (!query || query.length < 1) {
+      return { success: true, users: [] };
+    }
+
+    const supabase = await createAdminClient();
+    const searchTerm = query.toLowerCase();
+
+    // Get blocked users to exclude
+    const { data: blocks } = await supabase
+      .from("user_blocks")
+      .select("blocked_id, blocker_id")
+      .or(`blocker_id.eq.${session.user.id},blocked_id.eq.${session.user.id}`);
+
+    const blockedIds = new Set<string>();
+    blocks?.forEach((b) => {
+      if (b.blocker_id === session.user.id) blockedIds.add(b.blocked_id);
+      if (b.blocked_id === session.user.id) blockedIds.add(b.blocker_id);
+    });
+
+    // Run 3 queries in parallel for efficiency
+    const [followingResult, followersResult, allUsersResult] = await Promise.all([
+      // Users I'm following that match the query
+      supabase
+        .from("user_follows")
+        .select(`
+          following_id,
+          user:following_id (
+            id,
+            name,
+            email,
+            username
+          )
+        `)
+        .eq("follower_id", session.user.id)
+        .limit(limit),
+
+      // Users following me that match the query
+      supabase
+        .from("user_follows")
+        .select(`
+          follower_id,
+          user:follower_id (
+            id,
+            name,
+            email,
+            username
+          )
+        `)
+        .eq("following_id", session.user.id)
+        .limit(limit),
+
+      // All users matching query
+      supabase
+        .from("user")
+        .select("id, name, email, username")
+        .neq("id", session.user.id)
+        .or(`name.ilike.%${searchTerm}%,email.ilike.%${searchTerm}%,username.ilike.%${searchTerm}%`)
+        .limit(limit * 2), // Get more since we'll dedupe
+    ]);
+
+    // Build sets of following/follower IDs
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const followingIds = new Set((followingResult.data || []).map((r: any) => r.following_id));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const followerIds = new Set((followersResult.data || []).map((r: any) => r.follower_id));
+
+    // Collect all users, deduplicating
+    const userMap = new Map<string, {
+      id: string;
+      name?: string;
+      email?: string;
+      username?: string;
+    }>();
+
+    // Add following users
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (followingResult.data || []).forEach((r: any) => {
+      const user = r.user;
+      if (user && !blockedIds.has(user.id)) {
+        const matches =
+          user.name?.toLowerCase().includes(searchTerm) ||
+          user.username?.toLowerCase().includes(searchTerm) ||
+          user.email?.toLowerCase().includes(searchTerm);
+        if (matches) {
+          userMap.set(user.id, user);
+        }
+      }
+    });
+
+    // Add follower users
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (followersResult.data || []).forEach((r: any) => {
+      const user = r.user;
+      if (user && !blockedIds.has(user.id) && !userMap.has(user.id)) {
+        const matches =
+          user.name?.toLowerCase().includes(searchTerm) ||
+          user.username?.toLowerCase().includes(searchTerm) ||
+          user.email?.toLowerCase().includes(searchTerm);
+        if (matches) {
+          userMap.set(user.id, user);
+        }
+      }
+    });
+
+    // Add all users
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (allUsersResult.data || []).forEach((u: any) => {
+      if (!blockedIds.has(u.id) && !userMap.has(u.id)) {
+        userMap.set(u.id, u);
+      }
+    });
+
+    // Get profiles and presence for all collected users
+    const userIds = Array.from(userMap.keys());
+    if (userIds.length === 0) {
+      return { success: true, users: [] };
+    }
+
+    const [profilesResult, presencesResult] = await Promise.all([
+      supabase
+        .from("profiles")
+        .select("user_id, display_name, avatar_url, username")
+        .in("user_id", userIds),
+      supabase
+        .from("user_presence")
+        .select("user_id, status")
+        .in("user_id", userIds),
+    ]);
+
+    const profileMap = new Map(
+      (profilesResult.data as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []
+    );
+    const presenceMap = new Map(
+      (presencesResult.data as PresenceRow[] | null)?.map((p) => [p.user_id, p.status]) || []
+    );
+
+    // Build and sort result
+    const users = Array.from(userMap.values()).map((u) => {
+      const profile = profileMap.get(u.id);
+      const status = (presenceMap.get(u.id) || "offline") as "online" | "offline" | "idle";
+      const displayName = profile?.display_name || u.name;
+      const username = profile?.username || u.username;
+
+      // Check for exact match
+      const isExactMatch =
+        username?.toLowerCase() === searchTerm ||
+        displayName?.toLowerCase() === searchTerm ||
+        u.name?.toLowerCase() === searchTerm;
+
+      return {
+        id: u.id,
+        name: u.name ?? undefined,
+        displayName: displayName ?? undefined,
+        username: username ?? undefined,
+        avatarUrl: profile?.avatar_url ?? undefined,
+        status,
+        isFollowing: followingIds.has(u.id),
+        isFollower: followerIds.has(u.id),
+        isExactMatch,
+      };
+    });
+
+    // Sort by priority: exact match > following > follower > other
+    users.sort((a, b) => {
+      // Exact matches first
+      if (a.isExactMatch && !b.isExactMatch) return -1;
+      if (!a.isExactMatch && b.isExactMatch) return 1;
+
+      // Then users I follow
+      if (a.isFollowing && !b.isFollowing) return -1;
+      if (!a.isFollowing && b.isFollowing) return 1;
+
+      // Then my followers
+      if (a.isFollower && !b.isFollower) return -1;
+      if (!a.isFollower && b.isFollower) return 1;
+
+      // Then alphabetical by name
+      return (a.displayName || a.name || "").localeCompare(b.displayName || b.name || "");
+    });
+
+    return { success: true, users: users.slice(0, limit) };
+  } catch (error) {
+    console.error("Search users for mention error:", error);
     return { success: false, error: "An unexpected error occurred" };
   }
 }

@@ -43,6 +43,7 @@ export interface OpenOptions {
   // Messages options
   conversationId?: string;
   userId?: string;
+  messageId?: string; // For deep linking to a specific message
 }
 
 export interface UnifiedChatState {
@@ -57,6 +58,7 @@ export interface UnifiedChatState {
   // Messages state
   selectedConversationId: string | null;
   selectedUserId: string | null;
+  targetMessageId: string | null; // For scrolling to a specific message
 }
 
 interface UnifiedChatContextType extends UnifiedChatState {
@@ -78,6 +80,7 @@ interface UnifiedChatContextType extends UnifiedChatState {
   // Messages-specific
   selectConversation: (conversationId: string | null) => void;
   startConversationWithUser: (userId: string) => void;
+  clearTargetMessage: () => void;
 
   // Unread count for badge
   unreadCount: number;
@@ -93,7 +96,7 @@ const UnifiedChatContext = createContext<UnifiedChatContextType | null>(null);
 // Global functions for external access (e.g., openAssistant())
 let globalOpenUnifiedChat: ((mode: "ai" | "messages", options?: OpenOptions) => void) | null = null;
 let globalOpenAIAssistant: ((options?: { context?: AIContext; question?: string }) => void) | null = null;
-let globalOpenMessages: ((options?: { conversationId?: string; userId?: string }) => void) | null = null;
+let globalOpenMessages: ((options?: { conversationId?: string; userId?: string; messageId?: string }) => void) | null = null;
 
 export function openUnifiedChat(mode: "ai" | "messages", options?: OpenOptions) {
   if (globalOpenUnifiedChat) {
@@ -107,7 +110,7 @@ export function openAIAssistant(options?: { context?: AIContext; question?: stri
   }
 }
 
-export function openMessages(options?: { conversationId?: string; userId?: string }) {
+export function openMessages(options?: { conversationId?: string; userId?: string; messageId?: string }) {
   if (globalOpenMessages) {
     globalOpenMessages(options);
   }
@@ -135,6 +138,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
   // Messages state
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [targetMessageId, setTargetMessageId] = useState<string | null>(null);
 
   // Unread count for badge
   const [unreadCount, setUnreadCount] = useState(0);
@@ -153,6 +157,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     } else {
       if (options?.conversationId) setSelectedConversationId(options.conversationId);
       if (options?.userId) setSelectedUserId(options.userId);
+      if (options?.messageId) setTargetMessageId(options.messageId);
     }
   }, []);
 
@@ -163,11 +168,12 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     if (options?.question) setAIQuestion(options.question);
   }, []);
 
-  const openMessagesFn = useCallback((options?: { conversationId?: string; userId?: string }) => {
+  const openMessagesFn = useCallback((options?: { conversationId?: string; userId?: string; messageId?: string }) => {
     setActiveTab("messages");
     setIsOpen(true);
     if (options?.conversationId) setSelectedConversationId(options.conversationId);
     if (options?.userId) setSelectedUserId(options.userId);
+    if (options?.messageId) setTargetMessageId(options.messageId);
   }, []);
 
   // Register global functions on mount
@@ -176,6 +182,38 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     globalOpenAIAssistant = openAIAssistantFn;
     globalOpenMessages = openMessagesFn;
   }, [openUnifiedChatFn, openAIAssistantFn, openMessagesFn]);
+
+  // Handle URL parameters for deep linking (e.g., from notification clicks)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const openChat = params.get("openChat");
+    const conversation = params.get("conversation");
+    const message = params.get("message");
+
+    if (openChat === "messages" && conversation) {
+      // Open the messages tab with the specified conversation and message
+      openMessagesFn({
+        conversationId: conversation,
+        messageId: message || undefined,
+      });
+
+      // Clean up URL parameters after handling
+      const url = new URL(window.location.href);
+      url.searchParams.delete("openChat");
+      url.searchParams.delete("conversation");
+      url.searchParams.delete("message");
+      window.history.replaceState({}, "", url.pathname + url.search);
+    } else if (openChat === "ai") {
+      openAIAssistantFn();
+
+      // Clean up URL parameters
+      const url = new URL(window.location.href);
+      url.searchParams.delete("openChat");
+      window.history.replaceState({}, "", url.pathname + url.search);
+    }
+  }, [openMessagesFn, openAIAssistantFn]);
 
   // ============================================================================
   // Navigation
@@ -217,6 +255,10 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     setSelectedConversationId(null);
   }, []);
 
+  const clearTargetMessage = useCallback(() => {
+    setTargetMessageId(null);
+  }, []);
+
   // ============================================================================
   // Context Value
   // ============================================================================
@@ -230,6 +272,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     aiQuestion,
     selectedConversationId,
     selectedUserId,
+    targetMessageId,
     unreadCount,
 
     // Methods
@@ -244,6 +287,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     clearAIContext,
     selectConversation,
     startConversationWithUser,
+    clearTargetMessage,
     setUnreadCount,
   };
 

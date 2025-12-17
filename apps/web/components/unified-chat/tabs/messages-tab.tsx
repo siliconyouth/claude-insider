@@ -14,7 +14,7 @@
  * - Auto-reconnection with exponential backoff
  */
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { cn } from "@/lib/design-system";
 import { useUnifiedChat } from "../unified-chat-provider";
 import { useSession } from "@/lib/auth-client";
@@ -22,10 +22,16 @@ import { AvatarWithStatus } from "@/components/presence";
 import { E2EEIndicator } from "@/components/messaging/e2ee-indicator";
 import { VirtualizedMessageList } from "@/components/messaging/virtualized-message-list";
 import {
+  MentionAutocomplete,
+  useMentionDetection,
+  type MentionUser,
+} from "@/components/messaging/mention-autocomplete";
+import {
   getConversations,
   getMessages,
   sendMessage,
   markConversationAsRead,
+  searchUsersForMention,
   type Conversation,
   type Message,
 } from "@/app/actions/messaging";
@@ -36,7 +42,7 @@ import { useConversationRealtime, type MessagePayload } from "@/lib/realtime/rea
 // ============================================================================
 
 export function MessagesTab() {
-  const { selectedConversationId, selectConversation, setUnreadCount } = useUnifiedChat();
+  const { selectedConversationId, selectConversation, setUnreadCount, targetMessageId, clearTargetMessage } = useUnifiedChat();
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
 
@@ -85,6 +91,8 @@ export function MessagesTab() {
           participants={conversation.participants}
           isGroupChat={conversation.type === "group"}
           onBack={() => selectConversation(null)}
+          targetMessageId={targetMessageId}
+          onTargetMessageScrolled={clearTargetMessage}
         />
       );
     }
@@ -229,6 +237,8 @@ interface ConversationViewProps {
   participants: Conversation["participants"];
   isGroupChat: boolean;
   onBack: () => void;
+  targetMessageId?: string | null;
+  onTargetMessageScrolled?: () => void;
 }
 
 function ConversationView({
@@ -237,6 +247,8 @@ function ConversationView({
   participants,
   isGroupChat,
   onBack,
+  targetMessageId,
+  onTargetMessageScrolled,
 }: ConversationViewProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -245,12 +257,73 @@ function ConversationView({
   const [isSending, setIsSending] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
+  const [cursorPosition, setCursorPosition] = useState(0);
+  const [isMentionOpen, setIsMentionOpen] = useState(false);
+  const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const inputWrapperRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const messageListRef = useRef<HTMLDivElement>(null);
 
   // Get other participant
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
+
+  // Build mentionable users list from participants (memoized for performance)
+  const mentionableUsers: MentionUser[] = useMemo(() => {
+    return participants
+      .filter((p) => p.userId !== currentUserId)
+      .map((p) => ({
+        id: p.userId,
+        name: p.displayName || p.name || "Unknown",
+        username: p.username,
+        avatarUrl: p.avatarUrl,
+      }));
+  }, [participants, currentUserId]);
+
+  // Search ALL users (like Telegram) - called when query is 2+ chars
+  // Prioritizes: exact match > following > followers > other users
+  const handleMentionSearch = useCallback(async (query: string): Promise<MentionUser[]> => {
+    const result = await searchUsersForMention(query, 10);
+    if (!result.success || !result.users) return [];
+
+    return result.users.map((u) => ({
+      id: u.id,
+      name: u.displayName || u.name || "Unknown",
+      username: u.username,
+      avatarUrl: u.avatarUrl,
+    }));
+  }, []);
+
+  // Use mention detection hook
+  const { mentionQuery, mentionStart } = useMentionDetection(inputValue, cursorPosition);
+
+  // Handle mention selection - insert @username at the mention position
+  const handleMentionSelect = useCallback(
+    (user: MentionUser, mentionText: string) => {
+      if (mentionStart < 0) return;
+
+      // Replace from @ to cursor with mention text + space
+      const before = inputValue.slice(0, mentionStart);
+      const after = inputValue.slice(cursorPosition);
+      const newValue = `${before}${mentionText} ${after}`;
+
+      setInputValue(newValue);
+
+      // Move cursor after the mention
+      const newCursorPos = mentionStart + mentionText.length + 1;
+      setCursorPosition(newCursorPos);
+
+      // Focus and set cursor position
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+          inputRef.current.setSelectionRange(newCursorPos, newCursorPos);
+        }
+      }, 0);
+    },
+    [inputValue, cursorPosition, mentionStart]
+  );
 
   // Handle incoming messages from realtime subscription
   const handleRealtimeMessage = useCallback(
@@ -326,6 +399,37 @@ function ConversationView({
     loadMessages();
   }, [conversationId]);
 
+  // Scroll to target message when deep linking from notifications
+  useEffect(() => {
+    if (!targetMessageId || isLoading || messages.length === 0) return;
+
+    // Find the target message index
+    const targetIndex = messages.findIndex((m) => m.id === targetMessageId);
+
+    if (targetIndex >= 0) {
+      // Highlight the message
+      setHighlightedMessageId(targetMessageId);
+
+      // Scroll to the message element
+      setTimeout(() => {
+        const messageElement = document.querySelector(`[data-message-id="${targetMessageId}"]`);
+        if (messageElement) {
+          messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 100);
+
+      // Clear highlight and target after animation
+      setTimeout(() => {
+        setHighlightedMessageId(null);
+        onTargetMessageScrolled?.();
+      }, 3000);
+    } else {
+      // Message not in current page - it might be older
+      // Clear target for now (could implement loading older messages until found)
+      onTargetMessageScrolled?.();
+    }
+  }, [targetMessageId, isLoading, messages, onTargetMessageScrolled]);
+
   // Load more (older) messages - for pagination
   const handleLoadMore = useCallback(async () => {
     if (isLoadingMore || !hasMore || messages.length === 0) return;
@@ -348,6 +452,7 @@ function ConversationView({
   // Handle input with optimized typing indicator (no DB write!)
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
+    setCursorPosition(e.target.selectionStart || 0);
 
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
@@ -359,6 +464,12 @@ function ConversationView({
     typingTimeoutRef.current = setTimeout(() => {
       sendTyping(false);
     }, 3000);
+  };
+
+  // Track cursor position on selection change (click, arrow keys)
+  const handleSelect = (e: React.SyntheticEvent<HTMLTextAreaElement>) => {
+    const target = e.target as HTMLTextAreaElement;
+    setCursorPosition(target.selectionStart || 0);
   };
 
   // Send message
@@ -386,6 +497,12 @@ function ConversationView({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    // Don't intercept keys when mention autocomplete is open
+    // The autocomplete handles Enter/Escape/Arrow keys
+    if (isMentionOpen) {
+      return;
+    }
+
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -434,18 +551,32 @@ function ConversationView({
         hasMore={hasMore}
         onLoadMore={handleLoadMore}
         isGroupChat={isGroupChat}
+        highlightedMessageId={highlightedMessageId}
         className="p-4"
       />
 
       {/* Input */}
       <div className="p-4 border-t border-gray-200 dark:border-[#262626]">
-        <div className="flex items-end gap-2">
+        <div ref={inputWrapperRef} className="relative flex items-end gap-2">
+          {/* Mention Autocomplete - positioned above input */}
+          <MentionAutocomplete
+            inputValue={inputValue}
+            cursorPosition={cursorPosition}
+            users={mentionableUsers}
+            isOpen={isMentionOpen}
+            onOpenChange={setIsMentionOpen}
+            onSelect={handleMentionSelect}
+            onSearch={handleMentionSearch}
+            position={{ top: 8, left: 0 }}
+          />
+
           <textarea
             ref={inputRef}
             value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            placeholder="Type a message..."
+            onSelect={handleSelect}
+            placeholder="Type a message... Use @ to mention"
             rows={1}
             className={cn(
               "flex-1 resize-none rounded-xl px-4 py-3",

@@ -33,6 +33,8 @@ interface VirtualizedMessageListProps {
   onLoadMore?: () => void;
   /** Whether this is a group chat (shows avatars) or 1:1 DM (hides avatars) */
   isGroupChat?: boolean;
+  /** Message ID to highlight (for deep linking) */
+  highlightedMessageId?: string | null;
   className?: string;
 }
 
@@ -116,6 +118,7 @@ export function VirtualizedMessageList({
   hasMore = false,
   onLoadMore,
   isGroupChat = false,
+  highlightedMessageId,
   className,
 }: VirtualizedMessageListProps) {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -303,10 +306,12 @@ export function VirtualizedMessageList({
           if (item.type === "message" && item.message) {
             const msg = item.message;
             const isOwn = msg.senderId === currentUserId;
+            const isHighlighted = msg.id === highlightedMessageId;
             return (
               <div
                 key={msg.id}
                 data-index={index}
+                data-message-id={msg.id}
                 ref={virtualizer.measureElement}
                 style={{
                   position: "absolute",
@@ -315,6 +320,10 @@ export function VirtualizedMessageList({
                   width: "100%",
                   transform: `translateY(${virtualRow.start}px)`,
                 }}
+                className={cn(
+                  isHighlighted && "animate-highlight-message",
+                  "transition-all duration-300"
+                )}
               >
                 <MessageBubble
                   message={msg}

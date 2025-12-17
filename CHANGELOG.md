@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.93.0] - 2025-12-17
+### User Directory & Mention System
+- **User Directory Page** (`/users`): Public user directory with 7 list types
+  - Featured, New Users, Most Active, High Achievers, Biggest Donors
+  - Authenticated: Following & Followers lists
+  - Search with filters (role, donor tier)
+  - ProfileHoverCard integration on all user cards
+  - Action buttons: Follow/Unfollow, Message, Block
+  - Expanded list modals with infinite scroll
+- **@Mention Deep Linking**: Click mention notifications to jump to specific messages
+  - URL-based navigation: `?openChat=messages&conversation=X&message=Y`
+  - CSS animation highlights target message for 2 seconds
+  - URL parameters auto-clean after navigation
+- **Message Grouping Refinements**: Sender grouping for cleaner chat UI
+  - Avatar/name only shown on first message in consecutive sequence
+  - Group chat vs DM display modes
+
 ## [0.92.0] - 2025-12-17
 ### Chat Performance Optimizations
 - **Realtime Context Provider**: Centralized subscription management with connection pooling
@@ -461,7 +478,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Range | Count | Period | Highlights |
 |-------|-------|--------|------------|
-| 0.87-0.92 | 6 | Dec 16-17 | Chat Performance, Dashboard, Diagnostics |
+| 0.87-0.93 | 7 | Dec 16-17 | User Directory, Chat Performance, Dashboard |
 | 0.80-0.86 | 7 | Dec 15-16 | E2EE, Unified Chat, Legal Compliance |
 | 0.70-0.79 | 10 | Dec 14-15 | Security Dashboard, Auth, Admin |
 | 0.60-0.69 | 10 | Dec 13-14 | Messaging, Notifications, Profiles |
@@ -472,7 +489,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | 0.10-0.19 | 10 | Dec 9 | AI Assistant, Design System |
 | 0.1-0.9 | 9 | Dec 8-9 | Foundation, Docs, SEO |
 
-**Total: 87 versions in 10 days** (Dec 8-17, 2025)
+**Total: 88 versions in 10 days** (Dec 8-17, 2025)
 
 ---
 

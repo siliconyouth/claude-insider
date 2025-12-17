@@ -66,6 +66,10 @@ function getNotificationUrl(notification: NotificationPreview): string {
 
     case "mention":
       // Link to the content where mentioned
+      if (resource_type === "dm_message" && data?.conversationId) {
+        // Deep link to message in chat - will be handled by unified chat
+        return `/?openChat=messages&conversation=${data.conversationId}&message=${data.messageId || resource_id}`;
+      }
       if (resource_type === "doc" && resource_id) {
         return `/docs/${resource_id}#comments`;
       }
