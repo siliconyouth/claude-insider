@@ -252,10 +252,34 @@ export function CoverPhotoCropper({
 
   // Track if user is currently dragging the crop area
   const [isDragging, setIsDragging] = useState(false);
+  const isDraggingRef = useRef(false);
+
+  // Keep ref in sync with state for event handlers
+  useEffect(() => {
+    isDraggingRef.current = isDragging;
+  }, [isDragging]);
+
+  // Global mouseup handler to catch drag end even outside component
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      if (isDraggingRef.current) {
+        // Small delay to ensure this fires after any click events
+        setTimeout(() => {
+          setIsDragging(false);
+        }, 100);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mouseup", handleGlobalMouseUp);
+      return () => document.removeEventListener("mouseup", handleGlobalMouseUp);
+    }
+  }, [isOpen]);
 
   // Handle backdrop click - but not during crop dragging
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && !isUploading && !isDragging) {
+    // Don't close if currently dragging or just finished dragging
+    if (e.target === e.currentTarget && !isUploading && !isDraggingRef.current) {
       onClose();
     }
   };
@@ -428,9 +452,6 @@ export function CoverPhotoCropper({
               </label>
               <div
                 className="flex justify-center bg-gray-100 dark:bg-[#0a0a0a] rounded-xl p-4"
-                onMouseDown={() => setIsDragging(true)}
-                onMouseUp={() => setIsDragging(false)}
-                onMouseLeave={() => setIsDragging(false)}
               >
                 <ReactCrop
                   crop={crop}
