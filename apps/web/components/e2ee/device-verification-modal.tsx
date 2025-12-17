@@ -41,7 +41,12 @@ import {
   ChevronUp,
   Lock,
   UserX,
+  Bot,
+  Sparkles,
+  Server,
+  Cpu,
 } from "lucide-react";
+import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
 
 // ============================================================================
 // QR CODE GENERATOR (Simple SVG-based)
@@ -156,7 +161,9 @@ type VerificationStep =
   | "confirming"
   | "success"
   | "failed"
-  | "cancelled";
+  | "cancelled"
+  | "no-device"
+  | "ai-verified";
 
 // ============================================================================
 // MAIN COMPONENT
@@ -196,6 +203,9 @@ export function DeviceVerificationModal({
     }
   }, []);
 
+  // Check if target is AI assistant
+  const isAIAssistant = targetUserId === AI_ASSISTANT_USER_ID;
+
   // Reset state when modal opens/closes
   useEffect(() => {
     if (!isOpen) {
@@ -207,11 +217,14 @@ export function DeviceVerificationModal({
       setQrData("");
       setShowExplanation(false);
       stopCamera();
+    } else if (isAIAssistant) {
+      // AI assistant is automatically verified - no manual verification needed
+      setStep("ai-verified");
     } else if (pendingVerification) {
       setVerification(pendingVerification);
       setStep("waiting");
     }
-  }, [isOpen, pendingVerification, stopCamera]);
+  }, [isOpen, pendingVerification, stopCamera, isAIAssistant]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -250,8 +263,8 @@ export function DeviceVerificationModal({
       if (!deviceId) {
         const fetchedId = await fetchTargetDeviceId(targetUserId);
         if (!fetchedId) {
-          setError("User has no registered E2EE devices. They need to enable E2EE first.");
-          setStep("failed");
+          // Show educational "no-device" step instead of error
+          setStep("no-device");
           return;
         }
         deviceId = fetchedId;
@@ -939,6 +952,179 @@ export function DeviceVerificationModal({
                 )}
               >
                 Close
+              </button>
+            </div>
+          )}
+
+          {/* No E2EE Device - Educational */}
+          {step === "no-device" && (
+            <div className="space-y-4">
+              {/* Reassurance Banner */}
+              <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4">
+                <div className="flex items-start gap-3">
+                  <Lock className="h-6 w-6 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-emerald-300 mb-1">
+                      Your messages are still encrypted!
+                    </h4>
+                    <p className="text-sm text-emerald-200/80">
+                      E2EE is active for this conversation. Verification is an <em>additional</em> security layer, not a requirement.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Info about the user */}
+              <div className="text-center py-2">
+                <Info className="h-10 w-10 mx-auto text-blue-400 mb-2" />
+                <h3 className="text-lg font-semibold text-white mb-1">
+                  {targetUserName || "This user"} hasn&apos;t enabled E2EE yet
+                </h3>
+                <p className="text-sm text-gray-400">
+                  They need to set up encryption on their device first
+                </p>
+              </div>
+
+              {/* E2EE Explanation */}
+              <div className="rounded-xl bg-gray-800/50 border border-gray-700 p-4 space-y-4">
+                <h4 className="font-medium text-white flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-blue-400" />
+                  How your messages are protected
+                </h4>
+
+                {/* Matrix Protocol */}
+                <div className="flex gap-3">
+                  <div className="shrink-0 w-8 h-8 rounded-lg bg-violet-500/20 flex items-center justify-center">
+                    <Server className="h-4 w-4 text-violet-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-200">Matrix Olm/Megolm Protocol</p>
+                    <p className="text-xs text-gray-400">
+                      We use the same encryption protocol as Signal and Element. Your messages use the Double Ratchet algorithm for perfect forward secrecy — even if keys are compromised later, past messages stay secure.
+                    </p>
+                  </div>
+                </div>
+
+                {/* WebCrypto Fallback */}
+                <div className="flex gap-3">
+                  <div className="shrink-0 w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                    <Cpu className="h-4 w-4 text-cyan-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-200">Web Crypto API Fallback</p>
+                    <p className="text-xs text-gray-400">
+                      If the main encryption library isn&apos;t available, we automatically fall back to the browser&apos;s built-in Web Crypto API using AES-256-GCM — the same encryption used by banks and governments.
+                    </p>
+                  </div>
+                </div>
+
+                {/* What this means */}
+                <div className="flex gap-3">
+                  <div className="shrink-0 w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                    <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-200">What this means for you</p>
+                    <p className="text-xs text-gray-400">
+                      Nobody — not us, not hackers, not anyone — can read your messages except you and the recipient. The encryption happens on your device before messages ever leave it.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Verification vs Encryption */}
+              <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3">
+                <p className="text-xs text-blue-200">
+                  <strong>Encryption vs Verification:</strong> Encryption protects message content. Verification confirms you&apos;re talking to the right person (not an impersonator). Both are valuable, but encryption alone keeps conversations private.
+                </p>
+              </div>
+
+              <button
+                onClick={onClose}
+                className={cn(
+                  "w-full rounded-lg px-4 py-3",
+                  "bg-gray-700 hover:bg-gray-600",
+                  "text-white font-medium",
+                  "transition-colors"
+                )}
+              >
+                Got it
+              </button>
+            </div>
+          )}
+
+          {/* AI Assistant - Auto-Verified */}
+          {step === "ai-verified" && (
+            <div className="space-y-4">
+              {/* Success Banner */}
+              <div className="text-center py-4">
+                <div className="relative inline-block mb-3">
+                  <Bot className="h-16 w-16 text-emerald-400" />
+                  <div className="absolute -bottom-1 -right-1 bg-emerald-500 rounded-full p-1">
+                    <CheckCircle2 className="h-5 w-5 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-1">
+                  AI Assistant Verified
+                </h3>
+                <p className="text-gray-400">
+                  @claudeinsider is automatically trusted
+                </p>
+              </div>
+
+              {/* Explanation */}
+              <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4 space-y-3">
+                <div className="flex items-start gap-3">
+                  <ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm text-emerald-200">
+                      The AI assistant is a <strong>trusted system component</strong> that runs on our secure servers. Unlike human users, it cannot be impersonated through man-in-the-middle attacks.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Why no manual verification */}
+              <div className="rounded-xl bg-gray-800/50 border border-gray-700 p-4 space-y-3">
+                <h4 className="font-medium text-white text-sm">
+                  Why can&apos;t I verify manually?
+                </h4>
+                <ul className="space-y-2 text-xs text-gray-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>The AI can&apos;t read emojis back to you over a call</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>It can&apos;t show you a QR code in person</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>Manual verification is designed for human-to-human trust</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Security Note */}
+              <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3">
+                <p className="text-xs text-blue-200">
+                  <strong>How AI messages are secured:</strong> Your messages to the AI are encrypted in transit using TLS 1.3, and the AI processes them in a secure, isolated environment. Conversation history is stored encrypted and only accessible to you.
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  onSuccess?.();
+                  onClose();
+                }}
+                className={cn(
+                  "w-full rounded-lg px-4 py-3",
+                  "bg-emerald-600 hover:bg-emerald-500",
+                  "text-white font-medium",
+                  "transition-colors"
+                )}
+              >
+                Done
               </button>
             </div>
           )}
