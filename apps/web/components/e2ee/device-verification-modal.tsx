@@ -36,6 +36,11 @@ import {
   QrCode,
   Camera,
   Smile,
+  Info,
+  ChevronDown,
+  ChevronUp,
+  Lock,
+  UserX,
 } from "lucide-react";
 
 // ============================================================================
@@ -177,6 +182,7 @@ export function DeviceVerificationModal({
   );
   const [error, setError] = useState<string | null>(null);
   const [qrData, setQrData] = useState<string>("");
+  const [showExplanation, setShowExplanation] = useState(false);
 
   // Video ref for QR scanning
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -199,6 +205,7 @@ export function DeviceVerificationModal({
       setEmojis([]);
       setError(null);
       setQrData("");
+      setShowExplanation(false);
       stopCamera();
     } else if (pendingVerification) {
       setVerification(pendingVerification);
@@ -466,10 +473,97 @@ export function DeviceVerificationModal({
                 <span className="font-semibold text-white">
                   {targetUserName || targetUserId}
                 </span>
-                &apos;s device to ensure your messages are secure.
+                &apos;s device to add an extra layer of security.
               </p>
 
+              {/* Security Explanation Box */}
+              <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 overflow-hidden">
+                {/* Quick Summary - Always Visible */}
+                <div className="p-3 flex items-start gap-3">
+                  <Lock className="h-5 w-5 text-blue-400 mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-blue-200">
+                      Your messages are <span className="font-semibold text-blue-100">already encrypted</span> with E2EE.
+                      Verification confirms you&apos;re talking to the right person.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Learn More Toggle */}
+                <button
+                  onClick={() => setShowExplanation(!showExplanation)}
+                  className="w-full px-3 py-2 flex items-center justify-between text-sm text-blue-300 hover:text-blue-200 bg-blue-500/5 hover:bg-blue-500/10 transition-colors border-t border-blue-500/20"
+                >
+                  <span className="flex items-center gap-2">
+                    <Info className="h-4 w-4" />
+                    Why does this matter?
+                  </span>
+                  {showExplanation ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </button>
+
+                {/* Expanded Explanation */}
+                {showExplanation && (
+                  <div className="px-3 pb-3 space-y-3 border-t border-blue-500/20 bg-blue-500/5">
+                    <div className="pt-3 space-y-3">
+                      {/* Without Verification */}
+                      <div className="flex gap-3">
+                        <div className="shrink-0 w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                          <Lock className="h-4 w-4 text-emerald-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-200">Without verification</p>
+                          <p className="text-xs text-gray-400">
+                            E2EE is active. Messages are encrypted and can only be read by you and the recipient.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* With Verification */}
+                      <div className="flex gap-3">
+                        <div className="shrink-0 w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                          <ShieldCheck className="h-4 w-4 text-blue-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-200">With verification</p>
+                          <p className="text-xs text-gray-400">
+                            You confirm the recipient&apos;s identity, protecting against man-in-the-middle attacks where someone could impersonate them.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* MITM Explanation */}
+                      <div className="flex gap-3">
+                        <div className="shrink-0 w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                          <UserX className="h-4 w-4 text-amber-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-200">What&apos;s a man-in-the-middle attack?</p>
+                          <p className="text-xs text-gray-400">
+                            An attacker intercepts your connection and pretends to be the person you&apos;re talking to.
+                            By comparing emojis in person or over a call, you verify the keys match, ensuring no one is in between.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom Line */}
+                    <div className="pt-2 border-t border-blue-500/20">
+                      <p className="text-xs text-blue-300 italic">
+                        💡 Think of it like checking someone&apos;s ID before sharing a secret — the secret is already in a locked box, but verification ensures you&apos;re giving it to the right person.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Verification Method Selection */}
               <div className="space-y-3">
+                <p className="text-sm text-gray-400">Choose verification method:</p>
+
                 {/* SAS Option */}
                 <button
                   onClick={() => setMethod("sas")}
@@ -485,7 +579,7 @@ export function DeviceVerificationModal({
                     <div>
                       <div className="font-medium text-white">Compare Emojis</div>
                       <div className="text-sm text-gray-400">
-                        Compare 7 emojis with the other device
+                        Compare 7 emojis over a call or in person
                       </div>
                     </div>
                   </div>
@@ -506,7 +600,7 @@ export function DeviceVerificationModal({
                     <div>
                       <div className="font-medium text-white">Scan QR Code</div>
                       <div className="text-sm text-gray-400">
-                        Scan a code from the other device
+                        Scan a code when you&apos;re together in person
                       </div>
                     </div>
                   </div>
