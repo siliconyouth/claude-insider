@@ -250,38 +250,30 @@ export function CoverPhotoCropper({
     }
   };
 
-  // Track if user is currently dragging the crop area
-  const [isDragging, setIsDragging] = useState(false);
-  const isDraggingRef = useRef(false);
+  // Track where mousedown originated to prevent closing when dragging from content to backdrop
+  // This is the standard solution used by Bootstrap and react-modal (see GitHub issues #13816, #475)
+  const mouseDownTargetRef = useRef<EventTarget | null>(null);
 
-  // Keep ref in sync with state for event handlers
-  useEffect(() => {
-    isDraggingRef.current = isDragging;
-  }, [isDragging]);
+  // Handle mousedown on backdrop - track that it started on backdrop
+  const handleBackdropMouseDown = (e: React.MouseEvent) => {
+    mouseDownTargetRef.current = e.target;
+  };
 
-  // Global mouseup handler to catch drag end even outside component
-  useEffect(() => {
-    const handleGlobalMouseUp = () => {
-      if (isDraggingRef.current) {
-        // Small delay to ensure this fires after any click events
-        setTimeout(() => {
-          setIsDragging(false);
-        }, 100);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mouseup", handleGlobalMouseUp);
-      return () => document.removeEventListener("mouseup", handleGlobalMouseUp);
-    }
-  }, [isOpen]);
-
-  // Handle backdrop click - but not during crop dragging
+  // Handle click on backdrop - only close if mousedown ALSO started on backdrop
   const handleBackdropClick = (e: React.MouseEvent) => {
-    // Don't close if currently dragging or just finished dragging
-    if (e.target === e.currentTarget && !isUploading && !isDraggingRef.current) {
+    // Only close if:
+    // 1. The click target is the backdrop itself (not a child)
+    // 2. The mousedown also started on the backdrop (not dragged from content)
+    // 3. We're not currently uploading
+    const clickedOnBackdrop = e.target === e.currentTarget;
+    const mouseDownOnBackdrop = mouseDownTargetRef.current === e.currentTarget;
+
+    if (clickedOnBackdrop && mouseDownOnBackdrop && !isUploading) {
       onClose();
     }
+
+    // Reset the mousedown target
+    mouseDownTargetRef.current = null;
   };
 
   // Handle escape key
@@ -302,6 +294,7 @@ export function CoverPhotoCropper({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      onMouseDown={handleBackdropMouseDown}
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
@@ -476,10 +469,7 @@ export function CoverPhotoCropper({
                       height: Math.max(1, Math.min(100, percentCrop.height)),
                     };
                     setCompletedCrop(clampedCrop);
-                    setIsDragging(false);
                   }}
-                  onDragStart={() => setIsDragging(true)}
-                  onDragEnd={() => setIsDragging(false)}
                   aspect={ASPECT_RATIO}
                   className="max-h-[300px]"
                 >
