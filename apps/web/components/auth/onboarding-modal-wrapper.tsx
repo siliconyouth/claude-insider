@@ -6,6 +6,11 @@
  * Handles showing the onboarding wizard for new users who haven't
  * completed their profile setup yet.
  *
+ * Requirements:
+ * - Show onboarding if hasCompletedOnboarding is false
+ * - Show onboarding if username is missing (mandatory field)
+ * - Show onboarding if displayName is missing (mandatory field)
+ *
  * Now uses the multi-step OnboardingWizard for enhanced onboarding flow.
  * Triggers the "Welcome Aboard" achievement on completion.
  */
@@ -25,11 +30,21 @@ export function OnboardingModalWrapper() {
     if (isLoading || hasChecked) return;
 
     if (isAuthenticated && user) {
-      // Show onboarding for users who haven't completed it yet
-      const needsOnboarding = !user.hasCompletedOnboarding;
+      // Show onboarding for users who:
+      // 1. Haven't completed onboarding yet
+      // 2. Are missing a username (mandatory)
+      // 3. Are missing a display name (mandatory)
+      const needsOnboarding =
+        !user.hasCompletedOnboarding ||
+        !user.username ||
+        !user.displayName;
 
       if (needsOnboarding) {
-         
+        console.log("[Onboarding] User needs onboarding:", {
+          hasCompletedOnboarding: user.hasCompletedOnboarding,
+          username: user.username,
+          displayName: user.displayName,
+        });
         setShowOnboarding(true);
       }
       setHasChecked(true);

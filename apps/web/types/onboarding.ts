@@ -17,6 +17,7 @@ export interface SocialLinks {
 export interface WizardData {
   // Step 1: Profile Basics
   displayName: string;
+  username: string;
   bio: string;
   avatarFile: File | null;
   avatarPreview: string | null;
@@ -88,6 +89,7 @@ export interface WizardContextValue {
 
 export const INITIAL_WIZARD_DATA: WizardData = {
   displayName: "",
+  username: "",
   bio: "",
   avatarFile: null,
   avatarPreview: null,

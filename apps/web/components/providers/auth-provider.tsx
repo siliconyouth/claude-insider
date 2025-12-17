@@ -36,6 +36,7 @@ interface User {
   createdAt: Date;
   updatedAt: Date;
   displayName?: string;
+  username?: string;
   bio?: string;
   avatarUrl?: string;
   isBetaTester?: boolean;

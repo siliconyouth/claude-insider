@@ -77,11 +77,25 @@ export function WizardProvider({ children, onComplete, steps }: WizardProviderPr
     return null;
   }, []);
 
+  // Helper to generate suggested username from display name
+  const generateSuggestedUsername = (name: string): string => {
+    return name
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "") // Remove spaces
+      .replace(/[^a-z0-9_]/g, "") // Remove special chars except underscore
+      .slice(0, 30); // Max 30 chars
+  };
+
   // Initialize wizard data with saved progress or user defaults
   const [data, setData] = useState<WizardData>(() => {
     const saved = loadSavedProgress();
+    const displayName = saved?.displayName || user?.displayName || user?.name || "";
+    // Generate username suggestion from display name if not already set
+    const suggestedUsername = generateSuggestedUsername(displayName);
     return {
-      displayName: saved?.displayName || user?.displayName || user?.name || "",
+      displayName,
+      username: saved?.username || user?.username || suggestedUsername || "",
       bio: saved?.bio || user?.bio || "",
       avatarFile: null,
       avatarPreview: saved?.avatarPreview || user?.image || user?.avatarUrl || null,
@@ -108,6 +122,7 @@ export function WizardProvider({ children, onComplete, steps }: WizardProviderPr
     try {
       const toSave = {
         displayName: data.displayName,
+        username: data.username,
         bio: data.bio,
         avatarPreview: data.avatarPreview,
         socialLinks: data.socialLinks,
