@@ -9,10 +9,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    // Skip ESLint during build (run separately in CI)
-    ignoreDuringBuilds: true,
-  },
   // Suppress SCSS deprecation warnings from PayloadCMS dependencies
   sassOptions: {
     silenceDeprecations: ["legacy-js-api", "import", "global-builtin"],
@@ -24,9 +20,6 @@ const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizeCss: true,
-    // Faster builds with parallel routes
-    parallelServerCompiles: true,
-    parallelServerBuildTraces: true,
   },
   // Tree-shake large icon libraries
   modularizeImports: {
