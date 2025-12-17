@@ -241,17 +241,20 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
           try {
             const userResult = await searchUsersForMention(userQuery || query, 5);
             if (userResult.success && userResult.users) {
-              const userResults: UserSearchResult[] = userResult.users.map((u) => ({
-                resultType: "user" as const,
-                id: u.id,
-                name: u.displayName || u.name || "Unknown",
-                username: u.username,
-                avatarUrl: u.avatarUrl,
-                url: `/u/${u.username || u.id}`,
-                title: u.displayName || u.name || "Unknown",
-                description: u.username ? `@${u.username}` : "User",
-                category: "Users" as const,
-              }));
+              // Filter out users without usernames (can't navigate to their profile)
+              const userResults: UserSearchResult[] = userResult.users
+                .filter((u) => u.username)
+                .map((u) => ({
+                  resultType: "user" as const,
+                  id: u.id,
+                  name: u.displayName || u.name || "Unknown",
+                  username: u.username,
+                  avatarUrl: u.avatarUrl,
+                  url: `/users/${u.username}`,
+                  title: u.displayName || u.name || "Unknown",
+                  description: `@${u.username}`,
+                  category: "Users" as const,
+                }));
 
               // If user-only search, show only users
               if (isUserSearch) {
