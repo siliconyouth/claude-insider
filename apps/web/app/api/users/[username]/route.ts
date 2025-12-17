@@ -132,7 +132,7 @@ export async function GET(
     // Get online status
     const presenceResult = await pool.query(
       `
-      SELECT status, last_seen
+      SELECT status, last_seen_at
       FROM user_presence
       WHERE user_id = $1
     `,
@@ -140,7 +140,7 @@ export async function GET(
     );
     const presence = presenceResult.rows[0];
     const isOnline = presence?.status === "online";
-    const lastSeen = presence?.last_seen?.toISOString();
+    const lastSeen = presence?.last_seen_at?.toISOString();
 
     // Get user achievements (unlocked ones)
     const achievementsResult = await pool.query(
