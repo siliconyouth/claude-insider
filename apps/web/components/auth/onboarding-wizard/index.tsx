@@ -152,6 +152,15 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
       skippable: true,
     });
 
+    // E2EE setup right after security - groups security-related steps together
+    steps.push({
+      id: "e2ee-setup",
+      title: "Secure Messaging",
+      description: "Enable end-to-end encrypted messages",
+      icon: "🔐",
+      skippable: true,
+    });
+
     // Always show notifications and PWA setup step
     steps.push({
       id: "notifications",
@@ -170,25 +179,8 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
       skippable: true,
     });
 
-    // Always show E2EE setup step (skippable but recommended)
-    steps.push({
-      id: "e2ee-setup",
-      title: "Secure Messaging",
-      description: "Enable end-to-end encrypted messages",
-      icon: "🔐",
-      skippable: true,
-    });
-
-    // Always show support step (skippable)
-    steps.push({
-      id: "support",
-      title: "Support Us",
-      description: "Help keep Claude Insider free and growing",
-      icon: "💜",
-      skippable: true,
-    });
-
-    // Only show beta application if not already a beta tester
+    // Show beta application if not already a beta tester
+    // Positioned after API key to capture engaged users
     if (!user?.isBetaTester) {
       steps.push({
         id: "beta-apply",
@@ -198,6 +190,15 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
         skippable: true,
       });
     }
+
+    // Always show support step (skippable) - placed at end as a gentle ask
+    steps.push({
+      id: "support",
+      title: "Support Us",
+      description: "Help keep Claude Insider free and growing",
+      icon: "💜",
+      skippable: true,
+    });
 
     return steps;
   }, [user?.emailVerified, user?.hasPassword, user?.isBetaTester]);
