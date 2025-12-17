@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.95.0] - 2025-12-17
+### E2EE Verification Improvements
+- **Auto-fetch Device ID**: Verification modal now automatically fetches target user's device ID
+  - No longer requires `targetDeviceId` prop to be passed manually
+  - Uses most recently active device from `/api/e2ee/devices` endpoint
+  - Shows helpful error if user has no E2EE devices registered
+- **Educational Security Content**: Added collapsible explanation section
+  - Quick summary: "Messages already encrypted, verification confirms identity"
+  - Expandable "Why does this matter?" with three key points:
+    - Without verification: E2EE still works, messages are encrypted
+    - With verification: Protects against man-in-the-middle attacks
+    - What is MITM: Explains attack scenario and how emojis prevent it
+  - Helpful analogy about checking ID before sharing secrets
+- **UX Improvements**: Updated method descriptions to mention "over a call or in person"
+
 ## [0.94.0] - 2025-12-17
 ### Profile Cover Photos
 - **Customizable Cover Photos**: Upload custom cover images for user profiles
@@ -493,7 +508,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Range | Count | Period | Highlights |
 |-------|-------|--------|------------|
-| 0.87-0.94 | 8 | Dec 16-17 | Cover Photos, User Directory, Chat Performance |
+| 0.87-0.95 | 9 | Dec 16-17 | E2EE UX, Cover Photos, User Directory, Chat Performance |
 | 0.80-0.86 | 7 | Dec 15-16 | E2EE, Unified Chat, Legal Compliance |
 | 0.70-0.79 | 10 | Dec 14-15 | Security Dashboard, Auth, Admin |
 | 0.60-0.69 | 10 | Dec 13-14 | Messaging, Notifications, Profiles |
@@ -504,7 +519,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | 0.10-0.19 | 10 | Dec 9 | AI Assistant, Design System |
 | 0.1-0.9 | 9 | Dec 8-9 | Foundation, Docs, SEO |
 
-**Total: 89 versions in 10 days** (Dec 8-17, 2025)
+**Total: 90 versions in 10 days** (Dec 8-17, 2025)
 
 ---
 

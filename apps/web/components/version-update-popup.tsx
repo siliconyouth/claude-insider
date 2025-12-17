@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.94.0";
+const APP_VERSION = "0.95.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,6 +24,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.95.0",
+    date: "2025-12-17",
+    type: "minor",
+    highlights: [
+      "E2EE Verification: Auto-fetches device ID, no manual prop needed",
+      "Educational security content explaining MITM attacks",
+      "Collapsible \"Why does this matter?\" explanation section",
+      "Clear messaging that E2EE works even without verification",
+    ],
+  },
+  {
     version: "0.94.0",
     date: "2025-12-17",
     type: "minor",
@@ -31,7 +42,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "Profile Cover Photos: Custom cover images with 3:1 aspect ratio",
       "Client-side image cropping with react-image-crop",
       "Animated default cover with lens flare gradient effect",
-      "Click-to-edit cover on profile page + settings integration",
     ],
   },
   {
@@ -52,7 +62,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "Realtime Context Provider with connection pooling",
       "Broadcast typing indicators (7.6x faster latency)",
       "Virtual scrolling for message lists",
-      "6 new database performance indexes",
     ],
   },
   {
@@ -63,16 +72,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "Profile page redesign with gradient cover banner",
       "Header/Footer added to 14 missing pages",
       "ProfileHoverCard redesign with badges and stats",
-    ],
-  },
-  {
-    version: "0.90.0",
-    date: "2025-12-16",
-    type: "minor",
-    highlights: [
-      "ChatMessage shared component with unified styling",
-      "Claude sparkle avatar icon for AI messages",
-      "Modern bubble styling with gradient and entrance animations",
     ],
   },
 ];
