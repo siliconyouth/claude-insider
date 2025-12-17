@@ -440,7 +440,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                 </button>
 
                 {/* Header with mode toggle */}
-                <div className="px-4 pt-3 pb-2 border-b border-gray-200 dark:border-[#262626] flex items-center justify-between">
+                <div className="px-4 pr-12 pt-3 pb-2 border-b border-gray-200 dark:border-[#262626] flex items-center justify-between">
                   <ModeToggle mode={mode} onModeChange={setMode} />
                   <span className="text-xs text-gray-400">
                     Press <kbd className="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-[10px]">Tab</kbd> to switch
@@ -478,7 +478,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                   </svg>
                   <input
                     ref={inputRef}
-                    type="search"
+                    type="text"
                     placeholder={
                       isListening
                         ? "Listening..."
