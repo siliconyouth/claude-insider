@@ -371,20 +371,33 @@ export async function initVodozemac(): Promise<VodozemacModule> {
 }
 
 /**
+ * Result of OlmMachine initialization
+ */
+export interface OlmMachineInitResult {
+  machine: OlmMachineWrapper | null;
+  /** If there's a device ID mismatch, contains the ID from OlmMachine's store */
+  storedOlmDeviceId?: string;
+  /** Indicates a device mismatch was detected */
+  hasMismatch: boolean;
+}
+
+/**
  * Initialize OlmMachine for a specific user/device
  *
  * This creates the main encryption state machine with optional
  * IndexedDB persistence.
+ *
+ * Returns information about any device ID mismatch detected.
  */
 export async function initOlmMachine(
   userId: string,
   deviceId: string,
   storeName?: string,
   storePassphrase?: string
-): Promise<OlmMachineWrapper | null> {
+): Promise<OlmMachineInitResult> {
   if (!wasmLoaded) {
     console.warn("[E2EE] OlmMachine requires WASM, using fallback");
-    return null;
+    return { machine: null, hasMismatch: false };
   }
 
   try {
@@ -407,6 +420,25 @@ export async function initOlmMachine(
       storePassphrase || undefined
     );
 
+    // Check if the device ID in OlmMachine matches what we passed
+    // The OlmMachine.deviceId is the authoritative source if store already existed
+    const olmDeviceIdString = machine.deviceId.toString();
+    const hasMismatch = olmDeviceIdString !== deviceId;
+
+    if (hasMismatch) {
+      console.warn("[E2EE] Device ID mismatch detected!", {
+        expected: deviceId,
+        actual: olmDeviceIdString,
+      });
+      // Free the machine since we detected a mismatch
+      machine.free();
+      return {
+        machine: null,
+        storedOlmDeviceId: olmDeviceIdString,
+        hasMismatch: true,
+      };
+    }
+
     olmMachineInstance = new OlmMachineWrapper(
       machine,
       cryptoModule,
@@ -415,10 +447,39 @@ export async function initOlmMachine(
     );
 
     console.log("[E2EE] OlmMachine initialized for user:", userId);
-    return olmMachineInstance;
+    return { machine: olmMachineInstance, hasMismatch: false };
   } catch (error) {
     console.error("[E2EE] Failed to initialize OlmMachine:", error);
-    return null;
+    return { machine: null, hasMismatch: false };
+  }
+}
+
+/**
+ * Clear OlmMachine's IndexedDB store for a user
+ * Used when regenerating device keys after a mismatch
+ */
+export async function clearOlmMachineStore(userId: string): Promise<void> {
+  const storeName = `claude-insider-e2ee-${userId}`;
+  try {
+    // Delete the IndexedDB database used by OlmMachine
+    await new Promise<void>((resolve, reject) => {
+      const request = indexedDB.deleteDatabase(storeName);
+      request.onsuccess = () => {
+        console.log("[E2EE] Cleared OlmMachine store:", storeName);
+        resolve();
+      };
+      request.onerror = () => {
+        console.error("[E2EE] Failed to clear OlmMachine store");
+        reject(request.error);
+      };
+      request.onblocked = () => {
+        console.warn("[E2EE] OlmMachine store deletion blocked");
+        // Still resolve after a delay
+        setTimeout(resolve, 100);
+      };
+    });
+  } catch (error) {
+    console.error("[E2EE] Error clearing OlmMachine store:", error);
   }
 }
 

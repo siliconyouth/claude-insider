@@ -59,6 +59,7 @@ export interface UnifiedChatState {
   selectedConversationId: string | null;
   selectedUserId: string | null;
   targetMessageId: string | null; // For scrolling to a specific message
+  pendingVerificationId: string | null; // For E2EE verification from notification
 }
 
 interface UnifiedChatContextType extends UnifiedChatState {
@@ -81,6 +82,7 @@ interface UnifiedChatContextType extends UnifiedChatState {
   selectConversation: (conversationId: string | null) => void;
   startConversationWithUser: (userId: string) => void;
   clearTargetMessage: () => void;
+  clearPendingVerification: () => void;
 
   // Unread count for badge
   unreadCount: number;
@@ -139,6 +141,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [targetMessageId, setTargetMessageId] = useState<string | null>(null);
+  const [pendingVerificationId, setPendingVerificationId] = useState<string | null>(null);
 
   // Unread count for badge
   const [unreadCount, setUnreadCount] = useState(0);
@@ -191,6 +194,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     const openChat = params.get("openChat");
     const conversation = params.get("conversation");
     const message = params.get("message");
+    const verify = params.get("verify");
 
     if (openChat === "messages" && conversation) {
       // Open the messages tab with the specified conversation and message
@@ -211,6 +215,16 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
       // Clean up URL parameters
       const url = new URL(window.location.href);
       url.searchParams.delete("openChat");
+      window.history.replaceState({}, "", url.pathname + url.search);
+    } else if (verify) {
+      // Handle E2EE verification deep link from notification
+      // Set pending verification and open messages tab
+      setPendingVerificationId(verify);
+      openMessagesFn();
+
+      // Clean up URL parameters
+      const url = new URL(window.location.href);
+      url.searchParams.delete("verify");
       window.history.replaceState({}, "", url.pathname + url.search);
     }
   }, [openMessagesFn, openAIAssistantFn]);
@@ -259,6 +273,10 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     setTargetMessageId(null);
   }, []);
 
+  const clearPendingVerification = useCallback(() => {
+    setPendingVerificationId(null);
+  }, []);
+
   // ============================================================================
   // Context Value
   // ============================================================================
@@ -273,6 +291,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     selectedConversationId,
     selectedUserId,
     targetMessageId,
+    pendingVerificationId,
     unreadCount,
 
     // Methods
@@ -288,6 +307,7 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     selectConversation,
     startConversationWithUser,
     clearTargetMessage,
+    clearPendingVerification,
     setUnreadCount,
   };
 

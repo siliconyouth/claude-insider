@@ -13,15 +13,19 @@
  *
  * Now uses the multi-step OnboardingWizard for enhanced onboarding flow.
  * Triggers the "Welcome Aboard" achievement on completion.
+ *
+ * IMPORTANT: We query the database directly for onboarding status instead of
+ * relying on the session cache. This prevents the race condition where the
+ * session cache hasn't updated yet after onboarding completion.
  */
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/components/providers/auth-provider";
 import { OnboardingWizard } from "./onboarding-wizard";
-import { queueAchievement } from "@/lib/achievement-queue";
+import { queueAchievement, isAchievementPending } from "@/lib/achievement-queue";
 
 export function OnboardingModalWrapper() {
-  const { user, isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [hasChecked, setHasChecked] = useState(false);
 
@@ -29,27 +33,43 @@ export function OnboardingModalWrapper() {
     // Only check once we've confirmed the user is authenticated and loaded
     if (isLoading || hasChecked) return;
 
-    if (isAuthenticated && user) {
-      // Show onboarding for users who:
-      // 1. Haven't completed onboarding yet
-      // 2. Are missing a username (mandatory)
-      // 3. Are missing a display name (mandatory)
-      const needsOnboarding =
-        !user.hasCompletedOnboarding ||
-        !user.username ||
-        !user.displayName;
-
-      if (needsOnboarding) {
-        console.log("[Onboarding] User needs onboarding:", {
-          hasCompletedOnboarding: user.hasCompletedOnboarding,
-          username: user.username,
-          displayName: user.displayName,
-        });
-        setShowOnboarding(true);
+    if (isAuthenticated) {
+      // IMPORTANT: Check if the "welcome_aboard" achievement is queued.
+      // This indicates onboarding JUST completed and we're in a reload.
+      if (isAchievementPending("welcome_aboard")) {
+        console.log("[Onboarding] Skipping - welcome_aboard achievement pending (just completed)");
+        setHasChecked(true);
+        return;
       }
-      setHasChecked(true);
+
+      // Query the database directly for fresh onboarding status
+      // This bypasses the session cache which may be stale
+      const checkOnboardingStatus = async () => {
+        try {
+          const response = await fetch("/api/user/onboarding-status");
+          if (!response.ok) {
+            console.error("[Onboarding] Failed to fetch status:", response.status);
+            setHasChecked(true);
+            return;
+          }
+
+          const data = await response.json();
+          console.log("[Onboarding] Database status:", data);
+
+          if (data.needsOnboarding) {
+            console.log("[Onboarding] User needs onboarding (from DB)");
+            setShowOnboarding(true);
+          }
+        } catch (error) {
+          console.error("[Onboarding] Error checking status:", error);
+        } finally {
+          setHasChecked(true);
+        }
+      };
+
+      checkOnboardingStatus();
     }
-  }, [isAuthenticated, isLoading, user, hasChecked]);
+  }, [isAuthenticated, isLoading, hasChecked]);
 
   const handleComplete = () => {
     setShowOnboarding(false);

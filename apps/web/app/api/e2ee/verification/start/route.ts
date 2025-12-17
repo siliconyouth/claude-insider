@@ -2,11 +2,13 @@
  * E2EE Verification Start API
  *
  * Initiates a new SAS verification session.
+ * Also sends a notification and optional system message to the target user.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
+import { pool } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
   try {
@@ -92,6 +94,31 @@ export async function POST(request: NextRequest) {
       .select("transaction_id")
       .eq("id", verificationId)
       .single();
+
+    // Get initiator's name for notification
+    const { rows: initiatorRows } = await pool.query(
+      `SELECT name FROM "user" WHERE id = $1`,
+      [session.user.id]
+    );
+    const initiatorName = initiatorRows[0]?.name || "Someone";
+
+    // Send notification to target user
+    await pool.query(
+      `INSERT INTO notifications (user_id, type, title, message, link, metadata)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [
+        targetUserId,
+        "e2ee_verification",
+        "🔐 Device Verification Request",
+        `${initiatorName} wants to verify your device. Compare emojis to confirm you're talking to each other securely.`,
+        `/messages?verify=${verificationId}`,
+        JSON.stringify({
+          verificationId,
+          initiatorUserId: session.user.id,
+          initiatorName,
+        }),
+      ]
+    );
 
     return NextResponse.json({
       verificationId,

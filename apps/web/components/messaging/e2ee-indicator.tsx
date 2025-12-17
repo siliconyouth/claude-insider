@@ -46,6 +46,12 @@ export interface ConversationE2EEBadgeProps {
   size?: "sm" | "md" | "lg";
   /** Additional classes */
   className?: string;
+  /** Callback when badge is clicked (for verification flow) */
+  onVerifyClick?: () => void;
+  /** Target user info for verification */
+  targetUserId?: string;
+  targetDeviceId?: string;
+  targetUserName?: string;
 }
 
 // ============================================================================
@@ -150,20 +156,27 @@ export function ConversationE2EEBadge({
   isVerified = false,
   size = "sm",
   className,
+  onVerifyClick,
 }: ConversationE2EEBadgeProps) {
   const config = sizeConfig[size];
+  const isClickable = onVerifyClick && e2eeEnabled && allParticipantsHaveE2EE && !isVerified;
+
+  const baseClasses = cn(
+    "inline-flex items-center rounded-full",
+    config.padding,
+    config.gap,
+    config.text,
+    className
+  );
+
+  const clickableClasses = isClickable
+    ? "cursor-pointer hover:opacity-80 transition-opacity"
+    : "";
 
   if (!e2eeEnabled) {
     return (
       <span
-        className={cn(
-          "inline-flex items-center rounded-full",
-          "bg-gray-800/50 text-gray-400",
-          config.padding,
-          config.gap,
-          config.text,
-          className
-        )}
+        className={cn(baseClasses, "bg-gray-800/50 text-gray-400")}
         title="End-to-end encryption not enabled"
       >
         <LockOpen className={config.icon} />
@@ -175,14 +188,7 @@ export function ConversationE2EEBadge({
   if (!allParticipantsHaveE2EE) {
     return (
       <span
-        className={cn(
-          "inline-flex items-center rounded-full",
-          "bg-amber-900/30 text-amber-400",
-          config.padding,
-          config.gap,
-          config.text,
-          className
-        )}
+        className={cn(baseClasses, "bg-amber-900/30 text-amber-400")}
         title="Some participants don't have E2EE enabled"
       >
         <ShieldQuestion className={config.icon} />
@@ -194,14 +200,7 @@ export function ConversationE2EEBadge({
   if (isVerified) {
     return (
       <span
-        className={cn(
-          "inline-flex items-center rounded-full",
-          "bg-emerald-900/30 text-emerald-400",
-          config.padding,
-          config.gap,
-          config.text,
-          className
-        )}
+        className={cn(baseClasses, "bg-emerald-900/30 text-emerald-400")}
         title="End-to-end encrypted and verified"
       >
         <ShieldCheck className={config.icon} />
@@ -210,16 +209,28 @@ export function ConversationE2EEBadge({
     );
   }
 
+  // Not verified - make clickable to start verification
+  if (isClickable) {
+    return (
+      <button
+        onClick={onVerifyClick}
+        className={cn(
+          baseClasses,
+          clickableClasses,
+          "bg-amber-900/30 text-amber-400 border border-amber-500/30",
+          "hover:bg-amber-900/50 hover:border-amber-500/50"
+        )}
+        title="Click to verify this contact's device"
+      >
+        <ShieldAlert className={cn(config.icon, "animate-pulse")} />
+        <span>Verify</span>
+      </button>
+    );
+  }
+
   return (
     <span
-      className={cn(
-        "inline-flex items-center rounded-full",
-        "bg-blue-900/30 text-blue-400",
-        config.padding,
-        config.gap,
-        config.text,
-        className
-      )}
+      className={cn(baseClasses, "bg-blue-900/30 text-blue-400")}
       title="End-to-end encrypted (not verified)"
     >
       <Lock className={config.icon} />

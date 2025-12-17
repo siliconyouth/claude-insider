@@ -28,6 +28,7 @@ import {
   isWasmLoaded,
   initOlmMachine,
   getOlmMachine,
+  clearOlmMachineStore,
   type OlmMachineWrapper,
 } from "@/lib/e2ee/vodozemac";
 import {
@@ -62,6 +63,7 @@ import type {
   StoredAccount,
   StoredSession,
   StoredMegolmSession,
+  DeviceMismatchInfo,
 } from "@/lib/e2ee/types";
 
 // ============================================================================
@@ -88,6 +90,7 @@ export function useE2EE(): UseE2EEReturn {
   const [availablePrekeys, setAvailablePrekeys] = useState(0);
   const [hasBackup, setHasBackup] = useState(false);
   const [usingWasm, setUsingWasm] = useState(false);
+  const [deviceMismatch, setDeviceMismatch] = useState<DeviceMismatchInfo | null>(null);
 
   // Refs for vodozemac instances (avoid state for WASM objects)
   const vodozemacRef = useRef<VodozemacModule | null>(null);
@@ -139,10 +142,27 @@ export function useE2EE(): UseE2EEReturn {
 
         // Initialize OlmMachine if WASM is available
         if (wasmAvailable && session?.user?.id) {
-          olmMachineRef.current = await initOlmMachine(
+          const olmResult = await initOlmMachine(
             session.user.id,
             storedAccount.deviceId
           );
+
+          // Check for device ID mismatch
+          if (olmResult.hasMismatch && olmResult.storedOlmDeviceId) {
+            console.warn("[E2EE] Device mismatch detected - showing recovery UI");
+            setDeviceMismatch({
+              storedDeviceId: storedAccount.deviceId,
+              olmDeviceId: olmResult.storedOlmDeviceId,
+              detectedAt: Date.now(),
+            });
+            setDeviceId(storedAccount.deviceId);
+            setIdentityKey(keys.curve25519);
+            setSigningKey(keys.ed25519);
+            setStatus("device-mismatch");
+            return;
+          }
+
+          olmMachineRef.current = olmResult.machine;
         }
 
         // Get storage stats
@@ -496,6 +516,86 @@ export function useE2EE(): UseE2EEReturn {
   }, [deviceId]);
 
   // ============================================================================
+  // DEVICE MISMATCH RECOVERY
+  // ============================================================================
+
+  /**
+   * Regenerate device after a mismatch.
+   * Clears all local E2EE data (including OlmMachine store) and creates fresh keys.
+   */
+  const regenerateDevice = useCallback(async () => {
+    if (!session?.user?.id) {
+      throw new Error("Not authenticated");
+    }
+
+    try {
+      setStatus("generating");
+      setError(null);
+
+      // 1. Delete the old device from server (both the stored one and the OlmMachine one)
+      const deviceIdsToDelete = new Set<string>();
+      if (deviceMismatch?.storedDeviceId) {
+        deviceIdsToDelete.add(deviceMismatch.storedDeviceId);
+      }
+      if (deviceMismatch?.olmDeviceId) {
+        deviceIdsToDelete.add(deviceMismatch.olmDeviceId);
+      }
+      if (deviceId) {
+        deviceIdsToDelete.add(deviceId);
+      }
+
+      for (const id of deviceIdsToDelete) {
+        try {
+          await fetch("/api/e2ee/keys", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ deviceId: id }),
+          });
+          console.log("[E2EE] Deleted old device from server:", id);
+        } catch {
+          // Continue even if server delete fails
+        }
+      }
+
+      // 2. Clear OlmMachine's IndexedDB store
+      await clearOlmMachineStore(session.user.id);
+
+      // 3. Clear our local E2EE data
+      await clearAllE2EEData();
+
+      // 4. Clear refs
+      if (accountRef.current?.free) {
+        accountRef.current.free();
+      }
+      accountRef.current = null;
+      olmMachineRef.current = null;
+
+      // 5. Reset mismatch state
+      setDeviceMismatch(null);
+
+      // 6. Generate new keys
+      await generateKeys();
+
+      console.log("[E2EE] Device regenerated successfully");
+    } catch (err) {
+      console.error("[E2EE] Device regeneration failed:", err);
+      setError(err instanceof Error ? err : new Error("Device regeneration failed"));
+      setStatus("error");
+      throw err;
+    }
+  }, [session?.user?.id, deviceMismatch, deviceId, generateKeys]);
+
+  /**
+   * Dismiss device mismatch and continue with fallback crypto.
+   * The app will work but without full OlmMachine features.
+   */
+  const dismissDeviceMismatch = useCallback(() => {
+    console.log("[E2EE] Dismissing device mismatch - continuing with fallback");
+    setDeviceMismatch(null);
+    setStatus("ready");
+  }, []);
+
+  // ============================================================================
   // MESSAGE ENCRYPTION (1:1 Olm)
   // ============================================================================
 
@@ -775,6 +875,7 @@ export function useE2EE(): UseE2EEReturn {
     availablePrekeys,
     hasBackup,
     usingWasm, // True if using official vodozemac WASM, false if Web Crypto fallback
+    deviceMismatch, // Details about device mismatch (if status is 'device-mismatch')
 
     // Actions
     initialize,
@@ -785,6 +886,8 @@ export function useE2EE(): UseE2EEReturn {
     restoreFromBackup,
     checkBackupExists,
     destroy,
+    regenerateDevice,
+    dismissDeviceMismatch,
     encryptMessage,
     decryptMessage,
     encryptGroupMessage,

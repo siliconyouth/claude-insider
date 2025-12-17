@@ -403,7 +403,20 @@ export type E2EEStatus =
   | "ready"
   | "generating"
   | "error"
-  | "needs-setup";
+  | "needs-setup"
+  | "device-mismatch";
+
+/**
+ * Device mismatch details for recovery UI
+ */
+export interface DeviceMismatchInfo {
+  /** Device ID stored in app's IndexedDB */
+  storedDeviceId: string;
+  /** Device ID found in OlmMachine's internal storage */
+  olmDeviceId: string;
+  /** When this mismatch was detected */
+  detectedAt: number;
+}
 
 /**
  * Public keys for sharing
@@ -447,6 +460,9 @@ export interface E2EEState {
 
   /** Whether using official vodozemac WASM (true) or Web Crypto fallback (false) */
   usingWasm: boolean;
+
+  /** Device mismatch details (set when status is 'device-mismatch') */
+  deviceMismatch: DeviceMismatchInfo | null;
 }
 
 /**
@@ -476,6 +492,19 @@ export interface E2EEActions {
 
   /** Destroy all local keys (logout) */
   destroy: () => Promise<void>;
+
+  /**
+   * Regenerate device after a mismatch.
+   * Clears all local E2EE data (including OlmMachine store) and creates fresh keys.
+   * The old device will be removed from the server.
+   */
+  regenerateDevice: () => Promise<void>;
+
+  /**
+   * Dismiss device mismatch and continue with fallback crypto.
+   * The app will work but without full OlmMachine features.
+   */
+  dismissDeviceMismatch: () => void;
 
   /** Encrypt a message for a recipient */
   encryptMessage: (

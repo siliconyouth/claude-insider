@@ -19,6 +19,7 @@
 import { createContext, useContext, type ReactNode } from "react";
 import { useE2EE } from "@/hooks/use-e2ee";
 import type { UseE2EEReturn, E2EEStatus } from "@/lib/e2ee/types";
+import { DeviceMismatchModal } from "@/components/e2ee/device-mismatch-modal";
 
 // ============================================================================
 // CONTEXT
@@ -37,7 +38,13 @@ interface E2EEProviderProps {
 export function E2EEProvider({ children }: E2EEProviderProps) {
   const e2ee = useE2EE();
 
-  return <E2EEContext.Provider value={e2ee}>{children}</E2EEContext.Provider>;
+  return (
+    <E2EEContext.Provider value={e2ee}>
+      {children}
+      {/* Show device mismatch modal when there's a conflict */}
+      <DeviceMismatchModal />
+    </E2EEContext.Provider>
+  );
 }
 
 // ============================================================================
@@ -84,6 +91,7 @@ function createSafeDefaults(): UseE2EEReturn {
     availablePrekeys: 0,
     hasBackup: false,
     usingWasm: false,
+    deviceMismatch: null,
 
     // Actions (no-op)
     initialize: noOp,
@@ -94,6 +102,8 @@ function createSafeDefaults(): UseE2EEReturn {
     restoreFromBackup: noOp,
     checkBackupExists: async () => false,
     destroy: noOp,
+    regenerateDevice: noOp,
+    dismissDeviceMismatch: () => {},
     encryptMessage: noOpEncrypt,
     decryptMessage: noOpEncrypt,
     encryptGroupMessage: noOpGroup,

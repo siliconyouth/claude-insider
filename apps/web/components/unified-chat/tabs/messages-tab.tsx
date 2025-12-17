@@ -19,7 +19,9 @@ import { cn } from "@/lib/design-system";
 import { useUnifiedChat } from "../unified-chat-provider";
 import { useSession } from "@/lib/auth-client";
 import { AvatarWithStatus } from "@/components/presence";
-import { E2EEIndicator } from "@/components/messaging/e2ee-indicator";
+import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
+import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
+import { useE2EEContext } from "@/components/providers/e2ee-provider";
 import { VirtualizedMessageList } from "@/components/messaging/virtualized-message-list";
 import {
   MentionAutocomplete,
@@ -42,13 +44,19 @@ import { useConversationRealtime, type MessagePayload } from "@/lib/realtime/rea
 // ============================================================================
 
 export function MessagesTab() {
-  const { selectedConversationId, selectConversation, setUnreadCount, targetMessageId, clearTargetMessage } = useUnifiedChat();
+  const { selectedConversationId, selectConversation, setUnreadCount, targetMessageId, clearTargetMessage, pendingVerificationId, clearPendingVerification } = useUnifiedChat();
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [isLoadingConversations, setIsLoadingConversations] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showPendingVerificationModal, setShowPendingVerificationModal] = useState(false);
+  const [pendingVerification, setPendingVerification] = useState<{
+    verificationId: string;
+    initiatorUserId: string;
+    initiatorName: string;
+  } | null>(null);
 
   // Load conversations
   useEffect(() => {
@@ -71,6 +79,31 @@ export function MessagesTab() {
 
     loadConversations();
   }, [currentUserId, setUnreadCount]);
+
+  // Handle pending verification from deep link
+  useEffect(() => {
+    if (!pendingVerificationId) return;
+
+    // Fetch verification details from the server
+    const fetchVerification = async () => {
+      try {
+        const response = await fetch(`/api/e2ee/verification/${pendingVerificationId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setPendingVerification({
+            verificationId: pendingVerificationId,
+            initiatorUserId: data.initiatorUserId,
+            initiatorName: data.initiatorName || "Someone",
+          });
+          setShowPendingVerificationModal(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch verification:", error);
+      }
+    };
+
+    fetchVerification();
+  }, [pendingVerificationId]);
 
   // Filter conversations
   const filteredConversations = conversations.filter((conv) => {
@@ -223,6 +256,25 @@ export function MessagesTab() {
           </div>
         )}
       </div>
+
+      {/* Pending E2EE Verification Modal (from notification deep link) */}
+      {pendingVerification && (
+        <DeviceVerificationModal
+          isOpen={showPendingVerificationModal}
+          onClose={() => {
+            setShowPendingVerificationModal(false);
+            setPendingVerification(null);
+            clearPendingVerification();
+          }}
+          targetUserId={pendingVerification.initiatorUserId}
+          targetUserName={pendingVerification.initiatorName}
+          onSuccess={() => {
+            setShowPendingVerificationModal(false);
+            setPendingVerification(null);
+            clearPendingVerification();
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -260,11 +312,16 @@ function ConversationView({
   const [cursorPosition, setCursorPosition] = useState(0);
   const [isMentionOpen, setIsMentionOpen] = useState(false);
   const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null);
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const messageListRef = useRef<HTMLDivElement>(null);
+
+  // E2EE context for encryption status
+  const e2ee = useE2EEContext();
 
   // Get other participant
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
@@ -533,9 +590,29 @@ function ConversationView({
             <p className="text-xs text-green-600 dark:text-green-400">Online</p>
           )}
         </div>
-        {/* E2EE indicator - we assume encrypted if messages exist */}
-        <E2EEIndicator isEncrypted={messages.length > 0} decryptionSuccess={true} />
+        {/* E2EE badge - shows encryption status and enables verification */}
+        <ConversationE2EEBadge
+          e2eeEnabled={e2ee.isInitialized}
+          allParticipantsHaveE2EE={e2ee.isInitialized}
+          isVerified={isVerified}
+          size="sm"
+          onVerifyClick={() => setShowVerificationModal(true)}
+          targetUserId={otherParticipant?.userId}
+          targetUserName={otherParticipant?.displayName || otherParticipant?.name}
+        />
       </div>
+
+      {/* Device Verification Modal */}
+      <DeviceVerificationModal
+        isOpen={showVerificationModal}
+        onClose={() => setShowVerificationModal(false)}
+        targetUserId={otherParticipant?.userId}
+        targetUserName={otherParticipant?.displayName || otherParticipant?.name}
+        onSuccess={() => {
+          setIsVerified(true);
+          setShowVerificationModal(false);
+        }}
+      />
 
       {/* Messages - Virtualized for performance */}
       <VirtualizedMessageList
