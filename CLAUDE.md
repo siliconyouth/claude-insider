@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.91.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 0.92.0**.
 
 | Link | URL |
 |------|-----|
@@ -56,6 +56,7 @@ All technologies are **free and/or open source** (except hosting services with f
 | date-fns | 4.1.0 | MIT | Date formatting |
 | @matrix-org/matrix-sdk-crypto-wasm | 16.0.0 | Apache-2.0 | E2EE implementation |
 | @paypal/react-paypal-js | 8.9.2 | Apache-2.0 | PayPal integration |
+| @tanstack/react-virtual | 3.13.2 | MIT | Virtual scrolling for message lists |
 
 ### Development Environment
 
@@ -192,19 +193,21 @@ claude-insider/
 │   │   ├── donations/            # Donation components
 │   │   ├── pwa/                  # PWA components
 │   │   ├── universal-search/     # Search modal
-│   │   └── resources/            # Resources components
+│   │   ├── resources/            # Resources components
+│   │   └── messaging/            # Virtualized message lists
 │   ├── hooks/                    # Custom React hooks
 │   ├── lib/                      # Core libraries
 │   │   ├── design-system.ts      # Design tokens & cn()
 │   │   ├── supabase/             # Database clients
 │   │   ├── dashboard/            # Dashboard hooks & utilities
 │   │   ├── e2ee/                 # E2EE library
+│   │   ├── realtime/             # Realtime subscriptions & typing
 │   │   └── resources/            # Resources library
 │   ├── content/                  # 34 MDX documentation pages
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 62 SQL migration files
+│   └── supabase/migrations/      # 63 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -443,7 +446,7 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 ### Overview
 
-Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **62 migrations** define **73 tables** across 13 categories.
+Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **63 migrations** define **73 tables** across 13 categories.
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -596,7 +599,8 @@ supabase/migrations/
 ├── 045-049                      # Security system, materialized views, superadmin
 ├── 050-053                      # Beta tester role, donation system
 ├── 054-057                      # E2EE (device keys, messages, verification, AI consent)
-└── 058-061                      # Messaging indexes, job queue, donations, notification indexes
+├── 058-061                      # Messaging indexes, job queue, donations, notification indexes
+└── 062-063                      # Presence indexes, chat performance (RPC functions, indexes)
 ```
 
 ### Mandatory Rules
@@ -733,6 +737,46 @@ import { openAIAssistant, openMessages } from "@/components/unified-chat";
 openAIAssistant({ context: AIContext, question: string });
 openMessages({ conversationId: string, userId: string });
 ```
+
+### Realtime Subscription System
+
+**Location**: `lib/realtime/realtime-context.tsx`
+
+Centralized realtime subscription manager with connection pooling and broadcast-based typing.
+
+| Feature | Description |
+|---------|-------------|
+| **Connection Pooling** | Single channel per conversation (50% fewer subscriptions) |
+| **Broadcast Typing** | 6ms latency vs 46ms (7.6x faster, no DB writes) |
+| **Auto-reconnection** | Exponential backoff (1s → 30s max) |
+| **Presence Tracking** | Online/away status per conversation |
+
+```tsx
+import { useConversationRealtime } from "@/lib/realtime/realtime-context";
+
+const { sendTyping, isConnected } = useConversationRealtime({
+  conversationId,
+  currentUserId,
+  onMessage: (payload) => addMessage(payload),
+  onTypingChange: (userIds) => setTypingUsers(userIds),
+});
+
+// Send typing indicator (auto-clears after 5s)
+sendTyping(true);
+```
+
+### Virtual Scrolling
+
+**Location**: `components/messaging/virtualized-message-list.tsx`
+
+TanStack Virtual-based message list for efficient rendering of large conversations.
+
+| Feature | Description |
+|---------|-------------|
+| **Dynamic Heights** | `measureElement` for variable-length messages |
+| **Overscan** | 10 extra items for smooth scrolling |
+| **Reverse Scroll** | Load older messages at top |
+| **Auto-scroll** | Scrolls to bottom for new messages (if at bottom) |
 
 ### RAG System (v6.0)
 

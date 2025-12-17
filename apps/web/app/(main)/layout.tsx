@@ -15,6 +15,7 @@ import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
 import { UnifiedChatProvider, UnifiedChatWindow, FloatingChatButton } from "@/components/unified-chat";
 import { AskAIProvider } from "@/components/ask-ai";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
+import { RealtimeProvider } from "@/lib/realtime/realtime-context";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
 import { FingerprintProvider } from "@/components/providers/fingerprint-provider";
 import { E2EEProvider } from "@/components/providers/e2ee-provider";
@@ -215,6 +216,7 @@ export default async function MainLayout({
         <I18nProvider locale={locale} messages={messages}>
           <FingerprintProvider>
             <AuthProvider>
+              <RealtimeProvider>
               <E2EEProvider>
               <UnifiedChatProvider>
               <AskAIProvider>
@@ -244,6 +246,7 @@ export default async function MainLayout({
               </AskAIProvider>
               </UnifiedChatProvider>
               </E2EEProvider>
+              </RealtimeProvider>
             </AuthProvider>
           </FingerprintProvider>
         </I18nProvider>

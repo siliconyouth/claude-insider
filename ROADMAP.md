@@ -2,14 +2,14 @@
 
 **Version:** 1.3.0
 **Last Updated:** 2025-12-17
-**Current Release:** v0.91.0
+**Current Release:** v0.92.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-This roadmap outlines the development path from **v0.91.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+This roadmap outlines the development path from **v0.92.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,7 @@ This roadmap outlines the development path from **v0.91.0** (current) to **v1.0.
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 0.92.0 | Dec 17 | Chat Performance: Broadcast typing, Virtual scrolling, RPC optimization |
 | 0.91.0 | Dec 17 | Profile & Navigation Overhaul, Header/Footer to 14 pages |
 | 0.90.0 | Dec 16 | Chat UI Redesign, shared ChatMessage component |
 | 0.89.0 | Dec 16 | Notification system refactoring, 3x performance |

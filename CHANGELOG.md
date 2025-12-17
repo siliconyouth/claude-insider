@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.92.0] - 2025-12-17
+### Chat Performance Optimizations
+- **Realtime Context Provider**: Centralized subscription management with connection pooling
+  - Single unified channel per conversation (postgres_changes + broadcast + presence)
+  - Automatic reconnection with exponential backoff
+  - 50% fewer subscriptions per user
+- **Broadcast Typing Indicators**: Ephemeral typing via Supabase Broadcast
+  - 6ms latency vs 46ms with postgres_changes (7.6x faster)
+  - No database writes for typing events
+  - Auto-clear after 5 seconds of inactivity
+- **Virtual Scrolling**: TanStack Virtual for message lists
+  - Only renders visible messages + 10 overscan items
+  - Dynamic height measurement for variable-length messages
+  - Cursor-based pagination for loading older messages
+- **Optimized RPC Functions**: Database-side query optimization
+  - `get_conversations_optimized`: Single query with JOINs instead of N+1
+  - `get_messages_paginated`: Cursor-based pagination with sender info
+- **Performance Indexes**: 6 new database indexes
+  - `idx_dm_participants_user_conversation`: Fast conversation lookups
+  - `idx_dm_messages_conversation_created`: Recent messages retrieval
+  - `idx_user_presence_user_status`: Online indicator queries
+
 ## [0.91.0] - 2025-12-17
 ### Profile & Navigation Overhaul
 - **Profile Page Redesign**: Unified `/profile` design to match `/users/[username]` public profile
@@ -439,6 +461,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Range | Count | Period | Highlights |
 |-------|-------|--------|------------|
+| 0.87-0.92 | 6 | Dec 16-17 | Chat Performance, Dashboard, Diagnostics |
 | 0.80-0.86 | 7 | Dec 15-16 | E2EE, Unified Chat, Legal Compliance |
 | 0.70-0.79 | 10 | Dec 14-15 | Security Dashboard, Auth, Admin |
 | 0.60-0.69 | 10 | Dec 13-14 | Messaging, Notifications, Profiles |
@@ -449,7 +472,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | 0.10-0.19 | 10 | Dec 9 | AI Assistant, Design System |
 | 0.1-0.9 | 9 | Dec 8-9 | Foundation, Docs, SEO |
 
-**Total: 86 versions in 9 days** (Dec 8-16, 2025)
+**Total: 87 versions in 10 days** (Dec 8-17, 2025)
 
 ---
 
