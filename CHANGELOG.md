@@ -9,6 +9,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.91.0] - 2025-12-17
+### Profile & Navigation Overhaul
+- **Profile Page Redesign**: Unified `/profile` design to match `/users/[username]` public profile
+  - Gradient cover banner with animated dot pattern
+  - Floating profile card with online indicator
+  - Badge system: Role, Verified, Beta Tester, Donor Tier
+  - 6-column stats bar (followers, following, points, favorites, collections, comments)
+  - Achievements section with rarity-based display
+  - Tab-based content navigation
+- **Header/Footer Consistency**: Added site navigation to 14 pages that were missing them
+  - Donation pages: `donors`, `donate/success`
+  - User content: `feed`, `inbox`, `suggestions`
+  - Collections: `favorites/collections`, `favorites/collections/[slug]`
+  - Search: `search`, `search/users`
+  - Profile: `profile/stats`, `reading-lists/[slug]`
+  - Social: `users/[username]`, `users/[username]/followers`, `users/[username]/following`
+- **ProfileHoverCard Redesign**: Enhanced info display with badges and stats
+- **Search Expansion**: Extended to full website with visual consistency improvements
+- **Hero Simplification**: Streamlined CTA buttons, renamed to "Getting Started"
+- **Header Cleanup**: Moved GitHub link to footer, expanded search width
+
+### Bug Fixes
+- **Avatar Border**: Fixed rectangular border on settings page (added `rounded-full` to outer container)
+- **Collections Query**: Removed non-existent `color`/`icon` columns, using `cover_image_url` instead
+- **Achievements Query**: Fixed column name (`unlocked_at` → `earned_at`), added JOIN for slug lookup
+- **Presence Query**: Fixed column name (`last_seen` → `last_seen_at`)
+- **Light Theme**: Improved contrast and hero consistency
+
 ## [0.90.0] - 2025-12-16
 ### Chat UI Redesign
 - **Shared ChatMessage Component**: New `components/chat/chat-message.tsx` with unified styling
