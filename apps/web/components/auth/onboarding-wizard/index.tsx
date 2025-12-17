@@ -179,8 +179,16 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
       skippable: true,
     });
 
-    // Show beta application if not already a beta tester
-    // Positioned after API key to capture engaged users
+    // Support step before beta - ask for support after showing value
+    steps.push({
+      id: "support",
+      title: "Support Us",
+      description: "Help keep Claude Insider free and growing",
+      icon: "💜",
+      skippable: true,
+    });
+
+    // Beta application as final step if not already a beta tester
     if (!user?.isBetaTester) {
       steps.push({
         id: "beta-apply",
@@ -190,15 +198,6 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
         skippable: true,
       });
     }
-
-    // Always show support step (skippable) - placed at end as a gentle ask
-    steps.push({
-      id: "support",
-      title: "Support Us",
-      description: "Help keep Claude Insider free and growing",
-      icon: "💜",
-      skippable: true,
-    });
 
     return steps;
   }, [user?.emailVerified, user?.hasPassword, user?.isBetaTester]);
