@@ -15,13 +15,19 @@
  * - External sources (cached reference documentation)
  * - Code examples (searchable snippets in 16+ languages)
  *
- * Run with: node scripts/generate-rag-index.cjs
+ * Caching:
+ * - Computes content hash of all input sources
+ * - Skips regeneration if content unchanged from previous build
+ * - Use --force to regenerate regardless of cache
+ *
+ * Run with: node scripts/generate-rag-index.cjs [--force]
  *
  * Built with Claude Code powered by Claude Opus 4.5
  */
 
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const matter = require("gray-matter");
 
 // Import dynamic project knowledge generator
@@ -48,7 +54,104 @@ try {
 // ===========================================================================
 
 const VERBOSE = true;
-const VERSION = "6.0"; // Increment when making significant changes
+const VERSION = "6.1"; // Increment when making significant changes
+const FORCE_REGENERATE = process.argv.includes("--force");
+
+// ===========================================================================
+// CONTENT HASHING FOR CACHE INVALIDATION
+// ===========================================================================
+
+/**
+ * Recursively collect all files matching extensions from a directory
+ */
+function collectFiles(dir, extensions, files = []) {
+  if (!fs.existsSync(dir)) return files;
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      collectFiles(fullPath, extensions, files);
+    } else if (extensions.some(ext => entry.name.endsWith(ext))) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
+/**
+ * Compute a hash of all content source files
+ * This is used to detect if any content has changed since last build
+ */
+function computeContentHash() {
+  const hash = crypto.createHash("sha256");
+  const baseDir = path.join(__dirname, "..");
+
+  // Collect all input files that affect the RAG index
+  const inputFiles = [
+    // MDX documentation files
+    ...collectFiles(path.join(baseDir, "content"), [".mdx"]),
+    // Resource JSON files
+    ...collectFiles(path.join(baseDir, "data/resources"), [".json"]),
+    // Generator scripts (if scripts change, regenerate)
+    path.join(__dirname, "generate-rag-index.cjs"),
+    path.join(__dirname, "generate-project-knowledge.cjs"),
+    path.join(__dirname, "generate-settings-index.cjs"),
+  ].filter(f => fs.existsSync(f)).sort();
+
+  // Add file contents to hash
+  for (const file of inputFiles) {
+    try {
+      const content = fs.readFileSync(file);
+      hash.update(file); // Include path in hash
+      hash.update(content);
+    } catch {
+      // Skip files that can't be read
+    }
+  }
+
+  // Include version in hash (changing version forces regeneration)
+  hash.update(VERSION);
+
+  return hash.digest("hex");
+}
+
+/**
+ * Check if the RAG index needs to be regenerated
+ * Returns { needsRegeneration: boolean, reason: string, currentHash: string }
+ */
+function checkCacheValidity() {
+  const outputPath = path.join(__dirname, "../data/rag-index.json");
+  const currentHash = computeContentHash();
+
+  // Force regeneration if flag is set
+  if (FORCE_REGENERATE) {
+    return { needsRegeneration: true, reason: "--force flag specified", currentHash };
+  }
+
+  // Check if output file exists
+  if (!fs.existsSync(outputPath)) {
+    return { needsRegeneration: true, reason: "RAG index file not found", currentHash };
+  }
+
+  // Read existing index and check hash
+  try {
+    const existingIndex = JSON.parse(fs.readFileSync(outputPath, "utf-8"));
+
+    if (!existingIndex.contentHash) {
+      return { needsRegeneration: true, reason: "No content hash in existing index", currentHash };
+    }
+
+    if (existingIndex.contentHash !== currentHash) {
+      return { needsRegeneration: true, reason: "Content has changed", currentHash };
+    }
+
+    // Cache is valid
+    return { needsRegeneration: false, reason: "Content unchanged", currentHash };
+  } catch (error) {
+    return { needsRegeneration: true, reason: `Error reading existing index: ${error.message}`, currentHash };
+  }
+}
 
 // ===========================================================================
 // CONSOLE STYLING
@@ -472,6 +575,36 @@ function generateRagIndex() {
   log("  Built with Claude Code powered by Claude Opus 4.5", colors.magenta);
   log("  Generating searchable knowledge base for AI Assistant\n", colors.dim);
 
+  // =========================================================================
+  // CHECK CACHE VALIDITY
+  // =========================================================================
+  logSection("CACHE CHECK");
+  logSubsection("Computing content hash...");
+
+  const cacheCheck = checkCacheValidity();
+
+  if (!cacheCheck.needsRegeneration) {
+    log("", colors.reset);
+    log("╔══════════════════════════════════════════════════════════════════════╗", colors.green);
+    log("║                    RAG INDEX CACHE HIT                               ║", colors.green + colors.bright);
+    log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+    log(`║  Status: ${cacheCheck.reason.padEnd(58)}║`, colors.white);
+    log(`║  Hash: ${cacheCheck.currentHash.slice(0, 16)}...${cacheCheck.currentHash.slice(-8).padEnd(43)}║`, colors.dim);
+    log("╠══════════════════════════════════════════════════════════════════════╣", colors.green);
+    log("║  Skipping regeneration - existing index is up to date                ║", colors.cyan);
+    log("║  Use --force to regenerate anyway                                    ║", colors.dim);
+    log("╚══════════════════════════════════════════════════════════════════════╝", colors.green);
+    log("", colors.reset);
+
+    const endTime = Date.now();
+    log(`  Cache check completed in ${(endTime - startTime)}ms`, colors.green + colors.bright);
+    console.log("");
+    return;
+  }
+
+  logStat("Reason:", cacheCheck.reason);
+  logStat("Content hash:", cacheCheck.currentHash.slice(0, 16) + "...");
+
   const contentDir = path.join(__dirname, "../content");
   const outputPath = path.join(__dirname, "../data/rag-index.json");
 
@@ -661,6 +794,7 @@ function generateRagIndex() {
 
   const ragIndex = {
     version: VERSION,
+    contentHash: cacheCheck.currentHash,
     generatedAt: new Date().toISOString(),
     builtWith: "Claude Code powered by Claude Opus 4.5",
     documentCount: chunks.length,
