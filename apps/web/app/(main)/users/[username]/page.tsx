@@ -10,6 +10,8 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { FollowButton } from "@/components/users/follow-button";
 import { openMessages } from "@/components/unified-chat";
 import {
@@ -271,7 +273,8 @@ export default function PublicProfilePage({
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a]">
-        {/* Header Skeleton */}
+        <Header />
+        {/* Cover Skeleton */}
         <div className="h-48 bg-gradient-to-r from-violet-600/20 via-blue-600/20 to-cyan-600/20 animate-pulse" />
 
         <div className="max-w-5xl mx-auto px-4 -mt-20">
@@ -304,13 +307,16 @@ export default function PublicProfilePage({
             ))}
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   if (error || !profile) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex flex-col">
+        <Header />
+        <div className="flex-1 flex items-center justify-center px-4">
         <div className="text-center max-w-md">
           <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gray-100 dark:bg-[#1a1a1a] flex items-center justify-center">
             <svg
@@ -347,6 +353,8 @@ export default function PublicProfilePage({
             Return to homepage
           </Link>
         </div>
+        </div>
+        <Footer />
       </div>
     );
   }
@@ -372,7 +380,8 @@ export default function PublicProfilePage({
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a]">
-      {/* Cover/Header */}
+      <Header />
+      {/* Cover Banner */}
       <div
         className={cn(
           "h-48 sm:h-56 relative overflow-hidden",
@@ -1062,6 +1071,7 @@ export default function PublicProfilePage({
             </div>
           )}
       </div>
+      <Footer />
     </div>
   );
 }
