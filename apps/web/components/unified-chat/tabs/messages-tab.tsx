@@ -44,7 +44,7 @@ import { useConversationRealtime, type MessagePayload } from "@/lib/realtime/rea
 // ============================================================================
 
 export function MessagesTab() {
-  const { selectedConversationId, selectConversation, setUnreadCount, targetMessageId, clearTargetMessage, pendingVerificationId, clearPendingVerification } = useUnifiedChat();
+  const { selectedConversationId, selectConversation, unreadCount, setUnreadCount, targetMessageId, clearTargetMessage, pendingVerificationId, clearPendingVerification } = useUnifiedChat();
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
 
@@ -113,6 +113,26 @@ export function MessagesTab() {
     return name.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
+  // Handle conversation selection - mark as read and update unread count
+  const handleSelectConversation = useCallback((conversation: Conversation | null) => {
+    if (conversation && conversation.unreadCount > 0) {
+      // Optimistically decrement global unread count
+      setUnreadCount(Math.max(0, unreadCount - conversation.unreadCount));
+
+      // Update local conversation state to mark as read
+      setConversations((prev) =>
+        prev.map((c) =>
+          c.id === conversation.id ? { ...c, unreadCount: 0 } : c
+        )
+      );
+
+      // Mark as read in database (non-blocking)
+      markConversationAsRead(conversation.id);
+    }
+
+    selectConversation(conversation?.id || null);
+  }, [selectConversation, setUnreadCount, unreadCount]);
+
   // Show conversation view if one is selected
   if (selectedConversationId && currentUserId) {
     const conversation = conversations.find((c) => c.id === selectedConversationId);
@@ -123,7 +143,7 @@ export function MessagesTab() {
           currentUserId={currentUserId}
           participants={conversation.participants}
           isGroupChat={conversation.type === "group"}
-          onBack={() => selectConversation(null)}
+          onBack={() => handleSelectConversation(null)}
           targetMessageId={targetMessageId}
           onTargetMessageScrolled={clearTargetMessage}
         />
@@ -198,7 +218,7 @@ export function MessagesTab() {
               return (
                 <button
                   key={conversation.id}
-                  onClick={() => selectConversation(conversation.id)}
+                  onClick={() => handleSelectConversation(conversation)}
                   className={cn(
                     "w-full flex items-start gap-3 px-4 py-3 text-left transition-colors",
                     "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",

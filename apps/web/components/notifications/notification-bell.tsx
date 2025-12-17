@@ -235,6 +235,28 @@ export function NotificationBell() {
     }
   };
 
+  // Mark single notification as read when clicked
+  const markAsRead = async (notificationId: string) => {
+    try {
+      const res = await fetch("/api/notifications", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notificationIds: [notificationId] }),
+      });
+
+      if (res.ok) {
+        // Optimistically update local state
+        setNotifications((prev) =>
+          prev.map((n) => (n.id === notificationId ? { ...n, read: true } : n))
+        );
+        // Refresh count from server (realtime will also update)
+        await refreshCount();
+      }
+    } catch (error) {
+      console.error("[NotificationBell] Mark single read error:", error);
+    }
+  };
+
   // Fetch browser notification preference on mount (no polling needed - realtime handles updates)
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -446,7 +468,13 @@ export function NotificationBell() {
                   <Link
                     key={notification.id}
                     href={getNotificationUrl(notification)}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      setIsOpen(false);
+                      // Mark as read if unread (fire and forget - don't block navigation)
+                      if (!notification.read) {
+                        markAsRead(notification.id);
+                      }
+                    }}
                     className={cn(
                       "flex items-start gap-3 px-4 py-3 transition-colors",
                       "hover:bg-gray-50 dark:hover:bg-[#0a0a0a]",

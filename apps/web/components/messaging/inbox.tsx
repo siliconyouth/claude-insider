@@ -19,6 +19,7 @@ import {
   getConversations,
   getUsersForMessaging,
   startConversation,
+  markConversationAsRead,
   type Conversation,
 } from "@/app/actions/messaging";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
@@ -154,6 +155,23 @@ export function Inbox({
   // Handle target message scrolled (clear deep link)
   const handleTargetMessageScrolled = useCallback(() => {
     setTargetMessageId(null);
+  }, []);
+
+  // Handle conversation selection - mark as read and update local state
+  const handleSelectConversation = useCallback((conversation: Conversation | null) => {
+    if (conversation && conversation.unreadCount > 0) {
+      // Update local conversations state to mark as read
+      setConversations((prev) =>
+        prev.map((c) =>
+          c.id === conversation.id ? { ...c, unreadCount: 0 } : c
+        )
+      );
+
+      // Mark as read in database (non-blocking)
+      markConversationAsRead(conversation.id);
+    }
+
+    setSelectedConversation(conversation);
   }, []);
 
   return (
@@ -322,7 +340,7 @@ export function Inbox({
                 return (
                   <button
                     key={conv.id}
-                    onClick={() => setSelectedConversation(conv)}
+                    onClick={() => handleSelectConversation(conv)}
                     className={cn(
                       "w-full flex items-start gap-3 px-4 py-3",
                       "transition-colors text-left",
@@ -402,7 +420,7 @@ export function Inbox({
             conversationId={selectedConversation.id}
             currentUserId={currentUserId}
             participants={selectedConversation.participants}
-            onBack={() => setSelectedConversation(null)}
+            onBack={() => handleSelectConversation(null)}
             targetMessageId={targetMessageId}
             onTargetMessageScrolled={handleTargetMessageScrolled}
           />
