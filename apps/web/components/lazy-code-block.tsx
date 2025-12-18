@@ -4,35 +4,101 @@ import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { cn } from "@/lib/design-system";
 import { Skeleton } from "@/components/skeleton";
+import { useAskAI } from "./ask-ai";
+import { getPageContext } from "@/lib/ai-context";
 
-// Language display names and colors
+// Language display names and colors - each language has a unique, distinct color
 const languageConfig: Record<string, { name: string; color: string }> = {
+  // JavaScript family - yellows/golds
   javascript: { name: "JavaScript", color: "bg-yellow-500" },
   js: { name: "JavaScript", color: "bg-yellow-500" },
-  typescript: { name: "TypeScript", color: "bg-blue-500" },
-  ts: { name: "TypeScript", color: "bg-blue-500" },
-  tsx: { name: "TSX", color: "bg-blue-400" },
-  jsx: { name: "JSX", color: "bg-yellow-400" },
-  python: { name: "Python", color: "bg-green-500" },
-  py: { name: "Python", color: "bg-green-500" },
-  bash: { name: "Bash", color: "bg-gray-500" },
-  sh: { name: "Shell", color: "bg-gray-500" },
-  shell: { name: "Shell", color: "bg-gray-500" },
-  json: { name: "JSON", color: "bg-orange-500" },
-  html: { name: "HTML", color: "bg-red-500" },
-  xml: { name: "XML", color: "bg-red-400" },
-  css: { name: "CSS", color: "bg-purple-500" },
-  markdown: { name: "Markdown", color: "bg-gray-400" },
-  md: { name: "Markdown", color: "bg-gray-400" },
-  mdx: { name: "MDX", color: "bg-orange-400" },
+  jsx: { name: "JSX", color: "bg-amber-500" },
+
+  // TypeScript family - blues
+  typescript: { name: "TypeScript", color: "bg-blue-600" },
+  ts: { name: "TypeScript", color: "bg-blue-600" },
+  tsx: { name: "TSX", color: "bg-sky-500" },
+
+  // Python - distinct green
+  python: { name: "Python", color: "bg-emerald-500" },
+  py: { name: "Python", color: "bg-emerald-500" },
+
+  // Shell/Bash - dark teal
+  bash: { name: "Bash", color: "bg-teal-600" },
+  sh: { name: "Shell", color: "bg-teal-600" },
+  shell: { name: "Shell", color: "bg-teal-600" },
+
+  // Data formats - each distinct
+  json: { name: "JSON", color: "bg-lime-500" },
   yaml: { name: "YAML", color: "bg-pink-500" },
   yml: { name: "YAML", color: "bg-pink-500" },
-  sql: { name: "SQL", color: "bg-blue-600" },
+  toml: { name: "TOML", color: "bg-orange-600" },
+  ini: { name: "INI", color: "bg-stone-500" },
+
+  // Web - distinct colors
+  html: { name: "HTML", color: "bg-orange-500" },
+  xml: { name: "XML", color: "bg-cyan-600" },
+  css: { name: "CSS", color: "bg-purple-500" },
+
+  // Documentation
+  markdown: { name: "Markdown", color: "bg-slate-500" },
+  md: { name: "Markdown", color: "bg-slate-500" },
+  mdx: { name: "MDX", color: "bg-violet-500" },
+
+  // Database
+  sql: { name: "SQL", color: "bg-indigo-500" },
+
+  // Systems languages - each unique
   go: { name: "Go", color: "bg-cyan-500" },
-  rust: { name: "Rust", color: "bg-orange-600" },
+  rust: { name: "Rust", color: "bg-amber-700" },
+  rs: { name: "Rust", color: "bg-amber-700" },
+  c: { name: "C", color: "bg-blue-700" },
+  cpp: { name: "C++", color: "bg-blue-500" },
+  "c++": { name: "C++", color: "bg-blue-500" },
+
+  // JVM languages - each distinct
   java: { name: "Java", color: "bg-red-600" },
-  plaintext: { name: "Text", color: "bg-gray-600" },
-  text: { name: "Text", color: "bg-gray-600" },
+  kotlin: { name: "Kotlin", color: "bg-violet-600" },
+  kt: { name: "Kotlin", color: "bg-violet-600" },
+  scala: { name: "Scala", color: "bg-rose-500" },
+
+  // .NET
+  csharp: { name: "C#", color: "bg-fuchsia-600" },
+  cs: { name: "C#", color: "bg-fuchsia-600" },
+  "c#": { name: "C#", color: "bg-fuchsia-600" },
+
+  // Scripting languages - each unique
+  php: { name: "PHP", color: "bg-indigo-600" },
+  ruby: { name: "Ruby", color: "bg-red-500" },
+  rb: { name: "Ruby", color: "bg-red-500" },
+  perl: { name: "Perl", color: "bg-blue-400" },
+  pl: { name: "Perl", color: "bg-blue-400" },
+  lua: { name: "Lua", color: "bg-purple-600" },
+  r: { name: "R", color: "bg-sky-600" },
+
+  // Mobile
+  swift: { name: "Swift", color: "bg-orange-400" },
+
+  // DevOps/Config
+  dockerfile: { name: "Dockerfile", color: "bg-sky-400" },
+  docker: { name: "Docker", color: "bg-sky-400" },
+  nginx: { name: "Nginx", color: "bg-green-600" },
+  apache: { name: "Apache", color: "bg-rose-600" },
+  apacheconf: { name: "Apache", color: "bg-rose-600" },
+  makefile: { name: "Makefile", color: "bg-yellow-600" },
+  make: { name: "Make", color: "bg-yellow-600" },
+
+  // API/Query
+  graphql: { name: "GraphQL", color: "bg-pink-600" },
+  gql: { name: "GraphQL", color: "bg-pink-600" },
+
+  // Diff/Patch
+  diff: { name: "Diff", color: "bg-green-500" },
+  patch: { name: "Patch", color: "bg-green-500" },
+
+  // Plain text - neutral gray
+  plaintext: { name: "Text", color: "bg-neutral-500" },
+  text: { name: "Text", color: "bg-neutral-500" },
 };
 
 interface LazyCodeBlockProps {
@@ -64,6 +130,7 @@ export function LazyCodeBlock({
   const [highlighted, setHighlighted] = useState(false);
   const [isHighlighting, setIsHighlighting] = useState(false);
   const codeRef = useRef<HTMLElement>(null);
+  const { openWithContext } = useAskAI();
 
   const { ref, isIntersecting } = useIntersectionObserver({
     rootMargin,
@@ -133,6 +200,19 @@ export function LazyCodeBlock({
     }
   }, []);
 
+  const handleAskAI = useCallback(() => {
+    const code = codeRef.current?.textContent || "";
+    const pageContext = getPageContext();
+    openWithContext({
+      page: pageContext,
+      content: {
+        type: "code",
+        code,
+        language: langConfig.name,
+      },
+    });
+  }, [openWithContext, langConfig.name]);
+
   // Show skeleton placeholder if not in viewport yet
   if (!isIntersecting && showPlaceholder) {
     return (
@@ -185,21 +265,35 @@ export function LazyCodeBlock({
         </code>
       </pre>
 
-      {/* Copy button */}
-      <button
-        onClick={handleCopy}
-        className={cn(
-          "absolute top-3 right-3 p-2 rounded-lg",
-          "bg-gray-800 hover:bg-gray-700",
-          "border border-gray-700",
-          "text-gray-400 hover:text-white",
-          "transition-all duration-200",
-          "opacity-0 group-hover:opacity-100 focus:opacity-100",
-          "focus:outline-none focus:ring-2 focus:ring-blue-500"
-        )}
-        aria-label={copied ? "Copied!" : "Copy code"}
-        title={copied ? "Copied!" : "Copy code"}
-      >
+      {/* Action buttons */}
+      <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+        {/* Ask AI button */}
+        <button
+          onClick={handleAskAI}
+          className="p-2 rounded-lg bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
+          aria-label="Ask AI about this code"
+          title="Ask AI about this code"
+        >
+          <svg
+            className="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" />
+          </svg>
+        </button>
+
+        {/* Copy button */}
+        <button
+          onClick={handleCopy}
+          className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-400 hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
+          aria-label={copied ? "Copied!" : "Copy code"}
+          title={copied ? "Copied!" : "Copy code"}
+        >
         {copied ? (
           <svg
             className="w-4 h-4 text-green-400"
@@ -231,7 +325,8 @@ export function LazyCodeBlock({
             />
           </svg>
         )}
-      </button>
+        </button>
+      </div>
     </div>
   );
 }

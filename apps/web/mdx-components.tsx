@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Link from "next/link";
-import { CodeBlock } from "@/components/code-block";
+import { LazyCodeBlock } from "@/components/lazy-code-block";
 import { ContentMeta } from "@/components/content-meta";
 import { H1, H2, H3, H4, H5, H6 } from "@/components/mdx/headings";
 import {
@@ -54,12 +54,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
 
-    // Code blocks with copy button and syntax highlighting
+    // Code blocks with copy button and syntax highlighting (lazy-loaded)
     pre: ({ children }) => {
       // Extract language class from the code element inside pre
       const codeElement = children as React.ReactElement<{ className?: string; children?: React.ReactNode }>;
       const className = codeElement?.props?.className ?? "";
-      return <CodeBlock className={className}>{codeElement?.props?.children}</CodeBlock>;
+      return <LazyCodeBlock className={className}>{codeElement?.props?.children}</LazyCodeBlock>;
     },
 
     // Inline code (not inside pre)

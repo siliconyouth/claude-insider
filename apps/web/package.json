@@ -83,6 +83,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/web-push": "^3.6.4",
+    "@types/webpack": "^5.28.5",
     "autoprefixer": "^10.4.22",
     "chrome-launcher": "^1.2.1",
     "eslint": "^9.39.1",
@@ -95,6 +96,7 @@
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
     "tsx": "^4.21.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "webpack": "^5.104.0"
   }
 }

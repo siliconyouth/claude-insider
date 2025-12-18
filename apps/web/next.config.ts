@@ -4,6 +4,7 @@ import { withPayload } from "@payloadcms/next/withPayload";
 import createNextIntlPlugin from "next-intl/plugin";
 import { withBotId } from "botid/next/config";
 import bundleAnalyzer from "@next/bundle-analyzer";
+import webpack from "webpack";
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
@@ -51,6 +52,19 @@ const nextConfig: NextConfig = {
   },
   // Bundle analyzer optimization
   productionBrowserSourceMaps: false,
+  // Webpack optimizations for bundle size
+  webpack: (config) => {
+    // Limit date-fns locales to only English (saves ~600KB)
+    // PayloadCMS bundles all ~120 locales by default
+    config.plugins.push(
+      new webpack.ContextReplacementPlugin(
+        /date-fns[/\\]locale/,
+        new RegExp(`(en-US|en-GB)`)
+      )
+    );
+
+    return config;
+  },
   // Security headers
   async headers() {
     return [
