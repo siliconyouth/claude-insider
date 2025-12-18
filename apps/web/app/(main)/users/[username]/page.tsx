@@ -390,124 +390,128 @@ export default function PublicProfilePage({
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a]">
       <Header />
-      {/* Cover Banner - Click to edit (own profile only) */}
-      <div
-        className={cn(
-          "h-48 sm:h-56 relative overflow-hidden",
-          profile.isOwnProfile && "cursor-pointer group"
-        )}
-        onClick={profile.isOwnProfile ? handleEditCover : undefined}
-        onMouseEnter={() => profile.isOwnProfile && setIsHoveringCover(true)}
-        onMouseLeave={() => setIsHoveringCover(false)}
-        role={profile.isOwnProfile ? "button" : undefined}
-        tabIndex={profile.isOwnProfile ? 0 : undefined}
-        onKeyDown={(e) => {
-          if (profile.isOwnProfile && (e.key === "Enter" || e.key === " ")) {
-            e.preventDefault();
-            handleEditCover();
-          }
-        }}
-        aria-label={profile.isOwnProfile ? "Edit cover photo" : undefined}
-      >
-        {/* Custom Cover or Default Animated */}
-        {profile.coverPhotoUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={profile.coverPhotoUrl}
-            alt="Profile cover"
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <DefaultCover className="w-full h-full" />
-        )}
-
-        {/* Edit overlay (own profile only) */}
-        {profile.isOwnProfile && (
+      <main id="main-content" className="flex-1 pt-6">
+        <div className="max-w-5xl mx-auto px-4">
+          {/* Main Profile Card */}
           <div
             className={cn(
-              "absolute inset-0 flex items-center justify-center",
-              "bg-black/40 transition-opacity duration-200",
-              isHoveringCover ? "opacity-100" : "opacity-0"
+              "bg-white dark:bg-[#111111] rounded-2xl",
+              "border border-gray-200 dark:border-[#262626]",
+              "shadow-xl shadow-black/5 dark:shadow-black/20",
+              "mb-6 overflow-hidden"
             )}
           >
-            <div className="flex items-center gap-2 text-white">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+            {/* Cover Photo - Inside card with 3:1 aspect ratio */}
+            <div
+              className={cn(
+                "relative w-full overflow-hidden",
+                // 3:1 aspect ratio container
+                "aspect-[3/1]",
+                // Clickable if own profile
+                profile.isOwnProfile && "cursor-pointer group"
+              )}
+              onClick={profile.isOwnProfile ? handleEditCover : undefined}
+              onMouseEnter={() => profile.isOwnProfile && setIsHoveringCover(true)}
+              onMouseLeave={() => setIsHoveringCover(false)}
+              role={profile.isOwnProfile ? "button" : undefined}
+              tabIndex={profile.isOwnProfile ? 0 : undefined}
+              onKeyDown={(e) => {
+                if (profile.isOwnProfile && (e.key === "Enter" || e.key === " ")) {
+                  e.preventDefault();
+                  handleEditCover();
+                }
+              }}
+              aria-label={profile.isOwnProfile ? "Edit cover photo" : undefined}
+            >
+              {/* Custom Cover or Default Animated */}
+              {profile.coverPhotoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={profile.coverPhotoUrl}
+                  alt="Profile cover"
+                  className="w-full h-full object-cover"
                 />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              <span className="text-sm font-medium">
-                {profile.coverPhotoUrl ? "Change cover" : "Add cover photo"}
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
+              ) : (
+                <DefaultCover className="w-full h-full" />
+              )}
 
-      <div className="max-w-5xl mx-auto px-4 -mt-24 sm:-mt-28 relative z-10">
-        {/* Main Profile Card */}
-        <div
-          className={cn(
-            "bg-white dark:bg-[#111111] rounded-2xl",
-            "border border-gray-200 dark:border-[#262626]",
-            "shadow-xl shadow-black/5 dark:shadow-black/20",
-            "mb-6"
-          )}
-        >
-          {/* Top section with avatar and info */}
-          <div className="p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              {/* Avatar with online indicator */}
-              <div className="relative flex-shrink-0">
-                {profile.avatar ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={profile.avatar}
-                    alt={profile.name}
-                    className={cn(
-                      "w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover",
-                      "border-4 border-white dark:border-[#111111]",
-                      "shadow-lg"
-                    )}
-                  />
-                ) : (
-                  <div
-                    className={cn(
-                      "w-28 h-28 sm:w-32 sm:h-32 rounded-full flex items-center justify-center",
-                      "text-4xl sm:text-5xl font-bold",
-                      "bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white",
-                      "border-4 border-white dark:border-[#111111]",
-                      "shadow-lg"
-                    )}
-                  >
-                    {profile.name?.[0]?.toUpperCase() || "U"}
+              {/* Edit overlay (own profile only) */}
+              {profile.isOwnProfile && (
+                <div
+                  className={cn(
+                    "absolute inset-0 flex items-center justify-center",
+                    "bg-black/40 transition-opacity duration-200",
+                    isHoveringCover ? "opacity-100" : "opacity-0"
+                  )}
+                >
+                  <div className="flex items-center gap-2 text-white">
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                    <span className="text-sm font-medium">
+                      {profile.coverPhotoUrl ? "Change cover" : "Add cover photo"}
+                    </span>
                   </div>
-                )}
-                {/* Online indicator */}
-                {profile.isOnline && (
-                  <div
-                    className={cn(
-                      "absolute bottom-2 right-2 w-5 h-5 rounded-full",
-                      "bg-emerald-500 border-3 border-white dark:border-[#111111]"
-                    )}
-                    title="Online"
-                  />
-                )}
-              </div>
+                </div>
+              )}
+            </div>
+
+            {/* Profile Info Section - Avatar overlaps cover */}
+            <div className="relative px-6 sm:px-8 pb-6 sm:pb-8">
+              {/* Avatar with online indicator - overlapping the cover */}
+              <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 sm:gap-6">
+                <div className="relative flex-shrink-0 -mt-16 sm:-mt-20">
+                  {profile.avatar ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={profile.avatar}
+                      alt={profile.name}
+                      className={cn(
+                        "w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover",
+                        "border-4 border-white dark:border-[#111111]",
+                        "shadow-lg"
+                      )}
+                    />
+                  ) : (
+                    <div
+                      className={cn(
+                        "w-28 h-28 sm:w-32 sm:h-32 rounded-full flex items-center justify-center",
+                        "text-4xl sm:text-5xl font-bold",
+                        "bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white",
+                        "border-4 border-white dark:border-[#111111]",
+                        "shadow-lg"
+                      )}
+                    >
+                      {profile.name?.[0]?.toUpperCase() || "U"}
+                    </div>
+                  )}
+                  {/* Online indicator */}
+                  {profile.isOnline && (
+                    <div
+                      className={cn(
+                        "absolute bottom-2 right-2 w-5 h-5 rounded-full",
+                        "bg-emerald-500 border-3 border-white dark:border-[#111111]"
+                      )}
+                      title="Online"
+                    />
+                  )}
+                </div>
 
               {/* Info */}
               <div className="flex-1 text-center sm:text-left min-w-0">
@@ -1127,7 +1131,8 @@ export default function PublicProfilePage({
               </p>
             </div>
           )}
-      </div>
+        </div>
+      </main>
       <Footer />
     </div>
   );
