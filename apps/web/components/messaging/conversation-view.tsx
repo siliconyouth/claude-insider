@@ -204,8 +204,9 @@ export function ConversationView({
       // Play sound for new messages from others
       if (isNew && payload.sender_id !== currentUserId) {
         // Check if current user is mentioned
-        const mentions = payload.mentions as Array<{ userId: string }> | undefined;
-        const isMentioned = mentions?.some((m) => m.userId === currentUserId);
+        // mentions is a TEXT[] in the database - array of user ID strings
+        const mentions = payload.mentions as string[] | undefined;
+        const isMentioned = mentions?.includes(currentUserId);
         if (isMentioned) {
           playMention();
         } else {

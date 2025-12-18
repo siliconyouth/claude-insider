@@ -175,6 +175,28 @@ export async function generateAIChatResponse(
 
     const aiResponseContent = textContent.text;
 
+    // Parse @mentions from AI response
+    const mentionRegex = /@(\w+)/g;
+    const mentionMatches = aiResponseContent.match(mentionRegex) || [];
+    const mentionUsernames = mentionMatches.map((m) => m.slice(1).toLowerCase());
+    const mentionedUserIds: string[] = [];
+
+    // Look up user IDs for mentioned usernames
+    if (mentionUsernames.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: mentionedUsers } = await (supabase as any)
+        .from("user")
+        .select("id, username")
+        .in("username", mentionUsernames);
+
+      if (mentionedUsers) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mentionedUsers.forEach((u: any) => {
+          if (u.id) mentionedUserIds.push(u.id);
+        });
+      }
+    }
+
     // Save the AI response as a message
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data: aiMessage, error: insertError } = await supabase
@@ -183,7 +205,7 @@ export async function generateAIChatResponse(
         conversation_id: conversationId,
         sender_id: AI_ASSISTANT_USER_ID,
         content: aiResponseContent,
-        mentions: [],
+        mentions: mentionedUserIds,
         is_ai_generated: true,
         ai_response_to: triggerMessageId,
       })
@@ -196,6 +218,31 @@ export async function generateAIChatResponse(
     }
 
     const savedMessage = aiMessage as SavedMessageRow;
+
+    // Create notifications for mentioned users
+    if (mentionedUserIds.length > 0) {
+      const { createNotification } = await import("./notifications");
+      const preview = aiResponseContent.length > 50 ? aiResponseContent.slice(0, 50) + "..." : aiResponseContent;
+
+      await Promise.all(
+        mentionedUserIds.map((userId) =>
+          createNotification({
+            userId,
+            type: "mention",
+            title: "Claude Insider mentioned you",
+            message: preview,
+            actorId: AI_ASSISTANT_USER_ID,
+            resourceType: "dm_message",
+            resourceId: savedMessage.id,
+            data: {
+              conversationId,
+              messageId: savedMessage.id,
+            },
+          })
+        )
+      );
+    }
+
     return {
       success: true,
       message: {
