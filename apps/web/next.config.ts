@@ -19,8 +19,18 @@ const nextConfig: NextConfig = {
   compress: true,
   // Enable experimental features for better performance
   experimental: {
+    // Optimize CSS for smaller bundles
     optimizeCss: true,
+    // Enable server actions optimization
+    serverActions: {
+      bodySizeLimit: "2mb",
+    },
   },
+  // Vercel-specific optimizations
+  // Enable output file tracing for smaller deployments
+  outputFileTracingRoot: process.cwd(),
+  // Generate ETags for better caching
+  generateEtags: true,
   // Tree-shake large icon libraries
   modularizeImports: {
     "lucide-react": {
