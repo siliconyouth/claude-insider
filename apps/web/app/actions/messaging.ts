@@ -525,20 +525,50 @@ export async function sendMessage(
       return { success: false, error: "You are not a participant in this conversation" };
     }
 
+    // Get conversation type to determine AI response behavior
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: conversation } = await supabase
+      .from("dm_conversations")
+      .select("type")
+      .eq("id", conversationId)
+      .single();
+
+    const conversationType = (conversation as { type: string } | null)?.type || "direct";
+    const isDirectDM = conversationType === "direct";
+
     // Detect @mentions in the message
     const mentionRegex = /@(\w+)/g;
     const mentionMatches = content.match(mentionRegex) || [];
     const mentionUsernames: string[] = [];
     let aiMentioned = false;
+    let aiExplicitlyMentioned = false;
 
     // Extract usernames from mentions
     for (const match of mentionMatches) {
       const username = match.slice(1).toLowerCase();
       if (username === "claudeinsider") {
-        aiMentioned = true;
+        aiExplicitlyMentioned = true;
       } else {
         mentionUsernames.push(username);
       }
+    }
+
+    // AI response logic:
+    // - Direct DMs: AI ALWAYS responds (no mention needed)
+    // - Group chats: AI only responds when @claudeinsider is mentioned AND AI is a member
+    if (isDirectDM) {
+      aiMentioned = true; // Always respond in 1-on-1 DMs
+    } else if (aiExplicitlyMentioned) {
+      // Check if AI is a member of this group before responding
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: aiParticipant } = await supabase
+        .from("dm_participants")
+        .select("id")
+        .eq("conversation_id", conversationId)
+        .eq("user_id", AI_ASSISTANT_USER_ID)
+        .single();
+
+      aiMentioned = !!aiParticipant; // Only respond if AI is a member
     }
 
     // Look up user IDs for mentioned usernames

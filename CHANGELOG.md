@@ -43,6 +43,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `sound_theme` column in `assistant_settings` table
   - Default: 'claude-insider'
 
+### Enhanced @claudeinsider AI Assistant
+- **Smart Response Triggering**:
+  - Direct DMs: AI ALWAYS responds (no @mention needed)
+  - Group chats: AI only responds when @claudeinsider is explicitly mentioned
+  - Added conversation type detection in `sendMessage()` function
+- **Group Chat AI Membership Management**:
+  - New functions: `addAIAssistantToGroup()`, `removeAIAssistantFromGroup()`, `isAIAssistantInGroup()`
+  - Only admins and owners can add/remove AI from groups
+  - AI is added as a "member" role (can be kicked, but can't kick others)
+  - AI membership is checked before responding to mentions in groups
+- **E2EE Integration**:
+  - AI assistant has pre-verified device (`claude-insider-system`)
+  - Verification method: `admin` (system authority)
+  - Profile marked as verified for trust indicators
+  - Uses existing consent system - users must grant AI access to encrypted content
+  - All AI access is logged via `e2ee_ai_consent` system
+- **Database Migrations**:
+  - `074_add_ai_assistant_user.sql`: Creates AI user (already deployed)
+  - `075_ai_assistant_e2ee_verified.sql`: Sets up verified device entry
+
 ### Fixed
 - **@claudeinsider AI Assistant in Messages Tab**: Fixed critical bug where the AI assistant wasn't responding to @claudeinsider mentions in DM conversations
   - Root cause: AI assistant user (`ai-assistant-claudeinsider`) was missing from `000_fresh_start.sql` consolidated schema

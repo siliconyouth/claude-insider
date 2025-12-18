@@ -13,6 +13,7 @@
 
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
+import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
 
 // ============================================
 // TYPES
@@ -411,6 +412,166 @@ export async function removeFromGroup(
     return { success: true };
   } catch (error) {
     console.error("Remove from group error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// AI ASSISTANT MANAGEMENT
+// ============================================
+
+/**
+ * Check if AI assistant is a member of a group conversation
+ */
+export async function isAIAssistantInGroup(
+  conversationId: string
+): Promise<{ success: boolean; isMember?: boolean; error?: string }> {
+  try {
+    const supabase = await createAdminClient();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, error } = await supabase
+      .from("dm_participants")
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", AI_ASSISTANT_USER_ID)
+      .single();
+
+    if (error && error.code !== "PGRST116") {
+      // PGRST116 = no rows found, which is expected if AI is not a member
+      console.error("Check AI in group error:", error);
+      return { success: false, error: "Failed to check AI membership" };
+    }
+
+    return { success: true, isMember: !!data };
+  } catch (error) {
+    console.error("Check AI in group error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Add AI assistant to a group conversation
+ * Only admins and owners can add the AI assistant
+ */
+export async function addAIAssistantToGroup(
+  conversationId: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Check if conversation is a group and user has permission
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: participant } = await supabase
+      .from("dm_participants")
+      .select("role")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    const role = (participant as { role?: string } | null)?.role;
+    if (role !== "owner" && role !== "admin") {
+      return { success: false, error: "Only admins and owners can add the AI assistant" };
+    }
+
+    // Check if conversation is a group
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: conversation } = await supabase
+      .from("dm_conversations")
+      .select("type")
+      .eq("id", conversationId)
+      .single();
+
+    if ((conversation as { type?: string } | null)?.type !== "group") {
+      return { success: false, error: "AI assistant can only be added to group chats" };
+    }
+
+    // Check if AI is already a member
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: existing } = await supabase
+      .from("dm_participants")
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", AI_ASSISTANT_USER_ID)
+      .single();
+
+    if (existing) {
+      return { success: false, error: "AI assistant is already in this group" };
+    }
+
+    // Add AI assistant as a member
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error: insertError } = await supabase
+      .from("dm_participants")
+      .insert({
+        conversation_id: conversationId,
+        user_id: AI_ASSISTANT_USER_ID,
+        role: "member",
+        invited_by: session.user.id,
+      });
+
+    if (insertError) {
+      console.error("Add AI to group error:", insertError);
+      return { success: false, error: "Failed to add AI assistant" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Add AI to group error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Remove AI assistant from a group conversation
+ * Only admins and owners can remove the AI assistant
+ */
+export async function removeAIAssistantFromGroup(
+  conversationId: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Check if user has permission (admin or owner)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: participant } = await supabase
+      .from("dm_participants")
+      .select("role")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    const role = (participant as { role?: string } | null)?.role;
+    if (role !== "owner" && role !== "admin") {
+      return { success: false, error: "Only admins and owners can remove the AI assistant" };
+    }
+
+    // Remove AI assistant
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error: deleteError } = await supabase
+      .from("dm_participants")
+      .delete()
+      .eq("conversation_id", conversationId)
+      .eq("user_id", AI_ASSISTANT_USER_ID);
+
+    if (deleteError) {
+      console.error("Remove AI from group error:", deleteError);
+      return { success: false, error: "Failed to remove AI assistant" };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Remove AI from group error:", error);
     return { success: false, error: "An unexpected error occurred" };
   }
 }

@@ -2638,6 +2638,30 @@ CREATE POLICY "device_keys_delete_own" ON public.device_keys FOR DELETE USING (
 );
 CREATE POLICY "device_keys_service_role" ON public.device_keys FOR ALL TO service_role USING (true) WITH CHECK (true);
 
+-- AI ASSISTANT E2EE VERIFIED DEVICE
+-- The AI doesn't actually decrypt messages - users consent to share
+-- decrypted content with the AI. But the AI needs a "device" entry
+-- to show as verified in the UI.
+INSERT INTO public.device_keys (
+  user_id, device_id, identity_key, signing_key, device_name, device_type,
+  is_verified, verified_at, verification_method
+)
+VALUES (
+  'ai-assistant-claudeinsider',
+  'claude-insider-system',
+  'AI_SYSTEM_IDENTITY_KEY',
+  'AI_SYSTEM_SIGNING_KEY',
+  'Claude Insider AI System',
+  'web',
+  TRUE,
+  NOW(),
+  'admin'
+) ON CONFLICT (user_id, device_id) DO UPDATE SET
+  is_verified = TRUE,
+  verified_at = NOW(),
+  verification_method = 'admin',
+  device_name = 'Claude Insider AI System';
+
 -- -----------------------------------------------------------------------------
 -- 10.2 ONE-TIME PREKEYS (Migration 054)
 -- -----------------------------------------------------------------------------
