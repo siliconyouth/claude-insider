@@ -9,6 +9,8 @@
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { extractMentions } from "@/lib/mentions";
+import { createNotification } from "./notifications";
+import type { NotificationType } from "./notifications";
 
 /**
  * Process mentions in content and create notifications
@@ -54,25 +56,29 @@ export async function processMentions(
       .eq("id", session.user.id)
       .single();
 
-    // Create notifications for each mentioned user
-    const notifications = mentionedUsers.map((user: { id: string; username: string }) => ({
-      user_id: user.id,
-      type: "mention",
-      title: `${currentUser?.name || "Someone"} mentioned you`,
-      message: getNotificationMessage(context, content),
-      link: getNotificationLink(context),
-      metadata: {
-        mentionedBy: session.user.id,
-        mentionedByName: currentUser?.name,
-        mentionedByUsername: currentUser?.username,
-        contextType: context.type,
+    // Create notifications for each mentioned user using createNotification
+    // This properly handles in-app, email, AND push notifications based on user preferences
+    const notificationType: NotificationType = "mention";
+    const notificationPromises = mentionedUsers.map((user: { id: string; username: string }) =>
+      createNotification({
+        userId: user.id,
+        type: notificationType,
+        title: `${currentUser?.name || "Someone"} mentioned you`,
+        message: getNotificationMessage(context, content),
+        actorId: session.user.id,
         resourceType: context.resourceType,
         resourceId: context.resourceId,
-      },
-    }));
+        data: {
+          mentionedByName: currentUser?.name,
+          mentionedByUsername: currentUser?.username,
+          contextType: context.type,
+          link: getNotificationLink(context),
+        },
+      })
+    );
 
-    // Insert notifications
-    await supabase.from("notifications").insert(notifications);
+    // Send all notifications in parallel
+    await Promise.all(notificationPromises);
 
     return {
       mentionedUsers: mentionedUsers.map((u: { username: string }) => u.username),
