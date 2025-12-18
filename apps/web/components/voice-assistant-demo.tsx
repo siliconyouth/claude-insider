@@ -245,6 +245,7 @@ export function VoiceAssistantDemo() {
                   ? "bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/30"
                   : "bg-gray-700 text-gray-400 hover:bg-gray-600"
               }`}
+              aria-label={showPulse ? "Recording voice input" : "Start voice input"}
             >
               {showPulse && (
                 <>
@@ -268,7 +269,10 @@ export function VoiceAssistantDemo() {
             </div>
 
             {/* Send button */}
-            <button className="p-2.5 rounded-full bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500 transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30">
+            <button
+              className="p-2.5 rounded-full bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500 transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30"
+              aria-label="Send message"
+            >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>

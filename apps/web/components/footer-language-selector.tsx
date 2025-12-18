@@ -57,7 +57,7 @@ export function FooterLanguageSelector() {
         )}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-label="Select language"
+        aria-label={`${localeNames[currentLocaleCode]}, select language`}
       >
         <span className="text-sm" aria-hidden="true">
           {localeFlags[currentLocaleCode]}
