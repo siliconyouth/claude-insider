@@ -2709,26 +2709,31 @@ CREATE POLICY "device_keys_service_role" ON public.device_keys FOR ALL TO servic
 -- AI ASSISTANT E2EE VERIFIED DEVICE
 -- The AI doesn't actually decrypt messages - users consent to share
 -- decrypted content with the AI. But the AI needs a "device" entry
--- to show as verified in the UI.
+-- with properly formatted keys to show as verified in the UI.
 INSERT INTO public.device_keys (
-  user_id, device_id, identity_key, signing_key, device_name, device_type,
-  is_verified, verified_at, verification_method
+  user_id, device_id, identity_key, signing_key,
+  signed_prekey, signed_prekey_id, signed_prekey_signature,
+  device_name, device_type, is_verified, verified_at, verification_method
 )
 VALUES (
   'ai-assistant-claudeinsider',
   'claude-insider-system',
-  'AI_SYSTEM_IDENTITY_KEY',
-  'AI_SYSTEM_SIGNING_KEY',
-  'Claude Insider AI System',
-  'web',
+  'AI_INSIDER_IDENTITY_7kFvC3qM9xR2aB5nT8wE1hL4pJ6sD0gU',
+  'AI_INSIDER_SIGNING_2mN5bY8xK4vF7hL1wR9tE3jA6pQ0cS',
+  'AI_INSIDER_PREKEY_9sG2fX5nB8mH1kL4vR7wT0jE3pA6cY',
+  1,
+  'AI_INSIDER_SIG_4bN7mK2xF5hL8vR1wT9jE3sA6pQ0cYgU2fX5nB8mH1k',
+  'Claude Insider AI',
+  'server',
   TRUE,
   NOW(),
-  'admin'
+  'system'
 ) ON CONFLICT (user_id, device_id) DO UPDATE SET
   is_verified = TRUE,
   verified_at = NOW(),
-  verification_method = 'admin',
-  device_name = 'Claude Insider AI System';
+  verification_method = 'system',
+  device_name = 'Claude Insider AI',
+  device_type = 'server';
 
 -- -----------------------------------------------------------------------------
 -- 10.2 ONE-TIME PREKEYS (Migration 054)

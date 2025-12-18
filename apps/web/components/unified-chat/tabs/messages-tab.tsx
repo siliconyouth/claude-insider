@@ -23,7 +23,7 @@ import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
-import { VirtualizedMessageList } from "@/components/messaging/virtualized-message-list";
+import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
 import {
   MentionAutocomplete,
   useMentionDetection,
@@ -358,6 +358,14 @@ function ConversationView({
   // Get other participant
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
 
+  // Auto-verify conversation with AI assistant (it has a pre-verified system device)
+  const isAIAssistantChat = otherParticipant?.userId === "ai-assistant-claudeinsider";
+  useEffect(() => {
+    if (isAIAssistantChat) {
+      setIsVerified(true);
+    }
+  }, [isAIAssistantChat]);
+
   // Build mentionable users list from participants (memoized for performance)
   const mentionableUsers: MentionUser[] = useMemo(() => {
     return participants
@@ -654,6 +662,9 @@ function ConversationView({
     setCursorPosition(target.selectionStart || 0);
   };
 
+  // Reference to the message list for scroll control
+  const virtualizerScrollRef = useRef<VirtualizedMessageListHandle>(null);
+
   // Send message
   const handleSend = async () => {
     if (!inputValue.trim() || isSending) return;
@@ -674,6 +685,43 @@ function ConversationView({
       setMessages((prev) => [...prev, result.message!]);
       // Play sent sound on success
       playMessageSent();
+
+      // Always scroll to bottom after sending a message
+      // Use requestAnimationFrame to ensure the message is rendered first
+      requestAnimationFrame(() => {
+        virtualizerScrollRef.current?.scrollToBottom();
+      });
+
+      // If AI was mentioned (or this is a direct DM with AI), trigger AI response
+      if (result.aiMentioned) {
+        // Import and call AI response generator
+        import("@/app/actions/ai-chat-response").then(async ({ generateAIChatResponse }) => {
+          const aiResult = await generateAIChatResponse(conversationId, result.message!.id);
+          if (aiResult.success && aiResult.message) {
+            // Add AI response to messages
+            setMessages((prev) => [
+              ...prev,
+              {
+                id: aiResult.message!.id,
+                conversationId,
+                senderId: "ai-assistant-claudeinsider",
+                senderName: "Claude Insider",
+                senderAvatar: "/images/claude-insider-avatar.png",
+                content: aiResult.message!.content,
+                mentions: [],
+                isAiGenerated: true,
+                createdAt: aiResult.message!.createdAt,
+              },
+            ]);
+            // Scroll to show AI response
+            requestAnimationFrame(() => {
+              virtualizerScrollRef.current?.scrollToBottom();
+            });
+            // Play notification sound for AI response
+            playMessageReceived();
+          }
+        });
+      }
     }
 
     setIsSending(false);
@@ -743,6 +791,7 @@ function ConversationView({
 
       {/* Messages - Virtualized for performance */}
       <VirtualizedMessageList
+        ref={virtualizerScrollRef}
         messages={messages}
         currentUserId={currentUserId}
         typingUsers={typingUsers}

@@ -13,7 +13,7 @@
  * - Maintains scroll position when loading older messages
  */
 
-import { useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
 import { MessageBubble, TypingIndicator, DateSeparator } from "./message-bubble";
@@ -22,6 +22,10 @@ import type { Message, ReadReceipt } from "@/app/actions/messaging";
 // ============================================================================
 // Types
 // ============================================================================
+
+export interface VirtualizedMessageListHandle {
+  scrollToBottom: () => void;
+}
 
 interface VirtualizedMessageListProps {
   messages: Message[];
@@ -113,20 +117,21 @@ function groupMessagesWithDates(messages: Message[]): MessageGroup[] {
 // Component
 // ============================================================================
 
-export function VirtualizedMessageList({
-  messages,
-  currentUserId,
-  typingUsers,
-  typingUserNames = [],
-  isLoading = false,
-  hasMore = false,
-  onLoadMore,
-  isGroupChat = false,
-  highlightedMessageId,
-  readReceipts = {},
-  participantCount = 1,
-  className,
-}: VirtualizedMessageListProps) {
+export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, VirtualizedMessageListProps>(
+  function VirtualizedMessageList({
+    messages,
+    currentUserId,
+    typingUsers,
+    typingUserNames = [],
+    isLoading = false,
+    hasMore = false,
+    onLoadMore,
+    isGroupChat = false,
+    highlightedMessageId,
+    readReceipts = {},
+    participantCount = 1,
+    className,
+  }, ref) {
   const parentRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const prevMessagesLengthRef = useRef(messages.length);
@@ -157,6 +162,21 @@ export function VirtualizedMessageList({
   });
 
   const virtualItems = virtualizer.getVirtualItems();
+
+  // Expose scrollToBottom method via ref
+  useImperativeHandle(ref, () => ({
+    scrollToBottom: () => {
+      // Use multiple frames to ensure measurements are complete
+      virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
+      requestAnimationFrame(() => {
+        const el = parentRef.current;
+        if (el) {
+          el.scrollTop = el.scrollHeight;
+        }
+        setIsAtBottom(true);
+      });
+    },
+  }), [virtualizer, totalCount]);
 
   // Check if scrolled to bottom
   const checkIfAtBottom = useCallback(() => {
@@ -409,4 +429,4 @@ export function VirtualizedMessageList({
       )}
     </div>
   );
-}
+});
