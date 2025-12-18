@@ -23,7 +23,7 @@ export function UnifiedChatHeader() {
   return (
     <div className="flex items-center justify-between px-2 py-2 border-b border-gray-200 dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
       {/* Tabs */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1" role="tablist" aria-label="Chat tabs">
         <TabButton
           active={activeTab === "ai"}
           onClick={() => switchTab("ai")}
