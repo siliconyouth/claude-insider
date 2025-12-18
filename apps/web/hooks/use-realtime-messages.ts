@@ -278,16 +278,18 @@ export function useRealtimeMessages(
           );
         }
 
-        // Subscribe to conversation updates (for read receipts)
+        // Subscribe to dm_participants updates (for unread count changes)
+        // This fires when markConversationAsRead updates dm_participants.unread_count
         channel.on(
           "postgres_changes",
           {
             event: "UPDATE",
             schema: "public",
-            table: "conversations",
+            table: "dm_participants",
+            filter: `user_id=eq.${userId}`,
           },
           () => {
-            // Refresh count when conversations update
+            // Refresh count when participant record updates (e.g., marked as read)
             refreshCount();
           }
         );
