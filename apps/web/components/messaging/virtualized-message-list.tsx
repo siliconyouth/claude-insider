@@ -13,6 +13,7 @@
  * - Maintains scroll position when loading older messages
  * - Scroll anchoring with tracked message IDs (Matrix SDK pattern)
  * - Shrink prevention for typing indicator transitions
+ * - Unfilling: removes messages far off-screen (>6000px) for memory efficiency
  */
 
 import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle } from "react";
@@ -49,6 +50,29 @@ interface ShrinkPreventionState {
 }
 
 // ============================================================================
+// Unfilling Constants (Matrix SDK pattern)
+// ============================================================================
+
+/**
+ * The amount of extra scroll distance to allow prior to unfilling.
+ * Content more than this distance from the viewport can be safely removed.
+ * Based on Matrix SDK's UNPAGINATION_PADDING constant.
+ */
+const UNPAGINATION_PADDING = 6000;
+
+/**
+ * Debounce time for unfill requests to prevent rapid-fire during fast scrolling.
+ * Based on Matrix SDK's UNFILL_REQUEST_DEBOUNCE_MS constant.
+ */
+const UNFILL_REQUEST_DEBOUNCE_MS = 200;
+
+/**
+ * Minimum number of messages to keep in memory regardless of scroll position.
+ * Prevents edge cases where we unfill everything.
+ */
+const MIN_MESSAGES_TO_KEEP = 50;
+
+// ============================================================================
 // Types
 // ============================================================================
 
@@ -74,6 +98,16 @@ interface VirtualizedMessageListProps {
   participantCount?: number;
   /** Map of lowercase username -> user data for @mention hover cards */
   mentionedUsers?: Record<string, MentionedUser>;
+  /**
+   * Callback to unfill (remove) messages that are far off-screen.
+   * Called when content exceeds UNPAGINATION_PADDING (6000px) from viewport.
+   *
+   * @param backwards - true to remove from top (older), false to remove from bottom (newer)
+   * @param messageCount - number of messages to remove
+   *
+   * Matrix SDK pattern for memory efficiency in long conversations.
+   */
+  onUnfill?: (backwards: boolean, messageCount: number) => void;
   className?: string;
 }
 
@@ -162,6 +196,7 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     readReceipts = {},
     participantCount = 1,
     mentionedUsers = {},
+    onUnfill,
     className,
   }, ref) {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -178,6 +213,9 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
 
   // Track previous typing state to detect transitions
   const prevTypingRef = useRef(typingUsers.length > 0);
+
+  // Unfill debounce timer (Matrix SDK pattern)
+  const unfillDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
   // Group messages with date separators
   const items = groupMessagesWithDates(messages);
@@ -347,7 +385,76 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     }
   }, []);
 
-  // Handle scroll for infinite loading and bottom detection
+  /**
+   * Check if we should unfill (remove) messages that are far off-screen.
+   * Matrix SDK pattern for memory efficiency in long conversations.
+   *
+   * We calculate how much content is above/below the viewport:
+   * - If > UNPAGINATION_PADDING (6000px) above viewport → unfill top (older messages)
+   * - If > UNPAGINATION_PADDING (6000px) below viewport → unfill bottom (newer messages)
+   *
+   * The debounce prevents rapid-fire unfill requests during fast scrolling.
+   */
+  const checkUnfillState = useCallback(() => {
+    const el = parentRef.current;
+    if (!el || !onUnfill) return;
+
+    // Don't unfill if we have too few messages
+    if (messages.length <= MIN_MESSAGES_TO_KEEP) return;
+
+    // Calculate excess content above and below viewport
+    const excessAbove = el.scrollTop;
+    const excessBelow = el.scrollHeight - el.scrollTop - el.clientHeight;
+
+    // Check if we need to unfill from the top (older messages)
+    if (excessAbove > UNPAGINATION_PADDING) {
+      // Calculate how many messages to remove
+      // We want to keep UNPAGINATION_PADDING/2 worth of content
+      // Estimate ~80px per message average
+      const targetExcess = UNPAGINATION_PADDING / 2;
+      const excessToRemove = excessAbove - targetExcess;
+      const estimatedMessageCount = Math.floor(excessToRemove / 80);
+
+      // Ensure we don't remove too many
+      const maxToRemove = messages.length - MIN_MESSAGES_TO_KEEP;
+      const countToRemove = Math.min(estimatedMessageCount, maxToRemove);
+
+      if (countToRemove > 0) {
+        // Debounce the unfill request
+        if (unfillDebounceRef.current) {
+          clearTimeout(unfillDebounceRef.current);
+        }
+        unfillDebounceRef.current = setTimeout(() => {
+          onUnfill(true, countToRemove); // backwards = true (remove from top)
+          unfillDebounceRef.current = null;
+        }, UNFILL_REQUEST_DEBOUNCE_MS);
+      }
+    }
+
+    // Check if we need to unfill from the bottom (newer messages)
+    // This is less common but can happen if user scrolls up a lot
+    if (excessBelow > UNPAGINATION_PADDING) {
+      const targetExcess = UNPAGINATION_PADDING / 2;
+      const excessToRemove = excessBelow - targetExcess;
+      const estimatedMessageCount = Math.floor(excessToRemove / 80);
+
+      const maxToRemove = messages.length - MIN_MESSAGES_TO_KEEP;
+      const countToRemove = Math.min(estimatedMessageCount, maxToRemove);
+
+      if (countToRemove > 0) {
+        // Debounce the unfill request
+        if (unfillDebounceRef.current) {
+          clearTimeout(unfillDebounceRef.current);
+        }
+        unfillDebounceRef.current = setTimeout(() => {
+          onUnfill(false, countToRemove); // backwards = false (remove from bottom)
+          unfillDebounceRef.current = null;
+        }, UNFILL_REQUEST_DEBOUNCE_MS);
+      }
+    }
+  }, [messages.length, onUnfill]);
+
+  // Handle scroll for infinite loading, bottom detection, and unfilling
   const handleScroll = useCallback(() => {
     const el = parentRef.current;
     if (!el) return;
@@ -355,6 +462,9 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     checkIfAtBottom();
     saveScrollState();
     clearShrinkPreventionIfNeeded();
+
+    // Check if we should unfill messages far off-screen (memory optimization)
+    checkUnfillState();
 
     // Load more when scrolled near top (reverse infinite scroll)
     if (
@@ -378,7 +488,7 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
         isLoadingMoreRef.current = false;
       });
     }
-  }, [hasMore, isLoading, onLoadMore, checkIfAtBottom, saveScrollState, clearShrinkPreventionIfNeeded]);
+  }, [hasMore, isLoading, onLoadMore, checkIfAtBottom, saveScrollState, clearShrinkPreventionIfNeeded, checkUnfillState]);
 
   // Scroll to bottom when new messages arrive (if already at bottom)
   useEffect(() => {
@@ -420,6 +530,16 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
       return () => clearTimeout(timer);
     }
   }, [shrinkPadding]);
+
+  // Cleanup unfill debounce timer on unmount
+  useEffect(() => {
+    const timerRef = unfillDebounceRef;
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
 
   // Initial scroll to bottom
   useEffect(() => {
