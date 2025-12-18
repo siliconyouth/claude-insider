@@ -401,12 +401,12 @@ export default function PublicProfilePage({
               "mb-6 overflow-hidden"
             )}
           >
-            {/* Cover Photo - Inside card with 3:1 aspect ratio */}
+            {/* Hero Cover Section with Profile Info Overlay */}
             <div
               className={cn(
                 "relative w-full overflow-hidden",
-                // 3:1 aspect ratio container
-                "aspect-[3/1]",
+                // Taller aspect ratio for hero effect
+                "aspect-[2.5/1] sm:aspect-[3/1]",
                 // Clickable if own profile
                 profile.isOwnProfile && "cursor-pointer group"
               )}
@@ -435,250 +435,209 @@ export default function PublicProfilePage({
                 <DefaultCover className="w-full h-full" />
               )}
 
-              {/* Edit overlay (own profile only) */}
+              {/* Gradient overlay for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+              {/* Edit overlay - appears on hover (own profile only) */}
               {profile.isOwnProfile && (
                 <div
                   className={cn(
-                    "absolute inset-0 flex items-center justify-center",
-                    "bg-black/40 transition-opacity duration-200",
+                    "absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-lg",
+                    "bg-black/50 text-white text-sm font-medium",
+                    "transition-opacity duration-200",
                     isHoveringCover ? "opacity-100" : "opacity-0"
                   )}
                 >
-                  <div className="flex items-center gap-2 text-white">
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                    <span className="text-sm font-medium">
-                      {profile.coverPhotoUrl ? "Change cover" : "Add cover photo"}
-                    </span>
-                  </div>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  {profile.coverPhotoUrl ? "Change cover" : "Add cover"}
                 </div>
               )}
-            </div>
 
-            {/* Profile Info Section - Avatar overlaps cover */}
-            <div className="relative px-6 sm:px-8 pb-6 sm:pb-8">
-              {/* Avatar with online indicator - overlapping the cover */}
-              <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 sm:gap-6">
-                <div className="relative flex-shrink-0 -mt-16 sm:-mt-20">
-                  {profile.avatar ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={profile.avatar}
-                      alt={profile.name}
-                      className={cn(
-                        "w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover",
-                        "border-4 border-white dark:border-[#111111]",
-                        "shadow-lg"
-                      )}
-                    />
-                  ) : (
-                    <div
-                      className={cn(
-                        "w-28 h-28 sm:w-32 sm:h-32 rounded-full flex items-center justify-center",
-                        "text-4xl sm:text-5xl font-bold",
-                        "bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white",
-                        "border-4 border-white dark:border-[#111111]",
-                        "shadow-lg"
-                      )}
-                    >
-                      {profile.name?.[0]?.toUpperCase() || "U"}
-                    </div>
-                  )}
-                  {/* Online indicator */}
-                  {profile.isOnline && (
-                    <div
-                      className={cn(
-                        "absolute bottom-2 right-2 w-5 h-5 rounded-full",
-                        "bg-emerald-500 border-3 border-white dark:border-[#111111]"
-                      )}
-                      title="Online"
-                    />
-                  )}
-                </div>
-
-              {/* Info */}
-              <div className="flex-1 text-center sm:text-left min-w-0">
-                {/* Name and badges row */}
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-                    {profile.name}
-                  </h1>
-                  {profile.isVerified && (
-                    <span
-                      className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"
-                      title="Verified"
-                    >
-                      ✓ Verified
-                    </span>
-                  )}
-                  {profile.isBetaTester && (
-                    <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400">
-                      Beta Tester
-                    </span>
-                  )}
-                  {roleBadge && (
-                    <span
-                      className={cn(
-                        "px-2 py-0.5 text-xs font-medium rounded-full border",
-                        roleBadge.color
-                      )}
-                    >
-                      {roleBadge.label}
-                    </span>
-                  )}
-                </div>
-
-                {/* Username and donor tier */}
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mb-3">
-                  <p className="text-gray-500 dark:text-gray-400">
-                    @{profile.username}
-                  </p>
-                  {donorConfig && (
-                    <span
-                      className={cn(
-                        "inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full border",
-                        donorConfig.bg,
-                        donorConfig.border
-                      )}
-                    >
-                      <HeartIcon className={cn("w-3.5 h-3.5", donorConfig.color)} />
-                      <span className={donorConfig.color}>{donorConfig.label}</span>
-                    </span>
-                  )}
-                </div>
-
-                {/* Bio */}
-                {profile.bio && (
-                  <p className="text-gray-700 dark:text-gray-300 mb-4 max-w-2xl">
-                    {profile.bio}
-                  </p>
-                )}
-
-                {/* Social Links */}
-                {Object.keys(profile.socialLinks).length > 0 && (
-                  <div className="flex justify-center sm:justify-start gap-3 mb-4">
-                    {profile.socialLinks.website && (
-                      <a
-                        href={profile.socialLinks.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
-                        title="Website"
+              {/* Profile Info Overlay - positioned at bottom of cover */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4">
+                  {/* Avatar */}
+                  <div className="relative flex-shrink-0">
+                    {profile.avatar ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={profile.avatar}
+                        alt={profile.name}
+                        className={cn(
+                          "w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover",
+                          "border-4 border-white/20",
+                          "shadow-xl shadow-black/30"
+                        )}
+                      />
+                    ) : (
+                      <div
+                        className={cn(
+                          "w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center",
+                          "text-3xl sm:text-4xl font-bold",
+                          "bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 text-white",
+                          "border-4 border-white/20",
+                          "shadow-xl shadow-black/30"
+                        )}
                       >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                        {profile.name?.[0]?.toUpperCase() || "U"}
+                      </div>
+                    )}
+                    {/* Online indicator */}
+                    {profile.isOnline && (
+                      <div
+                        className={cn(
+                          "absolute bottom-1 right-1 w-5 h-5 rounded-full",
+                          "bg-emerald-500 border-2 border-white/50"
+                        )}
+                        title="Online"
+                      />
+                    )}
+                  </div>
+
+                  {/* Name, Username, Badges - over cover */}
+                  <div className="flex-1 text-center sm:text-left min-w-0">
+                    {/* Name and badges row */}
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1">
+                      <h1 className="text-2xl sm:text-3xl font-bold text-white drop-shadow-lg">
+                        {profile.name}
+                      </h1>
+                      {profile.isVerified && (
+                        <span
+                          className="px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-500/80 text-white backdrop-blur-sm"
+                          title="Verified"
                         >
+                          ✓ Verified
+                        </span>
+                      )}
+                      {profile.isBetaTester && (
+                        <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-purple-500/80 text-white backdrop-blur-sm">
+                          Beta Tester
+                        </span>
+                      )}
+                      {roleBadge && (
+                        <span
+                          className={cn(
+                            "px-2 py-0.5 text-xs font-medium rounded-full",
+                            "bg-white/20 text-white backdrop-blur-sm"
+                          )}
+                        >
+                          {roleBadge.label}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Username and donor tier */}
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                      <p className="text-white/80 drop-shadow">@{profile.username}</p>
+                      {donorConfig && (
+                        <span
+                          className={cn(
+                            "inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full",
+                            "bg-white/20 text-white backdrop-blur-sm"
+                          )}
+                        >
+                          <HeartIcon className="w-3.5 h-3.5" />
+                          {donorConfig.label}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons - Desktop, positioned on cover */}
+                  <div className="hidden sm:flex items-center gap-2">
+                    {profile.isOwnProfile ? (
+                      <Link
+                        href="/settings"
+                        className={cn(
+                          "inline-flex items-center justify-center gap-2 px-5 py-2 text-sm font-medium rounded-xl",
+                          "bg-white text-gray-900",
+                          "shadow-lg shadow-black/20",
+                          "hover:bg-gray-100 transition-all duration-200"
+                        )}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                           />
                         </svg>
-                      </a>
+                        Edit Profile
+                      </Link>
+                    ) : (
+                      <>
+                        <FollowButton
+                          userId={profile.id}
+                          isFollowing={profile.isFollowing || false}
+                          size="md"
+                          className="!bg-white !text-gray-900 hover:!bg-gray-100 shadow-lg shadow-black/20"
+                        />
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleMessage();
+                          }}
+                          className={cn(
+                            "inline-flex items-center justify-center gap-2 px-5 py-2 text-sm font-medium rounded-xl",
+                            "bg-white/20 text-white backdrop-blur-sm",
+                            "hover:bg-white/30 transition-all duration-200"
+                          )}
+                        >
+                          <MessageIcon className="w-4 h-4" />
+                          Message
+                        </button>
+                      </>
                     )}
-                    {profile.socialLinks.github && (
-                      <a
-                        href={`https://github.com/${profile.socialLinks.github}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
-                        title="GitHub"
-                      >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path
-                            fillRule="evenodd"
-                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </a>
-                    )}
-                    {profile.socialLinks.twitter && (
-                      <a
-                        href={`https://twitter.com/${profile.socialLinks.twitter}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-400 transition-colors"
-                        title="Twitter"
-                      >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                        </svg>
-                      </a>
-                    )}
-                    {profile.socialLinks.linkedin && (
-                      <a
-                        href={`https://linkedin.com/in/${profile.socialLinks.linkedin}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-600 transition-colors"
-                        title="LinkedIn"
-                      >
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                        </svg>
-                      </a>
-                    )}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleShare();
+                      }}
+                      className={cn(
+                        "p-2 rounded-xl",
+                        "bg-white/20 text-white backdrop-blur-sm",
+                        "hover:bg-white/30 transition-all duration-200"
+                      )}
+                    >
+                      <ShareIcon className="w-5 h-5" />
+                    </button>
                   </div>
-                )}
-
-                {/* Meta info */}
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-sm text-gray-500 dark:text-gray-400">
-                  <span>Joined {formatDate(profile.joinedAt)}</span>
-                  {!profile.isOnline && profile.lastSeen && (
-                    <span>Last seen {formatRelativeDate(profile.lastSeen)}</span>
-                  )}
                 </div>
               </div>
+            </div>
 
-              {/* Action Buttons (Desktop) */}
-              <div className="hidden sm:flex flex-col gap-2">
+            {/* Secondary Info Section - Below cover */}
+            <div className="px-6 sm:px-8 py-4 sm:py-6">
+              {/* Mobile Action Buttons */}
+              <div className="flex sm:hidden gap-2 mb-4">
                 {profile.isOwnProfile ? (
                   <Link
                     href="/settings"
                     className={cn(
-                      "inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-xl",
-                      "bg-gray-100 dark:bg-[#1a1a1a]",
-                      "text-gray-700 dark:text-gray-300",
-                      "border border-gray-200 dark:border-[#262626]",
-                      "hover:bg-gray-200 dark:hover:bg-[#262626]",
-                      "transition-all duration-200"
+                      "flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl",
+                      "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                      "text-white"
                     )}
                   >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      />
-                    </svg>
                     Edit Profile
                   </Link>
                 ) : (
@@ -687,17 +646,15 @@ export default function PublicProfilePage({
                       userId={profile.id}
                       isFollowing={profile.isFollowing || false}
                       size="md"
-                      className="min-w-[140px]"
+                      className="flex-1"
                     />
                     <button
                       onClick={handleMessage}
                       className={cn(
-                        "inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-xl",
+                        "flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl",
                         "bg-gray-100 dark:bg-[#1a1a1a]",
                         "text-gray-700 dark:text-gray-300",
-                        "border border-gray-200 dark:border-[#262626]",
-                        "hover:bg-gray-200 dark:hover:bg-[#262626]",
-                        "transition-all duration-200"
+                        "border border-gray-200 dark:border-[#262626]"
                       )}
                     >
                       <MessageIcon className="w-4 h-4" />
@@ -708,66 +665,100 @@ export default function PublicProfilePage({
                 <button
                   onClick={handleShare}
                   className={cn(
-                    "inline-flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium rounded-xl",
+                    "px-4 py-2.5 rounded-xl",
                     "text-gray-500 dark:text-gray-400",
-                    "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]",
-                    "transition-all duration-200"
-                  )}
-                >
-                  <ShareIcon className="w-4 h-4" />
-                  {copied ? "Copied!" : "Share"}
-                </button>
-              </div>
-            </div>
-
-            {/* Action Buttons (Mobile) */}
-            <div className="flex sm:hidden gap-2 mt-6">
-              {profile.isOwnProfile ? (
-                <Link
-                  href="/settings"
-                  className={cn(
-                    "flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl",
-                    "bg-gray-100 dark:bg-[#1a1a1a]",
-                    "text-gray-700 dark:text-gray-300",
                     "border border-gray-200 dark:border-[#262626]"
                   )}
                 >
-                  Edit Profile
-                </Link>
-              ) : (
-                <>
-                  <FollowButton
-                    userId={profile.id}
-                    isFollowing={profile.isFollowing || false}
-                    size="md"
-                    className="flex-1"
-                  />
-                  <button
-                    onClick={handleMessage}
-                    className={cn(
-                      "flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl",
-                      "bg-gray-100 dark:bg-[#1a1a1a]",
-                      "text-gray-700 dark:text-gray-300",
-                      "border border-gray-200 dark:border-[#262626]"
-                    )}
-                  >
-                    <MessageIcon className="w-4 h-4" />
-                    Message
-                  </button>
-                </>
+                  <ShareIcon className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Bio */}
+              {profile.bio && (
+                <p className="text-gray-700 dark:text-gray-300 mb-4 max-w-2xl">
+                  {profile.bio}
+                </p>
               )}
-              <button
-                onClick={handleShare}
-                className={cn(
-                  "px-4 py-2.5 rounded-xl",
-                  "text-gray-500 dark:text-gray-400",
-                  "border border-gray-200 dark:border-[#262626]"
+
+              {/* Join Date and Last Seen */}
+              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+                <span>Joined {formatDate(profile.joinedAt)}</span>
+                {!profile.isOnline && profile.lastSeen && (
+                  <>
+                    <span>•</span>
+                    <span>Last seen {formatRelativeDate(profile.lastSeen)}</span>
+                  </>
                 )}
-              >
-                <ShareIcon className="w-4 h-4" />
-              </button>
+              </div>
+
+              {/* Social Links */}
+              {Object.keys(profile.socialLinks).length > 0 && (
+                <div className="flex gap-3">
+                  {profile.socialLinks.website && (
+                    <a
+                      href={profile.socialLinks.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
+                      title="Website"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                        />
+                      </svg>
+                    </a>
+                  )}
+                  {profile.socialLinks.github && (
+                    <a
+                      href={`https://github.com/${profile.socialLinks.github}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+                      title="GitHub"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          fillRule="evenodd"
+                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </a>
+                  )}
+                  {profile.socialLinks.twitter && (
+                    <a
+                      href={`https://twitter.com/${profile.socialLinks.twitter}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-400 transition-colors"
+                      title="Twitter"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                      </svg>
+                    </a>
+                  )}
+                  {profile.socialLinks.linkedin && (
+                    <a
+                      href={`https://linkedin.com/in/${profile.socialLinks.linkedin}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-600 transition-colors"
+                      title="LinkedIn"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
-          </div>
 
           {/* Stats Bar */}
           <div className="border-t border-gray-200 dark:border-[#262626] px-6 sm:px-8 py-4">
