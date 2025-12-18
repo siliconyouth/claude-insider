@@ -23,6 +23,7 @@ import {
   EditSuggestions,
   Media,
   Translations,
+  EmailTemplates,
 } from './collections';
 import { SiteSettings, CrossLinkSettings } from './globals';
 
@@ -69,6 +70,8 @@ export default buildConfig({
     EditSuggestions,
     // Internationalization (Settings group)
     Translations,
+    // Email Management (Settings group)
+    EmailTemplates,
   ],
 
   // Globals (single-instance documents for site-wide config)

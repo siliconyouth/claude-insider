@@ -35,3 +35,6 @@ export { Media } from './Media';
 
 // Internationalization
 export { Translations } from './Translations';
+
+// Email Management
+export { EmailTemplates } from './EmailTemplates';
