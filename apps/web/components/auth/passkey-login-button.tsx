@@ -14,7 +14,7 @@ import {
   initPasskeyAuth,
   completePasskeyAuth,
 } from "@/app/actions/passkeys";
-import { isWebAuthnSupported, isPlatformAuthenticatorAvailable } from "@/lib/webauthn";
+import { isWebAuthnSupported, isPlatformAuthenticatorAvailable } from "@/lib/webauthn-client";
 
 interface PasskeyLoginButtonProps {
   onSuccess?: () => void;

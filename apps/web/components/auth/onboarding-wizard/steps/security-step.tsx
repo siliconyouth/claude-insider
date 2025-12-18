@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 import { useWizard } from "../wizard-context";
 import { StepWrapper, StepInfoBox } from "../shared/step-wrapper";
-import { isWebAuthnSupported, isPlatformAuthenticatorAvailable } from "@/lib/webauthn";
+import { isWebAuthnSupported, isPlatformAuthenticatorAvailable } from "@/lib/webauthn-client";
 import { startRegistration } from "@simplewebauthn/browser";
 import {
   initPasskeyRegistration,

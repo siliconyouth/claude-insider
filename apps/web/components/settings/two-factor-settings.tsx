@@ -29,7 +29,7 @@ import {
   sendEmail2FACode,
   verifyEmail2FACode,
 } from "@/app/actions/email-2fa";
-import { formatLastUsed } from "@/lib/webauthn";
+import { formatLastUsed } from "@/lib/webauthn-client";
 
 type SetupStep = "initial" | "scan" | "verify" | "backup" | "complete";
 

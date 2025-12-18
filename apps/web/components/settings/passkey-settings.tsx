@@ -19,7 +19,7 @@ import {
   type PasskeyInfo,
 } from "@/app/actions/passkeys";
 import { startRegistration } from "@simplewebauthn/browser";
-import { formatLastUsed, isWebAuthnSupported } from "@/lib/webauthn";
+import { formatLastUsed, isWebAuthnSupported } from "@/lib/webauthn-client";
 
 type ViewState = "list" | "registering" | "naming";
 

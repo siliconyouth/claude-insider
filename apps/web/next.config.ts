@@ -3,6 +3,11 @@ import createMDX from "@next/mdx";
 import { withPayload } from "@payloadcms/next/withPayload";
 import createNextIntlPlugin from "next-intl/plugin";
 import { withBotId } from "botid/next/config";
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
@@ -142,5 +147,5 @@ const withMDX = createMDX({
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
-// Wrap with Payload, MDX, i18n, and BotId
-export default withBotId(withPayload(withNextIntl(withMDX(nextConfig))));
+// Wrap with Payload, MDX, i18n, BotId, and Bundle Analyzer
+export default withBundleAnalyzer(withBotId(withPayload(withNextIntl(withMDX(nextConfig)))));
