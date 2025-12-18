@@ -130,7 +130,7 @@ export default function SettingsPage() {
 
   // Browser notifications state
   const [showBrowserNotifPrompt, setShowBrowserNotifPrompt] = useState(false);
-  const { isSupported: browserNotifSupported, permission: browserNotifPermission, isEnabled: browserNotifEnabled } = useBrowserNotifications();
+  const { isSupported: browserNotifSupported, permission: browserNotifPermission, isEnabled: browserNotifEnabled, unsubscribe: unsubscribeFromPush } = useBrowserNotifications();
 
   // Sound settings
   const sounds = useSound();
@@ -305,12 +305,15 @@ export default function SettingsPage() {
         // Revert on error
         setNotifPrefs((prev) => ({ ...prev, [key]: !newValue }));
         toast.error(result.error);
+      } else {
+        // Clear cache so reload gets fresh data
+        clearCache();
       }
     });
   };
 
   // Browser notification toggle handler - shows prompt if permission not granted
-  const handleBrowserNotifToggle = () => {
+  const handleBrowserNotifToggle = async () => {
     // If trying to enable and permission not granted, show prompt
     if (!notifPrefs.browser_notifications) {
       if (!browserNotifSupported) {
@@ -327,10 +330,28 @@ export default function SettingsPage() {
         return;
       }
       // Already granted, just enable the setting
-    }
+      handleNotifPrefToggle("browser_notifications");
+    } else {
+      // Disabling - unsubscribe from push and update preference
+      setNotifPrefs((prev) => ({ ...prev, browser_notifications: false }));
 
-    // Toggle the setting
-    handleNotifPrefToggle("browser_notifications");
+      startTransition(async () => {
+        // Unsubscribe from push notifications (removes from browser and server)
+        await unsubscribeFromPush();
+
+        // Update database preference
+        const result = await updateNotificationPreferences({ browser_notifications: false });
+
+        if (result.error) {
+          // Revert on error
+          setNotifPrefs((prev) => ({ ...prev, browser_notifications: true }));
+          toast.error(result.error);
+        } else {
+          clearCache();
+          toast.success("Browser notifications disabled");
+        }
+      });
+    }
   };
 
   // Handle browser notification prompt close (just close the modal)
@@ -351,6 +372,7 @@ export default function SettingsPage() {
           setNotifPrefs((prev) => ({ ...prev, browser_notifications: false }));
           toast.error(updateResult.error);
         } else {
+          clearCache(); // Clear cache so reload gets fresh data
           toast.success("Browser notifications enabled");
         }
       });
@@ -1952,6 +1974,8 @@ export default function SettingsPage() {
                             const result = await updateNotificationPreferences({ email_digest_frequency: freq });
                             if (result.error) {
                               toast.error(result.error);
+                            } else {
+                              clearCache();
                             }
                           });
                         }}
