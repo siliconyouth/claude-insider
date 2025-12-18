@@ -651,11 +651,16 @@ export default function ProfilePage() {
                       )}
                     </div>
 
-                    {/* Username and donor tier */}
+                    {/* Username, followers, and donor tier */}
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
                       {profile?.username && (
                         <p className="text-white/80 drop-shadow">@{profile.username}</p>
                       )}
+                      <span className="text-white/70 text-sm">
+                        <span className="font-semibold text-white">{profile?.followersCount || 0}</span> followers
+                        <span className="mx-1.5">·</span>
+                        <span className="font-semibold text-white">{profile?.followingCount || 0}</span> following
+                      </span>
                       {donorConfig && (
                         <span
                           className={cn(
@@ -708,132 +713,6 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
-
-            {/* Quick Actions Bar - Icon-based */}
-            <div className="px-6 sm:px-8 py-4 border-b border-gray-200 dark:border-[#262626]">
-              <div className="flex items-center justify-between">
-                {/* Icon Actions */}
-                <div className="flex items-center gap-1">
-                  <Link
-                    href="/settings"
-                    className={cn(
-                      "p-3 rounded-xl transition-all duration-200",
-                      "text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-cyan-400",
-                      "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
-                    )}
-                    title="Settings"
-                  >
-                    <SettingsIcon className="w-5 h-5" />
-                  </Link>
-                  <Link
-                    href="/settings#profile"
-                    className={cn(
-                      "p-3 rounded-xl transition-all duration-200",
-                      "text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-cyan-400",
-                      "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
-                    )}
-                    title="Edit Profile"
-                  >
-                    <EditIcon className="w-5 h-5" />
-                  </Link>
-                  <button
-                    onClick={handleShare}
-                    className={cn(
-                      "p-3 rounded-xl transition-all duration-200",
-                      "text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-cyan-400",
-                      "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
-                    )}
-                    title={copied ? "Link copied!" : "Share profile"}
-                  >
-                    {copied ? (
-                      <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    ) : (
-                      <ShareIcon className="w-5 h-5" />
-                    )}
-                  </button>
-                </div>
-
-                {/* View Public Profile */}
-                {profile?.username && (
-                  <Link
-                    href={`/users/${profile.username}`}
-                    className={cn(
-                      "inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg",
-                      "text-gray-600 dark:text-gray-300",
-                      "hover:text-blue-600 dark:hover:text-cyan-400",
-                      "transition-colors"
-                    )}
-                  >
-                    <UsersIcon className="w-4 h-4" />
-                    View public profile
-                  </Link>
-                )}
-              </div>
-            </div>
-
-            {/* Badges Section - Prominent display */}
-            {(profile?.isVerified || profile?.isBetaTester || roleBadge || donorConfig) && (
-              <div className="px-6 sm:px-8 py-4 border-b border-gray-200 dark:border-[#262626]">
-                <div className="flex flex-wrap items-center gap-2">
-                  {profile?.isVerified && (
-                    <div
-                      className={cn(
-                        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
-                        "bg-emerald-100 dark:bg-emerald-900/30",
-                        "border border-emerald-200 dark:border-emerald-800"
-                      )}
-                    >
-                      <VerifiedIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
-                        Verified
-                      </span>
-                    </div>
-                  )}
-                  {profile?.isBetaTester && (
-                    <div
-                      className={cn(
-                        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
-                        "bg-purple-100 dark:bg-purple-900/30",
-                        "border border-purple-200 dark:border-purple-800"
-                      )}
-                    >
-                      <BetaIcon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                      <span className="text-sm font-medium text-purple-700 dark:text-purple-400">
-                        Beta Tester
-                      </span>
-                    </div>
-                  )}
-                  {roleBadge && (
-                    <div
-                      className={cn(
-                        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
-                        roleBadge.color
-                      )}
-                    >
-                      <SparklesIcon className="w-4 h-4" />
-                      <span className="text-sm font-medium">{roleBadge.label}</span>
-                    </div>
-                  )}
-                  {donorConfig && (
-                    <div
-                      className={cn(
-                        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
-                        donorConfig.bg,
-                        donorConfig.border,
-                        "border"
-                      )}
-                    >
-                      <HeartIcon className={cn("w-4 h-4", donorConfig.color)} />
-                      <span className={cn("text-sm font-medium", donorConfig.color)}>
-                        {donorConfig.label}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
 
             {/* Bio & Info Section */}
             <div className="px-6 sm:px-8 py-4">
@@ -962,7 +841,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Achievements Showcase - Always show with earned + locked */}
+          {/* Achievements - Icon-only display */}
           <section
             className={cn(
               "bg-white dark:bg-[#111111] rounded-2xl",
@@ -986,8 +865,9 @@ export default function ProfilePage() {
               </Link>
             </div>
             <div className="p-4">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {/* Earned achievements - Colored */}
+              {/* Icon grid - compact display */}
+              <div className="flex flex-wrap gap-2">
+                {/* Earned achievements - Colored icons */}
                 {featuredAchievements.map((achievement) => {
                   const rarityConfig = RARITY_CONFIG[achievement.rarity];
                   const Icon = achievement.icon;
@@ -995,99 +875,50 @@ export default function ProfilePage() {
                     <div
                       key={achievement.id}
                       className={cn(
-                        "p-4 rounded-xl border transition-all cursor-pointer hover:scale-[1.02]",
-                        rarityConfig.bgColor,
-                        rarityConfig.borderColor,
-                        achievement.rarity === "legendary" &&
-                          "ring-1 ring-amber-400/50 shadow-lg shadow-amber-500/10"
+                        "w-10 h-10 rounded-lg flex items-center justify-center",
+                        "transition-all cursor-pointer hover:scale-110",
+                        rarityConfig.iconBg,
+                        achievement.rarity === "legendary" && "ring-1 ring-amber-400/50"
                       )}
                       title={`${achievement.name} - ${achievement.criteria}`}
                     >
-                      <div className="flex flex-col items-center text-center gap-2">
-                        <div
-                          className={cn(
-                            "w-12 h-12 rounded-xl flex items-center justify-center",
-                            rarityConfig.iconBg
-                          )}
-                        >
-                          <Icon className={cn("w-6 h-6", rarityConfig.color)} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className={cn("font-medium text-sm truncate", rarityConfig.color)}>
-                            {achievement.name}
-                          </p>
-                          <div className="flex items-center justify-center gap-1 mt-1">
-                            <span
-                              className={cn(
-                                "text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded",
-                                rarityConfig.iconBg,
-                                rarityConfig.color
-                              )}
-                            >
-                              {rarityConfig.label}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                      <Icon className={cn("w-5 h-5", rarityConfig.color)} />
                     </div>
                   );
                 })}
-                {/* Locked achievements - Grayed out */}
+                {/* Locked achievements - Grayed icons */}
                 {lockedAchievements.map((achievement) => {
                   const Icon = achievement.icon;
                   return (
                     <div
                       key={achievement.id}
                       className={cn(
-                        "p-4 rounded-xl border transition-all cursor-pointer",
-                        "bg-gray-50 dark:bg-[#0a0a0a]",
-                        "border-gray-200 dark:border-[#1a1a1a]",
-                        "opacity-60 hover:opacity-80",
-                        "group"
+                        "relative w-10 h-10 rounded-lg flex items-center justify-center",
+                        "bg-gray-100 dark:bg-[#1a1a1a]",
+                        "opacity-40 hover:opacity-60 transition-all cursor-pointer"
                       )}
                       title={`Locked: ${achievement.criteria}`}
                     >
-                      <div className="flex flex-col items-center text-center gap-2">
-                        <div
-                          className={cn(
-                            "relative w-12 h-12 rounded-xl flex items-center justify-center",
-                            "bg-gray-200 dark:bg-[#1a1a1a]"
-                          )}
-                        >
-                          <Icon className="w-6 h-6 text-gray-400 dark:text-gray-600" />
-                          {/* Lock overlay */}
-                          <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
-                            <LockIcon className="w-3 h-3 text-gray-500 dark:text-gray-500" />
-                          </div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm truncate text-gray-400 dark:text-gray-500">
-                            {achievement.name}
-                          </p>
-                          <p className="text-[10px] text-gray-400 dark:text-gray-600 mt-1 line-clamp-1 group-hover:line-clamp-none">
-                            {achievement.criteria}
-                          </p>
-                        </div>
-                      </div>
+                      <Icon className="w-5 h-5 text-gray-400 dark:text-gray-600" />
+                      <LockIcon className="absolute -bottom-0.5 -right-0.5 w-3 h-3 text-gray-500" />
                     </div>
                   );
                 })}
               </div>
-              {/* Progress indicator */}
+              {/* Progress bar */}
               <div className="mt-4 pt-4 border-t border-gray-200 dark:border-[#262626]">
-                <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-gray-600 dark:text-gray-400">Collection Progress</span>
-                  <span className="font-medium text-gray-900 dark:text-white">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 h-1.5 bg-gray-200 dark:bg-[#1a1a1a] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 rounded-full transition-all duration-500"
+                      style={{
+                        width: `${(earnedAchievementIds.size / Object.keys(ACHIEVEMENTS).length) * 100}%`,
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
                     {Math.round((earnedAchievementIds.size / Object.keys(ACHIEVEMENTS).length) * 100)}%
                   </span>
-                </div>
-                <div className="h-2 bg-gray-200 dark:bg-[#1a1a1a] rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 rounded-full transition-all duration-500"
-                    style={{
-                      width: `${(earnedAchievementIds.size / Object.keys(ACHIEVEMENTS).length) * 100}%`,
-                    }}
-                  />
                 </div>
               </div>
             </div>
