@@ -5,17 +5,39 @@
  *
  * Main window component that renders via portal.
  * Contains tabs for AI Assistant and Messages.
+ *
+ * Performance: Uses dynamic imports for chat tabs to reduce initial bundle size.
+ * The heavy tab components (AI chat with streaming, messages with virtualization)
+ * are only loaded when the chat window is first opened.
  */
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/design-system";
 import { useUnifiedChat } from "./unified-chat-provider";
 import { UnifiedChatHeader } from "./unified-chat-header";
-import { AIAssistantTab } from "./tabs/ai-assistant-tab";
-import { MessagesTab } from "./tabs/messages-tab";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
 import { ErrorBoundary } from "@/components/error-boundary";
+
+// Dynamic imports for code splitting - these heavy components are only loaded when chat opens
+const AIAssistantTab = dynamic(() => import("./tabs/ai-assistant-tab").then(m => ({ default: m.AIAssistantTab })), {
+  ssr: false,
+  loading: () => (
+    <div className="flex-1 flex items-center justify-center">
+      <div className="animate-spin w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full" />
+    </div>
+  ),
+});
+
+const MessagesTab = dynamic(() => import("./tabs/messages-tab").then(m => ({ default: m.MessagesTab })), {
+  ssr: false,
+  loading: () => (
+    <div className="flex-1 flex items-center justify-center">
+      <div className="animate-spin w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full" />
+    </div>
+  ),
+});
 
 export function UnifiedChatWindow() {
   const {

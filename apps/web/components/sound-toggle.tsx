@@ -76,7 +76,7 @@ export function SoundToggle() {
           "flex items-center gap-2 text-sm transition-colors",
           "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         )}
-        aria-label={settings.enabled ? "Sound settings" : "Sound muted"}
+        aria-label={settings.enabled ? "Sound System, click to open settings" : "Sounds Muted, click to open settings"}
         aria-expanded={isOpen}
       >
         {settings.enabled ? (

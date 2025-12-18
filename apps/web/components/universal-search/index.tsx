@@ -440,7 +440,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
             ? "px-2.5 w-[160px] lg:w-[200px] bg-white dark:bg-[#111] border border-gray-200 dark:border-[#333] hover:border-gray-300 dark:hover:border-[#404040]"
             : "px-2.5 bg-gray-100 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#262626] hover:border-gray-300 dark:hover:border-[#404040]"
         )}
-        aria-label="Search (Ctrl+K or Cmd+K)"
+        aria-label="Search"
         aria-haspopup="dialog"
       >
         <svg
