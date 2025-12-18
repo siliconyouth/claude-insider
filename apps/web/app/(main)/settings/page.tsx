@@ -15,7 +15,7 @@ import {
   type PrivacySettings,
   type NotificationPreferences,
 } from "@/app/actions/profile";
-import { updateNotificationPreferences } from "@/app/actions/notifications";
+import { updateNotificationPreferences, sendTestNotifications } from "@/app/actions/notifications";
 import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
 import { PasskeySettings } from "@/components/settings/passkey-settings";
 import { DataManagement } from "@/components/settings/data-management";
@@ -131,6 +131,14 @@ export default function SettingsPage() {
   // Browser notifications state
   const [showBrowserNotifPrompt, setShowBrowserNotifPrompt] = useState(false);
   const { isSupported: browserNotifSupported, permission: browserNotifPermission, isEnabled: browserNotifEnabled, unsubscribe: unsubscribeFromPush } = useBrowserNotifications();
+
+  // Test notifications state
+  const [testNotifResults, setTestNotifResults] = useState<{
+    inApp: { success: boolean; error?: string };
+    push: { success: boolean; error?: string; sent?: number };
+    email: { success: boolean; error?: string };
+  } | null>(null);
+  const [isTestingNotifs, setIsTestingNotifs] = useState(false);
 
   // Sound settings
   const sounds = useSound();
@@ -273,6 +281,7 @@ export default function SettingsPage() {
       } else {
         toast.success("Username updated successfully");
         setOriginalUsername(username);
+        clearCache();
       }
     });
   };
@@ -288,6 +297,8 @@ export default function SettingsPage() {
         // Revert on error
         setPrivacy((prev) => ({ ...prev, [key]: !newValue }));
         toast.error(result.error);
+      } else {
+        clearCache();
       }
     });
   };
@@ -378,6 +389,37 @@ export default function SettingsPage() {
       });
     } else {
       toast.error("Browser notifications permission was denied");
+    }
+  };
+
+  // Test all notification channels
+  const handleTestNotifications = async () => {
+    setIsTestingNotifs(true);
+    setTestNotifResults(null);
+
+    try {
+      const result = await sendTestNotifications();
+      setTestNotifResults(result.results);
+
+      // Show summary toast
+      const successes = [
+        result.results.inApp.success && "In-app",
+        result.results.push.success && "Push",
+        result.results.email.success && "Email",
+      ].filter(Boolean);
+
+      if (successes.length === 3) {
+        toast.success("All notification channels working!");
+        playSuccess();
+      } else if (successes.length > 0) {
+        toast.success(`${successes.join(", ")} notifications sent`);
+      } else {
+        toast.error("No notifications could be sent");
+      }
+    } catch {
+      toast.error("Failed to send test notifications");
+    } finally {
+      setIsTestingNotifs(false);
     }
   };
 
@@ -2060,6 +2102,192 @@ export default function SettingsPage() {
                 />
               </button>
             </div>
+          </div>
+
+          {/* Test Notifications */}
+          <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4 mt-8">
+            Test Notifications
+          </h3>
+          <div
+            className={cn(
+              "p-4 rounded-xl",
+              "bg-gray-50 dark:bg-[#111111]",
+              "border border-gray-200 dark:border-[#262626]"
+            )}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <p className="font-medium text-gray-900 dark:text-white">Send Test Notifications</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Verify that all your notification channels are working correctly
+                </p>
+              </div>
+              <button
+                onClick={handleTestNotifications}
+                disabled={isTestingNotifs}
+                className={cn(
+                  "px-4 py-2 text-sm font-medium rounded-lg",
+                  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                  "text-white shadow-sm",
+                  "hover:shadow-md hover:-translate-y-0.5",
+                  "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0",
+                  "transition-all duration-200"
+                )}
+              >
+                {isTestingNotifs ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Testing...
+                  </span>
+                ) : (
+                  "Test All Channels"
+                )}
+              </button>
+            </div>
+
+            {/* Test Results */}
+            {testNotifResults && (
+              <div className="pt-4 border-t border-gray-200 dark:border-[#262626] space-y-3">
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Results:</p>
+
+                {/* In-App Result */}
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#262626]">
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "w-8 h-8 rounded-full flex items-center justify-center",
+                      testNotifResults.inApp.success
+                        ? "bg-green-100 dark:bg-green-900/30"
+                        : "bg-red-100 dark:bg-red-900/30"
+                    )}>
+                      {testNotifResults.inApp.success ? (
+                        <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white text-sm">In-App</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {testNotifResults.inApp.success ? "Notification created" : testNotifResults.inApp.error || "Failed"}
+                      </p>
+                    </div>
+                  </div>
+                  <span className={cn(
+                    "px-2 py-1 text-xs font-medium rounded-full",
+                    testNotifResults.inApp.success
+                      ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+                      : "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
+                  )}>
+                    {testNotifResults.inApp.success ? "Sent" : "Failed"}
+                  </span>
+                </div>
+
+                {/* Push Result */}
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#262626]">
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "w-8 h-8 rounded-full flex items-center justify-center",
+                      testNotifResults.push.success
+                        ? "bg-green-100 dark:bg-green-900/30"
+                        : testNotifResults.push.error === "Push notifications disabled"
+                          ? "bg-gray-100 dark:bg-gray-800"
+                          : "bg-red-100 dark:bg-red-900/30"
+                    )}>
+                      {testNotifResults.push.success ? (
+                        <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : testNotifResults.push.error === "Push notifications disabled" ? (
+                        <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white text-sm">Push</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {testNotifResults.push.success
+                          ? `Sent to ${testNotifResults.push.sent} device${testNotifResults.push.sent !== 1 ? "s" : ""}`
+                          : testNotifResults.push.error || "Failed"
+                        }
+                      </p>
+                    </div>
+                  </div>
+                  <span className={cn(
+                    "px-2 py-1 text-xs font-medium rounded-full",
+                    testNotifResults.push.success
+                      ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+                      : testNotifResults.push.error === "Push notifications disabled"
+                        ? "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                        : "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
+                  )}>
+                    {testNotifResults.push.success ? "Sent" : testNotifResults.push.error === "Push notifications disabled" ? "Disabled" : "Failed"}
+                  </span>
+                </div>
+
+                {/* Email Result */}
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#262626]">
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "w-8 h-8 rounded-full flex items-center justify-center",
+                      testNotifResults.email.success
+                        ? "bg-green-100 dark:bg-green-900/30"
+                        : testNotifResults.email.error === "Email notifications disabled"
+                          ? "bg-gray-100 dark:bg-gray-800"
+                          : "bg-red-100 dark:bg-red-900/30"
+                    )}>
+                      {testNotifResults.email.success ? (
+                        <svg className="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : testNotifResults.email.error === "Email notifications disabled" ? (
+                        <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900 dark:text-white text-sm">Email</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {testNotifResults.email.success
+                          ? "Test email queued"
+                          : testNotifResults.email.error || "Failed"
+                        }
+                      </p>
+                    </div>
+                  </div>
+                  <span className={cn(
+                    "px-2 py-1 text-xs font-medium rounded-full",
+                    testNotifResults.email.success
+                      ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+                      : testNotifResults.email.error === "Email notifications disabled"
+                        ? "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                        : "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
+                  )}>
+                    {testNotifResults.email.success ? "Sent" : testNotifResults.email.error === "Email notifications disabled" ? "Disabled" : "Failed"}
+                  </span>
+                </div>
+
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  Check your notifications panel, browser notifications, and email inbox to verify delivery.
+                </p>
+              </div>
+            )}
           </div>
         </section>
         </div>

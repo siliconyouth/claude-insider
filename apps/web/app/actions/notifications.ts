@@ -648,3 +648,144 @@ function getActionUrl(
       return `${baseUrl}/notifications`;
   }
 }
+
+/**
+ * Send test notifications to verify all notification channels are working
+ *
+ * Sends:
+ * 1. In-app notification (always)
+ * 2. Push notification (if browser_notifications enabled)
+ * 3. Email notification (if email preferences enabled)
+ */
+export async function sendTestNotifications(): Promise<{
+  results: {
+    inApp: { success: boolean; error?: string };
+    push: { success: boolean; error?: string; sent?: number };
+    email: { success: boolean; error?: string };
+  };
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return {
+        results: {
+          inApp: { success: false, error: "Not authenticated" },
+          push: { success: false, error: "Not authenticated" },
+          email: { success: false, error: "Not authenticated" },
+        },
+        error: "You must be signed in",
+      };
+    }
+
+    const userId = session.user.id;
+    const results = {
+      inApp: { success: false } as { success: boolean; error?: string },
+      push: { success: false, sent: 0 } as { success: boolean; error?: string; sent?: number },
+      email: { success: false } as { success: boolean; error?: string },
+    };
+
+    // Get user info and preferences
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createAdminClient()) as any;
+
+    const { data: user } = await supabase
+      .from("user")
+      .select("email, name")
+      .eq("id", userId)
+      .single();
+
+    const { data: prefs } = await supabase
+      .from("notification_preferences")
+      .select("*")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+    const testTime = new Date().toLocaleTimeString();
+
+    // 1. In-App Notification (always send)
+    try {
+      const { error: insertError } = await supabase.from("notifications").insert({
+        user_id: userId,
+        type: "system",
+        title: `Test notification sent at ${testTime}`,
+        message: "This is a test notification to verify your notification settings are working correctly.",
+        data: { test: true, timestamp: Date.now() },
+        read: false,
+        resource_type: "system",
+      });
+
+      if (insertError) {
+        results.inApp = { success: false, error: insertError.message };
+      } else {
+        results.inApp = { success: true };
+      }
+    } catch (err) {
+      results.inApp = { success: false, error: String(err) };
+    }
+
+    // 2. Push Notification (if enabled)
+    const browserNotifsEnabled = prefs?.browser_notifications === true;
+    if (browserNotifsEnabled && isWebPushConfigured()) {
+      try {
+        const pushResult = await sendPushNotificationToUser(userId, {
+          title: "Test Push Notification",
+          body: `Push test sent at ${testTime}. If you see this, push notifications are working!`,
+          url: "/settings",
+          tag: `test-${Date.now()}`,
+        });
+
+        if (pushResult.sent > 0) {
+          results.push = { success: true, sent: pushResult.sent };
+        } else if (pushResult.failed > 0) {
+          results.push = { success: false, error: `Failed to send to ${pushResult.failed} device(s)`, sent: 0 };
+        } else {
+          results.push = { success: false, error: "No push subscriptions found. Re-enable browser notifications.", sent: 0 };
+        }
+      } catch (err) {
+        results.push = { success: false, error: String(err), sent: 0 };
+      }
+    } else if (!browserNotifsEnabled) {
+      results.push = { success: false, error: "Browser notifications disabled in preferences", sent: 0 };
+    } else {
+      results.push = { success: false, error: "Push notifications not configured on server", sent: 0 };
+    }
+
+    // 3. Email Notification (if any email pref is enabled)
+    const anyEmailEnabled = prefs?.email_comments || prefs?.email_replies || prefs?.email_suggestions || prefs?.email_follows || prefs?.email_version_updates;
+    if (anyEmailEnabled && user?.email) {
+      try {
+        await sendNotificationEmail({
+          email: user.email,
+          userName: user.name || undefined,
+          type: "comment", // Use comment type for test
+          title: "Test Email Notification",
+          message: `This is a test email sent at ${testTime} to verify your email notification settings are working correctly.`,
+          actorName: "Claude Insider",
+          actionUrl: `${process.env.NEXT_PUBLIC_APP_URL || "https://claudeinsider.com"}/settings`,
+        });
+        results.email = { success: true };
+      } catch (err) {
+        results.email = { success: false, error: String(err) };
+      }
+    } else if (!user?.email) {
+      results.email = { success: false, error: "No email address on account" };
+    } else {
+      results.email = { success: false, error: "All email notifications disabled in preferences" };
+    }
+
+    revalidatePath("/notifications");
+
+    return { results };
+  } catch (error) {
+    console.error("[Notifications] Test notification error:", error);
+    return {
+      results: {
+        inApp: { success: false, error: "Unexpected error" },
+        push: { success: false, error: "Unexpected error" },
+        email: { success: false, error: "Unexpected error" },
+      },
+      error: "An unexpected error occurred",
+    };
+  }
+}
