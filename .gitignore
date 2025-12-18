@@ -39,3 +39,6 @@ dist/
 
 # Supabase CLI temp files (but not apps/web/supabase migrations)
 /supabase/
+
+# Lighthouse reports
+.lighthouse/
