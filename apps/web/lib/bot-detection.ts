@@ -66,19 +66,33 @@ export function botBlockedResponse(result: BotCheckResult) {
 
 /**
  * Higher-order function to wrap an API handler with bot protection
+ * Allows verified bots (Googlebot, Bingbot, etc.) while blocking unverified bots.
+ *
  * @param handler The original request handler
+ * @param options Configuration options
  * @returns Wrapped handler with bot detection
  */
 export function withBotProtection<T>(
-  handler: (request: Request) => Promise<T>
+  handler: (request: Request) => Promise<T>,
+  options: { allowVerifiedBots?: boolean } = { allowVerifiedBots: true }
 ): (request: Request) => Promise<T | NextResponse> {
   return async (request: Request) => {
     const botCheck = await checkForBot();
 
-    if (botCheck.isBot) {
-      console.warn("[Bot Blocked]:", {
-        isVerifiedBot: botCheck.isVerifiedBot,
+    // Allow verified bots (Googlebot, Bingbot, etc.) by default
+    // These are legitimate search engine crawlers that should access content
+    if (botCheck.isBot && options.allowVerifiedBots && botCheck.isVerifiedBot) {
+      console.info("[Verified Bot Allowed]:", {
         verifiedBotName: botCheck.verifiedBotName,
+        verifiedBotCategory: botCheck.verifiedBotCategory,
+        path: new URL(request.url).pathname,
+      });
+      return handler(request);
+    }
+
+    // Block unverified bots (scrapers, attackers, etc.)
+    if (botCheck.isBot && !botCheck.isVerifiedBot) {
+      console.warn("[Unverified Bot Blocked]:", {
         classificationReason: botCheck.classificationReason,
         path: new URL(request.url).pathname,
       });
@@ -102,6 +116,17 @@ export function getBotDetectionStatus() {
       "Credential stuffing protection",
       "API abuse prevention",
       "Automated scraping detection",
+      "Verified bot allowlist (Googlebot, Bingbot, etc.)",
+    ],
+    verifiedBotsAllowed: true,
+    verifiedBotExamples: [
+      "Googlebot",
+      "Bingbot",
+      "Applebot",
+      "DuckDuckBot",
+      "Slurp (Yahoo)",
+      "Baiduspider",
+      "YandexBot",
     ],
     protectedRoutes: [
       "/api/auth/*",
