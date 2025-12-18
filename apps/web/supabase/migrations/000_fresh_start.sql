@@ -2202,6 +2202,74 @@ CREATE INDEX IF NOT EXISTS idx_read_receipts_message_time ON public.dm_message_r
 ALTER TABLE public.dm_message_read_receipts ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "read_receipts_all" ON public.dm_message_read_receipts FOR ALL USING (true) WITH CHECK (true);
 
+-- RPC function to mark messages as read in bulk
+CREATE OR REPLACE FUNCTION public.mark_messages_read(
+  p_user_id TEXT,
+  p_conversation_id UUID,
+  p_up_to_message_id UUID DEFAULT NULL
+)
+RETURNS INTEGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  v_count INTEGER;
+  v_cutoff_time TIMESTAMPTZ;
+BEGIN
+  IF p_up_to_message_id IS NOT NULL THEN
+    SELECT created_at INTO v_cutoff_time
+    FROM public.dm_messages
+    WHERE id = p_up_to_message_id;
+  END IF;
+
+  WITH messages_to_mark AS (
+    SELECT m.id
+    FROM public.dm_messages m
+    WHERE m.conversation_id = p_conversation_id
+      AND m.sender_id != p_user_id
+      AND m.deleted_at IS NULL
+      AND (v_cutoff_time IS NULL OR m.created_at <= v_cutoff_time)
+      AND NOT EXISTS (
+        SELECT 1 FROM public.dm_message_read_receipts r
+        WHERE r.message_id = m.id AND r.user_id = p_user_id
+      )
+  )
+  INSERT INTO public.dm_message_read_receipts (message_id, user_id)
+  SELECT id, p_user_id FROM messages_to_mark;
+
+  GET DIAGNOSTICS v_count = ROW_COUNT;
+  RETURN v_count;
+END;
+$$;
+
+-- RPC function to get read receipts for multiple messages
+CREATE OR REPLACE FUNCTION public.get_message_read_receipts(
+  p_message_ids UUID[]
+)
+RETURNS TABLE (
+  message_id UUID,
+  user_id TEXT,
+  user_name TEXT,
+  user_username TEXT,
+  user_image TEXT,
+  read_at TIMESTAMPTZ
+)
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT
+    r.message_id,
+    r.user_id,
+    u.name as user_name,
+    u.username as user_username,
+    u.image as user_image,
+    r.read_at
+  FROM public.dm_message_read_receipts r
+  JOIN public."user" u ON r.user_id = u.id
+  WHERE r.message_id = ANY(p_message_ids)
+  ORDER BY r.read_at ASC;
+$$;
+
 CREATE TABLE IF NOT EXISTS public.dm_typing_indicators (
   user_id TEXT NOT NULL REFERENCES public."user"(id) ON DELETE CASCADE,
   conversation_id UUID NOT NULL REFERENCES public.dm_conversations(id) ON DELETE CASCADE,

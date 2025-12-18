@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "0.99.0";
+const APP_VERSION = "1.0.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,6 +24,18 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.0.0",
+    date: "2025-12-18",
+    type: "major",
+    highlights: [
+      "🎉 Version 1.0 Release! Claude Insider is now production-ready",
+      "@claudeinsider AI now responds automatically in 1-on-1 DMs (no @mention needed)",
+      "Group chat AI management: admins/owners can add/remove AI assistant",
+      "E2EE verified identity for @claudeinsider with audit logging",
+      "CMS-managed email templates with Payload integration",
+    ],
+  },
+  {
     version: "0.99.0",
     date: "2025-12-17",
     type: "minor",
@@ -31,7 +43,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "10 Sound Themes: Claude Insider, Anthropic, Apple, Microsoft, Google, Linux, WhatsApp, Telegram, GitHub, Vercel",
       "Theme selector in Settings with click-to-preview",
       "Footer SoundToggle for quick sound control",
-      "Database persistence for authenticated users",
     ],
   },
   {
@@ -42,7 +53,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "Message Read Receipts with ✓ (delivered) and ✓✓ (seen) indicators",
       "Group conversations show 'Seen by [names]' with +N more",
       "Real-time broadcast delivery for instant status updates",
-      "New messaging server actions for read receipt tracking",
     ],
   },
   {
@@ -53,7 +63,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "Site-wide sound effects system with 5 category controls",
       "Sound Settings UI in settings page with volume slider",
       "Notification, messaging, and AI assistant sounds",
-      "Mandatory Sound Design section added to CLAUDE.md",
     ],
   },
   {
@@ -62,19 +71,8 @@ const CHANGELOG: ChangelogEntry[] = [
     type: "patch",
     highlights: [
       "Fixed: Notification badges now mark as read when clicked",
-      "Fixed: Message unread counts update instantly when opening conversations",
-      "Optimistic UI updates for notification and message read states",
-    ],
-  },
-  {
-    version: "0.95.0",
-    date: "2025-12-17",
-    type: "minor",
-    highlights: [
-      "E2EE Verification: Auto-fetches device ID, no manual prop needed",
-      "Educational security content explaining MITM attacks",
-      "Collapsible \"Why does this matter?\" explanation section",
-      "Clear messaging that E2EE works even without verification",
+      "Fixed: Message unread counts update instantly",
+      "Optimistic UI updates for notification read states",
     ],
   },
 ];

@@ -366,8 +366,10 @@ export function MessageBubble({
                       stroke="currentColor"
                       strokeWidth={2.5}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M5 13l4 4L19 7" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 13l4 4L23 7" transform="translate(-7, 0)" />
+                      {/* First checkmark */}
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2 13l4 4L16 7" />
+                      {/* Second checkmark, offset to the right */}
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 13l4 4L22 7" />
                     </svg>
                     <span className="text-blue-500 dark:text-cyan-400">Seen</span>
                   </>
@@ -382,8 +384,10 @@ export function MessageBubble({
                       stroke="currentColor"
                       strokeWidth={2.5}
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7M5 13l4 4L19 7" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 13l4 4L23 7" transform="translate(-7, 0)" />
+                      {/* First checkmark */}
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2 13l4 4L16 7" />
+                      {/* Second checkmark, offset to the right */}
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 13l4 4L22 7" />
                     </svg>
                     <span className="text-blue-500 dark:text-cyan-400">
                       Seen by {readStatus.seenBy.join(", ")}

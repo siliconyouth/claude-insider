@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.0] - 2025-12-18
+### 🎉 Version 1.0 - Production Release
+Claude Insider is now production-ready! This major release brings significant enhancements to the AI messaging system.
+
+### Smart @claudeinsider AI Messaging (FR-35)
+- **Automatic 1-on-1 DM Responses**: AI now responds automatically in direct messages without requiring @mention
+- **Group Chat @mention Control**: In group conversations, AI only responds when explicitly mentioned with @claudeinsider
+- **Admin-Managed AI Membership**: Group admins and owners can add/remove the AI assistant from conversations
+- **E2EE Verified Identity**: AI has a pre-verified device with audit logging for transparent access
+
+### CMS-Managed Email Templates
+- **Payload CMS Integration**: Email templates now managed through the content management system
+- **Live Template Editing**: Admins can update email content without code deployments
+
+### What's Included
+This release consolidates all features from v0.91.0 through v0.99.0:
+- 10 Sound Themes with Web Audio API synthesis
+- Message Read Receipts (Seen feature)
+- User Directory with advanced search
+- Profile Cover Photos
+- End-to-End Encryption (Matrix Olm/Megolm)
+- 50+ Achievements and Gamification
+- 35 documented features total
+
+---
+
 ## [0.99.0] - 2025-12-17
 ### Sound Themes System
 - **10 Built-In Sound Themes**: Each with unique audio characteristics
