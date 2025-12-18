@@ -2243,6 +2243,45 @@ CREATE TABLE IF NOT EXISTS public.user_chat_settings (
 ALTER TABLE public.user_chat_settings ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "user_chat_settings_all" ON public.user_chat_settings FOR ALL USING (true) WITH CHECK (true);
 
+-- AI ASSISTANT SYSTEM USER
+-- Create the @claudeinsider AI assistant user for DM responses
+INSERT INTO public."user" (id, name, email, role, "emailVerified", "createdAt", "updatedAt")
+VALUES (
+  'ai-assistant-claudeinsider',
+  'Claude Insider',
+  'assistant@claudeinsider.com',
+  'ai_assistant',
+  TRUE,
+  NOW(),
+  NOW()
+) ON CONFLICT (id) DO UPDATE SET
+  role = 'ai_assistant',
+  name = 'Claude Insider';
+
+-- Create profile for AI assistant
+INSERT INTO public.profiles (id, user_id, display_name, bio, avatar_url, is_verified)
+VALUES (
+  gen_random_uuid(),
+  'ai-assistant-claudeinsider',
+  'Claude Insider',
+  'I''m the AI assistant for Claude Insider. Mention @claudeinsider in any chat and I''ll help you find documentation, resources, and answers!',
+  '/images/claude-insider-avatar.png',
+  TRUE
+) ON CONFLICT (user_id) DO UPDATE SET
+  display_name = 'Claude Insider',
+  bio = 'I''m the AI assistant for Claude Insider. Mention @claudeinsider in any chat and I''ll help you find documentation, resources, and answers!',
+  is_verified = TRUE;
+
+-- Set AI assistant presence as always "online"
+INSERT INTO public.user_presence (user_id, status, last_seen_at, last_active_at, updated_at)
+VALUES (
+  'ai-assistant-claudeinsider',
+  'online',
+  NOW(),
+  NOW(),
+  NOW()
+) ON CONFLICT (user_id) DO UPDATE SET status = 'online';
+
 -- -----------------------------------------------------------------------------
 -- 8.9 SECURITY SYSTEM (Migration 045)
 -- -----------------------------------------------------------------------------

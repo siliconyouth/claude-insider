@@ -43,6 +43,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `sound_theme` column in `assistant_settings` table
   - Default: 'claude-insider'
 
+### Fixed
+- **@claudeinsider AI Assistant in Messages Tab**: Fixed critical bug where the AI assistant wasn't responding to @claudeinsider mentions in DM conversations
+  - Root cause: AI assistant user (`ai-assistant-claudeinsider`) was missing from `000_fresh_start.sql` consolidated schema
+  - The `dm_messages.sender_id` foreign key constraint was preventing AI response insertion
+  - Added AI assistant user creation to `000_fresh_start.sql` (lines 2246-2283)
+  - Created migration `074_add_ai_assistant_user.sql` to fix existing databases
+
 ## [0.98.0] - 2025-12-17
 ### Message Read Receipts (Seen Feature)
 - **Per-Message Read Tracking**: New `dm_message_read_receipts` database table
