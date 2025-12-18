@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.0.1";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.0.1",
+    date: "2025-12-18",
+    type: "patch",
+    highlights: [
+      "⚡ Lighthouse Performance score improved to 88 (from ~55)",
+      "🚀 Core Web Vitals: LCP 2.2s, TBT 0ms, FCP 0.8s",
+      "📦 Dynamic imports for chat tabs reduce initial bundle by ~50-100KB",
+      "♿ Accessibility: aria-labels now match visible text (WCAG 2.5.3)",
+      "💬 @mentions now show ProfileHoverCard previews on hover",
+    ],
+  },
   {
     version: "1.0.0",
     date: "2025-12-18",

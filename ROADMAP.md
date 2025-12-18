@@ -1,15 +1,15 @@
 # Claude Insider Roadmap
 
 **Version:** 1.3.0
-**Last Updated:** 2025-12-17
-**Current Release:** v0.99.0
+**Last Updated:** 2025-12-18
+**Current Release:** v1.0.1
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-This roadmap outlines the development path from **v0.99.0** (current) to **v1.0.0**, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+**🎉 Version 1.0 Released!** Claude Insider has reached production-ready status. This roadmap now outlines the development path from **v1.0.1** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,8 @@ This roadmap outlines the development path from **v0.99.0** (current) to **v1.0.
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.0.1 | Dec 18 | Performance: Lighthouse 88, dynamic imports, WCAG 2.5.3 a11y, @mention hover cards |
+| 1.0.0 | Dec 18 | 🎉 Production Release: Smart AI messaging, E2EE verified @claudeinsider, CMS email templates |
 | 0.99.0 | Dec 17 | Sound Themes System: 10 themes (Claude Insider, Anthropic, Apple, Microsoft, Google, Linux, WhatsApp, Telegram, GitHub, Vercel) |
 | 0.98.0 | Dec 17 | Message Read Receipts: ✓/✓✓ indicators, "Seen by" in groups, real-time broadcasts |
 | 0.97.0 | Dec 17 | Site-wide Sound Effects: 24 sounds, 5 categories, Settings UI, CLAUDE.md docs |
@@ -40,7 +42,8 @@ This roadmap outlines the development path from **v0.99.0** (current) to **v1.0.
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 1.0.0 | Milestone | - | Q1 2025 | Stable Release |
+| 1.1.0 | Polish | Advanced analytics, Batch operations | Q1 2025 | Quality of Life |
+| 1.2.0 | Scale | Performance monitoring, Rate limiting | Q1 2025 | Enterprise Ready |
 
 ---
 

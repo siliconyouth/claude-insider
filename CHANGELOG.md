@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.1] - 2025-12-18
+### Performance & Accessibility
+- **Lighthouse Score 88**: Improved from ~55 with code splitting optimizations
+- **Dynamic Imports**: Chat tabs now lazy-loaded, reducing initial bundle by ~50-100KB
+- **Core Web Vitals**: LCP 2.2s (was 3.3s), TBT 0ms (was 460ms), FCP 0.8s (was 1.1s)
+- **Accessibility Fix**: aria-labels now match visible text (WCAG 2.5.3 compliance)
+- **@Mention Hover Cards**: User mentions now linkified with ProfileHoverCard previews
+- **CLAUDE.md**: Added mandatory Performance Optimization section with guidelines
+
+---
+
 ## [1.0.0] - 2025-12-18
 ### 🎉 Version 1.0 - Production Release
 Claude Insider is now production-ready! This major release brings significant enhancements to the AI messaging system.
