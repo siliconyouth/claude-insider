@@ -5,6 +5,7 @@
  * Falls back to hardcoded templates if CMS template is not found or inactive.
  */
 
+import "server-only";
 import { getPayload } from 'payload';
 import config from '@/payload.config';
 
