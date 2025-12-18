@@ -3,9 +3,15 @@
  *
  * Handles transactional emails for authentication and notifications.
  * Uses React Email templates for consistent branding.
+ *
+ * CMS Integration (v0.92.0):
+ * Email templates can now be managed via Payload CMS at /admin/collections/email-templates
+ * When a CMS template exists and is active, it takes precedence over hardcoded templates.
+ * Fallback to hardcoded templates ensures emails always work even if CMS is unavailable.
  */
 
 import { Resend } from "resend";
+import { tryCmsTemplate, EMAIL_TEMPLATE_SLUGS } from "./email-templates";
 
 // Initialize Resend client
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -117,6 +123,7 @@ export async function sendBulkEmail(params: BulkEmailParams): Promise<BulkEmailR
 
 /**
  * Send email verification link
+ * Supports CMS template override via slug 'verification'
  */
 export async function sendVerificationEmail(
   email: string,
@@ -124,11 +131,25 @@ export async function sendVerificationEmail(
   userName?: string
 ): Promise<EmailResult> {
   try {
+    // Try CMS template first, fall back to hardcoded
+    const template = await tryCmsTemplate(
+      EMAIL_TEMPLATE_SLUGS.VERIFICATION,
+      {
+        userName: userName || 'there',
+        verificationUrl,
+      },
+      () => ({
+        subject: `Verify your ${APP_NAME} account`,
+        html: getVerificationEmailHtml(verificationUrl, userName),
+      })
+    );
+
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
-      subject: `Verify your ${APP_NAME} account`,
-      html: getVerificationEmailHtml(verificationUrl, userName),
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
     });
 
     if (error) {
@@ -145,6 +166,7 @@ export async function sendVerificationEmail(
 
 /**
  * Send password reset link
+ * Supports CMS template override via slug 'password-reset'
  */
 export async function sendPasswordResetEmail(
   email: string,
@@ -152,11 +174,25 @@ export async function sendPasswordResetEmail(
   userName?: string
 ): Promise<EmailResult> {
   try {
+    // Try CMS template first, fall back to hardcoded
+    const template = await tryCmsTemplate(
+      EMAIL_TEMPLATE_SLUGS.PASSWORD_RESET,
+      {
+        userName: userName || 'there',
+        resetUrl,
+      },
+      () => ({
+        subject: `Reset your ${APP_NAME} password`,
+        html: getPasswordResetEmailHtml(resetUrl, userName),
+      })
+    );
+
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
-      subject: `Reset your ${APP_NAME} password`,
-      html: getPasswordResetEmailHtml(resetUrl, userName),
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
     });
 
     if (error) {
@@ -173,17 +209,31 @@ export async function sendPasswordResetEmail(
 
 /**
  * Send welcome email after account creation
+ * Supports CMS template override via slug 'welcome'
  */
 export async function sendWelcomeEmail(
   email: string,
   userName?: string
 ): Promise<EmailResult> {
   try {
+    // Try CMS template first, fall back to hardcoded
+    const template = await tryCmsTemplate(
+      EMAIL_TEMPLATE_SLUGS.WELCOME,
+      {
+        userName: userName || 'there',
+      },
+      () => ({
+        subject: `Welcome to ${APP_NAME}!`,
+        html: getWelcomeEmailHtml(userName),
+      })
+    );
+
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
-      subject: `Welcome to ${APP_NAME}!`,
-      html: getWelcomeEmailHtml(userName),
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
     });
 
     if (error) {
@@ -361,6 +411,7 @@ function getVerificationEmailWithCodeHtml(verificationUrl: string, code: string,
 
 /**
  * Send email verification with both link and code
+ * Supports CMS template override via slug 'verification-code'
  */
 export async function sendVerificationEmailWithCode(
   email: string,
@@ -369,11 +420,26 @@ export async function sendVerificationEmailWithCode(
   userName?: string
 ): Promise<EmailResult> {
   try {
+    // Try CMS template first, fall back to hardcoded
+    const template = await tryCmsTemplate(
+      EMAIL_TEMPLATE_SLUGS.VERIFICATION_CODE,
+      {
+        userName: userName || 'there',
+        verificationUrl,
+        verificationCode: code,
+      },
+      () => ({
+        subject: `Verify your ${APP_NAME} account - Code: ${code}`,
+        html: getVerificationEmailWithCodeHtml(verificationUrl, code, userName),
+      })
+    );
+
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
-      subject: `Verify your ${APP_NAME} account - Code: ${code}`,
-      html: getVerificationEmailWithCodeHtml(verificationUrl, code, userName),
+      subject: template.subject,
+      html: template.html,
+      text: template.text,
     });
 
     if (error) {
