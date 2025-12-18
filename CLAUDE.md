@@ -154,7 +154,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 | ID | Category | Requirements |
 |----|----------|--------------|
-| NFR-1 | Performance | Static generation, FCP < 1.5s, Turborepo caching, Lighthouse > 90 |
+| NFR-1 | Performance | Static generation, FCP < 1.0s, LCP < 2.5s, TBT < 200ms, Lighthouse > 85, dynamic imports for modals |
 | NFR-2 | Accessibility | WCAG 2.1 AA, keyboard navigation, screen reader support, skip-to-content |
 | NFR-3 | SEO | SSR, meta tags, Open Graph, sitemap.xml, robots.txt, JSON-LD |
 | NFR-4 | Security | HTTPS only, CSP headers, Permissions-Policy, privacy-first |
@@ -284,6 +284,91 @@ All new components MUST implement ALL seven pillars:
 - [ ] Components wrapped with ErrorBoundary
 - [ ] Buttons/cards use animated components
 - [ ] Modals use focus trap, dynamic content uses ARIA live
+
+---
+
+## Performance Optimization (MANDATORY)
+
+All new features MUST follow these performance guidelines to maintain Lighthouse scores above 90.
+
+### Code Splitting with Dynamic Imports
+
+**MANDATORY** for heavy components that are not immediately visible:
+
+| Component Type | Requirement | Example |
+|----------------|-------------|---------|
+| Modals/Dialogs | MUST use `next/dynamic` | Chat tabs, auth modals |
+| Below-fold content | SHOULD use dynamic imports | Feature sections |
+| Third-party integrations | MUST lazy load | PayPal, analytics |
+| Heavy libraries | MUST lazy load | highlight.js, chart libs |
+
+```tsx
+// ✅ CORRECT - Dynamic import for modal content
+import dynamic from "next/dynamic";
+
+const HeavyComponent = dynamic(
+  () => import("./heavy-component").then(m => ({ default: m.HeavyComponent })),
+  {
+    ssr: false,
+    loading: () => <LoadingSpinner />,
+  }
+);
+
+// ❌ WRONG - Direct import bloats initial bundle
+import { HeavyComponent } from "./heavy-component";
+```
+
+### Lazy Loading Boundaries
+
+Place dynamic imports at the **visibility boundary** - where UI transitions from hidden to visible:
+
+| Pattern | Implementation |
+|---------|----------------|
+| Modal content | Import inside modal, not in parent |
+| Tab content | Import per-tab, not all tabs upfront |
+| Accordion/Collapse | Import expanded content dynamically |
+| Route segments | Use Next.js route-based splitting |
+
+### Accessibility Labels (WCAG 2.5.3)
+
+**MANDATORY**: `aria-label` must match or contain visible text content:
+
+```tsx
+// ✅ CORRECT - aria-label matches visible text
+<button aria-label="Search">
+  <SearchIcon /> <span>Search</span>
+</button>
+
+// ✅ CORRECT - aria-label contains visible text with context
+<button aria-label="Sound System, click to open settings">
+  <SpeakerIcon /> <span>Sound System</span>
+</button>
+
+// ❌ WRONG - aria-label doesn't match visible text
+<button aria-label="Find content">
+  <SearchIcon /> <span>Search</span>
+</button>
+```
+
+### Performance Targets
+
+| Metric | Target | Current |
+|--------|--------|---------|
+| Lighthouse Performance | > 85 | 88 |
+| FCP (First Contentful Paint) | < 1.0s | 0.8s |
+| LCP (Largest Contentful Paint) | < 2.5s | 2.2s |
+| TBT (Total Blocking Time) | < 200ms | 0ms |
+| CLS (Cumulative Layout Shift) | < 0.1 | 0.003 |
+
+### Checklist for New Features
+
+- [ ] Heavy components use `next/dynamic` with `ssr: false`
+- [ ] Modal/dialog content is dynamically imported
+- [ ] Third-party libraries are lazy loaded
+- [ ] `aria-label` matches visible text (WCAG 2.5.3)
+- [ ] No render-blocking resources in critical path
+- [ ] Images use `priority` prop for above-fold, lazy load below
+- [ ] Run `npx lighthouse <url> --preset=desktop` before PR
 
 ---
 
