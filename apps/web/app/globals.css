@@ -2349,3 +2349,37 @@ code {
 .animate-pulse-ring {
   animation: pulse-ring 1s ease-out infinite;
 }
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   Content-visibility, font rendering, scroll
+   ============================================ */
+
+/* Content visibility for below-fold sections - skips rendering until visible */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* Optimize font rendering for LCP text elements */
+.lcp-text {
+  text-rendering: optimizeSpeed;
+  font-display: swap;
+}
+
+/* GPU acceleration for smooth scrolling areas */
+.scroll-optimized {
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce animation work for off-screen elements */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-when-visible {
+    animation-play-state: paused;
+  }
+
+  .animate-when-visible.is-visible {
+    animation-play-state: running;
+  }
+}

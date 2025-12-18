@@ -169,9 +169,7 @@ export default async function MainLayout({
             `,
           }}
         />
-        {/* DNS Prefetch and Preconnect for external services */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect for external services (fonts are self-hosted via next/font) */}
         {/* Supabase - authentication and database */}
         <link rel="preconnect" href="https://api.supabase.io" />
         <link rel="dns-prefetch" href="https://api.supabase.io" />

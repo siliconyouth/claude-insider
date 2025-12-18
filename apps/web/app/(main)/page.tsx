@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Suspense } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { HeroBackground } from "@/components/hero-background";
@@ -531,8 +530,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Categories Section with Documents */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        {/* Categories Section with Documents - content-visibility optimization */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 content-auto">
           <h2 className="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-white">
             Explore Documentation
           </h2>
@@ -594,8 +593,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Stats Section */}
-        <div className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gray-50 dark:bg-[#0a0a0a]">
+        {/* Stats Section - content-visibility optimization */}
+        <div className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gray-50 dark:bg-[#0a0a0a] content-auto">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
               <div className="group">
