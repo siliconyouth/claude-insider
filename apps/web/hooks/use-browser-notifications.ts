@@ -75,48 +75,62 @@ export function useBrowserNotifications(): UseBrowserNotificationsReturn {
   const pushSubscriptionRef = useRef<PushSubscription | null>(null);
 
   // Check browser support and current permission on mount
+  // This is split into sync (immediate) and async (background) parts
+  // to ensure the UI responds instantly
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Basic notification support
+    // IMMEDIATE: Basic notification support check (sync, no delay)
     if ("Notification" in window) {
       setIsSupported(true);
       setPermission(Notification.permission as BrowserNotificationPermission);
     }
 
-    // Web Push support (requires Service Worker and Push API)
-    const checkPushSupport = async () => {
-      if ("serviceWorker" in navigator && "PushManager" in window) {
-        setIsPushSupported(true);
+    // IMMEDIATE: Check if Push API is available (sync, no delay)
+    if ("serviceWorker" in navigator && "PushManager" in window) {
+      setIsPushSupported(true);
+    }
+  }, []);
 
-        try {
-          // Get existing service worker registration
-          const registration = await navigator.serviceWorker.ready;
-          swRegistrationRef.current = registration;
+  // BACKGROUND: Service Worker and subscription check (async, doesn't block UI)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!("serviceWorker" in navigator) || !("PushManager" in window)) return;
 
-          // Check for existing push subscription
-          const existingSubscription = await registration.pushManager.getSubscription();
-          if (existingSubscription) {
-            pushSubscriptionRef.current = existingSubscription;
-            setIsSubscribed(true);
-          }
-        } catch (error) {
-          console.error("[BrowserNotifications] Service worker check error:", error);
+    const checkExistingSubscription = async () => {
+      try {
+        // This can take 1-3 seconds on first load, but now it's non-blocking
+        const registration = await navigator.serviceWorker.ready;
+        swRegistrationRef.current = registration;
+
+        // Check for existing push subscription
+        const existingSubscription = await registration.pushManager.getSubscription();
+        if (existingSubscription) {
+          pushSubscriptionRef.current = existingSubscription;
+          setIsSubscribed(true);
         }
+      } catch (error) {
+        console.error("[BrowserNotifications] Service worker check error:", error);
       }
     };
 
-    checkPushSupport();
+    checkExistingSubscription();
   }, []);
 
   // Subscribe to push notifications
   const subscribeToPush = useCallback(async (): Promise<boolean> => {
-    if (!isPushSupported || !swRegistrationRef.current) {
-      console.log("[BrowserNotifications] Push not supported or SW not ready");
+    if (!isPushSupported) {
+      console.log("[BrowserNotifications] Push not supported");
       return false;
     }
 
     try {
+      // Wait for service worker if not ready yet (user clicked before background check completed)
+      if (!swRegistrationRef.current) {
+        console.log("[BrowserNotifications] Waiting for service worker...");
+        swRegistrationRef.current = await navigator.serviceWorker.ready;
+      }
+
       // Get VAPID public key from server
       const keyResponse = await fetch("/api/push/subscribe");
       if (!keyResponse.ok) {
