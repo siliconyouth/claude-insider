@@ -12,6 +12,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { pool } from "@/lib/db";
 import { cookies } from "next/headers";
+import { awardSpecialAchievement } from "@/app/actions/achievements";
 
 interface UpdateProfileRequest {
   name?: string;
@@ -126,6 +127,16 @@ export async function POST(request: NextRequest) {
     // Execute update
     const query = `UPDATE "user" SET ${updates.join(", ")} WHERE id = $${paramIndex}`;
     await pool.query(query, values);
+
+    // Award "Welcome Aboard" achievement when onboarding is completed
+    if (body.hasCompletedOnboarding === true) {
+      try {
+        await awardSpecialAchievement(session.user.id, "welcome_aboard");
+      } catch (err) {
+        // Log but don't fail the request - achievement is non-critical
+        console.error("[Update Profile] Failed to award welcome achievement:", err);
+      }
+    }
 
     // Clear Better Auth's session cookie cache to force fresh data fetch
     // This is crucial for hasCompletedOnboarding to reflect immediately
