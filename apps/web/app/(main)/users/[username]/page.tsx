@@ -188,6 +188,85 @@ function TrophyIcon({ className }: { className?: string }) {
   );
 }
 
+function VerifiedIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    </svg>
+  );
+}
+
+function BetaIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+      />
+    </svg>
+  );
+}
+
+function LockIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+      />
+    </svg>
+  );
+}
+
+function SparklesIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+      />
+    </svg>
+  );
+}
+
+function SettingsIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+      />
+    </svg>
+  );
+}
+
+function EditIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+      />
+    </svg>
+  );
+}
+
 export default function PublicProfilePage({
   params,
 }: {
@@ -374,18 +453,31 @@ export default function PublicProfilePage({
     ? DONOR_TIER_CONFIG[profile.donorTier]
     : null;
 
+  // Get user's earned achievement IDs
+  const earnedAchievementIds = new Set((profile.achievements || []).map((a) => a.id));
+
   // Get featured achievements (most recent + rarest)
   const featuredAchievements = (profile.achievements || [])
     .map((a) => {
       const details = getAchievementDetails(a.id);
-      return details ? { ...details, unlockedAt: a.unlockedAt } : null;
+      return details ? { ...details, unlockedAt: a.unlockedAt, isEarned: true } : null;
     })
-    .filter((a): a is AchievementDefinition & { unlockedAt: string } => a !== null)
+    .filter((a): a is AchievementDefinition & { unlockedAt: string; isEarned: boolean } => a !== null)
     .sort((a, b) => {
       const rarityOrder = { legendary: 0, epic: 1, rare: 2, common: 3 };
       return rarityOrder[a.rarity] - rarityOrder[b.rarity];
     })
     .slice(0, 6);
+
+  // Get locked achievements for display (ones user hasn't earned yet)
+  const lockedAchievements = Object.values(ACHIEVEMENTS)
+    .filter((a) => !earnedAchievementIds.has(a.id))
+    .sort((a, b) => {
+      const rarityOrder = { common: 0, rare: 1, epic: 2, legendary: 3 };
+      return rarityOrder[a.rarity] - rarityOrder[b.rarity];
+    })
+    .slice(0, Math.max(0, 8 - featuredAchievements.length))
+    .map((a) => ({ ...a, isEarned: false, unlockedAt: null }));
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a]">
@@ -625,55 +717,165 @@ export default function PublicProfilePage({
               </div>
             </div>
 
-            {/* Secondary Info Section - Below cover */}
-            <div className="px-6 sm:px-8 py-4 sm:py-6">
-              {/* Mobile Action Buttons */}
-              <div className="flex sm:hidden gap-2 mb-4">
-                {profile.isOwnProfile ? (
-                  <Link
-                    href="/settings"
+            {/* Quick Actions Bar - Icon-based */}
+            <div className="px-6 sm:px-8 py-4 border-b border-gray-200 dark:border-[#262626]">
+              <div className="flex items-center justify-between">
+                {/* Icon Actions */}
+                <div className="flex items-center gap-1">
+                  {profile.isOwnProfile ? (
+                    <>
+                      <Link
+                        href="/settings"
+                        className={cn(
+                          "p-3 rounded-xl transition-all duration-200",
+                          "text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-cyan-400",
+                          "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+                        )}
+                        title="Settings"
+                      >
+                        <SettingsIcon className="w-5 h-5" />
+                      </Link>
+                      <Link
+                        href="/settings#profile"
+                        className={cn(
+                          "p-3 rounded-xl transition-all duration-200",
+                          "text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-cyan-400",
+                          "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+                        )}
+                        title="Edit Profile"
+                      >
+                        <EditIcon className="w-5 h-5" />
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <FollowButton
+                        userId={profile.id}
+                        isFollowing={profile.isFollowing || false}
+                        size="sm"
+                      />
+                      <button
+                        onClick={handleMessage}
+                        className={cn(
+                          "p-3 rounded-xl transition-all duration-200",
+                          "text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-cyan-400",
+                          "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+                        )}
+                        title="Send message"
+                      >
+                        <MessageIcon className="w-5 h-5" />
+                      </button>
+                    </>
+                  )}
+                  <button
+                    onClick={handleShare}
                     className={cn(
-                      "flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl",
-                      "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-                      "text-white"
+                      "p-3 rounded-xl transition-all duration-200",
+                      "text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-cyan-400",
+                      "hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
                     )}
+                    title={copied ? "Link copied!" : "Share profile"}
                   >
-                    Edit Profile
-                  </Link>
-                ) : (
-                  <>
-                    <FollowButton
-                      userId={profile.id}
-                      isFollowing={profile.isFollowing || false}
-                      size="md"
-                      className="flex-1"
-                    />
-                    <button
-                      onClick={handleMessage}
+                    {copied ? (
+                      <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    ) : (
+                      <ShareIcon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Mobile Action Buttons (for non-icon actions) */}
+                <div className="flex sm:hidden gap-2">
+                  {!profile.isOwnProfile && (
+                    <>
+                      <FollowButton
+                        userId={profile.id}
+                        isFollowing={profile.isFollowing || false}
+                        size="sm"
+                      />
+                      <button
+                        onClick={handleMessage}
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg",
+                          "bg-gray-100 dark:bg-[#1a1a1a]",
+                          "text-gray-700 dark:text-gray-300"
+                        )}
+                      >
+                        <MessageIcon className="w-4 h-4" />
+                        Message
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Badges Section - Prominent display */}
+            {(profile.isVerified || profile.isBetaTester || roleBadge || donorConfig) && (
+              <div className="px-6 sm:px-8 py-4 border-b border-gray-200 dark:border-[#262626]">
+                <div className="flex flex-wrap items-center gap-2">
+                  {profile.isVerified && (
+                    <div
                       className={cn(
-                        "flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl",
-                        "bg-gray-100 dark:bg-[#1a1a1a]",
-                        "text-gray-700 dark:text-gray-300",
-                        "border border-gray-200 dark:border-[#262626]"
+                        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
+                        "bg-emerald-100 dark:bg-emerald-900/30",
+                        "border border-emerald-200 dark:border-emerald-800"
                       )}
                     >
-                      <MessageIcon className="w-4 h-4" />
-                      Message
-                    </button>
-                  </>
-                )}
-                <button
-                  onClick={handleShare}
-                  className={cn(
-                    "px-4 py-2.5 rounded-xl",
-                    "text-gray-500 dark:text-gray-400",
-                    "border border-gray-200 dark:border-[#262626]"
+                      <VerifiedIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                      <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                        Verified
+                      </span>
+                    </div>
                   )}
-                >
-                  <ShareIcon className="w-4 h-4" />
-                </button>
+                  {profile.isBetaTester && (
+                    <div
+                      className={cn(
+                        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
+                        "bg-purple-100 dark:bg-purple-900/30",
+                        "border border-purple-200 dark:border-purple-800"
+                      )}
+                    >
+                      <BetaIcon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                      <span className="text-sm font-medium text-purple-700 dark:text-purple-400">
+                        Beta Tester
+                      </span>
+                    </div>
+                  )}
+                  {roleBadge && (
+                    <div
+                      className={cn(
+                        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
+                        roleBadge.color
+                      )}
+                    >
+                      <SparklesIcon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{roleBadge.label}</span>
+                    </div>
+                  )}
+                  {donorConfig && (
+                    <div
+                      className={cn(
+                        "inline-flex items-center gap-2 px-3 py-1.5 rounded-full",
+                        donorConfig.bg,
+                        donorConfig.border,
+                        "border"
+                      )}
+                    >
+                      <HeartIcon className={cn("w-4 h-4", donorConfig.color)} />
+                      <span className={cn("text-sm font-medium", donorConfig.color)}>
+                        {donorConfig.label}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
+            )}
 
+            {/* Bio & Info Section */}
+            <div className="px-6 sm:px-8 py-4">
               {/* Bio */}
               {profile.bio && (
                 <p className="text-gray-700 dark:text-gray-300 mb-4 max-w-2xl">
@@ -681,26 +883,33 @@ export default function PublicProfilePage({
                 </p>
               )}
 
-              {/* Join Date and Last Seen */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
-                <span>Joined {formatDate(profile.joinedAt)}</span>
+              {/* Meta Info Row */}
+              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                <span className="inline-flex items-center gap-1.5">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Joined {formatDate(profile.joinedAt)}
+                </span>
                 {!profile.isOnline && profile.lastSeen && (
-                  <>
-                    <span>•</span>
-                    <span>Last seen {formatRelativeDate(profile.lastSeen)}</span>
-                  </>
+                  <span className="inline-flex items-center gap-1.5">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Last seen {formatRelativeDate(profile.lastSeen)}
+                  </span>
                 )}
               </div>
 
               {/* Social Links */}
               {Object.keys(profile.socialLinks).length > 0 && (
-                <div className="flex gap-3">
+                <div className="flex gap-2 mt-4">
                   {profile.socialLinks.website && (
                     <a
                       href={profile.socialLinks.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
+                      className="p-2.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors"
                       title="Website"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -718,7 +927,7 @@ export default function PublicProfilePage({
                       href={`https://github.com/${profile.socialLinks.github}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+                      className="p-2.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
                       title="GitHub"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -735,7 +944,7 @@ export default function PublicProfilePage({
                       href={`https://twitter.com/${profile.socialLinks.twitter}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-400 transition-colors"
+                      className="p-2.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-400 transition-colors"
                       title="Twitter"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -748,7 +957,7 @@ export default function PublicProfilePage({
                       href={`https://linkedin.com/in/${profile.socialLinks.linkedin}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-600 transition-colors"
+                      className="p-2.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] text-gray-500 hover:text-blue-600 transition-colors"
                       title="LinkedIn"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -825,86 +1034,130 @@ export default function PublicProfilePage({
         <div className="grid gap-6 lg:grid-cols-3 mb-12">
           {/* Main Content (2 cols) */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Achievements Section */}
-            {featuredAchievements.length > 0 && (
-              <section
-                className={cn(
-                  "bg-white dark:bg-[#111111] rounded-2xl",
-                  "border border-gray-200 dark:border-[#262626]",
-                  "overflow-hidden"
-                )}
-              >
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-[#262626]">
-                  <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                    <TrophyIcon className="w-5 h-5 text-yellow-500" />
-                    Achievements
-                  </h2>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {(profile.achievements || []).length} unlocked
+            {/* Achievements Showcase - Always show with earned + locked */}
+            <section
+              className={cn(
+                "bg-white dark:bg-[#111111] rounded-2xl",
+                "border border-gray-200 dark:border-[#262626]",
+                "overflow-hidden"
+              )}
+            >
+              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-[#262626]">
+                <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                  <TrophyIcon className="w-5 h-5 text-yellow-500" />
+                  Achievements
+                  <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                    ({earnedAchievementIds.size}/{Object.keys(ACHIEVEMENTS).length})
                   </span>
-                </div>
-                <div className="p-4">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {featuredAchievements.map((achievement) => {
-                      const rarityConfig = RARITY_CONFIG[achievement.rarity];
-                      const Icon = achievement.icon;
-                      return (
-                        <div
-                          key={achievement.id}
-                          className={cn(
-                            "p-4 rounded-xl border transition-all",
-                            rarityConfig.bgColor,
-                            rarityConfig.borderColor,
-                            achievement.rarity === "legendary" &&
-                              "ring-1 ring-amber-400/50 shadow-lg shadow-amber-500/10"
-                          )}
-                          title={achievement.criteria}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div
-                              className={cn(
-                                "flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center",
-                                rarityConfig.iconBg
-                              )}
-                            >
-                              <Icon
-                                className={cn("w-5 h-5", rarityConfig.color)}
-                              />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p
+                </h2>
+              </div>
+              <div className="p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {/* Earned achievements - Colored */}
+                  {featuredAchievements.map((achievement) => {
+                    const rarityConfig = RARITY_CONFIG[achievement.rarity];
+                    const Icon = achievement.icon;
+                    return (
+                      <div
+                        key={achievement.id}
+                        className={cn(
+                          "p-4 rounded-xl border transition-all cursor-pointer hover:scale-[1.02]",
+                          rarityConfig.bgColor,
+                          rarityConfig.borderColor,
+                          achievement.rarity === "legendary" &&
+                            "ring-1 ring-amber-400/50 shadow-lg shadow-amber-500/10"
+                        )}
+                        title={`${achievement.name} - ${achievement.criteria}`}
+                      >
+                        <div className="flex flex-col items-center text-center gap-2">
+                          <div
+                            className={cn(
+                              "w-12 h-12 rounded-xl flex items-center justify-center",
+                              rarityConfig.iconBg
+                            )}
+                          >
+                            <Icon className={cn("w-6 h-6", rarityConfig.color)} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className={cn("font-medium text-sm truncate", rarityConfig.color)}>
+                              {achievement.name}
+                            </p>
+                            <div className="flex items-center justify-center gap-1 mt-1">
+                              <span
                                 className={cn(
-                                  "font-medium text-sm truncate",
+                                  "text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded",
+                                  rarityConfig.iconBg,
                                   rarityConfig.color
                                 )}
                               >
-                                {achievement.name}
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1">
-                                {achievement.description}
-                              </p>
-                              <div className="flex items-center gap-2 mt-1">
-                                <span
-                                  className={cn(
-                                    "text-[10px] font-semibold uppercase",
-                                    rarityConfig.color
-                                  )}
-                                >
-                                  {rarityConfig.label}
-                                </span>
-                                <span className="text-[10px] text-gray-400">
-                                  {achievement.points} pts
-                                </span>
-                              </div>
+                                {rarityConfig.label}
+                              </span>
                             </div>
                           </div>
                         </div>
-                      );
-                    })}
+                      </div>
+                    );
+                  })}
+                  {/* Locked achievements - Grayed out */}
+                  {lockedAchievements.map((achievement) => {
+                    const Icon = achievement.icon;
+                    return (
+                      <div
+                        key={achievement.id}
+                        className={cn(
+                          "p-4 rounded-xl border transition-all cursor-pointer",
+                          "bg-gray-50 dark:bg-[#0a0a0a]",
+                          "border-gray-200 dark:border-[#1a1a1a]",
+                          "opacity-60 hover:opacity-80",
+                          "group"
+                        )}
+                        title={`Locked: ${achievement.criteria}`}
+                      >
+                        <div className="flex flex-col items-center text-center gap-2">
+                          <div
+                            className={cn(
+                              "relative w-12 h-12 rounded-xl flex items-center justify-center",
+                              "bg-gray-200 dark:bg-[#1a1a1a]"
+                            )}
+                          >
+                            <Icon className="w-6 h-6 text-gray-400 dark:text-gray-600" />
+                            {/* Lock overlay */}
+                            <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
+                              <LockIcon className="w-3 h-3 text-gray-500 dark:text-gray-500" />
+                            </div>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm truncate text-gray-400 dark:text-gray-500">
+                              {achievement.name}
+                            </p>
+                            <p className="text-[10px] text-gray-400 dark:text-gray-600 mt-1 line-clamp-1 group-hover:line-clamp-none">
+                              {achievement.criteria}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Progress indicator */}
+                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-[#262626]">
+                  <div className="flex items-center justify-between text-sm mb-2">
+                    <span className="text-gray-600 dark:text-gray-400">Collection Progress</span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      {Math.round((earnedAchievementIds.size / Object.keys(ACHIEVEMENTS).length) * 100)}%
+                    </span>
+                  </div>
+                  <div className="h-2 bg-gray-200 dark:bg-[#1a1a1a] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 rounded-full transition-all duration-500"
+                      style={{
+                        width: `${(earnedAchievementIds.size / Object.keys(ACHIEVEMENTS).length) * 100}%`,
+                      }}
+                    />
                   </div>
                 </div>
-              </section>
-            )}
+              </div>
+            </section>
 
             {/* Collections Section */}
             {profile.collections && profile.collections.length > 0 && (

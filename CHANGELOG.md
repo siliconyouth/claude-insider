@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0] - 2025-12-19
+### Profile Page Redesign
+- **Hero-Style Profile Layout**: Twitter-style cover photo with floating profile info overlay
+  - Gradient cover banner with animated dot pattern and lens flare effect
+  - Avatar with online status indicator overlapping cover
+  - Responsive layout adapting to all screen sizes
+- **Quick Actions Bar**: Icon-based action buttons for streamlined UX
+  - Own profile: Settings (gear), Edit (pencil), Share (arrow) icons
+  - Other profiles: Follow (heart), Message (chat), Share icons
+  - Hover effects with smooth opacity transitions
+- **Prominent Badges Section**: Status badges with icon + label format
+  - Verified checkmark badge (blue/cyan gradient)
+  - Beta tester beaker badge (violet)
+  - Role badge with appropriate icon (crown for admin, shield for mod)
+  - Donor tier badge with tier-specific colors (bronze, silver, gold, platinum)
+- **Achievement Showcase**: Gamification-focused display with collection feel
+  - Earned achievements shown in full color with rarity-based styling
+  - Locked achievements grayed out (opacity-50) with lock icon overlay
+  - Progress bar showing total achievement completion
+  - Sparkles icon header for visual appeal
+- **Applied to Both Pages**: `/profile` (private) and `/users/[username]` (public)
+  - Context-aware action buttons based on profile ownership
+  - Consistent design language across all profile views
+
+---
+
 ## [1.0.1] - 2025-12-18
 ### Performance & Accessibility
 - **Lighthouse Score 88**: Improved from ~55 with code splitting optimizations

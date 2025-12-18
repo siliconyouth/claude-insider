@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.0.1";
+const APP_VERSION = "1.1.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.1.0",
+    date: "2025-12-19",
+    type: "minor",
+    highlights: [
+      "🎨 Profile Page Redesign with Twitter-style hero layout",
+      "⚡ Quick Actions Bar with icon-based buttons (Settings, Edit, Share)",
+      "🏆 Achievement Showcase: earned in color, locked grayed with progress bar",
+      "🎖️ Prominent Badges: Verified, Beta Tester, Role, Donor tier badges",
+      "🔄 Applied to both /profile and /users/[username] pages",
+    ],
+  },
   {
     version: "1.0.1",
     date: "2025-12-18",
