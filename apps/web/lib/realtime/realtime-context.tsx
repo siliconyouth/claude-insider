@@ -444,7 +444,13 @@ export function useConversationRealtime({
           }
         });
 
-        onTypingChange?.(Array.from(typingUsersRef.current.keys()));
+        // Sort alphabetically to prevent UI flicker when order changes (Matrix SDK pattern)
+        // Without sorting, "Alice, Bob" could become "Bob, Alice" causing visual jumping
+        const sortedUserIds = Array.from(typingUsersRef.current.keys()).sort((a, b) =>
+          a.localeCompare(b)
+        );
+
+        onTypingChange?.(sortedUserIds);
       },
       onReadReceipt: (payload) => {
         // Skip own read receipts

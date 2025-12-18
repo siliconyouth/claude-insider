@@ -227,11 +227,22 @@ function formatTime(dateString: string): string {
   });
 }
 
+// ============================================
+// READ RECEIPT STACKING (Matrix SDK pattern)
+// ============================================
+
+// Maximum number of avatars to show before "+N" overflow
+const MAX_VISIBLE_AVATARS = 3;
+// Horizontal offset for each stacked avatar (px)
+const AVATAR_OFFSET_PX = 10;
+// Avatar size for read receipts (px)
+const RECEIPT_AVATAR_SIZE = 14;
+
 // Format read receipt status for display
 function formatReadStatus(
   readReceipts: ReadReceipt[] | undefined,
   conversationType: "direct" | "group",
-  participantCount: number
+  _participantCount: number
 ): { status: "delivered" | "seen" | "seen_by"; seenBy?: string[] } {
   if (!readReceipts || readReceipts.length === 0) {
     return { status: "delivered" };
@@ -251,6 +262,74 @@ function formatReadStatus(
     status: "seen_by",
     seenBy: seenByNames,
   };
+}
+
+/**
+ * Stacked Read Receipt Avatars Component (Matrix SDK pattern)
+ *
+ * Shows up to MAX_VISIBLE_AVATARS stacked horizontally, with a "+N" badge
+ * for overflow. This matches the UX of popular chat applications.
+ */
+function StackedReadReceipts({ receipts }: { receipts: ReadReceipt[] }) {
+  if (!receipts || receipts.length === 0) return null;
+
+  const visibleReceipts = receipts.slice(0, MAX_VISIBLE_AVATARS);
+  const overflowCount = receipts.length - MAX_VISIBLE_AVATARS;
+
+  // Calculate container width based on stacked avatars
+  const containerWidth =
+    visibleReceipts.length * AVATAR_OFFSET_PX +
+    RECEIPT_AVATAR_SIZE +
+    (overflowCount > 0 ? 20 : 0); // Extra space for overflow badge
+
+  return (
+    <div
+      className="relative flex items-center"
+      style={{ width: `${containerWidth}px`, height: `${RECEIPT_AVATAR_SIZE}px` }}
+      title={receipts.map((r) => r.userName || r.userUsername || "Someone").join(", ")}
+    >
+      {visibleReceipts.map((receipt, index) => (
+        <div
+          key={receipt.readAt + receipt.userId}
+          className="absolute rounded-full overflow-hidden border border-white dark:border-gray-800"
+          style={{
+            left: `${index * AVATAR_OFFSET_PX}px`,
+            zIndex: MAX_VISIBLE_AVATARS - index,
+            width: `${RECEIPT_AVATAR_SIZE}px`,
+            height: `${RECEIPT_AVATAR_SIZE}px`,
+          }}
+        >
+          {receipt.userAvatar ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={receipt.userAvatar}
+              alt={receipt.userName || "User"}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div
+              className={cn(
+                "w-full h-full flex items-center justify-center text-[8px] font-medium",
+                "bg-gradient-to-br from-violet-500 to-blue-500 text-white"
+              )}
+            >
+              {(receipt.userName || receipt.userUsername || "?").charAt(0).toUpperCase()}
+            </div>
+          )}
+        </div>
+      ))}
+      {overflowCount > 0 && (
+        <span
+          className="absolute text-[10px] text-gray-500 dark:text-gray-400 font-medium"
+          style={{
+            left: `${visibleReceipts.length * AVATAR_OFFSET_PX + RECEIPT_AVATAR_SIZE + 2}px`,
+          }}
+        >
+          +{overflowCount}
+        </span>
+      )}
+    </div>
+  );
 }
 
 export function MessageBubble({
@@ -459,7 +538,7 @@ export function MessageBubble({
 
             {/* Read status for own messages */}
             {isOwnMessage && readStatus && (
-              <span className="flex items-center gap-1 text-xs">
+              <span className="flex items-center gap-1.5 text-xs">
                 {readStatus.status === "delivered" && (
                   <>
                     {/* Single check mark for delivered */}
@@ -493,25 +572,11 @@ export function MessageBubble({
                     <span className="text-blue-500 dark:text-cyan-400">Seen</span>
                   </>
                 )}
-                {readStatus.status === "seen_by" && readStatus.seenBy && (
+                {readStatus.status === "seen_by" && readReceipts && readReceipts.length > 0 && (
                   <>
-                    {/* Double check mark for seen (group conversation) */}
-                    <svg
-                      className="w-4 h-4 text-blue-500 dark:text-cyan-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      {/* First checkmark */}
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2 13l4 4L16 7" />
-                      {/* Second checkmark, offset to the right */}
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 13l4 4L22 7" />
-                    </svg>
-                    <span className="text-blue-500 dark:text-cyan-400">
-                      Seen by {readStatus.seenBy.join(", ")}
-                      {readReceipts && readReceipts.length > 3 && ` +${readReceipts.length - 3}`}
-                    </span>
+                    {/* Stacked avatars for group conversation (Matrix SDK pattern) */}
+                    <StackedReadReceipts receipts={readReceipts} />
+                    <span className="text-blue-500 dark:text-cyan-400 ml-0.5">Seen</span>
                   </>
                 )}
               </span>

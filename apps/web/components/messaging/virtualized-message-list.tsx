@@ -11,6 +11,8 @@
  * - Reverse infinite scroll (load older messages at top)
  * - Auto-scroll to bottom for new messages
  * - Maintains scroll position when loading older messages
+ * - Scroll anchoring with tracked message IDs (Matrix SDK pattern)
+ * - Shrink prevention for typing indicator transitions
  */
 
 import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle } from "react";
@@ -18,6 +20,33 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
 import { MessageBubble, TypingIndicator, DateSeparator, type MentionedUser } from "./message-bubble";
 import type { Message, ReadReceipt } from "@/app/actions/messaging";
+
+// ============================================================================
+// Scroll State Types (Matrix SDK pattern)
+// ============================================================================
+
+/**
+ * Scroll state tracking for position preservation.
+ * Based on Matrix SDK's ScrollPanel implementation.
+ *
+ * Two states:
+ * - stuckAtBottom: viewport is scrolled to bottom, new messages should auto-scroll
+ * - anchored: viewport is tied to a specific message by ID
+ */
+interface ScrollState {
+  stuckAtBottom: boolean;
+  trackedMessageId?: string;
+  bottomOffset?: number; // px from bottom of tracked message to bottom of viewport
+}
+
+/**
+ * Shrink prevention state to prevent content jumping when typing indicator toggles.
+ * Stores the last known offset so we can compensate with padding.
+ */
+interface ShrinkPreventionState {
+  offsetFromBottom: number;
+  lastMessageId: string;
+}
 
 // ============================================================================
 // Types
@@ -140,6 +169,16 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   const prevMessagesLengthRef = useRef(messages.length);
   const isLoadingMoreRef = useRef(false);
 
+  // Scroll anchoring state (Matrix SDK pattern)
+  const scrollStateRef = useRef<ScrollState>({ stuckAtBottom: true });
+
+  // Shrink prevention state (prevents jump when typing indicator toggles)
+  const shrinkPreventionRef = useRef<ShrinkPreventionState | null>(null);
+  const [shrinkPadding, setShrinkPadding] = useState(0);
+
+  // Track previous typing state to detect transitions
+  const prevTypingRef = useRef(typingUsers.length > 0);
+
   // Group messages with date separators
   const items = groupMessagesWithDates(messages);
 
@@ -191,12 +230,131 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     setIsAtBottom(atBottom);
   }, []);
 
+  // Save scroll state with message anchoring (Matrix SDK pattern)
+  const saveScrollState = useCallback(() => {
+    const el = parentRef.current;
+    if (!el) return;
+
+    const threshold = 100;
+    const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < threshold;
+
+    if (atBottom) {
+      scrollStateRef.current = { stuckAtBottom: true };
+      return;
+    }
+
+    // Find the bottom-most visible message to anchor to
+    const virtualItems = virtualizer.getVirtualItems();
+    for (let i = virtualItems.length - 1; i >= 0; i--) {
+      const virtualItem = virtualItems[i];
+      if (!virtualItem) continue;
+      const item = items[virtualItem.index];
+      if (item?.type === "message" && item.message) {
+        const bottomOffset = el.scrollHeight - el.scrollTop - el.clientHeight;
+        scrollStateRef.current = {
+          stuckAtBottom: false,
+          trackedMessageId: item.message.id,
+          bottomOffset,
+        };
+        return;
+      }
+    }
+  }, [virtualizer, items]);
+
+  // Restore scroll state after content changes (Matrix SDK pattern)
+  const restoreScrollState = useCallback(() => {
+    const el = parentRef.current;
+    if (!el) return;
+
+    const state = scrollStateRef.current;
+
+    if (state.stuckAtBottom) {
+      el.scrollTop = el.scrollHeight;
+      return;
+    }
+
+    if (state.trackedMessageId) {
+      // Find the tracked message element
+      const messageEl = el.querySelector(`[data-message-id="${state.trackedMessageId}"]`);
+      if (messageEl && state.bottomOffset !== undefined) {
+        const newScrollTop = el.scrollHeight - el.clientHeight - state.bottomOffset;
+        el.scrollTop = Math.max(0, newScrollTop);
+      }
+    }
+  }, []);
+
+  // Shrink prevention: mark the last message position (Matrix SDK pattern)
+  const preventShrinking = useCallback(() => {
+    const el = parentRef.current;
+    if (!el || messages.length === 0) return;
+
+    const lastMessage = messages[messages.length - 1];
+    if (!lastMessage) return;
+
+    const lastMessageEl = el.querySelector(`[data-message-id="${lastMessage.id}"]`);
+    if (!lastMessageEl) return;
+
+    const rect = lastMessageEl.getBoundingClientRect();
+    const containerRect = el.getBoundingClientRect();
+    const offsetFromBottom = containerRect.bottom - rect.bottom;
+
+    shrinkPreventionRef.current = {
+      offsetFromBottom,
+      lastMessageId: lastMessage.id,
+    };
+  }, [messages]);
+
+  // Update shrink prevention padding (Matrix SDK pattern)
+  const updateShrinkPrevention = useCallback(() => {
+    const el = parentRef.current;
+    const state = shrinkPreventionRef.current;
+    if (!el || !state) {
+      setShrinkPadding(0);
+      return;
+    }
+
+    const lastMessageEl = el.querySelector(`[data-message-id="${state.lastMessageId}"]`);
+    if (!lastMessageEl) {
+      shrinkPreventionRef.current = null;
+      setShrinkPadding(0);
+      return;
+    }
+
+    const rect = lastMessageEl.getBoundingClientRect();
+    const containerRect = el.getBoundingClientRect();
+    const currentOffset = containerRect.bottom - rect.bottom;
+    const diff = state.offsetFromBottom - currentOffset;
+
+    // Apply padding if content shrunk (typing indicator removed)
+    if (diff > 0) {
+      setShrinkPadding(diff);
+    } else {
+      // Content grew or stayed same, clear prevention
+      shrinkPreventionRef.current = null;
+      setShrinkPadding(0);
+    }
+  }, []);
+
+  // Clear shrink prevention when scrolled away (>200px from bottom)
+  const clearShrinkPreventionIfNeeded = useCallback(() => {
+    const el = parentRef.current;
+    if (!el || !shrinkPreventionRef.current) return;
+
+    const spaceBelowViewport = el.scrollHeight - el.scrollTop - el.clientHeight;
+    if (spaceBelowViewport >= 200) {
+      shrinkPreventionRef.current = null;
+      setShrinkPadding(0);
+    }
+  }, []);
+
   // Handle scroll for infinite loading and bottom detection
   const handleScroll = useCallback(() => {
     const el = parentRef.current;
     if (!el) return;
 
     checkIfAtBottom();
+    saveScrollState();
+    clearShrinkPreventionIfNeeded();
 
     // Load more when scrolled near top (reverse infinite scroll)
     if (
@@ -220,7 +378,7 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
         isLoadingMoreRef.current = false;
       });
     }
-  }, [hasMore, isLoading, onLoadMore, checkIfAtBottom]);
+  }, [hasMore, isLoading, onLoadMore, checkIfAtBottom, saveScrollState, clearShrinkPreventionIfNeeded]);
 
   // Scroll to bottom when new messages arrive (if already at bottom)
   useEffect(() => {
@@ -232,6 +390,36 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
       virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
     }
   }, [messages.length, isAtBottom, totalCount, virtualizer]);
+
+  // Shrink prevention for typing indicator transitions (Matrix SDK pattern)
+  // When typing indicator appears, mark the last message position.
+  // When it disappears, apply padding to prevent content from jumping up.
+  useEffect(() => {
+    const wasTyping = prevTypingRef.current;
+    const isTyping = typingUsers.length > 0;
+    prevTypingRef.current = isTyping;
+
+    if (!wasTyping && isTyping) {
+      // Typing indicator appeared - mark position for shrink prevention
+      preventShrinking();
+    } else if (wasTyping && !isTyping) {
+      // Typing indicator disappeared - apply shrink prevention
+      requestAnimationFrame(() => {
+        updateShrinkPrevention();
+      });
+    }
+  }, [typingUsers.length, preventShrinking, updateShrinkPrevention]);
+
+  // Clear shrink padding after a short delay (allow animation to complete)
+  useEffect(() => {
+    if (shrinkPadding > 0) {
+      const timer = setTimeout(() => {
+        setShrinkPadding(0);
+        shrinkPreventionRef.current = null;
+      }, 300); // Match animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [shrinkPadding]);
 
   // Initial scroll to bottom
   useEffect(() => {
@@ -293,12 +481,14 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
         </div>
       )}
 
-      {/* Virtual list container */}
+      {/* Virtual list container with shrink prevention padding */}
       <div
         style={{
           height: `${virtualizer.getTotalSize()}px`,
           width: "100%",
           position: "relative",
+          paddingBottom: shrinkPadding > 0 ? `${shrinkPadding}px` : undefined,
+          transition: shrinkPadding > 0 ? "padding-bottom 300ms ease-out" : undefined,
         }}
       >
         {virtualItems.map((virtualRow) => {

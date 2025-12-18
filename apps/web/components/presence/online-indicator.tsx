@@ -7,10 +7,79 @@
  * - Green: Online
  * - Gray: Offline
  * - Orange: Idle/AFK (away for 1+ hour)
+ *
+ * Enhanced with "last active" display (Matrix SDK pattern):
+ * - "Online" when currently active
+ * - "Online 5m ago" when recently active
+ * - "Away 1h ago" when idle
+ * - "Offline 2d ago" when disconnected
  */
 
 import { cn } from "@/lib/design-system";
 import type { PresenceStatus } from "@/app/actions/presence";
+
+// ============================================
+// HELPER: Format "X ago" duration (Matrix SDK pattern)
+// ============================================
+
+/**
+ * Formats a duration in milliseconds to a human-readable "X ago" string.
+ * Based on Matrix SDK's formatDuration for presence display.
+ */
+function formatDuration(ms: number): string {
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+
+  if (weeks > 0) return `${weeks}w`;
+  if (days > 0) return `${days}d`;
+  if (hours > 0) return `${hours}h`;
+  if (minutes > 0) return `${minutes}m`;
+  return "now";
+}
+
+/**
+ * Get the "last active" display text based on status and time.
+ * Matches Matrix SDK's PresenceLabel behavior.
+ */
+function getPresenceLabel(
+  status: PresenceStatus,
+  lastActiveAt?: string | null,
+  currentlyActive?: boolean
+): string {
+  // If currently active, just show "Online"
+  if (currentlyActive || status === "online") {
+    if (!lastActiveAt) return "Online";
+
+    const activeAgo = Date.now() - new Date(lastActiveAt).getTime();
+    // If active within last minute, show "Online"
+    if (activeAgo < 60000) return "Online";
+    // Otherwise show "Online Xm ago"
+    return `Online ${formatDuration(activeAgo)} ago`;
+  }
+
+  if (status === "idle") {
+    if (!lastActiveAt) return "Away";
+    const activeAgo = Date.now() - new Date(lastActiveAt).getTime();
+    return `Away ${formatDuration(activeAgo)} ago`;
+  }
+
+  if (status === "offline") {
+    if (!lastActiveAt) return "Offline";
+    const activeAgo = Date.now() - new Date(lastActiveAt).getTime();
+    // If offline for over a week, just show "Offline"
+    if (activeAgo > 7 * 24 * 60 * 60 * 1000) return "Offline";
+    return `Offline ${formatDuration(activeAgo)} ago`;
+  }
+
+  return "Unknown";
+}
+
+// ============================================
+// COMPONENT PROPS
+// ============================================
 
 interface OnlineIndicatorProps {
   status: PresenceStatus;
@@ -70,20 +139,42 @@ export function OnlineIndicator({
 }
 
 // ============================================
-// ONLINE INDICATOR WITH LABEL
+// ONLINE INDICATOR WITH LABEL (Enhanced with "last active")
 // ============================================
 
 interface OnlineIndicatorWithLabelProps extends OnlineIndicatorProps {
   showLabel?: boolean;
+  /** ISO timestamp of when the user was last active (for "X ago" display) */
+  lastActiveAt?: string | null;
+  /** If true, show just the status without duration */
+  currentlyActive?: boolean;
 }
 
+/**
+ * OnlineIndicatorWithLabel - Enhanced with "last active" display
+ *
+ * Shows presence status with optional duration:
+ * - "Online" (currently active)
+ * - "Online 5m ago" (recently active)
+ * - "Away 1h ago" (idle)
+ * - "Offline 2d ago" (disconnected)
+ *
+ * Based on Matrix SDK's PresenceLabel pattern.
+ */
 export function OnlineIndicatorWithLabel({
   status,
   size = "md",
   showPulse = true,
   showLabel = true,
+  lastActiveAt,
+  currentlyActive,
   className,
 }: OnlineIndicatorWithLabelProps) {
+  // Get the formatted label with optional "X ago" suffix
+  const label = lastActiveAt
+    ? getPresenceLabel(status, lastActiveAt, currentlyActive)
+    : statusLabels[status];
+
   return (
     <span className={cn("inline-flex items-center gap-1.5", className)}>
       <OnlineIndicator status={status} size={size} showPulse={showPulse} />
@@ -98,7 +189,7 @@ export function OnlineIndicatorWithLabel({
               : "text-gray-500 dark:text-gray-400"
           )}
         >
-          {statusLabels[status]}
+          {label}
         </span>
       )}
     </span>
@@ -115,6 +206,8 @@ interface AvatarWithStatusProps {
   name?: string;
   status: PresenceStatus;
   size?: "sm" | "md" | "lg";
+  /** ISO timestamp of when the user was last active (for tooltip) */
+  lastActiveAt?: string | null;
   className?: string;
 }
 
@@ -136,6 +229,7 @@ export function AvatarWithStatus({
   name,
   status,
   size = "md",
+  lastActiveAt,
   className,
 }: AvatarWithStatusProps) {
   // Get initials from name
@@ -145,6 +239,11 @@ export function AvatarWithStatus({
     .join("")
     .toUpperCase()
     .slice(0, 2);
+
+  // Get the presence label with "X ago" if lastActiveAt is provided
+  const presenceTitle = lastActiveAt
+    ? getPresenceLabel(status, lastActiveAt)
+    : statusLabels[status];
 
   return (
     <div className={cn("relative inline-block", className)}>
@@ -172,7 +271,7 @@ export function AvatarWithStatus({
         </div>
       )}
 
-      {/* Status indicator */}
+      {/* Status indicator with enhanced tooltip */}
       <span
         className={cn(
           "absolute block rounded-full ring-2 ring-white dark:ring-[#0a0a0a]",
@@ -180,10 +279,17 @@ export function AvatarWithStatus({
           sizeClasses[size],
           statusColors[status]
         )}
-        title={statusLabels[status]}
+        title={presenceTitle}
       />
     </div>
   );
 }
 
+// ============================================
+// EXPORTS
+// ============================================
+
 export default OnlineIndicator;
+
+// Export helper functions for use in other components
+export { formatDuration, getPresenceLabel };
