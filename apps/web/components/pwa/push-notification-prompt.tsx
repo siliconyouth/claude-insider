@@ -5,13 +5,20 @@
  *
  * Prompts users to enable push notifications after they've been on the site for a while.
  * Only shows for authenticated users who haven't enabled notifications yet.
+ *
+ * CRITICAL: When permission is granted, we must:
+ * 1. Subscribe to Web Push (handled by useBrowserNotifications hook)
+ * 2. Update browser_notifications preference in database (handled here)
+ *
+ * Without step 2, push notifications won't be sent even though the subscription exists.
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { cn } from "@/lib/design-system";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
 import { useSession } from "@/lib/auth-client";
 import { Bell, X } from "lucide-react";
+import { updateNotificationPreferences } from "@/app/actions/notifications";
 
 interface PushNotificationPromptProps {
   className?: string;
@@ -35,6 +42,7 @@ export function PushNotificationPrompt({
 
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   // Check if user has dismissed the prompt before
   useEffect(() => {
@@ -74,6 +82,20 @@ export function PushNotificationPrompt({
   const handleEnable = async () => {
     const result = await requestPermission();
     if (result === "granted") {
+      // CRITICAL: Update browser_notifications preference in database
+      // Without this, the server won't send push notifications even though
+      // the browser subscription exists. The createNotification() function
+      // checks this preference before calling sendPushNotificationToUser().
+      startTransition(async () => {
+        const updateResult = await updateNotificationPreferences({
+          browser_notifications: true,
+        });
+        if (updateResult.error) {
+          console.error("[PushPrompt] Failed to update preference:", updateResult.error);
+        } else {
+          console.log("[PushPrompt] Successfully enabled browser_notifications preference");
+        }
+      });
       setIsVisible(false);
     } else if (result === "denied") {
       handleDismiss();
@@ -157,7 +179,7 @@ export function PushNotificationPrompt({
         <div className="flex items-center gap-2">
           <button
             onClick={handleEnable}
-            disabled={isRequesting}
+            disabled={isRequesting || isPending}
             className={cn(
               "flex-1 px-4 py-2 rounded-lg text-sm font-semibold text-white",
               "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
@@ -166,7 +188,7 @@ export function PushNotificationPrompt({
               "transition-all duration-200"
             )}
           >
-            {isRequesting ? "Enabling..." : "Enable Notifications"}
+            {isRequesting || isPending ? "Enabling..." : "Enable Notifications"}
           </button>
           <button
             onClick={handleDismiss}
