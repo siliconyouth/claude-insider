@@ -463,6 +463,10 @@ export interface E2EEState {
 
   /** Device mismatch details (set when status is 'device-mismatch') */
   deviceMismatch: DeviceMismatchInfo | null;
+
+  /** Version counter that increments when E2EE state changes significantly.
+   * Used to force context consumers to re-render when status transitions. */
+  stateVersion: number;
 }
 
 /**

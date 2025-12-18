@@ -92,6 +92,7 @@ function createSafeDefaults(): UseE2EEReturn {
     hasBackup: false,
     usingWasm: false,
     deviceMismatch: null,
+    stateVersion: 0,
 
     // Actions (no-op)
     initialize: noOp,

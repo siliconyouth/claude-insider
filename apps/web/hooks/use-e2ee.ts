@@ -92,6 +92,11 @@ export function useE2EE(): UseE2EEReturn {
   const [usingWasm, setUsingWasm] = useState(false);
   const [deviceMismatch, setDeviceMismatch] = useState<DeviceMismatchInfo | null>(null);
 
+  // Version counter to force context updates when E2EE state changes significantly
+  // This ensures consuming components re-render even if they only check isInitialized
+  const [stateVersion, setStateVersion] = useState(0);
+  const incrementVersion = useCallback(() => setStateVersion(v => v + 1), []);
+
   // Refs for vodozemac instances (avoid state for WASM objects)
   const vodozemacRef = useRef<VodozemacModule | null>(null);
   const accountRef = useRef<VodozemacAccount | null>(null);
@@ -255,6 +260,9 @@ export function useE2EE(): UseE2EEReturn {
       setAvailablePrekeys(ONE_TIME_KEY_COUNT);
       setStatus("ready");
 
+      // Increment version to force context consumers to re-render
+      incrementVersion();
+
       console.log("[E2EE] Keys generated and uploaded:", newDeviceId);
     } catch (err) {
       console.error("[E2EE] Key generation failed:", err);
@@ -262,7 +270,7 @@ export function useE2EE(): UseE2EEReturn {
       setStatus("error");
       throw err;
     }
-  }, [session?.user?.id]);
+  }, [session?.user?.id, incrementVersion]);
 
   // ============================================================================
   // PUBLIC KEYS
@@ -448,6 +456,9 @@ export function useE2EE(): UseE2EEReturn {
         setSigningKey(keys.ed25519);
         setStatus("ready");
 
+        // Increment version to force context consumers to re-render
+        incrementVersion();
+
         console.log("[E2EE] Restored from backup:", backupData.deviceId);
       } catch (err) {
         console.error("[E2EE] Backup restoration failed:", err);
@@ -456,7 +467,7 @@ export function useE2EE(): UseE2EEReturn {
         throw err;
       }
     },
-    []
+    [incrementVersion]
   );
 
   const checkBackupExists = useCallback(async (): Promise<boolean> => {
@@ -593,7 +604,8 @@ export function useE2EE(): UseE2EEReturn {
     console.log("[E2EE] Dismissing device mismatch - continuing with fallback");
     setDeviceMismatch(null);
     setStatus("ready");
-  }, []);
+    incrementVersion();
+  }, [incrementVersion]);
 
   // ============================================================================
   // MESSAGE ENCRYPTION (1:1 Olm)
@@ -876,6 +888,7 @@ export function useE2EE(): UseE2EEReturn {
     hasBackup,
     usingWasm, // True if using official vodozemac WASM, false if Web Crypto fallback
     deviceMismatch, // Details about device mismatch (if status is 'device-mismatch')
+    stateVersion, // Increments when E2EE state changes significantly (forces context updates)
 
     // Actions
     initialize,
