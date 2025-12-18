@@ -10,6 +10,22 @@
 -- 2. Verification flows work correctly
 -- 3. No errors from key format validation
 
+-- First, update the device_type constraint to allow 'server' for AI/system devices
+ALTER TABLE public.device_keys
+  DROP CONSTRAINT IF EXISTS device_keys_device_type_check;
+
+ALTER TABLE public.device_keys
+  ADD CONSTRAINT device_keys_device_type_check
+  CHECK (device_type IN ('web', 'mobile', 'desktop', 'server'));
+
+-- Update verification_method constraint to allow 'system' for AI/system devices
+ALTER TABLE public.device_keys
+  DROP CONSTRAINT IF EXISTS device_keys_verification_method_check;
+
+ALTER TABLE public.device_keys
+  ADD CONSTRAINT device_keys_verification_method_check
+  CHECK (verification_method IN ('sas', 'cross_sign', 'admin', 'qr', 'system'));
+
 -- Generate random keys in proper Curve25519 format (32 bytes = 43 base64 chars unpadded)
 -- Using encode(gen_random_bytes(32), 'base64') would add padding, so we use a fixed
 -- random key that follows the correct format
