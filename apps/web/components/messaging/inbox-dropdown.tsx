@@ -18,6 +18,7 @@ import { cn } from "@/lib/design-system";
 import { getConversations, type Conversation } from "@/app/actions/messaging";
 import { useRealtimeMessages } from "@/hooks/use-realtime-messages";
 import { useIsAuthenticated } from "@/lib/auth-client";
+import { useSound } from "@/hooks/use-sound-effects";
 import { AvatarWithStatus } from "@/components/presence";
 import { openMessages, useUnifiedChat } from "@/components/unified-chat";
 import Link from "next/link";
@@ -53,12 +54,17 @@ export function InboxDropdown() {
   const [isLoadingConversations, setIsLoadingConversations] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Sound effects for new messages
+  const { playMessageReceived } = useSound();
+
   // Real-time message updates
   const { unreadCount, refreshCount } = useRealtimeMessages({
     enabled: isAuthenticated,
     onNewMessage: () => {
       // Refresh conversations when new message arrives
       loadConversations();
+      // Play sound for new message
+      playMessageReceived();
     },
   });
 
