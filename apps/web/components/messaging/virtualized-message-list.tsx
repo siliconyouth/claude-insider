@@ -152,6 +152,8 @@ export function VirtualizedMessageList({
     overscan: 10, // Render 10 extra items for smooth scrolling
     // Enable dynamic measurement for accurate heights
     measureElement: (element) => element.getBoundingClientRect().height,
+    // Add padding at the end for read receipts visibility (included in scroll calculations)
+    paddingEnd: 24,
   });
 
   const virtualItems = virtualizer.getVirtualItems();
@@ -249,13 +251,12 @@ export function VirtualizedMessageList({
         </div>
       )}
 
-      {/* Virtual list container - extra padding at bottom for read receipts visibility */}
+      {/* Virtual list container */}
       <div
         style={{
           height: `${virtualizer.getTotalSize()}px`,
           width: "100%",
           position: "relative",
-          paddingBottom: "24px", // Space for read status on last message
         }}
       >
         {virtualItems.map((virtualRow) => {
