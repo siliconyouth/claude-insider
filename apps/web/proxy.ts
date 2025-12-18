@@ -1,15 +1,8 @@
 /**
- * Security & Performance Proxy
+ * Security Proxy
  *
- * Handles request correlation IDs, visitor tracking, and performance optimization.
- * Runs on all requests as a network-level proxy at the Edge.
- *
- * Features:
- * - Request correlation IDs for debugging
- * - Visitor tracking headers
- * - Performance timing headers
- * - Bot detection for optimized responses
- * - Cache hints for static vs protected routes
+ * Handles request correlation IDs and visitor tracking.
+ * Runs on all requests as a network-level proxy.
  *
  * NOTE: Honeypot and database operations are handled in API routes,
  * not in proxy (Edge runtime can't use node-postgres).
@@ -39,12 +32,6 @@ const SKIP_PATHS = [
   "/.well-known",
 ];
 
-// Routes that require authentication (no caching)
-const PROTECTED_ROUTES = ["/dashboard", "/settings", "/profile", "/inbox"];
-
-// Static/documentation routes (can be cached)
-const STATIC_ROUTES = ["/docs", "/resources", "/privacy", "/terms", "/accessibility", "/disclaimer"];
-
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -69,27 +56,6 @@ export async function proxy(request: NextRequest) {
 
   // Add request ID to response headers (for client-side tracking)
   response.headers.set(REQUEST_ID_HEADER, requestId);
-
-  // Performance: Add bot detection header
-  const userAgent = request.headers.get("user-agent") || "";
-  const isBot = /bot|crawler|spider|crawling|googlebot|bingbot|yandex|baidu/i.test(userAgent);
-  if (isBot) {
-    response.headers.set("X-Bot-Detected", "true");
-  }
-
-  // Performance: Add route type hints for debugging/monitoring
-  if (STATIC_ROUTES.some((route) => pathname.startsWith(route))) {
-    response.headers.set("X-Route-Type", "static");
-  } else if (PROTECTED_ROUTES.some((route) => pathname.startsWith(route))) {
-    response.headers.set("X-Route-Type", "protected");
-    // Prevent caching of authenticated pages
-    response.headers.set("Cache-Control", "no-store, must-revalidate");
-  }
-
-  // Performance: Add SEO hints for dashboard pages
-  if (pathname.startsWith("/dashboard")) {
-    response.headers.set("X-Robots-Tag", "noindex, nofollow");
-  }
 
   // Log API requests in development
   if (process.env.NODE_ENV === "development" && pathname.startsWith("/api")) {
