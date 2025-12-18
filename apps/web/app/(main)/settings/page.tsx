@@ -18,6 +18,7 @@ import {
 import { updateNotificationPreferences, sendTestNotifications } from "@/app/actions/notifications";
 import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
 import { PasskeySettings } from "@/components/settings/passkey-settings";
+import { E2EESettings } from "@/components/settings/e2ee-settings";
 import { DataManagement } from "@/components/settings/data-management";
 import { BlockedUsers } from "@/components/settings/blocked-users";
 import { AvatarUpload } from "@/components/settings/avatar-upload";
@@ -1065,6 +1066,17 @@ export default function SettingsPage() {
 
             {/* Passkeys */}
             <PasskeySettings />
+
+            {/* End-to-End Encryption */}
+            <div
+              className={cn(
+                "p-6 rounded-xl",
+                "bg-gray-50 dark:bg-[#111111]",
+                "border border-gray-200 dark:border-[#262626]"
+              )}
+            >
+              <E2EESettings />
+            </div>
           </div>
         </section>
 
