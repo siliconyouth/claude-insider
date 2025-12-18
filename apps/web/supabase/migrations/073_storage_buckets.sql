@@ -129,4 +129,5 @@ USING (
 -- ============================================================================
 -- Comments
 -- ============================================================================
-COMMENT ON TABLE storage.buckets IS 'Supabase Storage buckets for file uploads';
+-- Note: Cannot comment on storage.buckets as it's owned by Supabase
+-- COMMENT ON TABLE storage.buckets IS 'Supabase Storage buckets for file uploads';
