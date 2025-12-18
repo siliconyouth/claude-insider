@@ -16,6 +16,16 @@ import type { Message, ReadReceipt } from "@/app/actions/messaging";
 import Link from "next/link";
 import { ProfileHoverCard, type ProfileHoverCardUser } from "@/components/users/profile-hover-card";
 
+/** User data for @mention hover cards */
+export interface MentionedUser {
+  id: string;
+  name: string;
+  username: string;
+  image?: string | null;
+  bio?: string | null;
+  isOnline?: boolean;
+}
+
 interface MessageBubbleProps {
   message: Message;
   isOwnMessage: boolean;
@@ -32,43 +42,109 @@ interface MessageBubbleProps {
   conversationType?: "direct" | "group";
   /** Total number of participants in the conversation (excluding sender) */
   participantCount?: number;
+  /** Map of lowercase username -> user data for @mention hover cards */
+  mentionedUsers?: Record<string, MentionedUser>;
   className?: string;
 }
 
-// Parse and linkify message content
-function linkifyContent(content: string): React.ReactNode[] {
-  // Match URLs and internal links
+// Match types for unified parsing
+interface ContentMatch {
+  type: "url" | "markdown-link" | "mention";
+  index: number;
+  length: number;
+  text: string;
+  // For markdown links
+  linkText?: string;
+  linkUrl?: string;
+  // For mentions
+  username?: string;
+}
+
+// Parse and linkify message content (URLs, markdown links, and @mentions)
+function linkifyContent(
+  content: string,
+  mentionedUsers?: Record<string, MentionedUser>
+): React.ReactNode[] {
+  const matches: ContentMatch[] = [];
+
+  // Match URLs and markdown links
   const urlRegex = /(\[([^\]]+)\]\(([^)]+)\)|https?:\/\/[^\s]+|\/[a-z][^\s]*)/gi;
+  let match;
+  while ((match = urlRegex.exec(content)) !== null) {
+    if (match[0].startsWith("[")) {
+      matches.push({
+        type: "markdown-link",
+        index: match.index,
+        length: match[0].length,
+        text: match[0],
+        linkText: match[2] || "link",
+        linkUrl: match[3] || "#",
+      });
+    } else {
+      matches.push({
+        type: "url",
+        index: match.index,
+        length: match[0].length,
+        text: match[0],
+      });
+    }
+  }
+
+  // Match @mentions (word boundary before @, followed by alphanumeric/hyphens)
+  const mentionRegex = /\B@([a-zA-Z0-9-]+)/g;
+  while ((match = mentionRegex.exec(content)) !== null) {
+    // Check for overlap with existing matches (e.g., URL containing @)
+    const overlaps = matches.some(
+      (m) =>
+        (match!.index >= m.index && match!.index < m.index + m.length) ||
+        (match!.index + match![0].length > m.index &&
+          match!.index + match![0].length <= m.index + m.length)
+    );
+    if (!overlaps) {
+      matches.push({
+        type: "mention",
+        index: match.index,
+        length: match[0].length,
+        text: match[0],
+        username: match[1]?.toLowerCase(),
+      });
+    }
+  }
+
+  // Sort by position
+  matches.sort((a, b) => a.index - b.index);
+
+  // If no matches, return content as-is
+  if (matches.length === 0) {
+    return [content];
+  }
+
+  // Build parts array
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
-  let match;
 
-  while ((match = urlRegex.exec(content)) !== null) {
+  for (const m of matches) {
     // Add text before the match
-    if (match.index > lastIndex) {
-      parts.push(content.slice(lastIndex, match.index));
+    if (m.index > lastIndex) {
+      parts.push(content.slice(lastIndex, m.index));
     }
 
-    // Check if it's a markdown link
-    if (match[0].startsWith("[")) {
-      const linkText = match[2] || "link";
-      const linkUrl = match[3] || "#";
+    if (m.type === "markdown-link") {
       parts.push(
         <Link
-          key={match.index}
-          href={linkUrl}
+          key={`md-${m.index}`}
+          href={m.linkUrl || "#"}
           className="text-blue-600 dark:text-cyan-400 hover:underline"
         >
-          {linkText}
+          {m.linkText}
         </Link>
       );
-    } else {
-      // Regular URL or internal path
-      const url = match[0];
+    } else if (m.type === "url") {
+      const url = m.text;
       const isInternal = url.startsWith("/");
       parts.push(
         <Link
-          key={match.index}
+          key={`url-${m.index}`}
           href={url}
           className="text-blue-600 dark:text-cyan-400 hover:underline"
           {...(!isInternal && { target: "_blank", rel: "noopener noreferrer" })}
@@ -76,9 +152,51 @@ function linkifyContent(content: string): React.ReactNode[] {
           {isInternal ? url : url.replace(/^https?:\/\//, "")}
         </Link>
       );
+    } else if (m.type === "mention" && m.username) {
+      const user = mentionedUsers?.[m.username];
+      if (user) {
+        // Render with ProfileHoverCard
+        const hoverUser: ProfileHoverCardUser = {
+          id: user.id,
+          name: user.name,
+          username: user.username,
+          image: user.image,
+          bio: user.bio,
+          isOnline: user.isOnline,
+        };
+        parts.push(
+          <ProfileHoverCard key={`mention-${m.index}`} user={hoverUser} compact>
+            <Link
+              href={`/users/${user.username}`}
+              className={cn(
+                "inline-flex items-center font-medium",
+                "text-blue-600 dark:text-cyan-400",
+                "hover:underline"
+              )}
+            >
+              @{user.username}
+            </Link>
+          </ProfileHoverCard>
+        );
+      } else {
+        // Fallback: simple link without hover card
+        parts.push(
+          <Link
+            key={`mention-${m.index}`}
+            href={`/users/${m.username}`}
+            className={cn(
+              "inline-flex items-center font-medium",
+              "text-blue-600 dark:text-cyan-400",
+              "hover:underline"
+            )}
+          >
+            @{m.username}
+          </Link>
+        );
+      }
     }
 
-    lastIndex = match.index + match[0].length;
+    lastIndex = m.index + m.length;
   }
 
   // Add remaining text
@@ -145,6 +263,7 @@ export function MessageBubble({
   readReceipts,
   conversationType = "direct",
   participantCount = 1,
+  mentionedUsers,
   className,
 }: MessageBubbleProps) {
   const isAI = message.senderId === AI_ASSISTANT_USER_ID || message.isAiGenerated;
@@ -321,7 +440,7 @@ export function MessageBubble({
           )}
         >
           <p className="text-sm whitespace-pre-wrap break-words">
-            {linkifyContent(message.content)}
+            {linkifyContent(message.content, mentionedUsers)}
           </p>
         </div>
 

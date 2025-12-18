@@ -24,6 +24,7 @@ import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
 import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
+import type { MentionedUser } from "@/components/messaging/message-bubble";
 import {
   MentionAutocomplete,
   useMentionDetection,
@@ -37,10 +38,13 @@ import {
   markMessagesAsRead,
   getReadReceipts,
   searchUsersForMention,
+  getProfilesByUsernames,
   type Conversation,
   type Message,
   type ReadReceipt,
+  type MentionProfile,
 } from "@/app/actions/messaging";
+import { extractMentions } from "@/lib/mentions";
 import { useConversationRealtime, type MessagePayload, type ReadReceiptPayload } from "@/lib/realtime/realtime-context";
 
 // ============================================================================
@@ -340,6 +344,8 @@ function ConversationView({
   const [isVerified, setIsVerified] = useState(false);
   // Read receipts state: messageId -> ReadReceipt[]
   const [readReceipts, setReadReceipts] = useState<Record<string, ReadReceipt[]>>({});
+  // Mentioned users for @mention hover cards: lowercase username -> user data
+  const [mentionedUsers, setMentionedUsers] = useState<Record<string, MentionedUser>>({});
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
@@ -377,6 +383,48 @@ function ConversationView({
         avatarUrl: p.avatarUrl,
       }));
   }, [participants, currentUserId]);
+
+  // Extract all unique @usernames from messages for hover card lookups
+  const mentionedUsernames = useMemo(() => {
+    const allUsernames = new Set<string>();
+    for (const msg of messages) {
+      const usernames = extractMentions(msg.content);
+      usernames.forEach((u) => allUsernames.add(u));
+    }
+    return Array.from(allUsernames);
+  }, [messages]);
+
+  // Fetch profile data for mentioned usernames (batch fetch)
+  useEffect(() => {
+    if (mentionedUsernames.length === 0) return;
+
+    // Filter out usernames we already have
+    const newUsernames = mentionedUsernames.filter(
+      (u) => !mentionedUsers[u.toLowerCase()]
+    );
+    if (newUsernames.length === 0) return;
+
+    const fetchProfiles = async () => {
+      const result = await getProfilesByUsernames(newUsernames);
+      if (result.success && result.profiles) {
+        // Convert MentionProfile to MentionedUser and merge with existing
+        const newUsers: Record<string, MentionedUser> = {};
+        for (const [username, profile] of Object.entries(result.profiles)) {
+          newUsers[username] = {
+            id: profile.id,
+            name: profile.name,
+            username: profile.username,
+            image: profile.image,
+            bio: profile.bio,
+            isOnline: profile.isOnline,
+          };
+        }
+        setMentionedUsers((prev) => ({ ...prev, ...newUsers }));
+      }
+    };
+
+    fetchProfiles();
+  }, [mentionedUsernames]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Search ALL users (like Telegram) - called when query is 2+ chars
   // Prioritizes: exact match > following > followers > other users
@@ -807,6 +855,7 @@ function ConversationView({
         highlightedMessageId={highlightedMessageId}
         readReceipts={readReceipts}
         participantCount={participants.length - 1}
+        mentionedUsers={mentionedUsers}
         className="p-4"
       />
 

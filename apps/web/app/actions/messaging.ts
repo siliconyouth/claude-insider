@@ -1538,3 +1538,120 @@ export async function getSenderMessageReadReceipts(
   // in the future to only fetch receipts for the sender's messages
   return getReadReceipts(senderMessageIds);
 }
+
+// ============================================
+// MENTION PROFILE LOOKUP
+// ============================================
+
+/**
+ * Profile data for @mention hover cards
+ */
+export interface MentionProfile {
+  id: string;
+  name: string;
+  username: string;
+  image?: string | null;
+  bio?: string | null;
+  isOnline?: boolean;
+}
+
+/**
+ * Batch fetch profiles by usernames for @mention hover cards.
+ * Returns a map of lowercase username -> profile data.
+ *
+ * @param usernames - Array of usernames to look up (case-insensitive)
+ * @returns Map of lowercase username -> profile data
+ */
+export async function getProfilesByUsernames(
+  usernames: string[]
+): Promise<{
+  success: boolean;
+  profiles?: Record<string, MentionProfile>;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "Not authenticated" };
+    }
+
+    if (!usernames.length) {
+      return { success: true, profiles: {} };
+    }
+
+    // Deduplicate and lowercase
+    const uniqueUsernames = [...new Set(usernames.map((u) => u.toLowerCase()))];
+
+    const supabase = await createAdminClient();
+
+    // Fetch profiles by username (cast due to types being out of sync)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: profiles, error } = await (supabase as any)
+      .from("profiles")
+      .select("user_id, display_name, username, avatar_url, bio")
+      .in("username", uniqueUsernames);
+
+    if (error) {
+      console.error("Error fetching profiles by username:", error);
+      return { success: false, error: "Failed to fetch profiles" };
+    }
+
+    // Fetch user names from user table for profiles that don't have display_name
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const userIds = (profiles || []).map((p: any) => p.user_id as string);
+    let userNames: Record<string, string> = {};
+
+    if (userIds.length > 0) {
+      const { data: users } = await supabase
+        .from("user")
+        .select("id, name")
+        .in("id", userIds);
+
+      if (users) {
+        userNames = Object.fromEntries(
+          users.map((u: { id: string; name: string | null }) => [u.id, u.name || ""])
+        );
+      }
+    }
+
+    // Fetch online status from user_presence
+    let onlineStatus: Record<string, boolean> = {};
+    if (userIds.length > 0) {
+      const { data: presence } = await supabase
+        .from("user_presence")
+        .select("user_id, status")
+        .in("user_id", userIds);
+
+      if (presence) {
+        onlineStatus = Object.fromEntries(
+          presence.map((p: { user_id: string; status: string }) => [
+            p.user_id,
+            p.status === "online",
+          ])
+        );
+      }
+    }
+
+    // Build profile map
+    const profileMap: Record<string, MentionProfile> = {};
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    for (const profile of (profiles || []) as any[]) {
+      if (profile.username) {
+        const username = (profile.username as string).toLowerCase();
+        profileMap[username] = {
+          id: profile.user_id,
+          name: profile.display_name || userNames[profile.user_id] || profile.username,
+          username: profile.username,
+          image: profile.avatar_url,
+          bio: profile.bio,
+          isOnline: onlineStatus[profile.user_id] || false,
+        };
+      }
+    }
+
+    return { success: true, profiles: profileMap };
+  } catch (error) {
+    console.error("Error in getProfilesByUsernames:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}

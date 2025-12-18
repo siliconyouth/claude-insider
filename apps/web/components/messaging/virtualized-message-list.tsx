@@ -16,7 +16,7 @@
 import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
-import { MessageBubble, TypingIndicator, DateSeparator } from "./message-bubble";
+import { MessageBubble, TypingIndicator, DateSeparator, type MentionedUser } from "./message-bubble";
 import type { Message, ReadReceipt } from "@/app/actions/messaging";
 
 // ============================================================================
@@ -43,6 +43,8 @@ interface VirtualizedMessageListProps {
   readReceipts?: Record<string, ReadReceipt[]>;
   /** Number of participants in the conversation (excluding current user) */
   participantCount?: number;
+  /** Map of lowercase username -> user data for @mention hover cards */
+  mentionedUsers?: Record<string, MentionedUser>;
   className?: string;
 }
 
@@ -130,6 +132,7 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     highlightedMessageId,
     readReceipts = {},
     participantCount = 1,
+    mentionedUsers = {},
     className,
   }, ref) {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -386,6 +389,8 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
                   readReceipts={isOwn ? readReceipts[msg.id] : undefined}
                   conversationType={isGroupChat ? "group" : "direct"}
                   participantCount={participantCount}
+                  // Mentioned users for @mention hover cards
+                  mentionedUsers={mentionedUsers}
                 />
               </div>
             );
