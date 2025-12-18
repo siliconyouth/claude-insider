@@ -267,7 +267,7 @@ export function ResourceCard({
                 </span>
               ))}
               {resource.tags.length > maxTags && (
-                <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500">
+                <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                   +{resource.tags.length - maxTags}
                 </span>
               )}
@@ -460,7 +460,7 @@ export function ResourceCard({
             </span>
           ))}
           {resource.tags.length > maxTags && (
-            <span className="px-1.5 py-0.5 text-[10px] rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500">
+            <span className="px-1.5 py-0.5 text-[10px] rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
               +{resource.tags.length - maxTags}
             </span>
           )}

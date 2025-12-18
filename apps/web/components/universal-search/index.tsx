@@ -463,7 +463,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
           Search
         </span>
         <kbd className={cn(
-          "items-center gap-0.5 px-1.5 py-0.5 text-xs font-medium text-gray-500 bg-gray-200 dark:bg-gray-700 rounded ml-auto",
+          "items-center gap-0.5 px-1.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded ml-auto",
           expanded ? "hidden lg:inline-flex" : "hidden sm:inline-flex"
         )}>
           <span className="text-xs">⌘</span>K
@@ -531,7 +531,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                 <div className="px-4 pr-12 pt-3 pb-2 border-b border-gray-200 dark:border-[#262626] flex items-center justify-between">
                   <ModeToggle mode={mode} onModeChange={setMode} />
                   <span className="text-xs text-gray-400">
-                    Press <kbd className="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-[10px]">Tab</kbd> to switch
+                    Press <kbd className="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded text-[10px]">Tab</kbd> to switch
                   </span>
                 </div>
 
@@ -776,8 +776,8 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                             <p className="text-xs text-gray-500 mt-1">{result.category}</p>
                           </div>
                           {index === selectedIndex && (
-                            <div className="flex-shrink-0 text-xs text-gray-500" aria-hidden="true">
-                              <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">Enter</kbd>
+                            <div className="flex-shrink-0 text-xs" aria-hidden="true">
+                              <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">Enter</kbd>
                             </div>
                           )}
                         </button>
@@ -887,15 +887,15 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                       )}
                       <div className="flex justify-center gap-4 mt-6 text-xs text-gray-500">
                         <span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">↑↓</kbd>{" "}
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">↑↓</kbd>{" "}
                           Navigate
                         </span>
                         <span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">Enter</kbd>{" "}
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">Enter</kbd>{" "}
                           Select
                         </span>
                         <span>
-                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">Esc</kbd>{" "}
+                          <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">Esc</kbd>{" "}
                           Close
                         </span>
                       </div>
@@ -917,7 +917,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                       )}
                     </span>
                     <span>
-                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">Esc</kbd>{" "}
+                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">Esc</kbd>{" "}
                       to close
                     </span>
                   </div>

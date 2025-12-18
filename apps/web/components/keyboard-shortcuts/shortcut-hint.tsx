@@ -43,7 +43,7 @@ export function ShortcutHint({ shortcutId, className, showOnHover = false }: Sho
               "bg-gray-100/80 dark:bg-gray-800/80",
               "border border-gray-300/50 dark:border-gray-700/50",
               "rounded",
-              "text-gray-500 dark:text-gray-500"
+              "text-gray-600 dark:text-gray-300"
             )}
           >
             {part}

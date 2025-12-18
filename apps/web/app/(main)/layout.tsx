@@ -169,9 +169,21 @@ export default async function MainLayout({
             `,
           }}
         />
-        {/* DNS Prefetch and Preconnect */}
+        {/* DNS Prefetch and Preconnect for external services */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Supabase - authentication and database */}
+        <link rel="preconnect" href="https://api.supabase.io" />
+        <link rel="dns-prefetch" href="https://api.supabase.io" />
+        {/* Anthropic API - AI features */}
+        <link rel="preconnect" href="https://api.anthropic.com" />
+        <link rel="dns-prefetch" href="https://api.anthropic.com" />
+        {/* ElevenLabs - TTS features */}
+        <link rel="preconnect" href="https://api.elevenlabs.io" />
+        <link rel="dns-prefetch" href="https://api.elevenlabs.io" />
+        {/* Vercel Analytics */}
+        <link rel="preconnect" href="https://vitals.vercel-insights.com" />
+        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
 
         {/* Favicon and Icons */}
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
