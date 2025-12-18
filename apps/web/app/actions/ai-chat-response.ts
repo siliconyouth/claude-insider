@@ -219,6 +219,20 @@ export async function generateAIChatResponse(
 
     const savedMessage = aiMessage as SavedMessageRow;
 
+    // Mark the trigger message as "Seen" by the AI
+    // This creates a read receipt so the user sees "Seen" status on their message
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (supabase as any)
+      .from("dm_message_read_receipts")
+      .upsert({
+        message_id: triggerMessageId,
+        user_id: AI_ASSISTANT_USER_ID,
+        read_at: new Date().toISOString(),
+      }, {
+        onConflict: "message_id,user_id",
+        ignoreDuplicates: true,
+      });
+
     // Create notifications for mentioned users
     if (mentionedUserIds.length > 0) {
       const { createNotification } = await import("./notifications");

@@ -768,6 +768,12 @@ function ConversationView({
             });
             // Play notification sound for AI response
             playMessageReceived();
+
+            // Fetch read receipt for the user's message (AI marked it as "Seen")
+            const receiptsResult = await getReadReceipts([result.message!.id]);
+            if (receiptsResult.success && receiptsResult.receipts) {
+              setReadReceipts((prev) => ({ ...prev, ...receiptsResult.receipts }));
+            }
           }
         });
       }
