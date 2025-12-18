@@ -13,75 +13,18 @@ import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useSound } from "@/hooks/use-sound-effects";
 import { NotificationContent } from "./notification-content";
+import { getNotificationUrl, type NotificationLinkData } from "@/lib/notification-links";
 
-interface NotificationPopupData {
+interface NotificationPopupData extends NotificationLinkData {
   id: string;
-  type: string;
   title: string;
   message: string | null;
   created_at: string;
-  resource_type: string | null;
-  resource_id: string | null;
-  data: Record<string, unknown> | null;
-  actor?: {
-    name: string;
-    username: string | null;
-  } | null;
 }
 
 interface PopupNotification extends NotificationPopupData {
   popupId: string; // Unique ID for the popup instance
   isExiting?: boolean;
-}
-
-/**
- * Get the appropriate deep link URL for a notification
- */
-function getNotificationUrl(notification: NotificationPopupData): string {
-  const { type, resource_type, resource_id, data, actor } = notification;
-
-  switch (type) {
-    case "follow":
-      if (actor?.username) return `/users/${actor.username}`;
-      if (data?.actorUsername) return `/users/${data.actorUsername}`;
-      return "/notifications";
-
-    case "comment":
-    case "reply":
-      if (resource_type === "doc" && resource_id) {
-        return `/docs/${resource_id}#comments`;
-      }
-      return "/notifications";
-
-    case "suggestion_approved":
-    case "suggestion_rejected":
-    case "suggestion_merged":
-      return "/profile/suggestions";
-
-    case "mention":
-      if (resource_type === "dm_message" && data?.conversationId) {
-        // Deep link to message in chat - will be handled by unified chat
-        return `/?openChat=messages&conversation=${data.conversationId}&message=${data.messageId || resource_id}`;
-      }
-      if (resource_type === "doc" && resource_id) {
-        return `/docs/${resource_id}#comments`;
-      }
-      return "/notifications";
-
-    case "admin_notification":
-      if (data?.link) return String(data.link);
-      return "/notifications";
-
-    case "version_update":
-      return "/changelog";
-
-    case "system":
-      if (resource_type === "achievement") return "/profile#achievements";
-      return "/notifications";
-
-    default:
-      return "/notifications";
-  }
 }
 
 function getNotificationIcon(type: string) {

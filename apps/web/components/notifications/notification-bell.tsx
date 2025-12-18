@@ -16,76 +16,14 @@ import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
 import { useRealtimeNotifications } from "@/hooks/use-realtime-notifications";
 import { useSound } from "@/hooks/use-sound-effects";
 import { NotificationContent } from "./notification-content";
+import { getNotificationUrl, type NotificationLinkData } from "@/lib/notification-links";
 
-interface NotificationPreview {
+interface NotificationPreview extends NotificationLinkData {
   id: string;
-  type: string;
   title: string;
   message: string | null;
   read: boolean;
   created_at: string;
-  resource_type: string | null;
-  resource_id: string | null;
-  data: Record<string, unknown> | null;
-  actor?: {
-    name: string;
-    username: string | null;
-  } | null;
-}
-
-/**
- * Get the appropriate deep link URL for a notification
- * Best practice: Link directly to the relevant content, not a generic notifications page
- */
-function getNotificationUrl(notification: NotificationPreview): string {
-  const { type, resource_type, resource_id, data, actor } = notification;
-
-  switch (type) {
-    case "follow":
-      // Link to the follower's profile
-      if (actor?.username) {
-        return `/users/${actor.username}`;
-      }
-      if (data?.actorUsername) {
-        return `/users/${data.actorUsername}`;
-      }
-      return "/notifications";
-
-    case "comment":
-    case "reply":
-      // Link to the content where the comment was made
-      if (resource_type === "doc" && resource_id) {
-        return `/docs/${resource_id}#comments`;
-      }
-      return "/notifications";
-
-    case "suggestion_approved":
-    case "suggestion_rejected":
-    case "suggestion_merged":
-      // Link to user's suggestions page
-      return "/profile/suggestions";
-
-    case "mention":
-      // Link to the content where mentioned
-      if (resource_type === "dm_message" && data?.conversationId) {
-        // Deep link to message in chat - will be handled by unified chat
-        return `/?openChat=messages&conversation=${data.conversationId}&message=${data.messageId || resource_id}`;
-      }
-      if (resource_type === "doc" && resource_id) {
-        return `/docs/${resource_id}#comments`;
-      }
-      return "/notifications";
-
-    case "system":
-      // Achievement notifications go to profile
-      if (resource_type === "achievement") {
-        return "/profile#achievements";
-      }
-      return "/notifications";
-
-    default:
-      return "/notifications";
-  }
 }
 
 export function NotificationBell() {

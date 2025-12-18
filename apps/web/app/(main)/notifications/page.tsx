@@ -14,19 +14,16 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { useToast } from "@/components/toast";
 import { NotificationContent } from "@/components/notifications/notification-content";
+import { getNotificationUrl, type NotificationLinkData } from "@/lib/notification-links";
 
-interface Notification {
+interface Notification extends NotificationLinkData {
   id: string;
-  type: string;
   title: string;
   message: string | null;
-  data: Record<string, unknown>;
   read: boolean;
   read_at: string | null;
   created_at: string;
   actor_id: string | null;
-  resource_type: string | null;
-  resource_id: string | null;
   actor?: {
     name: string;
     username: string | null;
@@ -169,26 +166,6 @@ export default function NotificationsPage() {
     });
   };
 
-  const getNotificationLink = (notification: Notification): string => {
-    if (notification.resource_type && notification.resource_id) {
-      if (notification.resource_type === "doc") {
-        return `/docs/${notification.resource_id}`;
-      }
-      if (notification.resource_type === "resource") {
-        return `/resources?highlight=${notification.resource_id}`;
-      }
-      if (notification.resource_type === "suggestion") {
-        return `/suggestions`;
-      }
-      if (notification.resource_type === "comment") {
-        return `/docs/${notification.resource_id}#comments`;
-      }
-    }
-    if (notification.type === "follow" && notification.actor?.username) {
-      return `/users/${notification.actor.username}`;
-    }
-    return "#";
-  };
 
   const getNotificationIcon = (type: string, read: boolean) => {
     const iconClass = cn(
@@ -405,7 +382,7 @@ export default function NotificationsPage() {
           {notifications.map((notification) => (
             <Link
               key={notification.id}
-              href={getNotificationLink(notification)}
+              href={getNotificationUrl(notification)}
               onClick={() => {
                 if (!notification.read) {
                   markAsRead([notification.id]);
