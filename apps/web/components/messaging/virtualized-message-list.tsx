@@ -213,8 +213,27 @@ export function VirtualizedMessageList({
   // Initial scroll to bottom
   useEffect(() => {
     if (messages.length > 0 && !isLoading) {
+      // Scroll to bottom after items are measured
+      // Use multiple frames to ensure measurements are complete
+      const scrollToBottom = () => {
+        const el = parentRef.current;
+        if (el) {
+          el.scrollTop = el.scrollHeight;
+        }
+        setIsAtBottom(true);
+      };
+
+      // First frame: trigger initial render and measurement
       virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "auto" });
-      setIsAtBottom(true);
+
+      // Second frame: measurements start completing
+      requestAnimationFrame(() => {
+        scrollToBottom();
+        // Third frame: ensure we're still at bottom after any final adjustments
+        requestAnimationFrame(() => {
+          scrollToBottom();
+        });
+      });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]); // Only on initial load
