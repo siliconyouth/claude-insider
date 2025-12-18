@@ -130,7 +130,7 @@ export default function SettingsPage() {
 
   // Browser notifications state
   const [showBrowserNotifPrompt, setShowBrowserNotifPrompt] = useState(false);
-  const { isSupported: browserNotifSupported, permission: browserNotifPermission, isEnabled: browserNotifEnabled, unsubscribe: unsubscribeFromPush } = useBrowserNotifications();
+  const { isSupported: browserNotifSupported, permission: browserNotifPermission, isEnabled: browserNotifEnabled, unsubscribe: unsubscribeFromPush, requestPermission: requestPushPermission } = useBrowserNotifications();
 
   // Test notifications state
   const [testNotifResults, setTestNotifResults] = useState<{
@@ -340,8 +340,24 @@ export default function SettingsPage() {
         setShowBrowserNotifPrompt(true);
         return;
       }
-      // Already granted, just enable the setting
-      handleNotifPrefToggle("browser_notifications");
+      // Permission already granted - re-subscribe to push and enable setting
+      setNotifPrefs((prev) => ({ ...prev, browser_notifications: true }));
+      startTransition(async () => {
+        // Re-subscribe to push (creates new subscription since old one was deleted)
+        await requestPushPermission();
+
+        // Update database preference
+        const result = await updateNotificationPreferences({ browser_notifications: true });
+        if (result.error) {
+          setNotifPrefs((prev) => ({ ...prev, browser_notifications: false }));
+          toast.error(result.error);
+        } else {
+          clearCache();
+          toast.success("Browser notifications enabled");
+          playSuccess();
+        }
+      });
+      return;
     } else {
       // Disabling - unsubscribe from push and update preference
       setNotifPrefs((prev) => ({ ...prev, browser_notifications: false }));
