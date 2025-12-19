@@ -305,6 +305,8 @@ function StackedReadReceipts({ receipts }: { receipts: ReadReceipt[] }) {
               src={receipt.userAvatar}
               alt={receipt.userName || "User"}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           ) : (
             <div
@@ -373,6 +375,8 @@ export function MessageBubble({
             src={message.senderAvatar}
             alt="Claude Insider AI"
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       );
@@ -392,6 +396,8 @@ export function MessageBubble({
           src={message.senderAvatar}
           alt={message.senderName || "User"}
           className="w-8 h-8 rounded-full object-cover cursor-pointer"
+          loading="lazy"
+          decoding="async"
         />
       );
     }

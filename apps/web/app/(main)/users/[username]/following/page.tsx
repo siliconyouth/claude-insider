@@ -144,6 +144,8 @@ export default function FollowingPage({
                   src={user.image}
                   alt={user.name}
                   className="w-12 h-12 rounded-full object-cover cursor-pointer"
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <div

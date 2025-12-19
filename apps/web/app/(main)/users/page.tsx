@@ -22,6 +22,7 @@ import { Footer } from "@/components/footer";
 import { useAuth } from "@/components/providers/auth-provider";
 import { ProfileHoverCard, type ProfileHoverCardUser } from "@/components/users/profile-hover-card";
 import { FollowButton } from "@/components/users/follow-button";
+import { VirtualizedUserGrid } from "@/components/users/virtualized-user-grid";
 import type { UserRole } from "@/lib/roles";
 
 // ============================================================================
@@ -314,6 +315,8 @@ function UserCard({ user, showDonation, onFollowChange }: UserCardProps) {
                   src={user.avatar}
                   alt={user.name}
                   className="w-14 h-14 rounded-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <div className="w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center">
@@ -919,6 +922,8 @@ export default function UsersDirectoryPage() {
                                     src={user.avatar}
                                     alt={user.name}
                                     className="w-10 h-10 rounded-full object-cover"
+                                    loading="lazy"
+                                    decoding="async"
                                   />
                                 ) : (
                                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center">
@@ -1002,22 +1007,31 @@ export default function UsersDirectoryPage() {
               </button>
             </div>
 
-            {/* Modal content */}
-            <div className="p-4 overflow-y-auto max-h-[calc(80vh-140px)]">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {expandedUsers.map((user) => (
+            {/* Modal content - Virtualized for performance */}
+            <div className="p-4">
+              <VirtualizedUserGrid
+                items={expandedUsers}
+                keyExtractor={(user) => user.id}
+                renderItem={(user) => (
                   <UserCard
-                    key={user.id}
                     user={user}
                     showDonation={expandedList === "donors"}
                     onFollowChange={handleFollowChange}
                   />
-                ))}
-              </div>
+                )}
+                height="calc(80vh - 180px)"
+                columns={2}
+                isLoading={expandedLoading && expandedUsers.length === 0}
+                emptyState={
+                  <div className="flex items-center justify-center h-full">
+                    <p className="text-gray-500 dark:text-gray-400">No users found</p>
+                  </div>
+                }
+              />
 
               {/* Load more */}
               {expandedUsers.length < expandedTotal && (
-                <div className="text-center mt-6">
+                <div className="text-center mt-4 pt-4 border-t border-gray-200 dark:border-[#262626]">
                   <button
                     onClick={() => {
                       const nextPage = expandedPage + 1;

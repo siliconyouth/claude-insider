@@ -105,6 +105,8 @@ export function UserAvatar({
             src={src}
             alt={alt || name || "User avatar"}
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <span

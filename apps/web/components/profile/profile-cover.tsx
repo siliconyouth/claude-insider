@@ -82,6 +82,8 @@ export function ProfileCover({
             src={coverPhotoUrl}
             alt="Profile cover"
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <DefaultCover className="w-full h-full" />

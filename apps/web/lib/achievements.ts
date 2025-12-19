@@ -40,7 +40,7 @@ import {
   Users,
   UserPlus,
   UsersRound,
-  HandshakeIcon,
+  Handshake,
   Globe,
   // Content & Creation
   PenTool,
@@ -455,7 +455,7 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     id: "first_dm",
     name: "Direct Connection",
     description: "Send your first direct message",
-    icon: HandshakeIcon,
+    icon: Handshake,
     rarity: "common",
     category: "social",
     points: 25,

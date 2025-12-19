@@ -144,6 +144,8 @@ export default function FollowersPage({
                   src={follower.image}
                   alt={follower.name}
                   className="w-12 h-12 rounded-full object-cover cursor-pointer"
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <div

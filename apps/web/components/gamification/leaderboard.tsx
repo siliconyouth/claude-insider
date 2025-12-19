@@ -127,6 +127,8 @@ export function Leaderboard({
                   src={entry.avatar}
                   alt={entry.username}
                   className="w-full h-full rounded-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 (entry.username[0] || "?").toUpperCase()

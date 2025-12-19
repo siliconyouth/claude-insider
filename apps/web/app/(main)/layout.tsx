@@ -12,7 +12,8 @@ import { AuthModalWrapper, OnboardingModalWrapper } from "@/components/auth";
 import { FeedbackButton } from "@/components/feedback/feedback-button";
 import { I18nProvider } from "@/i18n";
 import { KeyboardShortcutsProvider } from "@/components/keyboard-shortcuts";
-import { UnifiedChatProvider, UnifiedChatWindow, FloatingChatButton } from "@/components/unified-chat";
+import { UnifiedChatProvider } from "@/components/unified-chat";
+import { LazyChatWrapper } from "@/components/unified-chat/lazy-chat-wrapper";
 import { AskAIProvider } from "@/components/ask-ai";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { RealtimeProvider } from "@/lib/realtime/realtime-context";
@@ -30,6 +31,10 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   preload: true,
+  // Adjust fallback font metrics to prevent layout shift
+  adjustFontFallback: true,
+  // Only load weights actually used (reduces font file size)
+  weight: ["400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
@@ -170,18 +175,15 @@ export default async function MainLayout({
           }}
         />
         {/* Preconnect for external services (fonts are self-hosted via next/font) */}
-        {/* Supabase - authentication and database */}
-        <link rel="preconnect" href="https://api.supabase.io" />
-        <link rel="dns-prefetch" href="https://api.supabase.io" />
-        {/* Anthropic API - AI features */}
-        <link rel="preconnect" href="https://api.anthropic.com" />
-        <link rel="dns-prefetch" href="https://api.anthropic.com" />
-        {/* ElevenLabs - TTS features */}
-        <link rel="preconnect" href="https://api.elevenlabs.io" />
-        <link rel="dns-prefetch" href="https://api.elevenlabs.io" />
-        {/* Vercel Analytics */}
-        <link rel="preconnect" href="https://vitals.vercel-insights.com" />
+        {/* Supabase - authentication, database, and realtime */}
+        <link rel="preconnect" href="https://pmsnjddolwngdeygkcfn.supabase.co" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://pmsnjddolwngdeygkcfn.supabase.co" />
+        {/* Vercel Analytics - critical for page load metrics */}
+        <link rel="preconnect" href="https://vitals.vercel-insights.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+        {/* Anthropic/ElevenLabs - only dns-prefetch (used on-demand, not initial load) */}
+        <link rel="dns-prefetch" href="https://api.anthropic.com" />
+        <link rel="dns-prefetch" href="https://api.elevenlabs.io" />
 
         {/* Favicon and Icons */}
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
@@ -240,8 +242,7 @@ export default async function MainLayout({
                     <ServiceWorkerRegister />
                     {children}
                     <VoiceAssistantErrorBoundary>
-                      <UnifiedChatWindow />
-                      <FloatingChatButton />
+                      <LazyChatWrapper />
                     </VoiceAssistantErrorBoundary>
                     <AuthModalWrapper />
                     <OnboardingModalWrapper />
