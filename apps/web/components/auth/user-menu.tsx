@@ -205,8 +205,8 @@ export function UserMenu() {
               </Link>
             )}
 
-            {/* Admin CMS link for admins and super admins */}
-            {hasMinRole(user?.role as UserRole, ROLES.ADMIN) && (
+            {/* Admin CMS link for moderators, admins, and super admins */}
+            {hasMinRole(user?.role as UserRole, ROLES.MODERATOR) && (
               <Link
                 href="/admin"
                 onClick={() => setIsOpen(false)}
