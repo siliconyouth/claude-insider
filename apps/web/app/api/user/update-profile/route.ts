@@ -19,6 +19,9 @@ interface UpdateProfileRequest {
   displayName?: string;
   username?: string;
   bio?: string;
+  location?: string;
+  timezone?: string;
+  countryCode?: string;
   hasCompletedOnboarding?: boolean;
 }
 
@@ -69,7 +72,7 @@ export async function POST(request: NextRequest) {
 
     // Build update fields
     const updates: string[] = [];
-    const values: (string | boolean)[] = [];
+    const values: (string | boolean | null)[] = [];
     let paramIndex = 1;
 
     if (body.name !== undefined) {
@@ -107,6 +110,26 @@ export async function POST(request: NextRequest) {
     if (body.bio !== undefined) {
       updates.push(`bio = $${paramIndex++}`);
       values.push(body.bio);
+    }
+
+    if (body.location !== undefined) {
+      updates.push(`location = $${paramIndex++}`);
+      values.push(body.location);
+    }
+
+    if (body.timezone !== undefined) {
+      updates.push(`timezone = $${paramIndex++}`);
+      values.push(body.timezone);
+    }
+
+    if (body.countryCode !== undefined) {
+      // Validate country code format (2 uppercase letters)
+      const cleanCountryCode = body.countryCode.toUpperCase().trim();
+      if (cleanCountryCode && !/^[A-Z]{2}$/.test(cleanCountryCode)) {
+        return NextResponse.json({ error: "Invalid country code format" }, { status: 400 });
+      }
+      updates.push(`country_code = $${paramIndex++}`);
+      values.push(cleanCountryCode || null);
     }
 
     if (body.hasCompletedOnboarding !== undefined) {

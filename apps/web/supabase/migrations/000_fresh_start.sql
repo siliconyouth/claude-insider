@@ -146,6 +146,19 @@ BEGIN
     ALTER TABLE public."user" ADD COLUMN "coverPhotoPath" TEXT;
   END IF;
 
+  -- Location and timezone fields (from migration 078)
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'location') THEN
+    ALTER TABLE public."user" ADD COLUMN location TEXT;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'timezone') THEN
+    ALTER TABLE public."user" ADD COLUMN timezone TEXT DEFAULT 'UTC';
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'country_code') THEN
+    ALTER TABLE public."user" ADD COLUMN country_code VARCHAR(2);
+  END IF;
+
   -- Role field (user hierarchy: user < editor < moderator < admin < superadmin, plus ai_assistant)
   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'user' AND column_name = 'role') THEN
     ALTER TABLE public."user" ADD COLUMN role TEXT DEFAULT 'user' CHECK (role IN ('user', 'editor', 'moderator', 'admin', 'superadmin', 'ai_assistant'));
@@ -428,6 +441,8 @@ CREATE TABLE IF NOT EXISTS public.collections (
   is_public BOOLEAN DEFAULT false,
   cover_image_url TEXT,
   item_count INTEGER DEFAULT 0,
+  is_featured BOOLEAN DEFAULT false,
+  featured_order INTEGER CHECK (featured_order IS NULL OR (featured_order >= 1 AND featured_order <= 5)),
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now(),
   UNIQUE(user_id, slug)
@@ -435,6 +450,7 @@ CREATE TABLE IF NOT EXISTS public.collections (
 
 CREATE INDEX IF NOT EXISTS idx_collections_user_id ON public.collections(user_id);
 CREATE INDEX IF NOT EXISTS idx_collections_public ON public.collections(is_public) WHERE is_public = true;
+CREATE INDEX IF NOT EXISTS idx_collections_featured ON public.collections(user_id, is_featured) WHERE is_featured = true;
 
 CREATE TABLE IF NOT EXISTS public.collection_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

@@ -22,7 +22,12 @@ export interface WizardData {
   avatarFile: File | null;
   avatarPreview: string | null;
 
-  // Step 2: Social Links
+  // Step 2: Location & Timezone
+  city: string;
+  countryCode: string;
+  timezone: string;
+
+  // Step 3: Social Links
   socialLinks: SocialLinks;
 
   // Step 3: Email Verification (read from user)
@@ -50,6 +55,7 @@ export interface WizardStep {
 
 export type WizardStepId =
   | "profile-basics"
+  | "location-timezone"
   | "social-links"
   | "email-verify"
   | "add-password"
@@ -93,6 +99,9 @@ export const INITIAL_WIZARD_DATA: WizardData = {
   bio: "",
   avatarFile: null,
   avatarPreview: null,
+  city: "",
+  countryCode: "",
+  timezone: "",
   socialLinks: {},
   password: "",
   confirmPassword: "",
@@ -164,6 +173,13 @@ export const WIZARD_STEPS: readonly WizardStep[] = [
     title: "Profile Basics",
     description: "Set up your display name and profile picture",
     icon: "👤",
+    skippable: false,
+  },
+  {
+    id: "location-timezone",
+    title: "Location & Time",
+    description: "Help others know your local time",
+    icon: "🌍",
     skippable: false,
   },
   {

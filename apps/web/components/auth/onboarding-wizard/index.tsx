@@ -23,6 +23,7 @@ import { authClient } from "@/lib/auth-client";
 
 // Step components
 import { ProfileBasicsStep } from "./steps/profile-basics-step";
+import { LocationTimezoneStep } from "./steps/location-timezone-step";
 import { SocialLinksStep } from "./steps/social-links-step";
 import { EmailVerifyStep } from "./steps/email-verify-step";
 import { AddPasswordStep } from "./steps/add-password-step";
@@ -44,6 +45,7 @@ interface OnboardingWizardProps {
 // Step component mapping
 const StepComponents: Record<WizardStepId, React.ComponentType> = {
   "profile-basics": ProfileBasicsStep,
+  "location-timezone": LocationTimezoneStep,
   "social-links": SocialLinksStep,
   "email-verify": EmailVerifyStep,
   "add-password": AddPasswordStep,
@@ -110,6 +112,13 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
         title: "Profile Basics",
         description: "Set up your display name and profile picture",
         icon: "👤",
+        skippable: false,
+      },
+      {
+        id: "location-timezone",
+        title: "Location & Time",
+        description: "Help others know your local time",
+        icon: "🌍",
         skippable: false,
       },
       {
