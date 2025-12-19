@@ -25,6 +25,7 @@ import {
   RARITY_CONFIG,
   type AchievementDefinition,
 } from "@/lib/achievements";
+import { SkeletonProfile } from "@/components/skeleton";
 import Link from "next/link";
 
 type TabType = "favorites" | "ratings" | "collections";
@@ -402,40 +403,8 @@ export default function ProfilePage() {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex flex-col">
         <Header />
-        <main id="main-content" className="flex-1">
-          {/* Header Skeleton */}
-          <div className="h-48 bg-gradient-to-r from-violet-600/20 via-blue-600/20 to-cyan-600/20 animate-pulse" />
-
-          <div className="max-w-5xl mx-auto px-4 -mt-20">
-            {/* Profile Card Skeleton */}
-            <div className="bg-white dark:bg-[#111111] rounded-2xl border border-gray-200 dark:border-[#262626] p-6 mb-6">
-              <div className="flex flex-col sm:flex-row items-start gap-6 animate-pulse">
-                <div className="w-28 h-28 rounded-full bg-gray-200 dark:bg-[#1a1a1a]" />
-                <div className="flex-1 space-y-3">
-                  <div className="h-8 w-48 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-                  <div className="h-4 w-64 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-                  <div className="flex gap-2">
-                    {[1, 2, 3].map((i) => (
-                      <div
-                        key={i}
-                        className="h-6 w-20 bg-gray-200 dark:bg-[#1a1a1a] rounded"
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Content Skeleton */}
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="h-24 bg-gray-200 dark:bg-[#1a1a1a] rounded-xl animate-pulse"
-                />
-              ))}
-            </div>
-          </div>
+        <main id="main-content" className="flex-1 pt-6">
+          <SkeletonProfile showTabs />
         </main>
         <Footer />
       </div>

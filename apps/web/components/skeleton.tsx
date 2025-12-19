@@ -255,3 +255,162 @@ export function SkeletonAvatar({
     />
   );
 }
+
+/**
+ * Skeleton for profile pages (hero cover design)
+ *
+ * Matches the new profile design with:
+ * - Hero cover section (3:1 aspect ratio)
+ * - Profile info overlay at bottom of cover
+ * - Bio/info section
+ * - Stats bar
+ * - Achievement section
+ * - Optional content tabs
+ */
+export function SkeletonProfile({
+  showTabs = false,
+  className,
+}: {
+  showTabs?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={cn("max-w-5xl mx-auto px-4", className)}>
+      {/* Main Profile Card */}
+      <div
+        className={cn(
+          "bg-white dark:bg-[#111111] rounded-2xl",
+          "border border-gray-200 dark:border-[#262626]",
+          "shadow-xl shadow-black/5 dark:shadow-black/20",
+          "mb-6 overflow-hidden"
+        )}
+      >
+        {/* Hero Cover Skeleton - matches aspect-[3/1] */}
+        <div className="relative w-full aspect-[2.5/1] sm:aspect-[3/1]">
+          {/* Animated gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 via-blue-600/20 to-cyan-600/20 animate-pulse" />
+
+          {/* Gradient overlay (mimics the real cover overlay) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+          {/* Profile Info Overlay Skeleton */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 animate-pulse">
+              {/* Avatar */}
+              <div
+                className={cn(
+                  "w-24 h-24 sm:w-28 sm:h-28 rounded-full",
+                  "bg-gray-300/50 dark:bg-gray-700/50",
+                  "border-4 border-white/20"
+                )}
+              />
+
+              {/* Name and badges */}
+              <div className="flex-1 text-center sm:text-left space-y-2">
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                  <div className="h-8 w-40 bg-white/20 rounded-lg" />
+                  <div className="h-5 w-16 bg-white/20 rounded-full" />
+                </div>
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                  <div className="h-4 w-24 bg-white/20 rounded" />
+                  <div className="h-4 w-32 bg-white/20 rounded" />
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="hidden sm:flex items-center gap-2">
+                <div className="h-10 w-28 bg-white/30 rounded-xl" />
+                <div className="h-10 w-10 bg-white/20 rounded-xl" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bio & Info Section Skeleton */}
+        <div className="px-6 sm:px-8 py-4 animate-pulse">
+          <div className="h-4 w-3/4 max-w-md bg-gray-200 dark:bg-[#1a1a1a] rounded mb-4" />
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="h-4 w-40 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+            <div className="h-4 w-32 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+          </div>
+        </div>
+
+        {/* Stats Bar Skeleton */}
+        <div className="border-t border-gray-200 dark:border-[#262626] px-6 sm:px-8 py-4">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center animate-pulse">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i}>
+                <div className="h-7 w-12 mx-auto bg-gray-200 dark:bg-[#1a1a1a] rounded mb-1" />
+                <div className="h-3 w-16 mx-auto bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Achievements Section Skeleton */}
+      <div
+        className={cn(
+          "bg-white dark:bg-[#111111] rounded-2xl",
+          "border border-gray-200 dark:border-[#262626]",
+          "overflow-hidden mb-6"
+        )}
+      >
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-[#262626] animate-pulse">
+          <div className="flex items-center gap-2">
+            <div className="h-5 w-5 bg-yellow-200 dark:bg-yellow-900/30 rounded" />
+            <div className="h-5 w-28 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+          </div>
+          <div className="h-4 w-16 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+        </div>
+        <div className="p-4 animate-pulse">
+          {/* Achievement icon grid */}
+          <div className="flex flex-wrap gap-2">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div
+                key={i}
+                className="w-10 h-10 rounded-lg bg-gray-200 dark:bg-[#1a1a1a]"
+              />
+            ))}
+          </div>
+          {/* Progress bar */}
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-[#262626]">
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-1.5 bg-gray-200 dark:bg-[#1a1a1a] rounded-full" />
+              <div className="h-3 w-8 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Tabs Skeleton (optional for private profile) */}
+      {showTabs && (
+        <div
+          className={cn(
+            "bg-white dark:bg-[#111111] rounded-2xl",
+            "border border-gray-200 dark:border-[#262626]",
+            "overflow-hidden mb-12"
+          )}
+        >
+          {/* Tab header */}
+          <div className="flex gap-2 px-6 pt-4 border-b border-gray-200 dark:border-[#262626] animate-pulse">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="px-4 py-3">
+                <div className="h-4 w-20 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
+              </div>
+            ))}
+          </div>
+          {/* Tab content */}
+          <div className="p-6 space-y-3 animate-pulse">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="h-20 bg-gray-100 dark:bg-[#0a0a0a] rounded-xl"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

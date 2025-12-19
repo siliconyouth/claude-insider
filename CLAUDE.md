@@ -285,6 +285,54 @@ All new components MUST implement ALL seven pillars:
 - [ ] Components wrapped with ErrorBoundary
 - [ ] Buttons/cards use animated components
 - [ ] Modals use focus trap, dynamic content uses ARIA live
+- [ ] **Loading skeletons match current page design** (see Skeleton Synchronization below)
+
+### Skeleton Synchronization (MANDATORY)
+
+**Rule**: When a page's design changes, its loading skeleton MUST be updated to match the new layout.
+
+Loading skeletons provide visual continuity during page loads. Outdated skeletons create jarring transitions and confuse users about what's loading.
+
+| Requirement | Description |
+|-------------|-------------|
+| **Mirror Structure** | Skeleton must reflect the actual page structure (hero, cards, sections) |
+| **Match Aspect Ratios** | Cover images, avatars, and cards must use the same dimensions |
+| **Use Shared Components** | Create reusable skeleton components in `components/skeleton.tsx` |
+| **Update Together** | Any PR that changes page layout MUST include skeleton updates |
+
+**Available Skeleton Components** (`components/skeleton.tsx`):
+
+| Component | Use For |
+|-----------|---------|
+| `SkeletonProfile` | Profile pages (hero cover, stats, achievements) |
+| `SkeletonCard` | Card-based content |
+| `SkeletonDocPage` | Documentation pages |
+| `SkeletonList` | List views |
+| `SkeletonHero` | Hero sections |
+| `SkeletonSidebar` | Navigation sidebars |
+
+**Example - Profile Page**:
+```tsx
+// ✅ CORRECT: Using shared skeleton that matches current design
+if (isLoading) {
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex flex-col">
+      <Header />
+      <main className="flex-1 pt-6">
+        <SkeletonProfile showTabs />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+// ❌ WRONG: Inline skeleton that may become outdated
+if (isLoading) {
+  return (
+    <div className="h-48 bg-gray-200 animate-pulse" />
+  );
+}
+```
 
 ---
 
