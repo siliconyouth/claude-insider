@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.1.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.3.0**.
 
 | Link | URL |
 |------|-----|
@@ -110,7 +110,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (36 total)
+### Implemented Features (37 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -150,6 +150,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-34 | Profile Cover Photos | Custom covers (3:1 ratio), animated default, react-image-crop, settings integration |
 | FR-35 | Smart AI Messaging | @claudeinsider auto-responds in 1-on-1 DMs, @mention-only in groups, admin-managed, E2EE verified |
 | FR-36 | Gamification CMS | Payload CMS for achievements, badges, tiers, categories; auto-sync to Supabase |
+| FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
 
 ### Non-Functional Requirements
 

@@ -24,6 +24,10 @@ export interface UserProfile {
   bio?: string;
   website?: string;
   joinedAt: string;
+  // Location & timezone fields
+  location?: string;
+  timezone?: string;
+  countryCode?: string;
   // Extended profile fields
   role?: string;
   isBetaTester?: boolean;
@@ -654,7 +658,7 @@ export async function getCompleteProfileData(options?: {
       // Extended profile from user table
       supabase
         .from("user")
-        .select("username, bio, avatarUrl, coverPhotoUrl, socialLinks, role, isBetaTester, isVerified, achievement_points, followers_count, following_count")
+        .select("username, bio, avatarUrl, coverPhotoUrl, socialLinks, role, isBetaTester, isVerified, achievement_points, followers_count, following_count, location, timezone, country_code")
         .eq("id", userId)
         .single(),
       // Favorites list
@@ -733,6 +737,10 @@ export async function getCompleteProfileData(options?: {
           coverPhotoUrl: profile?.coverPhotoUrl || null,
           bio: profile?.bio || undefined,
           website: socialLinks?.website || undefined,
+          // Location & timezone
+          location: profile?.location || undefined,
+          timezone: profile?.timezone || undefined,
+          countryCode: profile?.country_code || undefined,
           // Extended fields
           role: profile?.role || "user",
           isBetaTester: profile?.isBetaTester || false,
@@ -917,7 +925,7 @@ export async function getCompleteSettingsData(): Promise<{
       // User table for profile, username, and privacy settings (all in one query)
       supabase
         .from("user")
-        .select("bio, avatarUrl, coverPhotoUrl, socialLinks, username, profilePrivacy")
+        .select("bio, avatarUrl, coverPhotoUrl, socialLinks, username, profilePrivacy, location, timezone, country_code")
         .eq("id", userId)
         .single(),
       // Notification preferences
@@ -943,6 +951,9 @@ export async function getCompleteSettingsData(): Promise<{
           coverPhotoUrl: userData?.coverPhotoUrl || null,
           bio: userData?.bio || undefined,
           website: socialLinks?.website || undefined,
+          location: userData?.location || undefined,
+          timezone: userData?.timezone || undefined,
+          countryCode: userData?.country_code || undefined,
           joinedAt:
             session.user.createdAt instanceof Date
               ? session.user.createdAt.toISOString()

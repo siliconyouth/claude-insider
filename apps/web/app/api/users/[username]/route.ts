@@ -72,7 +72,9 @@ export async function GET(
         "profilePrivacy",
         "socialLinks",
         "createdAt",
-        achievement_points
+        achievement_points,
+        location,
+        timezone
       FROM "user"
       WHERE username = $1
     `,
@@ -178,7 +180,10 @@ export async function GET(
       isFollowing,
       followersCount,
       followingCount,
-      // New fields
+      // Location & timezone
+      location: user.location || undefined,
+      timezone: user.timezone || undefined,
+      // Donor & achievements
       donorTier,
       achievementPoints: user.achievement_points || 0,
       achievements: userAchievements,

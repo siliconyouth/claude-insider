@@ -6,7 +6,7 @@ import { cn } from "@/lib/design-system";
 import { FooterLanguageSelector } from "@/components/footer-language-selector";
 import { SoundToggle } from "@/components/sound-toggle";
 
-const APP_VERSION = "1.2.0";
+const APP_VERSION = "1.3.0";
 
 export function Footer() {
   const t = useTranslations("footer");

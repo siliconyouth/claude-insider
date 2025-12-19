@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2025-12-19
+### Profile Enhancements
+- **Location & Timezone Display**: Users can now set and display their location and local time on profiles
+  - Location field with country selector and optional city input
+  - IANA timezone selection with browser auto-detection
+  - Live "local time" display on profile cover overlay
+- **Mandatory Onboarding Step**: Location/timezone collection is now a required step in the onboarding wizard
+  - Cannot be skipped - ensures all users have timezone for local time display
+  - Timezone auto-detected from browser, with manual override option
+- **Share Profile Feature**: New modal for sharing profiles with rich social previews
+  - Dynamic OG image generation at `/api/og/profile` (Edge runtime)
+  - Preview card showing avatar, name, bio, location, followers, achievement points
+  - Social sharing buttons for Twitter/X, LinkedIn, and Facebook
+  - Copy link button with toast confirmation
+- **Settings Integration**: New "Location & Time" section in user settings
+  - Edit location and timezone with live preview
+  - Shows formatted local time in real-time
+- **Mobile Action Bar**: Profile actions now accessible on mobile devices
+  - Follow, Message, and Share buttons below profile cover
+  - Consistent experience across all device sizes
+- **OpenGraph Metadata**: Public profiles now have proper OG tags for social sharing
+  - Server-side metadata generation via layout.tsx
+  - 1200×630 dynamic images with profile data
+
+---
+
 ## [1.2.0] - 2025-12-19
 ### Gamification CMS
 - **Payload CMS Management**: New admin UI for achievements, badges, and gamification settings

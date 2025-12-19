@@ -27,6 +27,7 @@ import { PasswordSettings } from "@/components/settings/password-settings";
 import { ConnectedAccounts } from "@/components/settings/connected-accounts";
 import { ApiKeySettings } from "@/components/settings/api-key-settings";
 import { ActivitySettings } from "@/components/settings/activity-settings";
+import { LocationTimezoneSettings } from "@/components/settings/location-timezone-settings";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import { BrowserNotificationPrompt } from "@/components/notifications/browser-notification-prompt";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
@@ -865,6 +866,29 @@ export default function SettingsPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-gray-200 dark:border-[#262626] mb-12" />
+
+        {/* Location & Time Section */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Location & Time
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+            Help others know your local time and location
+          </p>
+
+          <LocationTimezoneSettings
+            initialLocation={profile?.location}
+            initialTimezone={profile?.timezone}
+            initialCountryCode={profile?.countryCode}
+            onUpdate={() => {
+              clearCache();
+              loadSettings(true);
+            }}
+          />
         </section>
 
         {/* Divider */}

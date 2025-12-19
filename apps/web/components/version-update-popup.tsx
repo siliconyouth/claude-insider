@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.2.0";
+const APP_VERSION = "1.3.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.3.0",
+    date: "2025-12-19",
+    type: "minor",
+    highlights: [
+      "📍 Location & Timezone: Display location and local time on profiles",
+      "🗺️ Mandatory Location Step: Onboarding now requires location/timezone selection",
+      "📤 Share Profile Modal: Share profiles with OG image preview and social buttons",
+      "🖼️ Dynamic OG Images: Auto-generated Open Graph images for social sharing",
+      "📱 Mobile Action Bar: Follow, Message, and Share buttons on mobile profiles",
+    ],
+  },
   {
     version: "1.2.0",
     date: "2025-12-19",

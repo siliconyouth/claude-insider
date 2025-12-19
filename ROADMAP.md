@@ -1,15 +1,15 @@
 # Claude Insider Roadmap
 
-**Version:** 1.3.0
+**Version:** 1.4.0
 **Last Updated:** 2025-12-19
-**Current Release:** v1.2.0
+**Current Release:** v1.3.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-**🎉 Version 1.2.0 Released!** Claude Insider has reached production-ready status with Gamification CMS. This roadmap now outlines the development path from **v1.2.0** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+**🎉 Version 1.3.0 Released!** Profile Enhancements bring location/timezone display, share functionality with OG images, and mobile action bars. This roadmap now outlines the development path from **v1.3.0** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,7 @@
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.3.0 | Dec 19 | Profile Enhancements: Location/timezone display, share modal with OG images, mobile action bar |
 | 1.2.0 | Dec 19 | Gamification CMS: Payload collections for achievements/badges/tiers, auto-sync to Supabase |
 | 1.1.0 | Dec 19 | Profile Page Redesign: Twitter-style hero layout, quick actions, achievement showcase |
 | 1.0.1 | Dec 18 | Performance: Lighthouse 88, dynamic imports, WCAG 2.5.3 a11y, @mention hover cards |
@@ -44,8 +45,8 @@
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 1.3.0 | Polish | Advanced analytics, Batch operations | Q1 2025 | Quality of Life |
-| 1.4.0 | Scale | Performance monitoring, Rate limiting | Q1 2025 | Enterprise Ready |
+| 1.4.0 | Polish | Advanced analytics, Batch operations, Featured collections | Q1 2025 | Quality of Life |
+| 1.5.0 | Scale | Performance monitoring, Rate limiting, Resource attribution | Q1 2025 | Enterprise Ready |
 
 ---
 

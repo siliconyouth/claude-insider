@@ -20,7 +20,9 @@ import {
   RARITY_CONFIG,
   type AchievementDefinition,
 } from "@/lib/achievements";
+import { formatTimeInTimezone } from "@/lib/timezone";
 import { SkeletonProfile } from "@/components/skeleton";
+import { ShareProfileModal } from "@/components/users/share-profile-modal";
 
 interface PublicProfile {
   id: string;
@@ -39,7 +41,10 @@ interface PublicProfile {
   isFollowing?: boolean;
   followersCount?: number;
   followingCount?: number;
-  // New fields
+  // Location & timezone
+  location?: string;
+  timezone?: string;
+  // Donor & achievements
   donorTier?: "bronze" | "silver" | "gold" | "platinum" | null;
   achievementPoints?: number;
   achievements?: Array<{ id: string; unlockedAt: string }>;
@@ -279,6 +284,7 @@ export default function PublicProfilePage({
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [isHoveringCover, setIsHoveringCover] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
     async function fetchProfile() {
@@ -329,15 +335,8 @@ export default function PublicProfilePage({
     return formatDate(dateString);
   };
 
-  const handleShare = async () => {
-    const url = window.location.href;
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Fallback
-    }
+  const handleShare = () => {
+    setShowShareModal(true);
   };
 
   const handleMessage = () => {
@@ -635,8 +634,28 @@ export default function PublicProfilePage({
                       </p>
                     )}
 
-                    {/* Joined + Last seen + Social Links - in cover */}
+                    {/* Location + Time + Joined + Last seen + Social Links - in cover */}
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                      {/* Location */}
+                      {profile.location && (
+                        <span className="inline-flex items-center gap-1.5 text-white/70 text-xs">
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          {profile.location}
+                        </span>
+                      )}
+                      {/* Local Time */}
+                      {profile.timezone && (
+                        <span className="inline-flex items-center gap-1.5 text-white/70 text-xs">
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          {formatTimeInTimezone(profile.timezone)} local
+                        </span>
+                      )}
+                      {/* Joined Date */}
                       <span className="inline-flex items-center gap-1.5 text-white/70 text-xs">
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -776,6 +795,57 @@ export default function PublicProfilePage({
                     </button>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Mobile Action Bar - Only visible on mobile */}
+            <div className="sm:hidden border-t border-gray-200 dark:border-[#262626] px-4 py-3">
+              <div className="flex items-center gap-2">
+                {profile.isOwnProfile ? (
+                  <Link
+                    href="/settings"
+                    className={cn(
+                      "flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl",
+                      "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white",
+                      "shadow-lg shadow-blue-500/25"
+                    )}
+                  >
+                    <EditIcon className="w-4 h-4" />
+                    Edit Profile
+                  </Link>
+                ) : (
+                  <>
+                    <FollowButton
+                      userId={profile.id}
+                      isFollowing={profile.isFollowing || false}
+                      size="md"
+                      className="flex-1"
+                    />
+                    <button
+                      onClick={handleMessage}
+                      className={cn(
+                        "flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl",
+                        "bg-gray-100 dark:bg-[#1a1a1a] text-gray-700 dark:text-gray-300",
+                        "border border-gray-200 dark:border-[#262626]",
+                        "hover:bg-gray-200 dark:hover:bg-[#262626] transition-colors"
+                      )}
+                    >
+                      <MessageIcon className="w-4 h-4" />
+                      Message
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={handleShare}
+                  className={cn(
+                    "p-2.5 rounded-xl",
+                    "bg-gray-100 dark:bg-[#1a1a1a] text-gray-700 dark:text-gray-300",
+                    "border border-gray-200 dark:border-[#262626]",
+                    "hover:bg-gray-200 dark:hover:bg-[#262626] transition-colors"
+                  )}
+                >
+                  <ShareIcon className="w-5 h-5" />
+                </button>
               </div>
             </div>
 
@@ -1140,6 +1210,23 @@ export default function PublicProfilePage({
         </div>
       </main>
       <Footer />
+
+      {/* Share Profile Modal */}
+      {profile && (
+        <ShareProfileModal
+          isOpen={showShareModal}
+          onClose={() => setShowShareModal(false)}
+          profile={{
+            username: profile.username,
+            name: profile.name,
+            bio: profile.bio,
+            avatar: profile.avatar,
+            location: profile.location,
+            followersCount: profile.followersCount,
+            achievementPoints: profile.achievementPoints,
+          }}
+        />
+      )}
     </div>
   );
 }
