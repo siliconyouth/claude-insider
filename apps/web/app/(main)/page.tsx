@@ -3,9 +3,9 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { HeroBackground } from "@/components/hero-background";
 import { DeviceShowcase } from "@/components/device-mockups";
-import { VoiceAssistantDemo } from "@/components/voice-assistant-demo";
+import { LazyVoiceAssistantDemo } from "@/components/lazy-voice-assistant-demo";
 import { OpenAssistantButton } from "@/components/open-assistant-button";
-import { ResourcesSection } from "@/components/home/resources-section";
+import { LazyResourcesSection } from "@/components/home/lazy-resources-section";
 import { cn } from "@/lib/design-system";
 
 const CATEGORIES = [
@@ -222,8 +222,8 @@ export default function HomePage() {
 
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Left side - Text content */}
-              <div className="animate-fade-in text-left">
+              {/* Left side - Text content - prioritized for LCP */}
+              <div className="animate-fade-in text-left" style={{ contentVisibility: 'visible', containIntrinsicSize: '0 500px' }}>
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 text-xs font-medium mb-6">
                   <span className="relative flex h-2 w-2">
@@ -325,11 +325,14 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Resources Section */}
-        <ResourcesSection />
+        {/* Resources Section - lazy loaded for better LCP */}
+        <LazyResourcesSection />
 
-        {/* AI Assistant Section */}
-        <div className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gradient-to-b from-gray-50 dark:from-[#111111]/50 to-transparent">
+        {/* AI Assistant Section - content-visibility for deferred rendering */}
+        <div
+          className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gradient-to-b from-gray-50 dark:from-[#111111]/50 to-transparent"
+          style={{ contentVisibility: 'auto', containIntrinsicSize: '0 600px' }}
+        >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="animate-fade-in-up">
@@ -377,14 +380,17 @@ export default function HomePage() {
                 <OpenAssistantButton />
               </div>
               <div className="relative animate-fade-in">
-                <VoiceAssistantDemo />
+                <LazyVoiceAssistantDemo />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Code Playground Section */}
-        <div className="border-t border-gray-200 dark:border-[#1a1a1a]">
+        {/* Code Playground Section - content-visibility for deferred rendering */}
+        <div
+          className="border-t border-gray-200 dark:border-[#1a1a1a]"
+          style={{ contentVisibility: 'auto', containIntrinsicSize: '0 700px' }}
+        >
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left - Info */}
@@ -530,8 +536,11 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Categories Section with Documents */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        {/* Categories Section with Documents - content-visibility for deferred rendering */}
+        <div
+          className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16"
+          style={{ contentVisibility: 'auto', containIntrinsicSize: '0 800px' }}
+        >
           <h2 className="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-white">
             Explore Documentation
           </h2>
