@@ -305,15 +305,28 @@ export function SkeletonProfile({
                 )}
               />
 
-              {/* Name and badges */}
+              {/* Name, badges, bio, and social */}
               <div className="flex-1 text-center sm:text-left space-y-2">
+                {/* Name + badges */}
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
                   <div className="h-8 w-40 bg-white/20 rounded-lg" />
                   <div className="h-5 w-16 bg-white/20 rounded-full" />
                 </div>
+                {/* Username + followers */}
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
                   <div className="h-4 w-24 bg-white/20 rounded" />
                   <div className="h-4 w-32 bg-white/20 rounded" />
+                </div>
+                {/* Bio */}
+                <div className="h-4 w-3/4 max-w-md bg-white/15 rounded" />
+                {/* Joined + social links */}
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                  <div className="h-3 w-28 bg-white/15 rounded" />
+                  <div className="flex gap-1">
+                    <div className="h-7 w-7 bg-white/10 rounded-lg" />
+                    <div className="h-7 w-7 bg-white/10 rounded-lg" />
+                    <div className="h-7 w-7 bg-white/10 rounded-lg" />
+                  </div>
                 </div>
               </div>
 
@@ -323,15 +336,6 @@ export function SkeletonProfile({
                 <div className="h-10 w-10 bg-white/20 rounded-xl" />
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Bio & Info Section Skeleton */}
-        <div className="px-6 sm:px-8 py-4 animate-pulse">
-          <div className="h-4 w-3/4 max-w-md bg-gray-200 dark:bg-[#1a1a1a] rounded mb-4" />
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="h-4 w-40 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
-            <div className="h-4 w-32 bg-gray-200 dark:bg-[#1a1a1a] rounded" />
           </div>
         </div>
 
