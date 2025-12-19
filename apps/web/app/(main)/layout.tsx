@@ -16,14 +16,14 @@ import { UnifiedChatProvider } from "@/components/unified-chat";
 import { LazyChatWrapper } from "@/components/unified-chat/lazy-chat-wrapper";
 import { AskAIProvider } from "@/components/ask-ai";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
-import { RealtimeProvider } from "@/lib/realtime/realtime-context";
+import { LazyRealtimeProvider } from "@/components/providers/lazy-realtime-provider";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
 import { LazyFingerprintProvider } from "@/components/providers/lazy-fingerprint-provider";
 import { LazyE2EEProvider } from "@/components/providers/lazy-e2ee-provider";
 import { NotificationPopup } from "@/components/notifications/notification-popup";
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
-import { SoundProvider } from "@/hooks/use-sound-effects";
+import { LazySoundProvider } from "@/components/providers/lazy-sound-provider";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { PushNotificationPrompt } from "@/components/pwa/push-notification-prompt";
 
@@ -229,12 +229,12 @@ export default async function MainLayout({
         <I18nProvider locale={locale} messages={messages}>
           <LazyFingerprintProvider>
             <AuthProvider>
-              <RealtimeProvider>
+              <LazyRealtimeProvider>
               <LazyE2EEProvider>
               <UnifiedChatProvider>
               <AskAIProvider>
               <KeyboardShortcutsProvider>
-              <SoundProvider>
+              <LazySoundProvider>
                 <ToastProvider>
                   <AchievementNotificationProvider>
                   <DonorBadgeProvider>
@@ -255,12 +255,12 @@ export default async function MainLayout({
                   </DonorBadgeProvider>
                   </AchievementNotificationProvider>
                 </ToastProvider>
-              </SoundProvider>
+              </LazySoundProvider>
               </KeyboardShortcutsProvider>
               </AskAIProvider>
               </UnifiedChatProvider>
               </LazyE2EEProvider>
-              </RealtimeProvider>
+              </LazyRealtimeProvider>
             </AuthProvider>
           </LazyFingerprintProvider>
         </I18nProvider>

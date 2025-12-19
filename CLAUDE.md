@@ -28,6 +28,29 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.3.0**.
 
 ---
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
+3. [Feature Requirements Summary](#feature-requirements-summary) - 37 implemented features
+4. [Project Structure](#project-structure) - Directory layout
+5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
+6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync
+7. [Performance Optimization (MANDATORY)](#performance-optimization-mandatory) - Dynamic imports, targets
+8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
+9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
+10. [Component Patterns](#component-patterns) - Buttons, cards, focus states
+11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 73 tables, RLS, migrations
+12. [Internationalization](#internationalization-i18n) - 18 languages
+13. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+14. [Content Structure](#content-structure) - Documentation, resources, legal pages
+15. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+16. [Success Metrics](#success-metrics)
+17. [Updating Guidelines](#updating-guidelines)
+18. [License](#license)
+
+---
+
 ## Quick Reference
 
 ### Tech Stack
