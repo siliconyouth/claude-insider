@@ -18,8 +18,8 @@ import { AskAIProvider } from "@/components/ask-ai";
 import { VoiceAssistantErrorBoundary } from "@/components/voice-assistant-error-boundary";
 import { RealtimeProvider } from "@/lib/realtime/realtime-context";
 import { VersionUpdatePopup } from "@/components/version-update-popup";
-import { FingerprintProvider } from "@/components/providers/fingerprint-provider";
-import { E2EEProvider } from "@/components/providers/e2ee-provider";
+import { LazyFingerprintProvider } from "@/components/providers/lazy-fingerprint-provider";
+import { LazyE2EEProvider } from "@/components/providers/lazy-e2ee-provider";
 import { NotificationPopup } from "@/components/notifications/notification-popup";
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
@@ -227,10 +227,10 @@ export default async function MainLayout({
         className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}
       >
         <I18nProvider locale={locale} messages={messages}>
-          <FingerprintProvider>
+          <LazyFingerprintProvider>
             <AuthProvider>
               <RealtimeProvider>
-              <E2EEProvider>
+              <LazyE2EEProvider>
               <UnifiedChatProvider>
               <AskAIProvider>
               <KeyboardShortcutsProvider>
@@ -259,10 +259,10 @@ export default async function MainLayout({
               </KeyboardShortcutsProvider>
               </AskAIProvider>
               </UnifiedChatProvider>
-              </E2EEProvider>
+              </LazyE2EEProvider>
               </RealtimeProvider>
             </AuthProvider>
-          </FingerprintProvider>
+          </LazyFingerprintProvider>
         </I18nProvider>
       </body>
     </html>
