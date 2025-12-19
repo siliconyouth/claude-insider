@@ -38,3 +38,9 @@ export { Translations } from './Translations';
 
 // Email Management
 export { EmailTemplates } from './EmailTemplates';
+
+// Gamification
+export { AchievementTiers } from './AchievementTiers';
+export { AchievementCategories } from './AchievementCategories';
+export { Achievements } from './Achievements';
+export { Badges } from './Badges';

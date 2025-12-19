@@ -24,8 +24,13 @@ import {
   Media,
   Translations,
   EmailTemplates,
+  // Gamification
+  AchievementTiers,
+  AchievementCategories,
+  Achievements,
+  Badges,
 } from './collections';
-import { SiteSettings, CrossLinkSettings } from './globals';
+import { SiteSettings, CrossLinkSettings, GamificationSettings } from './globals';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -72,10 +77,15 @@ export default buildConfig({
     Translations,
     // Email Management (Settings group)
     EmailTemplates,
+    // Gamification (Gamification group)
+    AchievementTiers,
+    AchievementCategories,
+    Achievements,
+    Badges,
   ],
 
   // Globals (single-instance documents for site-wide config)
-  globals: [SiteSettings, CrossLinkSettings],
+  globals: [SiteSettings, CrossLinkSettings, GamificationSettings],
 
   // Database - Supabase PostgreSQL via Drizzle
   // Using Session Pooler with PgBouncer compatibility

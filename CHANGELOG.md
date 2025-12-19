@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2025-12-19
+### Gamification CMS
+- **Payload CMS Management**: New admin UI for achievements, badges, and gamification settings
+  - AchievementTiers collection: Configure rarity tiers with colors, animations, point multipliers
+  - AchievementCategories collection: 10 achievement categories (milestone, social, content, streak, etc.)
+  - Achievements collection: Create achievements with conditions, notifications, confetti settings
+  - Badges collection: Profile badges (role, donor, special, event, verified, achievement-based)
+- **GamificationSettings Global**: Configure points system, levels, streaks, and notification defaults
+- **Supabase Auto-Sync**: CMS changes automatically sync to Supabase `achievements` table via afterChange hooks
+- **Welcome Aboard Achievement Fix**: Now properly auto-awards when onboarding is completed
+- **Seed API Endpoint**: `/api/admin/gamification/seed` for initial tiers and categories setup
+
+---
+
 ## [1.1.0] - 2025-12-19
 ### Profile Page Redesign
 - **Hero-Style Profile Layout**: Twitter-style cover photo with floating profile info overlay

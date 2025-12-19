@@ -110,7 +110,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (35 total)
+### Implemented Features (36 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -149,6 +149,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-33 | User Directory | `/users` page with 7 list types, search, filters, deep linking to messages |
 | FR-34 | Profile Cover Photos | Custom covers (3:1 ratio), animated default, react-image-crop, settings integration |
 | FR-35 | Smart AI Messaging | @claudeinsider auto-responds in 1-on-1 DMs, @mention-only in groups, admin-managed, E2EE verified |
+| FR-36 | Gamification CMS | Payload CMS for achievements, badges, tiers, categories; auto-sync to Supabase |
 
 ### Non-Functional Requirements
 
@@ -991,13 +992,31 @@ Matrix Olm/Megolm protocol with Double Ratchet algorithm.
 
 ### Achievement System
 
-**Location**: `lib/achievements.ts`, `components/achievements/`
+**Location**: `lib/achievements.ts`, `components/achievements/`, `collections/Achievements.ts`
 
-50+ achievements across 9 categories with 4 rarity tiers (Common, Rare, Epic, Legendary).
+50+ achievements across 10 categories with 4 rarity tiers (Common, Rare, Epic, Legendary).
+
+**Payload CMS Management** (Admin UI at `/admin`):
+
+| Collection | Purpose |
+|------------|---------|
+| `achievement-tiers` | Configure rarity tiers with colors, animations, point multipliers |
+| `achievement-categories` | Organize achievements into thematic groups |
+| `achievements` | Create/edit achievements with conditions, notifications |
+| `badges` | Profile badges (role, donor, special, achievement-based) |
+
+**GamificationSettings Global**: Configure points system, levels, streaks, and notification defaults.
+
+**Supabase Sync**: CMS achievements auto-sync to Supabase `achievements` table via afterChange hooks.
 
 ```tsx
+// Queue achievement for popup display
 import { queueAchievement } from "@/lib/achievement-queue";
 queueAchievement("welcome_aboard");
+
+// Award achievement (server-side)
+import { awardSpecialAchievement } from "@/app/actions/achievements";
+await awardSpecialAchievement(userId, "welcome_aboard");
 ```
 
 ### Sound Effects System

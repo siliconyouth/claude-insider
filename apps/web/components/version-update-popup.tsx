@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.1.0";
+const APP_VERSION = "1.2.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.2.0",
+    date: "2025-12-19",
+    type: "minor",
+    highlights: [
+      "🎮 Gamification CMS: Manage achievements, badges, and tiers via Payload admin",
+      "🏆 4 new Payload collections: AchievementTiers, AchievementCategories, Achievements, Badges",
+      "⚙️ GamificationSettings global: Configure points, levels, streaks",
+      "🔄 Auto-sync: CMS changes sync to Supabase for frontend",
+      "🎯 Welcome Aboard achievement now auto-awards on onboarding completion",
+    ],
+  },
   {
     version: "1.1.0",
     date: "2025-12-19",

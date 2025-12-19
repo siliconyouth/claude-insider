@@ -5,3 +5,4 @@
 
 export { SiteSettings } from './SiteSettings';
 export { CrossLinkSettings } from './CrossLinkSettings';
+export { GamificationSettings } from './GamificationSettings';
