@@ -1,15 +1,15 @@
 # Claude Insider Roadmap
 
 **Version:** 1.3.0
-**Last Updated:** 2025-12-18
-**Current Release:** v1.0.1
+**Last Updated:** 2025-12-19
+**Current Release:** v1.2.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-**🎉 Version 1.0 Released!** Claude Insider has reached production-ready status. This roadmap now outlines the development path from **v1.0.1** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+**🎉 Version 1.2.0 Released!** Claude Insider has reached production-ready status with Gamification CMS. This roadmap now outlines the development path from **v1.2.0** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,8 @@
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.2.0 | Dec 19 | Gamification CMS: Payload collections for achievements/badges/tiers, auto-sync to Supabase |
+| 1.1.0 | Dec 19 | Profile Page Redesign: Twitter-style hero layout, quick actions, achievement showcase |
 | 1.0.1 | Dec 18 | Performance: Lighthouse 88, dynamic imports, WCAG 2.5.3 a11y, @mention hover cards |
 | 1.0.0 | Dec 18 | 🎉 Production Release: Smart AI messaging, E2EE verified @claudeinsider, CMS email templates |
 | 0.99.0 | Dec 17 | Sound Themes System: 10 themes (Claude Insider, Anthropic, Apple, Microsoft, Google, Linux, WhatsApp, Telegram, GitHub, Vercel) |
@@ -42,8 +44,8 @@
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 1.1.0 | Polish | Advanced analytics, Batch operations | Q1 2025 | Quality of Life |
-| 1.2.0 | Scale | Performance monitoring, Rate limiting | Q1 2025 | Enterprise Ready |
+| 1.3.0 | Polish | Advanced analytics, Batch operations | Q1 2025 | Quality of Life |
+| 1.4.0 | Scale | Performance monitoring, Rate limiting | Q1 2025 | Enterprise Ready |
 
 ---
 
