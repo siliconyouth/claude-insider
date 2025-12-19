@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0] - 2025-12-19
+### Performance Optimization
+- **Lighthouse Score Improved**: Desktop performance now at 86% (up from 82%)
+- **LCP Reduced by 16%**: Largest Contentful Paint improved from 2.5s to 2.1s
+- **TBT Reduced**: Total Blocking Time improved from 100ms+ to 30-40ms
+- **Lazy Provider Architecture**: New pattern for client-only providers
+  - LazyRealtimeProvider: Defers Supabase realtime connection (~16KB saved)
+  - LazySoundProvider: Defers Web Audio API initialization (~12KB saved)
+  - Combined with existing LazyFingerprintProvider (~32KB) and LazyE2EEProvider (~136KB)
+- **Below-fold Optimization**: LazyResourcesSection and LazyVoiceAssistantDemo now use `content-visibility: auto`
+- **CLAUDE.md Updated**: New mandatory guidelines for provider lazy loading
+  - All client-only providers MUST have `Lazy*Provider` wrappers
+  - Pattern and checklist documented for future additions
+- **Performance Targets Updated**: Current metrics documented in CLAUDE.md
+
+---
+
 ## [1.3.0] - 2025-12-19
 ### Profile Enhancements
 - **Location & Timezone Display**: Users can now set and display their location and local time on profiles

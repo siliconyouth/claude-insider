@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.3.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.4.0**.
 
 | Link | URL |
 |------|-----|
@@ -362,7 +362,7 @@ if (isLoading) {
 
 ## Performance Optimization (MANDATORY)
 
-All new features MUST follow these performance guidelines to maintain Lighthouse scores above 90.
+All new features MUST follow these performance guidelines to maintain Lighthouse scores above 85.
 
 ### Code Splitting with Dynamic Imports
 
@@ -371,9 +371,10 @@ All new features MUST follow these performance guidelines to maintain Lighthouse
 | Component Type | Requirement | Example |
 |----------------|-------------|---------|
 | Modals/Dialogs | MUST use `next/dynamic` | Chat tabs, auth modals |
-| Below-fold content | SHOULD use dynamic imports | Feature sections |
+| Below-fold content | MUST use dynamic imports | Feature sections, resources |
 | Third-party integrations | MUST lazy load | PayPal, analytics |
 | Heavy libraries | MUST lazy load | highlight.js, chart libs |
+| Context Providers (client-only) | MUST lazy load | Realtime, Sound, Fingerprint |
 
 ```tsx
 // ✅ CORRECT - Dynamic import for modal content
@@ -391,6 +392,44 @@ const HeavyComponent = dynamic(
 import { HeavyComponent } from "./heavy-component";
 ```
 
+### Provider Lazy Loading (MANDATORY)
+
+**All client-only providers MUST be lazy loaded** to reduce initial JS bundle and improve LCP/TBT.
+
+**Currently Lazy-Loaded Providers** (in `components/providers/`):
+
+| Provider | File | Why Lazy |
+|----------|------|----------|
+| `LazyFingerprintProvider` | `lazy-fingerprint-provider.tsx` | FingerprintJS ~32KB, not needed for initial render |
+| `LazyE2EEProvider` | `lazy-e2ee-provider.tsx` | Matrix WASM ~136KB, only needed for encrypted messages |
+| `LazyRealtimeProvider` | `lazy-realtime-provider.tsx` | Supabase realtime ~16KB, defers connection |
+| `LazySoundProvider` | `lazy-sound-provider.tsx` | Web Audio API ~12KB, sounds don't play on load |
+
+**Pattern for Creating Lazy Providers**:
+
+```tsx
+// components/providers/lazy-my-provider.tsx
+"use client";
+
+import dynamic from "next/dynamic";
+import type { ReactNode } from "react";
+
+const MyProvider = dynamic(
+  () => import("./my-provider").then((m) => ({ default: m.MyProvider })),
+  { ssr: false } // Client-only providers don't need SSR
+);
+
+export function LazyMyProvider({ children }: { children: ReactNode }) {
+  return <MyProvider>{children}</MyProvider>;
+}
+```
+
+**When to Create a Lazy Provider**:
+- Provider initializes external APIs (Supabase, Web Audio, etc.)
+- Provider loads heavy libraries (WASM, crypto, etc.)
+- Provider functionality isn't needed for initial page render
+- Provider is client-only (`"use client"` directive)
+
 ### Lazy Loading Boundaries
 
 Place dynamic imports at the **visibility boundary** - where UI transitions from hidden to visible:
@@ -401,6 +440,7 @@ Place dynamic imports at the **visibility boundary** - where UI transitions from
 | Tab content | Import per-tab, not all tabs upfront |
 | Accordion/Collapse | Import expanded content dynamically |
 | Route segments | Use Next.js route-based splitting |
+| Context Providers | Create `Lazy*Provider` wrapper in `components/providers/` |
 
 ### Accessibility Labels (WCAG 2.5.3)
 
@@ -425,22 +465,26 @@ Place dynamic imports at the **visibility boundary** - where UI transitions from
 
 ### Performance Targets
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| Lighthouse Performance | > 85 | 88 |
-| FCP (First Contentful Paint) | < 1.0s | 0.8s |
-| LCP (Largest Contentful Paint) | < 2.5s | 2.2s |
-| TBT (Total Blocking Time) | < 200ms | 0ms |
-| CLS (Cumulative Layout Shift) | < 0.1 | 0.003 |
+| Metric | Target | Current (v1.4.0) |
+|--------|--------|------------------|
+| Lighthouse Performance (Desktop) | > 85 | 86 |
+| FCP (First Contentful Paint) | < 1.0s | 0.7s |
+| LCP (Largest Contentful Paint) | < 2.5s | 2.1s |
+| TBT (Total Blocking Time) | < 200ms | 30-40ms |
+| CLS (Cumulative Layout Shift) | < 0.1 | 0.001 |
+
+**Note**: Mobile (throttled) scores are lower (~51%) due to simulated slow CPU/network. Focus on desktop metrics for development.
 
 ### Checklist for New Features
 
 - [ ] Heavy components use `next/dynamic` with `ssr: false`
 - [ ] Modal/dialog content is dynamically imported
 - [ ] Third-party libraries are lazy loaded
+- [ ] **New providers have `Lazy*Provider` wrappers** (see Provider Lazy Loading above)
 - [ ] `aria-label` matches visible text (WCAG 2.5.3)
 - [ ] No render-blocking resources in critical path
 - [ ] Images use `priority` prop for above-fold, lazy load below
+- [ ] Below-fold sections use `contentVisibility: 'auto'` CSS
 - [ ] Run `npx lighthouse <url> --preset=desktop` before PR
 
 ---

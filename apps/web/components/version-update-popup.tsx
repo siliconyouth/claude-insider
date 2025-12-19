@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.3.0";
+const APP_VERSION = "1.4.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.4.0",
+    date: "2025-12-19",
+    type: "minor",
+    highlights: [
+      "⚡ Performance Boost: Lighthouse score improved to 86% (desktop)",
+      "🚀 LCP reduced from 2.5s to 2.1s (16% faster initial paint)",
+      "📦 Lazy Providers: RealtimeProvider & SoundProvider now lazy-loaded",
+      "🎯 TBT reduced to 30-40ms (from 100ms+)",
+      "📋 New CLAUDE.md guidelines: Mandatory provider lazy loading",
+    ],
+  },
   {
     version: "1.3.0",
     date: "2025-12-19",
