@@ -1,13 +1,13 @@
 {
   "url": "https://docs.anthropic.com/en/docs/claude-code/cli-usage",
   "title": "Claude Code Documentation - Commands",
-  "content": "",
-  "summary": null,
+  "content": "Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Loading... Solutions AI agents Code modernization Coding Customer support Education Financial services Government Life sciences Partners Amazon Bedrock Google Cloud&#x27;s Vertex AI Learn Blog Catalog Courses Use cases Connectors Customer stories Engineering at Anthropic Events Powered by Claude Service partners Startups program Company Anthropic Careers Economic Futures Research News Responsible Scaling Policy Security and compliance Transparency Learn Blog Catalog Courses Use cases Connectors Customer stories Engineering at Anthropic Events Powered by Claude Service partners Startups program Help and security Availability Status Support Discord Terms and policies Privacy policy Responsible disclosure policy Terms of service: Commercial Terms of service: Consumer Usage policy",
+  "summary": "# Summary: Claude Code Documentation - Commands Page\n\n## Overview\nThe provided content does not contain actual documentation about Claude Code commands. Instead, the content appears to be **navigation/menu elements** from the Anthropic documentation website, showing only the site's header, footer, and navigation structure.\n\n## What Was Captured\nThe content consists of:\n- Website navigation labels (\"Solutions\", \"Partners\", \"Learn\", \"Company\", \"Help and security\")\n- Product/service categories (AI agents, Code modernization, Customer support, etc.)\n- Partner integrations (Amazon Bedrock, Google Cloud's Vertex AI)\n- Standard website sections (Blog, Careers, Terms of service, Privacy policy, etc.)\n- Loading placeholders indicating the actual page content failed to load\n\n## Key Finding\n**No actual CLI commands, usage instructions, configuration options, or technical documentation was present in the provided content.**\n\n## Recommendation\nTo properly summarize Claude Code CLI usage documentation, the actual page content would need to be successfully loaded. The expected content based on the URL (https://docs.anthropic.com/en/docs/claude-code/cli-usage) would typically include:\n- CLI command syntax\n- Available flags and options\n- Usage examples\n- Configuration settings\n- Best practices for command-line usage\n\n## Data Quality Note\n⚠️ This appears to be a page load failure where only the website's shell/navigation loaded but the main documentation content did not render.",
   "referencedFrom": [
     "tips-and-tricks/productivity.mdx"
   ],
-  "cachedAt": "2025-12-14T01:44:46.723Z",
-  "contentLength": 0,
-  "summaryLength": 0,
-  "model": null
+  "cachedAt": "2025-12-20T09:29:22.549Z",
+  "contentLength": 952,
+  "summaryLength": 1484,
+  "model": "claude-opus-4-5-20251101"
 }
