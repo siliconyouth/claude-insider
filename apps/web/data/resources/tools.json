@@ -16,7 +16,8 @@
     "featured": true,
     "featuredReason": "Most Popular",
     "addedDate": "2024-01-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-editor/1766224574520-cursor-editor.png"
   },
   {
     "id": "continue-dev",
@@ -43,7 +44,8 @@
     "featured": true,
     "featuredReason": "Editor's Pick",
     "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/continue-dev/1766224574180-continue-dev.png"
   },
   {
     "id": "aider",
@@ -71,7 +73,8 @@
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-03-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aider/1766224570221-aider.png"
   },
   {
     "id": "cline-vscode",
@@ -98,7 +101,8 @@
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cline-vscode/1766224573871-cline-vscode.png"
   },
   {
     "id": "zed-editor",
@@ -123,7 +127,8 @@
       "language": "Rust"
     },
     "addedDate": "2024-04-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zed-editor/1766224577765-zed-editor.png"
   },
   {
     "id": "windsurf",
@@ -140,7 +145,8 @@
     ],
     "status": "community",
     "addedDate": "2024-11-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/windsurf/1766224577342-windsurf.png"
   },
   {
     "id": "neovim-avante",
@@ -166,7 +172,8 @@
       "language": "Lua"
     },
     "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/neovim-avante/1766224575623-neovim-avante.png"
   },
   {
     "id": "claude-cli-unofficial",
@@ -199,7 +206,8 @@
     ],
     "status": "community",
     "addedDate": "2024-02-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/raycast-ai/1766224576163-raycast-ai.png"
   },
   {
     "id": "chatbox",
@@ -224,7 +232,8 @@
       "language": "TypeScript"
     },
     "addedDate": "2024-03-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatbox/1766224573315-chatbox.png"
   },
   {
     "id": "typing-mind",
@@ -241,7 +250,8 @@
     ],
     "status": "community",
     "addedDate": "2024-01-20",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/typing-mind/1766224576666-typing-mind.png"
   },
   {
     "id": "open-webui",
@@ -266,6 +276,7 @@
       "language": "Svelte"
     },
     "addedDate": "2024-04-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/open-webui/1766224575900-open-webui.png"
   }
 ]

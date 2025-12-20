@@ -25,7 +25,8 @@
     "featured": true,
     "featuredReason": "Official Courses",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-courses/1766224570961-anthropic-courses.png"
   },
   {
     "id": "deeplearning-claude",

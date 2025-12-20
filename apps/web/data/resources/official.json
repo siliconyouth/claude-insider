@@ -16,7 +16,8 @@
     "featured": true,
     "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766224571914-anthropic-docs.png"
   },
   {
     "id": "claude-code-docs",
@@ -54,7 +55,8 @@
     "featured": true,
     "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766224575378-mcp-docs.png"
   },
   {
     "id": "anthropic-cookbook",
@@ -81,7 +83,8 @@
     "featured": true,
     "featuredReason": "Official Examples",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1766224570658-anthropic-cookbook.png"
   },
   {
     "id": "claude-code-repo",
@@ -108,7 +111,8 @@
     "featured": true,
     "featuredReason": "Official Repository",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1766224573579-claude-code-github.png"
   },
   {
     "id": "anthropic-sdk-python",

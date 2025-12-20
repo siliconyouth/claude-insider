@@ -16,7 +16,8 @@
     "featured": true,
     "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766224572230-anthropic-prompt-library.png"
   },
   {
     "id": "awesome-chatgpt-prompts",
@@ -43,7 +44,8 @@
     "featured": true,
     "featuredReason": "Most Popular",
     "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766224573035-awesome-chatgpt-prompts.png"
   },
   {
     "id": "prompts-chat",
@@ -88,7 +90,8 @@
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-04-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766224575074-fabric-prompts.png"
   },
   {
     "id": "chain-of-thought",

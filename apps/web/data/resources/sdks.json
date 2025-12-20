@@ -25,7 +25,8 @@
     "featured": true,
     "featuredReason": "Official SDK",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-python-official/1766224572493-anthropic-sdk-python.png"
   },
   {
     "id": "sdk-typescript-official",
@@ -53,7 +54,8 @@
     "featured": true,
     "featuredReason": "Official SDK",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-typescript-official/1766224572754-anthropic-sdk-typescript.png"
   },
   {
     "id": "sdk-go",
@@ -264,6 +266,7 @@
     "featured": true,
     "featuredReason": "Popular",
     "addedDate": "2024-04-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-ai-sdk/1766224577013-vercel-ai-sdk.png"
   }
 ]
