@@ -1291,7 +1291,7 @@ function AlternativesTab({ resource }: { resource: ResourceWithDetails }) {
         {resource.alternatives.map((alt) => (
           <Link
             key={alt.id}
-            href={`/resources/r/${alt.slug}`}
+            href={`/resources/${alt.slug}`}
             className={cn(
               "flex items-start gap-4 p-4 rounded-xl",
               "bg-white dark:bg-[#111111]",

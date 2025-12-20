@@ -66,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const individualResourcePages: MetadataRoute.Sitemap = resourceSlugs
     .filter((slug) => !RESOURCE_CATEGORY_SLUGS.includes(slug)) // Exclude category slugs
     .map((slug) => ({
-      url: `${baseUrl}/resources/r/${slug}`,
+      url: `${baseUrl}/resources/${slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,

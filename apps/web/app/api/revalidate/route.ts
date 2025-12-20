@@ -92,8 +92,8 @@ export async function POST(request: Request) {
 
     // Revalidate specific resource page if slug provided
     if (collection === 'resources' && slug) {
-      // Individual resource pages are at /resources/r/[slug]
-      const resourcePath = `/resources/r/${slug}`;
+      // Individual resource pages are at /resources/[slug]
+      const resourcePath = `/resources/${slug}`;
       revalidatePath(resourcePath);
       revalidated.push(`path:${resourcePath}`);
     }
