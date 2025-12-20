@@ -111,6 +111,20 @@ export interface TagWithCount {
   count: number;
 }
 
+// Array of category slugs for quick lookup (used in routing)
+export const RESOURCE_CATEGORY_SLUGS: ResourceCategorySlug[] = [
+  'official',
+  'tools',
+  'mcp-servers',
+  'rules',
+  'prompts',
+  'agents',
+  'tutorials',
+  'sdks',
+  'showcases',
+  'community',
+];
+
 // All categories with metadata
 export const RESOURCE_CATEGORIES: ResourceCategory[] = [
   {
