@@ -306,13 +306,13 @@ export async function getResourcesForDoc(
         r.github_stars,
         dr.relationship_type,
         dr.confidence_score,
-        dr.reasoning
+        dr.ai_reasoning as reasoning
        FROM doc_resource_relationships dr
        JOIN resources r ON r.id = dr.resource_id
        WHERE dr.doc_slug = $1
          AND dr.is_active = TRUE
          AND r.is_published = TRUE
-       ORDER BY dr.confidence_score DESC, r.github_stars DESC
+       ORDER BY dr.display_priority DESC, dr.confidence_score DESC, r.github_stars DESC
        LIMIT $2`,
       [docSlug, limit]
     );
