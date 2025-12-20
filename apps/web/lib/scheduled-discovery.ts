@@ -3,16 +3,17 @@
  *
  * Manages automatic resource discovery from configured sources.
  * Runs on a schedule via Vercel Cron.
+ *
+ * Uses Supabase resource_sources table for source configuration.
  */
 
 import "server-only";
-import { getPayload } from "payload";
-import config from "@payload-config";
-import { adapterRegistry, discoverResources } from "./adapters";
+import { pool } from "@/lib/db";
+import { adapterRegistry, discoverResources, type SourceType } from "./adapters";
 import { createAuditLog } from "./audit";
 
 export interface DiscoveryRunResult {
-  sourceId: number;
+  sourceId: string;
   sourceName: string;
   sourceType: string;
   status: "success" | "failed" | "skipped";
@@ -34,84 +35,55 @@ export interface ScheduledDiscoveryResult {
   results: DiscoveryRunResult[];
 }
 
-/**
- * Get all active sources that are due for a scheduled run
- */
-async function getActiveSources() {
-  const payload = await getPayload({ config });
-
-  const now = new Date();
-
-  const result = await payload.find({
-    collection: "resource-sources",
-    where: {
-      and: [
-        { isActive: { equals: true } },
-        {
-          or: [
-            // Never run before
-            { "scheduling.lastRunAt": { exists: false } },
-            // Due for next run (lastRun + interval <= now)
-            // For now, we just get all active sources and filter by interval
-          ],
-        },
-      ],
-    },
-    limit: 100,
-  });
-
-  // Filter sources that are due based on their scanFrequency
-  const dueSources = result.docs.filter((source) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const src = source as any;
-
-    // Skip manual-only sources
-    if (src.scanFrequency === "manual") return false;
-
-    const lastScannedAt = src.lastScannedAt;
-    if (!lastScannedAt) return true; // Never scanned before
-
-    const intervalHours = getIntervalHours(src.scanFrequency || "weekly");
-    const nextRunTime = new Date(lastScannedAt);
-    nextRunTime.setHours(nextRunTime.getHours() + intervalHours);
-
-    return now >= nextRunTime;
-  });
-
-  return dueSources;
+interface ResourceSource {
+  id: string;
+  name: string;
+  type: string;
+  url: string;
+  github_config: Record<string, unknown>;
+  registry_config: Record<string, unknown>;
+  awesome_config: Record<string, unknown>;
+  default_category: string | null;
+  default_tags: string[];
+  min_stars: number;
+  min_downloads: number;
+  scan_frequency: string;
+  is_active: boolean;
 }
 
 /**
- * Convert scanFrequency setting to hours
+ * Get all active sources that are due for a scheduled run
  */
-function getIntervalHours(frequency: string): number {
-  switch (frequency) {
-    case "daily":
-      return 24;
-    case "weekly":
-      return 168; // 7 * 24
-    case "monthly":
-      return 720; // 30 * 24
-    case "manual":
-      return Infinity;
-    default:
-      return 168; // Default to weekly
-  }
+async function getActiveSources(): Promise<ResourceSource[]> {
+  const result = await pool.query<ResourceSource>(`
+    SELECT
+      id, name, type, url,
+      github_config, registry_config, awesome_config,
+      default_category, default_tags,
+      min_stars, min_downloads,
+      scan_frequency, is_active
+    FROM resource_sources
+    WHERE is_active = TRUE
+      AND scan_frequency != 'manual'
+      AND (next_scan_at IS NULL OR next_scan_at <= NOW())
+    ORDER BY next_scan_at NULLS FIRST
+    LIMIT 20
+  `);
+
+  return result.rows;
 }
 
 /**
  * Process a single source for discovery
  */
-async function processSource(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  source: any
-): Promise<DiscoveryRunResult> {
+async function processSource(source: ResourceSource): Promise<DiscoveryRunResult> {
   const startTime = Date.now();
-  const payload = await getPayload({ config });
 
   try {
-    // Get the appropriate adapter
-    const adapter = adapterRegistry.getByType(source.type);
+    // Get the appropriate adapter based on source type
+    const adapterType = mapSourceTypeToAdapter(source.type);
+    const adapter = adapterRegistry.getByType(adapterType);
+
     if (!adapter) {
       return {
         sourceId: source.id,
@@ -130,21 +102,18 @@ async function processSource(
     const adapterConfig = buildAdapterConfig(source);
 
     // Get existing URLs to detect duplicates
-    const existingResources = await payload.find({
-      collection: "resources",
-      where: {
-        url: { exists: true },
-      },
-      limit: 10000,
-    });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const existingUrls = new Set(existingResources.docs.map((r: any) => r.url));
-    const existingUrlsArray = Array.from(existingUrls) as string[];
+    const existingResult = await pool.query<{ url: string }>(
+      `SELECT url FROM resources WHERE url IS NOT NULL`
+    );
+    const existingUrls = new Set(existingResult.rows.map((r) => r.url));
+    const existingUrlsArray = Array.from(existingUrls);
 
     // Run discovery
     const discoveryResult = await discoverResources(adapterConfig, {
-      limit: source.settings?.maxResourcesPerRun || 50,
+      limit: 50,
       skipExisting: existingUrlsArray,
+      minStars: source.min_stars,
+      minDownloads: source.min_downloads,
     });
 
     // Filter out duplicates from successful results
@@ -152,56 +121,49 @@ async function processSource(
     const newResources = discoveredResources.filter((r) => !existingUrls.has(r.url));
     const duplicateCount = discoveredResources.length - newResources.length;
 
-    // Add new resources to queue
+    // Add new resources to discovery queue
     let queuedCount = 0;
     for (const resource of newResources) {
       try {
-        await payload.create({
-          collection: "resource-discovery-queue",
-          data: {
-            url: resource.url,
-            title: resource.title,
-            description: resource.description,
-            // Note: suggestedCategory and suggestedTags are relationship fields
-            // that need IDs - they'll be set during manual review
-            source: source.id,
-            status: "pending",
-            priority: "normal",
-            // Store GitHub metadata if available
-            github: resource.metadata?.github
-              ? {
-                  owner: resource.metadata.github.owner,
-                  repo: resource.metadata.github.repo,
-                  stars: resource.metadata.github.stars,
-                  forks: resource.metadata.github.forks,
-                  language: resource.metadata.github.language,
-                  license: resource.metadata.github.license,
-                }
-              : undefined,
-            // Store npm metadata in rawData
-            rawData: {
-              npm: resource.metadata?.npm,
-              topics: resource.metadata?.github?.topics,
-              keywords: resource.metadata?.npm?.keywords,
-            },
-          },
-        });
-        queuedCount++;
+        // Check if already in queue
+        const existingQueue = await pool.query(
+          `SELECT id FROM resource_discovery_queue WHERE discovered_url = $1`,
+          [resource.url]
+        );
+
+        if (existingQueue.rows.length === 0) {
+          await pool.query(
+            `INSERT INTO resource_discovery_queue (
+              source_id, discovered_url, discovered_title, discovered_description,
+              discovered_data, status
+            ) VALUES ($1, $2, $3, $4, $5, $6)`,
+            [
+              source.id,
+              resource.url,
+              resource.title,
+              resource.description,
+              JSON.stringify({
+                github: resource.metadata?.github,
+                npm: resource.metadata?.npm,
+                sourceType: resource.sourceType,
+                discoveredAt: resource.discoveredAt,
+                context: resource.context,
+              }),
+              "pending",
+            ]
+          );
+          queuedCount++;
+        }
       } catch (err) {
         console.error(`[ScheduledDiscovery] Failed to queue resource: ${resource.url}`, err);
       }
     }
 
-    // Update source last scan time
-    await payload.update({
-      collection: "resource-sources",
-      id: source.id,
-      data: {
-        lastScannedAt: new Date().toISOString(),
-        lastScanStatus: "success",
-        resourceCount: (source.resourceCount || 0) + queuedCount,
-      },
-    });
+    // Update source with scan results
+    await pool.query(
+      `SELECT mark_source_scanned($1, $2, $3, $4)`,
+      [source.id, "success", queuedCount, null]
+    );
 
     return {
       sourceId: source.id,
@@ -216,15 +178,10 @@ async function processSource(
   } catch (error) {
     // Update source with failure status
     try {
-      await payload.update({
-        collection: "resource-sources",
-        id: source.id,
-        data: {
-          lastScannedAt: new Date().toISOString(),
-          lastScanStatus: "failed",
-          lastScanError: error instanceof Error ? error.message : "Unknown error",
-        },
-      });
+      await pool.query(
+        `SELECT mark_source_scanned($1, $2, $3, $4)`,
+        [source.id, "failed", 0, error instanceof Error ? error.message : "Unknown error"]
+      );
     } catch {
       console.error(`[ScheduledDiscovery] Failed to update source status`);
     }
@@ -244,30 +201,60 @@ async function processSource(
 }
 
 /**
+ * Map our source types to adapter types
+ */
+function mapSourceTypeToAdapter(sourceType: string): SourceType {
+  const mapping: Record<string, SourceType> = {
+    github_repo: "github_repo",
+    github_search: "github_search",
+    awesome_list: "awesome_list",
+    npm: "npm_search",
+    pypi: "npm_search", // Use npm adapter structure for PyPI for now
+    website: "website",
+    rss: "website",
+    api: "website",
+    manual: "manual",
+  };
+  return mapping[sourceType] || (sourceType as SourceType);
+}
+
+/**
  * Build adapter config from source settings
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function buildAdapterConfig(source: any): Parameters<typeof discoverResources>[0] {
+function buildAdapterConfig(source: ResourceSource): Parameters<typeof discoverResources>[0] {
+  const githubConfig = source.github_config as {
+    owner?: string;
+    repo?: string;
+    searchQuery?: string;
+    topics?: string[];
+    branch?: string;
+    path?: string;
+  };
+
+  const registryConfig = source.registry_config as {
+    searchQuery?: string;
+    scope?: string;
+    keywords?: string[];
+  };
+
+  const awesomeConfig = source.awesome_config as {
+    sections?: string[];
+  };
+
   switch (source.type) {
     case "github_repo":
-    case "github_org":
-    case "github_search":
       return {
         github: {
-          owner: source.settings?.owner,
-          repo: source.settings?.repo,
-          searchQuery: source.settings?.searchQuery,
-          topics: source.settings?.topics,
+          owner: githubConfig?.owner,
+          repo: githubConfig?.repo,
         },
       };
 
-    case "npm_package":
-    case "npm_search":
+    case "github_search":
       return {
-        npm: {
-          packageName: source.settings?.packageName,
-          searchQuery: source.settings?.searchQuery,
-          scope: source.settings?.scope,
+        github: {
+          searchQuery: githubConfig?.searchQuery,
+          topics: githubConfig?.topics,
         },
       };
 
@@ -275,20 +262,36 @@ function buildAdapterConfig(source: any): Parameters<typeof discoverResources>[0
       return {
         awesomeList: {
           url: source.url,
-          sections: source.settings?.sections,
+          sections: awesomeConfig?.sections,
+        },
+      };
+
+    case "npm":
+      return {
+        npm: {
+          searchQuery: registryConfig?.searchQuery,
+          scope: registryConfig?.scope,
+        },
+      };
+
+    case "pypi":
+      // PyPI uses similar structure to npm for now
+      return {
+        npm: {
+          searchQuery: registryConfig?.searchQuery,
         },
       };
 
     case "website":
+    case "rss":
+    case "api":
       return {
         website: {
           url: source.url,
-          selectors: source.settings?.selectors,
         },
       };
 
     default:
-      // Return empty config for unknown types
       return {};
   }
 }
@@ -324,8 +327,7 @@ export async function runScheduledDiscovery(): Promise<ScheduledDiscoveryResult>
   // Process sources sequentially to avoid rate limiting issues
   const results: DiscoveryRunResult[] = [];
   for (const source of sources) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    console.log(`[ScheduledDiscovery] Processing: ${(source as any).name}`);
+    console.log(`[ScheduledDiscovery] Processing: ${source.name} (${source.type})`);
     const result = await processSource(source);
     results.push(result);
 
@@ -353,8 +355,8 @@ export async function runScheduledDiscovery(): Promise<ScheduledDiscoveryResult>
       status: results.every((r) => r.status === "success")
         ? "success"
         : results.some((r) => r.status === "success")
-        ? "partial"
-        : "failed",
+          ? "partial"
+          : "failed",
     });
   } catch {
     console.error(`[ScheduledDiscovery] Failed to create audit log`);
@@ -379,19 +381,69 @@ export async function runScheduledDiscovery(): Promise<ScheduledDiscoveryResult>
 /**
  * Manually trigger discovery for a specific source
  */
-export async function runSourceDiscovery(
-  sourceId: number
-): Promise<DiscoveryRunResult> {
-  const payload = await getPayload({ config });
+export async function runSourceDiscovery(sourceId: string): Promise<DiscoveryRunResult> {
+  const result = await pool.query<ResourceSource>(
+    `SELECT
+      id, name, type, url,
+      github_config, registry_config, awesome_config,
+      default_category, default_tags,
+      min_stars, min_downloads,
+      scan_frequency, is_active
+    FROM resource_sources
+    WHERE id = $1`,
+    [sourceId]
+  );
 
-  const source = await payload.findByID({
-    collection: "resource-sources",
-    id: sourceId,
-  });
-
+  const source = result.rows[0];
   if (!source) {
     throw new Error(`Source not found: ${sourceId}`);
   }
 
   return processSource(source);
+}
+
+/**
+ * Get discovery queue statistics
+ */
+export async function getDiscoveryQueueStats(): Promise<{
+  pending: number;
+  reviewing: number;
+  approved: number;
+  rejected: number;
+  total: number;
+}> {
+  const result = await pool.query<{ status: string; count: string }>(`
+    SELECT status, COUNT(*) as count
+    FROM resource_discovery_queue
+    GROUP BY status
+  `);
+
+  const stats = {
+    pending: 0,
+    reviewing: 0,
+    approved: 0,
+    rejected: 0,
+    total: 0,
+  };
+
+  for (const row of result.rows) {
+    const count = parseInt(row.count, 10);
+    stats.total += count;
+    switch (row.status) {
+      case "pending":
+        stats.pending = count;
+        break;
+      case "reviewing":
+        stats.reviewing = count;
+        break;
+      case "approved":
+        stats.approved = count;
+        break;
+      case "rejected":
+        stats.rejected = count;
+        break;
+    }
+  }
+
+  return stats;
 }

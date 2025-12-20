@@ -1,5 +1,59 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig, CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload';
 import { hasRole } from './Users';
+import { upsertSupabaseSource, deleteSupabaseSource } from '@/lib/payload/sync-resource-sources';
+
+/**
+ * Sync to Supabase after changes
+ */
+const syncToSupabase: CollectionAfterChangeHook = async ({ doc, operation }) => {
+  try {
+    // Convert Payload doc to the format expected by sync function
+    const payloadSource = {
+      id: doc.supabaseId as string | undefined,
+      name: doc.name as string,
+      description: doc.description as string | undefined,
+      type: doc.type as string,
+      url: doc.url as string,
+      github: doc.github as { owner?: string; repo?: string; branch?: string; path?: string; searchQuery?: string; topics?: string } | undefined,
+      registry: doc.registry as { searchQuery?: string; scope?: string; keywords?: string } | undefined,
+      discoverySettings: doc.discoverySettings as {
+        defaultCategory?: string;
+        autoApprove?: boolean;
+        minStars?: number;
+        minDownloads?: number;
+      } | undefined,
+      isActive: doc.isActive as boolean | undefined,
+      scanFrequency: doc.scanFrequency as string | undefined,
+    };
+
+    const supabaseId = await upsertSupabaseSource(payloadSource);
+
+    // If this was a create and we got a new ID, we could store it
+    // But for now we use URL as the matching key
+    console.log(`[ResourceSources] ${operation} synced to Supabase: ${supabaseId}`);
+  } catch (error) {
+    console.error('[ResourceSources] Failed to sync to Supabase:', error);
+    // Don't throw - allow Payload operation to succeed even if sync fails
+  }
+
+  return doc;
+};
+
+/**
+ * Delete from Supabase when deleted in Payload
+ */
+const deleteFromSupabase: CollectionAfterDeleteHook = async ({ doc }) => {
+  try {
+    if (doc.supabaseId) {
+      await deleteSupabaseSource(doc.supabaseId as string);
+      console.log(`[ResourceSources] Deleted from Supabase: ${doc.supabaseId}`);
+    }
+  } catch (error) {
+    console.error('[ResourceSources] Failed to delete from Supabase:', error);
+  }
+
+  return doc;
+};
 
 /**
  * ResourceSources Collection
@@ -28,7 +82,19 @@ export const ResourceSources: CollectionConfig = {
     update: ({ req: { user } }) => hasRole(user, ['superadmin', 'admin', 'moderator']),
     delete: ({ req: { user } }) => hasRole(user, ['superadmin']),
   },
+  hooks: {
+    afterChange: [syncToSupabase],
+    afterDelete: [deleteFromSupabase],
+  },
   fields: [
+    // Supabase ID for sync (hidden)
+    {
+      name: 'supabaseId',
+      type: 'text',
+      admin: {
+        hidden: true,
+      },
+    },
     // Basic Info
     {
       name: 'name',
