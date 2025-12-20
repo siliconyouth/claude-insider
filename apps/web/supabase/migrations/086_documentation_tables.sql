@@ -363,27 +363,28 @@ ALTER TABLE documentation_sections ENABLE ROW LEVEL SECURITY;
 ALTER TABLE documentation_history ENABLE ROW LEVEL SECURITY;
 ALTER TABLE documentation_update_jobs ENABLE ROW LEVEL SECURITY;
 
--- Public read for published docs
-CREATE POLICY "Public can view published documentation"
-  ON documentation FOR SELECT
-  USING (is_published = TRUE);
-
-CREATE POLICY "Public can view documentation sections"
-  ON documentation_sections FOR SELECT
-  USING (TRUE);
-
--- Service role full access (app uses service_role key)
-CREATE POLICY "service_role_documentation" ON documentation
-  FOR ALL USING (TRUE);
-
-CREATE POLICY "service_role_doc_sections" ON documentation_sections
-  FOR ALL USING (TRUE);
-
-CREATE POLICY "service_role_doc_history" ON documentation_history
-  FOR ALL USING (TRUE);
-
-CREATE POLICY "service_role_doc_update_jobs" ON documentation_update_jobs
-  FOR ALL USING (TRUE);
+-- Documentation policies (defensive creation)
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view published documentation' AND tablename = 'documentation') THEN
+    CREATE POLICY "Public can view published documentation" ON documentation FOR SELECT USING (is_published = TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view documentation sections' AND tablename = 'documentation_sections') THEN
+    CREATE POLICY "Public can view documentation sections" ON documentation_sections FOR SELECT USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_documentation' AND tablename = 'documentation') THEN
+    CREATE POLICY "service_role_documentation" ON documentation FOR ALL USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_doc_sections' AND tablename = 'documentation_sections') THEN
+    CREATE POLICY "service_role_doc_sections" ON documentation_sections FOR ALL USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_doc_history' AND tablename = 'documentation_history') THEN
+    CREATE POLICY "service_role_doc_history" ON documentation_history FOR ALL USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_doc_update_jobs' AND tablename = 'documentation_update_jobs') THEN
+    CREATE POLICY "service_role_doc_update_jobs" ON documentation_update_jobs FOR ALL USING (TRUE);
+  END IF;
+END $$;
 
 -- ============================================================================
 -- HELPER FUNCTIONS

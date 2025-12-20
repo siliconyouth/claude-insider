@@ -136,77 +136,68 @@ ALTER TABLE resource_review_votes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resource_comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resource_comment_likes ENABLE ROW LEVEL SECURITY;
 
--- Reviews: Public can see approved, users can manage their own
-CREATE POLICY "Public can view approved reviews"
-  ON resource_reviews FOR SELECT
-  USING (status = 'approved');
+-- Policies (defensive creation)
+DO $$
+BEGIN
+  -- Reviews policies
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view approved reviews' AND tablename = 'resource_reviews') THEN
+    CREATE POLICY "Public can view approved reviews" ON resource_reviews FOR SELECT USING (status = 'approved');
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can view their own reviews' AND tablename = 'resource_reviews') THEN
+    CREATE POLICY "Users can view their own reviews" ON resource_reviews FOR SELECT USING (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can create reviews' AND tablename = 'resource_reviews') THEN
+    CREATE POLICY "Users can create reviews" ON resource_reviews FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can update their own pending reviews' AND tablename = 'resource_reviews') THEN
+    CREATE POLICY "Users can update their own pending reviews" ON resource_reviews FOR UPDATE USING (auth.uid()::text = user_id AND status = 'pending');
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can delete their own reviews' AND tablename = 'resource_reviews') THEN
+    CREATE POLICY "Users can delete their own reviews" ON resource_reviews FOR DELETE USING (auth.uid()::text = user_id);
+  END IF;
 
-CREATE POLICY "Users can view their own reviews"
-  ON resource_reviews FOR SELECT
-  USING (auth.uid()::text = user_id);
+  -- Review votes policies
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view review votes' AND tablename = 'resource_review_votes') THEN
+    CREATE POLICY "Public can view review votes" ON resource_review_votes FOR SELECT USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can vote on reviews' AND tablename = 'resource_review_votes') THEN
+    CREATE POLICY "Users can vote on reviews" ON resource_review_votes FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can change their vote' AND tablename = 'resource_review_votes') THEN
+    CREATE POLICY "Users can change their vote" ON resource_review_votes FOR UPDATE USING (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can remove their vote' AND tablename = 'resource_review_votes') THEN
+    CREATE POLICY "Users can remove their vote" ON resource_review_votes FOR DELETE USING (auth.uid()::text = user_id);
+  END IF;
 
-CREATE POLICY "Users can create reviews"
-  ON resource_reviews FOR INSERT
-  WITH CHECK (auth.uid()::text = user_id);
+  -- Comments policies
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view approved comments' AND tablename = 'resource_comments') THEN
+    CREATE POLICY "Public can view approved comments" ON resource_comments FOR SELECT USING (status = 'approved');
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can view their own comments' AND tablename = 'resource_comments') THEN
+    CREATE POLICY "Users can view their own comments" ON resource_comments FOR SELECT USING (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can create comments' AND tablename = 'resource_comments') THEN
+    CREATE POLICY "Users can create comments" ON resource_comments FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can update their own comments' AND tablename = 'resource_comments') THEN
+    CREATE POLICY "Users can update their own comments" ON resource_comments FOR UPDATE USING (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can delete their own comments' AND tablename = 'resource_comments') THEN
+    CREATE POLICY "Users can delete their own comments" ON resource_comments FOR DELETE USING (auth.uid()::text = user_id);
+  END IF;
 
-CREATE POLICY "Users can update their own pending reviews"
-  ON resource_reviews FOR UPDATE
-  USING (auth.uid()::text = user_id AND status = 'pending');
-
-CREATE POLICY "Users can delete their own reviews"
-  ON resource_reviews FOR DELETE
-  USING (auth.uid()::text = user_id);
-
--- Review votes
-CREATE POLICY "Public can view review votes"
-  ON resource_review_votes FOR SELECT
-  USING (TRUE);
-
-CREATE POLICY "Users can vote on reviews"
-  ON resource_review_votes FOR INSERT
-  WITH CHECK (auth.uid()::text = user_id);
-
-CREATE POLICY "Users can change their vote"
-  ON resource_review_votes FOR UPDATE
-  USING (auth.uid()::text = user_id);
-
-CREATE POLICY "Users can remove their vote"
-  ON resource_review_votes FOR DELETE
-  USING (auth.uid()::text = user_id);
-
--- Comments: Public can see approved (login required to post)
-CREATE POLICY "Public can view approved comments"
-  ON resource_comments FOR SELECT
-  USING (status = 'approved');
-
-CREATE POLICY "Users can view their own comments"
-  ON resource_comments FOR SELECT
-  USING (auth.uid()::text = user_id);
-
-CREATE POLICY "Users can create comments"
-  ON resource_comments FOR INSERT
-  WITH CHECK (auth.uid()::text = user_id);
-
-CREATE POLICY "Users can update their own comments"
-  ON resource_comments FOR UPDATE
-  USING (auth.uid()::text = user_id);
-
-CREATE POLICY "Users can delete their own comments"
-  ON resource_comments FOR DELETE
-  USING (auth.uid()::text = user_id);
-
--- Comment likes
-CREATE POLICY "Public can view comment likes"
-  ON resource_comment_likes FOR SELECT
-  USING (TRUE);
-
-CREATE POLICY "Users can like comments"
-  ON resource_comment_likes FOR INSERT
-  WITH CHECK (auth.uid()::text = user_id);
-
-CREATE POLICY "Users can unlike comments"
-  ON resource_comment_likes FOR DELETE
-  USING (auth.uid()::text = user_id);
+  -- Comment likes policies
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view comment likes' AND tablename = 'resource_comment_likes') THEN
+    CREATE POLICY "Public can view comment likes" ON resource_comment_likes FOR SELECT USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can like comments' AND tablename = 'resource_comment_likes') THEN
+    CREATE POLICY "Users can like comments" ON resource_comment_likes FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can unlike comments' AND tablename = 'resource_comment_likes') THEN
+    CREATE POLICY "Users can unlike comments" ON resource_comment_likes FOR DELETE USING (auth.uid()::text = user_id);
+  END IF;
+END $$;
 
 -- =============================================================================
 -- FUNCTIONS: Update denormalized counts
@@ -241,6 +232,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resource_reviews_count ON resource_reviews;
 CREATE TRIGGER trigger_resource_reviews_count
   AFTER INSERT OR UPDATE OR DELETE ON resource_reviews
   FOR EACH ROW
@@ -273,6 +265,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resource_comments_count ON resource_comments;
 CREATE TRIGGER trigger_resource_comments_count
   AFTER INSERT OR UPDATE OR DELETE ON resource_comments
   FOR EACH ROW
@@ -319,6 +312,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_review_helpful_count ON resource_review_votes;
 CREATE TRIGGER trigger_review_helpful_count
   AFTER INSERT OR UPDATE OR DELETE ON resource_review_votes
   FOR EACH ROW
@@ -341,6 +335,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_comment_likes_count ON resource_comment_likes;
 CREATE TRIGGER trigger_comment_likes_count
   AFTER INSERT OR DELETE ON resource_comment_likes
   FOR EACH ROW
@@ -358,6 +353,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resource_reviews_updated_at ON resource_reviews;
 CREATE TRIGGER trigger_resource_reviews_updated_at
   BEFORE UPDATE ON resource_reviews
   FOR EACH ROW
@@ -371,6 +367,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resource_comments_updated_at ON resource_comments;
 CREATE TRIGGER trigger_resource_comments_updated_at
   BEFORE UPDATE ON resource_comments
   FOR EACH ROW

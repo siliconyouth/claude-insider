@@ -251,25 +251,28 @@ SELECT
 ALTER TABLE ai_pipeline_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE ai_operation_queue ENABLE ROW LEVEL SECURITY;
 
--- Settings: anyone can read, only admins can modify
-CREATE POLICY "ai_pipeline_settings_select" ON ai_pipeline_settings
-  FOR SELECT USING (true);
-
-CREATE POLICY "ai_pipeline_settings_update" ON ai_pipeline_settings
-  FOR UPDATE USING (true);
-
-CREATE POLICY "ai_pipeline_settings_insert" ON ai_pipeline_settings
-  FOR INSERT WITH CHECK (true);
-
--- Queue: anyone can read, authenticated users can insert/update
-CREATE POLICY "ai_operation_queue_select" ON ai_operation_queue
-  FOR SELECT USING (true);
-
-CREATE POLICY "ai_operation_queue_insert" ON ai_operation_queue
-  FOR INSERT WITH CHECK (true);
-
-CREATE POLICY "ai_operation_queue_update" ON ai_operation_queue
-  FOR UPDATE USING (true);
+-- AI Pipeline policies (defensive creation)
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'ai_pipeline_settings_select' AND tablename = 'ai_pipeline_settings') THEN
+    CREATE POLICY "ai_pipeline_settings_select" ON ai_pipeline_settings FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'ai_pipeline_settings_update' AND tablename = 'ai_pipeline_settings') THEN
+    CREATE POLICY "ai_pipeline_settings_update" ON ai_pipeline_settings FOR UPDATE USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'ai_pipeline_settings_insert' AND tablename = 'ai_pipeline_settings') THEN
+    CREATE POLICY "ai_pipeline_settings_insert" ON ai_pipeline_settings FOR INSERT WITH CHECK (true);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'ai_operation_queue_select' AND tablename = 'ai_operation_queue') THEN
+    CREATE POLICY "ai_operation_queue_select" ON ai_operation_queue FOR SELECT USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'ai_operation_queue_insert' AND tablename = 'ai_operation_queue') THEN
+    CREATE POLICY "ai_operation_queue_insert" ON ai_operation_queue FOR INSERT WITH CHECK (true);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'ai_operation_queue_update' AND tablename = 'ai_operation_queue') THEN
+    CREATE POLICY "ai_operation_queue_update" ON ai_operation_queue FOR UPDATE USING (true);
+  END IF;
+END $$;
 
 -- Grant permissions
 GRANT SELECT ON ai_pipeline_settings TO authenticated;

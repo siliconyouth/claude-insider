@@ -4,18 +4,31 @@
 -- Impact: Minor query performance improvements (~5%)
 
 -- ============================================
--- USER ACHIEVEMENTS INDEXES
+-- USER ACHIEVEMENTS INDEXES (defensive)
 -- ============================================
 
--- Index for activity feed ordering (ORDER BY unlocked_at DESC)
--- Used in: app/api/dashboard/activity/route.ts
-CREATE INDEX IF NOT EXISTS idx_user_achievements_unlocked_at
-ON public.user_achievements(unlocked_at DESC);
+DO $$
+BEGIN
+  -- Check if unlocked_at column exists before creating indexes
+  IF EXISTS (
+    SELECT FROM information_schema.columns
+    WHERE table_schema = 'public'
+    AND table_name = 'user_achievements'
+    AND column_name = 'unlocked_at'
+  ) THEN
+    -- Index for activity feed ordering (ORDER BY unlocked_at DESC)
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_user_achievements_unlocked_at
+             ON public.user_achievements(unlocked_at DESC)';
+    RAISE NOTICE 'Created: idx_user_achievements_unlocked_at';
 
--- Composite index for user's recent achievements
--- Optimizes: SELECT ... WHERE user_id = $1 ORDER BY unlocked_at DESC LIMIT N
-CREATE INDEX IF NOT EXISTS idx_user_achievements_user_unlocked
-ON public.user_achievements(user_id, unlocked_at DESC);
+    -- Composite index for user's recent achievements
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_user_achievements_user_unlocked
+             ON public.user_achievements(user_id, unlocked_at DESC)';
+    RAISE NOTICE 'Created: idx_user_achievements_user_unlocked';
+  ELSE
+    RAISE NOTICE 'Skipped user_achievements indexes (unlocked_at column does not exist)';
+  END IF;
+END $$;
 
 -- ============================================
 -- SECURITY LOGS INDEXES (defensive - may not exist in dev)
@@ -44,12 +57,18 @@ END $$;
 
 DO $$
 BEGIN
-  IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = 'ai_conversations') THEN
+  -- Check if table AND column exist before creating index
+  IF EXISTS (
+    SELECT FROM information_schema.columns
+    WHERE table_schema = 'public'
+    AND table_name = 'ai_conversations'
+    AND column_name = 'model'
+  ) THEN
     EXECUTE 'CREATE INDEX IF NOT EXISTS idx_ai_conversations_user_model
              ON public.ai_conversations(user_id, model, updated_at DESC)';
     RAISE NOTICE 'Created: idx_ai_conversations_user_model';
   ELSE
-    RAISE NOTICE 'Skipped ai_conversations indexes (table does not exist)';
+    RAISE NOTICE 'Skipped ai_conversations index (model column does not exist)';
   END IF;
 END $$;
 

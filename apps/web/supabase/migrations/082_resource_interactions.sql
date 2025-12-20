@@ -94,41 +94,41 @@ ALTER TABLE resource_ratings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resource_views ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resource_view_stats_daily ENABLE ROW LEVEL SECURITY;
 
--- Favorites: Users can see their own, create, delete
-CREATE POLICY "Users can view their own favorites"
-  ON resource_favorites FOR SELECT
-  USING (TRUE);
+-- Policies (defensive creation)
+DO $$
+BEGIN
+  -- Favorites policies
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can view their own favorites' AND tablename = 'resource_favorites') THEN
+    CREATE POLICY "Users can view their own favorites" ON resource_favorites FOR SELECT USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can create their own favorites' AND tablename = 'resource_favorites') THEN
+    CREATE POLICY "Users can create their own favorites" ON resource_favorites FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can delete their own favorites' AND tablename = 'resource_favorites') THEN
+    CREATE POLICY "Users can delete their own favorites" ON resource_favorites FOR DELETE USING (auth.uid()::text = user_id);
+  END IF;
 
-CREATE POLICY "Users can create their own favorites"
-  ON resource_favorites FOR INSERT
-  WITH CHECK (auth.uid()::text = user_id);
+  -- Ratings policies
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view ratings' AND tablename = 'resource_ratings') THEN
+    CREATE POLICY "Public can view ratings" ON resource_ratings FOR SELECT USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can create their own ratings' AND tablename = 'resource_ratings') THEN
+    CREATE POLICY "Users can create their own ratings" ON resource_ratings FOR INSERT WITH CHECK (auth.uid()::text = user_id);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Users can update their own ratings' AND tablename = 'resource_ratings') THEN
+    CREATE POLICY "Users can update their own ratings" ON resource_ratings FOR UPDATE USING (auth.uid()::text = user_id);
+  END IF;
 
-CREATE POLICY "Users can delete their own favorites"
-  ON resource_favorites FOR DELETE
-  USING (auth.uid()::text = user_id);
+  -- Views policies
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Anyone can create views' AND tablename = 'resource_views') THEN
+    CREATE POLICY "Anyone can create views" ON resource_views FOR INSERT WITH CHECK (TRUE);
+  END IF;
 
--- Ratings: Public read, authenticated write
-CREATE POLICY "Public can view ratings"
-  ON resource_ratings FOR SELECT
-  USING (TRUE);
-
-CREATE POLICY "Users can create their own ratings"
-  ON resource_ratings FOR INSERT
-  WITH CHECK (auth.uid()::text = user_id);
-
-CREATE POLICY "Users can update their own ratings"
-  ON resource_ratings FOR UPDATE
-  USING (auth.uid()::text = user_id);
-
--- Views: Insert only (no read for regular users)
-CREATE POLICY "Anyone can create views"
-  ON resource_views FOR INSERT
-  WITH CHECK (TRUE);
-
--- View stats: Public read
-CREATE POLICY "Public can view stats"
-  ON resource_view_stats_daily FOR SELECT
-  USING (TRUE);
+  -- View stats policies
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view stats' AND tablename = 'resource_view_stats_daily') THEN
+    CREATE POLICY "Public can view stats" ON resource_view_stats_daily FOR SELECT USING (TRUE);
+  END IF;
+END $$;
 
 -- =============================================================================
 -- FUNCTIONS: Update denormalized counts
@@ -153,6 +153,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resource_favorites_count ON resource_favorites;
 CREATE TRIGGER trigger_resource_favorites_count
   AFTER INSERT OR DELETE ON resource_favorites
   FOR EACH ROW
@@ -181,6 +182,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resource_ratings_stats ON resource_ratings;
 CREATE TRIGGER trigger_resource_ratings_stats
   AFTER INSERT OR UPDATE OR DELETE ON resource_ratings
   FOR EACH ROW
@@ -197,6 +199,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resource_views_count ON resource_views;
 CREATE TRIGGER trigger_resource_views_count
   AFTER INSERT ON resource_views
   FOR EACH ROW
@@ -238,6 +241,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resource_ratings_updated_at ON resource_ratings;
 CREATE TRIGGER trigger_resource_ratings_updated_at
   BEFORE UPDATE ON resource_ratings
   FOR EACH ROW

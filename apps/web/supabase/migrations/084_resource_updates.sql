@@ -253,12 +253,16 @@ CREATE TRIGGER trigger_update_changelog_count
 ALTER TABLE resource_update_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resource_changelog ENABLE ROW LEVEL SECURITY;
 
--- Service role bypass (app uses service_role key)
-CREATE POLICY "service_role_update_jobs" ON resource_update_jobs
-  FOR ALL USING (true);
-
-CREATE POLICY "service_role_changelog" ON resource_changelog
-  FOR ALL USING (true);
+-- Service role bypass (app uses service_role key) - defensive
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_update_jobs' AND tablename = 'resource_update_jobs') THEN
+    CREATE POLICY "service_role_update_jobs" ON resource_update_jobs FOR ALL USING (true);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_changelog' AND tablename = 'resource_changelog') THEN
+    CREATE POLICY "service_role_changelog" ON resource_changelog FOR ALL USING (true);
+  END IF;
+END $$;
 
 -- ============================================================================
 -- COMMENTS

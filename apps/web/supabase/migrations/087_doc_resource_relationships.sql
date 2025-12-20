@@ -240,24 +240,25 @@ ALTER TABLE doc_resource_relationships ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resource_relationships ENABLE ROW LEVEL SECURITY;
 ALTER TABLE relationship_analysis_jobs ENABLE ROW LEVEL SECURITY;
 
--- Public read for active relationships
-CREATE POLICY "Public can view active doc-resource relationships"
-  ON doc_resource_relationships FOR SELECT
-  USING (is_active = TRUE);
-
-CREATE POLICY "Public can view active resource relationships"
-  ON resource_relationships FOR SELECT
-  USING (is_active = TRUE);
-
--- Service role full access
-CREATE POLICY "service_role_doc_resource_rel" ON doc_resource_relationships
-  FOR ALL USING (TRUE);
-
-CREATE POLICY "service_role_resource_rel" ON resource_relationships
-  FOR ALL USING (TRUE);
-
-CREATE POLICY "service_role_rel_jobs" ON relationship_analysis_jobs
-  FOR ALL USING (TRUE);
+-- Relationship policies (defensive creation)
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view active doc-resource relationships' AND tablename = 'doc_resource_relationships') THEN
+    CREATE POLICY "Public can view active doc-resource relationships" ON doc_resource_relationships FOR SELECT USING (is_active = TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'Public can view active resource relationships' AND tablename = 'resource_relationships') THEN
+    CREATE POLICY "Public can view active resource relationships" ON resource_relationships FOR SELECT USING (is_active = TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_doc_resource_rel' AND tablename = 'doc_resource_relationships') THEN
+    CREATE POLICY "service_role_doc_resource_rel" ON doc_resource_relationships FOR ALL USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_resource_rel' AND tablename = 'resource_relationships') THEN
+    CREATE POLICY "service_role_resource_rel" ON resource_relationships FOR ALL USING (TRUE);
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_policies WHERE policyname = 'service_role_rel_jobs' AND tablename = 'relationship_analysis_jobs') THEN
+    CREATE POLICY "service_role_rel_jobs" ON relationship_analysis_jobs FOR ALL USING (TRUE);
+  END IF;
+END $$;
 
 -- ============================================================================
 -- HELPER FUNCTIONS

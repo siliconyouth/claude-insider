@@ -199,22 +199,33 @@ ALTER TABLE resource_tags ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resource_authors ENABLE ROW LEVEL SECURITY;
 ALTER TABLE resource_alternatives ENABLE ROW LEVEL SECURITY;
 
--- Public read access for published resources
-CREATE POLICY "Public can view published resources"
-  ON resources FOR SELECT
-  USING (is_published = TRUE);
+-- Public read access for published resources (defensive)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT FROM pg_policies WHERE policyname = 'Public can view published resources' AND tablename = 'resources'
+  ) THEN
+    CREATE POLICY "Public can view published resources" ON resources FOR SELECT USING (is_published = TRUE);
+  END IF;
 
-CREATE POLICY "Public can view resource tags"
-  ON resource_tags FOR SELECT
-  USING (TRUE);
+  IF NOT EXISTS (
+    SELECT FROM pg_policies WHERE policyname = 'Public can view resource tags' AND tablename = 'resource_tags'
+  ) THEN
+    CREATE POLICY "Public can view resource tags" ON resource_tags FOR SELECT USING (TRUE);
+  END IF;
 
-CREATE POLICY "Public can view resource authors"
-  ON resource_authors FOR SELECT
-  USING (TRUE);
+  IF NOT EXISTS (
+    SELECT FROM pg_policies WHERE policyname = 'Public can view resource authors' AND tablename = 'resource_authors'
+  ) THEN
+    CREATE POLICY "Public can view resource authors" ON resource_authors FOR SELECT USING (TRUE);
+  END IF;
 
-CREATE POLICY "Public can view resource alternatives"
-  ON resource_alternatives FOR SELECT
-  USING (TRUE);
+  IF NOT EXISTS (
+    SELECT FROM pg_policies WHERE policyname = 'Public can view resource alternatives' AND tablename = 'resource_alternatives'
+  ) THEN
+    CREATE POLICY "Public can view resource alternatives" ON resource_alternatives FOR SELECT USING (TRUE);
+  END IF;
+END $$;
 
 -- =============================================================================
 -- TRIGGER: Update updated_at timestamp
@@ -228,6 +239,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS trigger_resources_updated_at ON resources;
 CREATE TRIGGER trigger_resources_updated_at
   BEFORE UPDATE ON resources
   FOR EACH ROW
