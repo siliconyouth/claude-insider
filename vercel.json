@@ -43,6 +43,10 @@
   ],
   "crons": [
     {
+      "path": "/api/cron",
+      "schedule": "0 10 * * *"
+    },
+    {
       "path": "/api/cron/discover",
       "schedule": "0 */6 * * *"
     },
