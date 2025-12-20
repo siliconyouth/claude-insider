@@ -6,12 +6,17 @@
     "url": "https://discord.gg/anthropic",
     "category": "community",
     "subcategory": "Discord",
-    "tags": ["discord", "official", "chat", "support"],
+    "tags": [
+      "discord",
+      "official",
+      "chat",
+      "support"
+    ],
     "status": "official",
     "featured": true,
     "featuredReason": "Official Community",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "reddit-claudeai",
@@ -20,24 +25,34 @@
     "url": "https://www.reddit.com/r/ClaudeAI/",
     "category": "community",
     "subcategory": "Forum",
-    "tags": ["reddit", "forum", "discussions", "tips"],
+    "tags": [
+      "reddit",
+      "forum",
+      "discussions",
+      "tips"
+    ],
     "status": "community",
     "featured": true,
     "featuredReason": "Active Community",
     "addedDate": "2024-01-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "github-discussions",
-    "title": "Claude Code GitHub Discussions",
-    "description": "Official discussions for Claude Code on GitHub.",
-    "url": "https://github.com/anthropics/claude-code/discussions",
+    "title": "Claude Code GitHub Issues",
+    "description": "Official issue tracker for Claude Code on GitHub - bug reports, feature requests.",
+    "url": "https://github.com/anthropics/claude-code/issues",
     "category": "community",
     "subcategory": "Forum",
-    "tags": ["github", "discussions", "official", "support"],
+    "tags": [
+      "github",
+      "issues",
+      "official",
+      "support"
+    ],
     "status": "official",
     "addedDate": "2024-02-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "hacker-news",
@@ -46,22 +61,33 @@
     "url": "https://hn.algolia.com/?q=claude+anthropic",
     "category": "community",
     "subcategory": "Forum",
-    "tags": ["hackernews", "tech", "discussions", "news"],
+    "tags": [
+      "hackernews",
+      "tech",
+      "discussions",
+      "news"
+    ],
     "status": "community",
     "addedDate": "2024-03-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "twitter-anthropic",
-    "title": "Anthropic on Twitter/X",
+    "title": "Anthropic on X",
     "description": "Official Anthropic account for news and updates.",
-    "url": "https://twitter.com/AnthropicAI",
+    "url": "https://x.com/AnthropicAI",
     "category": "community",
     "subcategory": "Social Media",
-    "tags": ["twitter", "official", "news", "updates"],
+    "tags": [
+      "x",
+      "twitter",
+      "official",
+      "news",
+      "updates"
+    ],
     "status": "official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "linkedin-anthropic",
@@ -70,10 +96,15 @@
     "url": "https://www.linkedin.com/company/anthropic/",
     "category": "community",
     "subcategory": "Social Media",
-    "tags": ["linkedin", "official", "professional", "jobs"],
+    "tags": [
+      "linkedin",
+      "official",
+      "professional",
+      "jobs"
+    ],
     "status": "official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "ai-news-newsletter",
@@ -82,10 +113,15 @@
     "url": "https://www.deeplearning.ai/the-batch/",
     "category": "community",
     "subcategory": "Newsletter",
-    "tags": ["newsletter", "ai-news", "weekly", "deeplearning"],
+    "tags": [
+      "newsletter",
+      "ai-news",
+      "weekly",
+      "deeplearning"
+    ],
     "status": "community",
     "addedDate": "2024-04-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "tldr-ai",
@@ -94,10 +130,15 @@
     "url": "https://tldr.tech/ai",
     "category": "community",
     "subcategory": "Newsletter",
-    "tags": ["newsletter", "ai-news", "daily", "tldr"],
+    "tags": [
+      "newsletter",
+      "ai-news",
+      "daily",
+      "tldr"
+    ],
     "status": "community",
     "addedDate": "2024-05-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "youtube-anthropic",
@@ -106,10 +147,15 @@
     "url": "https://www.youtube.com/@anthropic-ai",
     "category": "community",
     "subcategory": "Video",
-    "tags": ["youtube", "official", "videos", "tutorials"],
+    "tags": [
+      "youtube",
+      "official",
+      "videos",
+      "tutorials"
+    ],
     "status": "official",
     "addedDate": "2024-02-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "ai-explained",
@@ -118,10 +164,15 @@
     "url": "https://www.youtube.com/@aiexplained-official",
     "category": "community",
     "subcategory": "Video",
-    "tags": ["youtube", "explanations", "tutorials", "learning"],
+    "tags": [
+      "youtube",
+      "explanations",
+      "tutorials",
+      "learning"
+    ],
     "status": "community",
     "addedDate": "2024-06-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "stack-overflow",
@@ -130,10 +181,15 @@
     "url": "https://stackoverflow.com/questions/tagged/claude-ai",
     "category": "community",
     "subcategory": "Q&A",
-    "tags": ["stackoverflow", "qa", "programming", "help"],
+    "tags": [
+      "stackoverflow",
+      "qa",
+      "programming",
+      "help"
+    ],
     "status": "community",
     "addedDate": "2024-03-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "cursor-directory-community",
@@ -142,9 +198,14 @@
     "url": "https://cursor.directory",
     "category": "community",
     "subcategory": "Directory",
-    "tags": ["cursor", "community", "rules", "directory"],
+    "tags": [
+      "cursor",
+      "community",
+      "rules",
+      "directory"
+    ],
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]

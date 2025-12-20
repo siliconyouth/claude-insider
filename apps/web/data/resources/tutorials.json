@@ -6,21 +6,26 @@
     "url": "https://github.com/anthropics/courses",
     "category": "tutorials",
     "subcategory": "Official",
-    "tags": ["official", "courses", "learning", "beginner"],
+    "tags": [
+      "official",
+      "courses",
+      "learning",
+      "beginner"
+    ],
     "difficulty": "beginner",
     "status": "official",
     "github": {
       "owner": "anthropics",
       "repo": "courses",
-      "stars": 8200,
-      "forks": 750,
-      "lastUpdated": "2024-12-10",
+      "stars": 17824,
+      "forks": 1669,
+      "lastUpdated": "2025-11-13",
       "language": "Jupyter Notebook"
     },
     "featured": true,
     "featuredReason": "Official Courses",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "deeplearning-claude",
@@ -29,13 +34,18 @@
     "url": "https://www.deeplearning.ai/courses/",
     "category": "tutorials",
     "subcategory": "Course",
-    "tags": ["deeplearning", "professional", "courses", "certification"],
+    "tags": [
+      "deeplearning",
+      "professional",
+      "courses",
+      "certification"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "featured": true,
     "featuredReason": "Industry Standard",
     "addedDate": "2024-02-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rag-from-scratch",
@@ -44,19 +54,24 @@
     "url": "https://github.com/langchain-ai/rag-from-scratch",
     "category": "tutorials",
     "subcategory": "RAG",
-    "tags": ["rag", "tutorial", "langchain", "beginner"],
+    "tags": [
+      "rag",
+      "tutorial",
+      "langchain",
+      "beginner"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "github": {
       "owner": "langchain-ai",
       "repo": "rag-from-scratch",
-      "stars": 3500,
-      "forks": 600,
-      "lastUpdated": "2024-12-08",
-      "language": "Python"
+      "stars": 6097,
+      "forks": 1613,
+      "lastUpdated": "2025-06-26",
+      "language": "Jupyter Notebook"
     },
     "addedDate": "2024-03-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "building-ai-apps",
@@ -65,11 +80,16 @@
     "url": "https://docs.anthropic.com/en/docs/build-with-claude",
     "category": "tutorials",
     "subcategory": "Official",
-    "tags": ["building", "production", "official", "guide"],
+    "tags": [
+      "building",
+      "production",
+      "official",
+      "guide"
+    ],
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-01-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "tool-use-tutorial",
@@ -78,11 +98,16 @@
     "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
     "category": "tutorials",
     "subcategory": "Official",
-    "tags": ["tool-use", "function-calling", "official", "api"],
+    "tags": [
+      "tool-use",
+      "function-calling",
+      "official",
+      "api"
+    ],
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-02-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "streaming-tutorial",
@@ -91,11 +116,16 @@
     "url": "https://docs.anthropic.com/en/api/streaming",
     "category": "tutorials",
     "subcategory": "Official",
-    "tags": ["streaming", "real-time", "api", "official"],
+    "tags": [
+      "streaming",
+      "real-time",
+      "api",
+      "official"
+    ],
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-03-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "langchain-crash-course",
@@ -104,24 +134,34 @@
     "url": "https://python.langchain.com/docs/tutorials/",
     "category": "tutorials",
     "subcategory": "Framework",
-    "tags": ["langchain", "crash-course", "python", "beginner"],
+    "tags": [
+      "langchain",
+      "crash-course",
+      "python",
+      "beginner"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-04-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "llamaindex-tutorial",
     "title": "LlamaIndex Getting Started",
     "description": "Build your first RAG application with LlamaIndex.",
-    "url": "https://docs.llamaindex.ai/en/stable/getting_started/",
+    "url": "https://docs.llamaindex.ai/en/latest/getting_started/",
     "category": "tutorials",
     "subcategory": "Framework",
-    "tags": ["llamaindex", "rag", "getting-started", "python"],
+    "tags": [
+      "llamaindex",
+      "rag",
+      "getting-started",
+      "python"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-04-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "claude-code-tutorial",
@@ -130,13 +170,18 @@
     "url": "https://docs.anthropic.com/en/docs/claude-code/getting-started",
     "category": "tutorials",
     "subcategory": "Official",
-    "tags": ["claude-code", "cli", "getting-started", "official"],
+    "tags": [
+      "claude-code",
+      "cli",
+      "getting-started",
+      "official"
+    ],
     "difficulty": "beginner",
     "status": "official",
     "featured": true,
     "featuredReason": "Essential",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-server-tutorial",
@@ -145,11 +190,16 @@
     "url": "https://modelcontextprotocol.io/docs/server/",
     "category": "tutorials",
     "subcategory": "MCP",
-    "tags": ["mcp", "servers", "building", "typescript"],
+    "tags": [
+      "mcp",
+      "servers",
+      "building",
+      "typescript"
+    ],
     "difficulty": "advanced",
     "status": "official",
     "addedDate": "2024-06-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "vector-databases",
@@ -158,11 +208,16 @@
     "url": "https://docs.anthropic.com/en/docs/build-with-claude/retrieval",
     "category": "tutorials",
     "subcategory": "RAG",
-    "tags": ["vector-db", "embeddings", "rag", "storage"],
+    "tags": [
+      "vector-db",
+      "embeddings",
+      "rag",
+      "storage"
+    ],
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-05-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "fine-tuning-guide",
@@ -171,10 +226,15 @@
     "url": "https://docs.anthropic.com/en/docs/fine-tuning",
     "category": "tutorials",
     "subcategory": "Advanced",
-    "tags": ["fine-tuning", "training", "data", "advanced"],
+    "tags": [
+      "fine-tuning",
+      "training",
+      "data",
+      "advanced"
+    ],
     "difficulty": "expert",
     "status": "official",
     "addedDate": "2024-07-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]

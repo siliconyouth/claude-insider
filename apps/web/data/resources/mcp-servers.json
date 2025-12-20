@@ -6,12 +6,17 @@
     "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
     "category": "mcp-servers",
     "subcategory": "Official",
-    "tags": ["filesystem", "files", "official", "core"],
+    "tags": [
+      "filesystem",
+      "files",
+      "official",
+      "core"
+    ],
     "status": "official",
     "version": "1.0.0",
     "namespace": "mcp/filesystem",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-git",
@@ -20,42 +25,57 @@
     "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
     "category": "mcp-servers",
     "subcategory": "Official",
-    "tags": ["git", "version-control", "official", "core"],
+    "tags": [
+      "git",
+      "version-control",
+      "official",
+      "core"
+    ],
     "status": "official",
     "version": "1.0.0",
     "namespace": "mcp/git",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-postgres",
     "title": "PostgreSQL MCP Server",
     "description": "Official MCP server for PostgreSQL database operations.",
-    "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+    "url": "https://www.npmjs.com/package/@modelcontextprotocol/server-postgres",
     "category": "mcp-servers",
     "subcategory": "Official",
-    "tags": ["postgres", "database", "sql", "official"],
+    "tags": [
+      "postgres",
+      "database",
+      "sql",
+      "official"
+    ],
     "status": "official",
     "version": "1.0.0",
-    "namespace": "mcp/postgres",
+    "namespace": "@modelcontextprotocol/server-postgres",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-puppeteer",
     "title": "Puppeteer MCP Server",
     "description": "Official MCP server for browser automation with Puppeteer.",
-    "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer",
+    "url": "https://www.npmjs.com/package/@modelcontextprotocol/server-puppeteer",
     "category": "mcp-servers",
     "subcategory": "Official",
-    "tags": ["puppeteer", "browser", "automation", "official"],
+    "tags": [
+      "puppeteer",
+      "browser",
+      "automation",
+      "official"
+    ],
     "status": "official",
     "version": "1.0.0",
-    "namespace": "mcp/puppeteer",
+    "namespace": "@modelcontextprotocol/server-puppeteer",
     "featured": true,
     "featuredReason": "Official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-fetch",
@@ -64,12 +84,17 @@
     "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
     "category": "mcp-servers",
     "subcategory": "Official",
-    "tags": ["fetch", "http", "web", "official"],
+    "tags": [
+      "fetch",
+      "http",
+      "web",
+      "official"
+    ],
     "status": "official",
     "version": "1.0.0",
     "namespace": "mcp/fetch",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "awesome-mcp-servers",
@@ -78,34 +103,43 @@
     "url": "https://github.com/punkpeye/awesome-mcp-servers",
     "category": "mcp-servers",
     "subcategory": "Curated List",
-    "tags": ["awesome-list", "curated", "community"],
+    "tags": [
+      "awesome-list",
+      "curated",
+      "community"
+    ],
     "status": "community",
     "github": {
       "owner": "punkpeye",
       "repo": "awesome-mcp-servers",
-      "stars": 15000,
-      "forks": 900,
-      "lastUpdated": "2024-12-11",
+      "stars": 77035,
+      "forks": 6548,
+      "lastUpdated": "2025-12-15",
       "language": "Markdown"
     },
     "featured": true,
     "featuredReason": "Comprehensive List",
     "addedDate": "2024-06-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-sqlite",
     "title": "SQLite MCP Server",
     "description": "MCP server for SQLite database operations.",
-    "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite",
+    "url": "https://www.npmjs.com/package/@modelcontextprotocol/server-sqlite",
     "category": "mcp-servers",
     "subcategory": "Database",
-    "tags": ["sqlite", "database", "sql", "official"],
+    "tags": [
+      "sqlite",
+      "database",
+      "sql",
+      "official"
+    ],
     "status": "official",
     "version": "1.0.0",
-    "namespace": "mcp/sqlite",
+    "namespace": "@modelcontextprotocol/server-sqlite",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-memory",
@@ -114,89 +148,127 @@
     "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
     "category": "mcp-servers",
     "subcategory": "Storage",
-    "tags": ["memory", "knowledge-graph", "persistence", "official"],
+    "tags": [
+      "memory",
+      "knowledge-graph",
+      "persistence",
+      "official"
+    ],
     "status": "official",
     "version": "1.0.0",
     "namespace": "mcp/memory",
     "addedDate": "2024-03-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-github",
     "title": "GitHub MCP Server",
     "description": "MCP server for GitHub API operations - repos, issues, PRs.",
-    "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
+    "url": "https://www.npmjs.com/package/@modelcontextprotocol/server-github",
     "category": "mcp-servers",
     "subcategory": "API",
-    "tags": ["github", "api", "issues", "pull-requests"],
+    "tags": [
+      "github",
+      "api",
+      "issues",
+      "pull-requests"
+    ],
     "status": "official",
     "version": "1.0.0",
-    "namespace": "mcp/github",
+    "namespace": "@modelcontextprotocol/server-github",
     "addedDate": "2024-02-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-slack",
     "title": "Slack MCP Server",
     "description": "MCP server for Slack workspace interactions.",
-    "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+    "url": "https://www.npmjs.com/package/@modelcontextprotocol/server-slack",
     "category": "mcp-servers",
     "subcategory": "API",
-    "tags": ["slack", "chat", "messaging", "api"],
+    "tags": [
+      "slack",
+      "chat",
+      "messaging",
+      "api"
+    ],
     "status": "official",
     "version": "1.0.0",
-    "namespace": "mcp/slack",
+    "namespace": "@modelcontextprotocol/server-slack",
     "addedDate": "2024-04-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-brave-search",
     "title": "Brave Search MCP Server",
     "description": "MCP server for web search using Brave Search API.",
-    "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
+    "url": "https://www.npmjs.com/package/@anthropic-ai/claude-mcp-brave-search",
     "category": "mcp-servers",
     "subcategory": "Search",
-    "tags": ["search", "brave", "web", "api"],
+    "tags": [
+      "search",
+      "brave",
+      "web",
+      "api"
+    ],
     "status": "official",
     "version": "1.0.0",
-    "namespace": "mcp/brave-search",
+    "namespace": "@anthropic-ai/claude-mcp-brave-search",
     "addedDate": "2024-05-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "firecrawl-mcp",
     "title": "Firecrawl MCP Server",
     "description": "MCP server for web scraping and crawling with Firecrawl.",
-    "url": "https://github.com/mendableai/firecrawl-mcp-server",
+    "url": "https://github.com/firecrawl/firecrawl-mcp-server",
     "category": "mcp-servers",
     "subcategory": "Web",
-    "tags": ["scraping", "crawling", "firecrawl", "web"],
+    "tags": [
+      "scraping",
+      "crawling",
+      "firecrawl",
+      "web"
+    ],
     "status": "community",
     "github": {
-      "owner": "mendableai",
+      "owner": "firecrawl",
       "repo": "firecrawl-mcp-server",
-      "stars": 2500,
-      "forks": 180,
-      "lastUpdated": "2024-12-10",
-      "language": "TypeScript"
+      "stars": 5098,
+      "forks": 558,
+      "lastUpdated": "2025-12-18",
+      "language": "JavaScript"
     },
     "featured": true,
     "featuredReason": "Popular",
     "addedDate": "2024-07-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-notion",
     "title": "Notion MCP Server",
     "description": "MCP server for Notion workspace operations.",
-    "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/notion",
+    "url": "https://github.com/makenotion/notion-mcp-server",
     "category": "mcp-servers",
     "subcategory": "Productivity",
-    "tags": ["notion", "notes", "productivity", "api"],
-    "status": "community",
-    "version": "0.1.0",
+    "tags": [
+      "notion",
+      "notes",
+      "productivity",
+      "api"
+    ],
+    "status": "official",
+    "version": "1.0.0",
+    "github": {
+      "owner": "makenotion",
+      "repo": "notion-mcp-server",
+      "stars": 1200,
+      "forks": 150,
+      "lastUpdated": "2025-12-15",
+      "language": "TypeScript"
+    },
     "addedDate": "2024-08-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-linear",
@@ -205,18 +277,23 @@
     "url": "https://github.com/jerhadf/linear-mcp-server",
     "category": "mcp-servers",
     "subcategory": "Project Management",
-    "tags": ["linear", "issues", "project-management", "api"],
+    "tags": [
+      "linear",
+      "issues",
+      "project-management",
+      "api"
+    ],
     "status": "community",
     "github": {
       "owner": "jerhadf",
       "repo": "linear-mcp-server",
-      "stars": 500,
-      "forks": 45,
-      "lastUpdated": "2024-12-08",
-      "language": "TypeScript"
+      "stars": 339,
+      "forks": 60,
+      "lastUpdated": "2025-05-01",
+      "language": "JavaScript"
     },
     "addedDate": "2024-09-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-docker",
@@ -225,17 +302,21 @@
     "url": "https://github.com/ckreiling/mcp-server-docker",
     "category": "mcp-servers",
     "subcategory": "DevOps",
-    "tags": ["docker", "containers", "devops"],
+    "tags": [
+      "docker",
+      "containers",
+      "devops"
+    ],
     "status": "community",
     "github": {
       "owner": "ckreiling",
       "repo": "mcp-server-docker",
-      "stars": 350,
-      "forks": 30,
-      "lastUpdated": "2024-12-05",
-      "language": "TypeScript"
+      "stars": 658,
+      "forks": 87,
+      "lastUpdated": "2025-06-05",
+      "language": "Python"
     },
     "addedDate": "2024-10-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]

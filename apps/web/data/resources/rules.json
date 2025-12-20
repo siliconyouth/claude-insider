@@ -6,12 +6,17 @@
     "url": "https://cursor.directory",
     "category": "rules",
     "subcategory": "Directory",
-    "tags": ["cursor", "rules", "community", "directory"],
+    "tags": [
+      "cursor",
+      "rules",
+      "community",
+      "directory"
+    ],
     "status": "community",
     "featured": true,
     "featuredReason": "Most Popular",
     "addedDate": "2024-06-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "awesome-cursorrules",
@@ -20,20 +25,25 @@
     "url": "https://github.com/PatrickJS/awesome-cursorrules",
     "category": "rules",
     "subcategory": "Curated List",
-    "tags": ["awesome-list", "cursor", "rules", "curated"],
+    "tags": [
+      "awesome-list",
+      "cursor",
+      "rules",
+      "curated"
+    ],
     "status": "community",
     "github": {
       "owner": "PatrickJS",
       "repo": "awesome-cursorrules",
-      "stars": 36000,
-      "forks": 2400,
-      "lastUpdated": "2024-12-11",
-      "language": "Markdown"
+      "stars": 36300,
+      "forks": 3083,
+      "lastUpdated": "2025-10-24",
+      "language": "MDX"
     },
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-07-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-nextjs",
@@ -42,11 +52,16 @@
     "url": "https://cursor.directory/nextjs",
     "category": "rules",
     "subcategory": "Framework",
-    "tags": ["nextjs", "react", "typescript", "app-router"],
+    "tags": [
+      "nextjs",
+      "react",
+      "typescript",
+      "app-router"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-react",
@@ -55,11 +70,16 @@
     "url": "https://cursor.directory/react",
     "category": "rules",
     "subcategory": "Framework",
-    "tags": ["react", "hooks", "javascript", "frontend"],
+    "tags": [
+      "react",
+      "hooks",
+      "javascript",
+      "frontend"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-typescript",
@@ -68,11 +88,15 @@
     "url": "https://cursor.directory/typescript",
     "category": "rules",
     "subcategory": "Language",
-    "tags": ["typescript", "types", "strict-mode"],
+    "tags": [
+      "typescript",
+      "types",
+      "strict-mode"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-python",
@@ -81,11 +105,16 @@
     "url": "https://cursor.directory/python",
     "category": "rules",
     "subcategory": "Language",
-    "tags": ["python", "type-hints", "pep8", "backend"],
+    "tags": [
+      "python",
+      "type-hints",
+      "pep8",
+      "backend"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-vue",
@@ -94,11 +123,16 @@
     "url": "https://cursor.directory/vue",
     "category": "rules",
     "subcategory": "Framework",
-    "tags": ["vue", "composition-api", "typescript", "frontend"],
+    "tags": [
+      "vue",
+      "composition-api",
+      "typescript",
+      "frontend"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-08-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-svelte",
@@ -107,11 +141,16 @@
     "url": "https://cursor.directory/svelte",
     "category": "rules",
     "subcategory": "Framework",
-    "tags": ["svelte", "sveltekit", "runes", "frontend"],
+    "tags": [
+      "svelte",
+      "sveltekit",
+      "runes",
+      "frontend"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-08-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-fastapi",
@@ -120,11 +159,17 @@
     "url": "https://cursor.directory/fastapi",
     "category": "rules",
     "subcategory": "Framework",
-    "tags": ["fastapi", "python", "api", "async", "backend"],
+    "tags": [
+      "fastapi",
+      "python",
+      "api",
+      "async",
+      "backend"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-go",
@@ -133,11 +178,16 @@
     "url": "https://cursor.directory/go",
     "category": "rules",
     "subcategory": "Language",
-    "tags": ["go", "golang", "backend", "systems"],
+    "tags": [
+      "go",
+      "golang",
+      "backend",
+      "systems"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-rust",
@@ -146,11 +196,16 @@
     "url": "https://cursor.directory/rust",
     "category": "rules",
     "subcategory": "Language",
-    "tags": ["rust", "systems", "memory-safety", "performance"],
+    "tags": [
+      "rust",
+      "systems",
+      "memory-safety",
+      "performance"
+    ],
     "difficulty": "advanced",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-tailwind",
@@ -159,11 +214,16 @@
     "url": "https://cursor.directory/tailwind",
     "category": "rules",
     "subcategory": "Styling",
-    "tags": ["tailwind", "css", "styling", "utility-first"],
+    "tags": [
+      "tailwind",
+      "css",
+      "styling",
+      "utility-first"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-09-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-testing",
@@ -172,11 +232,17 @@
     "url": "https://cursor.directory/testing",
     "category": "rules",
     "subcategory": "Testing",
-    "tags": ["testing", "jest", "vitest", "playwright", "tdd"],
+    "tags": [
+      "testing",
+      "jest",
+      "vitest",
+      "playwright",
+      "tdd"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-10-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "rules-documentation",
@@ -185,10 +251,15 @@
     "url": "https://cursor.directory/documentation",
     "category": "rules",
     "subcategory": "Documentation",
-    "tags": ["documentation", "jsdoc", "markdown", "readme"],
+    "tags": [
+      "documentation",
+      "jsdoc",
+      "markdown",
+      "readme"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-10-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]

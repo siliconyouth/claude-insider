@@ -6,12 +6,17 @@
     "url": "https://docs.anthropic.com/en/prompt-library",
     "category": "prompts",
     "subcategory": "Official",
-    "tags": ["official", "templates", "library", "examples"],
+    "tags": [
+      "official",
+      "templates",
+      "library",
+      "examples"
+    ],
     "status": "official",
     "featured": true,
     "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "awesome-chatgpt-prompts",
@@ -20,20 +25,25 @@
     "url": "https://github.com/f/awesome-chatgpt-prompts",
     "category": "prompts",
     "subcategory": "Role-Based",
-    "tags": ["awesome-list", "roles", "personas", "creative"],
+    "tags": [
+      "awesome-list",
+      "roles",
+      "personas",
+      "creative"
+    ],
     "status": "community",
     "github": {
       "owner": "f",
       "repo": "awesome-chatgpt-prompts",
-      "stars": 139000,
-      "forks": 18000,
-      "lastUpdated": "2024-12-11",
-      "language": "Markdown"
+      "stars": 139915,
+      "forks": 18558,
+      "lastUpdated": "2025-12-20",
+      "language": "TypeScript"
     },
     "featured": true,
     "featuredReason": "Most Popular",
     "addedDate": "2024-02-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "prompts-chat",
@@ -42,10 +52,15 @@
     "url": "https://prompts.chat",
     "category": "prompts",
     "subcategory": "Directory",
-    "tags": ["directory", "interactive", "testing", "web"],
+    "tags": [
+      "directory",
+      "interactive",
+      "testing",
+      "web"
+    ],
     "status": "community",
     "addedDate": "2024-02-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "system-prompts-coding",
@@ -54,21 +69,26 @@
     "url": "https://github.com/danielmiessler/fabric",
     "category": "prompts",
     "subcategory": "System Prompts",
-    "tags": ["system-prompts", "coding", "code-review", "generation"],
+    "tags": [
+      "system-prompts",
+      "coding",
+      "code-review",
+      "generation"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "github": {
       "owner": "danielmiessler",
       "repo": "fabric",
-      "stars": 28000,
-      "forks": 2800,
-      "lastUpdated": "2024-12-11",
-      "language": "Python"
+      "stars": 35324,
+      "forks": 3606,
+      "lastUpdated": "2025-12-20",
+      "language": "Go"
     },
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-04-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "chain-of-thought",
@@ -77,11 +97,16 @@
     "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/chain-of-thought",
     "category": "prompts",
     "subcategory": "Technique",
-    "tags": ["chain-of-thought", "reasoning", "technique", "official"],
+    "tags": [
+      "chain-of-thought",
+      "reasoning",
+      "technique",
+      "official"
+    ],
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-01-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "prompt-senior-developer",
@@ -90,11 +115,16 @@
     "url": "https://cursor.directory/senior-developer",
     "category": "prompts",
     "subcategory": "Role-Based",
-    "tags": ["persona", "developer", "code-review", "mentoring"],
+    "tags": [
+      "persona",
+      "developer",
+      "code-review",
+      "mentoring"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-05-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "prompt-code-reviewer",
@@ -103,11 +133,16 @@
     "url": "https://cursor.directory/code-reviewer",
     "category": "prompts",
     "subcategory": "Role-Based",
-    "tags": ["persona", "code-review", "security", "performance"],
+    "tags": [
+      "persona",
+      "code-review",
+      "security",
+      "performance"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-05-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "prompt-technical-writer",
@@ -116,11 +151,16 @@
     "url": "https://cursor.directory/technical-writer",
     "category": "prompts",
     "subcategory": "Role-Based",
-    "tags": ["persona", "documentation", "readme", "api-docs"],
+    "tags": [
+      "persona",
+      "documentation",
+      "readme",
+      "api-docs"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-06-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "few-shot-learning",
@@ -129,11 +169,16 @@
     "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/few-shot-examples",
     "category": "prompts",
     "subcategory": "Technique",
-    "tags": ["few-shot", "examples", "learning", "technique"],
+    "tags": [
+      "few-shot",
+      "examples",
+      "learning",
+      "technique"
+    ],
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-03-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "structured-outputs",
@@ -142,24 +187,34 @@
     "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
     "category": "prompts",
     "subcategory": "Technique",
-    "tags": ["structured-output", "json", "xml", "formatting"],
+    "tags": [
+      "structured-output",
+      "json",
+      "xml",
+      "formatting"
+    ],
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-03-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "self-reflection",
     "title": "Self-Reflection Prompting",
     "description": "Techniques for making Claude review and improve its own responses.",
-    "url": "https://www.anthropic.com/research/constitutional-ai",
+    "url": "https://www.anthropic.com/news/claudes-character",
     "category": "prompts",
     "subcategory": "Technique",
-    "tags": ["self-reflection", "improvement", "constitutional-ai"],
+    "tags": [
+      "self-reflection",
+      "improvement",
+      "character",
+      "prompting"
+    ],
     "difficulty": "advanced",
     "status": "official",
     "addedDate": "2024-04-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "prompt-security-expert",
@@ -168,10 +223,15 @@
     "url": "https://cursor.directory/security",
     "category": "prompts",
     "subcategory": "Role-Based",
-    "tags": ["persona", "security", "audit", "vulnerabilities"],
+    "tags": [
+      "persona",
+      "security",
+      "audit",
+      "vulnerabilities"
+    ],
     "difficulty": "advanced",
     "status": "community",
     "addedDate": "2024-07-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]

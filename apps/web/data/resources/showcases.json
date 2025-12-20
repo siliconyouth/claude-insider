@@ -6,20 +6,25 @@
     "url": "https://www.claudeinsider.com",
     "category": "showcases",
     "subcategory": "Documentation",
-    "tags": ["documentation", "nextjs", "typescript", "open-source"],
+    "tags": [
+      "documentation",
+      "nextjs",
+      "typescript",
+      "open-source"
+    ],
     "status": "community",
     "github": {
       "owner": "siliconyouth",
       "repo": "claude-insider",
-      "stars": 50,
-      "forks": 5,
-      "lastUpdated": "2024-12-11",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-20",
       "language": "TypeScript"
     },
     "featured": true,
     "featuredReason": "Built with Claude",
     "addedDate": "2024-12-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "v0-vercel",
@@ -28,12 +33,17 @@
     "url": "https://v0.dev",
     "category": "showcases",
     "subcategory": "Production",
-    "tags": ["vercel", "ui-generation", "react", "production"],
+    "tags": [
+      "vercel",
+      "ui-generation",
+      "react",
+      "production"
+    ],
     "status": "community",
     "featured": true,
     "featuredReason": "Industry Example",
     "addedDate": "2024-03-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "perplexity",
@@ -42,10 +52,15 @@
     "url": "https://www.perplexity.ai",
     "category": "showcases",
     "subcategory": "Production",
-    "tags": ["search", "ai-search", "production", "startup"],
+    "tags": [
+      "search",
+      "ai-search",
+      "production",
+      "startup"
+    ],
     "status": "community",
     "addedDate": "2024-01-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "quora-poe",
@@ -54,10 +69,15 @@
     "url": "https://poe.com",
     "category": "showcases",
     "subcategory": "Production",
-    "tags": ["chat", "multi-model", "production", "quora"],
+    "tags": [
+      "chat",
+      "multi-model",
+      "production",
+      "quora"
+    ],
     "status": "community",
     "addedDate": "2024-02-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "notion-ai",
@@ -66,10 +86,15 @@
     "url": "https://www.notion.so/product/ai",
     "category": "showcases",
     "subcategory": "Production",
-    "tags": ["notion", "writing", "productivity", "production"],
+    "tags": [
+      "notion",
+      "writing",
+      "productivity",
+      "production"
+    ],
     "status": "community",
     "addedDate": "2024-02-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "duckduckgo-ai",
@@ -78,10 +103,15 @@
     "url": "https://duckduckgo.com/aichat",
     "category": "showcases",
     "subcategory": "Production",
-    "tags": ["privacy", "search", "chat", "production"],
+    "tags": [
+      "privacy",
+      "search",
+      "chat",
+      "production"
+    ],
     "status": "community",
     "addedDate": "2024-04-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "replit-agent",
@@ -90,10 +120,15 @@
     "url": "https://replit.com/ai",
     "category": "showcases",
     "subcategory": "Production",
-    "tags": ["replit", "ide", "coding", "agent"],
+    "tags": [
+      "replit",
+      "ide",
+      "coding",
+      "agent"
+    ],
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "codeium-windsurf",
@@ -102,10 +137,15 @@
     "url": "https://codeium.com/windsurf",
     "category": "showcases",
     "subcategory": "Production",
-    "tags": ["ide", "codeium", "coding", "production"],
+    "tags": [
+      "ide",
+      "codeium",
+      "coding",
+      "production"
+    ],
     "status": "community",
     "addedDate": "2024-11-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "chatgpt-alternative",
@@ -114,10 +154,15 @@
     "url": "https://claude.ai",
     "category": "showcases",
     "subcategory": "Official",
-    "tags": ["official", "chat", "web", "interface"],
+    "tags": [
+      "official",
+      "chat",
+      "web",
+      "interface"
+    ],
     "status": "official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "obsidian-copilot",
@@ -126,18 +171,23 @@
     "url": "https://github.com/logancyang/obsidian-copilot",
     "category": "showcases",
     "subcategory": "Plugin",
-    "tags": ["obsidian", "notes", "plugin", "productivity"],
+    "tags": [
+      "obsidian",
+      "notes",
+      "plugin",
+      "productivity"
+    ],
     "status": "community",
     "github": {
       "owner": "logancyang",
       "repo": "obsidian-copilot",
-      "stars": 4500,
-      "forks": 300,
-      "lastUpdated": "2024-12-09",
+      "stars": 5805,
+      "forks": 509,
+      "lastUpdated": "2025-12-19",
       "language": "TypeScript"
     },
     "addedDate": "2024-05-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "aichat",
@@ -146,18 +196,23 @@
     "url": "https://github.com/sigoden/aichat",
     "category": "showcases",
     "subcategory": "Open Source",
-    "tags": ["cli", "terminal", "rag", "rust"],
+    "tags": [
+      "cli",
+      "terminal",
+      "rag",
+      "rust"
+    ],
     "status": "community",
     "github": {
       "owner": "sigoden",
       "repo": "aichat",
-      "stars": 5200,
-      "forks": 400,
-      "lastUpdated": "2024-12-11",
+      "stars": 8878,
+      "forks": 584,
+      "lastUpdated": "2025-12-01",
       "language": "Rust"
     },
     "addedDate": "2024-06-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "khoj",
@@ -166,17 +221,22 @@
     "url": "https://github.com/khoj-ai/khoj",
     "category": "showcases",
     "subcategory": "Open Source",
-    "tags": ["self-hosted", "second-brain", "search", "python"],
+    "tags": [
+      "self-hosted",
+      "second-brain",
+      "search",
+      "python"
+    ],
     "status": "community",
     "github": {
       "owner": "khoj-ai",
       "repo": "khoj",
-      "stars": 17000,
-      "forks": 900,
-      "lastUpdated": "2024-12-11",
+      "stars": 31966,
+      "forks": 1895,
+      "lastUpdated": "2025-12-08",
       "language": "Python"
     },
     "addedDate": "2024-07-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]

@@ -3,15 +3,20 @@
     "id": "anthropic-docs",
     "title": "Anthropic Documentation",
     "description": "Official documentation for Claude API, including guides, tutorials, and API reference.",
-    "url": "https://docs.anthropic.com",
+    "url": "https://docs.anthropic.com/en/docs",
     "category": "official",
     "subcategory": "Documentation",
-    "tags": ["documentation", "api", "official", "guides"],
+    "tags": [
+      "documentation",
+      "api",
+      "official",
+      "guides"
+    ],
     "status": "official",
     "featured": true,
     "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "claude-code-docs",
@@ -20,12 +25,17 @@
     "url": "https://docs.anthropic.com/en/docs/claude-code",
     "category": "official",
     "subcategory": "Documentation",
-    "tags": ["claude-code", "cli", "official", "documentation"],
+    "tags": [
+      "claude-code",
+      "cli",
+      "official",
+      "documentation"
+    ],
     "status": "official",
     "featured": true,
     "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "mcp-docs",
@@ -34,34 +44,44 @@
     "url": "https://modelcontextprotocol.io",
     "category": "official",
     "subcategory": "Documentation",
-    "tags": ["mcp", "protocol", "official", "documentation"],
+    "tags": [
+      "mcp",
+      "protocol",
+      "official",
+      "documentation"
+    ],
     "status": "official",
     "featured": true,
     "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "anthropic-cookbook",
-    "title": "Anthropic Cookbook",
+    "title": "Claude Cookbooks",
     "description": "Code examples and recipes for using Claude API effectively.",
-    "url": "https://github.com/anthropics/anthropic-cookbook",
+    "url": "https://github.com/anthropics/claude-cookbooks",
     "category": "official",
     "subcategory": "Examples",
-    "tags": ["examples", "cookbook", "official", "python"],
+    "tags": [
+      "examples",
+      "cookbook",
+      "official",
+      "python"
+    ],
     "status": "official",
     "github": {
       "owner": "anthropics",
-      "repo": "anthropic-cookbook",
-      "stars": 8500,
-      "forks": 1200,
-      "lastUpdated": "2024-12-10",
-      "language": "Python"
+      "repo": "claude-cookbooks",
+      "stars": 29725,
+      "forks": 3020,
+      "lastUpdated": "2025-12-19",
+      "language": "Jupyter Notebook"
     },
     "featured": true,
     "featuredReason": "Official Examples",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "claude-code-repo",
@@ -70,20 +90,25 @@
     "url": "https://github.com/anthropics/claude-code",
     "category": "official",
     "subcategory": "Repository",
-    "tags": ["claude-code", "github", "official", "cli"],
+    "tags": [
+      "claude-code",
+      "github",
+      "official",
+      "cli"
+    ],
     "status": "official",
     "github": {
       "owner": "anthropics",
       "repo": "claude-code",
-      "stars": 45000,
-      "forks": 3500,
-      "lastUpdated": "2024-12-11",
-      "language": "TypeScript"
+      "stars": 47257,
+      "forks": 3318,
+      "lastUpdated": "2025-12-19",
+      "language": "Shell"
     },
     "featured": true,
     "featuredReason": "Official Repository",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "anthropic-sdk-python",
@@ -92,18 +117,23 @@
     "url": "https://github.com/anthropics/anthropic-sdk-python",
     "category": "official",
     "subcategory": "SDK",
-    "tags": ["sdk", "python", "official", "api"],
+    "tags": [
+      "sdk",
+      "python",
+      "official",
+      "api"
+    ],
     "status": "official",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-python",
-      "stars": 5800,
-      "forks": 650,
-      "lastUpdated": "2024-12-10",
+      "stars": 2528,
+      "forks": 412,
+      "lastUpdated": "2025-12-20",
       "language": "Python"
     },
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "anthropic-sdk-typescript",
@@ -112,18 +142,24 @@
     "url": "https://github.com/anthropics/anthropic-sdk-typescript",
     "category": "official",
     "subcategory": "SDK",
-    "tags": ["sdk", "typescript", "javascript", "official", "api"],
+    "tags": [
+      "sdk",
+      "typescript",
+      "javascript",
+      "official",
+      "api"
+    ],
     "status": "official",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-typescript",
-      "stars": 3200,
-      "forks": 380,
-      "lastUpdated": "2024-12-10",
+      "stars": 1431,
+      "forks": 180,
+      "lastUpdated": "2025-12-20",
       "language": "TypeScript"
     },
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "prompt-engineering-guide",
@@ -132,10 +168,15 @@
     "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",
     "category": "official",
     "subcategory": "Documentation",
-    "tags": ["prompting", "guide", "official", "best-practices"],
+    "tags": [
+      "prompting",
+      "guide",
+      "official",
+      "best-practices"
+    ],
     "status": "official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "anthropic-blog",
@@ -144,10 +185,15 @@
     "url": "https://www.anthropic.com/research",
     "category": "official",
     "subcategory": "Blog",
-    "tags": ["blog", "research", "official", "news"],
+    "tags": [
+      "blog",
+      "research",
+      "official",
+      "news"
+    ],
     "status": "official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "claude-console",
@@ -156,9 +202,14 @@
     "url": "https://console.anthropic.com",
     "category": "official",
     "subcategory": "Tool",
-    "tags": ["console", "api", "official", "dashboard"],
+    "tags": [
+      "console",
+      "api",
+      "official",
+      "dashboard"
+    ],
     "status": "official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]

@@ -6,12 +6,17 @@
     "url": "https://cursor.com",
     "category": "tools",
     "subcategory": "IDE",
-    "tags": ["ide", "editor", "vscode", "ai-coding"],
+    "tags": [
+      "ide",
+      "editor",
+      "vscode",
+      "ai-coding"
+    ],
     "status": "community",
     "featured": true,
     "featuredReason": "Most Popular",
     "addedDate": "2024-01-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "continue-dev",
@@ -20,43 +25,53 @@
     "url": "https://github.com/continuedev/continue",
     "category": "tools",
     "subcategory": "IDE Plugin",
-    "tags": ["vscode", "jetbrains", "ai-coding", "open-source"],
+    "tags": [
+      "vscode",
+      "jetbrains",
+      "ai-coding",
+      "open-source"
+    ],
     "status": "community",
     "github": {
       "owner": "continuedev",
       "repo": "continue",
-      "stars": 21000,
-      "forks": 1800,
-      "lastUpdated": "2024-12-11",
+      "stars": 30422,
+      "forks": 3926,
+      "lastUpdated": "2025-12-20",
       "language": "TypeScript"
     },
     "featured": true,
     "featuredReason": "Editor's Pick",
     "addedDate": "2024-02-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "aider",
     "title": "Aider",
     "description": "AI pair programming in your terminal. Works with Claude and other LLMs.",
-    "url": "https://github.com/paul-gauthier/aider",
+    "url": "https://github.com/Aider-AI/aider",
     "category": "tools",
     "subcategory": "CLI",
-    "tags": ["cli", "pair-programming", "terminal", "python"],
+    "tags": [
+      "cli",
+      "pair-programming",
+      "terminal",
+      "python"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "github": {
-      "owner": "paul-gauthier",
+      "owner": "Aider-AI",
       "repo": "aider",
-      "stars": 25000,
-      "forks": 2200,
-      "lastUpdated": "2024-12-11",
+      "stars": 39076,
+      "forks": 3749,
+      "lastUpdated": "2025-12-18",
       "language": "Python"
     },
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-03-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "cline-vscode",
@@ -65,20 +80,25 @@
     "url": "https://github.com/cline/cline",
     "category": "tools",
     "subcategory": "IDE Plugin",
-    "tags": ["vscode", "autonomous", "ai-agent", "browser"],
+    "tags": [
+      "vscode",
+      "autonomous",
+      "ai-agent",
+      "browser"
+    ],
     "status": "community",
     "github": {
       "owner": "cline",
       "repo": "cline",
-      "stars": 35000,
-      "forks": 3000,
-      "lastUpdated": "2024-12-11",
+      "stars": 56273,
+      "forks": 5461,
+      "lastUpdated": "2025-12-20",
       "language": "TypeScript"
     },
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-06-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "zed-editor",
@@ -87,30 +107,40 @@
     "url": "https://zed.dev",
     "category": "tools",
     "subcategory": "IDE",
-    "tags": ["ide", "editor", "rust", "multiplayer"],
+    "tags": [
+      "ide",
+      "editor",
+      "rust",
+      "multiplayer"
+    ],
     "status": "community",
     "github": {
       "owner": "zed-industries",
       "repo": "zed",
-      "stars": 52000,
-      "forks": 3200,
-      "lastUpdated": "2024-12-11",
+      "stars": 71785,
+      "forks": 6333,
+      "lastUpdated": "2025-12-20",
       "language": "Rust"
     },
     "addedDate": "2024-04-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "windsurf",
     "title": "Windsurf",
     "description": "AI-powered IDE by Codeium with Claude integration.",
-    "url": "https://codeium.com/windsurf",
+    "url": "https://windsurf.com/editor",
     "category": "tools",
     "subcategory": "IDE",
-    "tags": ["ide", "editor", "ai-coding", "codeium"],
+    "tags": [
+      "ide",
+      "editor",
+      "ai-coding",
+      "codeium"
+    ],
     "status": "community",
     "addedDate": "2024-11-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "neovim-avante",
@@ -119,19 +149,24 @@
     "url": "https://github.com/yetone/avante.nvim",
     "category": "tools",
     "subcategory": "IDE Plugin",
-    "tags": ["neovim", "vim", "plugin", "lua"],
+    "tags": [
+      "neovim",
+      "vim",
+      "plugin",
+      "lua"
+    ],
     "difficulty": "advanced",
     "status": "community",
     "github": {
       "owner": "yetone",
       "repo": "avante.nvim",
-      "stars": 12000,
-      "forks": 500,
-      "lastUpdated": "2024-12-10",
+      "stars": 16744,
+      "forks": 762,
+      "lastUpdated": "2025-12-19",
       "language": "Lua"
     },
     "addedDate": "2024-08-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "claude-cli-unofficial",
@@ -140,42 +175,56 @@
     "url": "https://github.com/anthropics/courses",
     "category": "tools",
     "subcategory": "CLI",
-    "tags": ["cli", "terminal", "conversations"],
+    "tags": [
+      "cli",
+      "terminal",
+      "conversations"
+    ],
     "status": "community",
     "addedDate": "2024-05-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
-    "id": "raycast-claude",
-    "title": "Raycast Claude Extension",
-    "description": "Access Claude directly from Raycast launcher on macOS.",
-    "url": "https://www.raycast.com/anthropic/claude",
+    "id": "raycast-ai",
+    "title": "Raycast AI",
+    "description": "Access Claude and other AI models directly from Raycast launcher on macOS.",
+    "url": "https://www.raycast.com/ai",
     "category": "tools",
     "subcategory": "Desktop App",
-    "tags": ["raycast", "macos", "launcher", "productivity"],
+    "tags": [
+      "raycast",
+      "macos",
+      "launcher",
+      "productivity"
+    ],
     "status": "community",
     "addedDate": "2024-02-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "chatbox",
     "title": "Chatbox",
     "description": "Cross-platform desktop client for multiple AI providers including Claude.",
-    "url": "https://github.com/Bin-Huang/chatbox",
+    "url": "https://github.com/chatboxai/chatbox",
     "category": "tools",
     "subcategory": "Desktop App",
-    "tags": ["desktop", "cross-platform", "chat", "electron"],
+    "tags": [
+      "desktop",
+      "cross-platform",
+      "chat",
+      "electron"
+    ],
     "status": "community",
     "github": {
-      "owner": "Bin-Huang",
+      "owner": "chatboxai",
       "repo": "chatbox",
-      "stars": 25000,
-      "forks": 2500,
-      "lastUpdated": "2024-12-10",
+      "stars": 37828,
+      "forks": 3832,
+      "lastUpdated": "2025-11-28",
       "language": "TypeScript"
     },
     "addedDate": "2024-03-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "typing-mind",
@@ -184,10 +233,15 @@
     "url": "https://www.typingmind.com",
     "category": "tools",
     "subcategory": "Web App",
-    "tags": ["web-app", "ui", "chat", "personas"],
+    "tags": [
+      "web-app",
+      "ui",
+      "chat",
+      "personas"
+    ],
     "status": "community",
     "addedDate": "2024-01-20",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "open-webui",
@@ -196,17 +250,22 @@
     "url": "https://github.com/open-webui/open-webui",
     "category": "tools",
     "subcategory": "Web App",
-    "tags": ["self-hosted", "web-ui", "docker", "open-source"],
+    "tags": [
+      "self-hosted",
+      "web-ui",
+      "docker",
+      "open-source"
+    ],
     "status": "community",
     "github": {
       "owner": "open-webui",
       "repo": "open-webui",
-      "stars": 55000,
-      "forks": 6500,
-      "lastUpdated": "2024-12-11",
-      "language": "Python"
+      "stars": 118273,
+      "forks": 16657,
+      "lastUpdated": "2025-12-16",
+      "language": "Svelte"
     },
     "addedDate": "2024-04-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]

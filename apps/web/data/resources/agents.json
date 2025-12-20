@@ -6,20 +6,25 @@
     "url": "https://github.com/Shubhamsaboo/awesome-llm-apps",
     "category": "agents",
     "subcategory": "Curated List",
-    "tags": ["awesome-list", "agents", "rag", "llm-apps"],
+    "tags": [
+      "awesome-list",
+      "agents",
+      "rag",
+      "llm-apps"
+    ],
     "status": "community",
     "github": {
       "owner": "Shubhamsaboo",
       "repo": "awesome-llm-apps",
-      "stars": 82300,
-      "forks": 8500,
-      "lastUpdated": "2024-12-11",
+      "stars": 83502,
+      "forks": 11817,
+      "lastUpdated": "2025-12-19",
       "language": "Python"
     },
     "featured": true,
     "featuredReason": "Most Popular",
     "addedDate": "2024-03-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "langchain",
@@ -28,21 +33,26 @@
     "url": "https://github.com/langchain-ai/langchain",
     "category": "agents",
     "subcategory": "Framework",
-    "tags": ["framework", "chains", "agents", "python"],
+    "tags": [
+      "framework",
+      "chains",
+      "agents",
+      "python"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "github": {
       "owner": "langchain-ai",
       "repo": "langchain",
-      "stars": 98000,
-      "forks": 15000,
-      "lastUpdated": "2024-12-11",
+      "stars": 122298,
+      "forks": 20159,
+      "lastUpdated": "2025-12-20",
       "language": "Python"
     },
     "featured": true,
     "featuredReason": "Industry Standard",
     "addedDate": "2024-01-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "llamaindex",
@@ -51,19 +61,24 @@
     "url": "https://github.com/run-llama/llama_index",
     "category": "agents",
     "subcategory": "Framework",
-    "tags": ["framework", "rag", "indexing", "python"],
+    "tags": [
+      "framework",
+      "rag",
+      "indexing",
+      "python"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "github": {
       "owner": "run-llama",
       "repo": "llama_index",
-      "stars": 38000,
-      "forks": 5200,
-      "lastUpdated": "2024-12-11",
+      "stars": 45908,
+      "forks": 6650,
+      "lastUpdated": "2025-12-19",
       "language": "Python"
     },
     "addedDate": "2024-02-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "autogen",
@@ -72,19 +87,24 @@
     "url": "https://github.com/microsoft/autogen",
     "category": "agents",
     "subcategory": "Multi-Agent",
-    "tags": ["multi-agent", "microsoft", "collaboration", "python"],
+    "tags": [
+      "multi-agent",
+      "microsoft",
+      "collaboration",
+      "python"
+    ],
     "difficulty": "advanced",
     "status": "community",
     "github": {
       "owner": "microsoft",
       "repo": "autogen",
-      "stars": 35000,
-      "forks": 5000,
-      "lastUpdated": "2024-12-11",
+      "stars": 52686,
+      "forks": 8005,
+      "lastUpdated": "2025-10-08",
       "language": "Python"
     },
     "addedDate": "2024-04-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "crewai",
@@ -93,21 +113,26 @@
     "url": "https://github.com/crewAIInc/crewAI",
     "category": "agents",
     "subcategory": "Multi-Agent",
-    "tags": ["multi-agent", "crew", "roles", "python"],
+    "tags": [
+      "multi-agent",
+      "crew",
+      "roles",
+      "python"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "github": {
       "owner": "crewAIInc",
       "repo": "crewAI",
-      "stars": 25000,
-      "forks": 3200,
-      "lastUpdated": "2024-12-11",
+      "stars": 41584,
+      "forks": 5570,
+      "lastUpdated": "2025-12-19",
       "language": "Python"
     },
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-05-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "phidata",
@@ -116,19 +141,24 @@
     "url": "https://github.com/phidatahq/phidata",
     "category": "agents",
     "subcategory": "Framework",
-    "tags": ["agents", "memory", "tools", "python"],
+    "tags": [
+      "agents",
+      "memory",
+      "tools",
+      "python"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "github": {
       "owner": "phidatahq",
       "repo": "phidata",
-      "stars": 18000,
-      "forks": 2200,
-      "lastUpdated": "2024-12-11",
+      "stars": 36160,
+      "forks": 4778,
+      "lastUpdated": "2025-12-20",
       "language": "Python"
     },
     "addedDate": "2024-06-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "smolagents",
@@ -137,19 +167,24 @@
     "url": "https://github.com/huggingface/smolagents",
     "category": "agents",
     "subcategory": "Framework",
-    "tags": ["huggingface", "minimal", "agents", "python"],
+    "tags": [
+      "huggingface",
+      "minimal",
+      "agents",
+      "python"
+    ],
     "difficulty": "beginner",
     "status": "community",
     "github": {
       "owner": "huggingface",
       "repo": "smolagents",
-      "stars": 12000,
-      "forks": 900,
-      "lastUpdated": "2024-12-11",
+      "stars": 24498,
+      "forks": 2196,
+      "lastUpdated": "2025-12-18",
       "language": "Python"
     },
     "addedDate": "2024-11-01",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "pydantic-ai",
@@ -158,19 +193,24 @@
     "url": "https://github.com/pydantic/pydantic-ai",
     "category": "agents",
     "subcategory": "Framework",
-    "tags": ["pydantic", "type-safe", "validation", "python"],
+    "tags": [
+      "pydantic",
+      "type-safe",
+      "validation",
+      "python"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "github": {
       "owner": "pydantic",
       "repo": "pydantic-ai",
-      "stars": 8500,
-      "forks": 600,
-      "lastUpdated": "2024-12-11",
+      "stars": 13890,
+      "forks": 1489,
+      "lastUpdated": "2025-12-20",
       "language": "Python"
     },
     "addedDate": "2024-11-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "semantic-kernel",
@@ -179,19 +219,25 @@
     "url": "https://github.com/microsoft/semantic-kernel",
     "category": "agents",
     "subcategory": "Framework",
-    "tags": ["microsoft", "sdk", "enterprise", "dotnet", "python"],
+    "tags": [
+      "microsoft",
+      "sdk",
+      "enterprise",
+      "dotnet",
+      "python"
+    ],
     "difficulty": "intermediate",
     "status": "community",
     "github": {
       "owner": "microsoft",
       "repo": "semantic-kernel",
-      "stars": 23000,
-      "forks": 3400,
-      "lastUpdated": "2024-12-11",
+      "stars": 26885,
+      "forks": 4394,
+      "lastUpdated": "2025-12-16",
       "language": "C#"
     },
     "addedDate": "2024-03-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "haystack",
@@ -200,19 +246,24 @@
     "url": "https://github.com/deepset-ai/haystack",
     "category": "agents",
     "subcategory": "RAG",
-    "tags": ["rag", "pipelines", "nlp", "python"],
+    "tags": [
+      "rag",
+      "pipelines",
+      "nlp",
+      "python"
+    ],
     "difficulty": "advanced",
     "status": "community",
     "github": {
       "owner": "deepset-ai",
       "repo": "haystack",
-      "stars": 18500,
-      "forks": 2000,
-      "lastUpdated": "2024-12-11",
-      "language": "Python"
+      "stars": 23679,
+      "forks": 2531,
+      "lastUpdated": "2025-12-19",
+      "language": "MDX"
     },
     "addedDate": "2024-02-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "dspy",
@@ -221,19 +272,24 @@
     "url": "https://github.com/stanfordnlp/dspy",
     "category": "agents",
     "subcategory": "Framework",
-    "tags": ["stanford", "programming", "modules", "python"],
+    "tags": [
+      "stanford",
+      "programming",
+      "modules",
+      "python"
+    ],
     "difficulty": "advanced",
     "status": "community",
     "github": {
       "owner": "stanfordnlp",
       "repo": "dspy",
-      "stars": 22000,
-      "forks": 1700,
-      "lastUpdated": "2024-12-11",
+      "stars": 30885,
+      "forks": 2483,
+      "lastUpdated": "2025-12-19",
       "language": "Python"
     },
     "addedDate": "2024-04-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   },
   {
     "id": "swarm",
@@ -242,18 +298,23 @@
     "url": "https://github.com/openai/swarm",
     "category": "agents",
     "subcategory": "Multi-Agent",
-    "tags": ["openai", "swarm", "multi-agent", "experimental"],
+    "tags": [
+      "openai",
+      "swarm",
+      "multi-agent",
+      "experimental"
+    ],
     "difficulty": "advanced",
     "status": "community",
     "github": {
       "owner": "openai",
       "repo": "swarm",
-      "stars": 20000,
-      "forks": 2100,
-      "lastUpdated": "2024-12-10",
+      "stars": 20711,
+      "forks": 2215,
+      "lastUpdated": "2025-03-11",
       "language": "Python"
     },
     "addedDate": "2024-10-15",
-    "lastVerified": "2024-12-11"
+    "lastVerified": "2025-12-20"
   }
 ]
