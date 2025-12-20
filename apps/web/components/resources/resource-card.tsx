@@ -186,7 +186,7 @@ export function ResourceCard({
 }: ResourceCardProps) {
   const category = getCategoryBySlug(resource.category);
   const isInternalLink = !!slug;
-  const href = isInternalLink ? `/resources/${slug}` : resource.url;
+  const href = isInternalLink ? `/resources/r/${slug}` : resource.url;
 
   // Common link wrapper classes
   const cardClasses = cn(
