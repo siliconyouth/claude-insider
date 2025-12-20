@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.5.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.6.0**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.5.0**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 37 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 39 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync
@@ -40,7 +40,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.5.0**.
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 10. [Component Patterns](#component-patterns) - Buttons, cards, focus states
-11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 75 tables, RLS, migrations
+11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 77 tables, RLS, migrations
 12. [Internationalization](#internationalization-i18n) - 18 languages
 13. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
 14. [Content Structure](#content-structure) - Documentation, resources, legal pages
@@ -133,7 +133,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (37 total)
+### Implemented Features (39 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -153,7 +153,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-14 | Notification Popups | Persistent until dismissed, deep-linking, ARIA regions |
 | FR-15 | Settings Model | Model selector in settings with feedback |
 | FR-16 | Header Model Display | Smart API key indicators, BEST badge, tier colors |
-| FR-17 | Database Types | 75 tables, auto-generated TypeScript types |
+| FR-17 | Database Types | 77 tables, auto-generated TypeScript types |
 | FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
 | FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
 | FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
@@ -175,6 +175,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-36 | Gamification CMS | Payload CMS for achievements, badges, tiers, categories; auto-sync to Supabase |
 | FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
 | FR-38 | Resource Auto-Update | AI-powered updates via Claude Opus 4.5, Firecrawl scraping, admin review workflow, changelog tracking |
+| FR-39 | AI Pipeline Integration | Payload CMS settings, Documents/Resources tab redesign, CLI scripts for analysis/enhancement, operation queue |
 
 ### Non-Functional Requirements
 
@@ -737,7 +738,7 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 ### Overview
 
-Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **85 migrations** define **75 tables** across 14 categories.
+Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **89 migrations** define **77 tables** across 15 categories.
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -842,6 +843,10 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 #### AI Conversations (2 tables)
 
 `ai_conversations`, `ai_messages`
+
+#### AI Pipeline (2 tables)
+
+`ai_pipeline_settings`, `ai_operation_queue`
 
 ### Role Hierarchy
 

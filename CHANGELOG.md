@@ -9,6 +9,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.0] - 2025-12-20
+### AI Pipeline Integration & Admin Dashboard
+- **AI Pipeline Settings Global**: New Payload CMS global for centralized AI operation configuration
+  - Relationship analysis settings (min confidence, auto-analyze toggle)
+  - Resource enhancement settings (require features/use cases)
+  - Documentation rewrite settings (schedule, source URL requirements)
+  - CLI command templates for Claude Code integration
+- **Documents Collection Redesign**: Complete tab-based UI overhaul
+  - Content Tab: Title, slug, description, category, MDX content
+  - Relationships Tab: Manual + AI-discovered relationships with confidence scores
+  - AI Pipeline Tab: Analysis status, operations panel, last analyzed date
+  - 7 relationship types: required, recommended, related, example, alternative, extends, implements
+- **Resources Collection Redesign**: 5-tab organization with AI enhancement fields
+  - Basic Info Tab: Title, URL, description, pricing, difficulty
+  - AI Enhancement Tab: Summary, key features, use cases, pros, cons (AI-generated)
+  - Relationships Tab: Document and resource relationships with reasoning
+  - GitHub & Versioning Tab: Repository integration, version tracking
+  - Discovery & Review Tab: Source tracking, review queue status
+- **Claude Code CLI Scripts**: Subscription-based AI operations (no API credits)
+  - `scripts/analyze-relationships.mjs`: Analyze doc-resource relationships
+  - `scripts/enhance-resources.mjs`: Generate summaries, features, pros/cons
+  - `scripts/rewrite-docs.mjs`: Rewrite documentation from source URLs
+  - All scripts support --dry-run, filtering by slug/category, and verbose output
+- **AI Operation Queue**: Database table for tracking pending operations
+  - Queue operations from admin UI without executing them
+  - Status tracking: pending, in_progress, completed, failed
+  - Copy-to-clipboard CLI commands for each operation type
+- **Database Schema** (Migration 089):
+  - `ai_pipeline_settings`: JSONB-based flexible configuration storage
+  - `ai_operation_queue`: Operation tracking with priority and status
+  - Helper function `queue_ai_operation()` for consistent queueing
+- **New API Endpoints**:
+  - `GET/POST /api/dashboard/ai-queue`: List and create queued operations
+  - `GET /api/dashboard/ai-stats`: Pipeline statistics for dashboard
+
+---
+
 ## [1.5.0] - 2025-12-20
 ### Resource Auto-Update System
 - **AI-Powered Resource Updates**: Automated system for keeping resources current using Claude Opus 4.5

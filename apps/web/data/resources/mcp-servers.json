@@ -2,7 +2,7 @@
   {
     "id": "mcp-filesystem",
     "title": "Filesystem MCP Server",
-    "description": "Official MCP server for file system operations - read, write, and manage files.",
+    "description": "Official MCP server enabling Claude to read, write, and manage files on your local filesystem with secure, sandboxed access.",
     "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
     "category": "mcp-servers",
     "subcategory": "Official",
@@ -16,7 +16,17 @@
     "version": "1.0.0",
     "namespace": "mcp/filesystem",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "github": {
+      "owner": "modelcontextprotocol",
+      "repo": "servers",
+      "stars": 74731,
+      "forks": 9073,
+      "lastUpdated": "2025-12-19",
+      "language": "TypeScript"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-filesystem/1766238197101-mcp-filesystem.png"
   },
   {
     "id": "mcp-git",
@@ -35,7 +45,17 @@
     "version": "1.0.0",
     "namespace": "mcp/git",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "modelcontextprotocol",
+      "repo": "servers",
+      "stars": 74731,
+      "forks": 9073,
+      "lastUpdated": "2025-12-19",
+      "language": "TypeScript"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-git/1766238197408-mcp-git.png"
   },
   {
     "id": "mcp-postgres",
@@ -94,12 +114,22 @@
     "version": "1.0.0",
     "namespace": "mcp/fetch",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "github": {
+      "owner": "modelcontextprotocol",
+      "repo": "servers",
+      "stars": 74731,
+      "forks": 9073,
+      "lastUpdated": "2025-12-19",
+      "language": "TypeScript"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-fetch/1766238196950-mcp-fetch.png"
   },
   {
     "id": "awesome-mcp-servers",
     "title": "Awesome MCP Servers",
-    "description": "Curated list of MCP servers for various use cases.",
+    "description": "Community-curated collection of 77k+ starred MCP servers organized by category, featuring official implementations and third-party integrations for extending Claude AI capabilities.",
     "url": "https://github.com/punkpeye/awesome-mcp-servers",
     "category": "mcp-servers",
     "subcategory": "Curated List",
@@ -112,15 +142,16 @@
     "github": {
       "owner": "punkpeye",
       "repo": "awesome-mcp-servers",
-      "stars": 77035,
-      "forks": 6548,
+      "stars": 77047,
+      "forks": 6552,
       "lastUpdated": "2025-12-15",
-      "language": "Markdown"
+      "language": null
     },
     "featured": true,
     "featuredReason": "Comprehensive List",
     "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner"
   },
   {
     "id": "mcp-sqlite",
@@ -158,7 +189,17 @@
     "version": "1.0.0",
     "namespace": "mcp/memory",
     "addedDate": "2024-03-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "modelcontextprotocol",
+      "repo": "servers",
+      "stars": 74731,
+      "forks": 9073,
+      "lastUpdated": "2025-12-19",
+      "language": "TypeScript"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-memory/1766238197826-mcp-memory.png"
   },
   {
     "id": "mcp-github",
@@ -220,7 +261,7 @@
   {
     "id": "firecrawl-mcp",
     "title": "Firecrawl MCP Server",
-    "description": "MCP server for web scraping and crawling with Firecrawl.",
+    "description": "Official Firecrawl MCP server that adds powerful web scraping, crawling, and search capabilities to Claude, Cursor, VS Code, and other LLM clients.",
     "url": "https://github.com/firecrawl/firecrawl-mcp-server",
     "category": "mcp-servers",
     "subcategory": "Web",
@@ -242,12 +283,14 @@
     "featured": true,
     "featuredReason": "Popular",
     "addedDate": "2024-07-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firecrawl-mcp/1766238193412-firecrawl-mcp.png"
   },
   {
     "id": "mcp-notion",
     "title": "Notion MCP Server",
-    "description": "MCP server for Notion workspace operations.",
+    "description": "Official Notion MCP server enabling Claude and other AI assistants to read, create, and manage Notion workspace content through the Model Context Protocol.",
     "url": "https://github.com/makenotion/notion-mcp-server",
     "category": "mcp-servers",
     "subcategory": "Productivity",
@@ -262,18 +305,20 @@
     "github": {
       "owner": "makenotion",
       "repo": "notion-mcp-server",
-      "stars": 1200,
-      "forks": 150,
-      "lastUpdated": "2025-12-15",
+      "stars": 3605,
+      "forks": 409,
+      "lastUpdated": "2025-12-07",
       "language": "TypeScript"
     },
     "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-notion/1766238198026-mcp-notion.png"
   },
   {
     "id": "mcp-linear",
     "title": "Linear MCP Server",
-    "description": "MCP server for Linear issue tracking.",
+    "description": "MCP server enabling LLMs to interact with Linear's issue tracking system for creating, updating, searching, and managing project issues.",
     "url": "https://github.com/jerhadf/linear-mcp-server",
     "category": "mcp-servers",
     "subcategory": "Project Management",
@@ -293,12 +338,14 @@
       "language": "JavaScript"
     },
     "addedDate": "2024-09-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-linear/1766238197627-mcp-linear.png"
   },
   {
     "id": "mcp-docker",
     "title": "Docker MCP Server",
-    "description": "MCP server for Docker container management.",
+    "description": "MCP server for managing Docker containers, images, networks, and volumes through natural language commands with Claude AI.",
     "url": "https://github.com/ckreiling/mcp-server-docker",
     "category": "mcp-servers",
     "subcategory": "DevOps",
@@ -317,6 +364,8 @@
       "language": "Python"
     },
     "addedDate": "2024-10-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docker/1766238196481-mcp-docker.png"
   }
 ]

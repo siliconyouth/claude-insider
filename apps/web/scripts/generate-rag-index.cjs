@@ -48,13 +48,25 @@ try {
 } catch {
   generateCodeChunks = () => [];
 }
+// Import relationships index (optional)
+let generateRelationshipChunks, getResourceRelationships, getDocRelationships;
+try {
+  const relationshipsModule = require("./generate-relationships-index.cjs");
+  generateRelationshipChunks = relationshipsModule.generateRelationshipChunks;
+  getResourceRelationships = relationshipsModule.getResourceRelationships;
+  getDocRelationships = relationshipsModule.getDocRelationships;
+} catch {
+  generateRelationshipChunks = () => [];
+  getResourceRelationships = () => ({});
+  getDocRelationships = () => ({});
+}
 
 // ===========================================================================
 // CONFIGURATION
 // ===========================================================================
 
 const VERBOSE = true;
-const VERSION = "6.2"; // Increment when making significant changes - Added changelog support
+const VERSION = "6.3"; // Increment when making significant changes - Added doc-resource relationships
 const FORCE_REGENERATE = process.argv.includes("--force");
 
 // ===========================================================================
@@ -238,6 +250,7 @@ function logFinalStats(stats) {
     ["Documentation Chunks", stats.documentationChunks],
     ["Project Knowledge", stats.projectKnowledgeCount],
     ["Resource Chunks", stats.resourceChunkCount],
+    ["Relationship Chunks", stats.relationshipChunkCount],
     ["Settings/Options", stats.settingsChunkCount],
     ["External Sources", stats.externalSourceCount],
     ["Code Examples", stats.codeExamplesCount],
@@ -798,14 +811,35 @@ function generateRagIndex() {
   }
 
   // =========================================================================
-  // 7. BUILD TF-IDF INDEX
+  // 7. RELATIONSHIP CHUNKS
+  // =========================================================================
+  logSection("RELATIONSHIP CHUNKS");
+  logSubsection("Generating doc-resource relationship data...");
+
+  const relationshipChunks = generateRelationshipChunks();
+  chunks.push(...relationshipChunks);
+
+  const relationshipChunkCount = relationshipChunks.length;
+
+  // Get relationship data for enhanced resource info
+  const resourceRelationships = getResourceRelationships();
+  const docRelationships = getDocRelationships();
+
+  if (VERBOSE) {
+    logStat("Relationship chunks:", relationshipChunkCount.toString());
+    logStat("Resources with doc links:", Object.keys(resourceRelationships).length.toString());
+    logStat("Docs with resource links:", Object.keys(docRelationships).length.toString());
+  }
+
+  // =========================================================================
+  // 8. BUILD TF-IDF INDEX
   // =========================================================================
   logSection("TF-IDF INDEX");
 
   const { tfidfIndex, idfValues, termCount } = buildTfidfIndex(chunks);
 
   // =========================================================================
-  // 8. CREATE AND WRITE RAG INDEX
+  // 9. CREATE AND WRITE RAG INDEX
   // =========================================================================
   logSection("WRITING OUTPUT");
   logSubsection("Generating JSON output file...");
@@ -819,9 +853,12 @@ function generateRagIndex() {
     documentationChunks: docsChunkCount,
     projectKnowledgeCount: projectKnowledgeCount,
     resourceChunkCount: resourceChunkCount,
+    relationshipChunkCount: relationshipChunkCount,
     settingsChunkCount: settingsChunkCount,
     externalSourceCount: sourceChunkCount,
     codeExamplesCount: codeChunkCount,
+    resourceRelationships: resourceRelationships,
+    docRelationships: docRelationships,
     chunks,
     tfidfIndex,
     idfValues,
@@ -852,6 +889,7 @@ function generateRagIndex() {
     documentationChunks: docsChunkCount,
     projectKnowledgeCount: projectKnowledgeCount,
     resourceChunkCount: resourceChunkCount,
+    relationshipChunkCount: relationshipChunkCount,
     settingsChunkCount: settingsChunkCount,
     externalSourceCount: sourceChunkCount,
     codeExamplesCount: codeChunkCount,
@@ -861,6 +899,7 @@ function generateRagIndex() {
       ...Object.keys(categoryCounts),
       "Project",
       "Resources",
+      "Relationships",
       "Settings",
       "Sources",
       "Code",

@@ -2,7 +2,7 @@
   {
     "id": "anthropic-prompt-library",
     "title": "Anthropic Prompt Library",
-    "description": "Official collection of prompts and templates from Anthropic.",
+    "description": "Official collection of 60+ optimized prompts and templates from Anthropic covering business, coding, creative, and personal productivity tasks.",
     "url": "https://docs.anthropic.com/en/prompt-library",
     "category": "prompts",
     "subcategory": "Official",
@@ -17,12 +17,13 @@
     "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766224572230-anthropic-prompt-library.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766238187295-anthropic-prompt-library.png",
+    "difficulty": "beginner"
   },
   {
     "id": "awesome-chatgpt-prompts",
     "title": "Awesome ChatGPT Prompts",
-    "description": "Huge collection of role-based prompts that work great with Claude too.",
+    "description": "Community-curated collection of 140k+ role-based prompts, compatible with Claude, ChatGPT, and other AI models. Self-hostable with full privacy.",
     "url": "https://github.com/f/awesome-chatgpt-prompts",
     "category": "prompts",
     "subcategory": "Role-Based",
@@ -36,7 +37,7 @@
     "github": {
       "owner": "f",
       "repo": "awesome-chatgpt-prompts",
-      "stars": 139915,
+      "stars": 139933,
       "forks": 18558,
       "lastUpdated": "2025-12-20",
       "language": "TypeScript"
@@ -45,12 +46,13 @@
     "featuredReason": "Most Popular",
     "addedDate": "2024-02-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766224573035-awesome-chatgpt-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766238188363-awesome-chatgpt-prompts.png",
+    "difficulty": "beginner"
   },
   {
     "id": "prompts-chat",
     "title": "prompts.chat",
-    "description": "Interactive website for browsing and testing ChatGPT/Claude prompts.",
+    "description": "Open-source community platform for discovering, sharing, and collecting AI prompts with 140k+ GitHub stars and self-hosting support.",
     "url": "https://prompts.chat",
     "category": "prompts",
     "subcategory": "Directory",
@@ -62,12 +64,14 @@
     ],
     "status": "community",
     "addedDate": "2024-02-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompts-chat/1766238200414-prompts-chat.png"
   },
   {
     "id": "system-prompts-coding",
     "title": "System Prompts for Coding",
-    "description": "Collection of system prompts optimized for code generation and review.",
+    "description": "Open-source framework with 150+ crowdsourced AI prompts for augmenting human capabilities, including coding, analysis, and content creation tasks.",
     "url": "https://github.com/danielmiessler/fabric",
     "category": "prompts",
     "subcategory": "System Prompts",
@@ -82,8 +86,8 @@
     "github": {
       "owner": "danielmiessler",
       "repo": "fabric",
-      "stars": 35324,
-      "forks": 3606,
+      "stars": 35336,
+      "forks": 3607,
       "lastUpdated": "2025-12-20",
       "language": "Go"
     },
@@ -91,7 +95,7 @@
     "featuredReason": "Trending",
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766224575074-fabric-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766238103278-fabric-prompts.png"
   },
   {
     "id": "chain-of-thought",
@@ -109,7 +113,8 @@
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-01-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1766238189264-chain-of-thought.png"
   },
   {
     "id": "prompt-senior-developer",
@@ -127,7 +132,8 @@
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-05-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1766238200040-prompt-senior-developer.png"
   },
   {
     "id": "prompt-code-reviewer",
@@ -145,7 +151,8 @@
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-05-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1766238199596-prompt-code-reviewer.png"
   },
   {
     "id": "prompt-technical-writer",
@@ -163,7 +170,8 @@
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1766238200257-prompt-technical-writer.png"
   },
   {
     "id": "few-shot-learning",
@@ -181,7 +189,8 @@
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-03-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1766238193108-few-shot-learning.png"
   },
   {
     "id": "structured-outputs",
@@ -199,7 +208,8 @@
     "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-03-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1766238206082-structured-outputs.png"
   },
   {
     "id": "self-reflection",
@@ -217,7 +227,8 @@
     "difficulty": "advanced",
     "status": "official",
     "addedDate": "2024-04-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1766238205029-self-reflection.png"
   },
   {
     "id": "prompt-security-expert",
@@ -235,6 +246,7 @@
     "difficulty": "advanced",
     "status": "community",
     "addedDate": "2024-07-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1766238199888-prompt-security-expert.png"
   }
 ]

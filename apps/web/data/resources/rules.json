@@ -2,7 +2,7 @@
   {
     "id": "cursor-directory",
     "title": "cursor.directory",
-    "description": "Community-driven directory of cursor rules for various frameworks and languages.",
+    "description": "Community hub for discovering and sharing Cursor rules, MCP servers, and AI development resources with 67k+ members.",
     "url": "https://cursor.directory",
     "category": "rules",
     "subcategory": "Directory",
@@ -16,12 +16,14 @@
     "featured": true,
     "featuredReason": "Most Popular",
     "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766238191743-cursor-directory.png"
   },
   {
     "id": "awesome-cursorrules",
     "title": "Awesome Cursor Rules",
-    "description": "Curated list of cursor rules organized by framework and use case.",
+    "description": "Comprehensive collection of .cursorrules configuration files organized by framework, language, and use case to customize Cursor AI's code generation behavior.",
     "url": "https://github.com/PatrickJS/awesome-cursorrules",
     "category": "rules",
     "subcategory": "Curated List",
@@ -35,20 +37,22 @@
     "github": {
       "owner": "PatrickJS",
       "repo": "awesome-cursorrules",
-      "stars": 36300,
-      "forks": 3083,
+      "stars": 36309,
+      "forks": 3084,
       "lastUpdated": "2025-10-24",
       "language": "MDX"
     },
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-07-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1766238188662-awesome-cursorrules.png"
   },
   {
     "id": "rules-nextjs",
     "title": "Next.js CLAUDE.md Rules",
-    "description": "Optimized rules for Next.js App Router projects with TypeScript.",
+    "description": "Comprehensive Cursor rules for Next.js App Router with TypeScript, React Server Components, Shadcn UI, and Tailwind CSS best practices.",
     "url": "https://cursor.directory/nextjs",
     "category": "rules",
     "subcategory": "Framework",
@@ -61,7 +65,8 @@
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1766238202163-rules-nextjs.png"
   },
   {
     "id": "rules-react",
@@ -79,7 +84,8 @@
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1766238202509-rules-react.png"
   },
   {
     "id": "rules-typescript",
@@ -96,7 +102,8 @@
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1766238203186-rules-typescript.png"
   },
   {
     "id": "rules-python",
@@ -114,7 +121,8 @@
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1766238202351-rules-python.png"
   },
   {
     "id": "rules-vue",
@@ -132,7 +140,8 @@
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-08-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1766238203313-rules-vue.png"
   },
   {
     "id": "rules-svelte",
@@ -150,7 +159,8 @@
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-08-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1766238202765-rules-svelte.png"
   },
   {
     "id": "rules-fastapi",
@@ -169,7 +179,8 @@
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1766238201877-rules-fastapi.png"
   },
   {
     "id": "rules-go",
@@ -187,7 +198,8 @@
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1766238202029-rules-go.png"
   },
   {
     "id": "rules-rust",
@@ -205,7 +217,8 @@
     "difficulty": "advanced",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1766238202636-rules-rust.png"
   },
   {
     "id": "rules-tailwind",
@@ -223,7 +236,8 @@
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-09-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1766238202897-rules-tailwind.png"
   },
   {
     "id": "rules-testing",
@@ -242,7 +256,8 @@
     "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-10-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1766238203040-rules-testing.png"
   },
   {
     "id": "rules-documentation",
@@ -260,6 +275,7 @@
     "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-10-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1766238201757-rules-documentation.png"
   }
 ]

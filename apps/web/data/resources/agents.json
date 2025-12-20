@@ -2,7 +2,7 @@
   {
     "id": "awesome-llm-apps",
     "title": "Awesome LLM Apps",
-    "description": "Collection of AI agent projects, RAG apps, and LLM applications.",
+    "description": "Curated collection of 80+ LLM apps featuring AI Agents, RAG, MCP, Voice Agents, and multi-agent teams using OpenAI, Anthropic, Gemini, and open-source models.",
     "url": "https://github.com/Shubhamsaboo/awesome-llm-apps",
     "category": "agents",
     "subcategory": "Curated List",
@@ -16,20 +16,22 @@
     "github": {
       "owner": "Shubhamsaboo",
       "repo": "awesome-llm-apps",
-      "stars": 83502,
-      "forks": 11817,
+      "stars": 83521,
+      "forks": 11823,
       "lastUpdated": "2025-12-19",
       "language": "Python"
     },
     "featured": true,
     "featuredReason": "Most Popular",
     "addedDate": "2024-03-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-llm-apps/1766238188879-awesome-llm-apps.png"
   },
   {
     "id": "langchain",
     "title": "LangChain",
-    "description": "Framework for developing applications powered by LLMs like Claude.",
+    "description": "Open-source Python framework for building reliable AI agents and LLM-powered applications with modular, interoperable components and extensive integrations.",
     "url": "https://github.com/langchain-ai/langchain",
     "category": "agents",
     "subcategory": "Framework",
@@ -44,20 +46,21 @@
     "github": {
       "owner": "langchain-ai",
       "repo": "langchain",
-      "stars": 122298,
-      "forks": 20159,
+      "stars": 122303,
+      "forks": 20160,
       "lastUpdated": "2025-12-20",
       "language": "Python"
     },
     "featured": true,
     "featuredReason": "Industry Standard",
     "addedDate": "2024-01-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain/1766238195703-langchain.png"
   },
   {
     "id": "llamaindex",
     "title": "LlamaIndex",
-    "description": "Data framework for building LLM applications with structured data.",
+    "description": "Leading data framework for building LLM-powered agents over your data with 300+ integrations, data connectors, and advanced retrieval capabilities.",
     "url": "https://github.com/run-llama/llama_index",
     "category": "agents",
     "subcategory": "Framework",
@@ -72,18 +75,19 @@
     "github": {
       "owner": "run-llama",
       "repo": "llama_index",
-      "stars": 45908,
+      "stars": 45909,
       "forks": 6650,
       "lastUpdated": "2025-12-19",
       "language": "Python"
     },
     "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex/1766238196222-llamaindex.png"
   },
   {
     "id": "autogen",
     "title": "AutoGen",
-    "description": "Microsoft's framework for building multi-agent AI systems.",
+    "description": "Microsoft's open-source Python framework for building multi-agent AI applications with autonomous or human-collaborative capabilities.",
     "url": "https://github.com/microsoft/autogen",
     "category": "agents",
     "subcategory": "Multi-Agent",
@@ -98,18 +102,19 @@
     "github": {
       "owner": "microsoft",
       "repo": "autogen",
-      "stars": 52686,
-      "forks": 8005,
+      "stars": 52694,
+      "forks": 8006,
       "lastUpdated": "2025-10-08",
       "language": "Python"
     },
     "addedDate": "2024-04-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/autogen/1766238188130-autogen.png"
   },
   {
     "id": "crewai",
     "title": "CrewAI",
-    "description": "Framework for orchestrating role-playing autonomous AI agents.",
+    "description": "Lean, lightning-fast Python framework for orchestrating autonomous AI agents in collaborative crews and event-driven flows.",
     "url": "https://github.com/crewAIInc/crewAI",
     "category": "agents",
     "subcategory": "Multi-Agent",
@@ -124,20 +129,21 @@
     "github": {
       "owner": "crewAIInc",
       "repo": "crewAI",
-      "stars": 41584,
+      "stars": 41589,
       "forks": 5570,
-      "lastUpdated": "2025-12-19",
+      "lastUpdated": "2025-12-20",
       "language": "Python"
     },
     "featured": true,
     "featuredReason": "Trending",
     "addedDate": "2024-05-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/crewai/1766238191344-crewai.png"
   },
   {
     "id": "phidata",
     "title": "Phidata",
-    "description": "Build AI agents with memory, knowledge, and tools.",
+    "description": "Unified multi-agent framework with production runtime, control plane, and native Claude support for building, deploying, and managing AI agent systems.",
     "url": "https://github.com/phidatahq/phidata",
     "category": "agents",
     "subcategory": "Framework",
@@ -152,18 +158,19 @@
     "github": {
       "owner": "phidatahq",
       "repo": "phidata",
-      "stars": 36160,
-      "forks": 4778,
+      "stars": 36162,
+      "forks": 4779,
       "lastUpdated": "2025-12-20",
       "language": "Python"
     },
     "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/phidata/1766238199366-phidata.png"
   },
   {
     "id": "smolagents",
     "title": "smolagents",
-    "description": "Hugging Face's minimal library for building AI agents.",
+    "description": "Hugging Face's minimal library for building AI agents that think and act in code, supporting 100+ LLMs including Claude via LiteLLM integration.",
     "url": "https://github.com/huggingface/smolagents",
     "category": "agents",
     "subcategory": "Framework",
@@ -178,18 +185,19 @@
     "github": {
       "owner": "huggingface",
       "repo": "smolagents",
-      "stars": 24498,
+      "stars": 24499,
       "forks": 2196,
       "lastUpdated": "2025-12-18",
       "language": "Python"
     },
     "addedDate": "2024-11-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/smolagents/1766238205512-smolagents.png"
   },
   {
     "id": "pydantic-ai",
     "title": "Pydantic AI",
-    "description": "Type-safe AI agent framework using Pydantic for validation.",
+    "description": "Python agent framework by the Pydantic team for building production-grade GenAI applications with full type safety, validation, and multi-model support.",
     "url": "https://github.com/pydantic/pydantic-ai",
     "category": "agents",
     "subcategory": "Framework",
@@ -210,12 +218,13 @@
       "language": "Python"
     },
     "addedDate": "2024-11-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/pydantic-ai/1766238200570-pydantic-ai.png"
   },
   {
     "id": "semantic-kernel",
     "title": "Semantic Kernel",
-    "description": "Microsoft's SDK for integrating LLMs into applications.",
+    "description": "Microsoft's enterprise-ready SDK for building, orchestrating, and deploying AI agents and multi-agent systems with any LLM including Claude.",
     "url": "https://github.com/microsoft/semantic-kernel",
     "category": "agents",
     "subcategory": "Framework",
@@ -232,17 +241,18 @@
       "owner": "microsoft",
       "repo": "semantic-kernel",
       "stars": 26885,
-      "forks": 4394,
+      "forks": 4395,
       "lastUpdated": "2025-12-16",
       "language": "C#"
     },
     "addedDate": "2024-03-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/semantic-kernel/1766238205300-semantic-kernel.png"
   },
   {
     "id": "haystack",
     "title": "Haystack",
-    "description": "End-to-end NLP framework for building production RAG pipelines.",
+    "description": "End-to-end LLM orchestration framework for building RAG, question answering, semantic search, and conversational agent applications with production-ready pipelines.",
     "url": "https://github.com/deepset-ai/haystack",
     "category": "agents",
     "subcategory": "RAG",
@@ -257,18 +267,19 @@
     "github": {
       "owner": "deepset-ai",
       "repo": "haystack",
-      "stars": 23679,
+      "stars": 23682,
       "forks": 2531,
       "lastUpdated": "2025-12-19",
       "language": "MDX"
     },
     "addedDate": "2024-02-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/haystack/1766238194642-haystack.png"
   },
   {
     "id": "dspy",
     "title": "DSPy",
-    "description": "Stanford's framework for programming LLMs with composable modules.",
+    "description": "Stanford's framework for programming—not prompting—language models with composable modules and automatic optimization of prompts and weights.",
     "url": "https://github.com/stanfordnlp/dspy",
     "category": "agents",
     "subcategory": "Framework",
@@ -283,18 +294,19 @@
     "github": {
       "owner": "stanfordnlp",
       "repo": "dspy",
-      "stars": 30885,
-      "forks": 2483,
+      "stars": 30888,
+      "forks": 2484,
       "lastUpdated": "2025-12-19",
       "language": "Python"
     },
     "addedDate": "2024-04-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dspy/1766238192760-dspy.png"
   },
   {
     "id": "swarm",
     "title": "OpenAI Swarm",
-    "description": "OpenAI's experimental framework for multi-agent orchestration.",
+    "description": "OpenAI's experimental, educational framework for exploring lightweight multi-agent orchestration patterns with agent handoffs and coordination.",
     "url": "https://github.com/openai/swarm",
     "category": "agents",
     "subcategory": "Multi-Agent",
@@ -309,12 +321,13 @@
     "github": {
       "owner": "openai",
       "repo": "swarm",
-      "stars": 20711,
+      "stars": 20710,
       "forks": 2215,
       "lastUpdated": "2025-03-11",
       "language": "Python"
     },
     "addedDate": "2024-10-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swarm/1766238206314-swarm.png"
   }
 ]

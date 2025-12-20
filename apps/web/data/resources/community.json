@@ -16,12 +16,13 @@
     "featured": true,
     "featuredReason": "Official Community",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-discord/1766238186550-anthropic-discord.png"
   },
   {
     "id": "reddit-claudeai",
     "title": "r/ClaudeAI",
-    "description": "Reddit community for Claude AI discussions and tips.",
+    "description": "Active Reddit community with 577K+ members discussing Claude AI, sharing tips, troubleshooting, and staying updated on Anthropic news.",
     "url": "https://www.reddit.com/r/ClaudeAI/",
     "category": "community",
     "subcategory": "Forum",
@@ -35,12 +36,14 @@
     "featured": true,
     "featuredReason": "Active Community",
     "addedDate": "2024-01-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reddit-claudeai/1766238201454-reddit-claudeai.png"
   },
   {
     "id": "github-discussions",
     "title": "Claude Code GitHub Issues",
-    "description": "Official issue tracker for Claude Code on GitHub - bug reports, feature requests.",
+    "description": "Official GitHub issue tracker for Claude Code (47k+ stars) - report bugs, request features, and track active development across 5k+ open issues.",
     "url": "https://github.com/anthropics/claude-code/issues",
     "category": "community",
     "subcategory": "Forum",
@@ -52,7 +55,17 @@
     ],
     "status": "official",
     "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-code",
+      "stars": 47307,
+      "forks": 3321,
+      "lastUpdated": "2025-12-19",
+      "language": "Shell"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-discussions/1766238194148-github-discussions.png"
   },
   {
     "id": "hacker-news",
@@ -69,12 +82,13 @@
     ],
     "status": "community",
     "addedDate": "2024-03-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/hacker-news/1766238194329-hacker-news.png"
   },
   {
     "id": "twitter-anthropic",
     "title": "Anthropic on X",
-    "description": "Official Anthropic account for news and updates.",
+    "description": "Official Anthropic X/Twitter account sharing company news, Claude updates, research announcements, and AI safety insights.",
     "url": "https://x.com/AnthropicAI",
     "category": "community",
     "subcategory": "Social Media",
@@ -87,12 +101,13 @@
     ],
     "status": "official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner"
   },
   {
     "id": "linkedin-anthropic",
     "title": "Anthropic on LinkedIn",
-    "description": "Official Anthropic LinkedIn page.",
+    "description": "Official Anthropic LinkedIn page for company updates, job opportunities, and AI research news.",
     "url": "https://www.linkedin.com/company/anthropic/",
     "category": "community",
     "subcategory": "Social Media",
@@ -104,12 +119,13 @@
     ],
     "status": "official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner"
   },
   {
     "id": "ai-news-newsletter",
     "title": "The Batch by DeepLearning.AI",
-    "description": "Weekly AI newsletter covering Claude and other developments.",
+    "description": "Weekly AI newsletter from Andrew Ng's DeepLearning.AI delivering curated news, research insights, and industry analysis including Claude and Anthropic coverage.",
     "url": "https://www.deeplearning.ai/the-batch/",
     "category": "community",
     "subcategory": "Newsletter",
@@ -121,12 +137,14 @@
     ],
     "status": "community",
     "addedDate": "2024-04-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-news-newsletter/1766238184980-ai-news-newsletter.png"
   },
   {
     "id": "tldr-ai",
     "title": "TLDR AI Newsletter",
-    "description": "Daily AI news digest including Claude updates.",
+    "description": "Daily newsletter delivering AI news and breakthroughs in 5 minutes, read by 920,000+ subscribers.",
     "url": "https://tldr.tech/ai",
     "category": "community",
     "subcategory": "Newsletter",
@@ -138,7 +156,9 @@
     ],
     "status": "community",
     "addedDate": "2024-05-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tldr-ai/1766238206546-tldr-ai.png"
   },
   {
     "id": "youtube-anthropic",
@@ -155,7 +175,9 @@
     ],
     "status": "official",
     "addedDate": "2024-02-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/youtube-anthropic/1766238208154-youtube-anthropic.png"
   },
   {
     "id": "ai-explained",
@@ -172,12 +194,14 @@
     ],
     "status": "community",
     "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-explained/1766238184544-ai-explained.png"
   },
   {
     "id": "stack-overflow",
     "title": "Stack Overflow Claude Questions",
-    "description": "Claude-related questions on Stack Overflow.",
+    "description": "Stack Overflow tag for Claude AI programming questions, troubleshooting, and developer community discussions.",
     "url": "https://stackoverflow.com/questions/tagged/claude-ai",
     "category": "community",
     "subcategory": "Q&A",
@@ -189,12 +213,13 @@
     ],
     "status": "community",
     "addedDate": "2024-03-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner"
   },
   {
     "id": "cursor-directory-community",
     "title": "cursor.directory Community",
-    "description": "Community-driven directory with 66k+ members.",
+    "description": "Community hub for Cursor IDE users with 67k+ members, featuring curated rules, MCP servers, job listings, and developer resources.",
     "url": "https://cursor.directory",
     "category": "community",
     "subcategory": "Directory",
@@ -206,6 +231,8 @@
     ],
     "status": "community",
     "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory-community/1766238191572-cursor-directory-community.png"
   }
 ]

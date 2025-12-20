@@ -58,6 +58,10 @@ export interface ResourceEntry {
   featured?: boolean;
   featuredReason?: string; // e.g., "Editor's Pick", "Most Popular", "New"
 
+  // Visual assets
+  screenshotUrl?: string;
+  screenshots?: string[];
+
   // Timestamps
   addedDate: string;
   lastVerified: string;

@@ -71,13 +71,15 @@ interface ResourceCardProps {
   resource: ResourceEntry;
   /** When provided, links to internal detail page instead of external URL */
   slug?: string;
-  variant?: 'default' | 'compact' | 'featured';
+  variant?: 'default' | 'compact' | 'featured' | 'horizontal';
   showCategory?: boolean;
   showTags?: boolean;
   showInteractions?: boolean;
   showAskAI?: boolean;
   maxTags?: number;
   className?: string;
+  /** Show screenshot thumbnail (for horizontal variant) */
+  showThumbnail?: boolean;
 }
 
 /**
@@ -183,6 +185,7 @@ export function ResourceCard({
   showAskAI = false,
   maxTags = 3,
   className,
+  showThumbnail = true,
 }: ResourceCardProps) {
   const category = getCategoryBySlug(resource.category);
   const isInternalLink = !!slug;
@@ -336,6 +339,155 @@ export function ResourceCard({
     ) : (
       <a href={href} target="_blank" rel="noopener noreferrer" className={cardClasses}>
         {featuredContent}
+      </a>
+    );
+  }
+
+  // Horizontal variant - GitHub repo style with thumbnail
+  if (variant === 'horizontal') {
+    const horizontalClasses = cn(
+      'group flex gap-4 p-4 rounded-xl',
+      'bg-white dark:bg-[#111111]',
+      'border border-gray-200 dark:border-[#262626]',
+      'transition-all duration-200',
+      'hover:-translate-y-0.5',
+      'hover:border-blue-500/50',
+      'hover:shadow-lg hover:shadow-blue-500/5',
+      className
+    );
+
+    // Get screenshot URL - prefer screenshotUrl, then first from screenshots array
+    const thumbnailUrl = resource.screenshotUrl ||
+      (resource.screenshots && resource.screenshots.length > 0 ? resource.screenshots[0] : null);
+
+    const horizontalContent = (
+      <>
+        {/* Thumbnail */}
+        {showThumbnail && thumbnailUrl && (
+          <div className="relative w-20 h-[60px] shrink-0 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={thumbnailUrl}
+              alt={`${resource.title} screenshot`}
+              className="w-full h-full object-cover object-top"
+              loading="lazy"
+            />
+          </div>
+        )}
+
+        {/* Fallback icon when no thumbnail */}
+        {showThumbnail && !thumbnailUrl && category && (
+          <div
+            className={cn(
+              'flex w-20 h-[60px] shrink-0 items-center justify-center rounded-lg text-2xl',
+              getCategoryColor(category)
+            )}
+          >
+            {category.icon}
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="flex-1 min-w-0 flex flex-col justify-center">
+          {/* Title Row */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <h4 className="text-sm font-semibold text-gray-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
+              {resource.title}
+            </h4>
+            <span
+              className={cn(
+                'px-1.5 py-0.5 text-[10px] font-medium rounded capitalize shrink-0',
+                STATUS_BADGE_STYLES[resource.status] || STATUS_BADGE_STYLES.community
+              )}
+            >
+              {resource.status}
+            </span>
+            {resource.difficulty && (
+              <span
+                className={cn(
+                  'px-1.5 py-0.5 text-[10px] font-medium rounded capitalize shrink-0',
+                  DIFFICULTY_BADGE_STYLES[resource.difficulty]
+                )}
+              >
+                {resource.difficulty}
+              </span>
+            )}
+          </div>
+
+          {/* Description */}
+          <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 line-clamp-2">
+            {resource.description}
+          </p>
+
+          {/* Stats Row */}
+          <div className="mt-2 flex items-center gap-3 flex-wrap">
+            {/* GitHub Stats */}
+            {resource.github && (
+              <>
+                <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                  <StarIcon className="w-3.5 h-3.5 text-yellow-500" />
+                  <span>{formatNumber(resource.github.stars)}</span>
+                </div>
+                {resource.github.forks > 0 && (
+                  <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                    <ForkIcon className="w-3.5 h-3.5" />
+                    <span>{formatNumber(resource.github.forks)}</span>
+                  </div>
+                )}
+                {resource.github.language && (
+                  <span className="text-xs text-gray-500 dark:text-gray-500">
+                    {resource.github.language}
+                  </span>
+                )}
+              </>
+            )}
+
+            {/* Tags inline */}
+            {showTags && resource.tags.length > 0 && (
+              <div className="flex items-center gap-1 ml-auto">
+                {resource.tags.slice(0, maxTags).map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-1.5 py-0.5 text-[10px] rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+                {resource.tags.length > maxTags && (
+                  <span className="text-[10px] text-gray-400">
+                    +{resource.tags.length - maxTags}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Interactions */}
+        {showInteractions && (
+          <div className="shrink-0 self-center">
+            <InteractionBar resource={resource} variant="compact" showAskAI={showAskAI} />
+          </div>
+        )}
+
+        {/* Link Icon */}
+        <div className="shrink-0 self-center">
+          {isInternalLink ? (
+            <ChevronRightIcon className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+          ) : (
+            <ExternalLinkIcon className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+          )}
+        </div>
+      </>
+    );
+
+    return isInternalLink ? (
+      <Link href={href} className={horizontalClasses}>
+        {horizontalContent}
+      </Link>
+    ) : (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={horizontalClasses}>
+        {horizontalContent}
       </a>
     );
   }
@@ -550,7 +702,31 @@ export function ResourceCard({
 /**
  * Skeleton loading state for ResourceCard
  */
-export function ResourceCardSkeleton({ variant = 'default' }: { variant?: 'default' | 'compact' | 'featured' }) {
+export function ResourceCardSkeleton({ variant = 'default' }: { variant?: 'default' | 'compact' | 'featured' | 'horizontal' }) {
+  if (variant === 'horizontal') {
+    return (
+      <div className="flex gap-4 p-4 rounded-xl border border-gray-200 dark:border-[#262626] bg-white dark:bg-[#111111]">
+        <div className="w-20 h-[60px] shrink-0 rounded-lg bg-gray-200 dark:bg-gray-800 animate-pulse" />
+        <div className="flex-1 space-y-2">
+          <div className="flex items-center gap-2">
+            <div className="h-4 w-32 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+            <div className="h-4 w-16 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+          </div>
+          <div className="h-3 w-full rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+          <div className="flex gap-3">
+            <div className="h-3 w-12 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+            <div className="h-3 w-12 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+            <div className="ml-auto flex gap-1">
+              <div className="h-3 w-10 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+              <div className="h-3 w-10 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+            </div>
+          </div>
+        </div>
+        <div className="w-4 h-4 rounded bg-gray-200 dark:bg-gray-800 animate-pulse self-center" />
+      </div>
+    );
+  }
+
   if (variant === 'compact') {
     return (
       <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-[#262626] bg-white dark:bg-[#111111]">

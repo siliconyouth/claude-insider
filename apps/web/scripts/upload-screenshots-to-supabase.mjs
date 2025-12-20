@@ -59,97 +59,36 @@ const SCREENSHOT_BUCKET = "resource-screenshots";
 const SCREENSHOTS_DIR = join(ROOT_DIR, "public/images/resources");
 const RESOURCES_DIR = join(ROOT_DIR, "data/resources");
 
-// Map screenshot filenames to resource IDs
-const FILENAME_TO_RESOURCE_ID = {
-  "aider.png": "aider",
-  "anthropic-cookbook.png": "anthropic-cookbook",
-  "anthropic-courses.png": "anthropic-courses",
-  "anthropic-docs.png": "anthropic-docs",
-  "anthropic-prompt-library.png": "anthropic-prompt-library",
-  "anthropic-sdk-python.png": "sdk-python-official",
-  "anthropic-sdk-typescript.png": "sdk-typescript-official",
-  "awesome-chatgpt-prompts.png": "awesome-chatgpt-prompts",
-  "chatbox.png": "chatbox",
-  "claude-code-github.png": "claude-code-repo",
-  "cline-vscode.png": "cline-vscode",
-  "continue-dev.png": "continue-dev",
-  "cursor-editor.png": "cursor-editor",
-  "fabric-prompts.png": "system-prompts-coding",
-  "mcp-docs.png": "mcp-docs",
-  "neovim-avante.png": "neovim-avante",
-  "open-webui.png": "open-webui",
-  "raycast-ai.png": "raycast-ai",
-  "typing-mind.png": "typing-mind",
-  "vercel-ai-sdk.png": "vercel-ai-sdk",
-  "windsurf.png": "windsurf",
-  "zed-editor.png": "zed-editor",
-};
+/**
+ * Build resource ID to JSON file mapping dynamically by scanning all JSON files
+ */
+async function buildResourceIndex() {
+  const resourceIndex = {}; // resourceId -> { file, resource }
+  const files = await readdir(RESOURCES_DIR);
+  const jsonFiles = files.filter(f => f.endsWith('.json'));
 
-// Map resource IDs to their JSON files
-const RESOURCE_ID_TO_FILE = {
-  // tools.json
-  "cursor-editor": "tools",
-  "continue-dev": "tools",
-  aider: "tools",
-  "cline-vscode": "tools",
-  "zed-editor": "tools",
-  windsurf: "tools",
-  "neovim-avante": "tools",
-  "claude-cli-unofficial": "tools",
-  "raycast-ai": "tools",
-  chatbox: "tools",
-  "typing-mind": "tools",
-  "open-webui": "tools",
-  // official.json
-  "anthropic-docs": "official",
-  "claude-code-docs": "official",
-  "mcp-docs": "official",
-  "anthropic-cookbook": "official",
-  "claude-code-repo": "official",
-  "anthropic-sdk-python": "official",
-  "anthropic-sdk-typescript": "official",
-  "prompt-engineering-guide": "official",
-  "anthropic-blog": "official",
-  "claude-console": "official",
-  // tutorials.json
-  "anthropic-courses": "tutorials",
-  "deeplearning-claude": "tutorials",
-  "rag-from-scratch": "tutorials",
-  "building-ai-apps": "tutorials",
-  "tool-use-tutorial": "tutorials",
-  "streaming-tutorial": "tutorials",
-  "langchain-crash-course": "tutorials",
-  "llamaindex-tutorial": "tutorials",
-  "claude-code-tutorial": "tutorials",
-  "mcp-server-tutorial": "tutorials",
-  "vector-databases": "tutorials",
-  "fine-tuning-guide": "tutorials",
-  // sdks.json
-  "sdk-python-official": "sdks",
-  "sdk-typescript-official": "sdks",
-  "sdk-go": "sdks",
-  "sdk-rust": "sdks",
-  "sdk-ruby": "sdks",
-  "sdk-java": "sdks",
-  "sdk-php": "sdks",
-  "sdk-dotnet": "sdks",
-  "langchain-anthropic": "sdks",
-  "llamaindex-anthropic": "sdks",
-  "vercel-ai-sdk": "sdks",
-  // prompts.json
-  "anthropic-prompt-library": "prompts",
-  "awesome-chatgpt-prompts": "prompts",
-  "prompts-chat": "prompts",
-  "system-prompts-coding": "prompts",
-  "chain-of-thought": "prompts",
-  "prompt-senior-developer": "prompts",
-  "prompt-code-reviewer": "prompts",
-  "prompt-technical-writer": "prompts",
-  "few-shot-learning": "prompts",
-  "structured-outputs": "prompts",
-  "self-reflection": "prompts",
-  "prompt-security-expert": "prompts",
-};
+  for (const file of jsonFiles) {
+    const filePath = join(RESOURCES_DIR, file);
+    const content = await readFile(filePath, 'utf-8');
+    try {
+      const resources = JSON.parse(content);
+      if (Array.isArray(resources)) {
+        for (const resource of resources) {
+          if (resource.id) {
+            resourceIndex[resource.id] = {
+              file: file.replace('.json', ''),
+              resource
+            };
+          }
+        }
+      }
+    } catch {
+      // Skip non-JSON files
+    }
+  }
+
+  return resourceIndex;
+}
 
 async function main() {
   console.log("📸 Upload Resource Screenshots to Supabase Storage\n");
@@ -209,6 +148,11 @@ async function main() {
     console.log(`  ✅ Bucket "${SCREENSHOT_BUCKET}" exists`);
   }
 
+  // Build dynamic resource index from JSON files
+  console.log(`\n📂 Building resource index from ${RESOURCES_DIR}...`);
+  const resourceIndex = await buildResourceIndex();
+  console.log(`  Found ${Object.keys(resourceIndex).length} resources`);
+
   // Read screenshot files
   console.log(`\n📂 Reading screenshots from ${SCREENSHOTS_DIR}...`);
   const files = await readdir(SCREENSHOTS_DIR);
@@ -219,13 +163,18 @@ async function main() {
   const uploadedUrls = {};
   let successCount = 0;
   let errorCount = 0;
+  let skippedCount = 0;
 
   console.log(`\n⬆️  Uploading screenshots to Supabase Storage...\n`);
 
   for (const filename of pngFiles) {
-    const resourceId = FILENAME_TO_RESOURCE_ID[filename];
-    if (!resourceId) {
-      console.log(`  ⚠️  Skipping ${filename} - no resource mapping`);
+    // Derive resource ID from filename (remove .png extension)
+    const resourceId = filename.replace('.png', '');
+
+    // Check if resource exists in our index
+    if (!resourceIndex[resourceId]) {
+      console.log(`  ⚠️  Skipping ${filename} - no matching resource ID`);
+      skippedCount++;
       continue;
     }
 
@@ -261,19 +210,21 @@ async function main() {
 
   console.log(`\n📊 Upload Summary:`);
   console.log(`  ✅ Successful: ${successCount}`);
+  console.log(`  ⚠️  Skipped: ${skippedCount}`);
   console.log(`  ❌ Failed: ${errorCount}`);
 
   // Update JSON files with screenshot URLs
   console.log(`\n📝 Updating resource JSON files...`);
 
-  // Group uploaded URLs by JSON file
+  // Group uploaded URLs by JSON file using the dynamic index
   const urlsByFile = {};
   for (const [resourceId, url] of Object.entries(uploadedUrls)) {
-    const jsonFile = RESOURCE_ID_TO_FILE[resourceId];
-    if (!jsonFile) {
-      console.log(`  ⚠️  No JSON file mapping for ${resourceId}`);
+    const resourceInfo = resourceIndex[resourceId];
+    if (!resourceInfo) {
+      console.log(`  ⚠️  No resource info for ${resourceId}`);
       continue;
     }
+    const jsonFile = resourceInfo.file;
     if (!urlsByFile[jsonFile]) {
       urlsByFile[jsonFile] = {};
     }

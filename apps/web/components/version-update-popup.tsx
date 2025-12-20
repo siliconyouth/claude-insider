@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.5.0";
+const APP_VERSION = "1.6.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.6.0",
+    date: "2025-12-20",
+    type: "minor",
+    highlights: [
+      "🤖 AI Pipeline Settings: Centralized configuration for AI operations",
+      "📚 Documents Collection: Tabbed UI with AI relationship management",
+      "📦 Resources Collection: AI enhancement fields with pros/cons/use cases",
+      "⚡ Claude Code CLI: Subscription-based analysis & enhancement scripts",
+      "🎯 Operation Queue: Track pending AI tasks without consuming API credits",
+    ],
+  },
   {
     version: "1.5.0",
     date: "2025-12-20",

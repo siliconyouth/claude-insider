@@ -2,7 +2,7 @@
   {
     "id": "sdk-python-official",
     "title": "Anthropic Python SDK",
-    "description": "Official Python SDK with async support and streaming.",
+    "description": "Official Python SDK for the Anthropic API with sync/async clients, streaming support, and type-safe request/response handling.",
     "url": "https://github.com/anthropics/anthropic-sdk-python",
     "category": "sdks",
     "subcategory": "Official",
@@ -16,7 +16,7 @@
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-python",
-      "stars": 2528,
+      "stars": 2529,
       "forks": 412,
       "lastUpdated": "2025-12-20",
       "language": "Python"
@@ -26,12 +26,13 @@
     "featuredReason": "Official SDK",
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-python-official/1766224572493-anthropic-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-python-official/1766238100292-anthropic-sdk-python.png",
+    "difficulty": "beginner"
   },
   {
     "id": "sdk-typescript-official",
     "title": "Anthropic TypeScript SDK",
-    "description": "Official TypeScript/JavaScript SDK for Node.js and browsers.",
+    "description": "Official TypeScript/JavaScript SDK providing convenient access to Anthropic's Claude API with full type definitions and streaming support.",
     "url": "https://github.com/anthropics/anthropic-sdk-typescript",
     "category": "sdks",
     "subcategory": "Official",
@@ -45,7 +46,7 @@
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-typescript",
-      "stars": 1431,
+      "stars": 1432,
       "forks": 180,
       "lastUpdated": "2025-12-20",
       "language": "TypeScript"
@@ -55,12 +56,13 @@
     "featuredReason": "Official SDK",
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-typescript-official/1766224572754-anthropic-sdk-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-typescript-official/1766238100591-anthropic-sdk-typescript.png",
+    "difficulty": "beginner"
   },
   {
     "id": "sdk-go",
     "title": "Claude Go SDK",
-    "description": "Community Go client for the Anthropic API.",
+    "description": "Unofficial Go wrapper for the Anthropic Claude API with full support for messages, streaming, vision, tool use, and batch processing.",
     "url": "https://github.com/liushuangls/go-anthropic",
     "category": "sdks",
     "subcategory": "Community",
@@ -80,12 +82,14 @@
       "language": "Go"
     },
     "addedDate": "2024-03-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-go/1766238204083-sdk-go.png"
   },
   {
     "id": "sdk-rust",
     "title": "Claude Rust SDK",
-    "description": "Community Rust client for the Anthropic API.",
+    "description": "Unofficial Rust SDK for the Anthropic API with async support, enabling Claude integration in Rust applications.",
     "url": "https://github.com/AbdelStark/anthropic-rs",
     "category": "sdks",
     "subcategory": "Community",
@@ -105,12 +109,14 @@
       "language": "Rust"
     },
     "addedDate": "2024-04-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-rust/1766238204816-sdk-rust.png"
   },
   {
     "id": "sdk-ruby",
     "title": "Claude Ruby SDK",
-    "description": "Community Ruby client for the Anthropic API.",
+    "description": "Community-maintained Ruby SDK for the Anthropic API, supporting Claude 3 models with streaming, batches, and configurable clients.",
     "url": "https://github.com/alexrudall/ruby-anthropic",
     "category": "sdks",
     "subcategory": "Community",
@@ -130,12 +136,14 @@
       "language": "Ruby"
     },
     "addedDate": "2024-05-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-ruby/1766238204615-sdk-ruby.png"
   },
   {
     "id": "sdk-java",
     "title": "Claude Kotlin/Java SDK",
-    "description": "Community Kotlin/Java client for the Anthropic API.",
+    "description": "Official Java SDK for the Anthropic API with support for AWS Bedrock and Google Vertex AI integration.",
     "url": "https://github.com/anthropics/anthropic-sdk-java",
     "category": "sdks",
     "subcategory": "Official",
@@ -149,18 +157,20 @@
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-java",
-      "stars": 320,
-      "forks": 45,
-      "lastUpdated": "2025-12-15",
-      "language": "Java"
+      "stars": 197,
+      "forks": 39,
+      "lastUpdated": "2025-12-20",
+      "language": "Kotlin"
     },
     "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-java/1766238204346-sdk-java.png"
   },
   {
     "id": "sdk-php",
     "title": "Claude PHP SDK",
-    "description": "Community PHP client for the Anthropic API.",
+    "description": "Community-maintained PHP API client for interacting with Anthropic's Claude API, featuring streaming support, tool use, and Laravel integration.",
     "url": "https://github.com/mozex/anthropic-php",
     "category": "sdks",
     "subcategory": "Community",
@@ -180,12 +190,13 @@
       "language": "PHP"
     },
     "addedDate": "2024-07-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate"
   },
   {
     "id": "sdk-dotnet",
     "title": "Claude .NET SDK",
-    "description": "Community .NET client for the Anthropic API.",
+    "description": "Unofficial C#/.NET SDK for the Anthropic Claude API, targeting .NET Standard 2.0, .NET 6.0, 8.0, and 9.0 with full streaming and tool support.",
     "url": "https://github.com/tghamm/Anthropic.SDK",
     "category": "sdks",
     "subcategory": "Community",
@@ -199,18 +210,20 @@
     "github": {
       "owner": "tghamm",
       "repo": "Anthropic.SDK",
-      "stars": 203,
+      "stars": 204,
       "forks": 38,
       "lastUpdated": "2025-10-24",
       "language": "C#"
     },
     "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-dotnet/1766238203548-sdk-dotnet.png"
   },
   {
     "id": "langchain-anthropic",
     "title": "LangChain Anthropic Integration",
-    "description": "Official LangChain integration for Claude models.",
+    "description": "Official LangChain integration package for Claude models with support for tool calling, streaming, multimodal inputs, and structured outputs.",
     "url": "https://python.langchain.com/docs/integrations/chat/anthropic/",
     "category": "sdks",
     "subcategory": "Integration",
@@ -222,12 +235,14 @@
     ],
     "status": "community",
     "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic/1766238195314-langchain-anthropic.png"
   },
   {
     "id": "llamaindex-anthropic",
     "title": "LlamaIndex Anthropic Integration",
-    "description": "LlamaIndex integration for Claude models.",
+    "description": "Official LlamaIndex integration for Anthropic Claude models, enabling seamless use of Claude in LlamaIndex's data framework for RAG and AI applications.",
     "url": "https://docs.llamaindex.ai/en/latest/api_reference/llms/anthropic/",
     "category": "sdks",
     "subcategory": "Integration",
@@ -239,12 +254,14 @@
     ],
     "status": "community",
     "addedDate": "2024-03-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic/1766238195889-llamaindex-anthropic.png"
   },
   {
     "id": "vercel-ai-sdk",
     "title": "Vercel AI SDK",
-    "description": "TypeScript toolkit for building AI apps with Claude support.",
+    "description": "Open-source TypeScript toolkit from Vercel for building AI-powered applications and agents with unified provider support including Claude, OpenAI, and Google.",
     "url": "https://github.com/vercel/ai",
     "category": "sdks",
     "subcategory": "Integration",
@@ -258,8 +275,8 @@
     "github": {
       "owner": "vercel",
       "repo": "ai",
-      "stars": 20230,
-      "forks": 3512,
+      "stars": 20231,
+      "forks": 3514,
       "lastUpdated": "2025-12-20",
       "language": "TypeScript"
     },
@@ -267,6 +284,7 @@
     "featuredReason": "Popular",
     "addedDate": "2024-04-15",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-ai-sdk/1766224577013-vercel-ai-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-ai-sdk/1766238207545-vercel-ai-sdk.png",
+    "difficulty": "intermediate"
   }
 ]

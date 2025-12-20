@@ -2,7 +2,7 @@
   {
     "id": "cursor-editor",
     "title": "Cursor",
-    "description": "AI-first code editor built on VS Code with native Claude integration.",
+    "description": "AI-powered code editor built on VS Code featuring intelligent autocomplete, autonomous coding agents, and seamless AI-assisted development workflows.",
     "url": "https://cursor.com",
     "category": "tools",
     "subcategory": "IDE",
@@ -17,12 +17,13 @@
     "featuredReason": "Most Popular",
     "addedDate": "2024-01-15",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-editor/1766224574520-cursor-editor.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-editor/1766238191916-cursor-editor.png",
+    "difficulty": "beginner"
   },
   {
     "id": "continue-dev",
     "title": "Continue",
-    "description": "Open-source AI code assistant for VS Code and JetBrains with Claude support.",
+    "description": "Open-source AI coding platform with CLI, IDE extensions (VS Code/JetBrains), and background agents for automated workflows.",
     "url": "https://github.com/continuedev/continue",
     "category": "tools",
     "subcategory": "IDE Plugin",
@@ -36,8 +37,8 @@
     "github": {
       "owner": "continuedev",
       "repo": "continue",
-      "stars": 30422,
-      "forks": 3926,
+      "stars": 30424,
+      "forks": 3927,
       "lastUpdated": "2025-12-20",
       "language": "TypeScript"
     },
@@ -45,12 +46,13 @@
     "featuredReason": "Editor's Pick",
     "addedDate": "2024-02-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/continue-dev/1766224574180-continue-dev.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/continue-dev/1766238191012-continue-dev.png",
+    "difficulty": "intermediate"
   },
   {
     "id": "aider",
     "title": "Aider",
-    "description": "AI pair programming in your terminal. Works with Claude and other LLMs.",
+    "description": "AI pair programming in your terminal. Works with Claude 3.7 Sonnet, GPT-4o, DeepSeek, and other LLMs to edit code in your existing codebase.",
     "url": "https://github.com/Aider-AI/aider",
     "category": "tools",
     "subcategory": "CLI",
@@ -65,7 +67,7 @@
     "github": {
       "owner": "Aider-AI",
       "repo": "aider",
-      "stars": 39076,
+      "stars": 39082,
       "forks": 3749,
       "lastUpdated": "2025-12-18",
       "language": "Python"
@@ -74,12 +76,12 @@
     "featuredReason": "Trending",
     "addedDate": "2024-03-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aider/1766224570221-aider.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aider/1766238185403-aider.png"
   },
   {
     "id": "cline-vscode",
     "title": "Cline",
-    "description": "Autonomous coding agent for VS Code that can use CLI and browser.",
+    "description": "Autonomous AI coding agent for VS Code that creates/edits files, executes terminal commands, and uses a browser with human approval at every step.",
     "url": "https://github.com/cline/cline",
     "category": "tools",
     "subcategory": "IDE Plugin",
@@ -93,8 +95,8 @@
     "github": {
       "owner": "cline",
       "repo": "cline",
-      "stars": 56273,
-      "forks": 5461,
+      "stars": 56274,
+      "forks": 5463,
       "lastUpdated": "2025-12-20",
       "language": "TypeScript"
     },
@@ -102,12 +104,13 @@
     "featuredReason": "Trending",
     "addedDate": "2024-06-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cline-vscode/1766224573871-cline-vscode.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cline-vscode/1766238190281-cline-vscode.png",
+    "difficulty": "intermediate"
   },
   {
     "id": "zed-editor",
     "title": "Zed",
-    "description": "High-performance, multiplayer code editor with built-in AI features.",
+    "description": "High-performance code editor built in Rust with native AI integration, supporting Claude and other LLMs for agentic editing and code transformation.",
     "url": "https://zed.dev",
     "category": "tools",
     "subcategory": "IDE",
@@ -121,19 +124,20 @@
     "github": {
       "owner": "zed-industries",
       "repo": "zed",
-      "stars": 71785,
-      "forks": 6333,
+      "stars": 71796,
+      "forks": 6331,
       "lastUpdated": "2025-12-20",
       "language": "Rust"
     },
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zed-editor/1766224577765-zed-editor.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zed-editor/1766238208349-zed-editor.png",
+    "difficulty": "beginner"
   },
   {
     "id": "windsurf",
     "title": "Windsurf",
-    "description": "AI-powered IDE by Codeium with Claude integration.",
+    "description": "AI-native IDE with Cascade agentic coding, deep codebase understanding, and intelligent code generation for seamless developer workflows.",
     "url": "https://windsurf.com/editor",
     "category": "tools",
     "subcategory": "IDE",
@@ -146,12 +150,13 @@
     "status": "community",
     "addedDate": "2024-11-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/windsurf/1766224577342-windsurf.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/windsurf/1766238207841-windsurf.png",
+    "difficulty": "beginner"
   },
   {
     "id": "neovim-avante",
     "title": "avante.nvim",
-    "description": "Neovim plugin for AI-assisted coding with Claude support.",
+    "description": "Neovim plugin that brings Cursor AI IDE-style coding assistance to Neovim, with AI-powered suggestions and one-click code application.",
     "url": "https://github.com/yetone/avante.nvim",
     "category": "tools",
     "subcategory": "IDE Plugin",
@@ -166,19 +171,19 @@
     "github": {
       "owner": "yetone",
       "repo": "avante.nvim",
-      "stars": 16744,
-      "forks": 762,
+      "stars": 16748,
+      "forks": 764,
       "lastUpdated": "2025-12-19",
       "language": "Lua"
     },
     "addedDate": "2024-08-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/neovim-avante/1766224575623-neovim-avante.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/neovim-avante/1766238198318-neovim-avante.png"
   },
   {
     "id": "claude-cli-unofficial",
     "title": "Claude CLI (Unofficial)",
-    "description": "Unofficial command-line interface for Claude conversations.",
+    "description": "Official Anthropic educational courses covering API fundamentals, prompt engineering, evaluations, and tool use with Claude.",
     "url": "https://github.com/anthropics/courses",
     "category": "tools",
     "subcategory": "CLI",
@@ -189,12 +194,21 @@
     ],
     "status": "community",
     "addedDate": "2024-05-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "courses",
+      "stars": 17825,
+      "forks": 1669,
+      "lastUpdated": "2025-11-13",
+      "language": "Jupyter Notebook"
+    },
+    "difficulty": "beginner"
   },
   {
     "id": "raycast-ai",
     "title": "Raycast AI",
-    "description": "Access Claude and other AI models directly from Raycast launcher on macOS.",
+    "description": "macOS launcher with AI Chat supporting 32+ models including Claude, plus AI Extensions for natural language OS control.",
     "url": "https://www.raycast.com/ai",
     "category": "tools",
     "subcategory": "Desktop App",
@@ -207,12 +221,13 @@
     "status": "community",
     "addedDate": "2024-02-15",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/raycast-ai/1766224576163-raycast-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/raycast-ai/1766238200969-raycast-ai.png",
+    "difficulty": "beginner"
   },
   {
     "id": "chatbox",
     "title": "Chatbox",
-    "description": "Cross-platform desktop client for multiple AI providers including Claude.",
+    "description": "Open-source cross-platform desktop AI client supporting Claude, ChatGPT, and other LLMs with local data storage and team collaboration features.",
     "url": "https://github.com/chatboxai/chatbox",
     "category": "tools",
     "subcategory": "Desktop App",
@@ -226,19 +241,20 @@
     "github": {
       "owner": "chatboxai",
       "repo": "chatbox",
-      "stars": 37828,
+      "stars": 37832,
       "forks": 3832,
       "lastUpdated": "2025-11-28",
       "language": "TypeScript"
     },
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatbox/1766224573315-chatbox.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatbox/1766238189407-chatbox.png",
+    "difficulty": "beginner"
   },
   {
     "id": "typing-mind",
     "title": "TypingMind",
-    "description": "Better UI for ChatGPT and Claude with custom personas and plugins.",
+    "description": "All-in-one LLM frontend supporting Claude, ChatGPT, Gemini with custom agents, plugins, and local data storage. One-time purchase, bring your own API keys.",
     "url": "https://www.typingmind.com",
     "category": "tools",
     "subcategory": "Web App",
@@ -251,12 +267,13 @@
     "status": "community",
     "addedDate": "2024-01-20",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/typing-mind/1766224576666-typing-mind.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/typing-mind/1766238206861-typing-mind.png",
+    "difficulty": "beginner"
   },
   {
     "id": "open-webui",
     "title": "Open WebUI",
-    "description": "Self-hosted web interface for LLMs with Claude API support.",
+    "description": "Extensible, self-hosted AI platform with OpenAI-compatible API support, RAG capabilities, and offline operation for Claude and other LLMs.",
     "url": "https://github.com/open-webui/open-webui",
     "category": "tools",
     "subcategory": "Web App",
@@ -270,13 +287,14 @@
     "github": {
       "owner": "open-webui",
       "repo": "open-webui",
-      "stars": 118273,
-      "forks": 16657,
-      "lastUpdated": "2025-12-16",
+      "stars": 118278,
+      "forks": 16660,
+      "lastUpdated": "2025-12-20",
       "language": "Svelte"
     },
     "addedDate": "2024-04-15",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/open-webui/1766224575900-open-webui.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/open-webui/1766238199019-open-webui.png",
+    "difficulty": "intermediate"
   }
 ]
