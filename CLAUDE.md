@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.4.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.5.0**.
 
 | Link | URL |
 |------|-----|
@@ -40,7 +40,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.4.0**.
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 10. [Component Patterns](#component-patterns) - Buttons, cards, focus states
-11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 73 tables, RLS, migrations
+11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 75 tables, RLS, migrations
 12. [Internationalization](#internationalization-i18n) - 18 languages
 13. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
 14. [Content Structure](#content-structure) - Documentation, resources, legal pages
@@ -153,7 +153,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-14 | Notification Popups | Persistent until dismissed, deep-linking, ARIA regions |
 | FR-15 | Settings Model | Model selector in settings with feedback |
 | FR-16 | Header Model Display | Smart API key indicators, BEST badge, tier colors |
-| FR-17 | Database Types | 73 tables, auto-generated TypeScript types |
+| FR-17 | Database Types | 75 tables, auto-generated TypeScript types |
 | FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
 | FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
 | FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
@@ -174,6 +174,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-35 | Smart AI Messaging | @claudeinsider auto-responds in 1-on-1 DMs, @mention-only in groups, admin-managed, E2EE verified |
 | FR-36 | Gamification CMS | Payload CMS for achievements, badges, tiers, categories; auto-sync to Supabase |
 | FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
+| FR-38 | Resource Auto-Update | AI-powered updates via Claude Opus 4.5, Firecrawl scraping, admin review workflow, changelog tracking |
 
 ### Non-Functional Requirements
 
@@ -465,7 +466,7 @@ Place dynamic imports at the **visibility boundary** - where UI transitions from
 
 ### Performance Targets
 
-| Metric | Target | Current (v1.4.0) |
+| Metric | Target | Current (v1.5.0) |
 |--------|--------|------------------|
 | Lighthouse Performance (Desktop) | > 85 | 86 |
 | FCP (First Contentful Paint) | < 1.0s | 0.7s |
@@ -736,7 +737,7 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 ### Overview
 
-Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **63 migrations** define **73 tables** across 13 categories.
+Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **85 migrations** define **75 tables** across 14 categories.
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -1105,6 +1106,70 @@ Matrix Olm/Megolm protocol with Double Ratchet algorithm.
 **Location**: `lib/resources/`, `data/resources/`, `app/resources/`
 
 122+ curated resources across 10 categories: official, tools, mcp-servers, rules, prompts, agents, tutorials, sdks, showcases, community.
+
+#### Resource Auto-Update System (MANDATORY)
+
+**Location**: `lib/resources/update-orchestrator.ts`, `lib/ai/resource-updater.ts`, `app/(main)/dashboard/resource-updates/`
+
+AI-powered system for keeping resources up-to-date with Claude Opus 4.5 analysis and admin review workflow.
+
+**Key Components**:
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| Update Orchestrator | `lib/resources/update-orchestrator.ts` | State machine for job lifecycle |
+| AI Analyzer | `lib/ai/resource-updater.ts` | Claude Opus 4.5 content comparison |
+| Screenshot Service | `lib/resources/screenshot-service.ts` | Firecrawl + Supabase Storage |
+| Admin Dashboard | `app/(main)/dashboard/resource-updates/` | Review and approve changes |
+| Cron Job | `app/api/cron/update-resources/route.ts` | Weekly Sunday 3 AM UTC |
+| Payload CMS Button | `components/payload/ResourceUpdateButton.tsx` | Manual trigger in CMS |
+
+**Job Status Flow**:
+```
+pending → scraping → analyzing → screenshots → ready_for_review → applied/rejected
+```
+
+**Database Tables** (Migration 084):
+
+| Table | Purpose |
+|-------|---------|
+| `resource_update_jobs` | Tracks job status, scraped content, AI analysis, screenshots |
+| `resource_changelog` | Historical record of all applied changes with versioning |
+
+**New Resource Columns**:
+- `last_update_job_id`: Reference to most recent update job
+- `last_auto_updated_at`: Timestamp of last auto-update
+- `update_frequency`: `daily`, `weekly`, `monthly`, or `manual`
+- `auto_update_enabled`: Toggle for cron inclusion
+- `changelog_count`: Denormalized count for performance
+
+**MANDATORY for New Resources**:
+
+When adding new resources to the system:
+
+1. **Set Update Frequency**: Choose appropriate `update_frequency` based on resource type
+2. **Enable Auto-Update**: Set `auto_update_enabled: true` unless resource is static
+3. **Provide URLs**: Ensure `official_url`, `repo_url`, or `documentation_url` are set for scraping
+4. **Review Changes**: All AI-generated updates require admin approval before applying
+
+**API Endpoints**:
+
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| POST | `/api/admin/resources/updates` | Create update job |
+| GET | `/api/admin/resources/updates` | List jobs (with status filter) |
+| GET | `/api/admin/resources/updates/[jobId]` | Job details |
+| POST | `/api/admin/resources/updates/[jobId]/approve` | Apply selected changes |
+| POST | `/api/admin/resources/updates/[jobId]/reject` | Reject with notes |
+| GET | `/api/resources/[slug]/changelog` | Public changelog |
+
+**Triggering Updates**:
+
+```typescript
+// From Payload CMS - use ResourceUpdateButton component
+// From dashboard - POST to /api/admin/resources/updates
+// Automatic - cron runs weekly on Sunday 3 AM UTC
+```
 
 ### Achievement System
 

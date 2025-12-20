@@ -2,6 +2,7 @@ import type { CollectionConfig, CollectionAfterChangeHook } from 'payload';
 import { createRevalidateHook, createDeleteRevalidateHook } from '../lib/revalidate';
 import { hasRole } from './Users';
 import { notifyAdminsResourceSubmission } from '../lib/admin-notifications';
+import { createResourceSyncHook, createResourceDeleteHook } from '../lib/payload/sync-resources';
 import type { Resource, Category } from '../payload-types';
 
 /**
@@ -64,8 +65,8 @@ export const Resources: CollectionConfig = {
     maxPerDoc: 10,
   },
   hooks: {
-    afterChange: [createRevalidateHook('resources'), notifyAdminsOnPendingReview],
-    afterDelete: [createDeleteRevalidateHook('resources')],
+    afterChange: [createRevalidateHook('resources'), notifyAdminsOnPendingReview, createResourceSyncHook()],
+    afterDelete: [createDeleteRevalidateHook('resources'), createResourceDeleteHook()],
   },
   fields: [
     // Publication workflow status
@@ -422,6 +423,18 @@ export const Resources: CollectionConfig = {
           },
         },
       ],
+    },
+
+    // AI Update Tools (UI component in sidebar)
+    {
+      name: 'aiUpdateTools',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: '@/components/payload/ResourceUpdateButton',
+        },
+      },
     },
   ],
   timestamps: true,

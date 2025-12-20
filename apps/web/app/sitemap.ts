@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getAllDocPaths } from "@/lib/mdx";
+import { getAllResourceSlugs } from "@/lib/resources/queries";
 
 // Resource categories for sitemap
 const RESOURCE_CATEGORY_SLUGS = [
@@ -15,7 +16,7 @@ const RESOURCE_CATEGORY_SLUGS = [
   "community",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.claudeinsider.com";
 
   // Homepage - highest priority
@@ -59,6 +60,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     })),
   ];
+
+  // Individual resource pages (high priority for SEO)
+  const resourceSlugs = await getAllResourceSlugs();
+  const individualResourcePages: MetadataRoute.Sitemap = resourceSlugs
+    .filter((slug) => !RESOURCE_CATEGORY_SLUGS.includes(slug)) // Exclude category slugs
+    .map((slug) => ({
+      url: `${baseUrl}/resources/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    }));
 
   // Important public pages
   const publicPages: MetadataRoute.Sitemap = [
@@ -137,6 +149,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...homepage,
     ...docsHub,
     ...resourcePages,
+    ...individualResourcePages,
     ...publicPages,
     ...legalPages,
     ...docPages,

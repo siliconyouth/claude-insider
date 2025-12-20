@@ -54,7 +54,7 @@ try {
 // ===========================================================================
 
 const VERBOSE = true;
-const VERSION = "6.1"; // Increment when making significant changes
+const VERSION = "6.2"; // Increment when making significant changes - Added changelog support
 const FORCE_REGENERATE = process.argv.includes("--force");
 
 // ===========================================================================
@@ -446,6 +446,15 @@ function generateResourceChunks() {
           resource.featuredReason || "",
         ];
 
+        // Include changelog summaries in search content
+        if (resource.changelog && Array.isArray(resource.changelog)) {
+          for (const entry of resource.changelog.slice(0, 3)) {
+            if (entry.summary) {
+              contentParts.push(`Updated ${entry.date}: ${entry.summary}`);
+            }
+          }
+        }
+
         const contentStr = contentParts.filter(Boolean).join(". ");
 
         // Build keywords from tags and metadata
@@ -472,6 +481,11 @@ function generateResourceChunks() {
         if (resource.status && resource.status !== "stable") {
           recommendationText += ` [Status: ${resource.status}]`;
         }
+        // Add latest update info if available
+        if (resource.changelog?.[0]) {
+          const latest = resource.changelog[0];
+          recommendationText += ` [Last updated ${latest.date}: ${latest.summary || 'Updated'}]`;
+        }
 
         chunks.push({
           id: `resource-${resource.id}`,
@@ -490,6 +504,8 @@ function generateResourceChunks() {
             featured: resource.featured || false,
             status: resource.status || "stable",
             github: resource.github || null,
+            changelog: resource.changelog ? resource.changelog.slice(0, 3) : null,
+            lastUpdated: resource.changelog?.[0]?.date || null,
           },
         });
 

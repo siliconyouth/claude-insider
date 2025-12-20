@@ -13,12 +13,17 @@ import "server-only";
 const FIRECRAWL_API_URL = "https://api.firecrawl.dev/v1";
 
 export interface ScrapeOptions {
-  formats?: ("markdown" | "html" | "rawHtml" | "links" | "summary")[];
+  formats?: ("markdown" | "html" | "rawHtml" | "links" | "summary" | "screenshot")[];
   onlyMainContent?: boolean;
   waitFor?: number;
   maxAge?: number; // Cache time in ms
   includeTags?: string[];
   excludeTags?: string[];
+  screenshot?: {
+    fullPage?: boolean;
+    quality?: number; // 0-100
+    viewport?: { width: number; height: number };
+  };
 }
 
 export interface ScrapeResult {
@@ -28,6 +33,7 @@ export interface ScrapeResult {
     html?: string;
     rawHtml?: string;
     links?: string[];
+    screenshot?: string; // Base64 encoded image or URL
     metadata?: {
       title?: string;
       description?: string;
@@ -95,6 +101,21 @@ export async function scrapeUrl(
         maxAge: options.maxAge,
         includeTags: options.includeTags,
         excludeTags: options.excludeTags,
+        // Screenshot options - pass as format object if screenshot is requested
+        ...(options.screenshot && options.formats?.includes("screenshot")
+          ? {
+              formats: options.formats.map((f) =>
+                f === "screenshot"
+                  ? {
+                      type: "screenshot" as const,
+                      fullPage: options.screenshot?.fullPage ?? false,
+                      quality: options.screenshot?.quality,
+                      viewport: options.screenshot?.viewport,
+                    }
+                  : f
+              ),
+            }
+          : {}),
       }),
     });
 

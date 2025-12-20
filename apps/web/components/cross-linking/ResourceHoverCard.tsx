@@ -184,6 +184,7 @@ export function ResourceHoverCard({
       <div className="relative bg-white dark:bg-[#111111] rounded-xl shadow-xl border border-gray-200 dark:border-[#262626] overflow-hidden">
         <ResourceCard
           resource={resource}
+          slug={resource.id}
           variant="compact"
           showCategory
           showTags={false}

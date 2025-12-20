@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.5.0] - 2025-12-20
+### Resource Auto-Update System
+- **AI-Powered Resource Updates**: Automated system for keeping resources current using Claude Opus 4.5
+  - Firecrawl-based web scraping for official websites, GitHub repos, and documentation
+  - Intelligent content comparison with confidence scoring (0-100%)
+  - Field-level change detection with AI-generated reasons
+  - Screenshot capture and automatic upload to Supabase Storage
+- **Admin Review Workflow**: All AI-generated changes require approval before applying
+  - Dashboard at `/dashboard/resource-updates` for managing update jobs
+  - Side-by-side diff view with cherry-pick selection
+  - Approve/reject with notes for audit trail
+  - Changelog tracking with version history
+- **Automated Scheduling**: Weekly cron job (Sundays 3 AM UTC) for batch updates
+  - Configurable per-resource update frequency (daily/weekly/monthly/manual)
+  - Auto-update toggle for excluding static resources
+- **Payload CMS Integration**: "Check for Updates" button in resource edit sidebar
+  - Real-time job status polling
+  - Direct link to review page when ready
+- **Database Schema** (Migration 084):
+  - `resource_update_jobs`: Job tracking with status state machine
+  - `resource_changelog`: Historical change records with versioning
+  - New columns on `resources`: `update_frequency`, `auto_update_enabled`, `changelog_count`
+- **RAG System Updated**: Changelog data now included in search index (v6.2)
+
+---
+
 ## [1.4.0] - 2025-12-19
 ### Performance Optimization
 - **Lighthouse Score Improved**: Desktop performance now at 86% (up from 82%)

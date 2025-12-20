@@ -9,7 +9,7 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/🌐_Live-claudeinsider.com-0a0a0a?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/📦_v1.3.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/📦_v1.5.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/📄_MIT-license-eab308?style=for-the-badge&labelColor=0a0a0a)](LICENSE)
 [![Donate](https://img.shields.io/badge/💖_Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
@@ -139,7 +139,7 @@ pnpm dev
 
 - Supabase
 - PostgreSQL
-- 73 Tables
+- 75 Tables
 - RLS Policies
 
 </td>

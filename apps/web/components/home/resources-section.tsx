@@ -170,6 +170,7 @@ function FeaturedResources() {
           >
             <ResourceCard
               resource={resource}
+              slug={resource.id}
               variant="featured"
               showCategory
               showTags
@@ -265,6 +266,7 @@ function TopByStars() {
           >
             <ResourceCard
               resource={resource}
+              slug={resource.id}
               variant="compact"
               showCategory
               showTags={false}

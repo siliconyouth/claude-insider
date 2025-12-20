@@ -29,6 +29,8 @@ export type { UserRole } from './Users';
 
 // Moderation
 export { EditSuggestions } from './EditSuggestions';
+export { ResourceReviews } from './ResourceReviews';
+export { ResourceAuthors } from './ResourceAuthors';
 
 // Media uploads
 export { Media } from './Media';

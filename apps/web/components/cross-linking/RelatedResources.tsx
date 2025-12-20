@@ -130,6 +130,7 @@ export function RelatedResources({
           <ResourceCard
             key={resource.id}
             resource={resource}
+            slug={resource.id}
             variant={variant}
             showCategory
             showTags={variant !== 'compact'}

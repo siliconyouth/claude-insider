@@ -179,6 +179,7 @@ export default async function CategoryPage({
                   >
                     <ResourceCard
                       resource={resource}
+                      slug={resource.id}
                       variant="featured"
                       showCategory={false}
                       showTags
@@ -208,6 +209,7 @@ export default async function CategoryPage({
                 >
                   <ResourceCard
                     resource={resource}
+                    slug={resource.id}
                     variant="default"
                     showCategory={false}
                     showTags

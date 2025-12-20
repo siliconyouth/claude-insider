@@ -539,6 +539,7 @@ function ResourcesContent() {
                 >
                   <ResourceCard
                     resource={resource}
+                    slug={resource.id}
                     variant={viewMode === 'grid' ? 'default' : 'compact'}
                     showCategory
                     showTags={viewMode === 'grid'}

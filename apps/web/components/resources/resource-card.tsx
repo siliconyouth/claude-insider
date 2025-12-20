@@ -6,8 +6,12 @@
  * Follows Claude Insider design system patterns (violet/blue/cyan gradients)
  *
  * Now supports user interaction buttons (favorites, ratings, collections)
+ *
+ * When `slug` is provided, links to internal detail page (/resources/[slug])
+ * Otherwise links to external resource URL
  */
 
+import Link from 'next/link';
 import { cn } from '@/lib/design-system';
 import type { ResourceEntry, ResourceCategory } from '@/data/resources/schema';
 import { getCategoryBySlug } from '@/data/resources/schema';
@@ -31,6 +35,12 @@ const ForkIcon = ({ className }: { className?: string }) => (
 const ExternalLinkIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+  </svg>
+);
+
+const ChevronRightIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
   </svg>
 );
 
@@ -59,6 +69,8 @@ const DIFFICULTY_BADGE_STYLES: Record<string, string> = {
 
 interface ResourceCardProps {
   resource: ResourceEntry;
+  /** When provided, links to internal detail page instead of external URL */
+  slug?: string;
   variant?: 'default' | 'compact' | 'featured';
   showCategory?: boolean;
   showTags?: boolean;
@@ -163,6 +175,7 @@ function getCategoryColor(category: ResourceCategory): string {
 
 export function ResourceCard({
   resource,
+  slug,
   variant = 'default',
   showCategory = true,
   showTags = true,
@@ -172,163 +185,175 @@ export function ResourceCard({
   className,
 }: ResourceCardProps) {
   const category = getCategoryBySlug(resource.category);
+  const isInternalLink = !!slug;
+  const href = isInternalLink ? `/resources/${slug}` : resource.url;
 
-  // Featured variant with gradient border and glow
-  if (variant === 'featured') {
-    return (
-      <a
-        href={resource.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(
-          'group relative block overflow-hidden rounded-xl',
-          'bg-white dark:bg-[#111111]',
-          'border border-gray-200 dark:border-[#262626]',
-          'shadow-sm',
-          'transition-all duration-300',
-          'hover:shadow-xl hover:shadow-blue-500/10',
-          'hover:-translate-y-1',
-          'hover:border-blue-500/50',
-          className
-        )}
-      >
-        {/* Featured badge */}
-        {resource.featured && resource.featuredReason && (
-          <div className="absolute top-0 right-0 z-10">
-            <div className="px-3 py-1 text-xs font-medium text-white bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 rounded-bl-lg rounded-tr-xl">
-              {resource.featuredReason}
-            </div>
+  // Common link wrapper classes
+  const cardClasses = cn(
+    'group relative block overflow-hidden rounded-xl',
+    'bg-white dark:bg-[#111111]',
+    'border border-gray-200 dark:border-[#262626]',
+    'shadow-sm',
+    'transition-all duration-300',
+    'hover:shadow-xl hover:shadow-blue-500/10',
+    'hover:-translate-y-1',
+    'hover:border-blue-500/50',
+    className
+  );
+
+  // Featured variant content
+  const featuredContent = (
+    <>
+      {/* Featured badge */}
+      {resource.featured && resource.featuredReason && (
+        <div className="absolute top-0 right-0 z-10">
+          <div className="px-3 py-1 text-xs font-medium text-white bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 rounded-bl-lg rounded-tr-xl">
+            {resource.featuredReason}
           </div>
-        )}
+        </div>
+      )}
 
-        <div className="p-6">
-          {/* Header: Icon + Title */}
-          <div className="flex items-start gap-4">
-            {category && (
-              <div
-                className={cn(
-                  'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl',
-                  'bg-gradient-to-br from-violet-500/10 via-blue-500/10 to-cyan-500/10',
-                  'group-hover:from-violet-500/20 group-hover:via-blue-500/20 group-hover:to-cyan-500/20',
-                  'transition-all duration-300'
-                )}
-              >
-                {category.icon}
+      <div className="p-6">
+        {/* Header: Icon + Title */}
+        <div className="flex items-start gap-4">
+          {category && (
+            <div
+              className={cn(
+                'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl',
+                'bg-gradient-to-br from-violet-500/10 via-blue-500/10 to-cyan-500/10',
+                'group-hover:from-violet-500/20 group-hover:via-blue-500/20 group-hover:to-cyan-500/20',
+                'transition-all duration-300'
+              )}
+            >
+              {category.icon}
+            </div>
+          )}
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
+              {resource.title}
+            </h3>
+            {showCategory && category && (
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                {category.name}
+              </p>
+            )}
+          </div>
+          {isInternalLink ? (
+            <ChevronRightIcon className="w-5 h-5 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+          ) : (
+            <ExternalLinkIcon className="w-5 h-5 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+          )}
+        </div>
+
+        {/* Description */}
+        <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+          {resource.description}
+        </p>
+
+        {/* GitHub Stats */}
+        {resource.github && (
+          <div className="mt-4 flex items-center gap-4 text-sm">
+            <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+              <StarIcon className="w-4 h-4 text-yellow-500" />
+              <span>{formatNumber(resource.github.stars)}</span>
+            </div>
+            {resource.github.forks > 0 && (
+              <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                <ForkIcon className="w-4 h-4" />
+                <span>{formatNumber(resource.github.forks)}</span>
               </div>
             )}
-            <div className="flex-1 min-w-0">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors">
-                {resource.title}
-              </h3>
-              {showCategory && category && (
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-                  {category.name}
-                </p>
-              )}
-            </div>
-            <ExternalLinkIcon className="w-5 h-5 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+            {resource.github.language && (
+              <span className="text-gray-500 dark:text-gray-500">
+                {resource.github.language}
+              </span>
+            )}
           </div>
+        )}
 
-          {/* Description */}
-          <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-            {resource.description}
-          </p>
+        {/* Tags */}
+        {showTags && resource.tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {resource.tags.slice(0, maxTags).map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+              >
+                {tag}
+              </span>
+            ))}
+            {resource.tags.length > maxTags && (
+              <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+                +{resource.tags.length - maxTags}
+              </span>
+            )}
+          </div>
+        )}
 
-          {/* GitHub Stats */}
-          {resource.github && (
-            <div className="mt-4 flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                <StarIcon className="w-4 h-4 text-yellow-500" />
-                <span>{formatNumber(resource.github.stars)}</span>
-              </div>
-              {resource.github.forks > 0 && (
-                <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                  <ForkIcon className="w-4 h-4" />
-                  <span>{formatNumber(resource.github.forks)}</span>
-                </div>
+        {/* Footer: Status + Version + Interactions */}
+        <div className="mt-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span
+              className={cn(
+                'px-2 py-0.5 text-xs font-medium rounded-full capitalize',
+                STATUS_BADGE_STYLES[resource.status] || STATUS_BADGE_STYLES.community
               )}
-              {resource.github.language && (
-                <span className="text-gray-500 dark:text-gray-500">
-                  {resource.github.language}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* Tags */}
-          {showTags && resource.tags.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {resource.tags.slice(0, maxTags).map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
-                >
-                  {tag}
-                </span>
-              ))}
-              {resource.tags.length > maxTags && (
-                <span className="px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
-                  +{resource.tags.length - maxTags}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* Footer: Status + Version + Interactions */}
-          <div className="mt-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            >
+              {resource.status}
+            </span>
+            {resource.difficulty && (
               <span
                 className={cn(
                   'px-2 py-0.5 text-xs font-medium rounded-full capitalize',
-                  STATUS_BADGE_STYLES[resource.status] || STATUS_BADGE_STYLES.community
+                  DIFFICULTY_BADGE_STYLES[resource.difficulty]
                 )}
               >
-                {resource.status}
+                {resource.difficulty}
               </span>
-              {resource.difficulty && (
-                <span
-                  className={cn(
-                    'px-2 py-0.5 text-xs font-medium rounded-full capitalize',
-                    DIFFICULTY_BADGE_STYLES[resource.difficulty]
-                  )}
-                >
-                  {resource.difficulty}
-                </span>
-              )}
-            </div>
-            <div className="flex items-center gap-2">
-              {resource.version && (
-                <span className="text-xs text-gray-500 dark:text-gray-500 font-mono">
-                  v{resource.version}
-                </span>
-              )}
-              {showInteractions && (
-                <InteractionBar resource={resource} variant="featured" showAskAI={showAskAI} />
-              )}
-            </div>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            {resource.version && (
+              <span className="text-xs text-gray-500 dark:text-gray-500 font-mono">
+                v{resource.version}
+              </span>
+            )}
+            {showInteractions && (
+              <InteractionBar resource={resource} variant="featured" showAskAI={showAskAI} />
+            )}
           </div>
         </div>
+      </div>
+    </>
+  );
+
+  // Featured variant with gradient border and glow
+  if (variant === 'featured') {
+    return isInternalLink ? (
+      <Link href={href} className={cardClasses}>
+        {featuredContent}
+      </Link>
+    ) : (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={cardClasses}>
+        {featuredContent}
       </a>
     );
   }
 
   // Compact variant for lists and search results
   if (variant === 'compact') {
-    return (
-      <a
-        href={resource.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(
-          'group flex items-center gap-4 p-4 rounded-lg',
-          'bg-white dark:bg-[#111111]',
-          'border border-gray-200 dark:border-[#262626]',
-          'transition-all duration-200',
-          'hover:border-blue-500/50',
-          'hover:bg-gray-50 dark:hover:bg-[#1a1a1a]',
-          className
-        )}
-      >
+    const compactClasses = cn(
+      'group flex items-center gap-4 p-4 rounded-lg',
+      'bg-white dark:bg-[#111111]',
+      'border border-gray-200 dark:border-[#262626]',
+      'transition-all duration-200',
+      'hover:border-blue-500/50',
+      'hover:bg-gray-50 dark:hover:bg-[#1a1a1a]',
+      className
+    );
+
+    const compactContent = (
+      <>
         {/* Category Icon */}
         {category && (
           <div
@@ -374,30 +399,41 @@ export function ResourceCard({
           <InteractionBar resource={resource} variant="compact" showAskAI={showAskAI} />
         )}
 
-        {/* External Link Icon */}
-        <ExternalLinkIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+        {/* Link Icon */}
+        {isInternalLink ? (
+          <ChevronRightIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+        ) : (
+          <ExternalLinkIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+        )}
+      </>
+    );
+
+    return isInternalLink ? (
+      <Link href={href} className={compactClasses}>
+        {compactContent}
+      </Link>
+    ) : (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={compactClasses}>
+        {compactContent}
       </a>
     );
   }
 
   // Default variant
-  return (
-    <a
-      href={resource.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        'group block p-5 rounded-xl',
-        'bg-white dark:bg-[#111111]',
-        'border border-gray-200 dark:border-[#262626]',
-        'shadow-sm',
-        'transition-all duration-200',
-        'hover:shadow-lg hover:shadow-blue-500/5',
-        'hover:-translate-y-0.5',
-        'hover:border-blue-500/50',
-        className
-      )}
-    >
+  const defaultClasses = cn(
+    'group block p-5 rounded-xl',
+    'bg-white dark:bg-[#111111]',
+    'border border-gray-200 dark:border-[#262626]',
+    'shadow-sm',
+    'transition-all duration-200',
+    'hover:shadow-lg hover:shadow-blue-500/5',
+    'hover:-translate-y-0.5',
+    'hover:border-blue-500/50',
+    className
+  );
+
+  const defaultContent = (
+    <>
       {/* Header */}
       <div className="flex items-start gap-3">
         {category && (
@@ -425,7 +461,11 @@ export function ResourceCard({
             </p>
           )}
         </div>
-        <ExternalLinkIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1" />
+        {isInternalLink ? (
+          <ChevronRightIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1" />
+        ) : (
+          <ExternalLinkIcon className="w-4 h-4 text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 mt-1" />
+        )}
       </div>
 
       {/* Description */}
@@ -493,6 +533,16 @@ export function ResourceCard({
           <InteractionBar resource={resource} variant="default" showAskAI={showAskAI} />
         )}
       </div>
+    </>
+  );
+
+  return isInternalLink ? (
+    <Link href={href} className={defaultClasses}>
+      {defaultContent}
+    </Link>
+  ) : (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={defaultClasses}>
+      {defaultContent}
     </a>
   );
 }

@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "type": "module",
   "private": true,
   "scripts": {
@@ -33,6 +33,7 @@
     "@payloadcms/email-resend": "^3.68.3",
     "@payloadcms/next": "^3.68.3",
     "@payloadcms/richtext-lexical": "^3.68.3",
+    "@payloadcms/ui": "^3.68.3",
     "@paypal/paypal-js": "^9.0.1",
     "@paypal/react-paypal-js": "^8.9.2",
     "@repo/ui": "workspace:*",

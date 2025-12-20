@@ -1,15 +1,15 @@
 # Claude Insider Roadmap
 
-**Version:** 1.4.0
-**Last Updated:** 2025-12-19
-**Current Release:** v1.3.0
+**Version:** 1.5.0
+**Last Updated:** 2025-12-20
+**Current Release:** v1.5.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-**🎉 Version 1.3.0 Released!** Profile Enhancements bring location/timezone display, share functionality with OG images, and mobile action bars. This roadmap now outlines the development path from **v1.3.0** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+**🎉 Version 1.5.0 Released!** Resource Auto-Update System brings AI-powered content updates using Claude Opus 4.5, automated Firecrawl scraping, admin review workflow with cherry-pick selection, and comprehensive changelog tracking. This roadmap outlines the development path from **v1.5.0** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,8 @@
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.5.0 | Dec 20 | Resource Auto-Update: AI-powered updates with Claude Opus 4.5, Firecrawl scraping, admin review |
+| 1.4.0 | Dec 19 | Performance: Lighthouse 86%, LCP -16%, lazy providers architecture |
 | 1.3.0 | Dec 19 | Profile Enhancements: Location/timezone display, share modal with OG images, mobile action bar |
 | 1.2.0 | Dec 19 | Gamification CMS: Payload collections for achievements/badges/tiers, auto-sync to Supabase |
 | 1.1.0 | Dec 19 | Profile Page Redesign: Twitter-style hero layout, quick actions, achievement showcase |
@@ -45,8 +47,8 @@
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 1.4.0 | Polish | Advanced analytics, Batch operations, Featured collections | Q1 2025 | Quality of Life |
-| 1.5.0 | Scale | Performance monitoring, Rate limiting, Resource attribution | Q1 2025 | Enterprise Ready |
+| 1.6.0 | Polish | Advanced analytics, Batch operations, Featured collections | Q1 2025 | Quality of Life |
+| 1.7.0 | Scale | Performance monitoring, Rate limiting, Resource attribution | Q1 2025 | Enterprise Ready |
 
 ---
 

@@ -1,7 +1,7 @@
 {
-  "version": "6.1",
-  "contentHash": "716e3ee73ff218ac571d4128b0ff9e45178e92104f881916d7a736ec53badf07",
-  "generatedAt": "2025-12-18T03:21:19.468Z",
+  "version": "6.2",
+  "contentHash": "a07fc2597be110259086885d2c4a8e0622902fae94ea2ecb4c640f60826d4f66",
+  "generatedAt": "2025-12-20T08:24:29.868Z",
   "builtWith": "Claude Code powered by Claude Opus 4.5",
   "documentCount": 1933,
   "documentationChunks": 443,
@@ -8451,7 +8451,7 @@
       "id": "project-overview",
       "title": "About Claude Insider",
       "section": "Project Overview",
-      "content": "Claude Insider is a comprehensive documentation website for Claude AI, Claude Code, and the Anthropic ecosystem. Version 1.0.0 (2025-12-18). Built by Vladimir Dukelic (@siliconyouth) using Claude Code powered by Claude Opus 4.5. Live at https://www.claudeinsider.com. Repository at https://github.com/siliconyouth/claude-insider. The site features 34 documentation pages across 7 categories, a voice-powered AI assistant with 42 premium voices, fuzzy search with Cmd/Ctrl+K, dark/light themes, and WCAG 2.1 AA accessibility compliance. The site supports 18 languages. MIT License with Attribution.",
+      "content": "Claude Insider is a comprehensive documentation website for Claude AI, Claude Code, and the Anthropic ecosystem. Version 1.4.0 (2025-12-20). Built by Vladimir Dukelic (@siliconyouth) using Claude Code powered by Claude Opus 4.5. Live at https://www.claudeinsider.com. Repository at https://github.com/siliconyouth/claude-insider. The site features 34 documentation pages across 7 categories, a voice-powered AI assistant with 42 premium voices, fuzzy search with Cmd/Ctrl+K, dark/light themes, and WCAG 2.1 AA accessibility compliance. The site supports 18 languages. MIT License with Attribution.",
       "url": "/",
       "category": "Project",
       "keywords": [
@@ -8751,7 +8751,7 @@
       "id": "project-versions",
       "title": "Version History",
       "section": "Recent Updates",
-      "content": "Claude Insider version history. Current: v1.0.0 (2025-12-18).\n\nRecent Releases:\nv1.0.0 (2025-12-18): 🎉 Version 1.0 - Production Release\nv0.99.0 (2025-12-17): Sound Themes System\nv0.98.0 (2025-12-17): Message Read Receipts (Seen Feature)\nv0.97.0 (2025-12-17): Site-Wide Sound Effects System\nv0.96.0 (2025-12-17): Unread Indicator Bug Fixes\n\nMajor Milestones:\n- v0.82.0 - Unified Chat Window (AI + Messages in tabbed interface)\n- v0.81.0 - RAG Index Generator v6.0 (1,933 chunks, 20 knowledge categories)\n- v0.80.0 - Zero ESLint warnings, TypeScript type safety improvements\n- v0.79.0 - Security dashboard, fingerprinting, honeypot system\n- v0.70.x - Achievements, gamification, XP system\n- v0.60.x - Messaging, group chats, AI mentions\n- v0.50.x - Authentication, Better Auth, passkeys\n- v0.40.x - User profiles, favorites, ratings, comments\n- v0.30.x - Resources section with 122+ curated entries\n- v0.20.x - Voice assistant, ElevenLabs TTS, 42 voices\n- v0.10.x - Initial release, documentation, search\n\nFull changelog at /changelog or CHANGELOG.md",
+      "content": "Claude Insider version history. Current: v1.4.0 (2025-12-20).\n\nRecent Releases:\nv1.4.0 (2025-12-19): Performance Optimization\nv1.3.0 (2025-12-19): Profile Enhancements\nv1.2.0 (2025-12-19): Gamification CMS\nv1.1.0 (2025-12-19): Profile Page Redesign\nv1.0.1 (2025-12-18): Performance & Accessibility\n\nMajor Milestones:\n- v0.82.0 - Unified Chat Window (AI + Messages in tabbed interface)\n- v0.81.0 - RAG Index Generator v6.0 (1,933 chunks, 20 knowledge categories)\n- v0.80.0 - Zero ESLint warnings, TypeScript type safety improvements\n- v0.79.0 - Security dashboard, fingerprinting, honeypot system\n- v0.70.x - Achievements, gamification, XP system\n- v0.60.x - Messaging, group chats, AI mentions\n- v0.50.x - Authentication, Better Auth, passkeys\n- v0.40.x - User profiles, favorites, ratings, comments\n- v0.30.x - Resources section with 122+ curated entries\n- v0.20.x - Voice assistant, ElevenLabs TTS, 42 voices\n- v0.10.x - Initial release, documentation, search\n\nFull changelog at /changelog or CHANGELOG.md",
       "url": "/changelog",
       "category": "Project",
       "keywords": [
@@ -8834,7 +8834,9 @@
           "forks": 8500,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -8871,7 +8873,9 @@
           "forks": 15000,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -8909,7 +8913,9 @@
           "forks": 5200,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -8947,7 +8953,9 @@
           "forks": 5000,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -8985,7 +8993,9 @@
           "forks": 3200,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9023,7 +9033,9 @@
           "forks": 2200,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9061,7 +9073,9 @@
           "forks": 900,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9100,7 +9114,9 @@
           "forks": 600,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9142,7 +9158,9 @@
           "forks": 3400,
           "lastUpdated": "2024-12-11",
           "language": "C#"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9180,7 +9198,9 @@
           "forks": 2000,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9219,7 +9239,9 @@
           "forks": 1700,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9258,7 +9280,9 @@
           "forks": 2100,
           "lastUpdated": "2024-12-10",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9288,7 +9312,9 @@
         ],
         "featured": true,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9318,7 +9344,9 @@
         ],
         "featured": true,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9349,7 +9377,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9380,7 +9410,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9411,7 +9443,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9442,7 +9476,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9472,7 +9508,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9502,7 +9540,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9533,7 +9573,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9564,7 +9606,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9595,7 +9639,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9624,7 +9670,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9654,7 +9702,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9684,7 +9734,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9714,7 +9766,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9744,7 +9798,9 @@
         ],
         "featured": true,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9774,7 +9830,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9811,7 +9869,9 @@
           "forks": 900,
           "lastUpdated": "2024-12-11",
           "language": "Markdown"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9841,7 +9901,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9872,7 +9934,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9903,7 +9967,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9934,7 +10000,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -9965,7 +10033,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10004,7 +10074,9 @@
           "forks": 180,
           "lastUpdated": "2024-12-10",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10035,7 +10107,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10075,7 +10149,9 @@
           "forks": 45,
           "lastUpdated": "2024-12-08",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10112,7 +10188,9 @@
           "forks": 30,
           "lastUpdated": "2024-12-05",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10141,7 +10219,9 @@
         ],
         "featured": true,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10170,7 +10250,9 @@
         ],
         "featured": true,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10199,7 +10281,9 @@
         ],
         "featured": true,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10235,7 +10319,9 @@
           "forks": 1200,
           "lastUpdated": "2024-12-10",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10273,7 +10359,9 @@
           "forks": 3500,
           "lastUpdated": "2024-12-11",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10309,7 +10397,9 @@
           "forks": 650,
           "lastUpdated": "2024-12-10",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10347,7 +10437,9 @@
           "forks": 380,
           "lastUpdated": "2024-12-10",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10377,7 +10469,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10406,7 +10500,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10436,7 +10532,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10466,7 +10564,9 @@
         ],
         "featured": true,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10506,7 +10606,9 @@
           "forks": 18000,
           "lastUpdated": "2024-12-11",
           "language": "Markdown"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10537,7 +10639,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10577,7 +10681,9 @@
           "forks": 2800,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10607,7 +10713,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10639,7 +10747,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10671,7 +10781,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10703,7 +10815,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10734,7 +10848,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10766,7 +10882,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10796,7 +10914,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10828,7 +10948,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10857,7 +10979,9 @@
         ],
         "featured": true,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10896,7 +11020,9 @@
           "forks": 2400,
           "lastUpdated": "2024-12-11",
           "language": "Markdown"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10928,7 +11054,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10960,7 +11088,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -10990,7 +11120,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11022,7 +11154,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11054,7 +11188,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11086,7 +11222,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11120,7 +11258,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11152,7 +11292,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11184,7 +11326,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11215,7 +11359,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11248,7 +11394,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11279,7 +11427,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11316,7 +11466,9 @@
           "forks": 650,
           "lastUpdated": "2024-12-10",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11353,7 +11505,9 @@
           "forks": 380,
           "lastUpdated": "2024-12-10",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11390,7 +11544,9 @@
           "forks": 65,
           "lastUpdated": "2024-12-08",
           "language": "Go"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11427,7 +11583,9 @@
           "forks": 35,
           "lastUpdated": "2024-11-20",
           "language": "Rust"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11464,7 +11622,9 @@
           "forks": 40,
           "lastUpdated": "2024-12-05",
           "language": "Ruby"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11501,7 +11661,9 @@
           "forks": 25,
           "lastUpdated": "2024-11-15",
           "language": "Kotlin"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11538,7 +11700,9 @@
           "forks": 20,
           "lastUpdated": "2024-11-28",
           "language": "PHP"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11576,7 +11740,9 @@
           "forks": 45,
           "lastUpdated": "2024-12-01",
           "language": "C#"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11607,7 +11773,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11638,7 +11806,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11677,7 +11847,9 @@
           "forks": 1800,
           "lastUpdated": "2024-12-11",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11715,7 +11887,9 @@
           "forks": 5,
           "lastUpdated": "2024-12-11",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11746,7 +11920,9 @@
         ],
         "featured": true,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11777,7 +11953,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11808,7 +11986,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11839,7 +12019,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11870,7 +12052,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11902,7 +12086,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11933,7 +12119,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -11963,7 +12151,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12002,7 +12192,9 @@
           "forks": 300,
           "lastUpdated": "2024-12-09",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12041,7 +12233,9 @@
           "forks": 400,
           "lastUpdated": "2024-12-11",
           "language": "Rust"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12080,7 +12274,9 @@
           "forks": 900,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12111,7 +12307,9 @@
         ],
         "featured": true,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12151,7 +12349,9 @@
           "forks": 1800,
           "lastUpdated": "2024-12-11",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12189,7 +12389,9 @@
           "forks": 2200,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12229,7 +12431,9 @@
           "forks": 3000,
           "lastUpdated": "2024-12-11",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12267,7 +12471,9 @@
           "forks": 3200,
           "lastUpdated": "2024-12-11",
           "language": "Rust"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12298,7 +12504,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12337,7 +12545,9 @@
           "forks": 500,
           "lastUpdated": "2024-12-10",
           "language": "Lua"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12366,7 +12576,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12398,7 +12610,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12438,7 +12652,9 @@
           "forks": 2500,
           "lastUpdated": "2024-12-10",
           "language": "TypeScript"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12470,7 +12686,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12510,7 +12728,9 @@
           "forks": 6500,
           "lastUpdated": "2024-12-11",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12548,7 +12768,9 @@
           "forks": 750,
           "lastUpdated": "2024-12-10",
           "language": "Jupyter Notebook"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12580,7 +12802,9 @@
         ],
         "featured": true,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12619,7 +12843,9 @@
           "forks": 600,
           "lastUpdated": "2024-12-08",
           "language": "Python"
-        }
+        },
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12649,7 +12875,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12679,7 +12907,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12709,7 +12939,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12741,7 +12973,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12773,7 +13007,9 @@
         ],
         "featured": false,
         "status": "community",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12803,7 +13039,9 @@
         ],
         "featured": true,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12834,7 +13072,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12865,7 +13105,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -12896,7 +13138,9 @@
         ],
         "featured": false,
         "status": "official",
-        "github": null
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
       }
     },
     {
@@ -59083,28 +59327,20 @@
       "2025": 1,
       "claude": 0.16666666666666666,
       "insider": 0.16666666666666666,
-      "version": 0.5,
+      "version": 0.3333333333333333,
       "history": 0.3333333333333333,
       "current": 0.16666666666666666,
       "recent": 0.3333333333333333,
       "releases": 0.16666666666666666,
-      "production": 0.16666666666666666,
-      "release": 0.3333333333333333,
-      "sound": 0.3333333333333333,
-      "themes": 0.16666666666666666,
-      "system": 0.6666666666666666,
-      "message": 0.16666666666666666,
-      "read": 0.16666666666666666,
-      "receipts": 0.16666666666666666,
-      "seen": 0.16666666666666666,
-      "feature": 0.16666666666666666,
-      "site": 0.16666666666666666,
-      "wide": 0.16666666666666666,
-      "effects": 0.16666666666666666,
-      "unread": 0.16666666666666666,
-      "indicator": 0.16666666666666666,
-      "bug": 0.16666666666666666,
-      "fixes": 0.16666666666666666,
+      "performance": 0.3333333333333333,
+      "optimization": 0.16666666666666666,
+      "profile": 0.3333333333333333,
+      "enhancements": 0.16666666666666666,
+      "gamification": 0.3333333333333333,
+      "cms": 0.16666666666666666,
+      "page": 0.16666666666666666,
+      "redesign": 0.16666666666666666,
+      "accessibility": 0.16666666666666666,
       "major": 0.16666666666666666,
       "milestones": 0.16666666666666666,
       "unified": 0.16666666666666666,
@@ -59130,8 +59366,8 @@
       "dashboard": 0.16666666666666666,
       "fingerprinting": 0.16666666666666666,
       "honeypot": 0.16666666666666666,
+      "system": 0.3333333333333333,
       "achievements": 0.16666666666666666,
-      "gamification": 0.16666666666666666,
       "messaging": 0.16666666666666666,
       "group": 0.16666666666666666,
       "chats": 0.16666666666666666,
@@ -59155,6 +59391,7 @@
       "tts": 0.16666666666666666,
       "voices": 0.16666666666666666,
       "initial": 0.16666666666666666,
+      "release": 0.16666666666666666,
       "documentation": 0.16666666666666666,
       "search": 0.16666666666666666,
       "full": 0.16666666666666666,
@@ -90335,7 +90572,7 @@
     "implement": 3.9559105665641066,
     "best": 3.236095138922,
     "practices": 3.506385468661912,
-    "production": 3.8779490250943947,
+    "production": 3.9032668330786846,
     "applications": 4.475786025850015,
     "authentication": 2.804654544410575,
     "console": 3.7601659894380113,
@@ -90618,7 +90855,7 @@
     "research": 4.794239756968549,
     "sonnet": 2.8939996447464247,
     "balanced": 5.16893320640996,
-    "performance": 3.635002846484005,
+    "performance": 3.6155847606269034,
     "haiku": 3.7601659894380113,
     "fast": 4.388774648860386,
     "simple": 4.070320917741851,
@@ -90720,7 +90957,7 @@
     "classification": 5.95739056677423,
     "extraction": 5.95739056677423,
     "processing": 4.34795265434013,
-    "feature": 3.5414767884731817,
+    "feature": 3.55949529397586,
     "speed": 5.6209183301530175,
     "slower": 5.6209183301530175,
     "medium": 4.858778278106121,
@@ -90802,7 +91039,7 @@
     "rationale": 5.6209183301530175,
     "cheap": 6.468216190540221,
     "selection": 4.522306041484908,
-    "optimization": 5.264243386214285,
+    "optimization": 5.16893320640996,
     "retries": 6.468216190540221,
     "remaining": 5.775069009980276,
     "batch": 5.081921829420331,
@@ -90853,7 +91090,7 @@
     "event": 4.234623969033127,
     "beginning": 6.8736812986483855,
     "contains": 6.18053411808844,
-    "message": 3.27636903805994,
+    "message": 3.2901623601922756,
     "metadata": 5.369603901872112,
     "starting": 4.927771149593072,
     "incremental": 5.6209183301530175,
@@ -90960,7 +91197,7 @@
     "through": 4.234623969033127,
     "fake": 6.468216190540221,
     "websites": 6.8736812986483855,
-    "site": 4.234623969033127,
+    "site": 4.270991613204002,
     "passkey": 5.001879121746794,
     "bound": 6.8736812986483855,
     "enclave": 6.8736812986483855,
@@ -91049,7 +91286,7 @@
     "during": 5.369603901872112,
     "onboarding": 5.95739056677423,
     "process": 4.270991613204002,
-    "profile": 4.308731941186849,
+    "profile": 4.270991613204002,
     "basics": 5.775069009980276,
     "email": 4.101092576408604,
     "optional": 5.264243386214285,
@@ -91162,7 +91399,7 @@
     "approve": 5.487386937528495,
     "reduces": 6.8736812986483855,
     "confirmation": 5.264243386214285,
-    "read": 3.4396940941632392,
+    "read": 3.4559546150350196,
     "claude_code_disable_telemetry": 6.18053411808844,
     "disable": 5.487386937528495,
     "anonymous": 6.468216190540221,
@@ -91360,7 +91597,7 @@
     "proposes": 6.468216190540221,
     "fix": 3.6155847606269034,
     "explanation": 5.775069009980276,
-    "bug": 4.070320917741851,
+    "bug": 4.101092576408604,
     "fixing": 5.081921829420331,
     "identify": 4.676456721312166,
     "refactor": 4.57109620565434,
@@ -91493,7 +91730,7 @@
     "badge": 6.18053411808844,
     "avatar": 5.775069009980276,
     "categories": 4.234623969033127,
-    "accessibility": 5.001879121746794,
+    "accessibility": 4.927771149593072,
     "wcag": 5.95739056677423,
     "compliant": 6.468216190540221,
     "interactions": 5.081921829420331,
@@ -91718,7 +91955,7 @@
     "redact": 6.8736812986483855,
     "bugs": 4.858778278106121,
     "diving": 5.95739056677423,
-    "fixes": 5.264243386214285,
+    "fixes": 5.369603901872112,
     "protocol": 5.081921829420331,
     "enables": 5.6209183301530175,
     "querying": 6.8736812986483855,
@@ -92073,7 +92310,7 @@
     "assertions": 6.468216190540221,
     "walkthrough": 6.468216190540221,
     "optimal": 6.8736812986483855,
-    "page": 4.858778278106121,
+    "page": 4.794239756968549,
     "showcasing": 6.8736812986483855,
     "stories": 5.95739056677423,
     "often": 6.468216190540221,
@@ -92114,7 +92351,7 @@
     "voices": 5.95739056677423,
     "fuzzy": 6.18053411808844,
     "dark": 5.16893320640996,
-    "themes": 6.18053411808844,
+    "themes": 6.468216190540221,
     "compliance": 5.264243386214285,
     "languages": 5.775069009980276,
     "mit": 6.468216190540221,
@@ -92155,7 +92392,7 @@
     "megolm": 6.8736812986483855,
     "vodozemac": 6.8736812986483855,
     "wasm": 6.8736812986483855,
-    "cms": 6.468216190540221,
+    "cms": 6.18053411808844,
     "payload": 6.468216190540221,
     "vercel": 5.6209183301530175,
     "technical": 5.775069009980276,
@@ -92224,10 +92461,10 @@
     "rare": 6.8736812986483855,
     "epic": 6.8736812986483855,
     "legendary": 6.8736812986483855,
-    "effects": 5.95739056677423,
+    "effects": 6.18053411808844,
     "confetti": 6.8736812986483855,
     "animations": 6.8736812986483855,
-    "sound": 5.6209183301530175,
+    "sound": 5.775069009980276,
     "glow": 6.8736812986483855,
     "achievement": 6.468216190540221,
     "queue": 6.18053411808844,
@@ -92393,12 +92630,8 @@
     "stdio": 5.6209183301530175,
     "callable": 6.8736812986483855,
     "releases": 6.468216190540221,
-    "release": 5.95739056677423,
-    "receipts": 6.8736812986483855,
-    "seen": 6.8736812986483855,
-    "wide": 6.18053411808844,
-    "unread": 6.8736812986483855,
-    "indicator": 6.8736812986483855,
+    "enhancements": 6.8736812986483855,
+    "redesign": 6.8736812986483855,
     "major": 6.8736812986483855,
     "milestones": 6.8736812986483855,
     "tabbed": 6.8736812986483855,
@@ -92406,6 +92639,7 @@
     "eslint": 5.487386937528495,
     "warnings": 5.95739056677423,
     "entries": 6.8736812986483855,
+    "release": 5.95739056677423,
     "guidelines": 5.081921829420331,
     "developing": 6.468216190540221,
     "lts": 6.8736812986483855,
@@ -93229,6 +93463,7 @@
     "observability": 6.18053411808844,
     "education": 6.18053411808844,
     "university": 6.8736812986483855,
+    "wide": 6.468216190540221,
     "students": 6.8736812986483855,
     "faculty": 6.8736812986483855,
     "staff": 6.8736812986483855,

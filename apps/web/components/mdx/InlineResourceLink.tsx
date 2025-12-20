@@ -118,6 +118,7 @@ export function ResourceEmbed({
     <div className={cn('my-4', className)}>
       <ResourceCard
         resource={resource}
+        slug={resource.id}
         variant={variant}
         showCategory
         showTags={showTags}
@@ -167,6 +168,7 @@ export function ResourceGrid({
         <ResourceCard
           key={resource.id}
           resource={resource}
+          slug={resource.id}
           variant={variant}
           showCategory
           showTags={false}

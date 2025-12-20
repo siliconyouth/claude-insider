@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.4.0";
+const APP_VERSION = "1.5.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.5.0",
+    date: "2025-12-20",
+    type: "minor",
+    highlights: [
+      "🤖 AI-Powered Resource Updates: Claude Opus 4.5 keeps resources current",
+      "🔄 Automated Scraping: Firecrawl fetches official websites, GitHub, docs",
+      "👀 Admin Review Workflow: Side-by-side diffs with cherry-pick selection",
+      "📅 Weekly Cron: Automatic updates every Sunday at 3 AM UTC",
+      "📜 Changelog Tracking: Full version history for all resource changes",
+    ],
+  },
   {
     version: "1.4.0",
     date: "2025-12-19",

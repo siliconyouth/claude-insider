@@ -13,6 +13,8 @@ import {
   Resources,
   ResourceSources,
   ResourceDiscoveryQueue,
+  ResourceReviews,
+  ResourceAuthors,
   AuditLogs,
   Documents,
   DocumentSections,
@@ -62,6 +64,10 @@ export default buildConfig({
     // Resource discovery and administration
     ResourceSources,
     ResourceDiscoveryQueue,
+    // Resource reviews moderation
+    ResourceReviews,
+    // Resource authors management
+    ResourceAuthors,
     // System - Audit logging
     AuditLogs,
     // Documentation cross-linking (Content group)
