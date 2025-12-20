@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.6.0";
+const APP_VERSION = "1.7.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.7.0",
+    date: "2025-12-20",
+    type: "minor",
+    highlights: [
+      "🔗 Doc-Resource Cross-Linking: Every documentation page now shows related resources",
+      "🤖 147 AI-Analyzed Relationships: Claude Opus 4.5 analyzed all docs for resource relevance",
+      "📊 Confidence Scores & Badges: See relationship type and AI confidence on each resource",
+      "🗄️ 9 New Database Tables: documentation, sections, relationships, and more",
+      "📚 RAG Index v6.3: Updated to 1,979 chunks with relationship context",
+    ],
+  },
   {
     version: "1.6.0",
     date: "2025-12-20",

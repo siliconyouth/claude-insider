@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.7.0] - 2025-12-20
+### Doc-Resource Cross-Linking System
+- **Related Resources on Docs**: Every documentation page now shows AI-analyzed related resources
+  - `DocRelatedResources` server component with Suspense loading
+  - 147 AI-analyzed relationships across all 35 documentation pages
+  - 7 relationship types: required, recommended, related, example, alternative, extends, implements
+  - Confidence scores and relationship badges on each resource card
+- **Database Schema** (Migrations 086-089):
+  - `documentation`: MDX content with full-text search and versioning
+  - `documentation_sections`: Heading-level indexing for cross-linking
+  - `doc_resource_relationships`: AI-analyzed links between docs and resources
+  - `resource_relationships`: AI-discovered relationships between resources
+  - Fixed migration idempotency with defensive `IF NOT EXISTS` patterns
+- **Query Infrastructure**:
+  - `getResourcesForDoc()` function in `lib/resources/queries.ts`
+  - Fixed column name mismatch (`ai_reasoning` vs `reasoning`)
+  - Order by display_priority, confidence_score, and github_stars
+- **RAG Index v6.3**: Updated to 1,979 chunks with relationship context
+
+---
+
 ## [1.6.0] - 2025-12-20
 ### AI Pipeline Integration & Admin Dashboard
 - **AI Pipeline Settings Global**: New Payload CMS global for centralized AI operation configuration

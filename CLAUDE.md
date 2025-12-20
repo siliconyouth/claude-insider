@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.6.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.7.0**.
 
 | Link | URL |
 |------|-----|
@@ -40,7 +40,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.6.0**.
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 10. [Component Patterns](#component-patterns) - Buttons, cards, focus states
-11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 77 tables, RLS, migrations
+11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 86 tables, RLS, migrations
 12. [Internationalization](#internationalization-i18n) - 18 languages
 13. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
 14. [Content Structure](#content-structure) - Documentation, resources, legal pages
@@ -133,7 +133,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (39 total)
+### Implemented Features (40 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -141,7 +141,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-2 | Navigation | 7 categories, breadcrumbs, prev/next navigation, sidebar |
 | FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
 | FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
-| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (1,933 chunks), ElevenLabs TTS (42 voices), speech-to-text |
+| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (1,979 chunks), ElevenLabs TTS (42 voices), speech-to-text |
 | FR-6 | Resources Section | 122+ curated resources, 10 categories, search, GitHub integration |
 | FR-7 | Account Security | Password management, OAuth linking, safety checks |
 | FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |
@@ -153,7 +153,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-14 | Notification Popups | Persistent until dismissed, deep-linking, ARIA regions |
 | FR-15 | Settings Model | Model selector in settings with feedback |
 | FR-16 | Header Model Display | Smart API key indicators, BEST badge, tier colors |
-| FR-17 | Database Types | 77 tables, auto-generated TypeScript types |
+| FR-17 | Database Types | 86 tables, auto-generated TypeScript types |
 | FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
 | FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
 | FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
@@ -176,6 +176,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
 | FR-38 | Resource Auto-Update | AI-powered updates via Claude Opus 4.5, Firecrawl scraping, admin review workflow, changelog tracking |
 | FR-39 | AI Pipeline Integration | Payload CMS settings, Documents/Resources tab redesign, CLI scripts for analysis/enhancement, operation queue |
+| FR-40 | Doc-Resource Cross-Linking | 147 AI-analyzed relationships, DocRelatedResources component, confidence scores, 7 relationship types |
 
 ### Non-Functional Requirements
 
@@ -225,6 +226,7 @@ claude-insider/
 │   │   ├── pwa/                  # PWA components
 │   │   ├── universal-search/     # Search modal
 │   │   ├── resources/            # Resources components
+│   │   ├── cross-linking/        # Doc-resource relationship components
 │   │   └── messaging/            # Virtualized message lists
 │   ├── hooks/                    # Custom React hooks
 │   ├── lib/                      # Core libraries
@@ -238,7 +240,7 @@ claude-insider/
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 70+ SQL migration files
+│   └── supabase/migrations/      # 89 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -467,13 +469,13 @@ Place dynamic imports at the **visibility boundary** - where UI transitions from
 
 ### Performance Targets
 
-| Metric | Target | Current (v1.5.0) |
-|--------|--------|------------------|
-| Lighthouse Performance (Desktop) | > 85 | 86 |
-| FCP (First Contentful Paint) | < 1.0s | 0.7s |
-| LCP (Largest Contentful Paint) | < 2.5s | 2.1s |
-| TBT (Total Blocking Time) | < 200ms | 30-40ms |
-| CLS (Cumulative Layout Shift) | < 0.1 | 0.001 |
+| Metric | Target | Current |
+|--------|--------|---------|
+| Lighthouse Performance (Desktop) | > 85 | 88 |
+| FCP (First Contentful Paint) | < 1.0s | 0.8s |
+| LCP (Largest Contentful Paint) | < 2.5s | 2.2s |
+| TBT (Total Blocking Time) | < 200ms | 0ms |
+| CLS (Cumulative Layout Shift) | < 0.1 | 0.003 |
 
 **Note**: Mobile (throttled) scores are lower (~51%) due to simulated slow CPU/network. Focus on desktop metrics for development.
 
@@ -738,7 +740,7 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 ### Overview
 
-Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **89 migrations** define **77 tables** across 15 categories.
+Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **89 migrations** define **86 tables** across 16 categories.
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -839,6 +841,10 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 #### Reading & Search (7 tables)
 
 `reading_lists`, `reading_list_items`, `view_history`, `resource_views`, `resource_view_stats`, `saved_searches`, `search_history`, `search_analytics`
+
+#### Documentation & Relationships (7 tables)
+
+`documentation`, `documentation_sections`, `documentation_history`, `documentation_update_jobs`, `doc_resource_relationships`, `resource_relationships`, `relationship_analysis_jobs`
 
 #### AI Conversations (2 tables)
 
@@ -1074,11 +1080,12 @@ TanStack Virtual-based message list for efficient rendering of large conversatio
 | **Reverse Scroll** | Load older messages at top |
 | **Auto-scroll** | Scrolls to bottom for new messages (if at bottom) |
 
-### RAG System (v6.0)
+### RAG System (v6.3)
 
-- **1,933 chunks** (1,913 docs + 20 project knowledge)
-- **3,866 indexed terms** for TF-IDF search
+- **1,979 chunks** (docs + relationships + project knowledge)
+- **3,958 indexed terms** for TF-IDF search
 - Built at compile time via `scripts/generate-rag-index.cjs`
+- Includes 147 doc-resource relationships for cross-linking
 
 ### End-to-End Encryption (E2EE)
 

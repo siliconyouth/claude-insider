@@ -1,15 +1,15 @@
 # Claude Insider Roadmap
 
-**Version:** 1.5.0
+**Version:** 1.7.0
 **Last Updated:** 2025-12-20
-**Current Release:** v1.5.0
+**Current Release:** v1.7.0
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-**🎉 Version 1.5.0 Released!** Resource Auto-Update System brings AI-powered content updates using Claude Opus 4.5, automated Firecrawl scraping, admin review workflow with cherry-pick selection, and comprehensive changelog tracking. This roadmap outlines the development path from **v1.5.0** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+**🎉 Version 1.7.0 Released!** Doc-Resource Cross-Linking System with 147 AI-analyzed relationships connecting documentation pages to relevant resources. Every doc page now shows related resources with confidence scores and relationship badges. This roadmap outlines the development path from **v1.7.0** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
