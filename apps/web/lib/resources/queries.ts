@@ -267,3 +267,58 @@ export async function getUserRating(
     return null;
   }
 }
+
+// =============================================================================
+// DOC-RESOURCE RELATIONSHIPS
+// =============================================================================
+
+export interface DocRelatedResource {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+  icon_url: string | null;
+  github_stars: number;
+  relationship_type: string;
+  confidence_score: number;
+  reasoning: string | null;
+}
+
+/**
+ * Get resources related to a documentation page
+ */
+export async function getResourcesForDoc(
+  docSlug: string,
+  limit: number = 6
+): Promise<DocRelatedResource[]> {
+  try {
+    const result = await pool.query<DocRelatedResource>(
+      `SELECT
+        r.id,
+        r.slug,
+        r.title,
+        r.description,
+        r.category,
+        r.url,
+        r.icon_url,
+        r.github_stars,
+        dr.relationship_type,
+        dr.confidence_score,
+        dr.reasoning
+       FROM doc_resource_relationships dr
+       JOIN resources r ON r.id = dr.resource_id
+       WHERE dr.doc_slug = $1
+         AND dr.is_active = TRUE
+         AND r.is_published = TRUE
+       ORDER BY dr.confidence_score DESC, r.github_stars DESC
+       LIMIT $2`,
+      [docSlug, limit]
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("[Resources] Error fetching doc relationships:", error);
+    return [];
+  }
+}

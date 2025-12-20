@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { TableOfContents } from "@/components/table-of-contents";
@@ -9,6 +9,8 @@ import { SuggestEditButton } from "@/components/interactions/suggest-edit-button
 import { CommentSection } from "@/components/interactions/comment-section";
 import { FavoriteButton } from "@/components/interactions/favorite-button";
 import { RatingStars } from "@/components/interactions/rating-stars";
+import { DocRelatedResources } from "@/components/cross-linking/DocRelatedResources";
+import { RelatedResourcesSkeleton } from "@/components/cross-linking/RelatedResources";
 
 interface SidebarSection {
   title: string;
@@ -174,6 +176,13 @@ export function DocsLayout({
                 </div>
               )}
             </article>
+
+            {/* Related Resources */}
+            {slug && (
+              <Suspense fallback={<RelatedResourcesSkeleton />}>
+                <DocRelatedResources docSlug={slug.join("/")} maxResources={6} />
+              </Suspense>
+            )}
 
             {/* Page Navigation */}
             {(prevPage || nextPage) && (
