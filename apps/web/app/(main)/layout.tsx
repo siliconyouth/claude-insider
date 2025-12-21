@@ -3,6 +3,7 @@ import "../globals.css";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getLocale, getMessages } from "next-intl/server";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { SkipLink } from "@/components/skip-link";
@@ -252,6 +253,7 @@ export default async function MainLayout({
                     <InstallPrompt />
                     <PushNotificationPrompt />
                     <Analytics />
+                    <SpeedInsights />
                   </DonorBadgeProvider>
                   </AchievementNotificationProvider>
                 </ToastProvider>
