@@ -134,11 +134,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsRefetching(true);
       try {
         // Better Auth's session endpoint - must match catch-all route handler
+        // Add AbortController with 5 second timeout to prevent hanging
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+
         const response = await fetch("/api/auth/session", {
           credentials: "include",
           cache: "no-store",
+          signal: controller.signal,
         });
 
+        clearTimeout(timeoutId);
         console.log("[Auth] Fallback response status:", response.status);
 
         if (response.ok) {
@@ -153,7 +159,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         }
       } catch (error) {
-        console.error("[Auth] Session refresh failed:", error);
+        if (error instanceof Error && error.name === "AbortError") {
+          console.error("[Auth] Session fetch timed out after 5s");
+        } else {
+          console.error("[Auth] Session refresh failed:", error);
+        }
       } finally {
         console.log("[Auth] Fallback complete");
         setIsRefetching(false);
