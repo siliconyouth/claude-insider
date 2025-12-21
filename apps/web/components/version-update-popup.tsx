@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.10.0";
+const APP_VERSION = "1.10.1";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.10.1",
+    date: "2025-12-21",
+    type: "patch",
+    highlights: [
+      "🔗 3,087 Resource Relationships: Massive expansion from 96 to 3,087 connections between resources",
+      "🏢 Same-Org Detection: 1,687 relationships linking tools from the same GitHub organizations",
+      "🤖 Claude Ecosystem: 1,220 relationships connecting Claude Code/Desktop related tools",
+      "🔧 Fixed relationship analysis script to use correct PostgreSQL constraint values",
+      "📚 RAG v6.4: Updated knowledge base with 3,234 total cross-linking relationships",
+    ],
+  },
   {
     version: "1.10.0",
     date: "2025-12-21",

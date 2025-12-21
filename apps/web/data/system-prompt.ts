@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-21 for v1.10.0
+ * Updated: 2025-12-21 for v1.10.1
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.10.0",
+  version: "1.10.1",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.10.0 - updated 2025-12-21)
+// TECH STACK KNOWLEDGE (v1.10.1 - updated 2025-12-21)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -886,6 +886,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.10.0", "charts", "recharts", "dashboard", "visualization", "prompts", "doc versions", "data viz"],
+  },
+  {
+    id: "v1101-features",
+    title: "Version 1.10.1 Features",
+    section: "New in v1.10.1",
+    content: `Claude Insider v1.10.1 massively expands the resource relationship graph. Resource-Resource Relationships: Now 3,087 relationships (up from 96) connecting 1,952 resources. Relationship types include: 1,687 same-organization (tools from same GitHub org), 136 title family (similar prefixes like agent-*, claude-*), 1,220 Claude ecosystem (Claude Code/Desktop related), 44 agent framework alternatives (AutoGen, CrewAI, LangChain). Fixed analyze-and-insert-relationships.mjs script to use correct PostgreSQL CHECK constraint values: similar, alternative, complement, uses, integrates. RAG System updated to v6.4 with 3,234 total relationships for cross-linking. Total documentation-resource relationships: 147. Combined knowledge graph enables better Related Resources sections, improved search relevance, and enhanced AI assistant context.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.10.1", "relationships", "resource graph", "cross-linking", "similar resources", "alternatives", "knowledge graph"],
   },
 ];
 

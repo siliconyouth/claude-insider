@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.1**.
 
 | Link | URL |
 |------|-----|
@@ -177,7 +177,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
 | FR-38 | Resource Auto-Update | AI-powered updates via Claude Opus 4.5, Firecrawl scraping, admin review workflow, changelog tracking |
 | FR-39 | AI Pipeline Integration | Payload CMS settings, Documents/Resources tab redesign, CLI scripts for analysis/enhancement, operation queue |
-| FR-40 | Doc-Resource Cross-Linking | 147 doc-resource + 96 resource-resource relationships, DocRelatedResources component, confidence scores, 10 relationship types |
+| FR-40 | Doc-Resource Cross-Linking | 147 doc-resource + 3,087 resource-resource relationships, DocRelatedResources component, confidence scores, 10 relationship types |
 | FR-41 | Admin Dashboard Content Management | Documentation, Resources, Relationships pages; role-based access; manual relationship editing |
 | FR-42 | Resource Discovery Pipeline | 6 adapter types (GitHub, ProductHunt, npm, etc.), discovery queue, data quality review scripts |
 | FR-43 | Advanced Search | Smart autocomplete, boolean operators (AND/OR/NOT), search filters, admin analytics dashboard |
@@ -1104,12 +1104,12 @@ TanStack Virtual-based message list for efficient rendering of large conversatio
 | **Reverse Scroll** | Load older messages at top |
 | **Auto-scroll** | Scrolls to bottom for new messages (if at bottom) |
 
-### RAG System (v6.3)
+### RAG System (v6.4)
 
-- **1,979 chunks** (docs + relationships + project knowledge)
-- **3,958 indexed terms** for TF-IDF search
+- **3,809 chunks** (docs + relationships + project knowledge + resources + code examples)
+- **7,354 indexed terms** for TF-IDF search
 - Built at compile time via `scripts/generate-rag-index.cjs`
-- Includes 147 doc-resource relationships for cross-linking
+- Includes 147 doc-resource + 3,087 resource-resource relationships for cross-linking
 
 ### End-to-End Encryption (E2EE)
 

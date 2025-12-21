@@ -282,7 +282,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.10.0
+ * Realistic terminal content showing Claude Insider v1.10.1
  */
 function MacBookTerminalContent() {
   return (
@@ -310,7 +310,7 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.10.0</span>
+          <span className="text-[#8b949e]"> v1.10.1</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
@@ -412,7 +412,7 @@ function IPhoneScreenContent() {
           }}
         >
           <div className="text-[4cqw] font-bold text-white leading-tight">
-            Claude Insider v1.10.0
+            Claude Insider v1.10.1
           </div>
           <div className="text-[3cqw] text-white/85 mt-[2%]">
             49 features • 1,950+ resources

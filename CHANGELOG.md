@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.1] - 2025-12-21
+### Resource Relationship Graph Expansion
+- **Resource-Resource Relationships**: Expanded from 96 to 3,087 relationships
+  - 1,687 same-organization relationships (tools from same GitHub org)
+  - 136 title family relationships (tools with similar prefixes: agent-*, claude-*, etc.)
+  - 1,220 Claude ecosystem relationships (Claude Code/Desktop related tools)
+  - 44 agent framework alternatives (AutoGen, CrewAI, LangChain, etc.)
+- **Relationship Analysis Script**: Fixed `analyze-and-insert-relationships.mjs`
+  - Corrected relationship type mapping to match PostgreSQL CHECK constraint
+  - Mapped semantic categories to valid enum values: 'similar', 'alternative', 'complement', 'uses', 'integrates'
+  - Added progress bars for multi-pass analysis
+- **Status Scripts**: Fixed `check-relationship-status.mjs` column reference
+- **RAG System**: Updated to v6.4 with 3,234 total relationships for cross-linking
+
+---
+
 ## [1.10.0] - 2025-12-21
 ### Enhanced Admin Dashboard & Data Visualization
 - **Dashboard Charts**: Rich data visualization with Recharts
