@@ -562,7 +562,8 @@ export default async function MainLayout({
                     </VoiceAssistantErrorBoundary>
                     <AuthModalWrapper />
                     <OnboardingModalWrapper />
-                    <FeedbackButton />
+                    {/* Temporarily disabled for debugging auth issue */}
+                    {/* <FeedbackButton /> */}
                     <VersionUpdatePopup />
                     <NotificationPopup />
                     <InstallPrompt />
