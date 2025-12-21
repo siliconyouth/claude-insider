@@ -282,7 +282,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Code v2.0.62
+ * Realistic terminal content showing Claude Insider v1.9.0
  */
 function MacBookTerminalContent() {
   return (
@@ -300,47 +300,38 @@ function MacBookTerminalContent() {
       {/* Terminal content */}
       <div className="p-3 space-y-[5px] text-[#c9d1d9]">
         <div>
-          <span className="text-[#58a6ff]">~/projects/app</span>
+          <span className="text-[#58a6ff]">~/claude-insider</span>
           <span className="text-[#8b949e]"> on </span>
           <span className="text-[#f78166]"> main</span>
           <span className="text-[#8b949e]"> $</span>
-          <span className="text-[#c9d1d9] ml-1">claude</span>
+          <span className="text-[#c9d1d9] ml-1">pnpm dev</span>
         </div>
 
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
-          <span className="text-[#7ee787]"> Claude Code</span>
-          <span className="text-[#8b949e]"> v2.0.62</span>
+          <span className="text-[#7ee787]"> Claude Insider</span>
+          <span className="text-[#8b949e]"> v1.9.0</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Model: claude-sonnet-4-20250514</span>
+          <span className="text-[#8b949e]"> Features: 45 • Resources: 122+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>
-          <span className="text-[#8b949e]"> Ready</span>
-        </div>
-
-        <div className="mt-2">
-          <span className="text-[#ffa657]">You</span>
-          <span className="text-[#8b949e]">:</span>
-          <span className="text-[#c9d1d9] ml-1">Add authentication to my Next.js app</span>
-        </div>
-
-        <div className="mt-1">
-          <span className="text-[#58a6ff]">Claude</span>
-          <span className="text-[#8b949e]">:</span>
-          <span className="text-[#c9d1d9] ml-1">I&apos;ll implement NextAuth.js with JWT...</span>
+          <span className="text-[#8b949e]"> localhost:3001</span>
         </div>
 
         <div className="mt-2 space-y-[3px]">
-          <div className="text-[#7ee787]">✓ Created lib/auth.ts</div>
-          <div className="text-[#7ee787]">✓ Created app/api/auth/[...nextauth]/route.ts</div>
-          <div className="text-[#7ee787]">✓ Updated middleware.ts</div>
-          <div className="flex items-center gap-1">
-            <span className="text-[#58a6ff] animate-pulse">●</span>
-            <span className="text-[#8b949e]">Writing tests...</span>
-          </div>
+          <div className="text-[#7ee787]">✓ Advanced Search with Boolean Operators</div>
+          <div className="text-[#7ee787]">✓ Admin Audit Export (JSON/CSV/XLSX)</div>
+          <div className="text-[#7ee787]">✓ Bot Challenge System</div>
+          <div className="text-[#7ee787]">✓ Community Stats Dashboard</div>
+          <div className="text-[#7ee787]">✓ Personal Analytics</div>
+        </div>
+
+        <div className="mt-2 flex items-center gap-1">
+          <span className="text-[#58a6ff] animate-pulse">●</span>
+          <span className="text-[#8b949e]">Ready on http://localhost:3001</span>
         </div>
       </div>
     </div>
@@ -421,13 +412,13 @@ function IPhoneScreenContent() {
           }}
         >
           <div className="text-[4cqw] font-bold text-white leading-tight">
-            Master Claude AI
+            Claude Insider v1.9.0
           </div>
           <div className="text-[3cqw] text-white/85 mt-[2%]">
-            34 comprehensive guides
+            45 features • 122+ resources
           </div>
           <div className="text-[2.5cqw] text-white/70 mt-[1.5%]">
-            API • MCP • Tutorials • Examples
+            Search • E2EE • Achievements • Analytics
           </div>
           <div className="mt-[5%] bg-white rounded-[2.5cqw] px-[6%] py-[3%] inline-flex items-center">
             <span className="text-[3cqw] text-gray-900 font-semibold">Get Started</span>
@@ -440,10 +431,10 @@ function IPhoneScreenContent() {
         {/* Categories grid */}
         <div className="px-[4%] grid grid-cols-2 gap-[3%]">
           {[
-            { icon: "⚡", name: "Getting Started", desc: "Setup guide" },
-            { icon: "🔌", name: "API Reference", desc: "Claude API" },
-            { icon: "💡", name: "Tips & Tricks", desc: "Best practices" },
-            { icon: "🔧", name: "Integrations", desc: "MCP & tools" }
+            { icon: "🔍", name: "Advanced Search", desc: "Boolean ops" },
+            { icon: "🏆", name: "Achievements", desc: "50+ badges" },
+            { icon: "🔐", name: "E2E Encryption", desc: "Matrix Olm" },
+            { icon: "📊", name: "Analytics", desc: "Stats & trends" }
           ].map((cat) => (
             <div
               key={cat.name}
