@@ -13,6 +13,7 @@ import { cn } from "@/lib/design-system";
 import { buildSearchIndex, createSearchInstance, search } from "@/lib/search";
 import { SearchFiltersPanel, SearchFilterBar } from "@/components/search/search-filters";
 import { SavedSearches, SaveSearchModal } from "@/components/search/saved-searches";
+import { QueryBuilder, useQueryBuilder, tokensToFuseQuery } from "@/components/search/query-builder";
 import {
   recordSearch,
   getSearchHistory,
@@ -74,8 +75,11 @@ function SearchPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
+  const initialMode = searchParams.get("mode") === "advanced";
 
   const [query, setQuery] = useState(initialQuery);
+  // Sync advanced mode from URL on mount
+  const [useAdvancedQuery, setUseAdvancedQuery] = useState(initialMode);
   const [filters, setFilters] = useState<SearchFilters>({});
   const [results, setResults] = useState<Array<{
     title: string;
@@ -88,6 +92,9 @@ function SearchPageContent() {
   const [popularSearches, setPopularSearches] = useState<PopularSearch[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
+
+  // Query builder for boolean operators
+  const { tokens, setTokens, queryString: builderQueryString } = useQueryBuilder();
 
   // Create search index
   const searchIndex = useMemo(() => {
@@ -120,7 +127,7 @@ function SearchPageContent() {
 
   // Perform search
   const performSearch = useCallback(
-    async (searchQuery: string, searchFilters: SearchFilters) => {
+    async (searchQuery: string, searchFilters: SearchFilters, isAdvanced: boolean = false) => {
       if (!searchQuery.trim()) {
         setResults([]);
         return;
@@ -129,6 +136,7 @@ function SearchPageContent() {
       setIsSearching(true);
 
       // Search using Fuse.js
+      // For advanced queries, use extended search syntax
       let searchResults = search(searchIndex, searchQuery, 50);
 
       // Apply filters
@@ -140,16 +148,22 @@ function SearchPageContent() {
 
       setResults(searchResults);
 
-      // Record search
+      // Record search (include advanced mode indicator)
       await recordSearch({
         query: searchQuery,
-        filters: searchFilters,
+        filters: {
+          ...searchFilters,
+          ...(isAdvanced && { advancedQuery: true }),
+        },
         resultCount: searchResults.length,
       });
 
       // Update URL
       const params = new URLSearchParams();
       params.set("q", searchQuery);
+      if (isAdvanced) {
+        params.set("mode", "advanced");
+      }
       router.push(`/search?${params.toString()}`, { scroll: false });
 
       setIsSearching(false);
@@ -168,7 +182,15 @@ function SearchPageContent() {
   // Handle search submit
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    performSearch(query, filters);
+    if (useAdvancedQuery) {
+      // Use query builder tokens converted to Fuse.js query
+      const fuseQuery = tokensToFuseQuery(tokens);
+      if (fuseQuery) {
+        performSearch(fuseQuery, filters, true);
+      }
+    } else {
+      performSearch(query, filters, false);
+    }
   };
 
   // Handle saved search select
@@ -206,49 +228,127 @@ function SearchPageContent() {
 
         {/* Search Form */}
         <form onSubmit={handleSearch} className="mb-6">
-          <div className="relative">
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search..."
-              className={cn(
-                "w-full px-5 py-4 pl-12 rounded-xl text-lg",
-                "bg-gray-50 dark:bg-[#111111]",
-                "border border-gray-200 dark:border-[#262626]",
-                "text-gray-900 dark:text-white placeholder-gray-400",
-                "focus:outline-none focus:ring-2 focus:ring-blue-500",
-                "transition-all"
-              )}
-            />
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-              />
-            </svg>
-            {query && (
+          {/* Mode toggle */}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-[#1a1a1a] rounded-lg">
               <button
                 type="button"
-                onClick={() => {
-                  setQuery("");
-                  setResults([]);
-                }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                onClick={() => setUseAdvancedQuery(false)}
+                className={cn(
+                  "px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
+                  !useAdvancedQuery
+                    ? "bg-white dark:bg-[#111111] text-gray-900 dark:text-white shadow-sm"
+                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                )}
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                Simple
               </button>
+              <button
+                type="button"
+                onClick={() => setUseAdvancedQuery(true)}
+                className={cn(
+                  "px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-1.5",
+                  useAdvancedQuery
+                    ? "bg-white dark:bg-[#111111] text-gray-900 dark:text-white shadow-sm"
+                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                )}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                </svg>
+                Query Builder
+              </button>
+            </div>
+            {useAdvancedQuery && (
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                Use AND, OR, NOT operators • Keyboard: Ctrl+A, Ctrl+O, Ctrl+N
+              </span>
             )}
           </div>
+
+          {/* Simple search input */}
+          {!useAdvancedQuery && (
+            <div className="relative">
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search..."
+                className={cn(
+                  "w-full px-5 py-4 pl-12 rounded-xl text-lg",
+                  "bg-gray-50 dark:bg-[#111111]",
+                  "border border-gray-200 dark:border-[#262626]",
+                  "text-gray-900 dark:text-white placeholder-gray-400",
+                  "focus:outline-none focus:ring-2 focus:ring-blue-500",
+                  "transition-all"
+                )}
+              />
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setQuery("");
+                    setResults([]);
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          )}
+
+          {/* Query Builder (advanced mode) */}
+          {useAdvancedQuery && (
+            <div className={cn(
+              "p-4 rounded-xl",
+              "bg-gray-50 dark:bg-[#111111]",
+              "border border-gray-200 dark:border-[#262626]"
+            )}>
+              <QueryBuilder
+                tokens={tokens}
+                onTokensChange={setTokens}
+                placeholder="Type a term and press Enter..."
+              />
+              <div className="mt-4 flex items-center justify-between">
+                <div>
+                  {tokens.length > 0 && (
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      Query: <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">{builderQueryString || "(empty)"}</code>
+                    </span>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  disabled={tokens.length === 0}
+                  className={cn(
+                    "px-4 py-2 rounded-lg text-sm font-semibold text-white",
+                    "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                    "shadow-lg shadow-blue-500/25",
+                    "hover:-translate-y-0.5 transition-all duration-200",
+                    "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                  )}
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Filter bar */}
           <div className="flex items-center justify-between mt-4">

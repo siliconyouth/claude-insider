@@ -38,6 +38,10 @@ import { SkeletonSearchResult } from "@/components/skeleton";
 import { ModeToggle } from "./mode-toggle";
 import { SearchMode, AISearchResponse } from "./types";
 import { searchUsersForMention } from "@/app/actions/messaging";
+import Link from "next/link";
+
+// Quick filter types
+type QuickFilter = "all" | "docs" | "resources" | "users";
 
 // Extended result type that can be document or user
 interface UserSearchResult {
@@ -73,6 +77,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [quickFilter, setQuickFilter] = useState<QuickFilter>("all");
 
   // Quick search state
   const [quickResults, setQuickResults] = useState<UnifiedSearchResult[]>([]);
@@ -117,6 +122,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
     setAiResponse(null);
     setAiError(null);
     setSelectedIndex(0);
+    setQuickFilter("all");
   }, []);
 
   // Initialize on mount
@@ -228,14 +234,18 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
     }
 
     // Check if query starts with @ for user-only search
-    const isUserSearch = query.startsWith("@");
-    const userQuery = isUserSearch ? query.slice(1) : query;
+    const isUserSearch = query.startsWith("@") || quickFilter === "users";
+    const userQuery = query.startsWith("@") ? query.slice(1) : query;
+
+    // Determine what to search based on filter
+    const shouldSearchUsers = quickFilter === "all" || quickFilter === "users" || query.startsWith("@");
+    const shouldSearchDocs = (quickFilter === "all" || quickFilter === "docs" || quickFilter === "resources") && !query.startsWith("@");
 
     startQuickSearchTransition(async () => {
       const results: UnifiedSearchResult[] = [];
 
-      // Search users if @ prefix or query is 2+ chars (mix users with docs)
-      if (isUserSearch || query.length >= 2) {
+      // Search users if enabled by filter
+      if (shouldSearchUsers && query.length >= 2) {
         // Debounce user search slightly
         userSearchTimeoutRef.current = setTimeout(async () => {
           try {
@@ -276,14 +286,28 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
         }, 200);
       }
 
-      // Search documents (skip if @ prefix)
-      if (!isUserSearch && fuseRef.current) {
-        const searchResults = fuseRef.current.search(query, { limit: 8 });
-        const docResults: DocumentSearchResult[] = searchResults.map((r) => ({
+      // Search documents (skip if user-only filter or @ prefix)
+      if (shouldSearchDocs && fuseRef.current) {
+        const searchResults = fuseRef.current.search(query, { limit: 12 });
+        let docResults: DocumentSearchResult[] = searchResults.map((r) => ({
           ...r.item,
           resultType: "document" as const,
         }));
-        results.push(...docResults);
+
+        // Apply category filter
+        if (quickFilter === "docs") {
+          docResults = docResults.filter((r) =>
+            !r.category.toLowerCase().includes("resource") &&
+            r.category !== "Resources"
+          );
+        } else if (quickFilter === "resources") {
+          docResults = docResults.filter((r) =>
+            r.category.toLowerCase().includes("resource") ||
+            r.category === "Resources"
+          );
+        }
+
+        results.push(...docResults.slice(0, 8));
       }
 
       setQuickResults(results);
@@ -301,7 +325,7 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
         clearTimeout(userSearchTimeoutRef.current);
       }
     };
-  }, [query, mode, announce]);
+  }, [query, mode, quickFilter, announce]);
 
   // AI search with debounce
   useEffect(() => {
@@ -653,6 +677,34 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                   </div>
                 )}
 
+                {/* Quick filters (quick mode only) */}
+                {mode === "quick" && (
+                  <div className="px-4 py-2 border-b border-gray-200 dark:border-[#262626] flex items-center gap-2">
+                    <span className="text-xs text-gray-500 mr-1">Filter:</span>
+                    <div className="flex items-center gap-1 p-0.5 bg-gray-100 dark:bg-[#1a1a1a] rounded-lg">
+                      {([
+                        { value: "all", label: "All" },
+                        { value: "docs", label: "Docs" },
+                        { value: "resources", label: "Resources" },
+                        { value: "users", label: "Users" },
+                      ] as { value: QuickFilter; label: string }[]).map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => setQuickFilter(option.value)}
+                          className={cn(
+                            "px-2.5 py-1 rounded-md text-xs font-medium transition-colors",
+                            quickFilter === option.value
+                              ? "bg-white dark:bg-[#111111] text-gray-900 dark:text-white shadow-sm"
+                              : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                          )}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* AI Error */}
                 {mode === "ai" && aiError && (
                   <div className="px-4 py-6 text-center">
@@ -916,10 +968,22 @@ export function UniversalSearch({ expanded = false }: UniversalSearchProps) {
                         "Search powered by Fuse.js"
                       )}
                     </span>
-                    <span>
-                      <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">Esc</kbd>{" "}
-                      to close
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <Link
+                        href={query ? `/search?q=${encodeURIComponent(query)}` : "/search"}
+                        onClick={closeModal}
+                        className="flex items-center gap-1 text-blue-600 dark:text-cyan-400 hover:underline"
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+                        </svg>
+                        Advanced
+                      </Link>
+                      <span>
+                        <kbd className="px-1.5 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">Esc</kbd>{" "}
+                        to close
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
