@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-21 for v1.9.0
+ * Updated: 2025-12-21 for v1.10.0
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.9.0",
+  version: "1.10.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.9.0 - updated 2025-12-21)
+// TECH STACK KNOWLEDGE (v1.10.0 - updated 2025-12-21)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -109,7 +109,7 @@ export const TECH_STACK = {
     type: "Fuzzy search with Cmd/Ctrl+K",
     features: ["Recent history", "Category filtering", "Quick + AI modes", "Boolean operators (AND/OR/NOT)", "Smart autocomplete", "Saved searches"],
   },
-  rag: { method: "TF-IDF", chunkCount: 1933, sources: "1,913 docs + 20 project knowledge" },
+  rag: { method: "TF-IDF", chunkCount: 3809, sources: "443 docs + 1,952 resources + 583 code + 727 settings + 43 relationships + 41 external + 20 project" },
   auth: {
     library: "Better Auth",
     version: "1.4.6",
@@ -119,9 +119,9 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.87.1",
     engine: "PostgreSQL 15+",
-    tables: 74,
-    categories: 13,
-    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage"],
+    tables: 126,
+    categories: 18,
+    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library"],
   },
   cms: {
     provider: "Payload CMS",
@@ -877,6 +877,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.9.0", "advanced search", "boolean operators", "export", "bot challenge", "security", "captcha"],
+  },
+  {
+    id: "v1100-features",
+    title: "Version 1.10.0 Features",
+    section: "New in v1.10.0",
+    content: `Claude Insider v1.10.0 introduces rich data visualization across the platform. Dashboard Charts: Six new Recharts-based components - AreaChartCard for time series, DonutChartCard for distributions, BarChartCard for comparisons, LineChartCard for multi-series, SparklineChart for inline trends, plus inline HorizontalBarChart and DonutChart variants. Site-Wide Charts: Interactive visualizations on public pages - ResourceInsights (category/difficulty/status charts on /resources), UserDirectoryInsights (community highlights on /users), ProfileActivityChart (activity breakdown on profile pages). Admin Pages: Prompts management for FR-49 Prompt Library and Doc Versions management for FR-48 Doc Versioning. Dashboard Navigation reorganized into 5 sections with 23 total items. Database additions: 5 new prompts tables (prompts, prompt_categories, user_prompt_saves, prompt_ratings, prompt_usage). 126 total tables.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.10.0", "charts", "recharts", "dashboard", "visualization", "prompts", "doc versions", "data viz"],
   },
 ];
 

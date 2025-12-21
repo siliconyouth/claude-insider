@@ -23,6 +23,7 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { ProfileHoverCard, type ProfileHoverCardUser } from "@/components/users/profile-hover-card";
 import { FollowButton } from "@/components/users/follow-button";
 import { VirtualizedUserGrid } from "@/components/users/virtualized-user-grid";
+import { UserDirectoryInsights } from "@/components/users/user-directory-insights";
 import type { UserRole } from "@/lib/roles";
 
 // ============================================================================
@@ -696,6 +697,13 @@ export default function UsersDirectoryPage() {
             Discover and connect with community members
           </p>
         </div>
+
+        {/* Community Insights Charts */}
+        <UserDirectoryInsights
+          lists={lists}
+          isAuthenticated={isAuthenticated}
+          className="mb-8"
+        />
 
         {/* Search & Filters */}
         <div className="mb-8 p-4 rounded-xl bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#262626]">

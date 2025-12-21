@@ -23,18 +23,20 @@ Claude Insider has achieved remarkable progress, already surpassing the original
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| **Fully Implemented** | 24 | 67% |
+| **Fully Implemented** | 26 | 72% |
 | **In Progress** | 0 | 0% |
-| **Not Started** | 10 | 28% |
-| **Backlog** | 2 | 5% |
+| **Not Started** | 8 | 22% |
+| **Backlog** | 2 | 6% |
 
-### Fully Implemented Features (24)
+### Fully Implemented Features (26)
 
 These features from the original roadmap are complete:
 
 | ID | Feature | Version | Notes |
 |----|---------|---------|-------|
 | F-001 | Donation System | v0.82.0 | PayPal, bank transfer, 4 donor tiers |
+| F-002 | Doc Versioning | v1.10.0 | Version history, line-by-line diff, rollback, admin controls |
+| F-005 | Prompt Library | v1.10.0 | 10 system prompts, 8 categories, save/rate/use tracking, variables |
 | F-006 | AI Writing Assistant | v1.9.0 | In-place doc editing, 8 AI commands, diff preview, streaming |
 | F-009 | Usage Analytics | v1.9.0 | Personal dashboard with level, streak, achievements, category charts |
 | F-010 | Community Statistics | v1.9.0 | Public /stats page with leaderboards, activity, achievements |
@@ -56,7 +58,7 @@ These features from the original roadmap are complete:
 | - | Resource Discovery | v1.8.0 | 6 adapters, 1,952 resources discovered |
 | - | AI Pipeline | v1.5.0-1.8.0 | Auto-update, relationships, CMS integration |
 
-### Not Started Features (10)
+### Not Started Features (8)
 
 These are entirely new work:
 
@@ -66,9 +68,7 @@ These are entirely new work:
 | **HIGH** | F-014 | VS Code Extension | L | Developer reach |
 | **HIGH** | F-015 | API Sandbox | L | Developer onboarding |
 | **HIGH** | F-033 | Agent Marketplace | XL | Community ecosystem |
-| **MEDIUM** | F-002 | Doc Versioning | L | Content management |
 | **MEDIUM** | F-003 | Personalized Dashboard | M | User engagement |
-| **MEDIUM** | F-005 | Prompt Library | L | Community content |
 | **MEDIUM** | F-016 | CLI Tool | M | Power users |
 | **MEDIUM** | F-021 | SSO/SAML | L | Enterprise customers |
 | **LOW** | F-004 | Progressive Tutorial | M | Onboarding |
@@ -130,11 +130,11 @@ The project has delivered significant features that weren't in the original plan
      │   (F-033)        │  (F-015)         │
 LOW  │──────────────────┼──────────────────│ HIGH
 EFFORT│                  │                  │ EFFORT
-     │   RSS Categories │  SSO/SAML        │
-     │   (F-028)        │  (F-021)         │
+     │   ✅ Doc Version │  SSO/SAML        │
+     │   ✅ Prompts     │  (F-021)         │
      │                  │                  │
-     │   CLI Tool       │  Doc Versioning  │
-     │   (F-016)        │  (F-002)         │
+     │   CLI Tool       │  Dashboard       │
+     │   (F-016)        │  (F-003)         │
      │                  │                  │
      └──────────────────┼──────────────────┘
                         │
@@ -191,21 +191,19 @@ EFFORT│                  │                  │ EFFORT
 
 **Estimated Effort:** 2 weeks for MVP
 
-#### 4. Prompt Library (F-005) - **MEDIUM PRIORITY**
+#### 4. Prompt Library (F-005) - ✅ **IMPLEMENTED**
 
-**Why Important:**
-- High user demand for prompt templates
-- Aligns with AI writing assistant vision
-- Community contribution drives engagement
-- Easy to implement with existing CMS
+**Status:** Completed in v1.10.0
 
-**Quick Win Path:**
-- Add "Prompts" collection to Payload CMS
-- Simple markdown storage with categories
-- User submissions with approval workflow
-- Integrate with Ask AI for instant use
-
-**Estimated Effort:** 1-2 weeks
+**Delivered:**
+- 10 system prompts across 8 categories (coding, writing, analysis, creative, productivity, learning, conversation, business)
+- User save/unsave with count tracking
+- 5-star rating system with averages
+- Usage tracking for popularity metrics
+- Variable syntax (`{{placeholder}}`) with auto-detection
+- Public/private/unlisted visibility
+- Full-text search with category filtering
+- Create new prompts with live preview
 
 #### 5. Complete Partial Features - **ONGOING**
 
@@ -234,8 +232,8 @@ Focus on finishing the 4 remaining partially implemented features:
 |---------|--------|----------|
 | **1.8.2** | Dec W4 | ✅ Mobile PWA Enhancement (bottom nav, gestures, background sync) |
 | **1.9.0** | Dec W4 | ✅ Advanced Search, Audit Export, Bot Challenge, 1,952 resources |
-| **1.10.0** | Jan W2 | Prompt Library MVP, Voice Navigation completion |
-| **1.11.0** | Jan W3 | MCP Playground Phase 1 (viewer/validator) |
+| **1.10.0** | Dec W4 | ✅ Doc Versioning, Prompt Library (10 prompts, 8 categories, save/rate/use) |
+| **1.11.0** | Jan W2 | MCP Playground Phase 1 (viewer/validator) |
 | **2.0.0** | Feb W1 | MCP Playground Phase 2 (live testing) |
 | **2.1.0** | Feb W2 | VS Code Extension MVP |
 | **2.2.0** | Feb W3 | Agent Marketplace MVP |
@@ -261,10 +259,10 @@ Focus on finishing the 4 remaining partially implemented features:
 
 | Version | Target | Features |
 |---------|--------|----------|
-| **3.1.0** | Jul W2 | Doc Versioning |
-| **3.2.0** | Jul W4 | Personalized Dashboard |
-| **3.3.0** | Aug W2 | Custom Themes |
-| **3.4.0** | Aug W4 | Collaborative Annotations |
+| **3.1.0** | Jul W2 | Personalized Dashboard (F-003) |
+| **3.2.0** | Jul W4 | Custom Themes |
+| **3.3.0** | Aug W2 | Collaborative Annotations (F-007) |
+| **3.4.0** | Aug W4 | Progressive Tutorial (F-004) |
 | **3.5.0** | Sep W2 | Notion Integration |
 | **3.6.0** | Sep W4 | Zapier/Make Connectors |
 
@@ -300,12 +298,13 @@ These features are moved to backlog or cancelled:
 
 ## Part 6: Success Metrics
 
-### Current State (v1.9.0)
+### Current State (v1.10.0)
 
 | Metric | Current | Note |
 |--------|---------|------|
-| Database Tables | 121 | Full TypeScript coverage |
+| Database Tables | 126 | +5 for prompts system |
 | Documentation Pages | 34 | With AI relationships |
+| System Prompts | 10 | 8 categories |
 | Curated Resources | 1,952 | Live in production |
 | Resource Relationships | 121 | AI-analyzed |
 | Doc-Resource Links | 147 | AI-analyzed |
@@ -313,7 +312,7 @@ These features are moved to backlog or cancelled:
 | Sound Themes | 10 | 26 sounds each |
 | Achievements | 50+ | 4 rarity tiers |
 | Languages | 18 | Full i18n |
-| Implemented Features | 45 | From FR-1 to FR-45 |
+| Implemented Features | 47 | From FR-1 to FR-47 |
 
 ### Target State (v4.5.0, End of 2025)
 
@@ -367,12 +366,12 @@ These features are moved to backlog or cancelled:
               │            │            │
               └────────────┼────────────┘
                            ▼
-                    Prompt Library (F-005)
-                           │
-              ┌────────────┼────────────┐
-              ▼            ▼            ▼
-        GitHub Sync   Slack Bot   Discord Bot
-         (F-017)      (F-018)      (F-019)
+               ✅ Prompt Library (F-005) ────┐
+                           │                 │
+              ┌────────────┼────────────┐    │
+              ▼            ▼            ▼    ▼
+     ✅ GitHub Sync  Slack Bot   Discord Bot  ✅ Doc Versioning
+        (F-017)      (F-018)      (F-019)        (F-002)
               │
               ▼
         SSO/SAML (F-021) ──► Enterprise Bundle
@@ -405,7 +404,7 @@ The revised roadmap provides a realistic, prioritized path forward that builds o
 
 ---
 
-*Document Version: 2.0*
+*Document Version: 2.1*
 *Last Updated: December 21, 2025*
 *Author: Claude Opus 4.5 via Claude Code*
-*Revision Notes: v1.9.0 release - 45 features implemented, 1,952 resources live, old detailed roadmap archived*
+*Revision Notes: v1.10.0 release - 47 features implemented, F-002 Doc Versioning and F-005 Prompt Library completed*

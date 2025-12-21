@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.9.0";
+const APP_VERSION = "1.10.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.10.0",
+    date: "2025-12-21",
+    type: "minor",
+    highlights: [
+      "📊 Dashboard Charts: Rich animated visualizations with Recharts (Area, Bar, Donut, Line, Sparkline)",
+      "📊 Site-Wide Charts: Interactive insights on Resources, Users, and Profile pages",
+      "📝 Prompts Admin: Complete management page for FR-49 Prompt Library",
+      "📜 Doc Versions Admin: Version management page for FR-48 Doc Versioning",
+      "🧭 Dashboard Navigation: Reorganized into 5 sections with 23 total pages",
+    ],
+  },
   {
     version: "1.9.0",
     date: "2025-12-21",

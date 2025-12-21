@@ -4,6 +4,7 @@
  * Dashboard Overview Page
  *
  * Main dashboard page showing key statistics and quick actions.
+ * Enhanced with animated charts for data visualization.
  */
 
 import { useEffect, useState, type JSX } from "react";
@@ -11,11 +12,30 @@ import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { StatsCards } from "./components/stats-cards";
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
+import {
+  AreaChartCard,
+  DonutChartCard,
+  BarChartCard,
+  StatCardWithSparkline,
+  CHART_COLORS,
+} from "@/components/dashboard/charts";
 import type { AdminStats, AdminBetaApplication, AdminFeedback } from "@/types/admin";
 import { getAdminNotifications, type AdminNotification } from "@/app/actions/admin-notifications";
 
+interface ChartStats {
+  userGrowth: { name: string; value: number }[];
+  contentDistribution: { name: string; value: number }[];
+  activityByType: { name: string; value: number }[];
+  roleDistribution: { name: string; value: number }[];
+  weeklySignups: { value: number }[];
+  trends: {
+    userGrowth: { value: number; isPositive: boolean };
+  };
+}
+
 export default function DashboardPage() {
   const [stats, setStats] = useState<AdminStats | null>(null);
+  const [chartStats, setChartStats] = useState<ChartStats | null>(null);
   const [recentBeta, setRecentBeta] = useState<AdminBetaApplication[]>([]);
   const [recentFeedback, setRecentFeedback] = useState<AdminFeedback[]>([]);
   const [recentNotifications, setRecentNotifications] = useState<AdminNotification[]>([]);
@@ -24,8 +44,9 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [statsRes, betaRes, feedbackRes, notificationsRes] = await Promise.all([
+        const [statsRes, chartStatsRes, betaRes, feedbackRes, notificationsRes] = await Promise.all([
           fetch("/api/dashboard/stats"),
+          fetch("/api/dashboard/chart-stats"),
           fetch("/api/dashboard/beta?limit=5&status=pending"),
           fetch("/api/dashboard/feedback?limit=5&status=open"),
           getAdminNotifications({ limit: 5 }),
@@ -34,6 +55,11 @@ export default function DashboardPage() {
         if (statsRes.ok) {
           const statsData = await statsRes.json();
           setStats(statsData);
+        }
+
+        if (chartStatsRes.ok) {
+          const chartData = await chartStatsRes.json();
+          setChartStats(chartData);
         }
 
         if (betaRes.ok) {
@@ -71,6 +97,82 @@ export default function DashboardPage() {
 
       {/* Stats Cards */}
       <StatsCards stats={stats} isLoading={isLoading} />
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* User Growth Chart */}
+        {isLoading ? (
+          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
+        ) : chartStats?.userGrowth && chartStats.userGrowth.length > 0 ? (
+          <AreaChartCard
+            title="User Growth (Last 30 Days)"
+            data={chartStats.userGrowth}
+            trend={chartStats.trends?.userGrowth}
+            height={200}
+            gradientColors={{ start: CHART_COLORS.primary, end: CHART_COLORS.secondary }}
+            className="border-gray-800 bg-gray-900/50"
+          />
+        ) : null}
+
+        {/* Content Distribution */}
+        {isLoading ? (
+          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
+        ) : chartStats?.contentDistribution && chartStats.contentDistribution.length > 0 ? (
+          <DonutChartCard
+            title="Content Distribution"
+            data={chartStats.contentDistribution}
+            centerLabel={{
+              value: chartStats.contentDistribution.reduce((sum, d) => sum + d.value, 0),
+              label: "Total",
+            }}
+            height={200}
+            className="border-gray-800 bg-gray-900/50"
+            colors={[
+              CHART_COLORS.primary,
+              CHART_COLORS.secondary,
+              CHART_COLORS.tertiary,
+              CHART_COLORS.success,
+            ]}
+          />
+        ) : null}
+
+        {/* Activity by Type */}
+        {isLoading ? (
+          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
+        ) : chartStats?.activityByType && chartStats.activityByType.length > 0 ? (
+          <BarChartCard
+            title="Activity by Type (Last 7 Days)"
+            data={chartStats.activityByType}
+            height={200}
+            className="border-gray-800 bg-gray-900/50"
+            horizontal
+          />
+        ) : null}
+
+        {/* Role Distribution */}
+        {isLoading ? (
+          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
+        ) : chartStats?.roleDistribution && chartStats.roleDistribution.length > 0 ? (
+          <DonutChartCard
+            title="User Roles"
+            data={chartStats.roleDistribution}
+            centerLabel={{
+              value: chartStats.roleDistribution.reduce((sum, d) => sum + d.value, 0),
+              label: "Users",
+            }}
+            height={200}
+            className="border-gray-800 bg-gray-900/50"
+            colors={[
+              CHART_COLORS.success,
+              CHART_COLORS.secondary,
+              CHART_COLORS.warning,
+              CHART_COLORS.primary,
+              CHART_COLORS.error,
+              CHART_COLORS.tertiary,
+            ]}
+          />
+        ) : null}
+      </div>
 
       {/* Quick Actions Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -242,20 +344,6 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Role Distribution (if stats available) */}
-      {stats && (
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">User Roles Distribution</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {Object.entries(stats.users.byRole || {}).map(([role, count]) => (
-              <div key={role} className="text-center">
-                <p className="text-2xl font-bold text-white">{count}</p>
-                <p className="text-sm text-gray-400 capitalize">{role}s</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

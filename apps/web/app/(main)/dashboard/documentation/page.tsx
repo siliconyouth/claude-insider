@@ -8,6 +8,7 @@
  */
 
 import { useState, useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/design-system";
 import { PageHeader, StatusBadge } from "@/components/dashboard/shared";
 import {
@@ -20,6 +21,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   SearchIcon,
+  ExternalLinkIcon,
 } from "lucide-react";
 
 interface DocumentationItem {
@@ -71,6 +73,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 export default function DocumentationPage() {
+  const router = useRouter();
   const [documentation, setDocumentation] = useState<DocumentationItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -86,8 +89,10 @@ export default function DocumentationPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [hasRelationships, setHasRelationships] = useState<string>("all");
 
-  // Selected item for detail view
-  const [selectedDoc, setSelectedDoc] = useState<DocumentationItem | null>(null);
+  // Navigate to detail page
+  const handleDocClick = (slug: string) => {
+    router.push(`/dashboard/documentation/${encodeURIComponent(slug)}`);
+  };
 
   // Fetch documentation
   const fetchDocs = useCallback(async () => {
@@ -264,8 +269,7 @@ export default function DocumentationPage() {
                 <DocRow
                   key={doc.slug}
                   doc={doc}
-                  isSelected={selectedDoc?.slug === doc.slug}
-                  onSelect={() => setSelectedDoc(doc)}
+                  onClick={() => handleDocClick(doc.slug)}
                 />
               ))}
             </div>
@@ -367,23 +371,21 @@ function StatCard({
 // Documentation Row Component
 function DocRow({
   doc,
-  isSelected,
-  onSelect,
+  onClick,
 }: {
   doc: DocumentationItem;
-  isSelected: boolean;
-  onSelect: () => void;
+  onClick: () => void;
 }) {
   const categoryColor =
     CATEGORY_COLORS[doc.category] || "bg-gray-500/20 text-gray-400 border-gray-500/30";
 
   return (
     <div
-      onClick={onSelect}
+      onClick={onClick}
       className={cn(
         "grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 px-4 py-3",
         "hover:bg-gray-800/50 cursor-pointer transition-colors",
-        isSelected && "bg-gray-800/70 ring-1 ring-blue-500/50"
+        "group"
       )}
     >
       {/* Title & Description */}
@@ -436,10 +438,16 @@ function DocRow({
         )}
       </div>
 
-      {/* Updated */}
-      <div className="col-span-1 md:col-span-2 flex items-center gap-1 text-xs text-gray-500">
-        <ClockIcon className="w-3 h-3" />
-        {new Date(doc.updatedAt).toLocaleDateString()}
+      {/* Updated + Version */}
+      <div className="col-span-1 md:col-span-2 flex items-center justify-between">
+        <div className="flex items-center gap-1 text-xs text-gray-500">
+          <ClockIcon className="w-3 h-3" />
+          {new Date(doc.updatedAt).toLocaleDateString()}
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-600">v{doc.version}</span>
+          <ExternalLinkIcon className="w-3 h-3 text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
       </div>
     </div>
   );

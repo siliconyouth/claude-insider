@@ -8,7 +8,6 @@
  */
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { toast } from "@/components/toast";
@@ -692,11 +691,10 @@ function ReviewCard({
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0">
           {review.user.image ? (
-            <Image
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
               src={review.user.image}
               alt={review.user.name}
-              width={40}
-              height={40}
               className="w-10 h-10 rounded-full"
             />
           ) : (
@@ -1182,13 +1180,12 @@ function CommentCard({
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
           {comment.user.image ? (
-            <Image
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
               src={comment.user.image}
               alt={comment.user.name}
-              width={isReply ? 28 : 36}
-              height={isReply ? 28 : 36}
               className={cn(
-                "rounded-full",
+                "rounded-full object-cover",
                 isReply ? "w-7 h-7" : "w-9 h-9"
               )}
             />
@@ -1310,11 +1307,10 @@ function AlternativesTab({ resource }: { resource: ResourceWithDetails }) {
               )}
             >
               {alt.icon_url ? (
-                <Image
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
                   src={alt.icon_url}
                   alt={alt.title}
-                  width={48}
-                  height={48}
                   className="w-full h-full object-cover rounded-xl"
                 />
               ) : (

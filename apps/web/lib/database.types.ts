@@ -3485,6 +3485,219 @@ export type Database = {
           },
         ]
       }
+      prompt_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          icon: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      prompt_ratings: {
+        Row: {
+          created_at: string
+          id: string
+          prompt_id: string
+          rating: number
+          review: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          prompt_id: string
+          rating: number
+          review?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          prompt_id?: string
+          rating?: number
+          review?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prompt_ratings_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "prompts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prompt_ratings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prompt_usage: {
+        Row: {
+          context: string | null
+          created_at: string
+          fingerprint_hash: string | null
+          id: string
+          prompt_id: string
+          user_id: string | null
+          variables_used: Json | null
+        }
+        Insert: {
+          context?: string | null
+          created_at?: string
+          fingerprint_hash?: string | null
+          id?: string
+          prompt_id: string
+          user_id?: string | null
+          variables_used?: Json | null
+        }
+        Update: {
+          context?: string | null
+          created_at?: string
+          fingerprint_hash?: string | null
+          id?: string
+          prompt_id?: string
+          user_id?: string | null
+          variables_used?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prompt_usage_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "prompts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prompt_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prompts: {
+        Row: {
+          author_id: string | null
+          avg_rating: number | null
+          category_id: string | null
+          content: string
+          created_at: string
+          description: string | null
+          id: string
+          is_featured: boolean | null
+          is_system: boolean | null
+          like_count: number | null
+          moderation_notes: string | null
+          rating_count: number | null
+          save_count: number | null
+          slug: string
+          status: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+          use_count: number | null
+          variables: Json | null
+          visibility: string
+        }
+        Insert: {
+          author_id?: string | null
+          avg_rating?: number | null
+          category_id?: string | null
+          content: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_system?: boolean | null
+          like_count?: number | null
+          moderation_notes?: string | null
+          rating_count?: number | null
+          save_count?: number | null
+          slug: string
+          status?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          use_count?: number | null
+          variables?: Json | null
+          visibility?: string
+        }
+        Update: {
+          author_id?: string | null
+          avg_rating?: number | null
+          category_id?: string | null
+          content?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_system?: boolean | null
+          like_count?: number | null
+          moderation_notes?: string | null
+          rating_count?: number | null
+          save_count?: number | null
+          slug?: string
+          status?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          use_count?: number | null
+          variables?: Json | null
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prompts_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prompts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "prompt_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       push_subscriptions: {
         Row: {
           auth_key: string
@@ -6142,6 +6355,45 @@ export type Database = {
           },
         ]
       }
+      user_prompt_saves: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          prompt_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          prompt_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          prompt_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_prompt_saves_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "prompts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_prompt_saves_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       verification: {
         Row: {
           createdAt: string | null
@@ -7440,3 +7692,64 @@ export const Constants = {
     },
   },
 } as const
+
+// ============================================================
+// Convenience Type Exports
+// ============================================================
+// Auto-generated from Supabase. Regenerate with: pnpm db:types
+// ============================================================
+
+// Core User Tables
+export type User = Tables<'user'>
+export type Account = Tables<'account'>
+export type Session = Tables<'session'>
+export type Profile = Tables<'profiles'>
+
+// Content Interaction Tables
+export type Favorite = Tables<'favorites'>
+export type Rating = Tables<'ratings'>
+export type Comment = Tables<'comments'>
+export type CommentVote = Tables<'comment_votes'>
+export type Collection = Tables<'collections'>
+export type CollectionItem = Tables<'collection_items'>
+
+// Activity & Analytics
+export type UserActivity = Tables<'user_activity'>
+export type ViewHistory = Tables<'view_history'>
+export type SearchHistory = Tables<'search_history'>
+
+// Notifications
+export type Notification = Tables<'notifications'>
+export type NotificationPreference = Tables<'notification_preferences'>
+export type AdminNotification = Tables<'admin_notifications'>
+export type PushSubscription = Tables<'push_subscriptions'>
+
+// Gamification
+export type Achievement = Tables<'achievements'>
+export type UserAchievement = Tables<'user_achievements'>
+export type AchievementProgress = Tables<'achievement_progress'>
+
+// Social Features
+export type UserFollow = Tables<'user_follows'>
+export type UserBlock = Tables<'user_blocks'>
+
+// AI & Assistant
+export type AiConversation = Tables<'ai_conversations'>
+export type AiMessage = Tables<'ai_messages'>
+export type AssistantSettings = Tables<'assistant_settings'>
+export type UserApiKey = Tables<'user_api_keys'>
+export type ApiKeyUsageLog = Tables<'api_key_usage_logs'>
+
+// Security & Auth
+export type Passkey = Tables<'passkeys'>
+export type WebauthnChallenge = Tables<'webauthn_challenges'>
+export type EmailVerificationCode = Tables<'email_verification_codes'>
+export type TwoFactorSession = Tables<'two_factor_sessions'>
+
+// Admin
+export type AdminLog = Tables<'admin_logs'>
+export type Feedback = Tables<'feedback'>
+export type EditSuggestion = Tables<'edit_suggestions'>
+
+// Views
+export type RatingStats = Tables<'rating_stats'>

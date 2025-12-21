@@ -9,6 +9,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.0] - 2025-12-21
+### Enhanced Admin Dashboard & Data Visualization
+- **Dashboard Charts**: Rich data visualization with Recharts
+  - `AreaChartCard`: Animated gradient-filled time series charts with trend indicators
+  - `DonutChartCard`: Animated pie/donut charts with center labels and legends
+  - `BarChartCard`: Vertical bar charts with hover tooltips
+  - `LineChartCard`: Multi-series comparison charts
+  - `SparklineChart`: Compact inline trend indicators for stat cards
+  - `HorizontalBarChart`: Inline horizontal bars for ranked data
+  - `DonutChart`: Inline donut charts with click handlers
+  - New API: `GET /api/dashboard/chart-stats` for aggregated chart data
+- **Site-Wide Charts**: Interactive visualizations on public pages
+  - `ResourceInsights`: Category distribution, difficulty breakdown, status donut chart
+  - `UserDirectoryInsights`: Community highlights bar chart, social network donut
+  - `ProfileActivityChart`: Activity breakdown donut with achievement progress
+- **Prompts Admin Page**: Complete management for FR-49 Prompt Library
+  - List all prompts (system + user) with filtering by category, visibility, type
+  - Feature toggle, soft delete, and detail modal
+  - New APIs: `GET/POST /api/dashboard/prompts`, `GET/PATCH/DELETE /api/dashboard/prompts/[id]`
+- **Doc Versions Admin Page**: Version management for FR-48 Doc Versioning
+  - List all documents with version counts and history info
+  - Version history modal with timeline view
+  - Links to diff comparison and documentation editor
+  - New API: `GET /api/dashboard/doc-versions`
+- **Dashboard Navigation Overhaul**: Reorganized from 14 items to 23 items in 5 sections
+  - **Overview**: Dashboard home
+  - **Content** (7 items): Documentation, Doc Versions, Resources, Prompts, Relationships, Discovery, Auto-Updates
+  - **Moderation** (6 items): Beta Applications, Beta Testers, Feedback, Edit Suggestions, Comments, Reports
+  - **Analytics** (3 items): FAQ Analytics, Search Analytics, Diagnostics
+  - **Admin** (6 items): Users, Banned Users, Notifications, Security, Donations, Exports
+- **Database**: Migration 096 for prompts tables (5 new tables: `prompts`, `prompt_categories`, `user_prompt_saves`, `prompt_ratings`, `prompt_usage`)
+- **TypeScript**: 126 tables now in generated types (up from 121)
+- **Dependencies**: Added `recharts@3.6.0` for animated charts
+
+---
+
 ## [1.9.0] - 2025-12-21
 ### Advanced Search, Admin Exports & Bot Challenge System
 - **F-035 Advanced Search** (40% → 100%): Complete search system overhaul

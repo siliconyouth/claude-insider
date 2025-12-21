@@ -7,7 +7,6 @@
  * Sticks to the side on desktop for easy access while scrolling.
  */
 
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import type { ResourceWithDetails, ResourceAuthorRow } from "@/lib/resources/queries";
@@ -254,11 +253,10 @@ function AuthorCard({
         )}
       >
         {author.avatar_url ? (
-          <Image
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
             src={author.avatar_url}
             alt={author.name}
-            width={40}
-            height={40}
             className="w-full h-full object-cover rounded-full"
           />
         ) : (

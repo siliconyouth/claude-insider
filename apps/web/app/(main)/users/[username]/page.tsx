@@ -23,6 +23,7 @@ import {
 import { formatTimeInTimezone } from "@/lib/timezone";
 import { SkeletonProfile } from "@/components/skeleton";
 import { ShareProfileModal } from "@/components/users/share-profile-modal";
+import { ProfileActivityChart } from "@/components/users/profile-activity-chart";
 
 interface PublicProfile {
   id: string;
@@ -1141,7 +1142,7 @@ export default function PublicProfilePage({
               </section>
             )}
 
-            {/* Quick Stats Card */}
+            {/* Activity Overview Card with Chart */}
             {profile.stats && (
               <section
                 className={cn(
@@ -1151,26 +1152,13 @@ export default function PublicProfilePage({
                 )}
               >
                 <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
-                  Contributions
+                  Activity Overview
                 </h2>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      Comments
-                    </span>
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                      {profile.stats.comments}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      Edit Suggestions
-                    </span>
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white">
-                      {profile.stats.suggestions}
-                    </span>
-                  </div>
-                </div>
+                <ProfileActivityChart
+                  stats={profile.stats}
+                  achievementPoints={profile.achievementPoints || 0}
+                  achievements={profile.achievements}
+                />
               </section>
             )}
           </div>

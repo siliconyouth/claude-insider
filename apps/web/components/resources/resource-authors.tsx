@@ -7,7 +7,6 @@
  * social links and role badges.
  */
 
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import type { ResourceAuthorRow } from "@/lib/resources/queries";
@@ -115,12 +114,11 @@ function AuthorCard({ author }: { author: ResourceAuthorRow }) {
         {/* Avatar */}
         <div className="flex-shrink-0">
           {avatarUrl ? (
-            <Image
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
               src={avatarUrl}
               alt={author.name}
-              width={48}
-              height={48}
-              className="w-12 h-12 rounded-full"
+              className="w-12 h-12 rounded-full object-cover"
             />
           ) : (
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center text-white font-semibold text-lg">

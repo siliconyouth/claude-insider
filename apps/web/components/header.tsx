@@ -13,7 +13,7 @@ import { NavDropdown, NavLink } from "@/components/nav-dropdown";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
-  activePage?: "home" | "docs" | "getting-started" | "resources" | "playground" | "stats";
+  activePage?: "home" | "docs" | "getting-started" | "resources" | "playground" | "stats" | "prompts";
 }
 
 // Icons for navigation items

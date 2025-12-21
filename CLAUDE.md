@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.9.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.0**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.9.0**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 47 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 49 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync
@@ -40,7 +40,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.9.0**.
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 10. [Component Patterns](#component-patterns) - Buttons, cards, focus states
-11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 121 tables, RLS, migrations
+11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
 12. [Internationalization](#internationalization-i18n) - 18 languages
 13. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
 14. [Content Structure](#content-structure) - Documentation, resources, legal pages
@@ -81,6 +81,7 @@ All technologies are **free and/or open source** (except hosting services with f
 | @paypal/react-paypal-js | 8.9.2 | Apache-2.0 | PayPal integration |
 | @tanstack/react-virtual | 3.13.2 | MIT | Virtual scrolling for message lists |
 | react-image-crop | 11.x | ISC | Client-side image cropping |
+| recharts | 3.6.0 | MIT | Animated charts (Area, Bar, Pie, Line) |
 
 ### Development Environment
 
@@ -133,7 +134,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (47 total)
+### Implemented Features (49 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -153,7 +154,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-14 | Notification Popups | Persistent until dismissed, deep-linking, ARIA regions |
 | FR-15 | Settings Model | Model selector in settings with feedback |
 | FR-16 | Header Model Display | Smart API key indicators, BEST badge, tier colors |
-| FR-17 | Database Types | 121 tables, auto-generated TypeScript types |
+| FR-17 | Database Types | 126 tables, auto-generated TypeScript types |
 | FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
 | FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
 | FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
@@ -184,6 +185,8 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-45 | Bot Challenge System | Slider puzzle, math captcha, rate limit warnings, trust-based difficulty, session bypass |
 | FR-46 | AI Writing Assistant | In-place doc editing, 8 AI commands (improve, expand, simplify, etc.), diff preview, streaming |
 | FR-47 | GitHub CLAUDE.md Sync | Sync CLAUDE.md to GitHub repos, repo selector, OAuth scopes, status tracking |
+| FR-48 | Doc Versioning | Version history, LCS line-by-line diff, unified/split view, rollback (admin only), 50 versions per doc |
+| FR-49 | Prompt Library | 10 system prompts, 8 categories, save/rate/use tracking, variable syntax `{{placeholder}}`, visibility controls |
 
 ### Non-Functional Requirements
 
@@ -227,6 +230,7 @@ claude-insider/
 │   │   ├── interactions/         # Favorites, ratings, comments
 │   │   ├── achievements/         # Gamification
 │   │   ├── notifications/        # Notification center
+│   │   ├── dashboard/charts/     # Recharts-based visualizations
 │   │   ├── dashboard/security/   # Security dashboard
 │   │   ├── dashboard/shared/     # Shared dashboard components
 │   │   ├── donations/            # Donation components
@@ -247,7 +251,7 @@ claude-insider/
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 91 SQL migration files
+│   └── supabase/migrations/      # 97 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -747,7 +751,7 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 ### Overview
 
-Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **94 migrations** define **121 tables** across 18 categories.
+Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **97 migrations** define **126 tables** across 19 categories.
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -786,7 +790,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 | `createServerClient()` | `lib/supabase/server.ts` | Server components, RLS-enforced |
 | `createAdminClient()` | `lib/supabase/server.ts` | Server-only, bypasses RLS |
 
-### Table Catalog (73 Tables)
+### Table Catalog (78 Tables)
 
 #### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 
@@ -865,6 +869,10 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 `export_jobs`
 
+#### Prompts (5 tables)
+
+`prompt_categories`, `prompts`, `user_prompt_saves`, `prompt_ratings`, `prompt_usage`
+
 ### Role Hierarchy
 
 ```sql
@@ -917,7 +925,8 @@ supabase/migrations/
 ├── 081-085                      # Resources system (tags, authors, alternatives, favorites, ratings, reviews, comments)
 ├── 086-088                      # Documentation tables, relationships, resource AI enhancements
 ├── 089-090                      # AI pipeline settings, operation queue, resource sources, discovery queue
-└── 091                          # Resource-resource relationships fix
+├── 091                          # Resource-resource relationships fix
+└── 096                          # Prompts system (categories, prompts, saves, ratings, usage)
 ```
 
 ### Mandatory Rules

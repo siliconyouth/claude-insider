@@ -13,7 +13,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/lib/design-system";
 import { PageHeader, StatusBadge } from "@/components/dashboard/shared";
 import { useToast } from "@/components/toast";

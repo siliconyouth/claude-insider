@@ -196,6 +196,24 @@ export function getTopByStars(limit: number = 10): ResourceEntry[] {
     .slice(0, limit);
 }
 
+// Get difficulty distribution stats
+export function getDifficultyStats(): { level: string; count: number }[] {
+  const levels = ['beginner', 'intermediate', 'advanced', 'expert'];
+  return levels.map((level) => ({
+    level,
+    count: ALL_RESOURCES.filter((r) => r.difficulty === level).length,
+  }));
+}
+
+// Get status distribution stats
+export function getStatusStats(): { status: string; count: number }[] {
+  const statuses = ['official', 'community', 'beta', 'deprecated'];
+  return statuses.map((status) => ({
+    status,
+    count: ALL_RESOURCES.filter((r) => r.status === status).length,
+  }));
+}
+
 // Re-export schema types and utilities
 export * from './schema';
 export { getCategoryBySlug };

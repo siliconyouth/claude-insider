@@ -174,6 +174,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
     }));
 
     return NextResponse.json({
+      userRole,
       documentation: {
         slug: doc.slug,
         title: doc.title,

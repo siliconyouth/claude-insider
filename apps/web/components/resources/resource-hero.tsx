@@ -8,7 +8,6 @@
  */
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { toast } from "@/components/toast";
@@ -130,11 +129,10 @@ export function ResourceHero({ resource, category }: ResourceHeroProps) {
               )}
             >
               {resource.icon_url ? (
-                <Image
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
                   src={resource.icon_url}
                   alt={resource.title}
-                  width={80}
-                  height={80}
                   className="w-full h-full object-cover rounded-2xl"
                 />
               ) : (
@@ -284,11 +282,10 @@ export function ResourceHero({ resource, category }: ResourceHeroProps) {
         {/* Banner Image */}
         {resource.banner_url && (
           <div className="mt-8 rounded-xl overflow-hidden border border-gray-200 dark:border-[#262626]">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={resource.banner_url}
               alt={`${resource.title} banner`}
-              width={1200}
-              height={400}
               className="w-full h-auto object-cover"
             />
           </div>

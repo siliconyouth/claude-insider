@@ -16,6 +16,8 @@ import {
   getResourceStats,
   getCategoriesWithCounts,
   getPopularTags,
+  getDifficultyStats,
+  getStatusStats,
   filterResources,
   type ResourceEntry,
   type ResourceCategorySlug,
@@ -23,6 +25,7 @@ import {
   type ResourceStatus,
 } from '@/data/resources';
 import { searchResources } from '@/lib/resources/search';
+import { ResourceInsights } from '@/components/resources/resource-insights';
 
 // Icons
 const SearchIcon = ({ className }: { className?: string }) => (
@@ -124,6 +127,8 @@ function ResourcesContent() {
   const stats = useMemo(() => getResourceStats(), []);
   const categories = useMemo(() => getCategoriesWithCounts(), []);
   const popularTags = useMemo(() => getPopularTags(30), []);
+  const difficultyStats = useMemo(() => getDifficultyStats(), []);
+  const statusStats = useMemo(() => getStatusStats(), []);
 
   // Filter and search resources
   const filteredResources = useMemo(() => {
@@ -222,6 +227,19 @@ function ResourcesContent() {
               Curated collection of tools, MCP servers, SDKs, tutorials, and community resources
             </p>
           </div>
+
+          {/* Resource Insights Charts */}
+          <ResourceInsights
+            categories={categories}
+            difficultyStats={difficultyStats}
+            statusStats={statusStats}
+            totalResources={stats.totalResources}
+            selectedCategory={filters.category}
+            selectedDifficulty={filters.difficulty}
+            onCategoryClick={(slug) => updateFilter('category', slug === filters.category ? null : slug as ResourceCategorySlug)}
+            onDifficultyClick={(level) => updateFilter('difficulty', level === filters.difficulty ? null : level as DifficultyLevel)}
+            className="mb-8"
+          />
 
           {/* Search and Filter Bar */}
           <div className="mb-8">

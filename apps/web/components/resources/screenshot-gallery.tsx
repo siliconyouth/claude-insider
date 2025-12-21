@@ -8,7 +8,6 @@
  */
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/design-system";
 
