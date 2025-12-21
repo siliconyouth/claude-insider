@@ -172,7 +172,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-32 | ProfileHoverCard | Touch-friendly previews, two-touch navigation |
 | FR-33 | User Directory | `/users` page with 7 list types, search, filters, deep linking to messages |
 | FR-34 | Profile Cover Photos | Custom covers (3:1 ratio), animated default, react-image-crop, settings integration |
-| FR-35 | Smart AI Messaging | @claudeinsider auto-responds in 1-on-1 DMs, @mention-only in groups, admin-managed, E2EE verified |
+| FR-35 | Smart AI Messaging | @claudeinsider responds only in group chats when @mentioned, no auto-response in DMs, admin-managed, E2EE verified |
 | FR-36 | Gamification CMS | Payload CMS for achievements, badges, tiers, categories; auto-sync to Supabase |
 | FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
 | FR-38 | Resource Auto-Update | AI-powered updates via Claude Opus 4.5, Firecrawl scraping, admin review workflow, changelog tracking |

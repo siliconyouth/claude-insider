@@ -554,11 +554,9 @@ export async function sendMessage(
     }
 
     // AI response logic:
-    // - Direct DMs: AI ALWAYS responds (no mention needed)
-    // - Group chats: AI only responds when @claudeinsider is mentioned AND AI is a member
-    if (isDirectDM) {
-      aiMentioned = true; // Always respond in 1-on-1 DMs
-    } else if (aiExplicitlyMentioned) {
+    // - Direct DMs: AI does NOT auto-respond (disabled to avoid unwanted AI messages)
+    // - Group chats: AI only responds when @claudeinsider is explicitly mentioned AND AI is a member
+    if (aiExplicitlyMentioned && !isDirectDM) {
       // Check if AI is a member of this group before responding
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: aiParticipant } = await supabase
@@ -570,6 +568,8 @@ export async function sendMessage(
 
       aiMentioned = !!aiParticipant; // Only respond if AI is a member
     }
+    // Note: In direct DMs, AI will not respond even if mentioned.
+    // Users should use the AI Assistant tab for direct AI interactions.
 
     // Look up user IDs for mentioned usernames
     const mentionedUserIds: string[] = aiMentioned ? [AI_ASSISTANT_USER_ID] : [];
