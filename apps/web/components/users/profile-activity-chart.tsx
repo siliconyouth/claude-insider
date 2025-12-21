@@ -9,7 +9,7 @@
 
 import { useMemo } from "react";
 import { cn } from "@/lib/design-system";
-import { DonutChart, type ChartDataPoint } from "@/components/dashboard/charts";
+import { LazyDonutChart, type ChartDataPoint } from "@/components/dashboard/charts";
 
 interface ProfileStats {
   favorites: number;
@@ -84,7 +84,7 @@ export function ProfileActivityChart({
     <div className={cn("space-y-4", className)}>
       {/* Activity Breakdown */}
       <div className="flex items-center gap-4">
-        <DonutChart
+        <LazyDonutChart
           data={activityData}
           size={100}
           innerRadius={28}

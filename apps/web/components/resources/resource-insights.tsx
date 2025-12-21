@@ -11,8 +11,8 @@
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/design-system";
 import {
-  DonutChart,
-  HorizontalBarChart,
+  LazyDonutChart,
+  LazyHorizontalBarChart,
   CHART_COLORS,
   type ChartDataPoint,
 } from "@/components/dashboard/charts";
@@ -142,7 +142,7 @@ export function ResourceInsights({
             By Category
           </h3>
           <div className="flex items-center gap-4">
-            <DonutChart
+            <LazyDonutChart
               data={categoryChartData}
               size={140}
               innerRadius={40}
@@ -205,7 +205,7 @@ export function ResourceInsights({
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
             By Difficulty
           </h3>
-          <HorizontalBarChart
+          <LazyHorizontalBarChart
             data={difficultyChartData}
             height={140}
             barSize={20}
@@ -249,7 +249,7 @@ export function ResourceInsights({
             By Status
           </h3>
           <div className="flex items-center justify-center gap-6">
-            <DonutChart
+            <LazyDonutChart
               data={statusChartData}
               size={120}
               innerRadius={35}

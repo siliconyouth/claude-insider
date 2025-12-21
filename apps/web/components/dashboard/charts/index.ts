@@ -10,13 +10,29 @@
  * - Dark mode support
  * - Responsive sizing
  * - Card and inline (headless) variants
+ *
+ * IMPORTANT: Use lazy-loaded versions (LazyAreaChartCard, etc.) in pages to avoid
+ * "Cannot access 'L' before initialization" errors from Recharts circular dependencies.
  */
 
+// Direct exports (use only in components that are themselves dynamically imported)
 export { AreaChartCard } from "./area-chart";
 export { DonutChartCard, DonutChart } from "./donut-chart";
 export { BarChartCard, HorizontalBarChart } from "./bar-chart";
 export { LineChartCard } from "./line-chart";
 export { SparklineChart, StatCardWithSparkline } from "./sparkline-chart";
+
+// Lazy-loaded exports (use in pages to avoid SSR issues)
+export {
+  LazyAreaChartCard,
+  LazyDonutChartCard,
+  LazyDonutChart,
+  LazyBarChartCard,
+  LazyHorizontalBarChart,
+  LazyLineChartCard,
+  LazySparklineChart,
+  LazyStatCardWithSparkline,
+} from "./lazy-charts";
 
 // Chart color constants matching design system
 export const CHART_COLORS = {

@@ -10,8 +10,8 @@
 import { useMemo } from "react";
 import { cn } from "@/lib/design-system";
 import {
-  HorizontalBarChart,
-  DonutChart,
+  LazyHorizontalBarChart,
+  LazyDonutChart,
   CHART_COLORS,
   type ChartDataPoint,
 } from "@/components/dashboard/charts";
@@ -128,7 +128,7 @@ export function UserDirectoryInsights({
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
             Community Highlights
           </h3>
-          <HorizontalBarChart
+          <LazyHorizontalBarChart
             data={categoryChartData}
             height={160}
             barSize={22}
@@ -163,7 +163,7 @@ export function UserDirectoryInsights({
               Your Network
             </h3>
             <div className="flex items-center justify-center gap-8">
-              <DonutChart
+              <LazyDonutChart
                 data={socialData}
                 size={140}
                 innerRadius={40}

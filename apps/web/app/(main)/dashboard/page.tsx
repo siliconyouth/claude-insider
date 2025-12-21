@@ -13,10 +13,9 @@ import { cn } from "@/lib/design-system";
 import { StatsCards } from "./components/stats-cards";
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import {
-  AreaChartCard,
-  DonutChartCard,
-  BarChartCard,
-  StatCardWithSparkline,
+  LazyAreaChartCard,
+  LazyDonutChartCard,
+  LazyBarChartCard,
   CHART_COLORS,
 } from "@/components/dashboard/charts";
 import type { AdminStats, AdminBetaApplication, AdminFeedback } from "@/types/admin";
@@ -104,7 +103,7 @@ export default function DashboardPage() {
         {isLoading ? (
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
         ) : chartStats?.userGrowth && chartStats.userGrowth.length > 0 ? (
-          <AreaChartCard
+          <LazyAreaChartCard
             title="User Growth (Last 30 Days)"
             data={chartStats.userGrowth}
             trend={chartStats.trends?.userGrowth}
@@ -118,7 +117,7 @@ export default function DashboardPage() {
         {isLoading ? (
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
         ) : chartStats?.contentDistribution && chartStats.contentDistribution.length > 0 ? (
-          <DonutChartCard
+          <LazyDonutChartCard
             title="Content Distribution"
             data={chartStats.contentDistribution}
             centerLabel={{
@@ -140,7 +139,7 @@ export default function DashboardPage() {
         {isLoading ? (
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
         ) : chartStats?.activityByType && chartStats.activityByType.length > 0 ? (
-          <BarChartCard
+          <LazyBarChartCard
             title="Activity by Type (Last 7 Days)"
             data={chartStats.activityByType}
             height={200}
@@ -153,7 +152,7 @@ export default function DashboardPage() {
         {isLoading ? (
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
         ) : chartStats?.roleDistribution && chartStats.roleDistribution.length > 0 ? (
-          <DonutChartCard
+          <LazyDonutChartCard
             title="User Roles"
             data={chartStats.roleDistribution}
             centerLabel={{
