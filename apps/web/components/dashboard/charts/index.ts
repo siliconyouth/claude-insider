@@ -11,18 +11,16 @@
  * - Responsive sizing
  * - Card and inline (headless) variants
  *
- * IMPORTANT: Use lazy-loaded versions (LazyAreaChartCard, etc.) in pages to avoid
- * "Cannot access 'L' before initialization" errors from Recharts circular dependencies.
+ * IMPORTANT: Only lazy-loaded versions are exported to prevent Recharts SSR errors.
+ * The "Cannot access 'x' before initialization" error occurs when Recharts is
+ * imported during SSR due to circular dependencies in the library.
+ *
+ * If you need direct chart imports (rare - only for components that are already
+ * dynamically imported), import directly from the specific chart file:
+ *   import { DonutChart } from "@/components/dashboard/charts/donut-chart";
  */
 
-// Direct exports (use only in components that are themselves dynamically imported)
-export { AreaChartCard } from "./area-chart";
-export { DonutChartCard, DonutChart } from "./donut-chart";
-export { BarChartCard, HorizontalBarChart } from "./bar-chart";
-export { LineChartCard } from "./line-chart";
-export { SparklineChart, StatCardWithSparkline } from "./sparkline-chart";
-
-// Lazy-loaded exports (use in pages to avoid SSR issues)
+// Lazy-loaded exports - ALWAYS use these in pages and components
 export {
   LazyAreaChartCard,
   LazyDonutChartCard,
