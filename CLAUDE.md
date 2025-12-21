@@ -1130,7 +1130,36 @@ Matrix Olm/Megolm protocol with Double Ratchet algorithm.
 
 **Location**: `lib/resources/`, `data/resources/`, `app/resources/`
 
-122+ curated resources across 10 categories: official, tools, mcp-servers, rules, prompts, agents, tutorials, sdks, showcases, community.
+1,952 curated resources across 10 categories: official, tools, mcp-servers, rules, prompts, agents, tutorials, sdks, showcases, community.
+
+#### Resource Data Management (MANDATORY)
+
+| Rule | Description |
+|------|-------------|
+| **Database is Source of Truth** | Always use Supabase `resources` table as the authoritative data source. JSON files are generated exports for build-time optimization only. |
+| **Screenshots Required** | Every resource MUST have a screenshot. Generate screenshots when adding new resources or updating existing ones. |
+| **Sync JSON Files** | After database changes, run `scripts/sync-resources-to-json.ts` to regenerate JSON files. |
+
+**Key Scripts**:
+
+| Script | Purpose | Usage |
+|--------|---------|-------|
+| `scripts/generate-screenshots-db.ts` | Mass screenshot generation (10 parallel browsers) | `npx dotenvx run -f .env.local -- npx tsx scripts/generate-screenshots-db.ts` |
+| `scripts/sync-resources-to-json.ts` | Export database to JSON files | `npx dotenvx run -f .env.local -- npx tsx scripts/sync-resources-to-json.ts` |
+| `scripts/generate-screenshots.ts` | Generate from JSON files (legacy) | `npx tsx scripts/generate-screenshots.ts` |
+| `scripts/upload-screenshots.ts` | Upload local screenshots to Supabase | `npx dotenvx run -- npx tsx scripts/upload-screenshots.ts` |
+
+**Screenshot Pipeline**:
+```
+New Resource → Capture Screenshot → Upload to Supabase Storage → Update Database → Sync JSON Files
+```
+
+**Checklist for Resource Changes**:
+- [ ] Resource added/updated in database
+- [ ] Screenshot captured and uploaded to `resource-screenshots` bucket
+- [ ] `screenshots` column updated with public URL
+- [ ] JSON files regenerated with sync script
+- [ ] Changes committed to repository
 
 #### Resource Auto-Update System (MANDATORY)
 
@@ -1431,7 +1460,7 @@ diagnostics/
 
 - User engagement (time on site, pages per session)
 - Search usage and success rate
-- Content coverage: 34 docs + 122+ resources
+- Content coverage: 34 docs + 1,952 resources
 - Core Web Vitals performance
 - GitHub stars and contributions
 

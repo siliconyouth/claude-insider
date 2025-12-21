@@ -1,32 +1,10 @@
 [
   {
-    "id": "cursor-directory",
-    "title": "cursor.directory",
-    "description": "Community hub for discovering and sharing Cursor rules, MCP servers, and AI development resources with 67k+ members.",
-    "url": "https://cursor.directory",
-    "category": "rules",
-    "subcategory": "Directory",
-    "tags": [
-      "cursor",
-      "rules",
-      "community",
-      "directory"
-    ],
-    "status": "community",
-    "featured": true,
-    "featuredReason": "Most Popular",
-    "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766238191743-cursor-directory.png"
-  },
-  {
     "id": "awesome-cursorrules",
     "title": "Awesome Cursor Rules",
-    "description": "Comprehensive collection of .cursorrules configuration files organized by framework, language, and use case to customize Cursor AI's code generation behavior.",
+    "description": "Curated list of cursor rules organized by framework and use case.",
     "url": "https://github.com/PatrickJS/awesome-cursorrules",
     "category": "rules",
-    "subcategory": "Curated List",
     "tags": [
       "awesome-list",
       "cursor",
@@ -34,133 +12,91 @@
       "curated"
     ],
     "status": "community",
+    "addedDate": "2024-07-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Curated List",
+    "featured": true,
+    "featuredReason": "Trending",
     "github": {
       "owner": "PatrickJS",
       "repo": "awesome-cursorrules",
-      "stars": 36309,
-      "forks": 3084,
-      "lastUpdated": "2025-10-24",
-      "language": "MDX"
+      "stars": 36000,
+      "forks": 2400,
+      "lastUpdated": "2024-12-11",
+      "language": "Markdown"
     },
-    "featured": true,
-    "featuredReason": "Trending",
-    "addedDate": "2024-07-01",
-    "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1766238188662-awesome-cursorrules.png"
   },
   {
-    "id": "rules-nextjs",
-    "title": "Next.js CLAUDE.md Rules",
-    "description": "Comprehensive Cursor rules for Next.js App Router with TypeScript, React Server Components, Shadcn UI, and Tailwind CSS best practices.",
-    "url": "https://cursor.directory/nextjs",
+    "id": "cursor-directory",
+    "title": "cursor.directory",
+    "description": "Community-driven directory of cursor rules for various frameworks and languages.",
+    "url": "https://cursor.directory",
     "category": "rules",
-    "subcategory": "Framework",
     "tags": [
-      "nextjs",
-      "react",
-      "typescript",
-      "app-router"
+      "cursor",
+      "rules",
+      "community",
+      "directory"
     ],
-    "difficulty": "intermediate",
     "status": "community",
-    "addedDate": "2024-08-01",
+    "addedDate": "2024-06-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1766238202163-rules-nextjs.png"
+    "subcategory": "Directory",
+    "featured": true,
+    "featuredReason": "Most Popular",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766238191743-cursor-directory.png"
   },
   {
-    "id": "rules-react",
-    "title": "React CLAUDE.md Rules",
-    "description": "Best practices rules for React applications with hooks and modern patterns.",
-    "url": "https://cursor.directory/react",
+    "id": "secretlint-secretlint-rule-anthropic",
+    "title": "@secretlint/secretlint-rule-anthropic",
+    "description": "A secretlint rule for detecting Anthropic Claude API keys",
+    "url": "https://www.npmjs.com/package/@secretlint/secretlint-rule-anthropic",
     "category": "rules",
-    "subcategory": "Framework",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1766286353914-secretlint-secretlint-rule-anthropic.png"
+  },
+  {
+    "id": "cursor-watchful-headers",
+    "title": "Cursor Watchful Headers",
+    "description": "Automated file header management and project structure visualization in cursorrules. Maintains consistent headers across multiple file types while providing real-time project tree updates. Perfect for maintaining documentation context in large codebases.",
+    "url": "https://github.com/johnbenac/cursor-watchful-headers",
+    "category": "rules",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "johnbenac",
+      "repo": "cursor-watchful-headers",
+      "stars": 51,
+      "forks": 4,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-watchful-headers/1766286353074-cursor-watchful-headers.png"
+  },
+  {
+    "id": "rules-documentation",
+    "title": "Documentation CLAUDE.md Rules",
+    "description": "Rules for generating clear and consistent documentation.",
+    "url": "https://cursor.directory/documentation",
+    "category": "rules",
     "tags": [
-      "react",
-      "hooks",
-      "javascript",
-      "frontend"
+      "documentation",
+      "jsdoc",
+      "markdown",
+      "readme"
     ],
+    "status": "community",
+    "addedDate": "2024-10-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Documentation",
     "difficulty": "beginner",
-    "status": "community",
-    "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1766238202509-rules-react.png"
-  },
-  {
-    "id": "rules-typescript",
-    "title": "TypeScript CLAUDE.md Rules",
-    "description": "Strict TypeScript rules for type-safe development.",
-    "url": "https://cursor.directory/typescript",
-    "category": "rules",
-    "subcategory": "Language",
-    "tags": [
-      "typescript",
-      "types",
-      "strict-mode"
-    ],
-    "difficulty": "intermediate",
-    "status": "community",
-    "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1766238203186-rules-typescript.png"
-  },
-  {
-    "id": "rules-python",
-    "title": "Python CLAUDE.md Rules",
-    "description": "Python development rules with type hints and modern practices.",
-    "url": "https://cursor.directory/python",
-    "category": "rules",
-    "subcategory": "Language",
-    "tags": [
-      "python",
-      "type-hints",
-      "pep8",
-      "backend"
-    ],
-    "difficulty": "beginner",
-    "status": "community",
-    "addedDate": "2024-08-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1766238202351-rules-python.png"
-  },
-  {
-    "id": "rules-vue",
-    "title": "Vue.js CLAUDE.md Rules",
-    "description": "Vue 3 Composition API rules with TypeScript support.",
-    "url": "https://cursor.directory/vue",
-    "category": "rules",
-    "subcategory": "Framework",
-    "tags": [
-      "vue",
-      "composition-api",
-      "typescript",
-      "frontend"
-    ],
-    "difficulty": "intermediate",
-    "status": "community",
-    "addedDate": "2024-08-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1766238203313-rules-vue.png"
-  },
-  {
-    "id": "rules-svelte",
-    "title": "Svelte CLAUDE.md Rules",
-    "description": "Svelte 5 and SvelteKit rules for modern web apps.",
-    "url": "https://cursor.directory/svelte",
-    "category": "rules",
-    "subcategory": "Framework",
-    "tags": [
-      "svelte",
-      "sveltekit",
-      "runes",
-      "frontend"
-    ],
-    "difficulty": "intermediate",
-    "status": "community",
-    "addedDate": "2024-08-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1766238202765-rules-svelte.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1766238201757-rules-documentation.png"
   },
   {
     "id": "rules-fastapi",
@@ -168,7 +104,6 @@
     "description": "FastAPI backend development rules with Pydantic and async patterns.",
     "url": "https://cursor.directory/fastapi",
     "category": "rules",
-    "subcategory": "Framework",
     "tags": [
       "fastapi",
       "python",
@@ -176,10 +111,11 @@
       "async",
       "backend"
     ],
-    "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Framework",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1766238201877-rules-fastapi.png"
   },
   {
@@ -188,18 +124,75 @@
     "description": "Go development rules following idiomatic Go patterns.",
     "url": "https://cursor.directory/go",
     "category": "rules",
-    "subcategory": "Language",
     "tags": [
       "go",
       "golang",
       "backend",
       "systems"
     ],
-    "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Language",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1766238202029-rules-go.png"
+  },
+  {
+    "id": "rules-nextjs",
+    "title": "Next.js CLAUDE.md Rules",
+    "description": "Optimized rules for Next.js App Router projects with TypeScript.",
+    "url": "https://cursor.directory/nextjs",
+    "category": "rules",
+    "tags": [
+      "nextjs",
+      "react",
+      "typescript",
+      "app-router"
+    ],
+    "status": "community",
+    "addedDate": "2024-08-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Framework",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1766238202163-rules-nextjs.png"
+  },
+  {
+    "id": "rules-python",
+    "title": "Python CLAUDE.md Rules",
+    "description": "Python development rules with type hints and modern practices.",
+    "url": "https://cursor.directory/python",
+    "category": "rules",
+    "tags": [
+      "python",
+      "type-hints",
+      "pep8",
+      "backend"
+    ],
+    "status": "community",
+    "addedDate": "2024-08-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Language",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1766238202351-rules-python.png"
+  },
+  {
+    "id": "rules-react",
+    "title": "React CLAUDE.md Rules",
+    "description": "Best practices rules for React applications with hooks and modern patterns.",
+    "url": "https://cursor.directory/react",
+    "category": "rules",
+    "tags": [
+      "react",
+      "hooks",
+      "javascript",
+      "frontend"
+    ],
+    "status": "community",
+    "addedDate": "2024-08-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Framework",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1766238202509-rules-react.png"
   },
   {
     "id": "rules-rust",
@@ -207,18 +200,37 @@
     "description": "Rust development rules for safe and performant code.",
     "url": "https://cursor.directory/rust",
     "category": "rules",
-    "subcategory": "Language",
     "tags": [
       "rust",
       "systems",
       "memory-safety",
       "performance"
     ],
-    "difficulty": "advanced",
     "status": "community",
     "addedDate": "2024-09-01",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Language",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1766238202636-rules-rust.png"
+  },
+  {
+    "id": "rules-svelte",
+    "title": "Svelte CLAUDE.md Rules",
+    "description": "Svelte 5 and SvelteKit rules for modern web apps.",
+    "url": "https://cursor.directory/svelte",
+    "category": "rules",
+    "tags": [
+      "svelte",
+      "sveltekit",
+      "runes",
+      "frontend"
+    ],
+    "status": "community",
+    "addedDate": "2024-08-15",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Framework",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1766238202765-rules-svelte.png"
   },
   {
     "id": "rules-tailwind",
@@ -226,17 +238,17 @@
     "description": "Tailwind CSS utility-first styling rules.",
     "url": "https://cursor.directory/tailwind",
     "category": "rules",
-    "subcategory": "Styling",
     "tags": [
       "tailwind",
       "css",
       "styling",
       "utility-first"
     ],
-    "difficulty": "beginner",
     "status": "community",
     "addedDate": "2024-09-15",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Styling",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1766238202897-rules-tailwind.png"
   },
   {
@@ -245,7 +257,6 @@
     "description": "Rules for writing effective tests with Jest, Vitest, and Playwright.",
     "url": "https://cursor.directory/testing",
     "category": "rules",
-    "subcategory": "Testing",
     "tags": [
       "testing",
       "jest",
@@ -253,29 +264,48 @@
       "playwright",
       "tdd"
     ],
-    "difficulty": "intermediate",
     "status": "community",
     "addedDate": "2024-10-01",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Testing",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1766238203040-rules-testing.png"
   },
   {
-    "id": "rules-documentation",
-    "title": "Documentation CLAUDE.md Rules",
-    "description": "Rules for generating clear and consistent documentation.",
-    "url": "https://cursor.directory/documentation",
+    "id": "rules-typescript",
+    "title": "TypeScript CLAUDE.md Rules",
+    "description": "Strict TypeScript rules for type-safe development.",
+    "url": "https://cursor.directory/typescript",
     "category": "rules",
-    "subcategory": "Documentation",
     "tags": [
-      "documentation",
-      "jsdoc",
-      "markdown",
-      "readme"
+      "typescript",
+      "types",
+      "strict-mode"
     ],
-    "difficulty": "beginner",
     "status": "community",
-    "addedDate": "2024-10-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1766238201757-rules-documentation.png"
+    "addedDate": "2024-08-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Language",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1766238203186-rules-typescript.png"
+  },
+  {
+    "id": "rules-vue",
+    "title": "Vue.js CLAUDE.md Rules",
+    "description": "Vue 3 Composition API rules with TypeScript support.",
+    "url": "https://cursor.directory/vue",
+    "category": "rules",
+    "tags": [
+      "vue",
+      "composition-api",
+      "typescript",
+      "frontend"
+    ],
+    "status": "community",
+    "addedDate": "2024-08-15",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Framework",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1766238203313-rules-vue.png"
   }
 ]

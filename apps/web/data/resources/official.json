@@ -1,74 +1,10 @@
 [
   {
-    "id": "anthropic-docs",
-    "title": "Anthropic Documentation",
-    "description": "Official Anthropic documentation covering Claude API, SDK integration, prompt engineering, MCP, tools, and agent development with comprehensive guides.",
-    "url": "https://docs.anthropic.com/en/docs",
-    "category": "official",
-    "subcategory": "Documentation",
-    "tags": [
-      "documentation",
-      "api",
-      "official",
-      "guides"
-    ],
-    "status": "official",
-    "featured": true,
-    "featuredReason": "Official Source",
-    "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766238187044-anthropic-docs.png",
-    "difficulty": "beginner"
-  },
-  {
-    "id": "claude-code-docs",
-    "title": "Claude Code Documentation",
-    "description": "Official Anthropic documentation for Claude Code, covering the agentic coding tool, CLI usage, and developer integration guides.",
-    "url": "https://docs.anthropic.com/en/docs/claude-code",
-    "category": "official",
-    "subcategory": "Documentation",
-    "tags": [
-      "claude-code",
-      "cli",
-      "official",
-      "documentation"
-    ],
-    "status": "official",
-    "featured": true,
-    "featuredReason": "Official Source",
-    "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1766238189665-claude-code-docs.png"
-  },
-  {
-    "id": "mcp-docs",
-    "title": "Model Context Protocol",
-    "description": "Official MCP documentation - the open-source standard for connecting AI applications like Claude to external data sources, tools, and workflows.",
-    "url": "https://modelcontextprotocol.io",
-    "category": "official",
-    "subcategory": "Documentation",
-    "tags": [
-      "mcp",
-      "protocol",
-      "official",
-      "documentation"
-    ],
-    "status": "official",
-    "featured": true,
-    "featuredReason": "Official Source",
-    "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766238196733-mcp-docs.png",
-    "difficulty": "intermediate"
-  },
-  {
     "id": "anthropic-cookbook",
-    "title": "Claude Cookbooks",
-    "description": "Official collection of Jupyter notebooks with copy-ready code recipes demonstrating Claude API implementations across classification, RAG, tool use, vision, and more.",
-    "url": "https://github.com/anthropics/claude-cookbooks",
+    "title": "Anthropic Cookbook",
+    "description": "Code examples and recipes for using Claude API effectively.",
+    "url": "https://github.com/anthropics/anthropic-cookbook",
     "category": "official",
-    "subcategory": "Examples",
     "tags": [
       "examples",
       "cookbook",
@@ -76,28 +12,67 @@
       "python"
     ],
     "status": "official",
-    "github": {
-      "owner": "anthropics",
-      "repo": "claude-cookbooks",
-      "stars": 29726,
-      "forks": 3020,
-      "lastUpdated": "2025-12-19",
-      "language": "Jupyter Notebook"
-    },
-    "featured": true,
-    "featuredReason": "Official Examples",
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1766238185929-anthropic-cookbook.png",
-    "difficulty": "intermediate"
+    "subcategory": "Examples",
+    "featured": true,
+    "featuredReason": "Official Examples",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-cookbook",
+      "stars": 8500,
+      "forks": 1200,
+      "lastUpdated": "2024-12-10",
+      "language": "Python"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1766238185929-anthropic-cookbook.png"
+  },
+  {
+    "id": "anthropic-docs",
+    "title": "Anthropic Documentation",
+    "description": "Official documentation for Claude API, including guides, tutorials, and API reference.",
+    "url": "https://docs.anthropic.com",
+    "category": "official",
+    "tags": [
+      "documentation",
+      "api",
+      "official",
+      "guides"
+    ],
+    "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Documentation",
+    "featured": true,
+    "featuredReason": "Official Source",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766238187044-anthropic-docs.png"
+  },
+  {
+    "id": "claude-code-docs",
+    "title": "Claude Code Documentation",
+    "description": "Official documentation for Claude Code CLI tool - the AI-powered coding assistant.",
+    "url": "https://docs.anthropic.com/en/docs/claude-code",
+    "category": "official",
+    "tags": [
+      "claude-code",
+      "cli",
+      "official",
+      "documentation"
+    ],
+    "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Documentation",
+    "featured": true,
+    "featuredReason": "Official Source",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1766238189665-claude-code-docs.png"
   },
   {
     "id": "claude-code-repo",
     "title": "Claude Code GitHub",
-    "description": "Official GitHub repository for Claude Code, Anthropic's agentic terminal coding tool with 47k+ stars, plugins, and active community.",
+    "description": "Official Claude Code repository - issues, discussions, and release information.",
     "url": "https://github.com/anthropics/claude-code",
     "category": "official",
-    "subcategory": "Repository",
     "tags": [
       "claude-code",
       "github",
@@ -105,102 +80,83 @@
       "cli"
     ],
     "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Repository",
+    "featured": true,
+    "featuredReason": "Official Repository",
     "github": {
       "owner": "anthropics",
       "repo": "claude-code",
-      "stars": 47308,
-      "forks": 3321,
-      "lastUpdated": "2025-12-19",
-      "language": "Shell"
-    },
-    "featured": true,
-    "featuredReason": "Official Repository",
-    "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1766238101715-claude-code-github.png",
-    "difficulty": "beginner"
-  },
-  {
-    "id": "anthropic-sdk-python",
-    "title": "Anthropic Python SDK",
-    "description": "Official Python SDK providing type-safe access to the Anthropic REST API with sync/async clients, streaming, and tool helpers.",
-    "url": "https://github.com/anthropics/anthropic-sdk-python",
-    "category": "official",
-    "subcategory": "SDK",
-    "tags": [
-      "sdk",
-      "python",
-      "official",
-      "api"
-    ],
-    "status": "official",
-    "github": {
-      "owner": "anthropics",
-      "repo": "anthropic-sdk-python",
-      "stars": 2529,
-      "forks": 412,
-      "lastUpdated": "2025-12-20",
-      "language": "Python"
-    },
-    "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-python/1766238187543-anthropic-sdk-python.png"
-  },
-  {
-    "id": "anthropic-sdk-typescript",
-    "title": "Anthropic TypeScript SDK",
-    "description": "Official TypeScript/JavaScript SDK providing convenient access to Anthropic's REST API with full type safety, streaming support, and tool helpers.",
-    "url": "https://github.com/anthropics/anthropic-sdk-typescript",
-    "category": "official",
-    "subcategory": "SDK",
-    "tags": [
-      "sdk",
-      "typescript",
-      "javascript",
-      "official",
-      "api"
-    ],
-    "status": "official",
-    "github": {
-      "owner": "anthropics",
-      "repo": "anthropic-sdk-typescript",
-      "stars": 1432,
-      "forks": 180,
-      "lastUpdated": "2025-12-20",
+      "stars": 45000,
+      "forks": 3500,
+      "lastUpdated": "2024-12-11",
       "language": "TypeScript"
     },
-    "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-typescript/1766238187852-anthropic-sdk-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1766238101715-claude-code-github.png"
   },
   {
-    "id": "prompt-engineering-guide",
-    "title": "Prompt Engineering Guide",
-    "description": "Official Anthropic documentation covering prompt engineering techniques, best practices, and advanced strategies for crafting effective prompts with Claude.",
-    "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",
+    "id": "mcp-docs",
+    "title": "Model Context Protocol",
+    "description": "Official MCP documentation - the open protocol for connecting AI assistants to external tools.",
+    "url": "https://modelcontextprotocol.io",
     "category": "official",
-    "subcategory": "Documentation",
     "tags": [
-      "prompting",
-      "guide",
+      "mcp",
+      "protocol",
       "official",
-      "best-practices"
+      "documentation"
     ],
     "status": "official",
     "addedDate": "2024-01-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Documentation",
+    "featured": true,
+    "featuredReason": "Official Source",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766238196733-mcp-docs.png"
+  },
+  {
+    "id": "announcement",
+    "title": "Announcement",
+    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/news/claude-opus-4-5",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1766238199737-prompt-engineering-guide.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement/1766286320655-announcement.png"
+  },
+  {
+    "id": "announcement-2",
+    "title": "Announcement",
+    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/news/claude-haiku-4-5",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1766286327610-announcement-2.png"
+  },
+  {
+    "id": "announcement-1",
+    "title": "Announcement",
+    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/news/claude-sonnet-4-5",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-1/1766286327593-announcement-1.png"
   },
   {
     "id": "anthropic-blog",
     "title": "Anthropic Blog",
-    "description": "Official Anthropic research hub covering AI safety, interpretability, alignment, and societal impacts research from specialized technical teams.",
+    "description": "Official blog with research papers, announcements, and insights.",
     "url": "https://www.anthropic.com/research",
     "category": "official",
-    "subcategory": "Blog",
     "tags": [
       "blog",
       "research",
@@ -210,8 +166,329 @@
     "status": "official",
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
-    "difficulty": "intermediate",
+    "subcategory": "Blog",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-blog/1766238185725-anthropic-blog.png"
+  },
+  {
+    "id": "anthropic-claude-code-best-practices",
+    "title": "Anthropic Claude Code Best Practices",
+    "description": "Official Anthropic engineering blog - Claude Code best practices",
+    "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1766286328280-anthropic-claude-code-best-practices.png"
+  },
+  {
+    "id": "anthropic-sdk-python",
+    "title": "Anthropic Python SDK",
+    "description": "Official Python SDK for the Anthropic API.",
+    "url": "https://github.com/anthropics/anthropic-sdk-python",
+    "category": "official",
+    "tags": [
+      "sdk",
+      "python",
+      "official",
+      "api"
+    ],
+    "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "SDK",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-python",
+      "stars": 5800,
+      "forks": 650,
+      "lastUpdated": "2024-12-10",
+      "language": "Python"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-python/1766238187543-anthropic-sdk-python.png"
+  },
+  {
+    "id": "anthropic-sdk-typescript",
+    "title": "Anthropic TypeScript SDK",
+    "description": "Official TypeScript/JavaScript SDK for the Anthropic API.",
+    "url": "https://github.com/anthropics/anthropic-sdk-typescript",
+    "category": "official",
+    "tags": [
+      "sdk",
+      "typescript",
+      "javascript",
+      "official",
+      "api"
+    ],
+    "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "SDK",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-typescript",
+      "stars": 3200,
+      "forks": 380,
+      "lastUpdated": "2024-12-10",
+      "language": "TypeScript"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-typescript/1766238187852-anthropic-sdk-typescript.png"
+  },
+  {
+    "id": "anthropic-bedrock-python",
+    "title": "anthropic-bedrock-python",
+    "description": "Official Anthropic resource for anthropic bedrock python. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/anthropic-bedrock-python",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-bedrock-python",
+      "stars": 50,
+      "forks": 6,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-python/1766286327696-anthropic-bedrock-python.png"
+  },
+  {
+    "id": "anthropic-bedrock-typescript",
+    "title": "anthropic-bedrock-typescript",
+    "description": "Official Anthropic resource for anthropic bedrock typescript. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/anthropic-bedrock-typescript",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-bedrock-typescript",
+      "stars": 25,
+      "forks": 2,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-typescript/1766286327657-anthropic-bedrock-typescript.png"
+  },
+  {
+    "id": "anthropic-sdk-csharp",
+    "title": "anthropic-sdk-csharp",
+    "description": "Access to Anthropic's safety-first language model APIs in C#",
+    "url": "https://github.com/anthropics/anthropic-sdk-csharp",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-csharp",
+      "stars": 84,
+      "forks": 15,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-csharp/1766286327748-anthropic-sdk-csharp.png"
+  },
+  {
+    "id": "anthropic-sdk-go",
+    "title": "anthropic-sdk-go",
+    "description": "Access to Anthropic's safety-first language model APIs via Go",
+    "url": "https://github.com/anthropics/anthropic-sdk-go",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-go",
+      "stars": 655,
+      "forks": 83,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-go/1766286327747-anthropic-sdk-go.png"
+  },
+  {
+    "id": "anthropic-sdk-java",
+    "title": "anthropic-sdk-java",
+    "description": "Official Anthropic resource for anthropic sdk java. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/anthropic-sdk-java",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-java",
+      "stars": 197,
+      "forks": 39,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-java/1766286328955-anthropic-sdk-java.png"
+  },
+  {
+    "id": "anthropic-sdk-php",
+    "title": "anthropic-sdk-php",
+    "description": "Access to Anthropic's safety-first language model APIs in PHP",
+    "url": "https://github.com/anthropics/anthropic-sdk-php",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-php",
+      "stars": 66,
+      "forks": 12,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-php/1766286327700-anthropic-sdk-php.png"
+  },
+  {
+    "id": "anthropic-sdk-ruby",
+    "title": "anthropic-sdk-ruby",
+    "description": "Official Anthropic resource for anthropic sdk ruby. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/anthropic-sdk-ruby",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-sdk-ruby",
+      "stars": 265,
+      "forks": 28,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-ruby/1766286334176-anthropic-sdk-ruby.png"
+  },
+  {
+    "id": "anthropic-tokenizer-typescript",
+    "title": "anthropic-tokenizer-typescript",
+    "description": "Official Anthropic resource for anthropic tokenizer typescript. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/anthropic-tokenizer-typescript",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "anthropic-tokenizer-typescript",
+      "stars": 87,
+      "forks": 8,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-tokenizer-typescript/1766286334172-anthropic-tokenizer-typescript.png"
+  },
+  {
+    "id": "anthropic-s-article",
+    "title": "Anthropic's article",
+    "description": "Official Anthropic resource for Anthropic's article. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/engineering/claude-think-tool",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1766286327590-anthropic-s-article.png"
+  },
+  {
+    "id": "blobfile",
+    "title": "blobfile",
+    "description": "Official Anthropic resource for blobfile. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/blobfile",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "blobfile",
+      "stars": 5,
+      "forks": 2,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blobfile/1766286334914-blobfile.png"
+  },
+  {
+    "id": "claude-agent-sdk-python",
+    "title": "Claude Agent SDK (Python)",
+    "description": "Python SDK for building autonomous AI agents with Claude. Create multi-step reasoning workflows.",
+    "url": "https://github.com/anthropics/claude-agent-sdk-python",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-agent-sdk-python",
+      "stars": 3588,
+      "forks": 480,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-python/1766286334915-claude-agent-sdk-python.png"
+  },
+  {
+    "id": "claude-agent-sdk-typescript",
+    "title": "Claude Agent SDK (TypeScript)",
+    "description": "Official Anthropic resource for Claude Agent SDK (TypeScript). Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/claude-agent-sdk-typescript",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-agent-sdk-typescript",
+      "stars": 496,
+      "forks": 52,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-typescript/1766286334271-claude-agent-sdk-typescript.png"
+  },
+  {
+    "id": "claude-agent-skills",
+    "title": "Claude Agent Skills",
+    "description": "Official Anthropic resource for Claude Agent Skills. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/news/skills",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1766286335823-claude-agent-skills.png"
+  },
+  {
+    "id": "claude-code-with-plugins",
+    "title": "Claude Code with plugins",
+    "description": "Official Anthropic resource for Claude Code with plugins. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/news/claude-code-plugins",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1766286340156-claude-code-with-plugins.png"
   },
   {
     "id": "claude-console",
@@ -219,7 +496,6 @@
     "description": "Official web interface for Claude - create, test, and manage API keys.",
     "url": "https://console.anthropic.com",
     "category": "official",
-    "subcategory": "Tool",
     "tags": [
       "console",
       "api",
@@ -228,6 +504,430 @@
     ],
     "status": "official",
     "addedDate": "2024-01-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Tool"
+  },
+  {
+    "id": "claude-cookbook",
+    "title": "Claude Cookbook",
+    "description": "A collection of notebooks/recipes showcasing some fun and effective ways of using Claude.",
+    "url": "https://github.com/anthropics/claude-cookbooks",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-cookbooks",
+      "stars": 29737,
+      "forks": 3020,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-cookbook/1766286340069-claude-cookbook.png"
+  },
+  {
+    "id": "claude-haiku-4-5-system-card",
+    "title": "Claude Haiku 4.5 System Card",
+    "description": "Official Anthropic resource for Claude Haiku 4.5 System Card. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/claude-haiku-4-5-system-card",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20"
+  },
+  {
+    "id": "claude-opus-4-5-system-card",
+    "title": "Claude Opus 4.5 System Card",
+    "description": "Official Anthropic resource for Claude Opus 4.5 System Card. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://assets.anthropic.com/m/64823ba7485345a7/Claude-Opus-4-5-System-Card.pdf",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20"
+  },
+  {
+    "id": "claude-quickstarts",
+    "title": "Claude Quickstarts",
+    "description": "A collection of projects designed to help developers quickly get started with building deployable applications using the Claude API",
+    "url": "https://github.com/anthropics/claude-quickstarts",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-quickstarts",
+      "stars": 12595,
+      "forks": 2137,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-quickstarts/1766286339987-claude-quickstarts.png"
+  },
+  {
+    "id": "claude-sonnet-4-5-system-card",
+    "title": "Claude Sonnet 4.5 System Card",
+    "description": "Official Anthropic resource for Claude Sonnet 4.5 System Card. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://assets.anthropic.com/m/12f214efcc2f457a/original/Claude-Sonnet-4-5-System-Card.pdf",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20"
+  },
+  {
+    "id": "claude-agent-sdk-demos",
+    "title": "claude-agent-sdk-demos",
+    "description": "Official Anthropic resource for Claude agent sdk demos. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/claude-agent-sdk-demos",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-agent-sdk-demos",
+      "stars": 814,
+      "forks": 133,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-demos/1766286333687-claude-agent-sdk-demos.png"
+  },
+  {
+    "id": "claude-code-action",
+    "title": "claude-code-action",
+    "description": "GitHub Action for running Claude Code in CI/CD pipelines. Automate code review, documentation generation, and other tasks with Claude.",
+    "url": "https://github.com/anthropics/claude-code-action",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-code-action",
+      "stars": 4394,
+      "forks": 1286,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-action/1766286334714-claude-code-action.png"
+  },
+  {
+    "id": "claude-code-base-action",
+    "title": "claude-code-base-action",
+    "description": "This repo is a mirror of the contents of base-action in https://github.com/anthropics/claude-code-action.",
+    "url": "https://github.com/anthropics/claude-code-base-action",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-code-base-action",
+      "stars": 536,
+      "forks": 597,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-base-action/1766286334712-claude-code-base-action.png"
+  },
+  {
+    "id": "claude-code-monitoring-guide",
+    "title": "claude-code-monitoring-guide",
+    "description": "Official Anthropic resource for Claude code monitoring guide. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/claude-code-monitoring-guide",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-code-monitoring-guide",
+      "stars": 113,
+      "forks": 19,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-monitoring-guide/1766286334913-claude-code-monitoring-guide.png"
+  },
+  {
+    "id": "claude-code-sdk-python",
+    "title": "claude-code-sdk-python",
+    "description": "Official Python SDK for Claude Code. Programmatically control Claude Code sessions with full type safety.",
+    "url": "https://github.com/anthropics/claude-code-sdk-python",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-code-sdk-python",
+      "stars": 3588,
+      "forks": 480,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-python/1766286338517-claude-code-sdk-python.png"
+  },
+  {
+    "id": "claude-code-security-review",
+    "title": "claude-code-security-review",
+    "description": "An AI-powered security review GitHub Action using Claude to analyze code changes for security vulnerabilities.",
+    "url": "https://github.com/anthropics/claude-code-security-review",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-code-security-review",
+      "stars": 2736,
+      "forks": 202,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-security-review/1766286339991-claude-code-security-review.png"
+  },
+  {
+    "id": "claude-plugins-official",
+    "title": "claude-plugins-official",
+    "description": "Anthropic-managed directory of high quality Claude Code Plugins.",
+    "url": "https://github.com/anthropics/claude-plugins-official",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "claude-plugins-official",
+      "stars": 285,
+      "forks": 36,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins-official/1766286338568-claude-plugins-official.png"
+  },
+  {
+    "id": "devcontainer-features",
+    "title": "devcontainer-features",
+    "description": "Anthropic Dev Container Features, including Claude Code CLI",
+    "url": "https://github.com/anthropics/devcontainer-features",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "devcontainer-features",
+      "stars": 176,
+      "forks": 30,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devcontainer-features/1766286340067-devcontainer-features.png"
+  },
+  {
+    "id": "evals",
+    "title": "evals",
+    "description": "Official Anthropic resource for evals. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/evals",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "evals",
+      "stars": 318,
+      "forks": 32,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/evals/1766286345502-evals.png"
+  },
+  {
+    "id": "life-sciences",
+    "title": "life-sciences",
+    "description": "Repo for the Claude Code Marketplace to use with the Claude for Life Sciences Launch. This will continue to host the marketplace.json long-term, but not the actual MCP servers.",
+    "url": "https://github.com/anthropics/life-sciences",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "life-sciences",
+      "stars": 86,
+      "forks": 12,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/life-sciences/1766286345576-life-sciences.png"
+  },
+  {
+    "id": "political-neutrality-eval",
+    "title": "political-neutrality-eval",
+    "description": "This repo contains detailed implementation information about Anthropic's paired prompts approach for evaluating political neutrality.",
+    "url": "https://github.com/anthropics/political-neutrality-eval",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "political-neutrality-eval",
+      "stars": 108,
+      "forks": 10,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/political-neutrality-eval/1766286345578-political-neutrality-eval.png"
+  },
+  {
+    "id": "prompt-engineering-guide",
+    "title": "Prompt Engineering Guide",
+    "description": "Official guide for crafting effective prompts with Claude.",
+    "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",
+    "category": "official",
+    "tags": [
+      "prompting",
+      "guide",
+      "official",
+      "best-practices"
+    ],
+    "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Documentation",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1766238199737-prompt-engineering-guide.png"
+  },
+  {
+    "id": "prompt-eng-interactive-tutorial",
+    "title": "prompt-eng-interactive-tutorial",
+    "description": "Anthropic's Interactive Prompt Engineering Tutorial",
+    "url": "https://github.com/anthropics/prompt-eng-interactive-tutorial",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "prompt-eng-interactive-tutorial",
+      "stars": 27508,
+      "forks": 2610,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-eng-interactive-tutorial/1766286344751-prompt-eng-interactive-tutorial.png"
+  },
+  {
+    "id": "redis-py",
+    "title": "redis-py",
+    "description": "Official Anthropic resource for redis py. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/redis-py",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "redis-py",
+      "stars": 14,
+      "forks": 4,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/redis-py/1766286346076-redis-py.png"
+  },
+  {
+    "id": "riv2025-long-horizon-coding-agent-demo",
+    "title": "riv2025-long-horizon-coding-agent-demo",
+    "description": "Official Anthropic resource for riv2025 long horizon coding agent demo. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/riv2025-long-horizon-coding-agent-demo",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "riv2025-long-horizon-coding-agent-demo",
+      "stars": 22,
+      "forks": 10,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/riv2025-long-horizon-coding-agent-demo/1766286346066-riv2025-long-horizon-coding-agent-demo.png"
+  },
+  {
+    "id": "s5cmd",
+    "title": "s5cmd",
+    "description": "Official Anthropic resource for s5cmd. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://github.com/anthropics/s5cmd",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "s5cmd",
+      "stars": 11,
+      "forks": 2,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s5cmd/1766286346071-s5cmd.png"
+  },
+  {
+    "id": "skills",
+    "title": "skills",
+    "description": "Public repository for Agent Skills",
+    "url": "https://github.com/anthropics/skills",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "anthropics",
+      "repo": "skills",
+      "stars": 23039,
+      "forks": 2194,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/skills/1766286345961-skills.png"
+  },
+  {
+    "id": "transparency-hub",
+    "title": "Transparency Hub",
+    "description": "Official Anthropic resource for Transparency Hub. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/transparency",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1766286344664-transparency-hub.png"
   }
 ]

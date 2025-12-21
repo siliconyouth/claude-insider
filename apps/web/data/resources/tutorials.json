@@ -2,174 +2,31 @@
   {
     "id": "anthropic-courses",
     "title": "Anthropic Courses",
-    "description": "Official educational courses from Anthropic covering API fundamentals, prompt engineering, evaluations, and tool use with Claude.",
+    "description": "Official courses and tutorials from Anthropic for learning Claude.",
     "url": "https://github.com/anthropics/courses",
     "category": "tutorials",
-    "subcategory": "Official",
     "tags": [
       "official",
       "courses",
       "learning",
       "beginner"
     ],
-    "difficulty": "beginner",
     "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Official",
+    "difficulty": "beginner",
+    "featured": true,
+    "featuredReason": "Official Courses",
     "github": {
       "owner": "anthropics",
       "repo": "courses",
-      "stars": 17825,
-      "forks": 1669,
-      "lastUpdated": "2025-11-13",
+      "stars": 8200,
+      "forks": 750,
+      "lastUpdated": "2024-12-10",
       "language": "Jupyter Notebook"
     },
-    "featured": true,
-    "featuredReason": "Official Courses",
-    "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-courses/1766238186249-anthropic-courses.png"
-  },
-  {
-    "id": "deeplearning-claude",
-    "title": "DeepLearning.AI Claude Courses",
-    "description": "Professional courses on Claude from DeepLearning.AI.",
-    "url": "https://www.deeplearning.ai/courses/",
-    "category": "tutorials",
-    "subcategory": "Course",
-    "tags": [
-      "deeplearning",
-      "professional",
-      "courses",
-      "certification"
-    ],
-    "difficulty": "intermediate",
-    "status": "community",
-    "featured": true,
-    "featuredReason": "Industry Standard",
-    "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/deeplearning-claude/1766238192547-deeplearning-claude.png"
-  },
-  {
-    "id": "rag-from-scratch",
-    "title": "RAG From Scratch",
-    "description": "Comprehensive video playlist and notebooks teaching RAG fundamentals from indexing to generation using LangChain.",
-    "url": "https://github.com/langchain-ai/rag-from-scratch",
-    "category": "tutorials",
-    "subcategory": "RAG",
-    "tags": [
-      "rag",
-      "tutorial",
-      "langchain",
-      "beginner"
-    ],
-    "difficulty": "beginner",
-    "status": "community",
-    "github": {
-      "owner": "langchain-ai",
-      "repo": "rag-from-scratch",
-      "stars": 6097,
-      "forks": 1613,
-      "lastUpdated": "2025-06-26",
-      "language": "Jupyter Notebook"
-    },
-    "addedDate": "2024-03-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rag-from-scratch/1766238200756-rag-from-scratch.png"
-  },
-  {
-    "id": "building-ai-apps",
-    "title": "Building AI Applications",
-    "description": "Official Anthropic documentation hub covering Claude API, SDK integration, prompt engineering, and building production AI applications.",
-    "url": "https://docs.anthropic.com/en/docs/build-with-claude",
-    "category": "tutorials",
-    "subcategory": "Official",
-    "tags": [
-      "building",
-      "production",
-      "official",
-      "guide"
-    ],
-    "difficulty": "intermediate",
-    "status": "official",
-    "addedDate": "2024-01-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/building-ai-apps/1766238189094-building-ai-apps.png"
-  },
-  {
-    "id": "tool-use-tutorial",
-    "title": "Tool Use Tutorial",
-    "description": "Official Anthropic documentation covering Claude's tool use (function calling) capabilities for building AI-powered applications.",
-    "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
-    "category": "tutorials",
-    "subcategory": "Official",
-    "tags": [
-      "tool-use",
-      "function-calling",
-      "official",
-      "api"
-    ],
-    "difficulty": "intermediate",
-    "status": "official",
-    "addedDate": "2024-02-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tool-use-tutorial/1766238206710-tool-use-tutorial.png"
-  },
-  {
-    "id": "streaming-tutorial",
-    "title": "Streaming Responses Tutorial",
-    "description": "Official guide to implementing real-time streaming responses with Claude's Messages API using server-sent events (SSE).",
-    "url": "https://docs.anthropic.com/en/api/streaming",
-    "category": "tutorials",
-    "subcategory": "Official",
-    "tags": [
-      "streaming",
-      "real-time",
-      "api",
-      "official"
-    ],
-    "difficulty": "intermediate",
-    "status": "official",
-    "addedDate": "2024-03-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/streaming-tutorial/1766238205800-streaming-tutorial.png"
-  },
-  {
-    "id": "langchain-crash-course",
-    "title": "LangChain Crash Course",
-    "description": "Official LangChain tutorial for building RAG agents and Q&A applications with Claude and other LLMs in ~40 lines of code.",
-    "url": "https://python.langchain.com/docs/tutorials/",
-    "category": "tutorials",
-    "subcategory": "Framework",
-    "tags": [
-      "langchain",
-      "crash-course",
-      "python",
-      "beginner"
-    ],
-    "difficulty": "beginner",
-    "status": "community",
-    "addedDate": "2024-04-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-crash-course/1766238195516-langchain-crash-course.png"
-  },
-  {
-    "id": "llamaindex-tutorial",
-    "title": "LlamaIndex Getting Started",
-    "description": "Build your first RAG application with LlamaIndex.",
-    "url": "https://docs.llamaindex.ai/en/latest/getting_started/",
-    "category": "tutorials",
-    "subcategory": "Framework",
-    "tags": [
-      "llamaindex",
-      "rag",
-      "getting-started",
-      "python"
-    ],
-    "difficulty": "beginner",
-    "status": "community",
-    "addedDate": "2024-04-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-tutorial/1766238196042-llamaindex-tutorial.png"
   },
   {
     "id": "claude-code-tutorial",
@@ -177,20 +34,60 @@
     "description": "Official tutorial for getting started with Claude Code CLI.",
     "url": "https://docs.anthropic.com/en/docs/claude-code/getting-started",
     "category": "tutorials",
-    "subcategory": "Official",
     "tags": [
       "claude-code",
       "cli",
       "getting-started",
       "official"
     ],
-    "difficulty": "beginner",
     "status": "official",
+    "addedDate": "2024-01-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Official",
+    "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Essential",
-    "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-tutorial/1766238189814-claude-code-tutorial.png"
+  },
+  {
+    "id": "deeplearning-claude",
+    "title": "DeepLearning.AI Claude Courses",
+    "description": "Professional courses on Claude from DeepLearning.AI.",
+    "url": "https://www.deeplearning.ai/courses/",
+    "category": "tutorials",
+    "tags": [
+      "deeplearning",
+      "professional",
+      "courses",
+      "certification"
+    ],
+    "status": "community",
+    "addedDate": "2024-02-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Course",
+    "difficulty": "intermediate",
+    "featured": true,
+    "featuredReason": "Industry Standard",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/deeplearning-claude/1766238192547-deeplearning-claude.png"
+  },
+  {
+    "id": "building-ai-apps",
+    "title": "Building AI Applications",
+    "description": "Comprehensive guide to building production AI applications.",
+    "url": "https://docs.anthropic.com/en/docs/build-with-claude",
+    "category": "tutorials",
+    "tags": [
+      "building",
+      "production",
+      "official",
+      "guide"
+    ],
+    "status": "official",
+    "addedDate": "2024-01-15",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Official",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/building-ai-apps/1766238189094-building-ai-apps.png"
   },
   {
     "id": "mcp-server-tutorial",
@@ -198,18 +95,140 @@
     "description": "Tutorial for creating custom MCP servers.",
     "url": "https://modelcontextprotocol.io/docs/server/",
     "category": "tutorials",
-    "subcategory": "MCP",
     "tags": [
       "mcp",
       "servers",
       "building",
       "typescript"
     ],
-    "difficulty": "advanced",
     "status": "official",
     "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2024-12-11",
+    "subcategory": "MCP",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-server-tutorial/1766238198185-mcp-server-tutorial.png"
+  },
+  {
+    "id": "fine-tuning-guide",
+    "title": "Fine-Tuning Best Practices",
+    "description": "Guide to preparing data and fine-tuning models.",
+    "url": "https://docs.anthropic.com/en/docs/fine-tuning",
+    "category": "tutorials",
+    "tags": [
+      "fine-tuning",
+      "training",
+      "data",
+      "advanced"
+    ],
+    "status": "official",
+    "addedDate": "2024-07-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Advanced",
+    "difficulty": "expert",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fine-tuning-guide/1766238193252-fine-tuning-guide.png"
+  },
+  {
+    "id": "langchain-crash-course",
+    "title": "LangChain Crash Course",
+    "description": "Quick introduction to building with LangChain and Claude.",
+    "url": "https://python.langchain.com/docs/tutorials/",
+    "category": "tutorials",
+    "tags": [
+      "langchain",
+      "crash-course",
+      "python",
+      "beginner"
+    ],
+    "status": "community",
+    "addedDate": "2024-04-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Framework",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-crash-course/1766238195516-langchain-crash-course.png"
+  },
+  {
+    "id": "llamaindex-tutorial",
+    "title": "LlamaIndex Getting Started",
+    "description": "Build your first RAG application with LlamaIndex.",
+    "url": "https://docs.llamaindex.ai/en/stable/getting_started/",
+    "category": "tutorials",
+    "tags": [
+      "llamaindex",
+      "rag",
+      "getting-started",
+      "python"
+    ],
+    "status": "community",
+    "addedDate": "2024-04-15",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Framework",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-tutorial/1766238196042-llamaindex-tutorial.png"
+  },
+  {
+    "id": "rag-from-scratch",
+    "title": "RAG From Scratch",
+    "description": "Step-by-step guide to building RAG systems with Claude.",
+    "url": "https://github.com/langchain-ai/rag-from-scratch",
+    "category": "tutorials",
+    "tags": [
+      "rag",
+      "tutorial",
+      "langchain",
+      "beginner"
+    ],
+    "status": "community",
+    "addedDate": "2024-03-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "RAG",
+    "difficulty": "beginner",
+    "github": {
+      "owner": "langchain-ai",
+      "repo": "rag-from-scratch",
+      "stars": 3500,
+      "forks": 600,
+      "lastUpdated": "2024-12-08",
+      "language": "Python"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rag-from-scratch/1766238200756-rag-from-scratch.png"
+  },
+  {
+    "id": "streaming-tutorial",
+    "title": "Streaming Responses Tutorial",
+    "description": "Implement streaming responses for real-time Claude interactions.",
+    "url": "https://docs.anthropic.com/en/api/streaming",
+    "category": "tutorials",
+    "tags": [
+      "streaming",
+      "real-time",
+      "api",
+      "official"
+    ],
+    "status": "official",
+    "addedDate": "2024-03-15",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Official",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/streaming-tutorial/1766238205800-streaming-tutorial.png"
+  },
+  {
+    "id": "tool-use-tutorial",
+    "title": "Tool Use Tutorial",
+    "description": "Learn how to use Claude's tool use (function calling) feature.",
+    "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
+    "category": "tutorials",
+    "tags": [
+      "tool-use",
+      "function-calling",
+      "official",
+      "api"
+    ],
+    "status": "official",
+    "addedDate": "2024-02-15",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Official",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tool-use-tutorial/1766238206710-tool-use-tutorial.png"
   },
   {
     "id": "vector-databases",
@@ -217,36 +236,17 @@
     "description": "Guide to choosing and using vector databases with Claude.",
     "url": "https://docs.anthropic.com/en/docs/build-with-claude/retrieval",
     "category": "tutorials",
-    "subcategory": "RAG",
     "tags": [
       "vector-db",
       "embeddings",
       "rag",
       "storage"
     ],
-    "difficulty": "intermediate",
     "status": "official",
     "addedDate": "2024-05-01",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2024-12-11",
+    "subcategory": "RAG",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vector-databases/1766238207374-vector-databases.png"
-  },
-  {
-    "id": "fine-tuning-guide",
-    "title": "Fine-Tuning Best Practices",
-    "description": "Official Anthropic documentation hub covering Claude API, prompt engineering, tools, and agent development.",
-    "url": "https://docs.anthropic.com/en/docs/fine-tuning",
-    "category": "tutorials",
-    "subcategory": "Advanced",
-    "tags": [
-      "fine-tuning",
-      "training",
-      "data",
-      "advanced"
-    ],
-    "difficulty": "expert",
-    "status": "official",
-    "addedDate": "2024-07-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fine-tuning-guide/1766238193252-fine-tuning-guide.png"
   }
 ]

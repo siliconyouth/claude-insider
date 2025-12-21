@@ -2,10 +2,9 @@
   {
     "id": "anthropic-prompt-library",
     "title": "Anthropic Prompt Library",
-    "description": "Official collection of 60+ optimized prompts and templates from Anthropic covering business, coding, creative, and personal productivity tasks.",
+    "description": "Official collection of prompts and templates from Anthropic.",
     "url": "https://docs.anthropic.com/en/prompt-library",
     "category": "prompts",
-    "subcategory": "Official",
     "tags": [
       "official",
       "templates",
@@ -13,20 +12,19 @@
       "examples"
     ],
     "status": "official",
-    "featured": true,
-    "featuredReason": "Official Source",
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766238187295-anthropic-prompt-library.png",
-    "difficulty": "beginner"
+    "subcategory": "Official",
+    "featured": true,
+    "featuredReason": "Official Source",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766238187295-anthropic-prompt-library.png"
   },
   {
     "id": "awesome-chatgpt-prompts",
     "title": "Awesome ChatGPT Prompts",
-    "description": "Community-curated collection of 140k+ role-based prompts, compatible with Claude, ChatGPT, and other AI models. Self-hostable with full privacy.",
+    "description": "Huge collection of role-based prompts that work great with Claude too.",
     "url": "https://github.com/f/awesome-chatgpt-prompts",
     "category": "prompts",
-    "subcategory": "Role-Based",
     "tags": [
       "awesome-list",
       "roles",
@@ -34,28 +32,345 @@
       "creative"
     ],
     "status": "community",
+    "addedDate": "2024-02-01",
+    "lastVerified": "2025-12-20",
+    "subcategory": "Role-Based",
+    "featured": true,
+    "featuredReason": "Most Popular",
     "github": {
       "owner": "f",
       "repo": "awesome-chatgpt-prompts",
-      "stars": 139933,
-      "forks": 18558,
-      "lastUpdated": "2025-12-20",
-      "language": "TypeScript"
+      "stars": 139000,
+      "forks": 18000,
+      "lastUpdated": "2024-12-11",
+      "language": "Markdown"
     },
-    "featured": true,
-    "featuredReason": "Most Popular",
-    "addedDate": "2024-02-01",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766238188363-awesome-chatgpt-prompts.png"
+  },
+  {
+    "id": "system-prompts-coding",
+    "title": "System Prompts for Coding",
+    "description": "Collection of system prompts optimized for code generation and review.",
+    "url": "https://github.com/danielmiessler/fabric",
+    "category": "prompts",
+    "tags": [
+      "system-prompts",
+      "coding",
+      "code-review",
+      "generation"
+    ],
+    "status": "community",
+    "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766238188363-awesome-chatgpt-prompts.png",
-    "difficulty": "beginner"
+    "subcategory": "System Prompts",
+    "difficulty": "intermediate",
+    "featured": true,
+    "featuredReason": "Trending",
+    "github": {
+      "owner": "danielmiessler",
+      "repo": "fabric",
+      "stars": 28000,
+      "forks": 2800,
+      "lastUpdated": "2024-12-11",
+      "language": "Python"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766238103278-fabric-prompts.png"
+  },
+  {
+    "id": "promptbook-utils",
+    "title": "@promptbook/utils",
+    "description": "Promptbook: Turn your company's scattered knowledge into AI ready books",
+    "url": "https://www.npmjs.com/package/@promptbook/utils",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promptbook-utils/1766286355015-promptbook-utils.png"
+  },
+  {
+    "id": "asgeirtj-system-prompts-leaks",
+    "title": "asgeirtj/system_prompts_leaks",
+    "description": "Collection of extracted System Prompts from popular chatbots like ChatGPT, Claude & Gemini",
+    "url": "https://github.com/asgeirtj/system_prompts_leaks",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "asgeirtj",
+      "repo": "system_prompts_leaks",
+      "stars": 24361,
+      "forks": 3717,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/asgeirtj-system-prompts-leaks/1766286344522-asgeirtj-system-prompts-leaks.png"
+  },
+  {
+    "id": "chain-of-thought",
+    "title": "Chain of Thought Prompting",
+    "description": "Guide to using chain-of-thought reasoning with Claude.",
+    "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/chain-of-thought",
+    "category": "prompts",
+    "tags": [
+      "chain-of-thought",
+      "reasoning",
+      "technique",
+      "official"
+    ],
+    "status": "official",
+    "addedDate": "2024-01-15",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Technique",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1766238189264-chain-of-thought.png"
+  },
+  {
+    "id": "claude",
+    "title": "Claude",
+    "description": "Prompt collection and templates for Claude. Curated examples and patterns for effective AI interactions.",
+    "url": "https://claude.ai/new",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude/1766286350212-claude.png"
+  },
+  {
+    "id": "claude-code-prompt-improver",
+    "title": "claude-code-prompt-improver",
+    "description": "Intelligent prompt improver hook for Claude Code. Type vibes, ship precision.",
+    "url": "https://github.com/severity1/claude-code-prompt-improver",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "severity1",
+      "repo": "claude-code-prompt-improver",
+      "stars": 997,
+      "forks": 93,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-prompt-improver/1766286349451-claude-code-prompt-improver.png"
+  },
+  {
+    "id": "claude-code-system-prompt",
+    "title": "claude-code-system-prompt",
+    "description": "Prompt collection and templates for claude code system prompt. Curated examples and patterns for effective AI interactions.",
+    "url": "https://github.com/matthew-lim-matthew-lim/claude-code-system-prompt",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "matthew-lim-matthew-lim",
+      "repo": "claude-code-system-prompt",
+      "stars": 119,
+      "forks": 44,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-system-prompt/1766286350115-claude-code-system-prompt.png"
+  },
+  {
+    "id": "claude-code-templates",
+    "title": "claude-code-templates",
+    "description": "CLI tool for configuring and monitoring Claude Code",
+    "url": "https://github.com/davila7/claude-code-templates",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "davila7",
+      "repo": "claude-code-templates",
+      "stars": 12794,
+      "forks": 1131,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates/1766286350010-claude-code-templates.png"
+  },
+  {
+    "id": "claude-code-templates-1",
+    "title": "claude-code-templates",
+    "description": "CLI tool to setup Claude Code configurations with framework-specific commands, automation hooks and MCP Servers for your projects",
+    "url": "https://www.npmjs.com/package/claude-code-templates",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates-1/1766286350127-claude-code-templates-1.png"
+  },
+  {
+    "id": "claude-prompts",
+    "title": "claude-prompts",
+    "description": "Claude Custom Prompts MCP Server",
+    "url": "https://www.npmjs.com/package/claude-prompts",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-prompts/1766286350124-claude-prompts.png"
+  },
+  {
+    "id": "prompt-code-reviewer",
+    "title": "Code Reviewer Persona",
+    "description": "Prompt for detailed code reviews with security and performance focus.",
+    "url": "https://cursor.directory/code-reviewer",
+    "category": "prompts",
+    "tags": [
+      "persona",
+      "code-review",
+      "security",
+      "performance"
+    ],
+    "status": "community",
+    "addedDate": "2024-05-15",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Role-Based",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1766238199596-prompt-code-reviewer.png"
+  },
+  {
+    "id": "few-shot-learning",
+    "title": "Few-Shot Learning Examples",
+    "description": "Guide to using few-shot learning effectively with Claude.",
+    "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/few-shot-examples",
+    "category": "prompts",
+    "tags": [
+      "few-shot",
+      "examples",
+      "learning",
+      "technique"
+    ],
+    "status": "official",
+    "addedDate": "2024-03-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Technique",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1766238193108-few-shot-learning.png"
+  },
+  {
+    "id": "friuns2-blackfriday-gpts-prompts",
+    "title": "friuns2/BlackFriday-GPTs-Prompts",
+    "description": "List of free GPTs that doesn't require plus subscription ",
+    "url": "https://github.com/friuns2/BlackFriday-GPTs-Prompts",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "friuns2",
+      "repo": "BlackFriday-GPTs-Prompts",
+      "stars": 8937,
+      "forks": 1326,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friuns2-blackfriday-gpts-prompts/1766286350031-friuns2-blackfriday-gpts-prompts.png"
+  },
+  {
+    "id": "github-stats-for-claude-code-system-prompts",
+    "title": "GitHub Stats for claude-code-system-prompts",
+    "description": "Prompt collection and templates for GitHub Stats for claude code system prompts. Curated examples and patterns for effective AI interactions.",
+    "url": "https://github-readme-stats-plus-theta.vercel.app/api/pin/?repo=claude-code-system-prompts&username=Piebald-AI&all_stats=true&stats_only=true&hide_border=true&bg_color=00000000&icon_color=FF0000&text_color=FF0000",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-system-prompts/1766286349967-github-stats-for-claude-code-system-prompts.png"
+  },
+  {
+    "id": "github-stats-for-claude-code-templates",
+    "title": "GitHub Stats for claude-code-templates",
+    "description": "Prompt collection and templates for GitHub Stats for claude code templates. Curated examples and patterns for effective AI interactions.",
+    "url": "https://github-readme-stats-plus-theta.vercel.app/api/pin/?repo=claude-code-templates&username=davila7&all_stats=true&stats_only=true&hide_border=true&bg_color=00000000&icon_color=FF0000&text_color=FF0000",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-templates/1766286350002-github-stats-for-claude-code-templates.png"
+  },
+  {
+    "id": "l1xu4n-awesome-chatgpt-prompts-zh-cn",
+    "title": "L1Xu4n/Awesome-ChatGPT-prompts-ZH_CN",
+    "description": "Prompt collection and templates for L1Xu4n/Awesome ChatGPT prompts ZH CN. Curated examples and patterns for effective AI interactions.",
+    "url": "https://github.com/L1Xu4n/Awesome-ChatGPT-prompts-ZH_CN",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "L1Xu4n",
+      "repo": "Awesome-ChatGPT-prompts-ZH_CN",
+      "stars": 3118,
+      "forks": 167,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l1xu4n-awesome-chatgpt-prompts-zh-cn/1766286350129-l1xu4n-awesome-chatgpt-prompts-zh-cn.png"
+  },
+  {
+    "id": "langgptai-awesome-claude-prompts",
+    "title": "langgptai/awesome-claude-prompts",
+    "description": "This repo includes Claude prompt curation to use Claude better.",
+    "url": "https://github.com/langgptai/awesome-claude-prompts",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "langgptai",
+      "repo": "awesome-claude-prompts",
+      "stars": 4007,
+      "forks": 393,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langgptai-awesome-claude-prompts/1766286353700-langgptai-awesome-claude-prompts.png"
+  },
+  {
+    "id": "mufeedvh-code2prompt",
+    "title": "mufeedvh/code2prompt",
+    "description": "A CLI tool to convert your codebase into a single LLM prompt with source tree, prompt templating, and token counting.",
+    "url": "https://github.com/mufeedvh/code2prompt",
+    "category": "prompts",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "github": {
+      "owner": "mufeedvh",
+      "repo": "code2prompt",
+      "stars": 6888,
+      "forks": 380,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mufeedvh-code2prompt/1766286353129-mufeedvh-code2prompt.png"
   },
   {
     "id": "prompts-chat",
     "title": "prompts.chat",
-    "description": "Open-source community platform for discovering, sharing, and collecting AI prompts with 140k+ GitHub stars and self-hosting support.",
+    "description": "Interactive website for browsing and testing ChatGPT/Claude prompts.",
     "url": "https://prompts.chat",
     "category": "prompts",
-    "subcategory": "Directory",
     "tags": [
       "directory",
       "interactive",
@@ -65,170 +380,8 @@
     "status": "community",
     "addedDate": "2024-02-15",
     "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
+    "subcategory": "Directory",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompts-chat/1766238200414-prompts-chat.png"
-  },
-  {
-    "id": "system-prompts-coding",
-    "title": "System Prompts for Coding",
-    "description": "Open-source framework with 150+ crowdsourced AI prompts for augmenting human capabilities, including coding, analysis, and content creation tasks.",
-    "url": "https://github.com/danielmiessler/fabric",
-    "category": "prompts",
-    "subcategory": "System Prompts",
-    "tags": [
-      "system-prompts",
-      "coding",
-      "code-review",
-      "generation"
-    ],
-    "difficulty": "intermediate",
-    "status": "community",
-    "github": {
-      "owner": "danielmiessler",
-      "repo": "fabric",
-      "stars": 35336,
-      "forks": 3607,
-      "lastUpdated": "2025-12-20",
-      "language": "Go"
-    },
-    "featured": true,
-    "featuredReason": "Trending",
-    "addedDate": "2024-04-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766238103278-fabric-prompts.png"
-  },
-  {
-    "id": "chain-of-thought",
-    "title": "Chain of Thought Prompting",
-    "description": "Guide to using chain-of-thought reasoning with Claude.",
-    "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/chain-of-thought",
-    "category": "prompts",
-    "subcategory": "Technique",
-    "tags": [
-      "chain-of-thought",
-      "reasoning",
-      "technique",
-      "official"
-    ],
-    "difficulty": "intermediate",
-    "status": "official",
-    "addedDate": "2024-01-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1766238189264-chain-of-thought.png"
-  },
-  {
-    "id": "prompt-senior-developer",
-    "title": "Senior Developer Persona",
-    "description": "System prompt for Claude to act as a senior software developer.",
-    "url": "https://cursor.directory/senior-developer",
-    "category": "prompts",
-    "subcategory": "Role-Based",
-    "tags": [
-      "persona",
-      "developer",
-      "code-review",
-      "mentoring"
-    ],
-    "difficulty": "beginner",
-    "status": "community",
-    "addedDate": "2024-05-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1766238200040-prompt-senior-developer.png"
-  },
-  {
-    "id": "prompt-code-reviewer",
-    "title": "Code Reviewer Persona",
-    "description": "Prompt for detailed code reviews with security and performance focus.",
-    "url": "https://cursor.directory/code-reviewer",
-    "category": "prompts",
-    "subcategory": "Role-Based",
-    "tags": [
-      "persona",
-      "code-review",
-      "security",
-      "performance"
-    ],
-    "difficulty": "intermediate",
-    "status": "community",
-    "addedDate": "2024-05-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1766238199596-prompt-code-reviewer.png"
-  },
-  {
-    "id": "prompt-technical-writer",
-    "title": "Technical Writer Persona",
-    "description": "Prompt for generating documentation, README files, and API docs.",
-    "url": "https://cursor.directory/technical-writer",
-    "category": "prompts",
-    "subcategory": "Role-Based",
-    "tags": [
-      "persona",
-      "documentation",
-      "readme",
-      "api-docs"
-    ],
-    "difficulty": "beginner",
-    "status": "community",
-    "addedDate": "2024-06-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1766238200257-prompt-technical-writer.png"
-  },
-  {
-    "id": "few-shot-learning",
-    "title": "Few-Shot Learning Examples",
-    "description": "Guide to using few-shot learning effectively with Claude.",
-    "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/few-shot-examples",
-    "category": "prompts",
-    "subcategory": "Technique",
-    "tags": [
-      "few-shot",
-      "examples",
-      "learning",
-      "technique"
-    ],
-    "difficulty": "intermediate",
-    "status": "official",
-    "addedDate": "2024-03-01",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1766238193108-few-shot-learning.png"
-  },
-  {
-    "id": "structured-outputs",
-    "title": "Structured Output Prompts",
-    "description": "Prompts for getting JSON, XML, and other structured outputs.",
-    "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
-    "category": "prompts",
-    "subcategory": "Technique",
-    "tags": [
-      "structured-output",
-      "json",
-      "xml",
-      "formatting"
-    ],
-    "difficulty": "intermediate",
-    "status": "official",
-    "addedDate": "2024-03-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1766238206082-structured-outputs.png"
-  },
-  {
-    "id": "self-reflection",
-    "title": "Self-Reflection Prompting",
-    "description": "Techniques for making Claude review and improve its own responses.",
-    "url": "https://www.anthropic.com/news/claudes-character",
-    "category": "prompts",
-    "subcategory": "Technique",
-    "tags": [
-      "self-reflection",
-      "improvement",
-      "character",
-      "prompting"
-    ],
-    "difficulty": "advanced",
-    "status": "official",
-    "addedDate": "2024-04-15",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1766238205029-self-reflection.png"
   },
   {
     "id": "prompt-security-expert",
@@ -236,17 +389,92 @@
     "description": "Prompt for security audits and vulnerability analysis.",
     "url": "https://cursor.directory/security",
     "category": "prompts",
-    "subcategory": "Role-Based",
     "tags": [
       "persona",
       "security",
       "audit",
       "vulnerabilities"
     ],
-    "difficulty": "advanced",
     "status": "community",
     "addedDate": "2024-07-01",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Role-Based",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1766238199888-prompt-security-expert.png"
+  },
+  {
+    "id": "self-reflection",
+    "title": "Self-Reflection Prompting",
+    "description": "Techniques for making Claude review and improve its own responses.",
+    "url": "https://www.anthropic.com/research/constitutional-ai",
+    "category": "prompts",
+    "tags": [
+      "self-reflection",
+      "improvement",
+      "constitutional-ai"
+    ],
+    "status": "official",
+    "addedDate": "2024-04-15",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Technique",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1766238205029-self-reflection.png"
+  },
+  {
+    "id": "prompt-senior-developer",
+    "title": "Senior Developer Persona",
+    "description": "System prompt for Claude to act as a senior software developer.",
+    "url": "https://cursor.directory/senior-developer",
+    "category": "prompts",
+    "tags": [
+      "persona",
+      "developer",
+      "code-review",
+      "mentoring"
+    ],
+    "status": "community",
+    "addedDate": "2024-05-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Role-Based",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1766238200040-prompt-senior-developer.png"
+  },
+  {
+    "id": "structured-outputs",
+    "title": "Structured Output Prompts",
+    "description": "Prompts for getting JSON, XML, and other structured outputs.",
+    "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
+    "category": "prompts",
+    "tags": [
+      "structured-output",
+      "json",
+      "xml",
+      "formatting"
+    ],
+    "status": "official",
+    "addedDate": "2024-03-15",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Technique",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1766238206082-structured-outputs.png"
+  },
+  {
+    "id": "prompt-technical-writer",
+    "title": "Technical Writer Persona",
+    "description": "Prompt for generating documentation, README files, and API docs.",
+    "url": "https://cursor.directory/technical-writer",
+    "category": "prompts",
+    "tags": [
+      "persona",
+      "documentation",
+      "readme",
+      "api-docs"
+    ],
+    "status": "community",
+    "addedDate": "2024-06-01",
+    "lastVerified": "2024-12-11",
+    "subcategory": "Role-Based",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1766238200257-prompt-technical-writer.png"
   }
 ]
