@@ -10,7 +10,7 @@
  * Index Sources:
  * - MDX documentation (34 pages across 7 categories)
  * - Project knowledge (20 chunks from generate-project-knowledge.cjs)
- * - Resources (122+ curated tools, SDKs, MCP servers)
+ * - Resources (1,950+ curated tools, SDKs, MCP servers)
  * - Settings/options (voice assistant configuration)
  * - External sources (cached reference documentation)
  * - Code examples (searchable snippets in 16+ languages)

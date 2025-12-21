@@ -188,11 +188,11 @@ export const DOCUMENTATION_STATS = {
 } as const;
 
 // =============================================================================
-// RESOURCES SECTION (122+ curated entries)
+// RESOURCES SECTION (1,952+ curated entries)
 // =============================================================================
 
 export const RESOURCES_INFO = {
-  totalResources: 122,
+  totalResources: 1952,
   categories: 10,
   categoriesList: {
     official: { name: "Official Resources", description: "Anthropic documentation, SDKs, console, API reference" },

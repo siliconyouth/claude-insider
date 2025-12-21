@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.8.1";
+const APP_VERSION = "1.9.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.9.0",
+    date: "2025-12-21",
+    type: "minor",
+    highlights: [
+      "🔍 Advanced Search: Boolean operators (AND/OR/NOT), smart autocomplete, saved searches",
+      "📦 Audit Export: Bulk admin exports in JSON, CSV, and XLSX formats",
+      "🤖 Bot Challenge: Slider puzzle and math captcha for human verification",
+      "⚡ Rate Limit Warnings: Proactive alerts before hitting request limits",
+      "📊 Search Analytics: Admin dashboard for top searches and zero-result queries",
+    ],
+  },
   {
     version: "1.8.1",
     date: "2025-12-21",

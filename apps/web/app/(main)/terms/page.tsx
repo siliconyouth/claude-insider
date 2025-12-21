@@ -120,7 +120,7 @@ export default function TermsOfServicePage() {
               <li>End-to-end encrypted direct messaging</li>
               <li>Interactive code playground</li>
               <li>Community features: comments, ratings, suggestions</li>
-              <li>122+ curated resources</li>
+              <li>1,950+ curated resources</li>
               <li>Donation system supporting the project</li>
             </ul>
             <p className="text-gray-300 leading-relaxed mt-4">

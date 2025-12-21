@@ -188,7 +188,7 @@ export function Header({ activePage }: HeaderProps) {
                 {
                   title: "Development",
                   items: [
-                    { label: "MCP Servers", href: "/resources/mcp-servers", description: "Model Context Protocol servers", icon: <ServerIcon />, badge: "122+" },
+                    { label: "MCP Servers", href: "/resources/mcp-servers", description: "Model Context Protocol servers", icon: <ServerIcon />, badge: "1,950+" },
                     { label: "Tools & SDKs", href: "/resources/tools", description: "Development utilities", icon: <ToolsIcon /> },
                     { label: "CLAUDE.md Rules", href: "/resources/rules", description: "Project configuration templates", icon: <TemplateIcon /> },
                   ],

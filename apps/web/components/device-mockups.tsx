@@ -314,7 +314,7 @@ function MacBookTerminalContent() {
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Features: 45 • Resources: 122+</span>
+          <span className="text-[#8b949e]"> Features: 45 • Resources: 1,950+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>
@@ -415,7 +415,7 @@ function IPhoneScreenContent() {
             Claude Insider v1.9.0
           </div>
           <div className="text-[3cqw] text-white/85 mt-[2%]">
-            45 features • 122+ resources
+            45 features • 1,950+ resources
           </div>
           <div className="text-[2.5cqw] text-white/70 mt-[1.5%]">
             Search • E2EE • Achievements • Analytics
