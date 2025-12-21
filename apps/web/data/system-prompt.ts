@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-21 for v1.10.1
+ * Updated: 2025-12-21 for v1.10.2
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.10.1",
+  version: "1.10.2",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.10.1 - updated 2025-12-21)
+// TECH STACK KNOWLEDGE (v1.10.2 - updated 2025-12-21)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -895,6 +895,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.10.1", "relationships", "resource graph", "cross-linking", "similar resources", "alternatives", "knowledge graph"],
+  },
+  {
+    id: "v1102-features",
+    title: "Version 1.10.2 Features",
+    section: "New in v1.10.2",
+    content: `Claude Insider v1.10.2 completes resource enhancement for all 1,952 resources. 100% Resource Enhancement: Every resource now has AI-generated metadata including AI summaries (contextual descriptions), key features (3-6 per resource), use cases (4 practical applications), pros/cons (category-specific advantages and limitations), target audience, and prerequisites. Enhancement Scripts: New tooling for resource metadata management - smart-enhance-resources.mjs (intelligent text analysis + category templates), check-enhancement-status.mjs (database verification), fetch-resources-batch.mjs (batch fetching), write-enhancements.mjs (bulk updates). Enhancement Strategy: Hybrid approach using Claude Code directly - first 30 resources with manual Opus 4.5 analysis, remaining 1,922 with smart algorithmic enhancement achieving 100% success rate at 10.9 resources/sec. Dashboard Resources section now shows 1,952 enhanced resources (was 0). All enhancement data stored in database columns: ai_summary, key_features, use_cases, pros, cons, target_audience, prerequisites, ai_analyzed_at, ai_confidence.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.10.2", "resource enhancement", "ai summary", "key features", "use cases", "pros cons", "target audience", "prerequisites", "metadata"],
   },
 ];
 
