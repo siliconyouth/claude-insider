@@ -15,6 +15,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Official",
+    "difficulty": "beginner",
     "version": "0.40.0",
     "featured": true,
     "featuredReason": "Official SDK",
@@ -44,6 +45,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Official",
+    "difficulty": "intermediate",
     "version": "0.32.0",
     "featured": true,
     "featuredReason": "Official SDK",
@@ -73,6 +75,7 @@
     "addedDate": "2024-04-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Integration",
+    "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Popular",
     "github": {
@@ -95,6 +98,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-anthropic/1766286354227-adaline-anthropic.png"
   },
   {
@@ -107,6 +111,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-google/1766286354267-adaline-google.png"
   },
   {
@@ -119,6 +124,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-together-ai/1766286353912-adaline-together-ai.png"
   },
   {
@@ -131,6 +137,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-amazon-bedrock/1766286358728-ai-sdk-amazon-bedrock.png"
   },
   {
@@ -143,6 +150,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-anthropic/1766286358645-ai-sdk-anthropic.png"
   },
   {
@@ -155,6 +163,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-azure/1766286358369-ai-sdk-azure.png"
   },
   {
@@ -167,6 +176,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cerebras/1766286358079-ai-sdk-cerebras.png"
   },
   {
@@ -179,6 +189,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cohere/1766286358673-ai-sdk-cohere.png"
   },
   {
@@ -191,6 +202,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepinfra/1766286359129-ai-sdk-deepinfra.png"
   },
   {
@@ -203,6 +215,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepseek/1766286359170-ai-sdk-deepseek.png"
   },
   {
@@ -215,6 +228,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-fireworks/1766286358730-ai-sdk-fireworks.png"
   },
   {
@@ -227,6 +241,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-gateway/1766286358420-ai-sdk-gateway.png"
   },
   {
@@ -239,6 +254,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google/1766286363435-ai-sdk-google.png"
   },
   {
@@ -251,6 +267,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google-vertex/1766286362488-ai-sdk-google-vertex.png"
   },
   {
@@ -263,6 +280,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-groq/1766286362801-ai-sdk-groq.png"
   },
   {
@@ -275,6 +293,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-langchain/1766286362518-ai-sdk-langchain.png"
   },
   {
@@ -287,6 +306,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-mistral/1766286363433-ai-sdk-mistral.png"
   },
   {
@@ -299,6 +319,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai/1766286362832-ai-sdk-openai.png"
   },
   {
@@ -311,6 +332,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai-compatible/1766286363471-ai-sdk-openai-compatible.png"
   },
   {
@@ -323,6 +345,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-perplexity/1766286362771-ai-sdk-perplexity.png"
   },
   {
@@ -335,6 +358,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider/1766286362776-ai-sdk-provider.png"
   },
   {
@@ -347,6 +371,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-utils/1766286367263-ai-sdk-provider-utils.png"
   },
   {
@@ -359,6 +384,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-react/1766286366967-ai-sdk-react.png"
   },
   {
@@ -371,6 +397,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-replicate/1766286368136-ai-sdk-replicate.png"
   },
   {
@@ -383,6 +410,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-rsc/1766286367177-ai-sdk-rsc.png"
   },
   {
@@ -395,6 +423,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-solid/1766286368193-ai-sdk-solid.png"
   },
   {
@@ -407,6 +436,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-svelte/1766286368194-ai-sdk-svelte.png"
   },
   {
@@ -419,6 +449,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-togetherai/1766286368104-ai-sdk-togetherai.png"
   },
   {
@@ -431,6 +462,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-ui-utils/1766286367728-ai-sdk-ui-utils.png"
   },
   {
@@ -443,6 +475,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vercel/1766286372479-ai-sdk-vercel.png"
   },
   {
@@ -455,6 +488,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vue/1766286371359-ai-sdk-vue.png"
   },
   {
@@ -467,6 +501,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-xai/1766286372486-ai-sdk-xai.png"
   },
   {
@@ -479,6 +514,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aigne-anthropic/1766286372633-aigne-anthropic.png"
   },
   {
@@ -491,6 +527,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-bedrock-sdk/1766286371479-anthropic-ai-bedrock-sdk.png"
   },
   {
@@ -503,6 +540,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-agent-sdk/1766286372487-anthropic-ai-claude-agent-sdk.png"
   },
   {
@@ -515,6 +553,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-code/1766286370909-anthropic-ai-claude-code.png"
   },
   {
@@ -527,6 +566,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-foundry-sdk/1766286377095-anthropic-ai-foundry-sdk.png"
   },
   {
@@ -539,6 +579,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sandbox-runtime/1766286376812-anthropic-ai-sandbox-runtime.png"
   },
   {
@@ -551,6 +592,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sdk/1766286376810-anthropic-ai-sdk.png"
   },
   {
@@ -563,6 +605,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-tokenizer/1766286376812-anthropic-ai-tokenizer.png"
   },
   {
@@ -575,6 +618,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-vertex-sdk/1766286376811-anthropic-ai-vertex-sdk.png"
   },
   {
@@ -587,6 +631,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aps-sdk-model-derivative/1766286376878-aps-sdk-model-derivative.png"
   },
   {
@@ -599,6 +644,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/arizeai-openinference-instrumentation-anthropic/1766286381154-arizeai-openinference-instrumentation-anthropic.png"
   },
   {
@@ -611,6 +657,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/assistant-ui-react-ai-sdk/1766286381440-assistant-ui-react-ai-sdk.png"
   },
   {
@@ -623,6 +670,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-rest-ai-document-intelligence/1766286380868-azure-rest-ai-document-intelligence.png"
   },
   {
@@ -635,6 +683,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-form-recognizer/1766286381558-azure-ai-form-recognizer.png"
   },
   {
@@ -647,6 +696,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-projects/1766286380783-azure-ai-projects.png"
   },
   {
@@ -659,6 +709,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-search-documents/1766286381050-azure-search-documents.png"
   },
   {
@@ -671,6 +722,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserbasehq-stagehand/1766286380782-browserbasehq-stagehand.png"
   },
   {
@@ -683,6 +735,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserstack-ai-sdk-node/1766286383804-browserstack-ai-sdk-node.png"
   },
   {
@@ -695,6 +748,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatclub1-claude-code/1766286383870-chatclub1-claude-code.png"
   },
   {
@@ -707,6 +761,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ckeditor-ckeditor5-ai/1766286385938-ckeditor-ckeditor5-ai.png"
   },
   {
@@ -719,6 +774,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/composio-anthropic/1766286391373-composio-anthropic.png"
   },
   {
@@ -731,6 +787,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/convex-dev-ai-sdk-google/1766286391371-convex-dev-ai-sdk-google.png"
   },
   {
@@ -743,6 +800,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/effect-ai/1766286394026-effect-ai.png"
   },
   {
@@ -755,6 +813,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-ai/1766286394056-firebase-ai.png"
   },
   {
@@ -767,6 +826,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai/1766286394162-firebase-vertexai.png"
   },
   {
@@ -779,6 +839,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai-preview/1766286394074-firebase-vertexai-preview.png"
   },
   {
@@ -791,6 +852,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/flatfile-anthropic/1766286394458-flatfile-anthropic.png"
   },
   {
@@ -803,6 +865,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gauravrathod674-super-customizable-chatbot/1766286394052-gauravrathod674-super-customizable-chatbot.png"
   },
   {
@@ -815,6 +878,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-cloud/1766286394556-genkit-ai-google-cloud.png"
   },
   {
@@ -827,6 +891,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-genai/1766286395062-genkit-ai-google-genai.png"
   },
   {
@@ -839,6 +904,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-cloud/1766286397602-getzep-zep-cloud.png"
   },
   {
@@ -851,6 +917,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-js/1766286397639-getzep-zep-js.png"
   },
   {
@@ -863,6 +930,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gooddata-sdk-model/1766286397157-gooddata-sdk-model.png"
   },
   {
@@ -875,6 +943,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-aiplatform/1766286397637-google-cloud-aiplatform.png"
   },
   {
@@ -887,6 +956,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-documentai/1766286397350-google-cloud-documentai.png"
   },
   {
@@ -899,6 +969,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-vertexai/1766286398772-google-cloud-vertexai.png"
   },
   {
@@ -911,6 +982,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-genai/1766286398278-google-genai.png"
   },
   {
@@ -923,6 +995,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-generative-ai/1766286397369-google-generative-ai.png"
   },
   {
@@ -935,6 +1008,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/graygate-claude-orchestrator/1766286401005-graygate-claude-orchestrator.png"
   },
   {
@@ -947,6 +1021,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ibm-generative-ai-node-sdk/1766286401340-ibm-generative-ai-node-sdk.png"
   },
   {
@@ -959,6 +1034,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/inngest-ai/1766286400980-inngest-ai.png"
   },
   {
@@ -971,6 +1047,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/instantlyeasy-claude-code-sdk-ts/1766286400983-instantlyeasy-claude-code-sdk-ts.png"
   },
   {
@@ -983,6 +1060,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kaitranntt-ccs/1766286402428-kaitranntt-ccs.png"
   },
   {
@@ -995,6 +1073,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kontent-ai-core-sdk/1766286401391-kontent-ai-core-sdk.png"
   },
   {
@@ -1007,6 +1086,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic-1/1766286409304-langchain-anthropic-1.png"
   },
   {
@@ -1019,6 +1099,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-google-common/1766286408654-langchain-google-common.png"
   },
   {
@@ -1031,6 +1112,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-langgraph/1766286407477-langchain-langgraph.png"
   },
   {
@@ -1043,6 +1125,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lenml-tokenizer-claude/1766286407475-lenml-tokenizer-claude.png"
   },
   {
@@ -1055,6 +1138,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic-1/1766286407588-llamaindex-anthropic-1.png"
   },
   {
@@ -1067,6 +1151,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lmnr-ai-claude-code-proxy/1766286407573-lmnr-ai-claude-code-proxy.png"
   },
   {
@@ -1079,6 +1164,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/loopback-model-api-builder/1766286407626-loopback-model-api-builder.png"
   },
   {
@@ -1091,6 +1177,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mariozechner-claude-trace/1766286407841-mariozechner-claude-trace.png"
   },
   {
@@ -1103,6 +1190,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra-core/1766286407953-mastra-core.png"
   },
   {
@@ -1115,6 +1203,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/matkirit-claude-trace/1766286411545-matkirit-claude-trace.png"
   },
   {
@@ -1127,6 +1216,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memberjunction-ai-anthropic/1766286411477-memberjunction-ai-anthropic.png"
   },
   {
@@ -1139,6 +1229,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/metorial-anthropic/1766286411510-metorial-anthropic.png"
   },
   {
@@ -1151,6 +1242,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/microsoft-applicationinsights-web/1766286411856-microsoft-applicationinsights-web.png"
   },
   {
@@ -1163,6 +1255,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-sdk/1766286412665-modelcontextprotocol-sdk.png"
   },
   {
@@ -1175,6 +1268,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-server-memory-1/1766286412470-modelcontextprotocol-server-memory-1.png"
   },
   {
@@ -1187,6 +1281,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/musistudio-claude-code-router/1766286411815-musistudio-claude-code-router.png"
   },
   {
@@ -1199,6 +1294,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-io-ai-assistant-sdk/1766286411495-n8n-io-ai-assistant-sdk.png"
   },
   {
@@ -1211,6 +1307,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openrouter-ai-sdk-provider/1766286414978-openrouter-ai-sdk-provider.png"
   },
   {
@@ -1223,6 +1320,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/owloops-claude-powerline/1766286415224-owloops-claude-powerline.png"
   },
   {
@@ -1235,6 +1333,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/platejs-ai/1766286415299-platejs-ai.png"
   },
   {
@@ -1247,6 +1346,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-grab-claude-code/1766286418653-react-grab-claude-code.png"
   },
   {
@@ -1259,6 +1359,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reservoir0x-relay-protocol-sdk/1766286418651-reservoir0x-relay-protocol-sdk.png"
   },
   {
@@ -1271,6 +1372,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sanity-assist/1766286422495-sanity-assist.png"
   },
   {
@@ -1283,6 +1385,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-ai-api/1766286422530-sap-ai-sdk-ai-api.png"
   },
   {
@@ -1295,6 +1398,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-prompt-registry/1766286422515-sap-ai-sdk-prompt-registry.png"
   },
   {
@@ -1307,6 +1411,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sista-ai-assistant-react/1766286422877-sista-ai-assistant-react.png"
   },
   {
@@ -1319,6 +1424,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/siteboon-claude-code-ui/1766286422589-siteboon-claude-code-ui.png"
   },
   {
@@ -1331,6 +1437,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sssaicode-claude/1766286422568-sssaicode-claude.png"
   },
   {
@@ -1343,6 +1450,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/storybook-manager-api/1766286428576-storybook-manager-api.png"
   },
   {
@@ -1355,6 +1463,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tanstack-ai-anthropic/1766286427511-tanstack-ai-anthropic.png"
   },
   {
@@ -1367,6 +1476,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-anthropic/1766286427565-theia-ai-anthropic.png"
   },
   {
@@ -1379,6 +1489,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-claude-code/1766286427201-theia-ai-claude-code.png"
   },
   {
@@ -1391,6 +1502,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/traceloop-instrumentation-anthropic/1766286427513-traceloop-instrumentation-anthropic.png"
   },
   {
@@ -1403,6 +1515,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tscircuit-fake-anthropic/1766286430911-tscircuit-fake-anthropic.png"
   },
   {
@@ -1415,6 +1528,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/wbern-claude-instructions/1766286430860-wbern-claude-instructions.png"
   },
   {
@@ -1427,6 +1541,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zed-industries-claude-code-acp/1766286431272-zed-industries-claude-code-acp.png"
   },
   {
@@ -1439,6 +1554,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zilliz-claude-context-core/1766286431240-zilliz-claude-context-core.png"
   },
   {
@@ -1451,6 +1567,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "coder",
       "repo": "agentapi",
@@ -1471,6 +1588,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-elements/1766286353856-ai-elements.png"
   },
   {
@@ -1483,6 +1601,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fallback/1766286358321-ai-fallback.png"
   },
   {
@@ -1495,6 +1614,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-claude-code/1766286363191-ai-sdk-provider-claude-code.png"
   },
   {
@@ -1507,6 +1627,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-gemini-cli/1766286367515-ai-sdk-provider-gemini-cli.png"
   },
   {
@@ -1519,6 +1640,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-v5-anthropic-custom/1766286367354-ai-sdk-v5-anthropic-custom.png"
   },
   {
@@ -1531,6 +1653,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic/1766286372484-anthropic.png"
   },
   {
@@ -1543,6 +1666,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-1/1766286371434-anthropic-1.png"
   },
   {
@@ -1555,6 +1679,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai/1766286372631-anthropic-ai.png"
   },
   {
@@ -1567,6 +1692,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-vertex-ai/1766286376880-anthropic-vertex-ai.png"
   },
   {
@@ -1579,6 +1705,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "apache",
       "repo": "apisix",
@@ -1599,6 +1726,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/api-overview-pricing/1766286375640-api-overview-pricing.png"
   },
   {
@@ -1611,6 +1739,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "APIParkLab",
       "repo": "APIPark",
@@ -1631,6 +1760,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ask-sdk-model/1766286380840-ask-sdk-model.png"
   },
   {
@@ -1643,6 +1773,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "e2b-dev",
       "repo": "awesome-sdks-for-ai-agents",
@@ -1663,6 +1794,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/better-claude-code/1766286380837-better-claude-code.png"
   },
   {
@@ -1675,6 +1807,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/building-with-the-claude-api/1766286385139-building-with-the-claude-api.png"
   },
   {
@@ -1687,6 +1820,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccstatusline-1/1766286383888-ccstatusline-1.png"
   },
   {
@@ -1699,6 +1833,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccusage-1/1766286385447-ccusage-1.png"
   },
   {
@@ -1711,6 +1846,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "chatanywhere",
       "repo": "GPT_API_free",
@@ -1731,6 +1867,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "cheahjs",
       "repo": "free-llm-api-resources",
@@ -1751,6 +1888,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/clasp-ai/1766286384248-clasp-ai.png"
   },
   {
@@ -1763,6 +1901,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-1/1766286384321-claude-1.png"
   },
   {
@@ -1781,6 +1920,7 @@
     "addedDate": "2024-08-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Community",
+    "difficulty": "intermediate",
     "github": {
       "owner": "tghamm",
       "repo": "Anthropic.SDK",
@@ -1807,6 +1947,7 @@
     "addedDate": "2024-03-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Community",
+    "difficulty": "intermediate",
     "github": {
       "owner": "liushuangls",
       "repo": "go-anthropic",
@@ -1833,6 +1974,7 @@
     "addedDate": "2024-06-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Community",
+    "difficulty": "intermediate",
     "github": {
       "owner": "aallam",
       "repo": "anthropic-kotlin",
@@ -1859,6 +2001,7 @@
     "addedDate": "2024-07-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Community",
+    "difficulty": "intermediate",
     "github": {
       "owner": "mozex",
       "repo": "anthropic-php",
@@ -1885,6 +2028,7 @@
     "addedDate": "2024-05-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Community",
+    "difficulty": "intermediate",
     "github": {
       "owner": "alexrudall",
       "repo": "anthropic",
@@ -1911,6 +2055,7 @@
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Community",
+    "difficulty": "intermediate",
     "github": {
       "owner": "abdelhamidbakhta",
       "repo": "anthropic-rs",
@@ -1931,6 +2076,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-ai/1766286388263-claude-ai.png"
   },
   {
@@ -1943,6 +2089,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-api/1766286388268-claude-api.png"
   },
   {
@@ -1955,6 +2102,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code/1766286388265-claude-code.png"
   },
   {
@@ -1967,6 +2115,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ZhangHanDong",
       "repo": "claude-code-api-rs",
@@ -1987,6 +2136,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-plugins/1766286388526-claude-code-plugins.png"
   },
   {
@@ -1999,6 +2149,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "instantlyeasy",
       "repo": "claude-code-sdk-ts",
@@ -2019,6 +2170,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-evolve/1766286388548-claude-evolve.png"
   },
   {
@@ -2031,6 +2183,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-issue-solver/1766286388200-claude-issue-solver.png"
   },
   {
@@ -2043,6 +2196,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-mira3/1766286388199-claude-mira3.png"
   },
   {
@@ -2055,6 +2209,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins/1766286388287-claude-plugins.png"
   },
   {
@@ -2067,6 +2222,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-pretty-printer/1766286391370-claude-pretty-printer.png"
   },
   {
@@ -2079,6 +2235,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-recall/1766286391199-claude-recall.png"
   },
   {
@@ -2091,6 +2248,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sdk/1766286391237-claude-sdk.png"
   },
   {
@@ -2103,19 +2261,8 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cohere-ai/1766286391197-cohere-ai.png"
-  },
-  {
-    "id": "copilot-api-1",
-    "title": "copilot-api",
-    "description": "Turn GitHub Copilot into OpenAI/Anthropic API compatible server. Usable with Claude Code!",
-    "url": "https://www.npmjs.com/package/copilot-api",
-    "category": "sdks",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api-1/1766286391371-copilot-api-1.png"
   },
   {
     "id": "copilot-api",
@@ -2127,6 +2274,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ericc-ch",
       "repo": "copilot-api",
@@ -2138,6 +2286,19 @@
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api/1766286391853-copilot-api.png"
   },
   {
+    "id": "copilot-api-1",
+    "title": "copilot-api",
+    "description": "Turn GitHub Copilot into OpenAI/Anthropic API compatible server. Usable with Claude Code!",
+    "url": "https://www.npmjs.com/package/copilot-api",
+    "category": "sdks",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api-1/1766286391371-copilot-api-1.png"
+  },
+  {
     "id": "csharp-sdk",
     "title": "csharp-sdk",
     "description": "The official C# SDK for Model Context Protocol servers and clients. Maintained in collaboration with Microsoft.",
@@ -2147,6 +2308,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "csharp-sdk",
@@ -2167,6 +2329,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dreame-claude/1766286391650-dreame-claude.png"
   },
   {
@@ -2179,6 +2342,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit/1766286394183-genkit.png"
   },
   {
@@ -2191,6 +2355,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkitx-anthropic/1766286394204-genkitx-anthropic.png"
   },
   {
@@ -2203,6 +2368,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-hooks-sdk/1766286397439-github-stats-for-claude-hooks-sdk.png"
   },
   {
@@ -2215,6 +2381,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "go-sdk",
@@ -2235,6 +2402,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "googleapis",
       "repo": "genai-toolbox",
@@ -2255,6 +2423,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "java-sdk",
@@ -2275,6 +2444,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Jktfe",
       "repo": "serveMyAPI",
@@ -2295,6 +2465,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "kotlin-sdk",
@@ -2321,6 +2492,7 @@
     "addedDate": "2024-02-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Integration",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic/1766238195314-langchain-anthropic.png"
   },
   {
@@ -2339,6 +2511,7 @@
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Integration",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic/1766238195889-llamaindex-anthropic.png"
   },
   {
@@ -2351,6 +2524,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra/1766286407955-mastra.png"
   },
   {
@@ -2363,6 +2537,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/msw-auto-mock/1766286411473-msw-auto-mock.png"
   },
   {
@@ -2375,6 +2550,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-nodes-azure-anthropic/1766286411531-n8n-nodes-azure-anthropic.png"
   },
   {
@@ -2387,6 +2563,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nanoid/1766286415937-nanoid.png"
   },
   {
@@ -2399,6 +2576,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/node-releases/1766286414978-node-releases.png"
   },
   {
@@ -2411,6 +2589,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nori-ai/1766286415203-nori-ai.png"
   },
   {
@@ -2423,6 +2602,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider/1766286414812-ollama-ai-provider.png"
   },
   {
@@ -2435,6 +2615,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider-v2/1766286415244-ollama-ai-provider-v2.png"
   },
   {
@@ -2447,6 +2628,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openapi3-ts/1766286414975-openapi3-ts.png"
   },
   {
@@ -2459,6 +2641,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "php-sdk",
@@ -2479,6 +2662,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/portkey-ai/1766286418656-portkey-ai.png"
   },
   {
@@ -2491,6 +2675,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/pyclaude/1766286418695-pyclaude.png"
   },
   {
@@ -2503,6 +2688,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "python-sdk",
@@ -2523,6 +2709,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "QuantumNous",
       "repo": "new-api",
@@ -2543,6 +2730,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-scroll/1766286418655-react-scroll.png"
   },
   {
@@ -2555,6 +2743,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "ruby-sdk",
@@ -2575,6 +2764,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "rust-sdk",
@@ -2595,6 +2785,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "s2-streamstore",
       "repo": "s2-sdk-typescript",
@@ -2615,6 +2806,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/serverless/1766286424759-serverless.png"
   },
   {
@@ -2627,6 +2819,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/size-limit/1766286423680-size-limit.png"
   },
   {
@@ -2639,6 +2832,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "songquanpeng",
       "repo": "one-api",
@@ -2659,6 +2853,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "strands-agents",
       "repo": "sdk-python",
@@ -2679,6 +2874,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "su-kaka",
       "repo": "gcli2api",
@@ -2699,6 +2895,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "swift-sdk",
@@ -2719,6 +2916,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/task-master-ai/1766286428573-task-master-ai.png"
   },
   {
@@ -2731,6 +2929,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tdd-guard-1/1766286427072-tdd-guard-1.png"
   },
   {
@@ -2743,6 +2942,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "typescript-sdk",
@@ -2763,6 +2963,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/voyage-ai-provider/1766286431273-voyage-ai-provider.png"
   },
   {
@@ -2775,6 +2976,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "xing61",
       "repo": "zzz-api",
@@ -2795,6 +2997,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/z-ai-web-dev-sdk/1766286430948-z-ai-web-dev-sdk.png"
   },
   {
@@ -2807,6 +3010,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zod-gpt/1766286430930-zod-gpt.png"
   }
 ]

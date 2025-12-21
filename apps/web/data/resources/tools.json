@@ -44,6 +44,7 @@
     "addedDate": "2024-06-01",
     "lastVerified": "2025-12-20",
     "subcategory": "IDE Plugin",
+    "difficulty": "advanced",
     "featured": true,
     "featuredReason": "Trending",
     "github": {
@@ -72,6 +73,7 @@
     "addedDate": "2024-02-01",
     "lastVerified": "2025-12-20",
     "subcategory": "IDE Plugin",
+    "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Editor's Pick",
     "github": {
@@ -100,6 +102,7 @@
     "addedDate": "2024-01-15",
     "lastVerified": "2025-12-20",
     "subcategory": "IDE",
+    "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Most Popular",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-editor/1766238191916-cursor-editor.png"
@@ -114,6 +117,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stargazers-over-time/1766286622896-stargazers-over-time.png"
   },
   {
@@ -126,6 +130,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fal-ai-client/1766286546907-fal-ai-client.png"
   },
   {
@@ -138,6 +143,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/iflow-ai-iflow-cli/1766286564475-iflow-ai-iflow-cli.png"
   },
   {
@@ -150,6 +156,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nx-tools-ci-context/1766286595269-nx-tools-ci-context.png"
   },
   {
@@ -162,6 +169,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/positronic-client-anthropic/1766286613255-positronic-client-anthropic.png"
   },
   {
@@ -174,6 +182,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/substrate-connect-extension-protocol/1766286624604-substrate-connect-extension-protocol.png"
   },
   {
@@ -186,6 +195,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/walletconnect-sign-client/1766286647787-walletconnect-sign-client.png"
   },
   {
@@ -198,6 +208,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "A9T9",
       "repo": "RPA",
@@ -218,6 +229,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "abinthomasonline",
       "repo": "repo2txt",
@@ -238,6 +250,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fluency-for-educators/1766286438107-ai-fluency-for-educators.png"
   },
   {
@@ -250,6 +263,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fluency-for-nonprofits/1766286438134-ai-fluency-for-nonprofits.png"
   },
   {
@@ -262,6 +276,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fluency-for-students/1766286438108-ai-fluency-for-students.png"
   },
   {
@@ -274,6 +289,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fluency-framework-foundations/1766286438114-ai-fluency-framework-foundations.png"
   },
   {
@@ -286,6 +302,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "AI-QL",
       "repo": "tuui",
@@ -306,6 +323,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Aider-AI",
       "repo": "aider",
@@ -326,6 +344,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/amazon-bedrock/1766286443821-amazon-bedrock.png"
   },
   {
@@ -338,6 +357,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-facebook-group/1766286442846-anthropic-ai-facebook-group.png"
   },
   {
@@ -350,6 +370,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "maxnowack",
       "repo": "anthropic-proxy",
@@ -370,6 +391,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "antiwork",
       "repo": "shortest",
@@ -390,6 +412,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Arize-ai",
       "repo": "phoenix",
@@ -410,6 +433,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ObservedObserver",
       "repo": "async-code",
@@ -457,6 +481,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ComposioHQ",
       "repo": "awesome-claude-skills",
@@ -477,6 +502,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesomeclaude-ai/1766286442225-awesomeclaude-ai.png"
   },
   {
@@ -489,6 +515,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "ax-llm",
       "repo": "ax",
@@ -509,6 +536,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "basicmachines-co",
       "repo": "basic-memory",
@@ -529,6 +557,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "BerriAI",
       "repo": "litellm",
@@ -549,6 +578,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "billmei",
       "repo": "every-chatgpt-gui",
@@ -569,6 +599,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Blarc",
       "repo": "ai-commits-intellij-plugin",
@@ -589,6 +620,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "brainlid",
       "repo": "langchain",
@@ -609,6 +641,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "brianpetro",
       "repo": "obsidian-smart-connections",
@@ -629,6 +662,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "bricks-cloud",
       "repo": "BricksLLM",
@@ -649,6 +683,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "bytebase",
       "repo": "dbhub",
@@ -669,6 +704,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "bytebot-ai",
       "repo": "bytebot",
@@ -689,6 +725,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "casibase",
       "repo": "casibase",
@@ -709,6 +746,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "castar-ventures",
       "repo": "castari-proxy",
@@ -729,6 +767,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ZhangHanDong",
       "repo": "cc-monitor-rs",
@@ -749,6 +788,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "cometkim",
       "repo": "cc-monitor-worker",
@@ -769,6 +809,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "GWUDCAP",
       "repo": "cc-sessions",
@@ -789,6 +830,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "chongdashu",
       "repo": "cc-statusline",
@@ -809,6 +851,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "badlogic",
       "repo": "cccost",
@@ -829,6 +872,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "snipeship",
       "repo": "ccflare",
@@ -849,6 +893,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "pomterre",
       "repo": "ccguard",
@@ -869,6 +914,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "p32929",
       "repo": "ccheckpoints",
@@ -889,6 +935,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "kbwo",
       "repo": "ccmanager",
@@ -909,6 +956,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "djyde",
       "repo": "ccmate",
@@ -929,6 +977,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "djyde",
       "repo": "ccmate-release",
@@ -949,6 +998,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "lich0821",
       "repo": "ccNexus",
@@ -969,6 +1019,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Haleclipse",
       "repo": "CCometixLine",
@@ -989,6 +1040,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "brennercruvinel",
       "repo": "CCPlugins",
@@ -1009,6 +1061,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "automazeio",
       "repo": "ccpm",
@@ -1029,6 +1082,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Iamshankhadeep",
       "repo": "ccseva",
@@ -1049,6 +1103,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "sirmalloc",
       "repo": "ccstatusline",
@@ -1069,6 +1124,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "jimmc414",
       "repo": "cctrace",
@@ -1089,6 +1145,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "RonitSachdev",
       "repo": "ccundo",
@@ -1109,6 +1166,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ryoppippi",
       "repo": "ccusage",
@@ -1135,6 +1193,7 @@
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Desktop App",
+    "difficulty": "advanced",
     "github": {
       "owner": "Bin-Huang",
       "repo": "chatbox",
@@ -1155,6 +1214,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "chatboxai",
       "repo": "chatbox",
@@ -1175,6 +1235,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ChatGPTNextWeb",
       "repo": "NextChat",
@@ -1195,6 +1256,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "CherryHQ",
       "repo": "cherry-studio",
@@ -1215,6 +1277,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "campfirein",
       "repo": "cipher",
@@ -1240,6 +1303,7 @@
     "addedDate": "2024-05-01",
     "lastVerified": "2025-12-20",
     "subcategory": "CLI",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-cli-unofficial/1766286469531-claude-cli-unofficial.png"
   },
   {
@@ -1252,6 +1316,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-in-action/1766286485281-claude-code-in-action.png"
   },
   {
@@ -1264,6 +1329,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Ido-Levi",
       "repo": "claude-code-tamagotchi",
@@ -1284,6 +1350,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-desktop/1766286503656-claude-desktop.png"
   },
   {
@@ -1296,6 +1363,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-for-chrome-beta/1766286503320-claude-for-chrome-beta.png"
   },
   {
@@ -1308,6 +1376,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "juancgarza",
       "repo": "claude-in-a-box",
@@ -1328,6 +1397,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-usage-tracker/1766286514670-claude-usage-tracker.png"
   },
   {
@@ -1340,6 +1410,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-video-tutorials/1766286521756-claude-video-tutorials.png"
   },
   {
@@ -1352,6 +1423,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-vscode-theme/1766286522359-claude-vscode-theme.png"
   },
   {
@@ -1364,6 +1436,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-with-amazon-bedrock/1766286521764-claude-with-amazon-bedrock.png"
   },
   {
@@ -1376,6 +1449,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-with-google-vertex-ai/1766286521755-claude-with-google-vertex-ai.png"
   },
   {
@@ -1388,6 +1462,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "benbasha",
       "repo": "Claude-Autopilot",
@@ -1408,6 +1483,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "snipeship",
       "repo": "claude-balancer",
@@ -1428,6 +1504,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "kiliczsh",
       "repo": "claude-cmd",
@@ -1448,6 +1525,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "severity1",
       "repo": "claude-code-auto-memory",
@@ -1468,6 +1546,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "yifanzz",
       "repo": "claude-code-boost",
@@ -1488,6 +1567,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "andrepimenta",
       "repo": "claude-code-chat",
@@ -1508,6 +1588,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "LKbaba",
       "repo": "Claude-code-ChatInWindows",
@@ -1528,6 +1609,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Matt-Dionis",
       "repo": "claude-code-configs",
@@ -1548,6 +1630,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "tintinweb",
       "repo": "claude-code-container",
@@ -1568,6 +1651,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ghostwriternr",
       "repo": "claude-code-containers",
@@ -1588,6 +1672,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "philipp-spiess",
       "repo": "claude-code-costs",
@@ -1608,6 +1693,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "peterkrueck",
       "repo": "Claude-Code-Development-Kit",
@@ -1628,6 +1714,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "zebbern",
       "repo": "claude-code-guide",
@@ -1648,6 +1735,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "gtrusler",
       "repo": "claude-code-heavy",
@@ -1668,6 +1756,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "disler",
       "repo": "claude-code-hooks-mastery",
@@ -1688,6 +1777,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "manzaltu",
       "repo": "claude-code-ide.el",
@@ -1708,6 +1798,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "disler",
       "repo": "claude-code-is-programmable",
@@ -1728,6 +1819,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "fakerybakery",
       "repo": "claude-code-kimi-groq",
@@ -1748,6 +1840,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "grp06",
       "repo": "claude-code-leaderboard",
@@ -1768,6 +1861,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "daaain",
       "repo": "claude-code-log",
@@ -1788,6 +1882,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "KroMiose",
       "repo": "claude-code-nexus",
@@ -1808,6 +1903,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Davincible",
       "repo": "claude-code-open",
@@ -1828,6 +1924,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "c0dezli",
       "repo": "claude-code-personal-assistant",
@@ -1839,26 +1936,6 @@
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-personal-assistant/1766286491641-claude-code-personal-assistant.png"
   },
   {
-    "id": "claude-code-proxy-1",
-    "title": "claude-code-proxy",
-    "description": "Claude Code to OpenAI API Proxy",
-    "url": "https://github.com/fuergaosi233/claude-code-proxy",
-    "category": "tools",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "github": {
-      "owner": "fuergaosi233",
-      "repo": "claude-code-proxy",
-      "stars": 1770,
-      "forks": 240,
-      "lastUpdated": "2025-12-20",
-      "language": "Unknown"
-    },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-proxy-1/1766286491640-claude-code-proxy-1.png"
-  },
-  {
     "id": "claude-code-proxy-2",
     "title": "claude-code-proxy",
     "description": "Proxy that captures and visualizes in-flight Claude Code requests and conversations. ",
@@ -1868,6 +1945,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "seifghazi",
       "repo": "claude-code-proxy",
@@ -1888,6 +1966,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "1rgs",
       "repo": "claude-code-proxy",
@@ -1899,6 +1978,27 @@
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-proxy/1766286488270-claude-code-proxy.png"
   },
   {
+    "id": "claude-code-proxy-1",
+    "title": "claude-code-proxy",
+    "description": "Claude Code to OpenAI API Proxy",
+    "url": "https://github.com/fuergaosi233/claude-code-proxy",
+    "category": "tools",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "fuergaosi233",
+      "repo": "claude-code-proxy",
+      "stars": 1770,
+      "forks": 240,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-proxy-1/1766286491640-claude-code-proxy-1.png"
+  },
+  {
     "id": "claude-code-remote",
     "title": "Claude-Code-Remote",
     "description": "Control Claude Code remotely via email、discord、telegram. Start tasks locally, receive notifications when Claude completes them, and send new commands by simply replying to emails.",
@@ -1908,6 +2008,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "JessyTsui",
       "repo": "Claude-Code-Remote",
@@ -1928,6 +2029,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "rizethereum",
       "repo": "claude-code-requirements-builder",
@@ -1948,6 +2050,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "musistudio",
       "repo": "claude-code-router",
@@ -1968,6 +2071,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "textcortex",
       "repo": "claude-code-sandbox",
@@ -1988,6 +2092,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "feiskyer",
       "repo": "claude-code-settings",
@@ -2008,6 +2113,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Pimzino",
       "repo": "claude-code-spec-workflow",
@@ -2028,6 +2134,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "kellemar",
       "repo": "claude-code-specs-generator",
@@ -2048,6 +2155,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "arnaldo-delisio",
       "repo": "claude-code-studio",
@@ -2068,6 +2176,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "firstloophq",
       "repo": "claude-code-test-runner",
@@ -2088,6 +2197,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "aleks-apostle",
       "repo": "claude-code-thinking-patch",
@@ -2108,6 +2218,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "bartolli",
       "repo": "claude-code-typescript-hooks",
@@ -2128,6 +2239,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "leeguooooo",
       "repo": "claude-code-usage-bar",
@@ -2148,6 +2260,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Maciek-roboblog",
       "repo": "Claude-Code-Usage-Monitor",
@@ -2168,6 +2281,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "d-kimuson",
       "repo": "claude-code-viewer",
@@ -2188,6 +2302,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "mckaywrigley",
       "repo": "claude-code-voice",
@@ -2208,6 +2323,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "binggg",
       "repo": "Claude-Code-Web-GUI",
@@ -2228,6 +2344,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "sugyan",
       "repo": "claude-code-webui",
@@ -2248,6 +2365,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "stevemolitor",
       "repo": "claude-code.el",
@@ -2268,6 +2386,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "greggh",
       "repo": "claude-code.nvim",
@@ -2288,6 +2407,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "qdhenry",
       "repo": "Claude-Command-Suite",
@@ -2308,6 +2428,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "badlogic",
       "repo": "claude-commands",
@@ -2328,6 +2449,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "gagarinyury",
       "repo": "claude-config-editor",
@@ -2348,6 +2470,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "FarhanAliRaza",
       "repo": "claude-context-local",
@@ -2368,6 +2491,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-deep-research/1766286503059-claude-deep-research.png"
   },
   {
@@ -2380,6 +2504,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "ruvnet",
       "repo": "claude-flow",
@@ -2400,6 +2525,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "tkaufmann",
       "repo": "claude-gemini-bridge",
@@ -2420,6 +2546,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Vvkmnn",
       "repo": "claude-historian",
@@ -2440,6 +2567,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "claude-did-this",
       "repo": "claude-hub",
@@ -2460,6 +2588,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "farouqaldori",
       "repo": "claude-island",
@@ -2480,6 +2609,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "thedotmack",
       "repo": "claude-mem",
@@ -2500,6 +2630,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "oxygen-fragment",
       "repo": "claude-modular",
@@ -2520,6 +2651,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "RISCfuture",
       "repo": "Claude-Monitor",
@@ -2540,6 +2672,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "obie",
       "repo": "claude-on-rails",
@@ -2560,6 +2693,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Owloops",
       "repo": "claude-powerline",
@@ -2580,6 +2714,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "DannyAziz",
       "repo": "claude-prune",
@@ -2600,6 +2735,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "aeitroc",
       "repo": "claude-select",
@@ -2620,6 +2756,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ramakay",
       "repo": "claude-self-reflect",
@@ -2640,6 +2777,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "iannuttall",
       "repo": "claude-sessions",
@@ -2660,6 +2798,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "AizenvoltPrime",
       "repo": "claude-setup",
@@ -2680,6 +2819,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Helmi",
       "repo": "claude-simone",
@@ -2700,6 +2840,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "komal-SkyNET",
       "repo": "claude-skill-homeassistant",
@@ -2720,6 +2861,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "jefflester",
       "repo": "claude-skills-supercharged",
@@ -2740,6 +2882,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "smtg-ai",
       "repo": "claude-squad",
@@ -2760,6 +2903,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "irenicj",
       "repo": "claude-user-memory",
@@ -2780,6 +2924,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "RchGrav",
       "repo": "claudebox",
@@ -2800,6 +2945,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "rosmur",
       "repo": "claudecode-best-practices",
@@ -2820,6 +2966,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "PiXeL16",
       "repo": "claudecode-macmenu",
@@ -2840,6 +2987,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "coder",
       "repo": "claudecode.nvim",
@@ -2860,6 +3008,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "siteboon",
       "repo": "claudecodeui",
@@ -2880,6 +3029,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "alirezarezvani",
       "repo": "ClaudeForge",
@@ -2900,6 +3050,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "aniketkarne",
       "repo": "ClaudeNightsWatch",
@@ -2920,6 +3071,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "getAsterisk",
       "repo": "claudia",
@@ -2940,6 +3092,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Haleclipse",
       "repo": "Claudiatron",
@@ -2960,6 +3113,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "neno-is-ooo",
       "repo": "claudify",
@@ -2980,6 +3134,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "clidey",
       "repo": "whodb",
@@ -3000,6 +3155,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ennucore",
       "repo": "clippy",
@@ -3020,6 +3176,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "code-yeongyu",
       "repo": "oh-my-opencode",
@@ -3040,6 +3197,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "wshobson",
       "repo": "commands",
@@ -3060,6 +3218,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "webdevtodayjason",
       "repo": "context-forge",
@@ -3080,6 +3239,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "AnandChowdhary",
       "repo": "continuous-claude",
@@ -3100,6 +3260,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "crmne",
       "repo": "ruby_llm",
@@ -3120,6 +3281,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "stravu",
       "repo": "crystal",
@@ -3140,6 +3302,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "BMPixel",
       "repo": "cui",
@@ -3160,6 +3323,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "danny-avila",
       "repo": "LibreChat",
@@ -3180,6 +3344,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "darrenburns",
       "repo": "elia",
@@ -3200,6 +3365,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "daveebbelaar",
       "repo": "ai-cookbook",
@@ -3220,6 +3386,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "DearVa",
       "repo": "Everywhere",
@@ -3240,6 +3407,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "deedy",
       "repo": "mac_computer_use",
@@ -3260,6 +3428,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "deta",
       "repo": "surf",
@@ -3280,6 +3449,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devtools-protocol/1766286540568-devtools-protocol.png"
   },
   {
@@ -3292,6 +3462,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "dinoki-ai",
       "repo": "osaurus",
@@ -3312,6 +3483,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "udecode",
       "repo": "dotai",
@@ -3332,6 +3504,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "FradSer",
       "repo": "dotclaude",
@@ -3352,6 +3525,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "dyad-sh",
       "repo": "dyad",
@@ -3372,6 +3546,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "e2b-dev",
       "repo": "code-interpreter",
@@ -3392,6 +3567,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "e2b-dev",
       "repo": "fragments",
@@ -3412,6 +3588,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "e2b-dev",
       "repo": "open-computer-use",
@@ -3432,6 +3609,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "eli64s",
       "repo": "readme-ai",
@@ -3452,6 +3630,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "EmbraceAGI",
       "repo": "awesome-chatgpt-zh",
@@ -3472,6 +3651,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "endorhq",
       "repo": "cli",
@@ -3492,6 +3672,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "modelcontextprotocol",
       "repo": "example-remote-client",
@@ -3512,6 +3693,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "explosion",
       "repo": "spacy-llm",
@@ -3532,6 +3714,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "agentsea",
       "repo": "flashbacker",
@@ -3552,6 +3735,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "FranciscoMoretti",
       "repo": "sparka",
@@ -3572,6 +3756,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "frankroeder",
       "repo": "parrot.nvim",
@@ -3592,6 +3777,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "friuns2",
       "repo": "Leaked-GPTs",
@@ -3612,6 +3798,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "fynnfluegge",
       "repo": "rocketnotes",
@@ -3632,6 +3819,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "GaiZhenbiao",
       "repo": "ChuanhuChatGPT",
@@ -3652,6 +3840,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "google-gemini",
       "repo": "gemini-cli",
@@ -3672,6 +3861,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "coffeegrind123",
       "repo": "gemini-for-claude-code",
@@ -3692,6 +3882,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "genieincodebottle",
       "repo": "generative-ai",
@@ -3712,6 +3903,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "specstoryai",
       "repo": "getspecstory",
@@ -3732,6 +3924,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-action/1766286550531-github-stats-for-claude-code-action.png"
   },
   {
@@ -3744,6 +3937,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-docs-1/1766286550533-github-stats-for-claude-code-docs-1.png"
   },
   {
@@ -3756,6 +3950,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-docs/1766286549731-github-stats-for-claude-code-docs.png"
   },
   {
@@ -3768,6 +3963,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-flow/1766286550532-github-stats-for-claude-code-flow.png"
   },
   {
@@ -3780,6 +3976,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-ide-el/1766286550532-github-stats-for-claude-code-ide-el.png"
   },
   {
@@ -3792,6 +3989,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-infrastructure-showcase/1766286553025-github-stats-for-claude-code-infrastructure-showcase.png"
   },
   {
@@ -3804,6 +4002,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-riper-5/1766286553010-github-stats-for-claude-code-riper-5.png"
   },
   {
@@ -3816,6 +4015,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-tools/1766286553111-github-stats-for-claude-code-tools.png"
   },
   {
@@ -3828,6 +4028,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-typescript-hooks/1766286553168-github-stats-for-claude-code-typescript-hooks.png"
   },
   {
@@ -3840,6 +4041,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-workflows/1766286552972-github-stats-for-claude-code-workflows.png"
   },
   {
@@ -3852,6 +4054,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-el/1766286549652-github-stats-for-claude-code-el.png"
   },
   {
@@ -3864,6 +4067,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-nvim/1766286553045-github-stats-for-claude-code-nvim.png"
   },
   {
@@ -3876,6 +4080,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-codepro/1766286553059-github-stats-for-claude-codepro.png"
   },
   {
@@ -3888,6 +4093,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-codex-settings/1766286552970-github-stats-for-claude-codex-settings.png"
   },
   {
@@ -3900,6 +4106,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-composer/1766286552991-github-stats-for-claude-composer.png"
   },
   {
@@ -3912,6 +4119,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-hook-comms/1766286553076-github-stats-for-claude-hook-comms.png"
   },
   {
@@ -3924,6 +4132,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-hooks/1766286555484-github-stats-for-claude-hooks.png"
   },
   {
@@ -3936,6 +4145,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-hub/1766286555485-github-stats-for-claude-hub.png"
   },
   {
@@ -3948,6 +4158,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-mountaineering-skills/1766286555486-github-stats-for-claude-mountaineering-skills.png"
   },
   {
@@ -3960,6 +4171,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-powerline/1766286555550-github-stats-for-claude-powerline.png"
   },
   {
@@ -3972,6 +4184,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-quickstarts/1766286555551-github-stats-for-claude-quickstarts.png"
   },
   {
@@ -3984,6 +4197,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-simone/1766286555551-github-stats-for-claude-simone.png"
   },
   {
@@ -3996,6 +4210,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-squad/1766286555548-github-stats-for-claude-squad.png"
   },
   {
@@ -4008,6 +4223,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-starter-kit/1766286555486-github-stats-for-claude-starter-kit.png"
   },
   {
@@ -4020,6 +4236,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-task-master/1766286555627-github-stats-for-claude-task-master.png"
   },
   {
@@ -4032,6 +4249,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-task-runner/1766286555569-github-stats-for-claude-task-runner.png"
   },
   {
@@ -4044,6 +4262,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claudecode-utils/1766286558054-github-stats-for-claudecode-utils.png"
   },
   {
@@ -4056,6 +4275,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claudekit/1766286557831-github-stats-for-claudekit.png"
   },
   {
@@ -4068,6 +4288,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claudepro-directory/1766286558072-github-stats-for-claudepro-directory.png"
   },
   {
@@ -4080,6 +4301,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claudex/1766286557845-github-stats-for-claudex.png"
   },
   {
@@ -4092,6 +4314,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-laravel-tall-claude-ai-configs/1766286558095-github-stats-for-laravel-tall-claude-ai-configs.png"
   },
   {
@@ -4104,6 +4327,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-run-claude-docker/1766286558104-github-stats-for-run-claude-docker.png"
   },
   {
@@ -4116,6 +4340,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "gitkraken",
       "repo": "gk-cli",
@@ -4136,6 +4361,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "glittercowboy",
       "repo": "taches-cc-resources",
@@ -4156,6 +4382,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-vertex-ai-model-garden/1766286558700-google-cloud-vertex-ai-model-garden.png"
   },
   {
@@ -4168,6 +4395,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "gptme",
       "repo": "gptme",
@@ -4188,6 +4416,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "griptape-ai",
       "repo": "griptape",
@@ -4208,6 +4437,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "superagent-ai",
       "repo": "grok-cli",
@@ -4228,6 +4458,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "slopus",
       "repo": "happy",
@@ -4248,6 +4479,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "haydenbleasel",
       "repo": "tersa",
@@ -4268,6 +4500,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/here/1766286561147-here.png"
   },
   {
@@ -4280,6 +4513,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "hesreallyhim",
       "repo": "awesome-claude-code",
@@ -4300,6 +4534,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ikaijua",
       "repo": "Awesome-AITools",
@@ -4320,6 +4555,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "JetBrains",
       "repo": "koog",
@@ -4340,6 +4576,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "jtsang4",
       "repo": "claude-to-chatgpt",
@@ -4360,6 +4597,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "K-Dense-AI",
       "repo": "claude-scientific-skills",
@@ -4380,6 +4618,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "kharvd",
       "repo": "gpt-cli",
@@ -4400,6 +4639,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Kilo-Org",
       "repo": "kilocode",
@@ -4420,6 +4660,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "LLM-Red-Team",
       "repo": "kimi-cc",
@@ -4440,6 +4681,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "kodu-ai",
       "repo": "claude-coder",
@@ -4460,6 +4702,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "kubb-labs",
       "repo": "kubb",
@@ -4480,6 +4723,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "labring",
       "repo": "FastGPT",
@@ -4500,6 +4744,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "LakshmanTurlapati",
       "repo": "Review-Gate",
@@ -4520,6 +4765,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "LangbaseInc",
       "repo": "BaseAI",
@@ -4540,6 +4786,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "langchain-ai",
       "repo": "open-swe",
@@ -4560,6 +4807,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "langchain4j",
       "repo": "langchain4j",
@@ -4580,6 +4828,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "langgptai",
       "repo": "LangGPT",
@@ -4600,6 +4849,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "laraben",
       "repo": "laravel-claude-code-setup",
@@ -4620,6 +4870,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "LearningCircuit",
       "repo": "local-deep-research",
@@ -4640,6 +4891,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "lencx",
       "repo": "Noi",
@@ -4660,6 +4912,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "LjyYano",
       "repo": "Thinking_in_Java_MindMapping",
@@ -4680,6 +4933,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "lobehub",
       "repo": "lobe-chat",
@@ -4700,6 +4954,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "looplj",
       "repo": "axonhub",
@@ -4720,6 +4975,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "m0n0x41d",
       "repo": "quint-code",
@@ -4740,6 +4996,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "memodb-io",
       "repo": "Acontext",
@@ -4760,6 +5017,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "markmdev",
       "repo": "meridian",
@@ -4780,6 +5038,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "metatool-ai",
       "repo": "metatool-app",
@@ -4800,6 +5059,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/microsoft-azure-ai-model-catalog-anthropic-publisher/1766286587444-microsoft-azure-ai-model-catalog-anthropic-publisher.png"
   },
   {
@@ -4812,6 +5072,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "milanglacier",
       "repo": "minuet-ai.nvim",
@@ -4832,6 +5093,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "MiroMindAI",
       "repo": "MiroFlow",
@@ -4852,6 +5114,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "n4ze3m",
       "repo": "dialoqbase",
@@ -4872,6 +5135,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "holt-web-ai",
       "repo": "n8n-nodes-claudecode",
@@ -4892,6 +5156,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Nanjiren01",
       "repo": "AIChatWeb",
@@ -4912,6 +5177,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "nbonamy",
       "repo": "witsy",
@@ -4932,6 +5198,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "nicepkg",
       "repo": "aide",
@@ -4952,6 +5219,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "NitroRCr",
       "repo": "AIaW",
@@ -4972,6 +5240,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "nottelabs",
       "repo": "notte",
@@ -4992,6 +5261,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "NPC-Worldwide",
       "repo": "npcpy",
@@ -5012,6 +5282,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "synthetic-lab",
       "repo": "octofriend",
@@ -5032,6 +5303,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official-documentation/1766286595234-official-documentation.png"
   },
   {
@@ -5044,6 +5316,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "olimorris",
       "repo": "codecompanion.nvim",
@@ -5064,6 +5337,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "opactorai",
       "repo": "Claudable",
@@ -5090,6 +5364,7 @@
     "addedDate": "2024-04-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Web App",
+    "difficulty": "beginner",
     "github": {
       "owner": "open-webui",
       "repo": "open-webui",
@@ -5110,6 +5385,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "open-compass",
       "repo": "VLMEvalKit",
@@ -5130,6 +5406,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "open-strategy-partners",
       "repo": "osp_marketing_tools",
@@ -5150,6 +5427,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "OpenAdaptAI",
       "repo": "OpenAdapt",
@@ -5170,6 +5448,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "openai",
       "repo": "codex",
@@ -5190,6 +5469,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "opencode-ai",
       "repo": "opencode",
@@ -5210,6 +5490,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ducan-ne",
       "repo": "opencoder",
@@ -5230,6 +5511,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "OvidijusParsiunas",
       "repo": "deep-chat",
@@ -5250,6 +5532,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "papersgpt",
       "repo": "papersgpt-for-zotero",
@@ -5270,6 +5553,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "prism-php",
       "repo": "prism",
@@ -5290,6 +5574,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "wolfdenpublishing",
       "repo": "pyccsl",
@@ -5310,6 +5595,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "QwenLM",
       "repo": "qwen-code",
@@ -5336,6 +5622,7 @@
     "addedDate": "2024-02-15",
     "lastVerified": "2024-12-11",
     "subcategory": "Desktop App",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/raycast-claude/1766286617527-raycast-claude.png"
   },
   {
@@ -5348,6 +5635,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "zippoxer",
       "repo": "recall",
@@ -5368,6 +5656,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "refly-ai",
       "repo": "refly",
@@ -5388,6 +5677,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "richardgill",
       "repo": "llm-ui",
@@ -5408,6 +5698,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "rinadelph",
       "repo": "rins_hooks",
@@ -5428,6 +5719,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "rowboatlabs",
       "repo": "rowboat",
@@ -5448,6 +5740,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "icanhasjonas",
       "repo": "run-claude-docker",
@@ -5468,6 +5761,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "sear-chat",
       "repo": "SearChat",
@@ -5488,6 +5782,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "TheCraigHewitt",
       "repo": "seomachine",
@@ -5508,6 +5803,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "blas0",
       "repo": "Severance",
@@ -5528,6 +5824,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "simstudioai",
       "repo": "sim",
@@ -5548,6 +5845,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "chiphuyen",
       "repo": "sniffly",
@@ -5568,6 +5866,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "papaoloba",
       "repo": "spec-based-claude-code",
@@ -5588,6 +5887,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "stackblitz",
       "repo": "bolt.new",
@@ -5608,6 +5908,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "strands-agents",
       "repo": "tools",
@@ -5628,6 +5929,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "NomenAK",
       "repo": "SuperClaude",
@@ -5648,6 +5950,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "gwendall",
       "repo": "superclaude",
@@ -5668,6 +5971,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "SuperClaude-Org",
       "repo": "SuperClaude_Framework",
@@ -5688,6 +5992,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "obra",
       "repo": "superpowers",
@@ -5708,6 +6013,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "szczyglis-dev",
       "repo": "py-gpt",
@@ -5728,6 +6034,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Taewan-P",
       "repo": "gpt_mobile",
@@ -5748,6 +6055,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "tbphp",
       "repo": "gpt-load",
@@ -5768,6 +6076,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "nizos",
       "repo": "tdd-guard",
@@ -5788,6 +6097,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/teaching-ai-fluency/1766286632011-teaching-ai-fluency.png"
   },
   {
@@ -5800,6 +6110,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "tensorzero",
       "repo": "tensorzero",
@@ -5820,6 +6131,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "ThinkInAIXYZ",
       "repo": "deepchat",
@@ -5840,6 +6152,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "travisvn",
       "repo": "awesome-claude-skills",
@@ -5860,6 +6173,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "travisvn",
       "repo": "openai-edge-tts",
@@ -5880,6 +6194,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "tw93",
       "repo": "Pake",
@@ -5900,6 +6215,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Piebald-AI",
       "repo": "tweakcc",
@@ -5926,6 +6242,7 @@
     "addedDate": "2024-01-20",
     "lastVerified": "2025-12-20",
     "subcategory": "Web App",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/typing-mind/1766238206861-typing-mind.png"
   },
   {
@@ -5938,6 +6255,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "u14app",
       "repo": "deep-research",
@@ -5958,6 +6276,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "UfoMiao",
       "repo": "zcf",
@@ -5978,6 +6297,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Upsonic",
       "repo": "Upsonic",
@@ -5998,6 +6318,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "BloopAI",
       "repo": "vibe-kanban",
@@ -6018,6 +6339,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "superagent-ai",
       "repo": "vibekit",
@@ -6038,6 +6360,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "thetronjohnson",
       "repo": "visual-claude",
@@ -6058,6 +6381,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "vllora",
       "repo": "vllora",
@@ -6078,6 +6402,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "voideditor",
       "repo": "void",
@@ -6098,6 +6423,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vscode-languageserver-protocol/1766286647796-vscode-languageserver-protocol.png"
   },
   {
@@ -6110,6 +6436,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "vxcontrol",
       "repo": "pentagi",
@@ -6130,6 +6457,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "Wei-Shaw",
       "repo": "claude-relay-service",
@@ -6150,6 +6478,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "somersby10ml",
       "repo": "win-claude-code",
@@ -6170,6 +6499,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "win4r",
       "repo": "AISuperDomain",
@@ -6196,6 +6526,7 @@
     "addedDate": "2024-11-01",
     "lastVerified": "2025-12-20",
     "subcategory": "IDE",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/windsurf/1766238207841-windsurf.png"
   },
   {
@@ -6208,6 +6539,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "winfunc",
       "repo": "deepreasoning",
@@ -6228,6 +6560,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "winfunc",
       "repo": "opcode",
@@ -6248,6 +6581,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "luohy15",
       "repo": "y-router",
@@ -6268,6 +6602,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "yamadashy",
       "repo": "repomix",
@@ -6294,6 +6629,7 @@
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
     "subcategory": "IDE",
+    "difficulty": "intermediate",
     "github": {
       "owner": "zed-industries",
       "repo": "zed",
@@ -6314,6 +6650,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "zhayujie",
       "repo": "bot-on-anything",
@@ -6334,6 +6671,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "zilliztech",
       "repo": "deep-searcher",

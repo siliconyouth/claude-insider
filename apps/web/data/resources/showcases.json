@@ -15,6 +15,7 @@
     "addedDate": "2024-12-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
+    "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Built with Claude",
     "github": {
@@ -43,6 +44,7 @@
     "addedDate": "2024-03-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
+    "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Industry Example",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/v0-vercel/1766238207221-v0-vercel.png"
@@ -63,6 +65,7 @@
     "addedDate": "2024-06-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Open Source",
+    "difficulty": "intermediate",
     "github": {
       "owner": "sigoden",
       "repo": "aichat",
@@ -89,6 +92,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Official",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatgpt-alternative/1766286431468-chatgpt-alternative.png"
   },
   {
@@ -107,6 +111,7 @@
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/duckduckgo-ai/1766238192961-duckduckgo-ai.png"
   },
   {
@@ -125,6 +130,7 @@
     "addedDate": "2024-07-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Open Source",
+    "difficulty": "beginner",
     "github": {
       "owner": "khoj-ai",
       "repo": "khoj",
@@ -151,6 +157,7 @@
     "addedDate": "2024-02-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/notion-ai/1766238198567-notion-ai.png"
   },
   {
@@ -169,6 +176,7 @@
     "addedDate": "2024-05-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Plugin",
+    "difficulty": "intermediate",
     "github": {
       "owner": "logancyang",
       "repo": "obsidian-copilot",
@@ -195,6 +203,7 @@
     "addedDate": "2024-01-15",
     "lastVerified": "2024-12-11",
     "subcategory": "Production",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/perplexity/1766286437283-perplexity.png"
   },
   {
@@ -213,6 +222,7 @@
     "addedDate": "2024-02-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Production",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quora-poe/1766286438085-quora-poe.png"
   },
   {
@@ -231,6 +241,7 @@
     "addedDate": "2024-09-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/replit-agent/1766238201601-replit-agent.png"
   },
   {
@@ -249,6 +260,7 @@
     "addedDate": "2024-11-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codeium-windsurf/1766238190709-codeium-windsurf.png"
   }
 ]

@@ -15,6 +15,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Examples",
+    "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Examples",
     "github": {
@@ -43,6 +44,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Documentation",
+    "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766238187044-anthropic-docs.png"
@@ -63,6 +65,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Documentation",
+    "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1766238189665-claude-code-docs.png"
@@ -83,6 +86,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Repository",
+    "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Official Repository",
     "github": {
@@ -111,6 +115,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
+    "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766238196733-mcp-docs.png"
@@ -125,19 +130,8 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement/1766286320655-announcement.png"
-  },
-  {
-    "id": "announcement-2",
-    "title": "Announcement",
-    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
-    "url": "https://www.anthropic.com/news/claude-haiku-4-5",
-    "category": "official",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1766286327610-announcement-2.png"
   },
   {
     "id": "announcement-1",
@@ -149,7 +143,21 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-1/1766286327593-announcement-1.png"
+  },
+  {
+    "id": "announcement-2",
+    "title": "Announcement",
+    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/news/claude-haiku-4-5",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1766286327610-announcement-2.png"
   },
   {
     "id": "anthropic-blog",
@@ -167,6 +175,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Blog",
+    "difficulty": "expert",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-blog/1766238185725-anthropic-blog.png"
   },
   {
@@ -179,6 +188,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1766286328280-anthropic-claude-code-best-practices.png"
   },
   {
@@ -197,6 +207,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "SDK",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-python",
@@ -224,6 +235,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "SDK",
+    "difficulty": "intermediate",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-typescript",
@@ -244,6 +256,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-bedrock-python",
@@ -264,6 +277,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-bedrock-typescript",
@@ -284,6 +298,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-csharp",
@@ -304,6 +319,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-go",
@@ -324,6 +340,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-java",
@@ -344,6 +361,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-php",
@@ -364,6 +382,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-ruby",
@@ -384,6 +403,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-tokenizer-typescript",
@@ -404,6 +424,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1766286327590-anthropic-s-article.png"
   },
   {
@@ -416,6 +437,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "blobfile",
@@ -436,6 +458,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "anthropics",
       "repo": "claude-agent-sdk-python",
@@ -456,6 +479,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "claude-agent-sdk-typescript",
@@ -476,6 +500,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1766286335823-claude-agent-skills.png"
   },
   {
@@ -488,6 +513,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1766286340156-claude-code-with-plugins.png"
   },
   {
@@ -505,7 +531,8 @@
     "status": "official",
     "addedDate": "2024-01-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Tool"
+    "subcategory": "Tool",
+    "difficulty": "beginner"
   },
   {
     "id": "claude-cookbook",
@@ -517,6 +544,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "claude-cookbooks",
@@ -536,7 +564,8 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner"
   },
   {
     "id": "claude-opus-4-5-system-card",
@@ -547,7 +576,8 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner"
   },
   {
     "id": "claude-quickstarts",
@@ -559,6 +589,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "claude-quickstarts",
@@ -578,7 +609,8 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner"
   },
   {
     "id": "claude-agent-sdk-demos",
@@ -590,6 +622,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "claude-agent-sdk-demos",
@@ -610,6 +643,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "anthropics",
       "repo": "claude-code-action",
@@ -630,6 +664,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "claude-code-base-action",
@@ -650,6 +685,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "claude-code-monitoring-guide",
@@ -670,6 +706,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "claude-code-sdk-python",
@@ -690,6 +727,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "claude-code-security-review",
@@ -710,6 +748,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "anthropics",
       "repo": "claude-plugins-official",
@@ -730,6 +769,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "devcontainer-features",
@@ -750,6 +790,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "evals",
@@ -770,6 +811,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "life-sciences",
@@ -790,6 +832,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "political-neutrality-eval",
@@ -816,6 +859,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1766238199737-prompt-engineering-guide.png"
   },
   {
@@ -828,6 +872,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "prompt-eng-interactive-tutorial",
@@ -848,6 +893,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "redis-py",
@@ -868,6 +914,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "riv2025-long-horizon-coding-agent-demo",
@@ -888,6 +935,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "s5cmd",
@@ -908,6 +956,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "skills",
@@ -928,6 +977,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1766286344664-transparency-hub.png"
   }
 ]

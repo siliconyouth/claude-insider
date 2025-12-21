@@ -15,6 +15,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Discord",
+    "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Official Community",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-discord/1766238186550-anthropic-discord.png"
@@ -35,6 +36,7 @@
     "addedDate": "2024-01-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Forum",
+    "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Active Community",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reddit-claudeai/1766238201454-reddit-claudeai.png"
@@ -55,6 +57,7 @@
     "addedDate": "2024-06-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Video",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-explained/1766238184544-ai-explained.png"
   },
   {
@@ -73,6 +76,7 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Social Media",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/linkedin-anthropic/1766285638957-linkedin-anthropic.png"
   },
   {
@@ -90,7 +94,8 @@
     "status": "official",
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
-    "subcategory": "Social Media"
+    "subcategory": "Social Media",
+    "difficulty": "intermediate"
   },
   {
     "id": "youtube-anthropic",
@@ -108,6 +113,7 @@
     "addedDate": "2024-02-15",
     "lastVerified": "2024-12-11",
     "subcategory": "Video",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/youtube-anthropic/1766238208154-youtube-anthropic.png"
   },
   {
@@ -126,6 +132,7 @@
     "addedDate": "2024-02-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Forum",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-discussions/1766238194148-github-discussions.png"
   },
   {
@@ -144,6 +151,7 @@
     "addedDate": "2024-08-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Directory",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory-community/1766238191572-cursor-directory-community.png"
   },
   {
@@ -162,6 +170,7 @@
     "addedDate": "2024-03-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Forum",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/hacker-news/1766238194329-hacker-news.png"
   },
   {
@@ -180,6 +189,7 @@
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Q&A",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stack-overflow/1766285640044-stack-overflow.png"
   },
   {
@@ -198,6 +208,7 @@
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Newsletter",
+    "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-news-newsletter/1766238184980-ai-news-newsletter.png"
   },
   {
@@ -216,6 +227,7 @@
     "addedDate": "2024-05-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Newsletter",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tldr-ai/1766238206546-tldr-ai.png"
   }
 ]

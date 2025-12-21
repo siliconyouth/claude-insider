@@ -15,6 +15,7 @@
     "addedDate": "2024-03-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Curated List",
+    "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Most Popular",
     "github": {
@@ -95,6 +96,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ajhous44/1766285522538-ajhous44.png"
   },
   {
@@ -107,6 +109,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-agents/1766285528852-azure-ai-agents.png"
   },
   {
@@ -119,6 +122,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/champpaba-claude-agent-kit/1766285535632-champpaba-claude-agent-kit.png"
   },
   {
@@ -131,6 +135,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/graphai-anthropic-agent/1766285607010-graphai-anthropic-agent.png"
   },
   {
@@ -143,6 +148,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-detect-agent/1766285639289-vercel-detect-agent.png"
   },
   {
@@ -155,6 +161,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "HumanSignal",
       "repo": "Adala",
@@ -175,6 +182,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "krokozyab",
       "repo": "Agent-Fusion",
@@ -195,6 +203,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "steipete",
       "repo": "agent-rules",
@@ -215,6 +224,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "LehengTHU",
       "repo": "Agent4Rec",
@@ -235,6 +245,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "devlyai",
       "repo": "AgentCheck",
@@ -255,6 +266,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "AgentEra",
       "repo": "Agently",
@@ -275,6 +287,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "DataBassGit",
       "repo": "AgentForge",
@@ -295,6 +308,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "AgentOps-AI",
       "repo": "agentops",
@@ -315,6 +329,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "AgentOps-AI",
       "repo": "tokencost",
@@ -335,6 +350,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "jbexta",
       "repo": "AgentPilot",
@@ -355,6 +371,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "contains-studio",
       "repo": "agents",
@@ -375,6 +392,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "wshobson",
       "repo": "agents",
@@ -395,6 +413,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "aiwaves-cn",
       "repo": "agents",
@@ -415,6 +434,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "OpenBMB",
       "repo": "AgentVerse",
@@ -435,6 +455,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentvibes/1766285523475-agentvibes.png"
   },
   {
@@ -447,6 +468,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "eumemic",
       "repo": "ai-legion",
@@ -467,6 +489,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "myshell-ai",
       "repo": "AIlice",
@@ -487,6 +510,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "airtai",
       "repo": "fastagency",
@@ -507,6 +531,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aiwaves-inc/1766285521249-aiwaves-inc.png"
   },
   {
@@ -519,6 +544,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "AntonOsika",
       "repo": "gpt-engineer",
@@ -539,6 +565,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/artisian-ai/1766285522041-artisian-ai.png"
   },
   {
@@ -578,6 +605,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "emrgnt-cmplxty",
       "repo": "automata",
@@ -598,6 +626,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "stepanogil",
       "repo": "autonomous-hr-chatbot",
@@ -618,6 +647,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "irgolic",
       "repo": "AutoPR",
@@ -638,6 +668,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "vijaythecoder",
       "repo": "awesome-claude-agents",
@@ -658,6 +689,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "hesreallyhim",
       "repo": "awesome-claude-code-agents",
@@ -678,6 +710,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "awslabs",
       "repo": "agent-squad",
@@ -698,6 +731,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "yoheinakajima",
       "repo": "babyagi",
@@ -718,6 +752,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "saten-private",
       "repo": "BabyCommandAGI",
@@ -738,6 +773,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "yoheinakajima",
       "repo": "babyagi",
@@ -758,6 +794,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "pgalko",
       "repo": "BambooAI",
@@ -778,6 +815,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "AutoPackAI",
       "repo": "beebot",
@@ -798,6 +836,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blackbox-ai-code-interpreter-in-terminal/1766285533982-blackbox-ai-code-interpreter-in-terminal.png"
   },
   {
@@ -810,6 +849,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "seahyinghang8",
       "repo": "blinky",
@@ -830,6 +870,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "BloopAI",
       "repo": "bloop",
@@ -850,6 +891,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "BloopAI",
       "repo": "bloop",
@@ -870,6 +912,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "xeol-io",
       "repo": "bumpgen",
@@ -890,6 +933,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "calcom",
       "repo": "cal.com",
@@ -910,6 +954,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "calcom",
       "repo": "cal.com",
@@ -930,6 +975,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "camel-ai",
       "repo": "camel",
@@ -950,6 +996,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Canner",
       "repo": "WrenAI",
@@ -970,6 +1017,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "OpenBMB",
       "repo": "ChatDev",
@@ -990,6 +1038,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "ur-whitelab",
       "repo": "chemcrow-public",
@@ -1010,6 +1059,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Dicklesworthstone",
       "repo": "claude_code_agent_farm",
@@ -1030,6 +1080,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "forayconsulting",
       "repo": "gemini_cli_skill",
@@ -1050,6 +1101,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "iannuttall",
       "repo": "claude-agents",
@@ -1070,6 +1122,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "tddworks",
       "repo": "claude-agents",
@@ -1090,6 +1143,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "vizra-ai",
       "repo": "claude-code-agents",
@@ -1110,6 +1164,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "disler",
       "repo": "claude-code-hooks-multi-agent-observability",
@@ -1130,6 +1185,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "lst97",
       "repo": "claude-code-sub-agents",
@@ -1141,26 +1197,6 @@
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sub-agents/1766285540899-claude-code-sub-agents.png"
   },
   {
-    "id": "claude-code-subagents-1",
-    "title": "claude-code-subagents",
-    "description": "A comprehensive collection of 100+ production-ready development subagents for Claude Code",
-    "url": "https://github.com/0xfurai/claude-code-subagents",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "github": {
-      "owner": "0xfurai",
-      "repo": "claude-code-subagents",
-      "stars": 583,
-      "forks": 115,
-      "lastUpdated": "2025-12-20",
-      "language": "Unknown"
-    },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-subagents-1/1766285540794-claude-code-subagents-1.png"
-  },
-  {
     "id": "claude-code-subagents",
     "title": "claude-code-subagents",
     "description": "Subagent system for Claude Code. Delegate tasks to specialized sub-agents.",
@@ -1170,6 +1206,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "NicholasSpisak",
       "repo": "claude-code-subagents",
@@ -1181,6 +1218,27 @@
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-subagents/1766285541100-claude-code-subagents.png"
   },
   {
+    "id": "claude-code-subagents-1",
+    "title": "claude-code-subagents",
+    "description": "A comprehensive collection of 100+ production-ready development subagents for Claude Code",
+    "url": "https://github.com/0xfurai/claude-code-subagents",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "github": {
+      "owner": "0xfurai",
+      "repo": "claude-code-subagents",
+      "stars": 583,
+      "forks": 115,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
+    },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-subagents-1/1766285540794-claude-code-subagents-1.png"
+  },
+  {
     "id": "claude-code-subagents-collection",
     "title": "claude-code-subagents-collection",
     "description": "Claude Code Subagents & Commands Collection + CLI Tool",
@@ -1190,6 +1248,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "davepoon",
       "repo": "claude-code-subagents-collection",
@@ -1210,6 +1269,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "stretchcloud",
       "repo": "claude-code-unified-agents",
@@ -1230,6 +1290,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "zhsama",
       "repo": "claude-sub-agent",
@@ -1250,6 +1311,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "parruda",
       "repo": "claude-swarm",
@@ -1270,6 +1332,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "darcyegb",
       "repo": "ClaudeCodeAgents",
@@ -1290,6 +1353,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "codefuse-ai",
       "repo": "codefuse-chatbot",
@@ -1310,6 +1374,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "ajhous44",
       "repo": "cody",
@@ -1330,6 +1395,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/1766285560507-community.png"
   },
   {
@@ -1342,6 +1408,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "joaomdmoura",
       "repo": "CrewAI",
@@ -1362,6 +1429,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "joaomdmoura",
       "repo": "crewai",
@@ -1382,6 +1450,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "Technion-Kishony-lab",
       "repo": "data-to-paper",
@@ -1402,6 +1471,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "melih-unsal",
       "repo": "DemoGPT",
@@ -1422,6 +1492,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "jina-ai",
       "repo": "dev-gpt",
@@ -1442,6 +1513,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "stitionai",
       "repo": "devika",
@@ -1462,6 +1534,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "entropy-research",
       "repo": "Devon",
@@ -1482,6 +1555,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "kuafuai",
       "repo": "DevOpsGPT",
@@ -1502,6 +1576,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dexter-storey/1766285565278-dexter-storey.png"
   },
   {
@@ -1514,6 +1589,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/documentation/1766285565805-documentation.png"
   },
   {
@@ -1526,6 +1602,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "dot-agent",
       "repo": "dotagent",
@@ -1573,6 +1650,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "e2b-dev",
       "repo": "e2b",
@@ -1593,6 +1671,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "e2b-dev",
       "repo": "e2b-cookbook",
@@ -1613,6 +1692,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "eidolon-ai",
       "repo": "eidolon",
@@ -1633,6 +1713,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "uilicious",
       "repo": "english-compiler",
@@ -1653,6 +1734,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/eumemic/1766285570576-eumemic.png"
   },
   {
@@ -1665,6 +1747,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "eylonmiz",
       "repo": "react-agent",
@@ -1685,6 +1768,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Farama-Foundation",
       "repo": "chatarena",
@@ -1705,6 +1789,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "ferdousbhai",
       "repo": "investor-agent",
@@ -1725,6 +1810,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "ferdousbhai",
       "repo": "tasty-agent",
@@ -1745,6 +1831,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "FlowiseAI",
       "repo": "Flowise",
@@ -1765,6 +1852,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "FOLLGAD",
       "repo": "Godmode-GPT",
@@ -1785,6 +1873,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/founder-s-github-devin-stein/1766285571257-founder-s-github-devin-stein.png"
   },
   {
@@ -1797,6 +1886,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "amirrezasalimi",
       "repo": "friday",
@@ -1817,6 +1907,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "FullAgent",
       "repo": "fulling",
@@ -1837,6 +1928,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "gabrielmaialva33",
       "repo": "winx-code-agent",
@@ -1857,6 +1949,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "gemy411",
       "repo": "multi-agents-research",
@@ -1877,6 +1970,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "genia-dev",
       "repo": "GeniA",
@@ -1897,6 +1991,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "getcursor",
       "repo": "cursor",
@@ -1908,66 +2003,6 @@
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-issue-only/1766285602434-github-issue-only.png"
   },
   {
-    "id": "github-41",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/trypromptly",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-41/1766285598076-github-41.png"
-  },
-  {
-    "id": "github-34",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/fixie-ai",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-34/1766285592289-github-34.png"
-  },
-  {
-    "id": "github-32",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/wpai-inc/",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-32/1766285594491-github-32.png"
-  },
-  {
-    "id": "github-31",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/chathelpai",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-31/1766285592402-github-31.png"
-  },
-  {
-    "id": "github-30",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/agentsinc",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-30/1766285590962-github-30.png"
-  },
-  {
     "id": "github-20",
     "title": "Github",
     "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
@@ -1977,91 +2012,8 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-20/1766285585578-github-20.png"
-  },
-  {
-    "id": "github-45",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/apps/use-tusk",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-45/1766285600933-github-45.png"
-  },
-  {
-    "id": "github-35",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/graphlit",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-35/1766285597764-github-35.png"
-  },
-  {
-    "id": "github-24",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/sweepai",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-24/1766285585582-github-24.png"
-  },
-  {
-    "id": "github-5",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/sourcegraph/sourcegraph/tree/main/client/cody",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-5/1766285600934-github-5.png"
-  },
-  {
-    "id": "github-43",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/RelevanceAI",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-43/1766285597415-github-43.png"
-  },
-  {
-    "id": "github-42",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/hiroshinishio",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-42/1766285597418-github-42.png"
-  },
-  {
-    "id": "github-40",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/mutableai/",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-40/1766285596992-github-40.png"
   },
   {
     "id": "github-37",
@@ -2073,19 +2025,8 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-37/1766285596793-github-37.png"
-  },
-  {
-    "id": "github-39",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/makedraft",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-39/1766285596913-github-39.png"
   },
   {
     "id": "github-38",
@@ -2097,31 +2038,21 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-38/1766285597867-github-38.png"
   },
   {
-    "id": "github-36",
+    "id": "github-43",
     "title": "Github",
     "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/Invicta-AI",
+    "url": "https://github.com/RelevanceAI",
     "category": "agents",
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-36/1766285597799-github-36.png"
-  },
-  {
-    "id": "github-33",
-    "title": "Github",
-    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
-    "url": "https://github.com/Codium-ai",
-    "category": "agents",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-33/1766285592406-github-33.png"
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-43/1766285597415-github-43.png"
   },
   {
     "id": "github-44",
@@ -2133,7 +2064,190 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-44/1766285600941-github-44.png"
+  },
+  {
+    "id": "github-31",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/chathelpai",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-31/1766285592402-github-31.png"
+  },
+  {
+    "id": "github-35",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/graphlit",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-35/1766285597764-github-35.png"
+  },
+  {
+    "id": "github-45",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/apps/use-tusk",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-45/1766285600933-github-45.png"
+  },
+  {
+    "id": "github-30",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/agentsinc",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-30/1766285590962-github-30.png"
+  },
+  {
+    "id": "github-42",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/hiroshinishio",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-42/1766285597418-github-42.png"
+  },
+  {
+    "id": "github-32",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/wpai-inc/",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-32/1766285594491-github-32.png"
+  },
+  {
+    "id": "github-24",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/sweepai",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-24/1766285585582-github-24.png"
+  },
+  {
+    "id": "github-34",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/fixie-ai",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-34/1766285592289-github-34.png"
+  },
+  {
+    "id": "github-36",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/Invicta-AI",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-36/1766285597799-github-36.png"
+  },
+  {
+    "id": "github-5",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/sourcegraph/sourcegraph/tree/main/client/cody",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-5/1766285600934-github-5.png"
+  },
+  {
+    "id": "github-40",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/mutableai/",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-40/1766285596992-github-40.png"
+  },
+  {
+    "id": "github-33",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/Codium-ai",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-33/1766285592406-github-33.png"
+  },
+  {
+    "id": "github-39",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/makedraft",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-39/1766285596913-github-39.png"
+  },
+  {
+    "id": "github-41",
+    "title": "Github",
+    "description": "AI agent framework for GitHub. Enables autonomous task execution and multi-step reasoning with LLM-powered decision making.",
+    "url": "https://github.com/trypromptly",
+    "category": "agents",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-41/1766285598076-github-41.png"
   },
   {
     "id": "github-copilot-x",
@@ -2145,6 +2259,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-copilot-x/1766285601041-github-copilot-x.png"
   },
   {
@@ -2157,6 +2272,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "krohling",
       "repo": "bondai",
@@ -2177,6 +2293,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "yeagerai",
       "repo": "yeagerai-agent",
@@ -2197,6 +2314,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-swarm/1766285606597-github-stats-for-claude-swarm.png"
   },
   {
@@ -2209,6 +2327,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "gmpetrov",
       "repo": "databerry",
@@ -2229,6 +2348,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Kav-K",
       "repo": "GPTDiscord",
@@ -2249,6 +2369,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "0xpayne",
       "repo": "gpt-migrate",
@@ -2269,6 +2390,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Pythagora-io",
       "repo": "gpt-pilot",
@@ -2289,6 +2411,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "assafelovic",
       "repo": "gpt-researcher",
@@ -2309,6 +2432,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "nicepkg",
       "repo": "gpt-runner",
@@ -2356,6 +2480,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "homanp",
       "repo": "superagent",
@@ -2376,6 +2501,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "farizrahman4u",
       "repo": "loopgpt",
@@ -2396,6 +2522,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "emrgnt-cmplxty",
       "repo": "Automata",
@@ -2416,6 +2543,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "imartinez",
       "repo": "privateGPT",
@@ -2436,6 +2564,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "disler",
       "repo": "infinite-agentic-loop",
@@ -2456,6 +2585,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "blob42",
       "repo": "Instrukt",
@@ -2476,6 +2606,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "microsoft",
       "repo": "JARVIS",
@@ -2496,6 +2627,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jinming-yang/1766285612245-jinming-yang.png"
   },
   {
@@ -2508,6 +2640,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "KillianLucas",
       "repo": "open-interpreter",
@@ -2528,6 +2661,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "samholt",
       "repo": "l2mac",
@@ -2548,6 +2682,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "langroid",
       "repo": "langroid",
@@ -2568,6 +2703,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "felixbrock",
       "repo": "lemon-agent",
@@ -2615,6 +2751,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "mpaepper",
       "repo": "llm_agents",
@@ -2635,6 +2772,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "PromtEngineer",
       "repo": "localGPT",
@@ -2655,6 +2793,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "farizrahman4u",
       "repo": "loopgpt",
@@ -2675,6 +2814,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "markeljan",
       "repo": "web3gpt",
@@ -2695,6 +2835,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "memfreeme",
       "repo": "memfree",
@@ -2715,6 +2856,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "cpacker",
       "repo": "MemGPT",
@@ -2735,6 +2877,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "biobootloader",
       "repo": "mentat",
@@ -2755,6 +2898,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "geekan",
       "repo": "MetaGPT",
@@ -2775,6 +2919,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "metauto-ai",
       "repo": "GPTSwarm",
@@ -2795,6 +2940,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "MineDojo",
       "repo": "Voyager",
@@ -2815,6 +2961,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "muellerberndt",
       "repo": "mini-agi",
@@ -2835,6 +2982,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "rumpfmax",
       "repo": "Multi-GPT",
@@ -2855,6 +3003,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "bijutharakan",
       "repo": "multi-agent-squad",
@@ -2875,6 +3024,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "composable-models",
       "repo": "llm_multiagent_debate",
@@ -2895,6 +3045,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "codeintegrity-ai",
       "repo": "mutahunter",
@@ -2915,6 +3066,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "mczhuge",
       "repo": "NLSOM",
@@ -2935,6 +3087,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "Oneirocom",
       "repo": "Magick",
@@ -2955,6 +3108,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "OpenAgentsInc",
       "repo": "openagents",
@@ -2975,6 +3129,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "xlang-ai",
       "repo": "OpenAgents",
@@ -2995,6 +3150,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "expert",
     "github": {
       "owner": "agiresearch",
       "repo": "OpenAGI",
@@ -3042,6 +3198,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "OpenDevin",
       "repo": "OpenDevin",
@@ -3062,6 +3219,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Operative-Sh",
       "repo": "web-eval-agent",
@@ -3082,6 +3240,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "OthersideAI",
       "repo": "self-operating-computer",
@@ -3102,6 +3261,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/paul-gauthier/1766285626216-paul-gauthier.png"
   },
   {
@@ -3114,6 +3274,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "pezzolabs",
       "repo": "pezzo",
@@ -3161,6 +3322,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "polywrap",
       "repo": "evo.ninja",
@@ -3181,6 +3343,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "topoteretes",
       "repo": "PromethAI-Backend",
@@ -3228,6 +3391,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "reworkd",
       "repo": "AgentGPT",
@@ -3248,6 +3412,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "RubricLab",
       "repo": "maige",
@@ -3296,6 +3461,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/shlomi-shemesh/1766285626214-shlomi-shemesh.png"
   },
   {
@@ -3308,6 +3474,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Significant-Gravitas",
       "repo": "Auto-GPT",
@@ -3328,6 +3495,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "smol-ai",
       "repo": "developer",
@@ -3375,6 +3543,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "Dimillian",
       "repo": "Claude",
@@ -3395,6 +3564,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "stackwiseai",
       "repo": "stackwise",
@@ -3415,6 +3585,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
     "github": {
       "owner": "webdevtodayjason",
       "repo": "sub-agents",
@@ -3435,6 +3606,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "superagent-ai",
       "repo": "superagent",
@@ -3455,6 +3627,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "CR-Gjx",
       "repo": "Suspicion-Agent",
@@ -3475,6 +3648,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "princeton-nlp",
       "repo": "SWE-agent",
@@ -3495,6 +3669,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "TaxyAI",
       "repo": "browser-extension",
@@ -3515,6 +3690,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ted-spare/1766285631716-ted-spare.png"
   },
   {
@@ -3527,6 +3703,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/telecom-mas-agent/1766285633194-telecom-mas-agent.png"
   },
   {
@@ -3539,6 +3716,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "TheoLvs",
       "repo": "westworld",
@@ -3559,6 +3737,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "trypromptly",
       "repo": "LLMStack",
@@ -3579,6 +3758,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "microsoft",
       "repo": "UFO",
@@ -3599,6 +3779,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/uri-shamay/1766285631720-uri-shamay.png"
   },
   {
@@ -3611,6 +3792,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "vanna-ai",
       "repo": "vanna",
@@ -3631,6 +3813,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "VoltAgent",
       "repo": "awesome-claude-code-subagents",
@@ -3651,6 +3834,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "team-openpm",
       "repo": "workgpt",
@@ -3671,6 +3855,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "OpenBMB",
       "repo": "XAgent",
@@ -3691,6 +3876,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "xataio",
       "repo": "agent",
@@ -3711,6 +3897,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "yeagerai",
       "repo": "yeagerai-agent",
@@ -3731,6 +3918,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "advanced",
     "github": {
       "owner": "pj4533",
       "repo": "yourgoal",

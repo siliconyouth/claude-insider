@@ -15,6 +15,7 @@
     "addedDate": "2024-07-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Curated List",
+    "difficulty": "advanced",
     "featured": true,
     "featuredReason": "Trending",
     "github": {
@@ -43,6 +44,7 @@
     "addedDate": "2024-06-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Directory",
+    "difficulty": "advanced",
     "featured": true,
     "featuredReason": "Most Popular",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766238191743-cursor-directory.png"
@@ -57,6 +59,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1766286353914-secretlint-secretlint-rule-anthropic.png"
   },
   {
@@ -69,6 +72,7 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
     "github": {
       "owner": "johnbenac",
       "repo": "cursor-watchful-headers",
