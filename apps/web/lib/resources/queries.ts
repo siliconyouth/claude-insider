@@ -178,6 +178,37 @@ export async function getAllResourceSlugs(): Promise<string[]> {
 }
 
 /**
+ * Resource summary for RSS feed
+ */
+export interface ResourceRSSSummary {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+  added_at: string;
+}
+
+/**
+ * Get all published resources for RSS feed
+ */
+export async function getResourcesForRSS(): Promise<ResourceRSSSummary[]> {
+  try {
+    const result = await pool.query<ResourceRSSSummary>(
+      `SELECT slug, title, description, category, url, added_at
+       FROM resources
+       WHERE is_published = TRUE
+       ORDER BY added_at DESC
+       LIMIT 100`
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("[Resources] Error fetching resources for RSS:", error);
+    return [];
+  }
+}
+
+/**
  * Get related resources by category or tags
  */
 export async function getRelatedResources(

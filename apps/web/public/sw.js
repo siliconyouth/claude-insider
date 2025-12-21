@@ -1,8 +1,18 @@
 // Cache version - UPDATE THIS ON EACH DEPLOY to bust old caches
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6';
 const STATIC_CACHE = `claude-insider-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `claude-insider-dynamic-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `claude-insider-offline-${CACHE_VERSION}`;
+const SYNC_DB_NAME = 'claude-insider-sync';
+const SYNC_STORE_NAME = 'pending-requests';
+
+// Background Sync Tags
+const SYNC_TAGS = {
+  FAVORITES: 'sync-favorites',
+  RATINGS: 'sync-ratings',
+  MESSAGES: 'sync-messages',
+  PREFERENCES: 'sync-preferences',
+};
 
 // Static assets to cache immediately (shell)
 const STATIC_ASSETS = [
@@ -47,6 +57,102 @@ const CACHEABLE_API_ROUTES = [
   '/api/collections',
 ];
 
+// ─────────────────────────────────────────────────────────────────────────────
+// IndexedDB Helpers for Background Sync
+// ─────────────────────────────────────────────────────────────────────────────
+
+function openSyncDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(SYNC_DB_NAME, 1);
+
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => resolve(request.result);
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains(SYNC_STORE_NAME)) {
+        const store = db.createObjectStore(SYNC_STORE_NAME, {
+          keyPath: 'id',
+          autoIncrement: true,
+        });
+        store.createIndex('tag', 'tag', { unique: false });
+        store.createIndex('timestamp', 'timestamp', { unique: false });
+      }
+    };
+  });
+}
+
+async function addPendingRequest(tag, request) {
+  const db = await openSyncDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(SYNC_STORE_NAME, 'readwrite');
+    const store = tx.objectStore(SYNC_STORE_NAME);
+
+    const data = {
+      tag,
+      url: request.url,
+      method: request.method,
+      headers: Object.fromEntries(request.headers.entries()),
+      body: request._body || null,
+      timestamp: Date.now(),
+    };
+
+    const addRequest = store.add(data);
+    addRequest.onsuccess = () => resolve(addRequest.result);
+    addRequest.onerror = () => reject(addRequest.error);
+  });
+}
+
+async function getPendingRequests(tag) {
+  const db = await openSyncDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(SYNC_STORE_NAME, 'readonly');
+    const store = tx.objectStore(SYNC_STORE_NAME);
+    const index = store.index('tag');
+    const request = index.getAll(tag);
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function removePendingRequest(id) {
+  const db = await openSyncDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(SYNC_STORE_NAME, 'readwrite');
+    const store = tx.objectStore(SYNC_STORE_NAME);
+    const request = store.delete(id);
+
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function clearPendingRequests(tag) {
+  const db = await openSyncDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(SYNC_STORE_NAME, 'readwrite');
+    const store = tx.objectStore(SYNC_STORE_NAME);
+    const index = store.index('tag');
+    const cursorRequest = index.openCursor(IDBKeyRange.only(tag));
+
+    cursorRequest.onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        store.delete(cursor.primaryKey);
+        cursor.continue();
+      } else {
+        resolve();
+      }
+    };
+    cursorRequest.onerror = () => reject(cursorRequest.error);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Install event - cache static assets
+// ─────────────────────────────────────────────────────────────────────────────
+
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -74,6 +180,94 @@ self.addEventListener('activate', (event) => {
   );
   self.clients.claim();
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Background Sync Handler
+// ─────────────────────────────────────────────────────────────────────────────
+
+self.addEventListener('sync', (event) => {
+  console.log('[SW] Background sync triggered:', event.tag);
+
+  // Handle different sync tags
+  if (Object.values(SYNC_TAGS).includes(event.tag)) {
+    event.waitUntil(processBackgroundSync(event.tag));
+  }
+});
+
+async function processBackgroundSync(tag) {
+  try {
+    const pendingRequests = await getPendingRequests(tag);
+    console.log(`[SW] Processing ${pendingRequests.length} pending requests for ${tag}`);
+
+    for (const request of pendingRequests) {
+      try {
+        const response = await fetch(request.url, {
+          method: request.method,
+          headers: request.headers,
+          body: request.body ? JSON.stringify(request.body) : undefined,
+        });
+
+        if (response.ok) {
+          await removePendingRequest(request.id);
+          console.log(`[SW] Successfully synced request:`, request.url);
+
+          // Notify client of successful sync
+          const clients = await self.clients.matchAll();
+          clients.forEach((client) => {
+            client.postMessage({
+              type: 'SYNC_COMPLETE',
+              tag,
+              url: request.url,
+            });
+          });
+        } else if (response.status >= 400 && response.status < 500) {
+          // Client error - remove from queue (don't retry)
+          await removePendingRequest(request.id);
+          console.warn(`[SW] Request failed with client error, removing:`, request.url);
+        }
+        // For 5xx errors, keep in queue for retry
+      } catch (err) {
+        console.warn(`[SW] Failed to sync request, will retry:`, request.url, err);
+        // Keep in queue for next sync attempt
+      }
+    }
+  } catch (err) {
+    console.error('[SW] Background sync failed:', err);
+    throw err; // Throw to trigger retry
+  }
+}
+
+// Periodic background sync (if supported)
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'content-sync') {
+    event.waitUntil(syncCachedContent());
+  }
+});
+
+async function syncCachedContent() {
+  try {
+    // Refresh key cached pages
+    const pagesToRefresh = [
+      '/',
+      '/docs',
+      '/resources',
+    ];
+
+    for (const url of pagesToRefresh) {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          const cache = await caches.open(DYNAMIC_CACHE);
+          await cache.put(url, response);
+        }
+      } catch (_err) {
+        // Offline, skip
+      }
+    }
+  } catch (err) {
+    console.error('[SW] Periodic sync failed:', err);
+  }
+}
 
 // Push notification handler
 self.addEventListener('push', (event) => {
@@ -136,7 +330,7 @@ self.addEventListener('notificationclick', (event) => {
   );
 });
 
-// Message handler for cache operations
+// Message handler for cache and sync operations
 self.addEventListener('message', (event) => {
   const { type, payload } = event.data || {};
 
@@ -179,6 +373,86 @@ self.addEventListener('message', (event) => {
 
     case 'SKIP_WAITING':
       self.skipWaiting();
+      break;
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Background Sync Messages
+    // ─────────────────────────────────────────────────────────────────────────
+
+    case 'QUEUE_SYNC':
+      // Queue a request for background sync
+      if (payload?.tag && payload?.request) {
+        addPendingRequest(payload.tag, payload.request)
+          .then(() => {
+            // Register for background sync
+            if (self.registration.sync) {
+              return self.registration.sync.register(payload.tag);
+            }
+          })
+          .then(() => {
+            event.source?.postMessage({
+              type: 'SYNC_QUEUED',
+              tag: payload.tag,
+            });
+          })
+          .catch((err) => {
+            console.error('[SW] Failed to queue sync:', err);
+            event.source?.postMessage({
+              type: 'SYNC_QUEUE_ERROR',
+              tag: payload.tag,
+              error: err.message,
+            });
+          });
+      }
+      break;
+
+    case 'GET_PENDING_SYNCS':
+      // Return pending sync requests
+      if (payload?.tag) {
+        getPendingRequests(payload.tag)
+          .then((requests) => {
+            event.source?.postMessage({
+              type: 'PENDING_SYNCS',
+              tag: payload.tag,
+              requests,
+            });
+          })
+          .catch((err) => {
+            console.error('[SW] Failed to get pending syncs:', err);
+          });
+      }
+      break;
+
+    case 'CLEAR_PENDING_SYNCS':
+      // Clear pending sync requests for a tag
+      if (payload?.tag) {
+        clearPendingRequests(payload.tag)
+          .then(() => {
+            event.source?.postMessage({
+              type: 'SYNCS_CLEARED',
+              tag: payload.tag,
+            });
+          })
+          .catch((err) => {
+            console.error('[SW] Failed to clear pending syncs:', err);
+          });
+      }
+      break;
+
+    case 'TRIGGER_SYNC':
+      // Manually trigger background sync (for testing or when coming online)
+      if (payload?.tag && self.registration.sync) {
+        self.registration.sync.register(payload.tag)
+          .then(() => {
+            event.source?.postMessage({
+              type: 'SYNC_TRIGGERED',
+              tag: payload.tag,
+            });
+          })
+          .catch((err) => {
+            console.error('[SW] Failed to trigger sync:', err);
+          });
+      }
       break;
   }
 });

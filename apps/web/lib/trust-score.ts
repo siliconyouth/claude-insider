@@ -255,3 +255,106 @@ function daysBetween(date1: Date, date2: Date): number {
   const diffMs = Math.abs(date2.getTime() - date1.getTime());
   return Math.floor(diffMs / (1000 * 60 * 60 * 24));
 }
+
+/**
+ * Trust factors for challenge verification
+ */
+export interface TrustFactors {
+  challengePassed?: boolean;
+  challengeType?: string;
+  completionTime?: number;
+}
+
+/**
+ * Get trust score for a visitor from the database
+ */
+export async function getTrustScore(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
+  params: { ip: string; userId?: string }
+): Promise<number> {
+  // Try to find visitor by user ID first, then by IP
+  const query = params.userId
+    ? supabase
+        .from("visitor_fingerprints")
+        .select("*")
+        .eq("linked_user_id", params.userId)
+        .single()
+    : supabase
+        .from("visitor_fingerprints")
+        .select("*")
+        .eq("visitor_id", params.ip)
+        .single();
+
+  const { data } = await query;
+
+  if (!data) {
+    // New visitor - return neutral score
+    return 50;
+  }
+
+  const result = calculateTrustScore({
+    visitorId: data.visitor_id || params.ip,
+    linkedUserId: data.linked_user_id,
+    totalRequests: data.total_requests || 0,
+    botRequests: data.bot_requests || 0,
+    humanRequests: data.human_requests || 0,
+    honeypotTriggers: data.honeypot_triggers || 0,
+    lastSeenAt: new Date(data.last_seen_at || Date.now()),
+    firstSeenAt: new Date(data.first_seen_at || Date.now()),
+    isBlocked: data.is_blocked || false,
+  });
+
+  return result.score;
+}
+
+/**
+ * Update trust score based on challenge result
+ */
+export async function updateTrustScore(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
+  params: {
+    ip: string;
+    userId?: string;
+    factors: TrustFactors;
+    increment: number;
+  }
+): Promise<void> {
+  const { ip, userId, factors, increment } = params;
+
+  // Try to find existing visitor record
+  const { data: existing } = await supabase
+    .from("visitor_fingerprints")
+    .select("id, human_requests, total_requests")
+    .eq("visitor_id", ip)
+    .single();
+
+  if (existing) {
+    // Update existing record - increase human_requests for passed challenges
+    await supabase
+      .from("visitor_fingerprints")
+      .update({
+        human_requests:
+          (existing.human_requests || 0) +
+          (factors.challengePassed ? Math.ceil(increment / 5) : 0),
+        total_requests: (existing.total_requests || 0) + 1,
+        last_seen_at: new Date().toISOString(),
+        linked_user_id: userId || undefined,
+      })
+      .eq("id", existing.id);
+  } else {
+    // Create new visitor record
+    await supabase.from("visitor_fingerprints").insert({
+      visitor_id: ip,
+      linked_user_id: userId,
+      total_requests: 1,
+      human_requests: factors.challengePassed ? 1 : 0,
+      bot_requests: 0,
+      honeypot_triggers: 0,
+      first_seen_at: new Date().toISOString(),
+      last_seen_at: new Date().toISOString(),
+      is_blocked: false,
+    });
+  }
+}

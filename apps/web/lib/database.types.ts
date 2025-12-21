@@ -2776,6 +2776,83 @@ export type Database = {
           },
         ]
       }
+      export_jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          created_by: string
+          current_step: string | null
+          error_details: Json | null
+          error_message: string | null
+          expires_at: string | null
+          export_type: string
+          file_path: string | null
+          file_size: number | null
+          format: string
+          id: string
+          options: Json
+          progress: number | null
+          row_count: number | null
+          schedule_cron: string | null
+          scheduled_for: string | null
+          started_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          created_by: string
+          current_step?: string | null
+          error_details?: Json | null
+          error_message?: string | null
+          expires_at?: string | null
+          export_type: string
+          file_path?: string | null
+          file_size?: number | null
+          format: string
+          id?: string
+          options?: Json
+          progress?: number | null
+          row_count?: number | null
+          schedule_cron?: string | null
+          scheduled_for?: string | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string
+          current_step?: string | null
+          error_details?: Json | null
+          error_message?: string | null
+          expires_at?: string | null
+          export_type?: string
+          file_path?: string | null
+          file_size?: number | null
+          format?: string
+          id?: string
+          options?: Json
+          progress?: number | null
+          row_count?: number | null
+          schedule_cron?: string | null
+          scheduled_for?: string | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "export_jobs_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       favorites: {
         Row: {
           created_at: string | null
@@ -7363,64 +7440,3 @@ export const Constants = {
     },
   },
 } as const
-
-// ============================================================
-// Convenience Type Exports
-// ============================================================
-// Auto-generated from Supabase. Regenerate with: pnpm db:types
-// ============================================================
-
-// Core User Tables
-export type User = Tables<'user'>
-export type Account = Tables<'account'>
-export type Session = Tables<'session'>
-export type Profile = Tables<'profiles'>
-
-// Content Interaction Tables
-export type Favorite = Tables<'favorites'>
-export type Rating = Tables<'ratings'>
-export type Comment = Tables<'comments'>
-export type CommentVote = Tables<'comment_votes'>
-export type Collection = Tables<'collections'>
-export type CollectionItem = Tables<'collection_items'>
-
-// Activity & Analytics
-export type UserActivity = Tables<'user_activity'>
-export type ViewHistory = Tables<'view_history'>
-export type SearchHistory = Tables<'search_history'>
-
-// Notifications
-export type Notification = Tables<'notifications'>
-export type NotificationPreference = Tables<'notification_preferences'>
-export type AdminNotification = Tables<'admin_notifications'>
-export type PushSubscription = Tables<'push_subscriptions'>
-
-// Gamification
-export type Achievement = Tables<'achievements'>
-export type UserAchievement = Tables<'user_achievements'>
-export type AchievementProgress = Tables<'achievement_progress'>
-
-// Social Features
-export type UserFollow = Tables<'user_follows'>
-export type UserBlock = Tables<'user_blocks'>
-
-// AI & Assistant
-export type AiConversation = Tables<'ai_conversations'>
-export type AiMessage = Tables<'ai_messages'>
-export type AssistantSettings = Tables<'assistant_settings'>
-export type UserApiKey = Tables<'user_api_keys'>
-export type ApiKeyUsageLog = Tables<'api_key_usage_logs'>
-
-// Security & Auth
-export type Passkey = Tables<'passkeys'>
-export type WebauthnChallenge = Tables<'webauthn_challenges'>
-export type EmailVerificationCode = Tables<'email_verification_codes'>
-export type TwoFactorSession = Tables<'two_factor_sessions'>
-
-// Admin
-export type AdminLog = Tables<'admin_logs'>
-export type Feedback = Tables<'feedback'>
-export type EditSuggestion = Tables<'edit_suggestions'>
-
-// Views
-export type RatingStats = Tables<'rating_stats'>

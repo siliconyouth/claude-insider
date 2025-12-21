@@ -13,7 +13,7 @@ import { NavDropdown, NavLink } from "@/components/nav-dropdown";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
-  activePage?: "home" | "docs" | "getting-started" | "resources" | "playground";
+  activePage?: "home" | "docs" | "getting-started" | "resources" | "playground" | "stats";
 }
 
 // Icons for navigation items
@@ -214,6 +214,7 @@ export function Header({ activePage }: HeaderProps) {
 
             {/* Simple Links */}
             <NavLink label="Playground" href="/playground" isActive={activePage === "playground"} />
+            <NavLink label="Stats" href="/stats" isActive={activePage === "stats"} />
 
             {/* Donate Button */}
             <Link

@@ -11,6 +11,7 @@ import { FavoriteButton } from "@/components/interactions/favorite-button";
 import { RatingStars } from "@/components/interactions/rating-stars";
 import { DocRelatedResources } from "@/components/cross-linking/DocRelatedResources";
 import { RelatedResourcesSkeleton } from "@/components/cross-linking/RelatedResources";
+import { SwipeNavigationWrapper } from "@/components/mobile";
 
 interface SidebarSection {
   title: string;
@@ -51,6 +52,12 @@ export function DocsLayout({
   const url = `https://www.claudeinsider.com${currentPath}`;
 
   return (
+    <SwipeNavigationWrapper
+      prevUrl={prevPage?.href}
+      nextUrl={nextPage?.href}
+      prevLabel={prevPage?.label}
+      nextLabel={nextPage?.label}
+    >
     <div className="min-h-screen">
       <ArticleJsonLd
         title={title}
@@ -255,5 +262,6 @@ export function DocsLayout({
         <Footer />
       </div>
     </div>
+    </SwipeNavigationWrapper>
   );
 }

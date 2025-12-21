@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-16 for v0.86.0
+ * Updated: 2025-12-21 for v1.9.0
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "0.86.0",
+  version: "1.9.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v0.86.0 - updated 2025-12-16)
+// TECH STACK KNOWLEDGE (v1.9.0 - updated 2025-12-21)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -107,7 +107,7 @@ export const TECH_STACK = {
     library: "Fuse.js",
     version: "7.1.0",
     type: "Fuzzy search with Cmd/Ctrl+K",
-    features: ["Recent history", "Category filtering", "Quick + AI modes"],
+    features: ["Recent history", "Category filtering", "Quick + AI modes", "Boolean operators (AND/OR/NOT)", "Smart autocomplete", "Saved searches"],
   },
   rag: { method: "TF-IDF", chunkCount: 1933, sources: "1,913 docs + 20 project knowledge" },
   auth: {
@@ -119,7 +119,7 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.87.1",
     engine: "PostgreSQL 15+",
-    tables: 73,
+    tables: 74,
     categories: 13,
     features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage"],
   },
@@ -132,7 +132,7 @@ export const TECH_STACK = {
     fingerprint: "FingerprintJS 5.0.1",
     requestIds: "nanoid 5.1.6",
     fakeData: "@faker-js/faker 10.1.0",
-    features: ["Browser fingerprinting", "Trust scores", "Honeypot/tarpit system", "Bot detection"],
+    features: ["Browser fingerprinting", "Trust scores", "Honeypot/tarpit system", "Bot detection", "Bot challenge puzzles", "Rate limit warnings"],
   },
   hosting: "Vercel",
   packageManager: "pnpm 10.19.0",
@@ -238,6 +238,16 @@ export const USER_FEATURES = {
     collections: "Organize favorites into custom collections",
     follows: "Follow other users and see their activity",
   },
+  search: {
+    modes: ["Quick search", "AI-powered search"],
+    features: ["Boolean operators (AND/OR/NOT)", "Smart autocomplete", "Saved searches", "Search history"],
+    filters: ["Content type", "Category", "Date range", "Sort order"],
+  },
+  botChallenge: {
+    description: "Human verification when suspicious activity is detected",
+    types: ["Slider puzzle", "Math captcha"],
+    features: ["Adaptive difficulty", "Rate limit warnings", "Session bypass for signed-in users"],
+  },
   gamification: {
     achievements: "50+ achievements across 9 categories",
     categories: ["Onboarding", "Engagement", "Learning", "Social", "Content", "Streak", "Collector", "Expert", "Special"],
@@ -267,7 +277,7 @@ export const USER_FEATURES = {
 export const ADMIN_FEATURES = {
   dashboard: {
     stats: ["User count", "New users (week/month)", "Beta applications", "Feedback count"],
-    sections: ["Users", "Beta Applications", "Feedback", "Suggestions", "Security", "Diagnostics"],
+    sections: ["Users", "Beta Applications", "Feedback", "Suggestions", "Security", "Diagnostics", "Exports", "Search Analytics"],
   },
   security: {
     overview: "Real-time security stats, bot detections, trust score distribution",
@@ -276,10 +286,22 @@ export const ADMIN_FEATURES = {
     visitors: "Fingerprint browser with trust scores, block/unblock controls",
     honeypots: "Configure honeypot routes, response types (fake_data, delay, redirect, block)",
     settings: "Security thresholds, rate limits, auto-block rules",
+    botChallenge: "Interactive challenges for suspected bots (slider puzzle, math captcha)",
   },
   userManagement: {
     actions: ["View profiles", "Change roles", "Ban/unban users", "Review reports"],
     roles: ["User", "Beta Tester", "Editor", "Moderator", "Admin", "Superadmin", "AI Assistant"],
+  },
+  exports: {
+    description: "Bulk data export for auditing and compliance",
+    formats: ["JSON", "CSV", "XLSX (Excel)"],
+    dataTypes: ["User profiles", "Content/activity", "Audit logs", "All data"],
+    features: ["Export job queue", "Download history", "Date range filtering", "Anonymization option"],
+  },
+  searchAnalytics: {
+    description: "Insights into user search behavior",
+    metrics: ["Top searches", "Zero-result queries", "Search trends", "Filter usage"],
+    features: ["7/30-day trend charts", "Content gap identification"],
   },
   diagnostics: {
     tests: 17,
@@ -340,9 +362,10 @@ export const VOICE_CAPABILITIES = {
 export const WEBSITE_FEATURES = {
   search: {
     trigger: "Cmd/Ctrl+K or search button",
-    type: "Fuzzy search with Fuse.js",
+    type: "Advanced fuzzy search with Fuse.js",
     modes: ["Quick Search (instant results)", "AI Search (conversational)"],
-    features: ["Recent search history", "Category filtering", "Keyboard navigation"],
+    features: ["Recent search history", "Category filtering", "Keyboard navigation", "Boolean operators (AND/OR/NOT)", "Smart autocomplete", "Saved searches"],
+    filters: ["Content type", "Category", "Date range", "Sort order"],
   },
   themes: {
     options: ["Dark (default)", "Light", "System"],
@@ -845,6 +868,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/docs/configuration/claude-md",
     category: "Configuration",
     keywords: ["claude.md", "configuration", "project context", "conventions", "settings"],
+  },
+  {
+    id: "v190-features",
+    title: "Version 1.9.0 Features",
+    section: "New in v1.9.0",
+    content: `Claude Insider v1.9.0 adds three major feature sets. Advanced Search (F-035): Boolean operators (AND/OR/NOT) with visual tokens, smart autocomplete suggestions, saved searches, filter integration, admin search analytics showing top searches and zero-result queries. Audit Export (F-023): Bulk data export for admins in JSON, CSV, and XLSX formats. Export job queue system with status tracking. Supports user profiles, content, activity, and audit logs. Optional anonymization for privacy. Bot Challenge System (F-024): Interactive human verification when suspicious activity is detected. Slider puzzle and math captcha challenges with adaptive difficulty based on trust score. Rate limit warnings before hitting limits. Session bypass for signed-in users.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.9.0", "advanced search", "boolean operators", "export", "bot challenge", "security", "captcha"],
   },
 ];
 

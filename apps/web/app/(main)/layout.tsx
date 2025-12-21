@@ -27,6 +27,7 @@ import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
 import { LazySoundProvider } from "@/components/providers/lazy-sound-provider";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { PushNotificationPrompt } from "@/components/pwa/push-notification-prompt";
+import { MobileBottomNav } from "@/components/mobile";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -215,8 +216,16 @@ export default async function MainLayout({
         <meta name="application-name" content="Claude Insider" />
         <meta name="format-detection" content="telephone=no" />
 
-        {/* RSS Feed */}
-        <link rel="alternate" type="application/rss+xml" title="Claude Insider RSS Feed" href="/feed.xml" />
+        {/* RSS Feeds - Main and Category */}
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - All Documentation" href="/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - Resources" href="/resources/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - Getting Started" href="/docs/getting-started/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - API Reference" href="/docs/api/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - Configuration" href="/docs/configuration/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - Integrations" href="/docs/integrations/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - Tips & Tricks" href="/docs/tips-and-tricks/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - Tutorials" href="/docs/tutorials/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="Claude Insider - Examples" href="/docs/examples/feed.xml" />
 
         {/* JSON-LD Structured Data */}
         <script
@@ -252,6 +261,7 @@ export default async function MainLayout({
                     <NotificationPopup />
                     <InstallPrompt />
                     <PushNotificationPrompt />
+                    <MobileBottomNav />
                     <Analytics />
                     <SpeedInsights />
                   </DonorBadgeProvider>

@@ -9,6 +9,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.9.0] - 2025-12-21
+### Advanced Search, Admin Exports & Bot Challenge System
+- **F-035 Advanced Search** (40% → 100%): Complete search system overhaul
+  - `SearchAutocomplete`: Smart suggestions combining recent, saved, and popular searches with 300ms debounce
+  - `SearchFiltersIntegration`: Collapsible filter panel (type, category, date range, sort)
+  - `QueryBuilder`: Visual token-based query builder with AND/OR/NOT boolean operators
+  - Keyboard shortcuts: ⌘A (AND), ⌘O (OR), ⌘N (NOT) for power users
+  - Admin search analytics dashboard with top queries and zero-result analysis
+  - New API: `GET /api/admin/search-analytics` with role-based access
+- **F-023 Audit Export** (70% → 100%): Enterprise bulk export system
+  - `export_jobs` table with async job queue (pending → processing → completed/failed)
+  - Multi-format export: JSON, CSV (RFC 4180), XLSX with dynamic imports
+  - Export types: users, activity, content, audit_logs, or all combined
+  - Options: date range filtering, user selection, data anonymization
+  - Admin export wizard UI with progress tracking and download management
+  - Storage integration with fallback to base64 data URLs
+- **F-024 Bot Challenge** (50% → 100%): Human verification system
+  - `SliderPuzzle`: Visual slider verification with timing/movement analysis
+  - `BotChallenge`: Modal with slider + math challenges, adaptive difficulty
+  - Challenge API: Token generation/verification at `/api/challenge`
+  - Session bypass for authenticated users at `/api/challenge/verify-session`
+  - `RateLimitWarning`: Proactive banner at 70% threshold, critical at 90%
+  - `useRateLimitWarning` hook with 30-second polling
+  - Trust score integration: +15 points for passed challenges
+- **Trust Score System Enhancement**: New database functions
+  - `getTrustScore()`: Calculate score from visitor fingerprints
+  - `updateTrustScore()`: Update based on challenge results
+  - `TrustFactors` interface for challenge metadata
+- **Client IP Utilities**: New `lib/client-ip.ts` module
+  - `getClientIP()`: Extract real IP from proxy headers (Vercel, Cloudflare)
+  - `anonymizeIP()`: Privacy-preserving IP anonymization
+  - `isPrivateIP()`: Detect local/private addresses
+- **Database**: Migration 094 for `export_jobs` table
+- **TypeScript**: All new components fully typed, 0 type errors
+- **Dependencies**: Added `xlsx` package for Excel exports
+
+---
+
 ## [1.8.1] - 2025-12-21
 ### Data Quality & Resource Relationships
 - **Resource-Resource Relationships**: 121 new AI-analyzed relationships between resources

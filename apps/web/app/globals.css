@@ -2383,3 +2383,82 @@ code {
     animation-play-state: running;
   }
 }
+
+/* ============================================
+   MOBILE PWA ENHANCEMENTS
+   Safe areas, touch targets, and mobile UX
+   ============================================ */
+
+/* Safe area CSS variables for notched devices */
+:root {
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+}
+
+/* Bottom nav padding for main content (mobile only) */
+@media (max-width: 767px) {
+  .has-bottom-nav {
+    padding-bottom: calc(4rem + var(--safe-area-inset-bottom));
+  }
+}
+
+/* Touch target minimum sizing (WCAG 2.5.5) */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Prevent text selection on navigation elements */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Smooth momentum scrolling for iOS */
+.momentum-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Hide scrollbar on mobile for cleaner look */
+@media (max-width: 767px) {
+  .hide-scrollbar-mobile {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar-mobile::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Pull-to-refresh prevention on body (we handle it manually) */
+@media (max-width: 767px) {
+  body {
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* Mobile-specific active states for touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  .touch-active:active {
+    opacity: 0.7;
+    transition: opacity 0.1s ease;
+  }
+}
+
+/* Standalone PWA mode adjustments */
+@media (display-mode: standalone) {
+  /* Extra padding at top for status bar */
+  .pwa-header {
+    padding-top: var(--safe-area-inset-top);
+  }
+
+  /* Hide browser chrome elements */
+  .browser-only {
+    display: none !important;
+  }
+}

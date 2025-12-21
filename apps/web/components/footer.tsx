@@ -54,6 +54,10 @@ export function Footer() {
             {t("changelog")}
           </Link>
           <span className={separatorClass}>·</span>
+          <Link href="/stats" className={linkClass}>
+            Stats
+          </Link>
+          <span className={separatorClass}>·</span>
           <Link
             href="/donate"
             className={cn(linkClass, "text-pink-500 dark:text-pink-400 hover:text-pink-600 dark:hover:text-pink-300 flex items-center gap-1")}
