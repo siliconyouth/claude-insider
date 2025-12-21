@@ -230,7 +230,7 @@ export default function HomePage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
                   </span>
-                  v1.9.0 • 45 Features • 1,950+ Resources • AI Assistant
+                  v1.10.0 • 49 Features • 1,950+ Resources • AI Assistant
                 </div>
 
                 {/* Headline - Stripe-style large typography */}
@@ -253,13 +253,13 @@ export default function HomePage() {
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Advanced Search
+                    Dashboard Charts
                   </span>
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    MCP Servers
+                    Prompt Library
                   </span>
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -313,7 +313,7 @@ export default function HomePage() {
 
                 {/* Trust badge */}
                 <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
-                  v1.9.0 • Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
+                  v1.10.0 • Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
                 </p>
               </div>
 
@@ -607,7 +607,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
             <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
               <div className="group">
-                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">45</div>
+                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">49</div>
                 <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
                   Platform Features
                 </div>

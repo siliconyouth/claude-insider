@@ -282,7 +282,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.9.0
+ * Realistic terminal content showing Claude Insider v1.10.0
  */
 function MacBookTerminalContent() {
   return (
@@ -310,11 +310,11 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.9.0</span>
+          <span className="text-[#8b949e]"> v1.10.0</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Features: 45 • Resources: 1,950+</span>
+          <span className="text-[#8b949e]"> Features: 49 • Resources: 1,950+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>
@@ -322,11 +322,11 @@ function MacBookTerminalContent() {
         </div>
 
         <div className="mt-2 space-y-[3px]">
-          <div className="text-[#7ee787]">✓ Advanced Search with Boolean Operators</div>
-          <div className="text-[#7ee787]">✓ Admin Audit Export (JSON/CSV/XLSX)</div>
-          <div className="text-[#7ee787]">✓ Bot Challenge System</div>
-          <div className="text-[#7ee787]">✓ Community Stats Dashboard</div>
-          <div className="text-[#7ee787]">✓ Personal Analytics</div>
+          <div className="text-[#7ee787]">✓ Dashboard Charts (Recharts)</div>
+          <div className="text-[#7ee787]">✓ Prompt Library with Categories</div>
+          <div className="text-[#7ee787]">✓ Doc Version Management</div>
+          <div className="text-[#7ee787]">✓ Site-Wide Data Visualizations</div>
+          <div className="text-[#7ee787]">✓ 126 Database Tables</div>
         </div>
 
         <div className="mt-2 flex items-center gap-1">
@@ -412,13 +412,13 @@ function IPhoneScreenContent() {
           }}
         >
           <div className="text-[4cqw] font-bold text-white leading-tight">
-            Claude Insider v1.9.0
+            Claude Insider v1.10.0
           </div>
           <div className="text-[3cqw] text-white/85 mt-[2%]">
-            45 features • 1,950+ resources
+            49 features • 1,950+ resources
           </div>
           <div className="text-[2.5cqw] text-white/70 mt-[1.5%]">
-            Search • E2EE • Achievements • Analytics
+            Charts • Prompts • E2EE • Achievements
           </div>
           <div className="mt-[5%] bg-white rounded-[2.5cqw] px-[6%] py-[3%] inline-flex items-center">
             <span className="text-[3cqw] text-gray-900 font-semibold">Get Started</span>
@@ -431,10 +431,10 @@ function IPhoneScreenContent() {
         {/* Categories grid */}
         <div className="px-[4%] grid grid-cols-2 gap-[3%]">
           {[
-            { icon: "🔍", name: "Advanced Search", desc: "Boolean ops" },
-            { icon: "🏆", name: "Achievements", desc: "50+ badges" },
+            { icon: "📊", name: "Dashboard", desc: "Rich charts" },
+            { icon: "📝", name: "Prompts", desc: "Library & cats" },
             { icon: "🔐", name: "E2E Encryption", desc: "Matrix Olm" },
-            { icon: "📊", name: "Analytics", desc: "Stats & trends" }
+            { icon: "🏆", name: "Achievements", desc: "50+ badges" }
           ].map((cat) => (
             <div
               key={cat.name}
