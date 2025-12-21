@@ -22,6 +22,10 @@ import { Pool } from 'pg';
 // Singleton pool instance
 let poolInstance: Pool | null = null;
 
+// Suppress verbose logging during builds to reduce noise
+// Only log in development or when DEBUG_DB is set
+const shouldLog = process.env.NODE_ENV === 'development' || process.env.DEBUG_DB === 'true';
+
 /**
  * Convert Session Pooler URL (port 5432) to Transaction Pooler URL (port 6543)
  * Transaction pooler handles serverless much better as it releases connections after each transaction
@@ -29,13 +33,15 @@ let poolInstance: Pool | null = null;
 function getConnectionString(): string {
   const url = process.env.DATABASE_URL || '';
 
-  // Log URL pattern for debugging (without credentials)
-  const safeUrl = url.replace(/\/\/[^@]+@/, '//***@');
-  console.log('[DB Pool] URL pattern:', safeUrl);
+  // Log URL pattern for debugging (without credentials) - only in dev
+  if (shouldLog) {
+    const safeUrl = url.replace(/\/\/[^@]+@/, '//***@');
+    console.log('[DB Pool] URL pattern:', safeUrl);
+  }
 
   // If already using transaction pooler (6543), return as-is
   if (url.includes(':6543')) {
-    console.log('[DB Pool] Already using Transaction Pooler');
+    if (shouldLog) console.log('[DB Pool] Already using Transaction Pooler');
     return url;
   }
 
@@ -43,11 +49,11 @@ function getConnectionString(): string {
   // Handles: aws-0-us-east-1.pooler.supabase.com, db.*.supabase.co, etc.
   if (url.includes('supabase') && url.includes(':5432')) {
     const transactionUrl = url.replace(':5432', ':6543');
-    console.log('[DB Pool] Auto-converted to Transaction Pooler (port 6543)');
+    if (shouldLog) console.log('[DB Pool] Auto-converted to Transaction Pooler (port 6543)');
     return transactionUrl;
   }
 
-  console.log('[DB Pool] Using original URL (no conversion needed)');
+  if (shouldLog) console.log('[DB Pool] Using original URL (no conversion needed)');
   return url;
 }
 

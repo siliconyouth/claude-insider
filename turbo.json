@@ -4,15 +4,15 @@
   "daemon": true,
   "cacheDir": ".turbo/cache",
   "globalEnv": [
+    "NODE_ENV",
+    "VERCEL_ENV",
+    "VERCEL_URL",
     "ANTHROPIC_API_KEY",
     "ELEVENLABS_API_KEY",
     "REVALIDATION_SECRET",
     "DATABASE_URL",
     "PAYLOAD_SECRET",
     "RESEND_API_KEY",
-    "NODE_ENV",
-    "VERCEL_URL",
-    "VERCEL_ENV",
     "BETTER_AUTH_SECRET",
     "BETTER_AUTH_URL",
     "GITHUB_CLIENT_ID",
@@ -26,10 +26,27 @@
     "PAYPAL_CLIENT_ID",
     "PAYPAL_CLIENT_SECRET",
     "PAYPAL_SANDBOX",
+    "PAYPAL_WEBHOOK_ID",
     "NEXT_PUBLIC_PAYPAL_CLIENT_ID",
     "NEXT_PUBLIC_SUPABASE_URL",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY",
-    "NEXT_PUBLIC_APP_URL"
+    "NEXT_PUBLIC_APP_URL",
+    "OPENAI_API_KEY",
+    "CRON_SECRET",
+    "VAPID_PUBLIC_KEY",
+    "VAPID_PRIVATE_KEY",
+    "VAPID_EMAIL",
+    "UPSTASH_REDIS_REST_URL",
+    "UPSTASH_REDIS_REST_TOKEN",
+    "FIRECRAWL_API_KEY"
+  ],
+  "globalPassThroughEnv": [
+    "CI",
+    "VERCEL",
+    "VERCEL_ENV",
+    "VERCEL_URL",
+    "VERCEL_GIT_COMMIT_SHA",
+    "VERCEL_GIT_COMMIT_REF"
   ],
   "tasks": {
     "build": {
@@ -44,17 +61,40 @@
         ".next/**",
         "!.next/cache/**",
         "build/**"
+      ]
+    },
+    "@repo/ui#build:components": {
+      "dependsOn": [],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "tsconfig.json"
       ],
-      "env": ["NODE_ENV", "VERCEL_ENV"]
+      "outputs": ["dist/**/*.js", "dist/**/*.d.ts"],
+      "cache": true
+    },
+    "@repo/ui#build:styles": {
+      "dependsOn": [],
+      "inputs": [
+        "src/**/*.css",
+        "tailwind.config.*"
+      ],
+      "outputs": ["dist/**/*.css"],
+      "cache": true
     },
     "web#build": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "@repo/ui#build:components",
+        "@repo/ui#build:styles"
+      ],
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env*",
         "!.env.local",
         "content/**",
-        "data/**"
+        "data/**",
+        "!data/rag-index.json",
+        "!data/build-info.json"
       ],
       "outputs": [
         ".next/**",
@@ -62,7 +102,7 @@
         "data/rag-index.json",
         "data/build-info.json"
       ],
-      "env": ["NODE_ENV", "VERCEL_ENV"]
+      "cache": true
     },
     "lint": {
       "dependsOn": [],
