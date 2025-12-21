@@ -63,9 +63,11 @@ function parseArgs(): { limit?: number; category?: string; dryRun: boolean; resu
 
   for (const arg of args) {
     if (arg.startsWith("--limit=")) {
-      options.limit = parseInt(arg.split("=")[1], 10);
+      const value = arg.split("=")[1];
+      if (value) options.limit = parseInt(value, 10);
     } else if (arg.startsWith("--category=")) {
-      options.category = arg.split("=")[1];
+      const value = arg.split("=")[1];
+      if (value) options.category = value;
     } else if (arg === "--dry-run") {
       options.dryRun = true;
     } else if (arg === "--resume") {
@@ -285,7 +287,7 @@ async function processResources(
     process.stdout.write(`\r📦 Batch ${batchNum}/${totalBatches} | ✅ ${successful} | ❌ ${failed} | ⏱️  ${Math.round((Date.now() - startTime) / 1000)}s`);
 
     const batchPromises = batch.map((resource, index) => {
-      const context = contexts[index % contexts.length];
+      const context = contexts[index % contexts.length]!;
       return processResource(context, supabase, resource);
     });
 

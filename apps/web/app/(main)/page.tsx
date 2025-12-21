@@ -230,7 +230,7 @@ export default function HomePage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
                   </span>
-                  v1.9.0 • 45 Features • 122+ Resources • AI Assistant
+                  v1.9.0 • 45 Features • 1,950+ Resources • AI Assistant
                 </div>
 
                 {/* Headline - Stripe-style large typography */}
@@ -613,7 +613,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="group">
-                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">122+</div>
+                <div className="text-3xl font-bold gradient-text-stripe group-hover:scale-110 transition-transform">1,950+</div>
                 <div className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
                   Curated Resources
                 </div>

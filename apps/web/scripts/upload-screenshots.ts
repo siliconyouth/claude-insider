@@ -64,8 +64,9 @@ function findLocalScreenshots(): { resourceId: string; filePath: string; categor
 }
 
 // Upload to Supabase
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function uploadToSupabase(
-  supabase: ReturnType<typeof createClient>,
+  supabase: any,
   filePath: string,
   resourceId: string
 ): Promise<string | null> {
@@ -103,7 +104,7 @@ function updateResourceFile(resourceId: string, screenshotUrl: string): boolean 
     const resources: Resource[] = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
     const resourceIndex = resources.findIndex((r) => r.id === resourceId);
-    if (resourceIndex !== -1) {
+    if (resourceIndex !== -1 && resources[resourceIndex]) {
       resources[resourceIndex].screenshotUrl = screenshotUrl;
       fs.writeFileSync(filePath, JSON.stringify(resources, null, 2) + "\n");
       return true;

@@ -172,8 +172,8 @@ function convertToJsonFormat(resource: DatabaseResource, tags: string[]): JsonRe
     category: resource.category,
     tags: tags,
     status: resource.status,
-    addedDate: resource.added_at.split("T")[0],
-    lastVerified: (resource.last_verified_at || resource.added_at).split("T")[0],
+    addedDate: resource.added_at.split("T")[0] ?? resource.added_at,
+    lastVerified: (resource.last_verified_at || resource.added_at).split("T")[0] ?? resource.added_at,
   };
 
   // Optional fields
@@ -207,7 +207,7 @@ function convertToJsonFormat(resource: DatabaseResource, tags: string[]): JsonRe
       repo: resource.github_repo,
       stars: resource.github_stars || 0,
       forks: resource.github_forks || 0,
-      lastUpdated: (resource.github_last_commit || resource.added_at).split("T")[0],
+      lastUpdated: (resource.github_last_commit || resource.added_at).split("T")[0] ?? resource.added_at,
       language: resource.github_language || "Unknown",
     };
   }

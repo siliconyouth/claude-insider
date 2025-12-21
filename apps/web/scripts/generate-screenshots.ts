@@ -130,12 +130,14 @@ async function captureScreenshot(
 }
 
 // Upload screenshot to Supabase Storage
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function uploadToSupabase(
-  supabase: ReturnType<typeof createClient>,
+  supabase: any,
   filePath: string,
   resourceId: string,
-  category: string
+  _category: string
 ): Promise<string | null> {
+  if (!supabase) return null;
   try {
     const fileBuffer = fs.readFileSync(filePath);
     const timestamp = Date.now();
@@ -172,7 +174,7 @@ function updateResourceFile(resourceId: string, category: string, screenshotUrl:
     const resources: Resource[] = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
     const resourceIndex = resources.findIndex((r) => r.id === resourceId);
-    if (resourceIndex !== -1) {
+    if (resourceIndex !== -1 && resources[resourceIndex]) {
       resources[resourceIndex].screenshotUrl = screenshotUrl;
       fs.writeFileSync(filePath, JSON.stringify(resources, null, 2) + "\n");
       console.log(`📝 Updated ${file} with screenshot for ${resourceId}`);
@@ -209,7 +211,7 @@ async function processResources(resources: Resource[]): Promise<void> {
     console.log(`\n📦 Processing batch ${Math.floor(i / CONCURRENT_BROWSERS) + 1}/${Math.ceil(resources.length / CONCURRENT_BROWSERS)}\n`);
 
     const batchPromises = batch.map(async (resource, index) => {
-      const browser = browsers[index % browsers.length];
+      const browser = browsers[index % browsers.length]!;
       const result = await captureScreenshot(browser, resource, SCREENSHOT_DIR);
 
       if (result.success && result.filePath) {
