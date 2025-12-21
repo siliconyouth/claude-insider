@@ -218,6 +218,7 @@ export default async function DocPage({ params }: PageProps) {
       slug={slug}
       readingTime={readingTime.text}
       editPath={editPath}
+      rawContent={content}
     >
       <MDXContent />
     </DocsLayout>

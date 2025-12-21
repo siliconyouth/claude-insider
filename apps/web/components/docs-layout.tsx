@@ -12,6 +12,7 @@ import { RatingStars } from "@/components/interactions/rating-stars";
 import { DocRelatedResources } from "@/components/cross-linking/DocRelatedResources";
 import { RelatedResourcesSkeleton } from "@/components/cross-linking/RelatedResources";
 import { SwipeNavigationWrapper } from "@/components/mobile";
+import { AIEditorButton } from "@/components/ai-editor";
 
 interface SidebarSection {
   title: string;
@@ -29,6 +30,7 @@ interface DocsLayoutProps {
   slug?: string[];
   readingTime?: string;
   editPath?: string;
+  rawContent?: string; // Raw MDX content for AI editing
 }
 
 export function DocsLayout({
@@ -42,6 +44,7 @@ export function DocsLayout({
   slug,
   readingTime,
   editPath,
+  rawContent,
 }: DocsLayoutProps) {
   // Build URL from slug or breadcrumbs
   const currentPath = slug
@@ -179,6 +182,21 @@ export function DocsLayout({
                       resourceTitle={title}
                       variant="link"
                     />
+                    {rawContent && (
+                      <>
+                        <span className="text-gray-300 dark:text-gray-700">·</span>
+                        <AIEditorButton
+                          content={rawContent}
+                          context={{
+                            title,
+                            category: slug?.[0],
+                            slug: slug?.join("/"),
+                            filePath: editPath,
+                          }}
+                          variant="link"
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               )}

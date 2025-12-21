@@ -24,8 +24,9 @@ Claude Insider has achieved remarkable progress, already surpassing the original
 | Status | Count | Percentage |
 |--------|-------|------------|
 | **Fully Implemented** | 22 | 61% |
-| **Partially Implemented** | 4 | 11% |
+| **In Progress** | 2 | 6% |
 | **Not Started** | 10 | 28% |
+| **Backlog** | 2 | 5% |
 
 ### Fully Implemented Features (22)
 
@@ -53,16 +54,14 @@ These features from the original roadmap are complete:
 | F-024 | Bot Challenge | v1.9.0 | Slider puzzle, math captcha, rate limit warning, trust-based difficulty |
 | F-035 | Advanced Search | v1.9.0 | Smart autocomplete, boolean operators, saved filters, search analytics |
 
-### Partially Implemented Features (4)
+### Partially Implemented Features (2) - In Progress
 
-These have foundational work but need completion:
+These have foundational work and are being completed:
 
-| ID | Feature | Status | Gap Analysis |
-|----|---------|--------|--------------|
-| F-006 | AI Writing Assistant | 40% | Chat exists, but no in-place doc editing |
-| F-008 | Custom Themes | 30% | Light/dark exists, no custom colors/presets |
-| F-017 | GitHub Integration | 40% | OAuth works, no CLAUDE.md sync to repos |
-| F-034 | Voice Navigation | 40% | Voice input exists, no hands-free navigation |
+| ID | Feature | Status | Gap Analysis | Priority |
+|----|---------|--------|--------------|----------|
+| F-006 | AI Writing Assistant | 40% → 100% | Chat exists, adding in-place doc editing | **NOW** |
+| F-017 | GitHub Integration | 40% → 100% | OAuth works, adding CLAUDE.md sync | **NEXT** |
 
 ### Not Started Features (10)
 
@@ -297,6 +296,8 @@ These features are moved to backlog or cancelled:
 
 | ID | Feature | Reason |
 |----|---------|--------|
+| F-008 | Custom Themes | **Backlog** - Light/dark sufficient; custom colors low demand |
+| F-034 | Voice Navigation | **Backlog** - Voice input works; hands-free nav lower priority |
 | F-020 | Real-time Collaboration | Existing chat + voice covers core use case |
 | F-035 | Enhanced Collaboration | Dependent on F-020; low ROI |
 | F-036 | AR/VR Documentation | **Removed** - Overkill for documentation site |
