@@ -95,22 +95,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authModalState, setAuthModalState] = useState<"closed" | "signin" | "signup">("closed");
   const [manualSession, setManualSession] = useState<Session | null>(null);
   const [isRefetching, setIsRefetching] = useState(false);
+  const [hasFallbackCompleted, setHasFallbackCompleted] = useState(false);
   const hasCheckedSession = useRef(false);
 
-  // Force session fetch only for OAuth callback scenarios
-  // This works around the Better Auth useSession reactivity issue
-  // Optimized: only call fallback API when useSession definitively returns null
+  // Debug logging in development
   useEffect(() => {
-    // Skip if already checked or still loading
-    if (hasCheckedSession.current || isPending) return;
+    if (process.env.NODE_ENV === "development") {
+      console.log("[Auth] State:", { isPending, hasSession: !!sessionData, hasManual: !!manualSession });
+    }
+  }, [isPending, sessionData, manualSession]);
 
-    // If useSession has data, skip the API call entirely
+  // Force session fetch for OAuth callback scenarios OR when useSession is stuck
+  // This works around the Better Auth useSession reactivity issue
+  useEffect(() => {
+    // Skip if already checked
+    if (hasCheckedSession.current) return;
+
+    // If useSession has data, we're done
     if (sessionData) {
       hasCheckedSession.current = true;
+      setHasFallbackCompleted(true);
       return;
     }
 
-    // Debounce to let useSession settle (OAuth callback edge case)
+    // If still pending, wait a bit but not forever
+    // Set a timeout to force fallback if isPending is stuck
     const timeoutId = setTimeout(async () => {
       // Double-check still no session after debounce
       if (hasCheckedSession.current) return;
@@ -122,7 +131,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Better Auth's session endpoint - must match catch-all route handler
         const response = await fetch("/api/auth/session", {
           credentials: "include",
-          // Use cache to avoid redundant network requests
           cache: "no-store",
         });
 
@@ -140,8 +148,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.error("[Auth] Session refresh failed:", error);
       } finally {
         setIsRefetching(false);
+        setHasFallbackCompleted(true);
       }
-    }, 100); // 100ms debounce
+    }, isPending ? 500 : 100); // Wait longer if isPending, shorter if already resolved to null
 
     return () => clearTimeout(timeoutId);
   }, [isPending, sessionData]);
@@ -158,10 +167,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setManualSession(null); // Clear manual session on sign out
   }, []);
 
+  // isLoading is true only if:
+  // 1. We're still refetching via fallback API, OR
+  // 2. isPending is true AND we haven't completed the fallback check yet
+  // This prevents infinite loading when isPending gets stuck
+  const isLoading = isRefetching || (isPending && !hasFallbackCompleted);
+
   const value: AuthContextValue = {
     user: effectiveSession?.user ?? null,
     session: effectiveSession ?? null,
-    isLoading: isPending || isRefetching,
+    isLoading,
     isAuthenticated: !!effectiveSession?.user,
     showSignIn,
     showSignUp,
