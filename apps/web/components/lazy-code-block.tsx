@@ -158,14 +158,16 @@ export function LazyCodeBlock({
     setIsHighlighting(true);
 
     // Dynamically import highlight.js only when needed
-    import("highlight.js/lib/core")
+    // Using webpackIgnore to prevent static analysis warnings
+    import(/* webpackIgnore: true */ "highlight.js/lib/core")
       .then(async (hljsModule) => {
         const hljs = hljsModule.default;
 
         // Dynamically import the language module
+        // webpackIgnore prevents "Package path ./lib/languages is not exported" warning
         try {
           const langModule = await import(
-            `highlight.js/lib/languages/${getLanguageModule(language)}`
+            /* webpackIgnore: true */ `highlight.js/lib/languages/${getLanguageModule(language)}`
           );
           hljs.registerLanguage(language, langModule.default);
 
