@@ -296,25 +296,27 @@ function determineDifficulty(resource: Resource): DifficultyAssignment {
   }
 
   // 2. Check GitHub language complexity
-  if (resource.github_language && LANGUAGE_DIFFICULTY[resource.github_language]) {
+  if (resource.github_language) {
     const langDifficulty = LANGUAGE_DIFFICULTY[resource.github_language];
-    reasons.push(`Language: ${resource.github_language}`);
+    if (langDifficulty) {
+      reasons.push(`Language: ${resource.github_language}`);
 
-    // Adjust based on stars (popular repos tend to be more accessible)
-    if (resource.github_stars > 1000 && langDifficulty !== "beginner") {
-      reasons.push(`High stars (${resource.github_stars}) → more accessible`);
+      // Adjust based on stars (popular repos tend to be more accessible)
+      if (resource.github_stars > 1000 && langDifficulty !== "beginner") {
+        reasons.push(`High stars (${resource.github_stars}) → more accessible`);
+        return {
+          resource,
+          difficulty: langDifficulty === "advanced" ? "intermediate" : langDifficulty,
+          reason: reasons.join("; "),
+        };
+      }
+
       return {
         resource,
-        difficulty: langDifficulty === "advanced" ? "intermediate" : langDifficulty,
+        difficulty: langDifficulty,
         reason: reasons.join("; "),
       };
     }
-
-    return {
-      resource,
-      difficulty: langDifficulty,
-      reason: reasons.join("; "),
-    };
   }
 
   // 3. Subcategory-based adjustments
@@ -407,7 +409,10 @@ function printSummary(assignments: DifficultyAssignment[]): void {
         expert: 0,
       };
     }
-    byCategory[assignment.resource.category][assignment.difficulty]++;
+    const categoryStats = byCategory[assignment.resource.category];
+    if (categoryStats) {
+      categoryStats[assignment.difficulty]++;
+    }
   }
 
   console.log("\n" + "=".repeat(70));

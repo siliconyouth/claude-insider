@@ -35,8 +35,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check if user is a beta tester
-    if (!session.user.isBetaTester) {
+    // Check if user is a beta tester (query database since session may not include this field)
+    const userResult = await pool.query(
+      `SELECT "isBetaTester" FROM "user" WHERE id = $1`,
+      [session.user.id]
+    );
+    const isBetaTester = userResult.rows[0]?.isBetaTester === true;
+
+    if (!isBetaTester) {
       return NextResponse.json(
         { error: "Only beta testers can submit feedback" },
         { status: 403 }

@@ -8,7 +8,7 @@
  * Positioned at center-right of page with bug icon for bug reporting.
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { FeedbackModal } from "./feedback-modal";
@@ -17,9 +17,30 @@ export function FeedbackButton() {
   const { user, isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isBetaTester, setIsBetaTester] = useState<boolean | null>(null);
+
+  // Check beta tester status - session may not include this field
+  useEffect(() => {
+    if (!isAuthenticated || !user?.id) {
+      setIsBetaTester(false);
+      return;
+    }
+
+    // First check if already in session
+    if (user.isBetaTester === true) {
+      setIsBetaTester(true);
+      return;
+    }
+
+    // Otherwise fetch from API
+    fetch(`/api/users/${user.id}/beta-status`)
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => setIsBetaTester(data?.isBetaTester ?? false))
+      .catch(() => setIsBetaTester(false));
+  }, [isAuthenticated, user?.id, user?.isBetaTester]);
 
   // Only show for beta testers
-  if (!isAuthenticated || !user?.isBetaTester) {
+  if (!isAuthenticated || isBetaTester !== true) {
     return null;
   }
 
