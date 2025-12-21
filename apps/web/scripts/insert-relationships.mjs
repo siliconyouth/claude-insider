@@ -8,6 +8,7 @@
  * based on semantic understanding of content, categories, and tags.
  */
 
+import './lib/env.mjs';
 import { readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";

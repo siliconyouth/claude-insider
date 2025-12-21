@@ -9,6 +9,7 @@
  * Usage: node scripts/sync-screenshots-to-db.mjs
  */
 
+import './lib/env.mjs';
 import { readdir, readFile } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";

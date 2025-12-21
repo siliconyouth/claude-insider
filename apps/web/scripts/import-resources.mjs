@@ -7,6 +7,7 @@
  * into the new resources table.
  */
 
+import './lib/env.mjs';
 import pg from "pg";
 import fs from "fs";
 import path from "path";

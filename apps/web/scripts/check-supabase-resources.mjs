@@ -1,3 +1,4 @@
+import './lib/env.mjs';
 import pg from 'pg';
 import { readFileSync } from 'fs';
 import { dirname, join } from 'path';

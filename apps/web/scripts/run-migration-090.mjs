@@ -1,3 +1,4 @@
+import './lib/env.mjs';
 import { createClient } from '@supabase/supabase-js';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';

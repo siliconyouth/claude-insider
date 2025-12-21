@@ -19,6 +19,7 @@
  * - SUPABASE_SERVICE_ROLE_KEY: Supabase service key
  */
 
+import './lib/env.mjs';
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";

@@ -14,6 +14,7 @@
  * - NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local
  */
 
+import './lib/env.mjs';
 import { createClient } from "@supabase/supabase-js";
 import { readdir, readFile, writeFile } from "fs/promises";
 import { join } from "path";

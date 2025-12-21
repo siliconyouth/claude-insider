@@ -16,6 +16,7 @@
  *   node scripts/migrate-docs-to-supabase.mjs [--dry-run] [--verbose]
  */
 
+import './lib/env.mjs';
 import { createHash } from "crypto";
 import { readFileSync, readdirSync, statSync, existsSync } from "fs";
 import { join, relative, basename, dirname } from "path";
