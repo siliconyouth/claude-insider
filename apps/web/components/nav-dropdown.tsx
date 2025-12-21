@@ -89,7 +89,7 @@ export function NavDropdown({
       <Link
         href={href}
         className={cn(
-          "flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
+          "flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm font-medium transition-all duration-200",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
           isActive
             ? "text-gray-900 dark:text-white bg-gray-100 dark:bg-[#1a1a1a]"
@@ -271,7 +271,7 @@ export function NavLink({
       href={href}
       {...extraProps}
       className={cn(
-        "rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
+        "rounded-lg px-2 py-1.5 text-sm font-medium transition-all duration-200",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
         isActive
           ? "text-gray-900 dark:text-white bg-gray-100 dark:bg-[#1a1a1a]"

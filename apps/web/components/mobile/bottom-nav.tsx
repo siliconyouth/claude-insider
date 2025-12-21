@@ -176,7 +176,7 @@ const navItems: NavItem[] = [
 
 export function MobileBottomNav() {
   const pathname = usePathname();
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, showSignIn } = useAuth();
 
   // Check if a nav item is active
   const isActive = (item: NavItem): boolean => {
@@ -192,11 +192,12 @@ export function MobileBottomNav() {
   // Filter items based on auth state
   const visibleItems = navItems.map((item) => {
     if (item.requiresAuth && !user && !isLoading) {
-      // Show login link instead of profile
+      // Show sign in button that opens auth modal instead of profile
       return {
         ...item,
         label: "Sign In",
-        href: "/login",
+        href: "#",
+        action: () => showSignIn(),
       };
     }
     return item;
