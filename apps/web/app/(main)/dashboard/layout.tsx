@@ -47,6 +47,29 @@ export default async function DashboardLayout({
   }
 
   const isAdmin = hasMinRole(userRole, ROLES.ADMIN);
+  const isSuperAdmin = userRole === "superadmin";
+
+  // Get role badge styling and label
+  const getRoleBadge = () => {
+    if (isSuperAdmin) {
+      return {
+        className: "bg-gradient-to-r from-amber-900/40 to-yellow-900/40 text-amber-400 border border-amber-500/30",
+        label: "Super Admin",
+      };
+    }
+    if (isAdmin) {
+      return {
+        className: "bg-cyan-900/30 text-cyan-400",
+        label: "Admin",
+      };
+    }
+    return {
+      className: "bg-violet-900/30 text-violet-400",
+      label: "Moderator",
+    };
+  };
+
+  const roleBadge = getRoleBadge();
 
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col">
@@ -81,13 +104,9 @@ export default async function DashboardLayout({
                 {session.user.name || session.user.email}
               </span>
               <span
-                className={`px-2 py-0.5 rounded text-xs font-medium ${
-                  isAdmin
-                    ? "bg-cyan-900/30 text-cyan-400"
-                    : "bg-violet-900/30 text-violet-400"
-                }`}
+                className={`px-2 py-0.5 rounded text-xs font-medium ${roleBadge.className}`}
               >
-                {isAdmin ? "Admin" : "Moderator"}
+                {roleBadge.label}
               </span>
             </div>
           </div>

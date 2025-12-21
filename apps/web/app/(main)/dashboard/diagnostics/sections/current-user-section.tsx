@@ -44,16 +44,24 @@ export function CurrentUserSection({
             <p
               className={cn(
                 "font-semibold",
-                user.role === "admin"
-                  ? "text-red-400"
-                  : user.role === "moderator"
-                    ? "text-violet-400"
-                    : user.role === "editor"
-                      ? "text-blue-400"
-                      : "text-gray-400"
+                user.role === "superadmin"
+                  ? "bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400 bg-clip-text text-transparent"
+                  : user.role === "admin"
+                    ? "text-red-400"
+                    : user.role === "moderator"
+                      ? "text-violet-400"
+                      : user.role === "editor"
+                        ? "text-blue-400"
+                        : "text-gray-400"
               )}
             >
-              {user.role || "user"}
+              {user.role === "superadmin"
+                ? "Super Admin"
+                : user.role === "ai_assistant"
+                  ? "AI Assistant"
+                  : user.role
+                    ? user.role.charAt(0).toUpperCase() + user.role.slice(1)
+                    : "User"}
             </p>
           </div>
           <div>
