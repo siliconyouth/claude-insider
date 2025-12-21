@@ -75,6 +75,7 @@
     "@dotenvx/dotenvx": "^1.51.2",
     "@next/bundle-analyzer": "^16.0.10",
     "@next/eslint-plugin-next": "^16.0.10",
+    "@playwright/test": "^1.57.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",

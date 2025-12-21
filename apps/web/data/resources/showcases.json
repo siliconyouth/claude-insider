@@ -63,7 +63,8 @@
     ],
     "status": "community",
     "addedDate": "2024-01-15",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/perplexity/1766285239271-perplexity.png"
   },
   {
     "id": "quora-poe",
@@ -80,7 +81,8 @@
     ],
     "status": "community",
     "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quora-poe/1766285239520-quora-poe.png"
   },
   {
     "id": "notion-ai",

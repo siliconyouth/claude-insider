@@ -120,7 +120,8 @@
     "status": "official",
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
-    "difficulty": "beginner"
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/linkedin-anthropic/1766285236635-linkedin-anthropic.png"
   },
   {
     "id": "ai-news-newsletter",
@@ -214,7 +215,8 @@
     "status": "community",
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
-    "difficulty": "beginner"
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stack-overflow/1766285237431-stack-overflow.png"
   },
   {
     "id": "cursor-directory-community",

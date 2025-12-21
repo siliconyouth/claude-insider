@@ -74,7 +74,8 @@
     "version": "1.0.0",
     "namespace": "@modelcontextprotocol/server-postgres",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-postgres/1766285238299-mcp-postgres.png"
   },
   {
     "id": "mcp-puppeteer",
@@ -95,7 +96,8 @@
     "featured": true,
     "featuredReason": "Official",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-puppeteer/1766285238512-mcp-puppeteer.png"
   },
   {
     "id": "mcp-fetch",
@@ -151,7 +153,8 @@
     "featuredReason": "Comprehensive List",
     "addedDate": "2024-06-01",
     "lastVerified": "2025-12-20",
-    "difficulty": "beginner"
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-mcp-servers/1766285237636-awesome-mcp-servers.png"
   },
   {
     "id": "mcp-sqlite",
@@ -170,7 +173,8 @@
     "version": "1.0.0",
     "namespace": "@modelcontextprotocol/server-sqlite",
     "addedDate": "2024-01-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-sqlite/1766285238890-mcp-sqlite.png"
   },
   {
     "id": "mcp-memory",
@@ -218,7 +222,8 @@
     "version": "1.0.0",
     "namespace": "@modelcontextprotocol/server-github",
     "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-github/1766285238114-mcp-github.png"
   },
   {
     "id": "mcp-slack",
@@ -237,7 +242,8 @@
     "version": "1.0.0",
     "namespace": "@modelcontextprotocol/server-slack",
     "addedDate": "2024-04-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-slack/1766285238699-mcp-slack.png"
   },
   {
     "id": "mcp-brave-search",
@@ -256,7 +262,8 @@
     "version": "1.0.0",
     "namespace": "@anthropic-ai/claude-mcp-brave-search",
     "addedDate": "2024-05-01",
-    "lastVerified": "2025-12-20"
+    "lastVerified": "2025-12-20",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-brave-search/1766285237946-mcp-brave-search.png"
   },
   {
     "id": "firecrawl-mcp",
