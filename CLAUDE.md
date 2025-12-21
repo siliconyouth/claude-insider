@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.9.0**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 45 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 47 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync
@@ -133,7 +133,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (45 total)
+### Implemented Features (47 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -182,6 +182,8 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-43 | Advanced Search | Smart autocomplete, boolean operators (AND/OR/NOT), search filters, admin analytics dashboard |
 | FR-44 | Audit Export | Bulk admin exports (JSON/CSV/XLSX), async job queue, date filtering, anonymization options |
 | FR-45 | Bot Challenge System | Slider puzzle, math captcha, rate limit warnings, trust-based difficulty, session bypass |
+| FR-46 | AI Writing Assistant | In-place doc editing, 8 AI commands (improve, expand, simplify, etc.), diff preview, streaming |
+| FR-47 | GitHub CLAUDE.md Sync | Sync CLAUDE.md to GitHub repos, repo selector, OAuth scopes, status tracking |
 
 ### Non-Functional Requirements
 

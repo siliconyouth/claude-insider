@@ -23,22 +23,27 @@ Claude Insider has achieved remarkable progress, already surpassing the original
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| **Fully Implemented** | 22 | 61% |
-| **In Progress** | 2 | 6% |
+| **Fully Implemented** | 24 | 67% |
+| **In Progress** | 0 | 0% |
 | **Not Started** | 10 | 28% |
 | **Backlog** | 2 | 5% |
 
-### Fully Implemented Features (22)
+### Fully Implemented Features (24)
 
 These features from the original roadmap are complete:
 
 | ID | Feature | Version | Notes |
 |----|---------|---------|-------|
 | F-001 | Donation System | v0.82.0 | PayPal, bank transfer, 4 donor tiers |
+| F-006 | AI Writing Assistant | v1.9.0 | In-place doc editing, 8 AI commands, diff preview, streaming |
 | F-009 | Usage Analytics | v1.9.0 | Personal dashboard with level, streak, achievements, category charts |
 | F-010 | Community Statistics | v1.9.0 | Public /stats page with leaderboards, activity, achievements |
+| F-017 | GitHub Integration | v1.9.0 | CLAUDE.md sync to repos, repo selector, OAuth scopes |
+| F-023 | Audit Export | v1.9.0 | Bulk admin exports, JSON/CSV/XLSX, job queue, download API |
+| F-024 | Bot Challenge | v1.9.0 | Slider puzzle, math captcha, rate limit warning, trust-based difficulty |
 | F-025 | Mobile PWA Enhancement | v1.8.2 | Bottom nav, gestures, pull-to-refresh, background sync |
 | F-028 | RSS Feeds | v1.8.2 | 9 feeds: main, resources, 7 doc categories with autodiscovery |
+| F-035 | Advanced Search | v1.9.0 | Smart autocomplete, boolean operators, saved filters, search analytics |
 | - | Unified Chat Window | v0.82.0 | AI + Messages in tabbed interface |
 | - | End-to-End Encryption | v0.82.0 | Matrix Olm/Megolm, device verification |
 | - | PWA Foundation | v0.47.0-0.48.0 | Service worker, offline support, push |
@@ -50,18 +55,6 @@ These features from the original roadmap are complete:
 | - | Voice Assistant | v0.11.0-0.35.0 | RAG, TTS, speech recognition |
 | - | Resource Discovery | v1.8.0 | 6 adapters, 1,952 resources discovered |
 | - | AI Pipeline | v1.5.0-1.8.0 | Auto-update, relationships, CMS integration |
-| F-023 | Audit Export | v1.9.0 | Bulk admin exports, JSON/CSV/XLSX, job queue, download API |
-| F-024 | Bot Challenge | v1.9.0 | Slider puzzle, math captcha, rate limit warning, trust-based difficulty |
-| F-035 | Advanced Search | v1.9.0 | Smart autocomplete, boolean operators, saved filters, search analytics |
-
-### Partially Implemented Features (2) - In Progress
-
-These have foundational work and are being completed:
-
-| ID | Feature | Status | Gap Analysis | Priority |
-|----|---------|--------|--------------|----------|
-| F-006 | AI Writing Assistant | 40% → 100% | Chat exists, adding in-place doc editing | **NOW** |
-| F-017 | GitHub Integration | 40% → 100% | OAuth works, adding CLAUDE.md sync | **NEXT** |
 
 ### Not Started Features (10)
 

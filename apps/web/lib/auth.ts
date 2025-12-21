@@ -105,6 +105,8 @@ export const auth = betterAuth({
     github: {
       clientId: process.env.GITHUB_CLIENT_ID || '',
       clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
+      // Request repo scope for CLAUDE.md sync feature (F-017)
+      scope: ['read:user', 'user:email', 'public_repo'],
     },
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID || '',

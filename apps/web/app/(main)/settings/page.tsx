@@ -16,6 +16,7 @@ import {
   type NotificationPreferences,
 } from "@/app/actions/profile";
 import { updateNotificationPreferences, sendTestNotifications } from "@/app/actions/notifications";
+import { getLinkedAccountsAction } from "@/app/actions/auth";
 import { TwoFactorSettings } from "@/components/settings/two-factor-settings";
 import { PasskeySettings } from "@/components/settings/passkey-settings";
 import { E2EESettings } from "@/components/settings/e2ee-settings";
@@ -28,6 +29,7 @@ import { ConnectedAccounts } from "@/components/settings/connected-accounts";
 import { ApiKeySettings } from "@/components/settings/api-key-settings";
 import { ActivitySettings } from "@/components/settings/activity-settings";
 import { LocationTimezoneSettings } from "@/components/settings/location-timezone-settings";
+import { GitHubSyncSettings } from "@/components/settings/github-sync-settings";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import { BrowserNotificationPrompt } from "@/components/notifications/browser-notification-prompt";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
@@ -104,6 +106,9 @@ export default function SettingsPage() {
   // Password state (from auth user)
   const [hasPassword, setHasPassword] = useState(false);
 
+  // GitHub connection state (for CLAUDE.md sync)
+  const [isGitHubConnected, setIsGitHubConnected] = useState(false);
+
   // Privacy settings state
   const [privacy, setPrivacy] = useState<PrivacySettings>({
     showEmail: false,
@@ -158,10 +163,38 @@ export default function SettingsPage() {
   // Sync hasPassword from auth user
   useEffect(() => {
     if (authUser) {
-       
+
       setHasPassword(authUser.hasPassword ?? false);
     }
   }, [authUser]);
+
+  // Check GitHub connection status
+  useEffect(() => {
+    async function checkGitHubConnection() {
+      try {
+        const result = await getLinkedAccountsAction();
+        if (result.accounts) {
+          const hasGitHub = result.accounts.some(
+            (acc: { providerId: string }) => acc.providerId === "github"
+          );
+          setIsGitHubConnected(hasGitHub);
+        }
+      } catch {
+        // Ignore errors - assume not connected
+      }
+    }
+    if (isAuthenticated) {
+      checkGitHubConnection();
+
+      // Also check if we just connected GitHub via callback
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("connected") === "github") {
+        // Clean up URL and trigger re-check
+        window.history.replaceState({}, "", "/settings");
+        setIsGitHubConnected(true);
+      }
+    }
+  }, [isAuthenticated]);
 
   const loadSettings = useCallback(async (forceRefresh = false) => {
     // Try to load from cache first (instant)
@@ -1139,6 +1172,21 @@ export default function SettingsPage() {
             "border border-gray-200 dark:border-[#262626]"
           )}>
             <ApiKeySettings />
+          </div>
+
+          {/* GitHub CLAUDE.md Sync */}
+          <div className={cn(
+            "p-6 rounded-xl mt-6",
+            "bg-gray-50 dark:bg-[#111111]",
+            "border border-gray-200 dark:border-[#262626]"
+          )}>
+            <GitHubSyncSettings
+              isGitHubConnected={isGitHubConnected}
+              onConnectGitHub={() => {
+                // Redirect to GitHub OAuth
+                window.location.href = `/api/auth/sign-in/social?provider=github&callbackURL=${encodeURIComponent(window.location.pathname + "?connected=github")}`;
+              }}
+            />
           </div>
         </section>
 
