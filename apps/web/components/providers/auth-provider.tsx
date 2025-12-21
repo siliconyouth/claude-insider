@@ -98,12 +98,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [hasFallbackCompleted, setHasFallbackCompleted] = useState(false);
   const hasCheckedSession = useRef(false);
 
-  // Debug logging in development
+  // Debug logging - always log to help diagnose issues
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("[Auth] State:", { isPending, hasSession: !!sessionData, hasManual: !!manualSession });
-    }
-  }, [isPending, sessionData, manualSession]);
+    console.log("[Auth] State:", {
+      isPending,
+      hasSession: !!sessionData,
+      hasManual: !!manualSession,
+      hasFallbackCompleted,
+      isRefetching
+    });
+  }, [isPending, sessionData, manualSession, hasFallbackCompleted, isRefetching]);
 
   // Force session fetch for OAuth callback scenarios OR when useSession is stuck
   // This works around the Better Auth useSession reactivity issue
@@ -126,6 +130,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       hasCheckedSession.current = true;
 
       // Only fetch if we still have no session
+      console.log("[Auth] Starting fallback fetch...");
       setIsRefetching(true);
       try {
         // Better Auth's session endpoint - must match catch-all route handler
@@ -134,8 +139,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           cache: "no-store",
         });
 
+        console.log("[Auth] Fallback response status:", response.status);
+
         if (response.ok) {
           const data = await response.json();
+          console.log("[Auth] Fallback data:", { hasSession: !!data?.session, hasUser: !!data?.user });
           if (data?.session && data?.user) {
             console.log("[Auth] Session found via fallback API call");
             setManualSession({
@@ -147,6 +155,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } catch (error) {
         console.error("[Auth] Session refresh failed:", error);
       } finally {
+        console.log("[Auth] Fallback complete");
         setIsRefetching(false);
         setHasFallbackCompleted(true);
       }
