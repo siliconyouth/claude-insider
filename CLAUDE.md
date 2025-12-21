@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.7.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.8.1**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.7.0**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 39 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 42 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync
@@ -40,7 +40,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.7.0**.
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 10. [Component Patterns](#component-patterns) - Buttons, cards, focus states
-11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 86 tables, RLS, migrations
+11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 120 tables, RLS, migrations
 12. [Internationalization](#internationalization-i18n) - 18 languages
 13. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
 14. [Content Structure](#content-structure) - Documentation, resources, legal pages
@@ -133,7 +133,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (40 total)
+### Implemented Features (42 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -142,7 +142,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
 | FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
 | FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (1,979 chunks), ElevenLabs TTS (42 voices), speech-to-text |
-| FR-6 | Resources Section | 122+ curated resources, 10 categories, search, GitHub integration |
+| FR-6 | Resources Section | 1,952 curated resources, 10 categories, search, GitHub integration |
 | FR-7 | Account Security | Password management, OAuth linking, safety checks |
 | FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |
 | FR-9 | Admin Notifications | In-app, push, email channels; scheduling; targeting by role |
@@ -153,7 +153,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-14 | Notification Popups | Persistent until dismissed, deep-linking, ARIA regions |
 | FR-15 | Settings Model | Model selector in settings with feedback |
 | FR-16 | Header Model Display | Smart API key indicators, BEST badge, tier colors |
-| FR-17 | Database Types | 86 tables, auto-generated TypeScript types |
+| FR-17 | Database Types | 120 tables, auto-generated TypeScript types |
 | FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
 | FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
 | FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
@@ -176,7 +176,9 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
 | FR-38 | Resource Auto-Update | AI-powered updates via Claude Opus 4.5, Firecrawl scraping, admin review workflow, changelog tracking |
 | FR-39 | AI Pipeline Integration | Payload CMS settings, Documents/Resources tab redesign, CLI scripts for analysis/enhancement, operation queue |
-| FR-40 | Doc-Resource Cross-Linking | 147 AI-analyzed relationships, DocRelatedResources component, confidence scores, 7 relationship types |
+| FR-40 | Doc-Resource Cross-Linking | 147 doc-resource + 96 resource-resource relationships, DocRelatedResources component, confidence scores, 10 relationship types |
+| FR-41 | Admin Dashboard Content Management | Documentation, Resources, Relationships pages; role-based access; manual relationship editing |
+| FR-42 | Resource Discovery Pipeline | 6 adapter types (GitHub, ProductHunt, npm, etc.), discovery queue, data quality review scripts |
 
 ### Non-Functional Requirements
 
@@ -240,7 +242,7 @@ claude-insider/
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 89 SQL migration files
+│   └── supabase/migrations/      # 91 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -740,7 +742,7 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 
 ### Overview
 
-Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **89 migrations** define **86 tables** across 16 categories.
+Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **91 migrations** define **120 tables** across 18 categories.
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -902,7 +904,11 @@ supabase/migrations/
 ├── 050-053                      # Beta tester role, donation system
 ├── 054-057                      # E2EE (device keys, messages, verification, AI consent)
 ├── 058-061                      # Messaging indexes, job queue, donations, notification indexes
-└── 062-063                      # Presence indexes, chat performance (RPC functions, indexes)
+├── 062-063                      # Presence indexes, chat performance (RPC functions, indexes)
+├── 081-085                      # Resources system (tags, authors, alternatives, favorites, ratings, reviews, comments)
+├── 086-088                      # Documentation tables, relationships, resource AI enhancements
+├── 089-090                      # AI pipeline settings, operation queue, resource sources, discovery queue
+└── 091                          # Resource-resource relationships fix
 ```
 
 ### Mandatory Rules

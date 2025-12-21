@@ -1,15 +1,15 @@
 # Claude Insider Roadmap
 
-**Version:** 1.7.0
-**Last Updated:** 2025-12-20
-**Current Release:** v1.7.0
+**Version:** 1.8.1
+**Last Updated:** 2025-12-21
+**Current Release:** v1.8.1
 **Maintained By:** Vladimir Dukelic (vladimir@dukelic.com)
 
 ---
 
 ## Overview
 
-**🎉 Version 1.7.0 Released!** Doc-Resource Cross-Linking System with 147 AI-analyzed relationships connecting documentation pages to relevant resources. Every doc page now shows related resources with confidence scores and relationship badges. This roadmap outlines the development path from **v1.7.0** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
+**🎉 Version 1.8.1 Released!** Data Quality & Resource Relationships patch with 121 AI-analyzed resource-resource relationships, 679 data quality fixes (titles, descriptions), and 100% data coverage across all 1,952 resources. This roadmap outlines the development path from **v1.8.1** (current) to future versions, introducing new features across 6 focus areas: User Engagement, Developer Experience, Enterprise Features, Community Growth, Platform Expansion, and Monetization.
 
 **Philosophy:** Open Source First - all technology choices prioritize open source solutions with commercial alternatives listed where applicable.
 
@@ -19,6 +19,10 @@
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.8.1 | Dec 21 | Data Quality & Relationships: 121 resource-resource relationships, 679 data fixes, 100% coverage |
+| 1.8.0 | Dec 21 | Admin Dashboard & Resource Discovery: 3 new management pages, 6 adapter types, 120 tables, 1,952 resources |
+| 1.7.0 | Dec 20 | Doc-Resource Cross-Linking: 147 AI-analyzed relationships, confidence scores, 7 relationship types |
+| 1.6.0 | Dec 20 | AI Pipeline Integration: Payload CMS settings, Documents/Resources collection redesign, CLI scripts |
 | 1.5.0 | Dec 20 | Resource Auto-Update: AI-powered updates with Claude Opus 4.5, Firecrawl scraping, admin review |
 | 1.4.0 | Dec 19 | Performance: Lighthouse 86%, LCP -16%, lazy providers architecture |
 | 1.3.0 | Dec 19 | Profile Enhancements: Location/timezone display, share modal with OG images, mobile action bar |
@@ -47,8 +51,8 @@
 
 | Version | Codename | Features | Target | Theme |
 |---------|----------|----------|--------|-------|
-| 1.6.0 | Polish | Advanced analytics, Batch operations, Featured collections | Q1 2025 | Quality of Life |
-| 1.7.0 | Scale | Performance monitoring, Rate limiting, Resource attribution | Q1 2025 | Enterprise Ready |
+| 1.9.0 | Polish | Advanced analytics, Batch operations, Featured collections | Q1 2025 | Quality of Life |
+| 2.0.0 | Scale | Performance monitoring, Rate limiting, Resource attribution | Q1 2025 | Enterprise Ready |
 
 ---
 

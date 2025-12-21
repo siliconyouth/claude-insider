@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.7.0";
+const APP_VERSION = "1.8.1";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,30 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.8.1",
+    date: "2025-12-21",
+    type: "patch",
+    highlights: [
+      "🔗 121 Resource-Resource Relationships: AI-analyzed connections between resources",
+      "✨ Data Quality: Fixed 221 bad titles and generated 458 descriptions",
+      "📊 100% Data Coverage: All 1,952 resources now have proper titles and descriptions",
+      "🤖 Category Templates: AI-generated descriptions based on resource type",
+      "🔧 Quality Scripts: New tools for analyzing and fixing data issues",
+    ],
+  },
+  {
+    version: "1.8.0",
+    date: "2025-12-21",
+    type: "minor",
+    highlights: [
+      "🎛️ Admin Dashboard Expansion: New Documentation, Resources, and Relationships management pages",
+      "🔍 Resource Discovery Pipeline: 6 adapter types (GitHub, ProductHunt, npm, PyPI, Homebrew, Manual)",
+      "🗄️ 120 Database Tables: Up from 86, with 1,952 resources cataloged",
+      "📊 Data Quality Review: New scripts for reviewing and curating discovered resources",
+      "⚡ 92 Migrations: Complete resource relationship system with AI analysis",
+    ],
+  },
   {
     version: "1.7.0",
     date: "2025-12-20",

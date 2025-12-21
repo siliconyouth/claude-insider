@@ -404,6 +404,100 @@ export type Database = {
           },
         ]
       }
+      ai_operation_queue: {
+        Row: {
+          cli_command: string | null
+          completed_at: string | null
+          error_message: string | null
+          id: string
+          notes: string | null
+          operation_type: string
+          priority: number | null
+          requested_at: string | null
+          requested_by: string | null
+          result: Json | null
+          started_at: string | null
+          status: string | null
+          target_id: string
+          target_type: string
+        }
+        Insert: {
+          cli_command?: string | null
+          completed_at?: string | null
+          error_message?: string | null
+          id?: string
+          notes?: string | null
+          operation_type: string
+          priority?: number | null
+          requested_at?: string | null
+          requested_by?: string | null
+          result?: Json | null
+          started_at?: string | null
+          status?: string | null
+          target_id: string
+          target_type: string
+        }
+        Update: {
+          cli_command?: string | null
+          completed_at?: string | null
+          error_message?: string | null
+          id?: string
+          notes?: string | null
+          operation_type?: string
+          priority?: number | null
+          requested_at?: string | null
+          requested_by?: string | null
+          result?: Json | null
+          started_at?: string | null
+          status?: string | null
+          target_id?: string
+          target_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_operation_queue_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_pipeline_settings: {
+        Row: {
+          description: string | null
+          id: string
+          key: string
+          updated_at: string | null
+          updated_by: string | null
+          value: Json
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          key: string
+          updated_at?: string | null
+          updated_by?: string | null
+          value: Json
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          key?: string
+          updated_at?: string | null
+          updated_by?: string | null
+          value?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_pipeline_settings_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       api_key_usage_logs: {
         Row: {
           api_key_id: string
@@ -464,6 +558,7 @@ export type Database = {
           selected_voice_id: string | null
           show_conversation_history: boolean | null
           show_suggested_questions: boolean | null
+          sound_theme: string | null
           speech_rate: number | null
           updated_at: string | null
           user_display_name: string | null
@@ -480,6 +575,7 @@ export type Database = {
           selected_voice_id?: string | null
           show_conversation_history?: boolean | null
           show_suggested_questions?: boolean | null
+          sound_theme?: string | null
           speech_rate?: number | null
           updated_at?: string | null
           user_display_name?: string | null
@@ -496,6 +592,7 @@ export type Database = {
           selected_voice_id?: string | null
           show_conversation_history?: boolean | null
           show_suggested_questions?: boolean | null
+          sound_theme?: string | null
           speech_rate?: number | null
           updated_at?: string | null
           user_display_name?: string | null
@@ -732,7 +829,9 @@ export type Database = {
           cover_image_url: string | null
           created_at: string | null
           description: string | null
+          featured_order: number | null
           id: string
+          is_featured: boolean | null
           is_public: boolean | null
           item_count: number | null
           name: string
@@ -744,7 +843,9 @@ export type Database = {
           cover_image_url?: string | null
           created_at?: string | null
           description?: string | null
+          featured_order?: number | null
           id?: string
+          is_featured?: boolean | null
           is_public?: boolean | null
           item_count?: number | null
           name: string
@@ -756,7 +857,9 @@ export type Database = {
           cover_image_url?: string | null
           created_at?: string | null
           description?: string | null
+          featured_order?: number | null
           id?: string
+          is_featured?: boolean | null
           is_public?: boolean | null
           item_count?: number | null
           name?: string
@@ -1085,6 +1188,42 @@ export type Database = {
           },
         ]
       }
+      dm_message_read_receipts: {
+        Row: {
+          id: string
+          message_id: string
+          read_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          message_id: string
+          read_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          message_id?: string
+          read_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dm_message_read_receipts_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "dm_messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dm_message_read_receipts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dm_messages: {
         Row: {
           ai_response_to: string | null
@@ -1288,6 +1427,396 @@ export type Database = {
           },
         ]
       }
+      doc_resource_relationships: {
+        Row: {
+          ai_model: string | null
+          ai_reasoning: string | null
+          analyzed_at: string | null
+          confidence_score: number
+          context_snippet: string | null
+          created_at: string | null
+          display_priority: number | null
+          doc_section: string | null
+          doc_slug: string
+          id: string
+          is_active: boolean | null
+          is_manual: boolean | null
+          relationship_type: string
+          resource_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          ai_model?: string | null
+          ai_reasoning?: string | null
+          analyzed_at?: string | null
+          confidence_score: number
+          context_snippet?: string | null
+          created_at?: string | null
+          display_priority?: number | null
+          doc_section?: string | null
+          doc_slug: string
+          id?: string
+          is_active?: boolean | null
+          is_manual?: boolean | null
+          relationship_type?: string
+          resource_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          ai_model?: string | null
+          ai_reasoning?: string | null
+          analyzed_at?: string | null
+          confidence_score?: number
+          context_snippet?: string | null
+          created_at?: string | null
+          display_priority?: number | null
+          doc_section?: string | null
+          doc_slug?: string
+          id?: string
+          is_active?: boolean | null
+          is_manual?: boolean | null
+          relationship_type?: string
+          resource_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "doc_resource_relationships_doc_slug_fkey"
+            columns: ["doc_slug"]
+            isOneToOne: false
+            referencedRelation: "documentation"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "doc_resource_relationships_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documentation: {
+        Row: {
+          ai_model: string | null
+          ai_summary: string | null
+          category: string
+          code_block_count: number | null
+          content: string
+          content_hash: string | null
+          created_at: string | null
+          description: string | null
+          generated_date: string | null
+          heading_count: number | null
+          is_featured: boolean | null
+          is_published: boolean | null
+          last_scraped_at: string | null
+          next_slug: string | null
+          order_index: number | null
+          parent_slug: string | null
+          prev_slug: string | null
+          reading_time_minutes: number | null
+          scrape_status: string | null
+          search_vector: unknown
+          slug: string
+          source_urls: string[] | null
+          sources: Json | null
+          subcategory: string | null
+          title: string
+          updated_at: string | null
+          version: number | null
+          word_count: number | null
+        }
+        Insert: {
+          ai_model?: string | null
+          ai_summary?: string | null
+          category: string
+          code_block_count?: number | null
+          content: string
+          content_hash?: string | null
+          created_at?: string | null
+          description?: string | null
+          generated_date?: string | null
+          heading_count?: number | null
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          last_scraped_at?: string | null
+          next_slug?: string | null
+          order_index?: number | null
+          parent_slug?: string | null
+          prev_slug?: string | null
+          reading_time_minutes?: number | null
+          scrape_status?: string | null
+          search_vector?: unknown
+          slug: string
+          source_urls?: string[] | null
+          sources?: Json | null
+          subcategory?: string | null
+          title: string
+          updated_at?: string | null
+          version?: number | null
+          word_count?: number | null
+        }
+        Update: {
+          ai_model?: string | null
+          ai_summary?: string | null
+          category?: string
+          code_block_count?: number | null
+          content?: string
+          content_hash?: string | null
+          created_at?: string | null
+          description?: string | null
+          generated_date?: string | null
+          heading_count?: number | null
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          last_scraped_at?: string | null
+          next_slug?: string | null
+          order_index?: number | null
+          parent_slug?: string | null
+          prev_slug?: string | null
+          reading_time_minutes?: number | null
+          scrape_status?: string | null
+          search_vector?: unknown
+          slug?: string
+          source_urls?: string[] | null
+          sources?: Json | null
+          subcategory?: string | null
+          title?: string
+          updated_at?: string | null
+          version?: number | null
+          word_count?: number | null
+        }
+        Relationships: []
+      }
+      documentation_history: {
+        Row: {
+          ai_confidence: number | null
+          ai_model: string | null
+          change_summary: string | null
+          change_type: string
+          changed_by: string | null
+          content: string
+          created_at: string | null
+          description: string | null
+          doc_slug: string
+          id: string
+          sources: Json | null
+          title: string
+          version: number
+        }
+        Insert: {
+          ai_confidence?: number | null
+          ai_model?: string | null
+          change_summary?: string | null
+          change_type: string
+          changed_by?: string | null
+          content: string
+          created_at?: string | null
+          description?: string | null
+          doc_slug: string
+          id?: string
+          sources?: Json | null
+          title: string
+          version: number
+        }
+        Update: {
+          ai_confidence?: number | null
+          ai_model?: string | null
+          change_summary?: string | null
+          change_type?: string
+          changed_by?: string | null
+          content?: string
+          created_at?: string | null
+          description?: string | null
+          doc_slug?: string
+          id?: string
+          sources?: Json | null
+          title?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documentation_history_changed_by_fkey"
+            columns: ["changed_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documentation_history_doc_slug_fkey"
+            columns: ["doc_slug"]
+            isOneToOne: false
+            referencedRelation: "documentation"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      documentation_sections: {
+        Row: {
+          content_preview: string | null
+          created_at: string | null
+          doc_slug: string
+          heading_id: string
+          heading_level: number
+          heading_text: string
+          id: string
+          order_index: number
+          search_vector: unknown
+          word_count: number | null
+        }
+        Insert: {
+          content_preview?: string | null
+          created_at?: string | null
+          doc_slug: string
+          heading_id: string
+          heading_level: number
+          heading_text: string
+          id?: string
+          order_index: number
+          search_vector?: unknown
+          word_count?: number | null
+        }
+        Update: {
+          content_preview?: string | null
+          created_at?: string | null
+          doc_slug?: string
+          heading_id?: string
+          heading_level?: number
+          heading_text?: string
+          id?: string
+          order_index?: number
+          search_vector?: unknown
+          word_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documentation_sections_doc_slug_fkey"
+            columns: ["doc_slug"]
+            isOneToOne: false
+            referencedRelation: "documentation"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      documentation_update_jobs: {
+        Row: {
+          ai_confidence: number | null
+          ai_model: string | null
+          ai_summary: string | null
+          ai_warnings: string[] | null
+          analyzed_at: string | null
+          completed_at: string | null
+          content_diff: string | null
+          created_at: string | null
+          current_content: string | null
+          doc_slug: string
+          error_details: Json | null
+          error_message: string | null
+          id: string
+          key_changes: string[] | null
+          proposed_content: string | null
+          proposed_description: string | null
+          proposed_sources: Json | null
+          proposed_title: string | null
+          retry_count: number | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          scrape_errors: Json | null
+          scraped_at: string | null
+          scraped_content: Json | null
+          status: string
+          trigger_type: string
+          triggered_by: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          ai_confidence?: number | null
+          ai_model?: string | null
+          ai_summary?: string | null
+          ai_warnings?: string[] | null
+          analyzed_at?: string | null
+          completed_at?: string | null
+          content_diff?: string | null
+          created_at?: string | null
+          current_content?: string | null
+          doc_slug: string
+          error_details?: Json | null
+          error_message?: string | null
+          id?: string
+          key_changes?: string[] | null
+          proposed_content?: string | null
+          proposed_description?: string | null
+          proposed_sources?: Json | null
+          proposed_title?: string | null
+          retry_count?: number | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          scrape_errors?: Json | null
+          scraped_at?: string | null
+          scraped_content?: Json | null
+          status?: string
+          trigger_type: string
+          triggered_by?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          ai_confidence?: number | null
+          ai_model?: string | null
+          ai_summary?: string | null
+          ai_warnings?: string[] | null
+          analyzed_at?: string | null
+          completed_at?: string | null
+          content_diff?: string | null
+          created_at?: string | null
+          current_content?: string | null
+          doc_slug?: string
+          error_details?: Json | null
+          error_message?: string | null
+          id?: string
+          key_changes?: string[] | null
+          proposed_content?: string | null
+          proposed_description?: string | null
+          proposed_sources?: Json | null
+          proposed_title?: string | null
+          retry_count?: number | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          scrape_errors?: Json | null
+          scraped_at?: string | null
+          scraped_content?: Json | null
+          status?: string
+          trigger_type?: string
+          triggered_by?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documentation_update_jobs_doc_slug_fkey"
+            columns: ["doc_slug"]
+            isOneToOne: false
+            referencedRelation: "documentation"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "documentation_update_jobs_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documentation_update_jobs_triggered_by_fkey"
+            columns: ["triggered_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       donation_bank_info: {
         Row: {
           account_holder: string
@@ -1436,7 +1965,9 @@ export type Database = {
           metadata: Json | null
           payment_method: string
           paypal_order_id: string | null
+          paypal_payer_email: string | null
           paypal_payer_id: string | null
+          paypal_payer_name: string | null
           recurring_frequency: string | null
           status: string
           subscription_id: string | null
@@ -1462,7 +1993,9 @@ export type Database = {
           metadata?: Json | null
           payment_method: string
           paypal_order_id?: string | null
+          paypal_payer_email?: string | null
           paypal_payer_id?: string | null
+          paypal_payer_name?: string | null
           recurring_frequency?: string | null
           status?: string
           subscription_id?: string | null
@@ -1488,7 +2021,9 @@ export type Database = {
           metadata?: Json | null
           payment_method?: string
           paypal_order_id?: string | null
+          paypal_payer_email?: string | null
           paypal_payer_id?: string | null
+          paypal_payer_name?: string | null
           recurring_frequency?: string | null
           status?: string
           subscription_id?: string | null
@@ -2419,6 +2954,54 @@ export type Database = {
           },
         ]
       }
+      job_queue: {
+        Row: {
+          attempts: number
+          completed_at: string | null
+          created_at: string
+          error_count: number
+          id: string
+          last_error: string | null
+          max_attempts: number
+          payload: Json
+          priority: number
+          run_at: string
+          started_at: string | null
+          status: string
+          type: string
+        }
+        Insert: {
+          attempts?: number
+          completed_at?: string | null
+          created_at?: string
+          error_count?: number
+          id?: string
+          last_error?: string | null
+          max_attempts?: number
+          payload?: Json
+          priority?: number
+          run_at?: string
+          started_at?: string | null
+          status?: string
+          type: string
+        }
+        Update: {
+          attempts?: number
+          completed_at?: string | null
+          created_at?: string
+          error_count?: number
+          id?: string
+          last_error?: string | null
+          max_attempts?: number
+          payload?: Json
+          priority?: number
+          run_at?: string
+          started_at?: string | null
+          status?: string
+          type?: string
+        }
+        Relationships: []
+      }
       magic_login_links: {
         Row: {
           created_at: string | null
@@ -2676,7 +3259,7 @@ export type Database = {
           created_at: string
           device_key_id: string
           id: string
-          key_id: number
+          key_id: string
           public_key: string
         }
         Insert: {
@@ -2686,7 +3269,7 @@ export type Database = {
           created_at?: string
           device_key_id: string
           id?: string
-          key_id: number
+          key_id: string
           public_key: string
         }
         Update: {
@@ -2696,7 +3279,7 @@ export type Database = {
           created_at?: string
           device_key_id?: string
           id?: string
-          key_id?: number
+          key_id?: string
           public_key?: string
         }
         Relationships: [
@@ -3023,6 +3606,86 @@ export type Database = {
           },
         ]
       }
+      relationship_analysis_jobs: {
+        Row: {
+          ai_model: string | null
+          completed_at: string | null
+          cost_estimate: number | null
+          created_at: string | null
+          discovered_relationships: Json | null
+          error_details: Json | null
+          error_message: string | null
+          id: string
+          job_type: string
+          progress_current: number | null
+          progress_total: number | null
+          relationships_created: number | null
+          relationships_skipped: number | null
+          relationships_updated: number | null
+          started_at: string | null
+          status: string
+          target_id: string
+          target_type: string
+          tokens_used: number | null
+          trigger_type: string | null
+          triggered_by: string | null
+        }
+        Insert: {
+          ai_model?: string | null
+          completed_at?: string | null
+          cost_estimate?: number | null
+          created_at?: string | null
+          discovered_relationships?: Json | null
+          error_details?: Json | null
+          error_message?: string | null
+          id?: string
+          job_type: string
+          progress_current?: number | null
+          progress_total?: number | null
+          relationships_created?: number | null
+          relationships_skipped?: number | null
+          relationships_updated?: number | null
+          started_at?: string | null
+          status?: string
+          target_id: string
+          target_type: string
+          tokens_used?: number | null
+          trigger_type?: string | null
+          triggered_by?: string | null
+        }
+        Update: {
+          ai_model?: string | null
+          completed_at?: string | null
+          cost_estimate?: number | null
+          created_at?: string | null
+          discovered_relationships?: Json | null
+          error_details?: Json | null
+          error_message?: string | null
+          id?: string
+          job_type?: string
+          progress_current?: number | null
+          progress_total?: number | null
+          relationships_created?: number | null
+          relationships_skipped?: number | null
+          relationships_updated?: number | null
+          started_at?: string | null
+          status?: string
+          target_id?: string
+          target_type?: string
+          tokens_used?: number | null
+          trigger_type?: string | null
+          triggered_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "relationship_analysis_jobs_triggered_by_fkey"
+            columns: ["triggered_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reports: {
         Row: {
           action_taken: string | null
@@ -3106,6 +3769,388 @@ export type Database = {
           },
         ]
       }
+      resource_alternatives: {
+        Row: {
+          alternative_resource_id: string
+          created_at: string | null
+          id: string
+          notes: string | null
+          relationship: string | null
+          resource_id: string
+        }
+        Insert: {
+          alternative_resource_id: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          relationship?: string | null
+          resource_id: string
+        }
+        Update: {
+          alternative_resource_id?: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          relationship?: string | null
+          resource_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_alternatives_alternative_resource_id_fkey"
+            columns: ["alternative_resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_alternatives_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_authors: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          github_username: string | null
+          id: string
+          is_primary: boolean | null
+          name: string
+          resource_id: string
+          role: string | null
+          twitter_username: string | null
+          user_id: string | null
+          website_url: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          github_username?: string | null
+          id?: string
+          is_primary?: boolean | null
+          name: string
+          resource_id: string
+          role?: string | null
+          twitter_username?: string | null
+          user_id?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          github_username?: string | null
+          id?: string
+          is_primary?: boolean | null
+          name?: string
+          resource_id?: string
+          role?: string | null
+          twitter_username?: string | null
+          user_id?: string | null
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_authors_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_authors_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_changelog: {
+        Row: {
+          ai_summary: string | null
+          applied_at: string | null
+          applied_by: string | null
+          changes: Json
+          id: string
+          resource_id: string
+          source_type: string | null
+          source_urls: string[] | null
+          stats_snapshot: Json | null
+          update_job_id: string | null
+          version: number
+        }
+        Insert: {
+          ai_summary?: string | null
+          applied_at?: string | null
+          applied_by?: string | null
+          changes: Json
+          id?: string
+          resource_id: string
+          source_type?: string | null
+          source_urls?: string[] | null
+          stats_snapshot?: Json | null
+          update_job_id?: string | null
+          version?: number
+        }
+        Update: {
+          ai_summary?: string | null
+          applied_at?: string | null
+          applied_by?: string | null
+          changes?: Json
+          id?: string
+          resource_id?: string
+          source_type?: string | null
+          source_urls?: string[] | null
+          stats_snapshot?: Json | null
+          update_job_id?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_changelog_applied_by_fkey"
+            columns: ["applied_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_changelog_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_changelog_update_job_id_fkey"
+            columns: ["update_job_id"]
+            isOneToOne: false
+            referencedRelation: "resource_update_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_comment_likes: {
+        Row: {
+          comment_id: string
+          created_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          comment_id: string
+          created_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          comment_id?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_comment_likes_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "resource_comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_comment_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_comments: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          likes_count: number | null
+          moderated_at: string | null
+          moderated_by: string | null
+          parent_id: string | null
+          resource_id: string
+          status: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          likes_count?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          parent_id?: string | null
+          resource_id: string
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          likes_count?: number | null
+          moderated_at?: string | null
+          moderated_by?: string | null
+          parent_id?: string | null
+          resource_id?: string
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_comments_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "resource_comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_comments_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_comments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_discovery_queue: {
+        Row: {
+          created_at: string | null
+          discovered_at: string | null
+          discovered_data: Json | null
+          discovered_description: string | null
+          discovered_title: string | null
+          discovered_url: string
+          id: string
+          rejection_reason: string | null
+          resource_id: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          source_id: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          discovered_at?: string | null
+          discovered_data?: Json | null
+          discovered_description?: string | null
+          discovered_title?: string | null
+          discovered_url: string
+          id?: string
+          rejection_reason?: string | null
+          resource_id?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          source_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          discovered_at?: string | null
+          discovered_data?: Json | null
+          discovered_description?: string | null
+          discovered_title?: string | null
+          discovered_url?: string
+          id?: string
+          rejection_reason?: string | null
+          resource_id?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          source_id?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_discovery_queue_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_discovery_queue_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_discovery_queue_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "resource_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_favorites: {
+        Row: {
+          created_at: string | null
+          id: string
+          resource_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          resource_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          resource_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_favorites_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_favorites_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       resource_rating_stats: {
         Row: {
           average_rating: number | null
@@ -3151,6 +4196,549 @@ export type Database = {
         }
         Relationships: []
       }
+      resource_ratings: {
+        Row: {
+          created_at: string | null
+          id: string
+          rating: number
+          resource_id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          rating: number
+          resource_id: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          rating?: number
+          resource_id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_ratings_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_ratings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_relationships: {
+        Row: {
+          ai_model: string | null
+          ai_reasoning: string | null
+          analyzed_at: string | null
+          confidence_score: number
+          created_at: string | null
+          display_priority: number | null
+          id: string
+          is_active: boolean | null
+          is_bidirectional: boolean | null
+          is_manual: boolean | null
+          relationship_type: string
+          shared_tags: string[] | null
+          similarity_factors: Json | null
+          source_resource_id: string
+          target_resource_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          ai_model?: string | null
+          ai_reasoning?: string | null
+          analyzed_at?: string | null
+          confidence_score: number
+          created_at?: string | null
+          display_priority?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_bidirectional?: boolean | null
+          is_manual?: boolean | null
+          relationship_type: string
+          shared_tags?: string[] | null
+          similarity_factors?: Json | null
+          source_resource_id: string
+          target_resource_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          ai_model?: string | null
+          ai_reasoning?: string | null
+          analyzed_at?: string | null
+          confidence_score?: number
+          created_at?: string | null
+          display_priority?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_bidirectional?: boolean | null
+          is_manual?: boolean | null
+          relationship_type?: string
+          shared_tags?: string[] | null
+          similarity_factors?: Json | null
+          source_resource_id?: string
+          target_resource_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_relationships_source_resource_id_fkey"
+            columns: ["source_resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_relationships_target_resource_id_fkey"
+            columns: ["target_resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_resource_relationships: {
+        Row: {
+          ai_model: string | null
+          ai_reasoning: string | null
+          analyzed_at: string | null
+          confidence_score: number
+          created_at: string | null
+          display_priority: number | null
+          id: string
+          is_active: boolean | null
+          is_bidirectional: boolean | null
+          is_manual: boolean | null
+          relationship_type: string
+          shared_tags: string[] | null
+          similarity_factors: Json | null
+          source_resource_id: string
+          target_resource_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          ai_model?: string | null
+          ai_reasoning?: string | null
+          analyzed_at?: string | null
+          confidence_score?: number
+          created_at?: string | null
+          display_priority?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_bidirectional?: boolean | null
+          is_manual?: boolean | null
+          relationship_type?: string
+          shared_tags?: string[] | null
+          similarity_factors?: Json | null
+          source_resource_id: string
+          target_resource_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          ai_model?: string | null
+          ai_reasoning?: string | null
+          analyzed_at?: string | null
+          confidence_score?: number
+          created_at?: string | null
+          display_priority?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_bidirectional?: boolean | null
+          is_manual?: boolean | null
+          relationship_type?: string
+          shared_tags?: string[] | null
+          similarity_factors?: Json | null
+          source_resource_id?: string
+          target_resource_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_resource_relationships_source_resource_id_fkey"
+            columns: ["source_resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_resource_relationships_target_resource_id_fkey"
+            columns: ["target_resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_review_votes: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_helpful: boolean
+          review_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_helpful: boolean
+          review_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_helpful?: boolean
+          review_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_review_votes_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "resource_reviews"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_review_votes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_reviews: {
+        Row: {
+          cons: string[] | null
+          content: string
+          created_at: string | null
+          helpful_count: number | null
+          id: string
+          moderated_at: string | null
+          moderated_by: string | null
+          moderation_notes: string | null
+          not_helpful_count: number | null
+          pros: string[] | null
+          rating: number
+          resource_id: string
+          status: string | null
+          title: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          cons?: string[] | null
+          content: string
+          created_at?: string | null
+          helpful_count?: number | null
+          id?: string
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          not_helpful_count?: number | null
+          pros?: string[] | null
+          rating: number
+          resource_id: string
+          status?: string | null
+          title?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          cons?: string[] | null
+          content?: string
+          created_at?: string | null
+          helpful_count?: number | null
+          id?: string
+          moderated_at?: string | null
+          moderated_by?: string | null
+          moderation_notes?: string | null
+          not_helpful_count?: number | null
+          pros?: string[] | null
+          rating?: number
+          resource_id?: string
+          status?: string | null
+          title?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_reviews_moderated_by_fkey"
+            columns: ["moderated_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_reviews_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_reviews_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_sources: {
+        Row: {
+          auto_approve: boolean | null
+          awesome_config: Json | null
+          created_at: string | null
+          created_by: string | null
+          default_category: string | null
+          default_subcategory: string | null
+          default_tags: string[] | null
+          description: string | null
+          exclude_patterns: string[] | null
+          github_config: Json | null
+          id: string
+          include_patterns: string[] | null
+          is_active: boolean | null
+          last_discovered_count: number | null
+          last_scan_error: string | null
+          last_scan_status: string | null
+          last_scanned_at: string | null
+          min_downloads: number | null
+          min_stars: number | null
+          name: string
+          next_scan_at: string | null
+          notes: string | null
+          pending_count: number | null
+          registry_config: Json | null
+          resource_count: number | null
+          scan_frequency: string | null
+          type: string
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          auto_approve?: boolean | null
+          awesome_config?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          default_category?: string | null
+          default_subcategory?: string | null
+          default_tags?: string[] | null
+          description?: string | null
+          exclude_patterns?: string[] | null
+          github_config?: Json | null
+          id?: string
+          include_patterns?: string[] | null
+          is_active?: boolean | null
+          last_discovered_count?: number | null
+          last_scan_error?: string | null
+          last_scan_status?: string | null
+          last_scanned_at?: string | null
+          min_downloads?: number | null
+          min_stars?: number | null
+          name: string
+          next_scan_at?: string | null
+          notes?: string | null
+          pending_count?: number | null
+          registry_config?: Json | null
+          resource_count?: number | null
+          scan_frequency?: string | null
+          type: string
+          updated_at?: string | null
+          url: string
+        }
+        Update: {
+          auto_approve?: boolean | null
+          awesome_config?: Json | null
+          created_at?: string | null
+          created_by?: string | null
+          default_category?: string | null
+          default_subcategory?: string | null
+          default_tags?: string[] | null
+          description?: string | null
+          exclude_patterns?: string[] | null
+          github_config?: Json | null
+          id?: string
+          include_patterns?: string[] | null
+          is_active?: boolean | null
+          last_discovered_count?: number | null
+          last_scan_error?: string | null
+          last_scan_status?: string | null
+          last_scanned_at?: string | null
+          min_downloads?: number | null
+          min_stars?: number | null
+          name?: string
+          next_scan_at?: string | null
+          notes?: string | null
+          pending_count?: number | null
+          registry_config?: Json | null
+          resource_count?: number | null
+          scan_frequency?: string | null
+          type?: string
+          updated_at?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_sources_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_tags: {
+        Row: {
+          created_at: string | null
+          id: string
+          resource_id: string
+          tag: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          resource_id: string
+          tag: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          resource_id?: string
+          tag?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_tags_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_update_jobs: {
+        Row: {
+          ai_model: string | null
+          ai_summary: string | null
+          analyzed_at: string | null
+          completed_at: string | null
+          created_at: string | null
+          error_details: Json | null
+          error_message: string | null
+          id: string
+          new_screenshots: string[] | null
+          overall_confidence: number | null
+          proposed_changes: Json | null
+          resource_id: string
+          retry_count: number | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          scrape_errors: Json | null
+          scraped_at: string | null
+          scraped_content: Json | null
+          screenshot_errors: string[] | null
+          selected_changes: Json | null
+          status: string
+          trigger_type: string
+          triggered_by: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          ai_model?: string | null
+          ai_summary?: string | null
+          analyzed_at?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          error_details?: Json | null
+          error_message?: string | null
+          id?: string
+          new_screenshots?: string[] | null
+          overall_confidence?: number | null
+          proposed_changes?: Json | null
+          resource_id: string
+          retry_count?: number | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          scrape_errors?: Json | null
+          scraped_at?: string | null
+          scraped_content?: Json | null
+          screenshot_errors?: string[] | null
+          selected_changes?: Json | null
+          status?: string
+          trigger_type: string
+          triggered_by?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          ai_model?: string | null
+          ai_summary?: string | null
+          analyzed_at?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          error_details?: Json | null
+          error_message?: string | null
+          id?: string
+          new_screenshots?: string[] | null
+          overall_confidence?: number | null
+          proposed_changes?: Json | null
+          resource_id?: string
+          retry_count?: number | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          scrape_errors?: Json | null
+          scraped_at?: string | null
+          scraped_content?: Json | null
+          screenshot_errors?: string[] | null
+          selected_changes?: Json | null
+          status?: string
+          trigger_type?: string
+          triggered_by?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_update_jobs_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_update_jobs_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_update_jobs_triggered_by_fkey"
+            columns: ["triggered_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       resource_view_stats: {
         Row: {
           last_viewed_at: string | null
@@ -3187,43 +4775,339 @@ export type Database = {
         }
         Relationships: []
       }
-      resource_views: {
+      resource_view_stats_daily: {
         Row: {
+          date: string
           id: string
-          referrer: string | null
           resource_id: string
-          resource_type: string
-          session_id: string | null
-          user_agent: string | null
-          user_id: string | null
-          viewed_at: string | null
+          unique_visitors: number | null
+          views: number | null
         }
         Insert: {
+          date: string
           id?: string
-          referrer?: string | null
           resource_id: string
-          resource_type: string
-          session_id?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-          viewed_at?: string | null
+          unique_visitors?: number | null
+          views?: number | null
         }
         Update: {
+          date?: string
           id?: string
-          referrer?: string | null
           resource_id?: string
-          resource_type?: string
-          session_id?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-          viewed_at?: string | null
+          unique_visitors?: number | null
+          views?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "resource_view_stats_daily_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_views: {
+        Row: {
+          created_at: string | null
+          id: string
+          ip_hash: string | null
+          referrer: string | null
+          resource_id: string
+          user_agent: string | null
+          user_id: string | null
+          visitor_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          ip_hash?: string | null
+          referrer?: string | null
+          resource_id: string
+          user_agent?: string | null
+          user_id?: string | null
+          visitor_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          ip_hash?: string | null
+          referrer?: string | null
+          resource_id?: string
+          user_agent?: string | null
+          user_id?: string | null
+          visitor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_views_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "resource_views_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resources: {
+        Row: {
+          added_at: string | null
+          ai_analyzed_at: string | null
+          ai_confidence: number | null
+          ai_overview: string | null
+          ai_summary: string | null
+          auto_update_enabled: boolean | null
+          average_rating: number | null
+          banner_url: string | null
+          category: string
+          changelog_count: number | null
+          changelog_url: string | null
+          comments_count: number | null
+          cons: string[] | null
+          created_at: string | null
+          description: string
+          difficulty: string | null
+          discord_url: string | null
+          docs_url: string | null
+          favorites_count: number | null
+          featured_reason: string | null
+          github_contributors: number | null
+          github_forks: number | null
+          github_issues: number | null
+          github_language: string | null
+          github_last_commit: string | null
+          github_owner: string | null
+          github_repo: string | null
+          github_stars: number | null
+          icon_url: string | null
+          id: string
+          is_featured: boolean | null
+          is_published: boolean | null
+          key_features: string[] | null
+          last_auto_updated_at: string | null
+          last_synced_at: string | null
+          last_update_job_id: string | null
+          last_verified_at: string | null
+          license: string | null
+          long_description: string | null
+          meta_description: string | null
+          meta_title: string | null
+          namespace: string | null
+          npm_downloads_weekly: number | null
+          npm_package: string | null
+          og_image_url: string | null
+          platforms: string[] | null
+          prerequisites: string[] | null
+          price_details: Json | null
+          pricing: string | null
+          primary_screenshot_url: string | null
+          pros: string[] | null
+          pypi_downloads_monthly: number | null
+          pypi_package: string | null
+          ratings_count: number | null
+          related_doc_slugs: string[] | null
+          related_docs_count: number | null
+          related_resource_slugs: string[] | null
+          related_resources_count: number | null
+          reviews_count: number | null
+          screenshot_metadata: Json | null
+          screenshots: string[] | null
+          slug: string
+          status: string | null
+          subcategory: string | null
+          target_audience: string[] | null
+          thumbnail_url: string | null
+          title: string
+          trending_calculated_at: string | null
+          trending_score: number | null
+          twitter_url: string | null
+          update_frequency: string | null
+          update_notes: string | null
+          updated_at: string | null
+          url: string
+          use_cases: string[] | null
+          version: string | null
+          video_url: string | null
+          views_count: number | null
+          views_this_week: number | null
+          website_url: string | null
+        }
+        Insert: {
+          added_at?: string | null
+          ai_analyzed_at?: string | null
+          ai_confidence?: number | null
+          ai_overview?: string | null
+          ai_summary?: string | null
+          auto_update_enabled?: boolean | null
+          average_rating?: number | null
+          banner_url?: string | null
+          category: string
+          changelog_count?: number | null
+          changelog_url?: string | null
+          comments_count?: number | null
+          cons?: string[] | null
+          created_at?: string | null
+          description: string
+          difficulty?: string | null
+          discord_url?: string | null
+          docs_url?: string | null
+          favorites_count?: number | null
+          featured_reason?: string | null
+          github_contributors?: number | null
+          github_forks?: number | null
+          github_issues?: number | null
+          github_language?: string | null
+          github_last_commit?: string | null
+          github_owner?: string | null
+          github_repo?: string | null
+          github_stars?: number | null
+          icon_url?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          key_features?: string[] | null
+          last_auto_updated_at?: string | null
+          last_synced_at?: string | null
+          last_update_job_id?: string | null
+          last_verified_at?: string | null
+          license?: string | null
+          long_description?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          namespace?: string | null
+          npm_downloads_weekly?: number | null
+          npm_package?: string | null
+          og_image_url?: string | null
+          platforms?: string[] | null
+          prerequisites?: string[] | null
+          price_details?: Json | null
+          pricing?: string | null
+          primary_screenshot_url?: string | null
+          pros?: string[] | null
+          pypi_downloads_monthly?: number | null
+          pypi_package?: string | null
+          ratings_count?: number | null
+          related_doc_slugs?: string[] | null
+          related_docs_count?: number | null
+          related_resource_slugs?: string[] | null
+          related_resources_count?: number | null
+          reviews_count?: number | null
+          screenshot_metadata?: Json | null
+          screenshots?: string[] | null
+          slug: string
+          status?: string | null
+          subcategory?: string | null
+          target_audience?: string[] | null
+          thumbnail_url?: string | null
+          title: string
+          trending_calculated_at?: string | null
+          trending_score?: number | null
+          twitter_url?: string | null
+          update_frequency?: string | null
+          update_notes?: string | null
+          updated_at?: string | null
+          url: string
+          use_cases?: string[] | null
+          version?: string | null
+          video_url?: string | null
+          views_count?: number | null
+          views_this_week?: number | null
+          website_url?: string | null
+        }
+        Update: {
+          added_at?: string | null
+          ai_analyzed_at?: string | null
+          ai_confidence?: number | null
+          ai_overview?: string | null
+          ai_summary?: string | null
+          auto_update_enabled?: boolean | null
+          average_rating?: number | null
+          banner_url?: string | null
+          category?: string
+          changelog_count?: number | null
+          changelog_url?: string | null
+          comments_count?: number | null
+          cons?: string[] | null
+          created_at?: string | null
+          description?: string
+          difficulty?: string | null
+          discord_url?: string | null
+          docs_url?: string | null
+          favorites_count?: number | null
+          featured_reason?: string | null
+          github_contributors?: number | null
+          github_forks?: number | null
+          github_issues?: number | null
+          github_language?: string | null
+          github_last_commit?: string | null
+          github_owner?: string | null
+          github_repo?: string | null
+          github_stars?: number | null
+          icon_url?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          key_features?: string[] | null
+          last_auto_updated_at?: string | null
+          last_synced_at?: string | null
+          last_update_job_id?: string | null
+          last_verified_at?: string | null
+          license?: string | null
+          long_description?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          namespace?: string | null
+          npm_downloads_weekly?: number | null
+          npm_package?: string | null
+          og_image_url?: string | null
+          platforms?: string[] | null
+          prerequisites?: string[] | null
+          price_details?: Json | null
+          pricing?: string | null
+          primary_screenshot_url?: string | null
+          pros?: string[] | null
+          pypi_downloads_monthly?: number | null
+          pypi_package?: string | null
+          ratings_count?: number | null
+          related_doc_slugs?: string[] | null
+          related_docs_count?: number | null
+          related_resource_slugs?: string[] | null
+          related_resources_count?: number | null
+          reviews_count?: number | null
+          screenshot_metadata?: Json | null
+          screenshots?: string[] | null
+          slug?: string
+          status?: string | null
+          subcategory?: string | null
+          target_audience?: string[] | null
+          thumbnail_url?: string | null
+          title?: string
+          trending_calculated_at?: string | null
+          trending_score?: number | null
+          twitter_url?: string | null
+          update_frequency?: string | null
+          update_notes?: string | null
+          updated_at?: string | null
+          url?: string
+          use_cases?: string[] | null
+          version?: string | null
+          video_url?: string | null
+          views_count?: number | null
+          views_this_week?: number | null
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resources_last_update_job_id_fkey"
+            columns: ["last_update_job_id"]
+            isOneToOne: false
+            referencedRelation: "resource_update_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -3745,6 +5629,9 @@ export type Database = {
           banReason: string | null
           bio: string | null
           blocked_count: number | null
+          country_code: string | null
+          coverPhotoPath: string | null
+          coverPhotoUrl: string | null
           createdAt: string
           displayName: string | null
           email: string
@@ -3759,6 +5646,7 @@ export type Database = {
           isBetaTester: boolean | null
           isVerified: boolean | null
           items_read_count: number | null
+          location: string | null
           mfaSetupRequired: boolean | null
           name: string
           onboardingStep: number | null
@@ -3768,6 +5656,7 @@ export type Database = {
           role: string | null
           saved_search_count: number | null
           socialLinks: Json | null
+          timezone: string | null
           twoFactorBackupCodes: string[] | null
           twoFactorEnabled: boolean | null
           twoFactorSecret: string | null
@@ -3790,6 +5679,9 @@ export type Database = {
           banReason?: string | null
           bio?: string | null
           blocked_count?: number | null
+          country_code?: string | null
+          coverPhotoPath?: string | null
+          coverPhotoUrl?: string | null
           createdAt?: string
           displayName?: string | null
           email: string
@@ -3804,6 +5696,7 @@ export type Database = {
           isBetaTester?: boolean | null
           isVerified?: boolean | null
           items_read_count?: number | null
+          location?: string | null
           mfaSetupRequired?: boolean | null
           name: string
           onboardingStep?: number | null
@@ -3813,6 +5706,7 @@ export type Database = {
           role?: string | null
           saved_search_count?: number | null
           socialLinks?: Json | null
+          timezone?: string | null
           twoFactorBackupCodes?: string[] | null
           twoFactorEnabled?: boolean | null
           twoFactorSecret?: string | null
@@ -3835,6 +5729,9 @@ export type Database = {
           banReason?: string | null
           bio?: string | null
           blocked_count?: number | null
+          country_code?: string | null
+          coverPhotoPath?: string | null
+          coverPhotoUrl?: string | null
           createdAt?: string
           displayName?: string | null
           email?: string
@@ -3849,6 +5746,7 @@ export type Database = {
           isBetaTester?: boolean | null
           isVerified?: boolean | null
           items_read_count?: number | null
+          location?: string | null
           mfaSetupRequired?: boolean | null
           name?: string
           onboardingStep?: number | null
@@ -3858,6 +5756,7 @@ export type Database = {
           role?: string | null
           saved_search_count?: number | null
           socialLinks?: Json | null
+          timezone?: string | null
           twoFactorBackupCodes?: string[] | null
           twoFactorEnabled?: boolean | null
           twoFactorSecret?: string | null
@@ -4391,6 +6290,23 @@ export type Database = {
       }
     }
     Views: {
+      ai_pipeline_stats: {
+        Row: {
+          analyzed_docs: number | null
+          avg_confidence: number | null
+          completed_operations: number | null
+          enhanced_resources: number | null
+          failed_operations: number | null
+          in_progress_operations: number | null
+          linked_resources: number | null
+          manual_relationships: number | null
+          pending_operations: number | null
+          total_docs: number | null
+          total_relationships: number | null
+          total_resources: number | null
+        }
+        Relationships: []
+      }
       honeypot_stats: {
         Row: {
           enabled: boolean | null
@@ -4584,9 +6500,60 @@ export type Database = {
         Args: { p_target_public_key: string; p_verification_id: string }
         Returns: boolean
       }
+      add_job: {
+        Args: {
+          p_max_attempts?: number
+          p_payload?: Json
+          p_priority?: number
+          p_run_at?: string
+          p_type: string
+        }
+        Returns: string
+      }
+      aggregate_resource_views_daily: { Args: never; Returns: undefined }
+      calculate_next_scan: {
+        Args: { p_frequency: string; p_last_scan?: string }
+        Returns: string
+      }
+      calculate_trending_score: {
+        Args: {
+          p_added_at: string
+          p_average_rating: number
+          p_favorites: number
+          p_github_stars: number
+          p_ratings_count: number
+          p_views_total: number
+          p_views_week: number
+        }
+        Returns: number
+      }
       check_ai_consent: {
         Args: { p_conversation_id: string; p_feature?: string }
         Returns: boolean
+      }
+      claim_jobs: {
+        Args: { p_limit?: number; p_types?: string[] }
+        Returns: {
+          attempts: number
+          completed_at: string | null
+          created_at: string
+          error_count: number
+          id: string
+          last_error: string | null
+          max_attempts: number
+          payload: Json
+          priority: number
+          run_at: string
+          started_at: string | null
+          status: string
+          type: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "job_queue"
+          isOneToOne: false
+          isSetofReturn: true
+        }
       }
       claim_megolm_sessions: {
         Args: { p_device_id: string; p_user_id: string }
@@ -4606,14 +6573,20 @@ export type Database = {
           p_target_user_id: string
         }
         Returns: {
-          key_id: number
+          key_id: string
           public_key: string
         }[]
       }
       cleanup_expired_2fa_codes: { Args: never; Returns: undefined }
       cleanup_expired_sas_verifications: { Args: never; Returns: number }
+      cleanup_old_jobs: { Args: { p_days?: number }; Returns: number }
       cleanup_stale_push_subscriptions: { Args: never; Returns: undefined }
       cleanup_typing_indicators: { Args: never; Returns: undefined }
+      complete_ai_operation: {
+        Args: { p_error?: string; p_operation_id: string; p_result?: Json }
+        Returns: boolean
+      }
+      complete_job: { Args: { p_job_id: string }; Returns: undefined }
       complete_sas_verification: {
         Args: {
           p_is_match: boolean
@@ -4661,6 +6634,10 @@ export type Database = {
         Args: { p_invitation_id: string; p_user_id: string }
         Returns: undefined
       }
+      fail_job: {
+        Args: { p_error?: string; p_job_id: string }
+        Returns: undefined
+      }
       generate_collection_slug: {
         Args: { p_name: string; p_user_id: string }
         Returns: string
@@ -4671,6 +6648,18 @@ export type Database = {
         Returns: string
       }
       generate_verification_code: { Args: never; Returns: string }
+      get_ai_pipeline_setting: { Args: { p_key: string }; Returns: Json }
+      get_category_toc: {
+        Args: { p_category: string }
+        Returns: {
+          description: string
+          heading_count: number
+          order_index: number
+          reading_time_minutes: number
+          slug: string
+          title: string
+        }[]
+      }
       get_conversation_consent_status: {
         Args: { p_conversation_id: string }
         Returns: {
@@ -4678,6 +6667,25 @@ export type Database = {
           consent_given_at: string
           consent_status: string
           user_id: string
+        }[]
+      }
+      get_conversations_optimized: {
+        Args: { p_user_id: string }
+        Returns: {
+          created_at: string
+          group_avatar: string
+          group_name: string
+          id: string
+          is_group: boolean
+          last_message_at: string
+          last_message_preview: string
+          participant_avatars: string[]
+          participant_ids: string[]
+          participant_names: string[]
+          participant_statuses: string[]
+          participant_usernames: string[]
+          unread_count: number
+          updated_at: string
         }[]
       }
       get_device_keys_for_users: {
@@ -4691,7 +6699,103 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_doc_related_resources: {
+        Args: {
+          p_doc_slug: string
+          p_limit?: number
+          p_min_confidence?: number
+        }
+        Returns: {
+          ai_reasoning: string
+          confidence_score: number
+          relationship_type: string
+          resource_category: string
+          resource_description: string
+          resource_id: string
+          resource_slug: string
+          resource_title: string
+        }[]
+      }
+      get_doc_with_sections: {
+        Args: { p_slug: string }
+        Returns: {
+          category: string
+          content: string
+          description: string
+          reading_time_minutes: number
+          sections: Json
+          slug: string
+          sources: Json
+          title: string
+        }[]
+      }
+      get_enhanced_resource: {
+        Args: { p_slug: string }
+        Returns: {
+          related_docs: Json
+          related_resources: Json
+          resource: Json
+          tags: string[]
+        }[]
+      }
       get_favorites_count: { Args: { p_user_id: string }; Returns: number }
+      get_homepage_resources: {
+        Args: { p_featured_limit?: number; p_trending_limit?: number }
+        Returns: {
+          featured: Json
+          trending: Json
+        }[]
+      }
+      get_job_queue_stats: {
+        Args: never
+        Returns: {
+          count: number
+          oldest: string
+          status: string
+        }[]
+      }
+      get_message_read_receipts: {
+        Args: { p_message_ids: string[] }
+        Returns: {
+          message_id: string
+          read_at: string
+          user_id: string
+          user_image: string
+          user_name: string
+          user_username: string
+        }[]
+      }
+      get_messages_paginated: {
+        Args: {
+          p_before_id?: string
+          p_conversation_id: string
+          p_limit?: number
+          p_user_id: string
+        }
+        Returns: {
+          ai_response_to: string
+          content: string
+          conversation_id: string
+          created_at: string
+          deleted_at: string
+          edited_at: string
+          encrypted_content: string
+          encryption_algorithm: string
+          has_more: boolean
+          id: string
+          is_ai_generated: boolean
+          is_encrypted: boolean
+          mentions: Json
+          metadata: Json
+          sender_avatar: string
+          sender_device_id: string
+          sender_id: string
+          sender_key: string
+          sender_name: string
+          sender_username: string
+          session_id: string
+        }[]
+      }
       get_notification_target_users: {
         Args: { notification_id: string }
         Returns: {
@@ -4714,6 +6818,7 @@ export type Database = {
           selected_voice_id: string | null
           show_conversation_history: boolean | null
           show_suggested_questions: boolean | null
+          sound_theme: string | null
           speech_rate: number | null
           updated_at: string | null
           user_display_name: string | null
@@ -4730,6 +6835,17 @@ export type Database = {
         Args: { p_user1: string; p_user2: string }
         Returns: string
       }
+      get_pending_analysis_jobs: {
+        Args: { p_limit?: number }
+        Returns: {
+          created_at: string
+          id: string
+          job_type: string
+          target_id: string
+          target_type: string
+          triggered_by: string
+        }[]
+      }
       get_pending_invitations: {
         Args: { p_user_id: string }
         Returns: {
@@ -4741,6 +6857,80 @@ export type Database = {
           inviter_id: string
           inviter_name: string
           message: string
+        }[]
+      }
+      get_pending_operations: {
+        Args: { p_target_id?: string; p_target_type?: string }
+        Returns: {
+          cli_command: string
+          id: string
+          operation_type: string
+          priority: number
+          requested_at: string
+          status: string
+          target_id: string
+          target_type: string
+        }[]
+      }
+      get_related_resources: {
+        Args: {
+          p_limit?: number
+          p_min_confidence?: number
+          p_relationship_types?: string[]
+          p_resource_id: string
+        }
+        Returns: {
+          ai_reasoning: string
+          confidence_score: number
+          direction: string
+          relationship_type: string
+          resource_category: string
+          resource_description: string
+          resource_id: string
+          resource_slug: string
+          resource_title: string
+        }[]
+      }
+      get_relationship_stats: {
+        Args: never
+        Returns: {
+          avg_doc_resource_confidence: number
+          avg_resource_resource_confidence: number
+          docs_with_relationships: number
+          resources_with_doc_relationships: number
+          resources_with_resource_relationships: number
+          total_doc_resource_relationships: number
+          total_resource_resource_relationships: number
+        }[]
+      }
+      get_resource_related_docs: {
+        Args: {
+          p_limit?: number
+          p_min_confidence?: number
+          p_resource_id: string
+        }
+        Returns: {
+          ai_reasoning: string
+          confidence_score: number
+          doc_category: string
+          doc_description: string
+          doc_slug: string
+          doc_title: string
+          relationship_type: string
+        }[]
+      }
+      get_sources_due_for_scan: {
+        Args: never
+        Returns: {
+          awesome_config: Json
+          default_category: string
+          default_tags: string[]
+          github_config: Json
+          id: string
+          name: string
+          registry_config: Json
+          type: string
+          url: string
         }[]
       }
       get_total_unread_dm_count: {
@@ -4813,9 +7003,38 @@ export type Database = {
         Args: { p_conversation_id: string; p_user_id: string }
         Returns: undefined
       }
+      mark_messages_read: {
+        Args: {
+          p_conversation_id: string
+          p_up_to_message_id?: string
+          p_user_id: string
+        }
+        Returns: number
+      }
+      mark_source_scanned: {
+        Args: {
+          p_discovered_count?: number
+          p_error?: string
+          p_source_id: string
+          p_status: string
+        }
+        Returns: boolean
+      }
+      queue_ai_operation: {
+        Args: {
+          p_notes?: string
+          p_operation_type: string
+          p_priority?: number
+          p_target_id: string
+          p_target_type: string
+          p_user_id?: string
+        }
+        Returns: string
+      }
       refresh_all_materialized_views: { Args: never; Returns: undefined }
       refresh_dashboard_stats: { Args: never; Returns: undefined }
       refresh_rating_stats: { Args: never; Returns: undefined }
+      refresh_trending_scores: { Args: never; Returns: number }
       register_passkey: {
         Args: {
           p_aaguid?: string
@@ -4857,6 +7076,17 @@ export type Database = {
         Args: { p_conversation_id: string; p_new_session_id: string }
         Returns: undefined
       }
+      search_documentation: {
+        Args: { p_category?: string; p_limit?: number; p_query: string }
+        Returns: {
+          category: string
+          description: string
+          headline: string
+          rank: number
+          slug: string
+          title: string
+        }[]
+      }
       share_megolm_session: {
         Args: {
           p_conversation_id: string
@@ -4867,6 +7097,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      start_ai_operation: { Args: { p_operation_id: string }; Returns: boolean }
       start_sas_verification: {
         Args: {
           p_initiator_commitment: string
@@ -4877,6 +7108,10 @@ export type Database = {
           p_target_user_id: string
         }
         Returns: string
+      }
+      update_ai_pipeline_setting: {
+        Args: { p_key: string; p_user_id?: string; p_value: Json }
+        Returns: boolean
       }
       update_group_member_role: {
         Args: {

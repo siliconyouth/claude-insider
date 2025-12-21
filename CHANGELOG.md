@@ -9,6 +9,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.8.1] - 2025-12-21
+### Data Quality & Resource Relationships
+- **Resource-Resource Relationships**: 121 new AI-analyzed relationships between resources
+  - 55 similar relationships (same purpose/functionality)
+  - 51 alternative relationships (drop-in replacements)
+  - 10 complement relationships (work well together)
+  - 5 uses relationships (internal dependencies)
+- **Data Quality Fixes**: 679 total updates to resource data
+  - Fixed 194 asterisked titles (stripped markdown `**bold**` formatting)
+  - Fixed 27 "GitHub" placeholder titles (replaced with `owner/repo` format)
+  - Generated 458 descriptions using category-aware templates
+  - 25 hand-crafted descriptions for popular/official resources
+- **Quality Scripts**: New data quality analysis and fix tools
+  - `scripts/analyze-content.mjs`: Analyze documentation and resources state
+  - `scripts/analyze-data-quality.mjs`: Identify title/description issues
+  - `scripts/fix-data-quality.mjs`: Automated fixes with templates
+  - `scripts/create-resource-relationships.mjs`: Create resource relationships
+- **Database**: Migration 092 for v1.8.0 release notification
+- **Data Quality Metrics**: 0 bad titles, 0 missing descriptions (was 242/456)
+
+---
+
+## [1.8.0] - 2025-12-21
+### Admin Dashboard & Resource Discovery Pipeline
+- **Admin Dashboard Expansion**: Three new dashboard pages for content management
+  - **Documentation Management** (`/dashboard/documentation`): View/filter 35 docs, relationship stats, CLI commands for AI operations
+  - **Resources Management** (`/dashboard/resources-admin`): Filter 1,952 resources by category/status/enhancement, sort by stars/views/rating
+  - **Relationships Overview** (`/dashboard/relationships`): Tabbed view of Doc→Resource (147) and Resource→Resource relationships, confidence filtering
+- **Resource Discovery Pipeline**: Multi-adapter system for curating community resources
+  - `awesome_list` adapter: Parse awesome-list markdown files
+  - `github_repo` adapter: Analyze repository structure, detect Claude patterns
+  - `github_search` adapter: Query GitHub API with rate limiting
+  - `npm` adapter: Search npm registry with download stats
+  - `pypi` adapter: Search PyPI registry with monthly downloads
+  - `website` adapter: Scrape website sitemaps and content pages
+  - Progress bars with estimated completion times
+  - 26 configured sources, 1,960 items in discovery queue
+- **Data Quality Review Script**: Comprehensive resource analysis (`scripts/data-quality-review.mjs`)
+  - Overview statistics, GitHub star distribution, category analysis
+  - Quality issue detection: missing descriptions, duplicate URLs, outdated entries
+  - Recommendations for improvement
+- **Database Schema** (Migrations 090-091):
+  - `resource_sources`: 26 discovery source configurations
+  - `resource_discovery_queue`: 1,960 items pending review
+  - `resource_resource_relationships`: Fixed missing table, self-referential relationships
+  - `get_pending_analysis_jobs()` function for AI operation queue
+  - Updated `get_relationship_stats()` to include resource-resource metrics
+- **New API Endpoints**:
+  - `GET /api/dashboard/documentation`: List docs with relationship stats
+  - `GET/PATCH /api/dashboard/documentation/[slug]`: Doc detail and updates
+  - `GET /api/dashboard/resources-admin`: List resources with AI stats
+  - `GET/PATCH /api/dashboard/resources-admin/[id]`: Resource detail and updates
+  - `GET/POST/DELETE /api/dashboard/relationships`: Relationship management
+- **TypeScript**: 120 tables now typed (up from 86)
+
+---
+
 ## [1.7.0] - 2025-12-20
 ### Doc-Resource Cross-Linking System
 - **Related Resources on Docs**: Every documentation page now shows AI-analyzed related resources

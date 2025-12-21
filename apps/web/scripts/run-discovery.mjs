@@ -110,12 +110,27 @@ async function fetchGitHubRepo(owner, repo) {
 /**
  * Simple progress bar
  */
-function progressBar(current, total, width = 30) {
+function progressBar(current, total, width = 25, label = '') {
   const percent = Math.round((current / total) * 100);
   const filled = Math.round((current / total) * width);
   const empty = width - filled;
   const bar = '█'.repeat(filled) + '░'.repeat(empty);
-  return `[${bar}] ${percent}% (${current}/${total})`;
+  const labelStr = label ? ` ${label}` : '';
+  return `[${bar}] ${percent}%${labelStr} (${current}/${total})`;
+}
+
+/**
+ * Show progress on same line
+ */
+function showProgress(current, total, label = '') {
+  process.stdout.write(`\r  ${progressBar(current, total, 25, label)}    `);
+}
+
+/**
+ * Clear progress line
+ */
+function clearProgress() {
+  process.stdout.write('\r' + ' '.repeat(70) + '\r');
 }
 
 /**
@@ -152,7 +167,7 @@ async function processAwesomeList(source, existingUrls) {
     return [];
   }
 
-  console.log(`  🔄 Enriching ${newLinks.length} new links with GitHub data...`);
+  console.log(`  🔄 Enriching ${newLinks.length} new links...`);
 
   // Enrich with GitHub data where applicable
   const resources = [];
@@ -160,11 +175,7 @@ async function processAwesomeList(source, existingUrls) {
 
   for (const link of newLinks) {
     processed++;
-
-    // Show progress every 10 items or at the end
-    if (processed % 10 === 0 || processed === newLinks.length) {
-      process.stdout.write(`\r  ${progressBar(processed, newLinks.length)}`);
-    }
+    showProgress(processed, newLinks.length);
 
     // Parse GitHub URLs
     const githubMatch = link.url.match(/github\.com\/([^\/]+)\/([^\/\?#]+)/);
@@ -205,8 +216,7 @@ async function processAwesomeList(source, existingUrls) {
     resources.push(resource);
   }
 
-  // Clear progress line and show completion
-  process.stdout.write('\r' + ' '.repeat(60) + '\r');
+  clearProgress();
   console.log(`  ✓ Enriched ${resources.length} resources`);
 
   return resources;
@@ -279,19 +289,128 @@ function processRepos(repos, source) {
 }
 
 /**
- * Process a website source (basic scraping)
+ * Process a website source (scraping for links)
  */
-async function processWebsite(source) {
-  console.log(`  🌐 Website scraping not fully implemented - adding as reference`);
+async function processWebsite(source, existingUrls) {
+  console.log(`  🌐 Scraping website: ${source.url}`);
 
-  // For now, just add the website itself as a resource
-  return [{
-    url: source.url,
-    title: source.name,
-    description: source.description || '',
-    sourceType: 'website',
-    metadata: {}
-  }];
+  const resources = [];
+
+  try {
+    const response = await fetch(source.url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; ClaudeInsider/1.0; +https://claudeinsider.com)',
+        'Accept': 'text/html,application/xhtml+xml',
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const html = await response.text();
+
+    // Extract all links from the page
+    const linkRegex = /<a[^>]+href=["']([^"']+)["'][^>]*>([^<]*)</g;
+    let match;
+    const links = [];
+
+    while ((match = linkRegex.exec(html)) !== null) {
+      const url = match[1];
+      let title = match[2].trim();
+
+      // Skip empty titles, anchors, and internal links
+      if (!title || url.startsWith('#') || url.startsWith('javascript:')) {
+        continue;
+      }
+
+      // Make relative URLs absolute
+      let absoluteUrl = url;
+      if (url.startsWith('/')) {
+        const baseUrl = new URL(source.url);
+        absoluteUrl = `${baseUrl.origin}${url}`;
+      } else if (!url.startsWith('http')) {
+        continue; // Skip non-http links
+      }
+
+      // Filter for relevant URLs (GitHub, npm, etc.)
+      if (absoluteUrl.includes('github.com') ||
+          absoluteUrl.includes('npmjs.com') ||
+          absoluteUrl.includes('pypi.org')) {
+        links.push({ url: absoluteUrl, title });
+      }
+    }
+
+    // Filter out existing URLs
+    const newLinks = links.filter(link => !existingUrls.has(link.url));
+    console.log(`  📋 Found ${links.length} links, ${newLinks.length} new`);
+
+    if (newLinks.length === 0) {
+      console.log(`  ✓ All links already known`);
+      return [];
+    }
+
+    // Process each link with progress
+    let processed = 0;
+    for (const link of newLinks) {
+      processed++;
+      showProgress(processed, newLinks.length);
+
+      // Get GitHub metadata if applicable
+      const githubMatch = link.url.match(/github\.com\/([^\/]+)\/([^\/\?#]+)/);
+      let metadata = {};
+
+      if (githubMatch) {
+        const [, owner, repo] = githubMatch;
+        const repoInfo = await fetchGitHubRepo(owner, repo.replace(/\.git$/, ''));
+
+        if (repoInfo) {
+          // Apply min_stars filter
+          if (source.min_stars && repoInfo.stargazers_count < source.min_stars) {
+            continue;
+          }
+
+          metadata.github = {
+            owner,
+            repo: repo.replace(/\.git$/, ''),
+            stars: repoInfo.stargazers_count,
+            forks: repoInfo.forks_count,
+            language: repoInfo.language,
+          };
+
+          // Use repo description if title is generic
+          if (link.title.length < 5 || link.title === owner || link.title === repo) {
+            link.title = repoInfo.name || repo;
+          }
+        }
+
+        await new Promise(r => setTimeout(r, 50));
+      }
+
+      resources.push({
+        url: link.url,
+        title: link.title,
+        description: metadata.github?.description || '',
+        sourceType: 'website',
+        metadata
+      });
+    }
+
+    clearProgress();
+    console.log(`  ✓ Processed ${resources.length} resources`);
+    return resources;
+  } catch (error) {
+    console.log(`  ❌ Website scraping failed: ${error.message}`);
+
+    // Fallback: add the website itself as a resource
+    return [{
+      url: source.url,
+      title: source.name,
+      description: source.description || '',
+      sourceType: 'website',
+      metadata: {}
+    }];
+  }
 }
 
 /**
@@ -336,7 +455,11 @@ async function processNpm(source, existingUrls) {
     } else {
       // Search by keywords
       const keywords = searchQuery.split(' ');
+      let keywordIdx = 0;
       for (const keyword of keywords) {
+        keywordIdx++;
+        showProgress(keywordIdx, keywords.length, keyword);
+
         const url = `https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(keyword)}&size=50`;
         const response = await fetch(url);
         if (!response.ok) continue;
@@ -370,6 +493,7 @@ async function processNpm(source, existingUrls) {
         // Rate limit
         await new Promise(r => setTimeout(r, 200));
       }
+      clearProgress();
     }
 
     console.log(`  ✓ Found ${resources.length} npm packages`);
@@ -396,42 +520,49 @@ async function processPypi(source, existingUrls) {
     // and use the JSON API to get package details
     const keywords = searchQuery.split(' ');
 
+    // Build all variations to check
+    const allPackages = [];
     for (const keyword of keywords) {
-      // Try to fetch package directly (common pattern: keyword-ai, keyword-sdk, etc.)
       const variations = [keyword, `${keyword}-ai`, `${keyword}-sdk`, `${keyword}-api`, `py${keyword}`];
-
-      for (const pkgName of variations) {
-        const url = `https://pypi.org/pypi/${pkgName}/json`;
-        try {
-          const response = await fetch(url);
-          if (!response.ok) continue;
-          const data = await response.json();
-
-          const pypiUrl = `https://pypi.org/project/${data.info.name}/`;
-          if (existingUrls.has(pypiUrl)) continue;
-
-          resources.push({
-            url: pypiUrl,
-            title: data.info.name,
-            description: data.info.summary || '',
-            sourceType: 'pypi',
-            metadata: {
-              pypi: {
-                name: data.info.name,
-                version: data.info.version,
-                author: data.info.author || '',
-                license: data.info.license || '',
-                requiresPython: data.info.requires_python || '',
-              }
-            }
-          });
-        } catch {
-          // Package doesn't exist, continue
-        }
-
-        await new Promise(r => setTimeout(r, 100));
-      }
+      allPackages.push(...variations);
     }
+
+    let checked = 0;
+    for (const pkgName of allPackages) {
+      checked++;
+      showProgress(checked, allPackages.length, pkgName);
+
+      const url = `https://pypi.org/pypi/${pkgName}/json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) continue;
+        const data = await response.json();
+
+        const pypiUrl = `https://pypi.org/project/${data.info.name}/`;
+        if (existingUrls.has(pypiUrl)) continue;
+
+        resources.push({
+          url: pypiUrl,
+          title: data.info.name,
+          description: data.info.summary || '',
+          sourceType: 'pypi',
+          metadata: {
+            pypi: {
+              name: data.info.name,
+              version: data.info.version,
+              author: data.info.author || '',
+              license: data.info.license || '',
+              requiresPython: data.info.requires_python || '',
+            }
+          }
+        });
+      } catch {
+        // Package doesn't exist, continue
+      }
+
+      await new Promise(r => setTimeout(r, 100));
+    }
+    clearProgress();
 
     // Dedupe by URL
     const seen = new Set();
@@ -593,7 +724,7 @@ async function runDiscovery() {
           resources = await processPypi(source, existingUrls);
           break;
         case 'website':
-          resources = await processWebsite(source);
+          resources = await processWebsite(source, existingUrls);
           break;
         default:
           console.log(`  ⏭️  Skipping unsupported type: ${source.type}`);
