@@ -119,7 +119,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Only fetch if we still have no session
       setIsRefetching(true);
       try {
-        const response = await fetch("/api/auth/get-session", {
+        // Better Auth's session endpoint - must match catch-all route handler
+        const response = await fetch("/api/auth/session", {
           credentials: "include",
           // Use cache to avoid redundant network requests
           cache: "no-store",
