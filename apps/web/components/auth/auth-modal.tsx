@@ -111,14 +111,14 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+      {/* Backdrop - z-0 to ensure it's behind the modal */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 z-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Modal */}
+      {/* Modal - z-10 to ensure it's above the backdrop */}
       <div
         className={cn(
           "relative z-10 w-full max-w-md p-6",
