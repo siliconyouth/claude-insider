@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.10.5";
+const APP_VERSION = "1.10.6";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.10.6",
+    date: "2025-12-22",
+    type: "patch",
+    highlights: [
+      "🎨 Brand Icon Redesign: New 'Ci' gradient icon (violet→blue→cyan) for favicon, PWA, and Apple touch",
+      "🛠️ Icon Generation Script: Playwright + sharp pipeline generates 19 icon files from single SVG source",
+      "📱 PWA Icons: All 17 icon sizes regenerated with proper maskable variants for adaptive icons",
+      "📚 CLAUDE.md: New mandatory Icon System section with generation workflow and guidelines",
+      "🔧 Dependency Additions: Added Playwright 1.53.1 and sharp 0.34.3 for icon generation",
+    ],
+  },
   {
     version: "1.10.5",
     date: "2025-12-22",

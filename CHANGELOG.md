@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.6] - 2025-12-22
+### Brand Icon Redesign
+- **New "Ci" Gradient Icon**: Complete redesign of all website icons
+  - Gradient: Violet (#A855F7) → Blue (#3B82F6) → Cyan (#06B6D4) at 135°
+  - "Ci" text in Inter font (600 weight, white) on 80px rounded corners
+  - Single source of truth: `public/icons/icon-source.svg`
+- **Icon Generation Script**: New automated pipeline (`scripts/generate-icons.cjs`)
+  - Uses Playwright for accurate SVG text rendering (sharp/librsvg have limited text support)
+  - Uses sharp for efficient Lanczos3 resizing to all target sizes
+  - Generates 19 files: 15 standard PNGs + 2 maskable PNGs + favicon.ico + safari-pinned-tab.svg
+- **PWA Icons**: All 17 icon sizes regenerated (16px to 512px)
+  - Maskable icons with 70% safe zone for Android adaptive icons
+  - Multi-resolution favicon.ico (16, 32, 48px embedded)
+  - Safari pinned tab SVG (monochrome version)
+- **CLAUDE.md Updates**: New mandatory "Icon System" section
+  - Brand icon design specifications
+  - Icon generation workflow (edit SVG → run script → commit all)
+  - Prohibited actions table (no manual PNG editing)
+  - Checklist for icon changes
+- **Dependencies**: Added Playwright 1.53.1 and sharp 0.34.3 to tech stack
+
+---
+
 ## [1.10.5] - 2025-12-22
 ### Code Optimization & Build Cache
 - **Dead Code Removal**: Removed unused Vercel AI SDK (`ai` package)

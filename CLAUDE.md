@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.5**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.6**.
 
 | Link | URL |
 |------|-----|
@@ -39,15 +39,16 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.5**.
 7. [Performance Optimization (MANDATORY)](#performance-optimization-mandatory) - Dynamic imports, targets
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
-10. [Component Patterns](#component-patterns) - Buttons, cards, focus states
-11. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
-12. [Internationalization](#internationalization-i18n) - 18 languages
-13. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-14. [Content Structure](#content-structure) - Documentation, resources, legal pages
-15. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-16. [Success Metrics](#success-metrics)
-17. [Updating Guidelines](#updating-guidelines)
-18. [License](#license)
+10. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
+11. [Component Patterns](#component-patterns) - Buttons, cards, focus states
+12. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
+13. [Internationalization](#internationalization-i18n) - 18 languages
+14. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+15. [Content Structure](#content-structure) - Documentation, resources, legal pages
+16. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+17. [Success Metrics](#success-metrics)
+18. [Updating Guidelines](#updating-guidelines)
+19. [License](#license)
 
 ---
 
@@ -82,6 +83,8 @@ All technologies are **free and/or open source** (except hosting services with f
 | @tanstack/react-virtual | 3.13.13 | MIT | Virtual scrolling for message lists |
 | react-image-crop | 11.x | ISC | Client-side image cropping |
 | recharts | 3.6.0 | MIT | Animated charts (Area, Bar, Pie, Line) |
+| Playwright | 1.53.1 | Apache-2.0 | Icon generation (SVG rendering) |
+| sharp | 0.34.3 | Apache-2.0 | Image resizing for icons |
 
 ### Development Environment
 
@@ -682,6 +685,79 @@ className="gradient-text-stripe"
 // Glass effect
 className="bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-lg"
 ```
+
+---
+
+## Icon System (MANDATORY)
+
+**Location**: `public/icons/`, `scripts/generate-icons.cjs`
+
+All website icons MUST use the official "Ci" gradient brand icon. Custom or alternative icons are prohibited.
+
+### Brand Icon Design
+
+| Element | Value |
+|---------|-------|
+| **Gradient** | `#A855F7` (violet) → `#3B82F6` (blue) → `#06B6D4` (cyan) at 135° |
+| **Corner Radius** | 80px on 512px base (15.6%) |
+| **Text** | "Ci" in Inter font, 600 weight, white (#ffffff) |
+| **Safe Zone** | Maskable icons use 70% (360px) content area |
+
+### Icon Files (MANDATORY)
+
+All icons are generated from `public/icons/icon-source.svg`. **Never manually create or modify PNG icons.**
+
+| File | Size | Purpose |
+|------|------|---------|
+| `icon-source.svg` | 512×512 | **Source of truth** - edit this only |
+| `favicon-16x16.png` | 16×16 | Browser tab (small) |
+| `favicon-32x32.png` | 32×32 | Browser tab (standard) |
+| `favicon.ico` | 16+32+48 | Multi-resolution favicon |
+| `apple-touch-icon.png` | 180×180 | iOS home screen |
+| `icon-192x192.png` | 192×192 | PWA standard |
+| `icon-512x512.png` | 512×512 | PWA splash |
+| `icon-192x192-maskable.png` | 192×192 | Android adaptive icon |
+| `icon-512x512-maskable.png` | 512×512 | Android adaptive icon |
+| `safari-pinned-tab.svg` | Vector | Safari pinned tab (monochrome) |
+
+### Icon Generation Script
+
+**Location**: `scripts/generate-icons.cjs`
+
+Uses Playwright for accurate SVG text rendering (sharp/librsvg have limited text support), then sharp for resizing.
+
+```bash
+# Generate all icons from source SVG
+cd apps/web && node scripts/generate-icons.cjs
+```
+
+**Output**: 19 files (15 standard PNGs + 2 maskable PNGs + favicon.ico + safari-pinned-tab.svg)
+
+### Updating Icons (MANDATORY WORKFLOW)
+
+1. **Edit source**: Modify `public/icons/icon-source.svg` only
+2. **Regenerate**: Run `node scripts/generate-icons.cjs`
+3. **Verify**: Check generated PNGs look correct at all sizes
+4. **Test build**: Run `pnpm build` to ensure no errors
+5. **Commit all**: Commit source SVG + all generated files together
+
+### Prohibited Actions
+
+| ❌ Prohibited | ✅ Required |
+|---------------|-------------|
+| Manually editing PNG icons | Edit `icon-source.svg` and regenerate |
+| Using different icon designs | Use official "Ci" gradient brand only |
+| Skipping maskable icons | Always include `-maskable` variants |
+| Committing only source SVG | Commit source + all generated files |
+
+### Checklist for Icon Changes
+
+- [ ] Only `icon-source.svg` was manually edited
+- [ ] Ran `node scripts/generate-icons.cjs` to regenerate all icons
+- [ ] Verified icons look correct at 16px, 32px, 192px, 512px
+- [ ] Checked maskable icons have proper safe zone padding
+- [ ] Ran `pnpm build` successfully
+- [ ] Committed both source SVG and all generated files
 
 ---
 
