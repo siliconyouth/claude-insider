@@ -56,14 +56,17 @@
         "!**/*.spec.ts",
         "!**/*.spec.tsx",
         "!**/__tests__/**",
-        "!**/node_modules/**"
+        "!**/node_modules/**",
+        "!**/.turbo/**",
+        "!**/coverage/**"
       ],
       "outputs": [
         "dist/**",
         ".next/**",
         "!.next/cache/**",
         "build/**"
-      ]
+      ],
+      "outputLogs": "new-only"
     },
     "@repo/ui#build:components": {
       "dependsOn": [],
@@ -75,7 +78,8 @@
         "package.json"
       ],
       "outputs": ["dist/**/*.js", "dist/**/*.d.ts"],
-      "cache": true
+      "cache": true,
+      "outputLogs": "new-only"
     },
     "@repo/ui#build:styles": {
       "dependsOn": [],
@@ -85,12 +89,16 @@
         "package.json"
       ],
       "outputs": ["dist/**/*.css"],
-      "cache": true
+      "cache": true,
+      "outputLogs": "new-only"
     },
     "web#build": {
       "dependsOn": [
         "@repo/ui#build:components",
         "@repo/ui#build:styles"
+      ],
+      "env": [
+        "SKIP_RAG_INDEX"
       ],
       "inputs": [
         "app/**",
@@ -98,14 +106,17 @@
         "lib/**",
         "hooks/**",
         "i18n/**",
+        "collections/**",
         "content/**/*.mdx",
         "data/resources/**/*.json",
-        "data/system-prompt.txt",
+        "scripts/*.cjs",
         "public/**",
         "next.config.ts",
         "tailwind.config.ts",
         "tsconfig.json",
         "package.json",
+        "../../CLAUDE.md",
+        "../../CHANGELOG.md",
         "!**/*.test.*",
         "!**/__tests__/**"
       ],
@@ -113,21 +124,25 @@
         ".next/**",
         "!.next/cache/**",
         "data/rag-index.json",
-        "data/build-info.json"
+        "data/build-info.json",
+        "data/code-examples-index.json"
       ],
-      "cache": true
+      "cache": true,
+      "outputLogs": "new-only"
     },
     "lint": {
       "dependsOn": [],
       "inputs": ["$TURBO_DEFAULT$", "eslint.config.*"],
       "outputs": [],
-      "cache": true
+      "cache": true,
+      "outputLogs": "errors-only"
     },
     "check-types": {
       "dependsOn": [],
       "inputs": ["$TURBO_DEFAULT$", "tsconfig.json"],
       "outputs": [],
-      "cache": true
+      "cache": true,
+      "outputLogs": "errors-only"
     },
     "dev": {
       "cache": false,

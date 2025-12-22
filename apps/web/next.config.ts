@@ -23,15 +23,26 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   poweredByHeader: false,
   compress: true,
+  // Reduce build output verbosity
+  logging: {
+    fetches: {
+      fullUrl: false,
+    },
+  },
   // Enable experimental features for better performance
   experimental: {
     optimizeCss: true,
+    // Optimize package imports for smaller bundles
+    optimizePackageImports: [
+      "lucide-react",
+      "@heroicons/react",
+      "date-fns",
+      "recharts",
+    ],
   },
   // Tree-shake large icon libraries
+  // Note: lucide-react is handled by optimizePackageImports (Turbopack-compatible)
   modularizeImports: {
-    "lucide-react": {
-      transform: "lucide-react/dist/esm/icons/{{ kebabCase member }}",
-    },
     "@heroicons/react/24/outline": {
       transform: "@heroicons/react/24/outline/{{ member }}",
     },
