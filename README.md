@@ -9,7 +9,7 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/🌐_Live-claudeinsider.com-0a0a0a?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/📦_v1.8.1-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/📦_v1.10.7-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/📄_MIT-license-eab308?style=for-the-badge&labelColor=0a0a0a)](LICENSE)
 [![Donate](https://img.shields.io/badge/💖_Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
@@ -50,7 +50,7 @@ Chat with Claude AI using voice or text. 42 premium ElevenLabs voices with strea
 Comprehensive guides across 7 categories: Getting Started, Configuration, API Reference, Integrations, and more.
 
 ### 🔍 RAG-Powered Search
-Intelligent search with 1,933 indexed chunks. Press `Cmd/Ctrl+K` for instant fuzzy search.
+Intelligent search with 1,979 indexed chunks. Press `Cmd/Ctrl+K` for instant fuzzy search.
 
 </td>
 <td width="50%">
@@ -139,7 +139,7 @@ pnpm dev
 
 - Supabase
 - PostgreSQL
-- 77 Tables
+- 126 Tables
 - RLS Policies
 
 </td>
@@ -190,7 +190,7 @@ Your support helps cover infrastructure costs and enables continued development.
 
 ![Resources Section](docs/screenshots/resources.png)
 
-*122+ curated resources across 10 categories with GitHub integration*
+*1,952+ curated resources across 10 categories with GitHub integration*
 
 </div>
 

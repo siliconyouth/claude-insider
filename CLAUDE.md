@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.6**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.7**.
 
 | Link | URL |
 |------|-----|
@@ -900,6 +900,33 @@ cd apps/web && node scripts/generate-icons.cjs
 | Using different icon designs | Use official "Ci" gradient brand only |
 | Skipping maskable icons | Always include `-maskable` variants |
 | Committing only source SVG | Commit source + all generated files |
+
+### Inline Logo Usage (MANDATORY)
+
+When displaying the "Ci" logo inline (e.g., header, footer, mockups), use this exact pattern:
+
+```tsx
+// ✅ CORRECT: Official logo pattern with aspect ratio protection
+<div className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20">
+  <span className="text-sm font-bold text-white tracking-tight">Ci</span>
+</div>
+
+// ❌ WRONG: Missing shrink-0 and aspect-square (logo can squish on mobile)
+<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600">
+  <span className="text-sm font-bold text-white">Ci</span>
+</div>
+```
+
+| Class | Purpose |
+|-------|---------|
+| `shrink-0` | Prevents flex shrinking in narrow containers |
+| `aspect-square` | Maintains 1:1 ratio as backup |
+| `from-violet-600 via-blue-600 to-cyan-600` | Official brand gradient |
+| `tracking-tight` | Proper letter spacing for "Ci" |
+
+**Files Using This Pattern**:
+- `components/header.tsx` - Main site header
+- `components/device-mockups.tsx` - Device preview mockups
 
 ### Checklist for Icon Changes
 
