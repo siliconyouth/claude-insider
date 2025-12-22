@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/design-system";
 import { FooterLanguageSelector } from "@/components/footer-language-selector";
 import { SoundToggle } from "@/components/sound-toggle";
+import { MonochromeLogo } from "@/components/monochrome-logo";
 
 const APP_VERSION = "1.10.6";
 
@@ -24,6 +25,13 @@ export function Footer() {
     <footer className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gray-50 dark:bg-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-gray-500 dark:text-gray-500">
+          <Link
+            href="/"
+            className="hover:opacity-80 transition-opacity"
+            aria-label="Claude Insider home"
+          >
+            <MonochromeLogo size={14} />
+          </Link>
           <span>{t("copyright", { year: currentYear })}</span>
           <a
             href="https://github.com/siliconyouth/claude-insider"
