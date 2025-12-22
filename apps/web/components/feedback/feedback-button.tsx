@@ -32,8 +32,8 @@ export function FeedbackButton() {
       return;
     }
 
-    // Otherwise fetch from API
-    fetch(`/api/users/${user.id}/beta-status`)
+    // Otherwise fetch from API (uses session for user ID)
+    fetch("/api/user/beta-status")
       .then((res) => res.ok ? res.json() : null)
       .then((data) => setIsBetaTester(data?.isBetaTester ?? false))
       .catch(() => setIsBetaTester(false));

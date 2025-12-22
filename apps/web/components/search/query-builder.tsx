@@ -17,7 +17,7 @@
 
 import { useState, useCallback, useRef, useEffect, KeyboardEvent } from "react";
 import { cn } from "@/lib/design-system";
-import { XIcon } from "lucide-react";
+import { X } from "lucide-react";
 
 // Boolean operators
 export type BooleanOperator = "AND" | "OR" | "NOT";
@@ -260,7 +260,7 @@ export function QueryBuilder({
                   className="p-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded transition-colors"
                   aria-label={`Remove "${token.value}"`}
                 >
-                  <XIcon className="w-3 h-3" />
+                  <X className="w-3 h-3" />
                 </button>
               )}
             </span>
