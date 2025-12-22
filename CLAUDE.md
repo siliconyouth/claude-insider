@@ -82,7 +82,6 @@ All technologies are **free and/or open source** (except hosting services with f
 | @tanstack/react-virtual | 3.13.13 | MIT | Virtual scrolling for message lists |
 | react-image-crop | 11.x | ISC | Client-side image cropping |
 | recharts | 3.6.0 | MIT | Animated charts (Area, Bar, Pie, Line) |
-| Vercel AI SDK | 6.0.1 | Apache-2.0 | AI streaming and tool calling |
 
 ### Development Environment
 
