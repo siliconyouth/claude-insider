@@ -120,6 +120,12 @@
   border-color: rgb(var(--ds-border-1));
 }
 
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   color: rgb(var(--ds-text-primary));
   background-color: rgb(var(--ds-background-1));
