@@ -1409,7 +1409,13 @@ export function VoiceAssistant() {
   return (
     <>
       {/* Floating Action Button with Tooltip */}
-      <div className={`fixed bottom-6 right-6 z-40 ${isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"} transition-all`}>
+      <div
+        className={`fixed right-6 z-40 ${isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"} transition-all`}
+        style={{
+          // Position above mobile bottom navigation
+          bottom: "calc(1.5rem + var(--mobile-nav-height, 0px))",
+        }}
+      >
         {/* Tooltip Balloon */}
         <div className="absolute bottom-full right-0 mb-3 w-56 animate-bounce">
           <div className="relative rounded-lg bg-white px-3 py-2 text-sm text-gray-800 shadow-lg dark:bg-gray-800 dark:text-white">

@@ -30,10 +30,14 @@ export function UpdateNotification({ className }: UpdateNotificationProps) {
   return (
     <div
       className={cn(
-        "fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm z-50",
+        "fixed left-4 right-4 md:left-auto md:right-4 md:max-w-sm z-50",
         "animate-in slide-in-from-bottom-4 fade-in duration-300",
         className
       )}
+      style={{
+        // Position above mobile bottom navigation
+        bottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
     >
       <div
         className={cn(

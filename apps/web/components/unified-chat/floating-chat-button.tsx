@@ -85,12 +85,16 @@ export function FloatingChatButton() {
   return (
     <div
       className={cn(
-        "fixed bottom-6 right-6 z-40",
+        "fixed right-6 z-40",
         "transition-all duration-300 ease-out",
         isOpen
           ? "scale-0 opacity-0 pointer-events-none"
           : "scale-100 opacity-100"
       )}
+      style={{
+        // Position above mobile bottom navigation
+        bottom: "calc(1.5rem + var(--mobile-nav-height, 0px))",
+      }}
     >
       {/* Attention-grabbing pulse ring */}
       <div

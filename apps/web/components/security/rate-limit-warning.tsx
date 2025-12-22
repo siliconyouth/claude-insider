@@ -111,7 +111,7 @@ export function RateLimitWarning({
     <div
       role="alert"
       className={cn(
-        "fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96",
+        "fixed left-4 right-4 md:left-auto md:right-4 md:w-96",
         "p-4 rounded-xl shadow-lg",
         "border transition-all",
         isCritical
@@ -120,6 +120,10 @@ export function RateLimitWarning({
         "animate-slide-up z-50",
         className
       )}
+      style={{
+        // Position above mobile bottom navigation
+        bottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
     >
       <div className="flex items-start gap-3">
         {/* Icon */}

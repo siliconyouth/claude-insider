@@ -157,7 +157,11 @@ function ToastContainer({ toasts, removeToast }: { toasts: Toast[]; removeToast:
 
   return createPortal(
     <div
-      className="fixed bottom-4 right-4 z-[9999] flex flex-col gap-2 pointer-events-none"
+      className="fixed right-4 z-[9999] flex flex-col gap-2 pointer-events-none"
+      style={{
+        // Position above mobile bottom navigation
+        bottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
       role="status"
       aria-live="polite"
       aria-label="Notifications"

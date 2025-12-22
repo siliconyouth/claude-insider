@@ -535,11 +535,15 @@ export function ErrorToast({
   return (
     <div
       className={cn(
-        "fixed bottom-4 right-4 z-50 max-w-sm",
+        "fixed right-4 z-50 max-w-sm",
         "rounded-lg border border-red-200 dark:border-red-800/50",
         "bg-white dark:bg-ds-surface-2 p-4 shadow-lg",
         "animate-slide-in-right"
       )}
+      style={{
+        // Position above mobile bottom navigation
+        bottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
       role="alert"
     >
       <div className="flex items-start gap-3">

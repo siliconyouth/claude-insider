@@ -32,7 +32,13 @@ export class VoiceAssistantErrorBoundary extends Component<Props, State> {
   render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div className="fixed bottom-6 right-6 z-50 w-80 rounded-2xl border border-red-200 bg-white p-6 shadow-xl dark:border-red-800 dark:bg-gray-900">
+        <div
+          className="fixed right-6 z-50 w-80 rounded-2xl border border-red-200 bg-white p-6 shadow-xl dark:border-red-800 dark:bg-gray-900"
+          style={{
+            // Position above mobile bottom navigation
+            bottom: "calc(1.5rem + var(--mobile-nav-height, 0px))",
+          }}
+        >
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 rounded-full bg-red-100 p-2 dark:bg-red-900/30">
               <svg

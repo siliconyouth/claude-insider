@@ -238,7 +238,11 @@ export function NotificationPopup() {
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-[100] flex flex-col-reverse gap-3 max-w-sm w-full pointer-events-none"
+      className="fixed right-4 z-[100] flex flex-col-reverse gap-3 max-w-sm w-full pointer-events-none"
+      style={{
+        // Position above mobile bottom navigation
+        bottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
       role="region"
       aria-label="Notifications"
     >

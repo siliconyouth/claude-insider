@@ -111,10 +111,14 @@ export function PushNotificationPrompt({
   return (
     <div
       className={cn(
-        "fixed bottom-20 left-4 right-4 md:left-auto md:right-4 md:max-w-sm z-40",
+        "fixed left-4 right-4 md:left-auto md:right-4 md:max-w-sm z-40",
         "animate-in slide-in-from-bottom-4 fade-in duration-300",
         className
       )}
+      style={{
+        // Position above mobile bottom navigation (original was bottom-20 = 5rem)
+        bottom: "calc(5rem + var(--mobile-nav-height, 0px))",
+      }}
     >
       <div
         className={cn(
