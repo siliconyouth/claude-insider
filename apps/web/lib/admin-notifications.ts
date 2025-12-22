@@ -1,7 +1,7 @@
 /**
  * Admin Notification System
  *
- * Notifies admin and moderator users about important system events:
+ * Notifies admin, superadmin, and moderator users about important system events:
  * - New user signups
  * - New beta applications
  * - New edit suggestions
@@ -40,7 +40,7 @@ async function getAdminAndModeratorUsers(): Promise<
     const { data, error } = await supabase
       .from("user")
       .select("id, email, name, role")
-      .in("role", ["admin", "moderator"]);
+      .in("role", ["superadmin", "admin", "moderator"]);
 
     if (error) {
       console.error("[AdminNotify] Error fetching admins/moderators:", error);

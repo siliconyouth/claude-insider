@@ -201,7 +201,7 @@ async function sendFeedbackNotifications(params: FeedbackEmailParams): Promise<v
   try {
     // 1. Get all admin users
     const adminsResult = await pool.query(
-      `SELECT id, name, email FROM "user" WHERE role IN ('admin', 'moderator') AND email IS NOT NULL`
+      `SELECT id, name, email FROM "user" WHERE role IN ('superadmin', 'admin', 'moderator') AND email IS NOT NULL`
     );
 
     const typeLabel = params.feedbackType === "bug"
