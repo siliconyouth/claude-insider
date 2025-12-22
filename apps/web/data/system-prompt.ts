@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-22 for v1.10.7 (Mobile optimization fixes)
+ * Updated: 2025-12-23 for v1.10.8 (Mobile header optimization, navigation documentation)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.10.7",
+  version: "1.10.8",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.10.7 - updated 2025-12-22)
+// TECH STACK KNOWLEDGE (v1.10.8 - updated 2025-12-23)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -402,6 +402,22 @@ export const WEBSITE_FEATURES = {
   soundEffects: {
     categories: ["Notifications", "Feedback (success/error)", "UI (click/toggle)", "Chat", "Achievements"],
     technology: "Web Audio API (no audio files)",
+  },
+  navigation: {
+    header: {
+      desktop: ["Logo", "Docs dropdown", "Resources dropdown", "Search", "Theme toggle", "Chat", "Sign-in/User menu", "Hamburger menu"],
+      mobile: ["Logo", "Search (icon)", "Theme toggle (icon)", "Sign-in (icon)", "Menu (hamburger)"],
+      rule: "Max 4-5 icons on mobile, all icon-only with aria-label",
+    },
+    footer: {
+      links: ["Logo", "Copyright", "Author", "Privacy", "Terms", "Disclaimer", "Accessibility", "Changelog", "Stats", "API", "Donate", "Language", "Sound toggle", "Version"],
+      layout: "Single row with dot separators, flex-wrap for mobile",
+    },
+    mobileBottomNav: {
+      tabs: ["Home", "Docs", "Resources", "Chat", "Sign In/Profile"],
+      height: "64px (CSS var --mobile-nav-height)",
+      position: "Fixed at bottom, hidden when keyboard is open",
+    },
   },
 } as const;
 

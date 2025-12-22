@@ -9,6 +9,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.8] - 2025-12-23
+### Mobile Header Optimization & Navigation Documentation
+- **Mobile Header Optimization**: Header now fits in one row on mobile viewports
+  - Sign-in button changed from text to compact user icon
+  - Removed ApiCreditsIndicator from header (both desktop and mobile)
+  - Removed API Settings link from mobile hamburger menu
+  - Mobile header now shows: Search, Theme toggle, Sign-in, Menu (4 icons)
+- **API Link Moved to Footer**: API settings link relocated for cleaner header
+  - Added key icon SVG for visual identification
+  - Available in footer on both desktop and mobile
+- **CLAUDE.md Documentation**: New mandatory "Header & Footer Navigation" section
+  - Desktop header structure documented
+  - Mobile header rules (max 4-5 icons)
+  - Footer layout specification
+  - Mobile bottom navigation structure
+  - Menu consistency checklist for adding navigation items
+- **Mobile Screenshot Updated**: iPhone mockup now shows optimized header layout
+- **Version Bump**: Updated to v1.10.8 across all files
+
+---
+
+## [1.10.7] - 2025-12-22
+### Mobile Navigation Fix & OG Images
+- **Mobile Navigation Fix**: All 33 modals and fixed-bottom elements now account for bottom navigation bar
+- **Viewport Lock**: Prevented horizontal scrolling on mobile with overflow-x: hidden
+- **Logo Aspect Ratio**: Fixed logo squishing on narrow screens with shrink-0 aspect-square
+- **OG Images**: Added branded OG images for social sharing
+- **Homepage Update**: New mobile screenshot in iPhone mockup
+
+---
+
 ## [1.10.6] - 2025-12-22
 ### Brand Icon Redesign
 - **New "Ci" Gradient Icon**: Complete redesign of all website icons

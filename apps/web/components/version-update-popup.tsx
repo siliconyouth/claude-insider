@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.10.7";
+const APP_VERSION = "1.10.8";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.10.8",
+    date: "2025-12-23",
+    type: "patch",
+    highlights: [
+      "📱 Mobile Header Optimization: Header now fits in one row (4 icons: Search, Theme, Sign-in, Menu)",
+      "🔗 API Link to Footer: Moved from header for cleaner mobile experience",
+      "📸 iPhone Mockup Screenshot: Real mobile view with optimized header layout",
+      "📚 CLAUDE.md: New MANDATORY 'Header & Footer Navigation' section with consistency checklist",
+      "🔧 Sign-in Button: Text button replaced with compact user icon on mobile",
+    ],
+  },
   {
     version: "1.10.7",
     date: "2025-12-22",

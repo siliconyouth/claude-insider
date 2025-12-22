@@ -2,16 +2,17 @@
 
 # Claude Insider
 
-### 📚 The Ultimate Documentation Hub for Claude AI
+### The Ultimate Documentation Hub for Claude AI
 
 **Created by [Vladimir Dukelic](mailto:vladimir@dukelic.com)** • MIT License with Attribution
 
 <br />
 
-[![Live Site](https://img.shields.io/badge/🌐_Live-claudeinsider.com-0a0a0a?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/📦_v1.10.7-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
-[![License](https://img.shields.io/badge/📄_MIT-license-eab308?style=for-the-badge&labelColor=0a0a0a)](LICENSE)
-[![Donate](https://img.shields.io/badge/💖_Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
+[![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
+[![Version](https://img.shields.io/badge/v1.10.8-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Features](https://img.shields.io/badge/49-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Resources](https://img.shields.io/badge/1,952+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
+[![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
 <br />
 
@@ -31,38 +32,38 @@
 
 <div align="center">
 
-[🌐 **Live Demo**](https://www.claudeinsider.com) &nbsp;•&nbsp; [📚 **Documentation**](https://www.claudeinsider.com/docs/getting-started/installation) &nbsp;•&nbsp; [💖 **Donate**](https://www.claudeinsider.com/donate) &nbsp;•&nbsp; [📋 **Changelog**](CHANGELOG.md)
+[**Live Demo**](https://www.claudeinsider.com) &nbsp;•&nbsp; [**Documentation**](https://www.claudeinsider.com/docs/getting-started/installation) &nbsp;•&nbsp; [**Resources**](https://www.claudeinsider.com/resources) &nbsp;•&nbsp; [**Donate**](https://www.claudeinsider.com/donate) &nbsp;•&nbsp; [**Changelog**](CHANGELOG.md)
 
 </div>
 
 ---
 
-## ✨ Highlights
+## Highlights
 
 <table>
 <tr>
 <td width="50%">
 
-### 🤖 AI Voice Assistant
-Chat with Claude AI using voice or text. 42 premium ElevenLabs voices with streaming TTS and speech recognition.
+### AI Voice Assistant
+Chat with Claude AI using voice or text. **42 premium ElevenLabs voices** with streaming TTS and Web Speech API recognition.
 
-### 📚 34 Documentation Pages
-Comprehensive guides across 7 categories: Getting Started, Configuration, API Reference, Integrations, and more.
+### 34 Documentation Pages
+Comprehensive guides across **7 categories**: Getting Started, Configuration, API Reference, Integrations, Tutorials, and more.
 
-### 🔍 RAG-Powered Search
-Intelligent search with 1,979 indexed chunks. Press `Cmd/Ctrl+K` for instant fuzzy search.
+### 1,952+ Curated Resources
+Tools, MCP servers, SDKs, and community resources across **10 categories** with GitHub integration and AI-enhanced metadata.
 
 </td>
 <td width="50%">
 
-### 🔐 Enterprise Security
-End-to-end encryption (Matrix Olm/Megolm), passkeys, multi-device 2FA, honeypot bot detection.
+### Enterprise Security
+**End-to-end encryption** (Matrix Olm/Megolm), passkeys/WebAuthn, multi-device 2FA, honeypot bot detection, and trust scoring.
 
-### 🎮 Gamification
-50+ achievements across 9 categories, leaderboards, sound effects, and animated celebrations.
+### 50+ Achievements
+Gamification system with **9 categories**, 4 rarity tiers, animated confetti, sound effects, and leaderboards.
 
-### 🌍 18 Languages
-Full internationalization with locale detection and seamless language switching.
+### 18 Languages
+Full internationalization with locale detection and seamless language switching across Americas, Europe, and Asia.
 
 </td>
 </tr>
@@ -74,13 +75,105 @@ Full internationalization with locale detection and seamless language switching.
 
 ![AI Voice Assistant](docs/screenshots/ai-assistant.png)
 
-*AI Voice Assistant with 42 premium voices and real-time streaming*
+*AI Voice Assistant with 42 premium voices, streaming responses, and suggested questions*
 
 </div>
 
 ---
 
-## 🚀 Quick Start
+## 49 Platform Features
+
+<details>
+<summary><b>Content & Documentation</b></summary>
+
+| Feature | Description |
+|---------|-------------|
+| MDX Documentation | 34 pages with syntax highlighting (33 languages), copy-to-clipboard, ToC with scroll spy |
+| Resources Section | 1,952 curated resources, 10 categories, GitHub integration, AI-enhanced descriptions |
+| Prompt Library | 10 system prompts, 8 categories, variable syntax, save/rate/use tracking |
+| Doc Versioning | Version history, line-by-line diff, unified/split view, rollback capability |
+| Cross-Linking | 147 doc-resource + 96 resource-resource relationships with confidence scores |
+
+</details>
+
+<details>
+<summary><b>AI & Voice</b></summary>
+
+| Feature | Description |
+|---------|-------------|
+| AI Voice Assistant | Claude Sonnet 4 streaming, RAG with 1,979 chunks, context-aware responses |
+| ElevenLabs TTS | 42 premium voices, sentence-by-sentence streaming, voice preview |
+| Speech Recognition | Web Speech API input with real-time transcription |
+| AI Writing Assistant | In-place doc editing, 8 AI commands, diff preview, streaming |
+| Smart AI Messaging | @claudeinsider auto-responds in DMs, @mention-only in groups |
+
+</details>
+
+<details>
+<summary><b>User Features</b></summary>
+
+| Feature | Description |
+|---------|-------------|
+| Authentication | OAuth (GitHub, Google), email/password, magic links |
+| Passkeys/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
+| Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
+| User Profiles | Custom covers (3:1 ratio), location/timezone, social links, share modal |
+| Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti effects |
+
+</details>
+
+<details>
+<summary><b>Messaging & Social</b></summary>
+
+| Feature | Description |
+|---------|-------------|
+| Direct Messages | Real-time messaging with typing indicators and online presence |
+| Group Chat | Up to 50 members, roles (owner/admin/member), invitations |
+| E2EE Messaging | Matrix Olm/Megolm protocol, device verification, cloud backup |
+| User Directory | Search, filters, 7 list types, deep linking to messages |
+| ProfileHoverCard | Touch-friendly previews, two-touch navigation on mobile |
+
+</details>
+
+<details>
+<summary><b>Admin & Security</b></summary>
+
+| Feature | Description |
+|---------|-------------|
+| Admin Dashboard | 23 pages across 5 sections with animated Recharts visualizations |
+| Security Dashboard | Fingerprinting, trust scores, honeypots, activity feed |
+| Bot Challenge | Slider puzzle, math captcha, rate limit warnings, trust-based difficulty |
+| Audit Export | Bulk exports (JSON/CSV/XLSX), async job queue, anonymization |
+| Search Analytics | Top searches, zero-result queries, trend charts |
+
+</details>
+
+<details>
+<summary><b>Performance & UX</b></summary>
+
+| Feature | Description |
+|---------|-------------|
+| Advanced Search | Boolean operators (AND/OR/NOT), smart autocomplete, saved searches |
+| Sound Effects | Web Audio API, 26 sound types, 10 themes, 6 categories |
+| PWA Support | 15 icons, service worker, push notifications, offline support |
+| 18 Languages | Americas, Europe, Asia with automatic locale detection |
+| Lighthouse 88+ | FCP 0.8s, LCP 2.2s, TBT 0ms, CLS 0.003 |
+
+</details>
+
+---
+
+<div align="center">
+
+![Documentation Page](docs/screenshots/documentation.png)
+
+*Syntax-highlighted documentation with sidebar navigation, ToC, and related resources*
+
+</div>
+
+---
+
+## Quick Start
 
 ```bash
 # Clone and install
@@ -90,33 +183,36 @@ cd claude-insider && pnpm install
 # Add required API keys to .env.local
 ANTHROPIC_API_KEY=your_key_here
 ELEVENLABS_API_KEY=your_key_here
+BETTER_AUTH_SECRET=your_secret_here  # min 32 chars
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_key
 
 # Start development server
 pnpm dev
 ```
 
-> 🔗 Open [localhost:3001](http://localhost:3001) to view the app
+> Open [localhost:3001](http://localhost:3001) to view the app
 
 ---
 
 <div align="center">
 
-![Documentation Page](docs/screenshots/documentation.png)
+![Resources Section](docs/screenshots/resources.png)
 
-*Syntax-highlighted documentation with 33 languages and copy-to-clipboard*
+*1,952+ curated resources with interactive charts, category filters, and GitHub stats*
 
 </div>
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 <table>
 <tr>
-<th>🖥️ Frontend</th>
-<th>🤖 AI & Voice</th>
-<th>🗄️ Database</th>
-<th>🔐 Security</th>
+<th>Frontend</th>
+<th>AI & Voice</th>
+<th>Database</th>
+<th>Security</th>
 </tr>
 <tr>
 <td>
@@ -125,6 +221,7 @@ pnpm dev
 - React 19
 - TypeScript 5.9
 - Tailwind CSS 4
+- Recharts 3.6
 
 </td>
 <td>
@@ -132,42 +229,82 @@ pnpm dev
 - Claude Sonnet 4
 - ElevenLabs TTS
 - Web Speech API
-- RAG Search
+- RAG (3,809 chunks)
 
 </td>
 <td>
 
 - Supabase
-- PostgreSQL
+- PostgreSQL 15+
 - 126 Tables
-- RLS Policies
+- Payload CMS 3.69
 
 </td>
 <td>
 
-- Better Auth
+- Better Auth 1.4.7
 - Passkeys/2FA
-- E2EE Messaging
-- Honeypots
+- E2EE (Matrix)
+- FingerprintJS
 
 </td>
 </tr>
 </table>
 
 <details>
-<summary>📦 View full tech stack with versions and licenses</summary>
+<summary><b>View full tech stack with versions</b></summary>
 
 <br />
 
-See [CLAUDE.md](CLAUDE.md) for the complete technology stack including all dependencies, versions, and open-source licenses.
+| Category | Technology | Version |
+|----------|------------|---------|
+| Framework | Next.js (App Router, Turbopack) | 16.0.10 |
+| UI Library | React | 19.2.3 |
+| Language | TypeScript (strict mode) | 5.9.3 |
+| Styling | Tailwind CSS | 4.1.5 |
+| Monorepo | Turborepo | 2.6.3 |
+| Package Manager | pnpm | 10.19.0 |
+| AI Provider | Anthropic SDK | latest |
+| Voice | ElevenLabs SDK | latest |
+| Search | Fuse.js | 7.1.0 |
+| Auth | Better Auth | 1.4.6 |
+| Database | Supabase | 2.87.1 |
+| CMS | Payload CMS | 3.68.3 |
+| Charts | Recharts | 3.6.0 |
+| E2EE | Matrix Olm/Megolm WASM | 16.0.0 |
+| Fingerprint | FingerprintJS | 5.0.1 |
+
+See [CLAUDE.md](CLAUDE.md) for complete documentation.
 
 </details>
 
 ---
 
+## Documentation
+
+| Document | Description |
+|:---------|:------------|
+| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 49 feature requirements |
+| [**CHANGELOG.md**](CHANGELOG.md) | Version history with detailed release notes |
+| [**ROADMAP.md**](ROADMAP.md) | Future feature planning and priorities |
+
+### Documentation Categories
+
+| Category | Pages | Topics |
+|:---------|:-----:|:-------|
+| Getting Started | 5 | Installation, Quick Start, Troubleshooting, Migration |
+| Configuration | 5 | CLAUDE.md, Settings, Environment, Permissions |
+| Tips & Tricks | 5 | Prompting, Productivity, Advanced Prompting, Debugging |
+| API Reference | 7 | Auth, Tool Use, Streaming, Error Handling, Models |
+| Integrations | 7 | MCP Servers, IDE Plugins, Hooks, GitHub Actions, Docker |
+| Tutorials | 4 | Code Review, Docs Generation, Test Generation |
+| Examples | 2 | Real-World Projects |
+
+---
+
 <div align="center">
 
-## 💖 Support This Project
+## Support This Project
 
 **Claude Insider is free and open source.**
 Your support helps cover infrastructure costs and enables continued development.
@@ -180,42 +317,13 @@ Your support helps cover infrastructure costs and enables continued development.
 
 **Other ways to support:**
 
-⭐ Star this repository &nbsp;•&nbsp; 🐛 Report bugs &nbsp;•&nbsp; 📝 Contribute docs &nbsp;•&nbsp; 🗣️ Share with others
+Star this repository &nbsp;•&nbsp; Report bugs &nbsp;•&nbsp; Contribute docs &nbsp;•&nbsp; Share with others
 
 </div>
 
 ---
 
-<div align="center">
-
-![Resources Section](docs/screenshots/resources.png)
-
-*1,952+ curated resources across 10 categories with GitHub integration*
-
-</div>
-
----
-
-## 📖 Documentation
-
-| Document | Description |
-|:---------|:------------|
-| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, feature requirements |
-| [**CHANGELOG.md**](CHANGELOG.md) | Version history with detailed release notes |
-
-### Documentation Categories
-
-| Category | Pages | Topics |
-|:---------|:-----:|:-------|
-| Getting Started | 4 | Installation, Quick Start, Troubleshooting |
-| Configuration | 5 | CLAUDE.md, Settings, Environment |
-| API Reference | 7 | Auth, Tool Use, Streaming |
-| Integrations | 7 | MCP Servers, IDE Plugins, Docker |
-| Tutorials | 4 | Code Review, Testing, Docs Generation |
-
----
-
-## 🤝 Contributing
+## Contributing
 
 ```
 1. Fork the repository
@@ -229,7 +337,7 @@ See [CLAUDE.md](CLAUDE.md) for coding standards, design system rules, and contri
 
 ---
 
-## 📄 License
+## License
 
 **MIT License with Attribution**
 
@@ -243,28 +351,24 @@ When using this software, you must:
 
 <div align="center">
 
-### 👨‍💻 Author
+### Author
 
 **Vladimir Dukelic**
 
-📧 [vladimir@dukelic.com](mailto:vladimir@dukelic.com) &nbsp;•&nbsp; 🐙 [@siliconyouth](https://github.com/siliconyouth)
+[vladimir@dukelic.com](mailto:vladimir@dukelic.com) &nbsp;•&nbsp; [@siliconyouth](https://github.com/siliconyouth)
 
 ---
 
-[🌐 Live Site](https://www.claudeinsider.com) &nbsp;•&nbsp; [📚 Docs](https://www.claudeinsider.com/docs/getting-started/installation) &nbsp;•&nbsp; [💖 Donate](https://www.claudeinsider.com/donate) &nbsp;•&nbsp; [📋 Changelog](CHANGELOG.md)
+[Live Site](https://www.claudeinsider.com) &nbsp;•&nbsp; [Docs](https://www.claudeinsider.com/docs/getting-started/installation) &nbsp;•&nbsp; [Resources](https://www.claudeinsider.com/resources) &nbsp;•&nbsp; [Donate](https://www.claudeinsider.com/donate) &nbsp;•&nbsp; [Changelog](CHANGELOG.md)
 
 <br />
 
-*If Claude Insider helps you, consider [supporting the project](https://www.claudeinsider.com/donate)* ☕
-
-<br />
-
-[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?style=flat-square&logo=paypal&logoColor=white)](https://www.claudeinsider.com/donate)
+*If Claude Insider helps you, consider [supporting the project](https://www.claudeinsider.com/donate)*
 
 <br />
 
 ---
 
-**Built with [Claude Code](https://claude.ai/code)** 🤖
+**Built with [Claude Code](https://claude.ai/code)**
 
 </div>

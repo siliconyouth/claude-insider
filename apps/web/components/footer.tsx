@@ -7,7 +7,7 @@ import { FooterLanguageSelector } from "@/components/footer-language-selector";
 import { SoundToggle } from "@/components/sound-toggle";
 import { MonochromeLogo } from "@/components/monochrome-logo";
 
-const APP_VERSION = "1.10.7";
+const APP_VERSION = "1.10.8";
 
 export function Footer() {
   const t = useTranslations("footer");

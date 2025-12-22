@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.7**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.8**.
 
 | Link | URL |
 |------|-----|
@@ -40,7 +40,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.7**.
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 10. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
-11. [Component Patterns](#component-patterns) - Buttons, cards, modals, mobile-aware elements
+11. [Component Patterns](#component-patterns) - Buttons, cards, modals, header/footer navigation (MANDATORY)
 12. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
 13. [Internationalization](#internationalization-i18n) - 18 languages
 14. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
@@ -1060,6 +1060,82 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 ```
 
 **Integrated in**: Leaderboard, ReviewCard, UserSearch, Followers/Following lists, ConversationView
+
+### Header & Footer Navigation (MANDATORY)
+
+The site-wide navigation is divided between header and footer menus. All components using navigation must follow this structure.
+
+#### Header Navigation
+
+**Desktop Header** (`components/header.tsx`):
+
+| Section | Items |
+|---------|-------|
+| **Left** | Logo, Documentation dropdown, Resources dropdown, Playground, Stats, Donate |
+| **Right** | Search (expanded), Theme toggle, Inbox, Notifications, User menu |
+
+**Mobile Header** (375px viewport):
+
+| Position | Items | Notes |
+|----------|-------|-------|
+| **Left** | Logo ("Ci Claude Insider") | Shrink-0, aspect-square |
+| **Right** | Search icon, Theme toggle, Sign-in icon, Hamburger menu | 4 icons in one row, `gap-1` |
+
+**Mobile Menu** (hamburger expanded):
+- Documentation (collapsible with all 7 categories)
+- Resources (collapsible with all 10 categories)
+- Playground, Stats, Support Us
+
+**MANDATORY Mobile Header Rules**:
+1. Maximum 4-5 icon buttons in the header row (excluding logo)
+2. Use icon-only buttons (no text labels) for compact display
+3. All icons must have `aria-label` and `title` for accessibility
+4. Less-used features belong in footer or hamburger menu
+
+#### Footer Navigation
+
+**Footer Layout** (`components/footer.tsx`):
+
+| Element | Description |
+|---------|-------------|
+| Logo | MonochromeLogo (14px), links to home |
+| Copyright | `© {year}` + author link |
+| Legal Links | Privacy, Terms, Disclaimer, Accessibility |
+| Utility Links | Changelog, Stats, **API** (with key icon), Donate (with heart icon) |
+| Controls | Language selector, Sound toggle |
+| Version | `v{APP_VERSION}-{buildId}` |
+
+**MANDATORY Footer Rules**:
+1. API link moved from header to footer (both desktop and mobile)
+2. API link includes key icon SVG for visual identification
+3. All links use consistent `linkClass` styling
+4. Separators use `·` character with `separatorClass`
+
+#### Mobile Bottom Navigation
+
+**Location**: `components/mobile/bottom-nav.tsx`
+
+| Tab | Icon | Route/Action |
+|-----|------|--------------|
+| Home | House | `/` |
+| Docs | Book | `/docs` |
+| Resources | Grid | `/resources` |
+| Chat | Message bubble | Opens chat |
+| Sign In / Profile | User | Auth modal or `/profile` |
+
+**MANDATORY**: Bottom nav uses CSS variable `--mobile-nav-height: 64px` for spacing calculations.
+
+#### Menu Consistency Checklist
+
+When adding new navigation items:
+
+- [ ] Desktop: Add to appropriate header section or footer
+- [ ] Mobile header: Keep under 5 icon buttons
+- [ ] Mobile menu: Add to hamburger if needed for mobile access
+- [ ] Footer: Add utility/secondary links here instead of header
+- [ ] Bottom nav: Only for primary 5 navigation actions
+- [ ] All links have proper `aria-label` attributes
+- [ ] Icon-only buttons include `title` for tooltips
 
 ---
 
