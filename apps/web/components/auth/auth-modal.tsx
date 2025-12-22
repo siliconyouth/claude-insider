@@ -121,7 +121,7 @@ export function AuthModal({ isOpen, onClose, initialMode = "signin" }: AuthModal
       {/* Modal */}
       <div
         className={cn(
-          "relative w-full max-w-md p-6",
+          "relative z-10 w-full max-w-md p-6",
           "bg-white dark:bg-[#111111]",
           "border border-gray-200 dark:border-[#262626]",
           "rounded-2xl shadow-2xl",
