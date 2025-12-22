@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-22 for v1.10.3
+ * Updated: 2025-12-22 for v1.10.4
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.10.3",
+  version: "1.10.4",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,14 +80,14 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.10.3 - updated 2025-12-22)
+// TECH STACK KNOWLEDGE (v1.10.4 - updated 2025-12-22)
 // =============================================================================
 
 export const TECH_STACK = {
-  framework: { name: "Next.js", version: "16.0.10", features: ["App Router", "API Routes", "Server Components", "SSR", "ISR"] },
+  framework: { name: "Next.js", version: "16.1.1", features: ["App Router", "Turbopack", "API Routes", "Server Components", "SSR", "ISR"] },
   language: { name: "TypeScript", version: "5.9.3", features: ["Strict mode", "Explicit types"] },
   ui: { name: "React", version: "19.2.3" },
-  styling: { name: "Tailwind CSS", version: "4.1.5", features: ["Dark mode", "Glass morphism", "Gradient system"] },
+  styling: { name: "Tailwind CSS", version: "4.1.18", features: ["Dark mode", "Glass morphism", "Gradient system"] },
   monorepo: { name: "Turborepo", version: "2.6.3" },
   ai: {
     provider: "Anthropic",

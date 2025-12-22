@@ -9,6 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.4] - 2025-12-22
+### Build Performance & Package Upgrades
+- **Turbopack Production Builds**: Next.js 16.1.1 enables Turbopack for production
+  - Compilation time reduced from 37.2s to 22.6s (40% faster)
+  - Removed redundant `modularizeImports` for lucide-react (handled by `optimizePackageImports`)
+  - Removed `--webpack` flag, now using Turbopack by default
+- **Major Package Upgrades**:
+  - Vercel AI SDK: 5.0.112 → 6.0.1 (major version)
+  - Payload CMS: 3.68.3 → 3.69.0
+  - Supabase: 2.87.1 → 2.89.0
+  - OpenAI SDK: 6.10.0 → 6.15.0
+  - Better Auth: 1.4.6 → 1.4.7
+  - TanStack Virtual: 3.13.2 → 3.13.13
+- **Turborepo Caching Improvements**:
+  - Added `outputLogs: "new-only"` for cleaner build output
+  - Added `SKIP_RAG_INDEX` environment variable support
+  - Expanded web#build inputs to include collections/, scripts/, CLAUDE.md, CHANGELOG.md
+  - Added code-examples-index.json to cache outputs
+- **Next.js Optimizations**:
+  - Added `optimizePackageImports` for lucide-react, heroicons, date-fns, recharts
+  - Added `logging.fetches.fullUrl: false` for cleaner build logs
+- **Documentation Updates**: All package versions updated in CLAUDE.md tech stack table
+
+---
+
 ## [1.10.3] - 2025-12-22
 ### Bug Fixes & Documentation Updates
 - **Auth Modal Fix**: Resolved click blocking issue

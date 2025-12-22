@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.10.3";
+const APP_VERSION = "1.10.4";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,6 +24,18 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.10.4",
+    date: "2025-12-22",
+    type: "patch",
+    highlights: [
+      "⚡ Turbopack Production: Next.js 16.1.1 enables 40% faster compilation (22.6s vs 37.2s)",
+      "📦 Major Upgrades: Vercel AI SDK 6.0, Payload 3.69.0, Supabase 2.89.0, OpenAI 6.15.0",
+      "🔧 Build Optimization: Enhanced Turborepo caching with granular inputs/outputs",
+      "📝 Package Imports: Added optimizePackageImports for lucide, heroicons, date-fns, recharts",
+      "📚 Documentation: Updated all package versions in CLAUDE.md tech stack table",
+    ],
+  },
+  {
     version: "1.10.3",
     date: "2025-12-22",
     type: "patch",
@@ -31,8 +43,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "🐛 Auth Modal Fix: Resolved click blocking issue caused by version popup backdrop",
       "🛣️ Route Conflict Fix: Moved beta-status endpoint to avoid [id] vs [username] conflict",
       "📦 Lucide Import Fix: Corrected XIcon → X for modularizeImports compatibility",
-      "📚 Documentation Update: Corrected errors and updated all version references",
-      "🔄 RAG Index v6.5: Regenerated with latest documentation and project knowledge",
     ],
   },
   {

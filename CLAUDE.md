@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.3**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.4**.
 
 | Link | URL |
 |------|-----|
@@ -59,18 +59,18 @@ All technologies are **free and/or open source** (except hosting services with f
 
 | Technology | Version | License | Purpose |
 |------------|---------|---------|---------|
-| Next.js | 16.0.10 | MIT | React framework (App Router) |
+| Next.js | 16.1.1 | MIT | React framework (App Router, Turbopack) |
 | React | 19.2.3 | MIT | UI library |
 | TypeScript | 5.9.3 | Apache-2.0 | Type-safe JavaScript (strict mode) |
-| Tailwind CSS | 4.1.5 | MIT | Utility-first CSS |
+| Tailwind CSS | 4.1.18 | MIT | Utility-first CSS |
 | MDX | 3.x | MIT | Markdown with React components |
 | Fuse.js | 7.1.0 | Apache-2.0 | Fuzzy search |
 | highlight.js | 11.x | BSD-3-Clause | Syntax highlighting (33 languages) |
-| Anthropic SDK | latest | Proprietary | Claude Sonnet 4 streaming chat |
-| ElevenLabs SDK | latest | MIT | Text-to-Speech (42 voices) |
-| Better Auth | 1.4.6 | MIT | User authentication (OAuth, 2FA) |
-| Supabase | 2.87.1 | MIT | PostgreSQL with RLS |
-| Payload CMS | 3.68.3 | MIT | Content management system |
+| Anthropic SDK | 0.71.2 | Proprietary | Claude Sonnet 4 streaming chat |
+| ElevenLabs SDK | 2.28.0 | MIT | Text-to-Speech (42 voices) |
+| Better Auth | 1.4.7 | MIT | User authentication (OAuth, 2FA) |
+| Supabase | 2.89.0 | MIT | PostgreSQL with RLS |
+| Payload CMS | 3.69.0 | MIT | Content management system |
 | Turborepo | 2.6.3 | MIT | Monorepo build system |
 | pnpm | 10.19.0 | MIT | Package manager |
 | FingerprintJS | 5.0.1 | MIT | Browser fingerprinting |
@@ -79,9 +79,10 @@ All technologies are **free and/or open source** (except hosting services with f
 | date-fns | 4.1.0 | MIT | Date formatting |
 | @matrix-org/matrix-sdk-crypto-wasm | 16.0.0 | Apache-2.0 | E2EE implementation |
 | @paypal/react-paypal-js | 8.9.2 | Apache-2.0 | PayPal integration |
-| @tanstack/react-virtual | 3.13.2 | MIT | Virtual scrolling for message lists |
+| @tanstack/react-virtual | 3.13.13 | MIT | Virtual scrolling for message lists |
 | react-image-crop | 11.x | ISC | Client-side image cropping |
 | recharts | 3.6.0 | MIT | Animated charts (Area, Bar, Pie, Line) |
+| Vercel AI SDK | 6.0.1 | Apache-2.0 | AI streaming and tool calling |
 
 ### Development Environment
 
