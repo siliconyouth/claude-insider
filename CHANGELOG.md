@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.5] - 2025-12-22
+### Code Optimization & Build Cache
+- **Dead Code Removal**: Removed unused Vercel AI SDK (`ai` package)
+  - Package was installed but never imported anywhere in codebase
+  - Project uses `@anthropic-ai/sdk` directly with custom SSE streaming
+  - Saves ~40KB from bundle, removes 3 packages from node_modules
+- **Turbopack Build Cache**: Enabled `turbopackFileSystemCacheForBuild` (Next.js 16.1 feature)
+  - Caches compiler artifacts on disk between builds
+  - Significantly faster incremental and CI/CD builds
+  - Cache written in 19.5s, reused on subsequent builds
+- **Package Version Sync**: Updated all version references
+  - Better Auth: 1.4.7
+  - Supabase: 2.89.0
+  - Payload CMS: 3.69.0
+- **Documentation Updates**: Synced versions in CLAUDE.md, system-prompt.ts, footer, version popup
+
+---
+
 ## [1.10.4] - 2025-12-22
 ### Build Performance & Package Upgrades
 - **Turbopack Production Builds**: Next.js 16.1.1 enables Turbopack for production
@@ -16,7 +34,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed redundant `modularizeImports` for lucide-react (handled by `optimizePackageImports`)
   - Removed `--webpack` flag, now using Turbopack by default
 - **Major Package Upgrades**:
-  - Vercel AI SDK: 5.0.112 → 6.0.1 (major version)
   - Payload CMS: 3.68.3 → 3.69.0
   - Supabase: 2.87.1 → 2.89.0
   - OpenAI SDK: 6.10.0 → 6.15.0

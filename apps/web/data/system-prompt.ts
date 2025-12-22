@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-22 for v1.10.4
+ * Updated: 2025-12-22 for v1.10.5
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.10.4",
+  version: "1.10.5",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.10.4 - updated 2025-12-22)
+// TECH STACK KNOWLEDGE (v1.10.5 - updated 2025-12-22)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -112,12 +112,12 @@ export const TECH_STACK = {
   rag: { method: "TF-IDF", chunkCount: 3809, sources: "443 docs + 1,952 resources + 583 code + 727 settings + 43 relationships + 41 external + 20 project" },
   auth: {
     library: "Better Auth",
-    version: "1.4.6",
+    version: "1.4.7",
     features: ["OAuth (GitHub, Google)", "Passkeys/WebAuthn", "Multi-device 2FA", "Magic links"],
   },
   database: {
     provider: "Supabase",
-    version: "2.87.1",
+    version: "2.89.0",
     engine: "PostgreSQL 15+",
     tables: 126,
     categories: 18,
@@ -125,7 +125,7 @@ export const TECH_STACK = {
   },
   cms: {
     provider: "Payload CMS",
-    version: "3.68.3",
+    version: "3.69.0",
     features: ["Site settings", "Translations", "Media management"],
   },
   security: {
