@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     template: "%s | Claude Insider",
   },
   description:
-    "Your comprehensive resource for Claude AI documentation, tips, tricks, and configuration guides. 45 features, 1,950+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code powered by Claude Opus 4.5.",
+    "Your comprehensive resource for Claude AI documentation, tips, tricks, and configuration guides. 49 features, 1,950+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code powered by Claude Opus 4.5.",
   keywords: [
     // Core brand keywords
     "Claude AI",
@@ -134,7 +134,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Claude Insider - Tips, Tricks & Documentation for Claude AI",
     description:
-      "Your comprehensive resource for Claude AI documentation. 45 features, 1,950+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code.",
+      "Your comprehensive resource for Claude AI documentation. 49 features, 1,950+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code.",
     url: "https://www.claudeinsider.com",
     siteName: "Claude Insider",
     type: "website",
@@ -164,7 +164,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Claude Insider - Tips, Tricks & Documentation for Claude AI",
     description:
-      "45 features, 1,950+ curated resources, 50+ achievements. Your comprehensive Claude AI documentation hub.",
+      "49 features, 1,950+ curated resources, 50+ achievements. Your comprehensive Claude AI documentation hub.",
     images: ["/og-image.png"],
     creator: "@claudeinsider",
     site: "@claudeinsider",

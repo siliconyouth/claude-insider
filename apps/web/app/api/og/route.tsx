@@ -7,21 +7,28 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
 
   const title = searchParams.get("title") || "Claude Insider";
-  const description = searchParams.get("description") || "Tips, Tricks & Documentation for Claude AI";
+  const description =
+    searchParams.get("description") ||
+    "Tips, Tricks & Documentation for Claude AI";
   const type = searchParams.get("type") || "default";
   const category = searchParams.get("category");
   const badge = searchParams.get("badge");
   const author = searchParams.get("author");
 
-  // Gradient colors based on type
-  const gradients = {
-    default: ["#7C3AED", "#2563EB", "#06B6D4"],
+  // Brand colors matching the website design system
+  // violet-600: #7c3aed, blue-600: #2563eb, cyan-600: #06b6d4
+  const brandGradient = ["#7c3aed", "#2563eb", "#06b6d4"];
+
+  // Type-specific accent colors (subtle variations)
+  const typeAccents = {
+    default: brandGradient,
     article: ["#8B5CF6", "#3B82F6", "#14B8A6"],
     resource: ["#A855F7", "#6366F1", "#0EA5E9"],
     profile: ["#C084FC", "#818CF8", "#38BDF8"],
   };
 
-  const colors = gradients[type as keyof typeof gradients] || gradients.default;
+  const accentColors =
+    typeAccents[type as keyof typeof typeAccents] || typeAccents.default;
 
   return new ImageResponse(
     (
@@ -32,38 +39,51 @@ export async function GET(request: NextRequest) {
           display: "flex",
           flexDirection: "column",
           backgroundColor: "#0a0a0a",
-          padding: "60px",
+          padding: "60px 80px",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Background gradient blobs */}
+        {/* Background gradient blobs - matching website hero */}
         <div
           style={{
             position: "absolute",
-            top: "-100px",
-            right: "-100px",
-            width: "500px",
-            height: "500px",
-            borderRadius: "50%",
-            background: `radial-gradient(circle, ${colors[0]}33 0%, transparent 70%)`,
-            filter: "blur(60px)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: "-150px",
-            left: "-100px",
+            top: "-200px",
+            right: "-150px",
             width: "600px",
             height: "600px",
             borderRadius: "50%",
-            background: `radial-gradient(circle, ${colors[2]}33 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${brandGradient[0]}25 0%, transparent 70%)`,
             filter: "blur(80px)",
           }}
         />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "-200px",
+            left: "-150px",
+            width: "700px",
+            height: "700px",
+            borderRadius: "50%",
+            background: `radial-gradient(circle, ${brandGradient[2]}20 0%, transparent 70%)`,
+            filter: "blur(100px)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "800px",
+            height: "400px",
+            borderRadius: "50%",
+            background: `radial-gradient(circle, ${brandGradient[1]}10 0%, transparent 70%)`,
+            filter: "blur(60px)",
+          }}
+        />
 
-        {/* Content */}
+        {/* Content container */}
         <div
           style={{
             display: "flex",
@@ -71,51 +91,63 @@ export async function GET(request: NextRequest) {
             flex: 1,
             position: "relative",
             zIndex: 1,
+            justifyContent: "space-between",
           }}
         >
-          {/* Header with logo and badge */}
+          {/* Header with logo - matching website header */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              marginBottom: "40px",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              {/* Logo icon */}
+              {/* Logo icon - exact match to website header */}
               <div
                 style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "12px",
-                  background: `linear-gradient(135deg, ${colors[0]}, ${colors[1]}, ${colors[2]})`,
+                  width: "56px",
+                  height: "56px",
+                  borderRadius: "14px",
+                  background: `linear-gradient(135deg, ${brandGradient[0]}, ${brandGradient[1]}, ${brandGradient[2]})`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  boxShadow: "0 4px 12px rgba(37, 99, 235, 0.25)",
                 }}
               >
-                <span style={{ fontSize: "24px", color: "white", fontWeight: "bold" }}>CI</span>
+                <span
+                  style={{
+                    fontSize: "26px",
+                    color: "white",
+                    fontWeight: 700,
+                    letterSpacing: "-0.5px",
+                  }}
+                >
+                  Ci
+                </span>
               </div>
+              {/* Wordmark - matching website header font */}
               <span
                 style={{
-                  fontSize: "24px",
+                  fontSize: "28px",
                   fontWeight: 600,
-                  color: "#9CA3AF",
+                  color: "white",
+                  letterSpacing: "-0.3px",
                 }}
               >
                 Claude Insider
               </span>
             </div>
 
-            {/* Badge or category */}
+            {/* Badge or category pill */}
             {(badge || category) && (
               <div
                 style={{
-                  padding: "8px 20px",
+                  padding: "10px 24px",
                   borderRadius: "9999px",
-                  background: `linear-gradient(135deg, ${colors[0]}44, ${colors[2]}44)`,
-                  border: `1px solid ${colors[1]}66`,
+                  background: `linear-gradient(135deg, ${accentColors[0]}30, ${accentColors[2]}30)`,
+                  border: `1px solid ${accentColors[1]}50`,
                   color: "#E5E7EB",
                   fontSize: "16px",
                   fontWeight: 500,
@@ -126,44 +158,53 @@ export async function GET(request: NextRequest) {
             )}
           </div>
 
-          {/* Main title */}
+          {/* Center content - Hero section */}
           <div
             style={{
               display: "flex",
-              flex: 1,
+              flexDirection: "column",
               alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+              textAlign: "center",
+              padding: "20px 0",
             }}
           >
+            {/* Main title with gradient - matching website hero */}
             <h1
               style={{
-                fontSize: title.length > 50 ? "48px" : "64px",
+                fontSize: title.length > 40 ? "56px" : "72px",
                 fontWeight: 700,
-                background: `linear-gradient(135deg, ${colors[0]}, ${colors[1]}, ${colors[2]})`,
+                background: `linear-gradient(135deg, ${brandGradient[0]}, ${brandGradient[1]}, ${brandGradient[2]})`,
                 backgroundClip: "text",
                 color: "transparent",
-                lineHeight: 1.2,
+                lineHeight: 1.15,
                 margin: 0,
-                maxWidth: "900px",
+                letterSpacing: "-1px",
+                maxWidth: "1000px",
               }}
             >
               {title}
             </h1>
-          </div>
 
-          {/* Description */}
-          {description && (
-            <p
-              style={{
-                fontSize: "24px",
-                color: "#9CA3AF",
-                margin: "0 0 40px 0",
-                maxWidth: "800px",
-                lineHeight: 1.4,
-              }}
-            >
-              {description.length > 120 ? description.slice(0, 120) + "..." : description}
-            </p>
-          )}
+            {/* Description - matching website subheadline */}
+            {description && (
+              <p
+                style={{
+                  fontSize: "26px",
+                  color: "#9CA3AF",
+                  margin: "24px 0 0 0",
+                  maxWidth: "800px",
+                  lineHeight: 1.5,
+                  letterSpacing: "-0.2px",
+                }}
+              >
+                {description.length > 100
+                  ? description.slice(0, 100) + "..."
+                  : description}
+              </p>
+            )}
+          </div>
 
           {/* Footer */}
           <div
@@ -177,10 +218,20 @@ export async function GET(request: NextRequest) {
           >
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               {author && (
-                <span style={{ fontSize: "18px", color: "#6B7280" }}>By {author}</span>
+                <span style={{ fontSize: "18px", color: "#6B7280" }}>
+                  By {author}
+                </span>
               )}
             </div>
-            <span style={{ fontSize: "18px", color: "#6B7280" }}>claudeinsider.com</span>
+            <span
+              style={{
+                fontSize: "20px",
+                color: "#6B7280",
+                fontWeight: 500,
+              }}
+            >
+              claudeinsider.com
+            </span>
           </div>
         </div>
       </div>
