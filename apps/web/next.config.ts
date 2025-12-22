@@ -32,8 +32,8 @@ const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizeCss: true,
-    // Turbopack filesystem caching for faster incremental builds
-    // Dev cache is enabled by default in Next.js 16
+    // Turbopack filesystem caching for faster incremental builds (Next.js 16.1+)
+    // Dev cache enabled by default, build cache opt-in for CI/CD speedup
     turbopackFileSystemCacheForBuild: true,
     // Optimize package imports for smaller bundles
     optimizePackageImports: [
