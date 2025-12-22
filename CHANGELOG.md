@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.10.3] - 2025-12-22
+### Bug Fixes & Documentation Updates
+- **Auth Modal Fix**: Resolved click blocking issue
+  - Root cause: `VersionUpdatePopup` backdrop intercepting all pointer events
+  - Auth modal was working correctly; issue was full-screen backdrop at z-50
+  - Reverted unnecessary z-index changes from commits 88d1e3a, c1c1bbe
+- **Route Conflict Fix**: Moved beta-status endpoint
+  - Changed `/api/users/[id]/beta-status` to `/api/user/beta-status`
+  - Avoided Next.js dynamic route conflict with existing `/api/users/[username]`
+- **Lucide Import Fix**: Corrected `XIcon` → `X` in `query-builder.tsx`
+  - `modularizeImports` transforms icon names without "Icon" suffix
+- **Documentation Updates**: All version references updated to 1.10.3
+- **RAG Index v6.5**: Regenerated with latest documentation and project knowledge
+
+---
+
 ## [1.10.2] - 2025-12-21
 ### Complete Resource Enhancement
 - **100% Resource Enhancement**: All 1,952 resources now have complete AI-generated metadata

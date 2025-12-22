@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.10.2";
+const APP_VERSION = "1.10.3";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.10.3",
+    date: "2025-12-22",
+    type: "patch",
+    highlights: [
+      "🐛 Auth Modal Fix: Resolved click blocking issue caused by version popup backdrop",
+      "🛣️ Route Conflict Fix: Moved beta-status endpoint to avoid [id] vs [username] conflict",
+      "📦 Lucide Import Fix: Corrected XIcon → X for modularizeImports compatibility",
+      "📚 Documentation Update: Corrected errors and updated all version references",
+      "🔄 RAG Index v6.5: Regenerated with latest documentation and project knowledge",
+    ],
+  },
   {
     version: "1.10.2",
     date: "2025-12-21",
