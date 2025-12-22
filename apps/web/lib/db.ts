@@ -65,14 +65,14 @@ function getPool(): Pool {
   if (!poolInstance) {
     poolInstance = new Pool({
       connectionString: getConnectionString(),
-      // CRITICAL: Keep pool size minimal for serverless
-      // Each Vercel function instance has its own pool
-      // With many instances, even max=1 can add up
-      max: 1,
-      // Release idle connections immediately in serverless
-      idleTimeoutMillis: 1000,
-      // Don't wait too long for connections
-      connectionTimeoutMillis: 5000,
+      // Increased from 1 to 3 to reduce connection contention
+      // Supabase Transaction Pooler can handle more connections efficiently
+      // This allows auth queries to run concurrently with other requests
+      max: 3,
+      // Release idle connections after 10 seconds in serverless
+      idleTimeoutMillis: 10000,
+      // Shorter timeout since we have more connections now
+      connectionTimeoutMillis: 3000,
       // SSL required for Supabase in production
       ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     });
@@ -81,6 +81,19 @@ function getPool(): Pool {
     poolInstance.on('error', (err) => {
       console.error('[DB Pool] Unexpected error on idle client:', err);
     });
+
+    // Log connection events in debug mode
+    if (shouldLog || process.env.DEBUG_DB === 'true') {
+      poolInstance.on('connect', () => {
+        console.log('[DB Pool] New connection established');
+      });
+      poolInstance.on('acquire', () => {
+        console.log('[DB Pool] Connection acquired from pool');
+      });
+      poolInstance.on('remove', () => {
+        console.log('[DB Pool] Connection removed from pool');
+      });
+    }
   }
 
   return poolInstance;

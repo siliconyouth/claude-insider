@@ -98,16 +98,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [hasFallbackCompleted, setHasFallbackCompleted] = useState(false);
   const hasCheckedSession = useRef(false);
 
-  // Debug logging - always log to help diagnose issues
+  // Debug logging - only in development or when DEBUG_AUTH is set
+  const shouldDebugLog = process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_DEBUG_AUTH === "true";
+
   useEffect(() => {
-    console.log("[Auth] State:", {
-      isPending,
-      hasSession: !!sessionData,
-      hasManual: !!manualSession,
-      hasFallbackCompleted,
-      isRefetching
-    });
-  }, [isPending, sessionData, manualSession, hasFallbackCompleted, isRefetching]);
+    if (shouldDebugLog) {
+      console.log("[Auth] State:", {
+        isPending,
+        hasSession: !!sessionData,
+        hasManual: !!manualSession,
+        hasFallbackCompleted,
+        isRefetching
+      });
+    }
+  }, [isPending, sessionData, manualSession, hasFallbackCompleted, isRefetching, shouldDebugLog]);
 
   // Force session fetch for OAuth callback scenarios OR when useSession is stuck
   // This works around the Better Auth useSession reactivity issue
@@ -124,19 +128,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // If still pending, wait a bit but not forever
     // Set a timeout to force fallback if isPending is stuck
-    const timeoutId = setTimeout(async () => {
+    const delayTimeoutId = setTimeout(async () => {
       // Double-check still no session after debounce
       if (hasCheckedSession.current) return;
       hasCheckedSession.current = true;
 
       // Only fetch if we still have no session
-      console.log("[Auth] Starting fallback fetch...");
+      if (shouldDebugLog) console.log("[Auth] Starting fallback fetch...");
       setIsRefetching(true);
+
+      // Use a separate variable for abort timeout to avoid shadowing
+      let abortTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
       try {
         // Better Auth's session endpoint - must match catch-all route handler
         // Add AbortController with 5 second timeout to prevent hanging
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        abortTimeoutId = setTimeout(() => controller.abort(), 5000);
 
         const response = await fetch("/api/auth/session", {
           credentials: "include",
@@ -144,14 +152,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           signal: controller.signal,
         });
 
-        clearTimeout(timeoutId);
-        console.log("[Auth] Fallback response status:", response.status);
+        if (abortTimeoutId) clearTimeout(abortTimeoutId);
+        if (shouldDebugLog) console.log("[Auth] Fallback response status:", response.status);
 
         if (response.ok) {
           const data = await response.json();
-          console.log("[Auth] Fallback data:", { hasSession: !!data?.session, hasUser: !!data?.user });
+          if (shouldDebugLog) console.log("[Auth] Fallback data:", { hasSession: !!data?.session, hasUser: !!data?.user });
           if (data?.session && data?.user) {
-            console.log("[Auth] Session found via fallback API call");
+            if (shouldDebugLog) console.log("[Auth] Session found via fallback API call");
             setManualSession({
               user: data.user,
               session: data.session,
@@ -159,20 +167,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           }
         }
       } catch (error) {
+        if (abortTimeoutId) clearTimeout(abortTimeoutId);
+        // Always log errors - they're important for debugging
         if (error instanceof Error && error.name === "AbortError") {
-          console.error("[Auth] Session fetch timed out after 5s");
+          console.warn("[Auth] Session fetch timed out after 5s - user may need to refresh");
         } else {
           console.error("[Auth] Session refresh failed:", error);
         }
       } finally {
-        console.log("[Auth] Fallback complete");
+        if (shouldDebugLog) console.log("[Auth] Fallback complete, setting hasFallbackCompleted=true");
         setIsRefetching(false);
         setHasFallbackCompleted(true);
       }
     }, isPending ? 500 : 100); // Wait longer if isPending, shorter if already resolved to null
 
-    return () => clearTimeout(timeoutId);
-  }, [isPending, sessionData]);
+    return () => clearTimeout(delayTimeoutId);
+  }, [isPending, sessionData, shouldDebugLog]);
 
   // Use sessionData from hook if available, otherwise use manual session
   const effectiveSession = sessionData || manualSession;
