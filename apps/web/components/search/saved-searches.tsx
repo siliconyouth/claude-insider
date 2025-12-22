@@ -194,7 +194,13 @@ export function SaveSearchModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
+    >
       <div className="w-full max-w-sm bg-white dark:bg-[#111111] rounded-2xl shadow-xl p-6">
         <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
           Save Search

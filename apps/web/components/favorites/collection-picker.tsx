@@ -183,6 +183,10 @@ export function CollectionPicker({
   return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
       onClick={onClose}
     >
       {/* Backdrop */}

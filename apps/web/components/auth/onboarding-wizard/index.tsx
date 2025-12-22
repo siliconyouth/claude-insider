@@ -238,7 +238,13 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "var(--mobile-nav-height, 0px)",
+      }}
+    >
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -255,8 +261,12 @@ export function OnboardingWizard({ isOpen, onComplete, onSkipForNow }: Onboardin
           "animate-in fade-in zoom-in-95 duration-200",
           "flex flex-col",
           // Responsive height: auto on desktop, scrollable on mobile
-          "max-h-[95vh] sm:max-h-none sm:h-auto"
+          "sm:max-h-none sm:h-auto"
         )}
+        style={{
+          // Max height accounts for mobile nav
+          maxHeight: "calc(95vh - var(--mobile-nav-height, 0px))",
+        }}
         role="dialog"
         aria-modal="true"
         aria-labelledby="wizard-title"

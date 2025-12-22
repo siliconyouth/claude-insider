@@ -128,6 +128,10 @@ export function ScreenshotGallery({ screenshots, title }: ScreenshotGalleryProps
         createPortal(
           <div
             className="fixed inset-0 z-50 flex items-center justify-center"
+            style={{
+              // Account for mobile bottom navigation
+              paddingBottom: "var(--mobile-nav-height, 0px)",
+            }}
             role="dialog"
             aria-modal="true"
             aria-label="Screenshot gallery"

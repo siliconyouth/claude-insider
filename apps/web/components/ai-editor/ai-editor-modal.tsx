@@ -219,6 +219,10 @@ export function AIEditorModal({
   const modalContent = (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="ai-editor-title"
@@ -233,11 +237,15 @@ export function AIEditorModal({
       {/* Modal */}
       <div
         className={cn(
-          "relative w-full max-w-5xl max-h-[90vh] overflow-hidden",
+          "relative w-full max-w-5xl overflow-hidden",
           "bg-white dark:bg-[#111111] rounded-xl shadow-2xl",
           "border border-gray-200 dark:border-[#262626]",
           "flex flex-col animate-scale-in"
         )}
+        style={{
+          // Max height accounts for mobile nav
+          maxHeight: "calc(90vh - var(--mobile-nav-height, 0px))",
+        }}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-[#262626]">

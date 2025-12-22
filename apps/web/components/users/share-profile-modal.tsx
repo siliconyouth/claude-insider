@@ -65,7 +65,13 @@ export function ShareProfileModal({ isOpen, onClose, profile }: ShareProfileModa
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "var(--mobile-nav-height, 0px)",
+      }}
+    >
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"

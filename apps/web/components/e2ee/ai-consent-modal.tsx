@@ -143,7 +143,13 @@ export function AIConsentModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
+    >
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -156,9 +162,13 @@ export function AIConsentModal({
           "relative z-10 w-full max-w-lg",
           "rounded-xl bg-gray-900 border border-gray-800",
           "shadow-2xl shadow-black/50",
-          "max-h-[90vh] overflow-y-auto",
+          "overflow-y-auto",
           "p-6"
         )}
+        style={{
+          // Max height accounts for mobile nav
+          maxHeight: "calc(90vh - var(--mobile-nav-height, 0px))",
+        }}
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-6">

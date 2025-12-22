@@ -171,6 +171,10 @@ export function AccessibleModal({
         !prefersReducedMotion && "animate-in fade-in duration-200"
       )}
       role="presentation"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
     >
       <div
         ref={containerRef}

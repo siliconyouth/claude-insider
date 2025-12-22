@@ -2395,6 +2395,17 @@ code {
   --safe-area-inset-right: env(safe-area-inset-right, 0px);
   --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
   --safe-area-inset-left: env(safe-area-inset-left, 0px);
+
+  /* Mobile bottom navigation height - accounts for nav bar (4rem/64px) + safe area */
+  /* Desktop: no nav, so 0px */
+  --mobile-nav-height: 0px;
+}
+
+/* Mobile: nav is visible, set height */
+@media (max-width: 767px) {
+  :root {
+    --mobile-nav-height: calc(4rem + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* Bottom nav padding for main content (mobile only) */

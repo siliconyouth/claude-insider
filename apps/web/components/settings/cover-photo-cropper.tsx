@@ -294,6 +294,10 @@ export function CoverPhotoCropper({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
       onMouseDown={handleBackdropMouseDown}
       onClick={handleBackdropClick}
       role="dialog"
@@ -304,9 +308,13 @@ export function CoverPhotoCropper({
         className={cn(
           "bg-white dark:bg-[#111111] rounded-2xl",
           "border border-gray-200 dark:border-[#262626]",
-          "shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden",
+          "shadow-2xl max-w-3xl w-full overflow-hidden",
           "flex flex-col"
         )}
+        style={{
+          // Max height accounts for mobile nav
+          maxHeight: "calc(90vh - var(--mobile-nav-height, 0px))",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

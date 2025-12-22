@@ -93,6 +93,10 @@ export function KeyboardShortcutsModal({ isOpen, onClose }: KeyboardShortcutsMod
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="shortcuts-title"
@@ -109,12 +113,16 @@ export function KeyboardShortcutsModal({ isOpen, onClose }: KeyboardShortcutsMod
         ref={modalRef}
         tabIndex={-1}
         className={cn(
-          "relative z-10 w-full max-w-2xl max-h-[85vh] overflow-hidden",
+          "relative z-10 w-full max-w-2xl overflow-hidden",
           "rounded-2xl bg-white dark:bg-[#111111]",
           "border border-gray-200 dark:border-[#262626]",
           "shadow-2xl",
           "focus:outline-none"
         )}
+        style={{
+          // Max height accounts for mobile nav
+          maxHeight: "calc(85vh - var(--mobile-nav-height, 0px))",
+        }}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-[#262626]">

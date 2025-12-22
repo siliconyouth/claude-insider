@@ -260,7 +260,13 @@ export function AskAIModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{
+        // Account for mobile bottom navigation
+        paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+      }}
+    >
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -270,12 +276,16 @@ export function AskAIModal() {
       {/* Modal */}
       <div
         className={cn(
-          "relative z-10 w-full max-w-2xl max-h-[80vh]",
+          "relative z-10 w-full max-w-2xl",
           "flex flex-col",
           "rounded-2xl bg-white dark:bg-[#111111]",
           "border border-gray-200 dark:border-[#262626]",
           "shadow-2xl overflow-hidden"
         )}
+        style={{
+          // Max height accounts for mobile nav
+          maxHeight: "calc(80vh - var(--mobile-nav-height, 0px))",
+        }}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-[#262626]">
