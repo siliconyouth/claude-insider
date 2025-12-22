@@ -52,20 +52,35 @@ export function UserMenu() {
     );
   }
 
-  // Not authenticated - show sign in button
+  // Not authenticated - show sign in icon button
   if (!isAuthenticated) {
     return (
       <button
         onClick={showSignIn}
         className={cn(
-          "px-4 py-2 rounded-lg text-sm font-medium",
-          "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-          "text-white",
-          "hover:opacity-90",
-          "transition-opacity duration-200"
+          "p-2 rounded-full",
+          "text-gray-600 dark:text-gray-400",
+          "hover:text-gray-900 dark:hover:text-white",
+          "hover:bg-gray-100 dark:hover:bg-gray-800",
+          "transition-all duration-200",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         )}
+        aria-label="Sign in"
+        title="Sign in"
       >
-        Sign in
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+          />
+        </svg>
       </button>
     );
   }
