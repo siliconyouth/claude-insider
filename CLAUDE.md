@@ -35,12 +35,12 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.6**.
 3. [Feature Requirements Summary](#feature-requirements-summary) - 49 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
-6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync
+6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile nav awareness
 7. [Performance Optimization (MANDATORY)](#performance-optimization-mandatory) - Dynamic imports, targets
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 10. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
-11. [Component Patterns](#component-patterns) - Buttons, cards, focus states
+11. [Component Patterns](#component-patterns) - Buttons, cards, modals, mobile-aware elements
 12. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
 13. [Internationalization](#internationalization-i18n) - 18 languages
 14. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
@@ -328,6 +328,7 @@ All new components MUST implement ALL seven pillars:
 - [ ] Buttons/cards use animated components
 - [ ] Modals use focus trap, dynamic content uses ARIA live
 - [ ] **Loading skeletons match current page design** (see Skeleton Synchronization below)
+- [ ] **Fixed-bottom elements account for mobile navigation** (see Mobile Bottom Navigation below)
 
 ### Skeleton Synchronization (MANDATORY)
 
@@ -375,6 +376,91 @@ if (isLoading) {
   );
 }
 ```
+
+### Mobile Bottom Navigation Awareness (MANDATORY)
+
+**Rule**: All modals, fixed-bottom elements, and floating UI components MUST account for the mobile bottom navigation bar.
+
+The mobile bottom navigation bar is 4rem tall (plus safe area insets on notched devices). Without proper handling, action buttons at the bottom of modals become unreachable on mobile.
+
+**CSS Variable** (defined in `globals.css`):
+
+```css
+:root {
+  --mobile-nav-height: 0px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --mobile-nav-height: calc(4rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+```
+
+**Use the `0px` fallback**: Always use `var(--mobile-nav-height, 0px)` so desktop users (where variable is `0px`) see no change.
+
+| Element Type | Required Pattern |
+|--------------|------------------|
+| **Modals/Dialogs** | Add `paddingBottom` to container + dynamic `maxHeight` on modal |
+| **Fixed-bottom buttons** | Convert `bottom-X` class to `bottom: calc(Xrem + var(--mobile-nav-height, 0px))` |
+| **Toasts/Notifications** | Position above navigation with dynamic `bottom` |
+| **Floating action buttons** | Position above navigation with dynamic `bottom` |
+
+**Modal Pattern**:
+```tsx
+// ✅ CORRECT: Modal accounts for mobile navigation
+<div
+  className="fixed inset-0 z-50 flex items-center justify-center p-4"
+  style={{
+    paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
+  }}
+>
+  <div
+    className={cn(
+      "relative w-full max-w-md overflow-y-auto",
+      "bg-white dark:bg-[#111111] rounded-xl"
+    )}
+    style={{
+      maxHeight: "calc(90vh - var(--mobile-nav-height, 0px))",
+    }}
+  >
+    {/* Modal content */}
+  </div>
+</div>
+
+// ❌ WRONG: Hardcoded max-height, no mobile nav awareness
+<div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div className="max-h-[90vh] overflow-y-auto">
+    {/* Content hidden behind navigation on mobile */}
+  </div>
+</div>
+```
+
+**Fixed-Bottom Element Pattern**:
+```tsx
+// ✅ CORRECT: Floating button above mobile navigation
+<button
+  className="fixed right-6 z-40"
+  style={{
+    bottom: "calc(1.5rem + var(--mobile-nav-height, 0px))",
+  }}
+>
+
+// ❌ WRONG: Button hidden behind navigation on mobile
+<button className="fixed bottom-6 right-6 z-40">
+```
+
+**Checklist for New UI Elements**:
+- [ ] Does this element have `fixed` positioning near the bottom of the viewport?
+- [ ] Does this modal have action buttons at the bottom?
+- [ ] If yes to either, use `--mobile-nav-height` CSS variable
+
+**Files Updated with This Pattern** (33 total):
+- All modals in `components/` (auth, onboarding, review, feedback, etc.)
+- `floating-chat-button.tsx` (AI assistant)
+- `toast.tsx`, `notification-popup.tsx`
+- PWA prompts (`install-prompt.tsx`, `update-notification.tsx`, `push-notification-prompt.tsx`)
+- `error-boundary.tsx`, `voice-assistant.tsx`
 
 ---
 
@@ -796,6 +882,68 @@ className={cn(
 
 ```tsx
 className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+```
+
+### Modals (Mobile-Aware)
+
+**MANDATORY**: All modals must use the mobile-aware pattern. See [Mobile Bottom Navigation Awareness](#mobile-bottom-navigation-awareness-mandatory) for details.
+
+```tsx
+// Standard modal structure with mobile navigation awareness
+<div
+  className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+  style={{ paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))" }}
+  onClick={onClose}
+>
+  <div
+    className={cn(
+      "relative w-full max-w-md p-6 rounded-xl overflow-y-auto",
+      "bg-white dark:bg-[#111111]",
+      "border border-gray-200 dark:border-[#262626]"
+    )}
+    style={{ maxHeight: "calc(90vh - var(--mobile-nav-height, 0px))" }}
+    onClick={(e) => e.stopPropagation()}
+  >
+    {/* Header */}
+    <div className="flex items-center justify-between mb-4">
+      <h2 className="text-lg font-semibold">Title</h2>
+      <button onClick={onClose} aria-label="Close">
+        <X className="w-5 h-5" />
+      </button>
+    </div>
+
+    {/* Content */}
+    <div>{children}</div>
+
+    {/* Actions - always visible above mobile nav */}
+    <div className="flex gap-2 mt-4">
+      <button className="flex-1 ...">Cancel</button>
+      <button className="flex-1 ...">Confirm</button>
+    </div>
+  </div>
+</div>
+```
+
+### Fixed-Bottom Elements (Mobile-Aware)
+
+Floating buttons, toasts, and notifications must position above the mobile navigation.
+
+```tsx
+// Floating action button (e.g., AI assistant)
+<button
+  className="fixed right-6 z-40 rounded-full p-4 bg-gradient-to-r from-violet-600 to-blue-600"
+  style={{ bottom: "calc(1.5rem + var(--mobile-nav-height, 0px))" }}
+>
+  <ChatIcon className="w-6 h-6 text-white" />
+</button>
+
+// Toast notification
+<div
+  className="fixed left-4 right-4 md:left-auto md:right-4 md:w-96 z-50"
+  style={{ bottom: "calc(1rem + var(--mobile-nav-height, 0px))" }}
+>
+  {/* Toast content */}
+</div>
 ```
 
 ### ProfileHoverCard
