@@ -282,7 +282,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.10.2
+ * Realistic terminal content showing Claude Insider v1.10.6
  */
 function MacBookTerminalContent() {
   return (
@@ -310,7 +310,7 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.10.2</span>
+          <span className="text-[#8b949e]"> v1.10.6</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
@@ -394,7 +394,9 @@ function IPhoneScreenContent() {
         {/* Header */}
         <div className="flex items-center justify-between px-[5%] py-[3%] border-b border-[#222]">
           <div className="flex items-center gap-[3%]">
-            <div className="w-[6cqw] h-[6cqw] rounded-[1.2cqw] bg-gradient-to-br from-violet-500 to-cyan-500" />
+            <div className="w-[6cqw] h-[6cqw] rounded-[1.2cqw] bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 flex items-center justify-center">
+              <span className="text-[3cqw] font-bold text-white">Ci</span>
+            </div>
             <span className="text-[3.5cqw] font-bold text-white">Claude Insider</span>
           </div>
           <div className="flex flex-col gap-[3px]">
@@ -412,7 +414,7 @@ function IPhoneScreenContent() {
           }}
         >
           <div className="text-[4cqw] font-bold text-white leading-tight">
-            Claude Insider v1.10.2
+            Claude Insider v1.10.6
           </div>
           <div className="text-[3cqw] text-white/85 mt-[2%]">
             49 features • 1,950+ resources

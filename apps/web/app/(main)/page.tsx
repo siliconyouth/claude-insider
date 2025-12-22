@@ -230,7 +230,7 @@ export default function HomePage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
                   </span>
-                  v1.10.2 • 49 Features • 1,950+ Resources • AI Assistant
+                  v1.10.6 • 49 Features • 1,950+ Resources • AI Assistant
                 </div>
 
                 {/* Headline - Stripe-style large typography */}
@@ -313,7 +313,7 @@ export default function HomePage() {
 
                 {/* Trust badge */}
                 <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
-                  v1.10.2 • Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
+                  v1.10.6 • Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
                 </p>
               </div>
 
