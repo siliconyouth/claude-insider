@@ -35,7 +35,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.10.6**.
 3. [Feature Requirements Summary](#feature-requirements-summary) - 49 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
-6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile nav awareness
+6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
 7. [Performance Optimization (MANDATORY)](#performance-optimization-mandatory) - Dynamic imports, targets
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
@@ -329,6 +329,8 @@ All new components MUST implement ALL seven pillars:
 - [ ] Modals use focus trap, dynamic content uses ARIA live
 - [ ] **Loading skeletons match current page design** (see Skeleton Synchronization below)
 - [ ] **Fixed-bottom elements account for mobile navigation** (see Mobile Bottom Navigation below)
+- [ ] **No horizontal scrolling on mobile** (see Mobile Viewport Protection below)
+- [ ] **Square elements use `shrink-0 aspect-square`** (see Flex Container Aspect Ratio below)
 
 ### Skeleton Synchronization (MANDATORY)
 
@@ -461,6 +463,69 @@ The mobile bottom navigation bar is 4rem tall (plus safe area insets on notched 
 - `toast.tsx`, `notification-popup.tsx`
 - PWA prompts (`install-prompt.tsx`, `update-notification.tsx`, `push-notification-prompt.tsx`)
 - `error-boundary.tsx`, `voice-assistant.tsx`
+
+### Mobile Viewport Protection (MANDATORY)
+
+**Rule**: The page MUST NOT allow horizontal scrolling on mobile devices.
+
+**Global CSS** (already defined in `globals.css`):
+
+```css
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+```
+
+**Common Causes of Horizontal Overflow**:
+
+| Cause | Solution |
+|-------|----------|
+| Elements with `width: 100vw` | Use `width: 100%` instead (100vw includes scrollbar) |
+| Negative margins extending past viewport | Contain with parent `overflow: hidden` |
+| Pre/code blocks without wrapping | Add `overflow-x: auto` to code containers |
+| Fixed-width elements larger than screen | Use `max-width: 100%` or responsive units |
+| Absolute positioned elements | Ensure they stay within bounds |
+
+**Checklist for New Content**:
+- [ ] Test on mobile viewport (375px width) - no horizontal scroll
+- [ ] Large elements use `max-width: 100%`
+- [ ] Code blocks have `overflow-x: auto`
+- [ ] Tables are wrapped in scrollable container
+
+### Flex Container Aspect Ratio (MANDATORY)
+
+**Rule**: Fixed-size elements inside flex containers MUST use `shrink-0` and `aspect-square` (for square elements) to prevent distortion on narrow screens.
+
+When flex containers have limited space, child elements can shrink below their specified dimensions. This breaks aspect ratios for logos, icons, and avatars.
+
+**Pattern for Square Elements (logos, icons, avatars)**:
+```tsx
+// ✅ CORRECT: Logo maintains square shape on all screen sizes
+<div className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600">
+  <span className="text-sm font-bold text-white">Ci</span>
+</div>
+
+// ❌ WRONG: Logo can be squished on narrow screens
+<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600">
+  <span className="text-sm font-bold text-white">Ci</span>
+</div>
+```
+
+| Class | Purpose |
+|-------|---------|
+| `shrink-0` | Prevents flex shrinking below specified size |
+| `aspect-square` | Enforces 1:1 aspect ratio as backup |
+| `aspect-video` | Enforces 16:9 aspect ratio for video thumbnails |
+| `aspect-[3/1]` | Custom aspect ratio (e.g., cover images) |
+
+**When to Apply**:
+- Logos and brand marks
+- User avatars
+- Icon buttons
+- Thumbnails with fixed dimensions
+- Any element that must maintain its shape
 
 ---
 
