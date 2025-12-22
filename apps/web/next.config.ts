@@ -26,12 +26,6 @@ const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizeCss: true,
-    // Enable parallel route rendering during build
-    webpackBuildWorker: true,
-    // Faster static page generation
-    staticGenerationRetryCount: 1,
-    // Memory optimizations for large builds
-    workerThreads: true,
   },
   // Tree-shake large icon libraries
   modularizeImports: {
