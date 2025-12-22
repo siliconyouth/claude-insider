@@ -282,7 +282,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.10.6
+ * Realistic terminal content showing Claude Insider v1.10.7
  */
 function MacBookTerminalContent() {
   return (
@@ -310,7 +310,7 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.10.6</span>
+          <span className="text-[#8b949e]"> v1.10.7</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
@@ -339,143 +339,20 @@ function MacBookTerminalContent() {
 }
 
 /**
- * Realistic iOS Safari screen content for iPhone 17 Pro Max
- * Designed for SVG foreignObject with precise 224x468 viewBox dimensions
- * Uses container query units (cqw) for responsive scaling
- *
- * Note: Dynamic Island is rendered as part of the SVG frame, not screen content
- * The screen starts below the Dynamic Island area
+ * Real screenshot of Claude Insider mobile homepage
+ * Shows the actual mobile header and bottom navigation bar
+ * Updated for v1.10.7 with mobile optimizations
  */
 function IPhoneScreenContent() {
   return (
-    <div className="h-full w-full bg-[#000000] flex flex-col overflow-hidden" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }}>
-      {/* Space for Dynamic Island (rendered in SVG, but we leave room) */}
-      <div className="h-[6%]" />
-
-      {/* iOS Status bar - positioned around Dynamic Island */}
-      <div className="flex items-center justify-between px-[6%] text-white" style={{ marginTop: '-3%' }}>
-        <span className="text-[3.5cqw] font-semibold tracking-tight">9:41</span>
-        <div className="flex items-center gap-[3%]">
-          {/* Cellular bars */}
-          <div className="flex items-end gap-[2px] h-[3cqw]">
-            <div className="w-[1.2cqw] h-[35%] bg-white/40 rounded-[1px]" />
-            <div className="w-[1.2cqw] h-[50%] bg-white/50 rounded-[1px]" />
-            <div className="w-[1.2cqw] h-[70%] bg-white/70 rounded-[1px]" />
-            <div className="w-[1.2cqw] h-[100%] bg-white rounded-[1px]" />
-          </div>
-          {/* WiFi */}
-          <svg className="w-[4.5cqw] h-[3.5cqw]" viewBox="0 0 16 12" fill="white">
-            <path d="M8 9.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z"/>
-            <path d="M4.5 7.5c2-2 5-2 7 0" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-            <path d="M2 5c3.5-3 8.5-3 12 0" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-          </svg>
-          {/* Battery */}
-          <div className="flex items-center">
-            <div className="w-[7cqw] h-[3.2cqw] rounded-[3px] border border-white/50 p-[1px]">
-              <div className="w-[85%] h-full bg-white rounded-[2px]"/>
-            </div>
-            <div className="w-[1cqw] h-[1.5cqw] bg-white/50 rounded-r-[1px] ml-[1px]"/>
-          </div>
-        </div>
-      </div>
-
-      {/* Safari URL bar */}
-      <div className="px-[4%] py-[2.5%]">
-        <div className="bg-[#1c1c1e] rounded-[2.5cqw] px-[4%] py-[2.5%] flex items-center justify-center gap-[2%]">
-          <svg className="w-[3.5cqw] h-[3.5cqw] text-[#8e8e93]" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"/>
-          </svg>
-          <span className="text-[#8e8e93] text-[3cqw] font-medium">claudeinsider.com</span>
-        </div>
-      </div>
-
-      {/* Website content */}
-      <div className="flex-1 overflow-hidden bg-[#0a0a0a]">
-        {/* Header */}
-        <div className="flex items-center justify-between px-[5%] py-[3%] border-b border-[#222]">
-          <div className="flex items-center gap-[3%]">
-            <div className="w-[6cqw] h-[6cqw] shrink-0 aspect-square rounded-[1.2cqw] bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 flex items-center justify-center">
-              <span className="text-[3cqw] font-bold text-white">Ci</span>
-            </div>
-            <span className="text-[3.5cqw] font-bold text-white">Claude Insider</span>
-          </div>
-          <div className="flex flex-col gap-[3px]">
-            <div className="w-[5cqw] h-[2px] bg-white rounded"/>
-            <div className="w-[5cqw] h-[2px] bg-white rounded"/>
-            <div className="w-[5cqw] h-[2px] bg-white rounded"/>
-          </div>
-        </div>
-
-        {/* Hero section */}
-        <div
-          className="mx-[4%] my-[4%] rounded-[3.5cqw] p-[5%] relative overflow-hidden"
-          style={{
-            background: 'linear-gradient(135deg, rgba(139,92,246,0.8) 0%, rgba(59,130,246,0.7) 50%, rgba(6,182,212,0.8) 100%)'
-          }}
-        >
-          <div className="text-[4cqw] font-bold text-white leading-tight">
-            Claude Insider v1.10.6
-          </div>
-          <div className="text-[3cqw] text-white/85 mt-[2%]">
-            49 features • 1,950+ resources
-          </div>
-          <div className="text-[2.5cqw] text-white/70 mt-[1.5%]">
-            Charts • Prompts • E2EE • Achievements
-          </div>
-          <div className="mt-[5%] bg-white rounded-[2.5cqw] px-[6%] py-[3%] inline-flex items-center">
-            <span className="text-[3cqw] text-gray-900 font-semibold">Get Started</span>
-            <svg className="w-[3cqw] h-[3cqw] ml-[2%] text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </div>
-
-        {/* Categories grid */}
-        <div className="px-[4%] grid grid-cols-2 gap-[3%]">
-          {[
-            { icon: "📊", name: "Dashboard", desc: "Rich charts" },
-            { icon: "📝", name: "Prompts", desc: "Library & cats" },
-            { icon: "🔐", name: "E2E Encryption", desc: "Matrix Olm" },
-            { icon: "🏆", name: "Achievements", desc: "50+ badges" }
-          ].map((cat) => (
-            <div
-              key={cat.name}
-              className="bg-[#1c1c1e] rounded-[2.5cqw] p-[4%]"
-            >
-              <div className="flex items-center gap-[4%]">
-                <span className="text-[4cqw]">{cat.icon}</span>
-                <div>
-                  <span className="text-[2.8cqw] text-white font-semibold block leading-tight">{cat.name}</span>
-                  <span className="text-[2.2cqw] text-gray-500">{cat.desc}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Safari bottom toolbar */}
-      <div className="px-[6%] py-[3%] flex items-center justify-between bg-[#1c1c1e] border-t border-[#2c2c2e]">
-        <svg className="w-[5.5cqw] h-[5.5cqw] text-[#0a84ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/>
-        </svg>
-        <svg className="w-[5.5cqw] h-[5.5cqw] text-[#0a84ff]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
-        </svg>
-        <svg className="w-[5.5cqw] h-[5.5cqw] text-[#0a84ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-        </svg>
-        <svg className="w-[5.5cqw] h-[5.5cqw] text-[#0a84ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
-        </svg>
-        <div className="w-[7cqw] h-[7cqw] rounded-[1.8cqw] bg-[#2c2c2e] border border-[#3c3c3e] flex items-center justify-center">
-          <svg className="w-[4.5cqw] h-[4.5cqw] text-[#0a84ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-        </div>
-      </div>
-
-      {/* Home indicator is rendered in SVG, not here */}
+    <div className="h-full w-full bg-[#0a0a0a] overflow-hidden">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/mobile-screenshot.png"
+        alt="Claude Insider mobile homepage"
+        className="w-full h-full object-cover object-top"
+        style={{ objectPosition: 'center top' }}
+      />
     </div>
   );
 }
