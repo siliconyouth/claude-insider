@@ -119,7 +119,7 @@ export function Header({ activePage }: HeaderProps) {
             href="https://www.claudeinsider.com"
             className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20">
+            <div className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20">
               <span className="text-sm font-bold text-white tracking-tight">Ci</span>
             </div>
             <span className="text-lg font-semibold text-gray-900 dark:text-white">

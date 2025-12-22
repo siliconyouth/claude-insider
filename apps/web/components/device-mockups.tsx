@@ -394,7 +394,7 @@ function IPhoneScreenContent() {
         {/* Header */}
         <div className="flex items-center justify-between px-[5%] py-[3%] border-b border-[#222]">
           <div className="flex items-center gap-[3%]">
-            <div className="w-[6cqw] h-[6cqw] rounded-[1.2cqw] bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 flex items-center justify-center">
+            <div className="w-[6cqw] h-[6cqw] shrink-0 aspect-square rounded-[1.2cqw] bg-gradient-to-br from-violet-500 via-blue-500 to-cyan-500 flex items-center justify-center">
               <span className="text-[3cqw] font-bold text-white">Ci</span>
             </div>
             <span className="text-[3.5cqw] font-bold text-white">Claude Insider</span>
