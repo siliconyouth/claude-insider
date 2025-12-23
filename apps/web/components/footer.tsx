@@ -68,6 +68,7 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
       { href: "https://github.com/siliconyouth/claude-insider", label: "GitHub", external: true },
       { href: "/changelog", labelKey: "changelog" },
       { href: "/stats", label: "Stats" },
+      { href: "/design-system", label: "Design System" },
       { href: "/users", label: "Members" },
       { href: "/donate", labelKey: "donate", highlight: true },
     ],
