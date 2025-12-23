@@ -17,7 +17,6 @@ import {
 } from "@/lib/dashboard";
 import {
   PageHeader,
-  CountBadge,
   StatusBadge,
   EmptyState,
 } from "@/components/dashboard/shared";

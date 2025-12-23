@@ -128,7 +128,7 @@ export async function createGroupConversation(
     const supabase = await createAdminClient();
 
     // Note: RPC function not in generated Supabase types
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase.rpc("create_group_conversation", {
       p_creator_id: session.user.id,
       p_name: name.trim(),
@@ -169,7 +169,7 @@ export async function inviteToGroup(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase.rpc("invite_to_group", {
       p_inviter_id: session.user.id,
       p_invitee_id: inviteeId,
@@ -211,7 +211,7 @@ export async function acceptGroupInvitation(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase.rpc("accept_group_invitation", {
       p_user_id: session.user.id,
       p_invitation_id: invitationId,
@@ -247,7 +247,7 @@ export async function declineGroupInvitation(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase.rpc("decline_group_invitation", {
       p_user_id: session.user.id,
       p_invitation_id: invitationId,
@@ -280,7 +280,7 @@ export async function leaveGroupConversation(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase.rpc("leave_group_conversation", {
       p_user_id: session.user.id,
       p_conversation_id: conversationId,
@@ -315,7 +315,7 @@ export async function updateGroupMemberRole(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase.rpc("update_group_member_role", {
       p_admin_id: session.user.id,
       p_target_user_id: targetUserId,
@@ -356,7 +356,7 @@ export async function transferGroupOwnership(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase.rpc("update_group_member_role", {
       p_admin_id: session.user.id,
       p_target_user_id: newOwnerId,
@@ -392,7 +392,7 @@ export async function removeFromGroup(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase.rpc("remove_from_group", {
       p_admin_id: session.user.id,
       p_target_user_id: targetUserId,
@@ -429,7 +429,7 @@ export async function isAIAssistantInGroup(
   try {
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase
       .from("dm_participants")
       .select("id")
@@ -466,7 +466,7 @@ export async function addAIAssistantToGroup(
     const supabase = await createAdminClient();
 
     // Check if conversation is a group and user has permission
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: participant } = await supabase
       .from("dm_participants")
       .select("role")
@@ -480,7 +480,7 @@ export async function addAIAssistantToGroup(
     }
 
     // Check if conversation is a group
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: conversation } = await supabase
       .from("dm_conversations")
       .select("type")
@@ -492,7 +492,7 @@ export async function addAIAssistantToGroup(
     }
 
     // Check if AI is already a member
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: existing } = await supabase
       .from("dm_participants")
       .select("id")
@@ -505,7 +505,7 @@ export async function addAIAssistantToGroup(
     }
 
     // Add AI assistant as a member
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error: insertError } = await supabase
       .from("dm_participants")
       .insert({
@@ -543,7 +543,7 @@ export async function removeAIAssistantFromGroup(
     const supabase = await createAdminClient();
 
     // Check if user has permission (admin or owner)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: participant } = await supabase
       .from("dm_participants")
       .select("role")
@@ -557,7 +557,7 @@ export async function removeAIAssistantFromGroup(
     }
 
     // Remove AI assistant
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error: deleteError } = await supabase
       .from("dm_participants")
       .delete()
@@ -593,7 +593,7 @@ export async function getPendingInvitations(): Promise<{
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase.rpc("get_pending_invitations", {
       p_user_id: session.user.id,
     });
@@ -643,7 +643,7 @@ export async function getGroupMembers(
     const supabase = await createAdminClient();
 
     // Verify user is a participant (dm_participants is a custom table)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: participant } = await supabase
       .from("dm_participants")
       .select("id")
@@ -656,7 +656,7 @@ export async function getGroupMembers(
     }
 
     // Get all members with their info
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: members, error } = await supabase
       .from("dm_participants")
       .select(`
@@ -685,7 +685,7 @@ export async function getGroupMembers(
 
     const [{ data: profiles }, { data: presences }] = await Promise.all([
       supabase.from("profiles").select("user_id, display_name, avatar_url").in("user_id", userIds),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       supabase.from("user_presence").select("user_id, status").in("user_id", userIds),
     ]);
 
@@ -739,7 +739,7 @@ export async function updateGroupSettings(
     const supabase = await createAdminClient();
 
     // Verify user is owner or admin
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: participant } = await supabase
       .from("dm_participants")
       .select("role")
@@ -768,7 +768,7 @@ export async function updateGroupSettings(
       updates.avatar_url = settings.avatarUrl || null;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase
       .from("dm_conversations")
       .update(updates)
@@ -819,7 +819,7 @@ export async function getChatSoundSettings(): Promise<{
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase
       .from("user_chat_settings")
       .select("*")
@@ -874,7 +874,7 @@ export async function updateChatSoundSettings(settings: {
     if (settings.soundMention !== undefined) updates.sound_mention = settings.soundMention;
     if (settings.soundInvitation !== undefined) updates.sound_invitation = settings.soundInvitation;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase
       .from("user_chat_settings")
       .upsert({

@@ -118,7 +118,7 @@ export async function reportUser(
     }
 
     // Check if already reported this user recently (within 24 hours)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: existingReport } = await supabase
       .from("reports")
       .select("id")
@@ -132,7 +132,7 @@ export async function reportUser(
     }
 
     // Create the report
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error: insertError } = await supabase.from("reports").insert({
       reporter_id: session.user.id,
       report_type: "user",
@@ -186,7 +186,7 @@ export async function reportComment(
     }
 
     // Check if already reported this comment recently
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: existingReport } = await supabase
       .from("reports")
       .select("id")
@@ -200,7 +200,7 @@ export async function reportComment(
     }
 
     // Create the report
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error: insertError } = await supabase.from("reports").insert({
       reporter_id: session.user.id,
       report_type: "comment",
@@ -237,7 +237,7 @@ export async function getMyReports(): Promise<{
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase
       .from("reports")
       .select(`
@@ -325,7 +325,7 @@ export async function getReports(options?: {
     const { status = "all", type = "all", page = 1, limit = 20 } = options || {};
     const offset = (page - 1) * limit;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     let query = supabase
       .from("reports")
       .select(`
@@ -458,7 +458,7 @@ export async function reviewReport(
     }
 
     // Get the report
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: report, error: reportError } = await supabase
       .from("reports")
       .select(`
@@ -481,7 +481,7 @@ export async function reviewReport(
     const reportData = report as unknown as Pick<ReportRow, 'id' | 'reporter_id' | 'report_type' | 'reported_user_id' | 'reported_comment_id' | 'reason' | 'status'>;
 
     // Update the report
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error: updateError } = await supabase
       .from("reports")
       .update({
@@ -623,7 +623,7 @@ export async function getReportStats(): Promise<{
       return { success: false, error: "You do not have permission to view report statistics" };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase.from("reports").select("status, report_type, reason");
 
     if (error) {

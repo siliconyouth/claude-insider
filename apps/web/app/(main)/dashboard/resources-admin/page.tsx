@@ -9,7 +9,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { cn } from "@/lib/design-system";
-import { PageHeader, StatusBadge } from "@/components/dashboard/shared";
+import { PageHeader } from "@/components/dashboard/shared";
 import {
   FolderIcon,
   LinkIcon,
@@ -21,8 +21,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   SearchIcon,
-  ExternalLinkIcon,
-  GithubIcon,
 } from "lucide-react";
 
 interface ResourceItem {

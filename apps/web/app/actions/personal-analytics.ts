@@ -11,7 +11,6 @@ import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import {
   type Level,
-  getLevelFromPoints,
   getLevelProgress,
   isStreakActive,
 } from "@/lib/gamification";

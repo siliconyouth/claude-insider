@@ -73,7 +73,7 @@ export default function ResourceUpdatesPage() {
       const data = await response.json();
       setJobs(data.jobs || []);
       setTotalPages(Math.ceil(data.total / 20) || 1);
-    } catch (error) {
+    } catch {
       toastApi.error("Error", "Failed to load update jobs");
     } finally {
       setIsLoading(false);
@@ -173,7 +173,7 @@ export default function ResourceUpdatesPage() {
 /**
  * Individual job card
  */
-function JobCard({ job, onRefresh }: { job: UpdateJob; onRefresh: () => void }) {
+function JobCard({ job, onRefresh: _onRefresh }: { job: UpdateJob; onRefresh: () => void }) {
   const statusConfig = JOB_STATUS[job.status];
   const changesCount = job.proposed_changes?.length || 0;
 

@@ -231,7 +231,7 @@ export function useEncryptedMessaging(): UseEncryptedMessagingReturn {
 
   // Check E2EE readiness
   useEffect(() => {
-    let mounted = true;
+    const mounted = true;
 
     const checkReady = async () => {
       try {

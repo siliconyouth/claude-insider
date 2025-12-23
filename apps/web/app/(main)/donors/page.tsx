@@ -30,10 +30,6 @@ export default function DonorWallPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedTier, setSelectedTier] = useState<DonorBadgeTier | 'all'>('all');
 
-  useEffect(() => {
-    fetchDonors();
-  }, [selectedTier]);
-
   const fetchDonors = async () => {
     setLoading(true);
     setError(null);
@@ -56,6 +52,11 @@ export default function DonorWallPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchDonors();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTier]);
 
   // Group donors by tier
   const donorsByTier: Partial<Record<DonorBadgeTier, DonorWallItem[]>> = data?.donors.reduce((acc, donor) => {

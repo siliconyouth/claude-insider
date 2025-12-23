@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     const headersList = await headers();
     const authHeader = headersList.get("authorization");
 
-    // eslint-disable-next-line turbo/no-undeclared-env-vars
+     
     const cronSecret = process.env.CRON_SECRET;
 
     // In development, allow without secret

@@ -20,7 +20,7 @@ import {
 } from "@/lib/web-push";
 import { sendEmail } from "@/lib/email";
 
-// eslint-disable-next-line turbo/no-undeclared-env-vars
+ 
 const CRON_SECRET = process.env.CRON_SECRET;
 
 interface TargetUser {

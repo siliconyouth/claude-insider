@@ -258,7 +258,7 @@ async function processExportJob(jobId: string): Promise<void> {
 }
 
 // Helper to update progress
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 async function updateProgress(
   supabase: any,
   jobId: string,
@@ -362,7 +362,7 @@ async function fetchAuditLogs(supabase: any, options: ExportJobOptions) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function fetchContentData(supabase: any, options: ExportJobOptions) {
+async function fetchContentData(supabase: any, _options: ExportJobOptions) {
   // Fetch reviews, comments, etc.
   const [reviews, comments] = await Promise.all([
     supabase

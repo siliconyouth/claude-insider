@@ -13,7 +13,6 @@ import {
   type SoundType,
   THEME_LIST,
   getTheme,
-  type SoundThemeDefinition,
 } from "@/hooks/use-sound-effects";
 import { SOUND_CATEGORIES } from "../diagnostics.types";
 

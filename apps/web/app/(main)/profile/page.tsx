@@ -159,7 +159,7 @@ function TrophyIcon({ className }: { className?: string }) {
   );
 }
 
-function MessageIcon({ className }: { className?: string }) {
+function _MessageIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -172,7 +172,7 @@ function MessageIcon({ className }: { className?: string }) {
   );
 }
 
-function EditIcon({ className }: { className?: string }) {
+function _EditIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -185,7 +185,7 @@ function EditIcon({ className }: { className?: string }) {
   );
 }
 
-function SettingsIcon({ className }: { className?: string }) {
+function _SettingsIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -204,7 +204,7 @@ function SettingsIcon({ className }: { className?: string }) {
   );
 }
 
-function VerifiedIcon({ className }: { className?: string }) {
+function _VerifiedIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
       <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -212,7 +212,7 @@ function VerifiedIcon({ className }: { className?: string }) {
   );
 }
 
-function BetaIcon({ className }: { className?: string }) {
+function _BetaIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -238,7 +238,7 @@ function LockIcon({ className }: { className?: string }) {
   );
 }
 
-function UsersIcon({ className }: { className?: string }) {
+function _UsersIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -251,7 +251,7 @@ function UsersIcon({ className }: { className?: string }) {
   );
 }
 
-function SparklesIcon({ className }: { className?: string }) {
+function _SparklesIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -273,7 +273,7 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<TabType>("favorites");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [_copied, setCopied] = useState(false);
   const [isHoveringCover, setIsHoveringCover] = useState(false);
 
   // Track if we've loaded data (prevents duplicate fetches)

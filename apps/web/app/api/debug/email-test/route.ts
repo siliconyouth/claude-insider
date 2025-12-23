@@ -14,7 +14,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { hasMinRole, type UserRole } from "@/lib/roles";
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Check auth - require admin role
     const session = await auth.api.getSession({

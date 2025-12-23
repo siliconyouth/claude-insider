@@ -220,17 +220,17 @@ export async function getActivityStats(
         .from("user_achievements")
         .select("id", { count: "exact", head: true })
         .eq("user_id", targetUserId),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       supabase
         .from("reports")
         .select("id", { count: "exact", head: true })
         .eq("reporter_id", targetUserId),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       supabase
         .from("user_follows")
         .select("id", { count: "exact", head: true })
         .eq("follower_id", targetUserId),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       supabase
         .from("user_follows")
         .select("id", { count: "exact", head: true })
@@ -409,7 +409,7 @@ async function getUserActivityInternal(
 
   // Get reports submitted (private - only for own/admin view)
   if (includePrivate) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: reports } = await supabase
       .from("reports")
       .select("id, report_type, reason, status, created_at")
@@ -438,7 +438,7 @@ async function getUserActivityInternal(
 
   // Get follows (public activity)
   // Note: "follows" table not in generated types, cast to bypass
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const { data: follows } = await supabase
     .from("user_follows")
     .select(`

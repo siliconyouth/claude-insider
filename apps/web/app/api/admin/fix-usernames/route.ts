@@ -69,7 +69,7 @@ async function findUniqueUsername(baseUsername: string): Promise<string> {
 }
 
 // GET: List users without usernames
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const session = await getSession();
     if (!session?.user?.id) {
@@ -118,7 +118,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST: Fix users without usernames
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     const session = await getSession();
     if (!session?.user?.id) {

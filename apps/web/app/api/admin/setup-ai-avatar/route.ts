@@ -18,7 +18,7 @@ import * as path from "path";
 const AI_ASSISTANT_USER_ID = "ai-assistant-claudeinsider";
 const AVATAR_BUCKET = "avatars";
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     // Verify admin authentication
     const session = await getSession();

@@ -17,7 +17,6 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/design-system';
 import { useToast } from '@/components/toast';
-import { DonorBadge } from '@/components/donations/donor-badge';
 import { BADGE_CONFIG, formatDonationAmount, type DonorBadgeTier } from '@/lib/donations/types';
 
 interface DonationStats {
@@ -99,22 +98,23 @@ export default function DonationsDashboardPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
   const fetchStats = async () => {
     try {
       const response = await fetch('/api/dashboard/donations');
       if (!response.ok) throw new Error('Failed to load donation stats');
       const data = await response.json();
       setStats(data);
-    } catch (err) {
+    } catch {
       showError('Failed to load donation statistics');
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleConfirmTransfer = async (donationId: string, action: 'confirm' | 'reject') => {
     setProcessingId(donationId);

@@ -23,7 +23,7 @@ function DonationSuccessContent() {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [badgeTier, setBadgeTier] = useState<DonorBadgeTier | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [donationId, setDonationId] = useState<string | null>(null);
+  const [_donationId, setDonationId] = useState<string | null>(null);
   const [donationType, setDonationType] = useState<DonationTypeInfo>('one-time');
   const [nextBillingDate, setNextBillingDate] = useState<string | null>(null);
 

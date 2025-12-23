@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
  *
  * Removes the cover photo and reverts to the default animated gradient.
  */
-export async function DELETE(request: NextRequest) {
+export async function DELETE(_request: NextRequest) {
   try {
     // Verify authentication
     const session = await getSession();

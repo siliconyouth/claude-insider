@@ -132,7 +132,7 @@ export default function DiscoveryDashboardPage() {
       const data = await response.json();
       setQueueItems(data.items || []);
       setQueueTotalPages(data.totalPages || 1);
-    } catch (error) {
+    } catch {
       toastApi.error("Error", "Failed to load discovery queue");
     } finally {
       setIsLoading(false);
@@ -147,7 +147,7 @@ export default function DiscoveryDashboardPage() {
       if (!response.ok) throw new Error("Failed to fetch sources");
       const data = await response.json();
       setSources(data.sources || []);
-    } catch (error) {
+    } catch {
       toastApi.error("Error", "Failed to load sources");
     } finally {
       setIsLoading(false);

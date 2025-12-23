@@ -13,7 +13,7 @@ import { pool } from "./db";
 // Initialize web-push with VAPID keys
 // VAPID keys should be generated once and stored as environment variables
 // Generate with: npx web-push generate-vapid-keys
-/* eslint-disable turbo/no-undeclared-env-vars */
+ 
 if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
   webPush.setVapidDetails(
     `mailto:${process.env.VAPID_EMAIL || "support@claudeinsider.com"}`,
@@ -21,7 +21,7 @@ if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
     process.env.VAPID_PRIVATE_KEY
   );
 }
-/* eslint-enable turbo/no-undeclared-env-vars */
+ 
 
 export interface PushNotificationPayload {
   title: string;
@@ -48,7 +48,7 @@ export interface StoredSubscription {
  * Get the public VAPID key for client-side subscription
  */
 export function getVapidPublicKey(): string | null {
-  // eslint-disable-next-line turbo/no-undeclared-env-vars
+   
   return process.env.VAPID_PUBLIC_KEY || null;
 }
 
@@ -258,10 +258,10 @@ export async function sendPushNotificationToUsers(
  * Check if web push is properly configured
  */
 export function isWebPushConfigured(): boolean {
-  /* eslint-disable turbo/no-undeclared-env-vars */
+   
   return !!(
     process.env.VAPID_PUBLIC_KEY &&
     process.env.VAPID_PRIVATE_KEY
   );
-  /* eslint-enable turbo/no-undeclared-env-vars */
+   
 }

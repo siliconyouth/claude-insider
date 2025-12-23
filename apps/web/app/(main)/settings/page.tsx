@@ -33,7 +33,7 @@ import { GitHubSyncSettings } from "@/components/settings/github-sync-settings";
 import { AskAIButton } from "@/components/ask-ai/ask-ai-button";
 import { BrowserNotificationPrompt } from "@/components/notifications/browser-notification-prompt";
 import { useBrowserNotifications } from "@/hooks/use-browser-notifications";
-import { useSound, type SoundSettings, THEME_LIST } from "@/hooks/use-sound-effects";
+import { useSound, THEME_LIST } from "@/hooks/use-sound-effects";
 import Link from "next/link";
 
 // Cache key for sessionStorage

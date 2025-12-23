@@ -10,7 +10,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/design-system";
-import { PageHeader, StatusBadge } from "@/components/dashboard/shared";
+import { PageHeader } from "@/components/dashboard/shared";
 import {
   FileTextIcon,
   LinkIcon,

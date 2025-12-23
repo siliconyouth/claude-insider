@@ -80,7 +80,7 @@ export default function JobDetailPage() {
         if (data.job?.proposed_changes) {
           setSelectedFields(new Set(data.job.proposed_changes.map((c: ProposedChange) => c.field)));
         }
-      } catch (error) {
+      } catch {
         toastApi.error("Error", "Failed to load update job");
       } finally {
         setIsLoading(false);
@@ -155,7 +155,7 @@ export default function JobDetailPage() {
 
       toastApi.success("Rejected", "Update job has been rejected");
       router.push("/dashboard/resource-updates");
-    } catch (error) {
+    } catch {
       toastApi.error("Error", "Failed to reject job");
     } finally {
       setIsSubmitting(false);

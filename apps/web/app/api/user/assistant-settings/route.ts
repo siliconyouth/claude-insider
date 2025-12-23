@@ -87,7 +87,7 @@ export async function GET() {
     const supabase = await createClient();
 
     // Get or create settings (returns array from SETOF function)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase.rpc("get_or_create_assistant_settings", {
       p_user_id: session.user.id,
     });
@@ -175,13 +175,13 @@ export async function POST(request: NextRequest) {
     }
 
     // First ensure settings exist
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     await supabase.rpc("get_or_create_assistant_settings", {
       p_user_id: session.user.id,
     });
 
     // Then update
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase
       .from("assistant_settings")
       .update(updates)

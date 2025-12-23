@@ -378,7 +378,7 @@ export async function getMessages(
     const supabase = await createAdminClient();
 
     // Verify user is a participant
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: participant } = await supabase
       .from("dm_participants")
       .select("id")
@@ -391,7 +391,7 @@ export async function getMessages(
     }
 
     // Build query
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     let query = supabase
       .from("dm_messages")
       .select(`
@@ -513,7 +513,7 @@ export async function sendMessage(
     const supabase = await createAdminClient();
 
     // Verify user is a participant
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: participant } = await supabase
       .from("dm_participants")
       .select("id")
@@ -526,7 +526,7 @@ export async function sendMessage(
     }
 
     // Get conversation type to determine AI response behavior
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: conversation } = await supabase
       .from("dm_conversations")
       .select("type")
@@ -558,7 +558,7 @@ export async function sendMessage(
     // - Group chats: AI only responds when @claudeinsider is explicitly mentioned AND AI is a member
     if (aiExplicitlyMentioned && !isDirectDM) {
       // Check if AI is a member of this group before responding
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const { data: aiParticipant } = await supabase
         .from("dm_participants")
         .select("id")
@@ -608,7 +608,7 @@ export async function sendMessage(
     }
 
     // Insert message
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: newMessage, error } = await supabase
       .from("dm_messages")
       .insert({
@@ -735,7 +735,7 @@ export async function startConversation(
     }
 
     // Use database function to get or create conversation
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase.rpc("get_or_create_dm_conversation", {
       p_user1: session.user.id,
       p_user2: targetUserId,
@@ -768,7 +768,7 @@ export async function markConversationAsRead(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase.rpc("mark_dm_conversation_read", {
       p_user_id: session.user.id,
       p_conversation_id: conversationId,
@@ -802,7 +802,7 @@ export async function muteConversation(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase
       .from("dm_participants")
       .update({ is_muted: muted })
@@ -838,7 +838,7 @@ export async function getTotalUnreadCount(): Promise<{
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase.rpc("get_total_unread_dm_count", {
       p_user_id: session.user.id,
     });
@@ -1207,7 +1207,7 @@ export async function deleteMessage(
     const supabase = await createAdminClient();
 
     // Verify ownership
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: message } = await supabase
       .from("dm_messages")
       .select("id, sender_id")
@@ -1224,7 +1224,7 @@ export async function deleteMessage(
     }
 
     // Soft delete
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase
       .from("dm_messages")
       .update({ deleted_at: new Date().toISOString() })

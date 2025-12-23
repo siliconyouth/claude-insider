@@ -18,7 +18,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { sendDigestEmail, type DigestEmailParams } from "@/lib/email";
 
 // Verify cron secret to prevent unauthorized calls
-// eslint-disable-next-line turbo/no-undeclared-env-vars
+ 
 const CRON_SECRET = process.env.CRON_SECRET;
 
 interface DigestRequest {

@@ -104,7 +104,7 @@ const CHANGE_TYPE_LABELS: Record<string, { label: string; icon: React.ReactNode 
 
 export default function DocumentationDetailPage() {
   const params = useParams();
-  const router = useRouter();
+  const _router = useRouter();
   const slug = params.slug as string;
 
   // Data states

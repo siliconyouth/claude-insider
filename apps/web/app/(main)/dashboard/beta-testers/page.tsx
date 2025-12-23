@@ -17,7 +17,6 @@ import {
   FilterBar,
   ConfirmModal,
   ReviewModal,
-  DetailRow,
 } from "@/components/dashboard/shared";
 
 interface BetaTester {

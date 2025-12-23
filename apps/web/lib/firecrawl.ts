@@ -69,7 +69,7 @@ export interface SearchResult {
  * Get Firecrawl API key from environment
  */
 function getApiKey(): string {
-  // eslint-disable-next-line turbo/no-undeclared-env-vars
+   
   const apiKey = process.env.FIRECRAWL_API_KEY;
   if (!apiKey) {
     throw new Error("FIRECRAWL_API_KEY environment variable is not set");

@@ -97,7 +97,7 @@ export async function generateAIChatResponse(
 
     // Get the trigger message
     // Note: dm_messages table not in generated Supabase types
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: triggerMessage, error: msgError } = await supabase
       .from("dm_messages")
       .select("content, sender_id")
@@ -111,7 +111,7 @@ export async function generateAIChatResponse(
     const trigger = triggerMessage as TriggerMessageRow;
 
     // Get recent conversation context (last 5 messages)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: recentMessages } = await supabase
       .from("dm_messages")
       .select("content, sender_id, is_ai_generated")
@@ -198,7 +198,7 @@ export async function generateAIChatResponse(
     }
 
     // Save the AI response as a message
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data: aiMessage, error: insertError } = await supabase
       .from("dm_messages")
       .insert({

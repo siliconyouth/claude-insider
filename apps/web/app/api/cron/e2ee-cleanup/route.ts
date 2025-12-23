@@ -19,7 +19,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 
 // Verify cron secret to prevent unauthorized calls
-// eslint-disable-next-line turbo/no-undeclared-env-vars
+ 
 const CRON_SECRET = process.env.CRON_SECRET;
 
 // Time thresholds in days

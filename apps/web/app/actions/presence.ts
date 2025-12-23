@@ -57,7 +57,7 @@ export async function updatePresence(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase.rpc("update_user_presence", {
       p_user_id: session.user.id,
       p_status: status,
@@ -89,7 +89,7 @@ export async function heartbeat(): Promise<{ success: boolean; error?: string }>
     const supabase = await createAdminClient();
 
     // Update last_active_at to prevent idle status
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { error } = await supabase
       .from("user_presence")
       .upsert({
@@ -131,7 +131,7 @@ export async function getOnlineUsers(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase
       .from("user_presence")
       .select("user_id, status")
@@ -176,7 +176,7 @@ export async function getUserPresence(
   try {
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase
       .from("user_presence")
       .select("user_id, status, last_seen_at, last_active_at")
@@ -235,7 +235,7 @@ export async function setTyping(
 
     if (isTyping) {
       // Upsert typing indicator
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const { error } = await supabase
         .from("dm_typing_indicators")
         .upsert({
@@ -250,7 +250,7 @@ export async function setTyping(
       }
     } else {
       // Remove typing indicator
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
       const { error } = await supabase
         .from("dm_typing_indicators")
         .delete()
@@ -289,7 +289,7 @@ export async function getTypingUsers(
 
     const supabase = await createAdminClient();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const { data, error } = await supabase
       .from("dm_typing_indicators")
       .select("user_id")

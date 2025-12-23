@@ -58,7 +58,7 @@ export default function ExportsPage() {
         setJobs(result.jobs || []);
         setError(null);
       }
-    } catch (err) {
+    } catch {
       setError("Failed to load exports");
     } finally {
       setIsLoading(false);
@@ -374,7 +374,7 @@ function ExportWizard({
       }
 
       onComplete();
-    } catch (err) {
+    } catch {
       setError("Failed to create export");
     } finally {
       setIsSubmitting(false);
