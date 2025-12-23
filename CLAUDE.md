@@ -1157,6 +1157,12 @@ When updating the mobile screenshot used in the iPhone device mockup on the home
 
 The iPhone mockup SVG uses a screen area of 224×468 pixels (ratio ~1:2.09). A screenshot at 430×932 (ratio ~1:2.17) would be taller than the mockup area. With `object-cover object-top`, the excess height gets cropped from the bottom, cutting off the navigation bar.
 
+**Dynamic Island Positioning**:
+
+The iPhone 17 Pro Max mockup includes a Dynamic Island notch at the top. The screen content starts at y=6, but the Dynamic Island spans y=14 to y=32. This means ~26px of screen content is under the notch.
+
+The image uses `objectPosition: 'center 2%'` to shift content down slightly, ensuring the header and logo icons are fully visible below the Dynamic Island. Do NOT change this to `center top` or the header will be partially obscured.
+
 **MANDATORY Checklist for Mockup Updates**:
 
 - [ ] Navigate to `https://www.claudeinsider.com` (NOT localhost)
