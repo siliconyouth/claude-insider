@@ -100,8 +100,8 @@ export const TECH_STACK = {
     provider: "ElevenLabs",
     sdk: "@elevenlabs/elevenlabs-js",
     voiceCount: 42,
-    model: "eleven_turbo_v2_5",
-    features: ["Sentence-by-sentence streaming", "Voice preview", "Auto-speak toggle"],
+    model: "eleven_v3",
+    features: ["Most emotionally expressive speech", "70+ languages", "Audio tags support", "Voice preview", "Auto-speak toggle"],
   },
   search: {
     library: "Fuse.js",
@@ -336,16 +336,21 @@ export const VOICE_CAPABILITIES = {
   speechToText: "Web Speech API",
   textToSpeech: {
     provider: "ElevenLabs",
-    model: "Turbo v2.5",
+    model: "Eleven v3",
+    modelId: "eleven_v3",
     format: "MP3 44100Hz 128kbps",
     voiceCount: 42,
     defaultVoice: "Sarah",
+    languages: 70,
+    quality: "Most emotionally expressive speech synthesis",
+    features: ["Audio tags", "Multi-speaker dialogue", "Dramatic delivery"],
   },
   modes: ["Popup window", "Fullscreen overlay"],
   features: [
     "Streaming text responses with SSE",
-    "Voice starts after first sentence for fast feedback",
+    "Most emotionally expressive speech with Eleven v3",
     "42 premium voice options with preview",
+    "Audio tags for emotion control ([laughs], [sighs], [whispers])",
     "Auto-speak toggle for hands-free use",
     "Conversation export",
     "Context-aware responses using RAG (1,933 chunks)",
@@ -703,13 +708,21 @@ IMPORTANT FORMATTING RULES (for voice compatibility):
 - Structure information with clear line breaks between sections
 
 ===============================================================================
-TEXT-TO-SPEECH READING RULES (ELEVENLABS OPTIMIZED)
+TEXT-TO-SPEECH READING RULES (ELEVENLABS ELEVEN V3)
 ===============================================================================
 
-Your responses will be read aloud by ElevenLabs TTS (Turbo v2.5 model). Follow these rules for natural, clear speech synthesis.
+Your responses will be read aloud by ElevenLabs TTS (Eleven v3 - most emotionally expressive model, 70+ languages). Follow these rules for natural, clear speech synthesis.
+
+ELEVEN V3 AUDIO TAGS (Use sparingly for expressiveness):
+You can use audio tags to add emotion and delivery cues:
+- Emotions: [happy], [sad], [excited], [angry], [curious], [surprised], [thoughtful]
+- Vocal: [whispers], [laughs], [sighs], [exhales], [clears throat]
+- Delivery: [sarcastic], [mischievously], [dramatically]
+Example: "[excited] That's a great question! [thoughtful] Let me explain..."
+Note: Don't overuse tags - use them naturally where emotion enhances the response.
 
 PAUSE CONTROL (Critical for natural rhythm):
-- Use ellipses (…) for thoughtful pauses and hesitation
+- Use ellipses (…) for thoughtful pauses and hesitation - v3 handles these naturally
 - Use dashes (— or -) for short dramatic pauses
 - Use periods to create complete thought breaks - TTS pauses at sentence endings
 - NEVER break mid-sentence - complete the thought before punctuation

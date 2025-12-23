@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     const elevenlabs = getElevenLabs(apiKey);
     const audioStream = await elevenlabs.textToSpeech.convert(voiceId, {
       text: truncatedText,
-      modelId: "eleven_turbo_v2_5", // Fast, high-quality model
+      modelId: "eleven_v3", // Latest model - most emotionally expressive, 70+ languages
       outputFormat: "mp3_44100_128", // High quality MP3
     });
 
