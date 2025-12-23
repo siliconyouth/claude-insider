@@ -1047,6 +1047,30 @@ export function AIAssistantTab() {
   };
 
   /**
+   * Generate recommendations when conversation loads with existing messages.
+   * Shows follow-up suggestions if last message is from assistant.
+   */
+  useEffect(() => {
+    // Only generate if:
+    // 1. We have messages
+    // 2. Last message is from assistant
+    // 3. Not currently loading/streaming
+    // 4. Don't already have recommendations
+    if (
+      messages.length > 0 &&
+      messages[messages.length - 1]?.role === "assistant" &&
+      !isLoading &&
+      !streamingContent &&
+      recommendations.length === 0
+    ) {
+      const pool = generateRecommendations();
+      setRecommendationPool(pool.slice(3));
+      setRecommendations(pool.slice(0, 3));
+      setShowRecommendations(true);
+    }
+  }, [messages, isLoading, streamingContent, recommendations.length, generateRecommendations]);
+
+  /**
    * Handle clicking a recommendation - sends immediately and hides recommendations
    */
   const handleRecommendationClick = useCallback((recommendation: string) => {
