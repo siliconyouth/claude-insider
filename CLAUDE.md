@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.1**.
 
 | Link | URL |
 |------|-----|
@@ -799,11 +799,60 @@ The AI assistant follows these rules when generating TTS-friendly responses:
 4. **Number Formatting**: "1,000" becomes "one thousand"
 5. **URL Handling**: Describe links, don't read URLs
 6. **Audio Tag Usage**: Use sparingly for emotional emphasis
+7. **Path Pronunciation**: Convert `/docs/config` to "docs config" for natural speech
 
-### Implementation Pattern
+### Streaming TTS (v1.12.1)
+
+TTS starts immediately as the AI response streams, providing near-instant audio feedback:
+
+| Feature | Description |
+|---------|-------------|
+| **Sentence Detection** | Queues complete sentences (ending with `.!?`) as they arrive |
+| **First-Chunk Optimization** | Looks for comma breaks at 40+ chars if no sentence boundary yet |
+| **Progressive Queuing** | Adds new sentences to queue while previous ones play |
+| **Latency** | 1-2 seconds from response start to audio (down from 5-10s) |
+
+**Key Functions** (`components/unified-chat/tabs/ai-assistant-tab.tsx`):
+
+| Function | Purpose |
+|----------|---------|
+| `queueStreamingTTS(text, isFinal)` | Queue sentences progressively during streaming |
+| `resetStreamingTTS()` | Reset tracking state before new response |
+| `processSpeechQueue()` | Play queued sentences sequentially |
+
+**Implementation Pattern**:
 
 ```tsx
-// Using the TTS API
+// During streaming loop - queue sentences as they arrive
+if (autoSpeak) {
+  queueStreamingTTS(fullContent, false);
+}
+
+// After streaming ends - queue any remaining text
+if (autoSpeak && fullContent) {
+  queueStreamingTTS(fullContent, true);
+}
+```
+
+### Text Conversion for TTS
+
+**Location**: `lib/claude-utils.ts`
+
+The `markdownToSpeakableText()` function converts markdown to TTS-friendly text:
+
+| Conversion | Example |
+|------------|---------|
+| Code blocks | Removed entirely |
+| Inline code | `-g` → "dash g" |
+| URL paths | `/docs/config` → "docs config" |
+| Headers | `## Title` → "Title," |
+| Bold/Italic | Markers removed, text kept |
+| Links | `[text](url)` → "text" |
+
+### Basic TTS API Pattern
+
+```tsx
+// Using the TTS API directly
 const response = await fetch('/api/assistant/speak', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
@@ -821,11 +870,14 @@ audio.play();
 ### Checklist for TTS Features
 
 - [ ] Use ElevenLabs v3 model (`eleven_v3`)
-- [ ] Strip markdown/formatting before sending to TTS
+- [ ] Use streaming TTS for AI assistant responses (not wait for full response)
+- [ ] Strip markdown/formatting using `markdownToSpeakableText()`
+- [ ] Convert URL paths to spoken form (slashes become spaces)
 - [ ] Include audio tags for emotional content when appropriate
 - [ ] Handle quota exceeded errors (429 status)
-- [ ] Provide voice selection UI with preview
+- [ ] Provide voice selection UI with inline preview button
 - [ ] Buffer complete audio before playback (avoid MP3 chunk artifacts)
+- [ ] Auto-scroll to bottom after recommendations appear
 
 ---
 

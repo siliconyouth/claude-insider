@@ -198,6 +198,10 @@ export function AIAssistantTab() {
   // Track if we've played the first response sound (plays once per response)
   const hasPlayedFirstChunkRef = useRef(false);
 
+  // Streaming TTS: track position in text that has been queued
+  const streamingTTSStartedRef = useRef(false);
+  const lastQueuedTextRef = useRef("");
+
   // ============================================================================
   // Initialization
   // ============================================================================
@@ -532,6 +536,90 @@ export function AIAssistantTab() {
     setSpeakingMessageIdx(null);
   }, []);
 
+  /**
+   * Queue text for streaming TTS - starts speaking as soon as first sentence is ready.
+   * Call this during streaming to add sentences to the queue progressively.
+   *
+   * @param fullText - The complete text so far (including previously queued text)
+   * @param isFinal - If true, queues any remaining text even if incomplete sentence
+   */
+  const queueStreamingTTS = useCallback((fullText: string, isFinal: boolean = false) => {
+    if (!fullText.trim()) return;
+
+    const speakableText = markdownToSpeakableText(fullText);
+    const alreadyQueued = lastQueuedTextRef.current;
+
+    // Find the new text that hasn't been queued yet
+    if (!speakableText.startsWith(alreadyQueued)) {
+      // Text was completely replaced, reset
+      lastQueuedTextRef.current = "";
+    }
+
+    const newText = speakableText.slice(lastQueuedTextRef.current.length).trim();
+    if (!newText) return;
+
+    // Find complete sentences (ends with . ! ? or newlines for headers)
+    // For streaming, we want to be aggressive about finding sentence boundaries
+    const sentenceEndRegex = /[.!?]\s+|[.!?]$/;
+    const lastSentenceEnd = newText.search(sentenceEndRegex);
+
+    let textToQueue = "";
+
+    if (isFinal) {
+      // Queue everything remaining
+      textToQueue = newText;
+    } else if (lastSentenceEnd !== -1) {
+      // Find the actual end position (including the punctuation)
+      const match = newText.match(sentenceEndRegex);
+      if (match && match.index !== undefined) {
+        textToQueue = newText.slice(0, match.index + match[0].length).trim();
+      }
+    } else if (!streamingTTSStartedRef.current && newText.length > 80) {
+      // For first chunk, if we have enough text, start with what we have
+      // Look for natural break points like commas
+      const commaPos = newText.lastIndexOf(", ");
+      if (commaPos > 40) {
+        textToQueue = newText.slice(0, commaPos + 1).trim();
+      }
+    }
+
+    if (!textToQueue) return;
+
+    // Update tracking
+    lastQueuedTextRef.current += (lastQueuedTextRef.current ? " " : "") + textToQueue;
+
+    // Initialize TTS state if this is the first chunk
+    if (!streamingTTSStartedRef.current) {
+      streamingTTSStartedRef.current = true;
+      isSpeakingRef.current = true;
+      setIsSpeaking(true);
+      // Stop any previous audio
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
+      speechQueueRef.current = [];
+      isProcessingQueueRef.current = false;
+    }
+
+    // Add to queue
+    speechQueueRef.current.push(textToQueue);
+
+    // Start processing if not already
+    if (!isProcessingQueueRef.current) {
+      processSpeechQueue();
+    }
+  }, [processSpeechQueue]);
+
+  /**
+   * Reset streaming TTS state - call before starting a new response.
+   */
+  const resetStreamingTTS = useCallback(() => {
+    streamingTTSStartedRef.current = false;
+    lastQueuedTextRef.current = "";
+  }, []);
+
   // ============================================================================
   // Speech Recognition
   // ============================================================================
@@ -684,6 +772,9 @@ export function AIAssistantTab() {
     // Reset first chunk tracking for this response
     hasPlayedFirstChunkRef.current = false;
 
+    // Reset streaming TTS state for new response
+    resetStreamingTTS();
+
     // Track analytics
     track("assistant_message_sent", { page: pathname });
 
@@ -742,6 +833,11 @@ export function AIAssistantTab() {
                   hasPlayedFirstChunkRef.current = true;
                   playMessageReceived();
                 }
+
+                // Stream TTS: queue sentences as they arrive
+                if (autoSpeak) {
+                  queueStreamingTTS(fullContent, false);
+                }
               }
             } catch {
               // Ignore parse errors
@@ -755,9 +851,9 @@ export function AIAssistantTab() {
       setMessages((prev) => [...prev, assistantMessage]);
       setStreamingContent("");
 
-      // Auto-speak if enabled
+      // Queue any remaining text for TTS (final chunk)
       if (autoSpeak && fullContent) {
-        speakText(fullContent);
+        queueStreamingTTS(fullContent, true);
       }
 
       // Show smart recommendations after response
@@ -790,7 +886,8 @@ export function AIAssistantTab() {
     pathname,
     aiContext,
     autoSpeak,
-    speakText,
+    queueStreamingTTS,
+    resetStreamingTTS,
     stopSpeaking,
     clearAIContext,
     announce,
@@ -861,7 +958,7 @@ export function AIAssistantTab() {
           {copiedMessageIdx === index ? (
             <>
               <CheckIcon className="h-4 w-4" />
-              <span>Copied</span>
+              <span>Copied!</span>
             </>
           ) : (
             <>

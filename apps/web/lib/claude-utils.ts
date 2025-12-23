@@ -51,6 +51,7 @@ export function markdownToDisplayText(text: string): string {
  * - ElevenLabs v3 naturally handles sentence flow without extra punctuation
  * - Let the AI's natural punctuation control pauses
  * - Convert code symbols to spoken words (e.g., `-g` → "dash g")
+ * - Convert URL paths to spoken words (e.g., `/docs/configuration` → "docs configuration")
  */
 export function markdownToSpeakableText(text: string): string {
   return text
@@ -63,6 +64,12 @@ export function markdownToSpeakableText(text: string): string {
     // Remove bold markers
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/__([^_]+)__/g, "$1")
+    // Convert URL paths to spoken form (e.g., /docs/configuration → docs configuration)
+    // This must come after removing bold/italic markers but before link removal
+    .replace(/(?:^|\s)(\/[\w-]+(?:\/[\w-]+)+)(?=[\s.,!?]|$)/g, (_match, path: string) => {
+      // Remove leading/trailing slashes and split into words
+      return " " + path.replace(/^\/|\/$/g, "").replace(/\//g, " ").replace(/-/g, " ");
+    })
     // Remove italic markers
     .replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, "$1")
     .replace(/(?<!_)_([^_\n]+)_(?!_)/g, "$1")

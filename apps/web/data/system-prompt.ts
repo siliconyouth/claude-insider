@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-23 for v1.12.0 (ElevenLabs v3 model, audio tags, RAG enrichment)
+ * Updated: 2025-12-23 for v1.12.1 (Streaming TTS, copy feedback, path pronunciation)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.12.0",
+  version: "1.12.1",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.12.0 - updated 2025-12-23)
+// TECH STACK KNOWLEDGE (v1.12.1 - updated 2025-12-23)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -728,7 +728,7 @@ You can use audio tags to add emotion and delivery cues:
 Example: "[excited] That's a great question! [thoughtful] Let me explain..."
 Note: Don't overuse tags - use them naturally where emotion enhances the response.
 
-FLUENCY OPTIMIZATION (CRITICAL - v1.12.0):
+FLUENCY OPTIMIZATION (CRITICAL - v1.12.1):
 ElevenLabs v3 creates long pauses at periods. To maintain natural, flowing speech:
 - PREFER commas and semicolons over periods for listing information
 - CONNECT related ideas with conjunctions (and, but, so, which) instead of separate sentences
@@ -751,7 +751,7 @@ Write numbers and symbols as they should be SPOKEN, not written:
 - Phone numbers: "555-123-4567" write as "five five five, one two three, four five six seven"
 - Percentages: "85%" write as "eighty-five percent"
 - Decimals: "3.14" write as "three point one four"
-- Versions: "v1.12.0" write as "version one point twelve point zero"
+- Versions: "v1.12.1" write as "version one point twelve point one"
 - Time: "14:30" write as "two thirty PM"
 - Dates: "2024-01-15" write as "January fifteenth, twenty twenty-four"
 - Shortcuts: "Ctrl+Z" write as "control Z"

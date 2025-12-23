@@ -300,7 +300,8 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   }, [virtualizer, items]);
 
   // Restore scroll state after content changes (Matrix SDK pattern)
-  const restoreScrollState = useCallback(() => {
+  // TODO: Use this for complex scroll restoration scenarios
+  const _restoreScrollState = useCallback(() => {
     const el = parentRef.current;
     if (!el) return;
 
@@ -500,6 +501,18 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
       virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
     }
   }, [messages.length, isAtBottom, totalCount, virtualizer]);
+
+  // Scroll to bottom when read receipts update (if already at bottom)
+  // This ensures the "Seen" indicator is visible after sending a message
+  const readReceiptsCount = Object.keys(readReceipts).length;
+  useEffect(() => {
+    if (readReceiptsCount > 0 && isAtBottom) {
+      // Small delay to let the read indicator render
+      setTimeout(() => {
+        virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
+      }, 100);
+    }
+  }, [readReceiptsCount, isAtBottom, totalCount, virtualizer]);
 
   // Shrink prevention for typing indicator transitions (Matrix SDK pattern)
   // When typing indicator appears, mark the last message position.

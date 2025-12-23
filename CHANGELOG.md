@@ -9,6 +9,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.1] - 2025-12-23
+### Streaming TTS & UI Polish
+- **Streaming TTS Auto-Start**: AI voice now starts speaking immediately as response streams
+  - Speech begins after first complete sentence (no more waiting for full response)
+  - Progressive sentence queuing for seamless audio playback
+  - 1-2 second response-to-speech latency (down from 5-10 seconds)
+- **Copy Button Feedback**: Visual confirmation when copying AI messages
+  - "Copied!" text with checkmark icon
+  - Solid emerald background with scale animation
+  - Auto-resets after 2 seconds
+- **TTS Path Pronunciation**: Fixed mispronunciation of URL paths
+  - `/docs/configuration` now speaks as "docs configuration" (not "configuraganta")
+  - Converts forward slashes and hyphens to spaces for natural speech
+- **Message Bubble Spacing**: Consistent padding between chat messages
+  - Added `py-2 px-4` to message containers (8px vertical, 16px horizontal)
+  - Works correctly with virtualized scrolling
+- **Auto-Scroll Improvements**:
+  - AI Assistant scrolls to bottom when suggestions appear
+  - Chat tab scrolls to bottom when read receipts update
+- **Code Quality**: Fixed unused variable warning in virtualized-message-list.tsx
+
+---
+
+## [1.12.0] - 2025-12-23
+### ElevenLabs v3, Audio Tags & RAG v7.0
+- **ElevenLabs Eleven v3 Model**: Upgraded TTS engine for natural, emotionally expressive speech
+  - 70+ language support with natural prosody
+  - Audio tags for emotional expression (`[excited]`, `[curious]`, `[thoughtful]`, etc.)
+  - Improved fluency without artificial pauses between sentences
+- **Audio Tag Enrichment**: RAG index now includes audio tags for expressive TTS
+  - 980 chunks (14.1%) enriched with contextual audio tags
+  - Distribution: `[curious]` 423, `[excited]` 274, `[thoughtful]` 258, `[happy]` 49
+  - Tags match content context (tips get `[mischievously]`, warnings get `[dramatically]`)
+- **RAG v7.0**: Expanded knowledge base with 6,953 chunks
+  - 7,695 indexed terms for TF-IDF search
+  - Includes doc-resource relationships and code examples
+  - Ask AI context integration for better assistance
+- **TTS Fluency Optimization**: Smoother speech synthesis
+  - Sentences batched into larger chunks (fewer API calls)
+  - Uses spaces instead of periods for paragraph breaks
+  - Natural punctuation controls pauses (no artificial gaps)
+- **Voice Preview**: Listen button moved inline with voice selector dropdown
+- **Inline Recommendations**: Suggestions appear within message list (not overlay)
+
+---
+
 ## [1.11.0] - 2025-12-23
 ### Footer Redesign & Navigation Documentation
 - **Footer Layout Overhaul**: Complete redesign using flex + grid hybrid pattern

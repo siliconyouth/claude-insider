@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.12.0";
+const APP_VERSION = "1.12.1";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.12.1",
+    date: "2025-12-23",
+    type: "patch",
+    highlights: [
+      "🎤 Streaming TTS: AI voice starts speaking immediately (1-2s latency, down from 5-10s)",
+      "📋 Copy Feedback: 'Copied!' button with emerald highlight and scale animation",
+      "🔊 Path Pronunciation: /docs/configuration speaks as 'docs configuration' naturally",
+      "💬 Message Spacing: Consistent 8px vertical padding between chat bubbles",
+      "📜 Auto-Scroll: Scrolls to bottom when suggestions or read receipts appear",
+    ],
+  },
   {
     version: "1.12.0",
     date: "2025-12-23",

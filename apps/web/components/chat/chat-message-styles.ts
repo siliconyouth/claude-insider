@@ -16,9 +16,9 @@ import { cn } from "@/lib/design-system";
  * Chat message style constants
  */
 export const chatMessageStyles = {
-  // Container alignment
+  // Container alignment with consistent spacing
   container: {
-    base: "flex",
+    base: "flex px-4 py-2",
     user: "justify-end",
     assistant: "justify-start",
   },
@@ -86,11 +86,14 @@ export const chatMessageStyles = {
       "text-gray-500 dark:text-gray-400",
       "hover:text-gray-700 dark:hover:text-gray-300",
       "hover:bg-gray-100 dark:hover:bg-gray-700",
-      "transition-colors"
+      "transition-all duration-200"
     ),
     buttonActive: cn(
-      "text-emerald-600 dark:text-emerald-400",
-      "bg-emerald-50 dark:bg-emerald-900/20"
+      "text-white dark:text-white",
+      "bg-emerald-500 dark:bg-emerald-600",
+      "scale-105 shadow-sm",
+      "hover:bg-emerald-500 dark:hover:bg-emerald-600",
+      "hover:text-white dark:hover:text-white"
     ),
   },
 } as const;

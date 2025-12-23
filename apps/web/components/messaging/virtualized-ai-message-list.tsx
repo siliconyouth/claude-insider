@@ -149,6 +149,16 @@ export function VirtualizedAIMessageList({
     }
   }, [isLoading, isAtBottom, totalCount, virtualizer]);
 
+  // Scroll to bottom when recommendations appear
+  useEffect(() => {
+    if (hasRecommendations) {
+      // Small delay to let the recommendations render and be measured
+      setTimeout(() => {
+        virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
+      }, 100);
+    }
+  }, [hasRecommendations, totalCount, virtualizer]);
+
   return (
     <div
       ref={parentRef}
