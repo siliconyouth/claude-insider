@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.1**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.2**.
 
 | Link | URL |
 |------|-----|
@@ -801,38 +801,60 @@ The AI assistant follows these rules when generating TTS-friendly responses:
 6. **Audio Tag Usage**: Use sparingly for emotional emphasis
 7. **Path Pronunciation**: Convert `/docs/config` to "docs config" for natural speech
 
-### Streaming TTS (v1.12.1)
+### Streaming TTS with Parallel Prefetch (v1.12.2)
 
-TTS starts immediately as the AI response streams, providing near-instant audio feedback:
+TTS uses parallel audio prefetch during Claude streaming for minimal latency:
 
 | Feature | Description |
 |---------|-------------|
-| **Sentence Detection** | Queues complete sentences (ending with `.!?`) as they arrive |
-| **First-Chunk Optimization** | Looks for comma breaks at 40+ chars if no sentence boundary yet |
-| **Progressive Queuing** | Adds new sentences to queue while previous ones play |
+| **Parallel Prefetch** | Audio fetch starts at 300 chars while Claude continues streaming |
+| **Fake Text Streaming** | Text reveals progressively synced to audio duration after prefetch |
+| **Canplay Optimization** | Uses `canplay` event instead of `canplaythrough` (500ms faster) |
+| **Smart Reuse** | If text grew <50% since prefetch, reuses early audio |
 | **Latency** | 1-2 seconds from response start to audio (down from 5-10s) |
 
 **Key Functions** (`components/unified-chat/tabs/ai-assistant-tab.tsx`):
 
 | Function | Purpose |
 |----------|---------|
-| `queueStreamingTTS(text, isFinal)` | Queue sentences progressively during streaming |
-| `resetStreamingTTS()` | Reset tracking state before new response |
-| `processSpeechQueue()` | Play queued sentences sequentially |
+| `prefetchAudio(text)` | Fetch audio from ElevenLabs with 15s timeout |
+| `fakeStreamText(text, durationMs)` | Reveal text progressively synced to audio |
+| `stopFakeStream()` | Cancel ongoing fake stream on stop/cancel |
 
 **Implementation Pattern**:
 
 ```tsx
-// During streaming loop - queue sentences as they arrive
-if (autoSpeak) {
-  queueStreamingTTS(fullContent, false);
+// During Claude streaming - start audio prefetch early (parallel)
+const EARLY_PREFETCH_THRESHOLD = 300;
+if (autoSpeak && !earlyAudioPromise && fullContent.length >= EARLY_PREFETCH_THRESHOLD) {
+  earlyAudioPromise = prefetchAudio(fullContent);
 }
 
-// After streaming ends - queue any remaining text
-if (autoSpeak && fullContent) {
-  queueStreamingTTS(fullContent, true);
+// After streaming - check if early prefetch is still valid
+const textGrowth = (fullContent.length - earlyPrefetchText.length) / earlyPrefetchText.length;
+if (earlyAudioPromise && textGrowth < 0.5) {
+  audio = await earlyAudioPromise; // Reuse early prefetch
+} else {
+  audio = await prefetchAudio(fullContent); // Fetch fresh
 }
+
+// Play audio + fake-stream text simultaneously
+audio.play();
+fakeStreamText(fullContent, audio.duration * 1000);
 ```
+
+### Concise Response Guidelines (v1.12.2)
+
+**MANDATORY**: AI responses must be concise for optimal TTS performance:
+
+| Response Type | Length Guideline |
+|--------------|------------------|
+| Simple questions | 1-2 sentences |
+| Complex questions | 2-3 sentences |
+| Code examples | Brief explanation + code block |
+| Documentation links | Short answer + link to docs |
+
+**RAG Chunk Size**: 800 characters (reduced from 1500) for faster audio prefetch.
 
 ### Text Conversion for TTS
 

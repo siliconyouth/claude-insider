@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.2] - 2025-12-23
+### ElevenLabs v3 TTS Optimization & Concise Responses
+- **Parallel Audio Prefetch**: Audio fetch starts at 300 chars while Claude continues streaming
+  - Eliminates sequential waiting (audio fetches during Claude response, not after)
+  - Uses `canplay` event instead of `canplaythrough` for 500ms faster audio start
+  - Smart reuse: if text grew <50% since prefetch, reuses early audio
+- **Fake Text Streaming**: Text reveals progressively synced to audio duration
+  - Creates seamless illusion of synchronized speech and text
+  - Stop button appears during auto-speak playback
+- **Concise Response Guidelines**: AI now gives shorter answers for faster TTS
+  - Simple questions: 1-2 sentences (down from 2-4)
+  - Complex questions: 2-3 sentences
+  - Reduces audio generation time and user wait
+- **RAG Chunk Size Reduction**: 800 chars (down from 1500)
+  - Smaller chunks = faster audio prefetch
+  - More focused retrieval results
+  - Index regenerated with new size limits
+- **Recommendations on Load**: Suggested follow-ups appear when loading existing conversations
+
+---
+
 ## [1.12.1] - 2025-12-23
 ### Streaming TTS & UI Polish
 - **Streaming TTS Auto-Start**: AI voice now starts speaking immediately as response streams

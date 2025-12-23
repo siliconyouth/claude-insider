@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.11.1 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.12.2 notification to all opted-in users...\n");
 
-  const version = "1.11.1";
-  const title = "Claude Insider v1.11.1 - Hero Section & Device Mockups";
+  const version = "1.12.2";
+  const title = "Claude Insider v1.12.2 - ElevenLabs Eleven v3 TTS & Audio Tags";
   const message =
-    "📱 Full Viewport Hero • 🖥️ New MANDATORY device mockup rules • ⌨️ Styled keyboard shortcuts • 📚 Updated CLAUDE.md documentation";
+    "🎤 ElevenLabs Eleven v3 for emotionally expressive speech • 🎭 Audio tags for natural reading • 💬 Concise 1-2 sentence responses • ⚡ Faster TTS with smaller chunks";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

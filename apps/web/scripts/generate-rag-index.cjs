@@ -597,7 +597,8 @@ function chunkContent(content, title, url, category) {
       .map(([word]) => word);
 
     // Enrich content with ElevenLabs v3 audio tags for natural TTS
-    const enrichedContent = enrichWithAudioTags(sectionContent.slice(0, 1500), category);
+    // Use 800 chars for shorter, more focused chunks (better for TTS performance)
+    const enrichedContent = enrichWithAudioTags(sectionContent.slice(0, 800), category);
 
     chunks.push({
       id: `${url}#${i}`,
@@ -624,7 +625,8 @@ function chunkContent(content, title, url, category) {
       .map(([word]) => word);
 
     // Enrich content with ElevenLabs v3 audio tags for natural TTS
-    const enrichedFallbackContent = enrichWithAudioTags(cleanContent.slice(0, 1500), category);
+    // Use 800 chars for shorter, more focused chunks (better for TTS performance)
+    const enrichedFallbackContent = enrichWithAudioTags(cleanContent.slice(0, 800), category);
 
     chunks.push({
       id: `${url}#0`,

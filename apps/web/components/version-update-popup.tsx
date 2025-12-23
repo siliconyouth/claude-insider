@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.12.1";
+const APP_VERSION = "1.12.2";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.12.2",
+    date: "2025-12-23",
+    type: "patch",
+    highlights: [
+      "🎤 ElevenLabs Eleven v3: Latest TTS model with most emotionally expressive speech synthesis",
+      "🎭 Audio Tags: 9 emotion tags ([excited], [curious], [thoughtful]) for natural, expressive reading",
+      "💬 Concise Responses: AI assistant now gives 1-2 sentence answers (faster TTS playback)",
+      "📚 RAG v7.0: 6,953 chunks with 14.1% audio-enriched for expressive reading",
+      "⚡ Smaller Chunks: 800 char limit (down from 1500) for faster audio prefetch",
+    ],
+  },
   {
     version: "1.12.1",
     date: "2025-12-23",

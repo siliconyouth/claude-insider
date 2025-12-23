@@ -310,7 +310,7 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.12.1</span>
+          <span className="text-[#8b949e]"> v1.12.2</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
@@ -322,11 +322,11 @@ function MacBookTerminalContent() {
         </div>
 
         <div className="mt-2 space-y-[3px]">
-          <div className="text-[#7ee787]">✓ Dashboard Charts (Recharts)</div>
-          <div className="text-[#7ee787]">✓ Prompt Library with Categories</div>
-          <div className="text-[#7ee787]">✓ Doc Version Management</div>
-          <div className="text-[#7ee787]">✓ Site-Wide Data Visualizations</div>
-          <div className="text-[#7ee787]">✓ 126 Database Tables</div>
+          <div className="text-[#7ee787]">✓ ElevenLabs Eleven v3 TTS</div>
+          <div className="text-[#7ee787]">✓ Audio Tags for Emotional Speech</div>
+          <div className="text-[#7ee787]">✓ Streaming TTS (1-2s latency)</div>
+          <div className="text-[#7ee787]">✓ 42 Premium AI Voices</div>
+          <div className="text-[#7ee787]">✓ RAG v7.0 (6,953 chunks)</div>
         </div>
 
         <div className="mt-2 flex items-center gap-1">
@@ -341,7 +341,7 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.12.0 with proper aspect ratio handling
+ * Updated for v1.12.2 with proper aspect ratio handling
  *
  * MANDATORY MOCKUP RULES:
  * 1. Screenshot MUST be taken at 446×932 viewport (matches mockup 224:468 aspect ratio)
