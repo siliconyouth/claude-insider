@@ -57,7 +57,7 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
   resources: {
     titleKey: "resourcesTitle",
     links: [
-      { href: "/resources/mcp-servers", label: "MCP Servers", badge: "1,950+" },
+      { href: "/resources/mcp-servers", label: "MCP Servers" },
       { href: "/resources/tools", label: "Tools & SDKs" },
       { href: "/resources/rules", label: "CLAUDE.md Rules" },
       { href: "/resources/prompts", label: "Prompts" },
