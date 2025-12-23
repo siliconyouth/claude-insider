@@ -12,7 +12,7 @@ import { NavDropdown, NavLink } from "@/components/nav-dropdown";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
-  activePage?: "home" | "docs" | "getting-started" | "resources" | "playground" | "stats" | "prompts";
+  activePage?: "home" | "docs" | "getting-started" | "resources" | "playground" | "stats" | "prompts" | "community";
 }
 
 // Icons for navigation items
@@ -214,6 +214,7 @@ export function Header({ activePage }: HeaderProps) {
             {/* Simple Links */}
             <NavLink label="Playground" href="/playground" isActive={activePage === "playground"} />
             <NavLink label="Stats" href="/stats" isActive={activePage === "stats"} />
+            <NavLink label="Community" href="/users" isActive={activePage === "community"} />
 
             {/* Donate Button */}
             <Link
@@ -347,6 +348,30 @@ export function Header({ activePage }: HeaderProps) {
                 )}
               >
                 Playground
+              </Link>
+              <Link
+                href="/stats"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                  activePage === "stats"
+                    ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+                )}
+              >
+                Stats
+              </Link>
+              <Link
+                href="/users"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                  activePage === "community"
+                    ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
+                )}
+              >
+                Community
               </Link>
               <Link
                 href="/donate"
