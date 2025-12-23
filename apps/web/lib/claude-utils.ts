@@ -50,13 +50,14 @@ export function markdownToDisplayText(text: string): string {
  * - Use spaces instead of periods for paragraph breaks to avoid TTS pauses
  * - ElevenLabs v3 naturally handles sentence flow without extra punctuation
  * - Let the AI's natural punctuation control pauses
+ * - Convert code symbols to spoken words (e.g., `-g` → "dash g")
  */
 export function markdownToSpeakableText(text: string): string {
   return text
     // Remove code blocks entirely (not useful for TTS)
     .replace(/```[\w]*\n?([\s\S]*?)```/g, "")
-    // Remove inline code backticks
-    .replace(/`([^`]+)`/g, "$1")
+    // Extract and convert inline code - handle symbols for speech
+    .replace(/`([^`]+)`/g, (_match, code: string) => convertCodeToSpeech(code))
     // Convert headers to spoken form - use comma for light pause, not period
     .replace(/^#{1,6}\s+(.+)$/gm, "$1,")
     // Remove bold markers
@@ -79,5 +80,29 @@ export function markdownToSpeakableText(text: string): string {
     .replace(/\n{2,}/g, " ")
     .replace(/\n/g, " ")
     .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+/**
+ * Convert code/command text to speakable form.
+ * Handles common CLI symbols and patterns.
+ */
+function convertCodeToSpeech(code: string): string {
+  return code
+    // Common CLI flags: -g, --global, -v, etc.
+    .replace(/\s--([a-z-]+)/gi, " dash dash $1")
+    .replace(/\s-([a-zA-Z])\b/g, " dash $1")
+    .replace(/^--([a-z-]+)/gi, "dash dash $1")
+    .replace(/^-([a-zA-Z])\b/g, "dash $1")
+    // @ symbol in package names
+    .replace(/@/g, " at ")
+    // Forward slashes in paths/packages
+    .replace(/\//g, " slash ")
+    // Underscores
+    .replace(/_/g, " underscore ")
+    // Dots in commands/packages (but not at end of sentences)
+    .replace(/\.([a-zA-Z])/g, " dot $1")
+    // Clean up multiple spaces
+    .replace(/\s+/g, " ")
     .trim();
 }

@@ -698,14 +698,21 @@ Communication Style:
 - Keep responses ${ASSISTANT_PERSONA.communication.length}
 - Use ${ASSISTANT_PERSONA.communication.format}
 
-IMPORTANT FORMATTING RULES (for voice compatibility):
-- DO NOT use markdown syntax like ##, **, *, \`\`\`, or \`
-- For headings/sections, just write the text on its own line followed by a colon
-- For emphasis, use CAPITAL LETTERS sparingly or just write naturally
-- For lists, use simple numbered lists (1. 2. 3.) or bullet points with dashes (-)
-- For code, describe it naturally without backticks
-- Keep responses conversational and easy to read aloud
-- Structure information with clear line breaks between sections
+IMPORTANT FORMATTING RULES (text + voice hybrid):
+Your responses are DISPLAYED as text AND read aloud by TTS. Use markdown for visual clarity - it will be stripped automatically when speaking.
+
+CODE AND COMMANDS (CRITICAL):
+- ALWAYS use backticks for inline code: \`npm install -g @anthropic-ai/claude-code\`
+- ALWAYS use code blocks for multi-line code or commands
+- NEVER rewrite code symbols in prose - keep \`-g\` as \`-g\`, not "dash g"
+- The TTS system will automatically convert \`-g\` to "dash g" when speaking
+- Commands should be copy-pasteable, so preserve exact syntax
+
+OTHER FORMATTING:
+- Use **bold** for emphasis on key terms
+- Use simple numbered lists (1. 2. 3.) or bullet points (-)
+- Keep responses conversational and flowing
+- Links: use markdown links [text](/path) for navigation
 
 ===============================================================================
 TEXT-TO-SPEECH READING RULES (ELEVENLABS ELEVEN V3)
@@ -804,14 +811,13 @@ EMPHASIS AND EMOTION (ElevenLabs compatible):
 - Exclamation adds energy: "That's great!"
 - Question marks indicate rising intonation
 
-MARKDOWN TO SPEECH CONVERSION:
-Instead of markdown syntax, use natural speech patterns:
-- Bold/emphasis: Use CAPS or natural emphasis words ("This is REALLY important")
-- Code/commands: Introduce with "the command is" or "run" then speak naturally
-- Bullet lists: Use "First... Second... Third..." or "One... Two... Three..."
-- Code blocks: "Here's how to do it:" then describe steps conversationally
-- Links: "Check out the docs at slash docs slash getting started"
-- Headers: Just read the text naturally as a topic introduction
+MARKDOWN TO SPEECH CONVERSION (automatic):
+The TTS system automatically converts your markdown to speakable text:
+- Code backticks are stripped, content read naturally
+- \`-g\` becomes "dash g", \`@anthropic-ai\` becomes "at anthropic dash ai"
+- Bold markers removed, content emphasized naturally
+- Links become just the link text
+- You DON'T need to write "dash" - write the actual symbol and TTS handles it
 
 CONVERSATIONAL FLOW:
 - Vary sentence openings: "So", "Now", "Here's the thing", "Let me explain" - WITHOUT trailing ellipses

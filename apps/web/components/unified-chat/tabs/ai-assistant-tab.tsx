@@ -156,6 +156,7 @@ export function AIAssistantTab() {
   const [autoSpeak, setAutoSpeak] = useState(true);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakingMessageIdx, setSpeakingMessageIdx] = useState<number | null>(null);
+  const [copiedMessageIdx, setCopiedMessageIdx] = useState<number | null>(null);
   const [isListening, setIsListening] = useState(false);
   const [interimTranscript, setInterimTranscript] = useState("");
   const [speechSupported, setSpeechSupported] = useState(false);
@@ -849,16 +850,29 @@ export function AIAssistantTab() {
         <ChatMessageAction
           onClick={() => {
             navigator.clipboard.writeText(msg.content);
+            setCopiedMessageIdx(index);
             announce("Copied to clipboard");
+            // Reset after 2 seconds
+            setTimeout(() => setCopiedMessageIdx(null), 2000);
           }}
+          isActive={copiedMessageIdx === index}
           ariaLabel="Copy message to clipboard"
         >
-          <CopyIcon className="h-4 w-4" />
-          <span>Copy</span>
+          {copiedMessageIdx === index ? (
+            <>
+              <CheckIcon className="h-4 w-4" />
+              <span>Copied</span>
+            </>
+          ) : (
+            <>
+              <CopyIcon className="h-4 w-4" />
+              <span>Copy</span>
+            </>
+          )}
         </ChatMessageAction>
       </>
     );
-  }, [speakingMessageIdx, isSpeaking, speakText, stopSpeaking, announce]);
+  }, [speakingMessageIdx, isSpeaking, copiedMessageIdx, speakText, stopSpeaking, announce]);
 
   // ============================================================================
   // Conversation Management
@@ -1433,6 +1447,14 @@ function CopyIcon({ className }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
       <rect x="9" y="9" width="13" height="13" rx="2" />
       <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+    </svg>
+  );
+}
+
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
   );
 }
