@@ -57,7 +57,7 @@ const CLAUDE_MODELS = [
 ] as const;
 
 // Legacy string array for backwards compatibility
-const CLAUDE_MODEL_IDS = CLAUDE_MODELS.map(m => m.id);
+const _CLAUDE_MODEL_IDS = CLAUDE_MODELS.map(m => m.id);
 
 /**
  * Test which models are available to an API key

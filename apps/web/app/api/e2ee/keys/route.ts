@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
     if (oneTimeKeys && Array.isArray(oneTimeKeys) && oneTimeKeys.length > 0) {
       const prekeyValues = oneTimeKeys
         .map(
-          ([keyId, publicKey]: [number | string, string], index: number) =>
+          ([_keyId, _publicKey]: [number | string, string], index: number) =>
             `($1, $${index * 2 + 2}, $${index * 2 + 3})`
         )
         .join(", ");

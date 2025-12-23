@@ -12,7 +12,6 @@ import { cn } from "@/lib/design-system";
 import { useToast } from "@/components/toast";
 import { COUNTRIES, findCountry, formatLocation } from "@/lib/countries";
 import {
-  TIMEZONES,
   getTimezoneGroups,
   formatTimeInTimezone,
   findTimezone,

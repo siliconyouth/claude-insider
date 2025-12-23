@@ -127,7 +127,7 @@ export function ConversationView({
   );
 
   // Use mention detection hook
-  const { mentionQuery, mentionStart } = useMentionDetection(
+  const { mentionQuery: _mentionQuery, mentionStart } = useMentionDetection(
     inputValue,
     cursorPosition
   );

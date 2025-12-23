@@ -112,6 +112,7 @@ export function E2EESettings() {
       loadStorageStats();
       loadVerifiedDevices();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Load functions are stable, only run when dependencies change
   }, [e2ee.isInitialized, e2ee.deviceId, session?.user?.id]);
 
   // Handle key generation

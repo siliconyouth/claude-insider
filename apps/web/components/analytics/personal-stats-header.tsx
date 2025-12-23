@@ -7,12 +7,11 @@
  */
 
 import { cn } from "@/lib/design-system";
-import { type Level, levels } from "@/lib/gamification";
+import { type Level } from "@/lib/gamification";
 import {
   TrophyIcon,
   FlameIcon,
   SparklesIcon,
-  TargetIcon,
 } from "lucide-react";
 
 interface PersonalStatsHeaderProps {
@@ -33,7 +32,7 @@ export function PersonalStatsHeader({
   totalPoints,
   pointsThisWeek,
   nextLevelProgress,
-  pointsToNextLevel,
+  pointsToNextLevel: _pointsToNextLevel,
   currentStreak,
   streakActive,
   achievementsUnlocked,

@@ -71,7 +71,7 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
   const [donorName, setDonorName] = useState('');
   const [donorEmail, setDonorEmail] = useState('');
   const [referenceNumber, setReferenceNumber] = useState('');
-  const [completedDonationId, setCompletedDonationId] = useState<string | null>(null);
+  const [_completedDonationId, setCompletedDonationId] = useState<string | null>(null);
   const { error: showError } = useToast();
 
   // Load settings on mount
@@ -105,7 +105,8 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
   const selectedAmount = customAmount ? parseFloat(customAmount) : amount;
 
   // Handle PayPal checkout (one-time or subscription)
-  const handlePayPalCheckout = async () => {
+  // NOTE: Legacy function - PayPal checkout is now handled inline via PayPalDonateButtons
+  const _handlePayPalCheckout = async () => {
     setIsProcessing(true);
     setStep('processing');
 
@@ -171,7 +172,8 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
   };
 
   // Submit bank transfer notification
-  const handleBankTransferSubmit = async () => {
+  // NOTE: Legacy function - bank transfer submission is now handled inline via BankTransferInstructions
+  const _handleBankTransferSubmit = async () => {
     if (!donorName || !donorEmail) {
       showError('Please enter your name and email');
       return;

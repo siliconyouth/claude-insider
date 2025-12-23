@@ -294,23 +294,16 @@ function SplitDiff({
   const leftLines: (DiffLine | null)[] = [];
   const rightLines: (DiffLine | null)[] = [];
 
-  let leftIdx = 0;
-  let rightIdx = 0;
-
   for (const line of lines) {
     if (line.type === "unchanged") {
       leftLines.push(line);
       rightLines.push(line);
-      leftIdx++;
-      rightIdx++;
     } else if (line.type === "removed") {
       leftLines.push(line);
       rightLines.push(null);
-      leftIdx++;
     } else if (line.type === "added") {
       leftLines.push(null);
       rightLines.push(line);
-      rightIdx++;
     }
   }
 

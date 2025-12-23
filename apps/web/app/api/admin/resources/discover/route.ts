@@ -50,9 +50,7 @@ async function fetchGitHubData(owner: string, repo: string) {
         headers: {
           Accept: "application/vnd.github+json",
           "X-GitHub-Api-Version": "2022-11-28",
-          // eslint-disable-next-line turbo/no-undeclared-env-vars
           ...(process.env.GITHUB_TOKEN && {
-            // eslint-disable-next-line turbo/no-undeclared-env-vars
             Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
           }),
         },

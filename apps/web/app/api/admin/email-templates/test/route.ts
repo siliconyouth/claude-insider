@@ -22,7 +22,6 @@ import {
 } from "@/lib/email-templates";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-// eslint-disable-next-line turbo/no-undeclared-env-vars
 const FROM_EMAIL = process.env.EMAIL_FROM || "Claude Insider <noreply@claudeinsider.com>";
 
 // Validate slug is a valid template slug

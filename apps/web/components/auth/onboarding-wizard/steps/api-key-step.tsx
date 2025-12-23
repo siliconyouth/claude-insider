@@ -81,7 +81,7 @@ export function ApiKeyStep() {
     error?: string;
   } | null>(null);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
-  const [isSavingModel, setIsSavingModel] = useState(false);
+  const [_isSavingModel, setIsSavingModel] = useState(false);
 
   // Check if user already has an API key connected
   useEffect(() => {

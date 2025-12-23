@@ -8,7 +8,7 @@
 "use client";
 
 import { cn } from "@/lib/design-system";
-import type { FilterConfig, FilterOption } from "@/lib/dashboard/types";
+import type { FilterOption } from "@/lib/dashboard/types";
 
 interface FilterBarProps {
   /** Search input value */

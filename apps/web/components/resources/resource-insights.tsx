@@ -160,7 +160,7 @@ export function ResourceInsights({
               expandOnHover
             />
             <div className="flex-1 space-y-1.5">
-              {categoryChartData.slice(0, 5).map((cat, index) => (
+              {categoryChartData.slice(0, 5).map((cat) => (
                 <button
                   key={cat.name}
                   onClick={() => onCategoryClick?.(cat.slug as string)}

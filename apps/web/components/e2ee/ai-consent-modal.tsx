@@ -20,7 +20,6 @@ import {
 import {
   Bot,
   ShieldCheck,
-  ShieldAlert,
   X,
   Loader2,
   CheckCircle2,

@@ -4,7 +4,7 @@ import { hasRole } from './Users';
 import { notifyAdminsResourceSubmission } from '../lib/admin-notifications';
 import { createResourceSyncHook, createResourceDeleteHook } from '../lib/payload/sync-resources';
 import type { Resource, Category } from '../payload-types';
-import { RELATIONSHIP_TYPES, ANALYSIS_STATUS } from './Documents';
+import { RELATIONSHIP_TYPES } from './Documents';
 
 /**
  * Resource relationship types (resource-to-resource)

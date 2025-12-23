@@ -64,7 +64,7 @@ async function syncAuthorToSupabase(
 /**
  * Get resource ID from Supabase by slug
  */
-async function getSupabaseResourceId(payloadResourceId: string | number): Promise<string | null> {
+async function getSupabaseResourceId(_payloadResourceId: string | number): Promise<string | null> {
   try {
     // First try to find by matching title/url since Payload IDs don't match Supabase IDs
     const result = await pool.query<{ id: string }>(
@@ -94,7 +94,7 @@ export const ResourceAuthors: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc, operation }) => {
+      async ({ doc, operation: _operation }) => {
         // Sync to Supabase after create/update
         if (doc.resource) {
           const resourceId = typeof doc.resource === 'object' ? doc.resource.id : doc.resource;

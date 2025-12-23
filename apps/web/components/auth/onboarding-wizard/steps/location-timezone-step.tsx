@@ -19,7 +19,6 @@ import { WizardNavigation } from "../wizard-navigation";
 import { StepWrapper } from "../shared/step-wrapper";
 import { COUNTRIES, findCountry, formatLocation } from "@/lib/countries";
 import {
-  TIMEZONES,
   getTimezoneGroups,
   detectTimezone,
   formatTimeInTimezone,
