@@ -210,7 +210,7 @@ export function Footer() {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={cn(linkClass, "flex items-center gap-1")}
+                      className={cn(linkClass, "inline-flex items-center gap-1.5")}
                     >
                       {link.labelKey ? t(link.labelKey) : link.label}
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -257,7 +257,7 @@ export function Footer() {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={cn(linkClass, "flex items-center gap-1")}
+                      className={cn(linkClass, "inline-flex items-center gap-1.5")}
                     >
                       {link.labelKey ? t(link.labelKey) : link.label}
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -269,7 +269,7 @@ export function Footer() {
                       href={link.href}
                       className={cn(
                         linkClass,
-                        link.highlight && "text-pink-500 hover:text-rose-500 dark:text-pink-500 dark:hover:text-rose-400 flex items-center gap-1"
+                        link.highlight && "text-pink-500 hover:text-rose-500 dark:text-pink-500 dark:hover:text-rose-400 inline-flex items-center gap-1.5"
                       )}
                     >
                       {link.highlight && (
