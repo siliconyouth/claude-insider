@@ -177,6 +177,7 @@ export function Footer() {
                     {link.action === "openAIAssistant" ? (
                       <button
                         onClick={() => openAIAssistant()}
+                        title="AI Assistant/Chat (Cmd + .)"
                         className={cn(linkClass, "inline-flex items-center gap-2")}
                       >
                         {link.labelKey ? t(link.labelKey) : link.label}
