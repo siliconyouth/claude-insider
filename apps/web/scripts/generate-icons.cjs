@@ -168,10 +168,12 @@ async function generateIcons() {
   }
 
   // Generate favicon.ico (multi-resolution)
+  // IMPORTANT: Must use .ensureAlpha() to guarantee RGBA format for ICO embedding
+  // Next.js/Turbopack requires PNG data in ICO files to be RGBA (4 channels)
   console.log('\n🔖 Generating favicon.ico...');
-  const favicon16 = await sharp(baseBuffer).resize(16, 16).png().toBuffer();
-  const favicon32 = await sharp(baseBuffer).resize(32, 32).png().toBuffer();
-  const favicon48 = await sharp(baseBuffer).resize(48, 48).png().toBuffer();
+  const favicon16 = await sharp(baseBuffer).resize(16, 16).ensureAlpha().png().toBuffer();
+  const favicon32 = await sharp(baseBuffer).resize(32, 32).ensureAlpha().png().toBuffer();
+  const favicon48 = await sharp(baseBuffer).resize(48, 48).ensureAlpha().png().toBuffer();
 
   // Create ICO file (simple format with PNG data)
   const icoBuffer = createIcoFromPngs([
