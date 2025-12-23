@@ -31,10 +31,10 @@ export function MonochromeLogo({ className, size = 14 }: MonochromeLogoProps) {
       {/* Text - inverts based on theme */}
       <text
         x="256"
-        y="340"
+        y="355"
         fontFamily="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
-        fontSize="240"
-        fontWeight="600"
+        fontSize="300"
+        fontWeight="800"
         textAnchor="middle"
         className="fill-white dark:fill-gray-900"
       >
