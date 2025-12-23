@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.10.8";
+const APP_VERSION = "1.11.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,15 +24,26 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.11.0",
+    date: "2025-12-23",
+    type: "minor",
+    highlights: [
+      "🎨 Footer Redesign: New flex + grid hybrid layout with 5 unified columns for perfect alignment",
+      "🔗 AI Assistant Button: Opens chat window directly with keyboard shortcut tooltip (Cmd + .)",
+      "🌓 Contrast Logo: MonochromeLogo now supports 'contrast' variant for better dark/light visibility",
+      "📚 CLAUDE.md: 10 new MANDATORY footer design rules with code patterns",
+      "⚡ Wider Container: Footer now uses max-w-[1440px] for better content display",
+      "🎯 Icon Spacing: All footer icons use consistent gap-1.5 with inline-flex alignment",
+    ],
+  },
+  {
     version: "1.10.8",
     date: "2025-12-23",
     type: "patch",
     highlights: [
       "📱 Mobile Header Optimization: Header now fits in one row (4 icons: Search, Theme, Sign-in, Menu)",
       "🔗 API Link to Footer: Moved from header for cleaner mobile experience",
-      "📸 iPhone Mockup Screenshot: Real mobile view with optimized header layout",
       "📚 CLAUDE.md: New MANDATORY 'Header & Footer Navigation' section with consistency checklist",
-      "🔧 Sign-in Button: Text button replaced with compact user icon on mobile",
     ],
   },
   {

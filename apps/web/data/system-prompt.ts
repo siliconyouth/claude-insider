@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-23 for v1.10.8 (Mobile header optimization, navigation documentation)
+ * Updated: 2025-12-23 for v1.11.0 (Footer redesign, navigation documentation)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.10.8",
+  version: "1.11.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.10.8 - updated 2025-12-23)
+// TECH STACK KNOWLEDGE (v1.11.0 - updated 2025-12-23)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -410,8 +410,9 @@ export const WEBSITE_FEATURES = {
       rule: "Max 4-5 icons on mobile, all icon-only with aria-label",
     },
     footer: {
-      links: ["Logo", "Copyright", "Author", "Privacy", "Terms", "Disclaimer", "Accessibility", "Changelog", "Stats", "API", "Donate", "Language", "Sound toggle", "Version"],
-      layout: "Single row with dot separators, flex-wrap for mobile",
+      columns: ["Features (6 links)", "Documentation (7 links)", "Resources (6 links)", "Project (7 links)", "Legal (4 links)"],
+      layout: "Flex + Grid hybrid: fixed-width brand section (lg:w-64) + 5-column unified grid (lg:grid-cols-5)",
+      bottomBar: ["Logo", "Copyright", "Author", "Version", "Language selector", "Sound toggle", "Theme toggle"],
     },
     mobileBottomNav: {
       tabs: ["Home", "Docs", "Resources", "Chat", "Sign In/Profile"],

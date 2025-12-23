@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.11.0] - 2025-12-23
+### Footer Redesign & Navigation Documentation
+- **Footer Layout Overhaul**: Complete redesign using flex + grid hybrid pattern
+  - Brand section now fixed width (lg:w-64) for consistent spacing
+  - 5 unified link columns in single grid (lg:grid-cols-5) for perfect alignment
+  - Container width increased to max-w-[1440px] for better content display
+  - Column gap increased to lg:gap-10 for breathing room
+- **AI Assistant Button**: Footer link now opens chat window directly
+  - Uses action callback instead of navigation
+  - Added keyboard shortcut tooltip "AI Assistant/Chat (Cmd + .)"
+  - Badge shows "New" indicator
+- **MonochromeLogo Enhancement**: New `variant` prop with "contrast" option
+  - Contrast variant: Black bg/white text in light mode, white bg/black text in dark mode
+  - Used in footer for better visibility in both themes
+- **Footer Column Structure**: 5 organized columns
+  - Features (6 links): Docs, Resources, Playground, Prompt Library, AI Assistant, Chat
+  - Documentation (7 links): Getting Started, Configuration, API Reference, Tutorials, External: Official Docs
+  - Resources (6 links): MCP Servers, Tools & SDKs, CLAUDE.md Rules, Prompts, Showcases, Community
+  - Project (7 links): GitHub, Changelog, RSS Feed, Community Stats, Design System, Members, Donate
+  - Legal (4 links): Privacy, Terms, Disclaimer, Accessibility
+- **Design System Updates**: 10 new mandatory footer rules in CLAUDE.md
+  - Layout pattern with code examples
+  - Icon spacing standardized to gap-1.5
+  - External link pattern with icon SVG
+  - AI Assistant button pattern with action callback
+- **Quick Links Removed**: Removed redundant Quick Links section from homepage (now in footer)
+- **Tagline Improved**: Footer brand tagline now flows as single sentence with em dash
+
+---
+
 ## [1.10.8] - 2025-12-23
 ### Mobile Header Optimization & Navigation Documentation
 - **Mobile Header Optimization**: Header now fits in one row on mobile viewports
