@@ -1417,8 +1417,8 @@ export function VoiceAssistant() {
         }}
       >
         {/* Tooltip Balloon */}
-        <div className="absolute bottom-full right-0 mb-3 w-56 animate-bounce">
-          <div className="relative rounded-lg bg-white px-3 py-2 text-sm text-gray-800 shadow-lg dark:bg-gray-800 dark:text-white">
+        <div className="absolute bottom-full right-0 mb-3 animate-bounce">
+          <div className="relative rounded-lg bg-white px-3 py-2 text-sm text-gray-800 shadow-lg dark:bg-gray-800 dark:text-white whitespace-nowrap">
             <span className="font-semibold text-blue-500 dark:text-cyan-400">AI Assistant</span>
             <span className="text-gray-600 dark:text-gray-300"> (Cmd + .)</span>
             {/* Arrow - inline styles override global border-color rule */}
