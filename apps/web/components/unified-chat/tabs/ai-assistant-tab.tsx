@@ -848,10 +848,8 @@ export function AIAssistantTab() {
                   playMessageReceived();
                 }
 
-                // Stream TTS: queue sentences as they arrive
-                if (autoSpeak) {
-                  queueStreamingTTS(fullContent, false);
-                }
+                // Note: TTS is handled AFTER streaming completes (below)
+                // This ensures one continuous audio file without inter-chunk pauses
               }
             } catch {
               // Ignore parse errors
@@ -865,9 +863,11 @@ export function AIAssistantTab() {
       setMessages((prev) => [...prev, assistantMessage]);
       setStreamingContent("");
 
-      // Queue any remaining text for TTS (final chunk)
+      // TTS: Send full text as ONE request for continuous audio without pauses
+      // This happens after streaming completes - user sees text immediately,
+      // then hears smooth audio (better than chunked streaming TTS)
       if (autoSpeak && fullContent) {
-        queueStreamingTTS(fullContent, true);
+        speakText(fullContent);
       }
 
       // Show smart recommendations after response
@@ -900,7 +900,7 @@ export function AIAssistantTab() {
     pathname,
     aiContext,
     autoSpeak,
-    queueStreamingTTS,
+    speakText,
     resetStreamingTTS,
     stopSpeaking,
     clearAIContext,
