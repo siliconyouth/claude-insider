@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.12.3 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.12.4 notification to all opted-in users...\n");
 
-  const version = "1.12.3";
-  const title = "Claude Insider v1.12.3 - ElevenLabs Turbo v2.5 & Immediate Streaming";
+  const version = "1.12.4";
+  const title = "Claude Insider v1.12.4 - Lighthouse 100% Performance";
   const message =
-    "⚡ ElevenLabs Turbo v2.5 for 3x faster TTS • 📝 Immediate text streaming without buffering • 💻 Code blocks now readable by TTS • 🔧 Fixed loading indicator during audio prefetch";
+    "🚀 100% Lighthouse score on desktop (up from 73%) • ⚡ TBT reduced from 2,010ms to 0ms • 📦 Provider deferral with requestIdleCallback • 🔄 Homepage sections now code-split for faster loading";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
