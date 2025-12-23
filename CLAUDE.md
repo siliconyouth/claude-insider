@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.2**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.3**.
 
 | Link | URL |
 |------|-----|
@@ -69,7 +69,7 @@ All technologies are **free and/or open source** (except hosting services with f
 | Fuse.js | 7.1.0 | Apache-2.0 | Fuzzy search |
 | highlight.js | 11.x | BSD-3-Clause | Syntax highlighting (33 languages) |
 | Anthropic SDK | 0.71.2 | Proprietary | Claude Sonnet 4 streaming chat |
-| ElevenLabs SDK | 2.28.0 | MIT | Text-to-Speech (42 voices, Eleven v3 model, audio tags) |
+| ElevenLabs SDK | 2.28.0 | MIT | Text-to-Speech (42 voices, Turbo v2.5 model, fast streaming) |
 | Better Auth | 1.4.7 | MIT | User authentication (OAuth, 2FA) |
 | Supabase | 2.89.0 | MIT | PostgreSQL with RLS |
 | Payload CMS | 3.69.0 | MIT | Content management system |
@@ -146,7 +146,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-2 | Navigation | 7 categories, breadcrumbs, prev/next navigation, sidebar |
 | FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
 | FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
-| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (6,953 chunks with 14% audio-enriched), ElevenLabs Eleven v3 TTS (42 voices, audio tags for emotional expression), speech-to-text |
+| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (6,953 chunks with 14% audio-enriched), ElevenLabs Turbo v2.5 TTS (42 voices, immediate text streaming, low-latency audio), speech-to-text |
 | FR-6 | Resources Section | 1,952 curated resources, 10 categories, search, GitHub integration |
 | FR-7 | Account Security | Password management, OAuth linking, safety checks |
 | FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |
@@ -747,20 +747,27 @@ function MyComponent() {
 
 **Location**: `app/api/assistant/speak/route.ts`, `data/system-prompt.ts`
 
-Claude Insider uses **ElevenLabs Eleven v3** (alpha) model for natural, emotionally expressive text-to-speech.
+Claude Insider uses **ElevenLabs Turbo v2.5** model for fast, natural text-to-speech with minimal latency.
 
-### Model Configuration
+### Model Configuration (MANDATORY for all TTS usage)
 
 | Setting | Value | Description |
 |---------|-------|-------------|
-| Model | `eleven_v3` | Latest model with emotional expressiveness, 70+ languages |
-| Output Format | `mp3_44100_128` | High-quality 44.1kHz MP3, 128kbps |
+| Model | `eleven_turbo_v2_5` | Fast model with good quality, 32 languages |
+| Output Format | `mp3_22050_32` | Lower bitrate 22kHz MP3, 32kbps for faster transfer |
+| Latency Optimization | `3` | Level 3 of 4 (higher = lower latency, max quality tradeoff) |
 | Default Voice | `sarah` | Natural-sounding female voice |
 | Available Voices | 42 | Premium ElevenLabs voice library |
 
+**Why Turbo v2.5 over Eleven v3?** (v1.12.3)
+- **3x faster** speech generation for real-time chat responsiveness
+- Minimal latency is critical for conversational AI experience
+- Audio tags still supported but focus on speed over expressiveness
+- 32 language support with natural prosody
+
 ### Audio Tags for Emotional Expression
 
-ElevenLabs v3 supports audio tags to add emotional context to speech:
+ElevenLabs Turbo v2.5 supports audio tags to add emotional context to speech:
 
 | Tag | Usage | Probability in RAG |
 |-----|-------|-------------------|
@@ -801,9 +808,9 @@ The AI assistant follows these rules when generating TTS-friendly responses:
 6. **Audio Tag Usage**: Use sparingly for emotional emphasis
 7. **Path Pronunciation**: Convert `/docs/config` to "docs config" for natural speech
 
-### Streaming TTS with Parallel Prefetch (v1.12.2)
+### Immediate Text Streaming with Parallel Audio (v1.12.3)
 
-TTS uses parallel audio prefetch during Claude streaming for minimal latency:
+Text streams immediately without buffering, audio plays in parallel when ready:
 
 | Feature | Description |
 |---------|-------------|
@@ -856,7 +863,7 @@ fakeStreamText(fullContent, audio.duration * 1000);
 
 **RAG Chunk Size**: 800 characters (reduced from 1500) for faster audio prefetch.
 
-### Text Conversion for TTS
+### Text Conversion for TTS (v1.12.3)
 
 **Location**: `lib/claude-utils.ts`
 
@@ -864,12 +871,21 @@ The `markdownToSpeakableText()` function converts markdown to TTS-friendly text:
 
 | Conversion | Example |
 |------------|---------|
-| Code blocks | Removed entirely |
-| Inline code | `-g` → "dash g" |
+| Code blocks | Converted to speakable text (not removed) |
+| Inline code | `-g` → "dash g", `--global` → "dash dash global" |
+| Package names | `@anthropic-ai/sdk` → "at anthropic-ai slash sdk" |
 | URL paths | `/docs/config` → "docs config" |
 | Headers | `## Title` → "Title," |
 | Bold/Italic | Markers removed, text kept |
 | Links | `[text](url)` → "text" |
+| Underscores | `_var` → "underscore var" |
+
+**Code Block Conversion** (v1.12.3):
+- Code blocks are no longer skipped - they are converted to speakable text
+- CLI flags: `-g` becomes "dash g", `--verbose` becomes "dash dash verbose"
+- Package names with `@` are read as "at"
+- Forward slashes become "slash"
+- Underscores become "underscore"
 
 ### Basic TTS API Pattern
 
@@ -891,15 +907,17 @@ audio.play();
 
 ### Checklist for TTS Features
 
-- [ ] Use ElevenLabs v3 model (`eleven_v3`)
-- [ ] Use streaming TTS for AI assistant responses (not wait for full response)
+- [ ] Use ElevenLabs Turbo v2.5 model (`eleven_turbo_v2_5`) - MANDATORY
+- [ ] Use `optimizeStreamingLatency: 3` for fastest response
+- [ ] Use `mp3_22050_32` output format for faster transfer
+- [ ] Stream text immediately without buffering
 - [ ] Strip markdown/formatting using `markdownToSpeakableText()`
+- [ ] Convert code blocks to speakable text (not skip them)
 - [ ] Convert URL paths to spoken form (slashes become spaces)
-- [ ] Include audio tags for emotional content when appropriate
 - [ ] Handle quota exceeded errors (429 status)
 - [ ] Provide voice selection UI with inline preview button
 - [ ] Buffer complete audio before playback (avoid MP3 chunk artifacts)
-- [ ] Auto-scroll to bottom after recommendations appear
+- [ ] Clear loading state before audio prefetch starts
 
 ---
 
@@ -1783,7 +1801,7 @@ WHERE p.user_id = $1;
 
 | Tab | Features |
 |-----|----------|
-| **AI Assistant** | Claude streaming, ElevenLabs Eleven v3 TTS (42 voices, audio tags), speech recognition, localStorage history |
+| **AI Assistant** | Claude streaming, ElevenLabs Turbo v2.5 TTS (42 voices, low-latency), immediate text streaming, speech recognition, localStorage history |
 | **Messages** | Supabase real-time, typing indicators, E2EE indicators, unread badges |
 
 ```typescript
@@ -1837,7 +1855,7 @@ TanStack Virtual-based message list for efficient rendering of large conversatio
 
 - **6,953 chunks** (docs + relationships + project knowledge + resources + code examples + Ask AI context)
 - **7,695 indexed terms** for TF-IDF search
-- **980 chunks (14.1%)** enriched with ElevenLabs v3 audio tags for expressive TTS
+- **980 chunks (14.1%)** enriched with audio tags for expressive TTS (compatible with Turbo v2.5)
 - Built at compile time via `scripts/generate-rag-index.cjs`
 - Includes 147 doc-resource + 3,087 resource-resource relationships for cross-linking
 - Audio tag distribution: `[curious]` 423, `[excited]` 274, `[thoughtful]` 258, `[happy]` 49, `[mischievously]` 19, `[dramatically]` 17

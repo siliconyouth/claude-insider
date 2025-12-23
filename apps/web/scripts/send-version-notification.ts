@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.12.2 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.12.3 notification to all opted-in users...\n");
 
-  const version = "1.12.2";
-  const title = "Claude Insider v1.12.2 - ElevenLabs Eleven v3 TTS & Audio Tags";
+  const version = "1.12.3";
+  const title = "Claude Insider v1.12.3 - ElevenLabs Turbo v2.5 & Immediate Streaming";
   const message =
-    "🎤 ElevenLabs Eleven v3 for emotionally expressive speech • 🎭 Audio tags for natural reading • 💬 Concise 1-2 sentence responses • ⚡ Faster TTS with smaller chunks";
+    "⚡ ElevenLabs Turbo v2.5 for 3x faster TTS • 📝 Immediate text streaming without buffering • 💻 Code blocks now readable by TTS • 🔧 Fixed loading indicator during audio prefetch";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.12.2";
+const APP_VERSION = "1.12.3";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,18 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.12.3",
+    date: "2025-12-23",
+    type: "patch",
+    highlights: [
+      "⚡ ElevenLabs Turbo v2.5: 3x faster TTS with optimized streaming latency",
+      "📝 Immediate Text Streaming: Text appears instantly without buffering",
+      "💻 Code Block TTS: CLI flags and code now read naturally (dash g, dash dash global)",
+      "🔧 Loading Fix: No more loading indicator flicker during audio prefetch",
+      "📚 MANDATORY TTS Guidelines: All TTS usage must use Turbo v2.5 model",
+    ],
+  },
   {
     version: "1.12.2",
     date: "2025-12-23",

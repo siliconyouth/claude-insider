@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.3] - 2025-12-23
+### ElevenLabs Turbo v2.5 & Immediate Text Streaming
+- **ElevenLabs Turbo v2.5**: Switched from Eleven v3 to Turbo v2.5 for 3x faster speech generation
+  - Optimized streaming latency setting (level 3 out of 4)
+  - Lower bitrate audio format (22kHz/32kbps) for faster transfer
+  - 32 language support with natural prosody
+- **Immediate Text Streaming**: Text now streams instantly without buffering
+  - No waiting for audio to load or prefetch
+  - Audio plays in parallel when ready
+  - Smoother user experience during long responses
+- **Code Block TTS Support**: Code blocks now converted to speakable text
+  - CLI flags converted: `-g` → "dash g", `--global` → "dash dash global"
+  - Package names with @ symbol read naturally
+  - Forward slashes and underscores handled properly
+- **Loading Indicator Fix**: Prevented loading indicator from appearing during audio prefetch
+  - Loading state cleared immediately after message added
+  - No more jarring loading dots between response and recommendations
+- **MANDATORY TTS Guidelines**: Updated CLAUDE.md with Turbo v2.5 requirements
+  - All TTS usage across website must use Turbo v2.5
+  - System prompts updated with new model configuration
+
+---
+
 ## [1.12.2] - 2025-12-23
 ### ElevenLabs v3 TTS Optimization & Concise Responses
 - **Parallel Audio Prefetch**: Audio fetch starts at 300 chars while Claude continues streaming
