@@ -211,17 +211,17 @@ export default function HomePage() {
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
       <Header activePage="home" />
 
-      {/* Hero Section - Stripe-style left-aligned with device mockups */}
+      {/* Hero Section - Full viewport height, Stripe-style left-aligned with device mockups */}
       <main id="main-content">
-        <div className="relative isolate overflow-hidden min-h-[700px] lg:min-h-[800px]">
+        <div className="relative isolate overflow-hidden min-h-[calc(100vh-4rem)] min-h-[calc(100dvh-4rem)] flex flex-col">
           {/* Animated lens flare background */}
           <HeroBackground className="-z-10" />
 
           {/* Subtle dot pattern overlay - consistent visibility in both themes */}
           <div className="absolute inset-0 -z-10 pattern-dots opacity-[0.15] dark:opacity-[0.08]" />
 
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 flex-1 flex items-center w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center w-full">
               {/* Left side - Text content - prioritized for LCP */}
               <div className="animate-fade-in text-left" style={{ contentVisibility: 'visible', containIntrinsicSize: '0 500px' }}>
                 {/* Badge */}
@@ -322,6 +322,14 @@ export default function HomePage() {
                 <DeviceShowcase className="w-full" />
               </div>
             </div>
+          </div>
+
+          {/* Scroll indicator - hints more content below */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce hidden sm:flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+            <span className="text-xs font-medium">Scroll to explore</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </div>
         </div>
 
