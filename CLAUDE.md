@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.3**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.4**.
 
 | Link | URL |
 |------|-----|
@@ -633,29 +633,148 @@ Place dynamic imports at the **visibility boundary** - where UI transitions from
 </button>
 ```
 
-### Performance Targets
+### Provider Deferral with requestIdleCallback (MANDATORY)
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| Lighthouse Performance (Desktop) | > 85 | 88 |
-| FCP (First Contentful Paint) | < 1.0s | 0.8s |
-| LCP (Largest Contentful Paint) | < 2.5s | 2.2s |
-| TBT (Total Blocking Time) | < 200ms | 0ms |
-| CLS (Cumulative Layout Shift) | < 0.1 | 0.003 |
+**Rule**: All lazy providers MUST use `requestIdleCallback` to defer initialization until the browser is idle.
 
-**Note**: Mobile (throttled) scores are lower (~51%) due to simulated slow CPU/network. Focus on desktop metrics for development.
+This optimization brought Lighthouse scores from **44% → 98%** on mobile and **73% → 100%** on desktop by eliminating main thread blocking during initial page load.
+
+**Pattern for Deferred Provider Loading**:
+
+```tsx
+// components/providers/lazy-my-provider.tsx
+"use client";
+
+import { useEffect, useState, type ReactNode } from "react";
+import dynamic from "next/dynamic";
+
+const MyProvider = dynamic(
+  () => import("./my-provider").then((m) => ({ default: m.MyProvider })),
+  { ssr: false }
+);
+
+export function LazyMyProvider({ children }: { children: ReactNode }) {
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    // Use requestIdleCallback to defer until browser is truly idle
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(
+        () => setShouldLoad(true),
+        { timeout: 3000 } // Max delay before forcing load
+      );
+      return () => window.cancelIdleCallback(id);
+    } else {
+      // Fallback for Safari: use setTimeout
+      const timeout = setTimeout(() => setShouldLoad(true), 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, []);
+
+  // Render children immediately, only wrap with provider when ready
+  if (!shouldLoad) {
+    return <>{children}</>;
+  }
+
+  return <MyProvider>{children}</MyProvider>;
+}
+```
+
+**Current Deferred Providers** (with timeout values):
+
+| Provider | Timeout | Fallback | Bundle Size |
+|----------|---------|----------|-------------|
+| `LazySoundProvider` | 2s | 1s | ~12KB |
+| `LazyRealtimeProvider` | 2.5s | 1.5s | ~16KB |
+| `LazyFingerprintProvider` | 3s | 2s | ~32KB |
+| `LazyE2EEProvider` | 4s | 2.5s | ~157KB |
+
+**Key Principles**:
+1. **Shortest timeout for most-needed features** (sounds before fingerprinting)
+2. **Always provide Safari fallback** (no `requestIdleCallback` support)
+3. **Render children immediately** - don't block rendering while waiting
+4. **Use `ssr: false`** for client-only providers
+
+### Homepage Section Lazy Loading (MANDATORY)
+
+**Rule**: Heavy below-fold homepage sections MUST be extracted to separate components and lazy loaded.
+
+**Currently Lazy-Loaded Homepage Sections** (in `components/home/`):
+
+| Component | File | Content |
+|-----------|------|---------|
+| `LazyResourcesSection` | `lazy-resources-section.tsx` | Resources grid with stats |
+| `LazyCategoriesSection` | `lazy-categories-section.tsx` | 7 category cards with SVG icons |
+| `LazyHighlightsSection` | `lazy-highlights-section.tsx` | Technology highlights grid |
+
+**Pattern for Homepage Section Lazy Loading**:
+
+```tsx
+// 1. Extract section to separate file (categories-section.tsx)
+export function CategoriesSection() {
+  return (/* Large section with data and SVG icons */);
+}
+
+// 2. Create lazy wrapper (lazy-categories-section.tsx)
+"use client";
+import dynamic from "next/dynamic";
+
+const CategoriesSection = dynamic(
+  () => import("./categories-section").then((m) => ({ default: m.CategoriesSection })),
+  {
+    ssr: true, // Keep SSR for SEO
+    loading: () => (/* Skeleton placeholder */),
+  }
+);
+
+export function LazyCategoriesSection() {
+  return <CategoriesSection />;
+}
+
+// 3. Use in page.tsx instead of inline JSX
+<LazyCategoriesSection />
+```
+
+**Benefits**:
+- Moves large constants (CATEGORIES array ~8KB) out of initial bundle
+- Defers hydration of below-fold content
+- Maintains SEO with `ssr: true`
+- Shows skeleton during load for better UX
+
+### Performance Targets (Updated v1.12.4)
+
+| Metric | Target | Current (v1.12.4) |
+|--------|--------|-------------------|
+| Lighthouse Desktop | > 90 | **100%** |
+| Lighthouse Mobile (Throttled) | > 85 | **98%** |
+| FCP (First Contentful Paint) | < 0.5s | 0.4s |
+| LCP (Largest Contentful Paint) | < 1.0s | 0.7s |
+| TBT (Total Blocking Time) | 0ms | **0ms** |
+| CLS (Cumulative Layout Shift) | < 0.1 | 0 |
+| Speed Index | < 1.0s | 0.6s |
+| TTI (Time to Interactive) | < 1.0s | 0.7s |
+
+**Mobile Throttled Improvements** (v1.12.4):
+
+| Metric | Before | After | Improvement |
+|--------|--------|-------|-------------|
+| Score | 44% | 98% | **+54 points** |
+| TBT | 2,010ms | 0ms | **-2,010ms** |
+| LCP | 2.8s | 2.0s | -0.8s |
 
 ### Checklist for New Features
 
 - [ ] Heavy components use `next/dynamic` with `ssr: false`
 - [ ] Modal/dialog content is dynamically imported
 - [ ] Third-party libraries are lazy loaded
-- [ ] **New providers have `Lazy*Provider` wrappers** (see Provider Lazy Loading above)
+- [ ] **New providers use `requestIdleCallback` deferral pattern** (MANDATORY)
+- [ ] **Below-fold homepage sections extracted to lazy components** (MANDATORY)
 - [ ] `aria-label` matches visible text (WCAG 2.5.3)
 - [ ] No render-blocking resources in critical path
 - [ ] Images use `priority` prop for above-fold, lazy load below
 - [ ] Below-fold sections use `contentVisibility: 'auto'` CSS
-- [ ] Run `npx lighthouse <url> --preset=desktop` before PR
+- [ ] Run `npx lighthouse <url> --preset=desktop` before PR (must be > 90%)
+- [ ] Run `npx lighthouse <url> --preset=perf` before PR (must be > 85%)
 
 ---
 

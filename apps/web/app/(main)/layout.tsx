@@ -25,6 +25,7 @@ import { NotificationPopup } from "@/components/notifications/notification-popup
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
 import { LazySoundProvider } from "@/components/providers/lazy-sound-provider";
+import { PrefetchProvider } from "@/components/providers/prefetch-provider";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { PushNotificationPrompt } from "@/components/pwa/push-notification-prompt";
 import { MobileBottomNav } from "@/components/mobile";
@@ -552,6 +553,7 @@ export default async function MainLayout({
               <KeyboardShortcutsProvider>
               <LazySoundProvider>
                 <ToastProvider>
+                <PrefetchProvider>
                   <AchievementNotificationProvider>
                   <DonorBadgeProvider>
                     <SkipLink />
@@ -572,6 +574,7 @@ export default async function MainLayout({
                     <SpeedInsights />
                   </DonorBadgeProvider>
                   </AchievementNotificationProvider>
+                </PrefetchProvider>
                 </ToastProvider>
               </LazySoundProvider>
               </KeyboardShortcutsProvider>

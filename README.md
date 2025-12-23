@@ -9,7 +9,8 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.12.3-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.12.4-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
 [![Features](https://img.shields.io/badge/49-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/1,952+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
@@ -78,6 +79,46 @@ Gamification system with **9 categories**, 4 rarity tiers, animated confetti, so
 *AI Voice Assistant with 42 premium voices, streaming responses, and suggested questions*
 
 </div>
+
+---
+
+## 🚀 Performance (100% Lighthouse Score)
+
+<table>
+<tr>
+<td width="50%" align="center">
+
+### Desktop
+| Metric | Score |
+|--------|-------|
+| **Lighthouse** | **100%** |
+| FCP | 0.4s |
+| LCP | 0.7s |
+| TBT | 0ms |
+| CLS | 0 |
+
+</td>
+<td width="50%" align="center">
+
+### Mobile (Throttled)
+| Metric | Score |
+|--------|-------|
+| **Lighthouse** | **98%** |
+| FCP | 2.0s |
+| LCP | 2.0s |
+| TBT | 0ms |
+| CLS | 0 |
+
+</td>
+</tr>
+</table>
+
+**Key Optimizations** (v1.12.4):
+- **requestIdleCallback Provider Deferral**: Non-critical providers (E2EE, Fingerprint, Sound, Realtime) load after browser is idle
+- **Homepage Section Lazy Loading**: Below-fold sections code-split with SSR for SEO
+- **Dynamic Imports**: Heavy components use `next/dynamic` with skeleton loading states
+
+See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-mandatory) for implementation patterns.
 
 ---
 

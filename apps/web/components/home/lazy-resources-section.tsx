@@ -8,6 +8,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { ResourcesErrorBoundary } from "./resources-error-boundary";
 
 // Lazy load the resources section - it's below the fold
 const ResourcesSection = dynamic(
@@ -39,5 +40,9 @@ const ResourcesSection = dynamic(
 );
 
 export function LazyResourcesSection() {
-  return <ResourcesSection />;
+  return (
+    <ResourcesErrorBoundary>
+      <ResourcesSection />
+    </ResourcesErrorBoundary>
+  );
 }

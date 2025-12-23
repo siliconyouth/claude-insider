@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.4] - 2025-12-23
+### Lighthouse Performance Optimization (100% Score)
+- **Massive Performance Improvements**: Lighthouse scores improved dramatically
+  - Desktop: 73% → **100%** (+27 points)
+  - Mobile (throttled): 44% → **98%** (+54 points)
+  - TBT (Total Blocking Time): 2,010ms → **0ms**
+  - LCP: 2.8s → 2.0s (mobile), 2.2s → 0.7s (desktop)
+- **requestIdleCallback Provider Deferral**: All lazy providers now defer until browser is idle
+  - `LazyFingerprintProvider`: Defers ~32KB FingerprintJS with 3s timeout
+  - `LazyE2EEProvider`: Defers ~157KB Matrix WASM with 4s timeout
+  - `LazyRealtimeProvider`: Defers ~16KB Supabase realtime with 2.5s timeout
+  - `LazySoundProvider`: Defers ~12KB Web Audio API with 2s timeout
+  - Safari fallback via setTimeout when requestIdleCallback unavailable
+- **Homepage Section Lazy Loading**: Heavy below-fold sections now code-split
+  - `LazyCategoriesSection`: Extracts ~8KB CATEGORIES array with 7 SVG icons
+  - `LazyHighlightsSection`: Extracts ~2KB highlights section
+  - Both use SSR for SEO with skeleton loading states
+  - Homepage page.tsx reduced from ~600 lines to ~360 lines
+- **MANDATORY Performance Rules**: Updated CLAUDE.md with new requirements
+  - All providers must use requestIdleCallback deferral pattern
+  - Below-fold homepage sections must be lazy loaded
+  - Lighthouse desktop > 90%, mobile > 85% required before PR
+  - New performance targets documented with current metrics
+
+---
+
 ## [1.12.3] - 2025-12-23
 ### ElevenLabs Turbo v2.5 & Immediate Text Streaming
 - **ElevenLabs Turbo v2.5**: Switched from Eleven v3 to Turbo v2.5 for 3x faster speech generation

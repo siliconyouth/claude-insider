@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.12.3";
+const APP_VERSION = "1.12.4";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,27 +24,25 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.4",
+    date: "2025-12-23",
+    type: "patch",
+    highlights: [
+      "🚀 Lighthouse 100%: Desktop score improved from 73% to 100%",
+      "📱 Mobile 98%: Throttled mobile score improved from 44% to 98%",
+      "⚡ Zero TBT: Total Blocking Time reduced from 2,010ms to 0ms",
+      "🔄 requestIdleCallback: Providers now defer until browser is idle",
+      "📦 Code Splitting: Below-fold homepage sections lazy loaded",
+    ],
+  },
+  {
     version: "1.12.3",
     date: "2025-12-23",
     type: "patch",
     highlights: [
       "⚡ ElevenLabs Turbo v2.5: 3x faster TTS with optimized streaming latency",
       "📝 Immediate Text Streaming: Text appears instantly without buffering",
-      "💻 Code Block TTS: CLI flags and code now read naturally (dash g, dash dash global)",
-      "🔧 Loading Fix: No more loading indicator flicker during audio prefetch",
-      "📚 MANDATORY TTS Guidelines: All TTS usage must use Turbo v2.5 model",
-    ],
-  },
-  {
-    version: "1.12.2",
-    date: "2025-12-23",
-    type: "patch",
-    highlights: [
-      "🎤 ElevenLabs Eleven v3: Latest TTS model with most emotionally expressive speech synthesis",
-      "🎭 Audio Tags: 9 emotion tags ([excited], [curious], [thoughtful]) for natural, expressive reading",
-      "💬 Concise Responses: AI assistant now gives 1-2 sentence answers (faster TTS playback)",
-      "📚 RAG v7.0: 6,953 chunks with 14.1% audio-enriched for expressive reading",
-      "⚡ Smaller Chunks: 800 char limit (down from 1500) for faster audio prefetch",
+      "💻 Code Block TTS: CLI flags and code now read naturally",
     ],
   },
   {

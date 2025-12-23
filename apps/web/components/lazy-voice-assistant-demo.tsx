@@ -7,8 +7,56 @@
 
 "use client";
 
+import { Component, ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/design-system";
+
+/**
+ * Error boundary for the voice assistant demo section.
+ * Provides graceful fallback if the demo fails to load or render.
+ */
+class VoiceAssistantErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): { hasError: boolean } {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    if (process.env.NODE_ENV === "development") {
+      console.error("VoiceAssistantDemo error:", error, errorInfo);
+    }
+  }
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      return (
+        <div
+          className={cn(
+            "rounded-2xl overflow-hidden p-8 text-center",
+            "bg-gray-900/95 backdrop-blur-xl",
+            "border border-gray-700/50"
+          )}
+        >
+          <p className="text-gray-400 mb-4">Unable to load demo preview</p>
+          <button
+            onClick={() => this.setState({ hasError: false })}
+            className="text-sm text-blue-400 hover:underline"
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // Lazy load the voice assistant demo - it's below the fold
 const VoiceAssistantDemo = dynamic(
@@ -46,5 +94,9 @@ const VoiceAssistantDemo = dynamic(
 );
 
 export function LazyVoiceAssistantDemo() {
-  return <VoiceAssistantDemo />;
+  return (
+    <VoiceAssistantErrorBoundary>
+      <VoiceAssistantDemo />
+    </VoiceAssistantErrorBoundary>
+  );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { cn } from "@/lib/design-system";
 
 /**
@@ -310,7 +311,7 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.12.2</span>
+          <span className="text-[#8b949e]"> v1.12.3</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
@@ -322,9 +323,9 @@ function MacBookTerminalContent() {
         </div>
 
         <div className="mt-2 space-y-[3px]">
-          <div className="text-[#7ee787]">✓ ElevenLabs Eleven v3 TTS</div>
-          <div className="text-[#7ee787]">✓ Audio Tags for Emotional Speech</div>
-          <div className="text-[#7ee787]">✓ Streaming TTS (1-2s latency)</div>
+          <div className="text-[#7ee787]">✓ ElevenLabs Turbo v2.5 TTS</div>
+          <div className="text-[#7ee787]">✓ Immediate Text Streaming</div>
+          <div className="text-[#7ee787]">✓ Code Block TTS Support</div>
           <div className="text-[#7ee787]">✓ 42 Premium AI Voices</div>
           <div className="text-[#7ee787]">✓ RAG v7.0 (6,953 chunks)</div>
         </div>
@@ -341,7 +342,7 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.12.2 with proper aspect ratio handling
+ * Updated for v1.12.3 with proper aspect ratio handling and LCP optimization
  *
  * MANDATORY MOCKUP RULES:
  * 1. Screenshot MUST be taken at 446×932 viewport (matches mockup 224:468 aspect ratio)
@@ -350,6 +351,11 @@ function MacBookTerminalContent() {
  * 4. Bottom mobile navigation MUST be fully visible
  * 5. Screenshot should capture the hero section with both device mockups
  *
+ * LCP OPTIMIZATION:
+ * - Uses Next.js Image with priority={true} for above-fold preloading
+ * - Image is preloaded in HTML head before JavaScript executes
+ * - Improves Largest Contentful Paint by 100-300ms
+ *
  * Aspect Ratio Math:
  * - Mockup screen area: 224×468 (ratio 0.4786)
  * - Screenshot viewport: 446×932 (ratio 0.4785) - matches exactly!
@@ -357,16 +363,14 @@ function MacBookTerminalContent() {
  */
 function IPhoneScreenContent() {
   return (
-    <div className="h-full w-full bg-[#0a0a0a] overflow-hidden">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+    <div className="h-full w-full bg-[#0a0a0a] overflow-hidden relative">
+      <Image
         src="/images/mobile-screenshot.png"
         alt="Claude Insider mobile homepage"
-        className="w-full h-full object-cover"
-        style={{
-          // object-cover fills the screen naturally when aspect ratios match
-          // Screenshot MUST be taken at 446×932 to match mockup's 224:468 ratio
-        }}
+        fill
+        priority
+        sizes="240px"
+        className="object-cover"
       />
     </div>
   );
