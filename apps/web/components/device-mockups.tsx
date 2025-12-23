@@ -341,20 +341,31 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.11.0 with footer redesign (flex + grid hybrid)
+ * Updated for v1.11.1 with proper aspect ratio handling
+ *
+ * MANDATORY MOCKUP RULES:
+ * 1. Screenshot MUST be taken at 446×932 viewport (matches mockup 224:468 aspect ratio)
+ * 2. ALWAYS use object-cover to fill the screen naturally
+ * 3. Header with logo/icons MUST be visible below Dynamic Island
+ * 4. Bottom mobile navigation MUST be fully visible
+ * 5. Screenshot should capture the hero section with both device mockups
+ *
+ * Aspect Ratio Math:
+ * - Mockup screen area: 224×468 (ratio 0.4786)
+ * - Screenshot viewport: 446×932 (ratio 0.4785) - matches exactly!
+ * - With matching aspect ratios, object-cover fits perfectly without cropping
  */
 function IPhoneScreenContent() {
   return (
-    <div className="h-full w-full bg-[#0a0a0a] overflow-hidden flex items-center justify-center">
+    <div className="h-full w-full bg-[#0a0a0a] overflow-hidden">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/mobile-screenshot.png"
         alt="Claude Insider mobile homepage"
-        className="w-full h-full object-contain"
+        className="w-full h-full object-cover"
         style={{
-          // Use object-contain to show full screenshot without cropping
-          // The slight aspect ratio difference creates minimal letterboxing
-          // which blends with the phone's black screen background
+          // object-cover fills the screen naturally when aspect ratios match
+          // Screenshot MUST be taken at 446×932 to match mockup's 224:468 ratio
         }}
       />
     </div>

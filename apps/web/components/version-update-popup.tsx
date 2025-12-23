@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.11.0";
+const APP_VERSION = "1.11.1";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,19 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.11.1",
+    date: "2025-12-23",
+    type: "patch",
+    highlights: [
+      "📱 Full Viewport Hero: Hero section now covers 100% viewport on desktop and mobile",
+      "🖥️ Device Mockups: New MANDATORY screenshot rules (446×932 viewport, object-cover)",
+      "⌨️ Keyboard Shortcut Styling: AI Assistant tooltip uses styled ⌘. badge like search bar",
+      "📚 CLAUDE.md: New 'Device Mockups (MANDATORY)' section with aspect ratio math",
+      "🎯 iPhone Mockup: Proper aspect ratio matching eliminates cropping issues",
+      "📖 Documentation: Updated system prompts and RAG index with hero section info",
+    ],
+  },
   {
     version: "1.11.0",
     date: "2025-12-23",

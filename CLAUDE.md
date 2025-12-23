@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.11.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.11.1**.
 
 | Link | URL |
 |------|-----|
@@ -40,7 +40,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.11.0**.
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 10. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
-11. [Component Patterns](#component-patterns) - Buttons, cards, modals, header/footer navigation (MANDATORY)
+11. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
 12. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
 13. [Internationalization](#internationalization-i18n) - 18 languages
 14. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
@@ -1060,6 +1060,68 @@ import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 ```
 
 **Integrated in**: Leaderboard, ReviewCard, UserSearch, Followers/Following lists, ConversationView
+
+### Device Mockups (MANDATORY)
+
+**Location**: `components/device-mockups.tsx`
+
+The homepage hero section features photorealistic device mockups displaying live screenshots. All mockup usage MUST follow these rules:
+
+#### Components
+
+| Component | Description | Screen Area |
+|-----------|-------------|-------------|
+| `MacBookMockup` | M3 Pro style laptop with terminal content | 91.4% × 82% of SVG |
+| `IPhone17ProMax` | Natural Titanium phone with Dynamic Island | 224×468 in SVG coordinates |
+| `DeviceShowcase` | Combined display for hero section | Both devices with ambient glow |
+
+#### MANDATORY Screenshot Rules for iPhone Mockup
+
+1. **Aspect Ratio Matching**: Screenshot viewport MUST be **446×932** pixels
+   - Mockup screen: 224×468 (ratio 0.4786)
+   - Viewport: 446×932 (ratio 0.4785) - matches exactly!
+   - This ensures `object-cover` fits perfectly without cropping
+
+2. **Always Use `object-cover`**: Never use `object-contain`
+   - With matched aspect ratios, `object-cover` fills naturally
+   - `object-contain` creates letterboxing which looks unnatural
+
+3. **Required Visible Elements**:
+   - Header with logo ("Ci Claude Insider") and icons below Dynamic Island
+   - Hero section content ("Master Claude AI development")
+   - Bottom mobile navigation (Home, Docs, Resources, Chat, Sign In)
+
+4. **Screenshot Source**: Always capture from live production site
+   ```bash
+   # Playwright command to capture at correct aspect ratio
+   await page.setViewportSize({ width: 446, height: 932 });
+   await page.goto('https://www.claudeinsider.com');
+   await page.screenshot({ path: 'mobile-screenshot.png' });
+   ```
+
+5. **File Location**: `public/images/mobile-screenshot.png`
+
+#### Usage Example
+
+```tsx
+import { DeviceShowcase, IPhone17ProMax, MacBookMockup } from "@/components/device-mockups";
+
+// Hero section - use combined showcase
+<DeviceShowcase className="min-h-[520px] lg:min-h-[600px]" />
+
+// Individual mockups with custom content
+<MacBookMockup>{/* Terminal or custom content */}</MacBookMockup>
+<IPhone17ProMax>{/* Custom screen content */}</IPhone17ProMax>
+```
+
+#### Checklist for Mockup Updates
+
+- [ ] Screenshot taken at 446×932 viewport (not 430×932!)
+- [ ] Captured from live site (www.claudeinsider.com)
+- [ ] Header fully visible below Dynamic Island
+- [ ] Bottom navigation fully visible
+- [ ] Using `object-cover` (not `object-contain`)
+- [ ] File saved to `public/images/mobile-screenshot.png`
 
 ### Header & Footer Navigation (MANDATORY)
 

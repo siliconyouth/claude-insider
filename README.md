@@ -9,7 +9,7 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.11.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.11.1-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Features](https://img.shields.io/badge/49-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/1,952+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
@@ -44,26 +44,26 @@
 <tr>
 <td width="50%">
 
+### Stunning Hero Section
+Full-viewport landing with **photorealistic device mockups** (MacBook Pro M3 + iPhone 17 Pro Max), animated gradient orbs, and live terminal demo.
+
 ### AI Voice Assistant
 Chat with Claude AI using voice or text. **42 premium ElevenLabs voices** with streaming TTS and Web Speech API recognition.
 
 ### 34 Documentation Pages
 Comprehensive guides across **7 categories**: Getting Started, Configuration, API Reference, Integrations, Tutorials, and more.
 
-### 1,952+ Curated Resources
-Tools, MCP servers, SDKs, and community resources across **10 categories** with GitHub integration and AI-enhanced metadata.
-
 </td>
 <td width="50%">
+
+### 1,952+ Curated Resources
+Tools, MCP servers, SDKs, and community resources across **10 categories** with GitHub integration and AI-enhanced metadata.
 
 ### Enterprise Security
 **End-to-end encryption** (Matrix Olm/Megolm), passkeys/WebAuthn, multi-device 2FA, honeypot bot detection, and trust scoring.
 
 ### 50+ Achievements
 Gamification system with **9 categories**, 4 rarity tiers, animated confetti, sound effects, and leaderboards.
-
-### 18 Languages
-Full internationalization with locale detection and seamless language switching across Americas, Europe, and Asia.
 
 </td>
 </tr>

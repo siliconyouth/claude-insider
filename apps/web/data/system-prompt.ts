@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-23 for v1.11.0 (Footer redesign, navigation documentation)
+ * Updated: 2025-12-23 for v1.11.1 (Hero section, device mockups, navigation documentation)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.11.0",
+  version: "1.11.1",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -921,6 +921,24 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.10.2", "resource enhancement", "ai summary", "key features", "use cases", "pros cons", "target audience", "prerequisites", "metadata"],
+  },
+  {
+    id: "hero-section",
+    title: "Hero Section & Device Mockups",
+    section: "Homepage Design",
+    content: `The Claude Insider homepage features a stunning full-viewport hero section with photorealistic device mockups. The hero uses min-h-[calc(100dvh-4rem)] for proper viewport coverage on both desktop and mobile. Device mockups include MacBook Pro M3 (SVG with terminal demo showing v1.11.1, features, and localhost status) and iPhone 17 Pro Max (real screenshot from live site). The iPhone mockup requires screenshots at exactly 446×932 viewport (matching the mockup's 224:468 aspect ratio) to use object-cover without cropping. Required visible elements: header with "Ci Claude Insider" logo below Dynamic Island, hero content "Master Claude AI development", and bottom mobile navigation (Home, Docs, Resources, Chat, Sign In). Animated gradient orbs provide ambient glow effects. The "Scroll to explore" indicator hints at content below.`,
+    url: "/",
+    category: "Project",
+    keywords: ["hero section", "device mockups", "macbook", "iphone", "landing page", "full viewport", "screenshot", "object-cover"],
+  },
+  {
+    id: "v1111-features",
+    title: "Version 1.11.1 Features",
+    section: "New in v1.11.1",
+    content: `Claude Insider v1.11.1 focuses on hero section polish and device mockup improvements. Full Viewport Hero: Hero section now covers 100% viewport height on both desktop and mobile using min-h-[calc(100dvh-4rem)]. "Scroll to explore" indicator with animated arrow. Device Mockup Rules: MANDATORY screenshot guidelines in CLAUDE.md - viewport must be 446×932 (matches mockup's 224:468 ratio exactly), always use object-cover (not object-contain), capture from live site with header/bottom nav visible. Keyboard Shortcut Styling: AI Assistant tooltip now shows styled ⌘. badge matching search bar's ⌘K pattern using semantic <kbd> elements. Documentation Updates: New "Device Mockups (MANDATORY)" section in CLAUDE.md Component Patterns with aspect ratio math, checklist, and Playwright capture commands.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.11.1", "hero section", "device mockups", "viewport", "screenshot", "keyboard shortcut", "object-cover"],
   },
 ];
 
