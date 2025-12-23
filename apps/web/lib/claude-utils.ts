@@ -45,6 +45,11 @@ export function markdownToDisplayText(text: string): string {
 /**
  * Convert markdown text to speakable text for TTS.
  * Removes code blocks, converts headers to spoken form, etc.
+ *
+ * FLUENCY OPTIMIZATION (v1.12.0):
+ * - Use spaces instead of periods for paragraph breaks to avoid TTS pauses
+ * - ElevenLabs v3 naturally handles sentence flow without extra punctuation
+ * - Let the AI's natural punctuation control pauses
  */
 export function markdownToSpeakableText(text: string): string {
   return text
@@ -52,8 +57,8 @@ export function markdownToSpeakableText(text: string): string {
     .replace(/```[\w]*\n?([\s\S]*?)```/g, "")
     // Remove inline code backticks
     .replace(/`([^`]+)`/g, "$1")
-    // Convert headers to spoken form
-    .replace(/^#{1,6}\s+(.+)$/gm, "$1.")
+    // Convert headers to spoken form - use comma for light pause, not period
+    .replace(/^#{1,6}\s+(.+)$/gm, "$1,")
     // Remove bold markers
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/__([^_]+)__/g, "$1")
@@ -64,13 +69,14 @@ export function markdownToSpeakableText(text: string): string {
     .replace(/^>\s?(.*)$/gm, "$1")
     // Remove horizontal rules
     .replace(/^[-*_]{3,}$/gm, "")
-    // Convert list items to natural speech
+    // Convert list items to natural speech - add "and" for flow
     .replace(/^[-*•]\s+/gm, "")
     .replace(/^\d+\.\s+/gm, "")
     // Remove links but keep text
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    // Clean up excessive whitespace
-    .replace(/\n{2,}/g, ". ")
+    // FLUENCY: Use single space for paragraph breaks instead of periods
+    // This lets ElevenLabs v3 maintain natural flow without artificial pauses
+    .replace(/\n{2,}/g, " ")
     .replace(/\n/g, " ")
     .replace(/\s{2,}/g, " ")
     .trim();

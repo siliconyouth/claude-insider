@@ -41,9 +41,6 @@ import {
 import { useAnnouncer } from "@/hooks/use-aria-live";
 import { triggerCreditsRefresh } from "@/hooks/use-api-credits";
 import {
-  ChatMessage,
-  ChatMessageLoading,
-  ChatMessageStreaming,
   ChatMessageAction,
 } from "@/components/chat/chat-message";
 import { VirtualizedAIMessageList } from "@/components/messaging/virtualized-ai-message-list";
@@ -145,7 +142,7 @@ export function AIAssistantTab() {
   const pathname = usePathname();
 
   // Sound effects for AI chat
-  const { playMessageSent, playMessageReceived, playComplete, playToggleOn, playToggleOff } = useSound();
+  const { playMessageSent, playMessageReceived, playToggleOn, playToggleOff } = useSound();
 
   // Core state
   const [messages, setMessages] = useState<Message[]>([]);
@@ -311,87 +308,62 @@ export function AIAssistantTab() {
   // ============================================================================
 
   /**
-   * Split text into natural sentences for TTS streaming.
-   * Avoids splitting on technical dots (file extensions, URLs, abbreviations).
+   * Split text into natural chunks for TTS streaming.
+   *
+   * FLUENCY OPTIMIZATION (v1.12.0):
+   * Instead of splitting into individual sentences (which causes pauses between
+   * API calls), we now batch text into larger paragraphs/chunks. This lets
+   * ElevenLabs v3 handle internal pacing naturally, resulting in much smoother
+   * speech without artificial gaps.
+   *
+   * Chunk strategy:
+   * - Short responses (<500 chars): Send as single chunk for seamless playback
+   * - Medium responses: Split on paragraph breaks only (double newlines)
+   * - Long responses (>2000 chars): Split on paragraphs, max ~1500 chars per chunk
    */
-  const splitIntoSentences = useCallback((text: string): string[] => {
-    const sentences: string[] = [];
-    let current = "";
-    let i = 0;
+  const splitIntoChunks = useCallback((text: string): string[] => {
+    const cleanText = text.trim();
 
-    const pushCurrent = () => {
-      const trimmed = current.trim();
-      if (trimmed.length > 0) {
-        sentences.push(trimmed);
-      }
-      current = "";
-    };
-
-    while (i < text.length) {
-      const char = text[i];
-      const nextChar = text[i + 1];
-
-      // Paragraph breaks create natural pauses
-      if (char === "\n" && nextChar === "\n") {
-        current += char;
-        pushCurrent();
-        while (text[i + 1] === "\n") i++;
-        i++;
-        continue;
-      }
-
-      // List items start new sentences
-      if (char === "\n") {
-        const afterNewline = text.slice(i + 1, i + 5);
-        const isListItem = /^(\d+[.)]\s|[-*•]\s)/.test(afterNewline);
-        if (isListItem && current.trim().length > 0) {
-          pushCurrent();
-        }
-        current += char;
-        i++;
-        continue;
-      }
-
-      current += char;
-
-      // Colon followed by newline (introduces list)
-      if (char === ":" && nextChar === "\n") {
-        pushCurrent();
-        i++;
-        continue;
-      }
-
-      // Check for sentence-ending punctuation
-      if (char === "." || char === "!" || char === "?") {
-        // Skip dots that are NOT sentence endings
-        const isFileExtension = /\.(md|ts|tsx|js|jsx|json|py|go|rs|yaml|yml|env|css|html|xml|txt|sh|bash|toml|sql)$/i.test(current);
-        const isDomain = /\.(com|org|io|dev|ai|net|edu|gov|co|app)$/i.test(current);
-        const isAbbreviation = /(e\.g|i\.e|etc|vs|mr|mrs|dr|sr|jr)\.$/i.test(current);
-        const isVersionOrNumber = /\d\.$/.test(current) || /v\d+\.$/.test(current.toLowerCase());
-        const isPath = current.includes("/") && !nextChar?.match(/\s/);
-        const isCodeRef = /[a-z_]\.[a-z_]/i.test(current.slice(-5));
-        const hasNoSpaceAfter = nextChar && !nextChar.match(/\s/) && nextChar !== undefined;
-
-        const isRealSentenceEnd =
-          !isFileExtension &&
-          !isDomain &&
-          !isAbbreviation &&
-          !isVersionOrNumber &&
-          !isPath &&
-          !isCodeRef &&
-          !hasNoSpaceAfter &&
-          (nextChar === undefined || nextChar === " " || nextChar === "\n");
-
-        if (isRealSentenceEnd) {
-          while (text[i + 1] === " ") i++;
-          pushCurrent();
-        }
-      }
-      i++;
+    // Short text: send as single chunk for maximum fluency
+    if (cleanText.length < 500) {
+      return [cleanText];
     }
 
-    pushCurrent();
-    return sentences;
+    // Split on paragraph breaks (double newlines)
+    const paragraphs = cleanText.split(/\n\n+/).filter(p => p.trim().length > 0);
+
+    // If only 1-2 paragraphs, return as-is
+    if (paragraphs.length <= 2) {
+      return paragraphs.map(p => p.trim());
+    }
+
+    // For longer text, batch paragraphs into chunks of ~1500 chars max
+    // This balances fluency (fewer API calls) with responsiveness
+    const chunks: string[] = [];
+    let currentChunk = "";
+    const MAX_CHUNK_SIZE = 1500;
+
+    for (const paragraph of paragraphs) {
+      const trimmedPara = paragraph.trim();
+
+      if (currentChunk.length === 0) {
+        currentChunk = trimmedPara;
+      } else if (currentChunk.length + trimmedPara.length + 2 <= MAX_CHUNK_SIZE) {
+        // Add paragraph to current chunk with separator
+        currentChunk += " " + trimmedPara;
+      } else {
+        // Current chunk is full, push it and start new one
+        chunks.push(currentChunk);
+        currentChunk = trimmedPara;
+      }
+    }
+
+    // Push final chunk
+    if (currentChunk.trim().length > 0) {
+      chunks.push(currentChunk);
+    }
+
+    return chunks;
   }, []);
 
   /**
@@ -524,13 +496,13 @@ export function AIAssistantTab() {
     }
     setIsSpeaking(true);
 
-    // Split into sentences and queue
-    const sentences = splitIntoSentences(markdownToSpeakableText(text));
-    speechQueueRef.current = sentences;
+    // Split into chunks and queue
+    const chunks = splitIntoChunks(markdownToSpeakableText(text));
+    speechQueueRef.current = chunks;
 
     // Start processing queue
     processSpeechQueue();
-  }, [splitIntoSentences, processSpeechQueue]);
+  }, [splitIntoChunks, processSpeechQueue]);
 
   /**
    * Stop all audio playback and clear queue.
@@ -1167,7 +1139,7 @@ export function AIAssistantTab() {
 
             {/* Settings Content */}
             <div className="flex-1 overflow-y-auto p-4 space-y-6">
-              {/* Voice Selection Section */}
+              {/* Voice Selection Section with inline preview */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <SpeakerIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -1176,23 +1148,49 @@ export function AIAssistantTab() {
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Choose the voice for text-to-speech responses
                 </p>
-                <select
-                  value={selectedVoice}
-                  onChange={(e) => setSelectedVoice(e.target.value)}
-                  className={cn(
-                    "w-full rounded-lg px-3 py-2.5 text-sm",
-                    "bg-gray-100 dark:bg-gray-800",
-                    "border border-gray-200 dark:border-gray-700",
-                    "focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-                    "transition-all"
-                  )}
-                >
-                  {VOICES.map((voice) => (
-                    <option key={voice.id} value={voice.id}>
-                      {voice.name} - {voice.description}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={selectedVoice}
+                    onChange={(e) => setSelectedVoice(e.target.value)}
+                    className={cn(
+                      "flex-1 rounded-lg px-3 py-2.5 text-sm",
+                      "bg-gray-100 dark:bg-gray-800",
+                      "border border-gray-200 dark:border-gray-700",
+                      "focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                      "transition-all"
+                    )}
+                  >
+                    {VOICES.map((voice) => (
+                      <option key={voice.id} value={voice.id}>
+                        {voice.name} - {voice.description}
+                      </option>
+                    ))}
+                  </select>
+                  {/* Inline preview button */}
+                  <button
+                    onClick={() => {
+                      if (isSpeaking) {
+                        stopSpeaking();
+                      } else {
+                        speakText("Hello! I'm your AI assistant, here to help you learn about Claude and answer your questions.");
+                      }
+                    }}
+                    className={cn(
+                      "shrink-0 p-2.5 rounded-lg transition-all",
+                      isSpeaking
+                        ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400"
+                        : "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white hover:scale-105"
+                    )}
+                    title={isSpeaking ? "Stop preview" : "Preview voice"}
+                    aria-label={isSpeaking ? "Stop voice preview" : "Play voice preview"}
+                  >
+                    {isSpeaking ? (
+                      <StopIcon className="h-5 w-5" />
+                    ) : (
+                      <PlayIcon className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               {/* Auto-speak Toggle Section */}
@@ -1226,44 +1224,6 @@ export function AIAssistantTab() {
                 </div>
               </div>
 
-              {/* Voice Preview Section */}
-              <div className="space-y-3 border-t border-gray-200 dark:border-gray-700 pt-6">
-                <div className="flex items-center gap-2">
-                  <MicIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                  <h4 className="font-medium text-gray-900 dark:text-white">Voice Preview</h4>
-                </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Test how the selected voice sounds
-                </p>
-                <button
-                  onClick={() => {
-                    if (isSpeaking) {
-                      stopSpeaking();
-                    } else {
-                      speakText("Hello! I'm your AI assistant. I'm here to help you learn about Claude and answer your questions.");
-                    }
-                  }}
-                  className={cn(
-                    "w-full flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium",
-                    "transition-all",
-                    isSpeaking
-                      ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800"
-                      : "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white hover:scale-[1.02]"
-                  )}
-                >
-                  {isSpeaking ? (
-                    <>
-                      <StopIcon className="h-4 w-4" />
-                      Stop Preview
-                    </>
-                  ) : (
-                    <>
-                      <SpeakerIcon className="h-4 w-4" />
-                      Play Preview
-                    </>
-                  )}
-                </button>
-              </div>
             </div>
           </div>
         )}
@@ -1297,7 +1257,7 @@ export function AIAssistantTab() {
             </div>
           )}
 
-          {/* Virtualized Message List */}
+          {/* Virtualized Message List with inline recommendations */}
           {(messages.length > 0 || isLoading) && (
             <VirtualizedAIMessageList
               messages={messages}
@@ -1306,50 +1266,17 @@ export function AIAssistantTab() {
               error={error}
               renderActions={renderMessageActions}
               className="p-4"
+              recommendations={
+                showRecommendations && recommendations.length > 0
+                  ? recommendations.map((rec) => ({
+                      text: rec,
+                      onClick: () => handleRecommendationClick(rec),
+                    }))
+                  : []
+              }
+              onSomethingElse={handleSomethingElse}
+              hasMoreRecommendations={recommendationPool.length > 0}
             />
-          )}
-
-          {/* Smart Recommendations - shown after AI response */}
-          {showRecommendations && recommendations.length > 0 && !isLoading && messages.length > 0 && (
-            <div className="px-4 pb-2 space-y-2 border-t border-gray-100 dark:border-gray-800 pt-3">
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Suggested follow-ups:
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {recommendations.map((rec, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleRecommendationClick(rec)}
-                    className={cn(
-                      "px-3 py-1.5 rounded-lg text-sm",
-                      "bg-gray-100 dark:bg-gray-800",
-                      "text-gray-700 dark:text-gray-300",
-                      "hover:bg-blue-100 dark:hover:bg-blue-900/30",
-                      "border border-transparent hover:border-blue-300 dark:hover:border-blue-700",
-                      "transition-all duration-200"
-                    )}
-                  >
-                    {rec}
-                  </button>
-                ))}
-                {recommendationPool.length > 0 && (
-                  <button
-                    onClick={handleSomethingElse}
-                    className={cn(
-                      "px-3 py-1.5 rounded-lg text-sm",
-                      "bg-gradient-to-r from-violet-100 to-blue-100",
-                      "dark:from-violet-900/30 dark:to-blue-900/30",
-                      "text-violet-700 dark:text-violet-300",
-                      "hover:from-violet-200 hover:to-blue-200",
-                      "dark:hover:from-violet-800/40 dark:hover:to-blue-800/40",
-                      "transition-all duration-200"
-                    )}
-                  >
-                    Something else →
-                  </button>
-                )}
-              </div>
-            </div>
           )}
 
           {/* Input */}
@@ -1489,6 +1416,14 @@ function StopIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
       <rect x="6" y="6" width="12" height="12" rx="2" />
+    </svg>
+  );
+}
+
+function PlayIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5v14l11-7z" />
     </svg>
   );
 }

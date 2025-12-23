@@ -31,6 +31,11 @@ export interface AIMessage {
   content: string;
 }
 
+interface Recommendation {
+  text: string;
+  onClick: () => void;
+}
+
 interface VirtualizedAIMessageListProps {
   messages: AIMessage[];
   streamingContent?: string;
@@ -38,6 +43,12 @@ interface VirtualizedAIMessageListProps {
   error?: string | null;
   renderActions?: (message: AIMessage, index: number) => ReactNode;
   className?: string;
+  /** Inline recommendations shown after the last AI message */
+  recommendations?: Recommendation[];
+  /** Callback when "Something else" is clicked */
+  onSomethingElse?: () => void;
+  /** Whether there are more recommendations available */
+  hasMoreRecommendations?: boolean;
 }
 
 // ============================================================================
@@ -51,18 +62,22 @@ export function VirtualizedAIMessageList({
   error = null,
   renderActions,
   className,
+  recommendations = [],
+  onSomethingElse,
+  hasMoreRecommendations = false,
 }: VirtualizedAIMessageListProps) {
   const parentRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const prevMessagesLengthRef = useRef(messages.length);
   const prevStreamingRef = useRef(streamingContent);
 
-  // Calculate total items: messages + streaming + loading + error
+  // Calculate total items: messages + streaming + loading + error + recommendations
   const hasStreaming = streamingContent.length > 0;
   const hasLoading = isLoading && !hasStreaming;
   const hasError = error !== null;
+  const hasRecommendations = recommendations.length > 0 && !isLoading && !hasStreaming;
 
-  const extraItems = (hasStreaming ? 1 : 0) + (hasLoading ? 1 : 0) + (hasError ? 1 : 0);
+  const extraItems = (hasStreaming ? 1 : 0) + (hasLoading ? 1 : 0) + (hasError ? 1 : 0) + (hasRecommendations ? 1 : 0);
   const totalCount = messages.length + extraItems;
 
   // Initialize virtualizer
@@ -72,10 +87,11 @@ export function VirtualizedAIMessageList({
     // Estimate: user messages ~60px, assistant messages ~120px (longer with code)
     estimateSize: (index) => {
       if (index >= messages.length) {
-        // Extra items (streaming, loading, error)
+        // Extra items (streaming, loading, error, recommendations)
         if (hasStreaming && index === messages.length) return 100;
         if (hasLoading) return 60;
         if (hasError) return 50;
+        if (hasRecommendations) return 80; // Recommendations row
         return 60;
       }
       const msg = messages[index];
@@ -244,6 +260,64 @@ export function VirtualizedAIMessageList({
               >
                 <div className="px-4 py-2 rounded-lg bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm">
                   {error}
+                </div>
+              </div>
+            );
+          }
+
+          // Inline recommendations
+          const recsIndex = (hasStreaming ? 1 : 0) + (hasLoading ? 1 : 0) + (hasError ? 1 : 0);
+          if (hasRecommendations && extraIndex === recsIndex) {
+            return (
+              <div
+                key="recommendations"
+                data-index={index}
+                ref={virtualizer.measureElement}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  transform: `translateY(${virtualRow.start}px)`,
+                }}
+                className="px-4 py-3"
+              >
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                  Suggested follow-ups:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {recommendations.map((rec, i) => (
+                    <button
+                      key={i}
+                      onClick={rec.onClick}
+                      className={cn(
+                        "px-3 py-1.5 rounded-lg text-sm",
+                        "bg-gray-100 dark:bg-gray-800",
+                        "text-gray-700 dark:text-gray-300",
+                        "hover:bg-blue-100 dark:hover:bg-blue-900/30",
+                        "border border-transparent hover:border-blue-300 dark:hover:border-blue-700",
+                        "transition-all duration-200"
+                      )}
+                    >
+                      {rec.text}
+                    </button>
+                  ))}
+                  {hasMoreRecommendations && onSomethingElse && (
+                    <button
+                      onClick={onSomethingElse}
+                      className={cn(
+                        "px-3 py-1.5 rounded-lg text-sm",
+                        "bg-gradient-to-r from-violet-100 to-blue-100",
+                        "dark:from-violet-900/30 dark:to-blue-900/30",
+                        "text-violet-700 dark:text-violet-300",
+                        "hover:from-violet-200 hover:to-blue-200",
+                        "dark:hover:from-violet-800/40 dark:hover:to-blue-800/40",
+                        "transition-all duration-200"
+                      )}
+                    >
+                      Something else →
+                    </button>
+                  )}
                 </div>
               </div>
             );
