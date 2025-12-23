@@ -92,7 +92,7 @@ function PromptsContent() {
 
   // Check authentication
   useEffect(() => {
-    fetch("/api/auth/session")
+    fetch("/api/auth/get-session")
       .then(res => res.json())
       .then(data => setIsAuthenticated(!!data?.user))
       .catch(() => setIsAuthenticated(false));

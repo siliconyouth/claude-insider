@@ -146,7 +146,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const controller = new AbortController();
         abortTimeoutId = setTimeout(() => controller.abort(), 5000);
 
-        const response = await fetch("/api/auth/session", {
+        const response = await fetch("/api/auth/get-session", {
           credentials: "include",
           cache: "no-store",
           signal: controller.signal,
