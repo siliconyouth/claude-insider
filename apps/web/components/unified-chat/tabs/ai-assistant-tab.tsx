@@ -634,6 +634,94 @@ export function AIAssistantTab() {
     lastQueuedTextRef.current = "";
   }, []);
 
+  /**
+   * Prefetch audio from ElevenLabs - returns audio element ready to play.
+   * Call this early to reduce latency.
+   */
+  const prefetchAudio = useCallback(async (text: string): Promise<HTMLAudioElement | null> => {
+    if (!text.trim()) return null;
+
+    try {
+      const speakableText = markdownToSpeakableText(text);
+      const cacheKey = `${selectedVoiceRef.current}:${speakableText}`;
+      let audioUrl = audioCacheRef.current.get(cacheKey);
+
+      if (!audioUrl) {
+        const response = await fetch("/api/assistant/speak", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text: speakableText,
+            voice: selectedVoiceRef.current,
+          }),
+        });
+
+        if (!response.ok) return null;
+
+        const audioBlob = await response.blob();
+        audioUrl = URL.createObjectURL(audioBlob);
+        audioCacheRef.current.set(cacheKey, audioUrl);
+      }
+
+      const audio = new Audio(audioUrl);
+      // Preload the audio
+      audio.preload = "auto";
+      await new Promise<void>((resolve) => {
+        audio.oncanplaythrough = () => resolve();
+        audio.onerror = () => resolve();
+        audio.load();
+      });
+
+      return audio;
+    } catch {
+      return null;
+    }
+  }, []);
+
+  /**
+   * Fake-stream text while audio plays - reveals text progressively synced to audio duration.
+   */
+  const fakeStreamText = useCallback((
+    fullText: string,
+    audioDuration: number,
+    onUpdate: (partialText: string) => void,
+    onComplete: () => void
+  ) => {
+    const chars = fullText.length;
+    // Calculate reveal rate: slightly faster than audio to ensure text is ahead
+    const msPerChar = (audioDuration * 1000 * 0.85) / chars;
+    const minMsPerChar = 15; // Minimum speed (fast typing)
+    const maxMsPerChar = 50; // Maximum speed (slow, readable)
+    const actualMsPerChar = Math.max(minMsPerChar, Math.min(maxMsPerChar, msPerChar));
+
+    let currentIndex = 0;
+
+    const revealNext = () => {
+      if (currentIndex >= chars) {
+        onUpdate(fullText);
+        onComplete();
+        return;
+      }
+
+      // Reveal in word chunks for smoother appearance
+      let nextIndex = currentIndex + 1;
+      // If we're at a space, reveal until next space (whole word)
+      if (fullText[currentIndex] === ' ' || currentIndex === 0) {
+        const nextSpace = fullText.indexOf(' ', currentIndex + 1);
+        if (nextSpace !== -1 && nextSpace - currentIndex < 15) {
+          nextIndex = nextSpace + 1;
+        }
+      }
+
+      currentIndex = nextIndex;
+      onUpdate(fullText.slice(0, currentIndex));
+
+      setTimeout(revealNext, actualMsPerChar * (nextIndex - currentIndex + 1));
+    };
+
+    revealNext();
+  }, []);
+
   // ============================================================================
   // Speech Recognition
   // ============================================================================
@@ -840,16 +928,22 @@ export function AIAssistantTab() {
               const parsed = JSON.parse(data);
               if (parsed.content) {
                 fullContent += parsed.content;
-                setStreamingContent(fullContent);
+
+                // If autoSpeak: buffer text silently, we'll fake-stream it with audio later
+                // If not autoSpeak: show text streaming immediately (normal behavior)
+                if (!autoSpeak) {
+                  setStreamingContent(fullContent);
+                }
 
                 // Play received sound on first chunk
                 if (!hasPlayedFirstChunkRef.current) {
                   hasPlayedFirstChunkRef.current = true;
                   playMessageReceived();
+                  // Show loading indicator when autoSpeak (text will appear with audio)
+                  if (autoSpeak) {
+                    setStreamingContent("...");
+                  }
                 }
-
-                // Note: TTS is handled AFTER streaming completes (below)
-                // This ensures one continuous audio file without inter-chunk pauses
               }
             } catch {
               // Ignore parse errors
@@ -858,16 +952,50 @@ export function AIAssistantTab() {
         }
       }
 
-      // Add assistant message
-      const assistantMessage: Message = { role: "assistant", content: fullContent };
-      setMessages((prev) => [...prev, assistantMessage]);
-      setStreamingContent("");
-
-      // TTS: Send full text as ONE request for continuous audio without pauses
-      // This happens after streaming completes - user sees text immediately,
-      // then hears smooth audio (better than chunked streaming TTS)
+      // Handle TTS with synced fake-streaming for better UX
       if (autoSpeak && fullContent) {
-        speakText(fullContent);
+        // Prefetch audio (this was happening in parallel with Claude streaming)
+        const audio = await prefetchAudio(fullContent);
+
+        if (audio && audio.duration > 0) {
+          // Set up audio state
+          audioRef.current = audio;
+          isSpeakingRef.current = true;
+          setIsSpeaking(true);
+
+          // Start audio playback
+          audio.play();
+
+          // Fake-stream text synced to audio duration
+          fakeStreamText(
+            fullContent,
+            audio.duration,
+            (partialText) => setStreamingContent(partialText),
+            () => {
+              // Text reveal complete - add final message
+              const assistantMessage: Message = { role: "assistant", content: fullContent };
+              setMessages((prev) => [...prev, assistantMessage]);
+              setStreamingContent("");
+            }
+          );
+
+          // Handle audio end
+          audio.onended = () => {
+            isSpeakingRef.current = false;
+            setIsSpeaking(false);
+            setSpeakingMessageIdx(null);
+          };
+        } else {
+          // Audio failed - just show text immediately
+          const assistantMessage: Message = { role: "assistant", content: fullContent };
+          setMessages((prev) => [...prev, assistantMessage]);
+          setStreamingContent("");
+        }
+      } else {
+        // No autoSpeak - add message normally
+        const assistantMessage: Message = { role: "assistant", content: fullContent };
+        setMessages((prev) => [...prev, assistantMessage]);
+        setStreamingContent("");
       }
 
       // Show smart recommendations after response
@@ -900,7 +1028,8 @@ export function AIAssistantTab() {
     pathname,
     aiContext,
     autoSpeak,
-    speakText,
+    prefetchAudio,
+    fakeStreamText,
     resetStreamingTTS,
     stopSpeaking,
     clearAIContext,
