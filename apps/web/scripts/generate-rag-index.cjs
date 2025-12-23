@@ -353,38 +353,58 @@ const AUDIO_TAGS = {
  */
 const CONTENT_PATTERNS = [
   // Exciting new features or announcements
-  { pattern: /\b(new|introducing|announcing|just released|now available|brand new)\b/i, tag: "excited", probability: 0.4 },
-  { pattern: /\b(amazing|awesome|incredible|powerful|game-?changing)\b/i, tag: "excited", probability: 0.35 },
+  { pattern: /\b(new|introducing|announcing|just released|now available|brand new|latest)\b/i, tag: "excited", probability: 0.7 },
+  { pattern: /\b(amazing|awesome|incredible|powerful|game-?changing|fantastic|excellent)\b/i, tag: "excited", probability: 0.65 },
+  { pattern: /\b(feature|capability|functionality|support for)\b/i, tag: "excited", probability: 0.4 },
 
   // Tips and helpful advice
-  { pattern: /\b(pro tip|tip:|here's a (tip|trick)|helpful hint)\b/i, tag: "mischievously", probability: 0.5 },
-  { pattern: /\b(secret|hidden feature|did you know)\b/i, tag: "whispers", probability: 0.4 },
+  { pattern: /\b(pro tip|tip:|here's a (tip|trick)|helpful hint|quick tip)\b/i, tag: "mischievously", probability: 0.8 },
+  { pattern: /\b(secret|hidden feature|did you know|lesser known|insider)\b/i, tag: "whispers", probability: 0.7 },
+  { pattern: /\b(shortcut|hack|trick|workaround)\b/i, tag: "mischievously", probability: 0.5 },
 
   // Questions and curiosity
-  { pattern: /\b(what if|have you (ever )?wondered|curious about|ever asked)\b/i, tag: "curious", probability: 0.45 },
-  { pattern: /^(why|how|what|when|where)\b.*\?$/im, tag: "curious", probability: 0.3 },
+  { pattern: /\b(what if|have you (ever )?wondered|curious about|ever asked|wondering)\b/i, tag: "curious", probability: 0.7 },
+  { pattern: /^(why|how|what|when|where)\b.*\?$/im, tag: "curious", probability: 0.6 },
+  { pattern: /\b(explore|discover|learn|understand|dive into)\b/i, tag: "curious", probability: 0.45 },
 
   // Important warnings or notes
-  { pattern: /\b(important|warning|caution|note:|be careful|watch out)\b/i, tag: "dramatically", probability: 0.4 },
-  { pattern: /\b(critical|crucial|essential|must|never|always)\b/i, tag: "thoughtful", probability: 0.3 },
+  { pattern: /\b(important|warning|caution|note:|be careful|watch out|attention)\b/i, tag: "dramatically", probability: 0.7 },
+  { pattern: /\b(critical|crucial|essential|must|never|always|required)\b/i, tag: "thoughtful", probability: 0.55 },
+  { pattern: /\b(security|vulnerability|risk|danger|protect)\b/i, tag: "dramatically", probability: 0.6 },
 
   // Explanations and thinking through
-  { pattern: /\b(let me explain|here's (how|why)|the (reason|key) is|think of it)\b/i, tag: "thoughtful", probability: 0.5 },
-  { pattern: /\b(in other words|basically|simply put|to summarize)\b/i, tag: "thoughtful", probability: 0.35 },
+  { pattern: /\b(let me explain|here's (how|why)|the (reason|key) is|think of it|consider)\b/i, tag: "thoughtful", probability: 0.75 },
+  { pattern: /\b(in other words|basically|simply put|to summarize|essentially)\b/i, tag: "thoughtful", probability: 0.6 },
+  { pattern: /\b(this means|because|therefore|as a result|consequently)\b/i, tag: "thoughtful", probability: 0.45 },
+  { pattern: /\b(works by|designed to|allows you to|enables|provides)\b/i, tag: "thoughtful", probability: 0.4 },
 
   // Success and positive outcomes
-  { pattern: /\b(success|congratulations|well done|great job|you('ve)? (did|made) it)\b/i, tag: "happy", probability: 0.5 },
-  { pattern: /\b(works|solved|fixed|complete|done|finished)\b/i, tag: "happy", probability: 0.25 },
+  { pattern: /\b(success|congratulations|well done|great job|you('ve)? (did|made) it)\b/i, tag: "happy", probability: 0.8 },
+  { pattern: /\b(works|solved|fixed|complete|done|finished|ready)\b/i, tag: "happy", probability: 0.45 },
+  { pattern: /\b(easy|simple|straightforward|quick|fast)\b/i, tag: "happy", probability: 0.4 },
+  { pattern: /\b(benefit|advantage|improve|enhance|boost)\b/i, tag: "happy", probability: 0.35 },
 
   // Surprise elements
-  { pattern: /\b(surprisingly|unexpectedly|believe it or not|turns out)\b/i, tag: "surprised", probability: 0.45 },
-  { pattern: /\b(actually|in fact|interesting(ly)?)\b/i, tag: "curious", probability: 0.25 },
+  { pattern: /\b(surprisingly|unexpectedly|believe it or not|turns out|remarkably)\b/i, tag: "surprised", probability: 0.75 },
+  { pattern: /\b(actually|in fact|interesting(ly)?|notably)\b/i, tag: "curious", probability: 0.5 },
 
   // Fun facts and trivia
-  { pattern: /\b(fun fact|little(-| )known|bonus|extra)\b/i, tag: "mischievously", probability: 0.5 },
+  { pattern: /\b(fun fact|little(-| )known|bonus|extra|special)\b/i, tag: "mischievously", probability: 0.7 },
 
   // Sighing moments (complex, long explanations)
-  { pattern: /\b(unfortunately|sadly|however|but|although|despite)\b/i, tag: "sighs", probability: 0.2 },
+  { pattern: /\b(unfortunately|sadly|however|although|despite|limitation)\b/i, tag: "sighs", probability: 0.4 },
+  { pattern: /\b(complex|complicated|challenging|difficult|tricky)\b/i, tag: "sighs", probability: 0.35 },
+
+  // Technical documentation patterns
+  { pattern: /\b(install|setup|configure|initialize|deploy)\b/i, tag: "thoughtful", probability: 0.35 },
+  { pattern: /\b(example|sample|demo|showcase|illustration)\b/i, tag: "curious", probability: 0.4 },
+  { pattern: /\b(best practice|recommended|optimal|ideal)\b/i, tag: "mischievously", probability: 0.5 },
+  { pattern: /\b(powerful|robust|flexible|versatile|comprehensive)\b/i, tag: "excited", probability: 0.45 },
+
+  // Claude/AI specific patterns
+  { pattern: /\b(claude|anthropic|ai assistant|language model|llm)\b/i, tag: "excited", probability: 0.4 },
+  { pattern: /\b(prompt|context|token|model|inference)\b/i, tag: "thoughtful", probability: 0.35 },
+  { pattern: /\b(mcp|server|integration|api|sdk)\b/i, tag: "curious", probability: 0.35 },
 ];
 
 /**
@@ -415,7 +435,7 @@ function simpleHash(content) {
  * Enriches content with ElevenLabs v3 audio tags for natural speech
  *
  * Rules:
- * - Only add tags to ~15-25% of content (not overwhelming)
+ * - Add tags to ~10-15% of all chunks for expressiveness
  * - Tags are added at the start of sentences or key phrases
  * - Pattern matching determines appropriate emotional context
  * - Deterministic based on content hash for reproducible builds
@@ -429,14 +449,14 @@ function enrichWithAudioTags(content, category) {
 
   const contentHash = simpleHash(content);
 
-  // Global probability check - only enrich ~20% of all content
-  if (!shouldAddTag(contentHash, 0.20)) {
+  // Global probability check - enrich ~60% of content that passes first gate
+  if (!shouldAddTag(contentHash, 0.60)) {
     return content;
   }
 
   let enrichedContent = content;
   let tagsAdded = 0;
-  const maxTags = 2; // Limit tags per chunk to avoid over-tagging
+  const maxTags = 3; // Allow up to 3 tags per chunk for more expression
 
   // Check each pattern and potentially add tags
   for (const { pattern, tag, probability } of CONTENT_PATTERNS) {
@@ -452,10 +472,14 @@ function enrichWithAudioTags(content, category) {
 
         // Find the start of the sentence containing the match
         const beforeMatch = enrichedContent.slice(0, match.index);
+        const dotPos = beforeMatch.lastIndexOf(". ");
+        const exclPos = beforeMatch.lastIndexOf("! ");
+        const questPos = beforeMatch.lastIndexOf("? ");
+        // Only add 2 if we found a sentence boundary, otherwise use 0
         const sentenceStart = Math.max(
-          beforeMatch.lastIndexOf(". ") + 2,
-          beforeMatch.lastIndexOf("! ") + 2,
-          beforeMatch.lastIndexOf("? ") + 2,
+          dotPos >= 0 ? dotPos + 2 : 0,
+          exclPos >= 0 ? exclPos + 2 : 0,
+          questPos >= 0 ? questPos + 2 : 0,
           0
         );
 
@@ -477,13 +501,27 @@ function enrichWithAudioTags(content, category) {
   if (tagsAdded === 0 && category) {
     const categoryHash = simpleHash(contentHash + category);
 
-    // Add contextual tags based on category
-    if (category === "Tips & Tricks" && shouldAddTag(categoryHash, 0.3)) {
+    // Add contextual tags based on category with higher probabilities
+    if (category === "Tips & Tricks" && shouldAddTag(categoryHash, 0.6)) {
       enrichedContent = AUDIO_TAGS.mischievously + " " + enrichedContent;
-    } else if (category === "Getting Started" && shouldAddTag(categoryHash, 0.25)) {
+    } else if (category === "Getting Started" && shouldAddTag(categoryHash, 0.55)) {
       enrichedContent = AUDIO_TAGS.happy + " " + enrichedContent;
-    } else if (category === "API Reference" && shouldAddTag(categoryHash, 0.2)) {
+    } else if (category === "API Reference" && shouldAddTag(categoryHash, 0.5)) {
       enrichedContent = AUDIO_TAGS.thoughtful + " " + enrichedContent;
+    } else if (category === "Tutorials" && shouldAddTag(categoryHash, 0.55)) {
+      enrichedContent = AUDIO_TAGS.curious + " " + enrichedContent;
+    } else if (category === "Examples" && shouldAddTag(categoryHash, 0.5)) {
+      enrichedContent = AUDIO_TAGS.excited + " " + enrichedContent;
+    } else if (category === "Configuration" && shouldAddTag(categoryHash, 0.45)) {
+      enrichedContent = AUDIO_TAGS.thoughtful + " " + enrichedContent;
+    } else if (category === "Integrations" && shouldAddTag(categoryHash, 0.5)) {
+      enrichedContent = AUDIO_TAGS.curious + " " + enrichedContent;
+    } else if (category === "Resources" && shouldAddTag(categoryHash, 0.45)) {
+      enrichedContent = AUDIO_TAGS.excited + " " + enrichedContent;
+    } else if ((category === "MCP Servers" || category === "Development Tools") && shouldAddTag(categoryHash, 0.5)) {
+      enrichedContent = AUDIO_TAGS.curious + " " + enrichedContent;
+    } else if (category === "Official Resources" && shouldAddTag(categoryHash, 0.55)) {
+      enrichedContent = AUDIO_TAGS.excited + " " + enrichedContent;
     }
   }
 
