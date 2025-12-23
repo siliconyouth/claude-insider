@@ -1420,7 +1420,7 @@ export function VoiceAssistant() {
         <div className="absolute bottom-full right-0 mb-3 w-56 animate-bounce">
           <div className="relative rounded-lg bg-white px-3 py-2 text-sm text-gray-800 shadow-lg dark:bg-gray-800 dark:text-white">
             <span className="font-semibold text-blue-500 dark:text-cyan-400">AI Assistant</span>
-            <span className="text-gray-600 dark:text-gray-300"> (Cmd + . or click)</span>
+            <span className="text-gray-600 dark:text-gray-300"> (Cmd + .)</span>
             {/* Arrow - inline styles override global border-color rule */}
             <div
               className="absolute -bottom-2 right-6 h-0 w-0 dark:hidden"
@@ -1452,7 +1452,7 @@ export function VoiceAssistant() {
           }}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white shadow-lg shadow-blue-500/25 transition-all hover:scale-105 hover:shadow-xl hover:shadow-blue-500/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-950"
           aria-label="Open AI Assistant"
-          title="AI Assistant (Cmd + . or click to activate)"
+          title="AI Assistant/Chat (Cmd + .)"
         >
           <svg
             className="h-6 w-6"

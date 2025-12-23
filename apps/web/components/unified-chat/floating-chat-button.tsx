@@ -142,7 +142,7 @@ export function FloatingChatButton() {
           </span>
           <span className="text-gray-600 dark:text-gray-400">
             {" "}
-            (Cmd + . or click)
+            (Cmd + .)
           </span>
 
           {/* Arrow - Light mode */}
@@ -190,7 +190,7 @@ export function FloatingChatButton() {
           "active:scale-95"
         )}
         aria-label="Open AI Assistant"
-        title="AI Assistant (Cmd + . or click to activate)"
+        title="AI Assistant/Chat (Cmd + .)"
       >
         {/* Icon */}
         <svg
