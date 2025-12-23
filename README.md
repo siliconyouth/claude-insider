@@ -9,7 +9,7 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.11.1-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.12.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Features](https://img.shields.io/badge/49-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/1,952+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
@@ -48,7 +48,7 @@
 Full-viewport landing with **photorealistic device mockups** (MacBook Pro M3 + iPhone 17 Pro Max), animated gradient orbs, and live terminal demo.
 
 ### AI Voice Assistant
-Chat with Claude AI using voice or text. **42 premium ElevenLabs voices** with streaming TTS and Web Speech API recognition.
+Chat with Claude AI using voice or text. **ElevenLabs Eleven v3** model with **42 premium voices**, audio tags for emotional expression, and Web Speech API recognition.
 
 ### 34 Documentation Pages
 Comprehensive guides across **7 categories**: Getting Started, Configuration, API Reference, Integrations, Tutorials, and more.
@@ -101,8 +101,8 @@ Gamification system with **9 categories**, 4 rarity tiers, animated confetti, so
 
 | Feature | Description |
 |---------|-------------|
-| AI Voice Assistant | Claude Sonnet 4 streaming, RAG with 1,979 chunks, context-aware responses |
-| ElevenLabs TTS | 42 premium voices, sentence-by-sentence streaming, voice preview |
+| AI Voice Assistant | Claude Sonnet 4 streaming, RAG with 6,953 chunks (14% audio-enriched), context-aware responses |
+| ElevenLabs TTS | Eleven v3 model, 42 premium voices, audio tags for emotional expression, voice preview |
 | Speech Recognition | Web Speech API input with real-time transcription |
 | AI Writing Assistant | In-place doc editing, 8 AI commands, diff preview, streaming |
 | Smart AI Messaging | @claudeinsider auto-responds in DMs, @mention-only in groups |

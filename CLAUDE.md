@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.11.1**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.0**.
 
 | Link | URL |
 |------|-----|
@@ -38,17 +38,18 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.11.1**.
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
 7. [Performance Optimization (MANDATORY)](#performance-optimization-mandatory) - Dynamic imports, targets
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
-9. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
-10. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
-11. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
-12. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
-13. [Internationalization](#internationalization-i18n) - 18 languages
-14. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-15. [Content Structure](#content-structure) - Documentation, resources, legal pages
-16. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-17. [Success Metrics](#success-metrics)
-18. [Updating Guidelines](#updating-guidelines)
-19. [License](#license)
+9. [Text-to-Speech System (MANDATORY)](#text-to-speech-system-mandatory) - ElevenLabs v3, audio tags
+10. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
+11. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
+12. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
+13. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
+14. [Internationalization](#internationalization-i18n) - 18 languages
+15. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+16. [Content Structure](#content-structure) - Documentation, resources, legal pages
+17. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+18. [Success Metrics](#success-metrics)
+19. [Updating Guidelines](#updating-guidelines)
+20. [License](#license)
 
 ---
 
@@ -68,7 +69,7 @@ All technologies are **free and/or open source** (except hosting services with f
 | Fuse.js | 7.1.0 | Apache-2.0 | Fuzzy search |
 | highlight.js | 11.x | BSD-3-Clause | Syntax highlighting (33 languages) |
 | Anthropic SDK | 0.71.2 | Proprietary | Claude Sonnet 4 streaming chat |
-| ElevenLabs SDK | 2.28.0 | MIT | Text-to-Speech (42 voices) |
+| ElevenLabs SDK | 2.28.0 | MIT | Text-to-Speech (42 voices, Eleven v3 model, audio tags) |
 | Better Auth | 1.4.7 | MIT | User authentication (OAuth, 2FA) |
 | Supabase | 2.89.0 | MIT | PostgreSQL with RLS |
 | Payload CMS | 3.69.0 | MIT | Content management system |
@@ -145,7 +146,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | FR-2 | Navigation | 7 categories, breadcrumbs, prev/next navigation, sidebar |
 | FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
 | FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
-| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (1,979 chunks), ElevenLabs TTS (42 voices), speech-to-text |
+| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (6,953 chunks with 14% audio-enriched), ElevenLabs Eleven v3 TTS (42 voices, audio tags for emotional expression), speech-to-text |
 | FR-6 | Resources Section | 1,952 curated resources, 10 categories, search, GitHub integration |
 | FR-7 | Account Security | Password management, OAuth linking, safety checks |
 | FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |
@@ -739,6 +740,92 @@ function MyComponent() {
 - [ ] Verify sounds work with master toggle enabled/disabled
 - [ ] Test that feature works normally when sounds are off
 - [ ] Add sound test to diagnostics page if new sound type
+
+---
+
+## Text-to-Speech System (MANDATORY)
+
+**Location**: `app/api/assistant/speak/route.ts`, `data/system-prompt.ts`
+
+Claude Insider uses **ElevenLabs Eleven v3** (alpha) model for natural, emotionally expressive text-to-speech.
+
+### Model Configuration
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| Model | `eleven_v3` | Latest model with emotional expressiveness, 70+ languages |
+| Output Format | `mp3_44100_128` | High-quality 44.1kHz MP3, 128kbps |
+| Default Voice | `sarah` | Natural-sounding female voice |
+| Available Voices | 42 | Premium ElevenLabs voice library |
+
+### Audio Tags for Emotional Expression
+
+ElevenLabs v3 supports audio tags to add emotional context to speech:
+
+| Tag | Usage | Probability in RAG |
+|-----|-------|-------------------|
+| `[excited]` | New features, capabilities, announcements | 274 chunks |
+| `[curious]` | Exploring, learning, discovering | 423 chunks |
+| `[thoughtful]` | Explanations, technical details | 258 chunks |
+| `[happy]` | Success, completions, positive outcomes | 49 chunks |
+| `[mischievously]` | Tips, tricks, best practices | 19 chunks |
+| `[dramatically]` | Warnings, important notes | 17 chunks |
+| `[whispers]` | Secrets, hidden features | 5 chunks |
+| `[sighs]` | Complex explanations, limitations | 2 chunks |
+| `[surprised]` | Unexpected facts | 1 chunk |
+
+### RAG Index Audio Enrichment
+
+The RAG index generator automatically enriches ~14% of content with audio tags:
+
+```javascript
+// In scripts/generate-rag-index.cjs
+const enrichedContent = enrichWithAudioTags(content, category);
+```
+
+**Enrichment Rules**:
+- Global probability: 60% of chunks pass first gate
+- Pattern matching adds context-appropriate tags
+- Max 3 tags per chunk
+- Deterministic placement via content hashing (reproducible builds)
+
+### System Prompt TTS Rules
+
+The AI assistant follows these rules when generating TTS-friendly responses:
+
+1. **Sentence Pauses**: Use periods for natural breathing pauses
+2. **Markdown Stripping**: Remove links, formatting before speaking
+3. **Technical Pronunciation**: Spell out acronyms on first use
+4. **Number Formatting**: "1,000" becomes "one thousand"
+5. **URL Handling**: Describe links, don't read URLs
+6. **Audio Tag Usage**: Use sparingly for emotional emphasis
+
+### Implementation Pattern
+
+```tsx
+// Using the TTS API
+const response = await fetch('/api/assistant/speak', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    text: "[excited] This is amazing news!",
+    voice: "sarah" // Optional, defaults to sarah
+  })
+});
+
+const audioBlob = await response.blob();
+const audio = new Audio(URL.createObjectURL(audioBlob));
+audio.play();
+```
+
+### Checklist for TTS Features
+
+- [ ] Use ElevenLabs v3 model (`eleven_v3`)
+- [ ] Strip markdown/formatting before sending to TTS
+- [ ] Include audio tags for emotional content when appropriate
+- [ ] Handle quota exceeded errors (429 status)
+- [ ] Provide voice selection UI with preview
+- [ ] Buffer complete audio before playback (avoid MP3 chunk artifacts)
 
 ---
 
@@ -1622,7 +1709,7 @@ WHERE p.user_id = $1;
 
 | Tab | Features |
 |-----|----------|
-| **AI Assistant** | Claude streaming, ElevenLabs TTS (42 voices), speech recognition, localStorage history |
+| **AI Assistant** | Claude streaming, ElevenLabs Eleven v3 TTS (42 voices, audio tags), speech recognition, localStorage history |
 | **Messages** | Supabase real-time, typing indicators, E2EE indicators, unread badges |
 
 ```typescript
@@ -1672,12 +1759,14 @@ TanStack Virtual-based message list for efficient rendering of large conversatio
 | **Reverse Scroll** | Load older messages at top |
 | **Auto-scroll** | Scrolls to bottom for new messages (if at bottom) |
 
-### RAG System (v6.4)
+### RAG System (v7.0)
 
-- **3,809 chunks** (docs + relationships + project knowledge + resources + code examples)
-- **7,354 indexed terms** for TF-IDF search
+- **6,953 chunks** (docs + relationships + project knowledge + resources + code examples + Ask AI context)
+- **7,695 indexed terms** for TF-IDF search
+- **980 chunks (14.1%)** enriched with ElevenLabs v3 audio tags for expressive TTS
 - Built at compile time via `scripts/generate-rag-index.cjs`
 - Includes 147 doc-resource + 3,087 resource-resource relationships for cross-linking
+- Audio tag distribution: `[curious]` 423, `[excited]` 274, `[thoughtful]` 258, `[happy]` 49, `[mischievously]` 19, `[dramatically]` 17
 
 ### End-to-End Encryption (E2EE)
 

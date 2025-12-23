@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.11.1";
+const APP_VERSION = "1.12.0";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -23,6 +23,19 @@ interface ChangelogEntry {
 
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "1.12.0",
+    date: "2025-12-23",
+    type: "minor",
+    highlights: [
+      "🎤 ElevenLabs v3: Upgraded to Eleven v3 (alpha) model for emotionally expressive TTS",
+      "🎭 Audio Tags: 9 emotion tags ([excited], [curious], [thoughtful], etc.) for natural speech",
+      "📚 RAG v7.0: 6,953 chunks with 14.1% (980 chunks) audio-enriched for expressive reading",
+      "🔊 TTS System: New MANDATORY section in CLAUDE.md with audio tag guidelines",
+      "📖 System Prompts: Updated TTS rules with ElevenLabs v3 best practices",
+      "🎯 Smart Enrichment: Deterministic audio tag placement based on content patterns",
+    ],
+  },
   {
     version: "1.11.1",
     date: "2025-12-23",
