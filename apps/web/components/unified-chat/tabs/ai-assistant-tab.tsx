@@ -636,7 +636,7 @@ export function AIAssistantTab() {
 
   /**
    * Prefetch audio from ElevenLabs - returns audio element ready to play.
-   * Call this early to reduce latency.
+   * Optimized for low latency with early playback capability.
    */
   const prefetchAudio = useCallback(async (text: string): Promise<HTMLAudioElement | null> => {
     if (!text.trim()) return null;
@@ -647,6 +647,10 @@ export function AIAssistantTab() {
       let audioUrl = audioCacheRef.current.get(cacheKey);
 
       if (!audioUrl) {
+        // Use AbortController for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
         const response = await fetch("/api/assistant/speak", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -654,7 +658,10 @@ export function AIAssistantTab() {
             text: speakableText,
             voice: selectedVoiceRef.current,
           }),
+          signal: controller.signal,
         });
+
+        clearTimeout(timeoutId);
 
         if (!response.ok) return null;
 
@@ -664,11 +671,21 @@ export function AIAssistantTab() {
       }
 
       const audio = new Audio(audioUrl);
-      // Preload the audio
-      audio.preload = "auto";
+      // Use 'metadata' preload - faster than 'auto', enough to get duration
+      audio.preload = "metadata";
+
+      // Wait for 'canplay' (enough data to start) instead of 'canplaythrough' (all data)
+      // This reduces latency by ~500ms-1s
       await new Promise<void>((resolve) => {
-        audio.oncanplaythrough = () => resolve();
-        audio.onerror = () => resolve();
+        const onReady = () => {
+          audio.removeEventListener("canplay", onReady);
+          audio.removeEventListener("loadedmetadata", onReady);
+          audio.removeEventListener("error", onReady);
+          resolve();
+        };
+        audio.addEventListener("canplay", onReady);
+        audio.addEventListener("loadedmetadata", onReady);
+        audio.addEventListener("error", onReady);
         audio.load();
       });
 
@@ -913,6 +930,11 @@ export function AIAssistantTab() {
       const decoder = new TextDecoder();
       let fullContent = "";
 
+      // OPTIMIZATION: Start audio prefetch early during streaming (parallel, not sequential)
+      let earlyAudioPromise: Promise<HTMLAudioElement | null> | null = null;
+      let earlyPrefetchText = "";
+      const EARLY_PREFETCH_THRESHOLD = 300; // Start prefetch after 300 chars
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -944,6 +966,13 @@ export function AIAssistantTab() {
                     setStreamingContent("...");
                   }
                 }
+
+                // OPTIMIZATION: Start early audio prefetch when we have enough text
+                // This runs IN PARALLEL with continued Claude streaming
+                if (autoSpeak && !earlyAudioPromise && fullContent.length >= EARLY_PREFETCH_THRESHOLD) {
+                  earlyPrefetchText = fullContent;
+                  earlyAudioPromise = prefetchAudio(fullContent);
+                }
               }
             } catch {
               // Ignore parse errors
@@ -954,8 +983,19 @@ export function AIAssistantTab() {
 
       // Handle TTS with synced fake-streaming for better UX
       if (autoSpeak && fullContent) {
-        // Prefetch audio (this was happening in parallel with Claude streaming)
-        const audio = await prefetchAudio(fullContent);
+        let audio: HTMLAudioElement | null = null;
+
+        // Check if early prefetch is still valid (text didn't change too much)
+        // If text grew by less than 50%, reuse early prefetch; otherwise fetch fresh
+        const textGrowth = earlyPrefetchText ? (fullContent.length - earlyPrefetchText.length) / earlyPrefetchText.length : 1;
+
+        if (earlyAudioPromise && textGrowth < 0.5) {
+          // Reuse early prefetch - text didn't change much
+          audio = await earlyAudioPromise;
+        } else {
+          // Text changed significantly or no early prefetch - fetch fresh
+          audio = await prefetchAudio(fullContent);
+        }
 
         if (audio && audio.duration > 0) {
           // Set up audio state
