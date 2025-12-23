@@ -345,16 +345,16 @@ function MacBookTerminalContent() {
  */
 function IPhoneScreenContent() {
   return (
-    <div className="h-full w-full bg-[#0a0a0a] overflow-hidden">
+    <div className="h-full w-full bg-[#0a0a0a] overflow-hidden flex items-center justify-center">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/mobile-screenshot.png"
         alt="Claude Insider mobile homepage"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
         style={{
-          // Shift image down to clear Dynamic Island (~26px in mockup coordinates)
-          // This ensures the header and logo are fully visible below the notch
-          objectPosition: 'center 2%'
+          // Use object-contain to show full screenshot without cropping
+          // The slight aspect ratio difference creates minimal letterboxing
+          // which blends with the phone's black screen background
         }}
       />
     </div>
