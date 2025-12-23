@@ -1420,7 +1420,10 @@ export function VoiceAssistant() {
         <div className="absolute bottom-full right-0 mb-3 animate-bounce">
           <div className="relative rounded-lg bg-white px-3 py-2 text-sm text-gray-800 shadow-lg dark:bg-gray-800 dark:text-white whitespace-nowrap">
             <span className="font-semibold text-blue-500 dark:text-cyan-400">AI Assistant</span>
-            <span className="text-gray-600 dark:text-gray-300"> (Cmd + .)</span>
+            <kbd className="inline-flex items-center gap-0.5 ml-2 px-1.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded">
+              <span>⌘</span>
+              <span>.</span>
+            </kbd>
             {/* Arrow - inline styles override global border-color rule */}
             <div
               className="absolute -bottom-2 right-6 h-0 w-0 dark:hidden"
@@ -2356,10 +2359,11 @@ export function VoiceAssistant() {
 
           <div className="mt-2 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>Powered by Claude AI</span>
-            <span>
-              <kbd className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs dark:bg-gray-800">
-                Cmd + .
-              </kbd>{" "}
+            <span className="inline-flex items-center gap-1">
+              <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded">
+                <span>⌘</span>
+                <span>.</span>
+              </kbd>
               to toggle
             </span>
           </div>

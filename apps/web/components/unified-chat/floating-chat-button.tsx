@@ -140,10 +140,10 @@ export function FloatingChatButton() {
           <span className="font-semibold bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
             AI Assistant
           </span>
-          <span className="text-gray-600 dark:text-gray-400">
-            {" "}
-            (Cmd + .)
-          </span>
+          <kbd className="inline-flex items-center gap-0.5 ml-2 px-1.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded">
+            <span>⌘</span>
+            <span>.</span>
+          </kbd>
 
           {/* Arrow - Light mode */}
           <div
