@@ -43,12 +43,13 @@ export async function POST(request: Request) {
     // Get voice ID from voice name
     const voiceId = TTS_VOICES[voice] || TTS_VOICES.sarah;
 
-    // Generate speech using ElevenLabs
+    // Generate speech using ElevenLabs with latency optimizations
     const elevenlabs = getElevenLabs(apiKey);
     const audioStream = await elevenlabs.textToSpeech.convert(voiceId, {
       text: truncatedText,
-      modelId: "eleven_v3", // Latest model - most emotionally expressive, 70+ languages
-      outputFormat: "mp3_44100_128", // High quality MP3
+      modelId: "eleven_turbo_v2_5", // Fast model with good quality, 32 languages
+      outputFormat: "mp3_22050_32", // Lower bitrate for faster transfer
+      optimizeStreamingLatency: 3, // 0-4, higher = lower latency
     });
 
     // Buffer the complete audio before sending

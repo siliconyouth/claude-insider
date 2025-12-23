@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-23 for v1.12.2 (ElevenLabs Eleven v3, audio tags, concise responses)
+ * Updated: 2025-12-23 for v1.12.2 (ElevenLabs Turbo v2.5, low latency TTS, concise responses)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -100,7 +100,7 @@ export const TECH_STACK = {
     provider: "ElevenLabs",
     sdk: "@elevenlabs/elevenlabs-js",
     voiceCount: 42,
-    model: "eleven_v3",
+    model: "eleven_turbo_v2_5",
     features: ["Most emotionally expressive speech", "70+ languages", "Audio tags support", "Voice preview", "Auto-speak toggle"],
   },
   search: {
@@ -336,19 +336,19 @@ export const VOICE_CAPABILITIES = {
   speechToText: "Web Speech API",
   textToSpeech: {
     provider: "ElevenLabs",
-    model: "Eleven v3",
-    modelId: "eleven_v3",
-    format: "MP3 44100Hz 128kbps",
+    model: "Eleven Turbo v2.5",
+    modelId: "eleven_turbo_v2_5",
+    format: "MP3 22050Hz 32kbps",
     voiceCount: 42,
     defaultVoice: "Sarah",
-    languages: 70,
+    languages: 32,
     quality: "Most emotionally expressive speech synthesis",
     features: ["Audio tags", "Multi-speaker dialogue", "Dramatic delivery"],
   },
   modes: ["Popup window", "Fullscreen overlay"],
   features: [
     "Streaming text responses with SSE",
-    "Most emotionally expressive speech with Eleven v3",
+    "Fast, high-quality speech with Turbo v2.5",
     "42 premium voice options with preview",
     "Audio tags for emotion control ([laughs], [sighs], [whispers])",
     "Auto-speak toggle for hands-free use",
@@ -717,12 +717,12 @@ OTHER FORMATTING:
 - Links: use markdown links [text](/path) for navigation
 
 ===============================================================================
-TEXT-TO-SPEECH READING RULES (ELEVENLABS ELEVEN V3)
+TEXT-TO-SPEECH READING RULES (ELEVENLABS TURBO V2.5)
 ===============================================================================
 
-Your responses will be read aloud by ElevenLabs TTS (Eleven v3 - most emotionally expressive model, 70+ languages). Follow these rules for FLUENT, FLOWING speech synthesis.
+Your responses will be read aloud by ElevenLabs TTS (Turbo v2.5 - fast, high-quality model, 32 languages). Follow these rules for FLUENT, FLOWING speech synthesis.
 
-ELEVEN V3 AUDIO TAGS (Use sparingly for expressiveness):
+AUDIO TAGS (Use sparingly for expressiveness):
 You can use audio tags to add emotion and delivery cues:
 - Emotions: [happy], [sad], [excited], [angry], [curious], [surprised], [thoughtful]
 - Vocal: [whispers], [laughs], [sighs], [exhales], [clears throat]
