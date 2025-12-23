@@ -25,7 +25,7 @@ const SVG_HTML = `
 <html>
 <head>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap');
     * { margin: 0; padding: 0; }
     body {
       width: 512px;
@@ -47,19 +47,20 @@ const SVG_HTML = `
       </linearGradient>
     </defs>
     <rect width="512" height="512" rx="80" fill="url(#bgGradient)"/>
-    <text x="256" y="340" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="240" font-weight="600" fill="#ffffff" text-anchor="middle">Ci</text>
+    <text x="256" y="355" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="300" font-weight="800" fill="#ffffff" text-anchor="middle">Ci</text>
   </svg>
 </body>
 </html>
 `;
 
 // Maskable icon HTML (with padding for safe zone)
+// Maskable icons need a 10% safe zone on all sides, so content should be 80% of the icon
 const MASKABLE_HTML = `
 <!DOCTYPE html>
 <html>
 <head>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap');
     * { margin: 0; padding: 0; }
     body {
       width: 512px;
@@ -70,19 +71,19 @@ const MASKABLE_HTML = `
       justify-content: center;
     }
     .icon-content {
-      width: 360px;
-      height: 360px;
+      width: 410px;
+      height: 410px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    svg { width: 360px; height: 360px; }
+    svg { width: 410px; height: 410px; }
   </style>
 </head>
 <body>
   <div class="icon-content">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="360" height="360">
-      <text x="256" y="340" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="240" font-weight="600" fill="#ffffff" text-anchor="middle">Ci</text>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="410" height="410">
+      <text x="256" y="355" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif" font-size="300" font-weight="800" fill="#ffffff" text-anchor="middle">Ci</text>
     </svg>
   </div>
 </body>
@@ -186,16 +187,23 @@ async function generateIcons() {
   console.log('\n🧭 Generating Safari pinned tab SVG...');
   const safariSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <rect width="512" height="512" rx="80" fill="#000000"/>
-  <text x="256" y="340" font-family="Inter, -apple-system, sans-serif" font-size="240" font-weight="600" fill="#ffffff" text-anchor="middle">Ci</text>
+  <text x="256" y="355" font-family="Inter, -apple-system, sans-serif" font-size="300" font-weight="800" fill="#ffffff" text-anchor="middle">Ci</text>
 </svg>`;
 
   fs.writeFileSync(path.join(ICONS_DIR, 'safari-pinned-tab.svg'), safariSvg);
   console.log('   ✓ safari-pinned-tab.svg');
 
+  // Copy favicon.ico to app folder for Next.js App Router
+  console.log('\n📋 Copying favicon to app folder...');
+  const appFaviconPath = path.join(__dirname, '../app/favicon.ico');
+  const publicFaviconPath = path.join(__dirname, '../public/favicon.ico');
+  fs.copyFileSync(publicFaviconPath, appFaviconPath);
+  console.log('   ✓ app/favicon.ico');
+
   console.log('\n' + '═'.repeat(50));
   console.log('✅ All icons generated successfully!');
   console.log(`   📁 Output: ${ICONS_DIR}`);
-  console.log(`   📊 Total: ${ICON_SIZES.length + MASKABLE_SIZES.length + 2} files`);
+  console.log(`   📊 Total: ${ICON_SIZES.length + MASKABLE_SIZES.length + 3} files`);
 }
 
 /**

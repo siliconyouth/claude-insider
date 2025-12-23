@@ -6,6 +6,8 @@
       <stop offset="100%" stop-color="#06B6D4"/>
     </linearGradient>
   </defs>
+  <!-- Gradient background with 80px corner radius like Apple icons -->
   <rect width="512" height="512" rx="80" fill="url(#bgGradient)"/>
-  <text x="256" y="340" font-family="Inter, -apple-system, sans-serif" font-size="240" font-weight="600" fill="#ffffff" text-anchor="middle">Ci</text>
+  <!-- Bold Ci text - Adobe CC style, within Apple safe zone (51px margins) -->
+  <text x="256" y="355" font-family="Inter, -apple-system, sans-serif" font-size="300" font-weight="800" fill="#ffffff" text-anchor="middle">Ci</text>
 </svg>
