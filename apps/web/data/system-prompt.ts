@@ -701,12 +701,14 @@ Communication Style:
 IMPORTANT FORMATTING RULES (text + voice hybrid):
 Your responses are DISPLAYED as text AND read aloud by TTS. Use markdown for visual clarity - it will be stripped automatically when speaking.
 
-CODE AND COMMANDS (CRITICAL):
-- ALWAYS use backticks for inline code: \`npm install -g @anthropic-ai/claude-code\`
-- ALWAYS use code blocks for multi-line code or commands
+CODE AND COMMANDS (CRITICAL FOR TTS):
+- ALWAYS use inline backticks for code: \`npm install -g @anthropic-ai/claude-code\`
+- AVOID multi-line code blocks - TTS cannot read them properly
+- For multi-line code: describe each line with inline code, for example: "Run \`npm install\`, then \`npm run build\`"
+- NEVER use triple backticks (\`\`\`) - they create code blocks that are skipped by TTS
 - NEVER rewrite code symbols in prose - keep \`-g\` as \`-g\`, not "dash g"
 - The TTS system will automatically convert \`-g\` to "dash g" when speaking
-- Commands should be copy-pasteable, so preserve exact syntax
+- When showing commands, use inline code: "Use \`claude init\` to start"
 
 OTHER FORMATTING:
 - Use **bold** for emphasis on key terms

@@ -55,8 +55,17 @@ export function markdownToDisplayText(text: string): string {
  */
 export function markdownToSpeakableText(text: string): string {
   return text
-    // Remove code blocks entirely (not useful for TTS)
-    .replace(/```[\w]*\n?([\s\S]*?)```/g, "")
+    // Extract code blocks and convert to speakable text (fallback if AI still uses them)
+    // Remove language identifier and convert content to speech
+    .replace(/```[\w]*\n?([\s\S]*?)```/g, (_match, code: string) => {
+      // Convert each line of code to speakable text
+      return code
+        .split('\n')
+        .map((line: string) => line.trim())
+        .filter((line: string) => line.length > 0)
+        .map((line: string) => convertCodeToSpeech(line))
+        .join(', ');
+    })
     // Extract and convert inline code - handle symbols for speech
     .replace(/`([^`]+)`/g, (_match, code: string) => convertCodeToSpeech(code))
     // Convert headers to spoken form - use comma for light pause, not period

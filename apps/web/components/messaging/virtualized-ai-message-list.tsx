@@ -255,7 +255,7 @@ export function VirtualizedAIMessageList({
             );
           }
 
-          // Loading indicator
+          // Loading indicator - animated typing dots while waiting for response
           const loadingIndex = hasStreaming ? 1 : 0;
           if (hasLoading && extraIndex === loadingIndex) {
             return (
