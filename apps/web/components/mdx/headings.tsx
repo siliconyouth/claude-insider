@@ -4,11 +4,12 @@
  * MDX Heading Components with Ask AI
  *
  * Headings that include contextual Ask AI buttons.
+ * Uses UnifiedChatProvider's openAIAssistant to trigger the chat window.
  */
 
 import { useCallback, type ReactNode } from "react";
 import { cn } from "@/lib/design-system";
-import { useAskAI } from "../ask-ai";
+import { openAIAssistant } from "@/components/unified-chat";
 import { getPageContext } from "@/lib/ai-context";
 
 interface HeadingProps {
@@ -21,22 +22,23 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
   const Tag = `h${level}` as const;
 
   function Heading({ children, id, className }: HeadingProps) {
-    const { openWithContext } = useAskAI();
     const text = typeof children === "string" ? children : "";
 
     const handleAskAI = useCallback(() => {
       const pageContext = getPageContext();
-      openWithContext({
-        page: {
-          ...pageContext,
-          section: text,
-        },
-        content: {
-          type: "heading",
-          title: text,
+      openAIAssistant({
+        context: {
+          page: {
+            ...pageContext,
+            section: text,
+          },
+          content: {
+            type: "heading",
+            title: text,
+          },
         },
       });
-    }, [openWithContext, text]);
+    }, [text]);
 
     const sizeClasses = {
       1: "text-3xl font-bold",

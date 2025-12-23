@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { cn } from "@/lib/design-system";
 import { Skeleton } from "@/components/skeleton";
-import { useAskAI } from "./ask-ai";
+import { openAIAssistant } from "@/components/unified-chat";
 import { getPageContext } from "@/lib/ai-context";
 
 // Language display names and colors - each language has a unique, distinct color
@@ -130,7 +130,6 @@ export function LazyCodeBlock({
   const [highlighted, setHighlighted] = useState(false);
   const [isHighlighting, setIsHighlighting] = useState(false);
   const codeRef = useRef<HTMLElement>(null);
-  const { openWithContext } = useAskAI();
 
   const { ref, isIntersecting } = useIntersectionObserver({
     rootMargin,
@@ -205,15 +204,17 @@ export function LazyCodeBlock({
   const handleAskAI = useCallback(() => {
     const code = codeRef.current?.textContent || "";
     const pageContext = getPageContext();
-    openWithContext({
-      page: pageContext,
-      content: {
-        type: "code",
-        code,
-        language: langConfig.name,
+    openAIAssistant({
+      context: {
+        page: pageContext,
+        content: {
+          type: "code",
+          code,
+          language: langConfig.name,
+        },
       },
     });
-  }, [openWithContext, langConfig.name]);
+  }, [langConfig.name]);
 
   // Show skeleton placeholder if not in viewport yet
   if (!isIntersecting && showPlaceholder) {

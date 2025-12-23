@@ -14,7 +14,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { cn } from "@/lib/design-system";
-import { useAskAI } from "./ask-ai";
+import { openAIAssistant } from "@/components/unified-chat";
 import { getPageContext } from "@/lib/ai-context";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -298,7 +298,6 @@ export function CodePlayground({
   const [showShareMenu, setShowShareMenu] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const highlightRef = useRef<HTMLPreElement>(null);
-  const { openWithContext, openWithQuestion } = useAskAI();
 
   const langConfig = LANGUAGE_CONFIG[currentLanguage];
 
@@ -451,8 +450,8 @@ export function CodePlayground({
   const handleAIExplain = useCallback(() => {
     setShowAIMenu(false);
     const pageContext = getPageContext();
-    openWithContext(
-      {
+    openAIAssistant({
+      context: {
         page: pageContext,
         content: {
           type: "code",
@@ -460,22 +459,24 @@ export function CodePlayground({
           language: langConfig.name,
         },
       },
-      "Explain this code step by step"
-    );
-  }, [code, langConfig.name, openWithContext]);
+      question: "Explain this code step by step",
+    });
+  }, [code, langConfig.name]);
 
   const handleAIImprove = useCallback(() => {
     setShowAIMenu(false);
-    openWithQuestion(`How can I improve this ${langConfig.name} code?\n\n\`\`\`${currentLanguage}\n${code}\n\`\`\``);
-  }, [code, currentLanguage, langConfig.name, openWithQuestion]);
+    openAIAssistant({
+      question: `How can I improve this ${langConfig.name} code?\n\n\`\`\`${currentLanguage}\n${code}\n\`\`\``,
+    });
+  }, [code, currentLanguage, langConfig.name]);
 
   const handleAIDebug = useCallback(() => {
     setShowAIMenu(false);
     const errorContext = result?.error ? `\n\nI'm getting this error: ${result.error}` : "";
-    openWithQuestion(
-      `Help me debug this ${langConfig.name} code${errorContext}\n\n\`\`\`${currentLanguage}\n${code}\n\`\`\``
-    );
-  }, [code, currentLanguage, langConfig.name, result, openWithQuestion]);
+    openAIAssistant({
+      question: `Help me debug this ${langConfig.name} code${errorContext}\n\n\`\`\`${currentLanguage}\n${code}\n\`\`\``,
+    });
+  }, [code, currentLanguage, langConfig.name, result]);
 
   // Handle share
   const handleShare = useCallback(async () => {

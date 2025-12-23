@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, ReactNode, useCallback } from "react";
-import { useAskAI } from "./ask-ai";
+import { openAIAssistant } from "@/components/unified-chat";
 import { getPageContext } from "@/lib/ai-context";
 import hljs from "highlight.js/lib/core";
 // Import common languages
@@ -195,7 +195,6 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const codeRef = useRef<HTMLElement>(null);
   const [highlighted, setHighlighted] = useState(false);
-  const { openWithContext } = useAskAI();
 
   // Extract language from className (e.g., "language-typescript")
   const languageMatch = className?.match(/language-(\w+)/);
@@ -235,15 +234,17 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
   const handleAskAI = useCallback(() => {
     const code = codeRef.current?.textContent || "";
     const pageContext = getPageContext();
-    openWithContext({
-      page: pageContext,
-      content: {
-        type: "code",
-        code,
-        language: langConfig.name,
+    openAIAssistant({
+      context: {
+        page: pageContext,
+        content: {
+          type: "code",
+          code,
+          language: langConfig.name,
+        },
       },
     });
-  }, [openWithContext, langConfig.name]);
+  }, [langConfig.name]);
 
   return (
     <div className="group relative my-4">

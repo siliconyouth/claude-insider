@@ -12,7 +12,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { cn } from "@/lib/design-system";
-import { useAskAI } from "../ask-ai";
+import { openAIAssistant } from "@/components/unified-chat";
 import {
   getCachedFAQs,
   getFAQsByCategory,
@@ -27,7 +27,6 @@ export function FAQContent() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [feedbackGiven, setFeedbackGiven] = useState<Set<string>>(new Set());
-  const { openWithQuestion } = useAskAI();
 
   // Load FAQs on mount
   useEffect(() => {
@@ -68,9 +67,9 @@ export function FAQContent() {
   // Ask AI for more details
   const handleAskMore = useCallback(
     (question: string) => {
-      openWithQuestion(`Can you explain more about: ${question}`);
+      openAIAssistant({ question: `Can you explain more about: ${question}` });
     },
-    [openWithQuestion]
+    []
   );
 
   // Group FAQs by category
@@ -151,7 +150,7 @@ export function FAQContent() {
           Our AI assistant can help you find answers to any question about Claude AI.
         </p>
         <button
-          onClick={() => openWithQuestion("I have a question about Claude Code")}
+          onClick={() => openAIAssistant({ question: "I have a question about Claude Code" })}
           className={cn(
             "inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium text-white",
             "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
