@@ -25,12 +25,12 @@ interface FooterColumn {
   links: FooterLink[];
 }
 
-type FooterColumnKeys = "product" | "documentation" | "resources" | "company" | "legal";
+type FooterColumnKeys = "features" | "documentation" | "resources" | "project" | "legal";
 
 // Footer column configuration
 const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
-  product: {
-    titleKey: "product",
+  features: {
+    titleKey: "features",
     links: [
       { href: "/docs", labelKey: "documentation" },
       { href: "/resources", labelKey: "resources" },
@@ -61,8 +61,8 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
       { href: "/resources/community", label: "Community" },
     ],
   },
-  company: {
-    titleKey: "company",
+  project: {
+    titleKey: "project",
     links: [
       { href: "/stats", label: "Stats" },
       { href: "/changelog", labelKey: "changelog" },
@@ -129,11 +129,10 @@ export function Footer() {
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link
               href="/"
-              className="flex items-center gap-2.5 mb-4 hover:opacity-80 transition-opacity"
+              className="inline-flex flex-col mb-4 hover:opacity-80 transition-opacity"
+              aria-label="Claude Insider home"
             >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20">
-                <span className="text-sm font-bold text-white tracking-tight">Ci</span>
-              </div>
+              <MonochromeLogo size={32} className="mb-2" />
               <span className="text-lg font-semibold text-gray-900 dark:text-white">
                 Claude Insider
               </span>
@@ -149,7 +148,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  className="text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -158,11 +157,11 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Product Column */}
+          {/* Features Column */}
           <div>
-            <h3 className={columnTitleClass}>{t(footerColumns.product.titleKey)}</h3>
+            <h3 className={columnTitleClass}>{t(footerColumns.features.titleKey)}</h3>
             <ul className="space-y-3">
-              {footerColumns.product.links.map((link) => (
+              {footerColumns.features.links.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={cn(linkClass, "flex items-center gap-2")}>
                     {link.labelKey ? t(link.labelKey) : link.label}
@@ -210,11 +209,11 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Company Column */}
+          {/* Project Column */}
           <div>
-            <h3 className={columnTitleClass}>{t(footerColumns.company.titleKey)}</h3>
+            <h3 className={columnTitleClass}>{t(footerColumns.project.titleKey)}</h3>
             <ul className="space-y-3">
-              {footerColumns.company.links.map((link) => (
+              {footerColumns.project.links.map((link) => (
                 <li key={link.href}>
                   {link.external ? (
                     <a
