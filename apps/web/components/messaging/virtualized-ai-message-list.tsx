@@ -49,6 +49,10 @@ interface VirtualizedAIMessageListProps {
   onSomethingElse?: () => void;
   /** Whether there are more recommendations available */
   hasMoreRecommendations?: boolean;
+  /** Whether TTS is currently speaking (for streaming message Stop button) */
+  isSpeaking?: boolean;
+  /** Callback to stop TTS playback */
+  onStopSpeaking?: () => void;
 }
 
 // ============================================================================
@@ -65,6 +69,8 @@ export function VirtualizedAIMessageList({
   recommendations = [],
   onSomethingElse,
   hasMoreRecommendations = false,
+  isSpeaking = false,
+  onStopSpeaking,
 }: VirtualizedAIMessageListProps) {
   const parentRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
@@ -226,6 +232,25 @@ export function VirtualizedAIMessageList({
                 }}
               >
                 <ChatMessageStreaming content={streamingContent} />
+                {/* Stop button when auto-speaking during fake-stream */}
+                {isSpeaking && onStopSpeaking && (
+                  <div className="flex justify-end px-4 -mt-2 mb-2">
+                    <button
+                      onClick={onStopSpeaking}
+                      className={cn(
+                        "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm",
+                        "bg-red-500/10 text-red-600 dark:text-red-400",
+                        "hover:bg-red-500/20 transition-colors"
+                      )}
+                      aria-label="Stop speaking"
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <rect x="6" y="6" width="12" height="12" rx="1" />
+                      </svg>
+                      Stop
+                    </button>
+                  </div>
+                )}
               </div>
             );
           }

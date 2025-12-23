@@ -1530,6 +1530,8 @@ export function AIAssistantTab() {
               }
               onSomethingElse={handleSomethingElse}
               hasMoreRecommendations={recommendationPool.length > 0}
+              isSpeaking={isSpeaking}
+              onStopSpeaking={stopSpeaking}
             />
           )}
 
