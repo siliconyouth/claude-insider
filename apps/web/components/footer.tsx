@@ -64,11 +64,11 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
   project: {
     titleKey: "project",
     links: [
+      { href: "https://github.com/siliconyouth/claude-insider", label: "GitHub", external: true },
       { href: "/stats", label: "Stats" },
       { href: "/changelog", labelKey: "changelog" },
-      { href: "/donate", labelKey: "donate", highlight: true },
       { href: "/users", label: "Community" },
-      { href: "https://github.com/siliconyouth/claude-insider", label: "GitHub", external: true },
+      { href: "/donate", labelKey: "donate", highlight: true },
     ],
   },
   legal: {
