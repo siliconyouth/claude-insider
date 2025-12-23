@@ -9,7 +9,7 @@ import { MonochromeLogo } from "@/components/monochrome-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { openAIAssistant } from "@/components/unified-chat";
 
-const APP_VERSION = "1.12.3";
+const APP_VERSION = "1.12.5";
 
 // Type definitions for footer links
 interface FooterLink {

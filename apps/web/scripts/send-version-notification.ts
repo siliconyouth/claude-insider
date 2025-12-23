@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.12.4 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.12.5 notification to all opted-in users...\n");
 
-  const version = "1.12.4";
-  const title = "Claude Insider v1.12.4 - Lighthouse 100% Performance";
+  const version = "1.12.5";
+  const title = "Claude Insider v1.12.5 - Synchronized Loading & Docs Optimization";
   const message =
-    "🚀 100% Lighthouse score on desktop (up from 73%) • ⚡ TBT reduced from 2,010ms to 0ms • 📦 Provider deferral with requestIdleCallback • 🔄 Homepage sections now code-split for faster loading";
+    "🔄 Synchronized provider loading (no more flickering) • 📚 CLAUDE.md optimized 57% (2,372 → 1,011 lines) • 📖 New companion docs: FEATURES.md, DATABASE.md, PATTERNS.md";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

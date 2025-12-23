@@ -157,14 +157,45 @@ export function LazyMyProvider({ children }: { children: ReactNode }) {
 }
 ```
 
-### Provider Deferral with requestIdleCallback
+### Synchronized Provider Deferral (MANDATORY - v1.12.5)
+
+**CRITICAL**: All lazy providers MUST use `DeferredLoadingProvider` to prevent flickering. Do NOT use individual `requestIdleCallback` calls per provider.
 
 ```tsx
-// components/providers/lazy-my-provider.tsx
+// Step 1: deferred-loading-context.tsx (already exists)
 "use client";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-import { useEffect, useState, type ReactNode } from "react";
+const DeferredLoadingContext = createContext({ isReady: false });
+export function useDeferredLoading(): boolean {
+  return useContext(DeferredLoadingContext).isReady;
+}
+
+export function DeferredLoadingProvider({ children, timeout = 2000 }: {
+  children: ReactNode;
+  timeout?: number;
+}) {
+  const [isReady, setIsReady] = useState(false);
+  useEffect(() => {
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(() => setIsReady(true), { timeout });
+      return () => window.cancelIdleCallback(id);
+    } else {
+      const id = setTimeout(() => setIsReady(true), Math.min(timeout, 1500));
+      return () => clearTimeout(id);
+    }
+  }, [timeout]);
+  return (
+    <DeferredLoadingContext.Provider value={{ isReady }}>
+      {children}
+    </DeferredLoadingContext.Provider>
+  );
+}
+
+// Step 2: Lazy provider uses shared hook (NOT its own useEffect)
+"use client";
 import dynamic from "next/dynamic";
+import { useDeferredLoading } from "./deferred-loading-context";
 
 const MyProvider = dynamic(
   () => import("./my-provider").then((m) => ({ default: m.MyProvider })),
@@ -172,31 +203,28 @@ const MyProvider = dynamic(
 );
 
 export function LazyMyProvider({ children }: { children: ReactNode }) {
-  const [shouldLoad, setShouldLoad] = useState(false);
-
-  useEffect(() => {
-    // Use requestIdleCallback to defer until browser is truly idle
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(
-        () => setShouldLoad(true),
-        { timeout: 3000 } // Max delay before forcing load
-      );
-      return () => window.cancelIdleCallback(id);
-    } else {
-      // Fallback for Safari: use setTimeout
-      const timeout = setTimeout(() => setShouldLoad(true), 2000);
-      return () => clearTimeout(timeout);
-    }
-  }, []);
-
-  // Render children immediately, only wrap with provider when ready
-  if (!shouldLoad) {
-    return <>{children}</>;
-  }
-
+  const isReady = useDeferredLoading(); // Uses shared state!
+  if (!isReady) return <>{children}</>;
   return <MyProvider>{children}</MyProvider>;
 }
+
+// Step 3: Wrap provider tree in layout.tsx
+<DeferredLoadingProvider timeout={2000}>
+  <LazyFingerprintProvider>
+    <LazyRealtimeProvider>
+      <LazyE2EEProvider>
+        <LazySoundProvider>
+          {children}
+        </LazySoundProvider>
+      </LazyE2EEProvider>
+    </LazyRealtimeProvider>
+  </LazyFingerprintProvider>
+</DeferredLoadingProvider>
 ```
+
+**Why this pattern?**
+- ❌ Old pattern: 4 providers × 4 `requestIdleCallback` calls = 4 re-renders = flickering
+- ✅ New pattern: 1 coordinator × 1 `requestIdleCallback` call = 1 re-render = smooth
 
 ### Homepage Section Lazy Loading
 

@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 
 // Current app version - updated during release
-const APP_VERSION = "1.12.4";
+const APP_VERSION = "1.12.5";
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {
@@ -24,6 +24,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.5",
+    date: "2025-12-23",
+    type: "patch",
+    highlights: [
+      "🔄 Synchronized Provider Loading: All lazy providers now load together (1 re-render instead of 4)",
+      "✨ No More Flickering: DeferredLoadingProvider coordinates all deferred content",
+      "📚 CLAUDE.md Optimization: 57% reduction (2,372 → 1,011 lines) with companion docs",
+      "📖 New Documentation: FEATURES.md, DATABASE.md, PATTERNS.md for detailed reference",
+    ],
+  },
+  {
     version: "1.12.4",
     date: "2025-12-23",
     type: "patch",
@@ -32,7 +43,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "📱 Mobile 98%: Throttled mobile score improved from 44% to 98%",
       "⚡ Zero TBT: Total Blocking Time reduced from 2,010ms to 0ms",
       "🔄 requestIdleCallback: Providers now defer until browser is idle",
-      "📦 Code Splitting: Below-fold homepage sections lazy loaded",
     ],
   },
   {
@@ -42,7 +52,6 @@ const CHANGELOG: ChangelogEntry[] = [
     highlights: [
       "⚡ ElevenLabs Turbo v2.5: 3x faster TTS with optimized streaming latency",
       "📝 Immediate Text Streaming: Text appears instantly without buffering",
-      "💻 Code Block TTS: CLI flags and code now read naturally",
     ],
   },
   {

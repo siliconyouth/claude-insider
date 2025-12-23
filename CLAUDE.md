@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.4**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.5**.
 
 | Link | URL |
 |------|-----|
@@ -351,18 +351,27 @@ Lighthouse targets: **Desktop > 90%** (current: 100%), **Mobile > 85%** (current
 | Modals/Dialogs | `next/dynamic` with `ssr: false` |
 | Below-fold content | Dynamic imports |
 | Third-party libs | Lazy load |
-| Context Providers | `Lazy*Provider` wrapper with `requestIdleCallback` |
+| Context Providers | `Lazy*Provider` wrapper using `DeferredLoadingProvider` |
 
-### Provider Deferral (MANDATORY)
+### Synchronized Provider Deferral (MANDATORY - v1.12.5)
 
-All client-only providers MUST use `requestIdleCallback` deferral:
+**CRITICAL**: All lazy providers MUST use `DeferredLoadingProvider` for synchronized loading. This prevents flickering from multiple re-renders.
 
-| Provider | Timeout | Bundle Size |
-|----------|---------|-------------|
-| `LazySoundProvider` | 2s | ~12KB |
-| `LazyRealtimeProvider` | 2.5s | ~16KB |
-| `LazyFingerprintProvider` | 3s | ~32KB |
-| `LazyE2EEProvider` | 4s | ~157KB |
+| Rule | Description |
+|------|-------------|
+| **Single Coordinator** | `DeferredLoadingProvider` fires ONE `requestIdleCallback` |
+| **Shared State** | All lazy providers consume `useDeferredLoading()` hook |
+| **No Individual Timers** | Lazy providers MUST NOT have their own `requestIdleCallback` |
+| **Result** | 1 re-render instead of 4+ (eliminates flickering) |
+
+**Synchronized Providers** (all load together after 2s):
+
+| Provider | Bundle Size | Purpose |
+|----------|-------------|---------|
+| `LazyFingerprintProvider` | ~32KB | Browser fingerprinting |
+| `LazyRealtimeProvider` | ~16KB | Supabase real-time |
+| `LazyE2EEProvider` | ~157KB | Matrix WASM encryption |
+| `LazySoundProvider` | ~12KB | Web Audio API |
 
 ### Homepage Lazy Sections
 
@@ -376,7 +385,7 @@ All client-only providers MUST use `requestIdleCallback` deferral:
 
 `aria-label` MUST match or contain visible text content.
 
-### Performance Targets (v1.12.4)
+### Performance Targets (v1.12.5)
 
 | Metric | Target | Current |
 |--------|--------|---------|

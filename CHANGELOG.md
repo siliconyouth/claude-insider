@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.5] - 2025-12-23
+### Synchronized Provider Loading & Documentation Optimization
+- **Flickering Fix**: All lazy providers now load synchronously via `DeferredLoadingProvider`
+  - Before: 4 separate `requestIdleCallback` calls = 4 re-renders = visible flickering
+  - After: 1 coordinated `requestIdleCallback` = 1 re-render = smooth loading
+  - `DeferredLoadingProvider` fires single idle callback with 2s timeout
+  - All 4 lazy providers (`Fingerprint`, `Realtime`, `E2EE`, `Sound`) consume shared state
+- **CLAUDE.md Optimization**: Reduced from 2,372 lines to 1,011 lines (57% reduction)
+  - Extracted `docs/DATABASE.md` (317 lines) - Schema, tables, queries
+  - Extracted `FEATURES.md` (128 lines) - Feature catalog
+  - Extracted `docs/PATTERNS.md` (480 lines) - Code examples & templates
+  - All rules and guidelines retained, only examples moved
+- **MANDATORY Performance Rules**: Updated with synchronized provider loading pattern
+  - Lazy providers MUST use `useDeferredLoading()` hook
+  - Individual `requestIdleCallback` per provider is PROHIBITED
+  - New pattern documented in `docs/PATTERNS.md`
+
+---
+
 ## [1.12.4] - 2025-12-23
 ### Lighthouse Performance Optimization (100% Score)
 - **Massive Performance Improvements**: Lighthouse scores improved dramatically
