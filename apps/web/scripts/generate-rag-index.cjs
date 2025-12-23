@@ -60,13 +60,20 @@ try {
   getResourceRelationships = () => ({});
   getDocRelationships = () => ({});
 }
+// Import Ask AI context generator (optional)
+let generateAskAIContextChunks;
+try {
+  generateAskAIContextChunks = require("./generate-ask-ai-context-index.cjs").generateAskAIContextChunks;
+} catch {
+  generateAskAIContextChunks = () => ({ chunks: [], stats: {} });
+}
 
 // ===========================================================================
 // CONFIGURATION
 // ===========================================================================
 
 const VERBOSE = true;
-const VERSION = "6.3"; // Increment when making significant changes - Added doc-resource relationships
+const VERSION = "7.0"; // Increment when making significant changes - Added Ask AI context chunks
 const FORCE_REGENERATE = process.argv.includes("--force");
 
 // ===========================================================================
@@ -109,6 +116,7 @@ function computeContentHash() {
     path.join(__dirname, "generate-rag-index.cjs"),
     path.join(__dirname, "generate-project-knowledge.cjs"),
     path.join(__dirname, "generate-settings-index.cjs"),
+    path.join(__dirname, "generate-ask-ai-context-index.cjs"),
   ].filter(f => fs.existsSync(f)).sort();
 
   // Add file contents to hash
@@ -254,6 +262,7 @@ function logFinalStats(stats) {
     ["Settings/Options", stats.settingsChunkCount],
     ["External Sources", stats.externalSourceCount],
     ["Code Examples", stats.codeExamplesCount],
+    ["Ask AI Context", stats.askAIContextCount],
   ];
 
   chunks.forEach(([label, value]) => {
@@ -832,14 +841,34 @@ function generateRagIndex() {
   }
 
   // =========================================================================
-  // 8. BUILD TF-IDF INDEX
+  // 8. ASK AI CONTEXT CHUNKS
+  // =========================================================================
+  logSection("ASK AI CONTEXT CHUNKS");
+  logSubsection("Generating FAQ, page, paragraph, code, and resource context...");
+
+  const { chunks: askAIChunks, stats: askAIStats } = generateAskAIContextChunks();
+  chunks.push(...askAIChunks);
+
+  const askAIChunkCount = askAIChunks.length;
+
+  if (VERBOSE) {
+    logStat("FAQ chunks:", (askAIStats.faqCount || 0).toString());
+    logStat("Page context chunks:", (askAIStats.pageContextCount || 0).toString());
+    logStat("Paragraph context chunks:", (askAIStats.paragraphCount || 0).toString());
+    logStat("Code block context chunks:", (askAIStats.codeBlockCount || 0).toString());
+    logStat("Resource context chunks:", (askAIStats.resourceContextCount || 0).toString());
+    logStat("Total Ask AI chunks:", askAIChunkCount.toString());
+  }
+
+  // =========================================================================
+  // 9. BUILD TF-IDF INDEX
   // =========================================================================
   logSection("TF-IDF INDEX");
 
   const { tfidfIndex, idfValues, termCount } = buildTfidfIndex(chunks);
 
   // =========================================================================
-  // 9. CREATE AND WRITE RAG INDEX
+  // 10. CREATE AND WRITE RAG INDEX
   // =========================================================================
   logSection("WRITING OUTPUT");
   logSubsection("Generating JSON output file...");
@@ -857,6 +886,8 @@ function generateRagIndex() {
     settingsChunkCount: settingsChunkCount,
     externalSourceCount: sourceChunkCount,
     codeExamplesCount: codeChunkCount,
+    askAIContextCount: askAIChunkCount,
+    askAIStats: askAIStats,
     resourceRelationships: resourceRelationships,
     docRelationships: docRelationships,
     chunks,
@@ -893,6 +924,7 @@ function generateRagIndex() {
     settingsChunkCount: settingsChunkCount,
     externalSourceCount: sourceChunkCount,
     codeExamplesCount: codeChunkCount,
+    askAIContextCount: askAIChunkCount,
     tfidfTerms: termCount,
     fileSizeKB: fileSizeKB,
     categories: [
@@ -903,6 +935,11 @@ function generateRagIndex() {
       "Settings",
       "Sources",
       "Code",
+      "FAQ",
+      "PageContext",
+      "ParagraphContext",
+      "CodeContext",
+      "ResourceContext",
     ],
     outputPath: outputPath.replace(process.cwd(), "."),
   });
