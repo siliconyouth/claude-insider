@@ -36,7 +36,8 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
       { href: "/resources", labelKey: "resources" },
       { href: "/playground", label: "Playground" },
       { href: "/prompts", label: "Prompt Library" },
-      { href: "/assistant", label: "AI Assistant", badge: "New" },
+      { href: "/assistant", label: "Ask AI", badge: "New" },
+      { href: "/messages", label: "Chat" },
     ],
   },
   documentation: {
@@ -65,8 +66,8 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
     titleKey: "project",
     links: [
       { href: "https://github.com/siliconyouth/claude-insider", label: "GitHub", external: true },
-      { href: "/stats", label: "Stats" },
       { href: "/changelog", labelKey: "changelog" },
+      { href: "/stats", label: "Stats" },
       { href: "/users", label: "Community" },
       { href: "/donate", labelKey: "donate", highlight: true },
     ],
