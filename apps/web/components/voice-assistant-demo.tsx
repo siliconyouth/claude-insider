@@ -50,7 +50,7 @@ export function VoiceAssistantDemo() {
   const [highlightedSuggestion, setHighlightedSuggestion] = useState<number | null>(null);
   const [streamingText, setStreamingText] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   // Typewriter effect for streaming
   const streamText = useCallback((text: string, onComplete: () => void) => {
@@ -72,9 +72,12 @@ export function VoiceAssistantDemo() {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll to bottom when messages change
+  // Scroll to bottom when messages change (within container only, not page)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }, [messages, streamingText, isTyping]);
 
   // Main animation cycle
@@ -255,7 +258,7 @@ export function VoiceAssistantDemo() {
         </div>
 
         {/* Messages area */}
-        <div className="h-[340px] overflow-y-auto p-4 space-y-4">
+        <div ref={messagesContainerRef} className="h-[340px] overflow-y-auto p-4 space-y-4">
           {/* Suggested questions - only show when no messages */}
           {showSuggestions && messages.length === 0 && (
             <div className="space-y-3 animate-fade-in">
@@ -385,7 +388,6 @@ export function VoiceAssistantDemo() {
             </div>
           )}
 
-          <div ref={messagesEndRef} />
         </div>
 
         {/* Input area */}
