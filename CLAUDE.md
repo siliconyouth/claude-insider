@@ -1137,6 +1137,44 @@ When adding new navigation items:
 - [ ] All links have proper `aria-label` attributes
 - [ ] Icon-only buttons include `title` for tooltips
 
+#### Device Mockup Screenshots (MANDATORY)
+
+**Location**: `public/images/mobile-screenshot.png` → `components/device-mockups.tsx`
+
+When updating the mobile screenshot used in the iPhone device mockup on the homepage, you MUST ensure both the header AND bottom navigation bar are fully visible.
+
+**Technical Requirements**:
+
+| Aspect | Requirement | Reason |
+|--------|-------------|--------|
+| **Viewport Size** | 430 × 898 px | Matches iPhone mockup screen ratio (224:468 ≈ 1:2.09) |
+| **Source** | Live site (claudeinsider.com) | Avoid dev tools/localhost artifacts |
+| **Header** | 4 icons visible in one row | Search, Theme, Sign-in, Menu |
+| **Bottom Nav** | All 5 tabs visible | Home, Docs, Resources, Chat, Sign In |
+| **AI Assistant FAB** | Include in screenshot | Part of mobile UX |
+
+**Why 430×898 instead of real iPhone dimensions (430×932)?**
+
+The iPhone mockup SVG uses a screen area of 224×468 pixels (ratio ~1:2.09). A screenshot at 430×932 (ratio ~1:2.17) would be taller than the mockup area. With `object-cover object-top`, the excess height gets cropped from the bottom, cutting off the navigation bar.
+
+**MANDATORY Checklist for Mockup Updates**:
+
+- [ ] Navigate to `https://www.claudeinsider.com` (NOT localhost)
+- [ ] Resize viewport to exactly **430 × 898** pixels
+- [ ] Verify header shows 4 icons in single row
+- [ ] Verify bottom nav shows all 5 tabs
+- [ ] Verify AI Assistant FAB is visible
+- [ ] Save to `public/images/mobile-screenshot.png`
+- [ ] Commit with descriptive message
+
+**Command to Capture** (using Playwright):
+```bash
+# Resize to mockup-matching dimensions
+await page.setViewportSize({ width: 430, height: 898 });
+# Take screenshot
+await page.screenshot({ path: 'mobile-screenshot.png' });
+```
+
 ---
 
 ## Data Layer Architecture (MANDATORY)
