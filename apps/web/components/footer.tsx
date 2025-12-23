@@ -7,6 +7,7 @@ import { FooterLanguageSelector } from "@/components/footer-language-selector";
 import { SoundToggle } from "@/components/sound-toggle";
 import { MonochromeLogo } from "@/components/monochrome-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { openAIAssistant } from "@/components/unified-chat";
 
 const APP_VERSION = "1.10.8";
 
@@ -18,6 +19,7 @@ interface FooterLink {
   badge?: string;
   highlight?: boolean;
   external?: boolean;
+  action?: "openAIAssistant"; // Special action to open AI Assistant window
 }
 
 interface FooterColumn {
@@ -36,7 +38,7 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
       { href: "/resources", labelKey: "resources" },
       { href: "/playground", label: "Playground" },
       { href: "/prompts", label: "Prompt Library" },
-      { href: "/assistant", label: "Ask AI", badge: "New" },
+      { href: "#", label: "AI Assistant", badge: "New", action: "openAIAssistant" },
       { href: "/messages", label: "Chat" },
     ],
   },
@@ -131,16 +133,19 @@ export function Footer() {
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link
               href="/"
-              className="inline-flex flex-col mb-4 hover:opacity-80 transition-opacity"
+              className="inline-flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity"
               aria-label="Claude Insider home"
             >
-              <MonochromeLogo size={32} className="mb-2" />
+              <MonochromeLogo size={32} variant="contrast" />
               <span className="text-lg font-semibold text-gray-900 dark:text-white">
                 Claude Insider
               </span>
             </Link>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 max-w-xs">
-              {t("tagline")}
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 max-w-xs leading-relaxed">
+              <span className="block">Your comprehensive guide to Claude AI</span>
+              <span className="block text-gray-500 dark:text-gray-500">
+                Documentation · Resources · Best Practices
+              </span>
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
@@ -164,15 +169,29 @@ export function Footer() {
             <h3 className={columnTitleClass}>{t(footerColumns.features.titleKey)}</h3>
             <ul className="space-y-3">
               {footerColumns.features.links.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className={cn(linkClass, "flex items-center gap-2")}>
-                    {link.labelKey ? t(link.labelKey) : link.label}
-                    {link.badge && (
-                      <span className="px-1.5 py-0.5 text-[10px] font-semibold rounded bg-gradient-to-r from-violet-500 to-blue-500 text-white">
-                        {link.badge}
-                      </span>
-                    )}
-                  </Link>
+                <li key={link.label || link.labelKey}>
+                  {link.action === "openAIAssistant" ? (
+                    <button
+                      onClick={() => openAIAssistant()}
+                      className={cn(linkClass, "flex items-center gap-2")}
+                    >
+                      {link.labelKey ? t(link.labelKey) : link.label}
+                      {link.badge && (
+                        <span className="px-1.5 py-0.5 text-[10px] font-semibold rounded bg-gradient-to-r from-violet-500 to-blue-500 text-white">
+                          {link.badge}
+                        </span>
+                      )}
+                    </button>
+                  ) : (
+                    <Link href={link.href} className={cn(linkClass, "flex items-center gap-2")}>
+                      {link.labelKey ? t(link.labelKey) : link.label}
+                      {link.badge && (
+                        <span className="px-1.5 py-0.5 text-[10px] font-semibold rounded bg-gradient-to-r from-violet-500 to-blue-500 text-white">
+                          {link.badge}
+                        </span>
+                      )}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -277,7 +296,7 @@ export function Footer() {
                 className="hover:opacity-80 transition-opacity"
                 aria-label="Claude Insider home"
               >
-                <MonochromeLogo size={16} />
+                <MonochromeLogo size={16} variant="contrast" />
               </Link>
               <span>
                 © {currentYear} {t("copyrightShort")}

@@ -5,15 +5,39 @@ import { cn } from "@/lib/design-system";
 interface MonochromeLogoProps {
   className?: string;
   size?: number;
+  /**
+   * - "muted": Gray tones for subtle integration (original behavior)
+   * - "contrast": High contrast - black/white for better visibility
+   */
+  variant?: "muted" | "contrast";
 }
 
 /**
  * Monochrome "Ci" logo that adapts to theme
- * Uses footer text gray colors for consistency:
- * - Light mode: black background, gray text (matches footer text-gray-500)
- * - Dark mode: gray background (matches footer text-gray-500), black text
+ *
+ * Muted variant (default):
+ * - Light mode: black background, gray text
+ * - Dark mode: gray background, black text
+ *
+ * Contrast variant:
+ * - Light mode: black background, white text
+ * - Dark mode: white background, black text
  */
-export function MonochromeLogo({ className, size = 14 }: MonochromeLogoProps) {
+export function MonochromeLogo({
+  className,
+  size = 14,
+  variant = "muted",
+}: MonochromeLogoProps) {
+  const bgClass =
+    variant === "contrast"
+      ? "fill-gray-900 dark:fill-white"
+      : "fill-gray-900 dark:fill-gray-500";
+
+  const textClass =
+    variant === "contrast"
+      ? "fill-white dark:fill-gray-900"
+      : "fill-gray-500 dark:fill-gray-900";
+
   return (
     <svg
       width={size}
@@ -22,14 +46,9 @@ export function MonochromeLogo({ className, size = 14 }: MonochromeLogoProps) {
       className={cn("flex-shrink-0", className)}
       aria-hidden="true"
     >
-      {/* Background - black in light, gray in dark (matching footer text) */}
-      <rect
-        width="512"
-        height="512"
-        rx="80"
-        className="fill-gray-900 dark:fill-gray-500"
-      />
-      {/* Text - gray in light (matching footer text), black in dark */}
+      {/* Background */}
+      <rect width="512" height="512" rx="80" className={bgClass} />
+      {/* Text */}
       <text
         x="256"
         y="355"
@@ -37,7 +56,7 @@ export function MonochromeLogo({ className, size = 14 }: MonochromeLogoProps) {
         fontSize="300"
         fontWeight="800"
         textAnchor="middle"
-        className="fill-gray-500 dark:fill-gray-900"
+        className={textClass}
       >
         Ci
       </text>
