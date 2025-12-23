@@ -17,8 +17,7 @@ import {
   getBubbleClasses,
   getContainerClasses,
 } from "./chat-message-styles";
-import { LinkifiedText } from "@/components/linkified-text";
-import { markdownToDisplayText } from "@/lib/claude-utils";
+import { MarkdownContent } from "./markdown-content";
 
 // ============================================================================
 // TYPES
@@ -115,10 +114,8 @@ export function ChatMessage({
             // User messages: plain text
             <span>{content}</span>
           ) : (
-            // Assistant messages: markdown with links
-            <div className={styles.content.prose}>
-              <LinkifiedText text={markdownToDisplayText(content)} />
-            </div>
+            // Assistant messages: properly rendered markdown with links
+            <MarkdownContent content={content} />
           )}
         </div>
 

@@ -25,6 +25,7 @@ import {
   updateConversationMessages,
   deleteConversation,
   clearAllConversations,
+  renameConversation,
   getActiveConversationId,
   setActiveConversationId,
   getAssistantName,
@@ -167,6 +168,8 @@ export function AIAssistantTab() {
   const [showHistory, setShowHistory] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeConversationId, setActiveConvId] = useState<string | null>(null);
+  const [renamingConvId, setRenamingConvId] = useState<string | null>(null);
+  const [renameValue, setRenameValue] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   // Smart recommendations after AI response
@@ -925,6 +928,30 @@ export function AIAssistantTab() {
     }
   }, [announce]);
 
+  // Start renaming a conversation
+  const startRename = useCallback((convId: string, currentTitle: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setRenamingConvId(convId);
+    setRenameValue(currentTitle);
+  }, []);
+
+  // Save renamed conversation
+  const saveRename = useCallback(() => {
+    if (renamingConvId && renameValue.trim()) {
+      renameConversation(renamingConvId, renameValue.trim());
+      setConversations(getAllConversations());
+      announce(`Conversation renamed to ${renameValue.trim()}`);
+    }
+    setRenamingConvId(null);
+    setRenameValue("");
+  }, [renamingConvId, renameValue, announce]);
+
+  // Cancel renaming
+  const cancelRename = useCallback(() => {
+    setRenamingConvId(null);
+    setRenameValue("");
+  }, []);
+
   // ============================================================================
   // Render
   // ============================================================================
@@ -1015,9 +1042,8 @@ export function AIAssistantTab() {
               ) : (
                 <div className="space-y-2">
                   {conversations.map((conv) => (
-                    <button
+                    <div
                       key={conv.id}
-                      onClick={() => loadConversation(conv)}
                       className={cn(
                         "group w-full rounded-lg border p-3 text-left transition-all",
                         "hover:border-blue-500/50 hover:shadow-md",
@@ -1027,32 +1053,72 @@ export function AIAssistantTab() {
                       )}
                     >
                       <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0 flex-1">
-                          <p className={cn(
-                            "truncate text-sm font-medium",
-                            activeConversationId === conv.id
-                              ? "text-blue-600 dark:text-cyan-400"
-                              : "text-gray-900 dark:text-white"
-                          )}>
-                            {conv.title}
-                          </p>
+                        <button
+                          className="min-w-0 flex-1 text-left"
+                          onClick={() => loadConversation(conv)}
+                        >
+                          {renamingConvId === conv.id ? (
+                            <input
+                              type="text"
+                              value={renameValue}
+                              onChange={(e) => setRenameValue(e.target.value)}
+                              onBlur={saveRename}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") saveRename();
+                                if (e.key === "Escape") cancelRename();
+                              }}
+                              onClick={(e) => e.stopPropagation()}
+                              className={cn(
+                                "w-full px-2 py-1 rounded text-sm font-medium",
+                                "bg-white dark:bg-gray-700",
+                                "border border-blue-500",
+                                "focus:outline-none focus:ring-2 focus:ring-blue-500",
+                                "text-gray-900 dark:text-white"
+                              )}
+                              autoFocus
+                            />
+                          ) : (
+                            <p className={cn(
+                              "truncate text-sm font-medium",
+                              activeConversationId === conv.id
+                                ? "text-blue-600 dark:text-cyan-400"
+                                : "text-gray-900 dark:text-white"
+                            )}>
+                              {conv.title}
+                            </p>
+                          )}
                           <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
                             {conv.messages.length} message{conv.messages.length !== 1 ? "s" : ""} · {formatConversationTime(conv.updatedAt)}
                           </p>
-                        </div>
-                        <button
-                          onClick={(e) => deleteConv(conv.id, e)}
-                          className={cn(
-                            "rounded p-1 opacity-0 transition-all group-hover:opacity-100",
-                            "text-gray-400 hover:text-red-500",
-                            "hover:bg-red-100 dark:hover:bg-red-900/30"
-                          )}
-                          title="Delete conversation"
-                        >
-                          <TrashIcon className="h-4 w-4" />
                         </button>
+                        <div className="flex items-center gap-1">
+                          {/* Rename button */}
+                          <button
+                            onClick={(e) => startRename(conv.id, conv.title, e)}
+                            className={cn(
+                              "rounded p-1 opacity-0 transition-all group-hover:opacity-100",
+                              "text-gray-400 hover:text-blue-500",
+                              "hover:bg-blue-100 dark:hover:bg-blue-900/30"
+                            )}
+                            title="Rename conversation"
+                          >
+                            <PencilIcon className="h-4 w-4" />
+                          </button>
+                          {/* Delete button */}
+                          <button
+                            onClick={(e) => deleteConv(conv.id, e)}
+                            className={cn(
+                              "rounded p-1 opacity-0 transition-all group-hover:opacity-100",
+                              "text-gray-400 hover:text-red-500",
+                              "hover:bg-red-100 dark:hover:bg-red-900/30"
+                            )}
+                            title="Delete conversation"
+                          >
+                            <TrashIcon className="h-4 w-4" />
+                          </button>
+                        </div>
                       </div>
-                    </button>
+                    </div>
                   ))}
                 </div>
               )}
@@ -1080,52 +1146,124 @@ export function AIAssistantTab() {
           </div>
         )}
 
-        {/* Settings panel */}
+        {/* Settings Panel - Full screen overlay */}
         {showSettings && (
-          <div className="w-72 border-r border-gray-200 dark:border-[#262626] overflow-y-auto p-4 space-y-4">
-            <h3 className="font-medium text-gray-900 dark:text-white">Settings</h3>
-
-            {/* Voice selection */}
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">
-                Voice
-              </label>
-              <select
-                value={selectedVoice}
-                onChange={(e) => setSelectedVoice(e.target.value)}
+          <div className="absolute inset-0 z-10 flex flex-col bg-white dark:bg-gray-900">
+            {/* Settings Header */}
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+              <h3 className="font-semibold text-gray-900 dark:text-white">Assistant Settings</h3>
+              <button
+                onClick={() => setShowSettings(false)}
                 className={cn(
-                  "w-full rounded-lg px-3 py-2 text-sm",
-                  "bg-gray-100 dark:bg-gray-800",
-                  "border-0 focus:ring-2 focus:ring-blue-500"
+                  "rounded-lg p-2 transition-colors",
+                  "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white",
+                  "hover:bg-gray-100 dark:hover:bg-gray-800"
                 )}
+                title="Back to chat"
               >
-                {VOICES.map((voice) => (
-                  <option key={voice.id} value={voice.id}>
-                    {voice.name} - {voice.description}
-                  </option>
-                ))}
-              </select>
+                <CloseIcon className="h-5 w-5" />
+              </button>
             </div>
 
-            {/* Auto-speak toggle */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Auto-speak</span>
-              <button
-                onClick={() => setAutoSpeak(!autoSpeak)}
-                className={cn(
-                  "relative w-10 h-6 rounded-full transition-colors",
-                  autoSpeak
-                    ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600"
-                    : "bg-gray-300 dark:bg-gray-600"
-                )}
-              >
-                <span
+            {/* Settings Content */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-6">
+              {/* Voice Selection Section */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <SpeakerIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  <h4 className="font-medium text-gray-900 dark:text-white">Voice</h4>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Choose the voice for text-to-speech responses
+                </p>
+                <select
+                  value={selectedVoice}
+                  onChange={(e) => setSelectedVoice(e.target.value)}
                   className={cn(
-                    "absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform",
-                    autoSpeak && "translate-x-4"
+                    "w-full rounded-lg px-3 py-2.5 text-sm",
+                    "bg-gray-100 dark:bg-gray-800",
+                    "border border-gray-200 dark:border-gray-700",
+                    "focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                    "transition-all"
                   )}
-                />
-              </button>
+                >
+                  {VOICES.map((voice) => (
+                    <option key={voice.id} value={voice.id}>
+                      {voice.name} - {voice.description}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Auto-speak Toggle Section */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <h4 className="font-medium text-gray-900 dark:text-white">Auto-speak Responses</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Automatically read AI responses aloud
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setAutoSpeak(!autoSpeak)}
+                    className={cn(
+                      "relative w-11 h-6 rounded-full transition-colors",
+                      autoSpeak
+                        ? "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600"
+                        : "bg-gray-300 dark:bg-gray-600"
+                    )}
+                    role="switch"
+                    aria-checked={autoSpeak}
+                    aria-label="Auto-speak responses"
+                  >
+                    <span
+                      className={cn(
+                        "absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow transition-transform",
+                        autoSpeak && "translate-x-5"
+                      )}
+                    />
+                  </button>
+                </div>
+              </div>
+
+              {/* Voice Preview Section */}
+              <div className="space-y-3 border-t border-gray-200 dark:border-gray-700 pt-6">
+                <div className="flex items-center gap-2">
+                  <MicIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  <h4 className="font-medium text-gray-900 dark:text-white">Voice Preview</h4>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Test how the selected voice sounds
+                </p>
+                <button
+                  onClick={() => {
+                    if (isSpeaking) {
+                      stopSpeaking();
+                    } else {
+                      speakText("Hello! I'm your AI assistant. I'm here to help you learn about Claude and answer your questions.");
+                    }
+                  }}
+                  className={cn(
+                    "w-full flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium",
+                    "transition-all",
+                    isSpeaking
+                      ? "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800"
+                      : "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white hover:scale-[1.02]"
+                  )}
+                >
+                  {isSpeaking ? (
+                    <>
+                      <StopIcon className="h-4 w-4" />
+                      Stop Preview
+                    </>
+                  ) : (
+                    <>
+                      <SpeakerIcon className="h-4 w-4" />
+                      Play Preview
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -1291,8 +1429,17 @@ function HistoryIcon({ className }: { className?: string }) {
 function SettingsIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+      {/* Cog/gear icon */}
+      <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
       <circle cx="12" cy="12" r="3" />
-      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+    </svg>
+  );
+}
+
+function PencilIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
     </svg>
   );
 }

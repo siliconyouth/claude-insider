@@ -279,6 +279,27 @@ export function setActiveConversationId(id: string | null): void {
 }
 
 /**
+ * Rename a conversation
+ */
+export function renameConversation(id: string, newTitle: string): boolean {
+  if (typeof window === "undefined") return false;
+
+  try {
+    const conversations = getAllConversations();
+    const conv = conversations.find((c) => c.id === id);
+    if (conv) {
+      conv.title = newTitle.trim() || "Untitled";
+      conv.updatedAt = Date.now();
+      localStorage.setItem(STORAGE_KEYS.CONVERSATIONS, JSON.stringify(conversations));
+      return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Save a conversation (create or update)
  */
 export function saveConversation(conversation: Conversation): void {
