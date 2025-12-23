@@ -282,7 +282,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.10.8
+ * Realistic terminal content showing Claude Insider v1.11.0
  */
 function MacBookTerminalContent() {
   return (
@@ -310,11 +310,11 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.10.8</span>
+          <span className="text-[#8b949e]"> v1.11.0</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Features: 49 • Resources: 1,950+</span>
+          <span className="text-[#8b949e]"> Features: 49 • Resources: 1,952+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>
@@ -341,7 +341,7 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.10.8 with mobile header optimization
+ * Updated for v1.11.0 with footer redesign (flex + grid hybrid)
  */
 function IPhoneScreenContent() {
   return (
