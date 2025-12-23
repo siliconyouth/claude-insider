@@ -138,74 +138,28 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-### Implemented Features (49 total)
+**49 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
-| ID | Feature | Key Capabilities |
-|----|---------|------------------|
-| FR-1 | Content Management | MDX, syntax highlighting (33 languages), copy-to-clipboard, ToC with scroll spy |
-| FR-2 | Navigation | 7 categories, breadcrumbs, prev/next navigation, sidebar |
-| FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
-| FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
-| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (6,953 chunks with 14% audio-enriched), ElevenLabs Turbo v2.5 TTS (42 voices, immediate text streaming, low-latency audio), speech-to-text |
-| FR-6 | Resources Section | 1,952 curated resources, 10 categories, search, GitHub integration |
-| FR-7 | Account Security | Password management, OAuth linking, safety checks |
-| FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |
-| FR-9 | Admin Notifications | In-app, push, email channels; scheduling; targeting by role |
-| FR-10 | User API Keys | AES-256-GCM encryption, model detection, usage tracking |
-| FR-11 | Model Selection | Header dropdown, tier badges, real-time token counter |
-| FR-12 | Assistant Settings | Database-backed preferences, cross-device sync |
-| FR-13 | Enhanced Onboarding | API key setup, credits explanation |
-| FR-14 | Notification Popups | Persistent until dismissed, deep-linking, ARIA regions |
-| FR-15 | Settings Model | Model selector in settings with feedback |
-| FR-16 | Header Model Display | Smart API key indicators, BEST badge, tier colors |
-| FR-17 | Database Types | 126 tables, auto-generated TypeScript types |
-| FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
-| FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
-| FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
-| FR-21 | Sound Effects | Web Audio API, 26 sound types, 10 themes, 6 categories |
-| FR-22 | Group Chat | Roles (owner/admin/member), invitations, ownership transfer |
-| FR-23 | Admin Diagnostics | TEST ALL, streaming AI analysis, fix prompts |
-| FR-24 | API Key Testing | Validate keys, rate limits, model availability |
-| FR-25 | Resources API | Public endpoint, filtering, stats |
-| FR-26 | Link Checker | Connectivity tests, error handling |
-| FR-27 | Security Dashboard | Fingerprinting, trust scores, honeypots, activity feed |
-| FR-28 | E2EE | Matrix Olm/Megolm, device verification, cloud backup |
-| FR-29 | Unified Chat | AI + Messages tabs, portal-rendered, focus trap |
-| FR-30 | Donation System | PayPal, bank transfer, donor badges, receipts |
-| FR-31 | PWA Enhancements | 15 icons, service worker, push notifications |
-| FR-32 | ProfileHoverCard | Touch-friendly previews, two-touch navigation |
-| FR-33 | User Directory | `/users` page with 7 list types, search, filters, deep linking to messages |
-| FR-34 | Profile Cover Photos | Custom covers (3:1 ratio), animated default, react-image-crop, settings integration |
-| FR-35 | Smart AI Messaging | @claudeinsider responds only in group chats when @mentioned, no auto-response in DMs, admin-managed, E2EE verified |
-| FR-36 | Gamification CMS | Payload CMS for achievements, badges, tiers, categories; auto-sync to Supabase |
-| FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
-| FR-38 | Resource Auto-Update | AI-powered updates via Claude Opus 4.5, Firecrawl scraping, admin review workflow, changelog tracking |
-| FR-39 | AI Pipeline Integration | Payload CMS settings, Documents/Resources tab redesign, CLI scripts for analysis/enhancement, operation queue |
-| FR-40 | Doc-Resource Cross-Linking | 147 doc-resource + 3,087 resource-resource relationships, DocRelatedResources component, confidence scores, 10 relationship types |
-| FR-41 | Admin Dashboard Content Management | Documentation, Resources, Relationships pages; role-based access; manual relationship editing |
-| FR-42 | Resource Discovery Pipeline | 6 adapter types (GitHub, ProductHunt, npm, etc.), discovery queue, data quality review scripts |
-| FR-43 | Advanced Search | Smart autocomplete, boolean operators (AND/OR/NOT), search filters, admin analytics dashboard |
-| FR-44 | Audit Export | Bulk admin exports (JSON/CSV/XLSX), async job queue, date filtering, anonymization options |
-| FR-45 | Bot Challenge System | Slider puzzle, math captcha, rate limit warnings, trust-based difficulty, session bypass |
-| FR-46 | AI Writing Assistant | In-place doc editing, 8 AI commands (improve, expand, simplify, etc.), diff preview, streaming |
-| FR-47 | GitHub CLAUDE.md Sync | Sync CLAUDE.md to GitHub repos, repo selector, OAuth scopes, status tracking |
-| FR-48 | Doc Versioning | Version history, LCS line-by-line diff, unified/split view, rollback (admin only), 50 versions per doc |
-| FR-49 | Prompt Library | 10 system prompts, 8 categories, save/rate/use tracking, variable syntax `{{placeholder}}`, visibility controls |
+| Category | Key Features |
+|----------|--------------|
+| **Content** | MDX docs (34 pages), 1,952 resources, AI Voice Assistant, Advanced Search |
+| **Auth & Security** | OAuth, Passkeys/2FA, E2EE (Matrix), Bot Challenge, Security Dashboard |
+| **User Features** | Achievements (50+), Sound Effects (10 themes), Profiles, Notifications |
+| **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging |
+| **Admin** | Diagnostics, Content Management, Audit Export, Resource Updates |
+| **AI & Automation** | RAG (6,953 chunks), Resource Auto-Update, AI Writing Assistant |
+| **Infrastructure** | 126 DB tables, PWA, Doc Versioning, Prompt Library |
 
 ### Non-Functional Requirements
 
-| ID | Category | Requirements |
-|----|----------|--------------|
-| NFR-1 | Performance | Static generation, FCP < 1.0s, LCP < 2.5s, TBT < 200ms, Lighthouse > 85, dynamic imports for modals |
-| NFR-2 | Accessibility | WCAG 2.1 AA, keyboard navigation, screen reader support, skip-to-content |
-| NFR-3 | SEO | SSR, meta tags, Open Graph, sitemap.xml, robots.txt, JSON-LD |
-| NFR-4 | Security | HTTPS only, CSP headers, Permissions-Policy, privacy-first |
+| Category | Requirements |
+|----------|--------------|
+| **Performance** | FCP < 1.0s, LCP < 2.5s, TBT < 200ms, Lighthouse > 85 |
+| **Accessibility** | WCAG 2.1 AA, keyboard navigation, screen reader support |
+| **SEO** | SSR, Open Graph, sitemap.xml, JSON-LD |
+| **Security** | HTTPS, CSP headers, Permissions-Policy |
 
-### Browser Support
-
-| Browser | Versions |
-|---------|----------|
-| Chrome, Firefox, Safari, Edge | Last 2 versions |
+**Browser Support**: Chrome, Firefox, Safari, Edge (last 2 versions)
 
 ---
 
@@ -335,708 +289,189 @@ All new components MUST implement ALL seven pillars:
 
 ### Skeleton Synchronization (MANDATORY)
 
-**Rule**: When a page's design changes, its loading skeleton MUST be updated to match the new layout.
-
-Loading skeletons provide visual continuity during page loads. Outdated skeletons create jarring transitions and confuse users about what's loading.
+**Rule**: When a page's design changes, its loading skeleton MUST be updated to match.
 
 | Requirement | Description |
 |-------------|-------------|
-| **Mirror Structure** | Skeleton must reflect the actual page structure (hero, cards, sections) |
-| **Match Aspect Ratios** | Cover images, avatars, and cards must use the same dimensions |
-| **Use Shared Components** | Create reusable skeleton components in `components/skeleton.tsx` |
-| **Update Together** | Any PR that changes page layout MUST include skeleton updates |
+| Mirror Structure | Skeleton reflects actual page structure |
+| Match Aspect Ratios | Same dimensions as actual content |
+| Use Shared Components | `components/skeleton.tsx` |
+| Update Together | Page layout + skeleton in same PR |
 
-**Available Skeleton Components** (`components/skeleton.tsx`):
-
-| Component | Use For |
-|-----------|---------|
-| `SkeletonProfile` | Profile pages (hero cover, stats, achievements) |
-| `SkeletonCard` | Card-based content |
-| `SkeletonDocPage` | Documentation pages |
-| `SkeletonList` | List views |
-| `SkeletonHero` | Hero sections |
-| `SkeletonSidebar` | Navigation sidebars |
-
-**Example - Profile Page**:
-```tsx
-// ✅ CORRECT: Using shared skeleton that matches current design
-if (isLoading) {
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex flex-col">
-      <Header />
-      <main className="flex-1 pt-6">
-        <SkeletonProfile showTabs />
-      </main>
-      <Footer />
-    </div>
-  );
-}
-
-// ❌ WRONG: Inline skeleton that may become outdated
-if (isLoading) {
-  return (
-    <div className="h-48 bg-gray-200 animate-pulse" />
-  );
-}
-```
+**Components**: `SkeletonProfile`, `SkeletonCard`, `SkeletonDocPage`, `SkeletonList`, `SkeletonHero`, `SkeletonSidebar`
 
 ### Mobile Bottom Navigation Awareness (MANDATORY)
 
-**Rule**: All modals, fixed-bottom elements, and floating UI components MUST account for the mobile bottom navigation bar.
+**Rule**: All modals and fixed-bottom elements MUST account for mobile navigation bar (4rem + safe area).
 
-The mobile bottom navigation bar is 4rem tall (plus safe area insets on notched devices). Without proper handling, action buttons at the bottom of modals become unreachable on mobile.
+**CSS Variable**: `--mobile-nav-height` (defined in `globals.css`)
 
-**CSS Variable** (defined in `globals.css`):
+| Element Type | Pattern |
+|--------------|---------|
+| Modals | `paddingBottom: calc(1rem + var(--mobile-nav-height, 0px))` |
+| Fixed buttons | `bottom: calc(Xrem + var(--mobile-nav-height, 0px))` |
+| Toasts | Position above navigation with dynamic `bottom` |
 
-```css
-:root {
-  --mobile-nav-height: 0px;
-}
-
-@media (max-width: 767px) {
-  :root {
-    --mobile-nav-height: calc(4rem + env(safe-area-inset-bottom, 0px));
-  }
-}
-```
-
-**Use the `0px` fallback**: Always use `var(--mobile-nav-height, 0px)` so desktop users (where variable is `0px`) see no change.
-
-| Element Type | Required Pattern |
-|--------------|------------------|
-| **Modals/Dialogs** | Add `paddingBottom` to container + dynamic `maxHeight` on modal |
-| **Fixed-bottom buttons** | Convert `bottom-X` class to `bottom: calc(Xrem + var(--mobile-nav-height, 0px))` |
-| **Toasts/Notifications** | Position above navigation with dynamic `bottom` |
-| **Floating action buttons** | Position above navigation with dynamic `bottom` |
-
-**Modal Pattern**:
-```tsx
-// ✅ CORRECT: Modal accounts for mobile navigation
-<div
-  className="fixed inset-0 z-50 flex items-center justify-center p-4"
-  style={{
-    paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))",
-  }}
->
-  <div
-    className={cn(
-      "relative w-full max-w-md overflow-y-auto",
-      "bg-white dark:bg-[#111111] rounded-xl"
-    )}
-    style={{
-      maxHeight: "calc(90vh - var(--mobile-nav-height, 0px))",
-    }}
-  >
-    {/* Modal content */}
-  </div>
-</div>
-
-// ❌ WRONG: Hardcoded max-height, no mobile nav awareness
-<div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-  <div className="max-h-[90vh] overflow-y-auto">
-    {/* Content hidden behind navigation on mobile */}
-  </div>
-</div>
-```
-
-**Fixed-Bottom Element Pattern**:
-```tsx
-// ✅ CORRECT: Floating button above mobile navigation
-<button
-  className="fixed right-6 z-40"
-  style={{
-    bottom: "calc(1.5rem + var(--mobile-nav-height, 0px))",
-  }}
->
-
-// ❌ WRONG: Button hidden behind navigation on mobile
-<button className="fixed bottom-6 right-6 z-40">
-```
-
-**Checklist for New UI Elements**:
-- [ ] Does this element have `fixed` positioning near the bottom of the viewport?
-- [ ] Does this modal have action buttons at the bottom?
-- [ ] If yes to either, use `--mobile-nav-height` CSS variable
-
-**Files Updated with This Pattern** (33 total):
-- All modals in `components/` (auth, onboarding, review, feedback, etc.)
-- `floating-chat-button.tsx` (AI assistant)
-- `toast.tsx`, `notification-popup.tsx`
-- PWA prompts (`install-prompt.tsx`, `update-notification.tsx`, `push-notification-prompt.tsx`)
-- `error-boundary.tsx`, `voice-assistant.tsx`
+**See [docs/PATTERNS.md](docs/PATTERNS.md#modal-pattern-mobile-aware) for code examples.**
 
 ### Mobile Viewport Protection (MANDATORY)
 
-**Rule**: The page MUST NOT allow horizontal scrolling on mobile devices.
-
-**Global CSS** (already defined in `globals.css`):
-
-```css
-html,
-body {
-  overflow-x: hidden;
-  max-width: 100vw;
-}
-```
-
-**Common Causes of Horizontal Overflow**:
+**Rule**: No horizontal scrolling on mobile. Global CSS in `globals.css` sets `overflow-x: hidden`.
 
 | Cause | Solution |
 |-------|----------|
-| Elements with `width: 100vw` | Use `width: 100%` instead (100vw includes scrollbar) |
-| Negative margins extending past viewport | Contain with parent `overflow: hidden` |
-| Pre/code blocks without wrapping | Add `overflow-x: auto` to code containers |
-| Fixed-width elements larger than screen | Use `max-width: 100%` or responsive units |
-| Absolute positioned elements | Ensure they stay within bounds |
-
-**Checklist for New Content**:
-- [ ] Test on mobile viewport (375px width) - no horizontal scroll
-- [ ] Large elements use `max-width: 100%`
-- [ ] Code blocks have `overflow-x: auto`
-- [ ] Tables are wrapped in scrollable container
+| `width: 100vw` | Use `width: 100%` |
+| Negative margins | Parent `overflow: hidden` |
+| Code blocks | `overflow-x: auto` |
+| Fixed-width elements | `max-width: 100%` |
 
 ### Flex Container Aspect Ratio (MANDATORY)
 
-**Rule**: Fixed-size elements inside flex containers MUST use `shrink-0` and `aspect-square` (for square elements) to prevent distortion on narrow screens.
-
-When flex containers have limited space, child elements can shrink below their specified dimensions. This breaks aspect ratios for logos, icons, and avatars.
-
-**Pattern for Square Elements (logos, icons, avatars)**:
-```tsx
-// ✅ CORRECT: Logo maintains square shape on all screen sizes
-<div className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600">
-  <span className="text-sm font-bold text-white">Ci</span>
-</div>
-
-// ❌ WRONG: Logo can be squished on narrow screens
-<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600">
-  <span className="text-sm font-bold text-white">Ci</span>
-</div>
-```
+**Rule**: Fixed-size elements in flex containers MUST use `shrink-0` + `aspect-square`.
 
 | Class | Purpose |
 |-------|---------|
-| `shrink-0` | Prevents flex shrinking below specified size |
-| `aspect-square` | Enforces 1:1 aspect ratio as backup |
-| `aspect-video` | Enforces 16:9 aspect ratio for video thumbnails |
-| `aspect-[3/1]` | Custom aspect ratio (e.g., cover images) |
+| `shrink-0` | Prevents flex shrinking |
+| `aspect-square` | Enforces 1:1 ratio |
+| `aspect-video` | 16:9 ratio |
+| `aspect-[3/1]` | Custom ratio |
 
-**When to Apply**:
-- Logos and brand marks
-- User avatars
-- Icon buttons
-- Thumbnails with fixed dimensions
-- Any element that must maintain its shape
+**See [docs/PATTERNS.md](docs/PATTERNS.md#flex-aspect-ratio-pattern) for code examples.**
 
 ---
 
 ## Performance Optimization (MANDATORY)
 
-All new features MUST follow these performance guidelines to maintain Lighthouse scores above 85.
+Lighthouse targets: **Desktop > 90%** (current: 100%), **Mobile > 85%** (current: 98%).
 
-### Code Splitting with Dynamic Imports
+### Code Splitting Rules
 
-**MANDATORY** for heavy components that are not immediately visible:
+| Component Type | Requirement |
+|----------------|-------------|
+| Modals/Dialogs | `next/dynamic` with `ssr: false` |
+| Below-fold content | Dynamic imports |
+| Third-party libs | Lazy load |
+| Context Providers | `Lazy*Provider` wrapper with `requestIdleCallback` |
 
-| Component Type | Requirement | Example |
-|----------------|-------------|---------|
-| Modals/Dialogs | MUST use `next/dynamic` | Chat tabs, auth modals |
-| Below-fold content | MUST use dynamic imports | Feature sections, resources |
-| Third-party integrations | MUST lazy load | PayPal, analytics |
-| Heavy libraries | MUST lazy load | highlight.js, chart libs |
-| Context Providers (client-only) | MUST lazy load | Realtime, Sound, Fingerprint |
+### Provider Deferral (MANDATORY)
 
-```tsx
-// ✅ CORRECT - Dynamic import for modal content
-import dynamic from "next/dynamic";
+All client-only providers MUST use `requestIdleCallback` deferral:
 
-const HeavyComponent = dynamic(
-  () => import("./heavy-component").then(m => ({ default: m.HeavyComponent })),
-  {
-    ssr: false,
-    loading: () => <LoadingSpinner />,
-  }
-);
+| Provider | Timeout | Bundle Size |
+|----------|---------|-------------|
+| `LazySoundProvider` | 2s | ~12KB |
+| `LazyRealtimeProvider` | 2.5s | ~16KB |
+| `LazyFingerprintProvider` | 3s | ~32KB |
+| `LazyE2EEProvider` | 4s | ~157KB |
 
-// ❌ WRONG - Direct import bloats initial bundle
-import { HeavyComponent } from "./heavy-component";
-```
+### Homepage Lazy Sections
 
-### Provider Lazy Loading (MANDATORY)
+| Component | Content |
+|-----------|---------|
+| `LazyResourcesSection` | Resources grid with stats |
+| `LazyCategoriesSection` | 7 category cards |
+| `LazyHighlightsSection` | Technology highlights |
 
-**All client-only providers MUST be lazy loaded** to reduce initial JS bundle and improve LCP/TBT.
+### Accessibility (WCAG 2.5.3)
 
-**Currently Lazy-Loaded Providers** (in `components/providers/`):
+`aria-label` MUST match or contain visible text content.
 
-| Provider | File | Why Lazy |
-|----------|------|----------|
-| `LazyFingerprintProvider` | `lazy-fingerprint-provider.tsx` | FingerprintJS ~32KB, not needed for initial render |
-| `LazyE2EEProvider` | `lazy-e2ee-provider.tsx` | Matrix WASM ~136KB, only needed for encrypted messages |
-| `LazyRealtimeProvider` | `lazy-realtime-provider.tsx` | Supabase realtime ~16KB, defers connection |
-| `LazySoundProvider` | `lazy-sound-provider.tsx` | Web Audio API ~12KB, sounds don't play on load |
+### Performance Targets (v1.12.4)
 
-**Pattern for Creating Lazy Providers**:
+| Metric | Target | Current |
+|--------|--------|---------|
+| Desktop Lighthouse | > 90% | **100%** |
+| Mobile Lighthouse | > 85% | **98%** |
+| FCP | < 0.5s | 0.4s |
+| LCP | < 1.0s | 0.7s |
+| TBT | 0ms | **0ms** |
 
-```tsx
-// components/providers/lazy-my-provider.tsx
-"use client";
-
-import dynamic from "next/dynamic";
-import type { ReactNode } from "react";
-
-const MyProvider = dynamic(
-  () => import("./my-provider").then((m) => ({ default: m.MyProvider })),
-  { ssr: false } // Client-only providers don't need SSR
-);
-
-export function LazyMyProvider({ children }: { children: ReactNode }) {
-  return <MyProvider>{children}</MyProvider>;
-}
-```
-
-**When to Create a Lazy Provider**:
-- Provider initializes external APIs (Supabase, Web Audio, etc.)
-- Provider loads heavy libraries (WASM, crypto, etc.)
-- Provider functionality isn't needed for initial page render
-- Provider is client-only (`"use client"` directive)
-
-### Lazy Loading Boundaries
-
-Place dynamic imports at the **visibility boundary** - where UI transitions from hidden to visible:
-
-| Pattern | Implementation |
-|---------|----------------|
-| Modal content | Import inside modal, not in parent |
-| Tab content | Import per-tab, not all tabs upfront |
-| Accordion/Collapse | Import expanded content dynamically |
-| Route segments | Use Next.js route-based splitting |
-| Context Providers | Create `Lazy*Provider` wrapper in `components/providers/` |
-
-### Accessibility Labels (WCAG 2.5.3)
-
-**MANDATORY**: `aria-label` must match or contain visible text content:
-
-```tsx
-// ✅ CORRECT - aria-label matches visible text
-<button aria-label="Search">
-  <SearchIcon /> <span>Search</span>
-</button>
-
-// ✅ CORRECT - aria-label contains visible text with context
-<button aria-label="Sound System, click to open settings">
-  <SpeakerIcon /> <span>Sound System</span>
-</button>
-
-// ❌ WRONG - aria-label doesn't match visible text
-<button aria-label="Find content">
-  <SearchIcon /> <span>Search</span>
-</button>
-```
-
-### Provider Deferral with requestIdleCallback (MANDATORY)
-
-**Rule**: All lazy providers MUST use `requestIdleCallback` to defer initialization until the browser is idle.
-
-This optimization brought Lighthouse scores from **44% → 98%** on mobile and **73% → 100%** on desktop by eliminating main thread blocking during initial page load.
-
-**Pattern for Deferred Provider Loading**:
-
-```tsx
-// components/providers/lazy-my-provider.tsx
-"use client";
-
-import { useEffect, useState, type ReactNode } from "react";
-import dynamic from "next/dynamic";
-
-const MyProvider = dynamic(
-  () => import("./my-provider").then((m) => ({ default: m.MyProvider })),
-  { ssr: false }
-);
-
-export function LazyMyProvider({ children }: { children: ReactNode }) {
-  const [shouldLoad, setShouldLoad] = useState(false);
-
-  useEffect(() => {
-    // Use requestIdleCallback to defer until browser is truly idle
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(
-        () => setShouldLoad(true),
-        { timeout: 3000 } // Max delay before forcing load
-      );
-      return () => window.cancelIdleCallback(id);
-    } else {
-      // Fallback for Safari: use setTimeout
-      const timeout = setTimeout(() => setShouldLoad(true), 2000);
-      return () => clearTimeout(timeout);
-    }
-  }, []);
-
-  // Render children immediately, only wrap with provider when ready
-  if (!shouldLoad) {
-    return <>{children}</>;
-  }
-
-  return <MyProvider>{children}</MyProvider>;
-}
-```
-
-**Current Deferred Providers** (with timeout values):
-
-| Provider | Timeout | Fallback | Bundle Size |
-|----------|---------|----------|-------------|
-| `LazySoundProvider` | 2s | 1s | ~12KB |
-| `LazyRealtimeProvider` | 2.5s | 1.5s | ~16KB |
-| `LazyFingerprintProvider` | 3s | 2s | ~32KB |
-| `LazyE2EEProvider` | 4s | 2.5s | ~157KB |
-
-**Key Principles**:
-1. **Shortest timeout for most-needed features** (sounds before fingerprinting)
-2. **Always provide Safari fallback** (no `requestIdleCallback` support)
-3. **Render children immediately** - don't block rendering while waiting
-4. **Use `ssr: false`** for client-only providers
-
-### Homepage Section Lazy Loading (MANDATORY)
-
-**Rule**: Heavy below-fold homepage sections MUST be extracted to separate components and lazy loaded.
-
-**Currently Lazy-Loaded Homepage Sections** (in `components/home/`):
-
-| Component | File | Content |
-|-----------|------|---------|
-| `LazyResourcesSection` | `lazy-resources-section.tsx` | Resources grid with stats |
-| `LazyCategoriesSection` | `lazy-categories-section.tsx` | 7 category cards with SVG icons |
-| `LazyHighlightsSection` | `lazy-highlights-section.tsx` | Technology highlights grid |
-
-**Pattern for Homepage Section Lazy Loading**:
-
-```tsx
-// 1. Extract section to separate file (categories-section.tsx)
-export function CategoriesSection() {
-  return (/* Large section with data and SVG icons */);
-}
-
-// 2. Create lazy wrapper (lazy-categories-section.tsx)
-"use client";
-import dynamic from "next/dynamic";
-
-const CategoriesSection = dynamic(
-  () => import("./categories-section").then((m) => ({ default: m.CategoriesSection })),
-  {
-    ssr: true, // Keep SSR for SEO
-    loading: () => (/* Skeleton placeholder */),
-  }
-);
-
-export function LazyCategoriesSection() {
-  return <CategoriesSection />;
-}
-
-// 3. Use in page.tsx instead of inline JSX
-<LazyCategoriesSection />
-```
-
-**Benefits**:
-- Moves large constants (CATEGORIES array ~8KB) out of initial bundle
-- Defers hydration of below-fold content
-- Maintains SEO with `ssr: true`
-- Shows skeleton during load for better UX
-
-### Performance Targets (Updated v1.12.4)
-
-| Metric | Target | Current (v1.12.4) |
-|--------|--------|-------------------|
-| Lighthouse Desktop | > 90 | **100%** |
-| Lighthouse Mobile (Throttled) | > 85 | **98%** |
-| FCP (First Contentful Paint) | < 0.5s | 0.4s |
-| LCP (Largest Contentful Paint) | < 1.0s | 0.7s |
-| TBT (Total Blocking Time) | 0ms | **0ms** |
-| CLS (Cumulative Layout Shift) | < 0.1 | 0 |
-| Speed Index | < 1.0s | 0.6s |
-| TTI (Time to Interactive) | < 1.0s | 0.7s |
-
-**Mobile Throttled Improvements** (v1.12.4):
-
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| Score | 44% | 98% | **+54 points** |
-| TBT | 2,010ms | 0ms | **-2,010ms** |
-| LCP | 2.8s | 2.0s | -0.8s |
-
-### Checklist for New Features
-
-- [ ] Heavy components use `next/dynamic` with `ssr: false`
-- [ ] Modal/dialog content is dynamically imported
-- [ ] Third-party libraries are lazy loaded
-- [ ] **New providers use `requestIdleCallback` deferral pattern** (MANDATORY)
-- [ ] **Below-fold homepage sections extracted to lazy components** (MANDATORY)
-- [ ] `aria-label` matches visible text (WCAG 2.5.3)
-- [ ] No render-blocking resources in critical path
-- [ ] Images use `priority` prop for above-fold, lazy load below
-- [ ] Below-fold sections use `contentVisibility: 'auto'` CSS
-- [ ] Run `npx lighthouse <url> --preset=desktop` before PR (must be > 90%)
-- [ ] Run `npx lighthouse <url> --preset=perf` before PR (must be > 85%)
+**See [docs/PATTERNS.md](docs/PATTERNS.md#performance-patterns) for implementation patterns.**
 
 ---
 
 ## Sound Design System (MANDATORY)
 
-**Location**: `hooks/use-sound-effects.tsx`
-
-All interactions that provide user feedback SHOULD have corresponding sounds. Sound effects enhance UX by providing audio confirmation of actions.
+**Location**: `hooks/use-sound-effects.tsx` | **See [docs/PATTERNS.md](docs/PATTERNS.md#sound-patterns) for code examples**
 
 ### Core Principles
 
-1. **User Control First**: All sounds respect the master `enabled` toggle in settings
-2. **Category Control**: Users can disable sound categories independently
-3. **Non-Intrusive**: Default volumes are subtle, not jarring
-4. **Accessibility**: Respects system preferences, no sounds that block interaction
-5. **No Audio Files**: Uses Web Audio API to generate tones programmatically (0 bytes payload)
+1. **User Control**: Sounds respect master `enabled` toggle and per-category settings
+2. **No Audio Files**: Web Audio API generates tones programmatically (0 bytes payload)
+3. **Non-Intrusive**: Default volumes are subtle, accessibility-aware
 
-### Sound Categories & Defaults
+### Sound Categories
 
 | Category | Default | Use For |
 |----------|---------|---------|
-| `notifications` | ON | New notifications, badges, alerts |
-| `feedback` | ON | Success/error/warning responses |
-| `ui` | **OFF** | Clicks, toggles, hover (optional, power users) |
-| `chat` | ON | Messages sent/received, typing, mentions |
-| `achievements` | ON | Unlocks, level ups, progress |
+| `notifications` | ON | Alerts, badges |
+| `feedback` | ON | Success/error/warning |
+| `ui` | **OFF** | Clicks, toggles (power users) |
+| `chat` | ON | Messages, typing, mentions |
+| `achievements` | ON | Unlocks, progress |
 
-### When to Trigger Sounds
+### Key Methods
 
-| Event Type | Sound Method | Volume | Notes |
-|------------|--------------|--------|-------|
-| New notification | `playNotification()` | 0.4 | Attention-grabbing but not harsh |
-| Message received | `playMessageReceived()` | 0.35 | Only if sender != current user |
-| Message sent | `playMessageSent()` | 0.25 | Subtle confirmation |
-| Typing starts | `playTyping()` | 0.08 | Very subtle, **single trigger** only |
-| @Mention received | `playMention()` | 0.5 | Higher priority, multi-tone |
-| Achievement unlock | `playAchievement()` | 0.5 | Celebratory, longer duration |
-| Error occurred | `playError()` | 0.4 | Distinct descending tone |
-| Success action | `playSuccess()` | 0.35 | Pleasant ascending tone |
-| Toggle on | `playToggleOn()` | 0.2 | UI category (off by default) |
-| Toggle off | `playToggleOff()` | 0.2 | UI category (off by default) |
-| User joins chat | `playUserJoin()` | 0.25 | Presence indicator |
-| User leaves chat | `playUserLeave()` | 0.2 | Presence indicator |
+| Method | Volume | Use For |
+|--------|--------|---------|
+| `playNotification()` | 0.4 | New notifications |
+| `playMessageReceived()` | 0.35 | Incoming messages (not own) |
+| `playMention()` | 0.5 | @Mentions (highest priority) |
+| `playAchievement()` | 0.5 | Unlocks |
+| `playSuccess()` / `playError()` | 0.35/0.4 | Action feedback |
 
-### Implementation Pattern
+### Rules
 
-```tsx
-import { useSound } from "@/hooks/use-sound-effects";
-
-function MyComponent() {
-  const { playSuccess, playError, playNotification } = useSound();
-
-  const handleAction = async () => {
-    const result = await someAction();
-    if (result.success) {
-      playSuccess();
-    } else {
-      playError();
-    }
-  };
-}
-```
-
-### Best Practices
-
-1. **One sound per action** - Don't stack multiple sounds simultaneously
-2. **Debounce rapid events** - Typing sounds should have 500ms minimum gap
-3. **Context matters** - Don't play `playMessageReceived()` for own messages
-4. **Volume hierarchy** - Mentions > Notifications > Messages > UI
-5. **Test with sounds off** - Ensure functionality works without sounds
-6. **Use `useSound()` hook** - NOT `useSoundEffects()` directly (ensures context)
-
-### Browser Push Notification Limitation
-
-**Important**: The Web Push API does not support custom audio files. Push notifications use the browser's default system sound. Custom sounds only play when the user interacts with the notification.
-
-### Checklist for New Features with Sounds
-
-- [ ] Identify all interaction points that need feedback
-- [ ] Map each interaction to appropriate sound method
-- [ ] Use `useSound()` hook from context
-- [ ] Verify sounds work with master toggle enabled/disabled
-- [ ] Test that feature works normally when sounds are off
-- [ ] Add sound test to diagnostics page if new sound type
+- **One sound per action** - No stacking
+- **Debounce rapid events** - 500ms gap for typing
+- **Always use `useSound()` hook** - Never `useSoundEffects()` directly
+- **Web Push limitation**: Browser default sound only (no custom audio)
 
 ---
 
 ## Text-to-Speech System (MANDATORY)
 
-**Location**: `app/api/assistant/speak/route.ts`, `data/system-prompt.ts`
+**Location**: `app/api/assistant/speak/route.ts` | **See [docs/PATTERNS.md](docs/PATTERNS.md#tts-patterns) for code examples**
 
-Claude Insider uses **ElevenLabs Turbo v2.5** model for fast, natural text-to-speech with minimal latency.
-
-### Model Configuration (MANDATORY for all TTS usage)
+### Model Configuration (MANDATORY)
 
 | Setting | Value | Description |
 |---------|-------|-------------|
-| Model | `eleven_turbo_v2_5` | Fast model with good quality, 32 languages |
-| Output Format | `mp3_22050_32` | Lower bitrate 22kHz MP3, 32kbps for faster transfer |
-| Latency Optimization | `3` | Level 3 of 4 (higher = lower latency, max quality tradeoff) |
-| Default Voice | `sarah` | Natural-sounding female voice |
-| Available Voices | 42 | Premium ElevenLabs voice library |
-
-**Why Turbo v2.5 over Eleven v3?** (v1.12.3)
-- **3x faster** speech generation for real-time chat responsiveness
-- Minimal latency is critical for conversational AI experience
-- Audio tags still supported but focus on speed over expressiveness
-- 32 language support with natural prosody
+| Model | `eleven_turbo_v2_5` | 3x faster than v3, 32 languages |
+| Output Format | `mp3_22050_32` | Low bitrate for fast transfer |
+| Latency | `3` | Level 3/4 optimization |
+| Default Voice | `sarah` | 42 voices available |
 
 ### Audio Tags for Emotional Expression
 
-ElevenLabs Turbo v2.5 supports audio tags to add emotional context to speech:
+Tags enriched in ~14% of RAG chunks: `[excited]`, `[curious]`, `[thoughtful]`, `[happy]`, `[mischievously]`, `[dramatically]`, `[whispers]`, `[sighs]`, `[surprised]`
 
-| Tag | Usage | Probability in RAG |
-|-----|-------|-------------------|
-| `[excited]` | New features, capabilities, announcements | 274 chunks |
-| `[curious]` | Exploring, learning, discovering | 423 chunks |
-| `[thoughtful]` | Explanations, technical details | 258 chunks |
-| `[happy]` | Success, completions, positive outcomes | 49 chunks |
-| `[mischievously]` | Tips, tricks, best practices | 19 chunks |
-| `[dramatically]` | Warnings, important notes | 17 chunks |
-| `[whispers]` | Secrets, hidden features | 5 chunks |
-| `[sighs]` | Complex explanations, limitations | 2 chunks |
-| `[surprised]` | Unexpected facts | 1 chunk |
-
-### RAG Index Audio Enrichment
-
-The RAG index generator automatically enriches ~14% of content with audio tags:
-
-```javascript
-// In scripts/generate-rag-index.cjs
-const enrichedContent = enrichWithAudioTags(content, category);
-```
-
-**Enrichment Rules**:
-- Global probability: 60% of chunks pass first gate
-- Pattern matching adds context-appropriate tags
-- Max 3 tags per chunk
-- Deterministic placement via content hashing (reproducible builds)
-
-### System Prompt TTS Rules
-
-The AI assistant follows these rules when generating TTS-friendly responses:
-
-1. **Sentence Pauses**: Use periods for natural breathing pauses
-2. **Markdown Stripping**: Remove links, formatting before speaking
-3. **Technical Pronunciation**: Spell out acronyms on first use
-4. **Number Formatting**: "1,000" becomes "one thousand"
-5. **URL Handling**: Describe links, don't read URLs
-6. **Audio Tag Usage**: Use sparingly for emotional emphasis
-7. **Path Pronunciation**: Convert `/docs/config` to "docs config" for natural speech
-
-### Immediate Text Streaming with Parallel Audio (v1.12.3)
-
-Text streams immediately without buffering, audio plays in parallel when ready:
+### Parallel Audio Architecture (v1.12.3)
 
 | Feature | Description |
 |---------|-------------|
-| **Parallel Prefetch** | Audio fetch starts at 300 chars while Claude continues streaming |
-| **Fake Text Streaming** | Text reveals progressively synced to audio duration after prefetch |
-| **Canplay Optimization** | Uses `canplay` event instead of `canplaythrough` (500ms faster) |
-| **Smart Reuse** | If text grew <50% since prefetch, reuses early audio |
-| **Latency** | 1-2 seconds from response start to audio (down from 5-10s) |
+| **Parallel Prefetch** | Audio starts at 300 chars while Claude streams |
+| **Smart Reuse** | Reuse early audio if text grew <50% |
+| **Latency** | 1-2 seconds (down from 5-10s) |
 
-**Key Functions** (`components/unified-chat/tabs/ai-assistant-tab.tsx`):
+### Text Conversion (`markdownToSpeakableText()`)
 
-| Function | Purpose |
-|----------|---------|
-| `prefetchAudio(text)` | Fetch audio from ElevenLabs with 15s timeout |
-| `fakeStreamText(text, durationMs)` | Reveal text progressively synced to audio |
-| `stopFakeStream()` | Cancel ongoing fake stream on stop/cancel |
+| Input | Output |
+|-------|--------|
+| `-g`, `--global` | "dash g", "dash dash global" |
+| `@pkg/sdk` | "at pkg slash sdk" |
+| `/docs/config` | "docs config" |
+| Code blocks | Converted (not skipped) |
 
-**Implementation Pattern**:
+### Response Guidelines
 
-```tsx
-// During Claude streaming - start audio prefetch early (parallel)
-const EARLY_PREFETCH_THRESHOLD = 300;
-if (autoSpeak && !earlyAudioPromise && fullContent.length >= EARLY_PREFETCH_THRESHOLD) {
-  earlyAudioPromise = prefetchAudio(fullContent);
-}
+| Type | Length |
+|------|--------|
+| Simple | 1-2 sentences |
+| Complex | 2-3 sentences |
+| Code | Brief + code block |
 
-// After streaming - check if early prefetch is still valid
-const textGrowth = (fullContent.length - earlyPrefetchText.length) / earlyPrefetchText.length;
-if (earlyAudioPromise && textGrowth < 0.5) {
-  audio = await earlyAudioPromise; // Reuse early prefetch
-} else {
-  audio = await prefetchAudio(fullContent); // Fetch fresh
-}
-
-// Play audio + fake-stream text simultaneously
-audio.play();
-fakeStreamText(fullContent, audio.duration * 1000);
-```
-
-### Concise Response Guidelines (v1.12.2)
-
-**MANDATORY**: AI responses must be concise for optimal TTS performance:
-
-| Response Type | Length Guideline |
-|--------------|------------------|
-| Simple questions | 1-2 sentences |
-| Complex questions | 2-3 sentences |
-| Code examples | Brief explanation + code block |
-| Documentation links | Short answer + link to docs |
-
-**RAG Chunk Size**: 800 characters (reduced from 1500) for faster audio prefetch.
-
-### Text Conversion for TTS (v1.12.3)
-
-**Location**: `lib/claude-utils.ts`
-
-The `markdownToSpeakableText()` function converts markdown to TTS-friendly text:
-
-| Conversion | Example |
-|------------|---------|
-| Code blocks | Converted to speakable text (not removed) |
-| Inline code | `-g` → "dash g", `--global` → "dash dash global" |
-| Package names | `@anthropic-ai/sdk` → "at anthropic-ai slash sdk" |
-| URL paths | `/docs/config` → "docs config" |
-| Headers | `## Title` → "Title," |
-| Bold/Italic | Markers removed, text kept |
-| Links | `[text](url)` → "text" |
-| Underscores | `_var` → "underscore var" |
-
-**Code Block Conversion** (v1.12.3):
-- Code blocks are no longer skipped - they are converted to speakable text
-- CLI flags: `-g` becomes "dash g", `--verbose` becomes "dash dash verbose"
-- Package names with `@` are read as "at"
-- Forward slashes become "slash"
-- Underscores become "underscore"
-
-### Basic TTS API Pattern
-
-```tsx
-// Using the TTS API directly
-const response = await fetch('/api/assistant/speak', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    text: "[excited] This is amazing news!",
-    voice: "sarah" // Optional, defaults to sarah
-  })
-});
-
-const audioBlob = await response.blob();
-const audio = new Audio(URL.createObjectURL(audioBlob));
-audio.play();
-```
-
-### Checklist for TTS Features
-
-- [ ] Use ElevenLabs Turbo v2.5 model (`eleven_turbo_v2_5`) - MANDATORY
-- [ ] Use `optimizeStreamingLatency: 3` for fastest response
-- [ ] Use `mp3_22050_32` output format for faster transfer
-- [ ] Stream text immediately without buffering
-- [ ] Strip markdown/formatting using `markdownToSpeakableText()`
-- [ ] Convert code blocks to speakable text (not skip them)
-- [ ] Convert URL paths to spoken form (slashes become spaces)
-- [ ] Handle quota exceeded errors (429 status)
-- [ ] Provide voice selection UI with inline preview button
-- [ ] Buffer complete audio before playback (avoid MP3 chunk artifacts)
-- [ ] Clear loading state before audio prefetch starts
+**RAG Chunk Size**: 800 characters
 
 ---
 
@@ -1239,660 +674,116 @@ When displaying the "Ci" logo inline (e.g., header, footer, mockups), use this e
 
 ## Component Patterns
 
-### Buttons
+**See [docs/PATTERNS.md](docs/PATTERNS.md#component-patterns) for all code examples**
 
-```tsx
-// Primary CTA
-className={cn(
-  "rounded-lg px-6 py-3 text-sm font-semibold text-white",
-  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-  "shadow-lg shadow-blue-500/25",
-  "hover:-translate-y-0.5 transition-all duration-200"
-)}
+### UI Components
 
-// Secondary
-className={cn(
-  "rounded-lg px-4 py-2 text-sm border border-gray-200 dark:border-[#262626]",
-  "hover:border-blue-500/50 transition-all duration-200"
-)}
-```
+| Component | Key Classes |
+|-----------|-------------|
+| **Primary Button** | `bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 shadow-blue-500/25` |
+| **Secondary Button** | `border border-gray-200 dark:border-[#262626] hover:border-blue-500/50` |
+| **Card** | `rounded-xl bg-white dark:bg-[#111111] border hover:-translate-y-1` |
+| **Focus State** | `focus-visible:ring-2 focus-visible:ring-blue-500` |
 
-### Cards
+### Modals & Fixed Elements (Mobile-Aware)
 
-```tsx
-className={cn(
-  "rounded-xl p-6 bg-white dark:bg-[#111111]",
-  "border border-gray-200 dark:border-[#262626]",
-  "hover:border-blue-500/50 hover:shadow-lg hover:-translate-y-1",
-  "transition-all duration-300"
-)}
-```
+**MANDATORY**: Use `--mobile-nav-height` CSS variable for all bottom-positioned elements.
 
-### Focus States
-
-```tsx
-className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-```
-
-### Modals (Mobile-Aware)
-
-**MANDATORY**: All modals must use the mobile-aware pattern. See [Mobile Bottom Navigation Awareness](#mobile-bottom-navigation-awareness-mandatory) for details.
-
-```tsx
-// Standard modal structure with mobile navigation awareness
-<div
-  className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-  style={{ paddingBottom: "calc(1rem + var(--mobile-nav-height, 0px))" }}
-  onClick={onClose}
->
-  <div
-    className={cn(
-      "relative w-full max-w-md p-6 rounded-xl overflow-y-auto",
-      "bg-white dark:bg-[#111111]",
-      "border border-gray-200 dark:border-[#262626]"
-    )}
-    style={{ maxHeight: "calc(90vh - var(--mobile-nav-height, 0px))" }}
-    onClick={(e) => e.stopPropagation()}
-  >
-    {/* Header */}
-    <div className="flex items-center justify-between mb-4">
-      <h2 className="text-lg font-semibold">Title</h2>
-      <button onClick={onClose} aria-label="Close">
-        <X className="w-5 h-5" />
-      </button>
-    </div>
-
-    {/* Content */}
-    <div>{children}</div>
-
-    {/* Actions - always visible above mobile nav */}
-    <div className="flex gap-2 mt-4">
-      <button className="flex-1 ...">Cancel</button>
-      <button className="flex-1 ...">Confirm</button>
-    </div>
-  </div>
-</div>
-```
-
-### Fixed-Bottom Elements (Mobile-Aware)
-
-Floating buttons, toasts, and notifications must position above the mobile navigation.
-
-```tsx
-// Floating action button (e.g., AI assistant)
-<button
-  className="fixed right-6 z-40 rounded-full p-4 bg-gradient-to-r from-violet-600 to-blue-600"
-  style={{ bottom: "calc(1.5rem + var(--mobile-nav-height, 0px))" }}
->
-  <ChatIcon className="w-6 h-6 text-white" />
-</button>
-
-// Toast notification
-<div
-  className="fixed left-4 right-4 md:left-auto md:right-4 md:w-96 z-50"
-  style={{ bottom: "calc(1rem + var(--mobile-nav-height, 0px))" }}
->
-  {/* Toast content */}
-</div>
-```
+| Pattern | CSS |
+|---------|-----|
+| Modal padding | `paddingBottom: calc(1rem + var(--mobile-nav-height, 0px))` |
+| Modal max-height | `maxHeight: calc(90vh - var(--mobile-nav-height, 0px))` |
+| Fixed buttons | `bottom: calc(1.5rem + var(--mobile-nav-height, 0px))` |
 
 ### ProfileHoverCard
 
-**Location**: `components/users/profile-hover-card.tsx`
-
 | Feature | Behavior |
 |---------|----------|
-| Desktop | Shows on hover, click navigates to profile |
-| Mobile/Tablet | First touch shows card, second touch navigates |
-| Keyboard | Focus shows card, Enter navigates |
-
-```tsx
-import { ProfileHoverCard } from "@/components/users/profile-hover-card";
-
-<ProfileHoverCard
-  user={{ id, name, username, image, bio, isFollowing }}
-  side="bottom"
->
-  <span className="cursor-pointer">{user.name}</span>
-</ProfileHoverCard>
-```
-
-**Integrated in**: Leaderboard, ReviewCard, UserSearch, Followers/Following lists, ConversationView
+| Desktop | Hover shows card, click navigates |
+| Mobile | First touch shows, second navigates |
+| Keyboard | Focus shows, Enter navigates |
 
 ### Device Mockups (MANDATORY)
 
 **Location**: `components/device-mockups.tsx`
 
-The homepage hero section features photorealistic device mockups displaying live screenshots. All mockup usage MUST follow these rules:
+| Component | Screen Area |
+|-----------|-------------|
+| `MacBookMockup` | 91.4% × 82% of SVG |
+| `IPhone17ProMax` | 224×468 SVG coords |
+| `DeviceShowcase` | Combined hero display |
 
-#### Components
-
-| Component | Description | Screen Area |
-|-----------|-------------|-------------|
-| `MacBookMockup` | M3 Pro style laptop with terminal content | 91.4% × 82% of SVG |
-| `IPhone17ProMax` | Natural Titanium phone with Dynamic Island | 224×468 in SVG coordinates |
-| `DeviceShowcase` | Combined display for hero section | Both devices with ambient glow |
-
-#### MANDATORY Screenshot Rules for iPhone Mockup
-
-1. **Aspect Ratio Matching**: Screenshot viewport MUST be **446×932** pixels
-   - Mockup screen: 224×468 (ratio 0.4786)
-   - Viewport: 446×932 (ratio 0.4785) - matches exactly!
-   - This ensures `object-cover` fits perfectly without cropping
-
-2. **Always Use `object-cover`**: Never use `object-contain`
-   - With matched aspect ratios, `object-cover` fills naturally
-   - `object-contain` creates letterboxing which looks unnatural
-
-3. **Required Visible Elements**:
-   - Header with logo ("Ci Claude Insider") and icons below Dynamic Island
-   - Hero section content ("Master Claude AI development")
-   - Bottom mobile navigation (Home, Docs, Resources, Chat, Sign In)
-
-4. **Screenshot Source**: Always capture from live production site
-   ```bash
-   # Playwright command to capture at correct aspect ratio
-   await page.setViewportSize({ width: 446, height: 932 });
-   await page.goto('https://www.claudeinsider.com');
-   await page.screenshot({ path: 'mobile-screenshot.png' });
-   ```
-
-5. **File Location**: `public/images/mobile-screenshot.png`
-
-#### Usage Example
-
-```tsx
-import { DeviceShowcase, IPhone17ProMax, MacBookMockup } from "@/components/device-mockups";
-
-// Hero section - use combined showcase
-<DeviceShowcase className="min-h-[520px] lg:min-h-[600px]" />
-
-// Individual mockups with custom content
-<MacBookMockup>{/* Terminal or custom content */}</MacBookMockup>
-<IPhone17ProMax>{/* Custom screen content */}</IPhone17ProMax>
-```
-
-#### Checklist for Mockup Updates
-
-- [ ] Screenshot taken at 446×932 viewport (not 430×932!)
-- [ ] Captured from live site (www.claudeinsider.com)
-- [ ] Header fully visible below Dynamic Island
-- [ ] Bottom navigation fully visible
-- [ ] Using `object-cover` (not `object-contain`)
-- [ ] File saved to `public/images/mobile-screenshot.png`
+**Screenshot Rules**:
+- Viewport: **446×932** (matches mockup ratio 0.4786)
+- Use `object-cover` (never `object-contain`)
+- Capture from live site: `www.claudeinsider.com`
+- File: `public/images/mobile-screenshot.png`
+- Must show: header, hero content, bottom nav
 
 ### Header & Footer Navigation (MANDATORY)
 
-The site-wide navigation is divided between header and footer menus. All components using navigation must follow this structure.
+**Header** (`components/header.tsx`):
+- Desktop: Logo, dropdowns, Search, Theme, Inbox, Notifications, User
+- Mobile: Logo + 4 icons (Search, Theme, Sign-in, Menu)
+- Rule: Max 4-5 icon buttons, all with `aria-label` and `title`
 
-#### Header Navigation
+**Footer** (`components/footer.tsx`):
+- Layout: `max-w-[1440px]`, flex + 5-column grid (`lg:grid-cols-5`)
+- Brand section: `lg:w-64 lg:shrink-0`
+- Columns: Features | Documentation | Resources | Project | Legal
+- External links: Include icon + `target="_blank" rel="noopener noreferrer"`
+- AI Assistant: Use `action` callback, not href
 
-**Desktop Header** (`components/header.tsx`):
-
-| Section | Items |
-|---------|-------|
-| **Left** | Logo, Documentation dropdown, Resources dropdown, Playground, Stats, Donate |
-| **Right** | Search (expanded), Theme toggle, Inbox, Notifications, User menu |
-
-**Mobile Header** (375px viewport):
-
-| Position | Items | Notes |
-|----------|-------|-------|
-| **Left** | Logo ("Ci Claude Insider") | Shrink-0, aspect-square |
-| **Right** | Search icon, Theme toggle, Sign-in icon, Hamburger menu | 4 icons in one row, `gap-1` |
-
-**Mobile Menu** (hamburger expanded):
-- Documentation (collapsible with all 7 categories)
-- Resources (collapsible with all 10 categories)
-- Playground, Stats, Support Us
-
-**MANDATORY Mobile Header Rules**:
-1. Maximum 4-5 icon buttons in the header row (excluding logo)
-2. Use icon-only buttons (no text labels) for compact display
-3. All icons must have `aria-label` and `title` for accessibility
-4. Less-used features belong in footer or hamburger menu
-
-#### Footer Navigation
-
-**Footer Layout** (`components/footer.tsx`):
-
-The footer uses a **flex + grid hybrid layout** for perfect column alignment:
-
-```tsx
-<div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-  <div className="lg:flex lg:gap-16">
-    {/* Brand Section - fixed width, doesn't affect grid */}
-    <div className="mb-10 lg:mb-0 lg:w-64 lg:shrink-0">
-      {/* Logo, tagline, social links */}
-    </div>
-
-    {/* Link Columns - unified 5-column grid for perfect alignment */}
-    <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5 lg:gap-10 lg:flex-1">
-      {/* Features | Documentation | Resources | Project | Legal */}
-    </div>
-  </div>
-</div>
-```
-
-**Footer Columns** (5 link columns):
-
-| Column | Key Links |
-|--------|-----------|
-| **Features** | Docs, Resources, Playground, Prompt Library, AI Assistant (action), Chat |
-| **Documentation** | Getting Started, Configuration, API Reference, Tutorials, Official Docs (external) |
-| **Resources** | MCP Servers, Tools & SDKs, CLAUDE.md Rules, Prompts, Showcases, Community |
-| **Project** | GitHub (external), Changelog, RSS Feed, Community Stats, Design System, Members, Donate (highlighted) |
-| **Legal** | Privacy, Terms, Disclaimer, Accessibility |
-
-**Bottom Bar Elements**:
-
-| Element | Description |
-|---------|-------------|
-| Logo | MonochromeLogo (16px) with `variant="contrast"` |
-| Copyright | `© {year}` + author link |
-| Version | `v{APP_VERSION}-{buildId}` in monospace |
-| Controls | Language selector, Sound toggle, Theme toggle |
-
-**MANDATORY Footer Rules**:
-
-1. **Layout**: Use flex container with fixed-width Brand section (`lg:w-64`) and flexible grid for link columns
-2. **Container Width**: Use `max-w-[1440px]` (not `max-w-7xl`) for wider layout
-3. **Column Gap**: Use `lg:gap-10` between columns for breathing room
-4. **Grid Alignment**: All 5 link columns share one grid (`lg:grid-cols-5`) for perfect heading/link alignment
-5. **Logo Variant**: Use `MonochromeLogo` with `variant="contrast"` for high visibility in both themes
-6. **Icon Spacing**: All icons use `gap-1.5` with `inline-flex items-center` (never `gap-1` or `gap-2`)
-7. **External Links**: Include external icon (`w-3 h-3`) with `target="_blank" rel="noopener noreferrer"`
-8. **AI Assistant Button**: Use `action` callback (not href), include `title` tooltip with keyboard shortcut
-9. **No Dynamic Count Badges**: Don't use badges showing resource counts (may become inaccurate)
-10. **Highlighted Links**: Donate uses `text-pink-500` with heart icon
-
-**AI Assistant Button Pattern**:
-
-```tsx
-// Footer link with action callback instead of navigation
-{link.action === "openAIAssistant" ? (
-  <button
-    onClick={() => openAIAssistant()}
-    title="AI Assistant/Chat (Cmd + .)"
-    className={cn(linkClass, "inline-flex items-center gap-2")}
-  >
-    {link.label}
-    {link.badge && <span className="...">{link.badge}</span>}
-  </button>
-) : (
-  <Link href={link.href}>...</Link>
-)}
-```
-
-**External Link Pattern**:
-
-```tsx
-<a
-  href={link.href}
-  target="_blank"
-  rel="noopener noreferrer"
-  className={cn(linkClass, "inline-flex items-center gap-1.5")}
->
-  {link.label}
-  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-  </svg>
-</a>
-```
-
-#### Mobile Bottom Navigation
-
-**Location**: `components/mobile/bottom-nav.tsx`
-
-| Tab | Icon | Route/Action |
-|-----|------|--------------|
-| Home | House | `/` |
-| Docs | Book | `/docs` |
-| Resources | Grid | `/resources` |
-| Chat | Message bubble | Opens chat |
-| Sign In / Profile | User | Auth modal or `/profile` |
-
-**MANDATORY**: Bottom nav uses CSS variable `--mobile-nav-height: 64px` for spacing calculations.
-
-#### Menu Consistency Checklist
-
-When adding new navigation items:
-
-- [ ] Desktop: Add to appropriate header section or footer
-- [ ] Mobile header: Keep under 5 icon buttons
-- [ ] Mobile menu: Add to hamburger if needed for mobile access
-- [ ] Footer: Add utility/secondary links here instead of header
-- [ ] Bottom nav: Only for primary 5 navigation actions
-- [ ] All links have proper `aria-label` attributes
-- [ ] Icon-only buttons include `title` for tooltips
-
-#### Device Mockup Screenshots (MANDATORY)
-
-**Location**: `public/images/mobile-screenshot.png` → `components/device-mockups.tsx`
-
-When updating the mobile screenshot used in the iPhone device mockup on the homepage, you MUST ensure both the header AND bottom navigation bar are fully visible.
-
-**Technical Requirements**:
-
-| Aspect | Requirement | Reason |
-|--------|-------------|--------|
-| **Viewport Size** | 430 × 898 px | Matches iPhone mockup screen ratio (224:468 ≈ 1:2.09) |
-| **Source** | Live site (claudeinsider.com) | Avoid dev tools/localhost artifacts |
-| **Header** | 4 icons visible in one row | Search, Theme, Sign-in, Menu |
-| **Bottom Nav** | All 5 tabs visible | Home, Docs, Resources, Chat, Sign In |
-| **AI Assistant FAB** | Include in screenshot | Part of mobile UX |
-
-**Why 430×898 instead of real iPhone dimensions (430×932)?**
-
-The iPhone mockup SVG uses a screen area of 224×468 pixels (ratio ~1:2.09). A screenshot at 430×932 (ratio ~1:2.17) would be taller than the mockup area. With `object-cover object-top`, the excess height gets cropped from the bottom, cutting off the navigation bar.
-
-**Dynamic Island Positioning**:
-
-The iPhone 17 Pro Max mockup includes a Dynamic Island notch at the top. The screen content starts at y=6, but the Dynamic Island spans y=14 to y=32. This means ~26px of screen content is under the notch.
-
-The image uses `objectPosition: 'center 2%'` to shift content down slightly, ensuring the header and logo icons are fully visible below the Dynamic Island. Do NOT change this to `center top` or the header will be partially obscured.
-
-**MANDATORY Checklist for Mockup Updates**:
-
-- [ ] Navigate to `https://www.claudeinsider.com` (NOT localhost)
-- [ ] Resize viewport to exactly **430 × 898** pixels
-- [ ] Verify header shows 4 icons in single row
-- [ ] Verify bottom nav shows all 5 tabs
-- [ ] Verify AI Assistant FAB is visible
-- [ ] Save to `public/images/mobile-screenshot.png`
-- [ ] Commit with descriptive message
-
-**Command to Capture** (using Playwright):
-```bash
-# Resize to mockup-matching dimensions
-await page.setViewportSize({ width: 430, height: 898 });
-# Take screenshot
-await page.screenshot({ path: 'mobile-screenshot.png' });
-```
+**Mobile Bottom Nav** (`components/mobile/bottom-nav.tsx`):
+- 5 tabs: Home, Docs, Resources, Chat, Sign In/Profile
+- CSS variable: `--mobile-nav-height: 64px`
 
 ---
 
 ## Data Layer Architecture (MANDATORY)
 
-### Overview
+**126 tables** across 19 categories, **97 migrations** in `supabase/migrations/`.
 
-Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentication. **97 migrations** define **126 tables** across 19 categories.
-
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Database** | PostgreSQL 15+ (Supabase) | Primary data store |
-| **Authentication** | Better Auth 1.4.6 | User accounts, sessions, OAuth |
-| **ORM/Client** | `pg` Pool | Direct SQL queries |
-| **Migrations** | Supabase CLI | Manual SQL files in `supabase/migrations/` |
+**Full schema reference:** [docs/DATABASE.md](docs/DATABASE.md)
 
 ### Column Naming Convention (CRITICAL)
 
-| Table Type | Convention | Example | SQL Syntax |
-|------------|------------|---------|------------|
-| **Better Auth tables** (`user`, `session`, `account`, `verification`) | **camelCase** | `createdAt`, `emailVerified` | Must quote: `"createdAt"` |
-| **Custom tables** (all others) | **snake_case** | `created_at`, `user_id` | No quotes needed |
+| Table Type | Convention | SQL Syntax |
+|------------|------------|------------|
+| **Better Auth** (`user`, `session`, `account`, `verification`) | **camelCase** | Must quote: `"createdAt"` |
+| **Custom tables** | **snake_case** | No quotes: `created_at` |
 
 ```sql
--- ✅ CORRECT: Better Auth table (quoted camelCase)
-SELECT id, email, role, "createdAt" FROM "user" WHERE id = $1;
-
--- ✅ CORRECT: Custom table (snake_case)
-SELECT id, user_id, created_at FROM favorites WHERE user_id = $1;
-
--- ❌ WRONG: Using snake_case on Better Auth table
-SELECT id, email, created_at FROM "user";  -- FAILS: column doesn't exist
-
--- ❌ WRONG: Forgetting quotes on camelCase
-SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
+-- ✅ Better Auth: SELECT id, role, "createdAt" FROM "user" WHERE id = $1;
+-- ✅ Custom:      SELECT id, user_id, created_at FROM favorites WHERE user_id = $1;
 ```
 
 ### Database Clients
 
 | Client | Location | Use Case |
 |--------|----------|----------|
-| `pool` | `lib/db.ts` | Direct SQL queries (preferred for writes) |
+| `pool` | `lib/db.ts` | Direct SQL (preferred for writes) |
 | `createClient()` | `lib/supabase/client.ts` | Browser-side, RLS-enforced |
-| `createServerClient()` | `lib/supabase/server.ts` | Server components, RLS-enforced |
-| `createAdminClient()` | `lib/supabase/server.ts` | Server-only, bypasses RLS |
-
-### Table Catalog (78 Tables)
-
-#### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
-
-| Table | PK Type | Description |
-|-------|---------|-------------|
-| `user` | TEXT | User accounts with extended columns |
-| `session` | TEXT | Active sessions |
-| `account` | TEXT | OAuth accounts |
-| `verification` | TEXT | Email verification tokens |
-
-**Extended `user` Columns** (added by us):
-
-| Column | Type | Description |
-|--------|------|-------------|
-| `username` | TEXT | Unique username |
-| `role` | TEXT | user/editor/moderator/admin/superadmin/ai_assistant |
-| `"twoFactorEnabled"` | BOOLEAN | 2FA status (camelCase!) |
-| `"hasCompletedOnboarding"` | BOOLEAN | Onboarding status (camelCase!) |
-| `banned`, `banned_at`, `banned_reason` | BOOLEAN/TIMESTAMPTZ/TEXT | Ban status |
-| `followers_count`, `following_count` | INTEGER | Denormalized counts |
-| `achievement_points` | INTEGER | Gamification points |
-
-#### User Data (14 tables)
-
-`profiles`, `favorites`, `ratings`, `reviews`, `review_helpful_votes`, `comments`, `comment_votes`, `collections`, `collection_items`, `user_activity`, `notifications`, `notification_preferences`, `user_follows`, `user_blocks`
-
-#### Gamification (3 tables)
-
-`achievements`, `user_achievements`, `achievement_progress`
-
-#### Messaging (7 tables)
-
-`user_presence`, `dm_conversations`, `dm_participants`, `dm_messages`, `dm_typing_indicators`, `dm_group_invitations`, `user_chat_settings`
-
-#### Security (4 tables)
-
-`security_logs`, `visitor_fingerprints`, `honeypot_configs`, `security_settings`
-
-#### E2EE (13 tables)
-
-`device_keys`, `one_time_prekeys`, `e2ee_key_backups`, `megolm_session_shares`, `e2ee_message_keys`, `e2ee_conversation_settings`, `e2ee_sas_verifications`, `e2ee_cross_signing_keys`, `e2ee_device_signatures`, `e2ee_user_trust`, `e2ee_ai_consent`, `e2ee_ai_access_log`, `e2ee_conversation_ai_settings`
-
-#### Donations (5 tables)
-
-`donations`, `donor_badges`, `donation_receipts`, `donation_bank_info`, `donation_settings`
-
-#### Auth Extensions (9 tables)
-
-`two_factor_sessions`, `two_factor_devices`, `email_verification_codes`, `passkeys`, `webauthn_challenges`, `user_api_keys`, `api_key_usage_logs`, `push_subscriptions`, `assistant_settings`
-
-#### Reports & Appeals (3 tables)
-
-`reports`, `ban_appeals`, `ban_history`
-
-#### Content & Moderation (4 tables)
-
-`edit_suggestions`, `beta_applications`, `feedback`, `admin_logs`
-
-#### Reading & Search (7 tables)
-
-`reading_lists`, `reading_list_items`, `view_history`, `resource_views`, `resource_view_stats`, `saved_searches`, `search_history`, `search_analytics`
-
-#### Documentation & Relationships (7 tables)
-
-`documentation`, `documentation_sections`, `documentation_history`, `documentation_update_jobs`, `doc_resource_relationships`, `resource_relationships`, `relationship_analysis_jobs`
-
-#### AI Conversations (2 tables)
-
-`ai_conversations`, `ai_messages`
-
-#### AI Pipeline (2 tables)
-
-`ai_pipeline_settings`, `ai_operation_queue`
-
-#### Admin Exports (1 table)
-
-`export_jobs`
-
-#### Prompts (5 tables)
-
-`prompt_categories`, `prompts`, `user_prompt_saves`, `prompt_ratings`, `prompt_usage`
+| `createServerClient()` | `lib/supabase/server.ts` | Server components |
+| `createAdminClient()` | `lib/supabase/server.ts` | Bypasses RLS |
 
 ### Role Hierarchy
 
-```sql
-CHECK (role IN ('user', 'editor', 'moderator', 'admin', 'superadmin', 'ai_assistant'))
-```
-
 | Level | Role | API Check |
 |-------|------|-----------|
-| 0 | `ai_assistant` | Special non-hierarchical |
 | 1 | `user` | Default |
 | 2 | `editor` | `hasMinRole(userRole, ROLES.EDITOR)` |
 | 3 | `moderator` | `hasMinRole(userRole, ROLES.MODERATOR)` |
 | 4 | `admin` | `hasMinRole(userRole, ROLES.ADMIN)` |
 | 5 | `superadmin` | `isSuperAdmin(userRole)` |
 
-### RLS Security Model
-
-RLS policies use `USING (true)` because the app uses the **service_role** key (bypasses RLS). Access control is enforced at the **API route level**:
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                   API Route Layer                        │
-│   ✓ Session validation (Better Auth getSession())       │
-│   ✓ Role checks (hasMinRole, ROLES)                     │
-│   ✓ Ownership verification (WHERE user_id = session.id) │
-└─────────────────────────────────────────────────────────┘
-                          │
-                          ▼
-┌─────────────────────────────────────────────────────────┐
-│                   Database Layer                         │
-│   RLS: USING(true) - service_role bypasses              │
-│   Constraints: FK, CHECK, UNIQUE enforced               │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Migration Structure
-
-```
-supabase/migrations/
-├── 000_fresh_start.sql          # Consolidated schema (fresh installs)
-├── 001-022                      # Core user data tables
-├── 023-030                      # Notifications, email verification
-├── 031-034                      # 2FA, passkeys, API keys, assistant settings
-├── 041-044                      # Reports, bans, messaging, group chats
-├── 045-049                      # Security system, materialized views, superadmin
-├── 050-053                      # Beta tester role, donation system
-├── 054-057                      # E2EE (device keys, messages, verification, AI consent)
-├── 058-061                      # Messaging indexes, job queue, donations, notification indexes
-├── 062-063                      # Presence indexes, chat performance (RPC functions, indexes)
-├── 081-085                      # Resources system (tags, authors, alternatives, favorites, ratings, reviews, comments)
-├── 086-088                      # Documentation tables, relationships, resource AI enhancements
-├── 089-090                      # AI pipeline settings, operation queue, resource sources, discovery queue
-├── 091                          # Resource-resource relationships fix
-└── 096                          # Prompts system (categories, prompts, saves, ratings, usage)
-```
-
 ### Mandatory Rules
 
-#### Rule 1: Parameterized Queries Only
+1. **Parameterized queries only** - Never interpolate user input into SQL
+2. **Update schema docs** - Create migration, update `000_fresh_start.sql`, run `pnpm check-types`
+3. **Defensive migrations** - Use `IF EXISTS`, conditional DDL
 
-```typescript
-// ✅ CORRECT
-await pool.query('SELECT * FROM favorites WHERE user_id = $1', [userId]);
-
-// ❌ WRONG - SQL Injection vulnerability
-await pool.query(`SELECT * FROM favorites WHERE user_id = '${userId}'`);
-```
-
-#### Rule 2: Update Schema Documentation
-
-1. Create migration file in `supabase/migrations/`
-2. Update `000_fresh_start.sql` (if adding tables)
-3. Run `pnpm check-types` to verify
-
-#### Rule 3: Defensive Migration Pattern
-
-```sql
-DO $$
-BEGIN
-  IF EXISTS (SELECT FROM pg_tables WHERE tablename = 'mytable') THEN
-    CREATE INDEX IF NOT EXISTS idx_mytable_col ON mytable(col);
-  END IF;
-END $$;
-```
-
-#### Rule 4: Better Auth Column Awareness
-
-| Column | Correct SQL | Common Mistake |
-|--------|-------------|----------------|
-| Created date | `"createdAt"` | `created_at` |
-| Email verified | `"emailVerified"` | `email_verified` |
-| 2FA enabled | `"twoFactorEnabled"` | `two_factor_enabled` |
-| Onboarding | `"hasCompletedOnboarding"` | `has_completed_onboarding` |
-
-### API Route Template
-
-```typescript
-import { NextRequest, NextResponse } from "next/server";
-import { pool } from "@/lib/db";
-import { getSession } from "@/lib/auth";
-import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
-
-export async function GET(request: NextRequest) {
-  const session = await getSession();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const roleResult = await pool.query(
-    `SELECT role FROM "user" WHERE id = $1`,
-    [session.user.id]
-  );
-  const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
-  if (!hasMinRole(userRole, ROLES.MODERATOR)) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
-
-  const result = await pool.query(
-    `SELECT * FROM table WHERE user_id = $1`,
-    [session.user.id]
-  );
-
-  return NextResponse.json(result.rows);
-}
-```
-
-### Common Queries Reference
-
-```sql
--- Get user with role (Better Auth - must quote camelCase)
-SELECT id, email, role, "createdAt" FROM "user" WHERE id = $1;
-
--- Get user favorites (custom table - snake_case)
-SELECT * FROM favorites WHERE user_id = $1 ORDER BY created_at DESC;
-
--- Join user and custom table
-SELECT f.*, u.name FROM favorites f JOIN "user" u ON f.user_id = u.id;
-
--- Check online status
-SELECT * FROM user_presence WHERE user_id = $1;
-
--- Get conversations with unread count
-SELECT c.*, p.unread_count FROM dm_conversations c
-JOIN dm_participants p ON p.conversation_id = c.id
-WHERE p.user_id = $1;
-```
-
-### Checklist for Data Layer Changes
-
-- [ ] Column names match convention (camelCase for Better Auth, snake_case for custom)
-- [ ] Migration uses defensive patterns (IF EXISTS, conditional DDL)
-- [ ] `000_fresh_start.sql` updated (if adding tables)
-- [ ] Parameterized queries only (no string interpolation)
-- [ ] Run `pnpm check-types` after changes
+**See [docs/DATABASE.md](docs/DATABASE.md) for:** Table catalog, API route template, SQL examples, common queries
 
 ---
 
@@ -1914,328 +805,77 @@ WHERE p.user_id = $1;
 
 ## Feature Documentation
 
-### Unified Chat Window
+**See [docs/PATTERNS.md](docs/PATTERNS.md#realtime-patterns) for code examples**
 
-**Location**: `components/unified-chat/`
+### Unified Chat Window (`components/unified-chat/`)
 
 | Tab | Features |
 |-----|----------|
-| **AI Assistant** | Claude streaming, ElevenLabs Turbo v2.5 TTS (42 voices, low-latency), immediate text streaming, speech recognition, localStorage history |
-| **Messages** | Supabase real-time, typing indicators, E2EE indicators, unread badges |
+| **AI Assistant** | Claude streaming, TTS, speech recognition, localStorage history |
+| **Messages** | Supabase real-time, typing indicators, E2EE, unread badges |
 
-```typescript
-import { openAIAssistant, openMessages } from "@/components/unified-chat";
+### Realtime System (`lib/realtime/realtime-context.tsx`)
 
-openAIAssistant({ context: AIContext, question: string });
-openMessages({ conversationId: string, userId: string });
-```
-
-### Realtime Subscription System
-
-**Location**: `lib/realtime/realtime-context.tsx`
-
-Centralized realtime subscription manager with connection pooling and broadcast-based typing.
-
-| Feature | Description |
-|---------|-------------|
-| **Connection Pooling** | Single channel per conversation (50% fewer subscriptions) |
-| **Broadcast Typing** | 6ms latency vs 46ms (7.6x faster, no DB writes) |
-| **Auto-reconnection** | Exponential backoff (1s → 30s max) |
-| **Presence Tracking** | Online/away status per conversation |
-
-```tsx
-import { useConversationRealtime } from "@/lib/realtime/realtime-context";
-
-const { sendTyping, isConnected } = useConversationRealtime({
-  conversationId,
-  currentUserId,
-  onMessage: (payload) => addMessage(payload),
-  onTypingChange: (userIds) => setTypingUsers(userIds),
-});
-
-// Send typing indicator (auto-clears after 5s)
-sendTyping(true);
-```
-
-### Virtual Scrolling
-
-**Location**: `components/messaging/virtualized-message-list.tsx`
-
-TanStack Virtual-based message list for efficient rendering of large conversations.
-
-| Feature | Description |
-|---------|-------------|
-| **Dynamic Heights** | `measureElement` for variable-length messages |
-| **Overscan** | 10 extra items for smooth scrolling |
-| **Reverse Scroll** | Load older messages at top |
-| **Auto-scroll** | Scrolls to bottom for new messages (if at bottom) |
+| Feature | Benefit |
+|---------|---------|
+| Connection Pooling | 50% fewer subscriptions |
+| Broadcast Typing | 6ms latency (7.6x faster) |
+| Auto-reconnection | Exponential backoff (1s → 30s) |
 
 ### RAG System (v7.0)
 
-- **6,953 chunks** (docs + relationships + project knowledge + resources + code examples + Ask AI context)
-- **7,695 indexed terms** for TF-IDF search
-- **980 chunks (14.1%)** enriched with audio tags for expressive TTS (compatible with Turbo v2.5)
-- Built at compile time via `scripts/generate-rag-index.cjs`
-- Includes 147 doc-resource + 3,087 resource-resource relationships for cross-linking
-- Audio tag distribution: `[curious]` 423, `[excited]` 274, `[thoughtful]` 258, `[happy]` 49, `[mischievously]` 19, `[dramatically]` 17
+- **6,953 chunks** with TF-IDF search (7,695 terms)
+- **14.1%** enriched with audio tags
+- Built via `scripts/generate-rag-index.cjs`
 
-### End-to-End Encryption (E2EE)
+### E2EE (`lib/e2ee/`)
 
-**Location**: `lib/e2ee/`, `app/api/e2ee/`
+Matrix Olm/Megolm with Double Ratchet. Private keys never leave device.
 
-Matrix Olm/Megolm protocol with Double Ratchet algorithm.
+### Donation System (`app/donate/`)
 
-| Component | Purpose |
-|-----------|---------|
-| `vodozemac.ts` | WASM crypto with Web Crypto fallback |
-| `key-storage.ts` | IndexedDB for private keys |
-| `key-backup.ts` | Password-protected cloud backup |
-| `device-verification.ts` | Emoji-based verification (SAS) |
+| Tier | Threshold |
+|------|-----------|
+| Bronze/Silver/Gold/Platinum | $10+ / $50+ / $100+ / $500+ |
 
-**Security Model**: Private keys never leave device. Cloud backup uses AES-256-GCM.
+### Resources Section (`lib/resources/`, `data/resources/`)
 
-### Donation System
-
-**Location**: `app/donate/`, `components/donate/`
-
-| Tier | Threshold | Color |
-|------|-----------|-------|
-| Bronze | $10+ | amber-600 |
-| Silver | $50+ | gray-400 |
-| Gold | $100+ | yellow-500 |
-| Platinum | $500+ | gradient |
-
-### Resources Section
-
-**Location**: `lib/resources/`, `data/resources/`, `app/resources/`
-
-1,952 curated resources across 10 categories: official, tools, mcp-servers, rules, prompts, agents, tutorials, sdks, showcases, community.
-
-#### Resource Data Management (MANDATORY)
-
-| Rule | Description |
-|------|-------------|
-| **Database is Source of Truth** | Always use Supabase `resources` table as the authoritative data source. JSON files are generated exports for build-time optimization only. |
-| **Screenshots Required** | Every resource MUST have a screenshot. Generate screenshots when adding new resources or updating existing ones. |
-| **Sync JSON Files** | After database changes, run `scripts/sync-resources-to-json.ts` to regenerate JSON files. |
+1,952 resources across 10 categories. **Database is source of truth**, JSON files are build-time exports.
 
 **Key Scripts**:
+- `scripts/generate-screenshots-db.ts` - Mass screenshot generation
+- `scripts/sync-resources-to-json.ts` - Export DB to JSON
 
-| Script | Purpose | Usage |
-|--------|---------|-------|
-| `scripts/generate-screenshots-db.ts` | Mass screenshot generation (10 parallel browsers) | `npx dotenvx run -f .env.local -- npx tsx scripts/generate-screenshots-db.ts` |
-| `scripts/sync-resources-to-json.ts` | Export database to JSON files | `npx dotenvx run -f .env.local -- npx tsx scripts/sync-resources-to-json.ts` |
-| `scripts/generate-screenshots.ts` | Generate from JSON files (legacy) | `npx tsx scripts/generate-screenshots.ts` |
-| `scripts/upload-screenshots.ts` | Upload local screenshots to Supabase | `npx dotenvx run -- npx tsx scripts/upload-screenshots.ts` |
-
-**Screenshot Pipeline**:
-```
-New Resource → Capture Screenshot → Upload to Supabase Storage → Update Database → Sync JSON Files
-```
-
-**Checklist for Resource Changes**:
-- [ ] Resource added/updated in database
-- [ ] Screenshot captured and uploaded to `resource-screenshots` bucket
-- [ ] `screenshots` column updated with public URL
-- [ ] JSON files regenerated with sync script
-- [ ] Changes committed to repository
-
-#### Resource Auto-Update System (MANDATORY)
-
-**Location**: `lib/resources/update-orchestrator.ts`, `lib/ai/resource-updater.ts`, `app/(main)/dashboard/resource-updates/`
-
-AI-powered system for keeping resources up-to-date with Claude Opus 4.5 analysis and admin review workflow.
-
-**Key Components**:
-
-| Component | Location | Purpose |
-|-----------|----------|---------|
-| Update Orchestrator | `lib/resources/update-orchestrator.ts` | State machine for job lifecycle |
-| AI Analyzer | `lib/ai/resource-updater.ts` | Claude Opus 4.5 content comparison |
-| Screenshot Service | `lib/resources/screenshot-service.ts` | Firecrawl + Supabase Storage |
-| Admin Dashboard | `app/(main)/dashboard/resource-updates/` | Review and approve changes |
-| Cron Job | `app/api/cron/update-resources/route.ts` | Weekly Sunday 3 AM UTC |
-| Payload CMS Button | `components/payload/ResourceUpdateButton.tsx` | Manual trigger in CMS |
-
-**Job Status Flow**:
-```
-pending → scraping → analyzing → screenshots → ready_for_review → applied/rejected
-```
-
-**Database Tables** (Migration 084):
+**Auto-Update System**: AI-powered via Claude Opus 4.5, cron weekly Sunday 3 AM UTC, admin approval required.
 
 | Table | Purpose |
 |-------|---------|
-| `resource_update_jobs` | Tracks job status, scraped content, AI analysis, screenshots |
-| `resource_changelog` | Historical record of all applied changes with versioning |
+| `resource_update_jobs` | Job tracking |
+| `resource_changelog` | Version history |
 
-**New Resource Columns**:
-- `last_update_job_id`: Reference to most recent update job
-- `last_auto_updated_at`: Timestamp of last auto-update
-- `update_frequency`: `daily`, `weekly`, `monthly`, or `manual`
-- `auto_update_enabled`: Toggle for cron inclusion
-- `changelog_count`: Denormalized count for performance
+### Achievement System (`lib/achievements.ts`)
 
-**MANDATORY for New Resources**:
+50+ achievements, 4 rarity tiers. Managed in Payload CMS (`/admin`), auto-syncs to Supabase.
 
-When adding new resources to the system:
+### Sound Effects (`hooks/use-sound-effects.tsx`)
 
-1. **Set Update Frequency**: Choose appropriate `update_frequency` based on resource type
-2. **Enable Auto-Update**: Set `auto_update_enabled: true` unless resource is static
-3. **Provide URLs**: Ensure `official_url`, `repo_url`, or `documentation_url` are set for scraping
-4. **Review Changes**: All AI-generated updates require admin approval before applying
+Web Audio API synthesis, 26 types, 10 themes (Claude Insider, Anthropic, Apple, Microsoft, Google, Linux, WhatsApp, Telegram, GitHub, Vercel).
 
-**API Endpoints**:
+### Security System (`lib/fingerprint.ts`, `lib/security-logger.ts`)
 
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| POST | `/api/admin/resources/updates` | Create update job |
-| GET | `/api/admin/resources/updates` | List jobs (with status filter) |
-| GET | `/api/admin/resources/updates/[jobId]` | Job details |
-| POST | `/api/admin/resources/updates/[jobId]/approve` | Apply selected changes |
-| POST | `/api/admin/resources/updates/[jobId]/reject` | Reject with notes |
-| GET | `/api/resources/[slug]/changelog` | Public changelog |
+FingerprintJS (24h cache), trust scoring (0-100), honeypots, activity feed.
 
-**Triggering Updates**:
+### Group Chat (`app/actions/group-chat.ts`)
 
-```typescript
-// From Payload CMS - use ResourceUpdateButton component
-// From dashboard - POST to /api/admin/resources/updates
-// Automatic - cron runs weekly on Sunday 3 AM UTC
-```
+Roles: owner, admin, member. Features: invitations, ownership transfer.
 
-### Achievement System
+### Dashboard Infrastructure (`lib/dashboard/`)
 
-**Location**: `lib/achievements.ts`, `components/achievements/`, `collections/Achievements.ts`
+Hooks: `usePaginatedList<T>`, `useDashboardAction`, `useModerationAction`, `useBulkAction`
 
-50+ achievements across 10 categories with 4 rarity tiers (Common, Rare, Epic, Legendary).
+Status configs: `MODERATION_STATUS`, `FEEDBACK_STATUS`, `SEVERITY`, `REPORT_STATUS`, `USER_ROLE`, `TRUST_LEVEL`
 
-**Payload CMS Management** (Admin UI at `/admin`):
-
-| Collection | Purpose |
-|------------|---------|
-| `achievement-tiers` | Configure rarity tiers with colors, animations, point multipliers |
-| `achievement-categories` | Organize achievements into thematic groups |
-| `achievements` | Create/edit achievements with conditions, notifications |
-| `badges` | Profile badges (role, donor, special, achievement-based) |
-
-**GamificationSettings Global**: Configure points system, levels, streaks, and notification defaults.
-
-**Supabase Sync**: CMS achievements auto-sync to Supabase `achievements` table via afterChange hooks.
-
-```tsx
-// Queue achievement for popup display
-import { queueAchievement } from "@/lib/achievement-queue";
-queueAchievement("welcome_aboard");
-
-// Award achievement (server-side)
-import { awardSpecialAchievement } from "@/app/actions/achievements";
-await awardSpecialAchievement(userId, "welcome_aboard");
-```
-
-### Sound Effects System
-
-**Location**: `hooks/use-sound-effects.tsx`, `hooks/sound-themes.ts`
-
-Web Audio API-based synthesis, no audio files. 26 sound types across 6 categories with 10 built-in themes.
-
-| Theme | Icon | Inspiration |
-|-------|------|-------------|
-| Claude Insider | 🎵 | Warm, professional (default) |
-| Anthropic | 🤖 | Soft, AI-focused |
-| Apple | 🍎 | Crystal clear, glass-like |
-| Microsoft | 🪟 | Orchestral warmth |
-| Google | 🔍 | Material Design playful |
-| Linux | 🐧 | Functional utility |
-| WhatsApp | 💬 | Messaging pop |
-| Telegram | ✈️ | Quick, sharp |
-| GitHub | 🐙 | Developer mechanical |
-| Vercel | ▲ | Futuristic minimal |
-
-```tsx
-const sounds = useSoundEffects();
-sounds.playSuccess();
-sounds.playNotification();
-// Access current theme
-sounds.currentTheme // { id, name, icon, description, ... }
-sounds.availableThemes // THEME_LIST array
-```
-
-### Security System
-
-**Location**: `lib/fingerprint.ts`, `lib/security-logger.ts`, `lib/honeypot.ts`, `lib/trust-score.ts`
-
-| Component | Purpose |
-|-----------|---------|
-| Fingerprinting | FingerprintJS with 24-hour caching |
-| Trust Scoring | 0-100 rules-based algorithm |
-| Honeypots | Faker.js fake data traps |
-| Activity Feed | 7 activity types with real-time updates |
-
-### Group Chat
-
-**Location**: `app/actions/group-chat.ts`
-
-Roles: owner, admin, member. Features: invitations, ownership transfer, member management.
-
-### Dashboard Shared Infrastructure
-
-**Location**: `lib/dashboard/`, `components/dashboard/shared/`
-
-Centralized hooks, utilities, and components for dashboard moderation pages.
-
-**Hooks (`lib/dashboard/`):**
-
-| Hook | Purpose |
-|------|---------|
-| `usePaginatedList<T>` | Generic fetch with pagination, search, filters |
-| `useDashboardAction` | CRUD operations with loading/toast feedback |
-| `useStatusAction` | Status update actions |
-| `useEntityAction` | Entity-specific actions (approve, reject, delete) |
-| `useModerationAction` | Moderation workflow actions |
-| `useBulkAction` | Bulk operations on multiple items |
-
-**Status Configs (`status-config.ts`):**
-
-| Config | Statuses |
-|--------|----------|
-| `MODERATION_STATUS` | pending, approved, rejected, flagged |
-| `FEEDBACK_STATUS` | open, in_progress, resolved, closed, wont_fix |
-| `SEVERITY` | low, medium, high, critical |
-| `REPORT_STATUS` | pending, investigating, action_taken, dismissed |
-| `USER_ROLE` | user, editor, moderator, admin, superadmin |
-| `TRUST_LEVEL` | untrusted, suspicious, neutral, trusted, verified |
-
-**Shared Components (`components/dashboard/shared/`):**
-
-| Component | Purpose |
-|-----------|---------|
-| `PageHeader` | Consistent page titles with optional badge |
-| `StatusBadge` | Color-coded status indicators |
-| `EmptyState` | Empty list displays with icon/message |
-| `ReviewModal` | Modal for review/moderation actions |
-| `ConfirmModal` | Confirmation dialogs for destructive actions |
-| `FilterBar` | Search input with filter buttons |
-| `StatCard` / `StatGrid` | Metric display cards |
-| `NotesField` | Textarea for moderation notes |
-| `DetailRow` | Key-value display in modals |
-
-**Usage Example:**
-
-```tsx
-import { usePaginatedList, MODERATION_STATUS } from "@/lib/dashboard";
-import { PageHeader, StatusBadge, EmptyState } from "@/components/dashboard/shared";
-
-function MyPage() {
-  const { items, isLoading, page, totalPages, setPage } = usePaginatedList<Item>("endpoint");
-  return (
-    <div>
-      <PageHeader title="My Page" description="Description" />
-      {items.map(item => <StatusBadge style={MODERATION_STATUS[item.status]} />)}
-    </div>
-  );
-}
-```
+Components: `PageHeader`, `StatusBadge`, `EmptyState`, `ReviewModal`, `ConfirmModal`, `FilterBar`, `StatCard`
 
 ---
 

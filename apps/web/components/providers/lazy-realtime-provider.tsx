@@ -1,48 +1,43 @@
 /**
  * Lazy Realtime Provider
  *
- * Defers Supabase realtime connection establishment until browser is idle.
- * Uses requestIdleCallback to prevent competition with LCP and TTI.
+ * Dynamically imports the realtime provider to defer Supabase realtime connection (~16KB).
+ * Uses the shared DeferredLoadingContext to synchronize with other lazy providers,
+ * preventing flickering from multiple re-renders.
  *
  * Performance Impact:
- * - Defers ~16KB of Supabase realtime code until after critical rendering
- * - Delays WebSocket connection establishment
- * - Falls back to 1.5s timeout for browsers without requestIdleCallback
+ * - Defers realtime connection until after critical rendering
+ * - Prevents unnecessary WebSocket connections on initial load
+ * - Synchronized with other providers for single re-render
  */
 
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
+import { useDeferredLoading } from "./deferred-loading-context";
 
-// Lazy load the realtime provider - it's not needed for initial page render
+// Lazy load the realtime provider
 const RealtimeProvider = dynamic(
   () => import("@/lib/realtime/realtime-context").then((m) => ({ default: m.RealtimeProvider })),
   {
-    ssr: false, // Realtime features are client-only
+    ssr: false,
   }
 );
 
-export function LazyRealtimeProvider({ children }: { children: ReactNode }) {
-  const [shouldLoad, setShouldLoad] = useState(false);
+interface LazyRealtimeProviderProps {
+  children: ReactNode;
+}
 
-  useEffect(() => {
-    // Use requestIdleCallback to defer until browser is truly idle
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(
-        () => setShouldLoad(true),
-        { timeout: 2500 } // Max 2.5s delay
-      );
-      return () => window.cancelIdleCallback(id);
-    } else {
-      // Fallback: delay 1.5s after hydration
-      const timeout = setTimeout(() => setShouldLoad(true), 1500);
-      return () => clearTimeout(timeout);
-    }
-  }, []);
+/**
+ * Wrapper that defers realtime connection until browser is idle.
+ * Components using useRealtime() will gracefully handle the "not yet connected" state.
+ */
+export function LazyRealtimeProvider({ children }: LazyRealtimeProviderProps) {
+  const isReady = useDeferredLoading();
 
   // Render children immediately, only wrap with provider when ready
-  if (!shouldLoad) {
+  if (!isReady) {
     return <>{children}</>;
   }
 

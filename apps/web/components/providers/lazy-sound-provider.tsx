@@ -1,48 +1,43 @@
 /**
  * Lazy Sound Provider
  *
- * Defers Web Audio API initialization until browser is idle.
- * Uses requestIdleCallback to prevent competition with LCP and TTI.
+ * Dynamically imports the sound provider to defer Web Audio API initialization (~12KB).
+ * Uses the shared DeferredLoadingContext to synchronize with other lazy providers,
+ * preventing flickering from multiple re-renders.
  *
  * Performance Impact:
- * - Defers ~12KB of sound synthesis code until after critical rendering
- * - Delays AudioContext creation (which can be expensive)
- * - Falls back to 1s timeout for browsers without requestIdleCallback
+ * - Defers Web Audio API initialization until after critical rendering
+ * - Sounds don't play on initial load anyway, so no UX impact
+ * - Synchronized with other providers for single re-render
  */
 
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
+import { useDeferredLoading } from "./deferred-loading-context";
 
-// Lazy load the sound provider - sounds don't play on initial render
+// Lazy load the sound provider
 const SoundProvider = dynamic(
   () => import("@/hooks/use-sound-effects").then((m) => ({ default: m.SoundProvider })),
   {
-    ssr: false, // Web Audio API is client-only
+    ssr: false,
   }
 );
 
-export function LazySoundProvider({ children }: { children: ReactNode }) {
-  const [shouldLoad, setShouldLoad] = useState(false);
+interface LazySoundProviderProps {
+  children: ReactNode;
+}
 
-  useEffect(() => {
-    // Use requestIdleCallback to defer until browser is truly idle
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(
-        () => setShouldLoad(true),
-        { timeout: 2000 } // Max 2s delay
-      );
-      return () => window.cancelIdleCallback(id);
-    } else {
-      // Fallback: delay 1s after hydration (sounds needed earlier than others)
-      const timeout = setTimeout(() => setShouldLoad(true), 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, []);
+/**
+ * Wrapper that defers sound system loading until browser is idle.
+ * Components using useSound() will gracefully handle the "not yet loaded" state.
+ */
+export function LazySoundProvider({ children }: LazySoundProviderProps) {
+  const isReady = useDeferredLoading();
 
   // Render children immediately, only wrap with provider when ready
-  if (!shouldLoad) {
+  if (!isReady) {
     return <>{children}</>;
   }
 

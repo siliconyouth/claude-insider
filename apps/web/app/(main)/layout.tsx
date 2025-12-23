@@ -25,6 +25,7 @@ import { NotificationPopup } from "@/components/notifications/notification-popup
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
 import { LazySoundProvider } from "@/components/providers/lazy-sound-provider";
+import { DeferredLoadingProvider } from "@/components/providers/deferred-loading-context";
 import { PrefetchProvider } from "@/components/providers/prefetch-provider";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { PushNotificationPrompt } from "@/components/pwa/push-notification-prompt";
@@ -544,6 +545,7 @@ export default async function MainLayout({
         className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}
       >
         <I18nProvider locale={locale} messages={messages}>
+          <DeferredLoadingProvider timeout={2000}>
           <LazyFingerprintProvider>
             <AuthProvider>
               <LazyRealtimeProvider>
@@ -584,6 +586,7 @@ export default async function MainLayout({
               </LazyRealtimeProvider>
             </AuthProvider>
           </LazyFingerprintProvider>
+          </DeferredLoadingProvider>
         </I18nProvider>
       </body>
     </html>
