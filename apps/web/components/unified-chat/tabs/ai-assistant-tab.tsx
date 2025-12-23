@@ -976,10 +976,11 @@ export function AIAssistantTab() {
         }
       }
 
-      // Text streaming is already complete - add final message
+      // Text streaming is already complete - add final message and clear loading state
       const assistantMessage: Message = { role: "assistant", content: fullContent };
       setMessages((prev) => [...prev, assistantMessage]);
       setStreamingContent("");
+      setIsLoading(false); // Clear loading BEFORE audio prefetch to avoid showing loading indicator again
 
       // Handle TTS - audio plays alongside already-visible text (no fake streaming)
       if (autoSpeak && fullContent) {
