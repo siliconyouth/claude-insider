@@ -12,6 +12,8 @@
  *   --category=mcp-servers  Filter by category
  *   --dry-run       Show what would be processed without capturing
  *   --resume        Skip already processed resources
+ *   --force         Regenerate ALL screenshots (not just missing ones)
+ *   --dark          Use dark mode (prefers-color-scheme: dark)
  */
 
 import { chromium, Browser, BrowserContext } from "playwright";
@@ -54,11 +56,13 @@ interface ProcessResult {
 }
 
 // Parse command line arguments
-function parseArgs(): { limit?: number; category?: string; dryRun: boolean; resume: boolean } {
+function parseArgs(): { limit?: number; category?: string; dryRun: boolean; resume: boolean; force: boolean; dark: boolean } {
   const args = process.argv.slice(2);
-  const options: { limit?: number; category?: string; dryRun: boolean; resume: boolean } = {
+  const options: { limit?: number; category?: string; dryRun: boolean; resume: boolean; force: boolean; dark: boolean } = {
     dryRun: false,
     resume: false,
+    force: false,
+    dark: false,
   };
 
   for (const arg of args) {
@@ -72,6 +76,10 @@ function parseArgs(): { limit?: number; category?: string; dryRun: boolean; resu
       options.dryRun = true;
     } else if (arg === "--resume") {
       options.resume = true;
+    } else if (arg === "--force") {
+      options.force = true;
+    } else if (arg === "--dark") {
+      options.dark = true;
     }
   }
 
@@ -98,13 +106,17 @@ function shouldSkip(url: string): boolean {
 // Get resources needing screenshots from database
 async function getResourcesWithoutScreenshots(
   supabase: SupabaseClient,
-  options: { limit?: number; category?: string }
+  options: { limit?: number; category?: string; force?: boolean }
 ): Promise<Resource[]> {
   let query = supabase
     .from("resources")
     .select("id, slug, title, url, category, screenshots")
-    .eq("is_published", true)
-    .or("screenshots.is.null,screenshots.eq.{}");
+    .eq("is_published", true);
+
+  // Only filter for missing screenshots if not forcing regeneration
+  if (!options.force) {
+    query = query.or("screenshots.is.null,screenshots.eq.{}");
+  }
 
   if (options.category) {
     query = query.eq("category", options.category);
@@ -246,7 +258,8 @@ async function processResource(
 async function processResources(
   resources: Resource[],
   supabase: SupabaseClient,
-  dryRun: boolean
+  dryRun: boolean,
+  darkMode: boolean = false
 ): Promise<ProcessResult[]> {
   if (dryRun) {
     console.log("\n🔍 DRY RUN - Would process these resources:\n");
@@ -257,7 +270,7 @@ async function processResources(
     return [];
   }
 
-  console.log(`\n🚀 Launching ${CONCURRENT_BROWSERS} parallel browsers...\n`);
+  console.log(`\n🚀 Launching ${CONCURRENT_BROWSERS} parallel browsers${darkMode ? " (dark mode)" : ""}...\n`);
 
   // Launch browsers with contexts
   const browser = await chromium.launch({ headless: true });
@@ -268,6 +281,8 @@ async function processResources(
       viewport: VIEWPORT,
       userAgent:
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      // Enable dark mode via prefers-color-scheme media query
+      colorScheme: darkMode ? "dark" : "light",
     });
     contexts.push(context);
   }
@@ -323,6 +338,8 @@ async function main() {
   if (options.limit) console.log(`Limit: ${options.limit} resources`);
   if (options.category) console.log(`Category filter: ${options.category}`);
   if (options.dryRun) console.log("Mode: DRY RUN");
+  if (options.force) console.log("Mode: FORCE (regenerate all)");
+  if (options.dark) console.log("Theme: 🌙 DARK MODE");
   console.log("");
 
   const supabase = getSupabaseClient();
@@ -331,7 +348,10 @@ async function main() {
   console.log("📊 Fetching resources from database...");
   const resources = await getResourcesWithoutScreenshots(supabase, options);
 
-  console.log(`\n📋 Found ${resources.length} resources needing screenshots`);
+  const resourceMsg = options.force
+    ? `\n📋 Found ${resources.length} resources to regenerate`
+    : `\n📋 Found ${resources.length} resources needing screenshots`;
+  console.log(resourceMsg);
 
   if (resources.length === 0) {
     console.log("✨ All resources already have screenshots!");
@@ -355,7 +375,7 @@ async function main() {
 
   // Process resources
   const startTime = Date.now();
-  const results = await processResources(resources, supabase, options.dryRun);
+  const results = await processResources(resources, supabase, options.dryRun, options.dark);
 
   if (options.dryRun) {
     return;
