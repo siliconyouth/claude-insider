@@ -232,7 +232,7 @@ export function Footer() {
                       href={link.href}
                       className={cn(
                         linkClass,
-                        link.highlight && "text-pink-500 dark:text-pink-400 hover:text-pink-600 dark:hover:text-pink-300 flex items-center gap-1"
+                        link.highlight && "text-pink-500 hover:text-rose-500 dark:text-pink-500 dark:hover:text-rose-400 flex items-center gap-1"
                       )}
                     >
                       {link.highlight && (
