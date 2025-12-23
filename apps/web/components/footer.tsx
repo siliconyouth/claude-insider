@@ -143,11 +143,8 @@ export function Footer() {
                 Claude Insider
               </span>
             </Link>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-              <span className="block">Your comprehensive guide to Claude AI</span>
-              <span className="block text-gray-500 dark:text-gray-500">
-                Documentation · Resources · Best Practices
-              </span>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed max-w-[200px]">
+              Your comprehensive guide to Claude AI — documentation, resources, and best practices.
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">

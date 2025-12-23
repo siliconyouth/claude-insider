@@ -1096,20 +1096,90 @@ The site-wide navigation is divided between header and footer menus. All compone
 
 **Footer Layout** (`components/footer.tsx`):
 
+The footer uses a **flex + grid hybrid layout** for perfect column alignment:
+
+```tsx
+<div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+  <div className="lg:flex lg:gap-16">
+    {/* Brand Section - fixed width, doesn't affect grid */}
+    <div className="mb-10 lg:mb-0 lg:w-64 lg:shrink-0">
+      {/* Logo, tagline, social links */}
+    </div>
+
+    {/* Link Columns - unified 5-column grid for perfect alignment */}
+    <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5 lg:gap-10 lg:flex-1">
+      {/* Features | Documentation | Resources | Project | Legal */}
+    </div>
+  </div>
+</div>
+```
+
+**Footer Columns** (5 link columns):
+
+| Column | Key Links |
+|--------|-----------|
+| **Features** | Docs, Resources, Playground, Prompt Library, AI Assistant (action), Chat |
+| **Documentation** | Getting Started, Configuration, API Reference, Tutorials, Official Docs (external) |
+| **Resources** | MCP Servers, Tools & SDKs, CLAUDE.md Rules, Prompts, Showcases, Community |
+| **Project** | GitHub (external), Changelog, RSS Feed, Community Stats, Design System, Members, Donate (highlighted) |
+| **Legal** | Privacy, Terms, Disclaimer, Accessibility |
+
+**Bottom Bar Elements**:
+
 | Element | Description |
 |---------|-------------|
-| Logo | MonochromeLogo (14px), links to home |
+| Logo | MonochromeLogo (16px) with `variant="contrast"` |
 | Copyright | `© {year}` + author link |
-| Legal Links | Privacy, Terms, Disclaimer, Accessibility |
-| Utility Links | Changelog, Stats, **API** (with key icon), Donate (with heart icon) |
-| Controls | Language selector, Sound toggle |
-| Version | `v{APP_VERSION}-{buildId}` |
+| Version | `v{APP_VERSION}-{buildId}` in monospace |
+| Controls | Language selector, Sound toggle, Theme toggle |
 
 **MANDATORY Footer Rules**:
-1. API link moved from header to footer (both desktop and mobile)
-2. API link includes key icon SVG for visual identification
-3. All links use consistent `linkClass` styling
-4. Separators use `·` character with `separatorClass`
+
+1. **Layout**: Use flex container with fixed-width Brand section (`lg:w-64`) and flexible grid for link columns
+2. **Container Width**: Use `max-w-[1440px]` (not `max-w-7xl`) for wider layout
+3. **Column Gap**: Use `lg:gap-10` between columns for breathing room
+4. **Grid Alignment**: All 5 link columns share one grid (`lg:grid-cols-5`) for perfect heading/link alignment
+5. **Logo Variant**: Use `MonochromeLogo` with `variant="contrast"` for high visibility in both themes
+6. **Icon Spacing**: All icons use `gap-1.5` with `inline-flex items-center` (never `gap-1` or `gap-2`)
+7. **External Links**: Include external icon (`w-3 h-3`) with `target="_blank" rel="noopener noreferrer"`
+8. **AI Assistant Button**: Use `action` callback (not href), include `title` tooltip with keyboard shortcut
+9. **No Dynamic Count Badges**: Don't use badges showing resource counts (may become inaccurate)
+10. **Highlighted Links**: Donate uses `text-pink-500` with heart icon
+
+**AI Assistant Button Pattern**:
+
+```tsx
+// Footer link with action callback instead of navigation
+{link.action === "openAIAssistant" ? (
+  <button
+    onClick={() => openAIAssistant()}
+    title="AI Assistant/Chat (Cmd + .)"
+    className={cn(linkClass, "inline-flex items-center gap-2")}
+  >
+    {link.label}
+    {link.badge && <span className="...">{link.badge}</span>}
+  </button>
+) : (
+  <Link href={link.href}>...</Link>
+)}
+```
+
+**External Link Pattern**:
+
+```tsx
+<a
+  href={link.href}
+  target="_blank"
+  rel="noopener noreferrer"
+  className={cn(linkClass, "inline-flex items-center gap-1.5")}
+>
+  {link.label}
+  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+  </svg>
+</a>
+```
 
 #### Mobile Bottom Navigation
 
