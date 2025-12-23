@@ -323,6 +323,174 @@ const STOP_WORDS = new Set([
 ]);
 
 // ===========================================================================
+// ELEVENLABS V3 AUDIO TAG ENRICHMENT
+// ===========================================================================
+
+/**
+ * Audio tags for ElevenLabs Eleven v3 model
+ * These add emotional expressiveness to TTS output
+ */
+const AUDIO_TAGS = {
+  // Emotional states
+  excited: "[excited]",
+  happy: "[happy]",
+  curious: "[curious]",
+  thoughtful: "[thoughtful]",
+  surprised: "[surprised]",
+  // Vocal expressions
+  whispers: "[whispers]",
+  sighs: "[sighs]",
+  laughs: "[laughs]",
+  // Delivery styles
+  dramatically: "[dramatically]",
+  mischievously: "[mischievously]",
+  sarcastic: "[sarcastic]",
+};
+
+/**
+ * Content patterns that trigger specific audio tags
+ * Each pattern has a regex and corresponding tag with probability
+ */
+const CONTENT_PATTERNS = [
+  // Exciting new features or announcements
+  { pattern: /\b(new|introducing|announcing|just released|now available|brand new)\b/i, tag: "excited", probability: 0.4 },
+  { pattern: /\b(amazing|awesome|incredible|powerful|game-?changing)\b/i, tag: "excited", probability: 0.35 },
+
+  // Tips and helpful advice
+  { pattern: /\b(pro tip|tip:|here's a (tip|trick)|helpful hint)\b/i, tag: "mischievously", probability: 0.5 },
+  { pattern: /\b(secret|hidden feature|did you know)\b/i, tag: "whispers", probability: 0.4 },
+
+  // Questions and curiosity
+  { pattern: /\b(what if|have you (ever )?wondered|curious about|ever asked)\b/i, tag: "curious", probability: 0.45 },
+  { pattern: /^(why|how|what|when|where)\b.*\?$/im, tag: "curious", probability: 0.3 },
+
+  // Important warnings or notes
+  { pattern: /\b(important|warning|caution|note:|be careful|watch out)\b/i, tag: "dramatically", probability: 0.4 },
+  { pattern: /\b(critical|crucial|essential|must|never|always)\b/i, tag: "thoughtful", probability: 0.3 },
+
+  // Explanations and thinking through
+  { pattern: /\b(let me explain|here's (how|why)|the (reason|key) is|think of it)\b/i, tag: "thoughtful", probability: 0.5 },
+  { pattern: /\b(in other words|basically|simply put|to summarize)\b/i, tag: "thoughtful", probability: 0.35 },
+
+  // Success and positive outcomes
+  { pattern: /\b(success|congratulations|well done|great job|you('ve)? (did|made) it)\b/i, tag: "happy", probability: 0.5 },
+  { pattern: /\b(works|solved|fixed|complete|done|finished)\b/i, tag: "happy", probability: 0.25 },
+
+  // Surprise elements
+  { pattern: /\b(surprisingly|unexpectedly|believe it or not|turns out)\b/i, tag: "surprised", probability: 0.45 },
+  { pattern: /\b(actually|in fact|interesting(ly)?)\b/i, tag: "curious", probability: 0.25 },
+
+  // Fun facts and trivia
+  { pattern: /\b(fun fact|little(-| )known|bonus|extra)\b/i, tag: "mischievously", probability: 0.5 },
+
+  // Sighing moments (complex, long explanations)
+  { pattern: /\b(unfortunately|sadly|however|but|although|despite)\b/i, tag: "sighs", probability: 0.2 },
+];
+
+/**
+ * Determines if an audio tag should be added based on probability
+ * Uses seeded random for reproducibility
+ */
+function shouldAddTag(contentHash, probability) {
+  // Use content hash to create a deterministic "random" value
+  const hashNum = parseInt(contentHash.slice(0, 8), 16);
+  const pseudoRandom = (hashNum % 1000) / 1000;
+  return pseudoRandom < probability;
+}
+
+/**
+ * Creates a simple hash of content for deterministic tag placement
+ */
+function simpleHash(content) {
+  let hash = 0;
+  for (let i = 0; i < content.length; i++) {
+    const char = content.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash).toString(16).padStart(8, '0');
+}
+
+/**
+ * Enriches content with ElevenLabs v3 audio tags for natural speech
+ *
+ * Rules:
+ * - Only add tags to ~15-25% of content (not overwhelming)
+ * - Tags are added at the start of sentences or key phrases
+ * - Pattern matching determines appropriate emotional context
+ * - Deterministic based on content hash for reproducible builds
+ *
+ * @param {string} content - The raw content text
+ * @param {string} category - Content category for context
+ * @returns {string} Content with audio tags inserted
+ */
+function enrichWithAudioTags(content, category) {
+  if (!content || content.length < 50) return content;
+
+  const contentHash = simpleHash(content);
+
+  // Global probability check - only enrich ~20% of all content
+  if (!shouldAddTag(contentHash, 0.20)) {
+    return content;
+  }
+
+  let enrichedContent = content;
+  let tagsAdded = 0;
+  const maxTags = 2; // Limit tags per chunk to avoid over-tagging
+
+  // Check each pattern and potentially add tags
+  for (const { pattern, tag, probability } of CONTENT_PATTERNS) {
+    if (tagsAdded >= maxTags) break;
+
+    const match = enrichedContent.match(pattern);
+    if (match) {
+      // Use both content hash and match position for determinism
+      const matchHash = simpleHash(contentHash + match.index.toString());
+
+      if (shouldAddTag(matchHash, probability)) {
+        const audioTag = AUDIO_TAGS[tag];
+
+        // Find the start of the sentence containing the match
+        const beforeMatch = enrichedContent.slice(0, match.index);
+        const sentenceStart = Math.max(
+          beforeMatch.lastIndexOf(". ") + 2,
+          beforeMatch.lastIndexOf("! ") + 2,
+          beforeMatch.lastIndexOf("? ") + 2,
+          0
+        );
+
+        // Only add tag if it's not already there
+        if (!enrichedContent.slice(sentenceStart, sentenceStart + 15).includes("[")) {
+          // Insert audio tag at the start of the sentence
+          enrichedContent =
+            enrichedContent.slice(0, sentenceStart) +
+            audioTag + " " +
+            enrichedContent.slice(sentenceStart);
+
+          tagsAdded++;
+        }
+      }
+    }
+  }
+
+  // Category-specific enrichment for certain content types
+  if (tagsAdded === 0 && category) {
+    const categoryHash = simpleHash(contentHash + category);
+
+    // Add contextual tags based on category
+    if (category === "Tips & Tricks" && shouldAddTag(categoryHash, 0.3)) {
+      enrichedContent = AUDIO_TAGS.mischievously + " " + enrichedContent;
+    } else if (category === "Getting Started" && shouldAddTag(categoryHash, 0.25)) {
+      enrichedContent = AUDIO_TAGS.happy + " " + enrichedContent;
+    } else if (category === "API Reference" && shouldAddTag(categoryHash, 0.2)) {
+      enrichedContent = AUDIO_TAGS.thoughtful + " " + enrichedContent;
+    }
+  }
+
+  return enrichedContent;
+}
+
+// ===========================================================================
 // TOKENIZATION
 // ===========================================================================
 
@@ -390,11 +558,14 @@ function chunkContent(content, title, url, category) {
       .slice(0, 10)
       .map(([word]) => word);
 
+    // Enrich content with ElevenLabs v3 audio tags for natural TTS
+    const enrichedContent = enrichWithAudioTags(sectionContent.slice(0, 1500), category);
+
     chunks.push({
       id: `${url}#${i}`,
       title,
       section: sectionTitle,
-      content: sectionContent.slice(0, 1500), // Limit chunk size
+      content: enrichedContent,
       url,
       category,
       keywords,
@@ -414,11 +585,14 @@ function chunkContent(content, title, url, category) {
       .slice(0, 10)
       .map(([word]) => word);
 
+    // Enrich content with ElevenLabs v3 audio tags for natural TTS
+    const enrichedFallbackContent = enrichWithAudioTags(cleanContent.slice(0, 1500), category);
+
     chunks.push({
       id: `${url}#0`,
       title,
       section: title,
-      content: cleanContent.slice(0, 1500),
+      content: enrichedFallbackContent,
       url,
       category,
       keywords,
@@ -509,11 +683,14 @@ function generateResourceChunks() {
           recommendationText += ` [Last updated ${latest.date}: ${latest.summary || 'Updated'}]`;
         }
 
+        // Enrich resource content with ElevenLabs v3 audio tags for natural TTS
+        const enrichedRecommendation = enrichWithAudioTags(recommendationText, categoryInfo.name);
+
         chunks.push({
           id: `resource-${resource.id}`,
           title: resource.title,
           section: sectionTitle,
-          content: recommendationText,
+          content: enrichedRecommendation,
           url: resource.url,
           category: "Resources",
           subcategory: categoryInfo.name,
