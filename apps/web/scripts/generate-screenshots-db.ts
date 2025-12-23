@@ -103,39 +103,61 @@ function shouldSkip(url: string): boolean {
   return SKIP_PATTERNS.some((pattern) => url.includes(pattern));
 }
 
-// Get resources needing screenshots from database
+// Get resources needing screenshots from database (with pagination for large datasets)
 async function getResourcesWithoutScreenshots(
   supabase: SupabaseClient,
   options: { limit?: number; category?: string; force?: boolean }
 ): Promise<Resource[]> {
-  let query = supabase
-    .from("resources")
-    .select("id, slug, title, url, category, screenshots")
-    .eq("is_published", true);
+  const PAGE_SIZE = 1000;
+  let allResources: Resource[] = [];
+  let offset = 0;
+  let hasMore = true;
 
-  // Only filter for missing screenshots if not forcing regeneration
-  if (!options.force) {
-    query = query.or("screenshots.is.null,screenshots.eq.{}");
-  }
+  while (hasMore) {
+    let query = supabase
+      .from("resources")
+      .select("id, slug, title, url, category, screenshots")
+      .eq("is_published", true);
 
-  if (options.category) {
-    query = query.eq("category", options.category);
-  }
+    // Note: We fetch all and filter in JS because Supabase can't easily filter for empty JSONB arrays
+    // The screenshots column is a JSONB array, so null or [] both mean "no screenshot"
 
-  query = query.order("category").order("slug");
+    if (options.category) {
+      query = query.eq("category", options.category);
+    }
 
-  if (options.limit) {
-    query = query.limit(options.limit);
-  }
+    query = query.order("category").order("slug").range(offset, offset + PAGE_SIZE - 1);
 
-  const { data, error } = await query;
+    const { data, error } = await query;
 
-  if (error) {
-    throw new Error(`Failed to fetch resources: ${error.message}`);
+    if (error) {
+      throw new Error(`Failed to fetch resources: ${error.message}`);
+    }
+
+    if (data && data.length > 0) {
+      allResources = allResources.concat(data);
+      offset += PAGE_SIZE;
+      hasMore = data.length === PAGE_SIZE;
+    } else {
+      hasMore = false;
+    }
+
+    // If user specified a limit and we've reached it, stop
+    if (options.limit && allResources.length >= options.limit) {
+      allResources = allResources.slice(0, options.limit);
+      hasMore = false;
+    }
   }
 
   // Filter out resources with problematic URLs
-  return (data || []).filter((r) => !shouldSkip(r.url));
+  let filtered = allResources.filter((r) => !shouldSkip(r.url));
+
+  // If not forcing, filter out resources that already have screenshots
+  if (!options.force) {
+    filtered = filtered.filter((r) => !r.screenshots || r.screenshots.length === 0);
+  }
+
+  return filtered;
 }
 
 // Capture screenshot for a single resource
