@@ -112,7 +112,7 @@ async function generateIcons() {
 
   const baseBuffer = await page.screenshot({
     type: 'png',
-    omitBackground: false,
+    omitBackground: true, // IMPORTANT: Preserve alpha channel for rounded corners
   });
 
   // Render maskable icon
