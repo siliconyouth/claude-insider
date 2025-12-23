@@ -350,8 +350,12 @@ function IPhoneScreenContent() {
       <img
         src="/images/mobile-screenshot.png"
         alt="Claude Insider mobile homepage"
-        className="w-full h-full object-cover object-top"
-        style={{ objectPosition: 'center top' }}
+        className="w-full h-full object-cover"
+        style={{
+          // Shift image down to clear Dynamic Island (~26px in mockup coordinates)
+          // This ensures the header and logo are fully visible below the notch
+          objectPosition: 'center 2%'
+        }}
       />
     </div>
   );
