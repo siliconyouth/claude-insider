@@ -341,7 +341,7 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.10.7 with mobile optimizations
+ * Updated for v1.10.8 with mobile header optimization
  */
 function IPhoneScreenContent() {
   return (
