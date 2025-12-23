@@ -574,12 +574,26 @@ export function AIAssistantTab() {
       if (match && match.index !== undefined) {
         textToQueue = newText.slice(0, match.index + match[0].length).trim();
       }
-    } else if (!streamingTTSStartedRef.current && newText.length > 80) {
-      // For first chunk, if we have enough text, start with what we have
-      // Look for natural break points like commas
+    } else if (!streamingTTSStartedRef.current && newText.length > 150) {
+      // First chunk: wait for more context (~150 chars), then find natural break
+      // This gives ElevenLabs enough context for proper intonation
       const commaPos = newText.lastIndexOf(", ");
-      if (commaPos > 40) {
-        textToQueue = newText.slice(0, commaPos + 1).trim();
+      const semicolonPos = newText.lastIndexOf("; ");
+      const colonPos = newText.lastIndexOf(": ");
+      const bestBreak = Math.max(commaPos, semicolonPos, colonPos);
+      if (bestBreak > 60) {
+        textToQueue = newText.slice(0, bestBreak + 1).trim();
+      }
+    } else if (streamingTTSStartedRef.current && newText.length > 60) {
+      // Subsequent chunks: smaller threshold (~60 chars) for fluent flow
+      // Queue at natural pauses (commas, semicolons, colons) to avoid long gaps
+      const commaPos = newText.lastIndexOf(", ");
+      const semicolonPos = newText.lastIndexOf("; ");
+      const colonPos = newText.lastIndexOf(": ");
+      const dashPos = newText.lastIndexOf(" - ");
+      const bestBreak = Math.max(commaPos, semicolonPos, colonPos, dashPos);
+      if (bestBreak > 25) {
+        textToQueue = newText.slice(0, bestBreak + (dashPos === bestBreak ? 2 : 1)).trim();
       }
     }
 
