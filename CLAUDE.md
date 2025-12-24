@@ -36,7 +36,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.5**.
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
-7. [Performance Optimization (MANDATORY)](#performance-optimization-mandatory) - Dynamic imports, targets
+7. [Performance Optimization (MANDATORY)](#performance-optimization-mandatory) - Dynamic imports, build cache, targets
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Text-to-Speech System (MANDATORY)](#text-to-speech-system-mandatory) - ElevenLabs v3, audio tags
 10. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
@@ -396,6 +396,63 @@ Lighthouse targets: **Desktop > 90%** (current: 100%), **Mobile > 85%** (current
 | TBT | 0ms | **0ms** |
 
 **See [docs/PATTERNS.md](docs/PATTERNS.md#performance-patterns) for implementation patterns.**
+
+### Build Cache Optimization (MANDATORY)
+
+Vercel builds use **Turborepo Remote Cache** to skip rebuilding unchanged code. Improper changes can invalidate the cache and cause 5+ minute builds on every deploy.
+
+#### Cache Invalidation Rules
+
+| Rule | Description |
+|------|-------------|
+| **Never modify files in turbo inputs during prebuild** | Scripts in `prebuild` MUST NOT modify files that are turbo inputs (e.g., `components/**`) |
+| **Write generated data to outputs** | Generated files go in `data/*.json` which is in outputs, not inputs |
+| **Version from build-info.json** | All components needing version MUST import from `@/data/build-info.json` |
+
+#### Turbo Input/Output Separation
+
+| Location | Type | Example Files |
+|----------|------|---------------|
+| `components/**` | **INPUT** | React components - changes invalidate cache |
+| `data/build-info.json` | **OUTPUT** | Generated at prebuild - changes don't invalidate cache |
+| `data/rag-index.json` | **OUTPUT** | Generated at prebuild - changes don't invalidate cache |
+| `public/images/**` | **EXCLUDED** | Screenshots - not in inputs to avoid cache invalidation |
+
+#### PROHIBITED Patterns
+
+```typescript
+// ❌ WRONG - Modifying a component file during prebuild invalidates cache
+// scripts/update-build-info.cjs
+fs.writeFileSync("components/footer.tsx", modifiedContent);
+
+// ✅ CORRECT - Write to output file, components import from it
+// scripts/update-build-info.cjs
+fs.writeFileSync("data/build-info.json", JSON.stringify(buildInfo));
+
+// components/footer.tsx
+import buildInfo from "@/data/build-info.json";
+const APP_VERSION = buildInfo.version;
+```
+
+#### Version Import Pattern (MANDATORY)
+
+All files needing the app version MUST use this pattern:
+
+```typescript
+// Import build info from JSON (bundled at build time, doesn't invalidate Turbo cache)
+import buildInfo from "@/data/build-info.json";
+
+const APP_VERSION = buildInfo.version;
+```
+
+**Files using this pattern**: `footer.tsx`, `version-update-popup.tsx`, `content-meta.tsx`
+
+#### Build Cache Checklist
+
+- [ ] New prebuild scripts write to `data/*.json`, NOT to `components/**` or `lib/**`
+- [ ] Version displayed in UI comes from `@/data/build-info.json`
+- [ ] Large static files (screenshots, images) are NOT in turbo inputs
+- [ ] Changes to turbo.json inputs are intentional and documented
 
 ---
 
