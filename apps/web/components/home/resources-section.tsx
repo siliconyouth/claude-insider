@@ -17,7 +17,7 @@ import { cn } from '@/lib/design-system';
 import { HeroFeatured } from './hero-featured';
 import { TrendingResources } from './trending-resources';
 import { CategoryQuickLinks } from './category-quick-links';
-import { getResourceStats, getPopularTags } from '@/data/resources';
+import { getResourceStats, getPopularTags, getTargetAudienceStats, getEnhancedFieldsCoverage } from '@/data/resources';
 
 // Icons
 const SearchIcon = ({ className }: { className?: string }) => (
@@ -50,11 +50,15 @@ function formatNumber(num: number): string {
  */
 function QuickStats() {
   const stats = useMemo(() => getResourceStats(), []);
+  const coverage = useMemo(() => getEnhancedFieldsCoverage(), []);
+
+  // Calculate percentage with features
+  const featuresPercent = Math.round((coverage.hasKeyFeatures / coverage.total) * 100);
 
   const statItems = [
     { label: 'Resources', value: stats.totalResources, icon: '📚' },
     { label: 'GitHub Stars', value: formatNumber(stats.totalGitHubStars), icon: '⭐' },
-    { label: 'Categories', value: stats.totalCategories, icon: '📁' },
+    { label: 'with Key Features', value: `${featuresPercent}%`, icon: '✨' },
   ];
 
   return (
@@ -66,6 +70,75 @@ function QuickStats() {
           <span>{stat.label}</span>
         </div>
       ))}
+    </div>
+  );
+}
+
+// Audience icons mapping
+const AUDIENCE_ICONS: Record<string, string> = {
+  'Developers': '👨‍💻',
+  'Beginners': '🌱',
+  'Power Users': '⚡',
+  'Teams': '👥',
+  'Enterprise': '🏢',
+  'Content Creators': '✍️',
+  'Researchers': '🔬',
+  'Students': '📚',
+};
+
+/**
+ * Browse by Audience - Quick audience links
+ */
+function BrowseByAudience() {
+  const audienceStats = useMemo(() => getTargetAudienceStats().slice(0, 6), []);
+
+  if (audienceStats.length === 0) return null;
+
+  return (
+    <div className="mb-12">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          Browse by Audience
+        </h3>
+        <Link
+          href="/resources"
+          className="text-sm text-blue-600 dark:text-cyan-400 hover:underline"
+        >
+          See all filters →
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        {audienceStats.map((item, index) => (
+          <Link
+            key={item.audience}
+            href={`/resources?audience=${encodeURIComponent(item.audience)}`}
+            className={cn(
+              'flex flex-col items-center gap-2 px-4 py-4 rounded-xl',
+              'bg-white dark:bg-[#111111]',
+              'border border-gray-200 dark:border-[#262626]',
+              'text-gray-700 dark:text-gray-300',
+              'transition-all duration-200',
+              'hover:border-violet-500/50',
+              'hover:bg-gradient-to-br hover:from-violet-500/5 hover:to-cyan-500/5',
+              'hover:shadow-lg hover:shadow-violet-500/5',
+              'hover:-translate-y-0.5',
+              'animate-fade-in'
+            )}
+            style={{ animationDelay: `${index * 50}ms` }}
+          >
+            <span className="text-2xl">
+              {AUDIENCE_ICONS[item.audience] || '👤'}
+            </span>
+            <span className="text-sm font-medium text-center truncate w-full">
+              {item.audience}
+            </span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {item.count} resources
+            </span>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
@@ -176,6 +249,9 @@ export function ResourcesSection() {
 
         {/* Trending Resources */}
         <TrendingResources />
+
+        {/* Browse by Audience */}
+        <BrowseByAudience />
 
         {/* Popular Tags */}
         <PopularTags />

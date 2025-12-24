@@ -331,6 +331,15 @@ function ResourcesContent() {
             onCategoryClick={(slug) => updateFilter('category', slug === filters.category ? null : slug as ResourceCategorySlug)}
             onDifficultyClick={(level) => updateFilter('difficulty', level === filters.difficulty ? null : level as DifficultyLevel)}
             className="mb-8"
+            // Enhanced field props (Migration 088)
+            audienceStats={targetAudienceStats}
+            useCasesStats={useCasesStats}
+            enhancedCoverage={enhancedCoverage}
+            onAudienceClick={toggleAudience}
+            onUseCaseClick={toggleUseCase}
+            selectedAudiences={filters.targetAudience}
+            selectedUseCases={filters.useCases}
+            showEnhancedInsights={true}
           />
 
           {/* Search and Filter Bar */}
