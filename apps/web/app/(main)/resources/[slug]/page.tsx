@@ -92,7 +92,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ...(resource.github_forks > 0 && { forks: resource.github_forks.toString() }),
     pricing: resource.pricing || "free",
     ...(resource.platforms?.[0] && { platform: resource.platforms[0] }),
-    ...(resource.average_rating > 0 && { rating: resource.average_rating.toString() }),
+    ...(Number(resource.average_rating || 0) > 0 && { rating: Number(resource.average_rating).toString() }),
     ...(resource.is_featured && { featured: "true" }),
   });
   const dynamicOgImage = `https://www.claudeinsider.com/api/og/resource?${ogImageParams.toString()}`;
@@ -448,7 +448,7 @@ async function ResourcePageContent({ slug }: { slug: string }) {
       ? {
           aggregateRating: {
             "@type": "AggregateRating",
-            ratingValue: resource.average_rating.toFixed(1),
+            ratingValue: Number(resource.average_rating || 0).toFixed(1),
             ratingCount: resource.ratings_count,
             reviewCount: resource.reviews_count,
           },

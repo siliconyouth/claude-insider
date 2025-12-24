@@ -184,7 +184,7 @@ export function ResourceHero({ resource, category }: ResourceHeroProps) {
                 <div className="flex items-center gap-1">
                   <StarIcon className="w-4 h-4 text-yellow-500" filled />
                   <span className="font-medium text-gray-900 dark:text-white">
-                    {resource.average_rating.toFixed(1)}
+                    {Number(resource.average_rating || 0).toFixed(1)}
                   </span>
                   <span>({resource.ratings_count} reviews)</span>
                 </div>

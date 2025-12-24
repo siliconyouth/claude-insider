@@ -556,9 +556,9 @@ function ReviewsTab({ resource }: { resource: ResourceWithDetails }) {
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
           <div className="text-center">
             <div className="text-4xl font-bold text-gray-900 dark:text-white">
-              {resource.average_rating.toFixed(1)}
+              {Number(resource.average_rating || 0).toFixed(1)}
             </div>
-            <RatingStars value={resource.average_rating} size="md" className="mt-1" />
+            <RatingStars value={Number(resource.average_rating || 0)} size="md" className="mt-1" />
             <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               {resource.ratings_count} {resource.ratings_count === 1 ? "rating" : "ratings"}
             </div>
