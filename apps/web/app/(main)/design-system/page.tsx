@@ -22,6 +22,7 @@ import { cn } from "@/lib/design-system";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { MonochromeLogo } from "@/components/monochrome-logo";
+import { GradientLogo } from "@/components/gradient-logo";
 
 // ============================================================================
 // Types
@@ -290,11 +291,9 @@ function BrandSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Gradient Logo */}
           <div className="p-8 rounded-xl bg-gray-50 dark:bg-[#0a0a0a] flex flex-col items-center justify-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-lg shadow-blue-500/25">
-              <span className="text-3xl font-bold text-white tracking-tight">Ci</span>
-            </div>
+            <GradientLogo size={80} withGlow />
             <span className="text-sm text-gray-500 dark:text-gray-400">Primary Logo</span>
-            <CopyButton text="from-violet-600 via-blue-600 to-cyan-600" label="gradient" />
+            <CopyButton text="<GradientLogo size={80} withGlow />" label="component" />
           </div>
 
           {/* Monochrome Logo */}
@@ -309,9 +308,7 @@ function BrandSection() {
       <SubSection title="Wordmark">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm">
-              <span className="text-sm font-bold text-white">Ci</span>
-            </div>
+            <GradientLogo size={40} />
             <span className="text-2xl font-semibold text-gray-900 dark:text-white">Claude Insider</span>
           </div>
           <p className="text-gray-600 dark:text-gray-400">
@@ -333,9 +330,7 @@ function BrandSection() {
         <div className="p-6 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600">
           <div className="relative inline-block p-8 border border-blue-300 dark:border-blue-700">
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600">
-                <span className="text-xl font-bold text-white">Ci</span>
-              </div>
+              <GradientLogo size={64} />
             </div>
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-[#111] px-2 text-xs text-blue-500">
               1x

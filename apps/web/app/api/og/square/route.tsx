@@ -109,9 +109,10 @@ export async function GET(request: NextRequest) {
             >
               <span
                 style={{
-                  fontSize: "40px",
+                  // 80px * 0.586 = 47px (matches source SVG proportions)
+                  fontSize: "47px",
                   color: "white",
-                  fontWeight: 700,
+                  fontWeight: 800,
                   letterSpacing: "-1px",
                 }}
               >

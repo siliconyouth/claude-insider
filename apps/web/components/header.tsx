@@ -9,6 +9,7 @@ import { UserMenu } from "@/components/auth";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { InboxDropdown } from "@/components/messaging";
 import { NavDropdown, NavLink } from "@/components/nav-dropdown";
+import { GradientLogo } from "@/components/gradient-logo";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
@@ -118,9 +119,7 @@ export function Header({ activePage }: HeaderProps) {
             href="https://www.claudeinsider.com"
             className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
           >
-            <div className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20">
-              <span className="text-sm font-bold text-white tracking-tight">Ci</span>
-            </div>
+            <GradientLogo size={32} />
             <span className="text-lg font-semibold text-gray-900 dark:text-white">
               Claude Insider
             </span>
