@@ -9,9 +9,11 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
+// Import build info from JSON (bundled at build time)
+import buildInfo from "@/data/build-info.json";
 
-// Current app version - updated during release
-const APP_VERSION = "1.12.5";
+// Current app version - from build info
+const APP_VERSION = buildInfo.version;
 const STORAGE_KEY = "claude-insider-last-seen-version";
 
 interface ChangelogEntry {

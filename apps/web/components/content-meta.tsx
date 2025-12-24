@@ -1,5 +1,8 @@
 "use client";
 
+// Import build info from JSON (bundled at build time)
+import buildInfo from "@/data/build-info.json";
+
 interface Source {
   title: string;
   url: string;
@@ -11,7 +14,7 @@ interface ContentMetaProps {
   model?: string;
 }
 
-const APP_VERSION = "1.9.0";
+const APP_VERSION = buildInfo.version;
 
 export function ContentMeta({
   sources,

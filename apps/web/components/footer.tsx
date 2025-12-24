@@ -8,8 +8,10 @@ import { SoundToggle } from "@/components/sound-toggle";
 import { MonochromeLogo } from "@/components/monochrome-logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { openAIAssistant } from "@/components/unified-chat";
+// Import build info from JSON (bundled at build time, doesn't invalidate Turbo cache)
+import buildInfo from "@/data/build-info.json";
 
-const APP_VERSION = "1.12.5";
+const APP_VERSION = buildInfo.version;
 
 // Type definitions for footer links
 interface FooterLink {

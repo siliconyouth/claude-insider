@@ -1,15 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * Updates build info in footer.tsx before each build
- * Run with: node scripts/update-build-info.js
+ * Updates build info to data/build-info.json before each build
+ *
+ * IMPORTANT: This writes to a JSON file, NOT to footer.tsx!
+ * Writing to footer.tsx would invalidate the Turbo cache on every build.
+ *
+ * Run with: node scripts/update-build-info.cjs
  */
 
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 
-const footerPath = path.join(__dirname, "../components/footer.tsx");
+const buildInfoPath = path.join(__dirname, "../data/build-info.json");
 
 // Get current date in YYYY-MM-DD format
 const buildDate = new Date().toISOString().split("T")[0];
@@ -27,21 +31,15 @@ const packageJsonPath = path.join(__dirname, "../package.json");
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
 const version = packageJson.version || "0.0.0";
 
-// Read footer.tsx
-let footerContent = fs.readFileSync(footerPath, "utf-8");
+// Create build info object
+const buildInfo = {
+  version,
+  buildDate,
+  commitSha,
+  timestamp: Date.now(),
+};
 
-// Update the constants
-footerContent = footerContent.replace(
-  /const APP_VERSION = "[^"]*";/,
-  `const APP_VERSION = "${version}";`
-);
-
-footerContent = footerContent.replace(
-  /const BUILD_DATE = "[^"]*";/,
-  `const BUILD_DATE = "${buildDate}";`
-);
-
-// Write back
-fs.writeFileSync(footerPath, footerContent);
+// Write to JSON file (this is in outputs, not inputs)
+fs.writeFileSync(buildInfoPath, JSON.stringify(buildInfo, null, 2));
 
 console.log(`✓ Updated build info: v${version} · ${buildDate} · ${commitSha}`);

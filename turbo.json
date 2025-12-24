@@ -3,6 +3,10 @@
   "ui": "tui",
   "daemon": true,
   "cacheDir": ".turbo/cache",
+  "remoteCache": {
+    "enabled": true,
+    "preflight": false
+  },
   "globalEnv": [
     "NODE_ENV",
     "NEXT_PUBLIC_SUPABASE_URL",
@@ -120,7 +124,11 @@
         "content/**/*.mdx",
         "data/resources/**/*.json",
         "scripts/*.cjs",
-        "public/**",
+        "public/icons/**",
+        "public/manifest.json",
+        "public/robots.txt",
+        "public/sitemap*.xml",
+        "public/sw.js",
         "next.config.ts",
         "tailwind.config.ts",
         "tsconfig.json",

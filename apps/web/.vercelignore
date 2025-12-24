@@ -1,0 +1,47 @@
+# Vercel Ignore File
+# Exclude files that aren't needed for production builds
+# This speeds up deployments by reducing upload size
+
+# Development and test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/__tests__/**
+**/test/**
+**/tests/**
+coverage/
+
+# Documentation and meta files
+*.md
+!README.md
+docs/
+.github/
+.husky/
+.vscode/
+
+# Build artifacts and caches (Vercel rebuilds these)
+.turbo/
+.next/
+dist/
+build/
+out/
+
+# Screenshots and images used for development only
+.playwright-mcp/
+
+# Large development-only files
+*.log
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor configs
+.idea/
+*.swp
+*.swo
+
+# Supabase local files (using remote DB in production)
+supabase/.temp/
