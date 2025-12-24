@@ -14,6 +14,7 @@
  *   --resume        Skip already processed resources
  *   --force         Regenerate ALL screenshots (not just missing ones)
  *   --dark          Use dark mode (prefers-color-scheme: dark)
+ *   --skip=1000     Skip first N resources (for batch processing)
  */
 
 import { chromium, Browser, BrowserContext } from "playwright";
@@ -37,6 +38,20 @@ const SKIP_PATTERNS = [
   "127.0.0.1", // Local URLs
 ];
 
+// PDF viewer URL (Mozilla's PDF.js hosted viewer)
+const PDF_VIEWER_URL = "https://mozilla.github.io/pdf.js/web/viewer.html";
+
+// Check if URL is a PDF
+function isPdfUrl(url: string): boolean {
+  const lowerUrl = url.toLowerCase();
+  return lowerUrl.endsWith(".pdf") || lowerUrl.includes(".pdf?");
+}
+
+// Get PDF viewer URL for a PDF
+function getPdfViewerUrl(pdfUrl: string): string {
+  return `${PDF_VIEWER_URL}?file=${encodeURIComponent(pdfUrl)}`;
+}
+
 interface Resource {
   id: string;
   slug: string;
@@ -56,9 +71,9 @@ interface ProcessResult {
 }
 
 // Parse command line arguments
-function parseArgs(): { limit?: number; category?: string; dryRun: boolean; resume: boolean; force: boolean; dark: boolean } {
+function parseArgs(): { limit?: number; category?: string; dryRun: boolean; resume: boolean; force: boolean; dark: boolean; skip?: number } {
   const args = process.argv.slice(2);
-  const options: { limit?: number; category?: string; dryRun: boolean; resume: boolean; force: boolean; dark: boolean } = {
+  const options: { limit?: number; category?: string; dryRun: boolean; resume: boolean; force: boolean; dark: boolean; skip?: number } = {
     dryRun: false,
     resume: false,
     force: false,
@@ -72,6 +87,9 @@ function parseArgs(): { limit?: number; category?: string; dryRun: boolean; resu
     } else if (arg.startsWith("--category=")) {
       const value = arg.split("=")[1];
       if (value) options.category = value;
+    } else if (arg.startsWith("--skip=")) {
+      const value = arg.split("=")[1];
+      if (value) options.skip = parseInt(value, 10);
     } else if (arg === "--dry-run") {
       options.dryRun = true;
     } else if (arg === "--resume") {
@@ -106,7 +124,7 @@ function shouldSkip(url: string): boolean {
 // Get resources needing screenshots from database (with pagination for large datasets)
 async function getResourcesWithoutScreenshots(
   supabase: SupabaseClient,
-  options: { limit?: number; category?: string; force?: boolean }
+  options: { limit?: number; category?: string; force?: boolean; skip?: number }
 ): Promise<Resource[]> {
   const PAGE_SIZE = 1000;
   let allResources: Resource[] = [];
@@ -157,6 +175,11 @@ async function getResourcesWithoutScreenshots(
     filtered = filtered.filter((r) => !r.screenshots || r.screenshots.length === 0);
   }
 
+  // Apply skip if specified (for batch processing)
+  if (options.skip && options.skip > 0) {
+    filtered = filtered.slice(options.skip);
+  }
+
   return filtered;
 }
 
@@ -166,15 +189,62 @@ async function captureScreenshot(
   resource: Resource
 ): Promise<{ success: boolean; buffer?: Buffer; error?: string }> {
   const page = await context.newPage();
+  let downloadTriggered = false;
+  let downloadUrl: string | null = null;
+
+  // Listen for download events (PDF links often trigger downloads)
+  page.on("download", async (download) => {
+    downloadTriggered = true;
+    downloadUrl = download.url();
+    await download.cancel(); // Don't actually download the file
+  });
 
   try {
-    await page.goto(resource.url, {
-      waitUntil: "domcontentloaded", // Faster than networkidle
-      timeout: NAVIGATION_TIMEOUT,
-    });
+    // Check if URL is a PDF - use PDF.js viewer
+    let targetUrl = resource.url;
+    let isPdf = isPdfUrl(resource.url);
 
-    // Wait for page to settle
-    await page.waitForTimeout(SETTLE_TIME);
+    if (isPdf) {
+      targetUrl = getPdfViewerUrl(resource.url);
+    }
+
+    try {
+      await page.goto(targetUrl, {
+        waitUntil: "domcontentloaded",
+        timeout: isPdf ? 30000 : NAVIGATION_TIMEOUT,
+      });
+    } catch (navError) {
+      // If navigation failed due to download, use PDF viewer
+      const errorMsg = navError instanceof Error ? navError.message : "";
+      if (errorMsg.includes("Download is starting") || downloadTriggered) {
+        // URL triggered a download - likely a PDF, use viewer
+        const pdfUrl = downloadUrl || resource.url;
+        targetUrl = getPdfViewerUrl(pdfUrl);
+        isPdf = true;
+
+        await page.goto(targetUrl, {
+          waitUntil: "domcontentloaded",
+          timeout: 30000,
+        });
+      } else {
+        throw navError;
+      }
+    }
+
+    // Wait for page to settle (PDFs need extra time for rendering)
+    await page.waitForTimeout(isPdf ? 3000 : SETTLE_TIME);
+
+    // For PDFs, wait for the viewer to fully render the first page
+    if (isPdf) {
+      try {
+        // Wait for PDF.js viewer canvas to be ready
+        await page.waitForSelector("canvas.page", { timeout: 10000 });
+        await page.waitForTimeout(1000); // Extra time for rendering
+      } catch {
+        // If canvas not found, the PDF might still be loading
+        await page.waitForTimeout(2000);
+      }
+    }
 
     // Capture screenshot
     const buffer = await page.screenshot({
@@ -358,6 +428,7 @@ async function main() {
   console.log("=".repeat(60));
   console.log(`Concurrency: ${CONCURRENT_BROWSERS} browsers`);
   if (options.limit) console.log(`Limit: ${options.limit} resources`);
+  if (options.skip) console.log(`Skip: first ${options.skip} resources`);
   if (options.category) console.log(`Category filter: ${options.category}`);
   if (options.dryRun) console.log("Mode: DRY RUN");
   if (options.force) console.log("Mode: FORCE (regenerate all)");
