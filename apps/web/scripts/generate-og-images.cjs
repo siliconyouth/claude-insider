@@ -23,15 +23,17 @@ const BRAND_GRADIENT = {
 };
 
 /**
- * Generate HTML for OG image with centered big logo
+ * Generate HTML for OG image with centered inline logo + wordmark (like header)
  */
 function generateOGHTML(width, height, isSquare = false) {
-  const logoSize = isSquare ? 200 : 160;
+  // Bigger logo for OG images - prominent brand presence
+  const logoSize = isSquare ? 140 : 120;
   const fontSize = logoSize * 0.586; // 58.6% ratio from icon-source.svg
   const borderRadius = logoSize * 0.156; // 15.6% ratio
-  const wordmarkSize = isSquare ? 56 : 48;
-  const taglineSize = isSquare ? 28 : 24;
-  const urlSize = isSquare ? 22 : 20;
+  const wordmarkSize = isSquare ? 72 : 64;
+  const taglineSize = isSquare ? 32 : 28;
+  const urlSize = isSquare ? 24 : 22;
+  const logoGap = isSquare ? 28 : 24;
 
   return `
 <!DOCTYPE html>
@@ -102,19 +104,21 @@ function generateOGHTML(width, height, isSquare = false) {
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: ${isSquare ? 32 : 24}px;
+      gap: ${isSquare ? 40 : 32}px;
     }
 
-    .logo-container {
+    /* INLINE layout - logo and wordmark side by side like header */
+    .logo-row {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: ${isSquare ? 24 : 16}px;
+      gap: ${logoGap}px;
     }
 
     .logo {
       width: ${logoSize}px;
       height: ${logoSize}px;
+      flex-shrink: 0;
       border-radius: ${borderRadius}px;
       background: linear-gradient(135deg, ${BRAND_GRADIENT.violet}, ${BRAND_GRADIENT.blue}, ${BRAND_GRADIENT.cyan});
       display: flex;
@@ -133,11 +137,8 @@ function generateOGHTML(width, height, isSquare = false) {
     .wordmark {
       font-size: ${wordmarkSize}px;
       font-weight: 700;
-      background: linear-gradient(135deg, ${BRAND_GRADIENT.violet}, ${BRAND_GRADIENT.blue}, ${BRAND_GRADIENT.cyan});
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -1px;
+      color: white;
+      letter-spacing: -1.5px;
     }
 
     .tagline {
@@ -162,7 +163,8 @@ function generateOGHTML(width, height, isSquare = false) {
   <div class="blob-3"></div>
 
   <div class="content">
-    <div class="logo-container">
+    <!-- INLINE: Logo + Wordmark in same row like header -->
+    <div class="logo-row">
       <div class="logo">
         <span class="logo-text">Ci</span>
       </div>
