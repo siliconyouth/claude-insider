@@ -26,7 +26,48 @@
       "lastUpdated": "2024-12-11",
       "language": "TypeScript"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-insider/1766534788463-claude-insider.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-insider/1766534788463-claude-insider.png",
+    "aiSummary": "This website - comprehensive Claude documentation and resources, built entirely with Claude Code.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Code",
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ],
+    "relatedDocsCount": 2,
+    "relatedDocSlugs": [
+      "examples/index",
+      "examples/real-world-projects"
+    ]
   },
   {
     "id": "v0-vercel",
@@ -47,7 +88,47 @@
     "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Industry Example",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/v0-vercel/1766534792691-v0-vercel.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/v0-vercel/1766534792691-v0-vercel.png",
+    "aiSummary": "AI-powered UI generation tool using Claude for component creation.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Component creation",
+      "Tool and function calling support",
+      "Working implementation example",
+      "Source code availability"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "examples/real-world-projects"
+    ]
   },
   {
     "id": "aichat",
@@ -74,7 +155,42 @@
       "lastUpdated": "2024-12-11",
       "language": "Rust"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aichat/1766534786537-aichat.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aichat/1766534786537-aichat.png",
+    "aiSummary": "All-in-one AI CLI tool supporting Claude with RAG.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "RAG (Retrieval-Augmented Generation) integration",
+      "Tool and function calling support",
+      "Command-line interface"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ]
   },
   {
     "id": "chatgpt-alternative",
@@ -93,7 +209,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Official",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatgpt-alternative/1766534786824-chatgpt-alternative.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatgpt-alternative/1766534786824-chatgpt-alternative.png",
+    "aiSummary": "Official Claude web interface by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case",
+      "Learning resource"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ]
   },
   {
     "id": "duckduckgo-ai",
@@ -112,7 +264,43 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/duckduckgo-ai/1766534792682-duckduckgo-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/duckduckgo-ai/1766534792682-duckduckgo-ai.png",
+    "aiSummary": "Private AI chat using Claude without tracking.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case",
+      "Learning resource"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ]
   },
   {
     "id": "khoj",
@@ -139,7 +327,47 @@
       "lastUpdated": "2024-12-11",
       "language": "Python"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/khoj/1766534792689-khoj.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/khoj/1766534792689-khoj.png",
+    "aiSummary": "Self-hosted AI second brain with Claude support.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude support",
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "examples/real-world-projects"
+    ]
   },
   {
     "id": "notion-ai",
@@ -158,7 +386,47 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/notion-ai/1766534792963-notion-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/notion-ai/1766534792963-notion-ai.png",
+    "aiSummary": "AI writing assistant powered by Claude in Notion workspace.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case",
+      "Learning resource"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tips-and-tricks/productivity"
+    ]
   },
   {
     "id": "obsidian-copilot",
@@ -185,7 +453,48 @@
       "lastUpdated": "2024-12-09",
       "language": "TypeScript"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/obsidian-copilot/1766534792535-obsidian-copilot.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/obsidian-copilot/1766534792535-obsidian-copilot.png",
+    "aiSummary": "Claude-powered AI assistant for Obsidian note-taking.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Obsidian note-taking",
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ],
+    "relatedDocsCount": 2,
+    "relatedDocSlugs": [
+      "tips-and-tricks/productivity",
+      "examples/real-world-projects"
+    ]
   },
   {
     "id": "perplexity",
@@ -204,7 +513,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Production",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/perplexity/1766534791472-perplexity.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/perplexity/1766534791472-perplexity.png",
+    "aiSummary": "AI-powered search engine using Claude for answer generation.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Answer generation",
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ]
   },
   {
     "id": "quora-poe",
@@ -223,7 +568,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Production",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quora-poe/1766534793011-quora-poe.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quora-poe/1766534793011-quora-poe.png",
+    "aiSummary": "AI chat platform featuring Claude and other models.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude and other models",
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ]
   },
   {
     "id": "replit-agent",
@@ -242,7 +623,43 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/replit-agent/1766534792103-replit-agent.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/replit-agent/1766534792103-replit-agent.png",
+    "aiSummary": "AI coding agent in Replit IDE powered by Claude.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Agent-based architecture",
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ]
   },
   {
     "id": "codeium-windsurf",
@@ -261,6 +678,42 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Production",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codeium-windsurf/1766534787086-codeium-windsurf.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codeium-windsurf/1766534787086-codeium-windsurf.png",
+    "aiSummary": "AI-first IDE with Claude integration by Codeium.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude integration by Codeium",
+      "Working implementation example",
+      "Source code availability",
+      "Real-world use case"
+    ],
+    "useCases": [
+      "Learn from real implementations",
+      "Understand Claude integration patterns",
+      "Get inspired for new projects",
+      "Evaluate Claude capabilities"
+    ],
+    "pros": [
+      "Real-world implementation examples",
+      "Demonstrates practical Claude applications",
+      "Source code available for learning",
+      "Inspiration for your own projects"
+    ],
+    "cons": [
+      "May be tailored to specific use cases",
+      "Could require adaptation for your needs",
+      "Maintenance varies by project"
+    ],
+    "targetAudience": [
+      "Developers seeking implementation examples",
+      "Teams evaluating Claude capabilities",
+      "Anyone learning Claude integration patterns"
+    ],
+    "prerequisites": [
+      "Interest in Claude AI applications",
+      "Basic development knowledge",
+      "Claude access for experimentation"
+    ]
   }
 ]

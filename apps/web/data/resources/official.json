@@ -26,7 +26,92 @@
       "lastUpdated": "2024-12-10",
       "language": "Python"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1766534635550-anthropic-cookbook.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1766534635550-anthropic-cookbook.png",
+    "aiSummary": "Code examples and recipes for using Claude API effectively.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Using Claude API effectively",
+      "API integration support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 8,
+    "relatedResourcesCount": 35,
+    "relatedDocSlugs": [
+      "api/index",
+      "api/models",
+      "api/tool-use",
+      "getting-started/quickstart",
+      "tutorials/index",
+      "tutorials/test-generation",
+      "examples/index",
+      "examples/real-world-projects"
+    ],
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-docs",
@@ -47,7 +132,54 @@
     "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766534636008-anthropic-docs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766534636008-anthropic-docs.png",
+    "aiSummary": "Official documentation for Claude API, including guides, tutorials, and API reference.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude API",
+      "API integration support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 8,
+    "relatedDocSlugs": [
+      "api/index",
+      "api/authentication",
+      "api/models",
+      "api/rate-limits",
+      "api/streaming",
+      "api/tool-use",
+      "api/error-handling",
+      "configuration/account-security"
+    ]
   },
   {
     "id": "claude-code-docs",
@@ -68,7 +200,62 @@
     "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1766534655875-claude-code-docs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1766534655875-claude-code-docs.png",
+    "aiSummary": "Official documentation for Claude Code CLI tool - the AI-powered coding assistant.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Code CLI tool - the AI-powered coding assistant",
+      "Tool and function calling support",
+      "Command-line interface"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 17,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "configuration/claude-md",
+      "configuration/environment",
+      "configuration/permissions",
+      "configuration/settings",
+      "getting-started/quickstart",
+      "getting-started/installation",
+      "getting-started/migration",
+      "getting-started/troubleshooting",
+      "integrations/hooks",
+      "integrations/docker",
+      "tips-and-tricks/index",
+      "tips-and-tricks/debugging",
+      "tips-and-tricks/productivity",
+      "tutorials/code-review",
+      "tutorials/documentation-generation",
+      "tutorials/test-generation"
+    ]
   },
   {
     "id": "claude-code-repo",
@@ -97,7 +284,93 @@
       "lastUpdated": "2024-12-11",
       "language": "TypeScript"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1766534655061-claude-code-repo.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1766534655061-claude-code-repo.png",
+    "aiSummary": "Official Claude Code repository - issues, discussions, and release information.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 9,
+    "relatedResourcesCount": 35,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "configuration/claude-md",
+      "configuration/permissions",
+      "configuration/settings",
+      "getting-started/quickstart",
+      "getting-started/installation",
+      "getting-started/migration",
+      "integrations/github-actions",
+      "integrations/hooks"
+    ],
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "mcp-docs",
@@ -118,7 +391,48 @@
     "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766534668194-mcp-docs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766534668194-mcp-docs.png",
+    "aiSummary": "Official MCP documentation - the open protocol for connecting AI assistants to external tools.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Connecting AI assistants to external tools",
+      "Tool and function calling support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 2,
+    "relatedDocSlugs": [
+      "integrations/index",
+      "integrations/mcp-servers"
+    ]
   },
   {
     "id": "announcement-1",
@@ -131,7 +445,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-1/1766534635020-announcement-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-1/1766534635020-announcement-1.png",
+    "aiSummary": "Official Anthropic resource for Announcement.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Announcement",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "announcement",
@@ -144,7 +494,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement/1766534635510-announcement.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement/1766534635510-announcement.png",
+    "aiSummary": "Official Anthropic resource for Announcement.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Announcement",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "announcement-2",
@@ -157,7 +543,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1766534635294-announcement-2.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1766534635294-announcement-2.png",
+    "aiSummary": "Official Anthropic resource for Announcement.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Announcement",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "anthropic-blog",
@@ -176,7 +598,43 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Blog",
     "difficulty": "expert",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-blog/1766534635435-anthropic-blog.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-blog/1766534635435-anthropic-blog.png",
+    "aiSummary": "Official blog with research papers, announcements, and insights.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Research papers",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "anthropic-claude-code-best-practices",
@@ -189,7 +647,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1766534634870-anthropic-claude-code-best-practices.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1766534634870-anthropic-claude-code-best-practices.png",
+    "aiSummary": "Official Anthropic engineering blog - Claude Code best practices",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "anthropic-sdk-python",
@@ -216,7 +710,88 @@
       "lastUpdated": "2024-12-10",
       "language": "Python"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-python/1766534641847-anthropic-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-python/1766534641847-anthropic-sdk-python.png",
+    "aiSummary": "Official Python SDK for the Anthropic API.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "The Anthropic API",
+      "API integration support",
+      "Python support"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 5,
+    "relatedResourcesCount": 35,
+    "relatedDocSlugs": [
+      "api/index",
+      "api/authentication",
+      "api/streaming",
+      "api/error-handling",
+      "configuration/environment"
+    ],
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-sdk-typescript",
@@ -244,7 +819,88 @@
       "lastUpdated": "2024-12-10",
       "language": "TypeScript"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-typescript/1766534643166-anthropic-sdk-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-typescript/1766534643166-anthropic-sdk-typescript.png",
+    "aiSummary": "Official TypeScript/JavaScript SDK for the Anthropic API.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "The Anthropic API",
+      "API integration support",
+      "TypeScript support"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 5,
+    "relatedResourcesCount": 35,
+    "relatedDocSlugs": [
+      "api/index",
+      "api/authentication",
+      "api/streaming",
+      "api/error-handling",
+      "configuration/environment"
+    ],
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-bedrock-python",
@@ -265,7 +921,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-python/1766534635512-anthropic-bedrock-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-python/1766534635512-anthropic-bedrock-python.png",
+    "aiSummary": "Official Anthropic resource for anthropic bedrock python.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Anthropic bedrock python",
+      "Python support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-bedrock-typescript",
@@ -286,7 +1016,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-typescript/1766534635052-anthropic-bedrock-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-typescript/1766534635052-anthropic-bedrock-typescript.png",
+    "aiSummary": "Official Anthropic resource for anthropic bedrock typescript.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Anthropic bedrock typescript",
+      "TypeScript support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-sdk-csharp",
@@ -307,7 +1111,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-csharp/1766534643280-anthropic-sdk-csharp.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-csharp/1766534643280-anthropic-sdk-csharp.png",
+    "aiSummary": "Access to Anthropic's safety-first language model APIs in C#",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "API integration support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-sdk-go",
@@ -328,7 +1206,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-go/1766534643283-anthropic-sdk-go.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-go/1766534643283-anthropic-sdk-go.png",
+    "aiSummary": "Access to Anthropic's safety-first language model APIs via Go",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "API integration support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-sdk-java",
@@ -349,7 +1301,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-java/1766534643185-anthropic-sdk-java.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-java/1766534643185-anthropic-sdk-java.png",
+    "aiSummary": "Official Anthropic resource for anthropic sdk java.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Anthropic sdk java",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-sdk-php",
@@ -370,7 +1396,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-php/1766534643186-anthropic-sdk-php.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-php/1766534643186-anthropic-sdk-php.png",
+    "aiSummary": "Access to Anthropic's safety-first language model APIs in PHP",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "API integration support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-sdk-ruby",
@@ -391,7 +1491,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-ruby/1766534642813-anthropic-sdk-ruby.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-ruby/1766534642813-anthropic-sdk-ruby.png",
+    "aiSummary": "Official Anthropic resource for anthropic sdk ruby.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Anthropic sdk ruby",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-tokenizer-typescript",
@@ -412,7 +1586,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-tokenizer-typescript/1766534643169-anthropic-tokenizer-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-tokenizer-typescript/1766534643169-anthropic-tokenizer-typescript.png",
+    "aiSummary": "Official Anthropic resource for anthropic tokenizer typescript.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Anthropic tokenizer typescript",
+      "TypeScript support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "anthropic-s-article",
@@ -425,7 +1673,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1766534639885-anthropic-s-article.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1766534639885-anthropic-s-article.png",
+    "aiSummary": "Official Anthropic resource for Anthropic's article.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Anthropic's article",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "blobfile",
@@ -446,7 +1730,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blobfile/1766534643213-blobfile.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blobfile/1766534643213-blobfile.png",
+    "aiSummary": "Official Anthropic resource for blobfile.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-agent-sdk-python",
@@ -467,7 +1825,83 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-python/1766534655866-claude-agent-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-python/1766534655866-claude-agent-sdk-python.png",
+    "aiSummary": "Python SDK for building autonomous AI agents with Claude.  Create multi-step reasoning workflows.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Building autonomous AI agents with Claude",
+      "Autonomous operation capability",
+      "Multi-step reasoning and planning",
+      "Agent-based architecture",
+      "Workflow automation capabilities",
+      "Python support"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-agent-sdk-typescript",
@@ -488,7 +1922,80 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-typescript/1766534655856-claude-agent-sdk-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-typescript/1766534655856-claude-agent-sdk-typescript.png",
+    "aiSummary": "Official Anthropic resource for Claude Agent SDK (TypeScript).  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Agent SDK (TypeScript)",
+      "Agent-based architecture",
+      "TypeScript support"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-agent-skills",
@@ -501,7 +2008,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1766534656528-claude-agent-skills.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1766534656528-claude-agent-skills.png",
+    "aiSummary": "Official Anthropic resource for Claude Agent Skills.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Agent Skills",
+      "Agent-based architecture",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "claude-code-with-plugins",
@@ -514,7 +2057,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1766534662759-claude-code-with-plugins.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1766534662759-claude-code-with-plugins.png",
+    "aiSummary": "Official Anthropic resource for Claude Code with plugins.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Code with plugins",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "claude-console",
@@ -533,7 +2112,51 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Tool",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-console/1766535653853-claude-console.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-console/1766535653853-claude-console.png",
+    "aiSummary": "Official web interface for Claude - create, test, and manage API keys.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude - create",
+      "API integration support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 5,
+    "relatedDocSlugs": [
+      "api/index",
+      "api/authentication",
+      "api/models",
+      "api/rate-limits",
+      "configuration/account-security"
+    ]
   },
   {
     "id": "claude-cookbook",
@@ -554,7 +2177,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-cookbook/1766534662189-claude-cookbook.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-cookbook/1766534662189-claude-cookbook.png",
+    "aiSummary": "Collection of notebooks/recipes showcasing some fun and effective ways of using Claude.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-haiku-4-5-system-card",
@@ -567,7 +2264,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-haiku-4-5-system-card/1766535454878-claude-haiku-4-5-system-card.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-haiku-4-5-system-card/1766535454878-claude-haiku-4-5-system-card.png",
+    "aiSummary": "Official Anthropic resource for Claude Haiku 4. 5 System Card.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Haiku 4",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "claude-opus-4-5-system-card",
@@ -580,7 +2313,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-opus-4-5-system-card/1766535454561-claude-opus-4-5-system-card.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-opus-4-5-system-card/1766535454561-claude-opus-4-5-system-card.png",
+    "aiSummary": "Official Anthropic resource for Claude Opus 4. 5 System Card.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Opus 4",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "claude-quickstarts",
@@ -601,7 +2370,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-quickstarts/1766534662188-claude-quickstarts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-quickstarts/1766534662188-claude-quickstarts.png",
+    "aiSummary": "Collection of projects designed to help developers quickly get started with building deployable applications using the Claude API",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Building deployable applications using the Claude API",
+      "API integration support",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-sonnet-4-5-system-card",
@@ -614,7 +2457,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sonnet-4-5-system-card/1766535454602-claude-sonnet-4-5-system-card.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sonnet-4-5-system-card/1766535454602-claude-sonnet-4-5-system-card.png",
+    "aiSummary": "Official Anthropic resource for Claude Sonnet 4. 5 System Card.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Sonnet 4",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   },
   {
     "id": "claude-agent-sdk-demos",
@@ -635,7 +2514,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-demos/1766534655049-claude-agent-sdk-demos.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-demos/1766534655049-claude-agent-sdk-demos.png",
+    "aiSummary": "Official Anthropic resource for Claude agent sdk demos.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude agent sdk demos",
+      "Agent-based architecture",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-code-action",
@@ -656,7 +2609,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-action/1766534655655-claude-code-action.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-action/1766534655655-claude-code-action.png",
+    "aiSummary": "GitHub Action for running Claude Code in CI/CD pipelines.  Automate code review, documentation generation, and other tasks with Claude.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Running Claude Code in CI/CD pipelines",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-code-base-action",
@@ -677,7 +2704,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-base-action/1766534655129-claude-code-base-action.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-base-action/1766534655129-claude-code-base-action.png",
+    "aiSummary": "This repo is a mirror of the contents of base-action in",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-code-monitoring-guide",
@@ -698,7 +2799,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-monitoring-guide/1766534655850-claude-code-monitoring-guide.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-monitoring-guide/1766534655850-claude-code-monitoring-guide.png",
+    "aiSummary": "Official Anthropic resource for Claude code monitoring guide.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude code monitoring guide",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-code-sdk-python",
@@ -719,7 +2894,80 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-python/1766534655861-claude-code-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-python/1766534655861-claude-code-sdk-python.png",
+    "aiSummary": "Official Python SDK for Claude Code.  Programmatically control Claude Code sessions with full type safety.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Full type safety",
+      "Claude Code",
+      "Python support"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-code-security-review",
@@ -740,7 +2988,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-security-review/1766534661916-claude-code-security-review.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-security-review/1766534661916-claude-code-security-review.png",
+    "aiSummary": "AI-powered security review GitHub Action using Claude to analyze code changes for security vulnerabilities.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Security vulnerabilities",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "claude-plugins-official",
@@ -761,7 +3083,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins-official/1766534661518-claude-plugins-official.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins-official/1766534661518-claude-plugins-official.png",
+    "aiSummary": "Anthropic-managed directory of high quality Claude Code Plugins.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "devcontainer-features",
@@ -782,7 +3178,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devcontainer-features/1766534661743-devcontainer-features.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devcontainer-features/1766534661743-devcontainer-features.png",
+    "aiSummary": "Anthropic Dev Container Features, including Claude Code CLI",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Command-line interface",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "evals",
@@ -803,7 +3273,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/evals/1766534662199-evals.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/evals/1766534662199-evals.png",
+    "aiSummary": "Official Anthropic resource for evals.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "life-sciences",
@@ -824,7 +3368,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/life-sciences/1766534668254-life-sciences.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/life-sciences/1766534668254-life-sciences.png",
+    "aiSummary": "Repo for the Claude Code Marketplace to use with the Claude for Life Sciences Launch.  This will continue to host the marketplace.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "The Claude for Life Sciences Launch",
+      "The Claude Code Marketplace to use with the Claude for Life Sciences Launch",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "political-neutrality-eval",
@@ -845,7 +3463,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/political-neutrality-eval/1766534669527-political-neutrality-eval.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/political-neutrality-eval/1766534669527-political-neutrality-eval.png",
+    "aiSummary": "This repo contains detailed implementation information about Anthropic's paired prompts approach for evaluating political neutrality.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Evaluating political neutrality",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "prompt-engineering-guide",
@@ -864,7 +3556,49 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1766534669632-prompt-engineering-guide.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1766534669632-prompt-engineering-guide.png",
+    "aiSummary": "Official guide for crafting effective prompts with Claude.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Crafting effective prompts with Claude",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedDocsCount": 3,
+    "relatedDocSlugs": [
+      "tips-and-tricks/index",
+      "tips-and-tricks/prompting",
+      "tips-and-tricks/advanced-prompting"
+    ]
   },
   {
     "id": "prompt-eng-interactive-tutorial",
@@ -885,7 +3619,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-eng-interactive-tutorial/1766534668938-prompt-eng-interactive-tutorial.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-eng-interactive-tutorial/1766534668938-prompt-eng-interactive-tutorial.png",
+    "aiSummary": "Anthropic's Interactive Prompt Engineering Tutorial",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "redis-py",
@@ -906,7 +3714,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/redis-py/1766534669530-redis-py.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/redis-py/1766534669530-redis-py.png",
+    "aiSummary": "Official Anthropic resource for redis py.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "riv2025-long-horizon-coding-agent-demo",
@@ -927,7 +3809,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/riv2025-long-horizon-coding-agent-demo/1766534669566-riv2025-long-horizon-coding-agent-demo.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/riv2025-long-horizon-coding-agent-demo/1766534669566-riv2025-long-horizon-coding-agent-demo.png",
+    "aiSummary": "Official Anthropic resource for riv2025 long horizon coding agent demo.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Riv2025 long horizon coding agent demo",
+      "Agent-based architecture",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "s5cmd",
@@ -948,7 +3904,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s5cmd/1766534669544-s5cmd.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s5cmd/1766534669544-s5cmd.png",
+    "aiSummary": "Official Anthropic resource for s5cmd.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation",
+      "Regular feature updates"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "sdk-python-official",
+      "sdk-typescript-official",
+      "skills"
+    ]
   },
   {
     "id": "skills",
@@ -969,7 +3999,81 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/skills/1766534668196-skills.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/skills/1766534668196-skills.png",
+    "aiSummary": "Public repository for Agent Skills",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Agent Skills",
+      "Agent-based architecture",
+      "Official Anthropic support",
+      "Enterprise-grade reliability"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ],
+    "relatedResourcesCount": 35,
+    "relatedResourceSlugs": [
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript",
+      "anthropic-cookbook",
+      "anthropic-courses",
+      "anthropic-sdk-csharp",
+      "anthropic-sdk-go",
+      "anthropic-sdk-java",
+      "anthropic-sdk-php",
+      "anthropic-sdk-python",
+      "anthropic-sdk-ruby",
+      "anthropic-sdk-typescript",
+      "anthropic-tokenizer-typescript",
+      "blobfile",
+      "claude-agent-sdk-demos",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-action",
+      "claude-code-base-action",
+      "claude-code-monitoring-guide",
+      "claude-code-repo",
+      "claude-code-sdk-python",
+      "claude-code-security-review",
+      "claude-cookbook",
+      "claude-plugins-official",
+      "claude-quickstarts",
+      "devcontainer-features",
+      "evals",
+      "life-sciences",
+      "political-neutrality-eval",
+      "prompt-eng-interactive-tutorial",
+      "redis-py",
+      "riv2025-long-horizon-coding-agent-demo",
+      "s5cmd",
+      "sdk-python-official",
+      "sdk-typescript-official"
+    ]
   },
   {
     "id": "transparency-hub",
@@ -982,6 +4086,42 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1766534669604-transparency-hub.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1766534669604-transparency-hub.png",
+    "aiSummary": "Official Anthropic resource for Transparency Hub.  Part of the Claude ecosystem maintained by Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Transparency Hub",
+      "Official Anthropic support",
+      "Enterprise-grade reliability",
+      "Comprehensive documentation"
+    ],
+    "useCases": [
+      "Build enterprise AI solutions",
+      "Deploy production-grade Claude integrations",
+      "Access latest Claude capabilities",
+      "Develop with official support"
+    ],
+    "pros": [
+      "Officially supported by Anthropic",
+      "Enterprise-grade reliability and security",
+      "Comprehensive documentation",
+      "Regular updates and feature additions"
+    ],
+    "cons": [
+      "Usage limits based on subscription tier",
+      "May require specific account types",
+      "Bound to official service terms"
+    ],
+    "targetAudience": [
+      "Enterprise developers",
+      "Teams requiring official support",
+      "Organizations with compliance requirements"
+    ],
+    "prerequisites": [
+      "Anthropic account with appropriate tier",
+      "Understanding of Claude's capabilities",
+      "Compliance with usage guidelines"
+    ]
   }
 ]

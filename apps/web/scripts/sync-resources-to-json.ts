@@ -37,6 +37,37 @@ interface DatabaseResource {
   screenshots: string[] | null;
   added_at: string;
   last_verified_at: string | null;
+  // Enhanced fields (Migration 088)
+  ai_overview: string | null;
+  ai_summary: string | null;
+  ai_analyzed_at: string | null;
+  ai_confidence: number | null;
+  key_features: string[] | null;
+  use_cases: string[] | null;
+  pros: string[] | null;
+  cons: string[] | null;
+  target_audience: string[] | null;
+  prerequisites: string[] | null;
+  // Relationship denormalization
+  related_docs_count: number;
+  related_resources_count: number;
+  related_doc_slugs: string[] | null;
+  related_resource_slugs: string[] | null;
+  // Screenshot metadata
+  screenshot_metadata: Array<{
+    url: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+    caption?: string;
+    order?: number;
+  }> | null;
+  primary_screenshot_url: string | null;
+  thumbnail_url: string | null;
+  // Trending/popularity
+  views_this_week: number;
+  trending_score: number | null;
+  trending_calculated_at: string | null;
 }
 
 interface ResourceTag {
@@ -70,6 +101,36 @@ interface JsonResource {
   screenshots?: string[];
   addedDate: string;
   lastVerified: string;
+  // Enhanced fields (Migration 088)
+  aiOverview?: string;
+  aiSummary?: string;
+  aiAnalyzedAt?: string;
+  aiConfidence?: number;
+  keyFeatures?: string[];
+  useCases?: string[];
+  pros?: string[];
+  cons?: string[];
+  targetAudience?: string[];
+  prerequisites?: string[];
+  // Relationship data
+  relatedDocsCount?: number;
+  relatedResourcesCount?: number;
+  relatedDocSlugs?: string[];
+  relatedResourceSlugs?: string[];
+  // Screenshot metadata
+  screenshotMetadata?: Array<{
+    url: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+    caption?: string;
+    order?: number;
+  }>;
+  primaryScreenshotUrl?: string;
+  thumbnailUrl?: string;
+  // Trending
+  viewsThisWeek?: number;
+  trendingScore?: number;
 }
 
 // Get Supabase client
@@ -212,12 +273,83 @@ function convertToJsonFormat(resource: DatabaseResource, tags: string[]): JsonRe
     };
   }
 
-  // Screenshots
+  // Screenshots (basic)
   if (resource.screenshots && resource.screenshots.length > 0) {
     jsonResource.screenshotUrl = resource.screenshots[0];
     if (resource.screenshots.length > 1) {
       jsonResource.screenshots = resource.screenshots;
     }
+  }
+
+  // ============================================
+  // ENHANCED FIELDS (Migration 088)
+  // ============================================
+
+  // AI-generated content
+  if (resource.ai_overview) {
+    jsonResource.aiOverview = resource.ai_overview;
+  }
+  if (resource.ai_summary) {
+    jsonResource.aiSummary = resource.ai_summary;
+  }
+  if (resource.ai_analyzed_at) {
+    jsonResource.aiAnalyzedAt = resource.ai_analyzed_at.split("T")[0] ?? resource.ai_analyzed_at;
+  }
+  if (resource.ai_confidence !== null && resource.ai_confidence !== undefined) {
+    jsonResource.aiConfidence = resource.ai_confidence;
+  }
+
+  // AI-extracted arrays (only include if non-empty)
+  if (resource.key_features && resource.key_features.length > 0) {
+    jsonResource.keyFeatures = resource.key_features;
+  }
+  if (resource.use_cases && resource.use_cases.length > 0) {
+    jsonResource.useCases = resource.use_cases;
+  }
+  if (resource.pros && resource.pros.length > 0) {
+    jsonResource.pros = resource.pros;
+  }
+  if (resource.cons && resource.cons.length > 0) {
+    jsonResource.cons = resource.cons;
+  }
+  if (resource.target_audience && resource.target_audience.length > 0) {
+    jsonResource.targetAudience = resource.target_audience;
+  }
+  if (resource.prerequisites && resource.prerequisites.length > 0) {
+    jsonResource.prerequisites = resource.prerequisites;
+  }
+
+  // Relationship data
+  if (resource.related_docs_count > 0) {
+    jsonResource.relatedDocsCount = resource.related_docs_count;
+  }
+  if (resource.related_resources_count > 0) {
+    jsonResource.relatedResourcesCount = resource.related_resources_count;
+  }
+  if (resource.related_doc_slugs && resource.related_doc_slugs.length > 0) {
+    jsonResource.relatedDocSlugs = resource.related_doc_slugs;
+  }
+  if (resource.related_resource_slugs && resource.related_resource_slugs.length > 0) {
+    jsonResource.relatedResourceSlugs = resource.related_resource_slugs;
+  }
+
+  // Screenshot metadata
+  if (resource.screenshot_metadata && resource.screenshot_metadata.length > 0) {
+    jsonResource.screenshotMetadata = resource.screenshot_metadata;
+  }
+  if (resource.primary_screenshot_url) {
+    jsonResource.primaryScreenshotUrl = resource.primary_screenshot_url;
+  }
+  if (resource.thumbnail_url) {
+    jsonResource.thumbnailUrl = resource.thumbnail_url;
+  }
+
+  // Trending/popularity
+  if (resource.views_this_week > 0) {
+    jsonResource.viewsThisWeek = resource.views_this_week;
+  }
+  if (resource.trending_score !== null && resource.trending_score > 0) {
+    jsonResource.trendingScore = resource.trending_score;
   }
 
   return jsonResource;
@@ -292,13 +424,37 @@ async function main() {
   console.log(`Total resources: ${resources.length}`);
   console.log(`Categories: ${grouped.size}`);
 
+  // Count enhanced fields
   let withScreenshots = 0;
+  let withAiOverview = 0;
+  let withKeyFeatures = 0;
+  let withProsAndCons = 0;
+  let withRelatedDocs = 0;
+  let withTrendingScore = 0;
+
   for (const resource of resources) {
-    if (resource.screenshots && resource.screenshots.length > 0) {
-      withScreenshots++;
-    }
+    if (resource.screenshots && resource.screenshots.length > 0) withScreenshots++;
+    if (resource.ai_overview) withAiOverview++;
+    if (resource.key_features && resource.key_features.length > 0) withKeyFeatures++;
+    if ((resource.pros && resource.pros.length > 0) || (resource.cons && resource.cons.length > 0)) withProsAndCons++;
+    if (resource.related_docs_count > 0) withRelatedDocs++;
+    if (resource.trending_score && resource.trending_score > 0) withTrendingScore++;
   }
-  console.log(`With screenshots: ${withScreenshots} (${((withScreenshots / resources.length) * 100).toFixed(1)}%)`);
+
+  console.log(`\n📸 Basic Fields:`);
+  console.log(`   With screenshots: ${withScreenshots} (${((withScreenshots / resources.length) * 100).toFixed(1)}%)`);
+
+  console.log(`\n🤖 AI-Enhanced Fields:`);
+  console.log(`   With AI overview: ${withAiOverview} (${((withAiOverview / resources.length) * 100).toFixed(1)}%)`);
+  console.log(`   With key features: ${withKeyFeatures} (${((withKeyFeatures / resources.length) * 100).toFixed(1)}%)`);
+  console.log(`   With pros/cons: ${withProsAndCons} (${((withProsAndCons / resources.length) * 100).toFixed(1)}%)`);
+
+  console.log(`\n🔗 Relationship Fields:`);
+  console.log(`   With related docs: ${withRelatedDocs} (${((withRelatedDocs / resources.length) * 100).toFixed(1)}%)`);
+
+  console.log(`\n📈 Trending Fields:`);
+  console.log(`   With trending score: ${withTrendingScore} (${((withTrendingScore / resources.length) * 100).toFixed(1)}%)`);
+
   console.log("=".repeat(60) + "\n");
 }
 

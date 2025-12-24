@@ -26,7 +26,48 @@
       "lastUpdated": "2024-12-11",
       "language": "Markdown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1766534684887-awesome-cursorrules.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1766534684887-awesome-cursorrules.png",
+    "aiSummary": "Curated list of cursor rules organized by framework and use case.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Coding standard enforcement",
+      "AI assistant guidance",
+      "Project-specific customization",
+      "Team workflow integration"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ],
+    "relatedDocsCount": 2,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "configuration/claude-md"
+    ]
   },
   {
     "id": "cursor-directory",
@@ -47,7 +88,49 @@
     "difficulty": "advanced",
     "featured": true,
     "featuredReason": "Most Popular",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766534683529-cursor-directory.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766534683529-cursor-directory.png",
+    "aiSummary": "Community-driven directory of cursor rules for various frameworks and languages.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Various frameworks and languages",
+      "Coding standard enforcement",
+      "AI assistant guidance",
+      "Project-specific customization"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ],
+    "relatedDocsCount": 3,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "configuration/claude-md",
+      "integrations/ide-plugins"
+    ]
   },
   {
     "id": "secretlint-secretlint-rule-anthropic",
@@ -60,7 +143,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1766534691993-secretlint-secretlint-rule-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1766534691993-secretlint-secretlint-rule-anthropic.png",
+    "aiSummary": "Secretlint rule for detecting Anthropic Claude API keys",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Detecting Anthropic Claude API keys",
+      "API integration support",
+      "Coding standard enforcement",
+      "AI assistant guidance"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "cursor-watchful-headers",
@@ -81,7 +200,43 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-watchful-headers/1766534684948-cursor-watchful-headers.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-watchful-headers/1766534684948-cursor-watchful-headers.png",
+    "aiSummary": "Automated file header management and project structure visualization in cursorrules.  Maintains consistent headers across multiple file types while providing real-time project tree updates.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Maintaining documentation context in large codebases",
+      "Real-time processing and updates",
+      "Coding standard enforcement",
+      "AI assistant guidance"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "rules-documentation",
@@ -100,7 +255,47 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1766534683525-rules-documentation.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1766534683525-rules-documentation.png",
+    "aiSummary": "Rules for generating clear and consistent documentation.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Generating clear and consistent documentation",
+      "Coding standard enforcement",
+      "AI assistant guidance",
+      "Project-specific customization"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tutorials/documentation-generation"
+    ]
   },
   {
     "id": "rules-fastapi",
@@ -120,7 +315,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1766534687441-rules-fastapi.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1766534687441-rules-fastapi.png",
+    "aiSummary": "FastAPI backend development rules with Pydantic and async patterns.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Pydantic and async patterns",
+      "API integration support",
+      "Coding standard enforcement",
+      "AI assistant guidance"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "rules-go",
@@ -139,7 +370,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Language",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1766534687696-rules-go.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1766534687696-rules-go.png",
+    "aiSummary": "Go development rules following idiomatic Go patterns.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Coding standard enforcement",
+      "AI assistant guidance",
+      "Project-specific customization",
+      "Team workflow integration"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "rules-nextjs",
@@ -158,7 +425,47 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1766534687900-rules-nextjs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1766534687900-rules-nextjs.png",
+    "aiSummary": "Optimized rules for Next. js App Router projects with TypeScript.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "TypeScript",
+      "TypeScript support",
+      "Coding standard enforcement",
+      "AI assistant guidance"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "configuration/claude-md"
+    ]
   },
   {
     "id": "rules-python",
@@ -177,7 +484,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Language",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1766534687618-rules-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1766534687618-rules-python.png",
+    "aiSummary": "Python development rules with type hints and modern practices.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Type hints and modern practices",
+      "Python support",
+      "Coding standard enforcement",
+      "AI assistant guidance"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "rules-react",
@@ -196,7 +539,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Framework",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1766534687718-rules-react.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1766534687718-rules-react.png",
+    "aiSummary": "Best practices rules for React applications with hooks and modern patterns.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Hooks and modern patterns",
+      "React applications with hooks and modern patterns",
+      "Coding standard enforcement",
+      "AI assistant guidance"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "rules-rust",
@@ -215,7 +594,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Language",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1766534687903-rules-rust.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1766534687903-rules-rust.png",
+    "aiSummary": "Rust development rules for safe and performant code.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Safe and performant code",
+      "Coding standard enforcement",
+      "AI assistant guidance",
+      "Project-specific customization"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "rules-svelte",
@@ -234,7 +649,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1766534687763-rules-svelte.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1766534687763-rules-svelte.png",
+    "aiSummary": "Svelte 5 and SvelteKit rules for modern web apps.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Modern web apps",
+      "Coding standard enforcement",
+      "AI assistant guidance",
+      "Project-specific customization"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "rules-tailwind",
@@ -253,7 +704,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Styling",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1766534687612-rules-tailwind.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1766534687612-rules-tailwind.png",
+    "aiSummary": "Tailwind CSS utility-first styling rules.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Coding standard enforcement",
+      "AI assistant guidance",
+      "Project-specific customization",
+      "Team workflow integration"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   },
   {
     "id": "rules-testing",
@@ -273,7 +760,47 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Testing",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1766534687620-rules-testing.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1766534687620-rules-testing.png",
+    "aiSummary": "Rules for writing effective tests with Jest, Vitest, and Playwright.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Writing effective tests with Jest",
+      "Coding standard enforcement",
+      "AI assistant guidance",
+      "Project-specific customization"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tutorials/test-generation"
+    ]
   },
   {
     "id": "rules-typescript",
@@ -291,7 +818,47 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Language",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1766534687419-rules-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1766534687419-rules-typescript.png",
+    "aiSummary": "Strict TypeScript rules for type-safe development.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Type-safe development",
+      "TypeScript support",
+      "Coding standard enforcement",
+      "AI assistant guidance"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "configuration/claude-md"
+    ]
   },
   {
     "id": "rules-vue",
@@ -310,6 +877,42 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1766534690456-rules-vue.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1766534690456-rules-vue.png",
+    "aiSummary": "Vue 3 Composition API rules with TypeScript support.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "TypeScript support",
+      "API integration support",
+      "Coding standard enforcement",
+      "AI assistant guidance"
+    ],
+    "useCases": [
+      "Enforce coding standards with AI",
+      "Maintain code quality automatically",
+      "Guide AI assistants effectively",
+      "Standardize team workflows"
+    ],
+    "pros": [
+      "Enforces consistent coding standards",
+      "Integrates seamlessly with AI coding tools",
+      "Improves code quality automatically",
+      "Customizable to team preferences"
+    ],
+    "cons": [
+      "May conflict with existing linting rules",
+      "Requires initial configuration",
+      "Team adoption requires coordination"
+    ],
+    "targetAudience": [
+      "Development teams using AI assistants",
+      "Technical leads establishing standards",
+      "Code quality engineers"
+    ],
+    "prerequisites": [
+      "Claude Code or compatible AI coding tool",
+      "Project with CLAUDE.md or rules file",
+      "Access to project configuration"
+    ]
   }
 ]

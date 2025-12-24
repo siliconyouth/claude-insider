@@ -18,7 +18,48 @@
     "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766534674915-anthropic-prompt-library.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766534674915-anthropic-prompt-library.png",
+    "aiSummary": "Official collection of prompts and templates from Anthropic.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters",
+      "Best practice patterns"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 2,
+    "relatedDocSlugs": [
+      "tips-and-tricks/index",
+      "tips-and-tricks/prompting"
+    ]
   },
   {
     "id": "awesome-chatgpt-prompts",
@@ -47,7 +88,47 @@
       "lastUpdated": "2024-12-11",
       "language": "Markdown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766534674865-awesome-chatgpt-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766534674865-awesome-chatgpt-prompts.png",
+    "aiSummary": "Huge collection of role-based prompts that work great with Claude too.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude too",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tips-and-tricks/prompting"
+    ]
   },
   {
     "id": "system-prompts-coding",
@@ -76,7 +157,47 @@
       "lastUpdated": "2024-12-11",
       "language": "Python"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766534684172-system-prompts-coding.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766534684172-system-prompts-coding.png",
+    "aiSummary": "Collection of system prompts optimized for code generation and review.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Code generation and review",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tips-and-tricks/prompting"
+    ]
   },
   {
     "id": "promptbook-utils",
@@ -89,7 +210,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promptbook-utils/1766534684990-promptbook-utils.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promptbook-utils/1766534684990-promptbook-utils.png",
+    "aiSummary": "Promptbook: Turn your company's scattered knowledge into AI ready books",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters",
+      "Best practice patterns"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "asgeirtj-system-prompts-leaks",
@@ -110,7 +267,43 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/asgeirtj-system-prompts-leaks/1766534673021-asgeirtj-system-prompts-leaks.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/asgeirtj-system-prompts-leaks/1766534673021-asgeirtj-system-prompts-leaks.png",
+    "aiSummary": "Collection of extracted System Prompts from popular chatbots like ChatGPT, Claude & Gemini",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters",
+      "Best practice patterns"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "chain-of-thought",
@@ -129,7 +322,48 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Technique",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1766534674830-chain-of-thought.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1766534674830-chain-of-thought.png",
+    "aiSummary": "Guide to using chain-of-thought reasoning with Claude.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters",
+      "Best practice patterns"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 2,
+    "relatedDocSlugs": [
+      "tips-and-tricks/prompting",
+      "tips-and-tricks/advanced-prompting"
+    ]
   },
   {
     "id": "claude",
@@ -142,7 +376,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude/1766534674860-claude.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude/1766534674860-claude.png",
+    "aiSummary": "Prompt collection and templates for Claude.  Curated examples and patterns for effective AI interactions.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Effective AI interactions",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "claude-code-prompt-improver",
@@ -163,7 +433,47 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-prompt-improver/1766534674866-claude-code-prompt-improver.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-prompt-improver/1766534674866-claude-code-prompt-improver.png",
+    "aiSummary": "Intelligent prompt improver hook for Claude Code.  Type vibes, ship precision.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude Code",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-auto-memory"
+    ]
   },
   {
     "id": "claude-code-system-prompt",
@@ -184,7 +494,43 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-system-prompt/1766534674826-claude-code-system-prompt.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-system-prompt/1766534674826-claude-code-system-prompt.png",
+    "aiSummary": "Prompt collection and templates for claude code system prompt.  Curated examples and patterns for effective AI interactions.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude code system prompt",
+      "Effective AI interactions",
+      "Ready-to-use templates",
+      "Consistent output format"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "claude-code-templates",
@@ -205,7 +551,42 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates/1766534674827-claude-code-templates.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates/1766534674827-claude-code-templates.png",
+    "aiSummary": "CLI tool for configuring and monitoring Claude Code",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Configuring and monitoring Claude Code",
+      "Tool and function calling support",
+      "Command-line interface"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "claude-code-templates-1",
@@ -218,7 +599,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates-1/1766534674822-claude-code-templates-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates-1/1766534674822-claude-code-templates-1.png",
+    "aiSummary": "CLI tool to setup Claude Code configurations with framework-specific commands, automation hooks and MCP Servers for your projects",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Framework-specific commands",
+      "Your projects",
+      "Tool and function calling support",
+      "Command-line interface"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "claude-prompts",
@@ -231,7 +648,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-prompts/1766534674819-claude-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-prompts/1766534674819-claude-prompts.png",
+    "aiSummary": "Claude Custom Prompts MCP Server",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters",
+      "Best practice patterns"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "prompt-code-reviewer",
@@ -250,7 +703,47 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Role-Based",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1766534677526-prompt-code-reviewer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1766534677526-prompt-code-reviewer.png",
+    "aiSummary": "Prompt for detailed code reviews with security and performance focus.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Security and performance focus",
+      "Detailed code reviews with security and performance focus",
+      "Ready-to-use templates",
+      "Consistent output format"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tutorials/code-review"
+    ]
   },
   {
     "id": "few-shot-learning",
@@ -269,7 +762,48 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Technique",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1766534678742-few-shot-learning.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1766534678742-few-shot-learning.png",
+    "aiSummary": "Guide to using few-shot learning effectively with Claude.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters",
+      "Best practice patterns"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 2,
+    "relatedDocSlugs": [
+      "tips-and-tricks/prompting",
+      "tips-and-tricks/advanced-prompting"
+    ]
   },
   {
     "id": "friuns2-blackfriday-gpts-prompts",
@@ -290,7 +824,47 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friuns2-blackfriday-gpts-prompts/1766534679521-friuns2-blackfriday-gpts-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friuns2-blackfriday-gpts-prompts/1766534679521-friuns2-blackfriday-gpts-prompts.png",
+    "aiSummary": "List of free GPTs that doesn't require plus subscription",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters",
+      "Best practice patterns"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "friuns2-leaked-gpts"
+    ]
   },
   {
     "id": "github-stats-for-claude-code-system-prompts",
@@ -303,7 +877,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-system-prompts/1766534677793-github-stats-for-claude-code-system-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-system-prompts/1766534677793-github-stats-for-claude-code-system-prompts.png",
+    "aiSummary": "Prompt collection and templates for GitHub Stats for claude code system prompts.  Curated examples and patterns for effective AI interactions.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "GitHub Stats for claude code system prompts",
+      "Effective AI interactions",
+      "Ready-to-use templates",
+      "Consistent output format"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "github-stats-for-claude-code-templates",
@@ -316,7 +926,43 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-templates/1766534677792-github-stats-for-claude-code-templates.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-templates/1766534677792-github-stats-for-claude-code-templates.png",
+    "aiSummary": "Prompt collection and templates for GitHub Stats for claude code templates.  Curated examples and patterns for effective AI interactions.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "GitHub Stats for claude code templates",
+      "Effective AI interactions",
+      "Ready-to-use templates",
+      "Consistent output format"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "l1xu4n-awesome-chatgpt-prompts-zh-cn",
@@ -337,7 +983,43 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l1xu4n-awesome-chatgpt-prompts-zh-cn/1766534678614-l1xu4n-awesome-chatgpt-prompts-zh-cn.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l1xu4n-awesome-chatgpt-prompts-zh-cn/1766534678614-l1xu4n-awesome-chatgpt-prompts-zh-cn.png",
+    "aiSummary": "Prompt collection and templates for L1Xu4n/Awesome ChatGPT prompts ZH CN.  Curated examples and patterns for effective AI interactions.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "L1Xu4n/Awesome ChatGPT prompts ZH CN",
+      "Effective AI interactions",
+      "Ready-to-use templates",
+      "Consistent output format"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "langgptai-awesome-claude-prompts",
@@ -358,7 +1040,47 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langgptai-awesome-claude-prompts/1766534678749-langgptai-awesome-claude-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langgptai-awesome-claude-prompts/1766534678749-langgptai-awesome-claude-prompts.png",
+    "aiSummary": "This repo includes Claude prompt curation to use Claude better.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude prompt curation to use Claude better",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "langgptai-langgpt"
+    ]
   },
   {
     "id": "mufeedvh-code2prompt",
@@ -379,7 +1101,42 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mufeedvh-code2prompt/1766534678301-mufeedvh-code2prompt.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mufeedvh-code2prompt/1766534678301-mufeedvh-code2prompt.png",
+    "aiSummary": "CLI tool to convert your codebase into a single LLM prompt with source tree, prompt templating, and token counting.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Source tree",
+      "Tool and function calling support",
+      "Command-line interface"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "prompts-chat",
@@ -398,7 +1155,47 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Directory",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompts-chat/1766534683567-prompts-chat.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompts-chat/1766534683567-prompts-chat.png",
+    "aiSummary": "Interactive website for browsing and testing ChatGPT/Claude prompts.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Browsing and testing ChatGPT/Claude prompts",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tips-and-tricks/prompting"
+    ]
   },
   {
     "id": "prompt-security-expert",
@@ -417,7 +1214,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Role-Based",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1766534677797-prompt-security-expert.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1766534677797-prompt-security-expert.png",
+    "aiSummary": "Prompt for security audits and vulnerability analysis.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Security audits and vulnerability analysis",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "self-reflection",
@@ -435,7 +1268,47 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Technique",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1766534683533-self-reflection.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1766534683533-self-reflection.png",
+    "aiSummary": "Techniques for making Claude review and improve its own responses.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Making Claude review and improve its own responses",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tips-and-tricks/advanced-prompting"
+    ]
   },
   {
     "id": "prompt-senior-developer",
@@ -454,7 +1327,43 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Role-Based",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1766534677529-prompt-senior-developer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1766534677529-prompt-senior-developer.png",
+    "aiSummary": "System prompt for Claude to act as a senior software developer.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Claude to act as a senior software developer",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ]
   },
   {
     "id": "structured-outputs",
@@ -473,7 +1382,47 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Technique",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1766534684214-structured-outputs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1766534684214-structured-outputs.png",
+    "aiSummary": "Prompts for getting JSON, XML, and other structured outputs.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Getting JSON",
+      "Ready-to-use templates",
+      "Consistent output format",
+      "Customizable parameters"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "api/tool-use"
+    ]
   },
   {
     "id": "prompt-technical-writer",
@@ -492,6 +1441,46 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Role-Based",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1766534683510-prompt-technical-writer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1766534683510-prompt-technical-writer.png",
+    "aiSummary": "Prompt for generating documentation, README files, and API docs.",
+    "aiAnalyzedAt": "2025-12-21",
+    "aiConfidence": 0.85,
+    "keyFeatures": [
+      "Generating documentation",
+      "API integration support",
+      "Ready-to-use templates",
+      "Consistent output format"
+    ],
+    "useCases": [
+      "Generate consistent AI outputs",
+      "Automate content creation workflows",
+      "Build reusable prompt libraries",
+      "Improve response quality"
+    ],
+    "pros": [
+      "Ready-to-use prompt templates",
+      "Community-tested for consistent results",
+      "Saves time on prompt engineering",
+      "Easily customizable for specific needs"
+    ],
+    "cons": [
+      "May need adaptation for specific contexts",
+      "Results vary based on model and settings",
+      "Requires understanding of prompt principles"
+    ],
+    "targetAudience": [
+      "Content creators using Claude",
+      "Developers integrating AI prompts",
+      "Teams building prompt libraries"
+    ],
+    "prerequisites": [
+      "Access to Claude (web or API)",
+      "Basic understanding of prompt engineering",
+      "Clear use case for the prompt template"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "tutorials/documentation-generation"
+    ]
   }
 ]

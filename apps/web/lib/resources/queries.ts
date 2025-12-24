@@ -65,6 +65,37 @@ export interface ResourceRow {
   last_synced_at: string | null;
   created_at: string;
   updated_at: string;
+  // Enhanced fields (Migration 088)
+  ai_overview: string | null;
+  ai_summary: string | null;
+  ai_analyzed_at: string | null;
+  ai_confidence: number | null;
+  key_features: string[] | null;
+  use_cases: string[] | null;
+  pros: string[] | null;
+  cons: string[] | null;
+  target_audience: string[] | null;
+  prerequisites: string[] | null;
+  // Relationship denormalization
+  related_docs_count: number;
+  related_resources_count: number;
+  related_doc_slugs: string[] | null;
+  related_resource_slugs: string[] | null;
+  // Screenshot metadata
+  screenshot_metadata: Array<{
+    url: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+    caption?: string;
+    order?: number;
+  }> | null;
+  primary_screenshot_url: string | null;
+  thumbnail_url: string | null;
+  // Trending/popularity
+  views_this_week: number;
+  trending_score: number | null;
+  trending_calculated_at: string | null;
 }
 
 export interface ResourceTagRow {

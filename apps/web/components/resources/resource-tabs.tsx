@@ -239,6 +239,13 @@ export function ResourceTabs({ resource }: ResourceTabsProps) {
 // =============================================================================
 
 function OverviewTab({ resource }: { resource: ResourceWithDetails }) {
+  // Check if we have AI-enhanced data
+  const hasEnhancedData = resource.ai_overview ||
+    (resource.key_features && resource.key_features.length > 0) ||
+    (resource.use_cases && resource.use_cases.length > 0) ||
+    (resource.pros && resource.pros.length > 0) ||
+    (resource.cons && resource.cons.length > 0);
+
   return (
     <div className="space-y-8">
       {/* Authors Section */}
@@ -246,8 +253,149 @@ function OverviewTab({ resource }: { resource: ResourceWithDetails }) {
         <ResourceAuthors authors={resource.authors} />
       )}
 
-      {/* Long Description */}
-      {resource.long_description && (
+      {/* AI Overview - enhanced description */}
+      {resource.ai_overview && (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              Overview
+            </h3>
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400">
+              AI Enhanced
+            </span>
+          </div>
+          <div className="prose dark:prose-invert prose-blue dark:prose-cyan max-w-none prose-headings:text-gray-900 prose-headings:dark:text-white prose-p:text-gray-700 prose-p:dark:text-gray-300">
+            <p className="whitespace-pre-wrap">{resource.ai_overview}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Key Features */}
+      {resource.key_features && resource.key_features.length > 0 && (
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            ✨ Key Features
+          </h3>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {resource.key_features.map((feature, i) => (
+              <li key={i} className="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                <CheckIcon className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Pros & Cons */}
+      {((resource.pros && resource.pros.length > 0) || (resource.cons && resource.cons.length > 0)) && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {resource.pros && resource.pros.length > 0 && (
+            <div className={cn(
+              "p-4 rounded-xl",
+              "bg-green-50 dark:bg-green-900/10",
+              "border border-green-200 dark:border-green-800/30"
+            )}>
+              <h4 className="font-semibold text-green-800 dark:text-green-400 mb-3 flex items-center gap-2">
+                <CheckIcon className="w-5 h-5" />
+                Pros
+              </h4>
+              <ul className="space-y-2">
+                {resource.pros.map((pro, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-green-700 dark:text-green-300">
+                    <span className="text-green-500 mt-1">+</span>
+                    <span>{pro}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {resource.cons && resource.cons.length > 0 && (
+            <div className={cn(
+              "p-4 rounded-xl",
+              "bg-red-50 dark:bg-red-900/10",
+              "border border-red-200 dark:border-red-800/30"
+            )}>
+              <h4 className="font-semibold text-red-800 dark:text-red-400 mb-3 flex items-center gap-2">
+                <MinusIcon className="w-5 h-5" />
+                Cons
+              </h4>
+              <ul className="space-y-2">
+                {resource.cons.map((con, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-red-700 dark:text-red-300">
+                    <span className="text-red-500 mt-1">−</span>
+                    <span>{con}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Use Cases */}
+      {resource.use_cases && resource.use_cases.length > 0 && (
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            🎯 Use Cases
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {resource.use_cases.map((useCase, i) => (
+              <span
+                key={i}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-sm",
+                  "bg-blue-50 dark:bg-blue-900/20",
+                  "text-blue-700 dark:text-blue-300",
+                  "border border-blue-200 dark:border-blue-800/30"
+                )}
+              >
+                {useCase}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Target Audience & Prerequisites */}
+      {((resource.target_audience && resource.target_audience.length > 0) ||
+        (resource.prerequisites && resource.prerequisites.length > 0)) && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {resource.target_audience && resource.target_audience.length > 0 && (
+            <div className="space-y-3">
+              <h4 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                👥 Who is this for?
+              </h4>
+              <ul className="space-y-1.5">
+                {resource.target_audience.map((audience, i) => (
+                  <li key={i} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
+                    <span className="text-violet-500">•</span>
+                    {audience}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {resource.prerequisites && resource.prerequisites.length > 0 && (
+            <div className="space-y-3">
+              <h4 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                📋 Prerequisites
+              </h4>
+              <ul className="space-y-1.5">
+                {resource.prerequisites.map((prereq, i) => (
+                  <li key={i} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
+                    <span className="text-cyan-500">•</span>
+                    {prereq}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Long Description - fallback if no AI overview */}
+      {resource.long_description && !resource.ai_overview && (
         <div className="space-y-3">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             About
