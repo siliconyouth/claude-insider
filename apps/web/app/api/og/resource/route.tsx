@@ -2,9 +2,10 @@
  * Resource OG Image Generation
  *
  * Generates dynamic Open Graph images for resource pages.
- * Displays title, description, category, GitHub stars, and pricing.
+ * Displays title, description, category, GitHub stats, enhanced fields, and more.
  *
  * Usage: /api/og/resource?title=...&description=...&category=...&stars=...&pricing=...
+ *        &features=feature1|feature2|feature3&audience=Developers&aiEnhanced=true
  */
 
 import { ImageResponse } from "next/og";
@@ -35,6 +36,12 @@ export async function GET(request: NextRequest) {
   const platform = searchParams.get("platform") || "";
   const rating = parseFloat(searchParams.get("rating") || "0");
   const isFeatured = searchParams.get("featured") === "true";
+
+  // Enhanced fields (Migration 088)
+  const featuresParam = searchParams.get("features") || "";
+  const features = featuresParam ? featuresParam.split("|").slice(0, 3) : [];
+  const audience = searchParams.get("audience") || "";
+  const isAiEnhanced = searchParams.get("aiEnhanced") === "true";
 
   // Default colors used as fallback
   const defaultColors = ["#7C3AED", "#2563EB", "#06B6D4"];
@@ -147,6 +154,29 @@ export async function GET(request: NextRequest) {
 
             {/* Badge row */}
             <div style={{ display: "flex", gap: "12px" }}>
+              {/* AI Enhanced badge */}
+              {isAiEnhanced && (
+                <div
+                  style={{
+                    padding: "8px 16px",
+                    borderRadius: "9999px",
+                    background: "linear-gradient(135deg, #8B5CF622, #06B6D422)",
+                    border: "1px solid #8B5CF666",
+                    color: "#A78BFA",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#A78BFA">
+                    <path d="M12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2Z" />
+                  </svg>
+                  AI Enhanced
+                </div>
+              )}
+
               {/* Featured badge */}
               {isFeatured && (
                 <div
@@ -167,6 +197,23 @@ export async function GET(request: NextRequest) {
                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
                   </svg>
                   Featured
+                </div>
+              )}
+
+              {/* Audience badge */}
+              {audience && (
+                <div
+                  style={{
+                    padding: "8px 16px",
+                    borderRadius: "9999px",
+                    background: "#3B82F622",
+                    border: "1px solid #3B82F666",
+                    color: "#60A5FA",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                  }}
+                >
+                  For {audience}
                 </div>
               )}
 
@@ -260,6 +307,40 @@ export async function GET(request: NextRequest) {
                 >
                   {description.length > 120 ? description.slice(0, 120) + "..." : description}
                 </p>
+              )}
+
+              {/* Key Features */}
+              {features.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "8px",
+                    marginTop: "16px",
+                  }}
+                >
+                  {features.map((feature, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        padding: "6px 12px",
+                        borderRadius: "8px",
+                        background: "#1f1f1f",
+                        border: "1px solid #333",
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="#34D399">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                      </svg>
+                      <span style={{ fontSize: "14px", color: "#D1D5DB" }}>
+                        {feature.length > 35 ? feature.slice(0, 35) + "..." : feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>
@@ -364,11 +445,14 @@ export async function GET(request: NextRequest) {
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               borderTop: "1px solid #262626",
               paddingTop: "24px",
             }}
           >
+            <span style={{ fontSize: "16px", color: "#6B7280" }}>
+              Claude AI Resources & Tools
+            </span>
             <span style={{ fontSize: "18px", color: "#6B7280" }}>claudeinsider.com/resources</span>
           </div>
         </div>

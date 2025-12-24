@@ -79,10 +79,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const title = resource.meta_title || `${resource.title} | Claude Insider Resources`;
-  const description = resource.meta_description || resource.description;
+  // Use AI summary for description if available
+  const description = resource.ai_summary || resource.meta_description || resource.description;
   const category = getCategoryBySlug(resource.category as ResourceCategorySlug);
 
-  // Build dynamic OG image URL
+  // Enhanced keywords from all fields
+  const keywords = [
+    ...resource.tags,
+    ...(resource.target_audience || []),
+    ...(resource.use_cases || []).slice(0, 3),
+    resource.category,
+  ].filter(Boolean).join(", ");
+
+  // Build dynamic OG image URL with enhanced fields
   const ogImageParams = new URLSearchParams({
     title: resource.title,
     description: resource.description.slice(0, 150),
@@ -94,6 +103,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ...(resource.platforms?.[0] && { platform: resource.platforms[0] }),
     ...(Number(resource.average_rating || 0) > 0 && { rating: Number(resource.average_rating).toString() }),
     ...(resource.is_featured && { featured: "true" }),
+    // Enhanced fields for OG image
+    ...(resource.key_features && resource.key_features.length > 0 && {
+      features: resource.key_features.slice(0, 3).join("|"),
+    }),
+    ...(resource.target_audience && resource.target_audience.length > 0 && {
+      audience: resource.target_audience[0],
+    }),
+    ...(resource.ai_overview && { aiEnhanced: "true" }),
   });
   const dynamicOgImage = `https://www.claudeinsider.com/api/og/resource?${ogImageParams.toString()}`;
   const ogImage = resource.og_image_url || dynamicOgImage;
@@ -101,7 +118,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
-    keywords: resource.tags.join(", "),
+    keywords,
     openGraph: {
       title: resource.title,
       description,
@@ -426,15 +443,29 @@ async function ResourcePageContent({ slug }: { slug: string }) {
 
   const category = getCategoryBySlug(resource.category as ResourceCategorySlug);
 
-  // JSON-LD structured data for SEO
+  // JSON-LD structured data for SEO (enhanced with Migration 088 fields)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: resource.title,
-    description: resource.description,
+    description: resource.ai_summary || resource.description,
     url: resource.url,
     applicationCategory: "DeveloperApplication",
     operatingSystem: resource.platforms?.join(", ") || "Cross-platform",
+    // Enhanced fields
+    ...(resource.key_features && resource.key_features.length > 0 && {
+      featureList: resource.key_features.join(", "),
+    }),
+    ...(resource.target_audience && resource.target_audience.length > 0 && {
+      audience: {
+        "@type": "Audience",
+        audienceType: resource.target_audience.join(", "),
+      },
+    }),
+    ...(resource.prerequisites && resource.prerequisites.length > 0 && {
+      softwareRequirements: resource.prerequisites.join(", "),
+    }),
+    // Pricing
     ...(resource.pricing === "free" || resource.pricing === "open-source"
       ? {
           offers: {
@@ -444,6 +475,7 @@ async function ResourcePageContent({ slug }: { slug: string }) {
           },
         }
       : {}),
+    // Rating
     ...(resource.ratings_count > 0
       ? {
           aggregateRating: {
@@ -454,6 +486,17 @@ async function ResourcePageContent({ slug }: { slug: string }) {
           },
         }
       : {}),
+    // AI-generated review (if available)
+    ...(resource.ai_overview && {
+      review: {
+        "@type": "Review",
+        reviewBody: resource.ai_summary || resource.ai_overview.slice(0, 300),
+        author: {
+          "@type": "Organization",
+          name: "Claude Insider AI",
+        },
+      },
+    }),
   };
 
   return (

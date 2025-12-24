@@ -65,6 +65,46 @@ export interface ResourceEntry {
   // Timestamps
   addedDate: string;
   lastVerified: string;
+
+  // ============================================
+  // Enhanced fields (Migration 088)
+  // ============================================
+
+  // AI-generated content
+  aiOverview?: string;
+  aiSummary?: string;
+  aiAnalyzedAt?: string;
+  aiConfidence?: number;
+
+  // Structured analysis
+  keyFeatures?: string[];
+  useCases?: string[];
+  pros?: string[];
+  cons?: string[];
+  targetAudience?: string[];
+  prerequisites?: string[];
+
+  // Relationship data
+  relatedDocsCount?: number;
+  relatedResourcesCount?: number;
+  relatedDocSlugs?: string[];
+  relatedResourceSlugs?: string[];
+
+  // Screenshot metadata
+  screenshotMetadata?: Array<{
+    url: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+    caption?: string;
+    order?: number;
+  }>;
+  primaryScreenshotUrl?: string;
+  thumbnailUrl?: string;
+
+  // Trending/popularity
+  viewsThisWeek?: number;
+  trendingScore?: number;
 }
 
 // Category metadata
@@ -107,6 +147,15 @@ export interface ResourceFilters {
   status?: ResourceStatus;
   featured?: boolean;
   search?: string;
+
+  // Enhanced field filters (Migration 088)
+  targetAudience?: string[];
+  useCases?: string[];
+  minKeyFeatures?: number;
+  hasPros?: boolean;
+  hasCons?: boolean;
+  hasPrerequisites?: boolean;
+  hasAiAnalysis?: boolean;
 }
 
 // Tag with count

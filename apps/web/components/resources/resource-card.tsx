@@ -442,6 +442,18 @@ export function ResourceCard({
               </>
             )}
 
+            {/* Enhanced Badges (Migration 088) */}
+            {resource.keyFeatures && resource.keyFeatures.length > 0 && (
+              <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium rounded bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+                ✓ {resource.keyFeatures.length}
+              </span>
+            )}
+            {resource.aiOverview && (
+              <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium rounded bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400">
+                ★ AI
+              </span>
+            )}
+
             {/* Tags inline */}
             {showTags && resource.tags.length > 0 && (
               <div className="flex items-center gap-1 ml-auto">
@@ -635,6 +647,39 @@ export function ResourceCard({
           {resource.github.language && (
             <span className="text-xs text-gray-500 dark:text-gray-500">
               {resource.github.language}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Enhanced Field Badges (Migration 088) */}
+      {(resource.keyFeatures?.length || resource.targetAudience?.length || resource.aiOverview) && (
+        <div className="mt-2 flex flex-wrap items-center gap-1.5">
+          {/* Features Badge */}
+          {resource.keyFeatures && resource.keyFeatures.length > 0 && (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              {resource.keyFeatures.length} features
+            </span>
+          )}
+          {/* Target Audience Badge */}
+          {resource.targetAudience && resource.targetAudience.length > 0 && (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              {resource.targetAudience[0]}
+            </span>
+          )}
+          {/* AI Enhanced Badge */}
+          {resource.aiOverview && (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded bg-gradient-to-r from-violet-50 to-cyan-50 dark:from-violet-900/20 dark:to-cyan-900/20 text-violet-600 dark:text-violet-400">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2Z" />
+              </svg>
+              AI
             </span>
           )}
         </div>

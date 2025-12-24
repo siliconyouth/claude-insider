@@ -5,9 +5,9 @@
  * Full directory of Claude AI resources with search, filters, and category browsing
  */
 
-import { useState, useMemo, useCallback, Suspense } from 'react';
+import { useState, useMemo, useCallback, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { ResourceCard, ResourceCardSkeleton } from '@/components/resources/resource-card';
@@ -18,6 +18,9 @@ import {
   getPopularTags,
   getDifficultyStats,
   getStatusStats,
+  getTargetAudienceStats,
+  getUseCasesStats,
+  getEnhancedFieldsCoverage,
   filterResources,
   type ResourceEntry,
   type ResourceCategorySlug,
@@ -69,6 +72,13 @@ interface FilterState {
   status: ResourceStatus | null;
   featured: boolean | null;
   sort: SortOption;
+  // Enhanced field filters (Migration 088)
+  targetAudience: string[];
+  useCases: string[];
+  minKeyFeatures: number | null;
+  hasPros: boolean | null;
+  hasCons: boolean | null;
+  hasPrerequisites: boolean | null;
 }
 
 // Loading fallback for Suspense
@@ -107,6 +117,7 @@ export default function ResourcesPage() {
 // Inner content component that uses useSearchParams
 function ResourcesContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   // Initialize filters from URL params
   const initialFilters: FilterState = useMemo(() => ({
@@ -117,11 +128,45 @@ function ResourcesContent() {
     status: (searchParams?.get('status') as ResourceStatus) || null,
     featured: searchParams?.get('featured') === 'true' ? true : null,
     sort: (searchParams?.get('sort') as SortOption) || 'relevance',
+    // Enhanced field filters (Migration 088)
+    targetAudience: searchParams?.get('audience')?.split(',').filter(Boolean) || [],
+    useCases: searchParams?.get('usecase')?.split(',').filter(Boolean) || [],
+    minKeyFeatures: searchParams?.get('minFeatures') ? parseInt(searchParams.get('minFeatures')!) : null,
+    hasPros: searchParams?.get('hasPros') === 'true' ? true : null,
+    hasCons: searchParams?.get('hasCons') === 'true' ? true : null,
+    hasPrerequisites: searchParams?.get('hasPrerequisites') === 'true' ? true : null,
   }), [searchParams]);
 
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [showFilters, setShowFilters] = useState(false);
+
+  // URL Parameter Sync (B4 - Migration 088)
+  // Update URL when filters change to enable shareable links
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    // Basic filters
+    if (filters.query) params.set('q', filters.query);
+    if (filters.category) params.set('category', filters.category);
+    if (filters.tags.length > 0 && filters.tags[0]) params.set('tag', filters.tags[0]);
+    if (filters.difficulty) params.set('difficulty', filters.difficulty);
+    if (filters.status) params.set('status', filters.status);
+    if (filters.featured) params.set('featured', 'true');
+    if (filters.sort !== 'relevance') params.set('sort', filters.sort);
+
+    // Enhanced field filters
+    if (filters.targetAudience.length > 0) params.set('audience', filters.targetAudience.join(','));
+    if (filters.useCases.length > 0) params.set('usecase', filters.useCases.join(','));
+    if (filters.minKeyFeatures !== null) params.set('minFeatures', filters.minKeyFeatures.toString());
+    if (filters.hasPros) params.set('hasPros', 'true');
+    if (filters.hasCons) params.set('hasCons', 'true');
+    if (filters.hasPrerequisites) params.set('hasPrerequisites', 'true');
+
+    // Update URL without navigation (preserves scroll position)
+    const newUrl = params.toString() ? `/resources?${params.toString()}` : '/resources';
+    router.replace(newUrl, { scroll: false });
+  }, [filters, router]);
 
   // Get static data
   const stats = useMemo(() => getResourceStats(), []);
@@ -129,10 +174,24 @@ function ResourcesContent() {
   const popularTags = useMemo(() => getPopularTags(30), []);
   const difficultyStats = useMemo(() => getDifficultyStats(), []);
   const statusStats = useMemo(() => getStatusStats(), []);
+  // Enhanced field aggregations (Migration 088)
+  const targetAudienceStats = useMemo(() => getTargetAudienceStats(), []);
+  const useCasesStats = useMemo(() => getUseCasesStats(), []);
+  const enhancedCoverage = useMemo(() => getEnhancedFieldsCoverage(), []);
 
   // Filter and search resources
   const filteredResources = useMemo(() => {
     let results: ResourceEntry[];
+
+    // Common enhanced filter options
+    const enhancedFilters = {
+      targetAudience: filters.targetAudience.length > 0 ? filters.targetAudience : undefined,
+      useCases: filters.useCases.length > 0 ? filters.useCases : undefined,
+      minKeyFeatures: filters.minKeyFeatures ?? undefined,
+      hasPros: filters.hasPros ?? undefined,
+      hasCons: filters.hasCons ?? undefined,
+      hasPrerequisites: filters.hasPrerequisites ?? undefined,
+    };
 
     // If there's a search query, use Fuse.js search
     if (filters.query.trim()) {
@@ -144,6 +203,7 @@ function ResourcesContent() {
         status: filters.status || undefined,
         featured: filters.featured ?? undefined,
         limit: 100,
+        ...enhancedFilters,
       });
       results = searchResults.map((r) => r.item);
     } else {
@@ -154,6 +214,7 @@ function ResourcesContent() {
         difficulty: filters.difficulty || undefined,
         status: filters.status || undefined,
         featured: filters.featured ?? undefined,
+        ...enhancedFilters,
       });
     }
 
@@ -190,6 +251,26 @@ function ResourcesContent() {
     }));
   }, []);
 
+  // Toggle target audience filter (Migration 088)
+  const toggleAudience = useCallback((audience: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      targetAudience: prev.targetAudience.includes(audience)
+        ? prev.targetAudience.filter((a) => a !== audience)
+        : [...prev.targetAudience, audience],
+    }));
+  }, []);
+
+  // Toggle use case filter (Migration 088)
+  const toggleUseCase = useCallback((useCase: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      useCases: prev.useCases.includes(useCase)
+        ? prev.useCases.filter((u) => u !== useCase)
+        : [...prev.useCases, useCase],
+    }));
+  }, []);
+
   const clearFilters = useCallback(() => {
     setFilters({
       query: '',
@@ -199,11 +280,22 @@ function ResourcesContent() {
       status: null,
       featured: null,
       sort: 'relevance',
+      // Enhanced field filters (Migration 088)
+      targetAudience: [],
+      useCases: [],
+      minKeyFeatures: null,
+      hasPros: null,
+      hasCons: null,
+      hasPrerequisites: null,
     });
   }, []);
 
   const hasActiveFilters = filters.query || filters.category || filters.tags.length > 0 ||
-    filters.difficulty || filters.status || filters.featured !== null;
+    filters.difficulty || filters.status || filters.featured !== null ||
+    // Enhanced field filters (Migration 088)
+    filters.targetAudience.length > 0 || filters.useCases.length > 0 ||
+    filters.minKeyFeatures !== null || filters.hasPros !== null ||
+    filters.hasCons !== null || filters.hasPrerequisites !== null;
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
@@ -434,6 +526,147 @@ function ResourcesContent() {
                   </div>
                 </div>
 
+                {/* Target Audience Pills (Migration 088) */}
+                {targetAudienceStats.length > 0 && (
+                  <div className="mt-6">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                      Target Audience
+                      <span className="ml-2 text-xs text-gray-500">({enhancedCoverage.hasTargetAudience} resources)</span>
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {targetAudienceStats.slice(0, 10).map((item) => (
+                        <button
+                          key={item.audience}
+                          onClick={() => toggleAudience(item.audience)}
+                          className={cn(
+                            'px-3 py-1.5 rounded-lg text-sm transition-all duration-200 flex items-center gap-1.5',
+                            filters.targetAudience.includes(item.audience)
+                              ? 'bg-gradient-to-r from-violet-500/20 via-blue-500/20 to-cyan-500/20 text-blue-600 dark:text-cyan-400 border border-blue-500/30'
+                              : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-transparent hover:border-gray-300 dark:hover:border-gray-600'
+                          )}
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                          {item.audience}
+                          <span className="text-xs opacity-60">({item.count})</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Use Cases Pills (Migration 088) */}
+                {useCasesStats.length > 0 && (
+                  <div className="mt-6">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                      Use Cases
+                      <span className="ml-2 text-xs text-gray-500">({enhancedCoverage.hasUseCases} resources)</span>
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {useCasesStats.slice(0, 12).map((item) => (
+                        <button
+                          key={item.useCase}
+                          onClick={() => toggleUseCase(item.useCase)}
+                          className={cn(
+                            'px-3 py-1.5 rounded-lg text-sm transition-all duration-200 flex items-center gap-1.5',
+                            filters.useCases.includes(item.useCase)
+                              ? 'bg-gradient-to-r from-violet-500/20 via-blue-500/20 to-cyan-500/20 text-blue-600 dark:text-cyan-400 border border-blue-500/30'
+                              : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-transparent hover:border-gray-300 dark:hover:border-gray-600'
+                          )}
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          </svg>
+                          {item.useCase}
+                          <span className="text-xs opacity-60">({item.count})</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Enhanced Data Toggles (Migration 088) */}
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <label className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-[#262626] cursor-pointer hover:border-blue-500/30 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={filters.hasPros === true}
+                      onChange={(e) => updateFilter('hasPros', e.target.checked ? true : null)}
+                      className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                    />
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        Has Pros
+                        <span className="ml-1.5 text-xs text-gray-500">({enhancedCoverage.hasPros})</span>
+                      </span>
+                    </div>
+                  </label>
+
+                  <label className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-[#262626] cursor-pointer hover:border-blue-500/30 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={filters.hasCons === true}
+                      onChange={(e) => updateFilter('hasCons', e.target.checked ? true : null)}
+                      className="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                    />
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        Has Cons
+                        <span className="ml-1.5 text-xs text-gray-500">({enhancedCoverage.hasCons})</span>
+                      </span>
+                    </div>
+                  </label>
+
+                  <label className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-[#262626] cursor-pointer hover:border-blue-500/30 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={filters.hasPrerequisites === true}
+                      onChange={(e) => updateFilter('hasPrerequisites', e.target.checked ? true : null)}
+                      className="w-4 h-4 rounded border-gray-300 text-amber-600 focus:ring-amber-500"
+                    />
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                        Has Prerequisites
+                        <span className="ml-1.5 text-xs text-gray-500">({enhancedCoverage.hasPrerequisites})</span>
+                      </span>
+                    </div>
+                  </label>
+
+                  <div className="p-3 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-[#262626]">
+                    <label className="block text-sm text-gray-700 dark:text-gray-300 mb-2">
+                      Min Features
+                      <span className="ml-1.5 text-xs text-gray-500">({enhancedCoverage.hasKeyFeatures} have features)</span>
+                    </label>
+                    <select
+                      value={filters.minKeyFeatures || ''}
+                      onChange={(e) => updateFilter('minKeyFeatures', e.target.value ? parseInt(e.target.value) : null)}
+                      className={cn(
+                        'w-full px-2 py-1.5 rounded text-sm',
+                        'bg-white dark:bg-gray-800',
+                        'border border-gray-200 dark:border-gray-700',
+                        'text-gray-900 dark:text-white',
+                        'focus:outline-none focus:ring-2 focus:ring-blue-500'
+                      )}
+                    >
+                      <option value="">Any</option>
+                      <option value="3">3+ features</option>
+                      <option value="5">5+ features</option>
+                      <option value="7">7+ features</option>
+                      <option value="10">10+ features</option>
+                    </select>
+                  </div>
+                </div>
+
                 {/* Featured Toggle & Clear */}
                 <div className="mt-6 flex items-center justify-between">
                   <label className="flex items-center gap-2 cursor-pointer">
@@ -501,6 +734,55 @@ function ResourcesContent() {
                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-sm">
                   Featured
                   <button onClick={() => updateFilter('featured', null)}>
+                    <CloseIcon className="w-4 h-4" />
+                  </button>
+                </span>
+              )}
+              {/* Enhanced Filter Pills (Migration 088) */}
+              {filters.targetAudience.map((audience) => (
+                <span key={audience} className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-sm">
+                  👥 {audience}
+                  <button onClick={() => toggleAudience(audience)}>
+                    <CloseIcon className="w-4 h-4" />
+                  </button>
+                </span>
+              ))}
+              {filters.useCases.map((useCase) => (
+                <span key={useCase} className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 text-sm">
+                  ⚡ {useCase}
+                  <button onClick={() => toggleUseCase(useCase)}>
+                    <CloseIcon className="w-4 h-4" />
+                  </button>
+                </span>
+              ))}
+              {filters.minKeyFeatures !== null && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-sm">
+                  {filters.minKeyFeatures}+ features
+                  <button onClick={() => updateFilter('minKeyFeatures', null)}>
+                    <CloseIcon className="w-4 h-4" />
+                  </button>
+                </span>
+              )}
+              {filters.hasPros && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm">
+                  ✓ Has Pros
+                  <button onClick={() => updateFilter('hasPros', null)}>
+                    <CloseIcon className="w-4 h-4" />
+                  </button>
+                </span>
+              )}
+              {filters.hasCons && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-sm">
+                  ✗ Has Cons
+                  <button onClick={() => updateFilter('hasCons', null)}>
+                    <CloseIcon className="w-4 h-4" />
+                  </button>
+                </span>
+              )}
+              {filters.hasPrerequisites && (
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-sm">
+                  + Has Prerequisites
+                  <button onClick={() => updateFilter('hasPrerequisites', null)}>
                     <CloseIcon className="w-4 h-4" />
                   </button>
                 </span>

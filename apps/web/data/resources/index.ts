@@ -178,6 +178,41 @@ export function filterResources(filters: ResourceFilters): ResourceEntry[] {
     results = results.filter((r) => r.featured === filters.featured);
   }
 
+  // Enhanced field filters (Migration 088)
+  if (filters.targetAudience && filters.targetAudience.length > 0) {
+    results = results.filter((r) =>
+      r.targetAudience?.some((a) => filters.targetAudience!.includes(a))
+    );
+  }
+
+  if (filters.useCases && filters.useCases.length > 0) {
+    results = results.filter((r) =>
+      r.useCases?.some((u) => filters.useCases!.includes(u))
+    );
+  }
+
+  if (filters.minKeyFeatures !== undefined && filters.minKeyFeatures > 0) {
+    results = results.filter((r) =>
+      (r.keyFeatures?.length || 0) >= filters.minKeyFeatures!
+    );
+  }
+
+  if (filters.hasPros === true) {
+    results = results.filter((r) => r.pros && r.pros.length > 0);
+  }
+
+  if (filters.hasCons === true) {
+    results = results.filter((r) => r.cons && r.cons.length > 0);
+  }
+
+  if (filters.hasPrerequisites === true) {
+    results = results.filter((r) => r.prerequisites && r.prerequisites.length > 0);
+  }
+
+  if (filters.hasAiAnalysis === true) {
+    results = results.filter((r) => !!r.aiOverview || !!r.aiSummary);
+  }
+
   return results;
 }
 
@@ -212,6 +247,82 @@ export function getStatusStats(): { status: string; count: number }[] {
     status,
     count: ALL_RESOURCES.filter((r) => r.status === status).length,
   }));
+}
+
+// ============================================
+// Enhanced Field Aggregations (Migration 088)
+// ============================================
+
+// Get unique target audiences with counts
+export function getTargetAudienceStats(): { audience: string; count: number }[] {
+  const audienceMap = new Map<string, number>();
+
+  ALL_RESOURCES.forEach((r) => {
+    r.targetAudience?.forEach((audience) => {
+      audienceMap.set(audience, (audienceMap.get(audience) || 0) + 1);
+    });
+  });
+
+  return Array.from(audienceMap.entries())
+    .map(([audience, count]) => ({ audience, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+// Get unique use cases with counts
+export function getUseCasesStats(): { useCase: string; count: number }[] {
+  const useCaseMap = new Map<string, number>();
+
+  ALL_RESOURCES.forEach((r) => {
+    r.useCases?.forEach((useCase) => {
+      useCaseMap.set(useCase, (useCaseMap.get(useCase) || 0) + 1);
+    });
+  });
+
+  return Array.from(useCaseMap.entries())
+    .map(([useCase, count]) => ({ useCase, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+// Get key features distribution
+export function getFeatureCountStats(): { range: string; count: number; min: number; max: number }[] {
+  const ranges = [
+    { range: '0', min: 0, max: 0 },
+    { range: '1-3', min: 1, max: 3 },
+    { range: '4-6', min: 4, max: 6 },
+    { range: '7-10', min: 7, max: 10 },
+    { range: '10+', min: 10, max: Infinity },
+  ];
+
+  return ranges.map((r) => ({
+    ...r,
+    count: ALL_RESOURCES.filter((res) => {
+      const features = res.keyFeatures?.length || 0;
+      return features >= r.min && features <= r.max;
+    }).length,
+  }));
+}
+
+// Get enhanced fields coverage stats
+export function getEnhancedFieldsCoverage(): {
+  hasPros: number;
+  hasCons: number;
+  hasPrerequisites: number;
+  hasAiAnalysis: number;
+  hasTargetAudience: number;
+  hasUseCases: number;
+  hasKeyFeatures: number;
+  total: number;
+} {
+  return {
+    hasPros: ALL_RESOURCES.filter((r) => r.pros && r.pros.length > 0).length,
+    hasCons: ALL_RESOURCES.filter((r) => r.cons && r.cons.length > 0).length,
+    hasPrerequisites: ALL_RESOURCES.filter((r) => r.prerequisites && r.prerequisites.length > 0).length,
+    hasAiAnalysis: ALL_RESOURCES.filter((r) => !!r.aiOverview || !!r.aiSummary).length,
+    hasTargetAudience: ALL_RESOURCES.filter((r) => r.targetAudience && r.targetAudience.length > 0).length,
+    hasUseCases: ALL_RESOURCES.filter((r) => r.useCases && r.useCases.length > 0).length,
+    hasKeyFeatures: ALL_RESOURCES.filter((r) => r.keyFeatures && r.keyFeatures.length > 0).length,
+    total: ALL_RESOURCES.length,
+  };
 }
 
 // Re-export schema types and utilities

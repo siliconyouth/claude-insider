@@ -28,6 +28,15 @@ export interface ResourceSearchOptions {
   featured?: boolean;
   limit?: number;
   threshold?: number;
+
+  // Enhanced field filters (Migration 088)
+  targetAudience?: string[];
+  useCases?: string[];
+  minKeyFeatures?: number;
+  hasPros?: boolean;
+  hasCons?: boolean;
+  hasPrerequisites?: boolean;
+  hasAiAnalysis?: boolean;
 }
 
 // Fuse.js configuration with weighted fields
@@ -82,6 +91,14 @@ export function searchResources(options: ResourceSearchOptions): ResourceSearchR
     featured,
     limit = 50,
     threshold = 0.3,
+    // Enhanced field filters (Migration 088)
+    targetAudience,
+    useCases,
+    minKeyFeatures,
+    hasPros,
+    hasCons,
+    hasPrerequisites,
+    hasAiAnalysis,
   } = options;
 
   const fuse = getSearchInstance();
@@ -106,6 +123,35 @@ export function searchResources(options: ResourceSearchOptions): ResourceSearchR
       results = results.filter((r) => r.featured === featured);
     }
 
+    // Enhanced field filters (Migration 088)
+    if (targetAudience && targetAudience.length > 0) {
+      results = results.filter((r) =>
+        r.targetAudience?.some((a) => targetAudience.includes(a))
+      );
+    }
+    if (useCases && useCases.length > 0) {
+      results = results.filter((r) =>
+        r.useCases?.some((u) => useCases.includes(u))
+      );
+    }
+    if (minKeyFeatures !== undefined && minKeyFeatures > 0) {
+      results = results.filter((r) =>
+        (r.keyFeatures?.length || 0) >= minKeyFeatures
+      );
+    }
+    if (hasPros === true) {
+      results = results.filter((r) => r.pros && r.pros.length > 0);
+    }
+    if (hasCons === true) {
+      results = results.filter((r) => r.cons && r.cons.length > 0);
+    }
+    if (hasPrerequisites === true) {
+      results = results.filter((r) => r.prerequisites && r.prerequisites.length > 0);
+    }
+    if (hasAiAnalysis === true) {
+      results = results.filter((r) => !!r.aiOverview || !!r.aiSummary);
+    }
+
     return results.slice(0, limit).map((item) => ({
       item,
       score: 0,
@@ -127,6 +173,29 @@ export function searchResources(options: ResourceSearchOptions): ResourceSearchR
     if (status && r.status !== status) return false;
     if (featured !== undefined && r.featured !== featured) return false;
     if (result.score !== undefined && result.score > threshold) return false;
+
+    // Enhanced field filters (Migration 088)
+    if (targetAudience && targetAudience.length > 0) {
+      if (!r.targetAudience?.some((a) => targetAudience.includes(a))) return false;
+    }
+    if (useCases && useCases.length > 0) {
+      if (!r.useCases?.some((u) => useCases.includes(u))) return false;
+    }
+    if (minKeyFeatures !== undefined && minKeyFeatures > 0) {
+      if ((r.keyFeatures?.length || 0) < minKeyFeatures) return false;
+    }
+    if (hasPros === true) {
+      if (!r.pros || r.pros.length === 0) return false;
+    }
+    if (hasCons === true) {
+      if (!r.cons || r.cons.length === 0) return false;
+    }
+    if (hasPrerequisites === true) {
+      if (!r.prerequisites || r.prerequisites.length === 0) return false;
+    }
+    if (hasAiAnalysis === true) {
+      if (!r.aiOverview && !r.aiSummary) return false;
+    }
 
     return true;
   });
