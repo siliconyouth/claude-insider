@@ -9,7 +9,7 @@
 **/*.spec.tsx
 **/__tests__/**
 **/test/**
-**/tests/**
+# Note: Don't use **/tests/** - it would exclude app/dashboard/diagnostics/tests/ which is needed for builds
 coverage/
 
 # Documentation and meta files
