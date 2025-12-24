@@ -67,7 +67,7 @@ async function main() {
             JSON.stringify({
               type: "version_update",
               version,
-              link: "/",
+              // Note: link is handled by getNotificationUrl() which routes version_update to /changelog
             }),
           ]
         );

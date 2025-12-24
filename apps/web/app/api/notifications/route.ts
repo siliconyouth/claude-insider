@@ -132,6 +132,62 @@ export async function GET(request: NextRequest) {
 }
 
 /**
+ * Mark notifications as read (POST version for sendBeacon)
+ * sendBeacon only supports POST, so we duplicate PATCH logic here
+ * Used when marking notifications read during page navigation
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const { notificationIds, markAll } = body;
+
+    let query: string;
+    let params: (string | string[])[];
+
+    if (markAll) {
+      query = `
+        UPDATE notifications
+        SET read = TRUE, read_at = NOW()
+        WHERE user_id = $1 AND read = FALSE
+        RETURNING id
+      `;
+      params = [session.user.id];
+    } else if (notificationIds && Array.isArray(notificationIds) && notificationIds.length > 0) {
+      query = `
+        UPDATE notifications
+        SET read = TRUE, read_at = NOW()
+        WHERE user_id = $1 AND id = ANY($2) AND read = FALSE
+        RETURNING id
+      `;
+      params = [session.user.id, notificationIds];
+    } else {
+      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
+
+    const result = await pool.query(query, params);
+
+    // Invalidate cache after mutation
+    await invalidateNotificationCache(session.user.id);
+
+    return NextResponse.json({
+      success: true,
+      count: result.rowCount,
+    });
+  } catch (error) {
+    console.error("[Notifications API Error]:", error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Failed to update notifications" },
+      { status: 500 }
+    );
+  }
+}
+
+/**
  * Mark notifications as read
  * Invalidates cache after update
  */

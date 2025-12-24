@@ -152,9 +152,14 @@ export function getNotificationUrl(notification: NotificationLinkData): string {
       return "/changelog";
 
     case "system":
-      // System notifications (e.g., achievements)
+      // System notifications (e.g., achievements, version updates)
       if (resource_type === "achievement") {
         return "/profile#achievements";
+      }
+      // Version update notifications should go to changelog
+      // These are sent with type: "system" and data.type: "version_update"
+      if (data?.type === "version_update") {
+        return "/changelog";
       }
       // Custom link in data
       if (data?.link && typeof data.link === "string") {

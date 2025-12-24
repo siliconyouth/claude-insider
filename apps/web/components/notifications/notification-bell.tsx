@@ -112,6 +112,20 @@ export function NotificationBell() {
         data: { notificationId: latestNotif.id, url: targetUrl },
         onClick: () => {
           window.focus();
+          // Mark notification as read using sendBeacon (survives page unload)
+          const markReadPayload = JSON.stringify({ notificationIds: [latestNotif.id] });
+          navigator.sendBeacon("/api/notifications", markReadPayload);
+          // For version updates, also update localStorage to prevent popup re-trigger
+          if (latestNotif.type === "system" && latestNotif.data?.type === "version_update") {
+            try {
+              const version = (latestNotif.data as Record<string, unknown>)?.version as string;
+              if (version) {
+                localStorage.setItem("claude-insider-last-seen-version", version);
+              }
+            } catch {
+              // localStorage not available
+            }
+          }
           window.location.href = targetUrl;
         },
       });
@@ -178,28 +192,6 @@ export function NotificationBell() {
       }
     } catch (error) {
       console.error("[NotificationBell] Mark read error:", error);
-    }
-  };
-
-  // Mark single notification as read when clicked
-  const markAsRead = async (notificationId: string) => {
-    try {
-      const res = await fetch("/api/notifications", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notificationIds: [notificationId] }),
-      });
-
-      if (res.ok) {
-        // Optimistically update local state
-        setNotifications((prev) =>
-          prev.map((n) => (n.id === notificationId ? { ...n, read: true } : n))
-        );
-        // Refresh count from server (realtime will also update)
-        await refreshCount();
-      }
-    } catch (error) {
-      console.error("[NotificationBell] Mark single read error:", error);
     }
   };
 
@@ -416,9 +408,25 @@ export function NotificationBell() {
                     href={getNotificationUrl(notification)}
                     onClick={() => {
                       setIsOpen(false);
-                      // Mark as read if unread (fire and forget - don't block navigation)
+                      // Mark as read using sendBeacon (survives page navigation)
                       if (!notification.read) {
-                        markAsRead(notification.id);
+                        const markReadPayload = JSON.stringify({ notificationIds: [notification.id] });
+                        navigator.sendBeacon("/api/notifications", markReadPayload);
+                        // Optimistically update local state
+                        setNotifications((prev) =>
+                          prev.map((n) => (n.id === notification.id ? { ...n, read: true } : n))
+                        );
+                      }
+                      // For version updates, update localStorage to prevent popup re-trigger
+                      if (notification.type === "system" && notification.data?.type === "version_update") {
+                        try {
+                          const version = (notification.data as Record<string, unknown>)?.version as string;
+                          if (version) {
+                            localStorage.setItem("claude-insider-last-seen-version", version);
+                          }
+                        } catch {
+                          // localStorage not available
+                        }
                       }
                     }}
                     className={cn(

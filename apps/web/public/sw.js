@@ -308,25 +308,44 @@ self.addEventListener('notificationclick', (event) => {
 
   if (action === 'close') return;
 
+  // Mark notification as read if we have an ID
+  const markNotificationRead = async () => {
+    if (notificationData.notificationId) {
+      try {
+        await fetch('/api/notifications', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ notificationIds: [notificationData.notificationId] }),
+          credentials: 'include',
+        });
+      } catch (err) {
+        console.warn('[SW] Failed to mark notification as read:', err);
+      }
+    }
+  };
+
   // Open or focus the app
   event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true })
-      .then((clientList) => {
-        // Try to focus an existing window
-        for (const client of clientList) {
-          if (client.url.includes(self.location.origin) && 'focus' in client) {
-            client.focus();
-            if (notificationData.url) {
-              client.navigate(notificationData.url);
+    Promise.all([
+      markNotificationRead(),
+      clients.matchAll({ type: 'window', includeUncontrolled: true })
+        .then((clientList) => {
+          // Try to focus an existing window
+          for (const client of clientList) {
+            if (client.url.includes(self.location.origin) && 'focus' in client) {
+              client.focus();
+              if (notificationData.url) {
+                client.navigate(notificationData.url);
+              }
+              return;
             }
-            return;
           }
-        }
-        // Open new window if no existing window
-        if (clients.openWindow) {
-          return clients.openWindow(notificationData.url || '/');
-        }
-      })
+          // Open new window if no existing window
+          if (clients.openWindow) {
+            return clients.openWindow(notificationData.url || '/');
+          }
+        })
+    ])
   );
 });
 
