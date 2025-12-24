@@ -27,7 +27,7 @@
       "lastUpdated": "2024-12-10",
       "language": "Python"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-python-official/1766238100292-anthropic-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-python-official/1766534774303-sdk-python-official.png"
   },
   {
     "id": "sdk-typescript-official",
@@ -57,7 +57,7 @@
       "lastUpdated": "2024-12-10",
       "language": "TypeScript"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-typescript-official/1766238100591-anthropic-sdk-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-typescript-official/1766534775782-sdk-typescript-official.png"
   },
   {
     "id": "vercel-ai-sdk",
@@ -86,7 +86,7 @@
       "lastUpdated": "2024-12-11",
       "language": "TypeScript"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-ai-sdk/1766238207545-vercel-ai-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-ai-sdk/1766534783442-vercel-ai-sdk.png"
   },
   {
     "id": "adaline-anthropic",
@@ -99,7 +99,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-anthropic/1766286354227-adaline-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-anthropic/1766534692110-adaline-anthropic.png"
   },
   {
     "id": "adaline-google",
@@ -112,7 +112,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-google/1766286354267-adaline-google.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-google/1766534692067-adaline-google.png"
   },
   {
     "id": "adaline-together-ai",
@@ -125,7 +125,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-together-ai/1766286353912-adaline-together-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-together-ai/1766534691992-adaline-together-ai.png"
   },
   {
     "id": "ai-sdk-amazon-bedrock",
@@ -138,7 +138,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-amazon-bedrock/1766286358728-ai-sdk-amazon-bedrock.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-amazon-bedrock/1766534692063-ai-sdk-amazon-bedrock.png"
   },
   {
     "id": "ai-sdk-anthropic",
@@ -151,7 +151,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-anthropic/1766286358645-ai-sdk-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-anthropic/1766534691887-ai-sdk-anthropic.png"
   },
   {
     "id": "ai-sdk-azure",
@@ -164,7 +164,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-azure/1766286358369-ai-sdk-azure.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-azure/1766534696166-ai-sdk-azure.png"
   },
   {
     "id": "ai-sdk-cerebras",
@@ -177,7 +177,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cerebras/1766286358079-ai-sdk-cerebras.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cerebras/1766534696104-ai-sdk-cerebras.png"
   },
   {
     "id": "ai-sdk-cohere",
@@ -190,7 +190,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cohere/1766286358673-ai-sdk-cohere.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cohere/1766534696163-ai-sdk-cohere.png"
   },
   {
     "id": "ai-sdk-deepinfra",
@@ -203,7 +203,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepinfra/1766286359129-ai-sdk-deepinfra.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepinfra/1766534696612-ai-sdk-deepinfra.png"
   },
   {
     "id": "ai-sdk-deepseek",
@@ -216,7 +216,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepseek/1766286359170-ai-sdk-deepseek.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepseek/1766534696615-ai-sdk-deepseek.png"
   },
   {
     "id": "ai-sdk-fireworks",
@@ -229,7 +229,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-fireworks/1766286358730-ai-sdk-fireworks.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-fireworks/1766534695163-ai-sdk-fireworks.png"
   },
   {
     "id": "ai-sdk-gateway",
@@ -242,7 +242,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-gateway/1766286358420-ai-sdk-gateway.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-gateway/1766534696100-ai-sdk-gateway.png"
   },
   {
     "id": "ai-sdk-google",
@@ -255,7 +255,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google/1766286363435-ai-sdk-google.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google/1766534696378-ai-sdk-google.png"
   },
   {
     "id": "ai-sdk-google-vertex",
@@ -268,7 +268,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google-vertex/1766286362488-ai-sdk-google-vertex.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google-vertex/1766534696193-ai-sdk-google-vertex.png"
   },
   {
     "id": "ai-sdk-groq",
@@ -281,7 +281,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-groq/1766286362801-ai-sdk-groq.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-groq/1766534696022-ai-sdk-groq.png"
   },
   {
     "id": "ai-sdk-langchain",
@@ -294,7 +294,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-langchain/1766286362518-ai-sdk-langchain.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-langchain/1766534700561-ai-sdk-langchain.png"
   },
   {
     "id": "ai-sdk-mistral",
@@ -307,7 +307,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-mistral/1766286363433-ai-sdk-mistral.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-mistral/1766534700988-ai-sdk-mistral.png"
   },
   {
     "id": "ai-sdk-openai",
@@ -320,7 +320,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai/1766286362832-ai-sdk-openai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai/1766534699872-ai-sdk-openai.png"
   },
   {
     "id": "ai-sdk-openai-compatible",
@@ -333,7 +333,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai-compatible/1766286363471-ai-sdk-openai-compatible.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai-compatible/1766534700820-ai-sdk-openai-compatible.png"
   },
   {
     "id": "ai-sdk-perplexity",
@@ -346,7 +346,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-perplexity/1766286362771-ai-sdk-perplexity.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-perplexity/1766534699811-ai-sdk-perplexity.png"
   },
   {
     "id": "ai-sdk-provider",
@@ -359,7 +359,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider/1766286362776-ai-sdk-provider.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider/1766534699472-ai-sdk-provider.png"
   },
   {
     "id": "ai-sdk-provider-utils",
@@ -372,7 +372,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-utils/1766286367263-ai-sdk-provider-utils.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-utils/1766534700156-ai-sdk-provider-utils.png"
   },
   {
     "id": "ai-sdk-react",
@@ -385,7 +385,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-react/1766286366967-ai-sdk-react.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-react/1766534700817-ai-sdk-react.png"
   },
   {
     "id": "ai-sdk-replicate",
@@ -398,7 +398,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-replicate/1766286368136-ai-sdk-replicate.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-replicate/1766534705144-ai-sdk-replicate.png"
   },
   {
     "id": "ai-sdk-rsc",
@@ -411,7 +411,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-rsc/1766286367177-ai-sdk-rsc.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-rsc/1766534704228-ai-sdk-rsc.png"
   },
   {
     "id": "ai-sdk-solid",
@@ -424,7 +424,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-solid/1766286368193-ai-sdk-solid.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-solid/1766534704821-ai-sdk-solid.png"
   },
   {
     "id": "ai-sdk-svelte",
@@ -437,7 +437,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-svelte/1766286368194-ai-sdk-svelte.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-svelte/1766534705557-ai-sdk-svelte.png"
   },
   {
     "id": "ai-sdk-togetherai",
@@ -450,7 +450,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-togetherai/1766286368104-ai-sdk-togetherai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-togetherai/1766534704906-ai-sdk-togetherai.png"
   },
   {
     "id": "ai-sdk-ui-utils",
@@ -463,7 +463,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-ui-utils/1766286367728-ai-sdk-ui-utils.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-ui-utils/1766534705327-ai-sdk-ui-utils.png"
   },
   {
     "id": "ai-sdk-vercel",
@@ -476,7 +476,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vercel/1766286372479-ai-sdk-vercel.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vercel/1766534704565-ai-sdk-vercel.png"
   },
   {
     "id": "ai-sdk-vue",
@@ -489,7 +489,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vue/1766286371359-ai-sdk-vue.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vue/1766534704737-ai-sdk-vue.png"
   },
   {
     "id": "ai-sdk-xai",
@@ -502,7 +502,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-xai/1766286372486-ai-sdk-xai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-xai/1766534704611-ai-sdk-xai.png"
   },
   {
     "id": "aigne-anthropic",
@@ -515,7 +515,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aigne-anthropic/1766286372633-aigne-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aigne-anthropic/1766534710301-aigne-anthropic.png"
   },
   {
     "id": "anthropic-ai-bedrock-sdk",
@@ -528,7 +528,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-bedrock-sdk/1766286371479-anthropic-ai-bedrock-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-bedrock-sdk/1766534708862-anthropic-ai-bedrock-sdk.png"
   },
   {
     "id": "anthropic-ai-claude-agent-sdk",
@@ -541,7 +541,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-agent-sdk/1766286372487-anthropic-ai-claude-agent-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-agent-sdk/1766534710259-anthropic-ai-claude-agent-sdk.png"
   },
   {
     "id": "anthropic-ai-claude-code",
@@ -554,7 +554,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-code/1766286370909-anthropic-ai-claude-code.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-code/1766534708641-anthropic-ai-claude-code.png"
   },
   {
     "id": "anthropic-ai-foundry-sdk",
@@ -567,7 +567,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-foundry-sdk/1766286377095-anthropic-ai-foundry-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-foundry-sdk/1766534709935-anthropic-ai-foundry-sdk.png"
   },
   {
     "id": "anthropic-ai-sandbox-runtime",
@@ -580,7 +580,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sandbox-runtime/1766286376812-anthropic-ai-sandbox-runtime.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sandbox-runtime/1766534710259-anthropic-ai-sandbox-runtime.png"
   },
   {
     "id": "anthropic-ai-sdk",
@@ -593,7 +593,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sdk/1766286376810-anthropic-ai-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sdk/1766534708934-anthropic-ai-sdk.png"
   },
   {
     "id": "anthropic-ai-tokenizer",
@@ -606,7 +606,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-tokenizer/1766286376812-anthropic-ai-tokenizer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-tokenizer/1766534715854-anthropic-ai-tokenizer.png"
   },
   {
     "id": "anthropic-ai-vertex-sdk",
@@ -619,7 +619,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-vertex-sdk/1766286376811-anthropic-ai-vertex-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-vertex-sdk/1766534715700-anthropic-ai-vertex-sdk.png"
   },
   {
     "id": "aps-sdk-model-derivative",
@@ -632,7 +632,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aps-sdk-model-derivative/1766286376878-aps-sdk-model-derivative.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aps-sdk-model-derivative/1766534715849-aps-sdk-model-derivative.png"
   },
   {
     "id": "arizeai-openinference-instrumentation-anthropic",
@@ -645,7 +645,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/arizeai-openinference-instrumentation-anthropic/1766286381154-arizeai-openinference-instrumentation-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/arizeai-openinference-instrumentation-anthropic/1766534715853-arizeai-openinference-instrumentation-anthropic.png"
   },
   {
     "id": "assistant-ui-react-ai-sdk",
@@ -658,7 +658,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/assistant-ui-react-ai-sdk/1766286381440-assistant-ui-react-ai-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/assistant-ui-react-ai-sdk/1766534715751-assistant-ui-react-ai-sdk.png"
   },
   {
     "id": "azure-rest-ai-document-intelligence",
@@ -671,7 +671,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-rest-ai-document-intelligence/1766286380868-azure-rest-ai-document-intelligence.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-rest-ai-document-intelligence/1766534720068-azure-rest-ai-document-intelligence.png"
   },
   {
     "id": "azure-ai-form-recognizer",
@@ -684,7 +684,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-form-recognizer/1766286381558-azure-ai-form-recognizer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-form-recognizer/1766534720642-azure-ai-form-recognizer.png"
   },
   {
     "id": "azure-ai-projects",
@@ -697,7 +697,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-projects/1766286380783-azure-ai-projects.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-projects/1766534720433-azure-ai-projects.png"
   },
   {
     "id": "azure-search-documents",
@@ -710,7 +710,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-search-documents/1766286381050-azure-search-documents.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-search-documents/1766534720475-azure-search-documents.png"
   },
   {
     "id": "browserbasehq-stagehand",
@@ -723,7 +723,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserbasehq-stagehand/1766286380782-browserbasehq-stagehand.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserbasehq-stagehand/1766534720430-browserbasehq-stagehand.png"
   },
   {
     "id": "browserstack-ai-sdk-node",
@@ -736,7 +736,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserstack-ai-sdk-node/1766286383804-browserstack-ai-sdk-node.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserstack-ai-sdk-node/1766534720126-browserstack-ai-sdk-node.png"
   },
   {
     "id": "chatclub1-claude-code",
@@ -749,7 +749,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatclub1-claude-code/1766286383870-chatclub1-claude-code.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatclub1-claude-code/1766534724491-chatclub1-claude-code.png"
   },
   {
     "id": "ckeditor-ckeditor5-ai",
@@ -762,7 +762,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ckeditor-ckeditor5-ai/1766286385938-ckeditor-ckeditor5-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ckeditor-ckeditor5-ai/1766534725816-ckeditor-ckeditor5-ai.png"
   },
   {
     "id": "composio-anthropic",
@@ -775,7 +775,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/composio-anthropic/1766286391373-composio-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/composio-anthropic/1766534735375-composio-anthropic.png"
   },
   {
     "id": "convex-dev-ai-sdk-google",
@@ -788,7 +788,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/convex-dev-ai-sdk-google/1766286391371-convex-dev-ai-sdk-google.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/convex-dev-ai-sdk-google/1766534735358-convex-dev-ai-sdk-google.png"
   },
   {
     "id": "effect-ai",
@@ -801,7 +801,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/effect-ai/1766286394026-effect-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/effect-ai/1766534735129-effect-ai.png"
   },
   {
     "id": "firebase-ai",
@@ -814,7 +814,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-ai/1766286394056-firebase-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-ai/1766534735373-firebase-ai.png"
   },
   {
     "id": "firebase-vertexai",
@@ -827,7 +827,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai/1766286394162-firebase-vertexai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai/1766534735372-firebase-vertexai.png"
   },
   {
     "id": "firebase-vertexai-preview",
@@ -840,7 +840,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai-preview/1766286394074-firebase-vertexai-preview.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai-preview/1766534739821-firebase-vertexai-preview.png"
   },
   {
     "id": "flatfile-anthropic",
@@ -853,7 +853,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/flatfile-anthropic/1766286394458-flatfile-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/flatfile-anthropic/1766534739827-flatfile-anthropic.png"
   },
   {
     "id": "gauravrathod674-super-customizable-chatbot",
@@ -866,7 +866,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gauravrathod674-super-customizable-chatbot/1766286394052-gauravrathod674-super-customizable-chatbot.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gauravrathod674-super-customizable-chatbot/1766534740156-gauravrathod674-super-customizable-chatbot.png"
   },
   {
     "id": "genkit-ai-google-cloud",
@@ -879,7 +879,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-cloud/1766286394556-genkit-ai-google-cloud.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-cloud/1766534740155-genkit-ai-google-cloud.png"
   },
   {
     "id": "genkit-ai-google-genai",
@@ -892,7 +892,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-genai/1766286395062-genkit-ai-google-genai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-genai/1766534739824-genkit-ai-google-genai.png"
   },
   {
     "id": "getzep-zep-cloud",
@@ -905,7 +905,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-cloud/1766286397602-getzep-zep-cloud.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-cloud/1766534740089-getzep-zep-cloud.png"
   },
   {
     "id": "getzep-zep-js",
@@ -918,7 +918,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-js/1766286397639-getzep-zep-js.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-js/1766534739822-getzep-zep-js.png"
   },
   {
     "id": "gooddata-sdk-model",
@@ -931,7 +931,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gooddata-sdk-model/1766286397157-gooddata-sdk-model.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gooddata-sdk-model/1766534745361-gooddata-sdk-model.png"
   },
   {
     "id": "google-cloud-aiplatform",
@@ -944,7 +944,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-aiplatform/1766286397637-google-cloud-aiplatform.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-aiplatform/1766534745184-google-cloud-aiplatform.png"
   },
   {
     "id": "google-cloud-documentai",
@@ -957,7 +957,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-documentai/1766286397350-google-cloud-documentai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-documentai/1766534744637-google-cloud-documentai.png"
   },
   {
     "id": "google-cloud-vertexai",
@@ -970,7 +970,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-vertexai/1766286398772-google-cloud-vertexai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-vertexai/1766534744554-google-cloud-vertexai.png"
   },
   {
     "id": "google-genai",
@@ -983,7 +983,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-genai/1766286398278-google-genai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-genai/1766534743113-google-genai.png"
   },
   {
     "id": "google-generative-ai",
@@ -996,7 +996,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-generative-ai/1766286397369-google-generative-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-generative-ai/1766534744667-google-generative-ai.png"
   },
   {
     "id": "graygate-claude-orchestrator",
@@ -1009,7 +1009,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/graygate-claude-orchestrator/1766286401005-graygate-claude-orchestrator.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/graygate-claude-orchestrator/1766534744672-graygate-claude-orchestrator.png"
   },
   {
     "id": "ibm-generative-ai-node-sdk",
@@ -1022,7 +1022,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ibm-generative-ai-node-sdk/1766286401340-ibm-generative-ai-node-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ibm-generative-ai-node-sdk/1766534744873-ibm-generative-ai-node-sdk.png"
   },
   {
     "id": "inngest-ai",
@@ -1035,7 +1035,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/inngest-ai/1766286400980-inngest-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/inngest-ai/1766534750629-inngest-ai.png"
   },
   {
     "id": "instantlyeasy-claude-code-sdk-ts",
@@ -1048,7 +1048,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/instantlyeasy-claude-code-sdk-ts/1766286400983-instantlyeasy-claude-code-sdk-ts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/instantlyeasy-claude-code-sdk-ts/1766534750625-instantlyeasy-claude-code-sdk-ts.png"
   },
   {
     "id": "kaitranntt-ccs",
@@ -1061,7 +1061,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kaitranntt-ccs/1766286402428-kaitranntt-ccs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kaitranntt-ccs/1766534750658-kaitranntt-ccs.png"
   },
   {
     "id": "kontent-ai-core-sdk",
@@ -1074,7 +1074,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kontent-ai-core-sdk/1766286401391-kontent-ai-core-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kontent-ai-core-sdk/1766534750654-kontent-ai-core-sdk.png"
   },
   {
     "id": "langchain-anthropic-1",
@@ -1087,7 +1087,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic-1/1766286409304-langchain-anthropic-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic-1/1766534750729-langchain-anthropic-1.png"
   },
   {
     "id": "langchain-google-common",
@@ -1100,7 +1100,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-google-common/1766286408654-langchain-google-common.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-google-common/1766534750721-langchain-google-common.png"
   },
   {
     "id": "langchain-langgraph",
@@ -1113,7 +1113,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-langgraph/1766286407477-langchain-langgraph.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-langgraph/1766534755434-langchain-langgraph.png"
   },
   {
     "id": "lenml-tokenizer-claude",
@@ -1126,7 +1126,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lenml-tokenizer-claude/1766286407475-lenml-tokenizer-claude.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lenml-tokenizer-claude/1766534755441-lenml-tokenizer-claude.png"
   },
   {
     "id": "llamaindex-anthropic-1",
@@ -1139,7 +1139,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic-1/1766286407588-llamaindex-anthropic-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic-1/1766534754317-llamaindex-anthropic-1.png"
   },
   {
     "id": "lmnr-ai-claude-code-proxy",
@@ -1152,7 +1152,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lmnr-ai-claude-code-proxy/1766286407573-lmnr-ai-claude-code-proxy.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lmnr-ai-claude-code-proxy/1766534755438-lmnr-ai-claude-code-proxy.png"
   },
   {
     "id": "loopback-model-api-builder",
@@ -1165,7 +1165,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/loopback-model-api-builder/1766286407626-loopback-model-api-builder.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/loopback-model-api-builder/1766534755700-loopback-model-api-builder.png"
   },
   {
     "id": "mariozechner-claude-trace",
@@ -1178,7 +1178,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mariozechner-claude-trace/1766286407841-mariozechner-claude-trace.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mariozechner-claude-trace/1766534754925-mariozechner-claude-trace.png"
   },
   {
     "id": "mastra-core",
@@ -1191,7 +1191,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra-core/1766286407953-mastra-core.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra-core/1766534754373-mastra-core.png"
   },
   {
     "id": "matkirit-claude-trace",
@@ -1204,7 +1204,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/matkirit-claude-trace/1766286411545-matkirit-claude-trace.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/matkirit-claude-trace/1766534755333-matkirit-claude-trace.png"
   },
   {
     "id": "memberjunction-ai-anthropic",
@@ -1217,7 +1217,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memberjunction-ai-anthropic/1766286411477-memberjunction-ai-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memberjunction-ai-anthropic/1766534758132-memberjunction-ai-anthropic.png"
   },
   {
     "id": "metorial-anthropic",
@@ -1230,7 +1230,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/metorial-anthropic/1766286411510-metorial-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/metorial-anthropic/1766534758623-metorial-anthropic.png"
   },
   {
     "id": "microsoft-applicationinsights-web",
@@ -1243,7 +1243,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/microsoft-applicationinsights-web/1766286411856-microsoft-applicationinsights-web.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/microsoft-applicationinsights-web/1766534758278-microsoft-applicationinsights-web.png"
   },
   {
     "id": "modelcontextprotocol-sdk",
@@ -1256,7 +1256,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-sdk/1766286412665-modelcontextprotocol-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-sdk/1766534759872-modelcontextprotocol-sdk.png"
   },
   {
     "id": "modelcontextprotocol-server-memory-1",
@@ -1269,7 +1269,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-server-memory-1/1766286412470-modelcontextprotocol-server-memory-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-server-memory-1/1766534759238-modelcontextprotocol-server-memory-1.png"
   },
   {
     "id": "musistudio-claude-code-router",
@@ -1282,7 +1282,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/musistudio-claude-code-router/1766286411815-musistudio-claude-code-router.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/musistudio-claude-code-router/1766534758598-musistudio-claude-code-router.png"
   },
   {
     "id": "n8n-io-ai-assistant-sdk",
@@ -1295,7 +1295,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-io-ai-assistant-sdk/1766286411495-n8n-io-ai-assistant-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-io-ai-assistant-sdk/1766534758276-n8n-io-ai-assistant-sdk.png"
   },
   {
     "id": "openrouter-ai-sdk-provider",
@@ -1308,7 +1308,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openrouter-ai-sdk-provider/1766286414978-openrouter-ai-sdk-provider.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openrouter-ai-sdk-provider/1766534762164-openrouter-ai-sdk-provider.png"
   },
   {
     "id": "owloops-claude-powerline",
@@ -1321,7 +1321,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/owloops-claude-powerline/1766286415224-owloops-claude-powerline.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/owloops-claude-powerline/1766534762516-owloops-claude-powerline.png"
   },
   {
     "id": "platejs-ai",
@@ -1334,7 +1334,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/platejs-ai/1766286415299-platejs-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/platejs-ai/1766534762601-platejs-ai.png"
   },
   {
     "id": "react-grab-claude-code",
@@ -1347,7 +1347,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-grab-claude-code/1766286418653-react-grab-claude-code.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-grab-claude-code/1766534767860-react-grab-claude-code.png"
   },
   {
     "id": "reservoir0x-relay-protocol-sdk",
@@ -1360,7 +1360,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reservoir0x-relay-protocol-sdk/1766286418651-reservoir0x-relay-protocol-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reservoir0x-relay-protocol-sdk/1766534767855-reservoir0x-relay-protocol-sdk.png"
   },
   {
     "id": "sanity-assist",
@@ -1373,7 +1373,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sanity-assist/1766286422495-sanity-assist.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sanity-assist/1766534767861-sanity-assist.png"
   },
   {
     "id": "sap-ai-sdk-ai-api",
@@ -1386,7 +1386,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-ai-api/1766286422530-sap-ai-sdk-ai-api.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-ai-api/1766534772654-sap-ai-sdk-ai-api.png"
   },
   {
     "id": "sap-ai-sdk-prompt-registry",
@@ -1399,7 +1399,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-prompt-registry/1766286422515-sap-ai-sdk-prompt-registry.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-prompt-registry/1766534772993-sap-ai-sdk-prompt-registry.png"
   },
   {
     "id": "sista-ai-assistant-react",
@@ -1412,7 +1412,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sista-ai-assistant-react/1766286422877-sista-ai-assistant-react.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sista-ai-assistant-react/1766534779151-sista-ai-assistant-react.png"
   },
   {
     "id": "siteboon-claude-code-ui",
@@ -1425,7 +1425,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/siteboon-claude-code-ui/1766286422589-siteboon-claude-code-ui.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/siteboon-claude-code-ui/1766534779039-siteboon-claude-code-ui.png"
   },
   {
     "id": "sssaicode-claude",
@@ -1438,7 +1438,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sssaicode-claude/1766286422568-sssaicode-claude.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sssaicode-claude/1766534779139-sssaicode-claude.png"
   },
   {
     "id": "storybook-manager-api",
@@ -1451,7 +1451,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/storybook-manager-api/1766286428576-storybook-manager-api.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/storybook-manager-api/1766534780505-storybook-manager-api.png"
   },
   {
     "id": "tanstack-ai-anthropic",
@@ -1464,7 +1464,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tanstack-ai-anthropic/1766286427511-tanstack-ai-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tanstack-ai-anthropic/1766534783166-tanstack-ai-anthropic.png"
   },
   {
     "id": "theia-ai-anthropic",
@@ -1477,7 +1477,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-anthropic/1766286427565-theia-ai-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-anthropic/1766534782870-theia-ai-anthropic.png"
   },
   {
     "id": "theia-ai-claude-code",
@@ -1490,7 +1490,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-claude-code/1766286427201-theia-ai-claude-code.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-claude-code/1766534782639-theia-ai-claude-code.png"
   },
   {
     "id": "traceloop-instrumentation-anthropic",
@@ -1503,7 +1503,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/traceloop-instrumentation-anthropic/1766286427513-traceloop-instrumentation-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/traceloop-instrumentation-anthropic/1766534783118-traceloop-instrumentation-anthropic.png"
   },
   {
     "id": "tscircuit-fake-anthropic",
@@ -1516,7 +1516,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tscircuit-fake-anthropic/1766286430911-tscircuit-fake-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tscircuit-fake-anthropic/1766534782874-tscircuit-fake-anthropic.png"
   },
   {
     "id": "wbern-claude-instructions",
@@ -1529,7 +1529,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/wbern-claude-instructions/1766286430860-wbern-claude-instructions.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/wbern-claude-instructions/1766534785818-wbern-claude-instructions.png"
   },
   {
     "id": "zed-industries-claude-code-acp",
@@ -1542,7 +1542,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zed-industries-claude-code-acp/1766286431272-zed-industries-claude-code-acp.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zed-industries-claude-code-acp/1766534785933-zed-industries-claude-code-acp.png"
   },
   {
     "id": "zilliz-claude-context-core",
@@ -1555,7 +1555,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zilliz-claude-context-core/1766286431240-zilliz-claude-context-core.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zilliz-claude-context-core/1766534786452-zilliz-claude-context-core.png"
   },
   {
     "id": "agentapi",
@@ -1576,7 +1576,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentapi/1766286353772-agentapi.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentapi/1766534690915-agentapi.png"
   },
   {
     "id": "ai-elements",
@@ -1589,7 +1589,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-elements/1766286353856-ai-elements.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-elements/1766534691987-ai-elements.png"
   },
   {
     "id": "ai-fallback",
@@ -1602,7 +1602,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fallback/1766286358321-ai-fallback.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fallback/1766534691694-ai-fallback.png"
   },
   {
     "id": "ai-sdk-provider-claude-code",
@@ -1615,7 +1615,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-claude-code/1766286363191-ai-sdk-provider-claude-code.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-claude-code/1766534700518-ai-sdk-provider-claude-code.png"
   },
   {
     "id": "ai-sdk-provider-gemini-cli",
@@ -1628,7 +1628,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-gemini-cli/1766286367515-ai-sdk-provider-gemini-cli.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-gemini-cli/1766534700275-ai-sdk-provider-gemini-cli.png"
   },
   {
     "id": "ai-sdk-v5-anthropic-custom",
@@ -1641,20 +1641,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-v5-anthropic-custom/1766286367354-ai-sdk-v5-anthropic-custom.png"
-  },
-  {
-    "id": "anthropic",
-    "title": "anthropic",
-    "description": "SDK library for anthropic. Provides programmatic access to AI capabilities with type-safe interfaces and helper utilities.",
-    "url": "https://www.npmjs.com/package/anthropic",
-    "category": "sdks",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic/1766286372484-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-v5-anthropic-custom/1766534704742-ai-sdk-v5-anthropic-custom.png"
   },
   {
     "id": "anthropic-1",
@@ -1667,7 +1654,20 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-1/1766286371434-anthropic-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-1/1766534708628-anthropic-1.png"
+  },
+  {
+    "id": "anthropic",
+    "title": "anthropic",
+    "description": "SDK library for anthropic. Provides programmatic access to AI capabilities with type-safe interfaces and helper utilities.",
+    "url": "https://www.npmjs.com/package/anthropic",
+    "category": "sdks",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic/1766534710258-anthropic.png"
   },
   {
     "id": "anthropic-ai",
@@ -1680,7 +1680,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai/1766286372631-anthropic-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai/1766534710261-anthropic-ai.png"
   },
   {
     "id": "anthropic-vertex-ai",
@@ -1693,7 +1693,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-vertex-ai/1766286376880-anthropic-vertex-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-vertex-ai/1766534715695-anthropic-vertex-ai.png"
   },
   {
     "id": "apache-apisix",
@@ -1714,7 +1714,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/apache-apisix/1766286375646-apache-apisix.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/apache-apisix/1766534715015-apache-apisix.png"
   },
   {
     "id": "api-overview-pricing",
@@ -1727,7 +1727,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/api-overview-pricing/1766286375640-api-overview-pricing.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/api-overview-pricing/1766534714767-api-overview-pricing.png"
   },
   {
     "id": "apiparklab-apipark",
@@ -1748,7 +1748,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/apiparklab-apipark/1766286375451-apiparklab-apipark.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/apiparklab-apipark/1766534714244-apiparklab-apipark.png"
   },
   {
     "id": "ask-sdk-model",
@@ -1761,7 +1761,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ask-sdk-model/1766286380840-ask-sdk-model.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ask-sdk-model/1766534715753-ask-sdk-model.png"
   },
   {
     "id": "awesome-sdks-for-ai-agents",
@@ -1782,7 +1782,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-sdks-for-ai-agents/1766286380159-awesome-sdks-for-ai-agents.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-sdks-for-ai-agents/1766534719166-awesome-sdks-for-ai-agents.png"
   },
   {
     "id": "better-claude-code",
@@ -1795,7 +1795,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/better-claude-code/1766286380837-better-claude-code.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/better-claude-code/1766534719091-better-claude-code.png"
   },
   {
     "id": "building-with-the-claude-api",
@@ -1808,7 +1808,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/building-with-the-claude-api/1766286385139-building-with-the-claude-api.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/building-with-the-claude-api/1766534720236-building-with-the-claude-api.png"
   },
   {
     "id": "ccstatusline-1",
@@ -1821,7 +1821,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccstatusline-1/1766286383888-ccstatusline-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccstatusline-1/1766534720434-ccstatusline-1.png"
   },
   {
     "id": "ccusage-1",
@@ -1834,7 +1834,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccusage-1/1766286385447-ccusage-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccusage-1/1766534724792-ccusage-1.png"
   },
   {
     "id": "chatanywhere-gpt-api-free",
@@ -1855,7 +1855,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatanywhere-gpt-api-free/1766286384509-chatanywhere-gpt-api-free.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatanywhere-gpt-api-free/1766534724077-chatanywhere-gpt-api-free.png"
   },
   {
     "id": "cheahjs-free-llm-api-resources",
@@ -1876,7 +1876,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cheahjs-free-llm-api-resources/1766286384284-cheahjs-free-llm-api-resources.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cheahjs-free-llm-api-resources/1766534723899-cheahjs-free-llm-api-resources.png"
   },
   {
     "id": "clasp-ai",
@@ -1889,7 +1889,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/clasp-ai/1766286384248-clasp-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/clasp-ai/1766534725522-clasp-ai.png"
   },
   {
     "id": "claude-1",
@@ -1902,7 +1902,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-1/1766286384321-claude-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-1/1766534723697-claude-1.png"
   },
   {
     "id": "sdk-dotnet",
@@ -1929,7 +1929,7 @@
       "lastUpdated": "2024-12-01",
       "language": "C#"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-dotnet/1766238203548-sdk-dotnet.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-dotnet/1766534775813-sdk-dotnet.png"
   },
   {
     "id": "sdk-go",
@@ -1956,7 +1956,7 @@
       "lastUpdated": "2024-12-08",
       "language": "Go"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-go/1766238204083-sdk-go.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-go/1766534774605-sdk-go.png"
   },
   {
     "id": "sdk-java",
@@ -1983,7 +1983,7 @@
       "lastUpdated": "2024-11-15",
       "language": "Kotlin"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-java/1766238204346-sdk-java.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-java/1766534773004-sdk-java.png"
   },
   {
     "id": "sdk-php",
@@ -2010,7 +2010,7 @@
       "lastUpdated": "2024-11-28",
       "language": "PHP"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-php/1766286423206-sdk-php.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-php/1766534775680-sdk-php.png"
   },
   {
     "id": "sdk-ruby",
@@ -2037,7 +2037,7 @@
       "lastUpdated": "2024-12-05",
       "language": "Ruby"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-ruby/1766238204615-sdk-ruby.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-ruby/1766534775968-sdk-ruby.png"
   },
   {
     "id": "sdk-rust",
@@ -2064,7 +2064,7 @@
       "lastUpdated": "2024-11-20",
       "language": "Rust"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-rust/1766238204816-sdk-rust.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-rust/1766534775908-sdk-rust.png"
   },
   {
     "id": "claude-ai",
@@ -2077,7 +2077,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-ai/1766286388263-claude-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-ai/1766534723808-claude-ai.png"
   },
   {
     "id": "claude-api",
@@ -2090,7 +2090,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-api/1766286388268-claude-api.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-api/1766534723839-claude-api.png"
   },
   {
     "id": "claude-code",
@@ -2103,7 +2103,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code/1766286388265-claude-code.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code/1766534724436-claude-code.png"
   },
   {
     "id": "claude-code-api-rs",
@@ -2124,7 +2124,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-api-rs/1766286388909-claude-code-api-rs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-api-rs/1766534728893-claude-code-api-rs.png"
   },
   {
     "id": "claude-code-plugins",
@@ -2137,7 +2137,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-plugins/1766286388526-claude-code-plugins.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-plugins/1766534730392-claude-code-plugins.png"
   },
   {
     "id": "claude-code-sdk-ts",
@@ -2158,7 +2158,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-ts/1766286389000-claude-code-sdk-ts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-ts/1766534728850-claude-code-sdk-ts.png"
   },
   {
     "id": "claude-evolve",
@@ -2171,7 +2171,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-evolve/1766286388548-claude-evolve.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-evolve/1766534730402-claude-evolve.png"
   },
   {
     "id": "claude-issue-solver",
@@ -2184,7 +2184,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-issue-solver/1766286388200-claude-issue-solver.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-issue-solver/1766534730317-claude-issue-solver.png"
   },
   {
     "id": "claude-mira3",
@@ -2197,7 +2197,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-mira3/1766286388199-claude-mira3.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-mira3/1766534730399-claude-mira3.png"
   },
   {
     "id": "claude-plugins",
@@ -2210,7 +2210,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins/1766286388287-claude-plugins.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins/1766534729971-claude-plugins.png"
   },
   {
     "id": "claude-pretty-printer",
@@ -2223,7 +2223,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-pretty-printer/1766286391370-claude-pretty-printer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-pretty-printer/1766534729787-claude-pretty-printer.png"
   },
   {
     "id": "claude-recall",
@@ -2236,7 +2236,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-recall/1766286391199-claude-recall.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-recall/1766534730322-claude-recall.png"
   },
   {
     "id": "claude-sdk",
@@ -2249,7 +2249,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sdk/1766286391237-claude-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sdk/1766534728793-claude-sdk.png"
   },
   {
     "id": "cohere-ai",
@@ -2262,7 +2262,20 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cohere-ai/1766286391197-cohere-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cohere-ai/1766534735366-cohere-ai.png"
+  },
+  {
+    "id": "copilot-api-1",
+    "title": "copilot-api",
+    "description": "Turn GitHub Copilot into OpenAI/Anthropic API compatible server. Usable with Claude Code!",
+    "url": "https://www.npmjs.com/package/copilot-api",
+    "category": "sdks",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api-1/1766534735369-copilot-api-1.png"
   },
   {
     "id": "copilot-api",
@@ -2283,20 +2296,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api/1766286391853-copilot-api.png"
-  },
-  {
-    "id": "copilot-api-1",
-    "title": "copilot-api",
-    "description": "Turn GitHub Copilot into OpenAI/Anthropic API compatible server. Usable with Claude Code!",
-    "url": "https://www.npmjs.com/package/copilot-api",
-    "category": "sdks",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api-1/1766286391371-copilot-api-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api/1766534735096-copilot-api.png"
   },
   {
     "id": "csharp-sdk",
@@ -2317,7 +2317,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/csharp-sdk/1766286391779-csharp-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/csharp-sdk/1766534734466-csharp-sdk.png"
   },
   {
     "id": "dreame-claude",
@@ -2330,7 +2330,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dreame-claude/1766286391650-dreame-claude.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dreame-claude/1766534735367-dreame-claude.png"
   },
   {
     "id": "genkit",
@@ -2343,7 +2343,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit/1766286394183-genkit.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit/1766534740051-genkit.png"
   },
   {
     "id": "genkitx-anthropic",
@@ -2356,7 +2356,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkitx-anthropic/1766286394204-genkitx-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkitx-anthropic/1766534740400-genkitx-anthropic.png"
   },
   {
     "id": "github-stats-for-claude-hooks-sdk",
@@ -2369,7 +2369,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-hooks-sdk/1766286397439-github-stats-for-claude-hooks-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-hooks-sdk/1766534738668-github-stats-for-claude-hooks-sdk.png"
   },
   {
     "id": "go-sdk",
@@ -2390,7 +2390,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/go-sdk/1766286397676-go-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/go-sdk/1766534743212-go-sdk.png"
   },
   {
     "id": "googleapis-genai-toolbox",
@@ -2411,7 +2411,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/googleapis-genai-toolbox/1766286401813-googleapis-genai-toolbox.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/googleapis-genai-toolbox/1766534744088-googleapis-genai-toolbox.png"
   },
   {
     "id": "java-sdk",
@@ -2432,7 +2432,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/java-sdk/1766286401762-java-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/java-sdk/1766534750488-java-sdk.png"
   },
   {
     "id": "jktfe-servemyapi",
@@ -2453,7 +2453,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jktfe-servemyapi/1766286401484-jktfe-servemyapi.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jktfe-servemyapi/1766534750497-jktfe-servemyapi.png"
   },
   {
     "id": "kotlin-sdk",
@@ -2474,7 +2474,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kotlin-sdk/1766286404781-kotlin-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kotlin-sdk/1766534750305-kotlin-sdk.png"
   },
   {
     "id": "langchain-anthropic",
@@ -2493,7 +2493,7 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Integration",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic/1766238195314-langchain-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic/1766534751605-langchain-anthropic.png"
   },
   {
     "id": "llamaindex-anthropic",
@@ -2512,7 +2512,7 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Integration",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic/1766238195889-llamaindex-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic/1766534754929-llamaindex-anthropic.png"
   },
   {
     "id": "mastra",
@@ -2525,7 +2525,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra/1766286407955-mastra.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra/1766534755849-mastra.png"
   },
   {
     "id": "msw-auto-mock",
@@ -2538,7 +2538,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/msw-auto-mock/1766286411473-msw-auto-mock.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/msw-auto-mock/1766534758180-msw-auto-mock.png"
   },
   {
     "id": "n8n-nodes-azure-anthropic",
@@ -2551,7 +2551,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-nodes-azure-anthropic/1766286411531-n8n-nodes-azure-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-nodes-azure-anthropic/1766534758305-n8n-nodes-azure-anthropic.png"
   },
   {
     "id": "nanoid",
@@ -2564,7 +2564,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nanoid/1766286415937-nanoid.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nanoid/1766534759361-nanoid.png"
   },
   {
     "id": "node-releases",
@@ -2577,7 +2577,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/node-releases/1766286414978-node-releases.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/node-releases/1766534762306-node-releases.png"
   },
   {
     "id": "nori-ai",
@@ -2590,7 +2590,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nori-ai/1766286415203-nori-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nori-ai/1766534762216-nori-ai.png"
   },
   {
     "id": "ollama-ai-provider",
@@ -2603,7 +2603,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider/1766286414812-ollama-ai-provider.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider/1766534762232-ollama-ai-provider.png"
   },
   {
     "id": "ollama-ai-provider-v2",
@@ -2616,7 +2616,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider-v2/1766286415244-ollama-ai-provider-v2.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider-v2/1766534762531-ollama-ai-provider-v2.png"
   },
   {
     "id": "openapi3-ts",
@@ -2629,7 +2629,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openapi3-ts/1766286414975-openapi3-ts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openapi3-ts/1766534762190-openapi3-ts.png"
   },
   {
     "id": "php-sdk",
@@ -2650,7 +2650,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-sdk/1766286415645-php-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-sdk/1766534762970-php-sdk.png"
   },
   {
     "id": "portkey-ai",
@@ -2663,7 +2663,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/portkey-ai/1766286418656-portkey-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/portkey-ai/1766534762346-portkey-ai.png"
   },
   {
     "id": "pyclaude",
@@ -2676,7 +2676,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/pyclaude/1766286418695-pyclaude.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/pyclaude/1766534767864-pyclaude.png"
   },
   {
     "id": "python-sdk",
@@ -2697,7 +2697,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/python-sdk/1766286419908-python-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/python-sdk/1766534769263-python-sdk.png"
   },
   {
     "id": "quantumnous-new-api",
@@ -2718,7 +2718,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quantumnous-new-api/1766286419015-quantumnous-new-api.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quantumnous-new-api/1766534769266-quantumnous-new-api.png"
   },
   {
     "id": "react-scroll",
@@ -2731,7 +2731,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-scroll/1766286418655-react-scroll.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-scroll/1766534769381-react-scroll.png"
   },
   {
     "id": "ruby-sdk",
@@ -2752,7 +2752,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ruby-sdk/1766286419904-ruby-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ruby-sdk/1766534767986-ruby-sdk.png"
   },
   {
     "id": "rust-sdk",
@@ -2773,7 +2773,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rust-sdk/1766286419798-rust-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rust-sdk/1766534768236-rust-sdk.png"
   },
   {
     "id": "s2-streamstore-s2-sdk-typescript",
@@ -2794,7 +2794,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s2-streamstore-s2-sdk-typescript/1766286419909-s2-streamstore-s2-sdk-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s2-streamstore-s2-sdk-typescript/1766534767989-s2-streamstore-s2-sdk-typescript.png"
   },
   {
     "id": "serverless",
@@ -2807,7 +2807,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/serverless/1766286424759-serverless.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/serverless/1766534779158-serverless.png"
   },
   {
     "id": "size-limit",
@@ -2820,7 +2820,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/size-limit/1766286423680-size-limit.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/size-limit/1766534779077-size-limit.png"
   },
   {
     "id": "songquanpeng-one-api",
@@ -2841,7 +2841,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/songquanpeng-one-api/1766286423334-songquanpeng-one-api.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/songquanpeng-one-api/1766534779404-songquanpeng-one-api.png"
   },
   {
     "id": "strands-agents-sdk-python",
@@ -2862,7 +2862,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/strands-agents-sdk-python/1766286428578-strands-agents-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/strands-agents-sdk-python/1766534780138-strands-agents-sdk-python.png"
   },
   {
     "id": "su-kaka-gcli2api",
@@ -2883,7 +2883,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/su-kaka-gcli2api/1766286427959-su-kaka-gcli2api.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/su-kaka-gcli2api/1766534780135-su-kaka-gcli2api.png"
   },
   {
     "id": "swift-sdk",
@@ -2904,7 +2904,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swift-sdk/1766286427765-swift-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swift-sdk/1766534780471-swift-sdk.png"
   },
   {
     "id": "task-master-ai",
@@ -2917,7 +2917,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/task-master-ai/1766286428573-task-master-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/task-master-ai/1766534782663-task-master-ai.png"
   },
   {
     "id": "tdd-guard-1",
@@ -2930,7 +2930,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tdd-guard-1/1766286427072-tdd-guard-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tdd-guard-1/1766534782751-tdd-guard-1.png"
   },
   {
     "id": "typescript-sdk",
@@ -2951,7 +2951,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/typescript-sdk/1766286431471-typescript-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/typescript-sdk/1766534783446-typescript-sdk.png"
   },
   {
     "id": "voyage-ai-provider",
@@ -2964,7 +2964,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/voyage-ai-provider/1766286431273-voyage-ai-provider.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/voyage-ai-provider/1766534783134-voyage-ai-provider.png"
   },
   {
     "id": "xing61-zzz-api",
@@ -2985,7 +2985,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xing61-zzz-api/1766286433547-xing61-zzz-api.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xing61-zzz-api/1766534786315-xing61-zzz-api.png"
   },
   {
     "id": "z-ai-web-dev-sdk",
@@ -2998,7 +2998,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/z-ai-web-dev-sdk/1766286430948-z-ai-web-dev-sdk.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/z-ai-web-dev-sdk/1766534785812-z-ai-web-dev-sdk.png"
   },
   {
     "id": "zod-gpt",
@@ -3011,6 +3011,6 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zod-gpt/1766286430930-zod-gpt.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zod-gpt/1766534786309-zod-gpt.png"
   }
 ]

@@ -18,7 +18,7 @@
     "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766238187295-anthropic-prompt-library.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1766534674915-anthropic-prompt-library.png"
   },
   {
     "id": "awesome-chatgpt-prompts",
@@ -47,7 +47,7 @@
       "lastUpdated": "2024-12-11",
       "language": "Markdown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766238188363-awesome-chatgpt-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1766534674865-awesome-chatgpt-prompts.png"
   },
   {
     "id": "system-prompts-coding",
@@ -76,7 +76,7 @@
       "lastUpdated": "2024-12-11",
       "language": "Python"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766238103278-fabric-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1766534684172-system-prompts-coding.png"
   },
   {
     "id": "promptbook-utils",
@@ -89,7 +89,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promptbook-utils/1766286355015-promptbook-utils.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promptbook-utils/1766534684990-promptbook-utils.png"
   },
   {
     "id": "asgeirtj-system-prompts-leaks",
@@ -110,7 +110,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/asgeirtj-system-prompts-leaks/1766286344522-asgeirtj-system-prompts-leaks.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/asgeirtj-system-prompts-leaks/1766534673021-asgeirtj-system-prompts-leaks.png"
   },
   {
     "id": "chain-of-thought",
@@ -129,7 +129,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Technique",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1766238189264-chain-of-thought.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1766534674830-chain-of-thought.png"
   },
   {
     "id": "claude",
@@ -142,7 +142,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude/1766286350212-claude.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude/1766534674860-claude.png"
   },
   {
     "id": "claude-code-prompt-improver",
@@ -163,7 +163,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-prompt-improver/1766286349451-claude-code-prompt-improver.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-prompt-improver/1766534674866-claude-code-prompt-improver.png"
   },
   {
     "id": "claude-code-system-prompt",
@@ -184,7 +184,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-system-prompt/1766286350115-claude-code-system-prompt.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-system-prompt/1766534674826-claude-code-system-prompt.png"
   },
   {
     "id": "claude-code-templates",
@@ -205,7 +205,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates/1766286350010-claude-code-templates.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates/1766534674827-claude-code-templates.png"
   },
   {
     "id": "claude-code-templates-1",
@@ -218,7 +218,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates-1/1766286350127-claude-code-templates-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates-1/1766534674822-claude-code-templates-1.png"
   },
   {
     "id": "claude-prompts",
@@ -231,7 +231,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-prompts/1766286350124-claude-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-prompts/1766534674819-claude-prompts.png"
   },
   {
     "id": "prompt-code-reviewer",
@@ -250,7 +250,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Role-Based",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1766238199596-prompt-code-reviewer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1766534677526-prompt-code-reviewer.png"
   },
   {
     "id": "few-shot-learning",
@@ -269,7 +269,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Technique",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1766238193108-few-shot-learning.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1766534678742-few-shot-learning.png"
   },
   {
     "id": "friuns2-blackfriday-gpts-prompts",
@@ -290,7 +290,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friuns2-blackfriday-gpts-prompts/1766286350031-friuns2-blackfriday-gpts-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friuns2-blackfriday-gpts-prompts/1766534679521-friuns2-blackfriday-gpts-prompts.png"
   },
   {
     "id": "github-stats-for-claude-code-system-prompts",
@@ -303,7 +303,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-system-prompts/1766286349967-github-stats-for-claude-code-system-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-system-prompts/1766534677793-github-stats-for-claude-code-system-prompts.png"
   },
   {
     "id": "github-stats-for-claude-code-templates",
@@ -316,7 +316,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-templates/1766286350002-github-stats-for-claude-code-templates.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-templates/1766534677792-github-stats-for-claude-code-templates.png"
   },
   {
     "id": "l1xu4n-awesome-chatgpt-prompts-zh-cn",
@@ -337,7 +337,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l1xu4n-awesome-chatgpt-prompts-zh-cn/1766286350129-l1xu4n-awesome-chatgpt-prompts-zh-cn.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l1xu4n-awesome-chatgpt-prompts-zh-cn/1766534678614-l1xu4n-awesome-chatgpt-prompts-zh-cn.png"
   },
   {
     "id": "langgptai-awesome-claude-prompts",
@@ -358,7 +358,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langgptai-awesome-claude-prompts/1766286353700-langgptai-awesome-claude-prompts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langgptai-awesome-claude-prompts/1766534678749-langgptai-awesome-claude-prompts.png"
   },
   {
     "id": "mufeedvh-code2prompt",
@@ -379,7 +379,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mufeedvh-code2prompt/1766286353129-mufeedvh-code2prompt.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mufeedvh-code2prompt/1766534678301-mufeedvh-code2prompt.png"
   },
   {
     "id": "prompts-chat",
@@ -398,7 +398,7 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Directory",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompts-chat/1766238200414-prompts-chat.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompts-chat/1766534683567-prompts-chat.png"
   },
   {
     "id": "prompt-security-expert",
@@ -417,7 +417,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Role-Based",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1766238199888-prompt-security-expert.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1766534677797-prompt-security-expert.png"
   },
   {
     "id": "self-reflection",
@@ -435,7 +435,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Technique",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1766238205029-self-reflection.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1766534683533-self-reflection.png"
   },
   {
     "id": "prompt-senior-developer",
@@ -454,7 +454,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Role-Based",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1766238200040-prompt-senior-developer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1766534677529-prompt-senior-developer.png"
   },
   {
     "id": "structured-outputs",
@@ -473,7 +473,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Technique",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1766238206082-structured-outputs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1766534684214-structured-outputs.png"
   },
   {
     "id": "prompt-technical-writer",
@@ -492,6 +492,6 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Role-Based",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1766238200257-prompt-technical-writer.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1766534683510-prompt-technical-writer.png"
   }
 ]

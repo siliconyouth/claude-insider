@@ -26,7 +26,7 @@
       "lastUpdated": "2024-12-11",
       "language": "Markdown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1766238188662-awesome-cursorrules.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1766534684887-awesome-cursorrules.png"
   },
   {
     "id": "cursor-directory",
@@ -47,7 +47,7 @@
     "difficulty": "advanced",
     "featured": true,
     "featuredReason": "Most Popular",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766238191743-cursor-directory.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766534683529-cursor-directory.png"
   },
   {
     "id": "secretlint-secretlint-rule-anthropic",
@@ -60,7 +60,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1766286353914-secretlint-secretlint-rule-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1766534691993-secretlint-secretlint-rule-anthropic.png"
   },
   {
     "id": "cursor-watchful-headers",
@@ -81,7 +81,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-watchful-headers/1766286353074-cursor-watchful-headers.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-watchful-headers/1766534684948-cursor-watchful-headers.png"
   },
   {
     "id": "rules-documentation",
@@ -100,7 +100,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1766238201757-rules-documentation.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1766534683525-rules-documentation.png"
   },
   {
     "id": "rules-fastapi",
@@ -120,7 +120,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1766238201877-rules-fastapi.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1766534687441-rules-fastapi.png"
   },
   {
     "id": "rules-go",
@@ -139,7 +139,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Language",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1766238202029-rules-go.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1766534687696-rules-go.png"
   },
   {
     "id": "rules-nextjs",
@@ -158,7 +158,7 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1766238202163-rules-nextjs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1766534687900-rules-nextjs.png"
   },
   {
     "id": "rules-python",
@@ -177,7 +177,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Language",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1766238202351-rules-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1766534687618-rules-python.png"
   },
   {
     "id": "rules-react",
@@ -196,7 +196,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Framework",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1766238202509-rules-react.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1766534687718-rules-react.png"
   },
   {
     "id": "rules-rust",
@@ -215,7 +215,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Language",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1766238202636-rules-rust.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1766534687903-rules-rust.png"
   },
   {
     "id": "rules-svelte",
@@ -234,7 +234,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1766238202765-rules-svelte.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1766534687763-rules-svelte.png"
   },
   {
     "id": "rules-tailwind",
@@ -253,7 +253,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Styling",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1766238202897-rules-tailwind.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1766534687612-rules-tailwind.png"
   },
   {
     "id": "rules-testing",
@@ -273,7 +273,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Testing",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1766238203040-rules-testing.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1766534687620-rules-testing.png"
   },
   {
     "id": "rules-typescript",
@@ -291,7 +291,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Language",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1766238203186-rules-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1766534687419-rules-typescript.png"
   },
   {
     "id": "rules-vue",
@@ -310,6 +310,6 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1766238203313-rules-vue.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1766534690456-rules-vue.png"
   }
 ]

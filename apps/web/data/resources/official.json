@@ -26,7 +26,7 @@
       "lastUpdated": "2024-12-10",
       "language": "Python"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1766238185929-anthropic-cookbook.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1766534635550-anthropic-cookbook.png"
   },
   {
     "id": "anthropic-docs",
@@ -47,7 +47,7 @@
     "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766238187044-anthropic-docs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766534636008-anthropic-docs.png"
   },
   {
     "id": "claude-code-docs",
@@ -68,7 +68,7 @@
     "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1766238189665-claude-code-docs.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1766534655875-claude-code-docs.png"
   },
   {
     "id": "claude-code-repo",
@@ -97,7 +97,7 @@
       "lastUpdated": "2024-12-11",
       "language": "TypeScript"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1766238101715-claude-code-github.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1766534655061-claude-code-repo.png"
   },
   {
     "id": "mcp-docs",
@@ -118,20 +118,7 @@
     "difficulty": "beginner",
     "featured": true,
     "featuredReason": "Official Source",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766238196733-mcp-docs.png"
-  },
-  {
-    "id": "announcement",
-    "title": "Announcement",
-    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
-    "url": "https://www.anthropic.com/news/claude-opus-4-5",
-    "category": "official",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement/1766286320655-announcement.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766534668194-mcp-docs.png"
   },
   {
     "id": "announcement-1",
@@ -144,7 +131,20 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-1/1766286327593-announcement-1.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-1/1766534635020-announcement-1.png"
+  },
+  {
+    "id": "announcement",
+    "title": "Announcement",
+    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
+    "url": "https://www.anthropic.com/news/claude-opus-4-5",
+    "category": "official",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-20",
+    "lastVerified": "2025-12-20",
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement/1766534635510-announcement.png"
   },
   {
     "id": "announcement-2",
@@ -157,7 +157,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1766286327610-announcement-2.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1766534635294-announcement-2.png"
   },
   {
     "id": "anthropic-blog",
@@ -176,7 +176,7 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Blog",
     "difficulty": "expert",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-blog/1766238185725-anthropic-blog.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-blog/1766534635435-anthropic-blog.png"
   },
   {
     "id": "anthropic-claude-code-best-practices",
@@ -189,7 +189,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1766286328280-anthropic-claude-code-best-practices.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1766534634870-anthropic-claude-code-best-practices.png"
   },
   {
     "id": "anthropic-sdk-python",
@@ -216,7 +216,7 @@
       "lastUpdated": "2024-12-10",
       "language": "Python"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-python/1766238187543-anthropic-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-python/1766534641847-anthropic-sdk-python.png"
   },
   {
     "id": "anthropic-sdk-typescript",
@@ -244,7 +244,7 @@
       "lastUpdated": "2024-12-10",
       "language": "TypeScript"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-typescript/1766238187852-anthropic-sdk-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-typescript/1766534643166-anthropic-sdk-typescript.png"
   },
   {
     "id": "anthropic-bedrock-python",
@@ -265,7 +265,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-python/1766286327696-anthropic-bedrock-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-python/1766534635512-anthropic-bedrock-python.png"
   },
   {
     "id": "anthropic-bedrock-typescript",
@@ -286,7 +286,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-typescript/1766286327657-anthropic-bedrock-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-typescript/1766534635052-anthropic-bedrock-typescript.png"
   },
   {
     "id": "anthropic-sdk-csharp",
@@ -307,7 +307,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-csharp/1766286327748-anthropic-sdk-csharp.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-csharp/1766534643280-anthropic-sdk-csharp.png"
   },
   {
     "id": "anthropic-sdk-go",
@@ -328,7 +328,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-go/1766286327747-anthropic-sdk-go.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-go/1766534643283-anthropic-sdk-go.png"
   },
   {
     "id": "anthropic-sdk-java",
@@ -349,7 +349,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-java/1766286328955-anthropic-sdk-java.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-java/1766534643185-anthropic-sdk-java.png"
   },
   {
     "id": "anthropic-sdk-php",
@@ -370,7 +370,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-php/1766286327700-anthropic-sdk-php.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-php/1766534643186-anthropic-sdk-php.png"
   },
   {
     "id": "anthropic-sdk-ruby",
@@ -391,7 +391,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-ruby/1766286334176-anthropic-sdk-ruby.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-ruby/1766534642813-anthropic-sdk-ruby.png"
   },
   {
     "id": "anthropic-tokenizer-typescript",
@@ -412,7 +412,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-tokenizer-typescript/1766286334172-anthropic-tokenizer-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-tokenizer-typescript/1766534643169-anthropic-tokenizer-typescript.png"
   },
   {
     "id": "anthropic-s-article",
@@ -425,7 +425,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1766286327590-anthropic-s-article.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1766534639885-anthropic-s-article.png"
   },
   {
     "id": "blobfile",
@@ -446,7 +446,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blobfile/1766286334914-blobfile.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blobfile/1766534643213-blobfile.png"
   },
   {
     "id": "claude-agent-sdk-python",
@@ -467,7 +467,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-python/1766286334915-claude-agent-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-python/1766534655866-claude-agent-sdk-python.png"
   },
   {
     "id": "claude-agent-sdk-typescript",
@@ -488,7 +488,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-typescript/1766286334271-claude-agent-sdk-typescript.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-typescript/1766534655856-claude-agent-sdk-typescript.png"
   },
   {
     "id": "claude-agent-skills",
@@ -501,7 +501,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1766286335823-claude-agent-skills.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1766534656528-claude-agent-skills.png"
   },
   {
     "id": "claude-code-with-plugins",
@@ -514,7 +514,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1766286340156-claude-code-with-plugins.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1766534662759-claude-code-with-plugins.png"
   },
   {
     "id": "claude-console",
@@ -532,7 +532,8 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2024-12-11",
     "subcategory": "Tool",
-    "difficulty": "beginner"
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-console/1766535653853-claude-console.png"
   },
   {
     "id": "claude-cookbook",
@@ -553,7 +554,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-cookbook/1766286340069-claude-cookbook.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-cookbook/1766534662189-claude-cookbook.png"
   },
   {
     "id": "claude-haiku-4-5-system-card",
@@ -565,7 +566,8 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
-    "difficulty": "beginner"
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-haiku-4-5-system-card/1766535454878-claude-haiku-4-5-system-card.png"
   },
   {
     "id": "claude-opus-4-5-system-card",
@@ -577,7 +579,8 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
-    "difficulty": "beginner"
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-opus-4-5-system-card/1766535454561-claude-opus-4-5-system-card.png"
   },
   {
     "id": "claude-quickstarts",
@@ -598,7 +601,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-quickstarts/1766286339987-claude-quickstarts.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-quickstarts/1766534662188-claude-quickstarts.png"
   },
   {
     "id": "claude-sonnet-4-5-system-card",
@@ -610,7 +613,8 @@
     "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
-    "difficulty": "beginner"
+    "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sonnet-4-5-system-card/1766535454602-claude-sonnet-4-5-system-card.png"
   },
   {
     "id": "claude-agent-sdk-demos",
@@ -631,7 +635,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-demos/1766286333687-claude-agent-sdk-demos.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-demos/1766534655049-claude-agent-sdk-demos.png"
   },
   {
     "id": "claude-code-action",
@@ -652,7 +656,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-action/1766286334714-claude-code-action.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-action/1766534655655-claude-code-action.png"
   },
   {
     "id": "claude-code-base-action",
@@ -673,7 +677,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-base-action/1766286334712-claude-code-base-action.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-base-action/1766534655129-claude-code-base-action.png"
   },
   {
     "id": "claude-code-monitoring-guide",
@@ -694,7 +698,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-monitoring-guide/1766286334913-claude-code-monitoring-guide.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-monitoring-guide/1766534655850-claude-code-monitoring-guide.png"
   },
   {
     "id": "claude-code-sdk-python",
@@ -715,7 +719,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-python/1766286338517-claude-code-sdk-python.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-python/1766534655861-claude-code-sdk-python.png"
   },
   {
     "id": "claude-code-security-review",
@@ -736,7 +740,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-security-review/1766286339991-claude-code-security-review.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-security-review/1766534661916-claude-code-security-review.png"
   },
   {
     "id": "claude-plugins-official",
@@ -757,7 +761,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins-official/1766286338568-claude-plugins-official.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins-official/1766534661518-claude-plugins-official.png"
   },
   {
     "id": "devcontainer-features",
@@ -778,7 +782,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devcontainer-features/1766286340067-devcontainer-features.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devcontainer-features/1766534661743-devcontainer-features.png"
   },
   {
     "id": "evals",
@@ -799,7 +803,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/evals/1766286345502-evals.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/evals/1766534662199-evals.png"
   },
   {
     "id": "life-sciences",
@@ -820,7 +824,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/life-sciences/1766286345576-life-sciences.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/life-sciences/1766534668254-life-sciences.png"
   },
   {
     "id": "political-neutrality-eval",
@@ -841,7 +845,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/political-neutrality-eval/1766286345578-political-neutrality-eval.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/political-neutrality-eval/1766534669527-political-neutrality-eval.png"
   },
   {
     "id": "prompt-engineering-guide",
@@ -860,7 +864,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1766238199737-prompt-engineering-guide.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1766534669632-prompt-engineering-guide.png"
   },
   {
     "id": "prompt-eng-interactive-tutorial",
@@ -881,7 +885,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-eng-interactive-tutorial/1766286344751-prompt-eng-interactive-tutorial.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-eng-interactive-tutorial/1766534668938-prompt-eng-interactive-tutorial.png"
   },
   {
     "id": "redis-py",
@@ -902,7 +906,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/redis-py/1766286346076-redis-py.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/redis-py/1766534669530-redis-py.png"
   },
   {
     "id": "riv2025-long-horizon-coding-agent-demo",
@@ -923,7 +927,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/riv2025-long-horizon-coding-agent-demo/1766286346066-riv2025-long-horizon-coding-agent-demo.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/riv2025-long-horizon-coding-agent-demo/1766534669566-riv2025-long-horizon-coding-agent-demo.png"
   },
   {
     "id": "s5cmd",
@@ -944,7 +948,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s5cmd/1766286346071-s5cmd.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s5cmd/1766534669544-s5cmd.png"
   },
   {
     "id": "skills",
@@ -965,7 +969,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/skills/1766286345961-skills.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/skills/1766534668196-skills.png"
   },
   {
     "id": "transparency-hub",
@@ -978,6 +982,6 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1766286344664-transparency-hub.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1766534669604-transparency-hub.png"
   }
 ]

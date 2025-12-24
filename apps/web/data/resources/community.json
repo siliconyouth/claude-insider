@@ -18,7 +18,7 @@
     "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Official Community",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-discord/1766238186550-anthropic-discord.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-discord/1766532490164-anthropic-discord.png"
   },
   {
     "id": "reddit-claudeai",
@@ -39,7 +39,7 @@
     "difficulty": "intermediate",
     "featured": true,
     "featuredReason": "Active Community",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reddit-claudeai/1766238201454-reddit-claudeai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reddit-claudeai/1766532489947-reddit-claudeai.png"
   },
   {
     "id": "ai-explained",
@@ -58,7 +58,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Video",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-explained/1766238184544-ai-explained.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-explained/1766532480913-ai-explained.png"
   },
   {
     "id": "linkedin-anthropic",
@@ -77,7 +77,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Social Media",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/linkedin-anthropic/1766285638957-linkedin-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/linkedin-anthropic/1766532489787-linkedin-anthropic.png"
   },
   {
     "id": "twitter-anthropic",
@@ -95,7 +95,8 @@
     "addedDate": "2024-01-01",
     "lastVerified": "2025-12-20",
     "subcategory": "Social Media",
-    "difficulty": "intermediate"
+    "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/twitter-anthropic/1766535654662-twitter-anthropic.png"
   },
   {
     "id": "youtube-anthropic",
@@ -114,7 +115,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Video",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/youtube-anthropic/1766238208154-youtube-anthropic.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/youtube-anthropic/1766532490158-youtube-anthropic.png"
   },
   {
     "id": "github-discussions",
@@ -133,7 +134,7 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Forum",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-discussions/1766238194148-github-discussions.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-discussions/1766532489599-github-discussions.png"
   },
   {
     "id": "cursor-directory-community",
@@ -152,7 +153,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Directory",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory-community/1766238191572-cursor-directory-community.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory-community/1766532488498-cursor-directory-community.png"
   },
   {
     "id": "hacker-news",
@@ -171,7 +172,7 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Forum",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/hacker-news/1766238194329-hacker-news.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/hacker-news/1766532489605-hacker-news.png"
   },
   {
     "id": "stack-overflow",
@@ -190,7 +191,7 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Q&A",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stack-overflow/1766285640044-stack-overflow.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stack-overflow/1766532489880-stack-overflow.png"
   },
   {
     "id": "ai-news-newsletter",
@@ -209,7 +210,7 @@
     "lastVerified": "2025-12-20",
     "subcategory": "Newsletter",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-news-newsletter/1766238184980-ai-news-newsletter.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-news-newsletter/1766532489875-ai-news-newsletter.png"
   },
   {
     "id": "tldr-ai",
@@ -228,6 +229,6 @@
     "lastVerified": "2024-12-11",
     "subcategory": "Newsletter",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tldr-ai/1766238206546-tldr-ai.png"
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tldr-ai/1766532489895-tldr-ai.png"
   }
 ]
