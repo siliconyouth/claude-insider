@@ -14,7 +14,7 @@
     "next": "^16.1.1",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "turbo": "^2.7.1"
+    "turbo": "^2.7.2"
   },
   "packageManager": "pnpm@10.19.0",
   "engines": {
@@ -24,7 +24,7 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.89.0",
     "@types/pg": "^8.16.0",
-    "better-auth": "^1.4.7",
+    "better-auth": "^1.4.9",
     "pg": "^8.16.3"
   }
 }
