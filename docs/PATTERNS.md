@@ -7,7 +7,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 ## Table of Contents
 
 1. [UX Patterns](#ux-patterns)
-2. [Performance Patterns](#performance-patterns)
+2. [Performance Patterns](#performance-patterns) - includes Build Cache Patterns (MANDATORY)
 3. [Sound Patterns](#sound-patterns)
 4. [TTS Patterns](#tts-patterns)
 5. [Component Patterns](#component-patterns)
@@ -272,6 +272,39 @@ export function LazyCategoriesSection() {
   <SearchIcon /> <span>Search</span>
 </button>
 ```
+
+### Build Cache Patterns (MANDATORY - v1.12.6)
+
+**CRITICAL**: Vercel builds use Turborepo Remote Cache. Improper patterns can invalidate the cache and cause 5+ minute builds on every deploy.
+
+```typescript
+// ❌ WRONG - Modifying a component file during prebuild invalidates cache
+// scripts/update-build-info.cjs
+fs.writeFileSync("components/footer.tsx", modifiedContent);
+// Result: Every build is a cache miss (5+ minutes)
+
+// ✅ CORRECT - Write to output file, components import from it
+// scripts/update-build-info.cjs
+fs.writeFileSync("data/build-info.json", JSON.stringify(buildInfo));
+
+// components/footer.tsx
+import buildInfo from "@/data/build-info.json";
+const APP_VERSION = buildInfo.version;
+// Result: Cache hits when code unchanged (~30 seconds)
+```
+
+**Key Rules:**
+1. **Never modify turbo inputs during prebuild** - `components/**`, `lib/**`, `hooks/**` are inputs
+2. **Write generated data to outputs** - `data/*.json` is in outputs, not inputs
+3. **Version from build-info.json** - All files needing version MUST import from `@/data/build-info.json`
+
+**Input/Output Separation:**
+
+| Location | Type | Impact |
+|----------|------|--------|
+| `components/**` | INPUT | Changes invalidate cache |
+| `data/build-info.json` | OUTPUT | Changes don't invalidate cache |
+| `public/images/**` | EXCLUDED | Not in inputs (large files) |
 
 ---
 

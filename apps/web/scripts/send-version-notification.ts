@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.12.5 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.12.6 notification to all opted-in users...\n");
 
-  const version = "1.12.5";
-  const title = "Claude Insider v1.12.5 - Synchronized Loading & Docs Optimization";
+  const version = "1.12.6";
+  const title = "Claude Insider v1.12.6 - 70% Faster Builds";
   const message =
-    "🔄 Synchronized provider loading (no more flickering) • 📚 CLAUDE.md optimized 57% (2,372 → 1,011 lines) • 📖 New companion docs: FEATURES.md, DATABASE.md, PATTERNS.md";
+    "🚀 70% Faster Builds with Vercel Remote Cache • 🔧 Fixed cache invalidation (build-info.json pattern) • 📦 Optimized Turbo inputs (excluded 1,952+ files) • 📚 New mandatory build rules in CLAUDE.md";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

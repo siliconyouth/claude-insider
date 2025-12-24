@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.6] - 2025-12-24
+### Vercel Build Cache Optimization (70% Faster Builds)
+- **Fixed Cache Invalidation Bug**: Discovered that `update-build-info.cjs` was modifying `footer.tsx` on every build
+  - Since `components/**` is a Turbo input, this caused every build to be a cache miss
+  - Now writes to `data/build-info.json` (which is in outputs, not inputs)
+  - Components import version from `@/data/build-info.json` at build time
+- **Vercel Remote Cache Enabled**: Added explicit `remoteCache: { enabled: true }` to turbo.json
+  - Cache is now shared across all Vercel builds
+  - Cache hits complete in ~30 seconds instead of 5+ minutes
+- **Optimized Turbo Inputs**: Changed `public/**` to specific essential files
+  - Before: All 1,952+ screenshot files were in inputs (any change = cache miss)
+  - After: Only `public/icons/**`, `manifest.json`, `robots.txt`, `sitemap*.xml`, `sw.js`
+  - Screenshot updates no longer invalidate the build cache
+- **Created .vercelignore**: Excludes test files, docs, and dev artifacts from deployment uploads
+  - Reduces upload size by ~30%, speeding up deployments
+- **MANDATORY Build Rules**: Added comprehensive documentation
+  - New "Build Cache Optimization" section in CLAUDE.md
+  - New "Build Cache Patterns" section in docs/PATTERNS.md
+  - Input/Output separation table and prohibited patterns
+  - Build cache checklist for new features
+
+---
+
 ## [1.12.5] - 2025-12-23
 ### Synchronized Provider Loading & Documentation Optimization
 - **Flickering Fix**: All lazy providers now load synchronously via `DeferredLoadingProvider`

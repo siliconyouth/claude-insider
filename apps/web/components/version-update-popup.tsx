@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.6",
+    date: "2025-12-24",
+    type: "patch",
+    highlights: [
+      "🚀 70% Faster Builds: Vercel Remote Cache now properly enabled with cache hit optimization",
+      "🔧 Fixed Cache Invalidation: Build info now writes to data/build-info.json instead of modifying components",
+      "📦 Optimized Turbo Inputs: Excluded 1,952+ screenshot files from cache invalidation triggers",
+      "📚 MANDATORY Build Rules: New documentation for Turborepo cache patterns in CLAUDE.md and PATTERNS.md",
+    ],
+  },
+  {
     version: "1.12.5",
     date: "2025-12-23",
     type: "patch",

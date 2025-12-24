@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-23 for v1.12.5 (Synchronized provider loading, CLAUDE.md optimization, no flickering)
+ * Updated: 2025-12-24 for v1.12.6 (Build cache optimization, Vercel Remote Cache, faster builds)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.12.5",
+  version: "1.12.6",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
