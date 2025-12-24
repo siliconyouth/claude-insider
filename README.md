@@ -9,9 +9,9 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.12.7-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.12.8-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
-[![Features](https://img.shields.io/badge/50-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Features](https://img.shields.io/badge/52-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/1,952+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
@@ -58,7 +58,7 @@ Comprehensive guides across **7 categories**: Getting Started, Configuration, AP
 <td width="50%">
 
 ### 1,952+ Curated Resources
-Tools, MCP servers, SDKs, and community resources across **10 categories** with GitHub integration and AI-enhanced metadata.
+Tools, MCP servers, SDKs, and community resources across **10 categories** with GitHub integration, **21 enhanced fields**, insights dashboard, and advanced filtering by audience/use case.
 
 ### Enterprise Security
 **End-to-end encryption** (Matrix Olm/Megolm), passkeys/WebAuthn, multi-device 2FA, honeypot bot detection, and trust scoring.

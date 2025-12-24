@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.8",
+    date: "2025-12-24",
+    type: "minor",
+    highlights: [
+      "📊 Resource Insights Dashboard: Interactive charts for audience, difficulty, and coverage visualization",
+      "🔍 Enhanced Resource Filtering: 21 fields with URL sync, audience/use case multi-select",
+      "🏠 Homepage Browse by Audience: Quick navigation grid with pre-filtered resource links",
+      "🔒 MANDATORY Resource Rules: New Resources System section in CLAUDE.md with patterns",
+    ],
+  },
+  {
     version: "1.12.7",
     date: "2025-12-24",
     type: "patch",

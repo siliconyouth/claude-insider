@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.7**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.8**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.7**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 49 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 51 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -43,13 +43,14 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.7**.
 11. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
 12. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
 13. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
-14. [Internationalization](#internationalization-i18n) - 18 languages
-15. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-16. [Content Structure](#content-structure) - Documentation, resources, legal pages
-17. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-18. [Success Metrics](#success-metrics)
-19. [Updating Guidelines](#updating-guidelines)
-20. [License](#license)
+14. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
+15. [Internationalization](#internationalization-i18n) - 18 languages
+16. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+17. [Content Structure](#content-structure) - Documentation, resources, legal pages
+18. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+19. [Success Metrics](#success-metrics)
+20. [Updating Guidelines](#updating-guidelines)
+21. [License](#license)
 
 ---
 
@@ -898,6 +899,140 @@ The "Ci" text height is exactly **58.6% of the container** (300/512 in source SV
 
 ---
 
+## Resources System (MANDATORY)
+
+**1,952 resources** across 10 categories with **21 enhanced fields** (Migration 088). Database is source of truth.
+
+### Enhanced Fields (MANDATORY - v1.12.8)
+
+All resources MUST display enhanced fields when available. This includes:
+
+| Field | Type | Display Location | Mandatory |
+|-------|------|------------------|-----------|
+| `keyFeatures` | `string[]` | Resource card badge, detail page | Yes |
+| `targetAudience` | `string[]` | Insights dashboard, card badge, filters | Yes |
+| `useCases` | `string[]` | Insights dashboard, filters | Yes |
+| `pros` | `string[]` | Detail page, coverage chart | Yes |
+| `cons` | `string[]` | Detail page, coverage chart | Yes |
+| `prerequisites` | `string[]` | Detail page, coverage chart | Yes |
+| `aiOverview` | `string` | AI badge indicator | When present |
+| `aiSummary` | `string` | Meta description fallback | When present |
+
+### Resource Insights Dashboard (MANDATORY)
+
+The `/resources` page MUST display the `ResourceInsights` component with:
+
+| Chart | Purpose | Props |
+|-------|---------|-------|
+| Category Distribution | Donut chart, clickable | `categories`, `onCategoryClick` |
+| Difficulty Breakdown | Horizontal bar, clickable | `difficultyStats`, `onDifficultyClick` |
+| Status Distribution | Donut chart | `statusStats` |
+| Target Audience | Interactive bars | `audienceStats`, `onAudienceClick`, `showEnhancedInsights=true` |
+| Coverage Chart | Progress bars | `enhancedCoverage`, `showEnhancedInsights=true` |
+
+```tsx
+// ✅ CORRECT: Full enhanced props passed
+<ResourceInsights
+  categories={categories}
+  difficultyStats={difficultyStats}
+  statusStats={statusStats}
+  totalResources={stats.totalResources}
+  audienceStats={targetAudienceStats}
+  useCasesStats={useCasesStats}
+  enhancedCoverage={enhancedCoverage}
+  onAudienceClick={toggleAudience}
+  selectedAudiences={filters.targetAudience}
+  showEnhancedInsights={true}
+/>
+
+// ❌ WRONG: Missing enhanced field props
+<ResourceInsights
+  categories={categories}
+  difficultyStats={difficultyStats}
+  statusStats={statusStats}
+/>
+```
+
+### Resource Card Badges (MANDATORY)
+
+Resource cards MUST show enhanced field badges:
+
+```tsx
+// ✅ CORRECT: Shows features count, audience, AI badge
+{resource.keyFeatures && resource.keyFeatures.length > 0 && (
+  <span className="...text-[10px]...">{resource.keyFeatures.length} features</span>
+)}
+{resource.targetAudience?.[0] && (
+  <span className="...">For {resource.targetAudience[0]}</span>
+)}
+{resource.aiOverview && (
+  <span className="...">✨ AI</span>
+)}
+```
+
+### Filter URL Parameters (MANDATORY)
+
+The resources page MUST sync filters to URL parameters:
+
+| Parameter | Example | Logic |
+|-----------|---------|-------|
+| `audience` | `?audience=Developers,Beginners` | Comma-separated, OR logic |
+| `usecase` | `?usecase=API%20Integration` | URL-encoded |
+| `minFeatures` | `?minFeatures=3` | Minimum count filter |
+| `hasPros` | `?hasPros=true` | Boolean toggle |
+| `hasCons` | `?hasCons=true` | Boolean toggle |
+
+### Homepage Resources Section (MANDATORY)
+
+The homepage MUST include:
+
+1. **QuickStats** with "% with Key Features" stat
+2. **BrowseByAudience** grid with top 6 audiences
+3. Links to pre-filtered `/resources?audience=X` views
+
+### Aggregation Functions
+
+| Function | Location | Returns |
+|----------|----------|---------|
+| `getTargetAudienceStats()` | `data/resources/index.ts` | `{ audience, count }[]` |
+| `getUseCasesStats()` | `data/resources/index.ts` | `{ useCase, count }[]` |
+| `getEnhancedFieldsCoverage()` | `data/resources/index.ts` | Coverage object |
+| `getFeatureCountStats()` | `data/resources/index.ts` | Feature range counts |
+
+### SEO Requirements (MANDATORY)
+
+The `/resources` layout MUST include:
+
+```tsx
+// resources/layout.tsx
+export const metadata: Metadata = {
+  title: 'Claude AI Resources - Tools, MCP Servers, SDKs & Tutorials',
+  description: `Discover ${stats.totalResources} curated Claude AI resources...`,
+  // ... openGraph, twitter, canonical
+};
+
+// JSON-LD structured data
+const jsonLd = {
+  '@type': 'CollectionPage',
+  mainEntity: { '@type': 'ItemList', ... },
+};
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `data/resources/index.ts` | Aggregation functions, exports |
+| `data/resources/schema.ts` | ResourceEntry type, enhanced fields |
+| `lib/resources/search.ts` | Fuse.js search with enhanced filters |
+| `components/resources/resource-insights.tsx` | Insights dashboard |
+| `components/resources/resource-card.tsx` | Card with badges |
+| `components/home/resources-section.tsx` | Homepage section |
+| `app/(main)/resources/layout.tsx` | SEO metadata, JSON-LD |
+| `app/(main)/resources/page.tsx` | Main page with filters |
+
+---
+
 ## Internationalization (i18n)
 
 **18 Supported Languages**:
@@ -949,13 +1084,11 @@ Matrix Olm/Megolm with Double Ratchet. Private keys never leave device.
 |------|-----------|
 | Bronze/Silver/Gold/Platinum | $10+ / $50+ / $100+ / $500+ |
 
-### Resources Section (`lib/resources/`, `data/resources/`)
+### Resources Section
 
-1,952 resources across 10 categories. **Database is source of truth**, JSON files are build-time exports.
+**See [Resources System (MANDATORY)](#resources-system-mandatory) for complete documentation.**
 
-**Key Scripts**:
-- `scripts/generate-screenshots-db.ts` - Mass screenshot generation
-- `scripts/sync-resources-to-json.ts` - Export DB to JSON
+1,952 resources, 21 enhanced fields, insights dashboard, advanced filtering.
 
 **Auto-Update System**: AI-powered via Claude Opus 4.5, cron weekly Sunday 3 AM UTC, admin approval required.
 

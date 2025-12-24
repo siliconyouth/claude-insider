@@ -1,6 +1,6 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **50 implemented features** with detailed capabilities.
+Complete list of all **52 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
@@ -60,16 +60,19 @@ Complete list of all **50 implemented features** with detailed capabilities.
 | FR-48 | Doc Versioning | Version history, LCS line-by-line diff, unified/split view, rollback (admin only), 50 versions per doc |
 | FR-49 | Prompt Library | 10 system prompts, 8 categories, save/rate/use tracking, variable syntax `{{placeholder}}`, visibility controls |
 | FR-50 | Logo Component System | `GradientLogo`/`MonochromeLogo` SVG components, 58.6% scaling formula, OG image support, design system enforcement |
+| FR-51 | Resource Insights Dashboard | Interactive charts (category donut, difficulty bars, audience distribution, coverage visualization), click-to-filter, enhanced field display |
+| FR-52 | Resource Enhanced Fields | 21 enhanced fields (keyFeatures, targetAudience, useCases, pros, cons, prerequisites), URL parameter sync, homepage audience grid |
 
 ---
 
 ## Feature Categories
 
-### Content & Documentation (FR-1 to FR-6)
+### Content & Documentation (FR-1 to FR-6, FR-51, FR-52)
 - MDX documentation with 34 pages
-- 1,952 curated resources
-- Advanced search with fuzzy matching
+- 1,952 curated resources with 21 enhanced fields
+- Advanced search with fuzzy matching and URL parameter sync
 - AI Voice Assistant with RAG
+- Resource insights dashboard with interactive charts
 
 ### User Authentication & Security (FR-7, FR-10, FR-18, FR-19, FR-27, FR-28, FR-45)
 - OAuth (GitHub, Google) + email/password

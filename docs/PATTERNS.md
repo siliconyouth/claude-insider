@@ -13,6 +13,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 5. [Component Patterns](#component-patterns)
 6. [Navigation Patterns](#navigation-patterns)
 7. [Realtime Patterns](#realtime-patterns)
+8. [Resource Patterns](#resource-patterns) - Enhanced fields, insights dashboard, filters (MANDATORY)
 
 ---
 
@@ -729,4 +730,217 @@ function MyPage() {
   generatedDate="YYYY-MM-DD"
   model="Claude Opus 4.5"
 />
+```
+
+---
+
+## Resource Patterns
+
+### Resource Insights Dashboard (MANDATORY)
+
+```tsx
+// ✅ CORRECT: Full enhanced props with showEnhancedInsights enabled
+import { ResourceInsights } from '@/components/resources/resource-insights';
+import {
+  getTargetAudienceStats,
+  getUseCasesStats,
+  getEnhancedFieldsCoverage,
+} from '@/data/resources';
+
+// In component
+const targetAudienceStats = useMemo(() => getTargetAudienceStats(), []);
+const useCasesStats = useMemo(() => getUseCasesStats(), []);
+const enhancedCoverage = useMemo(() => getEnhancedFieldsCoverage(), []);
+
+<ResourceInsights
+  categories={categories}
+  difficultyStats={difficultyStats}
+  statusStats={statusStats}
+  totalResources={stats.totalResources}
+  // MANDATORY: Enhanced field props
+  audienceStats={targetAudienceStats}
+  useCasesStats={useCasesStats}
+  enhancedCoverage={enhancedCoverage}
+  onAudienceClick={toggleAudience}
+  onUseCaseClick={toggleUseCase}
+  selectedAudiences={filters.targetAudience}
+  selectedUseCases={filters.useCases}
+  showEnhancedInsights={true}  // Must be true!
+/>
+```
+
+### Resource Card Enhanced Badges
+
+```tsx
+// ✅ CORRECT: Show all enhanced field badges when available
+<div className="mt-2 flex flex-wrap items-center gap-1.5">
+  {/* Features count badge */}
+  {resource.keyFeatures && resource.keyFeatures.length > 0 && (
+    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+      <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+        <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+      </svg>
+      {resource.keyFeatures.length} features
+    </span>
+  )}
+
+  {/* Target audience badge */}
+  {resource.targetAudience && resource.targetAudience.length > 0 && (
+    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400">
+      For {resource.targetAudience[0]}
+    </span>
+  )}
+
+  {/* AI enhanced badge */}
+  {resource.aiOverview && (
+    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium rounded bg-gradient-to-r from-violet-500/10 to-cyan-500/10 text-violet-600 dark:text-violet-400">
+      ✨ AI
+    </span>
+  )}
+</div>
+```
+
+### Resource Filter URL Sync
+
+```tsx
+// ✅ CORRECT: Sync all filter state to URL parameters
+import { useRouter, useSearchParams } from 'next/navigation';
+
+const router = useRouter();
+const searchParams = useSearchParams();
+
+// Read from URL on mount
+const initialFilters: FilterState = {
+  targetAudience: searchParams.get('audience')?.split(',').filter(Boolean) || [],
+  useCases: searchParams.get('usecase')?.split(',').filter(Boolean) || [],
+  minKeyFeatures: searchParams.get('minFeatures') ? parseInt(searchParams.get('minFeatures')!) : null,
+  hasPros: searchParams.get('hasPros') === 'true' ? true : null,
+  hasCons: searchParams.get('hasCons') === 'true' ? true : null,
+};
+
+// Sync to URL on filter change
+useEffect(() => {
+  const params = new URLSearchParams();
+
+  if (filters.targetAudience.length > 0) {
+    params.set('audience', filters.targetAudience.join(','));
+  }
+  if (filters.useCases.length > 0) {
+    params.set('usecase', filters.useCases.join(','));
+  }
+  if (filters.minKeyFeatures !== null) {
+    params.set('minFeatures', filters.minKeyFeatures.toString());
+  }
+  if (filters.hasPros === true) {
+    params.set('hasPros', 'true');
+  }
+
+  const newUrl = params.toString() ? `/resources?${params.toString()}` : '/resources';
+  router.replace(newUrl, { scroll: false });
+}, [filters, router]);
+```
+
+### Resource Aggregation Functions
+
+```tsx
+// ✅ CORRECT: Use pre-computed aggregations from data layer
+import {
+  getTargetAudienceStats,   // Returns: { audience: string; count: number }[]
+  getUseCasesStats,          // Returns: { useCase: string; count: number }[]
+  getEnhancedFieldsCoverage, // Returns coverage object
+  getFeatureCountStats,      // Returns feature range counts
+} from '@/data/resources';
+
+// All functions are memoized at module level
+const audienceStats = getTargetAudienceStats();  // Sorted by count desc
+const coverage = getEnhancedFieldsCoverage();
+
+// Coverage object structure:
+interface EnhancedCoverage {
+  hasPros: number;
+  hasCons: number;
+  hasPrerequisites: number;
+  hasAiAnalysis: number;
+  hasTargetAudience: number;
+  hasUseCases: number;
+  hasKeyFeatures: number;
+  total: number;
+}
+```
+
+### Homepage Browse by Audience
+
+```tsx
+// ✅ CORRECT: Add BrowseByAudience section to homepage
+import { getTargetAudienceStats } from '@/data/resources';
+
+const AUDIENCE_ICONS: Record<string, string> = {
+  'Developers': '👨‍💻',
+  'Beginners': '🌱',
+  'Power Users': '⚡',
+  'Teams': '👥',
+  'Enterprise': '🏢',
+  'Content Creators': '✍️',
+};
+
+function BrowseByAudience() {
+  const audienceStats = useMemo(() => getTargetAudienceStats().slice(0, 6), []);
+
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      {audienceStats.map((item) => (
+        <Link
+          key={item.audience}
+          href={`/resources?audience=${encodeURIComponent(item.audience)}`}
+          className="flex flex-col items-center gap-2 px-4 py-4 rounded-xl bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#262626] hover:border-violet-500/50 transition-all"
+        >
+          <span className="text-2xl">{AUDIENCE_ICONS[item.audience] || '👤'}</span>
+          <span className="text-sm font-medium">{item.audience}</span>
+          <span className="text-xs text-gray-500">{item.count} resources</span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+```
+
+### Resources SEO Layout
+
+```tsx
+// ✅ CORRECT: resources/layout.tsx with JSON-LD
+import { Metadata } from 'next';
+import { getResourceStats, RESOURCE_CATEGORIES } from '@/data/resources';
+
+const stats = getResourceStats();
+
+export const metadata: Metadata = {
+  title: 'Claude AI Resources - Tools, MCP Servers, SDKs & Tutorials',
+  description: `Discover ${stats.totalResources} curated Claude AI resources...`,
+  openGraph: { /* ... */ },
+};
+
+// JSON-LD for search engines
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: RESOURCE_CATEGORIES.map((cat, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: cat.name,
+      url: `https://www.claudeinsider.com/resources?category=${cat.slug}`,
+    })),
+  },
+};
+
+export default function ResourcesLayout({ children }) {
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {children}
+    </>
+  );
+}
 ```

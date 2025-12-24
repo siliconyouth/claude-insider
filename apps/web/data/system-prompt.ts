@@ -208,11 +208,15 @@ export const RESOURCES_INFO = {
   },
   features: [
     "Full-text search with weighted fields (title, description, tags)",
-    "Category and tag filtering",
+    "Category and tag filtering with URL parameter sync",
     "GitHub integration (stars, forks, language, last commit)",
     "Status badges (stable, beta, experimental, deprecated)",
     "Difficulty levels (beginner, intermediate, advanced)",
     "Featured resources highlighted on homepage",
+    "21 enhanced fields (keyFeatures, targetAudience, useCases, pros, cons, prerequisites)",
+    "Interactive insights dashboard with audience distribution and coverage charts",
+    "Browse by Audience quick links on homepage",
+    "Advanced filtering by target audience and use cases",
   ],
   baseUrl: "/resources",
 } as const;
@@ -1056,6 +1060,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.10.2", "resource enhancement", "ai summary", "key features", "use cases", "pros cons", "target audience", "prerequisites", "metadata"],
+  },
+  {
+    id: "v1128-features",
+    title: "Version 1.12.8 Features",
+    section: "New in v1.12.8",
+    content: `Claude Insider v1.12.8 introduces the Resource Insights Dashboard and enhanced filtering system. Resource Insights Dashboard: Interactive charts showing category distribution (donut chart), difficulty breakdown (horizontal bars), status distribution, and target audience distribution. Click any chart segment to filter resources. Enhanced Data Coverage visualization shows percentage of resources with key features, pros, cons, and prerequisites. Browse by Audience: Homepage now includes quick navigation cards for top 6 target audiences (Developers, Beginners, Power Users, Teams, Enterprise, Content Creators) linking to pre-filtered resource views. Advanced Filtering: Multi-select filtering by target audience and use cases, minimum feature count filter, pros/cons/prerequisites toggle filters. All filters sync to URL parameters for shareable filtered views. Resource Cards: Now display enhanced field badges including feature count, target audience, and AI badge when resources have AI analysis. MANDATORY Rules: New Resources System section in CLAUDE.md with required patterns for ResourceInsights props, resource card badges, URL parameter sync, and SEO requirements.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.12.8", "resource insights", "dashboard", "charts", "audience distribution", "filtering", "url sync", "browse by audience", "enhanced fields"],
   },
   {
     id: "hero-section",

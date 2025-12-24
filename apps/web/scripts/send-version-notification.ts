@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.12.7 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.12.8 notification to all opted-in users...\n");
 
-  const version = "1.12.7";
-  const title = "Claude Insider v1.12.7 - Logo Component System";
+  const version = "1.12.8";
+  const title = "Claude Insider v1.12.8 - Resource Insights Dashboard";
   const message =
-    "🎨 New GradientLogo/MonochromeLogo SVG components • 🔒 MANDATORY design system rules for logo consistency • 📚 FR-50: Logo components now an official feature • 🔧 Fixed OG image font-weight (700→800)";
+    "📊 Interactive resource insights with audience distribution charts • 🔍 Enhanced filtering by target audience & use cases • 🏠 Browse by Audience quick links on homepage • 🔒 MANDATORY resource system rules in CLAUDE.md";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
