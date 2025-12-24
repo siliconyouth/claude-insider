@@ -105,16 +105,18 @@ if (isLoading) {
 ### Flex Aspect Ratio Pattern
 
 ```tsx
-// ✅ CORRECT: Logo maintains square shape on all screen sizes
-<div className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600">
-  <span className="text-sm font-bold text-white">Ci</span>
-</div>
+import { GradientLogo } from "@/components/gradient-logo";
 
-// ❌ WRONG: Logo can be squished on narrow screens
+// ✅ CORRECT: Use GradientLogo component (includes shrink-0 aspect-square)
+<GradientLogo size={32} />
+
+// ❌ WRONG: Inline CSS logo without aspect protection
 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600">
   <span className="text-sm font-bold text-white">Ci</span>
 </div>
 ```
+
+**Note**: The `GradientLogo` component automatically includes `shrink-0 aspect-square` to prevent flex container distortion.
 
 ---
 
@@ -507,17 +509,49 @@ await page.goto('https://www.claudeinsider.com');
 await page.screenshot({ path: 'mobile-screenshot.png' });
 ```
 
-### Inline Logo Pattern
+### Logo Component Patterns (MANDATORY - v1.12.7)
+
+**CRITICAL**: All inline "Ci" logos MUST use the official logo components. Never use inline CSS.
 
 ```tsx
-// ✅ CORRECT: Official logo pattern with aspect ratio protection
-<div className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20">
-  <span className="text-sm font-bold text-white tracking-tight">Ci</span>
-</div>
+import { GradientLogo } from "@/components/gradient-logo";
+import { MonochromeLogo } from "@/components/monochrome-logo";
 
-// ❌ WRONG: Missing shrink-0 and aspect-square (logo can squish on mobile)
-<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600">
+// ✅ CORRECT: Use GradientLogo component with size prop
+<GradientLogo size={32} />                    // 32x32 logo (header)
+<GradientLogo size={80} withGlow />           // 80x80 with glow (hero)
+<GradientLogo size={40} className="my-4" />   // With additional className
+
+// ✅ CORRECT: Use MonochromeLogo for monochrome contexts
+<MonochromeLogo size={64} />                  // 64x64 black logo
+<MonochromeLogo size={48} color="#ffffff" />  // White variant
+
+// ❌ WRONG: Inline CSS logo (inconsistent sizing, wrong font-weight)
+<div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600">
   <span className="text-sm font-bold text-white">Ci</span>
+</div>
+```
+
+#### Logo Scaling Formula
+
+The "Ci" text is exactly **58.6% of the container** (300/512 in source SVG):
+
+| Container | Font Size | Use Case |
+|-----------|-----------|----------|
+| 32px | 19px | Header |
+| 56px | 33px | OG standard |
+| 80px | 47px | OG square |
+
+**Formula**: `container_size × 0.586 = font_size`
+
+#### OG Image Logo Pattern
+
+For `@vercel/og` (Satori), which doesn't support SVG `<text>`, use CSS with the 58.6% ratio:
+
+```tsx
+// In app/api/og/route.tsx
+<div style={{ width: "56px", height: "56px", borderRadius: "14px", ... }}>
+  <span style={{ fontSize: "33px", fontWeight: 800 }}>Ci</span>  {/* 56 × 0.586 = 33 */}
 </div>
 ```
 

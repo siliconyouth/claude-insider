@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.7] - 2025-12-24
+### Logo Component System & Design Consistency
+- **New Logo Components**: Created `GradientLogo` and `MonochromeLogo` SVG components
+  - Both components use proper SVG viewBox for pixel-perfect scaling at any size
+  - 58.6% font-to-container ratio matches source SVG exactly (300/512)
+  - `GradientLogo` supports `size`, `withGlow`, and `className` props
+  - `MonochromeLogo` supports `size` and `color` props
+- **MANDATORY Design Rules**: Updated CLAUDE.md with logo component requirements
+  - All inline logos MUST use official components (no inline CSS)
+  - OG images use CSS with 58.6% ratio (Satori doesn't support SVG text)
+  - Logo scaling formula documented: `container_size × 0.586 = font_size`
+- **OG Image Fixes**: Corrected font-weight from 700 to 800 in both OG routes
+  - Standard OG (1200×630): 56px container → 33px font
+  - Square OG (1200×1200): 80px container → 47px font
+- **Documentation Updates**: Updated CLAUDE.md, PATTERNS.md, FEATURES.md, README.md
+  - Added FR-50: Logo Component System
+  - New "Logo Components (MANDATORY - v1.12.7)" section in CLAUDE.md
+  - Updated Flex Aspect Ratio Pattern to use GradientLogo
+- **50 Features**: Total implemented features increased from 49 to 50
+
+---
+
 ## [1.12.6] - 2025-12-24
 ### Vercel Build Cache Optimization (70% Faster Builds)
 - **Fixed Cache Invalidation Bug**: Discovered that `update-build-info.cjs` was modifying `footer.tsx` on every build

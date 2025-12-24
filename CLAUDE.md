@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.5**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.7**.
 
 | Link | URL |
 |------|-----|
@@ -138,7 +138,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**49 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**50 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -650,7 +650,7 @@ All website icons MUST use the official "Ci" gradient brand icon. Custom or alte
 |---------|-------|
 | **Gradient** | `#A855F7` (violet) → `#3B82F6` (blue) → `#06B6D4` (cyan) at 135° |
 | **Corner Radius** | 80px on 512px base (15.6%) |
-| **Text** | "Ci" in Inter font, 600 weight, white (#ffffff) |
+| **Text** | "Ci" in Inter font, **800 weight**, white (#ffffff), **58.6% of container height** |
 | **Safe Zone** | Maskable icons use 70% (360px) content area |
 
 ### Icon Files (MANDATORY)
@@ -700,32 +700,70 @@ cd apps/web && node scripts/generate-icons.cjs
 | Skipping maskable icons | Always include `-maskable` variants |
 | Committing only source SVG | Commit source + all generated files |
 
-### Inline Logo Usage (MANDATORY)
+### Logo Components (MANDATORY - v1.12.7)
 
-When displaying the "Ci" logo inline (e.g., header, footer, mockups), use this exact pattern:
+**CRITICAL**: All inline "Ci" logos MUST use the official logo components. **Never use inline CSS for logos.**
+
+| Component | Location | Use For |
+|-----------|----------|---------|
+| `GradientLogo` | `components/gradient-logo.tsx` | Color contexts (header, hero, cards) |
+| `MonochromeLogo` | `components/monochrome-logo.tsx` | Monochrome contexts (print, diagrams) |
+
+#### GradientLogo Usage
 
 ```tsx
-// ✅ CORRECT: Official logo pattern with aspect ratio protection
-<div className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600 shadow-sm shadow-blue-500/20">
-  <span className="text-sm font-bold text-white tracking-tight">Ci</span>
-</div>
+import { GradientLogo } from "@/components/gradient-logo";
 
-// ❌ WRONG: Missing shrink-0 and aspect-square (logo can squish on mobile)
-<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 via-blue-600 to-cyan-600">
+// ✅ CORRECT: Use component with size prop
+<GradientLogo size={32} />                    // 32x32 logo
+<GradientLogo size={80} withGlow />           // 80x80 with blue glow shadow
+<GradientLogo size={40} className="my-4" />   // Custom className
+
+// ❌ WRONG: Inline CSS logo (inconsistent sizing, wrong font-weight)
+<div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-600 to-cyan-600">
   <span className="text-sm font-bold text-white">Ci</span>
 </div>
 ```
 
-| Class | Purpose |
-|-------|---------|
-| `shrink-0` | Prevents flex shrinking in narrow containers |
-| `aspect-square` | Maintains 1:1 ratio as backup |
-| `from-violet-600 via-blue-600 to-cyan-600` | Official brand gradient |
-| `tracking-tight` | Proper letter spacing for "Ci" |
+#### MonochromeLogo Usage
 
-**Files Using This Pattern**:
-- `components/header.tsx` - Main site header
-- `components/device-mockups.tsx` - Device preview mockups
+```tsx
+import { MonochromeLogo } from "@/components/monochrome-logo";
+
+// ✅ CORRECT: SVG-based monochrome logo
+<MonochromeLogo size={64} />                  // 64x64 black logo
+<MonochromeLogo size={48} color="#ffffff" />  // White variant
+```
+
+#### Logo Scaling Formula
+
+The "Ci" text height is exactly **58.6% of the container** (300/512 in source SVG):
+
+| Container Size | Text Font Size | Example |
+|----------------|----------------|---------|
+| 32px | 19px | Header logo |
+| 56px | 33px | OG image standard |
+| 80px | 47px | OG image square |
+| 512px | 300px | Source SVG |
+
+**Formula**: `container_size × 0.586 = font_size`
+
+#### Files Using Logo Components
+
+- `components/header.tsx` - Site header (`GradientLogo size={32}`)
+- `components/device-mockups.tsx` - Device previews
+- `app/(main)/design-system/page.tsx` - Design system showcase
+- `app/api/og/route.tsx` - OG images (CSS-based, uses 58.6% ratio)
+- `app/api/og/square/route.tsx` - Square OG images
+
+#### Prohibited Patterns
+
+| ❌ Prohibited | ✅ Required |
+|---------------|-------------|
+| Inline CSS logos | Use `GradientLogo` or `MonochromeLogo` component |
+| `font-bold` for logo text | Component uses `font-weight: 800` |
+| Hardcoded font sizes | Component calculates from `size` prop |
+| Missing `shrink-0 aspect-square` | Components include these automatically |
 
 ### Checklist for Icon Changes
 
@@ -735,6 +773,13 @@ When displaying the "Ci" logo inline (e.g., header, footer, mockups), use this e
 - [ ] Checked maskable icons have proper safe zone padding
 - [ ] Ran `pnpm build` successfully
 - [ ] Committed both source SVG and all generated files
+
+### Checklist for Logo Usage
+
+- [ ] Using `GradientLogo` or `MonochromeLogo` component (not inline CSS)
+- [ ] Component has correct `size` prop for context
+- [ ] If using `withGlow`, background has sufficient contrast
+- [ ] OG images use 58.6% font-to-container ratio
 
 ---
 

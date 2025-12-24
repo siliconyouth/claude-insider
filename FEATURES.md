@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all 49 implemented features with detailed capabilities.
+Complete list of all **50 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (49 total)
+## Implemented Features (50 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -59,6 +59,7 @@ Complete list of all 49 implemented features with detailed capabilities.
 | FR-47 | GitHub CLAUDE.md Sync | Sync CLAUDE.md to GitHub repos, repo selector, OAuth scopes, status tracking |
 | FR-48 | Doc Versioning | Version history, LCS line-by-line diff, unified/split view, rollback (admin only), 50 versions per doc |
 | FR-49 | Prompt Library | 10 system prompts, 8 categories, save/rate/use tracking, variable syntax `{{placeholder}}`, visibility controls |
+| FR-50 | Logo Component System | `GradientLogo`/`MonochromeLogo` SVG components, 58.6% scaling formula, OG image support, design system enforcement |
 
 ---
 
@@ -100,12 +101,13 @@ Complete list of all 49 implemented features with detailed capabilities.
 - User directory
 - Smart AI messaging (@mentions)
 
-### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49)
+### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50)
 - Database types (126 tables)
 - PWA enhancements
 - Advanced search
 - GitHub sync, doc versioning
 - Prompt library
+- Logo component system
 
 ---
 

@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.12.6 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.12.7 notification to all opted-in users...\n");
 
-  const version = "1.12.6";
-  const title = "Claude Insider v1.12.6 - 70% Faster Builds";
+  const version = "1.12.7";
+  const title = "Claude Insider v1.12.7 - Logo Component System";
   const message =
-    "🚀 70% Faster Builds with Vercel Remote Cache • 🔧 Fixed cache invalidation (build-info.json pattern) • 📦 Optimized Turbo inputs (excluded 1,952+ files) • 📚 New mandatory build rules in CLAUDE.md";
+    "🎨 New GradientLogo/MonochromeLogo SVG components • 🔒 MANDATORY design system rules for logo consistency • 📚 FR-50: Logo components now an official feature • 🔧 Fixed OG image font-weight (700→800)";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

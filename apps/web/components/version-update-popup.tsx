@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.7",
+    date: "2025-12-24",
+    type: "patch",
+    highlights: [
+      "🎨 Logo Component System: New GradientLogo/MonochromeLogo SVG components with 58.6% scaling formula",
+      "🔒 Design System Enforcement: MANDATORY logo consistency rules prevent inline CSS drift",
+      "📚 FR-50: Logo components now tracked as official feature with documentation",
+      "🔧 OG Image Fix: Corrected font-weight (700→800) and proportions in social preview images",
+    ],
+  },
+  {
     version: "1.12.6",
     date: "2025-12-24",
     type: "patch",
