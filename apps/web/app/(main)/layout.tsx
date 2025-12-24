@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     template: "%s | Claude Insider",
   },
   description:
-    "Your comprehensive resource for Claude AI documentation, tips, tricks, and configuration guides. 49 features, 1,950+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code powered by Claude Opus 4.5.",
+    "Your comprehensive resource for Claude AI documentation, tips, tricks, and configuration guides. 50 features, 1,950+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code powered by Claude Opus 4.5.",
   keywords: [
     // Core brand keywords
     "Claude AI",
@@ -136,7 +136,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Claude Insider - Tips, Tricks & Documentation for Claude AI",
     description:
-      "Your comprehensive resource for Claude AI documentation. 49 features, 1,950+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code.",
+      "Your comprehensive resource for Claude AI documentation. 50 features, 1,950+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code.",
     url: "https://www.claudeinsider.com",
     siteName: "Claude Insider",
     type: "website",
@@ -166,7 +166,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Claude Insider - Tips, Tricks & Documentation for Claude AI",
     description:
-      "49 features, 1,950+ curated resources, 50+ achievements. Your comprehensive Claude AI documentation hub.",
+      "50 features, 1,950+ curated resources, 50+ achievements. Your comprehensive Claude AI documentation hub.",
     images: ["/og-image.png"],
     creator: "@claudeinsider",
     site: "@claudeinsider",
@@ -228,7 +228,7 @@ const jsonLd = {
       url: "https://www.claudeinsider.com",
       name: "Claude Insider",
       description:
-        "Your comprehensive resource for Claude AI documentation, tips, tricks, configuration guides, and setup instructions. 45 features, 1,950+ curated resources.",
+        "Your comprehensive resource for Claude AI documentation, tips, tricks, configuration guides, and setup instructions. 50 features, 1,950+ curated resources.",
       publisher: {
         "@id": "https://www.claudeinsider.com/#organization",
       },
@@ -284,7 +284,7 @@ const jsonLd = {
       "@id": "https://www.claudeinsider.com/#app",
       name: "Claude Insider",
       description:
-        "A comprehensive documentation hub for Claude AI with 45 features, 1,950+ curated resources, AI-powered search, and end-to-end encrypted messaging.",
+        "A comprehensive documentation hub for Claude AI with 50 features, 1,950+ curated resources, AI-powered search, and end-to-end encrypted messaging.",
       url: "https://www.claudeinsider.com",
       applicationCategory: "DeveloperApplication",
       operatingSystem: "Web Browser",
@@ -305,7 +305,7 @@ const jsonLd = {
       },
       screenshot: "https://www.claudeinsider.com/og-image.png",
       featureList: [
-        "45 Platform Features",
+        "50 Platform Features",
         "1,950+ Curated Resources",
         "50+ Achievements",
         "Advanced Search with Boolean Operators",
