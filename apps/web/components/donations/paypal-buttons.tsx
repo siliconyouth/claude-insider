@@ -7,6 +7,7 @@
  * Features:
  * - Theme-aware button colors (black on light, white on dark)
  * - Support for one-time and recurring donations
+ * - Debit/Credit Card payments (no PayPal account required)
  * - Pay Later messaging option
  */
 
@@ -261,6 +262,26 @@ function PayPalButtonsInner({
         onCancel={handleCancel}
       />
 
+      {/* Debit or Credit Card Button (no PayPal account needed) */}
+      <div className="mt-2">
+        <PayPalButtons
+          fundingSource={FUNDING.CARD}
+          style={{
+            layout: 'vertical',
+            color: 'black',
+            shape: 'rect',
+            label: isRecurring ? 'subscribe' : 'donate',
+            height: 48,
+          }}
+          disabled={disabled || isProcessing}
+          createOrder={isRecurring ? undefined : createOrder}
+          createSubscription={isRecurring ? createSubscription : undefined}
+          onApprove={isRecurring ? onSubscriptionApprove : onApprove}
+          onError={handleError}
+          onCancel={handleCancel}
+        />
+      </div>
+
       {/* Pay Later Button (one-time only, when enabled) */}
       {!isRecurring && showPayLater && (
         <div className="mt-2">
@@ -314,7 +335,8 @@ export function PayPalDonateButtons(props: PayPalDonateButtonsProps) {
     intent: props.isRecurring ? 'subscription' : 'capture',
     vault: props.isRecurring ? true : false,
     components: 'buttons',
-    'enable-funding': 'paylater',
+    // Enable card payments for guests (no PayPal account needed) and Pay Later
+    'enable-funding': 'card,paylater',
   };
 
   return (
