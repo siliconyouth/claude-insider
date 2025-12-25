@@ -11,7 +11,7 @@
  * - Pay Later messaging option
  */
 
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
   PayPalScriptProvider,
   PayPalButtons,
@@ -43,36 +43,6 @@ interface PayPalDonateButtonsProps {
   onCancel?: () => void;
   disabled?: boolean;
   showPayLater?: boolean;
-}
-
-// =============================================================================
-// THEME DETECTION HOOK
-// =============================================================================
-
-function useTheme(): 'light' | 'dark' {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-
-  useEffect(() => {
-    // Check initial theme
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
-
-    // Watch for theme changes
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (mutation.attributeName === 'class') {
-          const isDark = document.documentElement.classList.contains('dark');
-          setTheme(isDark ? 'dark' : 'light');
-        }
-      }
-    });
-
-    observer.observe(document.documentElement, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
-
-  return theme;
 }
 
 // =============================================================================
@@ -108,13 +78,7 @@ function PayPalButtonsInner({
   disabled = false,
   showPayLater = true,
 }: PayPalDonateButtonsProps) {
-  const theme = useTheme();
   const [isProcessing, setIsProcessing] = useState(false);
-
-  // Button color based on theme (for contrast)
-  // Light theme (white bg) → black button
-  // Dark theme (dark bg) → white button
-  const buttonColor = theme === 'dark' ? 'white' : 'black';
 
   // Create order for one-time donation
   const createOrder = useCallback(async (): Promise<string> => {
@@ -244,13 +208,13 @@ function PayPalButtonsInner({
     <div className={cn('paypal-buttons-container', disabled && 'opacity-50 pointer-events-none')}>
       <ButtonsLoading />
 
-      {/* Main PayPal Button */}
+      {/* Main PayPal Button - Classic yellow/gold */}
       <PayPalButtons
         fundingSource={FUNDING.PAYPAL}
         style={{
           layout: 'vertical',
-          color: buttonColor,
-          shape: 'rect',
+          color: 'gold',
+          shape: 'pill',
           label: isRecurring ? 'subscribe' : 'donate',
           height: 48,
         }}
@@ -263,13 +227,13 @@ function PayPalButtonsInner({
       />
 
       {/* Debit or Credit Card Button (no PayPal account needed) */}
-      <div className="mt-2">
+      <div className="mt-3">
         <PayPalButtons
           fundingSource={FUNDING.CARD}
           style={{
             layout: 'vertical',
             color: 'black',
-            shape: 'rect',
+            shape: 'pill',
             label: isRecurring ? 'subscribe' : 'donate',
             height: 48,
           }}
@@ -284,13 +248,13 @@ function PayPalButtonsInner({
 
       {/* Pay Later Button (one-time only, when enabled) */}
       {!isRecurring && showPayLater && (
-        <div className="mt-2">
+        <div className="mt-3">
           <PayPalButtons
             fundingSource={FUNDING.PAYLATER}
             style={{
               layout: 'vertical',
-              color: buttonColor,
-              shape: 'rect',
+              color: 'gold',
+              shape: 'pill',
               label: 'donate',
               height: 48,
             }}
