@@ -215,7 +215,6 @@ function PayPalButtonsInner({
           layout: 'vertical',
           color: 'gold',
           shape: 'rect',
-          borderRadius: 8,
           label: isRecurring ? 'subscribe' : 'donate',
           height: 48,
         }}
@@ -235,7 +234,6 @@ function PayPalButtonsInner({
             layout: 'vertical',
             color: 'black',
             shape: 'rect',
-            borderRadius: 8,
             label: isRecurring ? 'subscribe' : 'donate',
             height: 48,
           }}
@@ -257,7 +255,6 @@ function PayPalButtonsInner({
               layout: 'vertical',
               color: 'gold',
               shape: 'rect',
-              borderRadius: 8,
               label: 'donate',
               height: 48,
             }}
