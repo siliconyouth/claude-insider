@@ -2479,3 +2479,25 @@ code {
     display: none !important;
   }
 }
+
+/* ============================================
+   PAYPAL BUTTON STYLING
+   Override default PayPal SDK backgrounds
+   ============================================ */
+
+/* PayPal buttons container - transparent background */
+.paypal-buttons-container {
+  background: transparent !important;
+}
+
+/* PayPal SDK injects elements with white backgrounds - override them */
+.paypal-buttons-container > div,
+.paypal-buttons-container [class*="paypal"] {
+  background: transparent !important;
+}
+
+/* Dark mode: ensure PayPal button containers don't show white */
+.dark .paypal-buttons-container,
+.dark .paypal-buttons-container > div {
+  background: transparent !important;
+}

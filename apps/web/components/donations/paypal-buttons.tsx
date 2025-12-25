@@ -205,7 +205,7 @@ function PayPalButtonsInner({
   }, [onCancel]);
 
   return (
-    <div className={cn('paypal-buttons-container', disabled && 'opacity-50 pointer-events-none')}>
+    <div className={cn('paypal-buttons-container relative', disabled && 'opacity-50 pointer-events-none')}>
       <ButtonsLoading />
 
       {/* Main PayPal Button - Classic yellow/gold */}
