@@ -85,8 +85,9 @@ function getSectionColor(title: string): string {
 }
 
 export default function ChangelogPage() {
-  // Read CHANGELOG.md from repo root
-  const changelogPath = path.join(process.cwd(), "..", "..", "CHANGELOG.md");
+  // Read CHANGELOG.md from data/ (copied during prebuild for Vercel deployment)
+  // On Vercel, only apps/web is deployed, so monorepo root files aren't available
+  const changelogPath = path.join(process.cwd(), "data", "CHANGELOG.md");
   let versions: ChangelogVersion[] = [];
 
   try {

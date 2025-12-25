@@ -43,3 +43,19 @@ const buildInfo = {
 fs.writeFileSync(buildInfoPath, JSON.stringify(buildInfo, null, 2));
 
 console.log(`✓ Updated build info: v${version} · ${buildDate} · ${commitSha}`);
+
+// Copy CHANGELOG.md from monorepo root to data/ for Vercel deployment
+// On Vercel, only apps/web is deployed, so files outside need to be copied
+const changelogSource = path.join(__dirname, "../../../CHANGELOG.md");
+const changelogDest = path.join(__dirname, "../data/CHANGELOG.md");
+
+try {
+  if (fs.existsSync(changelogSource)) {
+    fs.copyFileSync(changelogSource, changelogDest);
+    console.log(`✓ Copied CHANGELOG.md to data/`);
+  } else {
+    console.warn("⚠ CHANGELOG.md not found at monorepo root");
+  }
+} catch (e) {
+  console.warn("⚠ Could not copy CHANGELOG.md:", e.message);
+}
