@@ -6,14 +6,15 @@
  * In-page PayPal checkout using the official React SDK.
  * Features:
  * - Gold PayPal button (recommended by PayPal for best conversion)
- * - Debit/Credit Card button (no PayPal account required)
+ * - Debit/Credit Card option via PayPal popup (no separate account required)
  * - Support for one-time and recurring donations
  * - Pay Later option for installment payments
  *
- * SDK loads both 'buttons' and 'card-fields' components for proper card support.
+ * Note: FUNDING.CARD button requires Advanced Checkout (ACDC) approval from PayPal.
+ * For standard accounts, card payments work through the PayPal popup flow.
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   PayPalScriptProvider,
   PayPalButtons,
@@ -81,6 +82,30 @@ function PayPalButtonsInner({
   showPayLater = true,
 }: PayPalDonateButtonsProps) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [cardEligible, setCardEligible] = useState<boolean | null>(null);
+  const [{ isResolved }] = usePayPalScriptReducer();
+
+  // Check if card funding is eligible once SDK loads
+  useEffect(() => {
+    if (isResolved && typeof window !== 'undefined') {
+      // Access the PayPal SDK to check eligibility
+      const paypal = (window as unknown as { paypal?: { isFundingEligible?: (source: string) => boolean } }).paypal;
+      if (paypal?.isFundingEligible) {
+        try {
+          const eligible = paypal.isFundingEligible('card');
+          setCardEligible(eligible);
+          if (!eligible) {
+            console.info('PayPal Card funding not eligible for this merchant');
+          }
+        } catch {
+          setCardEligible(false);
+        }
+      } else {
+        // If we can't check, assume eligible and let PayPal handle it
+        setCardEligible(true);
+      }
+    }
+  }, [isResolved]);
 
   // Create order for one-time donation
   const createOrder = useCallback(async (): Promise<string> => {
@@ -193,11 +218,17 @@ function PayPalButtonsInner({
     }
   }, [onSuccess, onError]);
 
-  // Handle errors
+  // Handle errors - log details and show user-friendly message
   const handleError = useCallback((err: Record<string, unknown>) => {
-    console.error('PayPal error:', err);
+    console.error('PayPal SDK error:', err);
+    console.error('PayPal error details:', JSON.stringify(err, null, 2));
     setIsProcessing(false);
-    onError('Payment could not be processed. Please try again.');
+
+    // Try to extract a meaningful error message
+    const errorMessage = typeof err?.message === 'string'
+      ? err.message
+      : 'Payment could not be processed. Please try again.';
+    onError(errorMessage);
   }, [onError]);
 
   // Handle cancel
@@ -229,24 +260,34 @@ function PayPalButtonsInner({
       />
 
       {/* Debit or Credit Card Button (no PayPal account needed) */}
-      <div className="mt-3">
-        <PayPalButtons
-          fundingSource={FUNDING.CARD}
-          style={{
-            layout: 'vertical',
-            color: 'black',
-            shape: 'rect',
-            label: isRecurring ? 'subscribe' : 'donate',
-            height: 48,
-          }}
-          disabled={disabled || isProcessing}
-          createOrder={isRecurring ? undefined : createOrder}
-          createSubscription={isRecurring ? createSubscription : undefined}
-          onApprove={isRecurring ? onSubscriptionApprove : onApprove}
-          onError={handleError}
-          onCancel={handleCancel}
-        />
-      </div>
+      {/* Only shown if merchant has Advanced Checkout (ACDC) enabled */}
+      {cardEligible && (
+        <div className="mt-3">
+          <PayPalButtons
+            fundingSource={FUNDING.CARD}
+            style={{
+              layout: 'vertical',
+              color: 'black',
+              shape: 'rect',
+              label: isRecurring ? 'subscribe' : 'donate',
+              height: 48,
+            }}
+            disabled={disabled || isProcessing}
+            createOrder={isRecurring ? undefined : createOrder}
+            createSubscription={isRecurring ? createSubscription : undefined}
+            onApprove={isRecurring ? onSubscriptionApprove : onApprove}
+            onError={handleError}
+            onCancel={handleCancel}
+          />
+        </div>
+      )}
+
+      {/* Show card payment note when card button not eligible */}
+      {cardEligible === false && (
+        <p className="mt-3 text-xs text-center text-gray-500 dark:text-gray-400">
+          💳 Pay with card by clicking PayPal above — no account required
+        </p>
+      )}
 
       {/* Pay Later Button (one-time only, when enabled) */}
       {!isRecurring && showPayLater && (
@@ -300,9 +341,10 @@ export function PayPalDonateButtons(props: PayPalDonateButtonsProps) {
     currency: props.currency || 'USD',
     intent: props.isRecurring ? 'subscription' : 'capture',
     vault: props.isRecurring ? true : false,
-    // Load both buttons and card-fields components for proper card support
-    components: 'buttons,card-fields',
+    // Only load buttons component (card-fields is for custom card form UI)
+    components: 'buttons',
     // Enable card and Pay Later funding sources
+    // Note: Card button requires Advanced Checkout (ACDC) enabled on PayPal account
     'enable-funding': 'card,paylater',
   };
 
