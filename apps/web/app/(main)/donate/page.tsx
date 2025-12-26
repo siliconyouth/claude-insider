@@ -39,7 +39,7 @@ interface DonationSettings {
 export default function DonatePage() {
   const router = useRouter();
   const [settings, setSettings] = useState<DonationSettings | null>(null);
-  const [amount, setAmount] = useState<number>(25);
+  const [amount, setAmount] = useState<number>(100);
   const [customAmount, setCustomAmount] = useState<string>('');
   const [message, setMessage] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);

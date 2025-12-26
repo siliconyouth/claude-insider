@@ -229,7 +229,7 @@ export const BADGE_CONFIG: Record<DonorBadgeTier, {
 // PRESET AMOUNTS
 // ============================================================================
 
-export const PRESET_DONATION_AMOUNTS = [5, 10, 25, 50, 100] as const;
+export const PRESET_DONATION_AMOUNTS = [5, 10, 25, 50, 100, 500] as const;
 
 export const DONATION_AMOUNT_LABELS: Record<number, string> = {
   5: 'Coffee',
@@ -237,6 +237,7 @@ export const DONATION_AMOUNT_LABELS: Record<number, string> = {
   25: 'Dinner',
   50: 'Weekly',
   100: 'Monthly',
+  500: 'Platinum',
 };
 
 // ============================================================================
