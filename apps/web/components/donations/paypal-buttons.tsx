@@ -6,21 +6,19 @@
  * In-page PayPal checkout using the official React SDK v8.
  * Features:
  * - Gold PayPal button (recommended by PayPal for best conversion)
- * - Embedded Card Fields form (no PayPal account required)
+ * - Card payments via PayPal popup (no PayPal account required)
  * - Support for one-time and recurring donations
  * - Pay Later option for installment payments
  *
- * Uses PayPalCardFieldsForm for direct card payments per PayPal SDK best practices.
- * See: https://github.com/paypal/paypal-js/tree/main/packages/react-paypal-js
+ * Note: Direct card input (CardFields) requires ACDC enabled on PayPal account.
+ * For standard accounts, users pay with cards via the PayPal popup flow.
+ * See: https://developer.paypal.com/docs/checkout/advanced/
  */
 
 import { useState, useCallback } from 'react';
 import {
   PayPalScriptProvider,
   PayPalButtons,
-  PayPalCardFieldsProvider,
-  PayPalCardFieldsForm,
-  usePayPalCardFields,
   usePayPalScriptReducer,
   FUNDING,
 } from '@paypal/react-paypal-js';
@@ -68,208 +66,17 @@ function ButtonsLoading() {
 }
 
 // =============================================================================
-// CARD FIELDS SUBMIT BUTTON
+// CARD PAYMENT INFO
 // =============================================================================
 
-function CardFieldsSubmitButton({ disabled }: { disabled: boolean }) {
-  const { cardFieldsForm } = usePayPalCardFields();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [cardError, setCardError] = useState<string | null>(null);
-
-  const handleClick = async () => {
-    if (!cardFieldsForm) {
-      console.error('CardFields form not available');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setCardError(null);
-
-    try {
-      await cardFieldsForm.submit();
-    } catch (error) {
-      console.error('Card submission error:', error);
-      setCardError(error instanceof Error ? error.message : 'Card payment failed');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="space-y-2">
-      {cardError && (
-        <p className="text-sm text-red-500 dark:text-red-400">{cardError}</p>
-      )}
-      <button
-        onClick={handleClick}
-        disabled={disabled || isSubmitting}
-        className={cn(
-          'w-full py-3 rounded-lg font-semibold text-white',
-          'bg-gray-900 dark:bg-white dark:text-gray-900',
-          'hover:bg-gray-800 dark:hover:bg-gray-100',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-          'transition-all duration-200'
-        )}
-      >
-        {isSubmitting ? (
-          <span className="flex items-center justify-center gap-2">
-            <span className="w-4 h-4 border-2 border-white dark:border-gray-900 border-t-transparent rounded-full animate-spin" />
-            Processing...
-          </span>
-        ) : (
-          'Pay with Card'
-        )}
-      </button>
-    </div>
-  );
-}
-
-// =============================================================================
-// CARD FIELDS SECTION
-// =============================================================================
-
-interface CardFieldsSectionProps {
-  amount: number;
-  currency: string;
-  message?: string;
-  isAnonymous: boolean;
-  onSuccess: PayPalDonateButtonsProps['onSuccess'];
-  onError: PayPalDonateButtonsProps['onError'];
-  disabled: boolean;
-}
-
-function CardFieldsSection({
-  amount,
-  currency,
-  message,
-  isAnonymous,
-  onSuccess,
-  onError,
-  disabled,
-}: CardFieldsSectionProps) {
-  const [showCardForm, setShowCardForm] = useState(false);
-
-  // Create order for card payment
-  const createOrder = useCallback(async (): Promise<string> => {
-    try {
-      const response = await fetch('/api/donations/paypal/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount,
-          currency,
-          message: message || undefined,
-          is_anonymous: isAnonymous,
-        }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to create order');
-      }
-
-      const data = await response.json();
-      return data.order_id;
-    } catch (error) {
-      console.error('Create order error:', error);
-      throw error;
-    }
-  }, [amount, currency, message, isAnonymous]);
-
-  // Handle approval
-  const onApprove = useCallback(async (data: { orderID: string }) => {
-    try {
-      const response = await fetch('/api/donations/paypal/capture', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order_id: data.orderID }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to capture payment');
-      }
-
-      const result = await response.json();
-      onSuccess({
-        donationId: result.donation_id,
-        transactionId: result.transaction_id,
-        badgeTier: result.badge_tier,
-      });
-    } catch (error) {
-      console.error('Capture error:', error);
-      onError(error instanceof Error ? error.message : 'Payment failed');
-    }
-  }, [onSuccess, onError]);
-
-  // Handle errors
-  const handleError = useCallback((err: Record<string, unknown>) => {
-    console.error('PayPal CardFields error:', err);
-    onError(typeof err?.message === 'string' ? err.message : 'Card payment failed');
-  }, [onError]);
-
-  if (!showCardForm) {
-    return (
-      <button
-        onClick={() => setShowCardForm(true)}
-        disabled={disabled}
-        className={cn(
-          'w-full py-3 px-4 rounded-lg font-semibold',
-          'border-2 border-gray-300 dark:border-gray-600',
-          'bg-white dark:bg-[#111111]',
-          'text-gray-900 dark:text-white',
-          'hover:border-gray-400 dark:hover:border-gray-500',
-          'disabled:opacity-50 disabled:cursor-not-allowed',
-          'transition-all duration-200',
-          'flex items-center justify-center gap-2'
-        )}
-      >
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-        </svg>
-        Debit or Credit Card
-      </button>
-    );
-  }
-
-  return (
-    <div className={cn(
-      'p-4 rounded-xl',
-      'bg-gray-50 dark:bg-[#0a0a0a]',
-      'border border-gray-200 dark:border-[#262626]'
-    )}>
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-          </svg>
-          Card Details
-        </h3>
-        <button
-          onClick={() => setShowCardForm(false)}
-          className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-        >
-          Cancel
-        </button>
-      </div>
-
-      <PayPalCardFieldsProvider
-        createOrder={createOrder}
-        onApprove={onApprove}
-        onError={handleError}
-      >
-        <PayPalCardFieldsForm />
-        <div className="mt-4">
-          <CardFieldsSubmitButton disabled={disabled} />
-        </div>
-      </PayPalCardFieldsProvider>
-
-      <p className="mt-3 text-xs text-center text-gray-500">
-        Secured by PayPal. No PayPal account required.
-      </p>
-    </div>
-  );
-}
+// Note: PayPal CardFields requires Advanced Credit and Debit Card Payments (ACDC)
+// to be enabled on the merchant account. If not enabled, cardFields.isEligible()
+// returns false and the fields won't render.
+//
+// For accounts without ACDC, users can still pay with cards by:
+// 1. Clicking the PayPal button
+// 2. Selecting "Pay with Debit or Credit Card" in the PayPal popup
+// 3. Entering card details (no PayPal account required)
 
 // =============================================================================
 // PAYPAL BUTTONS INNER (requires PayPalScriptProvider context)
@@ -436,19 +243,11 @@ function PayPalButtonsInner({
         onCancel={handleCancel}
       />
 
-      {/* Card Fields Section (one-time payments only) */}
+      {/* Card payment note */}
       {!isRecurring && (
-        <div className="mt-3">
-          <CardFieldsSection
-            amount={amount}
-            currency={currency}
-            message={message}
-            isAnonymous={isAnonymous}
-            onSuccess={onSuccess}
-            onError={onError}
-            disabled={disabled || isProcessing}
-          />
-        </div>
+        <p className="mt-3 text-xs text-center text-gray-500 dark:text-gray-400">
+          💳 <strong>No PayPal account?</strong> Click PayPal above, then select &quot;Pay with Debit or Credit Card&quot;
+        </p>
       )}
 
       {/* Pay Later Button (one-time only, when enabled) */}
@@ -503,8 +302,8 @@ export function PayPalDonateButtons(props: PayPalDonateButtonsProps) {
     currency: props.currency || 'USD',
     intent: props.isRecurring ? 'subscription' : 'capture',
     vault: props.isRecurring ? true : false,
-    // Load buttons and card-fields components
-    components: 'buttons,card-fields',
+    // Load buttons component only (CardFields requires ACDC which isn't enabled)
+    components: 'buttons',
     // Enable Pay Later funding
     'enable-funding': 'paylater',
   };
