@@ -3,16 +3,16 @@
 /**
  * PayPal Buttons Component
  *
- * In-page PayPal checkout using the official React SDK v8.
+ * In-page PayPal checkout using the official React SDK v8 + SDK v6 for card payments.
  * Features:
  * - Gold PayPal button (recommended by PayPal for best conversion)
- * - Card payments via PayPal popup (no PayPal account required)
+ * - Card payments via SDK v6 guest payments (no PayPal account required)
  * - Support for one-time and recurring donations
  * - Pay Later option for installment payments
  *
  * Note: Direct card input (CardFields) requires ACDC enabled on PayPal account.
- * For standard accounts, users pay with cards via the PayPal popup flow.
- * See: https://developer.paypal.com/docs/checkout/advanced/
+ * SDK v6 guest payments bypasses this requirement for card payments.
+ * See: https://docs.paypal.ai/payments/methods/paypal/sdk/js/v6/paypal-checkout
  */
 
 import { useState, useCallback } from 'react';
@@ -25,6 +25,7 @@ import {
 import type { OnApproveData } from '@paypal/paypal-js';
 import { cn } from '@/lib/design-system';
 import type { RecurringFrequency } from '@/lib/donations/types';
+import { PayPalSDKv6GuestPayments } from './paypal-sdk-v6';
 
 // =============================================================================
 // TYPES
@@ -243,11 +244,27 @@ function PayPalButtonsInner({
         onCancel={handleCancel}
       />
 
-      {/* Card payment note */}
+      {/* Divider */}
       {!isRecurring && (
-        <p className="mt-3 text-xs text-center text-gray-500 dark:text-gray-400">
-          💳 <strong>No PayPal account?</strong> Click PayPal above, then select &quot;Pay with Debit or Credit Card&quot;
-        </p>
+        <div className="flex items-center gap-3 my-4">
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+          <span className="text-sm text-gray-500 dark:text-gray-400">or</span>
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+        </div>
+      )}
+
+      {/* Card Payment via SDK v6 (one-time only) */}
+      {!isRecurring && (
+        <PayPalSDKv6GuestPayments
+          amount={amount}
+          currency={currency}
+          message={message}
+          isAnonymous={isAnonymous}
+          onSuccess={onSuccess}
+          onError={onError}
+          onCancel={onCancel}
+          disabled={disabled || isProcessing}
+        />
       )}
 
       {/* Pay Later Button (one-time only, when enabled) */}
