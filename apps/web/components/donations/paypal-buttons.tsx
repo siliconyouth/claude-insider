@@ -220,27 +220,32 @@ export function PayPalDonateButtons({
   }
 
   return (
-    <PayPalScriptProvider
-      options={{
-        clientId,
-        currency,
-        intent: 'capture',
-        components: 'buttons',
-        // Enable funding sources including cards
-        enableFunding: 'card,paylater',
-      }}
-    >
-      <PayPalButtonWrapper
-        amount={amount}
-        currency={currency}
-        message={message}
-        isAnonymous={isAnonymous}
-        onSuccess={onSuccess}
-        onError={onError}
-        onCancel={onCancel}
-        disabled={disabled}
-      />
-    </PayPalScriptProvider>
+    // Wrap with colorScheme: 'none' to prevent PayPal SDK from detecting
+    // light mode and applying white backgrounds on dark themed sites
+    // See: https://github.com/paypal/paypal-js/issues/584
+    <div style={{ colorScheme: 'none' }}>
+      <PayPalScriptProvider
+        options={{
+          clientId,
+          currency,
+          intent: 'capture',
+          components: 'buttons',
+          // Enable funding sources including cards
+          enableFunding: 'card,paylater',
+        }}
+      >
+        <PayPalButtonWrapper
+          amount={amount}
+          currency={currency}
+          message={message}
+          isAnonymous={isAnonymous}
+          onSuccess={onSuccess}
+          onError={onError}
+          onCancel={onCancel}
+          disabled={disabled}
+        />
+      </PayPalScriptProvider>
+    </div>
   );
 }
 
