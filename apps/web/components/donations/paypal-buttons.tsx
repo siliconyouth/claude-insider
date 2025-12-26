@@ -146,6 +146,8 @@ export function PayPalDonateButtons({
   const [paymentMode, setPaymentMode] = useState<'paypal' | 'card' | null>(null);
   const sdkInstanceRef = useRef<PayPalSDKv6Instance | null>(null);
   const initAttemptedRef = useRef(false);
+  const cardButtonRef = useRef<HTMLElement | null>(null);
+  const cardSessionRef = useRef<PayPalPaymentSession | null>(null);
 
   // Create order on server
   const createOrder = useCallback(async (): Promise<string> => {
@@ -222,6 +224,32 @@ export function PayPalDonateButtons({
           components: ['paypal-payments', 'paypal-guest-payments'],
         });
 
+        // Create card payment session
+        cardSessionRef.current = await sdkInstanceRef.current.createPayPalGuestOneTimePaymentSession({
+          onApprove: async (data) => {
+            try {
+              await captureOrder(data.orderID);
+            } catch (err) {
+              onError(err instanceof Error ? err.message : 'Payment failed');
+            }
+          },
+          onCancel: () => {
+            setIsProcessing(false);
+            setPaymentMode(null);
+            onCancel?.();
+          },
+          onComplete: () => {
+            setIsProcessing(false);
+            setPaymentMode(null);
+          },
+          onError: (err) => {
+            console.error('Card payment error:', err);
+            setIsProcessing(false);
+            setPaymentMode(null);
+            onError(err.message || 'Payment could not be processed');
+          },
+        });
+
         setSdkReady(true);
         setIsLoading(false);
       } catch (err) {
@@ -232,7 +260,7 @@ export function PayPalDonateButtons({
     };
 
     initialize();
-  }, []);
+  }, [captureOrder, onCancel, onError]);
 
   // Handle PayPal payment
   const handlePayWithPayPal = async () => {
@@ -276,41 +304,16 @@ export function PayPalDonateButtons({
     }
   };
 
-  // Handle card payment
+  // Handle card payment - starts the session on the custom PayPal element
   const handlePayWithCard = async () => {
-    if (!sdkInstanceRef.current || isProcessing || disabled) return;
+    if (!cardSessionRef.current || isProcessing || disabled) return;
 
     setIsProcessing(true);
     setPaymentMode('card');
     setError(null);
 
     try {
-      const session = await sdkInstanceRef.current.createPayPalGuestOneTimePaymentSession({
-        onApprove: async (data) => {
-          try {
-            await captureOrder(data.orderID);
-          } catch (err) {
-            onError(err instanceof Error ? err.message : 'Payment failed');
-          }
-        },
-        onCancel: () => {
-          setIsProcessing(false);
-          setPaymentMode(null);
-          onCancel?.();
-        },
-        onComplete: () => {
-          setIsProcessing(false);
-          setPaymentMode(null);
-        },
-        onError: (err) => {
-          console.error('Card payment error:', err);
-          setIsProcessing(false);
-          setPaymentMode(null);
-          onError(err.message || 'Payment could not be processed');
-        },
-      });
-
-      await session.start({ presentationMode: 'modal' }, createOrder());
+      await cardSessionRef.current.start({ presentationMode: 'modal' }, createOrder());
     } catch (err) {
       console.error('Payment start error:', err);
       setIsProcessing(false);
@@ -387,45 +390,52 @@ export function PayPalDonateButtons({
         <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
       </div>
 
-      {/* Card Payment Button */}
-      <button
-        onClick={handlePayWithCard}
-        disabled={disabled || isProcessing}
-        className={cn(
-          'w-full py-3 px-4 rounded-lg font-medium text-white',
-          'bg-gradient-to-r from-gray-700 to-gray-800',
-          'hover:from-gray-600 hover:to-gray-700',
-          'focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
-          'transition-all duration-200',
-          'flex items-center justify-center gap-2',
-          (disabled || isProcessing) && 'opacity-70 cursor-not-allowed'
-        )}
-        style={{ height: 48 }}
-      >
-        {isProcessing && paymentMode === 'card' ? (
-          <>
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-            <span>Processing...</span>
-          </>
-        ) : (
-          <>
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-              />
-            </svg>
-            <span>Pay with Debit or Credit Card</span>
-          </>
-        )}
-      </button>
+      {/* Card Payment Button - Using PayPal custom elements */}
+      {/* @ts-expect-error - PayPal custom elements */}
+      <paypal-basic-card-container className="w-full">
+        {/* @ts-expect-error - PayPal custom elements */}
+        <paypal-basic-card-button
+          ref={cardButtonRef}
+          onClick={handlePayWithCard}
+          disabled={disabled || isProcessing}
+          className={cn(
+            'w-full py-3 px-4 rounded-lg font-medium text-white cursor-pointer',
+            'bg-gradient-to-r from-gray-700 to-gray-800',
+            'hover:from-gray-600 hover:to-gray-700',
+            'focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
+            'transition-all duration-200',
+            'flex items-center justify-center gap-2',
+            (disabled || isProcessing) && 'opacity-70 cursor-not-allowed'
+          )}
+          style={{ height: 48, display: 'flex' }}
+        >
+          {isProcessing && paymentMode === 'card' ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span>Processing...</span>
+            </>
+          ) : (
+            <>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                />
+              </svg>
+              <span>Pay with Debit or Credit Card</span>
+            </>
+          )}
+        {/* @ts-expect-error - PayPal custom elements */}
+        </paypal-basic-card-button>
+      {/* @ts-expect-error - PayPal custom elements */}
+      </paypal-basic-card-container>
 
       {/* Error message */}
       {error && (
