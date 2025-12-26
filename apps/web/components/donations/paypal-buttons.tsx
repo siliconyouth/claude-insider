@@ -304,9 +304,14 @@ export function PayPalDonateButtons(props: PayPalDonateButtonsProps) {
   };
 
   return (
-    <PayPalScriptProvider options={initialOptions}>
-      <PayPalButtonsInner {...props} />
-    </PayPalScriptProvider>
+    // Wrap with colorScheme: 'none' to prevent PayPal SDK from detecting
+    // light mode and applying white backgrounds on dark themed sites
+    // See: https://github.com/paypal/paypal-js/issues/584
+    <div style={{ colorScheme: 'none' }}>
+      <PayPalScriptProvider options={initialOptions}>
+        <PayPalButtonsInner {...props} />
+      </PayPalScriptProvider>
+    </div>
   );
 }
 
