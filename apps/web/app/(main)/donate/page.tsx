@@ -294,7 +294,6 @@ export default function DonatePage() {
                       onSuccess={handlePayPalSuccess}
                       onError={handlePayPalError}
                       disabled={selectedAmount < settings.minimum_amount}
-                      showPayLater={true}
                     />
                   </div>
                 )}

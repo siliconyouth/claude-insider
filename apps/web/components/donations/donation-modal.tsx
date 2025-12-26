@@ -646,7 +646,6 @@ export function DonationModal({ isOpen, onClose, onSuccess }: DonationModalProps
                         // User cancelled PayPal popup
                       }}
                       disabled={isProcessing}
-                      showPayLater={donationType === 'one-time'}
                     />
                     <button
                       onClick={() => setStep('method')}
