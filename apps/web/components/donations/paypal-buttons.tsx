@@ -146,8 +146,21 @@ export function PayPalDonateButtons({
   const [paymentMode, setPaymentMode] = useState<'paypal' | 'card' | null>(null);
   const sdkInstanceRef = useRef<PayPalSDKv6Instance | null>(null);
   const initAttemptedRef = useRef(false);
-  const cardButtonRef = useRef<HTMLElement | null>(null);
   const cardSessionRef = useRef<PayPalPaymentSession | null>(null);
+  const cardButtonId = 'paypal-card-button-' + useRef(Math.random().toString(36).slice(2, 9)).current;
+
+  // Refs for values needed in native event listener and session callbacks (to avoid stale closures)
+  const isProcessingRef = useRef(isProcessing);
+  const disabledRef = useRef(disabled);
+  const captureOrderRef = useRef<((orderId: string) => Promise<void>) | null>(null);
+  const onCancelRef = useRef(onCancel);
+  const onErrorRef = useRef(onError);
+
+  // Keep refs in sync with current values
+  isProcessingRef.current = isProcessing;
+  disabledRef.current = disabled;
+  onCancelRef.current = onCancel;
+  onErrorRef.current = onError;
 
   // Create order on server
   const createOrder = useCallback(async (): Promise<string> => {
@@ -195,6 +208,9 @@ export function PayPalDonateButtons({
     [onSuccess]
   );
 
+  // Keep captureOrder ref in sync
+  captureOrderRef.current = captureOrder;
+
   // Initialize SDK
   useEffect(() => {
     if (initAttemptedRef.current) return;
@@ -224,19 +240,19 @@ export function PayPalDonateButtons({
           components: ['paypal-payments', 'paypal-guest-payments'],
         });
 
-        // Create card payment session
+        // Create card payment session (use refs in callbacks to avoid stale closures)
         cardSessionRef.current = await sdkInstanceRef.current.createPayPalGuestOneTimePaymentSession({
           onApprove: async (data) => {
             try {
-              await captureOrder(data.orderID);
+              await captureOrderRef.current?.(data.orderID);
             } catch (err) {
-              onError(err instanceof Error ? err.message : 'Payment failed');
+              onErrorRef.current?.(err instanceof Error ? err.message : 'Payment failed');
             }
           },
           onCancel: () => {
             setIsProcessing(false);
             setPaymentMode(null);
-            onCancel?.();
+            onCancelRef.current?.();
           },
           onComplete: () => {
             setIsProcessing(false);
@@ -246,12 +262,40 @@ export function PayPalDonateButtons({
             console.error('Card payment error:', err);
             setIsProcessing(false);
             setPaymentMode(null);
-            onError(err.message || 'Payment could not be processed');
+            onErrorRef.current?.(err.message || 'Payment could not be processed');
           },
         });
 
         setSdkReady(true);
         setIsLoading(false);
+
+        // Attach native click listener to PayPal card button element
+        // SDK v6 requires native DOM events, not React synthetic events
+        setTimeout(() => {
+          const cardButton = document.getElementById(cardButtonId);
+          if (cardButton && cardSessionRef.current) {
+            cardButton.addEventListener('click', async () => {
+              // Use refs to get current values (avoid stale closure)
+              if (isProcessingRef.current || disabledRef.current) return;
+
+              setIsProcessing(true);
+              setPaymentMode('card');
+              setError(null);
+
+              try {
+                await cardSessionRef.current!.start(
+                  { presentationMode: 'modal' },
+                  createOrder()
+                );
+              } catch (err) {
+                console.error('Payment start error:', err);
+                setIsProcessing(false);
+                setPaymentMode(null);
+                setError(err instanceof Error ? err.message : 'Failed to start payment');
+              }
+            });
+          }
+        }, 0);
       } catch (err) {
         console.error('PayPal SDK init error:', err);
         setError('Failed to initialize PayPal. Please refresh the page.');
@@ -260,7 +304,9 @@ export function PayPalDonateButtons({
     };
 
     initialize();
-  }, [captureOrder, onCancel, onError]);
+  // Dependencies: cardButtonId and createOrder are stable; captureOrder/onCancel/onError from props
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardButtonId]);
 
   // Handle PayPal payment
   const handlePayWithPayPal = async () => {
@@ -296,24 +342,6 @@ export function PayPalDonateButtons({
       });
 
       await session.start({ presentationMode: 'popup' }, createOrder());
-    } catch (err) {
-      console.error('Payment start error:', err);
-      setIsProcessing(false);
-      setPaymentMode(null);
-      setError(err instanceof Error ? err.message : 'Failed to start payment');
-    }
-  };
-
-  // Handle card payment - starts the session on the custom PayPal element
-  const handlePayWithCard = async () => {
-    if (!cardSessionRef.current || isProcessing || disabled) return;
-
-    setIsProcessing(true);
-    setPaymentMode('card');
-    setError(null);
-
-    try {
-      await cardSessionRef.current.start({ presentationMode: 'modal' }, createOrder());
     } catch (err) {
       console.error('Payment start error:', err);
       setIsProcessing(false);
@@ -390,14 +418,12 @@ export function PayPalDonateButtons({
         <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
       </div>
 
-      {/* Card Payment Button - Using PayPal custom elements */}
+      {/* Card Payment Button - Using PayPal custom elements with native DOM event */}
       {/* @ts-expect-error - PayPal custom elements */}
       <paypal-basic-card-container className="w-full">
         {/* @ts-expect-error - PayPal custom elements */}
         <paypal-basic-card-button
-          ref={cardButtonRef}
-          onClick={handlePayWithCard}
-          disabled={disabled || isProcessing}
+          id={cardButtonId}
           className={cn(
             'w-full py-3 px-4 rounded-lg font-medium text-white cursor-pointer',
             'bg-gradient-to-r from-gray-700 to-gray-800',
