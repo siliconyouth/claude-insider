@@ -6,13 +6,11 @@
  * In-page PayPal checkout using the official React SDK.
  * Features:
  * - Gold PayPal button (recommended by PayPal for best conversion)
+ * - Debit/Credit Card button (no PayPal account required)
  * - Support for one-time and recurring donations
  * - Pay Later option for installment payments
  *
- * Note: Card payments are available through the PayPal button itself -
- * users can pay as guest with debit/credit card without a PayPal account.
- * The standalone FUNDING.CARD button was removed due to known SDK bugs:
- * https://github.com/paypal/paypal-js/issues/488
+ * SDK loads both 'buttons' and 'card-fields' components for proper card support.
  */
 
 import { useState, useCallback } from 'react';
@@ -230,6 +228,26 @@ function PayPalButtonsInner({
         onCancel={handleCancel}
       />
 
+      {/* Debit or Credit Card Button (no PayPal account needed) */}
+      <div className="mt-3">
+        <PayPalButtons
+          fundingSource={FUNDING.CARD}
+          style={{
+            layout: 'vertical',
+            color: 'black',
+            shape: 'rect',
+            label: isRecurring ? 'subscribe' : 'donate',
+            height: 48,
+          }}
+          disabled={disabled || isProcessing}
+          createOrder={isRecurring ? undefined : createOrder}
+          createSubscription={isRecurring ? createSubscription : undefined}
+          onApprove={isRecurring ? onSubscriptionApprove : onApprove}
+          onError={handleError}
+          onCancel={handleCancel}
+        />
+      </div>
+
       {/* Pay Later Button (one-time only, when enabled) */}
       {!isRecurring && showPayLater && (
         <div className="mt-3">
@@ -282,9 +300,10 @@ export function PayPalDonateButtons(props: PayPalDonateButtonsProps) {
     currency: props.currency || 'USD',
     intent: props.isRecurring ? 'subscription' : 'capture',
     vault: props.isRecurring ? true : false,
-    components: 'buttons',
-    // Enable Pay Later option
-    'enable-funding': 'paylater',
+    // Load both buttons and card-fields components for proper card support
+    components: 'buttons,card-fields',
+    // Enable card and Pay Later funding sources
+    'enable-funding': 'card,paylater',
   };
 
   return (
