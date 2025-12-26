@@ -59,7 +59,7 @@ interface PayPalSDKv6Instance {
 interface PayPalPaymentSession {
   start: (
     options: { presentationMode: 'auto' | 'modal' | 'popup' | 'redirect' },
-    orderPromise: Promise<string>
+    orderPromise: Promise<{ orderId: string }>
   ) => Promise<void>;
 }
 
@@ -163,7 +163,8 @@ export function PayPalDonateButtons({
   onErrorRef.current = onError;
 
   // Create order on server
-  const createOrder = useCallback(async (): Promise<string> => {
+  // SDK v6 expects { orderId: string } not just a string
+  const createOrder = useCallback(async (): Promise<{ orderId: string }> => {
     const response = await fetch('/api/donations/paypal/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -181,7 +182,7 @@ export function PayPalDonateButtons({
     }
 
     const data = await response.json();
-    return data.order_id;
+    return { orderId: data.order_id };
   }, [amount, currency, message, isAnonymous]);
 
   // Capture order after approval
