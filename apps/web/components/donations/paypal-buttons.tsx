@@ -147,6 +147,8 @@ export function PayPalDonateButtons({
   const sdkInstanceRef = useRef<PayPalSDKv6Instance | null>(null);
   const initAttemptedRef = useRef(false);
   const cardSessionRef = useRef<PayPalPaymentSession | null>(null);
+  const hiddenCardButtonRef = useRef<HTMLElement | null>(null);
+  const hiddenCardButtonId = useRef(`paypal-card-btn-${Math.random().toString(36).slice(2, 9)}`).current;
 
   // Refs for values needed in session callbacks (to avoid stale closures)
   const captureOrderRef = useRef<((orderId: string) => Promise<void>) | null>(null);
@@ -264,6 +266,29 @@ export function PayPalDonateButtons({
 
         setSdkReady(true);
         setIsLoading(false);
+
+        // Attach native event listener to hidden PayPal card button
+        // SDK v6 requires the click to originate from <paypal-basic-card-button>
+        requestAnimationFrame(() => {
+          const hiddenButton = document.getElementById(hiddenCardButtonId);
+          if (hiddenButton && cardSessionRef.current) {
+            hiddenCardButtonRef.current = hiddenButton;
+            hiddenButton.addEventListener('click', async () => {
+              // The actual payment logic is here, triggered by our visible button
+              try {
+                await cardSessionRef.current!.start(
+                  { presentationMode: 'modal' },
+                  createOrder()
+                );
+              } catch (err) {
+                console.error('Card payment start error:', err);
+                setIsProcessing(false);
+                setPaymentMode(null);
+                setError(err instanceof Error ? err.message : 'Failed to start card payment');
+              }
+            });
+          }
+        });
       } catch (err) {
         console.error('PayPal SDK init error:', err);
         setError('Failed to initialize PayPal. Please refresh the page.');
@@ -318,22 +343,17 @@ export function PayPalDonateButtons({
     }
   };
 
-  // Handle card payment - uses pre-created guest payment session
-  const handlePayWithCard = async () => {
-    if (!cardSessionRef.current || isProcessing || disabled) return;
+  // Handle card payment - triggers click on hidden PayPal button element
+  // SDK v6 requires the click to originate from <paypal-basic-card-button>
+  const handlePayWithCard = () => {
+    if (!hiddenCardButtonRef.current || !cardSessionRef.current || isProcessing || disabled) return;
 
     setIsProcessing(true);
     setPaymentMode('card');
     setError(null);
 
-    try {
-      await cardSessionRef.current.start({ presentationMode: 'modal' }, createOrder());
-    } catch (err) {
-      console.error('Card payment start error:', err);
-      setIsProcessing(false);
-      setPaymentMode(null);
-      setError(err instanceof Error ? err.message : 'Failed to start card payment');
-    }
+    // Trigger click on the hidden PayPal button - the event listener there handles session.start()
+    hiddenCardButtonRef.current.click();
   };
 
   // Recurring donations not yet supported with SDK v6
@@ -404,10 +424,10 @@ export function PayPalDonateButtons({
         <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
       </div>
 
-      {/* Card Payment Button - Regular button that triggers guest payment session */}
+      {/* Card Payment Button - Triggers hidden PayPal element for SDK v6 compatibility */}
       <button
         onClick={handlePayWithCard}
-        disabled={disabled || isProcessing || !cardSessionRef.current}
+        disabled={disabled || isProcessing || !sdkReady}
         className={cn(
           'w-full py-3 px-4 rounded-lg font-medium text-white',
           'bg-gradient-to-r from-gray-700 to-gray-800',
@@ -415,7 +435,7 @@ export function PayPalDonateButtons({
           'focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2',
           'transition-all duration-200',
           'flex items-center justify-center gap-2',
-          (disabled || isProcessing || !cardSessionRef.current) && 'opacity-70 cursor-not-allowed'
+          (disabled || isProcessing || !sdkReady) && 'opacity-70 cursor-not-allowed'
         )}
         style={{ height: 48 }}
       >
@@ -443,6 +463,17 @@ export function PayPalDonateButtons({
           </>
         )}
       </button>
+
+      {/* Hidden PayPal card button - required by SDK v6 for guest payments */}
+      {/* We trigger this programmatically from our visible styled button */}
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore - PayPal custom web components */}
+      <div
+        style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', opacity: 0, pointerEvents: 'none' }}
+        dangerouslySetInnerHTML={{
+          __html: `<paypal-basic-card-container><paypal-basic-card-button id="${hiddenCardButtonId}"></paypal-basic-card-button></paypal-basic-card-container>`
+        }}
+      />
 
       {/* Error message */}
       {error && (
