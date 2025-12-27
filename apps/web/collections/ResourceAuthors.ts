@@ -28,34 +28,69 @@ async function syncAuthorToSupabase(
   resourceId: string
 ): Promise<void> {
   try {
-    await pool.query(
-      `INSERT INTO resource_authors (
-        resource_id, user_id, name, role, github_username, twitter_username,
-        website_url, avatar_url, is_primary, created_at, updated_at
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW())
-      ON CONFLICT (resource_id, user_id) WHERE user_id IS NOT NULL
-      DO UPDATE SET
-        name = EXCLUDED.name,
-        role = EXCLUDED.role,
-        github_username = EXCLUDED.github_username,
-        twitter_username = EXCLUDED.twitter_username,
-        website_url = EXCLUDED.website_url,
-        avatar_url = EXCLUDED.avatar_url,
-        is_primary = EXCLUDED.is_primary,
-        updated_at = NOW()`,
-      [
-        resourceId,
-        typeof doc.user === 'object' && doc.user ? doc.user.id : (doc.user || null),
-        doc.name,
-        doc.role,
-        doc.githubUsername || null,
-        doc.twitterUsername || null,
-        doc.websiteUrl || null,
-        doc.avatarUrl || null,
-        doc.isPrimary || false,
-      ]
+    const userId = typeof doc.user === 'object' && doc.user ? doc.user.id : (doc.user || null);
+    const githubUsername = doc.githubUsername || null;
+
+    // Check for existing author to prevent duplicates
+    // Match by: user_id (if set), or github_username (if set), or name
+    const existingResult = await pool.query(
+      `SELECT id FROM resource_authors
+       WHERE resource_id = $1
+         AND (
+           (user_id IS NOT NULL AND user_id = $2)
+           OR (github_username IS NOT NULL AND github_username = $3)
+           OR (user_id IS NULL AND github_username IS NULL AND name = $4)
+         )
+       LIMIT 1`,
+      [resourceId, userId, githubUsername, doc.name]
     );
-    console.log(`[Sync] Author synced to Supabase: ${doc.name}`);
+
+    if (existingResult.rows.length > 0) {
+      // Update existing author
+      await pool.query(
+        `UPDATE resource_authors SET
+          name = $1,
+          role = $2,
+          github_username = $3,
+          twitter_username = $4,
+          website_url = $5,
+          avatar_url = $6,
+          is_primary = $7,
+          updated_at = NOW()
+        WHERE id = $8`,
+        [
+          doc.name,
+          doc.role,
+          githubUsername,
+          doc.twitterUsername || null,
+          doc.websiteUrl || null,
+          doc.avatarUrl || null,
+          doc.isPrimary || false,
+          existingResult.rows[0].id,
+        ]
+      );
+      console.log(`[Sync] Author updated in Supabase: ${doc.name}`);
+    } else {
+      // Insert new author
+      await pool.query(
+        `INSERT INTO resource_authors (
+          resource_id, user_id, name, role, github_username, twitter_username,
+          website_url, avatar_url, is_primary, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW())`,
+        [
+          resourceId,
+          userId,
+          doc.name,
+          doc.role,
+          githubUsername,
+          doc.twitterUsername || null,
+          doc.websiteUrl || null,
+          doc.avatarUrl || null,
+          doc.isPrimary || false,
+        ]
+      );
+      console.log(`[Sync] Author added to Supabase: ${doc.name}`);
+    }
   } catch (error) {
     console.error(`[Sync] Failed to sync author:`, error);
   }
