@@ -359,7 +359,8 @@ function MacBookTerminalContent() {
  * Aspect Ratio Math:
  * - Mockup screen area: 224×468 (ratio 0.4786)
  * - Screenshot viewport: 446×932 (ratio 0.4785) - matches exactly!
- * - With matching aspect ratios, object-cover fits perfectly without cropping
+ * - With matching aspect ratios, object-cover fills naturally without cropping
+ * - object-top ensures header is visible (some content behind Dynamic Island is realistic)
  */
 function IPhoneScreenContent() {
   return (
@@ -370,7 +371,7 @@ function IPhoneScreenContent() {
         fill
         priority
         sizes="240px"
-        className="object-cover"
+        className="object-cover object-top"
       />
     </div>
   );
