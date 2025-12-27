@@ -3,6 +3,16 @@
   "framework": "nextjs",
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "cd ../.. && pnpm turbo run build --filter=web",
+  "functions": {
+    "app/admin/**/*.tsx": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "app/api/**/*.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
   "headers": [
     {
       "source": "/icons/(.*)",
