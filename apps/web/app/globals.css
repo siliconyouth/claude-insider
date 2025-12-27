@@ -335,8 +335,9 @@ body {
 }
 
 /* === UI Prose (for MDX/legal content) === */
+/* Note: prose classes are defined below (lines 693+), not via @tailwindcss/typography plugin */
 .ui-prose {
-  @apply prose dark:prose-invert prose-blue dark:prose-cyan max-w-none;
+  @apply max-w-none;
 }
 
 /* ============================================
