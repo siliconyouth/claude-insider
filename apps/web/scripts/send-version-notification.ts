@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.12.8 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.12.9 notification to all opted-in users...\n");
 
-  const version = "1.12.8";
-  const title = "Claude Insider v1.12.8 - Resource Insights Dashboard";
+  const version = "1.12.9";
+  const title = "Claude Insider v1.12.9 - SEO & PayPal Enhancements";
   const message =
-    "📊 Interactive resource insights with audience distribution charts • 🔍 Enhanced filtering by target audience & use cases • 🏠 Browse by Audience quick links on homepage • 🔒 MANDATORY resource system rules in CLAUDE.md";
+    "🔍 Enhanced doc page SEO with TechArticle JSON-LD & dynamic OG images • ⚡ IndexNow instant URL indexing to Bing/Yandex • 💳 PayPal React SDK for smoother donations • 🛠️ Fixed resource data issues across 1,952 resources";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.12.9",
+    date: "2025-12-27",
+    type: "patch",
+    highlights: [
+      "🔍 Enhanced Doc Page SEO: TechArticle JSON-LD, dynamic OG images, BreadcrumbList schema for all 34 pages",
+      "⚡ IndexNow Integration: Instant URL indexing to Bing/Yandex with weekly cron submission",
+      "💳 PayPal React SDK: Migrated to @paypal/react-paypal-js for smoother donation experience",
+      "🛠️ Resource Fixes: Corrected duplicate authors and 'Added' dates across 1,952 resources",
+    ],
+  },
+  {
     version: "1.12.8",
     date: "2025-12-24",
     type: "minor",

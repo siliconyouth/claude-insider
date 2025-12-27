@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-24 for v1.12.6 (Build cache optimization, Vercel Remote Cache, faster builds)
+ * Updated: 2025-12-27 for v1.12.9 (SEO enhancements, IndexNow, PayPal SDK, resource fixes)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.12.6",
+  version: "1.12.9",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -1060,6 +1060,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.10.2", "resource enhancement", "ai summary", "key features", "use cases", "pros cons", "target audience", "prerequisites", "metadata"],
+  },
+  {
+    id: "v1129-features",
+    title: "Version 1.12.9 Features",
+    section: "New in v1.12.9",
+    content: `Claude Insider v1.12.9 enhances SEO and fixes resource data issues. Enhanced Doc Page SEO: All 34 documentation pages now have TechArticle JSON-LD structured data, dynamic OG images with doc title and category, and BreadcrumbList schema for rich snippets in search results. IndexNow Integration: Instant URL indexing to Bing, Yandex, and IndexNow API. New /api/indexnow endpoint for on-demand submission, weekly cron job (Sundays 4 AM UTC) batches all URLs. Key file: 6a65eb75c5cef7d4c6fb4c1cdf37cd1f.txt for verification. PayPal React SDK: Migrated from legacy script to @paypal/react-paypal-js for smoother, more reliable donation experience with proper React integration. Resource Data Fixes: Corrected duplicate 'Claude AI' authors across 1,952 resources, fixed 'Added' dates showing incorrectly as 'Invalid Date'.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.12.9", "seo", "indexnow", "json-ld", "og images", "paypal", "structured data", "breadcrumbs", "resource fixes"],
   },
   {
     id: "v1128-features",

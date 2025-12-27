@@ -9,6 +9,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.12.9] - 2025-12-27
+### SEO Enhancement & PayPal Simplification
+- **Search Engine Optimization**: Comprehensive SEO infrastructure for thorough crawling
+  - Doc pages now have dynamic OG images via `/api/og` route
+  - TechArticle JSON-LD structured data on all 34 documentation pages
+  - BreadcrumbList schema for rich snippets in search results
+  - IndexNow API for instant Bing/Yandex indexing (no 2-week crawl wait)
+  - Weekly IndexNow cron job submits all 2,000+ URLs
+  - Yandex webmaster verification file added
+  - Search engine verification env vars documented (.env.example)
+- **PayPal React SDK Migration**: Simplified donation payments
+  - Migrated from PayPal SDK v6 to `@paypal/react-paypal-js`
+  - Card payments now work via "Pay with Debit or Credit Card" in PayPal popup
+  - Fixed white background on dark mode with `colorScheme: 'none'` wrapper
+  - Removed complex CardFields code that required ACDC approval
+- **Resource Data Fixes**: Database consistency improvements
+  - Fixed 45 duplicate author entries in `resource_authors` table
+  - Rewrote author sync to check-then-insert/update pattern
+  - Corrected `added_at` dates for 25 resources (was Jan 1 2024)
+
+---
+
+## [1.12.8] - 2025-12-26
+### Resource Insights Dashboard
+- **Enhanced Filters**: All AI-generated fields now filterable
+  - Target audience multi-select filter
+  - Use cases multi-select filter
+  - Minimum features slider (1-10+)
+  - Has Pros/Cons toggle filters
+- **Dashboard Visualizations**: Interactive charts for resource insights
+  - Target audience distribution bar chart
+  - Use cases word cloud (top 15)
+  - Feature richness pie chart
+  - Pros vs Cons balance stacked bar
+- **Resources Index SEO**: Enhanced metadata for `/resources` page
+  - Dynamic OG image with resource count
+  - JSON-LD ItemList for search results
+  - Canonical URL handling
+- **Resource Card Badges**: Enhanced field indicators
+  - Features count chip
+  - Target audience badge
+  - AI-enhanced sparkle icon
+
+---
+
 ## [1.12.7] - 2025-12-24
 ### Logo Component System & Design Consistency
 - **New Logo Components**: Created `GradientLogo` and `MonochromeLogo` SVG components
@@ -1334,7 +1379,10 @@ This release consolidates all features from v0.91.0 through v0.99.0:
 
 | Range | Count | Period | Highlights |
 |-------|-------|--------|------------|
-| 0.87-0.95 | 9 | Dec 16-17 | E2EE UX, Cover Photos, User Directory, Chat Performance |
+| 1.12.1-1.12.9 | 9 | Dec 23-27 | SEO, IndexNow, PayPal, Resource Insights, Performance |
+| 1.10.1-1.12.0 | 17 | Dec 21-23 | RAG v7, ElevenLabs v3, Dashboard Charts, Build Cache |
+| 1.0.0-1.10.0 | 16 | Dec 18-21 | AI Messaging, Resource Discovery, Cross-Linking |
+| 0.87-0.99 | 13 | Dec 16-17 | E2EE, Sound Themes, Read Receipts, User Directory |
 | 0.80-0.86 | 7 | Dec 15-16 | E2EE, Unified Chat, Legal Compliance |
 | 0.70-0.79 | 10 | Dec 14-15 | Security Dashboard, Auth, Admin |
 | 0.60-0.69 | 10 | Dec 13-14 | Messaging, Notifications, Profiles |
@@ -1345,7 +1393,7 @@ This release consolidates all features from v0.91.0 through v0.99.0:
 | 0.10-0.19 | 10 | Dec 9 | AI Assistant, Design System |
 | 0.1-0.9 | 9 | Dec 8-9 | Foundation, Docs, SEO |
 
-**Total: 90 versions in 10 days** (Dec 8-17, 2025)
+**Total: 131 versions in 20 days** (Dec 8-27, 2025)
 
 ---
 
