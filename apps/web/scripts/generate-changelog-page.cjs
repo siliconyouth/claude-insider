@@ -12,10 +12,15 @@ const fs = require("fs");
 const path = require("path");
 
 const possiblePaths = [
+  // From scripts/ directory - standard monorepo layout
   path.join(__dirname, "../../../CHANGELOG.md"),
   path.join(__dirname, "../../CHANGELOG.md"),
+  // From cwd - could be apps/web or monorepo root depending on how turbo runs
   path.join(process.cwd(), "../../CHANGELOG.md"),
+  path.join(process.cwd(), "../CHANGELOG.md"),
   path.join(process.cwd(), "CHANGELOG.md"),
+  // Vercel paths - explicit /vercel/path0 structure
+  "/vercel/path0/CHANGELOG.md",
 ];
 
 const outputPath = path.join(__dirname, "../app/(main)/changelog/changelog-content.tsx");
