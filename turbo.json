@@ -136,11 +136,13 @@
         "../../CLAUDE.md",
         "../../CHANGELOG.md",
         "!**/*.test.*",
-        "!**/__tests__/**"
+        "!**/__tests__/**",
+        "!app/(main)/changelog/changelog-content.tsx"
       ],
       "outputs": [
         ".next/**",
         "!.next/cache/**",
+        "app/(main)/changelog/changelog-content.tsx",
         "data/rag-index.json",
         "data/build-info.json",
         "data/code-examples-index.json"
