@@ -447,18 +447,18 @@ function ExportWizard({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-      <div className="w-full max-w-lg bg-gray-900 rounded-xl border border-gray-700 shadow-2xl">
+      <div className="w-full max-w-lg ui-bg-modal rounded-xl border ui-border shadow-2xl">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-700 flex items-center justify-between">
+        <div className="px-6 py-4 border-b ui-border flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-white">
+            <h2 className="text-lg font-semibold ui-text-heading">
               Create New Export
             </h2>
-            <p className="text-sm text-gray-400">Step {step} of 3</p>
+            <p className="text-sm ui-text-secondary">Step {step} of 3</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-white rounded-lg transition-colors"
+            className="p-2 ui-btn-ghost rounded-lg transition-colors"
           >
             <XIcon className="w-5 h-5" />
           </button>

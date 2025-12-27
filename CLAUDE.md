@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.1**.
 
 | Link | URL |
 |------|-----|
@@ -716,6 +716,50 @@ Instant URL indexing to Bing/Yandex:
 | Links | `text-blue-600` | `text-cyan-400` |
 
 **Pattern**: Always pair light/dark - `text-gray-700 dark:text-gray-300`
+
+#### UI Design Tokens (v1.13.1)
+
+**Location**: `app/globals.css`
+
+Pre-built CSS classes that automatically handle light/dark themes. Use these instead of inline Tailwind for consistency.
+
+| Token | Purpose | Light | Dark |
+|-------|---------|-------|------|
+| `ui-bg-page` | Page background | `bg-white` | `bg-[#0a0a0a]` |
+| `ui-bg-card` | Cards/containers | `bg-gray-50` | `bg-[#111111]` |
+| `ui-bg-modal` | Modal backgrounds | `bg-white` | `bg-[#111111]` |
+| `ui-bg-input` | Form inputs | `bg-gray-50` | `bg-[#1a1a1a]` |
+| `ui-border` | Default borders | `border-gray-200` | `border-[#262626]` |
+| `ui-text-heading` | Headings | `text-gray-900` | `text-white` |
+| `ui-text-body` | Body text | `text-gray-700` | `text-gray-300` |
+| `ui-text-secondary` | Secondary text | `text-gray-600` | `text-gray-400` |
+| `ui-text-link` | Links | `text-blue-600` | `text-cyan-400` |
+| `ui-input` | Form input styling | Full input styles with focus ring |
+| `ui-btn-ghost` | Ghost button hover | Light/dark hover states |
+| `ui-btn-secondary` | Secondary button | Bordered button style |
+| `ui-prose` | MDX content | `prose dark:prose-invert prose-blue dark:prose-cyan` |
+
+**Status Tokens** (for badges/alerts):
+- `ui-status-success` - Green (emerald)
+- `ui-status-warning` - Yellow/amber
+- `ui-status-error` - Red
+- `ui-status-info` - Blue
+- `ui-status-pending` - Yellow
+- `ui-status-neutral` - Gray
+
+```tsx
+// ✅ CORRECT - Use design tokens
+<div className="ui-bg-card border ui-border rounded-lg">
+  <h3 className="ui-text-heading">Title</h3>
+  <p className="ui-text-secondary">Description</p>
+</div>
+
+// ❌ WRONG - Hardcoded colors
+<div className="bg-gray-900/50 border border-gray-800 rounded-lg">
+  <h3 className="text-white">Title</h3>
+  <p className="text-gray-400">Description</p>
+</div>
+```
 
 #### Prose Typography (MDX)
 

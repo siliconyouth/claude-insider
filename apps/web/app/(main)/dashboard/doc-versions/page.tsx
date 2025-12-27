@@ -388,17 +388,17 @@ export default function DocVersionsPage() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelectedDoc(null)}
           />
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl bg-gray-900 border border-gray-700 shadow-xl">
-            <div className="sticky top-0 flex items-center justify-between p-4 border-b border-gray-800 bg-gray-900">
+          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl ui-bg-modal border ui-border shadow-xl">
+            <div className="sticky top-0 flex items-center justify-between p-4 border-b ui-border ui-bg-modal">
               <div>
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="text-lg font-semibold ui-text-heading">
                   Version History
                 </h3>
-                <p className="text-sm text-gray-400">{selectedDoc.title}</p>
+                <p className="text-sm ui-text-secondary">{selectedDoc.title}</p>
               </div>
               <button
                 onClick={() => setSelectedDoc(null)}
-                className="p-1 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors"
+                className="p-1 rounded-lg ui-btn-ghost"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

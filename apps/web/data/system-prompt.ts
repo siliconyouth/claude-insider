@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-27 for v1.13.0 (Admin Settings System, SEO dashboard, role-based access control)
+ * Updated: 2025-12-27 for v1.13.1 (Design Token System, Light Mode Support, Vercel Blacks)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.13.0",
+  version: "1.13.1",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -1060,6 +1060,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.10.2", "resource enhancement", "ai summary", "key features", "use cases", "pros cons", "target audience", "prerequisites", "metadata"],
+  },
+  {
+    id: "v1131-features",
+    title: "Version 1.13.1 Features",
+    section: "New in v1.13.1",
+    content: `Claude Insider v1.13.1 introduces universal UI design tokens for consistent light/dark theming. Universal Design Tokens: Migrated from dash-* to ui-* prefix (ui-bg-page, ui-bg-card, ui-border, ui-text-heading, ui-text-body, ui-text-secondary, ui-text-muted, ui-text-link). Light Mode Support: All tokens now work seamlessly in both light and dark themes with proper contrast. Vercel Blacks Alignment: Updated all colors to match CLAUDE.md specification using Vercel's black palette (#0a0a0a page, #111111 card, #1a1a1a elevated, #262626 borders, #333333 dividers). Design System Page Updates: Fixed PRIMARY_GRADIENT to use -600 values (violet-600, blue-600, cyan-600), updated typography scale to match CLAUDE.md, added link color documentation. Status Tokens: Added ui-status-success, ui-status-warning, ui-status-error, ui-status-info for consistent status indicators. CLAUDE.md updated with new UI Design Tokens section documenting all token mappings.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.13.1", "design tokens", "ui-tokens", "light mode", "dark mode", "vercel blacks", "theming", "css tokens"],
   },
   {
     id: "v1130-features",

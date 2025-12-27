@@ -170,7 +170,7 @@ function PopularTags() {
             href={`/resources?tag=${encodeURIComponent(tag.name)}`}
             className={cn(
               'inline-flex items-center gap-1 px-3 py-1.5 rounded-full',
-              'bg-gray-100 dark:bg-gray-800',
+              'bg-gray-100 dark:bg-[#1a1a1a]',
               'text-gray-700 dark:text-gray-300 text-sm',
               'border border-transparent',
               'transition-all duration-200',
@@ -235,7 +235,7 @@ export function ResourcesSection() {
           >
             <SearchIcon className="w-5 h-5" />
             <span className="flex-1 text-left">Search resources...</span>
-            <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-xs text-gray-500 dark:text-gray-400 font-mono">
+            <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-gray-100 dark:bg-[#1a1a1a] text-xs text-gray-500 dark:text-gray-400 font-mono">
               ⌘K
             </kbd>
           </Link>

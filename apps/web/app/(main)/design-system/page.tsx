@@ -57,9 +57,9 @@ const SECTIONS: Section[] = [
 ];
 
 const PRIMARY_GRADIENT: ColorSwatch[] = [
-  { name: "Violet", value: "#8B5CF6", tailwind: "violet-500" },
-  { name: "Blue", value: "#3B82F6", tailwind: "blue-500" },
-  { name: "Cyan", value: "#06B6D4", tailwind: "cyan-500" },
+  { name: "Violet", value: "#7C3AED", tailwind: "violet-600" },
+  { name: "Blue", value: "#2563EB", tailwind: "blue-600" },
+  { name: "Cyan", value: "#0891B2", tailwind: "cyan-600" },
 ];
 
 const SEMANTIC_COLORS: ColorSwatch[] = [
@@ -86,14 +86,13 @@ const LIGHT_SURFACES: ColorSwatch[] = [
 ];
 
 const TYPOGRAPHY_SCALE = [
-  { name: "Display", size: "72px", weight: "Bold", lineHeight: "1.1", tailwind: "text-7xl font-bold", example: "Display" },
-  { name: "H1", size: "48px", weight: "Bold", lineHeight: "1.2", tailwind: "text-5xl font-bold", example: "Heading 1" },
-  { name: "H2", size: "36px", weight: "Semibold", lineHeight: "1.25", tailwind: "text-4xl font-semibold", example: "Heading 2" },
-  { name: "H3", size: "24px", weight: "Semibold", lineHeight: "1.3", tailwind: "text-2xl font-semibold", example: "Heading 3" },
-  { name: "H4", size: "20px", weight: "Medium", lineHeight: "1.4", tailwind: "text-xl font-medium", example: "Heading 4" },
-  { name: "Body Large", size: "18px", weight: "Regular", lineHeight: "1.6", tailwind: "text-lg", example: "Body text large for lead paragraphs" },
+  { name: "Display", size: "36px/60px", weight: "Bold", lineHeight: "1.1", tailwind: "text-4xl sm:text-6xl font-bold tracking-tight", example: "Display" },
+  { name: "H1", size: "30px", weight: "Bold", lineHeight: "1.2", tailwind: "text-3xl font-bold", example: "Heading 1" },
+  { name: "H2", size: "24px", weight: "Bold", lineHeight: "1.25", tailwind: "text-2xl font-bold", example: "Heading 2" },
+  { name: "H3", size: "18px", weight: "Semibold", lineHeight: "1.3", tailwind: "text-lg font-semibold", example: "Heading 3" },
   { name: "Body", size: "16px", weight: "Regular", lineHeight: "1.5", tailwind: "text-base", example: "Body text for main content" },
-  { name: "Small", size: "14px", weight: "Regular", lineHeight: "1.5", tailwind: "text-sm", example: "Small text for captions" },
+  { name: "Small", size: "14px", weight: "Regular", lineHeight: "1.5", tailwind: "text-sm", example: "Small text for secondary content" },
+  { name: "Caption", size: "12px", weight: "Regular", lineHeight: "1.5", tailwind: "text-xs", example: "Caption text for labels" },
   { name: "Mono", size: "14px", weight: "Regular", lineHeight: "1.5", tailwind: "font-mono text-sm", example: "const code = 'example';" },
 ];
 
@@ -426,6 +425,45 @@ background: linear-gradient(to right, #8B5CF6, #3B82F6, #06B6D4);`}
             </div>
           ))}
         </div>
+      </SubSection>
+
+      <SubSection title="Text & Link Colors">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+          <div className="p-4 rounded-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#262626]">
+            <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">Headings</p>
+            <p className="text-gray-900 dark:text-white font-semibold">Sample Text</p>
+            <p className="text-xs text-gray-500 mt-2">text-gray-900 / white</p>
+          </div>
+          <div className="p-4 rounded-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#262626]">
+            <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">Body Text</p>
+            <p className="text-gray-700 dark:text-gray-300">Sample Text</p>
+            <p className="text-xs text-gray-500 mt-2">text-gray-700 / gray-300</p>
+          </div>
+          <div className="p-4 rounded-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#262626]">
+            <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">Links</p>
+            <a href="#" className="text-blue-600 dark:text-cyan-400 hover:underline">Sample Link</a>
+            <p className="text-xs text-gray-500 mt-2">blue-600 / cyan-400</p>
+          </div>
+          <div className="p-4 rounded-lg bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#262626]">
+            <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">Secondary</p>
+            <p className="text-gray-600 dark:text-gray-400">Sample Text</p>
+            <p className="text-xs text-gray-500 mt-2">text-gray-600 / gray-400</p>
+          </div>
+        </div>
+        <CodeBlock
+          code={`// Heading text
+className="text-gray-900 dark:text-white"
+
+// Body text
+className="text-gray-700 dark:text-gray-300"
+
+// Links (accent color)
+className="text-blue-600 dark:text-cyan-400"
+
+// Secondary/muted text
+className="text-gray-600 dark:text-gray-400"`}
+          language="tsx"
+        />
       </SubSection>
     </SectionCard>
   );

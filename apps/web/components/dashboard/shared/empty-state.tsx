@@ -35,15 +35,15 @@ export function EmptyState({
       )}
     >
       {icon && (
-        <div className="mb-4 text-gray-500 dark:text-gray-400">
+        <div className="mb-4 ui-text-secondary">
           {icon}
         </div>
       )}
-      <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+      <p className="text-lg font-medium ui-text-body">
         {message}
       </p>
       {description && (
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 max-w-md">
+        <p className="mt-2 text-sm ui-text-secondary max-w-md">
           {description}
         </p>
       )}
@@ -62,7 +62,7 @@ interface EmptyStateInlineProps {
 
 export function EmptyStateInline({ message, className }: EmptyStateInlineProps) {
   return (
-    <p className={cn("py-8 text-center text-gray-500 dark:text-gray-400", className)}>
+    <p className={cn("py-8 text-center ui-text-secondary", className)}>
       {message}
     </p>
   );

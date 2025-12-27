@@ -58,7 +58,7 @@ const buttonVariants = {
   success: "bg-emerald-600 text-white hover:bg-emerald-700",
   danger: "bg-red-600 text-white hover:bg-red-700",
   warning: "bg-yellow-600 text-white hover:bg-yellow-700",
-  ghost: "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800",
+  ghost: "ui-btn-ghost",
 };
 
 export function ReviewModal({
@@ -111,7 +111,7 @@ export function ReviewModal({
       <div
         className={cn(
           "relative w-full rounded-xl",
-          "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800",
+          "ui-bg-modal border ui-border",
           "shadow-2xl",
           "overflow-hidden flex flex-col",
           sizeStyles[size]
@@ -125,8 +125,8 @@ export function ReviewModal({
         aria-labelledby="modal-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-          <h2 id="modal-title" className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className="flex items-center justify-between px-6 py-4 border-b ui-border">
+          <h2 id="modal-title" className="text-lg font-semibold ui-text-heading">
             {title}
           </h2>
           <button
@@ -134,7 +134,7 @@ export function ReviewModal({
             disabled={isLoading}
             className={cn(
               "p-1 rounded-lg transition-colors",
-              isLoading ? "text-gray-400 dark:text-gray-600 cursor-not-allowed" : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+              isLoading ? "ui-text-muted cursor-not-allowed" : "ui-text-secondary hover:ui-text-heading ui-btn-ghost"
             )}
             aria-label="Close modal"
           >
@@ -151,7 +151,7 @@ export function ReviewModal({
 
         {/* Footer */}
         {(primaryAction || secondaryAction || extraActions.length > 0) && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-gray-800">
+          <div className="flex items-center justify-between px-6 py-4 border-t ui-border">
             <div className="flex items-center gap-2">
               {extraActions.map((action, idx) => (
                 <button
@@ -265,7 +265,7 @@ export function ConfirmModal({
         },
       ]}
     >
-      <p className="text-gray-600 dark:text-gray-300">{message}</p>
+      <p className="ui-text-body">{message}</p>
     </ReviewModal>
   );
 }
@@ -282,8 +282,8 @@ interface DetailRowProps {
 export function DetailRow({ label, value, className }: DetailRowProps) {
   return (
     <div className={cn("flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4", className)}>
-      <span className="text-sm text-gray-500 dark:text-gray-400 sm:w-32 shrink-0">{label}</span>
-      <span className="text-sm text-gray-800 dark:text-gray-100">{value}</span>
+      <span className="text-sm ui-text-secondary sm:w-32 shrink-0">{label}</span>
+      <span className="text-sm ui-text-heading">{value}</span>
     </div>
   );
 }
@@ -310,7 +310,7 @@ export function NotesField({
 }: NotesFieldProps) {
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</label>
+      <label className="text-sm font-medium ui-text-body">{label}</label>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -318,11 +318,7 @@ export function NotesField({
         rows={rows}
         disabled={disabled}
         className={cn(
-          "w-full rounded-lg px-4 py-3 text-sm",
-          "bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700",
-          "text-gray-900 dark:text-gray-100 placeholder-gray-500",
-          "focus:outline-none focus:ring-2 focus:ring-blue-500",
-          "resize-none",
+          "w-full rounded-lg px-4 py-3 text-sm resize-none ui-input",
           disabled && "opacity-50 cursor-not-allowed"
         )}
       />

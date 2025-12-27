@@ -22,10 +22,10 @@ import {
 type Tab = "all" | "pending" | "investigating" | "action_taken" | "dismissed";
 
 const STATUS_CONFIG: Record<ReportStatus, { label: string; bgColor: string; color: string }> = {
-  pending: { label: "Pending", bgColor: "bg-yellow-900/30", color: "text-yellow-400" },
-  investigating: { label: "Investigating", bgColor: "bg-blue-900/30", color: "text-blue-400" },
-  action_taken: { label: "Action Taken", bgColor: "bg-emerald-900/30", color: "text-emerald-400" },
-  dismissed: { label: "Dismissed", bgColor: "bg-gray-800", color: "text-gray-400" },
+  pending: { label: "Pending", bgColor: "bg-yellow-100 dark:bg-yellow-900/30", color: "text-yellow-700 dark:text-yellow-400" },
+  investigating: { label: "Investigating", bgColor: "bg-blue-100 dark:bg-blue-900/30", color: "text-blue-700 dark:text-blue-400" },
+  action_taken: { label: "Action Taken", bgColor: "bg-emerald-100 dark:bg-emerald-900/30", color: "text-emerald-700 dark:text-emerald-400" },
+  dismissed: { label: "Dismissed", bgColor: "bg-gray-200 dark:bg-gray-800", color: "text-gray-600 dark:text-gray-400" },
 };
 
 const REASON_LABELS: Record<string, string> = {
@@ -139,8 +139,8 @@ export default function ReportsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-white">Reports</h2>
-        <p className="mt-1 text-sm text-gray-400">
+        <h2 className="text-2xl font-bold ui-text-heading">Reports</h2>
+        <p className="mt-1 text-sm ui-text-secondary">
           Review and manage user and comment reports
         </p>
       </div>
@@ -148,25 +148,25 @@ export default function ReportsPage() {
       {/* Stats */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="p-4 rounded-xl bg-gray-800/50 border border-gray-700">
-            <p className="text-2xl font-bold text-white">{stats.total}</p>
-            <p className="text-xs text-gray-400">Total Reports</p>
+          <div className="p-4 rounded-xl ui-bg-card-hover border ui-border">
+            <p className="text-2xl font-bold ui-text-heading">{stats.total}</p>
+            <p className="text-xs ui-text-secondary">Total Reports</p>
           </div>
-          <div className="p-4 rounded-xl bg-yellow-900/20 border border-yellow-500/30">
-            <p className="text-2xl font-bold text-yellow-400">{stats.pending}</p>
-            <p className="text-xs text-yellow-400/70">Pending</p>
+          <div className="p-4 rounded-xl ui-card-warning">
+            <p className="text-2xl font-bold text-yellow-700 dark:text-yellow-400">{stats.pending}</p>
+            <p className="text-xs text-yellow-600 dark:text-yellow-400/70">Pending</p>
           </div>
-          <div className="p-4 rounded-xl bg-blue-900/20 border border-blue-500/30">
-            <p className="text-2xl font-bold text-blue-400">{stats.investigating}</p>
-            <p className="text-xs text-blue-400/70">Investigating</p>
+          <div className="p-4 rounded-xl ui-card-info">
+            <p className="text-2xl font-bold text-blue-700 dark:text-blue-400">{stats.investigating}</p>
+            <p className="text-xs text-blue-600 dark:text-blue-400/70">Investigating</p>
           </div>
-          <div className="p-4 rounded-xl bg-emerald-900/20 border border-emerald-500/30">
-            <p className="text-2xl font-bold text-emerald-400">{stats.actionTaken}</p>
-            <p className="text-xs text-emerald-400/70">Action Taken</p>
+          <div className="p-4 rounded-xl bg-emerald-100 dark:bg-emerald-900/20 border border-emerald-300 dark:border-emerald-500/30">
+            <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">{stats.actionTaken}</p>
+            <p className="text-xs text-emerald-600 dark:text-emerald-400/70">Action Taken</p>
           </div>
-          <div className="p-4 rounded-xl bg-gray-800 border border-gray-700">
-            <p className="text-2xl font-bold text-gray-400">{stats.dismissed}</p>
-            <p className="text-xs text-gray-500">Dismissed</p>
+          <div className="p-4 rounded-xl ui-bg-skeleton border ui-border">
+            <p className="text-2xl font-bold ui-text-secondary">{stats.dismissed}</p>
+            <p className="text-xs ui-text-muted">Dismissed</p>
           </div>
         </div>
       )}
@@ -182,8 +182,8 @@ export default function ReportsPage() {
               className={cn(
                 "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
                 activeTab === tab
-                  ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                  : "text-gray-400 hover:text-white hover:bg-gray-800"
+                  ? "ui-filter-active border"
+                  : "ui-filter-inactive"
               )}
             >
               {tab === "all" ? "All" : tab === "action_taken" ? "Action Taken" : tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -197,7 +197,7 @@ export default function ReportsPage() {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value as ReportType | "all")}
-            className="px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-1.5 rounded-lg ui-select text-sm"
           >
             <option value="all">All Types</option>
             <option value="user">User Reports</option>
@@ -207,42 +207,42 @@ export default function ReportsPage() {
       </div>
 
       {/* Reports List */}
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
+      <div className="rounded-xl border ui-border ui-bg-card overflow-hidden">
         {isLoading ? (
           <div className="p-8 space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="h-20 bg-gray-800 rounded-lg animate-pulse" />
+              <div key={i} className="h-20 ui-bg-skeleton rounded-lg animate-pulse" />
             ))}
           </div>
         ) : reports.length === 0 ? (
           <div className="p-8 text-center">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center">
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full ui-bg-skeleton flex items-center justify-center">
+              <svg className="w-6 h-6 ui-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <p className="text-gray-500">No reports found</p>
+            <p className="ui-text-muted">No reports found</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-800">
+          <div className="ui-divide divide-y">
             {reports.map((report) => (
               <div
                 key={report.id}
                 onClick={() => openReport(report)}
-                className="p-4 hover:bg-gray-800/50 cursor-pointer transition-colors"
+                className="p-4 ui-hover-row cursor-pointer transition-colors"
               >
                 <div className="flex items-start gap-4">
                   {/* Type Icon */}
                   <div className={cn(
                     "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0",
-                    report.reportType === "user" ? "bg-violet-900/30" : "bg-cyan-900/30"
+                    report.reportType === "user" ? "bg-violet-100 dark:bg-violet-900/30" : "bg-cyan-100 dark:bg-cyan-900/30"
                   )}>
                     {report.reportType === "user" ? (
-                      <svg className="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     ) : (
-                      <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                       </svg>
                     )}
@@ -258,7 +258,7 @@ export default function ReportsPage() {
                       )}>
                         {STATUS_CONFIG[report.status].label}
                       </span>
-                      <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-900/30 text-red-400">
+                      <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
                         {REASON_LABELS[report.reason] || report.reason}
                       </span>
                       <span className="text-xs text-gray-500">
@@ -268,13 +268,13 @@ export default function ReportsPage() {
 
                     <div className="mt-2">
                       {report.reportType === "user" ? (
-                        <p className="text-sm text-white">
-                          <span className="text-gray-400">Reported user:</span>{" "}
+                        <p className="text-sm text-gray-900 dark:text-white">
+                          <span className="text-gray-600 dark:text-gray-400">Reported user:</span>{" "}
                           {report.reportedUserName || report.reportedUserEmail || "Unknown"}
                         </p>
                       ) : (
-                        <p className="text-sm text-white truncate">
-                          <span className="text-gray-400">Comment:</span>{" "}
+                        <p className="text-sm text-gray-900 dark:text-white truncate">
+                          <span className="text-gray-600 dark:text-gray-400">Comment:</span>{" "}
                           {report.reportedCommentContent?.slice(0, 100) || "Unknown comment"}
                         </p>
                       )}
@@ -284,14 +284,14 @@ export default function ReportsPage() {
                     </div>
 
                     {report.description && (
-                      <p className="mt-2 text-sm text-gray-400 line-clamp-2">
+                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
                         {report.description}
                       </p>
                     )}
                   </div>
 
                   {/* Arrow */}
-                  <svg className="w-5 h-5 text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-gray-400 dark:text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -308,36 +308,36 @@ export default function ReportsPage() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelectedReport(null)}
           />
-          <div className="relative w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-2xl ui-bg-modal border ui-border rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-6 flex items-center justify-between">
+            <div className="sticky top-0 ui-bg-modal border-b ui-border p-6 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className={cn(
                   "w-10 h-10 rounded-full flex items-center justify-center",
-                  selectedReport.reportType === "user" ? "bg-violet-900/30" : "bg-cyan-900/30"
+                  selectedReport.reportType === "user" ? "bg-violet-100 dark:bg-violet-900/30" : "bg-cyan-100 dark:bg-cyan-900/30"
                 )}>
                   {selectedReport.reportType === "user" ? (
-                    <svg className="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   ) : (
-                    <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
                   )}
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-semibold ui-text-heading">
                     {selectedReport.reportType === "user" ? "User Report" : "Comment Report"}
                   </h3>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm ui-text-secondary">
                     {new Date(selectedReport.createdAt).toLocaleString()}
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedReport(null)}
-                className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800"
+                className="p-2 rounded-lg ui-btn-ghost"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -356,30 +356,30 @@ export default function ReportsPage() {
                 )}>
                   {STATUS_CONFIG[selectedReport.status].label}
                 </span>
-                <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-900/30 text-red-400">
+                <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
                   {REASON_LABELS[selectedReport.reason] || selectedReport.reason}
                 </span>
               </div>
 
               {/* Reporter Info */}
-              <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
-                <h4 className="text-sm font-medium text-gray-400 mb-2">Reporter</h4>
-                <p className="text-white">{selectedReport.reporterName || "Unknown"}</p>
-                <p className="text-sm text-gray-500">{selectedReport.reporterEmail}</p>
+              <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
+                <h4 className="text-sm font-medium ui-text-secondary mb-2">Reporter</h4>
+                <p className="ui-text-heading">{selectedReport.reporterName || "Unknown"}</p>
+                <p className="text-sm ui-text-muted">{selectedReport.reporterEmail}</p>
               </div>
 
               {/* Reported Content */}
-              <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
-                <h4 className="text-sm font-medium text-gray-400 mb-2">
+              <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
+                <h4 className="text-sm font-medium ui-text-secondary mb-2">
                   {selectedReport.reportType === "user" ? "Reported User" : "Reported Comment"}
                 </h4>
                 {selectedReport.reportType === "user" ? (
                   <>
-                    <p className="text-white">{selectedReport.reportedUserName || "Unknown"}</p>
-                    <p className="text-sm text-gray-500">{selectedReport.reportedUserEmail}</p>
+                    <p className="ui-text-heading">{selectedReport.reportedUserName || "Unknown"}</p>
+                    <p className="text-sm ui-text-muted">{selectedReport.reportedUserEmail}</p>
                   </>
                 ) : (
-                  <p className="text-white whitespace-pre-wrap">
+                  <p className="ui-text-heading whitespace-pre-wrap">
                     {selectedReport.reportedCommentContent || "Comment not available"}
                   </p>
                 )}
@@ -387,45 +387,45 @@ export default function ReportsPage() {
 
               {/* Description */}
               {selectedReport.description && (
-                <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Reporter&apos;s Description</h4>
-                  <p className="text-white whitespace-pre-wrap">{selectedReport.description}</p>
+                <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
+                  <h4 className="text-sm font-medium ui-text-secondary mb-2">Reporter&apos;s Description</h4>
+                  <p className="ui-text-heading whitespace-pre-wrap">{selectedReport.description}</p>
                 </div>
               )}
 
               {/* Review Section */}
               {selectedReport.status !== "action_taken" && selectedReport.status !== "dismissed" && (
                 <>
-                  <div className="pt-4 border-t border-gray-800">
-                    <h4 className="text-sm font-medium text-gray-400 mb-3">Review Notes (internal)</h4>
+                  <div className="pt-4 border-t ui-border">
+                    <h4 className="text-sm font-medium ui-text-secondary mb-3">Review Notes (internal)</h4>
                     <textarea
                       value={reviewNotes}
                       onChange={(e) => setReviewNotes(e.target.value)}
                       placeholder="Add notes about your review..."
                       rows={2}
-                      className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="w-full px-3 py-2 rounded-lg ui-input text-sm"
                     />
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-medium text-gray-400 mb-3">Action Taken</h4>
+                    <h4 className="text-sm font-medium ui-text-secondary mb-3">Action Taken</h4>
                     <input
                       type="text"
                       value={actionTaken}
                       onChange={(e) => setActionTaken(e.target.value)}
                       placeholder="e.g., Warning issued, Comment hidden, User banned..."
-                      className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="w-full px-3 py-2 rounded-lg ui-input text-sm"
                     />
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-medium text-gray-400 mb-3">Message to Reporter</h4>
+                    <h4 className="text-sm font-medium ui-text-secondary mb-3">Message to Reporter</h4>
                     <textarea
                       value={reporterMessage}
                       onChange={(e) => setReporterMessage(e.target.value)}
                       placeholder="Optional message to send to the reporter..."
                       rows={2}
-                      className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      className="w-full px-3 py-2 rounded-lg ui-input text-sm"
                     />
                   </div>
 
@@ -460,27 +460,27 @@ export default function ReportsPage() {
 
               {/* Completed Review Info */}
               {(selectedReport.status === "action_taken" || selectedReport.status === "dismissed") && (
-                <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Review Completed</h4>
+                <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
+                  <h4 className="text-sm font-medium ui-text-secondary mb-2">Review Completed</h4>
                   {selectedReport.reviewedByName && (
-                    <p className="text-sm text-gray-300">
-                      <span className="text-gray-500">Reviewed by:</span> {selectedReport.reviewedByName}
+                    <p className="text-sm ui-text-body">
+                      <span className="ui-text-muted">Reviewed by:</span> {selectedReport.reviewedByName}
                     </p>
                   )}
                   {selectedReport.reviewedAt && (
-                    <p className="text-sm text-gray-300">
-                      <span className="text-gray-500">Reviewed at:</span>{" "}
+                    <p className="text-sm ui-text-body">
+                      <span className="ui-text-muted">Reviewed at:</span>{" "}
                       {new Date(selectedReport.reviewedAt).toLocaleString()}
                     </p>
                   )}
                   {selectedReport.actionTaken && (
-                    <p className="text-sm text-gray-300 mt-2">
-                      <span className="text-gray-500">Action:</span> {selectedReport.actionTaken}
+                    <p className="text-sm ui-text-body mt-2">
+                      <span className="ui-text-muted">Action:</span> {selectedReport.actionTaken}
                     </p>
                   )}
                   {selectedReport.reviewNotes && (
-                    <p className="text-sm text-gray-300 mt-2">
-                      <span className="text-gray-500">Notes:</span> {selectedReport.reviewNotes}
+                    <p className="text-sm ui-text-body mt-2">
+                      <span className="ui-text-muted">Notes:</span> {selectedReport.reviewNotes}
                     </p>
                   )}
                 </div>

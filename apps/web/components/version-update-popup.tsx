@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.1",
+    date: "2025-12-27",
+    type: "patch",
+    highlights: [
+      "🎨 Universal UI Design Tokens: Migrated from dash-* to ui-* prefix for site-wide theming",
+      "☀️ Light Mode Support: All tokens now work seamlessly in both light and dark themes",
+      "🔧 Vercel Blacks Alignment: Updated all colors to match CLAUDE.md (#0a0a0a, #111111, #262626)",
+      "📊 Design System Page: Updated gradients, typography scale, and link colors to match spec",
+    ],
+  },
+  {
     version: "1.13.0",
     date: "2025-12-27",
     type: "minor",

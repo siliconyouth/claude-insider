@@ -266,7 +266,7 @@ function UsersFilters({
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search by name or email..."
-          className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
       <div className="flex flex-wrap gap-2">
@@ -277,8 +277,8 @@ function UsersFilters({
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
               roleFilter === role
-                ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                : "text-gray-400 hover:text-white hover:bg-gray-800"
+                ? "bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 border border-blue-300 dark:border-blue-500/30"
+                : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
             )}
           >
             {role === "all" ? "All Roles" : role === "superadmin" ? "Super Admin" : role}
@@ -295,8 +295,8 @@ function UsersFilters({
               className={cn(
                 "px-2.5 py-1 rounded-lg text-xs font-medium transition-all",
                 betaFilter === value
-                  ? "bg-emerald-600/20 text-emerald-400 border border-emerald-500/30"
-                  : "text-gray-400 hover:text-white hover:bg-gray-800"
+                  ? "bg-emerald-100 dark:bg-emerald-600/20 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30"
+                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
               )}
             >
               {value === "all" ? "All" : value === "yes" ? "✓ Beta" : "No Beta"}
@@ -322,9 +322,9 @@ function UsersTable({
 }) {
   if (isLoading) {
     return (
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-8 space-y-4">
+      <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 p-8 space-y-4">
         {[1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
+          <div key={i} className="h-16 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse" />
         ))}
       </div>
     );
@@ -332,7 +332,7 @@ function UsersTable({
 
   if (users.length === 0) {
     return (
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50">
+      <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
         <EmptyState
           icon={<UserIcon />}
           message={search ? "No users found matching your search" : "No users found"}
@@ -342,18 +342,18 @@ function UsersTable({
   }
 
   return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
+    <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-800/50">
+          <thead className="bg-gray-100 dark:bg-gray-800/50">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">User</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Role</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Joined</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">User</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Role</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Status</th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">Joined</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-800">
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
             {users.map((user) => (
               <UserRow key={user.id} user={user} onClick={() => onSelectUser(user.id)} />
             ))}
@@ -367,12 +367,12 @@ function UsersTable({
 // User row component
 function UserRow({ user, onClick }: { user: AdminUserListItem; onClick: () => void }) {
   return (
-    <tr className="hover:bg-gray-800/50 cursor-pointer transition-colors" onClick={onClick}>
+    <tr className="hover:bg-gray-100 dark:hover:bg-gray-800/50 cursor-pointer transition-colors" onClick={onClick}>
       <td className="px-4 py-4">
         <div className="flex items-center gap-3">
           <UserAvatar user={user} />
           <div>
-            <p className="text-sm font-medium text-white">{user.name || "—"}</p>
+            <p className="text-sm font-medium text-gray-900 dark:text-white">{user.name || "—"}</p>
             <p className="text-xs text-gray-500">{user.email}</p>
           </div>
         </div>
@@ -387,7 +387,7 @@ function UserRow({ user, onClick }: { user: AdminUserListItem; onClick: () => vo
           {user.emailVerified && <StatusBadge color="blue">Verified</StatusBadge>}
         </div>
       </td>
-      <td className="px-4 py-4 text-sm text-gray-400">
+      <td className="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">
         {new Date(user.createdAt).toLocaleDateString()}
       </td>
     </tr>
@@ -435,7 +435,7 @@ function UserDetailModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
         {isLoading ? (
           <div className="p-8 flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
@@ -443,15 +443,15 @@ function UserDetailModal({
         ) : user ? (
           <>
             {/* Header */}
-            <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-6 flex items-center justify-between">
+            <div className="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 p-6 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <UserAvatar user={user} size="lg" />
                 <div>
-                  <h3 className="text-lg font-semibold text-white">{user.name}</h3>
-                  <p className="text-sm text-gray-400">{user.email}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{user.name}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{user.email}</p>
                 </div>
               </div>
-              <button onClick={onClose} className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800">
+              <button onClick={onClose} className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800">
                 <CloseIcon />
               </button>
             </div>
@@ -527,8 +527,8 @@ function RoleSection({
   onRoleChange: (role: UserRole) => void;
 }) {
   return (
-    <div className="pt-4 border-t border-gray-800">
-      <label className="block text-sm font-medium text-gray-400 mb-3">Change Role</label>
+    <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+      <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Change Role</label>
       <div className="flex flex-wrap gap-2">
         {getAssignableRoles(currentUserRole).map((role) => (
           <button
@@ -539,7 +539,7 @@ function RoleSection({
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
               selectedRole === role
                 ? "bg-blue-600 text-white cursor-default"
-                : "bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700 disabled:opacity-50"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50"
             )}
           >
             {ROLE_INFO[role]?.label || role}
@@ -576,13 +576,13 @@ function BanSection({
   onSetModalView: (view: ModalView) => void;
 }) {
   return (
-    <div className="pt-4 border-t border-gray-800">
-      <label className="block text-sm font-medium text-gray-400 mb-3">Ban Management</label>
+    <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+      <label className="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Ban Management</label>
 
       {modalView === "ban" ? (
         <div className="space-y-4">
-          <div className="p-4 rounded-lg bg-red-900/20 border border-red-500/30">
-            <p className="text-sm text-red-400 mb-3">
+          <div className="p-4 rounded-lg bg-red-100 dark:bg-red-900/20 border border-red-300 dark:border-red-500/30">
+            <p className="text-sm text-red-700 dark:text-red-400 mb-3">
               You are about to ban <span className="font-semibold">{user.name || user.email}</span>.
               They will be logged out and unable to access their account.
             </p>
@@ -591,7 +591,7 @@ function BanSection({
               onChange={(e) => onBanReasonChange(e.target.value)}
               placeholder="Enter the reason for banning this user..."
               rows={3}
-              className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
+              className="w-full px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 text-sm"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -604,7 +604,7 @@ function BanSection({
             </button>
             <button
               onClick={() => { onSetModalView("view"); onBanReasonChange(""); }}
-              className="px-4 py-2 rounded-lg bg-gray-800 text-gray-400 text-sm font-medium hover:text-white hover:bg-gray-700"
+              className="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-sm font-medium hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
             >
               Cancel
             </button>
@@ -612,8 +612,8 @@ function BanSection({
         </div>
       ) : user.banned ? (
         <div className="space-y-3">
-          <div className="p-3 rounded-lg bg-red-900/20 border border-red-500/30">
-            <p className="text-sm text-red-400">
+          <div className="p-3 rounded-lg bg-red-100 dark:bg-red-900/20 border border-red-300 dark:border-red-500/30">
+            <p className="text-sm text-red-700 dark:text-red-400">
               <span className="font-semibold">Ban Reason:</span> {user.banReason || "No reason provided"}
             </p>
           </div>
@@ -629,7 +629,7 @@ function BanSection({
         <button
           onClick={() => onSetModalView("ban")}
           disabled={isUpdating}
-          className="px-4 py-2 rounded-lg bg-red-600/20 text-red-400 text-sm font-medium border border-red-500/30 hover:bg-red-600/30 disabled:opacity-50"
+          className="px-4 py-2 rounded-lg bg-red-100 dark:bg-red-600/20 text-red-700 dark:text-red-400 text-sm font-medium border border-red-300 dark:border-red-500/30 hover:bg-red-200 dark:hover:bg-red-600/30 disabled:opacity-50"
         >
           Ban User
         </button>
@@ -653,10 +653,10 @@ function ActivitySection({
   onToggle: () => void;
 }) {
   return (
-    <div className="pt-4 border-t border-gray-800">
+    <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
       <div className="flex items-center justify-between mb-3">
-        <label className="text-sm font-medium text-gray-400">Activity & History</label>
-        <button onClick={onToggle} className="text-sm text-blue-400 hover:text-blue-300">
+        <label className="text-sm font-medium text-gray-600 dark:text-gray-400">Activity & History</label>
+        <button onClick={onToggle} className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
           {showActivity ? "Hide" : "Show"}
         </button>
       </div>
@@ -670,12 +670,12 @@ function ActivitySection({
           ) : (
             <>
               {stats && (
-                <div className="bg-gray-800/50 rounded-lg p-4">
+                <div className="bg-gray-100 dark:bg-gray-800/50 rounded-lg p-4">
                   <ActivityStats stats={stats} showPrivate={true} />
                 </div>
               )}
-              <div className="bg-gray-800/50 rounded-lg p-4 max-h-[300px] overflow-y-auto">
-                <h4 className="text-sm font-medium text-gray-400 mb-3">Recent Activity</h4>
+              <div className="bg-gray-100 dark:bg-gray-800/50 rounded-lg p-4 max-h-[300px] overflow-y-auto">
+                <h4 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Recent Activity</h4>
                 <ActivityTimeline activities={activities} emptyMessage="No activity recorded" compact={true} />
               </div>
             </>
@@ -693,15 +693,15 @@ function Pagination({ page, totalPages, onPageChange }: { page: number; totalPag
       <button
         onClick={() => onPageChange(Math.max(1, page - 1))}
         disabled={page === 1}
-        className="px-3 py-1 rounded text-sm text-gray-400 hover:text-white disabled:opacity-50"
+        className="px-3 py-1 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-50"
       >
         Previous
       </button>
-      <span className="text-sm text-gray-400">Page {page} of {totalPages}</span>
+      <span className="text-sm text-gray-600 dark:text-gray-400">Page {page} of {totalPages}</span>
       <button
         onClick={() => onPageChange(Math.min(totalPages, page + 1))}
         disabled={page === totalPages}
-        className="px-3 py-1 rounded text-sm text-gray-400 hover:text-white disabled:opacity-50"
+        className="px-3 py-1 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white disabled:opacity-50"
       >
         Next
       </button>
@@ -712,21 +712,21 @@ function Pagination({ page, totalPages, onPageChange }: { page: number; totalPag
 // Beta application card
 function BetaApplicationCard({ application }: { application: { status: string; motivation: string } }) {
   return (
-    <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700">
-      <h4 className="text-sm font-medium text-gray-400 mb-2">Beta Application</h4>
+    <div className="p-4 rounded-lg bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+      <h4 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Beta Application</h4>
       <div className="space-y-2 text-sm">
         <div className="flex items-center gap-2">
           <span className="text-gray-500">Status:</span>
           <span className={cn(
             "px-2 py-0.5 rounded text-xs font-medium",
-            application.status === "approved" ? "bg-emerald-900/30 text-emerald-400" :
-            application.status === "rejected" ? "bg-red-900/30 text-red-400" :
-            "bg-yellow-900/30 text-yellow-400"
+            application.status === "approved" ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400" :
+            application.status === "rejected" ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400" :
+            "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400"
           )}>
             {application.status}
           </span>
         </div>
-        <p className="text-gray-400">{application.motivation}</p>
+        <p className="text-gray-600 dark:text-gray-400">{application.motivation}</p>
       </div>
     </div>
   );
@@ -755,10 +755,10 @@ function RoleBadge({ role }: { role: UserRole }) {
 
 function StatusBadge({ color, children }: { color: "red" | "emerald" | "blue" | "gray"; children: React.ReactNode }) {
   const colors = {
-    red: "bg-red-900/30 text-red-400",
-    emerald: "bg-emerald-900/30 text-emerald-400",
-    blue: "bg-blue-900/30 text-blue-400",
-    gray: "bg-gray-800 text-gray-400",
+    red: "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400",
+    emerald: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400",
+    blue: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400",
+    gray: "bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400",
   };
   return <span className={cn("px-2 py-0.5 rounded text-xs font-medium", colors[color])}>{children}</span>;
 }
@@ -767,7 +767,7 @@ function InfoField({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <label className="text-gray-500">{label}</label>
-      <p className="text-white capitalize">{value}</p>
+      <p className="text-gray-900 dark:text-white capitalize">{value}</p>
     </div>
   );
 }

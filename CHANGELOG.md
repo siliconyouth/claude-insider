@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.1] - 2025-12-27
+### Design Token System & Light Mode Support
+- **Universal Design Tokens**: Migrated from `dash-*` to `ui-*` tokens
+  - Renamed all dashboard-specific tokens to universal `ui-*` prefix
+  - Tokens now work across entire site (not just dashboard)
+  - Added status color tokens: `ui-status-success`, `ui-status-warning`, `ui-status-error`, `ui-status-info`
+- **Vercel Blacks Alignment**: Updated tokens to match CLAUDE.md specification
+  - Page background: `bg-white dark:bg-[#0a0a0a]`
+  - Card/surfaces: `bg-gray-50 dark:bg-[#111111]`
+  - Borders: `border-gray-200 dark:border-[#262626]`
+  - Links: `text-blue-600 dark:text-cyan-400`
+- **Light Mode Fixes**: Fixed 26 files with dark-only patterns
+  - Dashboard modals (donations, exports, prompts, doc-versions)
+  - Legal pages (terms, privacy, accessibility, disclaimer)
+  - Homepage components (resources, categories, highlights)
+  - Dashboard shared components (6 files)
+- **Design System Page Updates**: Aligned `/design-system` with CLAUDE.md
+  - Fixed primary gradient to use `-600` values (was `-500`)
+  - Updated typography scale to match CLAUDE.md
+  - Added Text & Link Colors documentation section
+
+---
+
 ## [1.13.0] - 2025-12-27
 ### Comprehensive Admin Settings System
 - **SEO Dashboard**: New admin dashboard page for SEO management

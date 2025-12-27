@@ -536,7 +536,7 @@ export default function DonationsDashboardPage() {
       {/* Resend Thank You Modal */}
       {resendModal.isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl bg-gray-900 border border-gray-800 p-6 shadow-2xl">
+          <div className="w-full max-w-md rounded-2xl ui-bg-modal border ui-border p-6 shadow-2xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-600 to-blue-600 flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -544,8 +544,8 @@ export default function DonationsDashboardPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-white">Send Thank You Email</h3>
-                <p className="text-sm text-gray-400">
+                <h3 className="text-lg font-semibold ui-text-heading">Send Thank You Email</h3>
+                <p className="text-sm ui-text-secondary">
                   Donation: {formatDonationAmount(resendModal.amount, resendModal.currency)}
                 </p>
               </div>
@@ -553,30 +553,30 @@ export default function DonationsDashboardPage() {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                <label className="block text-sm font-medium ui-text-body mb-1.5">
                   Donor Email <span className="text-red-400">*</span>
                 </label>
                 <input
                   type="email"
                   value={resendModal.donorEmail}
                   onChange={(e) => setResendModal({ ...resendModal, donorEmail: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 rounded-lg ui-input"
                   placeholder="donor@example.com"
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs ui-text-muted">
                   This will also update the donation record with this email.
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                <label className="block text-sm font-medium ui-text-body mb-1.5">
                   Donor Name (optional)
                 </label>
                 <input
                   type="text"
                   value={resendModal.donorName}
                   onChange={(e) => setResendModal({ ...resendModal, donorName: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2.5 rounded-lg ui-input"
                   placeholder="Jane Doe"
                 />
               </div>
@@ -585,7 +585,7 @@ export default function DonationsDashboardPage() {
             <div className="flex items-center gap-3 mt-6">
               <button
                 onClick={() => setResendModal({ ...resendModal, isOpen: false })}
-                className="flex-1 px-4 py-2.5 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors font-medium"
+                className="flex-1 px-4 py-2.5 rounded-lg ui-btn-secondary font-medium"
               >
                 Cancel
               </button>

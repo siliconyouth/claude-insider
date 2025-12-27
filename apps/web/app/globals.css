@@ -173,6 +173,173 @@ body {
 .text-ds-text-muted { color: rgb(var(--ds-text-muted)); }
 
 /* ============================================
+   UNIVERSAL UI DESIGN TOKENS
+   Theme-aware semantic classes for the entire site.
+   These automatically switch between light/dark modes.
+   ============================================ */
+
+/* === UI Backgrounds === */
+/* CLAUDE.md Theme: Light=bg-white, Dark=bg-[#0a0a0a] for page */
+.ui-bg-page {
+  @apply bg-white dark:bg-[#0a0a0a];
+}
+/* CLAUDE.md Theme: Light=bg-gray-50, Dark=bg-[#111111] for cards */
+.ui-bg-card {
+  @apply bg-gray-50 dark:bg-[#111111];
+}
+.ui-bg-card-hover {
+  @apply bg-gray-100 dark:bg-[#1a1a1a];
+}
+.ui-bg-input {
+  @apply bg-gray-50 dark:bg-[#1a1a1a];
+}
+.ui-bg-skeleton {
+  @apply bg-gray-200 dark:bg-[#262626];
+}
+.ui-bg-table-header {
+  @apply bg-gray-100 dark:bg-[#111111];
+}
+.ui-bg-modal {
+  @apply bg-white dark:bg-[#111111];
+}
+
+/* === UI Borders === */
+/* CLAUDE.md Theme: Light=border-gray-200, Dark=border-[#262626] */
+.ui-border {
+  @apply border-gray-200 dark:border-[#262626];
+}
+.ui-border-input {
+  @apply border-gray-300 dark:border-[#333333];
+}
+.ui-border-hover {
+  @apply border-gray-300 dark:border-[#333333];
+}
+.ui-divide {
+  @apply divide-gray-200 dark:divide-[#262626];
+}
+
+/* === UI Text === */
+.ui-text-heading {
+  @apply text-gray-900 dark:text-white;
+}
+.ui-text-body {
+  @apply text-gray-700 dark:text-gray-300;
+}
+.ui-text-secondary {
+  @apply text-gray-600 dark:text-gray-400;
+}
+.ui-text-muted {
+  @apply text-gray-500;
+}
+/* CLAUDE.md Theme: Light=text-blue-600, Dark=text-cyan-400 */
+.ui-text-link {
+  @apply text-blue-600 dark:text-cyan-400 hover:text-blue-700 dark:hover:text-cyan-300;
+}
+
+/* === UI Interactive States === */
+.ui-hover-row {
+  @apply hover:bg-gray-100 dark:hover:bg-[#1a1a1a];
+}
+.ui-hover-button {
+  @apply hover:bg-gray-100 dark:hover:bg-[#1a1a1a] hover:text-gray-900 dark:hover:text-white;
+}
+
+/* === UI Form Elements === */
+.ui-input {
+  @apply bg-gray-50 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#333333]
+         text-gray-900 dark:text-white placeholder-gray-500
+         focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+.ui-select {
+  @apply bg-white dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#333333]
+         text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+/* === UI Status Badges (Semantic Colors) === */
+.ui-badge-pending {
+  @apply bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400
+         border border-yellow-300 dark:border-yellow-500/30;
+}
+.ui-badge-success {
+  @apply bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400
+         border border-emerald-300 dark:border-emerald-500/30;
+}
+.ui-badge-error {
+  @apply bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400
+         border border-red-300 dark:border-red-500/30;
+}
+.ui-badge-info {
+  @apply bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400
+         border border-blue-300 dark:border-blue-500/30;
+}
+.ui-badge-neutral {
+  @apply bg-gray-200 dark:bg-[#1a1a1a] text-gray-600 dark:text-gray-400
+         border border-gray-300 dark:border-[#333333];
+}
+
+/* === UI Filter Buttons === */
+.ui-filter-active {
+  @apply bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400
+         border border-blue-300 dark:border-blue-500/30;
+}
+.ui-filter-inactive {
+  @apply text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white
+         hover:bg-gray-100 dark:hover:bg-[#1a1a1a];
+}
+
+/* === UI Cards with Status Colors === */
+.ui-card-warning {
+  @apply bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-500/30;
+}
+.ui-card-danger {
+  @apply bg-red-100 dark:bg-red-900/20 border border-red-300 dark:border-red-500/30;
+}
+.ui-card-info {
+  @apply bg-blue-100 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-500/30;
+}
+
+/* === UI Close/Action Buttons === */
+.ui-btn-ghost {
+  @apply text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white
+         hover:bg-gray-100 dark:hover:bg-[#1a1a1a];
+}
+.ui-btn-secondary {
+  @apply bg-gray-100 dark:bg-[#1a1a1a] text-gray-600 dark:text-gray-400
+         hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-[#262626];
+}
+
+/* === UI Status Colors (standalone, for inline use) === */
+.ui-status-success {
+  @apply bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400
+         border-emerald-300 dark:border-emerald-500/30;
+}
+.ui-status-warning {
+  @apply bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400
+         border-yellow-300 dark:border-yellow-500/30;
+}
+.ui-status-error {
+  @apply bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400
+         border-red-300 dark:border-red-500/30;
+}
+.ui-status-info {
+  @apply bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400
+         border-blue-300 dark:border-blue-500/30;
+}
+.ui-status-pending {
+  @apply bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400
+         border-yellow-300 dark:border-yellow-500/30;
+}
+.ui-status-neutral {
+  @apply bg-gray-100 dark:bg-[#1a1a1a] text-gray-600 dark:text-gray-400
+         border-gray-300 dark:border-[#333333];
+}
+
+/* === UI Prose (for MDX/legal content) === */
+.ui-prose {
+  @apply prose dark:prose-invert prose-blue dark:prose-cyan max-w-none;
+}
+
+/* ============================================
    SCROLLBAR (Subtle, Vercel-style)
    ============================================ */
 

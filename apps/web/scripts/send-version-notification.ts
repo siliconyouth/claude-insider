@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.13.0 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.13.1 notification to all opted-in users...\n");
 
-  const version = "1.13.0";
-  const title = "Claude Insider v1.13.0 - Admin Settings & Role-Based Access";
+  const version = "1.13.1";
+  const title = "Claude Insider v1.13.1 - Design Token System & Light Mode";
   const message =
-    "⚙️ Comprehensive Admin Settings with 44 sections across 5 Payload globals • 🔐 Role-Based Access Control with createRoleAccess() factory • 📊 SEO Dashboard with 9 configuration sections • 🎯 Enhanced Payload Globals with proper Admin+/Superadmin restrictions";
+    "🎨 Universal UI Design Tokens: Migrated from dash-* to ui-* tokens • ☀️ Light Mode Support: All tokens now work in both light and dark themes • 🔧 Vercel Blacks: Aligned all colors with CLAUDE.md specification (#0a0a0a, #111111, #262626) • 📊 Design System Page: Updated to match CLAUDE.md gradients and typography";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

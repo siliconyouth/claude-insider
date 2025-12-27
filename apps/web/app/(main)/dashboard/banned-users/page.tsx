@@ -29,11 +29,11 @@ import {
 type TabView = "banned" | "appeals";
 type AppealFilter = "all" | "pending" | "approved" | "rejected";
 
-// Status styles for appeals
+// Status styles for appeals (with light mode support)
 const APPEAL_STATUS = {
-  pending: { bg: "bg-yellow-900/30", text: "text-yellow-400", label: "Pending" },
-  approved: { bg: "bg-green-900/30", text: "text-green-400", label: "Approved" },
-  rejected: { bg: "bg-red-900/30", text: "text-red-400", label: "Rejected" },
+  pending: { bg: "bg-yellow-100 dark:bg-yellow-900/30", text: "text-yellow-700 dark:text-yellow-400", label: "Pending" },
+  approved: { bg: "bg-emerald-100 dark:bg-emerald-900/30", text: "text-emerald-700 dark:text-emerald-400", label: "Approved" },
+  rejected: { bg: "bg-red-100 dark:bg-red-900/30", text: "text-red-700 dark:text-red-400", label: "Rejected" },
 };
 
 export default function BannedUsersPage() {
@@ -139,7 +139,7 @@ export default function BannedUsersPage() {
       />
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-800">
+      <div className="flex gap-2 border-b ui-border">
         <TabButton
           active={activeTab === "appeals"}
           onClick={() => setActiveTab("appeals")}
@@ -259,13 +259,13 @@ function TabButton({
       className={cn(
         "px-4 py-2 text-sm font-medium border-b-2 transition-colors",
         active
-          ? "border-blue-500 text-blue-400"
-          : "border-transparent text-gray-400 hover:text-white"
+          ? "border-blue-500 text-blue-600 dark:text-blue-400"
+          : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
       )}
     >
       {children}
       {badge !== undefined && badge > 0 && (
-        <span className="ml-2 px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-500/20 text-yellow-400">
+        <span className="ml-2 px-2 py-0.5 text-xs font-semibold rounded-full bg-yellow-100 dark:bg-yellow-500/20 text-yellow-700 dark:text-yellow-400">
           {badge}
         </span>
       )}
@@ -298,8 +298,8 @@ function AppealsTab({
             className={cn(
               "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
               filter === f
-                ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                : "text-gray-400 hover:text-white hover:bg-gray-800"
+                ? "ui-filter-active border"
+                : "ui-filter-inactive"
             )}
           >
             {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -312,7 +312,7 @@ function AppealsTab({
         {isLoading ? (
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-32 bg-gray-800 rounded-xl animate-pulse" />
+              <div key={i} className="h-32 ui-bg-skeleton rounded-xl animate-pulse" />
             ))}
           </div>
         ) : appeals.length === 0 ? (
@@ -335,35 +335,35 @@ function AppealCard({ appeal, onReview }: { appeal: BanAppeal; onReview: () => v
   const status = APPEAL_STATUS[appeal.status as keyof typeof APPEAL_STATUS] || APPEAL_STATUS.pending;
 
   return (
-    <div className={cn("p-4 rounded-xl", "bg-gray-900/50 border border-gray-800", "hover:border-gray-700 transition-colors")}>
+    <div className={cn("p-4 rounded-xl", "ui-bg-card border ui-border", "hover:border-gray-300 dark:hover:border-gray-700 transition-colors")}>
       <div className="flex items-start gap-4">
         <UserAvatar user={appeal.user} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-medium text-white">{appeal.user?.name || "Unknown User"}</span>
+            <span className="font-medium ui-text-heading">{appeal.user?.name || "Unknown User"}</span>
             <span className={cn("px-2 py-0.5 rounded text-xs font-medium", status.bg, status.text)}>
               {status.label}
             </span>
           </div>
-          <p className="text-sm text-gray-400 mb-1">{appeal.user?.email}</p>
+          <p className="text-sm ui-text-secondary mb-1">{appeal.user?.email}</p>
 
           {appeal.user?.banReason && (
-            <div className="text-xs text-gray-500 mb-2">
+            <div className="text-xs ui-text-muted mb-2">
               <span className="font-medium">Ban reason:</span> {appeal.user.banReason}
             </div>
           )}
 
-          <div className="p-3 rounded-lg bg-gray-800/50 mb-2">
-            <p className="text-sm text-gray-300">{appeal.reason}</p>
+          <div className="p-3 rounded-lg ui-bg-skeleton mb-2">
+            <p className="text-sm ui-text-body">{appeal.reason}</p>
             {appeal.additionalContext && (
-              <div className="mt-2 pt-2 border-t border-gray-700">
-                <p className="text-xs text-gray-500 mb-1">Additional context:</p>
-                <p className="text-sm text-gray-400">{appeal.additionalContext}</p>
+              <div className="mt-2 pt-2 border-t ui-border">
+                <p className="text-xs ui-text-muted mb-1">Additional context:</p>
+                <p className="text-sm ui-text-secondary">{appeal.additionalContext}</p>
               </div>
             )}
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-gray-500">
+          <div className="flex items-center gap-4 text-xs ui-text-muted">
             <span>Submitted {new Date(appeal.createdAt).toLocaleDateString()}</span>
             {appeal.reviewedAt && <span>Reviewed {new Date(appeal.reviewedAt).toLocaleDateString()}</span>}
           </div>
@@ -398,9 +398,9 @@ function BannedUsersTab({
 }) {
   if (isLoading) {
     return (
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-8 space-y-4">
+      <div className="rounded-xl border ui-border ui-bg-card p-8 space-y-4">
         {[1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
+          <div key={i} className="h-16 ui-bg-skeleton rounded-lg animate-pulse" />
         ))}
       </div>
     );
@@ -408,26 +408,26 @@ function BannedUsersTab({
 
   if (users.length === 0) {
     return (
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50">
+      <div className="rounded-xl border ui-border ui-bg-card">
         <EmptyState icon={<BannedIcon />} message="No banned users" />
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
+    <div className="rounded-xl border ui-border ui-bg-card overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-800/50">
+          <thead className="ui-bg-skeleton">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">User</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Ban Reason</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Banned</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Appeals</th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
+              <th className="px-4 py-3 text-left text-xs font-medium ui-text-secondary uppercase tracking-wider">User</th>
+              <th className="px-4 py-3 text-left text-xs font-medium ui-text-secondary uppercase tracking-wider">Ban Reason</th>
+              <th className="px-4 py-3 text-left text-xs font-medium ui-text-secondary uppercase tracking-wider">Banned</th>
+              <th className="px-4 py-3 text-left text-xs font-medium ui-text-secondary uppercase tracking-wider">Appeals</th>
+              <th className="px-4 py-3 text-right text-xs font-medium ui-text-secondary uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-800">
+          <tbody className="ui-divide divide-y">
             {users.map((user) => (
               <BannedUserRow key={user.id} user={user} onUnban={() => onUnban(user)} />
             ))}
@@ -441,28 +441,28 @@ function BannedUsersTab({
 // Banned user row component
 function BannedUserRow({ user, onUnban }: { user: BannedUser; onUnban: () => void }) {
   return (
-    <tr className="hover:bg-gray-800/50 transition-colors">
+    <tr className="ui-hover-row transition-colors">
       <td className="px-4 py-4">
         <div className="flex items-center gap-3">
           <UserAvatar user={user} />
           <div>
-            <p className="text-sm font-medium text-white">{user.name || "—"}</p>
-            <p className="text-xs text-gray-500">{user.email}</p>
+            <p className="text-sm font-medium ui-text-heading">{user.name || "—"}</p>
+            <p className="text-xs ui-text-muted">{user.email}</p>
           </div>
         </div>
       </td>
       <td className="px-4 py-4">
-        <p className="text-sm text-gray-400 line-clamp-2 max-w-xs">{user.banReason || "No reason provided"}</p>
+        <p className="text-sm ui-text-secondary line-clamp-2 max-w-xs">{user.banReason || "No reason provided"}</p>
       </td>
-      <td className="px-4 py-4 text-sm text-gray-400">
+      <td className="px-4 py-4 text-sm ui-text-secondary">
         {user.bannedAt ? new Date(user.bannedAt).toLocaleDateString() : "—"}
-        {user.bannedByName && <p className="text-xs text-gray-500">by {user.bannedByName}</p>}
+        {user.bannedByName && <p className="text-xs ui-text-muted">by {user.bannedByName}</p>}
       </td>
       <td className="px-4 py-4">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-400">{user.appealCount}</span>
+          <span className="text-sm ui-text-secondary">{user.appealCount}</span>
           {user.latestAppealStatus === "pending" && (
-            <span className="px-2 py-0.5 text-xs font-medium rounded bg-yellow-900/30 text-yellow-400">Pending</span>
+            <span className="px-2 py-0.5 text-xs font-medium rounded bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">Pending</span>
           )}
         </div>
       </td>
@@ -471,7 +471,7 @@ function BannedUserRow({ user, onUnban }: { user: BannedUser; onUnban: () => voi
           onClick={onUnban}
           className={cn(
             "px-3 py-1.5 rounded-lg text-sm font-medium",
-            "bg-green-600/20 text-green-400 hover:bg-green-600/30 transition-colors"
+            "bg-emerald-100 dark:bg-green-600/20 text-emerald-700 dark:text-green-400 hover:bg-emerald-200 dark:hover:bg-green-600/30 transition-colors"
           )}
         >
           Unban

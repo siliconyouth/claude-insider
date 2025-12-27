@@ -65,23 +65,23 @@ export function StatCard({
     <div
       className={cn(
         "rounded-xl p-4 sm:p-6",
-        "bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800",
-        "hover:border-gray-300 dark:hover:border-gray-700 transition-colors",
+        "ui-bg-card border ui-border",
+        "hover:ui-bg-card-hover transition-colors",
         className
       )}
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
+          <p className="text-sm ui-text-secondary">{label}</p>
           <p className={cn("mt-1 text-2xl sm:text-3xl font-bold", styles.value)}>
             {typeof value === "number" ? value.toLocaleString() : value}
           </p>
           {description && (
-            <p className="mt-1 text-xs text-gray-500">{description}</p>
+            <p className="mt-1 text-xs ui-text-muted">{description}</p>
           )}
         </div>
         {icon && (
-          <div className={cn("p-2 rounded-lg bg-gray-100 dark:bg-gray-800/50", styles.icon)}>
+          <div className={cn("p-2 rounded-lg ui-bg-skeleton", styles.icon)}>
             {icon}
           </div>
         )}
@@ -91,14 +91,14 @@ export function StatCard({
           <span
             className={cn(
               "text-xs font-medium",
-              trend.value > 0 ? "text-emerald-600 dark:text-emerald-400" : trend.value < 0 ? "text-red-600 dark:text-red-400" : "text-gray-500 dark:text-gray-400"
+              trend.value > 0 ? "text-emerald-600 dark:text-emerald-400" : trend.value < 0 ? "text-red-600 dark:text-red-400" : "ui-text-muted"
             )}
           >
             {trend.value > 0 ? "+" : ""}
             {trend.value}%
           </span>
           {trend.label && (
-            <span className="text-xs text-gray-500">{trend.label}</span>
+            <span className="text-xs ui-text-muted">{trend.label}</span>
           )}
         </div>
       )}

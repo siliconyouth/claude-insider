@@ -238,11 +238,11 @@ export function CategoriesSection() {
             </svg>
             34 Documentation Pages
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 ui-text-heading">
             Explore the{" "}
             <span className="gradient-text-stripe">Documentation</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg ui-text-secondary max-w-2xl mx-auto">
             Comprehensive guides organized into 7 categories, from getting started to advanced API integration
           </p>
         </div>
@@ -289,7 +289,7 @@ export function CategoriesSection() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className={cn(
-                          "text-lg font-bold text-gray-900 dark:text-white",
+                          "text-lg font-bold ui-text-heading",
                           "group-hover:text-transparent group-hover:bg-clip-text",
                           "group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:via-blue-600 group-hover:to-cyan-600",
                           "transition-all duration-300"
@@ -301,7 +301,7 @@ export function CategoriesSection() {
                         </p>
                       </div>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-5">
+                    <p className="ui-text-secondary text-sm leading-relaxed mb-5">
                       {category.description}
                     </p>
                   </Link>
@@ -315,7 +315,7 @@ export function CategoriesSection() {
                             href={doc.href}
                             className={cn(
                               "group/link flex items-center gap-3 text-sm",
-                              "text-gray-600 dark:text-gray-400",
+                              "ui-text-secondary",
                               "hover:text-gray-900 dark:hover:text-white",
                               "transition-colors duration-200"
                             )}

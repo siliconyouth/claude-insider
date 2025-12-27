@@ -27,12 +27,12 @@ import {
 } from "@/app/actions/admin-notifications";
 
 const STATUS_COLORS: Record<AdminNotificationStatus, { bg: string; text: string }> = {
-  draft: { bg: "bg-gray-800", text: "text-gray-400" },
-  scheduled: { bg: "bg-blue-900/30", text: "text-blue-400" },
-  sending: { bg: "bg-yellow-900/30", text: "text-yellow-400" },
-  sent: { bg: "bg-emerald-900/30", text: "text-emerald-400" },
-  failed: { bg: "bg-red-900/30", text: "text-red-400" },
-  cancelled: { bg: "bg-gray-800", text: "text-gray-500" },
+  draft: { bg: "bg-gray-200 dark:bg-gray-800", text: "text-gray-600 dark:text-gray-400" },
+  scheduled: { bg: "bg-blue-100 dark:bg-blue-900/30", text: "text-blue-700 dark:text-blue-400" },
+  sending: { bg: "bg-yellow-100 dark:bg-yellow-900/30", text: "text-yellow-700 dark:text-yellow-400" },
+  sent: { bg: "bg-emerald-100 dark:bg-emerald-900/30", text: "text-emerald-700 dark:text-emerald-400" },
+  failed: { bg: "bg-red-100 dark:bg-red-900/30", text: "text-red-700 dark:text-red-400" },
+  cancelled: { bg: "bg-gray-200 dark:bg-gray-800", text: "text-gray-500" },
 };
 
 const ROLES = [
@@ -396,8 +396,8 @@ export default function NotificationsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Notifications</h2>
-          <p className="mt-1 text-sm text-gray-400">
+          <h2 className="text-2xl font-bold ui-text-heading">Notifications</h2>
+          <p className="mt-1 text-sm ui-text-secondary">
             Create and manage notifications ({total} total)
           </p>
         </div>
@@ -441,8 +441,8 @@ export default function NotificationsPage() {
               className={cn(
                 "px-3 py-1.5 rounded-lg text-xs font-medium transition-all",
                 statusFilter === status
-                  ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                  : "text-gray-400 hover:text-white hover:bg-gray-800"
+                  ? "ui-filter-active border"
+                  : "ui-filter-inactive"
               )}
             >
               {status === "all" ? "All" : status}
@@ -452,28 +452,28 @@ export default function NotificationsPage() {
       </div>
 
       {/* Notifications List */}
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
+      <div className="rounded-xl border ui-border ui-bg-card overflow-hidden">
         {isLoading ? (
           <div className="p-8 space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-24 bg-gray-800 rounded-lg animate-pulse" />
+              <div key={i} className="h-24 ui-bg-skeleton rounded-lg animate-pulse" />
             ))}
           </div>
         ) : notifications.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">
+          <div className="p-8 text-center ui-text-muted">
             No notifications found
           </div>
         ) : (
-          <div className="divide-y divide-gray-800">
+          <div className="ui-divide divide-y">
             {notifications.map((notification) => (
               <div
                 key={notification.id}
-                className="p-4 hover:bg-gray-800/50 transition-colors"
+                className="p-4 ui-hover-row transition-colors"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-sm font-medium text-white truncate">
+                      <h3 className="text-sm font-medium ui-text-heading truncate">
                         {notification.title}
                       </h3>
                       <span
@@ -488,12 +488,12 @@ export default function NotificationsPage() {
                     </div>
 
                     {notification.message && (
-                      <p className="text-sm text-gray-400 truncate mb-2">
+                      <p className="text-sm ui-text-secondary truncate mb-2">
                         {notification.message}
                       </p>
                     )}
 
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                    <div className="flex flex-wrap items-center gap-3 text-xs ui-text-muted">
                       {/* Target */}
                       <span className="flex items-center gap-1">
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -509,13 +509,13 @@ export default function NotificationsPage() {
                       {/* Channels */}
                       <span className="flex items-center gap-1">
                         {notification.send_in_app && (
-                          <span className="px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">Bell</span>
+                          <span className="px-1.5 py-0.5 rounded ui-bg-skeleton ui-text-secondary">Bell</span>
                         )}
                         {notification.send_push && (
-                          <span className="px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">Push</span>
+                          <span className="px-1.5 py-0.5 rounded ui-bg-skeleton ui-text-secondary">Push</span>
                         )}
                         {notification.send_email && (
-                          <span className="px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">Email</span>
+                          <span className="px-1.5 py-0.5 rounded ui-bg-skeleton ui-text-secondary">Email</span>
                         )}
                       </span>
 
@@ -547,27 +547,27 @@ export default function NotificationsPage() {
                       <>
                         <button
                           onClick={() => openEditModal(notification)}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-gray-800"
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium ui-text-secondary ui-hover-row"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleSchedule(notification.id, true)}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600/20 text-blue-400 hover:bg-blue-600/30"
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-600/30"
                         >
                           Send Now
                         </button>
                         {notification.scheduled_at && (
                           <button
                             onClick={() => handleSchedule(notification.id, false)}
-                            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-600/20 text-violet-400 hover:bg-violet-600/30"
+                            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-100 dark:bg-violet-600/20 text-violet-700 dark:text-violet-400 hover:bg-violet-200 dark:hover:bg-violet-600/30"
                           >
                             Schedule
                           </button>
                         )}
                         <button
                           onClick={() => handleDelete(notification.id)}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-red-400 hover:bg-red-900/20"
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/20"
                         >
                           Delete
                         </button>
@@ -577,13 +577,13 @@ export default function NotificationsPage() {
                       <>
                         <button
                           onClick={() => openEditModal(notification)}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-400 hover:text-white hover:bg-gray-800"
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium ui-text-secondary ui-hover-row"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleCancel(notification.id)}
-                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-red-400 hover:bg-red-900/20"
+                          className="px-3 py-1.5 rounded-lg text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/20"
                         >
                           Cancel
                         </button>
@@ -604,15 +604,15 @@ export default function NotificationsPage() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setShowModal(false)}
           />
-          <div className="relative w-full max-w-2xl bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-2xl ui-bg-modal border ui-border rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-6 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-white">
+            <div className="sticky top-0 ui-bg-modal border-b ui-border p-6 flex items-center justify-between">
+              <h3 className="text-lg font-semibold ui-text-heading">
                 {isEditing ? "Edit Notification" : "Create Notification"}
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800"
+                className="p-2 rounded-lg ui-btn-ghost"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -624,7 +624,7 @@ export default function NotificationsPage() {
             <div className="p-6 space-y-6">
               {/* Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
                   Title <span className="text-red-400">*</span>
                 </label>
                 <input
@@ -632,13 +632,13 @@ export default function NotificationsPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Notification title..."
-                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 rounded-lg ui-input"
                 />
               </div>
 
               {/* Message */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
                   Message (Optional)
                 </label>
                 <textarea
@@ -646,13 +646,13 @@ export default function NotificationsPage() {
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Notification message..."
                   rows={3}
-                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  className="w-full px-4 py-2 rounded-lg ui-input resize-none"
                 />
               </div>
 
               {/* Link */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
                   Link URL (Optional)
                 </label>
                 <input
@@ -660,16 +660,16 @@ export default function NotificationsPage() {
                   value={link}
                   onChange={(e) => setLink(e.target.value)}
                   placeholder="https://claudeinsider.com/..."
-                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 rounded-lg ui-input"
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs ui-text-muted">
                   Where users will be directed when clicking the notification
                 </p>
               </div>
 
               {/* Delivery Channels */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
                   Delivery Channels
                 </label>
                 <div className="flex flex-wrap gap-3">
@@ -678,34 +678,34 @@ export default function NotificationsPage() {
                       type="checkbox"
                       checked={sendInApp}
                       onChange={(e) => setSendInApp(e.target.checked)}
-                      className="w-4 h-4 rounded bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                      className="w-4 h-4 rounded ui-bg-input border ui-border-input text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-300">In-App (Bell)</span>
+                    <span className="text-sm ui-text-body">In-App (Bell)</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={sendPush}
                       onChange={(e) => setSendPush(e.target.checked)}
-                      className="w-4 h-4 rounded bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                      className="w-4 h-4 rounded ui-bg-input border ui-border-input text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-300">Web Push</span>
+                    <span className="text-sm ui-text-body">Web Push</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={sendEmail}
                       onChange={(e) => setSendEmail(e.target.checked)}
-                      className="w-4 h-4 rounded bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                      className="w-4 h-4 rounded ui-bg-input border ui-border-input text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-300">Email</span>
+                    <span className="text-sm ui-text-body">Email</span>
                   </label>
                 </div>
               </div>
 
               {/* Target Type */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
                   Target Audience
                 </label>
                 <div className="flex gap-2">
@@ -714,10 +714,10 @@ export default function NotificationsPage() {
                       key={type}
                       onClick={() => setTargetType(type)}
                       className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
+                        "px-3 py-1.5 rounded-lg text-sm font-medium transition-all border",
                         targetType === type
-                          ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                          : "text-gray-400 hover:text-white hover:bg-gray-800 border border-transparent"
+                          ? "ui-filter-active"
+                          : "ui-filter-inactive border-transparent"
                       )}
                     >
                       {type === "all"
@@ -733,7 +733,7 @@ export default function NotificationsPage() {
               {/* Role Selection */}
               {targetType === "role" && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">
+                  <label className="block text-sm font-medium ui-text-secondary mb-2">
                     Select Roles
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -742,10 +742,10 @@ export default function NotificationsPage() {
                         key={role.value}
                         onClick={() => toggleRole(role.value)}
                         className={cn(
-                          "px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
+                          "px-3 py-1.5 rounded-lg text-sm font-medium transition-all border",
                           targetRoles.includes(role.value)
-                            ? "bg-violet-600/20 text-violet-400 border border-violet-500/30"
-                            : "text-gray-400 hover:text-white hover:bg-gray-800 border border-gray-700"
+                            ? "bg-violet-100 dark:bg-violet-600/20 text-violet-700 dark:text-violet-400 border-violet-300 dark:border-violet-500/30"
+                            : "ui-filter-inactive border-gray-300 dark:border-gray-700"
                         )}
                       >
                         {role.label}
@@ -758,7 +758,7 @@ export default function NotificationsPage() {
               {/* User Selection */}
               {targetType === "users" && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">
+                  <label className="block text-sm font-medium ui-text-secondary mb-2">
                     Search Users
                   </label>
                   <div className="relative">
@@ -767,7 +767,7 @@ export default function NotificationsPage() {
                       value={userSearch}
                       onChange={(e) => setUserSearch(e.target.value)}
                       placeholder="Search by name, email, or username..."
-                      className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 rounded-lg ui-input"
                     />
                     {isSearching && (
                       <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -778,15 +778,15 @@ export default function NotificationsPage() {
 
                   {/* Search Results */}
                   {searchResults.length > 0 && (
-                    <div className="mt-2 max-h-40 overflow-y-auto rounded-lg border border-gray-700 bg-gray-800 divide-y divide-gray-700">
+                    <div className="mt-2 max-h-40 overflow-y-auto rounded-lg border ui-border ui-bg-card ui-divide divide-y">
                       {searchResults.map((user) => (
                         <button
                           key={user.id}
                           onClick={() => addUserTarget(user)}
-                          className="w-full px-4 py-2 text-left hover:bg-gray-700 transition-colors"
+                          className="w-full px-4 py-2 text-left ui-hover-row transition-colors"
                         >
-                          <p className="text-sm text-white">{user.name}</p>
-                          <p className="text-xs text-gray-500">{user.email}</p>
+                          <p className="text-sm ui-text-heading">{user.name}</p>
+                          <p className="text-xs ui-text-muted">{user.email}</p>
                         </button>
                       ))}
                     </div>
@@ -798,12 +798,12 @@ export default function NotificationsPage() {
                       {targetUsers.map((user) => (
                         <span
                           key={user.id}
-                          className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-600/20 text-blue-400 text-sm"
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-blue-100 dark:bg-blue-600/20 text-blue-700 dark:text-blue-400 text-sm"
                         >
                           {user.name}
                           <button
                             onClick={() => removeUserTarget(user.id)}
-                            className="hover:text-white"
+                            className="hover:text-blue-900 dark:hover:text-white"
                           >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -816,7 +816,7 @@ export default function NotificationsPage() {
 
                   {/* Show count for users loaded from edit */}
                   {targetUserIds.length > 0 && targetUsers.length === 0 && (
-                    <p className="mt-2 text-sm text-gray-500">
+                    <p className="mt-2 text-sm ui-text-muted">
                       {targetUserIds.length} user(s) selected
                     </p>
                   )}
@@ -825,18 +825,18 @@ export default function NotificationsPage() {
 
               {/* Recipient Count Preview */}
               {recipientCount !== null && (
-                <div className="p-3 rounded-lg bg-gray-800 border border-gray-700">
-                  <p className="text-sm text-gray-400">
+                <div className="p-3 rounded-lg ui-card-info border ui-border">
+                  <p className="text-sm ui-text-secondary">
                     This notification will be sent to{" "}
-                    <span className="text-white font-medium">{recipientCount}</span>{" "}
+                    <span className="ui-text-heading font-medium">{recipientCount}</span>{" "}
                     {recipientCount === 1 ? "user" : "users"}
                   </p>
                 </div>
               )}
 
               {/* Scheduling */}
-              <div className="pt-4 border-t border-gray-800">
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+              <div className="pt-4 border-t ui-border">
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
                   When to Send
                 </label>
                 <div className="space-y-3">
@@ -845,18 +845,18 @@ export default function NotificationsPage() {
                       type="radio"
                       checked={sendImmediately}
                       onChange={() => setSendImmediately(true)}
-                      className="w-4 h-4 bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                      className="w-4 h-4 ui-bg-input border ui-border-input text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-300">Send immediately when I click &quot;Send Now&quot;</span>
+                    <span className="text-sm ui-text-body">Send immediately when I click &quot;Send Now&quot;</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="radio"
                       checked={!sendImmediately}
                       onChange={() => setSendImmediately(false)}
-                      className="w-4 h-4 bg-gray-800 border-gray-700 text-blue-600 focus:ring-blue-500 focus:ring-offset-gray-900"
+                      className="w-4 h-4 ui-bg-input border ui-border-input text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="text-sm text-gray-300">Schedule for later</span>
+                    <span className="text-sm ui-text-body">Schedule for later</span>
                   </label>
 
                   {!sendImmediately && (
@@ -865,7 +865,7 @@ export default function NotificationsPage() {
                       value={scheduledAt}
                       onChange={(e) => setScheduledAt(e.target.value)}
                       min={new Date().toISOString().slice(0, 16)}
-                      className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-4 py-2 rounded-lg ui-input"
                     />
                   )}
                 </div>
@@ -873,10 +873,10 @@ export default function NotificationsPage() {
             </div>
 
             {/* Modal Footer */}
-            <div className="sticky bottom-0 bg-gray-900 border-t border-gray-800 p-6 flex items-center justify-end gap-3">
+            <div className="sticky bottom-0 ui-bg-modal border-t ui-border p-6 flex items-center justify-end gap-3">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800"
+                className="px-4 py-2 rounded-lg text-sm font-medium ui-btn-ghost"
               >
                 Cancel
               </button>
@@ -905,20 +905,20 @@ export default function NotificationsPage() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={resetVersionModal}
           />
-          <div className="relative w-full max-w-md bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl">
+          <div className="relative w-full max-w-md ui-bg-modal border ui-border rounded-2xl shadow-2xl">
             {/* Modal Header */}
-            <div className="border-b border-gray-800 p-6 flex items-center justify-between">
+            <div className="border-b ui-border p-6 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-emerald-600/20">
-                  <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-600/20">
+                  <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white">Send Version Update</h3>
+                <h3 className="text-lg font-semibold ui-text-heading">Send Version Update</h3>
               </div>
               <button
                 onClick={resetVersionModal}
-                className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800"
+                className="p-2 rounded-lg ui-btn-ghost"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -928,41 +928,41 @@ export default function NotificationsPage() {
 
             {/* Modal Content */}
             <div className="p-6 space-y-4">
-              <p className="text-sm text-gray-400">
+              <p className="text-sm ui-text-secondary">
                 Send a version update notification to all users who have opted in to receive version updates.
               </p>
 
               {/* Version Number */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
-                  Version Number <span className="text-red-400">*</span>
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
+                  Version Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={versionNumber}
                   onChange={(e) => setVersionNumber(e.target.value)}
                   placeholder="e.g., 0.66.0"
-                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full px-4 py-2 rounded-lg ui-input focus:ring-emerald-500"
                 />
               </div>
 
               {/* Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
-                  Title <span className="text-red-400">*</span>
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
+                  Title <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={versionTitle}
                   onChange={(e) => setVersionTitle(e.target.value)}
                   placeholder="e.g., New Features & Improvements"
-                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full px-4 py-2 rounded-lg ui-input focus:ring-emerald-500"
                 />
               </div>
 
               {/* Highlights */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium ui-text-secondary mb-2">
                   Highlights (one per line, optional)
                 </label>
                 <textarea
@@ -970,19 +970,19 @@ export default function NotificationsPage() {
                   onChange={(e) => setVersionHighlights(e.target.value)}
                   placeholder="Added dark mode support&#10;Fixed login issues&#10;Improved performance"
                   rows={4}
-                  className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
+                  className="w-full px-4 py-2 rounded-lg ui-input resize-none focus:ring-emerald-500"
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs ui-text-muted">
                   Enter each highlight on a new line. These will appear as bullet points.
                 </p>
               </div>
             </div>
 
             {/* Modal Footer */}
-            <div className="border-t border-gray-800 p-6 flex items-center justify-end gap-3">
+            <div className="border-t ui-border p-6 flex items-center justify-end gap-3">
               <button
                 onClick={resetVersionModal}
-                className="px-4 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800"
+                className="px-4 py-2 rounded-lg text-sm font-medium ui-btn-ghost"
               >
                 Cancel
               </button>

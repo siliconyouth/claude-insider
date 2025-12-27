@@ -32,11 +32,11 @@ export function PageHeader({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h1>
+            <h1 className="text-2xl font-bold ui-text-heading">{title}</h1>
             {badge}
           </div>
           {description && (
-            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{description}</p>
+            <p className="mt-1 text-sm ui-text-secondary">{description}</p>
           )}
         </div>
         {actions && (

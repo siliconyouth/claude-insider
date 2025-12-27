@@ -128,7 +128,7 @@ export default function AdminCommentsPage() {
         title="Comment Moderation"
         description="Review and moderate user comments"
         badge={pendingCount > 0 ? (
-          <span className="px-3 py-1 text-sm font-medium rounded-full bg-yellow-900/30 text-yellow-400">
+          <span className="px-3 py-1 text-sm font-medium rounded-full ui-badge-pending">
             {pendingCount} pending
           </span>
         ) : undefined}
@@ -143,13 +143,13 @@ export default function AdminCommentsPage() {
               key={status}
               onClick={() => setFilter(filter === status ? "all" : status)}
               className={cn(
-                "p-4 rounded-xl text-center transition-all border",
+                "p-4 rounded-xl text-center transition-all border ui-bg-card",
                 filter === status
                   ? "border-blue-500 shadow-lg"
-                  : "border-gray-800 hover:border-blue-500/50"
+                  : "ui-border hover:border-blue-500/50"
               )}
             >
-              <p className="text-2xl font-bold text-white tabular-nums">
+              <p className="text-2xl font-bold ui-text-heading tabular-nums">
                 {counts[status] || 0}
               </p>
               <p className={cn("text-xs font-medium", style.text)}>
@@ -170,7 +170,7 @@ export default function AdminCommentsPage() {
               "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
               filter === status
                 ? "bg-blue-600 text-white"
-                : "bg-gray-900 text-gray-400 hover:bg-gray-800"
+                : "ui-bg-card ui-text-secondary hover:ui-bg-card-hover"
             )}
           >
             {status === "all" ? "All" : MODERATION_STATUS[status].label}
@@ -184,13 +184,13 @@ export default function AdminCommentsPage() {
           {[...Array(5)].map((_, i) => (
             <div
               key={i}
-              className="p-4 rounded-xl bg-gray-900/50 border border-gray-800"
+              className="p-4 rounded-xl ui-bg-card border ui-border"
             >
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 bg-gray-800 rounded-full animate-pulse" />
+                <div className="w-8 h-8 ui-bg-skeleton rounded-full animate-pulse" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 w-48 bg-gray-800 rounded animate-pulse" />
-                  <div className="h-4 w-full bg-gray-800 rounded animate-pulse" />
+                  <div className="h-4 w-48 ui-bg-skeleton rounded animate-pulse" />
+                  <div className="h-4 w-full ui-bg-skeleton rounded animate-pulse" />
                 </div>
               </div>
             </div>
@@ -252,8 +252,8 @@ function CommentRow({
   return (
     <div
       className={cn(
-        "rounded-xl overflow-hidden bg-gray-900/50 border transition-all",
-        isSelected ? "border-blue-500 shadow-lg" : "border-gray-800"
+        "rounded-xl overflow-hidden ui-bg-card border transition-all",
+        isSelected ? "border-blue-500 shadow-lg" : "ui-border"
       )}
     >
       <div className="p-4 cursor-pointer" onClick={onToggle}>
@@ -268,26 +268,26 @@ function CommentRow({
               {comment.user_username ? (
                 <Link
                   href={`/users/${comment.user_username}`}
-                  className="font-medium text-sm text-white hover:text-cyan-400 transition-colors"
+                  className="font-medium text-sm ui-text-heading hover:text-cyan-400 transition-colors"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {comment.user_name || comment.user_email || "Unknown"}
                 </Link>
               ) : (
-                <span className="font-medium text-sm text-white">
+                <span className="font-medium text-sm ui-text-heading">
                   {comment.user_name || comment.user_email || "Unknown"}
                 </span>
               )}
               {comment.parent_id && (
-                <span className="text-xs text-gray-400">(reply)</span>
+                <span className="text-xs ui-text-secondary">(reply)</span>
               )}
             </div>
 
-            <p className="mt-1 text-sm text-gray-300 line-clamp-2">
+            <p className="mt-1 text-sm ui-text-body line-clamp-2">
               {comment.content}
             </p>
 
-            <div className="mt-2 flex items-center gap-3 text-xs text-gray-400">
+            <div className="mt-2 flex items-center gap-3 text-xs ui-text-secondary">
               <span className="capitalize">{comment.resource_type}</span>
               <span>•</span>
               <span>
@@ -307,7 +307,7 @@ function CommentRow({
 
           <svg
             className={cn(
-              "w-5 h-5 text-gray-400 transition-transform shrink-0",
+              "w-5 h-5 ui-text-secondary transition-transform shrink-0",
               isSelected && "rotate-180"
             )}
             fill="none"
@@ -351,13 +351,13 @@ function ExpandedPanel({
   isSubmitting: boolean;
 }) {
   return (
-    <div className="px-4 pb-4 border-t border-gray-800">
+    <div className="px-4 pb-4 border-t ui-border">
       <div className="pt-4 space-y-4">
         {/* Full Content */}
         <div>
-          <h4 className="text-sm font-medium text-gray-300 mb-1">Full Comment</h4>
-          <div className="p-3 rounded-lg bg-gray-950 border border-gray-800">
-            <p className="text-sm text-gray-400 whitespace-pre-wrap">{comment.content}</p>
+          <h4 className="text-sm font-medium ui-text-body mb-1">Full Comment</h4>
+          <div className="p-3 rounded-lg ui-bg-input border ui-border">
+            <p className="text-sm ui-text-secondary whitespace-pre-wrap">{comment.content}</p>
           </div>
         </div>
 
@@ -380,11 +380,11 @@ function ExpandedPanel({
         {/* Previous Moderation */}
         {comment.moderation_notes && comment.status !== "pending" && (
           <div>
-            <h4 className="text-sm font-medium text-gray-300 mb-1">Moderation Notes</h4>
-            <p className="text-sm text-gray-400 p-3 rounded-lg bg-blue-900/20 border border-blue-800">
+            <h4 className="text-sm font-medium ui-text-body mb-1">Moderation Notes</h4>
+            <p className="text-sm ui-text-secondary p-3 rounded-lg ui-card-info">
               {comment.moderation_notes}
               {comment.moderator_name && (
-                <span className="block mt-1 text-xs text-gray-500">— {comment.moderator_name}</span>
+                <span className="block mt-1 text-xs ui-text-muted">— {comment.moderator_name}</span>
               )}
             </p>
           </div>
@@ -392,10 +392,10 @@ function ExpandedPanel({
 
         {/* Moderation Actions */}
         {comment.status === "pending" || comment.status === "flagged" ? (
-          <div className="pt-4 border-t border-gray-800">
+          <div className="pt-4 border-t ui-border">
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1">
+                <label className="block text-sm font-medium ui-text-body mb-1">
                   Moderation Notes (optional)
                 </label>
                 <textarea
@@ -403,12 +403,7 @@ function ExpandedPanel({
                   onChange={(e) => onNotesChange(e.target.value)}
                   placeholder="Add notes about this decision..."
                   rows={2}
-                  className={cn(
-                    "w-full px-3 py-2 rounded-lg text-sm resize-none",
-                    "bg-gray-950 border border-gray-800",
-                    "focus:outline-none focus:ring-2 focus:ring-blue-500",
-                    "text-white placeholder-gray-500"
-                  )}
+                  className="w-full px-3 py-2 rounded-lg text-sm resize-none ui-input"
                 />
               </div>
 
@@ -448,7 +443,7 @@ function ExpandedPanel({
             </div>
           </div>
         ) : (
-          <div className="pt-4 border-t border-gray-800">
+          <div className="pt-4 border-t ui-border">
             <ActionButton
               onClick={() => onDelete(comment.id)}
               disabled={isSubmitting}
