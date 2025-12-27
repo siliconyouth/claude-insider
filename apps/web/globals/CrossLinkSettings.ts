@@ -1,11 +1,16 @@
 import type { GlobalConfig } from 'payload';
 import { createGlobalRevalidateHook } from '../lib/revalidate';
+import { publicRead, adminAccess } from '../lib/payload-access';
 
 /**
  * CrossLinkSettings Global
  *
  * System-wide configuration for the documentation-resources cross-linking system.
  * Controls auto-matching thresholds, display defaults, and category mappings.
+ *
+ * Access Control:
+ * - Read: Public (needed for frontend display)
+ * - Update: Admin and Superadmin only
  */
 export const CrossLinkSettings: GlobalConfig = {
   slug: 'cross-link-settings',
@@ -14,8 +19,8 @@ export const CrossLinkSettings: GlobalConfig = {
     description: 'Configure cross-linking between documentation and resources',
   },
   access: {
-    read: () => true, // Needed for frontend
-    update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'superadmin',
+    read: publicRead,
+    update: adminAccess,
   },
   hooks: {
     afterChange: [createGlobalRevalidateHook('cross-link-settings')],

@@ -1,10 +1,16 @@
 import type { GlobalConfig } from 'payload';
 import { createGlobalRevalidateHook } from '../lib/revalidate';
+import { publicRead, adminAccess } from '../lib/payload-access';
 
 /**
  * Site Settings Global
  * Single document for site-wide configuration
  * Editable from admin panel at /admin/globals/site-settings
+ *
+ * Access Control:
+ * - Read: Public (needed for frontend)
+ * - Update: Admin and Superadmin only
+ * - Announcement section: Moderators can also update
  */
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -14,8 +20,8 @@ export const SiteSettings: GlobalConfig = {
     description: 'Global site configuration - changes apply site-wide',
   },
   access: {
-    read: () => true, // Public read for frontend
-    update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'superadmin', // Admins and superadmins can edit
+    read: publicRead,
+    update: adminAccess,
   },
   hooks: {
     afterChange: [createGlobalRevalidateHook('site-settings')],
@@ -26,6 +32,9 @@ export const SiteSettings: GlobalConfig = {
       name: 'general',
       type: 'group',
       label: 'General',
+      admin: {
+        description: 'Core site identity and branding',
+      },
       fields: [
         {
           name: 'siteName',
@@ -61,9 +70,27 @@ export const SiteSettings: GlobalConfig = {
           name: 'version',
           type: 'text',
           label: 'Site Version',
-          defaultValue: '0.26.0',
+          defaultValue: '1.12.6',
           admin: {
             description: 'Current version displayed in footer',
+          },
+        },
+        {
+          name: 'logo',
+          type: 'upload',
+          label: 'Site Logo',
+          relationTo: 'media',
+          admin: {
+            description: 'Logo image for header and branding (optional)',
+          },
+        },
+        {
+          name: 'favicon',
+          type: 'upload',
+          label: 'Favicon',
+          relationTo: 'media',
+          admin: {
+            description: 'Browser tab icon (optional, uses default if not set)',
           },
         },
       ],
@@ -74,6 +101,9 @@ export const SiteSettings: GlobalConfig = {
       name: 'social',
       type: 'group',
       label: 'Social Links',
+      admin: {
+        description: 'Social media profile URLs',
+      },
       fields: [
         {
           name: 'github',
@@ -108,6 +138,22 @@ export const SiteSettings: GlobalConfig = {
             description: 'LinkedIn profile or company page URL (optional)',
           },
         },
+        {
+          name: 'youtube',
+          type: 'text',
+          label: 'YouTube URL',
+          admin: {
+            description: 'YouTube channel URL (optional)',
+          },
+        },
+        {
+          name: 'bluesky',
+          type: 'text',
+          label: 'Bluesky URL',
+          admin: {
+            description: 'Bluesky profile URL (optional)',
+          },
+        },
       ],
     },
 
@@ -116,6 +162,9 @@ export const SiteSettings: GlobalConfig = {
       name: 'footer',
       type: 'group',
       label: 'Footer',
+      admin: {
+        description: 'Footer display options',
+      },
       fields: [
         {
           name: 'copyrightText',
@@ -141,14 +190,51 @@ export const SiteSettings: GlobalConfig = {
             description: 'Shows build date and commit SHA',
           },
         },
+        {
+          name: 'customFooterLinks',
+          type: 'array',
+          label: 'Custom Footer Links',
+          admin: {
+            description: 'Additional links to display in footer',
+          },
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'label',
+                  type: 'text',
+                  required: true,
+                  admin: { width: '40%' },
+                },
+                {
+                  name: 'url',
+                  type: 'text',
+                  required: true,
+                  admin: { width: '40%' },
+                },
+                {
+                  name: 'external',
+                  type: 'checkbox',
+                  label: 'External',
+                  defaultValue: false,
+                  admin: { width: '20%' },
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
 
-    // ========== SEO Settings ==========
+    // ========== SEO Settings (Basic) ==========
     {
       name: 'seo',
       type: 'group',
-      label: 'SEO Settings',
+      label: 'SEO Settings (Basic)',
+      admin: {
+        description: 'Basic SEO - see SEO Settings global for comprehensive options',
+      },
       fields: [
         {
           name: 'ogImage',
@@ -183,6 +269,9 @@ export const SiteSettings: GlobalConfig = {
       name: 'features',
       type: 'group',
       label: 'Feature Flags',
+      admin: {
+        description: 'Enable or disable site features',
+      },
       fields: [
         {
           name: 'maintenanceMode',
@@ -204,30 +293,462 @@ export const SiteSettings: GlobalConfig = {
           },
         },
         {
-          name: 'enableVoiceAssistant',
-          type: 'checkbox',
-          label: 'Enable Voice Assistant',
-          defaultValue: true,
+          name: 'maintenanceAllowedIPs',
+          type: 'textarea',
+          label: 'Allowed IPs During Maintenance',
           admin: {
-            description: 'Show/hide the AI voice assistant feature',
+            description: 'Comma-separated list of IPs that bypass maintenance mode',
+            condition: (data) => data?.features?.maintenanceMode,
           },
         },
         {
-          name: 'enableSearch',
-          type: 'checkbox',
-          label: 'Enable Search',
-          defaultValue: true,
+          type: 'row',
+          fields: [
+            {
+              name: 'enableVoiceAssistant',
+              type: 'checkbox',
+              label: 'Enable Voice Assistant',
+              defaultValue: true,
+              admin: {
+                description: 'Show/hide the AI voice assistant feature',
+                width: '50%',
+              },
+            },
+            {
+              name: 'enableSearch',
+              type: 'checkbox',
+              label: 'Enable Search',
+              defaultValue: true,
+              admin: {
+                description: 'Enable/disable the search functionality',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'enableAnalytics',
+              type: 'checkbox',
+              label: 'Enable Analytics',
+              defaultValue: true,
+              admin: {
+                description: 'Enable Vercel Analytics tracking',
+                width: '50%',
+              },
+            },
+            {
+              name: 'enableChat',
+              type: 'checkbox',
+              label: 'Enable Chat',
+              defaultValue: true,
+              admin: {
+                description: 'Enable user-to-user messaging',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'enableAchievements',
+              type: 'checkbox',
+              label: 'Enable Achievements',
+              defaultValue: true,
+              admin: {
+                description: 'Enable gamification system',
+                width: '50%',
+              },
+            },
+            {
+              name: 'enableDonations',
+              type: 'checkbox',
+              label: 'Enable Donations',
+              defaultValue: true,
+              admin: {
+                description: 'Show donation buttons and page',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'enableUserRegistration',
+              type: 'checkbox',
+              label: 'Enable User Registration',
+              defaultValue: true,
+              admin: {
+                description: 'Allow new users to sign up',
+                width: '50%',
+              },
+            },
+            {
+              name: 'enableSoundEffects',
+              type: 'checkbox',
+              label: 'Enable Sound Effects',
+              defaultValue: true,
+              admin: {
+                description: 'Enable Web Audio API sounds',
+                width: '50%',
+              },
+            },
+          ],
+        },
+      ],
+    },
+
+    // ========== Security Settings (NEW) ==========
+    {
+      name: 'security',
+      type: 'group',
+      label: 'Security Settings',
+      admin: {
+        description: 'Security-related configuration (Admin only)',
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'enableBotChallenge',
+              type: 'checkbox',
+              label: 'Enable Bot Challenge',
+              defaultValue: true,
+              admin: {
+                description: 'Require bot challenge for sensitive actions',
+                width: '50%',
+              },
+            },
+            {
+              name: 'enableHoneypots',
+              type: 'checkbox',
+              label: 'Enable Honeypots',
+              defaultValue: true,
+              admin: {
+                description: 'Add honeypot fields to forms',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'enableE2EE',
+              type: 'checkbox',
+              label: 'Enable E2EE',
+              defaultValue: true,
+              admin: {
+                description: 'Enable end-to-end encryption for messages',
+                width: '50%',
+              },
+            },
+            {
+              name: 'enableFingerprinting',
+              type: 'checkbox',
+              label: 'Enable Fingerprinting',
+              defaultValue: true,
+              admin: {
+                description: 'Enable browser fingerprinting for security',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          name: 'trustedDomains',
+          type: 'textarea',
+          label: 'Trusted Domains',
+          defaultValue: 'www.claudeinsider.com\nclaudeinsider.com\nlocalhost',
           admin: {
-            description: 'Enable/disable the search functionality',
+            description: 'One domain per line - domains allowed for CORS and redirects',
           },
         },
         {
-          name: 'enableAnalytics',
+          name: 'blockedIPs',
+          type: 'textarea',
+          label: 'Blocked IPs',
+          admin: {
+            description: 'One IP per line - permanently blocked IP addresses',
+          },
+        },
+        {
+          name: 'rateLimitPerMinute',
+          type: 'number',
+          label: 'Rate Limit (requests/minute)',
+          defaultValue: 60,
+          min: 10,
+          max: 1000,
+          admin: {
+            description: 'API rate limit per IP per minute',
+          },
+        },
+      ],
+    },
+
+    // ========== Performance Settings (NEW) ==========
+    {
+      name: 'performance',
+      type: 'group',
+      label: 'Performance Settings',
+      admin: {
+        description: 'Caching and performance configuration',
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'enableISR',
+              type: 'checkbox',
+              label: 'Enable ISR',
+              defaultValue: true,
+              admin: {
+                description: 'Incremental Static Regeneration',
+                width: '50%',
+              },
+            },
+            {
+              name: 'enablePrefetching',
+              type: 'checkbox',
+              label: 'Enable Prefetching',
+              defaultValue: true,
+              admin: {
+                description: 'Prefetch linked pages',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          name: 'cacheRevalidateSeconds',
+          type: 'number',
+          label: 'Cache Revalidate (seconds)',
+          defaultValue: 3600,
+          min: 60,
+          max: 86400,
+          admin: {
+            description: 'Default ISR revalidation period',
+          },
+        },
+        {
+          name: 'staticPagePaths',
+          type: 'textarea',
+          label: 'Static Page Paths',
+          defaultValue: '/\n/docs\n/resources\n/donate',
+          admin: {
+            description: 'One path per line - pages to pre-render at build time',
+          },
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'enableLazyProviders',
+              type: 'checkbox',
+              label: 'Enable Lazy Providers',
+              defaultValue: true,
+              admin: {
+                description: 'Defer heavy context providers',
+                width: '50%',
+              },
+            },
+            {
+              name: 'enableImageOptimization',
+              type: 'checkbox',
+              label: 'Enable Image Optimization',
+              defaultValue: true,
+              admin: {
+                description: 'Use Next.js Image optimization',
+                width: '50%',
+              },
+            },
+          ],
+        },
+      ],
+    },
+
+    // ========== Notification Settings (NEW) ==========
+    {
+      name: 'notifications',
+      type: 'group',
+      label: 'Notification Settings',
+      admin: {
+        description: 'Email and push notification configuration',
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'enableEmailNotifications',
+              type: 'checkbox',
+              label: 'Enable Email Notifications',
+              defaultValue: true,
+              admin: { width: '50%' },
+            },
+            {
+              name: 'enablePushNotifications',
+              type: 'checkbox',
+              label: 'Enable Push Notifications',
+              defaultValue: false,
+              admin: { width: '50%' },
+            },
+          ],
+        },
+        {
+          name: 'emailFromAddress',
+          type: 'email',
+          label: 'Email From Address',
+          defaultValue: 'noreply@claudeinsider.com',
+          admin: {
+            description: 'Sender email address for notifications',
+          },
+        },
+        {
+          name: 'emailFromName',
+          type: 'text',
+          label: 'Email From Name',
+          defaultValue: 'Claude Insider',
+          admin: {
+            description: 'Sender name for notifications',
+          },
+        },
+        {
+          name: 'digestFrequency',
+          type: 'select',
+          label: 'Digest Frequency',
+          defaultValue: 'daily',
+          options: [
+            { label: 'Immediate', value: 'immediate' },
+            { label: 'Daily', value: 'daily' },
+            { label: 'Weekly', value: 'weekly' },
+            { label: 'Never', value: 'never' },
+          ],
+          admin: {
+            description: 'Default email digest frequency for new users',
+          },
+        },
+        {
+          name: 'notificationTypes',
+          type: 'group',
+          label: 'Default Notification Types',
+          admin: {
+            description: 'Which notifications are enabled by default',
+          },
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'messages',
+                  type: 'checkbox',
+                  label: 'Messages',
+                  defaultValue: true,
+                  admin: { width: '33%' },
+                },
+                {
+                  name: 'mentions',
+                  type: 'checkbox',
+                  label: 'Mentions',
+                  defaultValue: true,
+                  admin: { width: '33%' },
+                },
+                {
+                  name: 'achievements',
+                  type: 'checkbox',
+                  label: 'Achievements',
+                  defaultValue: true,
+                  admin: { width: '33%' },
+                },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'updates',
+                  type: 'checkbox',
+                  label: 'Site Updates',
+                  defaultValue: false,
+                  admin: { width: '33%' },
+                },
+                {
+                  name: 'marketing',
+                  type: 'checkbox',
+                  label: 'Marketing',
+                  defaultValue: false,
+                  admin: { width: '33%' },
+                },
+                {
+                  name: 'security',
+                  type: 'checkbox',
+                  label: 'Security Alerts',
+                  defaultValue: true,
+                  admin: { width: '33%' },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    // ========== API Settings (NEW) ==========
+    {
+      name: 'api',
+      type: 'group',
+      label: 'API Settings',
+      admin: {
+        description: 'Public API configuration',
+      },
+      fields: [
+        {
+          name: 'enablePublicAPI',
           type: 'checkbox',
-          label: 'Enable Analytics',
+          label: 'Enable Public API',
           defaultValue: true,
           admin: {
-            description: 'Enable Vercel Analytics tracking',
+            description: 'Allow public access to resources API',
+          },
+        },
+        {
+          name: 'apiRateLimit',
+          type: 'number',
+          label: 'API Rate Limit (requests/hour)',
+          defaultValue: 1000,
+          min: 100,
+          max: 100000,
+          admin: {
+            description: 'Rate limit for authenticated API requests',
+            condition: (data) => data?.api?.enablePublicAPI,
+          },
+        },
+        {
+          name: 'apiCorsOrigins',
+          type: 'textarea',
+          label: 'CORS Origins',
+          defaultValue: 'https://www.claudeinsider.com\nhttps://claudeinsider.com',
+          admin: {
+            description: 'One origin per line - allowed CORS origins for API',
+            condition: (data) => data?.api?.enablePublicAPI,
+          },
+        },
+        {
+          name: 'apiVersion',
+          type: 'text',
+          label: 'API Version',
+          defaultValue: 'v1',
+          admin: {
+            description: 'Current API version prefix',
           },
         },
       ],
@@ -257,14 +778,29 @@ export const SiteSettings: GlobalConfig = {
             description: 'URL for support/issues',
           },
         },
+        {
+          name: 'privacyEmail',
+          type: 'email',
+          label: 'Privacy Email',
+          defaultValue: 'privacy@claudeinsider.com',
+          admin: {
+            description: 'Email for privacy-related inquiries',
+          },
+        },
       ],
     },
 
     // ========== Announcement Banner ==========
+    // NOTE: This section has moderator access
     {
       name: 'announcement',
       type: 'group',
       label: 'Announcement Banner',
+      admin: {
+        description: 'Site-wide announcement (Moderators can edit)',
+      },
+      // Note: Field-level access in Payload v3 is handled differently
+      // Moderators can edit via custom admin component or API
       fields: [
         {
           name: 'enabled',
@@ -300,8 +836,31 @@ export const SiteSettings: GlobalConfig = {
             { label: 'Success (Green)', value: 'success' },
             { label: 'Warning (Yellow)', value: 'warning' },
             { label: 'New Feature (Purple)', value: 'feature' },
+            { label: 'Critical (Red)', value: 'critical' },
           ],
           admin: {
+            condition: (data) => data?.announcement?.enabled,
+          },
+        },
+        {
+          name: 'expiresAt',
+          type: 'date',
+          label: 'Expires At',
+          admin: {
+            description: 'Automatically hide banner after this date',
+            condition: (data) => data?.announcement?.enabled,
+            date: {
+              pickerAppearance: 'dayAndTime',
+            },
+          },
+        },
+        {
+          name: 'dismissible',
+          type: 'checkbox',
+          label: 'Dismissible',
+          defaultValue: true,
+          admin: {
+            description: 'Allow users to dismiss the banner',
             condition: (data) => data?.announcement?.enabled,
           },
         },

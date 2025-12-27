@@ -1,7 +1,7 @@
 import type { GlobalConfig } from 'payload';
 import { createGlobalRevalidateHook } from '../lib/revalidate';
-import { RELATIONSHIP_TYPES, ANALYSIS_STATUS } from '../collections/Documents';
-import { ENHANCEMENT_STATUS } from '../collections/Resources';
+import { RELATIONSHIP_TYPES } from '../collections/Documents';
+import { publicRead, superadminAccess } from '../lib/payload-access';
 
 /**
  * AIPipelineSettings Global
@@ -11,20 +11,25 @@ import { ENHANCEMENT_STATUS } from '../collections/Resources';
  * - Resource enhancement settings (auto-enhance, required fields)
  * - Documentation rewriting settings (source requirements, scheduling)
  * - CLI command templates for Claude Code operations
+ * - Cost tracking and rate limits
  *
  * Architecture:
  * This global syncs with the ai_pipeline_settings table in Supabase.
  * AI operations themselves run in Claude Code CLI (subscription-based).
+ *
+ * Access Control:
+ * - Read: Public (needed for CLI scripts)
+ * - Update: SUPERADMIN ONLY (sensitive API cost settings)
  */
 export const AIPipelineSettings: GlobalConfig = {
   slug: 'ai-pipeline-settings',
   admin: {
     group: 'Settings',
-    description: 'Configure AI pipeline operations (analysis, enhancement, rewriting)',
+    description: 'Configure AI pipeline operations (analysis, enhancement, rewriting) - Superadmin only',
   },
   access: {
-    read: () => true, // Needed for CLI scripts
-    update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'superadmin',
+    read: publicRead,
+    update: superadminAccess, // Superadmin only - controls API costs
   },
   hooks: {
     afterChange: [createGlobalRevalidateHook('ai-pipeline-settings')],
@@ -413,6 +418,241 @@ export const AIPipelineSettings: GlobalConfig = {
           max: 200000,
           admin: {
             description: 'Maximum tokens per operation',
+          },
+        },
+        {
+          name: 'temperature',
+          type: 'number',
+          defaultValue: 0.3,
+          min: 0,
+          max: 1,
+          admin: {
+            description: 'Model temperature (0 = deterministic, 1 = creative)',
+          },
+        },
+      ],
+    },
+
+    // ─────────────────────────────────────────────────────────────────
+    // Cost Tracking (NEW)
+    // ─────────────────────────────────────────────────────────────────
+    {
+      name: 'costTracking',
+      type: 'group',
+      label: 'Cost Tracking',
+      admin: {
+        description: 'Track and limit AI operation costs (Superadmin only)',
+      },
+      fields: [
+        {
+          name: 'enabled',
+          type: 'checkbox',
+          label: 'Enable Cost Tracking',
+          defaultValue: true,
+          admin: {
+            description: 'Track estimated costs for all AI operations',
+          },
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'monthlyBudgetUSD',
+              type: 'number',
+              label: 'Monthly Budget (USD)',
+              defaultValue: 100,
+              min: 0,
+              max: 10000,
+              admin: {
+                description: 'Monthly spending limit',
+                width: '50%',
+              },
+            },
+            {
+              name: 'warningThresholdPercent',
+              type: 'number',
+              label: 'Warning Threshold (%)',
+              defaultValue: 80,
+              min: 50,
+              max: 100,
+              admin: {
+                description: 'Notify when this % of budget used',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          name: 'pauseOnBudgetExceeded',
+          type: 'checkbox',
+          label: 'Pause on Budget Exceeded',
+          defaultValue: true,
+          admin: {
+            description: 'Automatically pause AI operations when budget is exceeded',
+          },
+        },
+        {
+          name: 'costPerInputToken',
+          type: 'number',
+          label: 'Cost per Input Token (USD)',
+          defaultValue: 0.000015,
+          admin: {
+            description: 'Estimated cost per input token for Opus 4.5',
+          },
+        },
+        {
+          name: 'costPerOutputToken',
+          type: 'number',
+          label: 'Cost per Output Token (USD)',
+          defaultValue: 0.000075,
+          admin: {
+            description: 'Estimated cost per output token for Opus 4.5',
+          },
+        },
+      ],
+    },
+
+    // ─────────────────────────────────────────────────────────────────
+    // Rate Limits (NEW)
+    // ─────────────────────────────────────────────────────────────────
+    {
+      name: 'rateLimits',
+      type: 'group',
+      label: 'Rate Limits',
+      admin: {
+        description: 'Limit AI operation frequency to prevent abuse',
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'maxOperationsPerHour',
+              type: 'number',
+              label: 'Max Operations/Hour',
+              defaultValue: 100,
+              min: 1,
+              max: 1000,
+              admin: {
+                description: 'Maximum AI operations per hour',
+                width: '50%',
+              },
+            },
+            {
+              name: 'maxOperationsPerDay',
+              type: 'number',
+              label: 'Max Operations/Day',
+              defaultValue: 500,
+              min: 1,
+              max: 10000,
+              admin: {
+                description: 'Maximum AI operations per day',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'maxConcurrentOperations',
+              type: 'number',
+              label: 'Max Concurrent',
+              defaultValue: 3,
+              min: 1,
+              max: 10,
+              admin: {
+                description: 'Maximum simultaneous operations',
+                width: '50%',
+              },
+            },
+            {
+              name: 'cooldownMinutes',
+              type: 'number',
+              label: 'Cooldown (minutes)',
+              defaultValue: 1,
+              min: 0,
+              max: 60,
+              admin: {
+                description: 'Minimum time between operations',
+                width: '50%',
+              },
+            },
+          ],
+        },
+        {
+          name: 'prioritizeManualRequests',
+          type: 'checkbox',
+          label: 'Prioritize Manual Requests',
+          defaultValue: true,
+          admin: {
+            description: 'Give manual (admin-initiated) requests higher priority than scheduled ones',
+          },
+        },
+      ],
+    },
+
+    // ─────────────────────────────────────────────────────────────────
+    // Scheduling (NEW)
+    // ─────────────────────────────────────────────────────────────────
+    {
+      name: 'scheduling',
+      type: 'group',
+      label: 'Scheduling',
+      admin: {
+        description: 'Configure when automated AI operations run',
+      },
+      fields: [
+        {
+          name: 'enableScheduledOperations',
+          type: 'checkbox',
+          label: 'Enable Scheduled Operations',
+          defaultValue: false,
+          admin: {
+            description: 'Allow AI operations to run on a schedule',
+          },
+        },
+        {
+          name: 'preferredTimeUTC',
+          type: 'text',
+          label: 'Preferred Time (UTC)',
+          defaultValue: '03:00',
+          admin: {
+            description: 'Preferred time for scheduled operations (HH:MM format)',
+            condition: (data) => data?.scheduling?.enableScheduledOperations,
+          },
+        },
+        {
+          name: 'preferredDays',
+          type: 'select',
+          label: 'Preferred Days',
+          hasMany: true,
+          defaultValue: ['sunday'],
+          options: [
+            { label: 'Monday', value: 'monday' },
+            { label: 'Tuesday', value: 'tuesday' },
+            { label: 'Wednesday', value: 'wednesday' },
+            { label: 'Thursday', value: 'thursday' },
+            { label: 'Friday', value: 'friday' },
+            { label: 'Saturday', value: 'saturday' },
+            { label: 'Sunday', value: 'sunday' },
+          ],
+          admin: {
+            description: 'Days when scheduled operations can run',
+            condition: (data) => data?.scheduling?.enableScheduledOperations,
+          },
+        },
+        {
+          name: 'maxBatchSize',
+          type: 'number',
+          label: 'Max Batch Size',
+          defaultValue: 50,
+          min: 1,
+          max: 500,
+          admin: {
+            description: 'Maximum items to process in one scheduled batch',
+            condition: (data) => data?.scheduling?.enableScheduledOperations,
           },
         },
       ],

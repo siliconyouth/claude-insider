@@ -1,10 +1,15 @@
 import type { GlobalConfig } from 'payload';
 import { createGlobalRevalidateHook } from '../lib/revalidate';
+import { publicRead, adminAccess } from '../lib/payload-access';
 
 /**
  * SEO Settings Global
  * Comprehensive SEO configuration for the entire site
  * Editable from admin panel at /admin/globals/seo-settings
+ *
+ * Access Control:
+ * - Read: Public (needed for frontend meta tags)
+ * - Update: Admin and Superadmin only
  */
 export const SEOSettings: GlobalConfig = {
   slug: 'seo-settings',
@@ -14,8 +19,8 @@ export const SEOSettings: GlobalConfig = {
     description: 'Search engine optimization settings - meta tags, structured data, social sharing',
   },
   access: {
-    read: () => true, // Public read for frontend
-    update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'superadmin',
+    read: publicRead,
+    update: adminAccess,
   },
   hooks: {
     afterChange: [createGlobalRevalidateHook('seo-settings')],
