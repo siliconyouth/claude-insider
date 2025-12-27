@@ -90,13 +90,12 @@ function main() {
   }
 
   if (!content) {
-    console.warn("⚠ CHANGELOG.md not found, generating empty changelog");
-    const emptyComponent = `// Auto-generated - DO NOT EDIT
-export function ChangelogContent() {
-  return <p className="text-gray-400">No changelog entries found.</p>;
-}
-`;
-    fs.writeFileSync(outputPath, emptyComponent);
+    // CRITICAL: Don't overwrite the committed file - it has the correct content!
+    // This preserves the generated file from git for Vercel deployments where
+    // the monorepo CHANGELOG.md might not be accessible at build time.
+    console.warn("⚠ CHANGELOG.md not found at any of these paths:");
+    possiblePaths.forEach(p => console.warn(`   - ${p}`));
+    console.warn("⚠ Keeping existing changelog-content.tsx (committed version)");
     return;
   }
 
