@@ -228,7 +228,7 @@ export function DashboardNav({ isAdmin }: DashboardNavProps) {
         return (
           <div key={section.title}>
             {/* Section header */}
-            <h3 className="px-4 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <h3 className="px-4 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-500">
               {section.title}
             </h3>
 
@@ -247,11 +247,11 @@ export function DashboardNav({ isAdmin }: DashboardNavProps) {
                     className={cn(
                       "flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all",
                       isActive
-                        ? "bg-gradient-to-r from-violet-600/20 via-blue-600/20 to-cyan-600/20 text-white border border-blue-500/30"
-                        : "text-gray-400 hover:text-white hover:bg-gray-800/50"
+                        ? "bg-gradient-to-r from-violet-500/10 dark:from-violet-600/20 via-blue-500/10 dark:via-blue-600/20 to-cyan-500/10 dark:to-cyan-600/20 text-gray-900 dark:text-white border border-blue-500/30"
+                        : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800/50"
                     )}
                   >
-                    <span className={cn(isActive ? "text-cyan-400" : "text-gray-500")}>
+                    <span className={cn(isActive ? "text-blue-600 dark:text-cyan-400" : "text-gray-400 dark:text-gray-500")}>
                       {item.icon}
                     </span>
                     {item.label}

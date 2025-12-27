@@ -542,7 +542,7 @@ export default async function MainLayout({
         />
       </head>
       <body
-        className={`${inter.className} bg-gray-950 text-gray-100 antialiased`}
+        className={`${inter.className} bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased`}
       >
         <I18nProvider locale={locale} messages={messages}>
           <DeferredLoadingProvider timeout={2000}>

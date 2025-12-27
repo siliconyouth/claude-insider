@@ -25,28 +25,28 @@ interface StatCardProps {
 
 const colorStyles = {
   blue: {
-    bg: "bg-blue-900/20",
-    border: "border-blue-500/30",
-    icon: "text-blue-400",
-    value: "text-blue-400",
+    bg: "bg-blue-50 dark:bg-blue-900/20",
+    border: "border-blue-200 dark:border-blue-500/30",
+    icon: "text-blue-600 dark:text-blue-400",
+    value: "text-blue-600 dark:text-blue-400",
   },
   violet: {
-    bg: "bg-violet-900/20",
-    border: "border-violet-500/30",
-    icon: "text-violet-400",
-    value: "text-violet-400",
+    bg: "bg-violet-50 dark:bg-violet-900/20",
+    border: "border-violet-200 dark:border-violet-500/30",
+    icon: "text-violet-600 dark:text-violet-400",
+    value: "text-violet-600 dark:text-violet-400",
   },
   cyan: {
-    bg: "bg-cyan-900/20",
-    border: "border-cyan-500/30",
-    icon: "text-cyan-400",
-    value: "text-cyan-400",
+    bg: "bg-cyan-50 dark:bg-cyan-900/20",
+    border: "border-cyan-200 dark:border-cyan-500/30",
+    icon: "text-cyan-600 dark:text-cyan-400",
+    value: "text-cyan-600 dark:text-cyan-400",
   },
   emerald: {
-    bg: "bg-emerald-900/20",
-    border: "border-emerald-500/30",
-    icon: "text-emerald-400",
-    value: "text-emerald-400",
+    bg: "bg-emerald-50 dark:bg-emerald-900/20",
+    border: "border-emerald-200 dark:border-emerald-500/30",
+    icon: "text-emerald-600 dark:text-emerald-400",
+    value: "text-emerald-600 dark:text-emerald-400",
   },
 };
 
@@ -64,9 +64,9 @@ function StatCard({ title, value, subtitle, icon, color, isLoading }: StatCardPr
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-400">{title}</p>
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{title}</p>
           {isLoading ? (
-            <div className="mt-2 h-8 w-16 bg-gray-700 rounded animate-pulse" />
+            <div className="mt-2 h-8 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
           ) : (
             <p className={cn("mt-2 text-3xl font-bold", styles.value)}>{value}</p>
           )}

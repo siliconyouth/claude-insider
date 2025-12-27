@@ -53,18 +53,18 @@ export default async function DashboardLayout({
   const getRoleBadge = () => {
     if (isSuperAdmin) {
       return {
-        className: "bg-gradient-to-r from-amber-900/40 to-yellow-900/40 text-amber-400 border border-amber-500/30",
+        className: "bg-gradient-to-r from-amber-100 dark:from-amber-900/40 to-yellow-100 dark:to-yellow-900/40 text-amber-700 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30",
         label: "Super Admin",
       };
     }
     if (isAdmin) {
       return {
-        className: "bg-cyan-900/30 text-cyan-400",
+        className: "bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400",
         label: "Admin",
       };
     }
     return {
-      className: "bg-violet-900/30 text-violet-400",
+      className: "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400",
       label: "Moderator",
     };
   };
@@ -72,18 +72,18 @@ export default async function DashboardLayout({
   const roleBadge = getRoleBadge();
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
       {/* Site Header */}
       <Header />
 
       {/* Dashboard Sub-Header */}
-      <div className="border-b border-gray-800 bg-gray-900/50">
+      <div className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-12 items-center justify-between">
             <div className="flex items-center gap-4">
               <Link
                 href="/"
-                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -95,12 +95,12 @@ export default async function DashboardLayout({
                 </svg>
                 Back to Site
               </Link>
-              <div className="h-4 w-px bg-gray-700" />
-              <h1 className="text-sm font-semibold text-white">Admin Dashboard</h1>
+              <div className="h-4 w-px bg-gray-300 dark:bg-gray-700" />
+              <h1 className="text-sm font-semibold text-gray-900 dark:text-white">Admin Dashboard</h1>
             </div>
 
             <div className="flex items-center gap-3">
-              <span className="text-xs text-gray-400 hidden sm:block">
+              <span className="text-xs text-gray-600 dark:text-gray-400 hidden sm:block">
                 {session.user.name || session.user.email}
               </span>
               <span

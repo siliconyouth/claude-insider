@@ -88,8 +88,8 @@ export default function DashboardPage() {
     <div className="space-y-8">
       {/* Page Header */}
       <div>
-        <h2 className="text-2xl font-bold text-white">Dashboard Overview</h2>
-        <p className="mt-1 text-sm text-gray-400">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h2>
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
           Monitor activity and manage Claude Insider
         </p>
       </div>
@@ -101,7 +101,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* User Growth Chart */}
         {isLoading ? (
-          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
+          <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-5 h-[280px] animate-pulse" />
         ) : chartStats?.userGrowth && chartStats.userGrowth.length > 0 ? (
           <LazyAreaChartCard
             title="User Growth (Last 30 Days)"
@@ -109,13 +109,13 @@ export default function DashboardPage() {
             trend={chartStats.trends?.userGrowth}
             height={200}
             gradientColors={{ start: CHART_COLORS.primary, end: CHART_COLORS.secondary }}
-            className="border-gray-800 bg-gray-900/50"
+            className="border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50"
           />
         ) : null}
 
         {/* Content Distribution */}
         {isLoading ? (
-          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
+          <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-5 h-[280px] animate-pulse" />
         ) : chartStats?.contentDistribution && chartStats.contentDistribution.length > 0 ? (
           <LazyDonutChartCard
             title="Content Distribution"
@@ -125,7 +125,7 @@ export default function DashboardPage() {
               label: "Total",
             }}
             height={200}
-            className="border-gray-800 bg-gray-900/50"
+            className="border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50"
             colors={[
               CHART_COLORS.primary,
               CHART_COLORS.secondary,
@@ -137,20 +137,20 @@ export default function DashboardPage() {
 
         {/* Activity by Type */}
         {isLoading ? (
-          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
+          <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-5 h-[280px] animate-pulse" />
         ) : chartStats?.activityByType && chartStats.activityByType.length > 0 ? (
           <LazyBarChartCard
             title="Activity by Type (Last 7 Days)"
             data={chartStats.activityByType}
             height={200}
-            className="border-gray-800 bg-gray-900/50"
+            className="border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50"
             horizontal
           />
         ) : null}
 
         {/* Role Distribution */}
         {isLoading ? (
-          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 h-[280px] animate-pulse" />
+          <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-5 h-[280px] animate-pulse" />
         ) : chartStats?.roleDistribution && chartStats.roleDistribution.length > 0 ? (
           <LazyDonutChartCard
             title="User Roles"
@@ -160,7 +160,7 @@ export default function DashboardPage() {
               label: "Users",
             }}
             height={200}
-            className="border-gray-800 bg-gray-900/50"
+            className="border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50"
             colors={[
               CHART_COLORS.success,
               CHART_COLORS.secondary,
@@ -176,12 +176,12 @@ export default function DashboardPage() {
       {/* Quick Actions Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Notifications Overview */}
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white">Recent Notifications</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Notifications</h3>
             <Link
               href="/dashboard/notifications"
-              className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="text-sm text-blue-600 dark:text-cyan-400 hover:text-blue-500 dark:hover:text-cyan-300 transition-colors"
             >
               View all →
             </Link>
@@ -190,7 +190,7 @@ export default function DashboardPage() {
           {isLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
+                <div key={i} className="h-16 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
               ))}
             </div>
           ) : recentNotifications.length === 0 ? (
@@ -217,11 +217,11 @@ export default function DashboardPage() {
                 <Link
                   key={notif.id}
                   href={`/dashboard/notifications`}
-                  className="flex items-center gap-3 p-3 rounded-lg border border-gray-800 hover:border-gray-700 hover:bg-gray-800/50 transition-all"
+                  className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all"
                 >
                   <NotificationStatusIcon status={notif.status} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{notif.title}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{notif.title}</p>
                     <p className="text-xs text-gray-500 truncate">
                       {notif.target_type === "all"
                         ? "All users"
@@ -238,12 +238,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Pending Beta Applications */}
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white">Pending Beta Applications</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Pending Beta Applications</h3>
             <Link
               href="/dashboard/beta"
-              className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="text-sm text-blue-600 dark:text-cyan-400 hover:text-blue-500 dark:hover:text-cyan-300 transition-colors"
             >
               View all →
             </Link>
@@ -252,7 +252,7 @@ export default function DashboardPage() {
           {isLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
+                <div key={i} className="h-16 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
               ))}
             </div>
           ) : recentBeta.length === 0 ? (
@@ -265,13 +265,13 @@ export default function DashboardPage() {
                 <Link
                   key={app.id}
                   href={`/dashboard/beta?highlight=${app.id}`}
-                  className="flex items-center gap-4 p-3 rounded-lg border border-gray-800 hover:border-gray-700 hover:bg-gray-800/50 transition-all"
+                  className="flex items-center gap-4 p-3 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all"
                 >
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center text-white font-medium">
                     {app.userName?.charAt(0).toUpperCase() || "?"}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                       {app.userName || app.userEmail}
                     </p>
                     <p className="text-xs text-gray-500 truncate">{app.motivation}</p>
@@ -286,12 +286,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent Feedback */}
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white">Recent Feedback</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Feedback</h3>
             <Link
               href="/dashboard/feedback"
-              className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="text-sm text-blue-600 dark:text-cyan-400 hover:text-blue-500 dark:hover:text-cyan-300 transition-colors"
             >
               View all →
             </Link>
@@ -300,7 +300,7 @@ export default function DashboardPage() {
           {isLoading ? (
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
+                <div key={i} className="h-16 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
               ))}
             </div>
           ) : recentFeedback.length === 0 ? (
@@ -311,11 +311,11 @@ export default function DashboardPage() {
                 <Link
                   key={feedback.id}
                   href={`/dashboard/feedback?highlight=${feedback.id}`}
-                  className="flex items-center gap-4 p-3 rounded-lg border border-gray-800 hover:border-gray-700 hover:bg-gray-800/50 transition-all"
+                  className="flex items-center gap-4 p-3 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all"
                 >
                   <FeedbackTypeIcon type={feedback.feedbackType} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{feedback.title}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">{feedback.title}</p>
                     <p className="text-xs text-gray-500 truncate">
                       by {feedback.userName || feedback.userEmail}
                     </p>
@@ -332,7 +332,7 @@ export default function DashboardPage() {
       <DonationsOverview />
 
       {/* Live Activity Feed */}
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6">
+      <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6">
         <ActivityFeed
           maxItems={30}
           showFilters={true}
@@ -350,17 +350,17 @@ export default function DashboardPage() {
 function FeedbackTypeIcon({ type }: { type: "bug" | "feature" | "general" }) {
   const icons = {
     bug: (
-      <div className="w-10 h-10 rounded-full bg-red-900/30 flex items-center justify-center">
+      <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
         <span className="text-lg">🐛</span>
       </div>
     ),
     feature: (
-      <div className="w-10 h-10 rounded-full bg-emerald-900/30 flex items-center justify-center">
+      <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
         <span className="text-lg">💡</span>
       </div>
     ),
     general: (
-      <div className="w-10 h-10 rounded-full bg-blue-900/30 flex items-center justify-center">
+      <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
         <span className="text-lg">💬</span>
       </div>
     ),
@@ -370,10 +370,10 @@ function FeedbackTypeIcon({ type }: { type: "bug" | "feature" | "general" }) {
 
 function SeverityBadge({ severity }: { severity: string }) {
   const styles: Record<string, string> = {
-    low: "bg-gray-800 text-gray-400",
-    medium: "bg-yellow-900/30 text-yellow-400",
-    high: "bg-orange-900/30 text-orange-400",
-    critical: "bg-red-900/30 text-red-400",
+    low: "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400",
+    medium: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400",
+    high: "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400",
+    critical: "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400",
   };
 
   return (
@@ -386,42 +386,42 @@ function SeverityBadge({ severity }: { severity: string }) {
 function NotificationStatusIcon({ status }: { status: string }) {
   const icons: Record<string, JSX.Element> = {
     draft: (
-      <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">
-        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+        <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
       </div>
     ),
     scheduled: (
-      <div className="w-10 h-10 rounded-full bg-blue-900/30 flex items-center justify-center">
-        <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+        <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </div>
     ),
     sending: (
-      <div className="w-10 h-10 rounded-full bg-yellow-900/30 flex items-center justify-center">
-        <svg className="w-5 h-5 text-yellow-400 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
+        <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
       </div>
     ),
     sent: (
-      <div className="w-10 h-10 rounded-full bg-emerald-900/30 flex items-center justify-center">
-        <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+        <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
         </svg>
       </div>
     ),
     failed: (
-      <div className="w-10 h-10 rounded-full bg-red-900/30 flex items-center justify-center">
-        <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+        <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
         </svg>
       </div>
     ),
     cancelled: (
-      <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">
+      <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
         <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
         </svg>
@@ -433,12 +433,12 @@ function NotificationStatusIcon({ status }: { status: string }) {
 
 function NotificationStatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    draft: "bg-gray-800 text-gray-400",
-    scheduled: "bg-blue-900/30 text-blue-400",
-    sending: "bg-yellow-900/30 text-yellow-400",
-    sent: "bg-emerald-900/30 text-emerald-400",
-    failed: "bg-red-900/30 text-red-400",
-    cancelled: "bg-gray-800 text-gray-500",
+    draft: "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400",
+    scheduled: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400",
+    sending: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400",
+    sent: "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400",
+    failed: "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400",
+    cancelled: "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-500",
   };
 
   return (
@@ -500,15 +500,15 @@ function DonationsOverview() {
   };
 
   return (
-    <div className="rounded-xl border border-pink-900/30 bg-gradient-to-br from-pink-900/10 to-rose-900/10 p-6">
+    <div className="rounded-xl border border-pink-200 dark:border-pink-900/30 bg-gradient-to-br from-pink-50 dark:from-pink-900/10 to-rose-50 dark:to-rose-900/10 p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="text-2xl">💜</span>
-          <h3 className="text-lg font-semibold text-white">Donations Overview</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Donations Overview</h3>
         </div>
         <Link
           href="/dashboard/donations"
-          className="text-sm text-pink-400 hover:text-pink-300 transition-colors"
+          className="text-sm text-pink-600 dark:text-pink-400 hover:text-pink-500 dark:hover:text-pink-300 transition-colors"
         >
           View details →
         </Link>
@@ -517,34 +517,34 @@ function DonationsOverview() {
       {isLoading ? (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-20 bg-gray-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-20 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
           ))}
         </div>
       ) : (
         <>
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            <div className="rounded-lg bg-gray-900/50 p-4 border border-gray-800">
-              <p className="text-sm text-gray-400">Total Raised</p>
-              <p className="text-2xl font-bold text-white">
+            <div className="rounded-lg bg-white dark:bg-gray-900/50 p-4 border border-gray-200 dark:border-gray-800">
+              <p className="text-sm text-gray-600 dark:text-gray-400">Total Raised</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {formatAmount(stats?.total_raised || 0)}
               </p>
             </div>
-            <div className="rounded-lg bg-gray-900/50 p-4 border border-gray-800">
-              <p className="text-sm text-gray-400">Completed</p>
-              <p className="text-2xl font-bold text-emerald-400">
+            <div className="rounded-lg bg-white dark:bg-gray-900/50 p-4 border border-gray-200 dark:border-gray-800">
+              <p className="text-sm text-gray-600 dark:text-gray-400">Completed</p>
+              <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
                 {stats?.completed_donations || 0}
               </p>
             </div>
-            <div className="rounded-lg bg-gray-900/50 p-4 border border-gray-800">
-              <p className="text-sm text-gray-400">Pending</p>
-              <p className="text-2xl font-bold text-amber-400">
+            <div className="rounded-lg bg-white dark:bg-gray-900/50 p-4 border border-gray-200 dark:border-gray-800">
+              <p className="text-sm text-gray-600 dark:text-gray-400">Pending</p>
+              <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">
                 {stats?.pending_donations || 0}
               </p>
             </div>
-            <div className="rounded-lg bg-gray-900/50 p-4 border border-gray-800">
-              <p className="text-sm text-gray-400">Unique Donors</p>
-              <p className="text-2xl font-bold text-blue-400">
+            <div className="rounded-lg bg-white dark:bg-gray-900/50 p-4 border border-gray-200 dark:border-gray-800">
+              <p className="text-sm text-gray-600 dark:text-gray-400">Unique Donors</p>
+              <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                 {stats?.unique_donors || 0}
               </p>
             </div>
@@ -553,25 +553,25 @@ function DonationsOverview() {
           {/* Recent Donations */}
           {stats?.recent_donations && stats.recent_donations.length > 0 ? (
             <div className="space-y-2">
-              <p className="text-sm text-gray-400">Recent Donations</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Recent Donations</p>
               {stats.recent_donations.map((donation) => (
                 <div
                   key={donation.id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-gray-900/50 border border-gray-800"
+                  className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-pink-900/30 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center">
                       <span className="text-sm">💝</span>
                     </div>
                     <span className={cn(
-                      "text-sm text-white",
-                      donation.is_anonymous && "italic text-gray-400"
+                      "text-sm text-gray-900 dark:text-white",
+                      donation.is_anonymous && "italic text-gray-500 dark:text-gray-400"
                     )}>
                       {donation.donor_name}
                     </span>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold text-white">
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
                       {formatAmount(donation.amount)}
                     </p>
                     <p className="text-xs text-gray-500">
