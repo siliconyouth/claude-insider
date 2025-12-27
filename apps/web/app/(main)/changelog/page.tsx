@@ -1,20 +1,13 @@
 import { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-// Import pre-parsed changelog JSON (generated at build time by update-build-info.cjs)
-// This works on Vercel because JSON imports are bundled, unlike fs.readFileSync
-import changelogData from "@/data/changelog.json";
+// Import pre-parsed changelog data (generated at build time by generate-changelog.cjs)
+import { changelogVersions, type ChangelogVersion } from "@/data/changelog-data";
 
 export const metadata: Metadata = {
   title: "Changelog - Claude Insider",
   description: "Version history and release notes for Claude Insider",
 };
-
-interface ChangelogVersion {
-  version: string;
-  date: string;
-  sections: { title: string; items: string[] }[];
-}
 
 function getSectionColor(title: string): string {
   const colors: Record<string, string> = {
@@ -29,9 +22,8 @@ function getSectionColor(title: string): string {
 }
 
 export default function ChangelogPage() {
-  // Use pre-parsed changelog JSON (generated at build time)
-  // This works on Vercel serverless functions because JSON is bundled
-  const versions = changelogData as ChangelogVersion[];
+  // Use pre-parsed changelog data (generated at build time by generate-changelog.cjs)
+  const versions = changelogVersions;
 
   return (
     <div className="min-h-screen">
