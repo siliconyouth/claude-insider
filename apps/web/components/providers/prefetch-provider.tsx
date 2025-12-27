@@ -20,7 +20,6 @@ const HOMEPAGE_CRITICAL_ROUTES = [
   "/docs/getting-started",
   "/resources",
   "/docs",
-  "/playground",
 ];
 
 // Routes that should be prefetched on all pages (navigation destinations)

@@ -13,7 +13,7 @@ import { GradientLogo } from "@/components/gradient-logo";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
-  activePage?: "home" | "docs" | "getting-started" | "resources" | "playground" | "stats" | "prompts" | "community";
+  activePage?: "home" | "docs" | "getting-started" | "resources" | "stats" | "prompts" | "community";
 }
 
 // Icons for navigation items
@@ -211,7 +211,6 @@ export function Header({ activePage }: HeaderProps) {
             />
 
             {/* Simple Links */}
-            <NavLink label="Playground" href="/playground" isActive={activePage === "playground"} />
             <NavLink label="Stats" href="/stats" isActive={activePage === "stats"} />
             <NavLink label="Community" href="/users" isActive={activePage === "community"} />
 
@@ -335,18 +334,6 @@ export function Header({ activePage }: HeaderProps) {
                 )}
               >
                 {t("resources")}
-              </Link>
-              <Link
-                href="/playground"
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
-                  activePage === "playground"
-                    ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
-                )}
-              >
-                Playground
               </Link>
               <Link
                 href="/stats"

@@ -38,7 +38,6 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
     links: [
       { href: "/docs", labelKey: "documentation" },
       { href: "/resources", labelKey: "resources" },
-      { href: "/playground", label: "Playground" },
       { href: "/prompts", label: "Prompt Library" },
       { href: "#", label: "AI Assistant", badge: "New", action: "openAIAssistant" },
       { href: "/messages", label: "Chat" },
