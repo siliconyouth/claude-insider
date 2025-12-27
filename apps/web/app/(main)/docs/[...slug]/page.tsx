@@ -118,11 +118,46 @@ export async function generateMetadata({
   const fileContent = fs.readFileSync(filePath, "utf-8");
   const { data } = extractFrontmatter(fileContent);
 
+  const title = data.title || formatSlugToTitle(slug[slug.length - 1] ?? "");
+  const description = data.description || "Claude AI documentation and guides";
+  const pageUrl = `https://www.claudeinsider.com/docs/${slug.join("/")}`;
+
+  // Dynamic OG image with title and category
+  const category = slug[0] ? formatSlugToTitle(slug[0]) : "Documentation";
+  const ogImageParams = new URLSearchParams({
+    title,
+    description: description.slice(0, 100),
+    type: "article",
+    category,
+  });
+  const ogImage = `https://www.claudeinsider.com/api/og?${ogImageParams.toString()}`;
+
   return {
-    title: data.title
-      ? `${data.title} | Claude Insider`
-      : "Documentation | Claude Insider",
-    description: data.description || "Claude AI documentation and guides",
+    title: `${title} | Claude Insider`,
+    description,
+    keywords: [
+      "Claude AI",
+      "Claude Code",
+      category,
+      ...slug.map(s => formatSlugToTitle(s)),
+    ].join(", "),
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url: pageUrl,
+      siteName: "Claude Insider",
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
+    alternates: {
+      canonical: pageUrl,
+    },
   };
 }
 
@@ -207,20 +242,78 @@ export default async function DocPage({ params }: PageProps) {
     }
   }
 
+  // JSON-LD structured data for SEO
+  const pageTitle = data.title || formatSlugToTitle(slug[slug.length - 1] ?? "");
+  const pageDescription = data.description || "Claude AI documentation and guides";
+  const pageUrl = `https://www.claudeinsider.com/docs/${slug.join("/")}`;
+  const categoryName = slug[0] ? formatSlugToTitle(slug[0]) : "Documentation";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": pageUrl,
+    headline: pageTitle,
+    description: pageDescription,
+    url: pageUrl,
+    datePublished: "2025-01-01",
+    dateModified: new Date().toISOString().split("T")[0],
+    author: {
+      "@type": "Organization",
+      name: "Claude Insider",
+      url: "https://www.claudeinsider.com",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Claude Insider",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.claudeinsider.com/icons/icon-512x512.png",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl,
+    },
+    articleSection: categoryName,
+    keywords: ["Claude AI", "Claude Code", categoryName, ...slug.map(s => formatSlugToTitle(s))].join(", "),
+    inLanguage: "en-US",
+    isAccessibleForFree: true,
+    // Breadcrumb for rich snippets
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.claudeinsider.com" },
+        { "@type": "ListItem", position: 2, name: "Docs", item: "https://www.claudeinsider.com/docs" },
+        ...slug.map((s, i) => ({
+          "@type": "ListItem",
+          position: i + 3,
+          name: formatSlugToTitle(s),
+          item: `https://www.claudeinsider.com/docs/${slug.slice(0, i + 1).join("/")}`,
+        })),
+      ],
+    },
+  };
+
   return (
-    <DocsLayout
-      title={data.title || formatSlugToTitle(slug[slug.length - 1] ?? "")}
-      description={data.description}
-      breadcrumbs={breadcrumbs}
-      sidebar={sidebarSections}
-      prevPage={prevPage}
-      nextPage={nextPage}
-      slug={slug}
-      readingTime={readingTime.text}
-      editPath={editPath}
-      rawContent={content}
-    >
-      <MDXContent />
-    </DocsLayout>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <DocsLayout
+        title={data.title || formatSlugToTitle(slug[slug.length - 1] ?? "")}
+        description={data.description}
+        breadcrumbs={breadcrumbs}
+        sidebar={sidebarSections}
+        prevPage={prevPage}
+        nextPage={nextPage}
+        slug={slug}
+        readingTime={readingTime.text}
+        editPath={editPath}
+        rawContent={content}
+      >
+        <MDXContent />
+      </DocsLayout>
+    </>
   );
 }
