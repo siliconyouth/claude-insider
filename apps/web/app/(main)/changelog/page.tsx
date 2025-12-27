@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   description: "Version history and release notes for Claude Insider",
 };
 
+// Force static generation and revalidation
+export const dynamic = "force-static";
+export const revalidate = 86400; // Revalidate once per day
+
 export default function ChangelogPage() {
   return (
     <div className="min-h-screen">
