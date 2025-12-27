@@ -33,7 +33,7 @@ import {
   Achievements,
   Badges,
 } from './collections';
-import { SiteSettings, CrossLinkSettings, GamificationSettings, AIPipelineSettings } from './globals';
+import { SiteSettings, SEOSettings, CrossLinkSettings, GamificationSettings, AIPipelineSettings } from './globals';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -92,7 +92,7 @@ export default buildConfig({
   ],
 
   // Globals (single-instance documents for site-wide config)
-  globals: [SiteSettings, CrossLinkSettings, GamificationSettings, AIPipelineSettings],
+  globals: [SiteSettings, SEOSettings, CrossLinkSettings, GamificationSettings, AIPipelineSettings],
 
   // Database - Supabase PostgreSQL via Drizzle
   // Using Session Pooler with PgBouncer compatibility
