@@ -13,7 +13,8 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 5. [Component Patterns](#component-patterns)
 6. [Navigation Patterns](#navigation-patterns)
 7. [Realtime Patterns](#realtime-patterns)
-8. [Resource Patterns](#resource-patterns) - Enhanced fields, insights dashboard, filters (MANDATORY)
+8. [Admin Settings Patterns](#admin-settings-patterns-v1130) - Payload CMS access control (v1.13.0)
+9. [Resource Patterns](#resource-patterns) - Enhanced fields, insights dashboard, filters (MANDATORY)
 
 ---
 
@@ -731,6 +732,119 @@ function MyPage() {
   model="Claude Opus 4.5"
 />
 ```
+
+---
+
+## Admin Settings Patterns (v1.13.0)
+
+### Payload CMS Access Control
+
+```tsx
+// lib/payload-access.ts - Role-based access control factory
+import type { Access, FieldAccess } from 'payload';
+
+// Access level hierarchy
+const ACCESS_LEVELS = {
+  public: 0,      // Anyone can read (not write)
+  user: 1,        // Logged-in users
+  editor: 2,      // Content editors
+  moderator: 3,   // Moderators
+  admin: 4,       // Administrators
+  superadmin: 5,  // Full access
+} as const;
+
+// Factory for collection/global access
+export function createRoleAccess(minRole: keyof typeof ACCESS_LEVELS): Access {
+  return ({ req }) => {
+    const userRole = req.user?.role || 'public';
+    return ACCESS_LEVELS[userRole] >= ACCESS_LEVELS[minRole];
+  };
+}
+
+// Factory for field-level access
+export function createFieldAccess(minRole: keyof typeof ACCESS_LEVELS): FieldAccess {
+  return ({ req }) => {
+    const userRole = req.user?.role || 'public';
+    return ACCESS_LEVELS[userRole] >= ACCESS_LEVELS[minRole];
+  };
+}
+```
+
+### Global Settings Pattern
+
+```tsx
+// globals/SiteSettings.ts - Standard global structure
+import { GlobalConfig } from 'payload';
+import { createRoleAccess, createFieldAccess } from '@/lib/payload-access';
+
+export const SiteSettings: GlobalConfig = {
+  slug: 'site-settings',
+  label: 'Site Settings',
+  // Admin+ for read/update
+  access: {
+    read: createRoleAccess('admin'),
+    update: createRoleAccess('admin'),
+  },
+  fields: [
+    // Group fields into tabs for organization
+    {
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'General',
+          fields: [
+            { name: 'siteName', type: 'text', required: true },
+            { name: 'siteDescription', type: 'textarea' },
+          ],
+        },
+        {
+          label: 'Security',
+          // Superadmin-only section
+          access: { read: createFieldAccess('superadmin') },
+          fields: [
+            { name: 'rateLimiting', type: 'checkbox' },
+            { name: 'maxRequestsPerMinute', type: 'number' },
+          ],
+        },
+      ],
+    },
+  ],
+};
+```
+
+### Sensitive Settings Pattern (Superadmin Only)
+
+```tsx
+// globals/AIPipelineSettings.ts - Superadmin-only global
+import { GlobalConfig } from 'payload';
+import { createRoleAccess } from '@/lib/payload-access';
+
+export const AIPipelineSettings: GlobalConfig = {
+  slug: 'ai-pipeline-settings',
+  label: 'AI Pipeline Settings',
+  admin: {
+    group: 'Settings', // Group in admin sidebar
+  },
+  // SUPERADMIN ONLY - contains API keys, cost tracking, rate limits
+  access: {
+    read: createRoleAccess('superadmin'),
+    update: createRoleAccess('superadmin'),
+  },
+  fields: [
+    // Cost tracking, model configuration, rate limits, etc.
+  ],
+};
+```
+
+### Global Configuration Summary (v1.13.0)
+
+| Global | Sections | Access | Purpose |
+|--------|----------|--------|---------|
+| `SiteSettings` | 12 | Admin+ | General, Social, Footer, SEO, Features, Security, Performance, Notifications, API, Contact, Announcement |
+| `SEOSettings` | 9 | Admin+ | Meta, OpenGraph, Twitter, StructuredData, Verification, Robots, IndexNow, Analytics, Advanced |
+| `CrossLinkSettings` | 5 | Admin+ | Auto-matching, Display, Scoring, Category mappings, Features |
+| `GamificationSettings` | 9 | Admin+ | Points, Levels, Streaks, Notifications, Leaderboard, Moderation, Achievements, Event Triggers |
+| `AIPipelineSettings` | 9 | **Superadmin** | Relationships, Enhancement, Documentation, CLI, Tracking, Model, Cost, Rate Limits, Scheduling |
 
 ---
 

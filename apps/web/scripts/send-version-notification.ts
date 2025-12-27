@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.12.9 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.13.0 notification to all opted-in users...\n");
 
-  const version = "1.12.9";
-  const title = "Claude Insider v1.12.9 - SEO & PayPal Enhancements";
+  const version = "1.13.0";
+  const title = "Claude Insider v1.13.0 - Admin Settings & Role-Based Access";
   const message =
-    "🔍 Enhanced doc page SEO with TechArticle JSON-LD & dynamic OG images • ⚡ IndexNow instant URL indexing to Bing/Yandex • 💳 PayPal React SDK for smoother donations • 🛠️ Fixed resource data issues across 1,952 resources";
+    "⚙️ Comprehensive Admin Settings with 44 sections across 5 Payload globals • 🔐 Role-Based Access Control with createRoleAccess() factory • 📊 SEO Dashboard with 9 configuration sections • 🎯 Enhanced Payload Globals with proper Admin+/Superadmin restrictions";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

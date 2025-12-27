@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-27 for v1.12.9 (SEO enhancements, IndexNow, PayPal SDK, resource fixes)
+ * Updated: 2025-12-27 for v1.13.0 (Admin Settings System, SEO dashboard, role-based access control)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.12.9",
+  version: "1.13.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -1060,6 +1060,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.10.2", "resource enhancement", "ai summary", "key features", "use cases", "pros cons", "target audience", "prerequisites", "metadata"],
+  },
+  {
+    id: "v1130-features",
+    title: "Version 1.13.0 Features",
+    section: "New in v1.13.0",
+    content: `Claude Insider v1.13.0 introduces comprehensive admin settings infrastructure with role-based access control. Admin Settings System: 5 Payload CMS globals (SiteSettings, SEOSettings, CrossLinkSettings, GamificationSettings, AIPipelineSettings) with 44 total configuration sections. Role-Based Access Control: New lib/payload-access.ts with createRoleAccess() and createFieldAccess() factory functions for consistent permission enforcement. Access levels: public, user, editor, moderator, admin, superadmin. SEO Dashboard: 9 configuration sections covering Meta, OpenGraph, Twitter, StructuredData, Verification, Robots, IndexNow, Analytics, and Advanced settings. Enhanced Payload Globals: All globals now have proper role restrictions - most require Admin+ access, while AIPipelineSettings (containing API keys, cost tracking, rate limits) requires Superadmin-only access. FR-53: Comprehensive Admin Settings tracked as new feature.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.13.0", "admin settings", "payload globals", "role-based access", "seo dashboard", "createRoleAccess", "payload-access", "fr-53"],
   },
   {
     id: "v1129-features",

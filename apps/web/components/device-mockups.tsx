@@ -311,11 +311,11 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.12.3</span>
+          <span className="text-[#8b949e]"> v1.13.0</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Features: 49 • Resources: 1,952+</span>
+          <span className="text-[#8b949e]"> Features: 53 • Resources: 1,952+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>
@@ -342,7 +342,7 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.12.3 with proper aspect ratio handling and LCP optimization
+ * Updated for v1.13.0 with proper aspect ratio handling and LCP optimization
  *
  * MANDATORY MOCKUP RULES:
  * 1. Screenshot MUST be taken at 446×932 viewport (matches mockup 224:468 aspect ratio)

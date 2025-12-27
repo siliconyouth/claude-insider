@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.0",
+    date: "2025-12-27",
+    type: "minor",
+    highlights: [
+      "⚙️ Comprehensive Admin Settings: 44 sections across 5 Payload globals (SiteSettings, SEO, Gamification, CrossLink, AI Pipeline)",
+      "🔐 Role-Based Access Control: New lib/payload-access.ts with createRoleAccess() and createFieldAccess() factories",
+      "📊 SEO Dashboard: 9 configuration sections for meta, OpenGraph, Twitter, JSON-LD, verification, and analytics",
+      "🎯 Enhanced Payload Globals: All globals now have proper role restrictions (Admin+ or Superadmin-only)",
+    ],
+  },
+  {
     version: "1.12.9",
     date: "2025-12-27",
     type: "patch",

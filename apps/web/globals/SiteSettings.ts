@@ -70,7 +70,7 @@ export const SiteSettings: GlobalConfig = {
           name: 'version',
           type: 'text',
           label: 'Site Version',
-          defaultValue: '1.12.6',
+          defaultValue: '1.13.0',
           admin: {
             description: 'Current version displayed in footer',
           },

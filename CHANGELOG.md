@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.0] - 2025-12-27
+### Comprehensive Admin Settings System
+- **SEO Dashboard**: New admin dashboard page for SEO management
+  - Health checks for meta tags, structured data, sitemap
+  - Google search preview with SERP simulation
+  - Social media previews (Open Graph, Twitter Cards)
+  - Quick links to Search Console, IndexNow, Analytics
+  - Integration with comprehensive SEO Settings global
+- **Enhanced Payload Globals**: 10 new settings sections across 5 globals
+  - SiteSettings: +Security, +Performance, +Notifications, +API (7 → 12 sections)
+  - GamificationSettings: +Moderation, +Achievements, +Event Triggers (5 → 9 sections)
+  - AIPipelineSettings: +Cost Tracking, +Rate Limits, +Scheduling (6 → 9 sections)
+  - All globals updated to use centralized access control
+- **Role-Based Access Control**: New `lib/payload-access.ts` utility
+  - Hierarchical role checking: USER < EDITOR < MODERATOR < ADMIN < SUPERADMIN
+  - Reusable access functions: `publicRead`, `adminAccess`, `superadminAccess`
+  - AIPipelineSettings now Superadmin-only for write access (API cost protection)
+- **Playground Hidden**: Code playground temporarily hidden from UI (code preserved for later)
+- **next-seo Integration**: Added JSON-LD component library for structured data
+
+---
+
 ## [1.12.9] - 2025-12-27
 ### SEO Enhancement & PayPal Simplification
 - **Search Engine Optimization**: Comprehensive SEO infrastructure for thorough crawling

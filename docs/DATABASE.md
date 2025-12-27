@@ -30,7 +30,7 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 |------|-------|
 | **Total Tables** | 126 |
 | **Categories** | 19 |
-| **Migrations** | 97 |
+| **Migrations** | 100 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -230,7 +230,9 @@ supabase/migrations/
 ├── 086-088                      # Documentation tables, relationships, resource AI enhancements
 ├── 089-090                      # AI pipeline settings, operation queue, resource sources, discovery queue
 ├── 091                          # Resource-resource relationships fix
-└── 096                          # Prompts system (categories, prompts, saves, ratings, usage)
+├── 092-095                      # Release notifications
+├── 096                          # Prompts system (categories, prompts, saves, ratings, usage)
+└── 097-100                      # Export jobs, release notifications
 ```
 
 ---
