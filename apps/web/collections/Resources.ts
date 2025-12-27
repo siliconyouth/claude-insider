@@ -509,6 +509,7 @@ export const Resources: CollectionConfig = {
                       type: 'select',
                       required: true,
                       options: RELATIONSHIP_TYPES.map(t => t),
+                      dbName: 'res_doc_rel_type', // Short name to avoid PostgreSQL 63-char limit
                       admin: { description: 'Type of relationship', width: '50%' },
                     },
                     {
@@ -579,6 +580,7 @@ export const Resources: CollectionConfig = {
                       type: 'select',
                       required: true,
                       options: RESOURCE_RELATIONSHIP_TYPES.map(t => t),
+                      dbName: 'res_res_rel_type', // Short name to avoid PostgreSQL 63-char limit
                       admin: { description: 'Type of relationship', width: '50%' },
                     },
                     {
