@@ -7,6 +7,7 @@ import {
   formatSlugToTitle,
 } from "@/lib/mdx";
 import { calculateReadingTime } from "@/lib/reading-time";
+import { DocArticleJsonLd, BreadcrumbsJsonLd } from "@/components/seo/json-ld";
 import fs from "fs";
 import type { Metadata } from "next";
 
@@ -242,64 +243,34 @@ export default async function DocPage({ params }: PageProps) {
     }
   }
 
-  // JSON-LD structured data for SEO
+  // SEO data for JSON-LD components
   const pageTitle = data.title || formatSlugToTitle(slug[slug.length - 1] ?? "");
   const pageDescription = data.description || "Claude AI documentation and guides";
-  const pageUrl = `https://www.claudeinsider.com/docs/${slug.join("/")}`;
   const categoryName = slug[0] ? formatSlugToTitle(slug[0]) : "Documentation";
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "@id": pageUrl,
-    headline: pageTitle,
-    description: pageDescription,
-    url: pageUrl,
-    datePublished: "2025-01-01",
-    dateModified: new Date().toISOString().split("T")[0],
-    author: {
-      "@type": "Organization",
-      name: "Claude Insider",
-      url: "https://www.claudeinsider.com",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Claude Insider",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://www.claudeinsider.com/icons/icon-512x512.png",
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": pageUrl,
-    },
-    articleSection: categoryName,
-    keywords: ["Claude AI", "Claude Code", categoryName, ...slug.map(s => formatSlugToTitle(s))].join(", "),
-    inLanguage: "en-US",
-    isAccessibleForFree: true,
-    // Breadcrumb for rich snippets
-    breadcrumb: {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.claudeinsider.com" },
-        { "@type": "ListItem", position: 2, name: "Docs", item: "https://www.claudeinsider.com/docs" },
-        ...slug.map((s, i) => ({
-          "@type": "ListItem",
-          position: i + 3,
-          name: formatSlugToTitle(s),
-          item: `https://www.claudeinsider.com/docs/${slug.slice(0, i + 1).join("/")}`,
-        })),
-      ],
-    },
-  };
+  // Breadcrumb items for JSON-LD
+  const breadcrumbItems = [
+    { name: "Home", href: "/" },
+    { name: "Docs", href: "/docs" },
+    ...slug.map((s, i) => ({
+      name: formatSlugToTitle(s),
+      href: `/docs/${slug.slice(0, i + 1).join("/")}`,
+    })),
+  ];
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      {/* Structured data using next-seo components */}
+      <DocArticleJsonLd
+        title={pageTitle}
+        description={pageDescription}
+        slug={slug.join("/")}
+        category={categoryName}
+        datePublished="2025-01-01"
+        dateModified={new Date().toISOString().split("T")[0]}
+        wordCount={readingTime.words}
       />
+      <BreadcrumbsJsonLd items={breadcrumbItems} />
       <DocsLayout
         title={data.title || formatSlugToTitle(slug[slug.length - 1] ?? "")}
         description={data.description}

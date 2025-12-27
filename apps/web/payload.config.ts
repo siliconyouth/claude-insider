@@ -4,6 +4,7 @@ import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { resendAdapter } from '@payloadcms/email-resend';
+import { seoPlugin } from '@payloadcms/plugin-seo';
 
 // All collections now enabled - first user created via custom seed endpoint
 import {
@@ -122,8 +123,57 @@ export default buildConfig({
     disable: true,
   },
 
-  // Plugins can be added here
-  plugins: [],
+  // Plugins
+  plugins: [
+    // SEO Plugin - adds meta fields to Documents and Resources
+    seoPlugin({
+      collections: ['documents', 'resources'],
+      uploadsCollection: 'media',
+      // Generate SEO title from document/resource title
+      generateTitle: ({ doc }) => {
+        const title = (doc as { title?: string }).title || 'Untitled';
+        return `${title} | Claude Insider`;
+      },
+      // Generate description from document/resource description
+      generateDescription: ({ doc }) => {
+        const description = (doc as { description?: string }).description;
+        return description || 'Claude AI documentation and resources';
+      },
+      // Generate canonical URL
+      generateURL: ({ doc, collectionSlug }) => {
+        const slug = (doc as { slug?: string }).slug || '';
+
+        if (collectionSlug === 'documents') {
+          return `https://www.claudeinsider.com/docs/${slug}`;
+        }
+        if (collectionSlug === 'resources') {
+          return `https://www.claudeinsider.com/resources/${slug}`;
+        }
+        return `https://www.claudeinsider.com/${slug}`;
+      },
+      // TinyMCE-style character limits
+      tabbedUI: true,
+      // Field overrides for custom SEO fields
+      fields: ({ defaultFields }) => [
+        ...defaultFields,
+        {
+          name: 'keywords',
+          type: 'text',
+          admin: {
+            description: 'Comma-separated keywords for meta tags',
+          },
+        },
+        {
+          name: 'noIndex',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            description: 'Prevent search engines from indexing this page',
+          },
+        },
+      ],
+    }),
+  ],
 
   // Localization - 18 supported languages
   localization: {

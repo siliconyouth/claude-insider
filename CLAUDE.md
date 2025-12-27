@@ -39,18 +39,19 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.12.9**.
 7. [Performance Optimization (MANDATORY)](#performance-optimization-mandatory) - Dynamic imports, build cache, targets
 8. [Sound Design System (MANDATORY)](#sound-design-system-mandatory) - Web Audio API, themes
 9. [Text-to-Speech System (MANDATORY)](#text-to-speech-system-mandatory) - ElevenLabs v3, audio tags
-10. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
-11. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
-12. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
-13. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
-14. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
-15. [Internationalization](#internationalization-i18n) - 18 languages
-16. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-17. [Content Structure](#content-structure) - Documentation, resources, legal pages
-18. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-19. [Success Metrics](#success-metrics)
-20. [Updating Guidelines](#updating-guidelines)
-21. [License](#license)
+10. [SEO System (MANDATORY)](#seo-system-mandatory) - JSON-LD, Payload SEO, IndexNow
+11. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
+12. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
+13. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
+14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
+15. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
+16. [Internationalization](#internationalization-i18n) - 18 languages
+17. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+18. [Content Structure](#content-structure) - Documentation, resources, legal pages
+19. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+20. [Success Metrics](#success-metrics)
+21. [Updating Guidelines](#updating-guidelines)
+22. [License](#license)
 
 ---
 
@@ -87,6 +88,8 @@ All technologies are **free and/or open source** (except hosting services with f
 | recharts | 3.6.0 | MIT | Animated charts (Area, Bar, Pie, Line) |
 | Playwright | 1.53.1 | Apache-2.0 | Icon generation (SVG rendering) |
 | sharp | 0.34.3 | Apache-2.0 | Image resizing for icons |
+| next-seo | 7.0.1 | MIT | JSON-LD structured data components |
+| @payloadcms/plugin-seo | 3.69.0 | MIT | CMS SEO field management |
 
 ### Development Environment
 
@@ -539,6 +542,117 @@ Tags enriched in ~14% of RAG chunks: `[excited]`, `[curious]`, `[thoughtful]`, `
 | Code | Brief + code block |
 
 **RAG Chunk Size**: 800 characters
+
+---
+
+## SEO System (MANDATORY)
+
+**Location**: `lib/seo-config.ts`, `components/seo/json-ld.tsx`, `payload.config.ts`
+
+### Architecture
+
+| Layer | Package | Purpose |
+|-------|---------|---------|
+| **CMS** | `@payloadcms/plugin-seo` | Admin UI for SEO fields (title, description, image) |
+| **Components** | `next-seo` | JSON-LD structured data components |
+| **Native** | Next.js Metadata API | `generateMetadata()` for meta tags |
+
+### Payload SEO Plugin
+
+Configured in `payload.config.ts` for Documents and Resources collections:
+
+```typescript
+import { seoPlugin } from '@payloadcms/plugin-seo';
+
+plugins: [
+  seoPlugin({
+    collections: ['documents', 'resources'],
+    uploadsCollection: 'media',
+    generateTitle: ({ doc }) => `${doc.title} | Claude Insider`,
+    generateDescription: ({ doc }) => doc.description,
+    generateURL: ({ doc, collectionSlug }) => {
+      if (collectionSlug === 'documents') return `https://www.claudeinsider.com/docs/${doc.slug}`;
+      if (collectionSlug === 'resources') return `https://www.claudeinsider.com/resources/${doc.slug}`;
+      return `https://www.claudeinsider.com/${doc.slug}`;
+    },
+    tabbedUI: true,
+  }),
+]
+```
+
+### JSON-LD Components
+
+| Component | Schema Type | Use For |
+|-----------|-------------|---------|
+| `DocArticleJsonLd` | TechArticle | Documentation pages |
+| `ResourceJsonLd` | SoftwareApplication | Resource detail pages |
+| `BreadcrumbsJsonLd` | BreadcrumbList | Navigation breadcrumbs |
+| `ResourceListJsonLd` | ItemList | Category listing pages |
+| `DocFAQJsonLd` | FAQPage | Q&A sections |
+| `TutorialJsonLd` | HowTo | Tutorial pages |
+| `HomeJsonLd` | Organization + WebSite | Homepage |
+
+### Usage Pattern
+
+```tsx
+// In page.tsx
+import { DocArticleJsonLd, BreadcrumbsJsonLd } from '@/components/seo/json-ld';
+
+export default function DocPage({ doc }) {
+  const breadcrumbs = [
+    { name: 'Home', href: '/' },
+    { name: 'Docs', href: '/docs' },
+    { name: doc.title, href: `/docs/${doc.slug}` },
+  ];
+
+  return (
+    <>
+      <DocArticleJsonLd
+        title={doc.title}
+        description={doc.description}
+        slug={doc.slug}
+        category={doc.category}
+        dateModified={doc.updatedAt}
+      />
+      <BreadcrumbsJsonLd items={breadcrumbs} />
+      {/* Page content */}
+    </>
+  );
+}
+```
+
+### SEO Constants
+
+```typescript
+// lib/seo-config.ts
+export const SEO_CONSTANTS = {
+  SITE_URL: 'https://www.claudeinsider.com',
+  SITE_NAME: 'Claude Insider',
+  TITLE_MAX_LENGTH: 60,
+  DESCRIPTION_MAX_LENGTH: 160,
+  OG_IMAGE_WIDTH: 1200,
+  OG_IMAGE_HEIGHT: 630,
+};
+```
+
+### IndexNow Integration
+
+Instant URL indexing to Bing/Yandex:
+
+| Endpoint | Purpose |
+|----------|---------|
+| `/api/indexnow` | On-demand URL submission |
+| `/api/cron/indexnow-submit` | Weekly batch submission (Sundays 4 AM UTC) |
+
+**Key file**: `public/6a65eb75c5cef7d4c6fb4c1cdf37cd1f.txt`
+
+### Checklist for New Pages
+
+- [ ] Add `generateMetadata()` with title, description, OG image
+- [ ] Include appropriate JSON-LD component (`DocArticleJsonLd`, `ResourceJsonLd`, etc.)
+- [ ] Add `BreadcrumbsJsonLd` for navigation
+- [ ] Verify canonical URL is correct
+- [ ] Test with Google Rich Results Test
 
 ---
 

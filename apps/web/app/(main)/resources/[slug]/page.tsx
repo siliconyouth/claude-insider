@@ -25,6 +25,7 @@ import { ResourceHero } from "@/components/resources/resource-hero";
 import { ResourceStats } from "@/components/resources/resource-stats";
 import { ResourceTabs } from "@/components/resources/resource-tabs";
 import { ResourceSidebar } from "@/components/resources/resource-sidebar";
+import { ResourceJsonLd, BreadcrumbsJsonLd, ResourceListJsonLd } from "@/components/seo/json-ld";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -190,9 +191,33 @@ async function CategoryPageContent({ categorySlug }: { categorySlug: ResourceCat
   const featuredResources = resources.filter((r) => r.featured);
   const regularResources = resources.filter((r) => !r.featured);
 
+  // Breadcrumb items for JSON-LD
+  const breadcrumbItems = [
+    { name: "Home", href: "/" },
+    { name: "Resources", href: "/resources" },
+    { name: category.name, href: `/resources/${categorySlug}` },
+  ];
+
+  // Resource list items for JSON-LD (first 20 for SEO)
+  const resourceListItems = resources.slice(0, 20).map((r, i) => ({
+    name: r.title,
+    slug: r.id,
+    description: r.description,
+    position: i + 1,
+  }));
+
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      <Header activePage="resources" />
+    <>
+      {/* Structured data for category page */}
+      <BreadcrumbsJsonLd items={breadcrumbItems} />
+      <ResourceListJsonLd
+        resources={resourceListItems}
+        listName={`${category.name} - Claude AI Resources`}
+        listDescription={category.description}
+      />
+
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
+        <Header activePage="resources" />
 
       <main id="main-content" className="pt-8 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -426,7 +451,8 @@ async function CategoryPageContent({ categorySlug }: { categorySlug: ResourceCat
       </main>
 
       <Footer />
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -443,68 +469,33 @@ async function ResourcePageContent({ slug }: { slug: string }) {
 
   const category = getCategoryBySlug(resource.category as ResourceCategorySlug);
 
-  // JSON-LD structured data for SEO (enhanced with Migration 088 fields)
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: resource.title,
-    description: resource.ai_summary || resource.description,
-    url: resource.url,
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: resource.platforms?.join(", ") || "Cross-platform",
-    // Enhanced fields
-    ...(resource.key_features && resource.key_features.length > 0 && {
-      featureList: resource.key_features.join(", "),
-    }),
-    ...(resource.target_audience && resource.target_audience.length > 0 && {
-      audience: {
-        "@type": "Audience",
-        audienceType: resource.target_audience.join(", "),
-      },
-    }),
-    ...(resource.prerequisites && resource.prerequisites.length > 0 && {
-      softwareRequirements: resource.prerequisites.join(", "),
-    }),
-    // Pricing
-    ...(resource.pricing === "free" || resource.pricing === "open-source"
-      ? {
-          offers: {
-            "@type": "Offer",
-            price: "0",
-            priceCurrency: "USD",
-          },
-        }
-      : {}),
-    // Rating
-    ...(resource.ratings_count > 0
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: Number(resource.average_rating || 0).toFixed(1),
-            ratingCount: resource.ratings_count,
-            reviewCount: resource.reviews_count,
-          },
-        }
-      : {}),
-    // AI-generated review (if available)
-    ...(resource.ai_overview && {
-      review: {
-        "@type": "Review",
-        reviewBody: resource.ai_summary || resource.ai_overview.slice(0, 300),
-        author: {
-          "@type": "Organization",
-          name: "Claude Insider AI",
-        },
-      },
-    }),
-  };
+  // Breadcrumb items for JSON-LD
+  const breadcrumbItems = [
+    { name: "Home", href: "/" },
+    { name: "Resources", href: "/resources" },
+    { name: category?.name || resource.category, href: `/resources/${resource.category}` },
+    { name: resource.title, href: `/resources/${slug}` },
+  ];
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      {/* Structured data using next-seo components */}
+      <ResourceJsonLd
+        name={resource.title}
+        description={resource.ai_summary || resource.description}
+        slug={slug}
+        category={resource.category}
+        url={resource.url}
+        rating={resource.ratings_count > 0 ? Number(resource.average_rating || 0) : undefined}
+        ratingCount={resource.ratings_count > 0 ? resource.ratings_count : undefined}
+        operatingSystem={resource.platforms?.join(", ") || "Cross-platform"}
+        offers={
+          resource.pricing === "free" || resource.pricing === "open-source"
+            ? { price: 0, priceCurrency: "USD" }
+            : undefined
+        }
       />
+      <BreadcrumbsJsonLd items={breadcrumbItems} />
 
       <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] flex flex-col">
         <Header activePage="resources" />
