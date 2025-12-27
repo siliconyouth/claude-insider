@@ -5,6 +5,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { resendAdapter } from '@payloadcms/email-resend';
 import { seoPlugin } from '@payloadcms/plugin-seo';
+import sharp from 'sharp';
 
 // All collections now enabled - first user created via custom seed endpoint
 import {
@@ -233,4 +234,7 @@ export default buildConfig({
 
   // Telemetry
   telemetry: false,
+
+  // Image processing
+  sharp,
 });
