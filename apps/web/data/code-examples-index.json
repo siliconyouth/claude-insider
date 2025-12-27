@@ -1,15 +1,15 @@
 {
   "version": "1.0",
-  "generatedAt": "2025-12-27T15:00:30.735Z",
+  "generatedAt": "2025-12-27T15:39:46.520Z",
   "stats": {
-    "totalExamples": 583,
-    "totalCodeBlocks": 583,
+    "totalExamples": 585,
+    "totalCodeBlocks": 585,
     "languages": 16,
     "patterns": 14
   },
   "byLanguage": {
     "text": 207,
-    "bash": 104,
+    "bash": 106,
     "python": 11,
     "typescript": 79,
     "powershell": 1,
@@ -26,13 +26,13 @@
     "elisp": 3
   },
   "byPattern": {
-    "apiCall": 262,
+    "apiCall": 264,
     "authentication": 148,
     "prompt": 110,
-    "model": 203,
+    "model": 205,
     "hooks": 170,
-    "cli": 287,
-    "configuration": 108,
+    "cli": 289,
+    "configuration": 109,
     "import": 34,
     "export": 31,
     "async": 55,
@@ -45,7 +45,7 @@
     "API Reference": 100,
     "Configuration": 73,
     "Examples": 19,
-    "Getting Started": 70,
+    "Getting Started": 72,
     "Integrations": 148,
     "Tips & Tricks": 109,
     "Tutorials": 64
@@ -6480,6 +6480,72 @@
         "languageFamily": "other",
         "patterns": [],
         "lineCount": 5,
+        "hasImports": false,
+        "hasExports": false,
+        "isAsync": false
+      }
+    },
+    {
+      "id": "code--docs-getting-started#0",
+      "title": "BASH Example: What is Claude Code?",
+      "section": "What is Claude Code?",
+      "content": "Context: - **Explain complex code** - Get clear explanations of unfamiliar code or concepts ## Quick Start Get Claude Code running in just two steps:\nLanguage: bash\nCode:\n# Install Claude Code globally\nnpm install -g @anthropic-ai/claude-code\n\n# Start your first session\nclaude",
+      "url": "/docs/getting-started",
+      "category": "Getting Started",
+      "keywords": [
+        "bash",
+        "shell",
+        "apiCall",
+        "model",
+        "cli",
+        "code",
+        "example",
+        "snippet"
+      ],
+      "isCodeExample": true,
+      "codeData": {
+        "language": "bash",
+        "languageFamily": "shell",
+        "patterns": [
+          "apiCall",
+          "model",
+          "cli"
+        ],
+        "lineCount": 5,
+        "hasImports": false,
+        "hasExports": false,
+        "isAsync": false
+      }
+    },
+    {
+      "id": "code--docs-getting-started#1",
+      "title": "BASH Example: What is Claude Code?",
+      "section": "What is Claude Code?",
+      "content": "Context: | **MCP Integration** | Extend capabilities with Model Context Protocol servers | ## Example Session Here's what a typical Claude Code session looks like:\nLanguage: bash\nCode:\n$ claude\n╭─ Claude Code ─────────────────────────────────────────────╮\n│ Welcome! I'm ready to help with your project.            │\n╰───────────────────────────────────────────────────────────╯\n\nYou: Add a dark mode toggle to the settings page\n\nClaude: I'll help you add a dark mode toggle. Let me first\nunderstand your current setup...\n\n[Claude reads your code, creates the component, and updates\nthe necessary files - all with your approval]",
+      "url": "/docs/getting-started",
+      "category": "Getting Started",
+      "keywords": [
+        "bash",
+        "shell",
+        "apiCall",
+        "configuration",
+        "model",
+        "cli",
+        "code",
+        "example",
+        "snippet"
+      ],
+      "isCodeExample": true,
+      "codeData": {
+        "language": "bash",
+        "languageFamily": "shell",
+        "patterns": [
+          "apiCall",
+          "configuration",
+          "model",
+          "cli"
+        ],
+        "lineCount": 12,
         "hasImports": false,
         "hasExports": false,
         "isAsync": false

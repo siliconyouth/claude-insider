@@ -117,7 +117,7 @@ export default function HomePage() {
 
                 {/* Trust badge */}
                 <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
-                  v1.13.0 • Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
+                  v1.13.1 • Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
                 </p>
               </div>
 

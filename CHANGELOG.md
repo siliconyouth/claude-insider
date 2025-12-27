@@ -29,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed primary gradient to use `-600` values (was `-500`)
   - Updated typography scale to match CLAUDE.md
   - Added Text & Link Colors documentation section
+- **Documentation Fixes**:
+  - Added missing `index.mdx` for Getting Started section
+  - Fixed 404 error on `/docs/getting-started` route
+  - Updated device mockup screenshot with v1.13.1 badge
 
 ---
 
