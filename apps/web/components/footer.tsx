@@ -155,7 +155,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                  className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -308,7 +308,7 @@ export function Footer() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             {/* Copyright */}
-            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-500">
+            <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-500">
               <Link
                 href="/"
                 className="hover:opacity-80 transition-opacity"
@@ -329,7 +329,7 @@ export function Footer() {
                 Vladimir Dukelic
               </a>
               <span className="hidden sm:inline text-gray-300 dark:text-gray-700">·</span>
-              <span className="hidden sm:inline font-mono text-gray-400 dark:text-gray-600">
+              <span className="hidden sm:inline font-mono text-gray-500 dark:text-gray-500">
                 v{APP_VERSION}-{buildId}
               </span>
             </div>

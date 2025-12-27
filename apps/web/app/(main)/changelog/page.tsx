@@ -20,17 +20,17 @@ export default function ChangelogPage() {
 
       <main id="main-content" className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-4">Changelog</h1>
-          <p className="text-gray-400 text-lg">
+          <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Changelog</h1>
+          <p className="text-gray-600 dark:text-gray-400 text-lg">
             All notable changes to Claude Insider are documented here.
           </p>
-          <p className="text-gray-500 text-sm mt-2">
+          <p className="text-gray-600 dark:text-gray-500 text-sm mt-2">
             This project adheres to{" "}
             <a
               href="https://semver.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-400 hover:text-cyan-300"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-cyan-300"
             >
               Semantic Versioning
             </a>
@@ -42,14 +42,14 @@ export default function ChangelogPage() {
         <ChangelogContent />
 
         {/* Link to GitHub */}
-        <div className="mt-16 pt-8 border-t border-gray-800">
-          <p className="text-gray-400 text-sm">
+        <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
             View the full changelog on{" "}
             <a
               href="https://github.com/siliconyouth/claude-insider/blob/main/CHANGELOG.md"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-400 hover:text-cyan-300"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-cyan-300"
             >
               GitHub
             </a>
