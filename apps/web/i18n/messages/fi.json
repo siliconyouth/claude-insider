@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "Yksityisyys",
-    "terms": "Ehdot",
+    "copyrightShort": "Claude Insider",
+    "privacy": "Tietosuojakäytäntö",
+    "terms": "Käyttöehdot",
     "disclaimer": "Vastuuvapauslauseke",
     "accessibility": "Esteettömyys",
-    "changelog": "Muutosloki"
+    "changelog": "Muutosloki",
+    "donate": "Lahjoita",
+    "tagline": "Kattava oppaasi Claude AI:hin - dokumentaatio, resurssit ja parhaat käytännöt.",
+    "features": "Ominaisuudet",
+    "documentation": "Dokumentaatio",
+    "resources": "Resurssit",
+    "documentationTitle": "Dokumentaatio",
+    "resourcesTitle": "Resurssit",
+    "project": "Projekti",
+    "legal": "Oikeudelliset",
+    "gettingStarted": "Aloitus",
+    "configuration": "Asetukset",
+    "apiReference": "API-viite",
+    "tipsTricks": "Vinkit ja niksit",
+    "tutorials": "Oppaat",
+    "examples": "Esimerkit"
   }
 }

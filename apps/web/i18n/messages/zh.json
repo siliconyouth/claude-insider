@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "隐私",
-    "terms": "条款",
+    "copyrightShort": "Claude Insider",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
     "disclaimer": "免责声明",
     "accessibility": "无障碍",
-    "changelog": "更新日志"
+    "changelog": "更新日志",
+    "donate": "捐赠",
+    "tagline": "您的Claude AI综合指南 - 文档、资源和最佳实践。",
+    "features": "功能",
+    "documentation": "文档",
+    "resources": "资源",
+    "documentationTitle": "文档",
+    "resourcesTitle": "资源",
+    "project": "项目",
+    "legal": "法律",
+    "gettingStarted": "入门指南",
+    "configuration": "配置",
+    "apiReference": "API参考",
+    "tipsTricks": "技巧与窍门",
+    "tutorials": "教程",
+    "examples": "示例"
   }
 }

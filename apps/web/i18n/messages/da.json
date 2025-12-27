@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "Privatliv",
-    "terms": "Vilkår",
+    "copyrightShort": "Claude Insider",
+    "privacy": "Privatlivspolitik",
+    "terms": "Servicevilkår",
     "disclaimer": "Ansvarsfraskrivelse",
     "accessibility": "Tilgængelighed",
-    "changelog": "Ændringslog"
+    "changelog": "Ændringslog",
+    "donate": "Donér",
+    "tagline": "Din komplette guide til Claude AI - dokumentation, ressourcer og bedste praksis.",
+    "features": "Funktioner",
+    "documentation": "Dokumentation",
+    "resources": "Ressourcer",
+    "documentationTitle": "Dokumentation",
+    "resourcesTitle": "Ressourcer",
+    "project": "Projekt",
+    "legal": "Juridisk",
+    "gettingStarted": "Kom i gang",
+    "configuration": "Konfiguration",
+    "apiReference": "API-reference",
+    "tipsTricks": "Tips og tricks",
+    "tutorials": "Tutorials",
+    "examples": "Eksempler"
   }
 }

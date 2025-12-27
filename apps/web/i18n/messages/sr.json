@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "Приватност",
-    "terms": "Услови",
+    "copyrightShort": "Claude Insider",
+    "privacy": "Политика приватности",
+    "terms": "Услови коришћења",
     "disclaimer": "Одрицање одговорности",
     "accessibility": "Приступачност",
-    "changelog": "Историја промена"
+    "changelog": "Историја промена",
+    "donate": "Донирај",
+    "tagline": "Ваш комплетан водич за Claude AI - документација, ресурси и најбоље праксе.",
+    "features": "Могућности",
+    "documentation": "Документација",
+    "resources": "Ресурси",
+    "documentationTitle": "Документација",
+    "resourcesTitle": "Ресурси",
+    "project": "Пројекат",
+    "legal": "Правне информације",
+    "gettingStarted": "Почетак рада",
+    "configuration": "Конфигурација",
+    "apiReference": "API референца",
+    "tipsTricks": "Савети и трикови",
+    "tutorials": "Упутства",
+    "examples": "Примери"
   }
 }

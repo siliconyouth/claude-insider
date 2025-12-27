@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "Конфиденциальность",
-    "terms": "Условия",
+    "copyrightShort": "Claude Insider",
+    "privacy": "Политика конфиденциальности",
+    "terms": "Условия использования",
     "disclaimer": "Отказ от ответственности",
     "accessibility": "Доступность",
-    "changelog": "История изменений"
+    "changelog": "История изменений",
+    "donate": "Пожертвовать",
+    "tagline": "Ваш полный гид по Claude AI - документация, ресурсы и лучшие практики.",
+    "features": "Возможности",
+    "documentation": "Документация",
+    "resources": "Ресурсы",
+    "documentationTitle": "Документация",
+    "resourcesTitle": "Ресурсы",
+    "project": "Проект",
+    "legal": "Юридическая информация",
+    "gettingStarted": "Начало работы",
+    "configuration": "Настройка",
+    "apiReference": "Справочник API",
+    "tipsTricks": "Советы и хитрости",
+    "tutorials": "Руководства",
+    "examples": "Примеры"
   }
 }

@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "개인정보",
-    "terms": "이용약관",
+    "copyrightShort": "Claude Insider",
+    "privacy": "개인정보처리방침",
+    "terms": "서비스 이용약관",
     "disclaimer": "면책조항",
     "accessibility": "접근성",
-    "changelog": "변경이력"
+    "changelog": "변경 이력",
+    "donate": "후원하기",
+    "tagline": "Claude AI 종합 가이드 - 문서, 리소스 및 모범 사례.",
+    "features": "기능",
+    "documentation": "문서",
+    "resources": "리소스",
+    "documentationTitle": "문서",
+    "resourcesTitle": "리소스",
+    "project": "프로젝트",
+    "legal": "법적 고지",
+    "gettingStarted": "시작하기",
+    "configuration": "설정",
+    "apiReference": "API 레퍼런스",
+    "tipsTricks": "팁과 요령",
+    "tutorials": "튜토리얼",
+    "examples": "예제"
   }
 }

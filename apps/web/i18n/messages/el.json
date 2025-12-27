@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "Απόρρητο",
-    "terms": "Όροι",
+    "copyrightShort": "Claude Insider",
+    "privacy": "Πολιτική Απορρήτου",
+    "terms": "Όροι Χρήσης",
     "disclaimer": "Αποποίηση ευθύνης",
     "accessibility": "Προσβασιμότητα",
-    "changelog": "Ιστορικό αλλαγών"
+    "changelog": "Ιστορικό αλλαγών",
+    "donate": "Δωρεά",
+    "tagline": "Ο πλήρης οδηγός σας για το Claude AI - τεκμηρίωση, πόροι και βέλτιστες πρακτικές.",
+    "features": "Χαρακτηριστικά",
+    "documentation": "Τεκμηρίωση",
+    "resources": "Πόροι",
+    "documentationTitle": "Τεκμηρίωση",
+    "resourcesTitle": "Πόροι",
+    "project": "Έργο",
+    "legal": "Νομικά",
+    "gettingStarted": "Ξεκινώντας",
+    "configuration": "Ρύθμιση",
+    "apiReference": "Αναφορά API",
+    "tipsTricks": "Συμβουλές και Κόλπα",
+    "tutorials": "Εκπαιδευτικά",
+    "examples": "Παραδείγματα"
   }
 }

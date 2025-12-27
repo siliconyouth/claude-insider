@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "プライバシー",
+    "copyrightShort": "Claude Insider",
+    "privacy": "プライバシーポリシー",
     "terms": "利用規約",
     "disclaimer": "免責事項",
     "accessibility": "アクセシビリティ",
-    "changelog": "変更履歴"
+    "changelog": "変更履歴",
+    "donate": "寄付する",
+    "tagline": "Claude AIの総合ガイド - ドキュメント、リソース、ベストプラクティス。",
+    "features": "機能",
+    "documentation": "ドキュメント",
+    "resources": "リソース",
+    "documentationTitle": "ドキュメント",
+    "resourcesTitle": "リソース",
+    "project": "プロジェクト",
+    "legal": "法的情報",
+    "gettingStarted": "はじめに",
+    "configuration": "設定",
+    "apiReference": "APIリファレンス",
+    "tipsTricks": "ヒントとコツ",
+    "tutorials": "チュートリアル",
+    "examples": "サンプル"
   }
 }

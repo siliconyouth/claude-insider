@@ -228,8 +228,8 @@ export default buildConfig({
     },
   },
 
-  // Debug mode in development
-  debug: process.env.NODE_ENV === 'development',
+  // Debug mode
+  debug: false,
 
   // Telemetry
   telemetry: false,

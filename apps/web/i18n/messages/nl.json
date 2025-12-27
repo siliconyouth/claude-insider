@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
-    "privacy": "Privacy",
-    "terms": "Voorwaarden",
+    "copyrightShort": "Claude Insider",
+    "privacy": "Privacybeleid",
+    "terms": "Servicevoorwaarden",
     "disclaimer": "Disclaimer",
     "accessibility": "Toegankelijkheid",
-    "changelog": "Changelog"
+    "changelog": "Wijzigingslogboek",
+    "donate": "Doneren",
+    "tagline": "Uw complete gids voor Claude AI - documentatie, bronnen en best practices.",
+    "features": "Functies",
+    "documentation": "Documentatie",
+    "resources": "Bronnen",
+    "documentationTitle": "Documentatie",
+    "resourcesTitle": "Bronnen",
+    "project": "Project",
+    "legal": "Juridisch",
+    "gettingStarted": "Aan de slag",
+    "configuration": "Configuratie",
+    "apiReference": "API-referentie",
+    "tipsTricks": "Tips en trucs",
+    "tutorials": "Handleidingen",
+    "examples": "Voorbeelden"
   }
 }

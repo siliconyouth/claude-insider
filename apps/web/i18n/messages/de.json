@@ -205,10 +205,26 @@
   },
   "footer": {
     "copyright": "© {year}",
+    "copyrightShort": "Claude Insider",
     "privacy": "Datenschutz",
     "terms": "Nutzungsbedingungen",
     "disclaimer": "Haftungsausschluss",
     "accessibility": "Barrierefreiheit",
-    "changelog": "Änderungen"
+    "changelog": "Änderungen",
+    "donate": "Spenden",
+    "tagline": "Ihr umfassender Leitfaden für Claude AI - Dokumentation, Ressourcen und Best Practices.",
+    "features": "Funktionen",
+    "documentation": "Dokumentation",
+    "resources": "Ressourcen",
+    "documentationTitle": "Dokumentation",
+    "resourcesTitle": "Ressourcen",
+    "project": "Projekt",
+    "legal": "Rechtliches",
+    "gettingStarted": "Erste Schritte",
+    "configuration": "Konfiguration",
+    "apiReference": "API-Referenz",
+    "tipsTricks": "Tipps & Tricks",
+    "tutorials": "Tutorials",
+    "examples": "Beispiele"
   }
 }
