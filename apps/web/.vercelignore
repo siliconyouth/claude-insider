@@ -15,7 +15,6 @@ coverage/
 # Documentation and meta files
 *.md
 !README.md
-docs/
 .github/
 .husky/
 .vscode/
