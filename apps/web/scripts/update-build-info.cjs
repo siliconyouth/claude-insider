@@ -44,18 +44,79 @@ fs.writeFileSync(buildInfoPath, JSON.stringify(buildInfo, null, 2));
 
 console.log(`✓ Updated build info: v${version} · ${buildDate} · ${commitSha}`);
 
-// Copy CHANGELOG.md from monorepo root to data/ for Vercel deployment
-// On Vercel, only apps/web is deployed, so files outside need to be copied
+// Parse CHANGELOG.md and output as JSON for Vercel deployment
+// fs.readFileSync doesn't work in Vercel serverless functions
 const changelogSource = path.join(__dirname, "../../../CHANGELOG.md");
-const changelogDest = path.join(__dirname, "../data/CHANGELOG.md");
+const changelogJsonDest = path.join(__dirname, "../data/changelog.json");
+
+function parseChangelog(content) {
+  const versions = [];
+  const lines = content.split("\n");
+
+  let currentVersion = null;
+  let currentSection = null;
+
+  for (const line of lines) {
+    // Match version headers: ## [x.x.x] - YYYY-MM-DD
+    const versionMatch = line.match(/^## \[([^\]]+)\] - (\d{4}-\d{2}-\d{2})/);
+    if (versionMatch && versionMatch[1] && versionMatch[2]) {
+      if (currentVersion) {
+        if (currentSection) {
+          currentVersion.sections.push(currentSection);
+        }
+        versions.push(currentVersion);
+      }
+      currentVersion = {
+        version: versionMatch[1],
+        date: versionMatch[2],
+        sections: [],
+      };
+      currentSection = null;
+      continue;
+    }
+
+    // Match section headers: ### Added, ### Changed, etc.
+    const sectionMatch = line.match(/^### (.+)/);
+    if (sectionMatch && sectionMatch[1] && currentVersion) {
+      if (currentSection) {
+        currentVersion.sections.push(currentSection);
+      }
+      currentSection = {
+        title: sectionMatch[1],
+        items: [],
+      };
+      continue;
+    }
+
+    // Match list items: - item
+    const itemMatch = line.match(/^- (.+)/);
+    if (itemMatch && itemMatch[1] && currentSection) {
+      currentSection.items.push(itemMatch[1]);
+    }
+  }
+
+  // Push the last version and section
+  if (currentVersion) {
+    if (currentSection) {
+      currentVersion.sections.push(currentSection);
+    }
+    versions.push(currentVersion);
+  }
+
+  return versions;
+}
 
 try {
   if (fs.existsSync(changelogSource)) {
-    fs.copyFileSync(changelogSource, changelogDest);
-    console.log(`✓ Copied CHANGELOG.md to data/`);
+    const content = fs.readFileSync(changelogSource, "utf-8");
+    const versions = parseChangelog(content);
+    fs.writeFileSync(changelogJsonDest, JSON.stringify(versions, null, 2));
+    console.log(`✓ Parsed CHANGELOG.md to data/changelog.json (${versions.length} versions)`);
   } else {
     console.warn("⚠ CHANGELOG.md not found at monorepo root");
+    fs.writeFileSync(changelogJsonDest, "[]");
   }
 } catch (e) {
-  console.warn("⚠ Could not copy CHANGELOG.md:", e.message);
+  console.warn("⚠ Could not parse CHANGELOG.md:", e.message);
+  fs.writeFileSync(changelogJsonDest, "[]");
 }

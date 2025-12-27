@@ -1,0 +1,1270 @@
+[
+  {
+    "version": "1.13.0",
+    "date": "2025-12-27",
+    "sections": [
+      {
+        "title": "Comprehensive Admin Settings System",
+        "items": [
+          "**SEO Dashboard**: New admin dashboard page for SEO management",
+          "**Enhanced Payload Globals**: 10 new settings sections across 5 globals",
+          "**Role-Based Access Control**: New `lib/payload-access.ts` utility",
+          "**Playground Hidden**: Code playground temporarily hidden from UI (code preserved for later)",
+          "**next-seo Integration**: Added JSON-LD component library for structured data"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.9",
+    "date": "2025-12-27",
+    "sections": [
+      {
+        "title": "SEO Enhancement & PayPal Simplification",
+        "items": [
+          "**Search Engine Optimization**: Comprehensive SEO infrastructure for thorough crawling",
+          "**PayPal React SDK Migration**: Simplified donation payments",
+          "**Resource Data Fixes**: Database consistency improvements"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.8",
+    "date": "2025-12-26",
+    "sections": [
+      {
+        "title": "Resource Insights Dashboard",
+        "items": [
+          "**Enhanced Filters**: All AI-generated fields now filterable",
+          "**Dashboard Visualizations**: Interactive charts for resource insights",
+          "**Resources Index SEO**: Enhanced metadata for `/resources` page",
+          "**Resource Card Badges**: Enhanced field indicators"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.7",
+    "date": "2025-12-24",
+    "sections": [
+      {
+        "title": "Logo Component System & Design Consistency",
+        "items": [
+          "**New Logo Components**: Created `GradientLogo` and `MonochromeLogo` SVG components",
+          "**MANDATORY Design Rules**: Updated CLAUDE.md with logo component requirements",
+          "**OG Image Fixes**: Corrected font-weight from 700 to 800 in both OG routes",
+          "**Documentation Updates**: Updated CLAUDE.md, PATTERNS.md, FEATURES.md, README.md",
+          "**50 Features**: Total implemented features increased from 49 to 50"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.6",
+    "date": "2025-12-24",
+    "sections": [
+      {
+        "title": "Vercel Build Cache Optimization (70% Faster Builds)",
+        "items": [
+          "**Fixed Cache Invalidation Bug**: Discovered that `update-build-info.cjs` was modifying `footer.tsx` on every build",
+          "**Vercel Remote Cache Enabled**: Added explicit `remoteCache: { enabled: true }` to turbo.json",
+          "**Optimized Turbo Inputs**: Changed `public/**` to specific essential files",
+          "**Created .vercelignore**: Excludes test files, docs, and dev artifacts from deployment uploads",
+          "**MANDATORY Build Rules**: Added comprehensive documentation"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.5",
+    "date": "2025-12-23",
+    "sections": [
+      {
+        "title": "Synchronized Provider Loading & Documentation Optimization",
+        "items": [
+          "**Flickering Fix**: All lazy providers now load synchronously via `DeferredLoadingProvider`",
+          "**CLAUDE.md Optimization**: Reduced from 2,372 lines to 1,011 lines (57% reduction)",
+          "**MANDATORY Performance Rules**: Updated with synchronized provider loading pattern"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.4",
+    "date": "2025-12-23",
+    "sections": [
+      {
+        "title": "Lighthouse Performance Optimization (100% Score)",
+        "items": [
+          "**Massive Performance Improvements**: Lighthouse scores improved dramatically",
+          "**requestIdleCallback Provider Deferral**: All lazy providers now defer until browser is idle",
+          "**Homepage Section Lazy Loading**: Heavy below-fold sections now code-split",
+          "**MANDATORY Performance Rules**: Updated CLAUDE.md with new requirements"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.3",
+    "date": "2025-12-23",
+    "sections": [
+      {
+        "title": "ElevenLabs Turbo v2.5 & Immediate Text Streaming",
+        "items": [
+          "**ElevenLabs Turbo v2.5**: Switched from Eleven v3 to Turbo v2.5 for 3x faster speech generation",
+          "**Immediate Text Streaming**: Text now streams instantly without buffering",
+          "**Code Block TTS Support**: Code blocks now converted to speakable text",
+          "**Loading Indicator Fix**: Prevented loading indicator from appearing during audio prefetch",
+          "**MANDATORY TTS Guidelines**: Updated CLAUDE.md with Turbo v2.5 requirements"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.2",
+    "date": "2025-12-23",
+    "sections": [
+      {
+        "title": "ElevenLabs v3 TTS Optimization & Concise Responses",
+        "items": [
+          "**Parallel Audio Prefetch**: Audio fetch starts at 300 chars while Claude continues streaming",
+          "**Fake Text Streaming**: Text reveals progressively synced to audio duration",
+          "**Concise Response Guidelines**: AI now gives shorter answers for faster TTS",
+          "**RAG Chunk Size Reduction**: 800 chars (down from 1500)",
+          "**Recommendations on Load**: Suggested follow-ups appear when loading existing conversations"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.1",
+    "date": "2025-12-23",
+    "sections": [
+      {
+        "title": "Streaming TTS & UI Polish",
+        "items": [
+          "**Streaming TTS Auto-Start**: AI voice now starts speaking immediately as response streams",
+          "**Copy Button Feedback**: Visual confirmation when copying AI messages",
+          "**TTS Path Pronunciation**: Fixed mispronunciation of URL paths",
+          "**Message Bubble Spacing**: Consistent padding between chat messages",
+          "**Auto-Scroll Improvements**:",
+          "**Code Quality**: Fixed unused variable warning in virtualized-message-list.tsx"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.12.0",
+    "date": "2025-12-23",
+    "sections": [
+      {
+        "title": "ElevenLabs v3, Audio Tags & RAG v7.0",
+        "items": [
+          "**ElevenLabs Eleven v3 Model**: Upgraded TTS engine for natural, emotionally expressive speech",
+          "**Audio Tag Enrichment**: RAG index now includes audio tags for expressive TTS",
+          "**RAG v7.0**: Expanded knowledge base with 6,953 chunks",
+          "**TTS Fluency Optimization**: Smoother speech synthesis",
+          "**Voice Preview**: Listen button moved inline with voice selector dropdown",
+          "**Inline Recommendations**: Suggestions appear within message list (not overlay)"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.11.0",
+    "date": "2025-12-23",
+    "sections": [
+      {
+        "title": "Footer Redesign & Navigation Documentation",
+        "items": [
+          "**Footer Layout Overhaul**: Complete redesign using flex + grid hybrid pattern",
+          "**AI Assistant Button**: Footer link now opens chat window directly",
+          "**MonochromeLogo Enhancement**: New `variant` prop with \"contrast\" option",
+          "**Footer Column Structure**: 5 organized columns",
+          "**Design System Updates**: 10 new mandatory footer rules in CLAUDE.md",
+          "**Quick Links Removed**: Removed redundant Quick Links section from homepage (now in footer)",
+          "**Tagline Improved**: Footer brand tagline now flows as single sentence with em dash"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.8",
+    "date": "2025-12-23",
+    "sections": [
+      {
+        "title": "Mobile Header Optimization & Navigation Documentation",
+        "items": [
+          "**Mobile Header Optimization**: Header now fits in one row on mobile viewports",
+          "**API Link Moved to Footer**: API settings link relocated for cleaner header",
+          "**CLAUDE.md Documentation**: New mandatory \"Header & Footer Navigation\" section",
+          "**Mobile Screenshot Updated**: iPhone mockup now shows optimized header layout",
+          "**Version Bump**: Updated to v1.10.8 across all files"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.7",
+    "date": "2025-12-22",
+    "sections": [
+      {
+        "title": "Mobile Navigation Fix & OG Images",
+        "items": [
+          "**Mobile Navigation Fix**: All 33 modals and fixed-bottom elements now account for bottom navigation bar",
+          "**Viewport Lock**: Prevented horizontal scrolling on mobile with overflow-x: hidden",
+          "**Logo Aspect Ratio**: Fixed logo squishing on narrow screens with shrink-0 aspect-square",
+          "**OG Images**: Added branded OG images for social sharing",
+          "**Homepage Update**: New mobile screenshot in iPhone mockup"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.6",
+    "date": "2025-12-22",
+    "sections": [
+      {
+        "title": "Brand Icon Redesign",
+        "items": [
+          "**New \"Ci\" Gradient Icon**: Complete redesign of all website icons",
+          "**Icon Generation Script**: New automated pipeline (`scripts/generate-icons.cjs`)",
+          "**PWA Icons**: All 17 icon sizes regenerated (16px to 512px)",
+          "**CLAUDE.md Updates**: New mandatory \"Icon System\" section",
+          "**Dependencies**: Added Playwright 1.53.1 and sharp 0.34.3 to tech stack"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.5",
+    "date": "2025-12-22",
+    "sections": [
+      {
+        "title": "Code Optimization & Build Cache",
+        "items": [
+          "**Dead Code Removal**: Removed unused Vercel AI SDK (`ai` package)",
+          "**Turbopack Build Cache**: Enabled `turbopackFileSystemCacheForBuild` (Next.js 16.1 feature)",
+          "**Package Version Sync**: Updated all version references",
+          "**Documentation Updates**: Synced versions in CLAUDE.md, system-prompt.ts, footer, version popup"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.4",
+    "date": "2025-12-22",
+    "sections": [
+      {
+        "title": "Build Performance & Package Upgrades",
+        "items": [
+          "**Turbopack Production Builds**: Next.js 16.1.1 enables Turbopack for production",
+          "**Major Package Upgrades**:",
+          "**Turborepo Caching Improvements**:",
+          "**Next.js Optimizations**:",
+          "**Documentation Updates**: All package versions updated in CLAUDE.md tech stack table"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.3",
+    "date": "2025-12-22",
+    "sections": [
+      {
+        "title": "Bug Fixes & Documentation Updates",
+        "items": [
+          "**Auth Modal Fix**: Resolved click blocking issue",
+          "**Route Conflict Fix**: Moved beta-status endpoint",
+          "**Lucide Import Fix**: Corrected `XIcon` → `X` in `query-builder.tsx`",
+          "**Documentation Updates**: All version references updated to 1.10.3",
+          "**RAG Index v6.5**: Regenerated with latest documentation and project knowledge"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.2",
+    "date": "2025-12-21",
+    "sections": [
+      {
+        "title": "Complete Resource Enhancement",
+        "items": [
+          "**100% Resource Enhancement**: All 1,952 resources now have complete AI-generated metadata",
+          "**Enhancement Scripts**: New tooling for resource metadata management",
+          "**Enhancement Strategy**: Hybrid approach using Claude Code directly",
+          "**Dashboard**: Resources section now shows 1,952 enhanced resources (was 0)"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.1",
+    "date": "2025-12-21",
+    "sections": [
+      {
+        "title": "Resource Relationship Graph Expansion",
+        "items": [
+          "**Resource-Resource Relationships**: Expanded from 96 to 3,087 relationships",
+          "**Relationship Analysis Script**: Fixed `analyze-and-insert-relationships.mjs`",
+          "**Status Scripts**: Fixed `check-relationship-status.mjs` column reference",
+          "**RAG System**: Updated to v6.4 with 3,234 total relationships for cross-linking"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.0",
+    "date": "2025-12-21",
+    "sections": [
+      {
+        "title": "Enhanced Admin Dashboard & Data Visualization",
+        "items": [
+          "**Dashboard Charts**: Rich data visualization with Recharts",
+          "**Site-Wide Charts**: Interactive visualizations on public pages",
+          "**Prompts Admin Page**: Complete management for FR-49 Prompt Library",
+          "**Doc Versions Admin Page**: Version management for FR-48 Doc Versioning",
+          "**Dashboard Navigation Overhaul**: Reorganized from 14 items to 23 items in 5 sections",
+          "**Database**: Migration 096 for prompts tables (5 new tables: `prompts`, `prompt_categories`, `user_prompt_saves`, `prompt_ratings`, `prompt_usage`)",
+          "**TypeScript**: 126 tables now in generated types (up from 121)",
+          "**Dependencies**: Added `recharts@3.6.0` for animated charts"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.0",
+    "date": "2025-12-21",
+    "sections": [
+      {
+        "title": "Advanced Search, Admin Exports & Bot Challenge System",
+        "items": [
+          "**F-035 Advanced Search** (40% → 100%): Complete search system overhaul",
+          "**F-023 Audit Export** (70% → 100%): Enterprise bulk export system",
+          "**F-024 Bot Challenge** (50% → 100%): Human verification system",
+          "**Trust Score System Enhancement**: New database functions",
+          "**Client IP Utilities**: New `lib/client-ip.ts` module",
+          "**Database**: Migration 094 for `export_jobs` table",
+          "**TypeScript**: All new components fully typed, 0 type errors",
+          "**Dependencies**: Added `xlsx` package for Excel exports"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.1",
+    "date": "2025-12-21",
+    "sections": [
+      {
+        "title": "Data Quality & Resource Relationships",
+        "items": [
+          "**Resource-Resource Relationships**: 121 new AI-analyzed relationships between resources",
+          "**Data Quality Fixes**: 679 total updates to resource data",
+          "**Quality Scripts**: New data quality analysis and fix tools",
+          "**Database**: Migration 092 for v1.8.0 release notification",
+          "**Data Quality Metrics**: 0 bad titles, 0 missing descriptions (was 242/456)"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.0",
+    "date": "2025-12-21",
+    "sections": [
+      {
+        "title": "Admin Dashboard & Resource Discovery Pipeline",
+        "items": [
+          "**Admin Dashboard Expansion**: Three new dashboard pages for content management",
+          "**Resource Discovery Pipeline**: Multi-adapter system for curating community resources",
+          "**Data Quality Review Script**: Comprehensive resource analysis (`scripts/data-quality-review.mjs`)",
+          "**Database Schema** (Migrations 090-091):",
+          "**New API Endpoints**:",
+          "**TypeScript**: 120 tables now typed (up from 86)"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.7.0",
+    "date": "2025-12-20",
+    "sections": [
+      {
+        "title": "Doc-Resource Cross-Linking System",
+        "items": [
+          "**Related Resources on Docs**: Every documentation page now shows AI-analyzed related resources",
+          "**Database Schema** (Migrations 086-089):",
+          "**Query Infrastructure**:",
+          "**RAG Index v6.3**: Updated to 1,979 chunks with relationship context"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.6.0",
+    "date": "2025-12-20",
+    "sections": [
+      {
+        "title": "AI Pipeline Integration & Admin Dashboard",
+        "items": [
+          "**AI Pipeline Settings Global**: New Payload CMS global for centralized AI operation configuration",
+          "**Documents Collection Redesign**: Complete tab-based UI overhaul",
+          "**Resources Collection Redesign**: 5-tab organization with AI enhancement fields",
+          "**Claude Code CLI Scripts**: Subscription-based AI operations (no API credits)",
+          "**AI Operation Queue**: Database table for tracking pending operations",
+          "**Database Schema** (Migration 089):",
+          "**New API Endpoints**:"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.5.0",
+    "date": "2025-12-20",
+    "sections": [
+      {
+        "title": "Resource Auto-Update System",
+        "items": [
+          "**AI-Powered Resource Updates**: Automated system for keeping resources current using Claude Opus 4.5",
+          "**Admin Review Workflow**: All AI-generated changes require approval before applying",
+          "**Automated Scheduling**: Weekly cron job (Sundays 3 AM UTC) for batch updates",
+          "**Payload CMS Integration**: \"Check for Updates\" button in resource edit sidebar",
+          "**Database Schema** (Migration 084):",
+          "**RAG System Updated**: Changelog data now included in search index (v6.2)"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.0",
+    "date": "2025-12-19",
+    "sections": [
+      {
+        "title": "Performance Optimization",
+        "items": [
+          "**Lighthouse Score Improved**: Desktop performance now at 86% (up from 82%)",
+          "**LCP Reduced by 16%**: Largest Contentful Paint improved from 2.5s to 2.1s",
+          "**TBT Reduced**: Total Blocking Time improved from 100ms+ to 30-40ms",
+          "**Lazy Provider Architecture**: New pattern for client-only providers",
+          "**Below-fold Optimization**: LazyResourcesSection and LazyVoiceAssistantDemo now use `content-visibility: auto`",
+          "**CLAUDE.md Updated**: New mandatory guidelines for provider lazy loading",
+          "**Performance Targets Updated**: Current metrics documented in CLAUDE.md"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.3.0",
+    "date": "2025-12-19",
+    "sections": [
+      {
+        "title": "Profile Enhancements",
+        "items": [
+          "**Location & Timezone Display**: Users can now set and display their location and local time on profiles",
+          "**Mandatory Onboarding Step**: Location/timezone collection is now a required step in the onboarding wizard",
+          "**Share Profile Feature**: New modal for sharing profiles with rich social previews",
+          "**Settings Integration**: New \"Location & Time\" section in user settings",
+          "**Mobile Action Bar**: Profile actions now accessible on mobile devices",
+          "**OpenGraph Metadata**: Public profiles now have proper OG tags for social sharing"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.0",
+    "date": "2025-12-19",
+    "sections": [
+      {
+        "title": "Gamification CMS",
+        "items": [
+          "**Payload CMS Management**: New admin UI for achievements, badges, and gamification settings",
+          "**GamificationSettings Global**: Configure points system, levels, streaks, and notification defaults",
+          "**Supabase Auto-Sync**: CMS changes automatically sync to Supabase `achievements` table via afterChange hooks",
+          "**Welcome Aboard Achievement Fix**: Now properly auto-awards when onboarding is completed",
+          "**Seed API Endpoint**: `/api/admin/gamification/seed` for initial tiers and categories setup"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.1.0",
+    "date": "2025-12-19",
+    "sections": [
+      {
+        "title": "Profile Page Redesign",
+        "items": [
+          "**Hero-Style Profile Layout**: Twitter-style cover photo with floating profile info overlay",
+          "**Quick Actions Bar**: Icon-based action buttons for streamlined UX",
+          "**Prominent Badges Section**: Status badges with icon + label format",
+          "**Achievement Showcase**: Gamification-focused display with collection feel",
+          "**Applied to Both Pages**: `/profile` (private) and `/users/[username]` (public)"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.0.1",
+    "date": "2025-12-18",
+    "sections": [
+      {
+        "title": "Performance & Accessibility",
+        "items": [
+          "**Lighthouse Score 88**: Improved from ~55 with code splitting optimizations",
+          "**Dynamic Imports**: Chat tabs now lazy-loaded, reducing initial bundle by ~50-100KB",
+          "**Core Web Vitals**: LCP 2.2s (was 3.3s), TBT 0ms (was 460ms), FCP 0.8s (was 1.1s)",
+          "**Accessibility Fix**: aria-labels now match visible text (WCAG 2.5.3 compliance)",
+          "**@Mention Hover Cards**: User mentions now linkified with ProfileHoverCard previews",
+          "**CLAUDE.md**: Added mandatory Performance Optimization section with guidelines"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.0.0",
+    "date": "2025-12-18",
+    "sections": [
+      {
+        "title": "🎉 Version 1.0 - Production Release",
+        "items": []
+      },
+      {
+        "title": "Smart @claudeinsider AI Messaging (FR-35)",
+        "items": [
+          "**Automatic 1-on-1 DM Responses**: AI now responds automatically in direct messages without requiring @mention",
+          "**Group Chat @mention Control**: In group conversations, AI only responds when explicitly mentioned with @claudeinsider",
+          "**Admin-Managed AI Membership**: Group admins and owners can add/remove the AI assistant from conversations",
+          "**E2EE Verified Identity**: AI has a pre-verified device with audit logging for transparent access"
+        ]
+      },
+      {
+        "title": "CMS-Managed Email Templates",
+        "items": [
+          "**Payload CMS Integration**: Email templates now managed through the content management system",
+          "**Live Template Editing**: Admins can update email content without code deployments"
+        ]
+      },
+      {
+        "title": "What's Included",
+        "items": [
+          "10 Sound Themes with Web Audio API synthesis",
+          "Message Read Receipts (Seen feature)",
+          "User Directory with advanced search",
+          "Profile Cover Photos",
+          "End-to-End Encryption (Matrix Olm/Megolm)",
+          "50+ Achievements and Gamification",
+          "35 documented features total"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.99.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "Sound Themes System",
+        "items": [
+          "**10 Built-In Sound Themes**: Each with unique audio characteristics",
+          "**Theme Architecture**: New `hooks/sound-themes.ts` (2000+ lines)",
+          "**Settings Integration**: Theme selector in Sound & Audio section",
+          "**Footer Sound Toggle**: Quick access sound control",
+          "**Diagnostics Testing**: Enhanced sound effects section",
+          "**Database Migration**: `072_sound_themes.sql`"
+        ]
+      },
+      {
+        "title": "Enhanced @claudeinsider AI Assistant",
+        "items": [
+          "**Smart Response Triggering**:",
+          "**Group Chat AI Membership Management**:",
+          "**E2EE Integration**:",
+          "**Database Migrations**:"
+        ]
+      },
+      {
+        "title": "Fixed",
+        "items": [
+          "**@claudeinsider AI Assistant in Messages Tab**: Fixed critical bug where the AI assistant wasn't responding to @claudeinsider mentions in DM conversations"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.98.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "Message Read Receipts (Seen Feature)",
+        "items": [
+          "**Per-Message Read Tracking**: New `dm_message_read_receipts` database table",
+          "**1:1 Conversation Status**: Shows \"Delivered\" and \"Seen\" indicators",
+          "**Group Conversation Status**: Shows \"Seen by [names]\" with display names",
+          "**Real-Time Broadcasts**: Instant read receipt delivery via Supabase channels",
+          "**Server Actions**: New messaging functions for read receipts",
+          "**UI Components Updated**: Both Messages Tab and Conversation View"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.97.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "Site-Wide Sound Effects System",
+        "items": [
+          "**SoundProvider Integration**: Added to main layout for app-wide sound access",
+          "**Sound Settings UI**: New section in Settings page",
+          "**Notification Sounds**: Integrated throughout notification system",
+          "**Messaging Sounds**: Full chat sound integration",
+          "**AI Assistant Sounds**: Voice assistant audio feedback",
+          "**Mandatory CLAUDE.md Section**: Added comprehensive Sound Design System documentation"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.96.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "Unread Indicator Bug Fixes",
+        "items": [
+          "**Notification Read State**: Clicking a notification now marks it as read immediately",
+          "**Message Unread Count Sync**: Opening a conversation updates global unread count",
+          "**State Synchronization**: Fixed gap between UI state and database state"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.95.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "E2EE Verification Improvements",
+        "items": [
+          "**Auto-fetch Device ID**: Verification modal now automatically fetches target user's device ID",
+          "**Educational Security Content**: Added collapsible explanation section",
+          "**UX Improvements**: Updated method descriptions to mention \"over a call or in person\""
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.94.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "Profile Cover Photos",
+        "items": [
+          "**Customizable Cover Photos**: Upload custom cover images for user profiles",
+          "**Animated Default Cover**: Lens flare gradient when no custom cover is set",
+          "**Click-to-Edit**: Click cover photo on profile page to open cropper modal",
+          "**Settings Integration**: Cover photo section in account settings",
+          "**Database**: New `coverPhotoUrl` and `coverPhotoPath` columns in user table",
+          "**Files Created**: `default-cover.tsx`, `profile-cover.tsx`, `cover-photo-cropper.tsx`, `cover-photo-section.tsx`, `070_cover_photo.sql`"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.93.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "User Directory & Mention System",
+        "items": [
+          "**User Directory Page** (`/users`): Public user directory with 7 list types",
+          "**@Mention Deep Linking**: Click mention notifications to jump to specific messages",
+          "**Message Grouping Refinements**: Sender grouping for cleaner chat UI"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.92.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "Chat Performance Optimizations",
+        "items": [
+          "**Realtime Context Provider**: Centralized subscription management with connection pooling",
+          "**Broadcast Typing Indicators**: Ephemeral typing via Supabase Broadcast",
+          "**Virtual Scrolling**: TanStack Virtual for message lists",
+          "**Optimized RPC Functions**: Database-side query optimization",
+          "**Performance Indexes**: 6 new database indexes"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.91.0",
+    "date": "2025-12-17",
+    "sections": [
+      {
+        "title": "Profile & Navigation Overhaul",
+        "items": [
+          "**Profile Page Redesign**: Unified `/profile` design to match `/users/[username]` public profile",
+          "**Header/Footer Consistency**: Added site navigation to 14 pages that were missing them",
+          "**ProfileHoverCard Redesign**: Enhanced info display with badges and stats",
+          "**Search Expansion**: Extended to full website with visual consistency improvements",
+          "**Hero Simplification**: Streamlined CTA buttons, renamed to \"Getting Started\"",
+          "**Header Cleanup**: Moved GitHub link to footer, expanded search width"
+        ]
+      },
+      {
+        "title": "Bug Fixes",
+        "items": [
+          "**Avatar Border**: Fixed rectangular border on settings page (added `rounded-full` to outer container)",
+          "**Collections Query**: Removed non-existent `color`/`icon` columns, using `cover_image_url` instead",
+          "**Achievements Query**: Fixed column name (`unlocked_at` → `earned_at`), added JOIN for slug lookup",
+          "**Presence Query**: Fixed column name (`last_seen` → `last_seen_at`)",
+          "**Light Theme**: Improved contrast and hero consistency"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.90.0",
+    "date": "2025-12-16",
+    "sections": [
+      {
+        "title": "Chat UI Redesign",
+        "items": [
+          "**Shared ChatMessage Component**: New `components/chat/chat-message.tsx` with unified styling",
+          "**AI Avatar**: Claude sparkle icon next to all AI messages (emerald-themed)",
+          "**Modern Bubble Styling**: User messages with gradient, AI with emerald accent + tail cutoffs",
+          "**Entrance Animations**: Subtle fade-in-up for new messages (respects reduced-motion)",
+          "**Code Reduction**: ~80% less message rendering code across 4 chat interfaces",
+          "**Files Updated**: `ai-assistant-tab.tsx`, `chat-page-content.tsx`, `ask-ai-modal.tsx`, `voice-assistant-full.tsx`",
+          "**New Files**: `chat-message.tsx` (229 lines), `chat-message-styles.ts` (120 lines)"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.89.0",
+    "date": "2025-12-16",
+    "sections": [
+      {
+        "title": "Notification System Refactoring",
+        "items": [
+          "**Performance**: 3x faster notification creation with parallel database queries (Promise.all)",
+          "**Performance**: 50x fewer DB round-trips in admin notification cron job (batch INSERT)",
+          "**Performance**: Removed duplicate polling intervals (30s + 15s → realtime only)",
+          "**Performance**: Added React.memo to UserMentionLink with custom comparison function",
+          "**Reliability**: Fixed memory leak in useRealtimeNotifications (callback refs pattern)",
+          "**Reliability**: Fixed race condition in admin notification cancel (atomic update)",
+          "**Reliability**: Fixed push subscription ref cleanup on failure",
+          "**Reliability**: Fixed browser notification edge case with initialization tracking",
+          "**Database**: New migration 061 with 4 indexes for actor_id, resource lookups, and grouping queries"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.88.0",
+    "date": "2025-12-16",
+    "sections": [
+      {
+        "title": "Dashboard Shared Infrastructure",
+        "items": [
+          "**New `lib/dashboard/`**: Centralized hooks and utilities for dashboard pages",
+          "**New `components/dashboard/shared/`**: Reusable dashboard UI components",
+          "**7 Pages Refactored**: beta-testers, comments, feedback, suggestions, banned-users, users",
+          "**Improved Maintainability**: Consistent patterns across all dashboard moderation pages"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.87.0",
+    "date": "2025-12-16",
+    "sections": [
+      {
+        "title": "Diagnostics Dashboard Refactoring",
+        "items": [
+          "**77% Code Reduction**: Main `page.tsx` reduced from 6,229 to 1,462 lines",
+          "**Modular Architecture**: Refactored monolithic component into 33 focused modules",
+          "**4 Custom Hooks**: `useConsoleCapture`, `useTestRunner`, `useAiAnalysis`, `collectBrowserEnvironmentData`",
+          "**11 Section Components**: Extracted UI sections for database, API, achievements, donors, etc.",
+          "**14 Test Suites**: Organized tests into dedicated files with factory pattern",
+          "**Type Safety**: All types centralized in `diagnostics.types.ts` with 222 lines of definitions"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.86.0",
+    "date": "2025-12-16",
+    "sections": [
+      {
+        "title": "Legal Pages Compliance Update",
+        "items": [
+          "**Multi-Jurisdictional Legal Framework**: Serbian law (primary), GDPR, CCPA/CPRA, Digital Services Act",
+          "**Privacy Policy** (848 lines): E2EE section, Direct Messaging, Donations, International Transfers, Legal Basis table",
+          "**Terms of Service** (729 lines): E2EE Terms, Donation Terms, DSA Compliance, MIT License with Attribution",
+          "**Disclaimer** (442 lines): E2EE key warnings, Donation tax disclaimer, DM disclaimer",
+          "**Accessibility Statement** (352 lines): Unified Chat Window, E2EE accessibility, Donation forms"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.85.0",
+    "date": "2025-12-16",
+    "sections": [
+      {
+        "title": "Documentation Consolidation",
+        "items": [
+          "**Single Source of Truth**: CLAUDE.md now contains all project guidelines including Data Layer Architecture (73 tables)",
+          "**Archived Plans**: Moved completed implementation plans to `docs/archive/`",
+          "**Removed Custom Agents**: Deleted 9 Claude agent definitions (functionality in CLAUDE.md)",
+          "**Streamlined Structure**: Removed boilerplate READMEs, updated all cross-references"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.84.0",
+    "date": "2025-12-16",
+    "sections": []
+  },
+  {
+    "version": "0.83.0",
+    "date": "2025-12-16",
+    "sections": []
+  },
+  {
+    "version": "0.82.0",
+    "date": "2025-12-16",
+    "sections": [
+      {
+        "title": "Major Release: E2EE + Unified Chat + Donations",
+        "items": [
+          "**End-to-End Encryption**: Matrix Olm/Megolm protocol with device verification",
+          "**Unified Chat Window**: Consolidated AI Assistant, Ask AI, and Messages into tabbed interface",
+          "**Donation System**: PayPal integration, bank transfers, donor badges",
+          "**PWA Enhancements**: 15 icons, service worker, push notifications"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.81.0",
+    "date": "2025-12-15",
+    "sections": []
+  },
+  {
+    "version": "0.80.0",
+    "date": "2025-12-15",
+    "sections": []
+  },
+  {
+    "version": "0.79.0",
+    "date": "2025-12-15",
+    "sections": []
+  },
+  {
+    "version": "0.78.0",
+    "date": "2025-12-15",
+    "sections": [
+      {
+        "title": "Major Release: Security Dashboard",
+        "items": [
+          "**Browser Fingerprinting**: FingerprintJS integration with 24-hour caching",
+          "**Trust Score Algorithm**: Rules-based 0-100 visitor scoring",
+          "**Honeypot System**: Faker.js-powered bot traps",
+          "**Security Dashboard**: 6 admin pages for analytics, logs, visitors, settings",
+          "**Activity Feed**: Real-time feed with 7 activity types"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.77.0",
+    "date": "2025-12-15",
+    "sections": []
+  },
+  {
+    "version": "0.76.0",
+    "date": "2025-12-15",
+    "sections": []
+  },
+  {
+    "version": "0.75.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.74.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.73.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.72.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.71.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.70.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.69.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.68.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.67.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.66.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.65.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.64.0",
+    "date": "2025-12-14",
+    "sections": []
+  },
+  {
+    "version": "0.63.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.62.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.61.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.60.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.59.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.58.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.57.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.56.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.55.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.54.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.53.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.52.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.51.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.50.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.49.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.48.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.47.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.46.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.45.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.44.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.43.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.42.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.41.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.40.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.39.0",
+    "date": "2025-12-13",
+    "sections": []
+  },
+  {
+    "version": "0.38.0",
+    "date": "2025-12-12",
+    "sections": []
+  },
+  {
+    "version": "0.37.0",
+    "date": "2025-12-12",
+    "sections": []
+  },
+  {
+    "version": "0.36.0",
+    "date": "2025-12-12",
+    "sections": []
+  },
+  {
+    "version": "0.35.0",
+    "date": "2025-12-12",
+    "sections": []
+  },
+  {
+    "version": "0.34.0",
+    "date": "2025-12-12",
+    "sections": []
+  },
+  {
+    "version": "0.33.0",
+    "date": "2025-12-11",
+    "sections": []
+  },
+  {
+    "version": "0.32.0",
+    "date": "2025-12-11",
+    "sections": []
+  },
+  {
+    "version": "0.31.0",
+    "date": "2025-12-11",
+    "sections": []
+  },
+  {
+    "version": "0.30.0",
+    "date": "2025-12-11",
+    "sections": []
+  },
+  {
+    "version": "0.29.0",
+    "date": "2025-12-11",
+    "sections": []
+  },
+  {
+    "version": "0.28.0",
+    "date": "2025-12-11",
+    "sections": []
+  },
+  {
+    "version": "0.27.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.26.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.25.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.24.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.23.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.22.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.21.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.20.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.19.0",
+    "date": "2025-12-10",
+    "sections": []
+  },
+  {
+    "version": "0.18.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.17.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.16.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.15.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.14.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.13.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.12.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.11.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.10.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.9.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.8.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.7.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.6.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.5.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.4.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.3.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.2.0",
+    "date": "2025-12-09",
+    "sections": []
+  },
+  {
+    "version": "0.1.0",
+    "date": "2025-12-08",
+    "sections": []
+  }
+]

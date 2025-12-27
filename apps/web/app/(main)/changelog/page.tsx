@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import fs from "fs";
-import path from "path";
+// Import pre-parsed changelog JSON (generated at build time by update-build-info.cjs)
+// This works on Vercel because JSON imports are bundled, unlike fs.readFileSync
+import changelogData from "@/data/changelog.json";
 
 export const metadata: Metadata = {
   title: "Changelog - Claude Insider",
@@ -13,63 +14,6 @@ interface ChangelogVersion {
   version: string;
   date: string;
   sections: { title: string; items: string[] }[];
-}
-
-function parseChangelog(content: string): ChangelogVersion[] {
-  const versions: ChangelogVersion[] = [];
-  const lines = content.split("\n");
-
-  let currentVersion: ChangelogVersion | null = null;
-  let currentSection: { title: string; items: string[] } | null = null;
-
-  for (const line of lines) {
-    // Match version headers: ## [x.x.x] - YYYY-MM-DD
-    const versionMatch = line.match(/^## \[([^\]]+)\] - (\d{4}-\d{2}-\d{2})/);
-    if (versionMatch && versionMatch[1] && versionMatch[2]) {
-      if (currentVersion) {
-        if (currentSection) {
-          currentVersion.sections.push(currentSection);
-        }
-        versions.push(currentVersion);
-      }
-      currentVersion = {
-        version: versionMatch[1],
-        date: versionMatch[2],
-        sections: [],
-      };
-      currentSection = null;
-      continue;
-    }
-
-    // Match section headers: ### Added, ### Changed, etc.
-    const sectionMatch = line.match(/^### (.+)/);
-    if (sectionMatch && sectionMatch[1] && currentVersion) {
-      if (currentSection) {
-        currentVersion.sections.push(currentSection);
-      }
-      currentSection = {
-        title: sectionMatch[1],
-        items: [],
-      };
-      continue;
-    }
-
-    // Match list items: - item
-    const itemMatch = line.match(/^- (.+)/);
-    if (itemMatch && itemMatch[1] && currentSection) {
-      currentSection.items.push(itemMatch[1]);
-    }
-  }
-
-  // Push the last version and section
-  if (currentVersion) {
-    if (currentSection) {
-      currentVersion.sections.push(currentSection);
-    }
-    versions.push(currentVersion);
-  }
-
-  return versions;
 }
 
 function getSectionColor(title: string): string {
@@ -85,18 +29,9 @@ function getSectionColor(title: string): string {
 }
 
 export default function ChangelogPage() {
-  // Read CHANGELOG.md from data/ (copied during prebuild for Vercel deployment)
-  // On Vercel, only apps/web is deployed, so monorepo root files aren't available
-  const changelogPath = path.join(process.cwd(), "data", "CHANGELOG.md");
-  let versions: ChangelogVersion[] = [];
-
-  try {
-    const content = fs.readFileSync(changelogPath, "utf-8");
-    versions = parseChangelog(content);
-  } catch {
-    // Fallback if file not found
-    versions = [];
-  }
+  // Use pre-parsed changelog JSON (generated at build time)
+  // This works on Vercel serverless functions because JSON is bundled
+  const versions = changelogData as ChangelogVersion[];
 
   return (
     <div className="min-h-screen">
