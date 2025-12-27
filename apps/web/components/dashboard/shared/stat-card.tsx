@@ -29,24 +29,24 @@ interface StatCardProps {
 
 const variantStyles = {
   default: {
-    icon: "text-gray-400",
-    value: "text-white",
+    icon: "text-gray-500 dark:text-gray-400",
+    value: "text-gray-900 dark:text-white",
   },
   success: {
-    icon: "text-emerald-400",
-    value: "text-emerald-400",
+    icon: "text-emerald-600 dark:text-emerald-400",
+    value: "text-emerald-600 dark:text-emerald-400",
   },
   warning: {
-    icon: "text-yellow-400",
-    value: "text-yellow-400",
+    icon: "text-yellow-600 dark:text-yellow-400",
+    value: "text-yellow-600 dark:text-yellow-400",
   },
   danger: {
-    icon: "text-red-400",
-    value: "text-red-400",
+    icon: "text-red-600 dark:text-red-400",
+    value: "text-red-600 dark:text-red-400",
   },
   info: {
-    icon: "text-blue-400",
-    value: "text-blue-400",
+    icon: "text-blue-600 dark:text-blue-400",
+    value: "text-blue-600 dark:text-blue-400",
   },
 };
 
@@ -65,14 +65,14 @@ export function StatCard({
     <div
       className={cn(
         "rounded-xl p-4 sm:p-6",
-        "bg-gray-900/50 border border-gray-800",
-        "hover:border-gray-700 transition-colors",
+        "bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800",
+        "hover:border-gray-300 dark:hover:border-gray-700 transition-colors",
         className
       )}
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-gray-400">{label}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{label}</p>
           <p className={cn("mt-1 text-2xl sm:text-3xl font-bold", styles.value)}>
             {typeof value === "number" ? value.toLocaleString() : value}
           </p>
@@ -81,7 +81,7 @@ export function StatCard({
           )}
         </div>
         {icon && (
-          <div className={cn("p-2 rounded-lg bg-gray-800/50", styles.icon)}>
+          <div className={cn("p-2 rounded-lg bg-gray-100 dark:bg-gray-800/50", styles.icon)}>
             {icon}
           </div>
         )}
@@ -91,7 +91,7 @@ export function StatCard({
           <span
             className={cn(
               "text-xs font-medium",
-              trend.value > 0 ? "text-emerald-400" : trend.value < 0 ? "text-red-400" : "text-gray-400"
+              trend.value > 0 ? "text-emerald-600 dark:text-emerald-400" : trend.value < 0 ? "text-red-600 dark:text-red-400" : "text-gray-500 dark:text-gray-400"
             )}
           >
             {trend.value > 0 ? "+" : ""}

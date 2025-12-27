@@ -62,7 +62,7 @@ export function PaginatedTable<T>({
         {[1, 2, 3, 4, 5].map((i) => (
           <div
             key={i}
-            className="h-16 rounded-lg bg-gray-900/50 animate-pulse"
+            className="h-16 rounded-lg bg-gray-100 dark:bg-gray-900/50 animate-pulse"
           />
         ))}
       </div>
@@ -87,12 +87,12 @@ export function PaginatedTable<T>({
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-800">
+            <tr className="border-b border-gray-200 dark:border-gray-800">
               {columns.map((column) => (
                 <th
                   key={String(column.key)}
                   className={cn(
-                    "px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider",
+                    "px-4 py-3 text-left text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider",
                     column.align === "center" && "text-center",
                     column.align === "right" && "text-right"
                   )}
@@ -103,7 +103,7 @@ export function PaginatedTable<T>({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-800/50">
+          <tbody className="divide-y divide-gray-100 dark:divide-gray-800/50">
             {items.map((item) => {
               const key = getKey(item);
               const rowClass = typeof rowClassName === "function"
@@ -116,7 +116,7 @@ export function PaginatedTable<T>({
                   onClick={onRowClick ? () => onRowClick(item) : undefined}
                   className={cn(
                     "transition-colors",
-                    onRowClick && "cursor-pointer hover:bg-gray-900/50",
+                    onRowClick && "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900/50",
                     rowClass
                   )}
                 >
@@ -217,7 +217,7 @@ export function Pagination({
 
   return (
     <div className={cn("flex items-center justify-between", className)}>
-      <p className="text-sm text-gray-400">
+      <p className="text-sm text-gray-600 dark:text-gray-400">
         Page {page} of {totalPages}
       </p>
       <div className="flex items-center gap-1">
@@ -227,8 +227,8 @@ export function Pagination({
           className={cn(
             "px-3 py-1.5 text-sm rounded-lg transition-colors",
             canGoPrev
-              ? "text-gray-300 hover:bg-gray-800"
-              : "text-gray-600 cursor-not-allowed"
+              ? "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+              : "text-gray-400 dark:text-gray-600 cursor-not-allowed"
           )}
         >
           Previous
@@ -248,7 +248,7 @@ export function Pagination({
                   "min-w-[32px] px-2 py-1 text-sm rounded-lg transition-colors",
                   page === pageNum
                     ? "bg-blue-600 text-white"
-                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
                 )}
               >
                 {pageNum}
@@ -263,8 +263,8 @@ export function Pagination({
           className={cn(
             "px-3 py-1.5 text-sm rounded-lg transition-colors",
             canGoNext
-              ? "text-gray-300 hover:bg-gray-800"
-              : "text-gray-600 cursor-not-allowed"
+              ? "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+              : "text-gray-400 dark:text-gray-600 cursor-not-allowed"
           )}
         >
           Next
@@ -314,7 +314,7 @@ export function CardList<T>({
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="h-32 rounded-xl bg-gray-900/50 animate-pulse"
+            className="h-32 rounded-xl bg-gray-100 dark:bg-gray-900/50 animate-pulse"
           />
         ))}
       </div>

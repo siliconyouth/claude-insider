@@ -32,11 +32,11 @@ export function PageHeader({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-white">{title}</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h1>
             {badge}
           </div>
           {description && (
-            <p className="mt-1 text-sm text-gray-400">{description}</p>
+            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{description}</p>
           )}
         </div>
         {actions && (
@@ -60,7 +60,7 @@ export function CountBadge({ count, className }: CountBadgeProps) {
     <span
       className={cn(
         "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
-        "bg-blue-900/30 text-blue-400 border border-blue-500/30",
+        "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-300 dark:border-blue-500/30",
         className
       )}
     >

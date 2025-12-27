@@ -15,28 +15,28 @@ export type ModerationStatus = "pending" | "approved" | "rejected" | "flagged";
 
 export const MODERATION_STATUS: StatusConfig<ModerationStatus> = {
   pending: {
-    bg: "bg-yellow-900/30",
-    text: "text-yellow-400",
+    bg: "bg-yellow-100 dark:bg-yellow-900/30",
+    text: "text-yellow-700 dark:text-yellow-400",
     label: "Pending",
-    border: "border-yellow-500/30",
+    border: "border-yellow-300 dark:border-yellow-500/30",
   },
   approved: {
-    bg: "bg-emerald-900/30",
-    text: "text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    text: "text-emerald-700 dark:text-emerald-400",
     label: "Approved",
-    border: "border-emerald-500/30",
+    border: "border-emerald-300 dark:border-emerald-500/30",
   },
   rejected: {
-    bg: "bg-red-900/30",
-    text: "text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
+    text: "text-red-700 dark:text-red-400",
     label: "Rejected",
-    border: "border-red-500/30",
+    border: "border-red-300 dark:border-red-500/30",
   },
   flagged: {
-    bg: "bg-orange-900/30",
-    text: "text-orange-400",
+    bg: "bg-orange-100 dark:bg-orange-900/30",
+    text: "text-orange-700 dark:text-orange-400",
     label: "Flagged",
-    border: "border-orange-500/30",
+    border: "border-orange-300 dark:border-orange-500/30",
   },
 };
 
@@ -48,34 +48,34 @@ export type FeedbackStatus = "open" | "in_progress" | "resolved" | "closed" | "w
 
 export const FEEDBACK_STATUS: StatusConfig<FeedbackStatus> = {
   open: {
-    bg: "bg-yellow-900/30",
-    text: "text-yellow-400",
+    bg: "bg-yellow-100 dark:bg-yellow-900/30",
+    text: "text-yellow-700 dark:text-yellow-400",
     label: "Open",
-    border: "border-yellow-500/30",
+    border: "border-yellow-300 dark:border-yellow-500/30",
   },
   in_progress: {
-    bg: "bg-blue-900/30",
-    text: "text-blue-400",
+    bg: "bg-blue-100 dark:bg-blue-900/30",
+    text: "text-blue-700 dark:text-blue-400",
     label: "In Progress",
-    border: "border-blue-500/30",
+    border: "border-blue-300 dark:border-blue-500/30",
   },
   resolved: {
-    bg: "bg-emerald-900/30",
-    text: "text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    text: "text-emerald-700 dark:text-emerald-400",
     label: "Resolved",
-    border: "border-emerald-500/30",
+    border: "border-emerald-300 dark:border-emerald-500/30",
   },
   closed: {
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-600 dark:text-gray-400",
     label: "Closed",
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   },
   wont_fix: {
-    bg: "bg-gray-800",
-    text: "text-gray-500",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-500 dark:text-gray-500",
     label: "Won't Fix",
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   },
 };
 
@@ -87,22 +87,22 @@ export type FeedbackType = "bug" | "feature" | "general";
 
 export const FEEDBACK_TYPE: StatusConfig<FeedbackType> = {
   bug: {
-    bg: "bg-red-900/30",
-    text: "text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
+    text: "text-red-700 dark:text-red-400",
     label: "Bug",
-    border: "border-red-500/30",
+    border: "border-red-300 dark:border-red-500/30",
   },
   feature: {
-    bg: "bg-emerald-900/30",
-    text: "text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    text: "text-emerald-700 dark:text-emerald-400",
     label: "Feature",
-    border: "border-emerald-500/30",
+    border: "border-emerald-300 dark:border-emerald-500/30",
   },
   general: {
-    bg: "bg-blue-900/30",
-    text: "text-blue-400",
+    bg: "bg-blue-100 dark:bg-blue-900/30",
+    text: "text-blue-700 dark:text-blue-400",
     label: "General",
-    border: "border-blue-500/30",
+    border: "border-blue-300 dark:border-blue-500/30",
   },
 };
 
@@ -114,28 +114,28 @@ export type Severity = "low" | "medium" | "high" | "critical";
 
 export const SEVERITY: StatusConfig<Severity> = {
   low: {
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-600 dark:text-gray-400",
     label: "Low",
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   },
   medium: {
-    bg: "bg-yellow-900/30",
-    text: "text-yellow-400",
+    bg: "bg-yellow-100 dark:bg-yellow-900/30",
+    text: "text-yellow-700 dark:text-yellow-400",
     label: "Medium",
-    border: "border-yellow-500/30",
+    border: "border-yellow-300 dark:border-yellow-500/30",
   },
   high: {
-    bg: "bg-orange-900/30",
-    text: "text-orange-400",
+    bg: "bg-orange-100 dark:bg-orange-900/30",
+    text: "text-orange-700 dark:text-orange-400",
     label: "High",
-    border: "border-orange-500/30",
+    border: "border-orange-300 dark:border-orange-500/30",
   },
   critical: {
-    bg: "bg-red-900/30",
-    text: "text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
+    text: "text-red-700 dark:text-red-400",
     label: "Critical",
-    border: "border-red-500/30",
+    border: "border-red-300 dark:border-red-500/30",
   },
 };
 
@@ -147,28 +147,28 @@ export type ReportStatus = "pending" | "investigating" | "action_taken" | "dismi
 
 export const REPORT_STATUS: StatusConfig<ReportStatus> = {
   pending: {
-    bg: "bg-yellow-900/30",
-    text: "text-yellow-400",
+    bg: "bg-yellow-100 dark:bg-yellow-900/30",
+    text: "text-yellow-700 dark:text-yellow-400",
     label: "Pending",
-    border: "border-yellow-500/30",
+    border: "border-yellow-300 dark:border-yellow-500/30",
   },
   investigating: {
-    bg: "bg-blue-900/30",
-    text: "text-blue-400",
+    bg: "bg-blue-100 dark:bg-blue-900/30",
+    text: "text-blue-700 dark:text-blue-400",
     label: "Investigating",
-    border: "border-blue-500/30",
+    border: "border-blue-300 dark:border-blue-500/30",
   },
   action_taken: {
-    bg: "bg-emerald-900/30",
-    text: "text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    text: "text-emerald-700 dark:text-emerald-400",
     label: "Action Taken",
-    border: "border-emerald-500/30",
+    border: "border-emerald-300 dark:border-emerald-500/30",
   },
   dismissed: {
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-600 dark:text-gray-400",
     label: "Dismissed",
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   },
 };
 
@@ -180,34 +180,34 @@ export type NotificationStatus = "draft" | "scheduled" | "sending" | "sent" | "f
 
 export const NOTIFICATION_STATUS: StatusConfig<NotificationStatus> = {
   draft: {
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-600 dark:text-gray-400",
     label: "Draft",
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   },
   scheduled: {
-    bg: "bg-blue-900/30",
-    text: "text-blue-400",
+    bg: "bg-blue-100 dark:bg-blue-900/30",
+    text: "text-blue-700 dark:text-blue-400",
     label: "Scheduled",
-    border: "border-blue-500/30",
+    border: "border-blue-300 dark:border-blue-500/30",
   },
   sending: {
-    bg: "bg-cyan-900/30",
-    text: "text-cyan-400",
+    bg: "bg-cyan-100 dark:bg-cyan-900/30",
+    text: "text-cyan-700 dark:text-cyan-400",
     label: "Sending",
-    border: "border-cyan-500/30",
+    border: "border-cyan-300 dark:border-cyan-500/30",
   },
   sent: {
-    bg: "bg-emerald-900/30",
-    text: "text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    text: "text-emerald-700 dark:text-emerald-400",
     label: "Sent",
-    border: "border-emerald-500/30",
+    border: "border-emerald-300 dark:border-emerald-500/30",
   },
   failed: {
-    bg: "bg-red-900/30",
-    text: "text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
+    text: "text-red-700 dark:text-red-400",
     label: "Failed",
-    border: "border-red-500/30",
+    border: "border-red-300 dark:border-red-500/30",
   },
 };
 
@@ -219,22 +219,22 @@ export type BetaApplicationStatus = "pending" | "approved" | "rejected";
 
 export const BETA_APPLICATION_STATUS: StatusConfig<BetaApplicationStatus> = {
   pending: {
-    bg: "bg-yellow-900/30",
-    text: "text-yellow-400",
+    bg: "bg-yellow-100 dark:bg-yellow-900/30",
+    text: "text-yellow-700 dark:text-yellow-400",
     label: "Pending Review",
-    border: "border-yellow-500/30",
+    border: "border-yellow-300 dark:border-yellow-500/30",
   },
   approved: {
-    bg: "bg-emerald-900/30",
-    text: "text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    text: "text-emerald-700 dark:text-emerald-400",
     label: "Approved",
-    border: "border-emerald-500/30",
+    border: "border-emerald-300 dark:border-emerald-500/30",
   },
   rejected: {
-    bg: "bg-red-900/30",
-    text: "text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
+    text: "text-red-700 dark:text-red-400",
     label: "Rejected",
-    border: "border-red-500/30",
+    border: "border-red-300 dark:border-red-500/30",
   },
 };
 
@@ -246,28 +246,28 @@ export type ResourceStatus = "pending" | "approved" | "rejected" | "archived";
 
 export const RESOURCE_STATUS: StatusConfig<ResourceStatus> = {
   pending: {
-    bg: "bg-yellow-900/30",
-    text: "text-yellow-400",
+    bg: "bg-yellow-100 dark:bg-yellow-900/30",
+    text: "text-yellow-700 dark:text-yellow-400",
     label: "Pending",
-    border: "border-yellow-500/30",
+    border: "border-yellow-300 dark:border-yellow-500/30",
   },
   approved: {
-    bg: "bg-emerald-900/30",
-    text: "text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    text: "text-emerald-700 dark:text-emerald-400",
     label: "Approved",
-    border: "border-emerald-500/30",
+    border: "border-emerald-300 dark:border-emerald-500/30",
   },
   rejected: {
-    bg: "bg-red-900/30",
-    text: "text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
+    text: "text-red-700 dark:text-red-400",
     label: "Rejected",
-    border: "border-red-500/30",
+    border: "border-red-300 dark:border-red-500/30",
   },
   archived: {
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-600 dark:text-gray-400",
     label: "Archived",
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   },
 };
 
@@ -279,40 +279,40 @@ export type UserRole = "user" | "editor" | "moderator" | "admin" | "superadmin" 
 
 export const USER_ROLE: StatusConfig<UserRole> = {
   user: {
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-600 dark:text-gray-400",
     label: "User",
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   },
   editor: {
-    bg: "bg-blue-900/30",
-    text: "text-blue-400",
+    bg: "bg-blue-100 dark:bg-blue-900/30",
+    text: "text-blue-700 dark:text-blue-400",
     label: "Editor",
-    border: "border-blue-500/30",
+    border: "border-blue-300 dark:border-blue-500/30",
   },
   moderator: {
-    bg: "bg-violet-900/30",
-    text: "text-violet-400",
+    bg: "bg-violet-100 dark:bg-violet-900/30",
+    text: "text-violet-700 dark:text-violet-400",
     label: "Moderator",
-    border: "border-violet-500/30",
+    border: "border-violet-300 dark:border-violet-500/30",
   },
   admin: {
-    bg: "bg-amber-900/30",
-    text: "text-amber-400",
+    bg: "bg-amber-100 dark:bg-amber-900/30",
+    text: "text-amber-700 dark:text-amber-400",
     label: "Admin",
-    border: "border-amber-500/30",
+    border: "border-amber-300 dark:border-amber-500/30",
   },
   superadmin: {
-    bg: "bg-red-900/30",
-    text: "text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
+    text: "text-red-700 dark:text-red-400",
     label: "Super Admin",
-    border: "border-red-500/30",
+    border: "border-red-300 dark:border-red-500/30",
   },
   ai_assistant: {
-    bg: "bg-cyan-900/30",
-    text: "text-cyan-400",
+    bg: "bg-cyan-100 dark:bg-cyan-900/30",
+    text: "text-cyan-700 dark:text-cyan-400",
     label: "AI Assistant",
-    border: "border-cyan-500/30",
+    border: "border-cyan-300 dark:border-cyan-500/30",
   },
 };
 
@@ -324,34 +324,34 @@ export type TrustLevel = "untrusted" | "suspicious" | "neutral" | "trusted" | "v
 
 export const TRUST_LEVEL: StatusConfig<TrustLevel> = {
   untrusted: {
-    bg: "bg-red-900/30",
-    text: "text-red-400",
+    bg: "bg-red-100 dark:bg-red-900/30",
+    text: "text-red-700 dark:text-red-400",
     label: "Untrusted",
-    border: "border-red-500/30",
+    border: "border-red-300 dark:border-red-500/30",
   },
   suspicious: {
-    bg: "bg-orange-900/30",
-    text: "text-orange-400",
+    bg: "bg-orange-100 dark:bg-orange-900/30",
+    text: "text-orange-700 dark:text-orange-400",
     label: "Suspicious",
-    border: "border-orange-500/30",
+    border: "border-orange-300 dark:border-orange-500/30",
   },
   neutral: {
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-600 dark:text-gray-400",
     label: "Neutral",
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   },
   trusted: {
-    bg: "bg-blue-900/30",
-    text: "text-blue-400",
+    bg: "bg-blue-100 dark:bg-blue-900/30",
+    text: "text-blue-700 dark:text-blue-400",
     label: "Trusted",
-    border: "border-blue-500/30",
+    border: "border-blue-300 dark:border-blue-500/30",
   },
   verified: {
-    bg: "bg-emerald-900/30",
-    text: "text-emerald-400",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30",
+    text: "text-emerald-700 dark:text-emerald-400",
     label: "Verified",
-    border: "border-emerald-500/30",
+    border: "border-emerald-300 dark:border-emerald-500/30",
   },
 };
 
@@ -368,10 +368,10 @@ export function getStatusStyle<T extends string>(
   fallback?: T
 ): StatusStyle {
   return config[status as T] || (fallback ? config[fallback] : {
-    bg: "bg-gray-800",
-    text: "text-gray-400",
+    bg: "bg-gray-200 dark:bg-gray-800",
+    text: "text-gray-600 dark:text-gray-400",
     label: status,
-    border: "border-gray-600",
+    border: "border-gray-300 dark:border-gray-600",
   });
 }
 
