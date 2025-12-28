@@ -75,6 +75,8 @@ export interface Config {
     resources: Resource;
     'resource-sources': ResourceSource;
     'resource-discovery-queue': ResourceDiscoveryQueue;
+    'resource-reviews': ResourceReview;
+    'resource-authors': ResourceAuthor;
     'audit-logs': AuditLog;
     documents: Document;
     'document-sections': DocumentSection;
@@ -83,6 +85,11 @@ export interface Config {
     'programming-languages': ProgrammingLanguage;
     'edit-suggestions': EditSuggestion;
     translations: Translation;
+    'email-templates': EmailTemplate;
+    'achievement-tiers': AchievementTier;
+    'achievement-categories': AchievementCategory;
+    achievements: Achievement;
+    badges: Badge;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -98,6 +105,8 @@ export interface Config {
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
     'resource-sources': ResourceSourcesSelect<false> | ResourceSourcesSelect<true>;
     'resource-discovery-queue': ResourceDiscoveryQueueSelect<false> | ResourceDiscoveryQueueSelect<true>;
+    'resource-reviews': ResourceReviewsSelect<false> | ResourceReviewsSelect<true>;
+    'resource-authors': ResourceAuthorsSelect<false> | ResourceAuthorsSelect<true>;
     'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     'document-sections': DocumentSectionsSelect<false> | DocumentSectionsSelect<true>;
@@ -106,6 +115,11 @@ export interface Config {
     'programming-languages': ProgrammingLanguagesSelect<false> | ProgrammingLanguagesSelect<true>;
     'edit-suggestions': EditSuggestionsSelect<false> | EditSuggestionsSelect<true>;
     translations: TranslationsSelect<false> | TranslationsSelect<true>;
+    'email-templates': EmailTemplatesSelect<false> | EmailTemplatesSelect<true>;
+    'achievement-tiers': AchievementTiersSelect<false> | AchievementTiersSelect<true>;
+    'achievement-categories': AchievementCategoriesSelect<false> | AchievementCategoriesSelect<true>;
+    achievements: AchievementsSelect<false> | AchievementsSelect<true>;
+    badges: BadgesSelect<false> | BadgesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -160,11 +174,17 @@ export interface Config {
       )[];
   globals: {
     'site-settings': SiteSetting;
+    'seo-settings': SeoSetting;
     'cross-link-settings': CrossLinkSetting;
+    'gamification-settings': GamificationSetting;
+    'ai-pipeline-settings': AiPipelineSetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'seo-settings': SeoSettingsSelect<false> | SeoSettingsSelect<true>;
     'cross-link-settings': CrossLinkSettingsSelect<false> | CrossLinkSettingsSelect<true>;
+    'gamification-settings': GamificationSettingsSelect<false> | GamificationSettingsSelect<true>;
+    'ai-pipeline-settings': AiPipelineSettingsSelect<false> | AiPipelineSettingsSelect<true>;
   };
   locale:
     | 'en'
@@ -433,6 +453,8 @@ export interface Tag {
   createdAt: string;
 }
 /**
+ * Curated resources with AI-powered enhancement and relationship management
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "resources".
  */
@@ -442,6 +464,10 @@ export interface Resource {
    * Publication workflow status
    */
   publishStatus: 'published' | 'hidden' | 'pending_review' | 'rejected' | 'draft';
+  /**
+   * AI enhancement status
+   */
+  enhancementStatus?: ('not_enhanced' | 'pending' | 'enhanced' | 'needs_update' | 'failed') | null;
   /**
    * Resource title (e.g., "Claude Desktop")
    */
@@ -455,11 +481,11 @@ export interface Resource {
    */
   url: string;
   /**
-   * Primary category for this resource
+   * Primary category
    */
   category: number | Category;
   /**
-   * Subcategory within the parent category
+   * Subcategory
    */
   subcategory?: (number | null) | Subcategory;
   /**
@@ -467,16 +493,181 @@ export interface Resource {
    */
   tags?: (number | Tag)[] | null;
   /**
-   * Skill level required to use this resource
+   * Skill level required
    */
   difficulty?: (number | null) | DifficultyLevel;
-  status: 'official' | 'community' | 'beta' | 'deprecated' | 'archived';
+  resourceType: 'official' | 'community' | 'beta' | 'deprecated' | 'archived';
   /**
-   * GitHub repository information (if applicable)
+   * Show on homepage featured section
+   */
+  featured?: boolean | null;
+  /**
+   * Featured badge
+   */
+  featuredReason?: ('editors-pick' | 'most-popular' | 'new' | 'trending' | 'essential') | null;
+  /**
+   * Date added to collection
+   */
+  addedDate: string;
+  /**
+   * Last verified as active
+   */
+  lastVerified: string;
+  /**
+   * AI-generated summary (1-2 paragraphs)
+   */
+  aiSummary?: string | null;
+  /**
+   * AI-generated detailed overview (MDX-compatible)
+   */
+  aiOverview?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * AI-discovered key features of this resource
+   */
+  keyFeatures?:
+    | {
+        feature: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * AI-identified use cases
+   */
+  useCases?:
+    | {
+        useCase: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * AI-identified advantages
+   */
+  pros?:
+    | {
+        pro: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * AI-identified disadvantages
+   */
+  cons?:
+    | {
+        con: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Details from the most recent AI enhancement
+   */
+  enhancementMetadata?: {
+    /**
+     * Last AI enhancement timestamp
+     */
+    aiEnhancedAt?: string | null;
+    /**
+     * AI model used
+     */
+    aiModel?: string | null;
+    /**
+     * Notes from the enhancement run
+     */
+    enhancementNotes?: string | null;
+  };
+  /**
+   * Manually linked documentation pages
+   */
+  relatedDocs?: (number | Document)[] | null;
+  /**
+   * Auto-matched documents based on shared tags (read-only)
+   */
+  autoMatchedDocs?: (number | Document)[] | null;
+  /**
+   * Relationships to documentation discovered by AI analysis
+   */
+  aiDocRelationships?:
+    | {
+        /**
+         * Document slug
+         */
+        docSlug: string;
+        /**
+         * Document title
+         */
+        docTitle?: string | null;
+        /**
+         * Type of relationship
+         */
+        relationshipType: 'required' | 'recommended' | 'related' | 'example' | 'alternative' | 'extends' | 'implements';
+        /**
+         * Confidence score (0.0-1.0)
+         */
+        confidence?: number | null;
+        /**
+         * AI's reasoning
+         */
+        reasoning?: string | null;
+        /**
+         * Manually approved by admin
+         */
+        isApproved?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Manually linked related resources
+   */
+  relatedResources?: (number | Resource)[] | null;
+  /**
+   * Relationships to other resources discovered by AI
+   */
+  aiResourceRelationships?:
+    | {
+        /**
+         * Resource ID
+         */
+        resourceId: string;
+        /**
+         * Resource title
+         */
+        resourceTitle?: string | null;
+        /**
+         * Type of relationship
+         */
+        relationshipType: 'alternative' | 'complement' | 'dependency' | 'fork' | 'successor' | 'related';
+        /**
+         * Confidence score
+         */
+        confidence?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Total number of relationships
+   */
+  relationshipCount?: number | null;
+  /**
+   * GitHub repository information
    */
   github?: {
     /**
-     * GitHub username or organization
+     * GitHub username or org
      */
     owner?: string | null;
     /**
@@ -484,7 +675,7 @@ export interface Resource {
      */
     repo?: string | null;
     /**
-     * Star count (auto-updated or manual)
+     * Star count
      */
     stars?: number | null;
     forks?: number | null;
@@ -498,68 +689,35 @@ export interface Resource {
     language?: (number | null) | ProgrammingLanguage;
   };
   /**
-   * Latest version (for packages, MCP servers)
+   * Latest version
    */
   version?: string | null;
   /**
-   * Package namespace (e.g., "@modelcontextprotocol")
+   * Package namespace
    */
   namespace?: string | null;
   /**
-   * Show on homepage featured section
-   */
-  featured?: boolean | null;
-  /**
-   * Reason for featuring (shown as badge)
-   */
-  featuredReason?: ('editors-pick' | 'most-popular' | 'new' | 'trending' | 'essential') | null;
-  /**
-   * Date this resource was added to the collection
-   */
-  addedDate: string;
-  /**
-   * Last date this resource was verified as active
-   */
-  lastVerified: string;
-  /**
-   * Link this resource to related documentation
-   */
-  crossLinking?: {
-    /**
-     * Documentation pages related to this resource
-     */
-    relatedDocs?: (number | Document)[] | null;
-    /**
-     * Specific sections related to this resource
-     */
-    relatedSections?: (number | DocumentSection)[] | null;
-    /**
-     * Auto-matched documents based on shared tags (read-only)
-     */
-    autoMatchedDocs?: (number | Document)[] | null;
-  };
-  /**
-   * Metadata about how this resource was discovered
+   * How this resource was discovered
    */
   discovery?: {
     /**
-     * The source from which this resource was discovered
+     * Discovery source
      */
     source?: (number | null) | ResourceSource;
+    /**
+     * Discovery method
+     */
+    discoveredBy?: ('ai' | 'manual' | 'import' | 'suggestion') | null;
     /**
      * When this resource was discovered
      */
     discoveredAt?: string | null;
     /**
-     * How this resource was added to the system
-     */
-    discoveredBy?: ('ai' | 'manual' | 'import' | 'suggestion') | null;
-    /**
-     * AI confidence score (0-100) for auto-discovered resources
+     * AI confidence score (0-100)
      */
     aiConfidenceScore?: number | null;
     /**
-     * AI analysis notes and reasoning
+     * AI analysis notes
      */
     aiNotes?: string | null;
   };
@@ -568,21 +726,37 @@ export interface Resource {
    */
   review?: {
     /**
-     * Admin who reviewed this resource
+     * Reviewer
      */
     reviewedBy?: (number | null) | User;
     /**
-     * When this resource was last reviewed
+     * Review date
      */
     reviewedAt?: string | null;
     /**
-     * Notes from the reviewer
+     * Review notes
      */
     reviewNotes?: string | null;
     /**
-     * Reason for rejection (if applicable)
+     * Rejection reason
      */
     rejectionReason?: string | null;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords for meta tags
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -624,6 +798,203 @@ export interface DifficultyLevel {
    * Number of resources at this level (auto-calculated)
    */
   resourceCount?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Documentation pages with AI-powered relationship management
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  /**
+   * URL path slug (e.g., "getting-started/installation")
+   */
+  slug: string;
+  /**
+   * Document title from frontmatter
+   */
+  title: string;
+  /**
+   * Document description from frontmatter
+   */
+  description?: string | null;
+  /**
+   * Documentation category (e.g., "getting-started", "api")
+   */
+  docCategory: string;
+  /**
+   * Tags for auto-matching with resources
+   */
+  tags?: (number | Tag)[] | null;
+  /**
+   * Sync tracking information
+   */
+  syncInfo?: {
+    /**
+     * Path to source MDX file
+     */
+    mdxPath?: string | null;
+    /**
+     * MD5 hash for change detection
+     */
+    contentHash?: string | null;
+    /**
+     * Last sync timestamp
+     */
+    lastSynced?: string | null;
+  };
+  /**
+   * Document statistics
+   */
+  metadata?: {
+    /**
+     * Estimated reading time
+     */
+    readingTime?: string | null;
+    /**
+     * Word count
+     */
+    wordCount?: number | null;
+    /**
+     * Number of headings/sections
+     */
+    headingCount?: number | null;
+    /**
+     * Number of code blocks
+     */
+    codeBlockCount?: number | null;
+  };
+  /**
+   * How to display related resources on the doc page
+   */
+  displayMode?: ('hover' | 'cards' | 'both') | null;
+  /**
+   * Enable automatic tag-based matching
+   */
+  autoMatchEnabled?: boolean | null;
+  /**
+   * Manually linked resources (takes priority over auto-matched)
+   */
+  relatedResources?: (number | Resource)[] | null;
+  /**
+   * Resources to exclude from auto-matching and AI suggestions
+   */
+  excludedResources?: (number | Resource)[] | null;
+  /**
+   * Automatically matched based on shared tags (read-only)
+   */
+  autoMatchedResources?: (number | Resource)[] | null;
+  /**
+   * Relationships discovered by Claude Opus 4.5 analysis. Run analysis in Claude Code CLI.
+   */
+  aiRelationships?:
+    | {
+        /**
+         * Resource UUID
+         */
+        resourceId: string;
+        /**
+         * Resource title (for display)
+         */
+        resourceTitle?: string | null;
+        /**
+         * Type of relationship
+         */
+        relationshipType: 'required' | 'recommended' | 'related' | 'example' | 'alternative' | 'extends' | 'implements';
+        /**
+         * Confidence score (0.0-1.0)
+         */
+        confidence?: number | null;
+        /**
+         * AI's reasoning for this relationship
+         */
+        reasoning?: string | null;
+        /**
+         * Manually approved by admin
+         */
+        isApproved?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Total number of relationships (manual + AI)
+   */
+  relationshipCount?: number | null;
+  /**
+   * Current analysis status
+   */
+  analysisStatus?: ('pending' | 'analyzed' | 'needs_update' | 'failed') | null;
+  /**
+   * Last AI analysis timestamp
+   */
+  lastAnalyzedAt?: string | null;
+  /**
+   * Details from the most recent AI analysis
+   */
+  analysisMetadata?: {
+    /**
+     * AI model used (e.g., "claude-opus-4-5-20251101")
+     */
+    aiModel?: string | null;
+    /**
+     * Content hash at time of analysis
+     */
+    analysisContentHash?: string | null;
+    /**
+     * Number of relationships found
+     */
+    relationshipsFound?: number | null;
+    /**
+     * Analysis duration in seconds
+     */
+    analysisDuration?: number | null;
+    /**
+     * Notes from the analysis run
+     */
+    analysisNotes?: string | null;
+  };
+  /**
+   * Tracking for AI-powered documentation rewrites
+   */
+  rewriteInfo?: {
+    /**
+     * Last AI rewrite timestamp
+     */
+    lastRewriteAt?: string | null;
+    /**
+     * Rewrite operation status
+     */
+    rewriteStatus?: ('none' | 'queued' | 'in_progress' | 'completed') | null;
+    /**
+     * Source URLs for content rewriting
+     */
+    sourceUrls?:
+      | {
+          url: string;
+          title?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords for meta tags
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page
+     */
+    noIndex?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -675,146 +1046,6 @@ export interface ProgrammingLanguage {
   createdAt: string;
 }
 /**
- * Documentation pages synced from MDX files
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents".
- */
-export interface Document {
-  id: number;
-  /**
-   * URL path slug (e.g., "getting-started/installation")
-   */
-  slug: string;
-  /**
-   * Document title from frontmatter
-   */
-  title: string;
-  /**
-   * Document description from frontmatter
-   */
-  description?: string | null;
-  /**
-   * Documentation category (e.g., "getting-started", "api")
-   */
-  docCategory: string;
-  /**
-   * Tags for auto-matching with resources
-   */
-  tags?: (number | Tag)[] | null;
-  /**
-   * How to display related resources
-   */
-  displayMode?: ('hover' | 'cards' | 'both') | null;
-  /**
-   * Enable automatic tag-based matching
-   */
-  autoMatchEnabled?: boolean | null;
-  /**
-   * Manually linked resources (takes priority over auto-matched)
-   */
-  relatedResources?: (number | Resource)[] | null;
-  /**
-   * Resources to exclude from auto-matching
-   */
-  excludedResources?: (number | Resource)[] | null;
-  /**
-   * Automatically matched based on shared tags (read-only)
-   */
-  autoMatchedResources?: (number | Resource)[] | null;
-  /**
-   * Sync tracking information
-   */
-  syncInfo?: {
-    /**
-     * Path to source MDX file
-     */
-    mdxPath?: string | null;
-    /**
-     * MD5 hash for change detection
-     */
-    contentHash?: string | null;
-    /**
-     * Last sync timestamp
-     */
-    lastSynced?: string | null;
-  };
-  /**
-   * Additional metadata
-   */
-  metadata?: {
-    /**
-     * Estimated reading time
-     */
-    readingTime?: string | null;
-    /**
-     * Word count
-     */
-    wordCount?: number | null;
-    /**
-     * Number of headings/sections
-     */
-    headingCount?: number | null;
-    /**
-     * Number of code blocks
-     */
-    codeBlockCount?: number | null;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Document sections for granular cross-linking
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "document-sections".
- */
-export interface DocumentSection {
-  id: number;
-  /**
-   * Parent document this section belongs to
-   */
-  document: number | Document;
-  /**
-   * Anchor ID (e.g., "installation-methods")
-   */
-  headingId: string;
-  /**
-   * Heading text content
-   */
-  headingText: string;
-  /**
-   * Heading level (1-6)
-   */
-  headingLevel: number;
-  /**
-   * Position in document
-   */
-  order: number;
-  /**
-   * Section-specific tags for targeted matching
-   */
-  tags?: (number | Tag)[] | null;
-  /**
-   * Resources specifically related to this section
-   */
-  relatedResources?: (number | Resource)[] | null;
-  /**
-   * Show resources after this section
-   */
-  showRelatedResources?: boolean | null;
-  /**
-   * Display mode override
-   */
-  displayMode?: ('inherit' | 'hover' | 'cards') | null;
-  /**
-   * Preview of section content (first 200 chars)
-   */
-  contentPreview?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * Sources for discovering new resources
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -822,6 +1053,7 @@ export interface DocumentSection {
  */
 export interface ResourceSource {
   id: number;
+  supabaseId?: string | null;
   /**
    * Display name for this source (e.g., "Awesome Claude Code")
    */
@@ -1143,6 +1375,154 @@ export interface ResourceDiscoveryQueue {
   createdAt: string;
 }
 /**
+ * Moderate user reviews for resources
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resource-reviews".
+ */
+export interface ResourceReview {
+  id: number;
+  /**
+   * Reference to resource_reviews.id in Supabase
+   */
+  supabaseId: string;
+  /**
+   * Resource being reviewed
+   */
+  resourceTitle?: string | null;
+  /**
+   * Resource slug for linking
+   */
+  resourceSlug?: string | null;
+  /**
+   * User who wrote the review
+   */
+  userName?: string | null;
+  /**
+   * User email
+   */
+  userEmail?: string | null;
+  /**
+   * Supabase user ID
+   */
+  userId?: string | null;
+  /**
+   * Review title (can be edited for cleanup)
+   */
+  title?: string | null;
+  /**
+   * Review content (can be edited for cleanup)
+   */
+  content: string;
+  /**
+   * Star rating (1-5)
+   */
+  rating: number;
+  /**
+   * List of pros mentioned
+   */
+  pros?:
+    | {
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * List of cons mentioned
+   */
+  cons?:
+    | {
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Moderation status
+   */
+  status: 'pending' | 'approved' | 'rejected' | 'flagged';
+  /**
+   * Internal notes for moderators (not visible to user)
+   */
+  moderationNotes?: string | null;
+  /**
+   * Reason for rejection (if applicable)
+   */
+  rejectionReason?: ('spam' | 'inappropriate' | 'off-topic' | 'fake' | 'duplicate' | 'other') | null;
+  /**
+   * Admin who moderated this review
+   */
+  moderatedBy?: (number | null) | User;
+  /**
+   * When this review was moderated
+   */
+  moderatedAt?: string | null;
+  /**
+   * Number of helpful votes
+   */
+  helpfulCount?: number | null;
+  /**
+   * Number of not helpful votes
+   */
+  notHelpfulCount?: number | null;
+  /**
+   * When the review was submitted
+   */
+  submittedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage resource authors and contributors
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resource-authors".
+ */
+export interface ResourceAuthor {
+  id: number;
+  /**
+   * The resource this author contributed to
+   */
+  resource: number | Resource;
+  /**
+   * Link to platform user (if they have an account)
+   */
+  user?: (number | null) | User;
+  /**
+   * Display name of the author
+   */
+  name: string;
+  /**
+   * Role or contribution type
+   */
+  role: 'creator' | 'maintainer' | 'contributor' | 'author' | 'organization';
+  /**
+   * Is this the primary/main author?
+   */
+  isPrimary?: boolean | null;
+  /**
+   * GitHub username (without @)
+   */
+  githubUsername?: string | null;
+  /**
+   * Twitter/X username (without @)
+   */
+  twitterUsername?: string | null;
+  /**
+   * Personal website URL
+   */
+  websiteUrl?: string | null;
+  /**
+   * Avatar image URL (GitHub avatar auto-loaded from username)
+   */
+  avatarUrl?: string | null;
+  /**
+   * Short bio or description
+   */
+  bio?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Immutable audit trail of all admin actions
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1250,6 +1630,57 @@ export interface AuditLog {
     code?: string | null;
     stack?: string | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Document sections for granular cross-linking
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "document-sections".
+ */
+export interface DocumentSection {
+  id: number;
+  /**
+   * Parent document this section belongs to
+   */
+  document: number | Document;
+  /**
+   * Anchor ID (e.g., "installation-methods")
+   */
+  headingId: string;
+  /**
+   * Heading text content
+   */
+  headingText: string;
+  /**
+   * Heading level (1-6)
+   */
+  headingLevel: number;
+  /**
+   * Position in document
+   */
+  order: number;
+  /**
+   * Section-specific tags for targeted matching
+   */
+  tags?: (number | Tag)[] | null;
+  /**
+   * Resources specifically related to this section
+   */
+  relatedResources?: (number | Resource)[] | null;
+  /**
+   * Show resources after this section
+   */
+  showRelatedResources?: boolean | null;
+  /**
+   * Display mode override
+   */
+  displayMode?: ('inherit' | 'hover' | 'cards') | null;
+  /**
+   * Preview of section content (first 200 chars)
+   */
+  contentPreview?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1459,6 +1890,406 @@ export interface Translation {
   createdAt: string;
 }
 /**
+ * Customize transactional email templates sent to users
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-templates".
+ */
+export interface EmailTemplate {
+  id: number;
+  /**
+   * Select the email type this template is for
+   */
+  slug:
+    | 'verification'
+    | 'verification-code'
+    | 'password-reset'
+    | 'welcome'
+    | 'notification'
+    | 'digest'
+    | 'mention'
+    | 'follow'
+    | 'comment-reply'
+    | 'donation-receipt'
+    | 'donation-thank-you'
+    | 'feedback-confirmation'
+    | 'admin-alert'
+    | 'import-complete'
+    | 'discovery-complete';
+  /**
+   * Friendly name for this template (for admin reference)
+   */
+  name: string;
+  /**
+   * Only "Active" templates will be used. Draft templates fall back to default.
+   */
+  status: 'draft' | 'active';
+  /**
+   * Email subject line. Use {{variables}} for dynamic content.
+   */
+  subject: string;
+  /**
+   * Preview text shown in email clients (optional). Keep under 100 characters.
+   */
+  previewText?: string | null;
+  /**
+   * The main email body. Use {{variables}} for dynamic content.
+   */
+  htmlContent: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Plain text version of the email (optional but recommended for accessibility).
+   */
+  plainTextContent?: string | null;
+  /**
+   * Optional styling overrides
+   */
+  styling?: {
+    /**
+     * Primary button/link color (hex, e.g., #2563eb). Leave empty for default gradient.
+     */
+    primaryColor?: string | null;
+    /**
+     * Show Claude Insider logo in email header
+     */
+    showLogo?: boolean | null;
+    /**
+     * Show standard footer with copyright and unsubscribe link
+     */
+    showFooter?: boolean | null;
+  };
+  /**
+   * Internal notes about this template (not sent in emails)
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Configure achievement rarity tiers with colors and animations
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "achievement-tiers".
+ */
+export interface AchievementTier {
+  id: number;
+  /**
+   * Unique identifier (e.g., "common", "rare", "epic", "legendary")
+   */
+  slug: string;
+  /**
+   * Display name (e.g., "Common", "Rare")
+   */
+  name: string;
+  /**
+   * Optional description of what this tier represents
+   */
+  description?: string | null;
+  /**
+   * Points multiplier for achievements in this tier (1-10x)
+   */
+  pointMultiplier: number;
+  /**
+   * Tailwind gradient classes for the tier badge
+   */
+  colorGradient: {
+    /**
+     * Starting color (e.g., "gray-400", "violet-500")
+     */
+    from: string;
+    /**
+     * Middle color (optional)
+     */
+    via?: string | null;
+    /**
+     * Ending color (e.g., "gray-500", "blue-600")
+     */
+    to: string;
+  };
+  /**
+   * Glow/shadow color with opacity (e.g., "blue-500/25")
+   */
+  glowColor?: string | null;
+  /**
+   * Text color for the tier name (e.g., "gray-600", "violet-400")
+   */
+  textColor?: string | null;
+  /**
+   * CSS animation effect for this tier
+   */
+  animation: 'none' | 'pulse' | 'glow' | 'shine' | 'rainbow';
+  /**
+   * Display order (lower = more common, higher = more rare)
+   */
+  sortOrder: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Organize achievements into thematic categories
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "achievement-categories".
+ */
+export interface AchievementCategory {
+  id: number;
+  /**
+   * URL-friendly identifier (e.g., "milestone", "social", "streak")
+   */
+  slug: string;
+  /**
+   * Display name (e.g., "Milestones", "Social")
+   */
+  name: string;
+  /**
+   * Description of what achievements in this category represent
+   */
+  description?: string | null;
+  /**
+   * Lucide icon name (e.g., "trophy", "users", "flame")
+   */
+  icon: string;
+  /**
+   * Tailwind color for the category (e.g., "blue", "violet", "cyan")
+   */
+  color?: string | null;
+  /**
+   * Display order in the achievements list (lower = first)
+   */
+  sortOrder: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Create and manage user achievements
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "achievements".
+ */
+export interface Achievement {
+  id: number;
+  /**
+   * Unique identifier (e.g., "welcome_aboard", "first_message")
+   */
+  slug: string;
+  /**
+   * Achievement title (e.g., "Welcome Aboard")
+   */
+  name: string;
+  /**
+   * Description shown to users when they earn the achievement
+   */
+  description: string;
+  /**
+   * Lucide icon name (e.g., "rocket", "trophy", "star")
+   */
+  icon: string;
+  /**
+   * Rarity tier (affects points multiplier and visuals)
+   */
+  tier: number | AchievementTier;
+  /**
+   * Achievement category for organization
+   */
+  category: number | AchievementCategory;
+  /**
+   * Base points awarded (multiplied by tier multiplier)
+   */
+  basePoints: number;
+  /**
+   * How is this achievement triggered?
+   */
+  conditionType: 'special' | 'count' | 'streak' | 'time' | 'first' | 'compound';
+  /**
+   * Which metric triggers this achievement?
+   */
+  metric?:
+    | (
+        | 'messages_sent'
+        | 'messages_received'
+        | 'conversations_started'
+        | 'groups_created'
+        | 'followers_count'
+        | 'following_count'
+        | 'profile_views'
+        | 'reviews_written'
+        | 'comments_posted'
+        | 'favorites_count'
+        | 'ratings_count'
+        | 'login_days'
+        | 'account_age_days'
+        | 'streak_days'
+        | '2fa_enabled'
+        | 'passkeys_count'
+        | 'ai_conversations'
+        | 'ai_messages'
+      )
+    | null;
+  /**
+   * Target value to reach (e.g., 10 messages, 7 day streak)
+   */
+  threshold?: number | null;
+  /**
+   * Time window for time-based achievements (e.g., "7d", "30d", "1h")
+   */
+  timeWindow?: string | null;
+  /**
+   * How to combine multiple conditions
+   */
+  compoundLogic?: ('and' | 'or') | null;
+  /**
+   * JSON array of conditions: [{"metric": "...", "threshold": N}, ...]
+   */
+  compoundConditions?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Custom popup title (defaults to "Achievement Unlocked!")
+   */
+  notificationTitle?: string | null;
+  /**
+   * Custom popup message (defaults to achievement description)
+   */
+  notificationMessage?: string | null;
+  /**
+   * Sound to play when earned
+   */
+  notificationSound?: ('achievement' | 'level_up' | 'fanfare' | 'subtle' | 'none') | null;
+  /**
+   * Show confetti animation
+   */
+  showConfetti?: boolean | null;
+  /**
+   * Confetti duration (ms)
+   */
+  confettiDuration?: number | null;
+  /**
+   * Popup duration (ms)
+   */
+  displayDuration?: number | null;
+  /**
+   * Achievement can be earned
+   */
+  isActive?: boolean | null;
+  /**
+   * Hidden until earned
+   */
+  isHidden?: boolean | null;
+  /**
+   * Description hidden until earned
+   */
+  isSecret?: boolean | null;
+  /**
+   * Time-limited availability
+   */
+  isLimited?: boolean | null;
+  /**
+   * Available from (for limited achievements)
+   */
+  startDate?: string | null;
+  /**
+   * Available until (for limited achievements)
+   */
+  endDate?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Create and manage profile badges
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "badges".
+ */
+export interface Badge {
+  id: number;
+  /**
+   * Unique identifier (e.g., "verified", "beta_tester", "donor_gold")
+   */
+  slug: string;
+  /**
+   * Display name (e.g., "Verified", "Beta Tester")
+   */
+  name: string;
+  /**
+   * Tooltip text explaining what this badge represents
+   */
+  description?: string | null;
+  /**
+   * Badge category - determines how it's awarded
+   */
+  type: 'role' | 'donor' | 'special' | 'event' | 'verified' | 'achievement';
+  /**
+   * Lucide icon name (e.g., "badge-check", "shield", "star")
+   */
+  icon: string;
+  /**
+   * Text/icon color (Tailwind class)
+   */
+  textColor?: string | null;
+  /**
+   * Background color (Tailwind class)
+   */
+  bgColor?: string | null;
+  /**
+   * Border color (optional)
+   */
+  borderColor?: string | null;
+  /**
+   * Use gradient instead of solid background
+   */
+  gradient?: {
+    enabled?: boolean | null;
+    from?: string | null;
+    via?: string | null;
+    to?: string | null;
+  };
+  /**
+   * User must have this role (for role badges)
+   */
+  roleRequired?: ('' | 'editor' | 'moderator' | 'admin' | 'superadmin') | null;
+  /**
+   * User must have this donor tier (for donor badges)
+   */
+  donorTierRequired?: ('' | 'bronze' | 'silver' | 'gold' | 'platinum') | null;
+  /**
+   * User must have earned this achievement
+   */
+  achievementRequired?: (number | null) | Achievement;
+  /**
+   * Only award this badge manually (not auto-assigned)
+   */
+  manualOnly?: boolean | null;
+  /**
+   * Higher = shown first on profile
+   */
+  priority: number;
+  /**
+   * Badge can be displayed
+   */
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -1515,6 +2346,14 @@ export interface PayloadLockedDocument {
         value: number | ResourceDiscoveryQueue;
       } | null)
     | ({
+        relationTo: 'resource-reviews';
+        value: number | ResourceReview;
+      } | null)
+    | ({
+        relationTo: 'resource-authors';
+        value: number | ResourceAuthor;
+      } | null)
+    | ({
         relationTo: 'audit-logs';
         value: number | AuditLog;
       } | null)
@@ -1545,6 +2384,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'translations';
         value: number | Translation;
+      } | null)
+    | ({
+        relationTo: 'email-templates';
+        value: number | EmailTemplate;
+      } | null)
+    | ({
+        relationTo: 'achievement-tiers';
+        value: number | AchievementTier;
+      } | null)
+    | ({
+        relationTo: 'achievement-categories';
+        value: number | AchievementCategory;
+      } | null)
+    | ({
+        relationTo: 'achievements';
+        value: number | Achievement;
+      } | null)
+    | ({
+        relationTo: 'badges';
+        value: number | Badge;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1728,6 +2587,7 @@ export interface TagsSelect<T extends boolean = true> {
  */
 export interface ResourcesSelect<T extends boolean = true> {
   publishStatus?: T;
+  enhancementStatus?: T;
   title?: T;
   description?: T;
   url?: T;
@@ -1735,7 +2595,70 @@ export interface ResourcesSelect<T extends boolean = true> {
   subcategory?: T;
   tags?: T;
   difficulty?: T;
-  status?: T;
+  resourceType?: T;
+  featured?: T;
+  featuredReason?: T;
+  addedDate?: T;
+  lastVerified?: T;
+  aiSummary?: T;
+  aiOverview?: T;
+  keyFeatures?:
+    | T
+    | {
+        feature?: T;
+        description?: T;
+        id?: T;
+      };
+  useCases?:
+    | T
+    | {
+        useCase?: T;
+        description?: T;
+        id?: T;
+      };
+  pros?:
+    | T
+    | {
+        pro?: T;
+        id?: T;
+      };
+  cons?:
+    | T
+    | {
+        con?: T;
+        id?: T;
+      };
+  enhancementMetadata?:
+    | T
+    | {
+        aiEnhancedAt?: T;
+        aiModel?: T;
+        enhancementNotes?: T;
+      };
+  relatedDocs?: T;
+  autoMatchedDocs?: T;
+  aiDocRelationships?:
+    | T
+    | {
+        docSlug?: T;
+        docTitle?: T;
+        relationshipType?: T;
+        confidence?: T;
+        reasoning?: T;
+        isApproved?: T;
+        id?: T;
+      };
+  relatedResources?: T;
+  aiResourceRelationships?:
+    | T
+    | {
+        resourceId?: T;
+        resourceTitle?: T;
+        relationshipType?: T;
+        confidence?: T;
+        id?: T;
+      };
+  relationshipCount?: T;
   github?:
     | T
     | {
@@ -1748,23 +2671,12 @@ export interface ResourcesSelect<T extends boolean = true> {
       };
   version?: T;
   namespace?: T;
-  featured?: T;
-  featuredReason?: T;
-  addedDate?: T;
-  lastVerified?: T;
-  crossLinking?:
-    | T
-    | {
-        relatedDocs?: T;
-        relatedSections?: T;
-        autoMatchedDocs?: T;
-      };
   discovery?:
     | T
     | {
         source?: T;
-        discoveredAt?: T;
         discoveredBy?: T;
+        discoveredAt?: T;
         aiConfidenceScore?: T;
         aiNotes?: T;
       };
@@ -1776,6 +2688,15 @@ export interface ResourcesSelect<T extends boolean = true> {
         reviewNotes?: T;
         rejectionReason?: T;
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1785,6 +2706,7 @@ export interface ResourcesSelect<T extends boolean = true> {
  * via the `definition` "resource-sources_select".
  */
 export interface ResourceSourcesSelect<T extends boolean = true> {
+  supabaseId?: T;
   name?: T;
   description?: T;
   type?: T;
@@ -1889,6 +2811,61 @@ export interface ResourceDiscoveryQueueSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resource-reviews_select".
+ */
+export interface ResourceReviewsSelect<T extends boolean = true> {
+  supabaseId?: T;
+  resourceTitle?: T;
+  resourceSlug?: T;
+  userName?: T;
+  userEmail?: T;
+  userId?: T;
+  title?: T;
+  content?: T;
+  rating?: T;
+  pros?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  cons?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  status?: T;
+  moderationNotes?: T;
+  rejectionReason?: T;
+  moderatedBy?: T;
+  moderatedAt?: T;
+  helpfulCount?: T;
+  notHelpfulCount?: T;
+  submittedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "resource-authors_select".
+ */
+export interface ResourceAuthorsSelect<T extends boolean = true> {
+  resource?: T;
+  user?: T;
+  name?: T;
+  role?: T;
+  isPrimary?: T;
+  githubUsername?: T;
+  twitterUsername?: T;
+  websiteUrl?: T;
+  avatarUrl?: T;
+  bio?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "audit-logs_select".
  */
 export interface AuditLogsSelect<T extends boolean = true> {
@@ -1943,11 +2920,6 @@ export interface DocumentsSelect<T extends boolean = true> {
   description?: T;
   docCategory?: T;
   tags?: T;
-  displayMode?: T;
-  autoMatchEnabled?: T;
-  relatedResources?: T;
-  excludedResources?: T;
-  autoMatchedResources?: T;
   syncInfo?:
     | T
     | {
@@ -1962,6 +2934,56 @@ export interface DocumentsSelect<T extends boolean = true> {
         wordCount?: T;
         headingCount?: T;
         codeBlockCount?: T;
+      };
+  displayMode?: T;
+  autoMatchEnabled?: T;
+  relatedResources?: T;
+  excludedResources?: T;
+  autoMatchedResources?: T;
+  aiRelationships?:
+    | T
+    | {
+        resourceId?: T;
+        resourceTitle?: T;
+        relationshipType?: T;
+        confidence?: T;
+        reasoning?: T;
+        isApproved?: T;
+        id?: T;
+      };
+  relationshipCount?: T;
+  analysisStatus?: T;
+  lastAnalyzedAt?: T;
+  analysisMetadata?:
+    | T
+    | {
+        aiModel?: T;
+        analysisContentHash?: T;
+        relationshipsFound?: T;
+        analysisDuration?: T;
+        analysisNotes?: T;
+      };
+  rewriteInfo?:
+    | T
+    | {
+        lastRewriteAt?: T;
+        rewriteStatus?: T;
+        sourceUrls?:
+          | T
+          | {
+              url?: T;
+              title?: T;
+              id?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -2094,6 +3116,129 @@ export interface TranslationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-templates_select".
+ */
+export interface EmailTemplatesSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  status?: T;
+  subject?: T;
+  previewText?: T;
+  htmlContent?: T;
+  plainTextContent?: T;
+  styling?:
+    | T
+    | {
+        primaryColor?: T;
+        showLogo?: T;
+        showFooter?: T;
+      };
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "achievement-tiers_select".
+ */
+export interface AchievementTiersSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  description?: T;
+  pointMultiplier?: T;
+  colorGradient?:
+    | T
+    | {
+        from?: T;
+        via?: T;
+        to?: T;
+      };
+  glowColor?: T;
+  textColor?: T;
+  animation?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "achievement-categories_select".
+ */
+export interface AchievementCategoriesSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  description?: T;
+  icon?: T;
+  color?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "achievements_select".
+ */
+export interface AchievementsSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  description?: T;
+  icon?: T;
+  tier?: T;
+  category?: T;
+  basePoints?: T;
+  conditionType?: T;
+  metric?: T;
+  threshold?: T;
+  timeWindow?: T;
+  compoundLogic?: T;
+  compoundConditions?: T;
+  notificationTitle?: T;
+  notificationMessage?: T;
+  notificationSound?: T;
+  showConfetti?: T;
+  confettiDuration?: T;
+  displayDuration?: T;
+  isActive?: T;
+  isHidden?: T;
+  isSecret?: T;
+  isLimited?: T;
+  startDate?: T;
+  endDate?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "badges_select".
+ */
+export interface BadgesSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  description?: T;
+  type?: T;
+  icon?: T;
+  textColor?: T;
+  bgColor?: T;
+  borderColor?: T;
+  gradient?:
+    | T
+    | {
+        enabled?: T;
+        from?: T;
+        via?: T;
+        to?: T;
+      };
+  roleRequired?: T;
+  donorTierRequired?: T;
+  achievementRequired?: T;
+  manualOnly?: T;
+  priority?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -2140,6 +3285,9 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface SiteSetting {
   id: number;
+  /**
+   * Core site identity and branding
+   */
   general: {
     /**
      * The name of the website
@@ -2157,7 +3305,18 @@ export interface SiteSetting {
      * Current version displayed in footer
      */
     version?: string | null;
+    /**
+     * Logo image for header and branding (optional)
+     */
+    logo?: (number | null) | Media;
+    /**
+     * Browser tab icon (optional, uses default if not set)
+     */
+    favicon?: (number | null) | Media;
   };
+  /**
+   * Social media profile URLs
+   */
   social?: {
     /**
      * GitHub repository URL
@@ -2175,7 +3334,18 @@ export interface SiteSetting {
      * LinkedIn profile or company page URL (optional)
      */
     linkedin?: string | null;
+    /**
+     * YouTube channel URL (optional)
+     */
+    youtube?: string | null;
+    /**
+     * Bluesky profile URL (optional)
+     */
+    bluesky?: string | null;
   };
+  /**
+   * Footer display options
+   */
   footer?: {
     /**
      * Copyright notice in footer
@@ -2186,7 +3356,21 @@ export interface SiteSetting {
      * Shows build date and commit SHA
      */
     showBuildInfo?: boolean | null;
+    /**
+     * Additional links to display in footer
+     */
+    customFooterLinks?:
+      | {
+          label: string;
+          url: string;
+          external?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
   };
+  /**
+   * Basic SEO - see SEO Settings global for comprehensive options
+   */
   seo?: {
     /**
      * Default Open Graph image for social sharing
@@ -2201,6 +3385,9 @@ export interface SiteSetting {
      */
     googleAnalyticsId?: string | null;
   };
+  /**
+   * Enable or disable site features
+   */
   features?: {
     /**
      * Enable to show maintenance page to visitors
@@ -2210,6 +3397,10 @@ export interface SiteSetting {
      * Message displayed during maintenance
      */
     maintenanceMessage?: string | null;
+    /**
+     * Comma-separated list of IPs that bypass maintenance mode
+     */
+    maintenanceAllowedIPs?: string | null;
     /**
      * Show/hide the AI voice assistant feature
      */
@@ -2222,6 +3413,139 @@ export interface SiteSetting {
      * Enable Vercel Analytics tracking
      */
     enableAnalytics?: boolean | null;
+    /**
+     * Enable user-to-user messaging
+     */
+    enableChat?: boolean | null;
+    /**
+     * Enable gamification system
+     */
+    enableAchievements?: boolean | null;
+    /**
+     * Show donation buttons and page
+     */
+    enableDonations?: boolean | null;
+    /**
+     * Allow new users to sign up
+     */
+    enableUserRegistration?: boolean | null;
+    /**
+     * Enable Web Audio API sounds
+     */
+    enableSoundEffects?: boolean | null;
+  };
+  /**
+   * Security-related configuration (Admin only)
+   */
+  security?: {
+    /**
+     * Require bot challenge for sensitive actions
+     */
+    enableBotChallenge?: boolean | null;
+    /**
+     * Add honeypot fields to forms
+     */
+    enableHoneypots?: boolean | null;
+    /**
+     * Enable end-to-end encryption for messages
+     */
+    enableE2EE?: boolean | null;
+    /**
+     * Enable browser fingerprinting for security
+     */
+    enableFingerprinting?: boolean | null;
+    /**
+     * One domain per line - domains allowed for CORS and redirects
+     */
+    trustedDomains?: string | null;
+    /**
+     * One IP per line - permanently blocked IP addresses
+     */
+    blockedIPs?: string | null;
+    /**
+     * API rate limit per IP per minute
+     */
+    rateLimitPerMinute?: number | null;
+  };
+  /**
+   * Caching and performance configuration
+   */
+  performance?: {
+    /**
+     * Incremental Static Regeneration
+     */
+    enableISR?: boolean | null;
+    /**
+     * Prefetch linked pages
+     */
+    enablePrefetching?: boolean | null;
+    /**
+     * Default ISR revalidation period
+     */
+    cacheRevalidateSeconds?: number | null;
+    /**
+     * One path per line - pages to pre-render at build time
+     */
+    staticPagePaths?: string | null;
+    /**
+     * Defer heavy context providers
+     */
+    enableLazyProviders?: boolean | null;
+    /**
+     * Use Next.js Image optimization
+     */
+    enableImageOptimization?: boolean | null;
+  };
+  /**
+   * Email and push notification configuration
+   */
+  notifications?: {
+    enableEmailNotifications?: boolean | null;
+    enablePushNotifications?: boolean | null;
+    /**
+     * Sender email address for notifications
+     */
+    emailFromAddress?: string | null;
+    /**
+     * Sender name for notifications
+     */
+    emailFromName?: string | null;
+    /**
+     * Default email digest frequency for new users
+     */
+    digestFrequency?: ('immediate' | 'daily' | 'weekly' | 'never') | null;
+    /**
+     * Which notifications are enabled by default
+     */
+    notificationTypes?: {
+      messages?: boolean | null;
+      mentions?: boolean | null;
+      achievements?: boolean | null;
+      updates?: boolean | null;
+      marketing?: boolean | null;
+      security?: boolean | null;
+    };
+  };
+  /**
+   * Public API configuration
+   */
+  api?: {
+    /**
+     * Allow public access to resources API
+     */
+    enablePublicAPI?: boolean | null;
+    /**
+     * Rate limit for authenticated API requests
+     */
+    apiRateLimit?: number | null;
+    /**
+     * One origin per line - allowed CORS origins for API
+     */
+    apiCorsOrigins?: string | null;
+    /**
+     * Current API version prefix
+     */
+    apiVersion?: string | null;
   };
   contact?: {
     /**
@@ -2232,7 +3556,14 @@ export interface SiteSetting {
      * URL for support/issues
      */
     supportUrl?: string | null;
+    /**
+     * Email for privacy-related inquiries
+     */
+    privacyEmail?: string | null;
   };
+  /**
+   * Site-wide announcement (Moderators can edit)
+   */
   announcement?: {
     enabled?: boolean | null;
     /**
@@ -2243,7 +3574,207 @@ export interface SiteSetting {
      * Optional link for "Learn more"
      */
     link?: string | null;
-    type?: ('info' | 'success' | 'warning' | 'feature') | null;
+    type?: ('info' | 'success' | 'warning' | 'feature' | 'critical') | null;
+    /**
+     * Automatically hide banner after this date
+     */
+    expiresAt?: string | null;
+    /**
+     * Allow users to dismiss the banner
+     */
+    dismissible?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Search engine optimization settings - meta tags, structured data, social sharing
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-settings".
+ */
+export interface SeoSetting {
+  id: number;
+  /**
+   * Default meta tags for all pages
+   */
+  meta?: {
+    /**
+     * Template for page titles. Use %s as placeholder for page title.
+     */
+    titleTemplate?: string | null;
+    /**
+     * Fallback title when page title is not set (max 60 chars recommended)
+     */
+    defaultTitle?: string | null;
+    /**
+     * Default meta description (max 160 chars recommended)
+     */
+    defaultDescription?: string | null;
+    /**
+     * Comma-separated keywords for meta tags
+     */
+    keywords?: string | null;
+    /**
+     * Author name for meta tags
+     */
+    author?: string | null;
+    /**
+     * Browser theme color (hex format)
+     */
+    themeColor?: string | null;
+  };
+  /**
+   * Settings for Facebook, LinkedIn, and other platforms using Open Graph
+   */
+  openGraph?: {
+    siteName?: string | null;
+    type?: ('website' | 'article' | 'product') | null;
+    /**
+     * Locale in format language_TERRITORY (e.g., en_US)
+     */
+    locale?: string | null;
+    /**
+     * Additional locales for og:locale:alternate
+     */
+    alternateLocales?:
+      | {
+          locale: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Default image for social sharing (recommended: 1200x630px)
+     */
+    defaultImage?: (number | null) | Media;
+    imageAlt?: string | null;
+  };
+  /**
+   * Settings for Twitter/X card previews
+   */
+  twitter?: {
+    cardType?: ('summary' | 'summary_large_image' | 'app' | 'player') | null;
+    /**
+     * Twitter handle of the website (e.g., @claudeinsider)
+     */
+    site?: string | null;
+    /**
+     * Twitter handle of content creator
+     */
+    creator?: string | null;
+  };
+  /**
+   * Schema.org structured data for rich snippets
+   */
+  structuredData?: {
+    organizationType?: ('Organization' | 'Corporation' | 'EducationalOrganization' | 'LocalBusiness') | null;
+    organizationName?: string | null;
+    /**
+     * Logo for structured data (recommended: 512x512px)
+     */
+    logo?: (number | null) | Media;
+    /**
+     * URLs of social media profiles for organization
+     */
+    sameAs?:
+      | {
+          url: string;
+          id?: string | null;
+        }[]
+      | null;
+    contactEmail?: string | null;
+    contactType?: string | null;
+  };
+  /**
+   * Verification codes for search engine webmaster tools
+   */
+  verification?: {
+    /**
+     * Google site verification code (content value only)
+     */
+    google?: string | null;
+    /**
+     * Bing site verification code
+     */
+    bing?: string | null;
+    /**
+     * Yandex verification code
+     */
+    yandex?: string | null;
+    /**
+     * Pinterest domain verification code
+     */
+    pinterest?: string | null;
+  };
+  /**
+   * Control search engine crawling behavior
+   */
+  robots?: {
+    /**
+     * Uncheck to add noindex to entire site (useful for staging)
+     */
+    indexSite?: boolean | null;
+    /**
+     * Uncheck to add nofollow to entire site
+     */
+    followLinks?: boolean | null;
+    sitemapEnabled?: boolean | null;
+    sitemapChangeFreq?: ('always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never') | null;
+    /**
+     * Priority from 0.0 to 1.0
+     */
+    sitemapPriority?: number | null;
+  };
+  /**
+   * Push URLs to search engines instantly when content changes
+   */
+  indexNow?: {
+    enabled?: boolean | null;
+    /**
+     * Your IndexNow API key (a 32-character hex string)
+     */
+    apiKey?: string | null;
+    searchEngines?: ('bing' | 'yandex' | 'seznam' | 'naver')[] | null;
+  };
+  /**
+   * Third-party analytics integration
+   */
+  analytics?: {
+    /**
+     * Measurement ID (e.g., G-XXXXXXXXXX)
+     */
+    googleAnalyticsId?: string | null;
+    /**
+     * Container ID (e.g., GTM-XXXXXXX)
+     */
+    googleTagManagerId?: string | null;
+    /**
+     * Domain for Plausible Analytics
+     */
+    plausibleDomain?: string | null;
+    enableVercelAnalytics?: boolean | null;
+  };
+  /**
+   * Advanced SEO configuration
+   */
+  advanced?: {
+    /**
+     * Primary domain for canonical URLs (include https://)
+     */
+    canonicalDomain?: string | null;
+    /**
+     * Add trailing slash to URLs (e.g., /docs/ instead of /docs)
+     */
+    trailingSlash?: boolean | null;
+    wwwRedirect?: ('www' | 'non-www' | 'none') | null;
+    /**
+     * Add hreflang tags for international SEO
+     */
+    hreflangEnabled?: boolean | null;
+    /**
+     * Default language code (e.g., en, en-US)
+     */
+    defaultHreflang?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2368,6 +3899,471 @@ export interface CrossLinkSetting {
   createdAt?: string | null;
 }
 /**
+ * Configure points, levels, streaks, and achievement notifications
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gamification-settings".
+ */
+export interface GamificationSetting {
+  id: number;
+  pointsSystem?: {
+    /**
+     * Master toggle for the points system
+     */
+    enabled?: boolean | null;
+    /**
+     * Points awarded for sending a message
+     */
+    pointsPerMessage?: number | null;
+    /**
+     * Daily login bonus
+     */
+    pointsPerLogin?: number | null;
+    /**
+     * Points for writing a resource review
+     */
+    pointsPerReview?: number | null;
+    /**
+     * Points for posting a comment
+     */
+    pointsPerComment?: number | null;
+    /**
+     * Points for rating a resource
+     */
+    pointsPerRating?: number | null;
+    /**
+     * Points for adding to favorites
+     */
+    pointsPerFavorite?: number | null;
+    /**
+     * Points for approved edit suggestions
+     */
+    pointsPerEditSuggestion?: number | null;
+    /**
+     * Points for sharing content
+     */
+    pointsPerShare?: number | null;
+    /**
+     * Maximum points a user can earn per day (0 = unlimited)
+     */
+    dailyPointsCap?: number | null;
+  };
+  /**
+   * Show user levels based on total points
+   */
+  levelsEnabled?: boolean | null;
+  /**
+   * Define level thresholds and rewards
+   */
+  levels?:
+    | {
+        /**
+         * Level number
+         */
+        level: number;
+        /**
+         * Level name (e.g., "Beginner")
+         */
+        name: string;
+        /**
+         * Points to reach this level
+         */
+        pointsRequired: number;
+        /**
+         * Lucide icon name
+         */
+        icon?: string | null;
+        /**
+         * Tailwind color
+         */
+        color?: string | null;
+        /**
+         * Benefits unlocked at this level
+         */
+        perks?:
+          | {
+              /**
+               * Perk description
+               */
+              perk?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  streaks?: {
+    /**
+     * Track daily login streaks
+     */
+    enabled?: boolean | null;
+    /**
+     * Hours after midnight before streak resets
+     */
+    gracePeriodHours?: number | null;
+    /**
+     * Bonus rewards at streak milestones
+     */
+    milestones?:
+      | {
+          /**
+           * Days required
+           */
+          days: number;
+          /**
+           * Bonus points
+           */
+          bonusPoints?: number | null;
+          /**
+           * Achievement to award (slug)
+           */
+          achievementSlug?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  notifications?: {
+    showAchievementPopups?: boolean | null;
+    showLevelUpPopups?: boolean | null;
+    defaultConfettiEnabled?: boolean | null;
+    defaultSoundEnabled?: boolean | null;
+    /**
+     * Show toast notification when points are earned
+     */
+    showPointsToast?: boolean | null;
+  };
+  leaderboard?: {
+    enabled?: boolean | null;
+    /**
+     * Maximum users shown on leaderboard
+     */
+    displayLimit?: number | null;
+    /**
+     * How often to refresh rankings
+     */
+    refreshInterval?: number | null;
+    /**
+     * Include users who opted out of leaderboard
+     */
+    showAnonymousUsers?: boolean | null;
+    /**
+     * Minimum points required to appear on leaderboard
+     */
+    minimumPointsToShow?: number | null;
+  };
+  /**
+   * Settings for gamification abuse prevention and moderation
+   */
+  moderation?: {
+    /**
+     * Automatically detect suspicious point farming
+     */
+    enableAbuseDetection?: boolean | null;
+    /**
+     * Max point-earning actions per hour
+     */
+    maxActionsPerHour?: number | null;
+    /**
+     * Points/hour that triggers review
+     */
+    suspiciousThreshold?: number | null;
+    /**
+     * Automatically suspend gamification for suspicious accounts
+     */
+    autoSuspendOnAbuse?: boolean | null;
+    /**
+     * Allow moderators to add/remove user points
+     */
+    moderatorCanAdjustPoints?: boolean | null;
+    /**
+     * Maximum points a moderator can adjust at once
+     */
+    maxPointsAdjustment?: number | null;
+    /**
+     * Require moderators to provide reason for adjustments
+     */
+    requireAdjustmentReason?: boolean | null;
+    /**
+     * Allow moderators to revoke user achievements
+     */
+    moderatorCanRevokeAchievements?: boolean | null;
+  };
+  /**
+   * Configure how achievements work
+   */
+  achievements?: {
+    enabled?: boolean | null;
+    /**
+     * Show progress toward hidden achievements
+     */
+    showHiddenProgress?: boolean | null;
+    /**
+     * Max badges on profile preview
+     */
+    maxBadgesDisplayed?: number | null;
+    /**
+     * Max achievements user can showcase
+     */
+    showcaseLimit?: number | null;
+    /**
+     * Award achievements for past actions when new achievement is created
+     */
+    retroactiveAwards?: boolean | null;
+  };
+  /**
+   * Configure when points and achievements are awarded
+   */
+  eventTriggers?: {
+    /**
+     * Award bonus points for first-time actions (first message, first review, etc.)
+     */
+    awardOnFirstAction?: boolean | null;
+    /**
+     * Multiply points by this for first-time actions
+     */
+    firstActionMultiplier?: number | null;
+    /**
+     * Bonus points for high-quality contributions (upvoted reviews, etc.)
+     */
+    awardOnQuality?: boolean | null;
+    /**
+     * Extra points for quality contributions
+     */
+    qualityBonusPoints?: number | null;
+    /**
+     * Delay before points are credited (prevents rapid undo/redo farming)
+     */
+    delayAwardsMinutes?: number | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Configure AI pipeline operations (analysis, enhancement, rewriting) - Superadmin only
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-pipeline-settings".
+ */
+export interface AiPipelineSetting {
+  id: number;
+  /**
+   * Settings for AI-powered relationship discovery between docs and resources
+   */
+  relationships: {
+    /**
+     * Minimum confidence score to save a relationship (0-1)
+     */
+    minConfidence: number;
+    /**
+     * Maximum AI relationships to discover per document
+     */
+    maxRelationshipsPerDoc: number;
+    /**
+     * Relationship types to discover
+     */
+    enabledTypes: ('required' | 'recommended' | 'related' | 'example' | 'alternative' | 'extends' | 'implements')[];
+    /**
+     * Automatically queue new documents for analysis (requires CLI execution)
+     */
+    autoAnalyzeNewContent?: boolean | null;
+    /**
+     * Mark documents for re-analysis when content hash changes
+     */
+    reanalyzeOnContentChange?: boolean | null;
+  };
+  /**
+   * Settings for AI-powered resource enhancement (summary, features, pros/cons)
+   */
+  enhancement?: {
+    /**
+     * Automatically queue new resources for enhancement
+     */
+    autoEnhanceNewResources?: boolean | null;
+    /**
+     * Fields required for a resource to be considered "enhanced"
+     */
+    requiredFields?: {
+      requireSummary?: boolean | null;
+      requireKeyFeatures?: boolean | null;
+      requireUseCases?: boolean | null;
+      requireProsAndCons?: boolean | null;
+    };
+    /**
+     * Minimum key features to generate
+     */
+    minFeaturesCount?: number | null;
+    /**
+     * Maximum key features to generate
+     */
+    maxFeaturesCount?: number | null;
+  };
+  /**
+   * Settings for AI-powered documentation rewriting from source URLs
+   */
+  documentation?: {
+    /**
+     * Automatic rewrite schedule (queues operations for CLI)
+     */
+    autoRewriteSchedule?: ('disabled' | 'weekly' | 'monthly') | null;
+    /**
+     * Require at least one source URL for rewriting
+     */
+    requireSourceUrls?: boolean | null;
+    /**
+     * Maximum source URLs to process
+     */
+    maxSourcesPerDoc?: number | null;
+    /**
+     * MDX sections to preserve during rewrite
+     */
+    preserveSections?: ('code_examples' | 'content_meta' | 'custom_components')[] | null;
+  };
+  /**
+   * Command templates for running AI operations. These run in Claude Code CLI to use your subscription credits instead of API credits.
+   */
+  cliCommands?: {
+    /**
+     * Command to analyze relationships for a single document
+     */
+    analyzeRelationshipsCommand?: string | null;
+    /**
+     * Command to enhance a single resource
+     */
+    enhanceResourceCommand?: string | null;
+    /**
+     * Command to rewrite a single document
+     */
+    rewriteDocCommand?: string | null;
+    /**
+     * Command to analyze all pending documents
+     */
+    bulkAnalyzeCommand?: string | null;
+    /**
+     * Command to enhance all pending resources
+     */
+    bulkEnhanceCommand?: string | null;
+  };
+  /**
+   * Settings for tracking AI operations
+   */
+  operationTracking?: {
+    /**
+     * Days to keep completed operations in history
+     */
+    keepCompletedDays?: number | null;
+    /**
+     * Days to keep failed operations for debugging
+     */
+    keepFailedDays?: number | null;
+    /**
+     * Send notification when operations complete
+     */
+    notifyOnCompletion?: boolean | null;
+    /**
+     * Send notification when operations fail
+     */
+    notifyOnFailure?: boolean | null;
+  };
+  /**
+   * AI model settings for pipeline operations
+   */
+  modelConfig?: {
+    /**
+     * Preferred model for AI operations
+     */
+    preferredModel?: ('claude-opus-4-5-20251101' | 'claude-sonnet-4-20250514' | 'claude-3-5-haiku-20241022') | null;
+    /**
+     * Fallback model if preferred is unavailable
+     */
+    fallbackModel?: ('claude-opus-4-5-20251101' | 'claude-sonnet-4-20250514' | 'claude-3-5-haiku-20241022') | null;
+    /**
+     * Maximum tokens per operation
+     */
+    maxTokensPerOperation?: number | null;
+    /**
+     * Model temperature (0 = deterministic, 1 = creative)
+     */
+    temperature?: number | null;
+  };
+  /**
+   * Track and limit AI operation costs (Superadmin only)
+   */
+  costTracking?: {
+    /**
+     * Track estimated costs for all AI operations
+     */
+    enabled?: boolean | null;
+    /**
+     * Monthly spending limit
+     */
+    monthlyBudgetUSD?: number | null;
+    /**
+     * Notify when this % of budget used
+     */
+    warningThresholdPercent?: number | null;
+    /**
+     * Automatically pause AI operations when budget is exceeded
+     */
+    pauseOnBudgetExceeded?: boolean | null;
+    /**
+     * Estimated cost per input token for Opus 4.5
+     */
+    costPerInputToken?: number | null;
+    /**
+     * Estimated cost per output token for Opus 4.5
+     */
+    costPerOutputToken?: number | null;
+  };
+  /**
+   * Limit AI operation frequency to prevent abuse
+   */
+  rateLimits?: {
+    /**
+     * Maximum AI operations per hour
+     */
+    maxOperationsPerHour?: number | null;
+    /**
+     * Maximum AI operations per day
+     */
+    maxOperationsPerDay?: number | null;
+    /**
+     * Maximum simultaneous operations
+     */
+    maxConcurrentOperations?: number | null;
+    /**
+     * Minimum time between operations
+     */
+    cooldownMinutes?: number | null;
+    /**
+     * Give manual (admin-initiated) requests higher priority than scheduled ones
+     */
+    prioritizeManualRequests?: boolean | null;
+  };
+  /**
+   * Configure when automated AI operations run
+   */
+  scheduling?: {
+    /**
+     * Allow AI operations to run on a schedule
+     */
+    enableScheduledOperations?: boolean | null;
+    /**
+     * Preferred time for scheduled operations (HH:MM format)
+     */
+    preferredTimeUTC?: string | null;
+    /**
+     * Days when scheduled operations can run
+     */
+    preferredDays?: ('monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday')[] | null;
+    /**
+     * Maximum items to process in one scheduled batch
+     */
+    maxBatchSize?: number | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
@@ -2379,6 +4375,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         tagline?: T;
         description?: T;
         version?: T;
+        logo?: T;
+        favicon?: T;
       };
   social?:
     | T
@@ -2387,6 +4385,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         twitter?: T;
         discord?: T;
         linkedin?: T;
+        youtube?: T;
+        bluesky?: T;
       };
   footer?:
     | T
@@ -2394,6 +4394,14 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         copyrightText?: T;
         showVersion?: T;
         showBuildInfo?: T;
+        customFooterLinks?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              external?: T;
+              id?: T;
+            };
       };
   seo?:
     | T
@@ -2407,15 +4415,70 @@ export interface SiteSettingsSelect<T extends boolean = true> {
     | {
         maintenanceMode?: T;
         maintenanceMessage?: T;
+        maintenanceAllowedIPs?: T;
         enableVoiceAssistant?: T;
         enableSearch?: T;
         enableAnalytics?: T;
+        enableChat?: T;
+        enableAchievements?: T;
+        enableDonations?: T;
+        enableUserRegistration?: T;
+        enableSoundEffects?: T;
+      };
+  security?:
+    | T
+    | {
+        enableBotChallenge?: T;
+        enableHoneypots?: T;
+        enableE2EE?: T;
+        enableFingerprinting?: T;
+        trustedDomains?: T;
+        blockedIPs?: T;
+        rateLimitPerMinute?: T;
+      };
+  performance?:
+    | T
+    | {
+        enableISR?: T;
+        enablePrefetching?: T;
+        cacheRevalidateSeconds?: T;
+        staticPagePaths?: T;
+        enableLazyProviders?: T;
+        enableImageOptimization?: T;
+      };
+  notifications?:
+    | T
+    | {
+        enableEmailNotifications?: T;
+        enablePushNotifications?: T;
+        emailFromAddress?: T;
+        emailFromName?: T;
+        digestFrequency?: T;
+        notificationTypes?:
+          | T
+          | {
+              messages?: T;
+              mentions?: T;
+              achievements?: T;
+              updates?: T;
+              marketing?: T;
+              security?: T;
+            };
+      };
+  api?:
+    | T
+    | {
+        enablePublicAPI?: T;
+        apiRateLimit?: T;
+        apiCorsOrigins?: T;
+        apiVersion?: T;
       };
   contact?:
     | T
     | {
         email?: T;
         supportUrl?: T;
+        privacyEmail?: T;
       };
   announcement?:
     | T
@@ -2424,6 +4487,105 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         message?: T;
         link?: T;
         type?: T;
+        expiresAt?: T;
+        dismissible?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-settings_select".
+ */
+export interface SeoSettingsSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        titleTemplate?: T;
+        defaultTitle?: T;
+        defaultDescription?: T;
+        keywords?: T;
+        author?: T;
+        themeColor?: T;
+      };
+  openGraph?:
+    | T
+    | {
+        siteName?: T;
+        type?: T;
+        locale?: T;
+        alternateLocales?:
+          | T
+          | {
+              locale?: T;
+              id?: T;
+            };
+        defaultImage?: T;
+        imageAlt?: T;
+      };
+  twitter?:
+    | T
+    | {
+        cardType?: T;
+        site?: T;
+        creator?: T;
+      };
+  structuredData?:
+    | T
+    | {
+        organizationType?: T;
+        organizationName?: T;
+        logo?: T;
+        sameAs?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+            };
+        contactEmail?: T;
+        contactType?: T;
+      };
+  verification?:
+    | T
+    | {
+        google?: T;
+        bing?: T;
+        yandex?: T;
+        pinterest?: T;
+      };
+  robots?:
+    | T
+    | {
+        indexSite?: T;
+        followLinks?: T;
+        sitemapEnabled?: T;
+        sitemapChangeFreq?: T;
+        sitemapPriority?: T;
+      };
+  indexNow?:
+    | T
+    | {
+        enabled?: T;
+        apiKey?: T;
+        searchEngines?: T;
+      };
+  analytics?:
+    | T
+    | {
+        googleAnalyticsId?: T;
+        googleTagManagerId?: T;
+        plausibleDomain?: T;
+        enableVercelAnalytics?: T;
+      };
+  advanced?:
+    | T
+    | {
+        canonicalDomain?: T;
+        trailingSlash?: T;
+        wwwRedirect?: T;
+        hreflangEnabled?: T;
+        defaultHreflang?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -2474,6 +4636,201 @@ export interface CrossLinkSettingsSelect<T extends boolean = true> {
         enableSectionLinks?: T;
         enableCodeBlockLinks?: T;
         enableBidirectionalLinks?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gamification-settings_select".
+ */
+export interface GamificationSettingsSelect<T extends boolean = true> {
+  pointsSystem?:
+    | T
+    | {
+        enabled?: T;
+        pointsPerMessage?: T;
+        pointsPerLogin?: T;
+        pointsPerReview?: T;
+        pointsPerComment?: T;
+        pointsPerRating?: T;
+        pointsPerFavorite?: T;
+        pointsPerEditSuggestion?: T;
+        pointsPerShare?: T;
+        dailyPointsCap?: T;
+      };
+  levelsEnabled?: T;
+  levels?:
+    | T
+    | {
+        level?: T;
+        name?: T;
+        pointsRequired?: T;
+        icon?: T;
+        color?: T;
+        perks?:
+          | T
+          | {
+              perk?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  streaks?:
+    | T
+    | {
+        enabled?: T;
+        gracePeriodHours?: T;
+        milestones?:
+          | T
+          | {
+              days?: T;
+              bonusPoints?: T;
+              achievementSlug?: T;
+              id?: T;
+            };
+      };
+  notifications?:
+    | T
+    | {
+        showAchievementPopups?: T;
+        showLevelUpPopups?: T;
+        defaultConfettiEnabled?: T;
+        defaultSoundEnabled?: T;
+        showPointsToast?: T;
+      };
+  leaderboard?:
+    | T
+    | {
+        enabled?: T;
+        displayLimit?: T;
+        refreshInterval?: T;
+        showAnonymousUsers?: T;
+        minimumPointsToShow?: T;
+      };
+  moderation?:
+    | T
+    | {
+        enableAbuseDetection?: T;
+        maxActionsPerHour?: T;
+        suspiciousThreshold?: T;
+        autoSuspendOnAbuse?: T;
+        moderatorCanAdjustPoints?: T;
+        maxPointsAdjustment?: T;
+        requireAdjustmentReason?: T;
+        moderatorCanRevokeAchievements?: T;
+      };
+  achievements?:
+    | T
+    | {
+        enabled?: T;
+        showHiddenProgress?: T;
+        maxBadgesDisplayed?: T;
+        showcaseLimit?: T;
+        retroactiveAwards?: T;
+      };
+  eventTriggers?:
+    | T
+    | {
+        awardOnFirstAction?: T;
+        firstActionMultiplier?: T;
+        awardOnQuality?: T;
+        qualityBonusPoints?: T;
+        delayAwardsMinutes?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-pipeline-settings_select".
+ */
+export interface AiPipelineSettingsSelect<T extends boolean = true> {
+  relationships?:
+    | T
+    | {
+        minConfidence?: T;
+        maxRelationshipsPerDoc?: T;
+        enabledTypes?: T;
+        autoAnalyzeNewContent?: T;
+        reanalyzeOnContentChange?: T;
+      };
+  enhancement?:
+    | T
+    | {
+        autoEnhanceNewResources?: T;
+        requiredFields?:
+          | T
+          | {
+              requireSummary?: T;
+              requireKeyFeatures?: T;
+              requireUseCases?: T;
+              requireProsAndCons?: T;
+            };
+        minFeaturesCount?: T;
+        maxFeaturesCount?: T;
+      };
+  documentation?:
+    | T
+    | {
+        autoRewriteSchedule?: T;
+        requireSourceUrls?: T;
+        maxSourcesPerDoc?: T;
+        preserveSections?: T;
+      };
+  cliCommands?:
+    | T
+    | {
+        analyzeRelationshipsCommand?: T;
+        enhanceResourceCommand?: T;
+        rewriteDocCommand?: T;
+        bulkAnalyzeCommand?: T;
+        bulkEnhanceCommand?: T;
+      };
+  operationTracking?:
+    | T
+    | {
+        keepCompletedDays?: T;
+        keepFailedDays?: T;
+        notifyOnCompletion?: T;
+        notifyOnFailure?: T;
+      };
+  modelConfig?:
+    | T
+    | {
+        preferredModel?: T;
+        fallbackModel?: T;
+        maxTokensPerOperation?: T;
+        temperature?: T;
+      };
+  costTracking?:
+    | T
+    | {
+        enabled?: T;
+        monthlyBudgetUSD?: T;
+        warningThresholdPercent?: T;
+        pauseOnBudgetExceeded?: T;
+        costPerInputToken?: T;
+        costPerOutputToken?: T;
+      };
+  rateLimits?:
+    | T
+    | {
+        maxOperationsPerHour?: T;
+        maxOperationsPerDay?: T;
+        maxConcurrentOperations?: T;
+        cooldownMinutes?: T;
+        prioritizeManualRequests?: T;
+      };
+  scheduling?:
+    | T
+    | {
+        enableScheduledOperations?: T;
+        preferredTimeUTC?: T;
+        preferredDays?: T;
+        maxBatchSize?: T;
       };
   updatedAt?: T;
   createdAt?: T;

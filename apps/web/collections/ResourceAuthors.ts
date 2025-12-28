@@ -114,6 +114,8 @@ async function getSupabaseResourceId(_payloadResourceId: string | number): Promi
 
 export const ResourceAuthors: CollectionConfig = {
   slug: 'resource-authors',
+  // Use separate table to avoid conflict with existing custom 'resource_authors' table
+  dbName: 'payload_resource_authors',
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'resource', 'role', 'isPrimary', 'updatedAt'],

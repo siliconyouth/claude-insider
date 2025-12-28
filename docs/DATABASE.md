@@ -30,7 +30,7 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 |------|-------|
 | **Total Tables** | 126 |
 | **Categories** | 19 |
-| **Migrations** | 100 |
+| **Migrations** | 102 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|

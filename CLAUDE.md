@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.1**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.2**.
 
 | Link | URL |
 |------|-----|
@@ -151,7 +151,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | **User Features** | Achievements (50+), Sound Effects (10 themes), Profiles, Notifications |
 | **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging |
 | **Admin** | Diagnostics, Content Management, Audit Export, Resource Updates, Settings System (5 globals, SEO dashboard) |
-| **AI & Automation** | RAG (6,953 chunks), Resource Auto-Update, AI Writing Assistant |
+| **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant |
 | **Infrastructure** | 126 DB tables, PWA, Doc Versioning, Prompt Library |
 
 ### Non-Functional Requirements
@@ -1228,7 +1228,7 @@ const jsonLd = {
 
 ### RAG System (v7.0)
 
-- **6,953 chunks** with TF-IDF search (7,695 terms)
+- **6,983 chunks** with TF-IDF search (7,695 terms)
 - **14.1%** enriched with audio tags
 - Built via `scripts/generate-rag-index.cjs`
 

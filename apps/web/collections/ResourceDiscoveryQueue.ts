@@ -21,6 +21,8 @@ import { hasRole } from './Users';
  */
 export const ResourceDiscoveryQueue: CollectionConfig = {
   slug: 'resource-discovery-queue',
+  // Use separate table to avoid conflict with existing custom 'resource_discovery_queue' table
+  dbName: 'payload_resource_discovery_queue',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'priority', 'aiAnalysis.confidenceScore', 'source', 'createdAt'],

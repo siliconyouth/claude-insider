@@ -16,6 +16,8 @@ import {
  */
 export const Achievements: CollectionConfig = {
   slug: 'achievements',
+  // Use separate table to avoid conflict with existing custom 'achievements' table
+  dbName: 'payload_achievements',
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'tier', 'category', 'basePoints', 'isActive'],

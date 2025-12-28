@@ -577,7 +577,7 @@ export interface CompleteProfileData {
   collections: CollectionWithItems[];
 }
 
-// Donor tier thresholds (same as in /api/users/[username]/route.ts)
+// Donor tier thresholds (same as in /api/profiles/[username]/route.ts)
 const DONOR_TIERS = {
   platinum: 500,
   gold: 100,

@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.2] - 2025-12-28
+### Payload CMS Authentication Fix
+- **Route Conflict Resolution**: Fixed API route conflicts blocking Payload CMS REST endpoints
+  - Moved `/api/users/route.ts` → `/api/user-directory/route.ts` (User Directory API)
+  - Moved `/api/users/[username]/*` → `/api/profiles/[username]/*` (Profile APIs)
+  - Payload's `/api/users/*` endpoints now properly handled by catch-all route
+- **Collection Table Conflicts**: Added `dbName` to 7 collections to avoid Supabase table conflicts
+  - `payload_edit_suggestions`, `payload_resource_authors`, `payload_resource_discovery_queue`
+  - `payload_resource_reviews`, `payload_resource_sources`, `payload_resources`, `payload_achievements`
+- **Field Naming Collision Fix**: Renamed `status` → `resourceType` in Resources.ts
+  - Avoided collision with Payload's `_status` versioning field (draft/published)
+- **Database Schema Fixes**: Corrected column naming mismatches
+  - Fixed `feedback.is_feadback` → `is_feedback` typo
+  - Fixed `resource_comments.is_piined` → `is_pinned` typo
+- **i18n Updates**: Added missing footer translations to all 17 non-English locales
+- **Vercel Optimization**: Increased function limits for Payload admin panel
+
+---
+
 ## [1.13.1] - 2025-12-27
 ### Design Token System & Light Mode Support
 - **Universal Design Tokens**: Migrated from `dash-*` to `ui-*` tokens

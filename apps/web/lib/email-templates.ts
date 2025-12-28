@@ -5,7 +5,8 @@
  * Falls back to hardcoded templates if CMS template is not found or inactive.
  */
 
-import "server-only";
+// Note: This is a server-only module by nature (uses Payload server API)
+// Removed "server-only" import to allow Payload CLI to work
 import { getPayload } from 'payload';
 import config from '@/payload.config';
 

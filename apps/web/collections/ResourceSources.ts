@@ -70,6 +70,8 @@ const deleteFromSupabase: CollectionAfterDeleteHook = async ({ doc }) => {
  */
 export const ResourceSources: CollectionConfig = {
   slug: 'resource-sources',
+  // Use separate table to avoid conflict with existing custom 'resource_sources' table
+  dbName: 'payload_resource_sources',
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'type', 'isActive', 'scanFrequency', 'lastScannedAt', 'resourceCount'],

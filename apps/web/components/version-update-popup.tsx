@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.2",
+    date: "2025-12-28",
+    type: "patch",
+    highlights: [
+      "🔧 Payload CMS Fix: Resolved API route conflicts blocking admin authentication",
+      "📁 Route Restructure: Moved /api/users/* to /api/profiles/* and /api/user-directory/*",
+      "🗄️ Database Fixes: Added dbName to 7 collections, fixed column naming typos",
+      "🌐 i18n Updates: Added footer translations to all 17 non-English locales",
+    ],
+  },
+  {
     version: "1.13.1",
     date: "2025-12-27",
     type: "patch",

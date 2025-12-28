@@ -73,7 +73,7 @@ export const MentionInput = forwardRef<HTMLTextAreaElement, MentionInputProps>(
             searchParams.set("prioritize", participantIds.join(","));
           }
 
-          const response = await fetch(`/api/users/search?${searchParams.toString()}`);
+          const response = await fetch(`/api/profiles/search?${searchParams.toString()}`);
           if (response.ok) {
             const data = await response.json();
             // Add Claude Insider assistant as a special mention

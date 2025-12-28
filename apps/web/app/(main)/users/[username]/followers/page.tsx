@@ -37,7 +37,7 @@ export default function FollowersPage({
     async function fetchFollowers() {
       setIsLoading(true);
       try {
-        const res = await fetch(`/api/users/${username}/followers`);
+        const res = await fetch(`/api/profiles/${username}/followers`);
         const data = await res.json();
 
         if (res.ok) {

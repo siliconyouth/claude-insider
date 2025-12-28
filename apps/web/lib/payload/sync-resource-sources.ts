@@ -8,7 +8,7 @@
  * Payload provides the admin UI for management.
  */
 
-import "server-only";
+// Note: server-only module by nature (uses direct DB access)
 import { pool } from "@/lib/db";
 
 interface SupabaseSource {

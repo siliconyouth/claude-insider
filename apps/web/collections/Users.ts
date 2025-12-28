@@ -43,8 +43,7 @@ const maskEmail = (email: string): string => {
 
 export const Users: CollectionConfig = {
   slug: 'users',
-  // Use a separate table name to avoid conflict with Better Auth's "user" table
-  dbName: 'payload_users',
+  // Payload manages its own 'users' table (separate from Better Auth's 'user' table)
   auth: {
     // Use stateless JWTs instead of database sessions
     // This avoids issues with PgBouncer connection pooling

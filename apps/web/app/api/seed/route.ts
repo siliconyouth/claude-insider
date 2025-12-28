@@ -1,9 +1,20 @@
 import { getPayload } from 'payload';
 import config from '@payload-config';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   try {
+    // Require CRON_SECRET for security - prevents unauthorized seeding
+    const authHeader = request.headers.get('authorization');
+    const expectedSecret = process.env.CRON_SECRET;
+
+    if (!expectedSecret || authHeader !== `Bearer ${expectedSecret}`) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const payload = await getPayload({ config });
 
     // Check if any users exist
@@ -19,14 +30,14 @@ export async function POST() {
       );
     }
 
-    // Create admin user
+    // Create superadmin user (first user should have full access)
     const user = await payload.create({
       collection: 'users',
       data: {
         email: 'vladimir@dukelic.com',
         password: 'TestPassword123',
         name: 'Vladimir Dukelic',
-        role: 'admin',
+        role: 'superadmin',
       },
     });
 

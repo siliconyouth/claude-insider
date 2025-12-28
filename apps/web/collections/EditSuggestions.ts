@@ -15,6 +15,8 @@ import { hasRole } from './Users';
  */
 export const EditSuggestions: CollectionConfig = {
   slug: 'edit-suggestions',
+  // Use separate table to avoid conflict with existing custom 'edit_suggestions' table
+  dbName: 'payload_edit_suggestions',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'targetType', 'submitterEmail', 'createdAt'],

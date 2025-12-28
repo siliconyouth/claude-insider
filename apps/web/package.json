@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "1.13.1",
+  "version": "1.13.2",
   "type": "module",
   "private": true,
   "scripts": {
@@ -70,6 +70,7 @@
     "react-image-crop": "^11.0.10",
     "recharts": "^3.6.0",
     "resend": "^6.6.0",
+    "server-only": "^0.0.1",
     "web-push": "^3.6.7",
     "xlsx": "^0.18.5"
   },

@@ -293,7 +293,7 @@ export default function PublicProfilePage({
       setError(null);
 
       try {
-        const res = await fetch(`/api/users/${username}`);
+        const res = await fetch(`/api/profiles/${username}`);
         const data = await res.json();
 
         if (!res.ok) {

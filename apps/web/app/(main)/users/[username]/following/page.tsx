@@ -37,7 +37,7 @@ export default function FollowingPage({
     async function fetchFollowing() {
       setIsLoading(true);
       try {
-        const res = await fetch(`/api/users/${username}/following`);
+        const res = await fetch(`/api/profiles/${username}/following`);
         const data = await res.json();
 
         if (res.ok) {

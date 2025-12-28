@@ -283,7 +283,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.13.1
+ * Realistic terminal content showing Claude Insider v1.13.2
  */
 function MacBookTerminalContent() {
   return (
@@ -311,7 +311,7 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.13.1</span>
+          <span className="text-[#8b949e]"> v1.13.2</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
@@ -327,7 +327,7 @@ function MacBookTerminalContent() {
           <div className="text-[#7ee787]">✓ Immediate Text Streaming</div>
           <div className="text-[#7ee787]">✓ Code Block TTS Support</div>
           <div className="text-[#7ee787]">✓ 42 Premium AI Voices</div>
-          <div className="text-[#7ee787]">✓ RAG v7.0 (6,953 chunks)</div>
+          <div className="text-[#7ee787]">✓ RAG v7.0 (6,983 chunks)</div>
         </div>
 
         <div className="mt-2 flex items-center gap-1">
@@ -342,7 +342,7 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.13.1 with proper aspect ratio handling and LCP optimization
+ * Updated for v1.13.2 with proper aspect ratio handling and LCP optimization
  *
  * MANDATORY MOCKUP RULES:
  * 1. Screenshot MUST be taken at 446×932 viewport (matches mockup 224:468 aspect ratio)

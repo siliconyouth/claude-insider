@@ -83,6 +83,8 @@ const notifyAdminsOnPendingReview: CollectionAfterChangeHook<Resource> = async (
  */
 export const Resources: CollectionConfig = {
   slug: 'resources',
+  // Use separate table to avoid conflict with existing custom 'resources' table
+  dbName: 'payload_resources',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'publishStatus', 'enhancementStatus', 'featured', 'updatedAt'],
@@ -223,7 +225,8 @@ export const Resources: CollectionConfig = {
                   },
                 },
                 {
-                  name: 'status',
+                  // Renamed from 'status' to avoid collision with Payload's _status versioning field
+                  name: 'resourceType',
                   type: 'select',
                   required: true,
                   defaultValue: 'community',

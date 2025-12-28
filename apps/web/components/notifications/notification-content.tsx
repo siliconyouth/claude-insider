@@ -79,7 +79,7 @@ const UserMentionLink = memo(function UserMentionLink({
     // Fetch user data
     const fetchUser = async () => {
       try {
-        const res = await fetch(`/api/users/${username}`);
+        const res = await fetch(`/api/profiles/${username}`);
         if (res.ok) {
           const data = await res.json();
           const fetchedUser: ProfileHoverCardUser = {

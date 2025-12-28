@@ -14,7 +14,7 @@ Complete list of all **53 implemented features** with detailed capabilities.
 | FR-2 | Navigation | 7 categories, breadcrumbs, prev/next navigation, sidebar |
 | FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
 | FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
-| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (6,953 chunks with 14% audio-enriched), ElevenLabs Turbo v2.5 TTS (42 voices, immediate text streaming, low-latency audio), speech-to-text |
+| FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (6,983 chunks with 14% audio-enriched), ElevenLabs Turbo v2.5 TTS (42 voices, immediate text streaming, low-latency audio), speech-to-text |
 | FR-6 | Resources Section | 1,952 curated resources, 10 categories, search, GitHub integration |
 | FR-7 | Account Security | Password management, OAuth linking, safety checks |
 | FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |

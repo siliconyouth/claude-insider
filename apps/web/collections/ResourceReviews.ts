@@ -32,6 +32,8 @@ async function syncReviewStatus(
 
 export const ResourceReviews: CollectionConfig = {
   slug: 'resource-reviews',
+  // Use separate table to avoid conflict with existing custom 'resource_reviews' table
+  dbName: 'payload_resource_reviews',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'resourceTitle', 'userName', 'rating', 'status', 'createdAt'],
