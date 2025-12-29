@@ -122,7 +122,7 @@ export async function PATCH(
           subcategory: updateData.subcategory || queueItem.suggestedSubcategory,
           tags: updateData.tags || queueItem.suggestedTags,
           difficulty: updateData.difficulty || queueItem.suggestedDifficulty,
-          status: updateData.resourceStatus || queueItem.suggestedStatus || "community",
+          resourceType: updateData.resourceStatus || queueItem.suggestedStatus || "community",
           publishStatus: "published",
           github: queueItem.github
             ? {

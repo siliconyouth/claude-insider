@@ -120,7 +120,7 @@ export async function POST(request: Request) {
                 subcategory: queueItem.suggestedSubcategory ?? undefined,
                 tags: queueItem.suggestedTags ?? undefined,
                 difficulty: queueItem.suggestedDifficulty ?? undefined,
-                status: queueItem.suggestedStatus || "community",
+                resourceType: queueItem.suggestedStatus || "community",
                 publishStatus: "published",
                 github: queueItem.github
                   ? {

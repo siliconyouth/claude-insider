@@ -477,7 +477,7 @@ function transformPayloadResource(doc: Resource): ResourceEntry {
       : undefined,
     tags: tags.map((t) => (typeof t === 'number' ? String(t) : (t as Tag).name)),
     difficulty: difficultyString as ResourceEntry['difficulty'],
-    status: doc.status,
+    status: doc.resourceType,
     github: github?.owner && github?.repo
       ? {
           owner: github.owner,

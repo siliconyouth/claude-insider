@@ -188,7 +188,7 @@ export async function POST() {
             tags: tagIds,
             // difficulty is a relationship - not migrated (would need difficulty level ID lookup)
             difficulty: undefined,
-            status: resource.status as 'official' | 'community' | 'beta' | 'deprecated' | 'archived',
+            resourceType: resource.status as 'official' | 'community' | 'beta' | 'deprecated' | 'archived',
             // GitHub is a group field with nested properties
             github: resource.github ? {
               owner: resource.github.owner,

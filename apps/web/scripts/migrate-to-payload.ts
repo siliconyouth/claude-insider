@@ -164,7 +164,7 @@ async function migrate() {
           tags: tagIds,
           // difficulty is a relationship - requires ID lookup (not migrated)
           difficulty: undefined,
-          status: resource.status as 'official' | 'community' | 'beta' | 'deprecated' | 'archived',
+          resourceType: resource.status as 'official' | 'community' | 'beta' | 'deprecated' | 'archived',
           featured: resource.featured || false,
           featuredReason: resource.featured ? mapFeaturedReason(resource.featuredReason) : undefined,
           addedDate: resource.addedDate,
