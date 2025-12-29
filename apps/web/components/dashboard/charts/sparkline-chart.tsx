@@ -40,7 +40,7 @@ export function SparklineChart({
   const fillColor = gradientColor || color;
 
   return (
-    <div className={cn("inline-block", className)} style={{ width, height }}>
+    <div className={cn("inline-block", className)} style={{ width, height, minWidth: 40, minHeight: 20 }}>
       <ResponsiveContainer width="100%" height="100%" minWidth={40} minHeight={20}>
         <AreaChart data={data} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
           {showGradient && (

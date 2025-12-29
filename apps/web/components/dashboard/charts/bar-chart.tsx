@@ -85,7 +85,7 @@ export function BarChartCard({
       </div>
 
       {/* Chart */}
-      <div style={{ height }}>
+      <div style={{ height, minHeight: 100, minWidth: 100 }}>
         <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={100}>
           <BarChart
             data={data}
@@ -246,7 +246,7 @@ export function HorizontalBarChart({
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className={cn("w-full", className)} style={{ height }}>
+    <div className={cn("w-full", className)} style={{ height, minHeight: 100, minWidth: 100 }}>
       <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={100}>
         <BarChart
           data={data}

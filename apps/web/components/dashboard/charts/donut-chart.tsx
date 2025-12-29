@@ -78,7 +78,7 @@ export function DonutChartCard({
 
       <div className="flex items-center gap-6">
         {/* Chart */}
-        <div className="relative" style={{ width: outerRadius * 2 + 20, height }}>
+        <div className="relative" style={{ width: outerRadius * 2 + 20, height, minWidth: 60, minHeight: 60 }}>
           <ResponsiveContainer width="100%" height="100%" minWidth={60} minHeight={60}>
             <PieChart>
               <Pie
@@ -232,7 +232,7 @@ export function DonutChart({
   const displayActiveIndex = activeIndex ?? (expandOnHover ? hoveredIndex : null);
 
   return (
-    <div className={cn("relative", className)} style={{ width: size, height: size }}>
+    <div className={cn("relative", className)} style={{ width: size, height: size, minWidth: 60, minHeight: 60 }}>
       <ResponsiveContainer width="100%" height="100%" minWidth={60} minHeight={60}>
         <PieChart>
           <Pie

@@ -76,7 +76,7 @@ export function LineChartCard({
       </h3>
 
       {/* Chart */}
-      <div style={{ height }}>
+      <div style={{ height, minHeight: 100, minWidth: 100 }}>
         <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={100}>
           <LineChart
             data={data}
