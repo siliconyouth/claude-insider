@@ -201,12 +201,23 @@ export function Header({ activePage }: HeaderProps) {
                 },
               ]}
               footer={
-                <Link href="/resources" className="text-sm text-blue-600 dark:text-cyan-400 hover:underline flex items-center gap-1">
-                  Browse all resources
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
+                <div className="flex items-center justify-between">
+                  <Link href="/resources" className="text-sm text-blue-600 dark:text-cyan-400 hover:underline flex items-center gap-1">
+                    Browse all resources
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                  <Link
+                    href="/resources/submit"
+                    className="text-sm font-medium text-violet-600 dark:text-violet-400 hover:underline flex items-center gap-1"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    Submit Resource
+                  </Link>
+                </div>
               }
             />
 

@@ -256,8 +256,8 @@ export function ResourcesSection() {
         {/* Popular Tags */}
         <PopularTags />
 
-        {/* CTA Button */}
-        <div className="text-center">
+        {/* CTA Buttons */}
+        <div className="text-center flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/resources"
             className={cn(
@@ -273,6 +273,23 @@ export function ResourcesSection() {
           >
             Explore All Resources
             <ArrowRightIcon className="w-5 h-5" />
+          </Link>
+          <Link
+            href="/resources/submit"
+            className={cn(
+              'inline-flex items-center gap-2 px-6 py-4 rounded-xl',
+              'text-violet-700 dark:text-violet-300 font-semibold',
+              'bg-violet-100 dark:bg-violet-900/30',
+              'border border-violet-200 dark:border-violet-700/50',
+              'hover:bg-violet-200 dark:hover:bg-violet-900/50',
+              'hover:-translate-y-0.5',
+              'transition-all duration-200'
+            )}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Submit Resource
           </Link>
         </div>
       </div>
