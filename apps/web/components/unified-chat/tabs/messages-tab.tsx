@@ -491,6 +491,31 @@ function ConversationView({
         // Get sender info from participants
         const participant = participants.find((p) => p.userId === payload.sender_id);
 
+        // Resolve reply-to message details from existing messages
+        let replyToMessage: Message["replyToMessage"] | undefined;
+        const replyToMessageId = payload.reply_to_message_id as string | undefined;
+        if (replyToMessageId) {
+          const originalMessage = prev.find((m) => m.id === replyToMessageId);
+          if (originalMessage) {
+            replyToMessage = {
+              id: originalMessage.id,
+              senderId: originalMessage.senderId,
+              senderName: originalMessage.senderName || "Unknown",
+              content: originalMessage.content,
+              isDeleted: !!originalMessage.deletedAt,
+            };
+          } else {
+            // Original message not in current list - show minimal info
+            replyToMessage = {
+              id: replyToMessageId,
+              senderId: "",
+              senderName: "Unknown",
+              content: "[Message not loaded]",
+              isDeleted: false,
+            };
+          }
+        }
+
         // Construct message object from payload
         const message: Message = {
           id: payload.id,
@@ -513,6 +538,9 @@ function ConversationView({
           senderDeviceId: payload.sender_device_id,
           senderKey: payload.sender_key,
           sessionId: payload.session_id,
+          // Reply threading
+          replyToMessageId,
+          replyToMessage,
         };
 
         return [...prev, message];
