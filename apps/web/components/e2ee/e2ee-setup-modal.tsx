@@ -24,6 +24,7 @@ import {
 import { Lock, Upload, Key, Shield, ShieldCheck, X, Eye, EyeOff, ArrowLeft, Loader2 } from "lucide-react";
 
 type SetupState = "choose" | "generating" | "backup-password" | "restoring" | "complete";
+type CompletionType = "generated" | "restored" | "generated-with-backup";
 
 interface E2EESetupModalProps {
   isOpen: boolean;
@@ -36,6 +37,7 @@ export function E2EESetupModal({ isOpen, onClose, onSuccess }: E2EESetupModalPro
 
   // State
   const [setupState, setSetupState] = useState<SetupState>("choose");
+  const [completionType, setCompletionType] = useState<CompletionType | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [backupPassword, setBackupPassword] = useState("");
@@ -54,6 +56,7 @@ export function E2EESetupModal({ isOpen, onClose, onSuccess }: E2EESetupModalPro
       checkBackup();
       // Reset state when modal opens
       setSetupState("choose");
+      setCompletionType(null);
       setError(null);
       setBackupPassword("");
       setConfirmPassword("");
@@ -97,6 +100,7 @@ export function E2EESetupModal({ isOpen, onClose, onSuccess }: E2EESetupModalPro
 
     try {
       await e2ee.createBackup(backupPassword);
+      setCompletionType("generated-with-backup");
       setSetupState("complete");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create backup");
@@ -107,6 +111,7 @@ export function E2EESetupModal({ isOpen, onClose, onSuccess }: E2EESetupModalPro
 
   const handleSkipBackup = () => {
     // Keys are generated but not backed up - user can do this later
+    setCompletionType("generated");
     setSetupState("complete");
   };
 
@@ -121,14 +126,17 @@ export function E2EESetupModal({ isOpen, onClose, onSuccess }: E2EESetupModalPro
 
     try {
       await e2ee.restoreFromBackup(restorePassword);
+      setCompletionType("restored");
       setSetupState("complete");
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message === "No backup found"
             ? "No backup found for this account"
-            : "Incorrect password"
-          : "Failed to restore backup"
+            : err.message.includes("decrypt")
+            ? "Incorrect password. Please try again."
+            : err.message
+          : "Failed to restore backup. Please check your password."
       );
     } finally {
       setIsProcessing(false);
@@ -477,18 +485,38 @@ export function E2EESetupModal({ isOpen, onClose, onSuccess }: E2EESetupModalPro
               </div>
 
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 text-center">
-                Your messages are now encrypted!
+                {completionType === "restored"
+                  ? "Keys Restored Successfully!"
+                  : "Encryption Enabled!"}
               </h3>
+
+              <p className="text-sm text-gray-600 dark:text-gray-400 text-center mb-4">
+                {completionType === "restored"
+                  ? "Your encryption keys have been restored from your cloud backup. You can now send and receive encrypted messages."
+                  : completionType === "generated-with-backup"
+                  ? "Your new encryption keys are active and safely backed up to the cloud."
+                  : "Your new encryption keys are active. Consider creating a backup in settings."}
+              </p>
 
               <div className="space-y-2 text-center mb-4">
                 <div className="flex items-center justify-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
                   <Shield className="w-4 h-4" />
-                  Encryption keys active
+                  {completionType === "restored"
+                    ? "Keys restored from backup"
+                    : "New encryption keys generated"}
                 </div>
-                {e2ee.hasBackup && (
+                {(completionType === "restored" || completionType === "generated-with-backup") && (
                   <div className="flex items-center justify-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
                     <Upload className="w-4 h-4" />
-                    Cloud backup created
+                    {completionType === "restored"
+                      ? "Synced with cloud backup"
+                      : "Cloud backup created"}
+                  </div>
+                )}
+                {completionType === "generated" && (
+                  <div className="flex items-center justify-center gap-2 text-sm text-amber-600 dark:text-amber-400">
+                    <Upload className="w-4 h-4" />
+                    No backup (create one in settings)
                   </div>
                 )}
               </div>
