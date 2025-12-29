@@ -15,6 +15,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 7. [Realtime Patterns](#realtime-patterns)
 8. [Admin Settings Patterns](#admin-settings-patterns-v1130) - Payload CMS access control (v1.13.0)
 9. [Resource Patterns](#resource-patterns) - Enhanced fields, insights dashboard, filters (MANDATORY)
+10. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
 
 ---
 
@@ -1058,3 +1059,137 @@ export default function ResourcesLayout({ children }) {
   );
 }
 ```
+
+
+---
+
+## Sync Patterns (v1.13.3)
+
+### Bidirectional Sync Architecture
+
+Claude Insider maintains bidirectional sync between Supabase (frontend data) and Payload CMS (admin management).
+
+| Direction | Trigger | Key File |
+|-----------|---------|----------|
+| Payload → Supabase | `afterChange` hook | `lib/payload/sync-resources.ts` |
+| Supabase → Payload | CLI script | `scripts/sync-supabase-to-payload.ts` |
+
+### Content Hash Change Detection
+
+```typescript
+// ✅ CORRECT: Generate hash from relevant fields only
+import { createHash } from 'crypto';
+
+function generateContentHash(resource: Resource): string {
+  const relevantData = {
+    title: resource.title,
+    description: resource.description,
+    url: resource.url,
+    is_published: resource.is_published,
+    status: resource.status,
+    is_featured: resource.is_featured,
+    category: resource.category,
+    // Arrays sorted for consistent hashing
+    key_features: resource.key_features,
+    tags: resource.tags?.sort(),
+  };
+
+  return createHash('md5')
+    .update(JSON.stringify(relevantData))
+    .digest('hex');
+}
+
+// Skip sync if hash unchanged
+if (existingHash === newHash) {
+  console.log(`[Sync] Skipped (unchanged): ${resource.slug}`);
+  return { synced: false, reason: 'unchanged' };
+}
+```
+
+### Incremental Sync CLI Options
+
+```bash
+# Full sync (all resources)
+pnpm exec tsx scripts/sync-supabase-to-payload.ts
+
+# Incremental sync (last 24 hours)
+pnpm exec tsx scripts/sync-supabase-to-payload.ts --incremental --hours 24
+
+# Sync since specific date
+pnpm exec tsx scripts/sync-supabase-to-payload.ts --since "2024-12-28"
+
+# Sync specific resources
+pnpm exec tsx scripts/sync-supabase-to-payload.ts --ids "uuid1,uuid2"
+
+# Resources only (skip categories/difficulty)
+pnpm exec tsx scripts/sync-supabase-to-payload.ts --resources-only
+
+# Force sync (ignore hash comparison)
+pnpm exec tsx scripts/sync-supabase-to-payload.ts --force
+```
+
+### CTE Query Pattern (Combined Operations)
+
+```sql
+-- ✅ CORRECT: CTE for upsert + tag sync in one transaction
+WITH upserted AS (
+  INSERT INTO resources (slug, title, description, content_hash, ...)
+  VALUES ($1, $2, $3, $4, ...)
+  ON CONFLICT (slug) DO UPDATE SET
+    title = EXCLUDED.title,
+    content_hash = EXCLUDED.content_hash,
+    updated_at = NOW()
+  RETURNING id
+),
+deleted_tags AS (
+  DELETE FROM resource_tags
+  WHERE resource_id = (SELECT id FROM upserted)
+  RETURNING 1
+)
+SELECT id FROM upserted;
+
+-- Then batch insert all tags
+INSERT INTO resource_tags (resource_id, tag)
+VALUES ($1, $2), ($1, $3), ($1, $4)
+ON CONFLICT DO NOTHING;
+```
+
+### Batched Tag Operations
+
+```typescript
+// ✅ CORRECT: Single query for all tags
+if (resourceId && tagSlugs.length > 0) {
+  const values = tagSlugs.map((_, i) => `($1, $${i + 2})`).join(', ');
+  await pool.query(
+    `INSERT INTO resource_tags (resource_id, tag) VALUES ${values} ON CONFLICT DO NOTHING`,
+    [resourceId, ...tagSlugs]
+  );
+}
+
+// ❌ WRONG: One query per tag
+for (const tag of tagSlugs) {
+  await pool.query(
+    `INSERT INTO resource_tags (resource_id, tag) VALUES ($1, $2)`,
+    [resourceId, tag]
+  );
+}
+```
+
+### Progress Reporting with ETA
+
+```typescript
+// Calculate ETA during batch processing
+const elapsed = Date.now() - startTime;
+const rate = processedCount / (elapsed / 1000); // items/second
+const remaining = totalCount - processedCount;
+const etaSeconds = remaining / rate;
+const etaStr = etaSeconds > 60
+  ? `${Math.round(etaSeconds / 60)}m ${Math.round(etaSeconds % 60)}s`
+  : `${Math.round(etaSeconds)}s`;
+
+console.log(
+  `Progress: ${processedCount}/${totalCount} (${pct}%) - ` +
+  `Created: ${created}, Updated: ${updated}, Skipped: ${skipped} - ETA: ${etaStr}`
+);
+```
+

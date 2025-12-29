@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.2**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.3**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.2**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 53 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 54 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -142,7 +142,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**53 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**54 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -213,7 +213,7 @@ claude-insider/
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 97 SQL migration files
+│   └── supabase/migrations/      # 103 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -1012,7 +1012,7 @@ The "Ci" text height is exactly **58.6% of the container** (300/512 in source SV
 
 ## Data Layer Architecture (MANDATORY)
 
-**126 tables** across 19 categories, **97 migrations** in `supabase/migrations/`.
+**133 tables** across 20 categories, **103 migrations** in `supabase/migrations/`.
 
 **Full schema reference:** [docs/DATABASE.md](docs/DATABASE.md)
 
@@ -1254,6 +1254,19 @@ Matrix Olm/Megolm with Double Ratchet. Private keys never leave device.
 |-------|---------|
 | `resource_update_jobs` | Job tracking |
 | `resource_changelog` | Version history |
+
+**Bidirectional Sync System** (v1.13.3): Optimized sync between Supabase and Payload CMS.
+
+| Direction | Trigger | Key File |
+|-----------|---------|----------|
+| Payload → Supabase | afterChange hook | `lib/payload/sync-resources.ts` |
+| Supabase → Payload | CLI script | `scripts/sync-supabase-to-payload.ts` |
+
+**Optimizations**:
+- Content hash change detection (MD5, skips unchanged resources)
+- CTE queries (combined upsert + tag sync in single transaction)
+- Incremental sync (`--hours 24`, `--since DATE`, `--ids UUID,...`)
+- Configurable batch size and concurrency
 
 ### Achievement System (`lib/achievements.ts`)
 

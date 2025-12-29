@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.13.1 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.13.3 notification to all opted-in users...\n");
 
-  const version = "1.13.1";
-  const title = "Claude Insider v1.13.1 - Design Token System & Light Mode";
+  const version = "1.13.3";
+  const title = "Claude Insider v1.13.3 - Optimized Bidirectional Sync";
   const message =
-    "🎨 Universal UI Design Tokens: Migrated from dash-* to ui-* tokens • ☀️ Light Mode Support: All tokens now work in both light and dark themes • 🔧 Vercel Blacks: Aligned all colors with CLAUDE.md specification (#0a0a0a, #111111, #262626) • 📊 Design System Page: Updated to match CLAUDE.md gradients and typography";
+    "⚡ 70% Faster Syncs: Content hash change detection skips unchanged resources via MD5 • 🔄 Incremental Sync: Process only recently changed resources with --hours, --since, --ids • 🗄️ CTE Queries: Combined upsert + tag sync in single transactions • 📊 Batched Operations: Configurable batch size and concurrency for high-volume syncs";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

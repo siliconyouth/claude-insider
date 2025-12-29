@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-28 for v1.13.2 (Payload CMS Route Fix, API Route Restructure)
+ * Updated: 2025-12-29 for v1.13.3 (Bidirectional Sync Optimization)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.13.2",
+  version: "1.13.3",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -119,8 +119,8 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.89.0",
     engine: "PostgreSQL 15+",
-    tables: 126,
-    categories: 18,
+    tables: 133,
+    categories: 20,
     features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library"],
   },
   cms: {
@@ -1114,6 +1114,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.11.1", "hero section", "device mockups", "viewport", "screenshot", "keyboard shortcut", "object-cover"],
+  },
+  {
+    id: "v1133-features",
+    title: "Version 1.13.3 Features",
+    section: "New in v1.13.3",
+    content: `Claude Insider v1.13.3 introduces optimized bidirectional sync between Supabase and Payload CMS. Content Hash Change Detection: Skip syncing unchanged resources using MD5 hash comparison. New content_hash column in Supabase resources table (migration 103) and contentHash field in Payload payload_resources collection. O(1) hash lookups via database indexes. Incremental Sync Support: Process only recently changed resources with CLI flags --incremental/-i (sync only updated), --hours <n>/-h (filter by hours), --since <date>/-s (filter by ISO date), --ids <uuid,...> (sync specific resources). Batched Operations: Reduced database round-trips using CTE queries that combine upsert + tag sync in single transaction. Batched tag inserts with configurable batch size and concurrency. Performance Improvements: ~70% faster syncs when resources are unchanged due to hash comparison and incremental sync. ETA calculation with percentage complete display.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.13.3", "bidirectional sync", "content hash", "incremental sync", "CTE queries", "batched operations", "payload cms", "supabase"],
   },
 ];
 

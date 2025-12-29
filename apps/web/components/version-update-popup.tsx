@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.3",
+    date: "2025-12-29",
+    type: "patch",
+    highlights: [
+      "⚡ 70% Faster Syncs: Content hash change detection skips unchanged resources via MD5 comparison",
+      "🔄 Incremental Sync: Process only recently changed resources with --hours, --since, --ids flags",
+      "🗄️ CTE Queries: Combined upsert + tag sync in single transactions for fewer round-trips",
+      "📊 Batched Operations: Configurable batch size and concurrency for high-volume syncs",
+    ],
+  },
+  {
     version: "1.13.2",
     date: "2025-12-28",
     type: "patch",

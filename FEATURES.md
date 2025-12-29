@@ -1,6 +1,6 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **53 implemented features** with detailed capabilities.
+Complete list of all **54 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
@@ -63,6 +63,7 @@ Complete list of all **53 implemented features** with detailed capabilities.
 | FR-51 | Resource Insights Dashboard | Interactive charts (category donut, difficulty bars, audience distribution, coverage visualization), click-to-filter, enhanced field display |
 | FR-52 | Resource Enhanced Fields | 21 enhanced fields (keyFeatures, targetAudience, useCases, pros, cons, prerequisites), URL parameter sync, homepage audience grid |
 | FR-53 | Comprehensive Admin Settings | SEO dashboard, 10 new settings sections (Security, Performance, Notifications, API, Moderation, Cost Tracking, Rate Limits, Scheduling), role-based access control, `lib/payload-access.ts` |
+| FR-54 | Bidirectional Sync System | Content hash change detection (MD5), incremental sync (--hours, --since, --ids), CTE queries, batched operations, ~70% faster syncs when unchanged, ETA calculation |
 
 ---
 

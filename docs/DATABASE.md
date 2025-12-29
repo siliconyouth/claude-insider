@@ -28,9 +28,9 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 126 |
-| **Categories** | 19 |
-| **Migrations** | 102 |
+| **Total Tables** | 133 |
+| **Categories** | 20 |
+| **Migrations** | 103 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -130,6 +130,18 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 ### Content & Moderation (4 tables)
 
 `edit_suggestions`, `beta_applications`, `feedback`, `admin_logs`
+
+### Resources (7 tables)
+
+`resources`, `resource_tags`, `resource_comments`, `resource_reviews`, `resource_changelog`, `resource_update_jobs`, `resource_authors`
+
+**Key columns in `resources`:**
+- `slug` (TEXT, PK) - URL-friendly identifier
+- `title`, `description`, `url` - Basic resource info
+- `category`, `difficulty` - Classification
+- `github_owner`, `github_repo`, `github_stars`, `github_forks` - GitHub integration
+- `key_features`, `pros`, `cons`, `use_cases` (TEXT[]) - Enhanced fields
+- `content_hash` (TEXT) - MD5 hash for sync change detection (v1.13.3)
 
 ### Reading & Search (8 tables)
 

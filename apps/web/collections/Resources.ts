@@ -259,11 +259,25 @@ export const Resources: CollectionConfig = {
                   name: 'featuredReason',
                   type: 'select',
                   options: [
+                    // Core badges
                     { label: "Editor's Pick", value: 'editors-pick' },
                     { label: 'Most Popular', value: 'most-popular' },
+                    { label: 'Popular', value: 'popular' },
                     { label: 'New', value: 'new' },
                     { label: 'Trending', value: 'trending' },
                     { label: 'Essential', value: 'essential' },
+                    // Official badges
+                    { label: 'Official', value: 'official' },
+                    { label: 'Official Source', value: 'official-source' },
+                    { label: 'Official Repository', value: 'official-repository' },
+                    { label: 'Official Community', value: 'official-community' },
+                    { label: 'Official Courses', value: 'official-courses' },
+                    { label: 'Official Examples', value: 'official-examples' },
+                    // Other badges
+                    { label: 'Active Community', value: 'active-community' },
+                    { label: 'Built with Claude', value: 'built-with-claude' },
+                    { label: 'Industry Standard', value: 'industry-standard' },
+                    { label: 'Industry Example', value: 'industry-example' },
                   ],
                   admin: {
                     condition: (data) => data?.featured,
@@ -791,6 +805,16 @@ export const Resources: CollectionConfig = {
           ],
         },
       ],
+    },
+    // Hidden field for sync optimization (content hash for change detection)
+    {
+      name: 'contentHash',
+      type: 'text',
+      admin: {
+        hidden: true,
+        description: 'MD5 hash for content change detection during sync',
+      },
+      index: true,
     },
   ],
   timestamps: true,

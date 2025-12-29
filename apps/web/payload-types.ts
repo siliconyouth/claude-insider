@@ -504,7 +504,26 @@ export interface Resource {
   /**
    * Featured badge
    */
-  featuredReason?: ('editors-pick' | 'most-popular' | 'new' | 'trending' | 'essential') | null;
+  featuredReason?:
+    | (
+        | 'editors-pick'
+        | 'most-popular'
+        | 'popular'
+        | 'new'
+        | 'trending'
+        | 'essential'
+        | 'official'
+        | 'official-source'
+        | 'official-repository'
+        | 'official-community'
+        | 'official-courses'
+        | 'official-examples'
+        | 'active-community'
+        | 'built-with-claude'
+        | 'industry-standard'
+        | 'industry-example'
+      )
+    | null;
   /**
    * Date added to collection
    */
@@ -742,6 +761,10 @@ export interface Resource {
      */
     rejectionReason?: string | null;
   };
+  /**
+   * MD5 hash for content change detection during sync
+   */
+  contentHash?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -2688,6 +2711,7 @@ export interface ResourcesSelect<T extends boolean = true> {
         reviewNotes?: T;
         rejectionReason?: T;
       };
+  contentHash?: T;
   meta?:
     | T
     | {
