@@ -194,15 +194,17 @@ export async function GET(request: NextRequest) {
     const totalPages = Math.ceil(total / limit);
 
     // Fetch users (no DISTINCT needed - all JOINs are 1:1 relationships)
+    // Join with profiles to get display_name which is the authoritative source
     const usersQuery = `
       SELECT
         u.id,
         u.username,
         u.name,
         u."displayName",
-        u.bio,
+        p.display_name as profile_display_name,
+        COALESCE(p.bio, u.bio) as bio,
         u.image,
-        u."avatarUrl",
+        COALESCE(p.avatar_url, u."avatarUrl") as "avatarUrl",
         u.role,
         u."isBetaTester",
         u."isVerified",
@@ -212,6 +214,7 @@ export async function GET(request: NextRequest) {
         u.following_count
         ${selectExtra}
       FROM "user" u
+      LEFT JOIN profiles p ON p.user_id = u.id
       ${joinClause}
       ${whereClause}
       ${orderBy}
@@ -285,7 +288,8 @@ export async function GET(request: NextRequest) {
       return {
         id: u.id,
         username: u.username,
-        name: u.displayName || u.name || "Anonymous",
+        // Priority: profile display_name > user displayName > user name
+        name: u.profile_display_name || u.displayName || u.name || "Anonymous",
         bio: u.bio,
         avatar: u.avatarUrl || u.image,
         role: u.role,
