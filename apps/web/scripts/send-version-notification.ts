@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.13.5 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.13.6 notification to all opted-in users...\n");
 
-  const version = "1.13.5";
-  const title = "Claude Insider v1.13.5 - Messaging Consolidation & Presence";
+  const version = "1.13.6";
+  const title = "Claude Insider v1.13.6 - Resource Submissions & Chat Performance";
   const message =
-    "🔗 ConversationView Consolidation: Single source of truth, removed 826 lines of duplicate code • 🔐 E2EE Setup Flow: Clickable 'Not encrypted' badge opens setup modal • 👤 Matrix SDK Presence: Heartbeat-based (30s) with reliable online/idle/offline status • ✨ Display Names: Consistent @DisplayName in mentions, replies, and community page";
+    "📤 Resource Submissions: Users can now submit resources at /resources/submit with AI-powered analysis • ⚡ Chat Performance: 4x faster conversations with optimized RPC functions (200ms → 50ms) • 🔔 Smart Notifications: Deep-linking to messages with auto-scroll and highlight animation • 🛠️ Edit Fix: Message bubble overlap resolved";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
