@@ -129,6 +129,9 @@ export function ConversationView({
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
   const isAIConversation = otherParticipant?.userId === AI_ASSISTANT_USER_ID;
 
+  // Get current user participant for optimistic messages
+  const currentUserParticipant = participants.find((p) => p.userId === currentUserId);
+
   // Build mentionable users list from participants (memoized for performance)
   const mentionableUsers: MentionUser[] = useMemo(() => {
     return participants
@@ -582,54 +585,115 @@ export function ConversationView({
     setCursorPosition(target.selectionStart || 0);
   };
 
-  // Send message
+  /**
+   * Send message with OPTIMISTIC UPDATES (Matrix SDK pattern)
+   *
+   * Key insight: Show the message IMMEDIATELY, don't wait for server.
+   * 1. Create optimistic message with temp ID → add to state → message appears INSTANTLY
+   * 2. Play sound → user hears confirmation
+   * 3. Send to server in background (non-blocking)
+   * 4. Server responds → replace temp ID with real ID (or realtime handles it)
+   * 5. If error → show retry button on the message
+   */
   const handleSend = async () => {
     if (!inputValue.trim() || isSending) return;
 
     const content = inputValue.trim();
-    const replyToId = replyingTo?.id; // Capture before clearing
-    clearDraft(); // Clear draft from localStorage immediately
-    setReplyingTo(null); // Clear reply state immediately for UX
-    setIsSending(true);
+    const replyToId = replyingTo?.id;
+    const replyToMessage = replyingTo ? {
+      id: replyingTo.id,
+      senderId: replyingTo.senderId,
+      senderName: replyingTo.senderName || "Unknown",
+      content: replyingTo.content,
+      isDeleted: !!replyingTo.deletedAt,
+    } : undefined;
+
+    // Clear input IMMEDIATELY for snappy UX
+    clearDraft();
+    setReplyingTo(null);
 
     if (typingTimeoutRef.current) {
       clearTimeout(typingTimeoutRef.current);
     }
-    // Clear typing indicator immediately via Broadcast
     sendTyping(false);
 
-    // Send message with optional reply reference
-    const result = await sendMessage(conversationId, content, replyToId);
+    // Generate temp ID for optimistic message
+    const tempId = `temp_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 
-    if (result.success && result.message) {
-      setMessages((prev) => [...prev, result.message!]);
-      // Play sent sound on success
-      playMessageSent();
+    // Create OPTIMISTIC MESSAGE - appears INSTANTLY!
+    const optimisticMessage: Message = {
+      id: tempId,
+      conversationId,
+      senderId: currentUserId,
+      senderName: currentUserParticipant?.displayName || currentUserParticipant?.name || "You",
+      senderUsername: currentUserParticipant?.username,
+      senderAvatar: currentUserParticipant?.avatarUrl,
+      content,
+      mentions: [],
+      isAiGenerated: false,
+      createdAt: new Date().toISOString(),
+      replyToMessageId: replyToId,
+      replyToMessage,
+    };
 
-      // Scroll to bottom after sending a message
-      requestAnimationFrame(() => {
-        messageListRef.current?.scrollToBottom();
-      });
+    // Add to state IMMEDIATELY - message appears NOW!
+    setMessages((prev) => [...prev, optimisticMessage]);
 
-      // If AI was mentioned, trigger AI response
-      if (result.aiMentioned) {
-        // Generate AI response (async, will appear via realtime)
-        await generateAIChatResponse(conversationId, result.message.id);
-        // Refresh to get AI message
-        const refreshResult = await getMessages(conversationId, 10);
-        if (refreshResult.success && refreshResult.messages) {
-          setMessages(refreshResult.messages);
-          // Scroll to show AI response
-          requestAnimationFrame(() => {
-            messageListRef.current?.scrollToBottom();
-          });
+    // Play sound IMMEDIATELY - user hears + sees together
+    playMessageSent();
+
+    // Scroll to bottom IMMEDIATELY
+    requestAnimationFrame(() => {
+      messageListRef.current?.scrollToBottom();
+    });
+
+    // Now send to server in background (user already sees the message)
+    setIsSending(true);
+
+    try {
+      const result = await sendMessage(conversationId, content, replyToId);
+
+      if (result.success && result.message) {
+        // Replace temp message with real message from server
+        setMessages((prev) => {
+          // Check if realtime already added the real message
+          const hasRealMessage = prev.some((m) => m.id === result.message!.id);
+          if (hasRealMessage) {
+            // Remove the temp message, real one is already there
+            return prev.filter((m) => m.id !== tempId);
+          }
+          // Replace temp with real
+          return prev.map((m) => (m.id === tempId ? result.message! : m));
+        });
+
+        // If AI was mentioned, trigger AI response
+        if (result.aiMentioned) {
+          await generateAIChatResponse(conversationId, result.message.id);
+          // Refresh to get AI message
+          const refreshResult = await getMessages(conversationId, 10);
+          if (refreshResult.success && refreshResult.messages) {
+            setMessages(refreshResult.messages);
+            requestAnimationFrame(() => {
+              messageListRef.current?.scrollToBottom();
+            });
+          }
+          // Fetch read receipt for the user's message
+          const receiptsResult = await getReadReceipts([result.message.id]);
+          if (receiptsResult.success && receiptsResult.receipts) {
+            setReadReceipts((prev) => ({ ...prev, ...receiptsResult.receipts }));
+          }
         }
-        // Fetch read receipt for the user's message (AI marked it as "Seen")
-        const receiptsResult = await getReadReceipts([result.message.id]);
-        if (receiptsResult.success && receiptsResult.receipts) {
-          setReadReceipts((prev) => ({ ...prev, ...receiptsResult.receipts }));
-        }
+      } else {
+        // Failed - mark message as failed (could add retry UI here)
+        console.error("[Chat] Failed to send message:", result.error);
+        // For now, remove the optimistic message on failure
+        // TODO: Add retry queue integration for failed messages
+        setMessages((prev) => prev.filter((m) => m.id !== tempId));
       }
+    } catch (error) {
+      console.error("[Chat] Error sending message:", error);
+      // Remove optimistic message on error
+      setMessages((prev) => prev.filter((m) => m.id !== tempId));
     }
 
     setIsSending(false);
