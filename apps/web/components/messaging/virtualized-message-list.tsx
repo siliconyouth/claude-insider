@@ -17,9 +17,6 @@
  */
 
 import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle, useMemo } from "react";
-
-// useLayoutEffect that's safe for SSR - falls back to useEffect on server
-const useIsomorphicLayoutEffect = typeof window !== "undefined" ? require("react").useLayoutEffect : useEffect;
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
 import { MessageBubble, TypingIndicator, DateSeparator, type MentionedUser } from "./message-bubble";
@@ -562,14 +559,13 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   }, [hasMore, isLoading, onLoadMore, checkIfAtBottom, saveScrollState, clearShrinkPreventionIfNeeded, checkUnfillState]);
 
   // Scroll to bottom when new messages arrive (if already at bottom)
-  // Matrix SDK pattern: useLayoutEffect for synchronous DOM access + rAF for after paint
-  useIsomorphicLayoutEffect(() => {
+  // Matrix SDK pattern: useEffect + rAF ensures scroll after render and paint
+  useEffect(() => {
     const newMessagesAdded = messages.length > prevMessagesLengthRef.current;
     prevMessagesLengthRef.current = messages.length;
 
     if (newMessagesAdded && isAtBottom) {
       // Schedule scroll after browser paint when elements are rendered and measured
-      // This is the Matrix SDK pattern: scroll after content is visible
       requestAnimationFrame(() => {
         scrollToActualBottom();
       });
