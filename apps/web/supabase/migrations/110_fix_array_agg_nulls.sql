@@ -1,11 +1,9 @@
--- Migration 109: Fix RPC function column names
+-- Migration 110: Fix get_conversations_optimized
 --
--- The dm_conversations table uses:
--- - type (TEXT: 'direct' or 'group') NOT is_group (BOOLEAN)
--- - name (TEXT) NOT group_name
--- - avatar_url (TEXT) NOT group_avatar
---
--- This fixes migration 108's RPC function to use the correct column mappings
+-- Fixes:
+-- 1. p.username doesn't exist (profiles table has no username column)
+--    - username is on "user" table only, use u.username
+-- 2. ARRAY_AGG NULL handling - use FILTER to exclude NULLs
 
 CREATE OR REPLACE FUNCTION get_conversations_optimized(p_user_id TEXT)
 RETURNS TABLE (
@@ -34,7 +32,7 @@ BEGIN
       dp.conversation_id,
       dp.user_id,
       COALESCE(p.display_name, u.name, 'Unknown') as name,
-      u.username as username,  -- username is only on "user" table, not profiles
+      u.username as username,
       COALESCE(p.avatar_url, u.image) as avatar,
       COALESCE(pr.status, 'offline') as status
     FROM dm_participants dp
@@ -47,9 +45,7 @@ BEGIN
   )
   SELECT
     c.id,
-    -- Derive is_group from type column (actual schema uses 'type' not 'is_group')
     (c.type = 'group')::BOOLEAN as is_group,
-    -- Use actual column names with aliases
     c.name as group_name,
     c.avatar_url as group_avatar,
     c.created_at,
@@ -57,11 +53,12 @@ BEGIN
     c.last_message_at,
     c.last_message_preview,
     COALESCE(my_p.unread_count, 0)::INTEGER as unread_count,
-    COALESCE(ARRAY_AGG(cp.user_id ORDER BY cp.user_id), ARRAY[]::TEXT[]) as participant_ids,
-    COALESCE(ARRAY_AGG(cp.name ORDER BY cp.user_id), ARRAY[]::TEXT[]) as participant_names,
-    ARRAY_AGG(cp.username ORDER BY cp.user_id) as participant_usernames,
-    ARRAY_AGG(cp.avatar ORDER BY cp.user_id) as participant_avatars,
-    COALESCE(ARRAY_AGG(cp.status ORDER BY cp.user_id), ARRAY[]::TEXT[]) as participant_statuses
+    -- Use FILTER to exclude NULLs from arrays (important when LEFT JOIN has no matches)
+    COALESCE(ARRAY_AGG(cp.user_id ORDER BY cp.user_id) FILTER (WHERE cp.user_id IS NOT NULL), ARRAY[]::TEXT[]) as participant_ids,
+    COALESCE(ARRAY_AGG(cp.name ORDER BY cp.user_id) FILTER (WHERE cp.user_id IS NOT NULL), ARRAY[]::TEXT[]) as participant_names,
+    COALESCE(ARRAY_AGG(cp.username ORDER BY cp.user_id) FILTER (WHERE cp.user_id IS NOT NULL), ARRAY[]::TEXT[]) as participant_usernames,
+    COALESCE(ARRAY_AGG(cp.avatar ORDER BY cp.user_id) FILTER (WHERE cp.user_id IS NOT NULL), ARRAY[]::TEXT[]) as participant_avatars,
+    COALESCE(ARRAY_AGG(cp.status ORDER BY cp.user_id) FILTER (WHERE cp.user_id IS NOT NULL), ARRAY[]::TEXT[]) as participant_statuses
   FROM dm_conversations c
   JOIN dm_participants my_p ON my_p.conversation_id = c.id AND my_p.user_id = p_user_id
   LEFT JOIN conversation_participants cp ON cp.conversation_id = c.id
@@ -71,5 +68,4 @@ BEGIN
 END;
 $$;
 
--- Re-grant permissions
 GRANT EXECUTE ON FUNCTION get_conversations_optimized(TEXT) TO authenticated;

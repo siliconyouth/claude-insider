@@ -55,7 +55,7 @@ BEGIN
       dp.conversation_id,
       dp.user_id,
       COALESCE(p.display_name, u.name, 'Unknown') as name,
-      COALESCE(p.username, u.username) as username,
+      u.username as username,  -- username is only on "user" table, not profiles
       COALESCE(p.avatar_url, u.image) as avatar,
       COALESCE(pr.status, 'offline') as status
     FROM dm_participants dp
