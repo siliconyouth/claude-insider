@@ -115,6 +115,29 @@ export const metadata: Metadata = {
     },
   },
   // ============================================
+  // Icons Configuration (PWA, Favicon, Apple Touch)
+  // ============================================
+  icons: {
+    icon: [
+      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/icon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icons/icon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/icons/icon-120x120.png", sizes: "120x120", type: "image/png" },
+      { url: "/icons/icon-152x152.png", sizes: "152x152", type: "image/png" },
+      { url: "/icons/icon-167x167.png", sizes: "167x167", type: "image/png" },
+    ],
+    other: [
+      { rel: "mask-icon", url: "/icons/safari-pinned-tab.svg", color: "#3b82f6" },
+    ],
+  },
+  // ============================================
   // PWA & App Configuration
   // ============================================
   manifest: "/manifest.json",
@@ -461,23 +484,8 @@ export default async function MainLayout({
         <link rel="dns-prefetch" href="https://api.anthropic.com" />
         <link rel="dns-prefetch" href="https://api.elevenlabs.io" />
 
-        {/* Favicon and Icons */}
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/icons/icon-96x96.png" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-
-        {/* Apple Touch Icons */}
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-        <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120x120.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-167x167.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-
-        {/* Safari Pinned Tab */}
-        <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#3b82f6" />
-
-        {/* Microsoft Tiles */}
+        {/* Note: Favicons and Apple Touch Icons are now handled by metadata.icons property */}
+        {/* Microsoft Tiles (not covered by Next.js metadata) */}
         <meta name="msapplication-TileColor" content="#0a0a0a" />
         <meta name="msapplication-TileImage" content="/icons/icon-144x144.png" />
         <meta name="msapplication-config" content="/browserconfig.xml" />

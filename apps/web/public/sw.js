@@ -1,5 +1,6 @@
 // Cache version - UPDATE THIS ON EACH DEPLOY to bust old caches
-const CACHE_VERSION = 'v6';
+// v7: Force icon refresh after new "Ci" gradient icons (2025-12-29)
+const CACHE_VERSION = 'v7';
 const STATIC_CACHE = `claude-insider-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `claude-insider-dynamic-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `claude-insider-offline-${CACHE_VERSION}`;
