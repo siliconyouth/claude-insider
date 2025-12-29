@@ -723,7 +723,8 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
             const isHighlighted = msg.id === highlightedMessageId;
             return (
               <div
-                key={msg.id}
+                // Include editedAt in key to force re-mount and re-measure when edited
+                key={`${msg.id}-${msg.editedAt || ""}`}
                 data-index={index}
                 data-message-id={msg.id}
                 ref={virtualizer.measureElement}
