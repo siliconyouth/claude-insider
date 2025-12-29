@@ -11,7 +11,7 @@ This document contains the complete database schema, table catalog, and SQL refe
 1. [Overview](#overview)
 2. [Column Naming Convention](#column-naming-convention-critical)
 3. [Database Clients](#database-clients)
-4. [Table Catalog](#table-catalog-126-tables)
+4. [Table Catalog](#table-catalog-135-tables)
 5. [Extended User Columns](#extended-user-columns)
 6. [Role Hierarchy](#role-hierarchy)
 7. [RLS Security Model](#rls-security-model)
@@ -28,7 +28,7 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 126 |
+| **Total Tables** | 135 |
 | **Categories** | 20 |
 | **Migrations** | 110 |
 
@@ -84,7 +84,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 ---
 
-## Table Catalog (126 Tables)
+## Table Catalog (135 Tables)
 
 ### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 

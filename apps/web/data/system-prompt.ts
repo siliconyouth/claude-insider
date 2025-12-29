@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-29 for v1.13.6 (Resource Submissions & Chat Performance)
+ * Updated: 2025-12-29 for v1.13.7 (Optimistic UI MANDATORY, Resource Submissions OPEN)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.13.6",
+  version: "1.13.7",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -119,7 +119,7 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.89.0",
     engine: "PostgreSQL 15+",
-    tables: 134,
+    tables: 135,
     categories: 20,
     features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library"],
   },
@@ -264,7 +264,7 @@ export const USER_FEATURES = {
   },
   messaging: {
     types: ["Direct messages", "Group chats (up to 50 members)"],
-    features: ["Typing indicators", "Online presence", "Message mentions", "AI assistant @mentions", "Emoji reactions", "Reply threading", "In-conversation search", "Message drafts", "Retry queue"],
+    features: ["Optimistic UI (instant ~2ms)", "Typing indicators", "Online presence", "Message mentions", "AI assistant @mentions", "Emoji reactions", "Reply threading", "In-conversation search", "Message drafts", "Retry queue"],
     roles: ["Owner", "Admin", "Member"],
   },
   apiKeys: {
@@ -1150,6 +1150,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.13.6", "resource submissions", "submit resources", "chat performance", "rpc functions", "message edit", "notification deep linking", "rate limiting"],
+  },
+  {
+    id: "v1137-features",
+    title: "Version 1.13.7 Features",
+    section: "New in v1.13.7",
+    content: `Claude Insider v1.13.7 makes resource submissions open to the community and introduces MANDATORY optimistic UI patterns. Resource Submissions OPEN: Community can now submit resources at /resources/submit with AI-powered analysis. Rate limits: 10/day anonymous (IP-hashed), 50/day logged-in, 100/day verified users. Duplicate detection across all tables. Status tracking: pending → analyzing → queued → approved/rejected. Admin moderation workflow with notifications to submitters. Optimistic UI (MANDATORY): All messaging features must use the Matrix SDK optimistic pattern for instant feedback. Messages appear in ~2ms with temp IDs before server sync. Sound plays with message appearance. setIsSending(false) called immediately after optimistic update, not after server response. Send button re-enables instantly - message appearing IS the feedback. Failed messages removed from UI with error toast. TanStack Virtual Removed: Replaced with simple flexbox layout + CSS overflow-anchor for scroll preservation. Reduces complexity and bundle size. No virtualization overhead for typical chat sizes. Send Button Unblocked: Button no longer shows spinner or waits for server response. User can immediately type next message after sending. 135 total database tables with 110 migrations. FR-56 Resource Submissions and FR-57 Optimistic UI now documented as mandatory features.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.13.7", "resource submissions open", "optimistic ui", "mandatory", "matrix sdk pattern", "tanstack virtual removed", "flexbox", "overflow-anchor", "instant messaging"],
   },
 ];
 

@@ -16,7 +16,8 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 8. [Admin Settings Patterns](#admin-settings-patterns-v1130) - Payload CMS access control (v1.13.0)
 9. [Resource Patterns](#resource-patterns) - Enhanced fields, insights dashboard, filters (MANDATORY)
 10. [Matrix SDK Patterns](#matrix-sdk-patterns-v1134) - Reactions, replies, search, drafts (v1.13.4)
-11. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
+11. [Optimistic Messaging Patterns](#optimistic-messaging-patterns-mandatory---v1137) - Instant feedback, scroll preservation (MANDATORY)
+12. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
 
 ---
 
@@ -1302,6 +1303,161 @@ export function useRetryQueue() {
   return { pendingMessages, retry, remove };
 }
 ```
+
+---
+
+## Optimistic Messaging Patterns (MANDATORY - v1.13.7)
+
+**CRITICAL**: All messaging/chat features MUST use the Matrix SDK optimistic pattern. This ensures instant feedback (message appears in ~2ms) while server sync happens in the background.
+
+### Core Flow (MANDATORY)
+
+```tsx
+// ✅ CORRECT: Optimistic message flow
+const handleSend = async () => {
+  if (!content.trim() || isSending) return;
+
+  setIsSending(true);  // Brief mutex to prevent double-clicks
+
+  // 1. Generate temp ID for optimistic message
+  const tempId = `temp-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  // 2. Create optimistic message and add to state IMMEDIATELY
+  const optimisticMessage: Message = {
+    id: tempId,
+    content: content.trim(),
+    sender_id: currentUserId,
+    sender: currentUser,
+    conversation_id: conversationId,
+    created_at: new Date().toISOString(),
+    is_read: true,
+    _optimistic: true,  // Flag for UI styling
+  };
+
+  setMessages(prev => [...prev, optimisticMessage]);
+
+  // 3. Play sound (user hears confirmation with message appearance)
+  playMessageSent();
+
+  // 4. Clear input & enable button (~2ms total from click)
+  setContent('');
+  setIsSending(false);  // IMMEDIATELY re-enable, not after server response!
+
+  // 5. Server sync in background (non-blocking)
+  try {
+    const { data: serverMessage } = await sendMessage(content.trim(), conversationId);
+
+    // 6. Replace temp with real server message
+    setMessages(prev =>
+      prev.map(m => m.id === tempId ? { ...serverMessage, _optimistic: false } : m)
+    );
+  } catch (error) {
+    // 7. Handle failure - remove optimistic message, show error
+    setMessages(prev => prev.filter(m => m.id !== tempId));
+    playError();
+    toast.error('Failed to send message');
+  }
+};
+```
+
+### PROHIBITED Patterns
+
+```tsx
+// ❌ WRONG: Blocking until server response
+const handleSend = async () => {
+  setIsSending(true);
+  try {
+    const { data } = await sendMessage(content);  // Blocks for 500-2000ms!
+    setMessages(prev => [...prev, data]);
+  } finally {
+    setIsSending(false);  // User waits entire duration
+  }
+};
+
+// ❌ WRONG: Spinner on send button
+<button disabled={isSending}>
+  {isSending ? <Spinner /> : <SendIcon />}  // Don't show spinner!
+</button>
+
+// ❌ WRONG: Using TanStack Virtual for chat
+import { useVirtualizer } from '@tanstack/react-virtual';
+// Removed in v1.13.7 - adds complexity without benefit for chat
+
+// ✅ CORRECT: Simple send button (message appearing IS the feedback)
+<button disabled={isSending}>
+  <SendIcon />
+</button>
+```
+
+### Scroll Preservation with CSS `overflow-anchor`
+
+```tsx
+// ✅ CORRECT: Flexbox layout with native scroll anchoring
+<div className="flex flex-col h-full overflow-hidden">
+  {/* Messages container - scrollable */}
+  <div className="flex-1 overflow-y-auto flex flex-col">
+    {/* Messages grow from top, anchor at bottom */}
+    <div className="mt-auto">  {/* Pushes content to bottom */}
+      {messages.map((message) => (
+        <MessageBubble key={message.id} message={message} />
+      ))}
+    </div>
+    {/* Anchor element - CSS auto-scrolls to keep this visible */}
+    <div className="h-px w-full" style={{ overflowAnchor: 'auto' }} />
+  </div>
+
+  {/* Input area - fixed at bottom */}
+  <div className="border-t p-4">
+    <MessageInput />
+  </div>
+</div>
+
+// globals.css - Enable native scroll anchoring
+.overflow-y-auto {
+  overflow-anchor: none;  /* Disable on container */
+}
+.overflow-y-auto > :last-child {
+  overflow-anchor: auto;  /* Enable on anchor element */
+}
+```
+
+### Optimistic Styling
+
+```tsx
+// Show visual difference for pending messages
+<div
+  className={cn(
+    'message-bubble',
+    message._optimistic && 'opacity-70'  // Subtle pending state
+  )}
+>
+  {message.content}
+  {message._optimistic && (
+    <span className="text-xs text-gray-400 ml-2">Sending...</span>
+  )}
+</div>
+```
+
+### Performance Requirements
+
+| Metric | Target | Method |
+|--------|--------|--------|
+| Click → Message visible | < 5ms | Optimistic state update |
+| Click → Button re-enabled | < 5ms | Clear `isSending` after optimistic update |
+| Server sync | Background | Non-blocking async |
+| Scroll preservation | Native | CSS `overflow-anchor` |
+
+### Implementation Checklist
+
+- [ ] Uses temp ID (`temp-${timestamp}-${random}`) for optimistic messages
+- [ ] `setIsSending(false)` called IMMEDIATELY after optimistic update
+- [ ] Sound plays with message appearance (not after server response)
+- [ ] Input cleared immediately after optimistic update
+- [ ] Server sync is non-blocking (`await` after state updates)
+- [ ] Failed messages removed from UI with error toast
+- [ ] Uses flexbox layout (NOT TanStack Virtual)
+- [ ] CSS `overflow-anchor` for scroll preservation
+- [ ] No spinner on send button (message IS the feedback)
 
 ---
 

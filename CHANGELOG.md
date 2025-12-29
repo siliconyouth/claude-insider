@@ -9,6 +9,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.7] - 2025-12-29
+### 🎉 Resource Submissions OPEN & Optimistic UI
+- **Resource Submissions Now Live**: Community can submit resources at `/resources/submit`
+  - Full submission workflow: pending → analyzing → queued → approved/rejected
+  - AI-powered analysis with Claude Opus 4.5
+  - Rate limits: Anonymous 10/day, Logged-in 50/day, Verified 100/day
+  - Duplicate detection across 3 tables (resources, submissions, discovery queue)
+  - Admin notification workflow with moderation dashboard
+- **Optimistic UI (MANDATORY)**: Matrix SDK pattern for instant message display
+  - Messages appear INSTANTLY with temp ID before server response
+  - Sound plays immediately with message (not before)
+  - Server sync happens completely in background
+  - Send button enabled immediately after optimistic update (~2ms)
+  - If server fails, message removed with error indication
+- **TanStack Virtual Removed**: Replaced with simple flexbox layout
+  - Fixed message bubble overlap issues caused by absolute positioning
+  - CSS `overflow-anchor` handles scroll preservation natively
+  - `virtualized-message-list.tsx`: 823 → 432 lines (48% reduction)
+  - `virtualized-ai-message-list.tsx`: 380 → 310 lines (18% reduction)
+- **Send Button No Longer Blocks**: Immediate re-enable after optimistic update
+  - Previous: Button disabled until server responds (500-2000ms)
+  - Now: Button enabled after optimistic message added (~2ms)
+  - Users can type next message immediately
+- **Documentation Updates**: CLAUDE.md now includes Optimistic UI as MANDATORY pillar
+
+---
+
 ## [1.13.6] - 2025-12-29
 ### User Resource Submissions & Chat Performance
 - **Resource Submissions System**: Community-driven resource discovery
@@ -1566,7 +1593,8 @@ This release consolidates all features from v0.91.0 through v0.99.0:
 
 | Range | Count | Period | Highlights |
 |-------|-------|--------|------------|
-| 1.12.1-1.12.9 | 9 | Dec 23-27 | SEO, IndexNow, PayPal, Resource Insights, Performance |
+| 1.13.0-1.13.7 | 8 | Dec 27-29 | Resource Submissions, Optimistic UI, SEO Dashboard |
+| 1.12.1-1.12.9 | 9 | Dec 23-27 | IndexNow, PayPal, Resource Insights, Performance |
 | 1.10.1-1.12.0 | 17 | Dec 21-23 | RAG v7, ElevenLabs v3, Dashboard Charts, Build Cache |
 | 1.0.0-1.10.0 | 16 | Dec 18-21 | AI Messaging, Resource Discovery, Cross-Linking |
 | 0.87-0.99 | 13 | Dec 16-17 | E2EE, Sound Themes, Read Receipts, User Directory |
@@ -1580,7 +1608,7 @@ This release consolidates all features from v0.91.0 through v0.99.0:
 | 0.10-0.19 | 10 | Dec 9 | AI Assistant, Design System |
 | 0.1-0.9 | 9 | Dec 8-9 | Foundation, Docs, SEO |
 
-**Total: 131 versions in 20 days** (Dec 8-27, 2025)
+**Total: 139 versions in 21 days** (Dec 8-29, 2025)
 
 ---
 

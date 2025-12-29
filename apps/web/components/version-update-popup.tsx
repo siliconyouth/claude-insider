@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.7",
+    date: "2025-12-29",
+    type: "patch",
+    highlights: [
+      "🎉 Resource Submissions OPEN: Community can now submit resources at /resources/submit with AI analysis",
+      "⚡ Optimistic UI (MANDATORY): Messages appear instantly (~2ms) with background server sync",
+      "🗑️ TanStack Virtual Removed: Replaced with simple flexbox + CSS overflow-anchor for scroll preservation",
+      "🔓 Send Button Unblocked: Button re-enables immediately after optimistic update, no waiting for server",
+    ],
+  },
+  {
     version: "1.13.6",
     date: "2025-12-29",
     type: "patch",

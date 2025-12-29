@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.6**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.7**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.6**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 56 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 57 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -43,7 +43,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.6**.
 11. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 12. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
 13. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
-14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 134 tables, RLS, migrations
+14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 135 tables, RLS, migrations
 15. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
 16. [Internationalization](#internationalization-i18n) - 18 languages
 17. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
@@ -83,7 +83,6 @@ All technologies are **free and/or open source** (except hosting services with f
 | date-fns | 4.1.0 | MIT | Date formatting |
 | @matrix-org/matrix-sdk-crypto-wasm | 16.0.0 | Apache-2.0 | E2EE implementation |
 | @paypal/react-paypal-js | 8.9.2 | Apache-2.0 | PayPal integration |
-| @tanstack/react-virtual | 3.13.13 | MIT | Virtual scrolling for message lists |
 | react-image-crop | 11.x | ISC | Client-side image cropping |
 | recharts | 3.6.0 | MIT | Animated charts (Area, Bar, Pie, Line) |
 | Playwright | 1.53.1 | Apache-2.0 | Icon generation (SVG rendering) |
@@ -142,17 +141,17 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**56 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**57 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
-| **Content** | MDX docs (34 pages), 1,952 resources, AI Voice Assistant, Advanced Search |
+| **Content** | MDX docs (34 pages), 1,952+ resources, AI Voice Assistant, Advanced Search |
 | **Auth & Security** | OAuth, Passkeys/2FA, E2EE (Matrix), Bot Challenge, Security Dashboard |
 | **User Features** | Achievements (50+), Sound Effects (10 themes), Profiles, Notifications |
-| **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging |
+| **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging, **Optimistic UI** |
 | **Admin** | Diagnostics, Content Management, Audit Export, Resource Updates, Settings System (5 globals, SEO dashboard) |
-| **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant, Resource Submissions |
-| **Infrastructure** | 126 DB tables, PWA, Doc Versioning, Prompt Library |
+| **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant, **Resource Submissions** |
+| **Infrastructure** | 135 DB tables, PWA, Doc Versioning, Prompt Library |
 
 ### Non-Functional Requirements
 
@@ -341,6 +340,33 @@ All new components MUST implement ALL seven pillars:
 | `aspect-[3/1]` | Custom ratio |
 
 **See [docs/PATTERNS.md](docs/PATTERNS.md#flex-aspect-ratio-pattern) for code examples.**
+
+### Optimistic Messaging (MANDATORY - v1.13.7)
+
+**Rule**: All messaging/chat features MUST use the Matrix SDK optimistic pattern.
+
+| Step | Description |
+|------|-------------|
+| 1. **Create optimistic message** | Generate temp ID, add to state IMMEDIATELY |
+| 2. **Play sound** | User hears confirmation with message appearance |
+| 3. **Clear input & enable button** | User can type next message immediately |
+| 4. **Server sync in background** | `await sendMessage()` happens non-blocking |
+| 5. **Replace temp with real** | Swap temp ID for server ID on success |
+| 6. **Handle failure** | Remove optimistic message, show error |
+
+**PROHIBITED Patterns:**
+
+| ❌ Don't | ✅ Do |
+|----------|-------|
+| `setIsSending(true)` blocking until server | Set `isSending(true)`, clear after optimistic update (~2ms) |
+| `await sendMessage()` before showing message | Add message to state first, then await in background |
+| Spinner on send button during server wait | Message appearing IS the feedback |
+| Using TanStack Virtual for chat | Use simple flexbox with CSS `overflow-anchor` |
+
+**Key Files:**
+- `conversation-view.tsx`: Reference implementation with temp IDs
+- `virtualized-message-list.tsx`: Flexbox layout, no absolute positioning
+- `virtualized-ai-message-list.tsx`: Same pattern for AI chat
 
 ---
 
@@ -1012,7 +1038,7 @@ The "Ci" text height is exactly **58.6% of the container** (300/512 in source SV
 
 ## Data Layer Architecture (MANDATORY)
 
-**133 tables** across 20 categories, **103 migrations** in `supabase/migrations/`.
+**135 tables** across 20 categories, **110 migrations** in `supabase/migrations/`.
 
 **Full schema reference:** [docs/DATABASE.md](docs/DATABASE.md)
 
