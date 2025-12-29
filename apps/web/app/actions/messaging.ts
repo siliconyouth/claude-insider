@@ -486,14 +486,32 @@ export async function getMessages(
           (replyProfiles as ProfileRow[] | null)?.forEach((p) => profileMap.set(p.user_id, p));
         }
 
-        // Build reply message map
+        // Get all reply sender IDs for user table fallback (in case profiles don't have display_name)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const allReplySenderIds = [...new Set((replyMessages as any[]).map((r) => r.sender_id))] as string[];
+        let replyUserNames: Record<string, string> = {};
+        if (allReplySenderIds.length > 0) {
+          const { data: replyUsers } = await supabase
+            .from("user")
+            .select("id, name")
+            .in("id", allReplySenderIds);
+
+          if (replyUsers) {
+            replyUserNames = Object.fromEntries(
+              replyUsers.map((u: { id: string; name: string | null }) => [u.id, u.name || ""])
+            );
+          }
+        }
+
+        // Build reply message map with proper fallback chain: profile.display_name > user.name > profile.username > "Unknown"
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (replyMessages as any[]).forEach((r) => {
           const replyProfile = profileMap.get(r.sender_id);
+          const userName = replyUserNames[r.sender_id];
           replyMessageMap.set(r.id, {
             id: r.id,
             senderId: r.sender_id,
-            senderName: replyProfile?.display_name || replyProfile?.username || "Unknown",
+            senderName: replyProfile?.display_name || userName || replyProfile?.username || "Unknown",
             content: r.deleted_at ? "[Message deleted]" : r.content,
             isDeleted: !!r.deleted_at,
           });
@@ -686,14 +704,32 @@ export async function getMessagesSince(
           });
         }
 
-        // Build reply message map
+        // Get all reply sender IDs for user table fallback (in case profiles don't have display_name)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const allReplySenderIds = [...new Set((replyMessages as any[]).map((r) => r.sender_id))] as string[];
+        let replyUserNames: Record<string, string> = {};
+        if (allReplySenderIds.length > 0) {
+          const { data: replyUsers } = await supabase
+            .from("user")
+            .select("id, name")
+            .in("id", allReplySenderIds);
+
+          if (replyUsers) {
+            replyUserNames = Object.fromEntries(
+              replyUsers.map((u: { id: string; name: string | null }) => [u.id, u.name || ""])
+            );
+          }
+        }
+
+        // Build reply message map with proper fallback chain: profile.displayName > user.name > profile.username > "Unknown"
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (replyMessages as any[]).forEach((r) => {
           const replyProfile = profileMap.get(r.sender_id);
+          const userName = replyUserNames[r.sender_id];
           replyMessageMap.set(r.id, {
             id: r.id,
             senderId: r.sender_id,
-            senderName: replyProfile?.displayName || replyProfile?.username || "Unknown",
+            senderName: replyProfile?.displayName || userName || replyProfile?.username || "Unknown",
             content: r.deleted_at ? "[Message deleted]" : r.content,
             isDeleted: !!r.deleted_at,
           });
@@ -2036,20 +2072,26 @@ export async function getProfilesByUsernames(
       }
     }
 
-    // Fetch online status from user_presence
+    // Fetch online status from user_presence (Matrix SDK pattern - compute from last_active_at)
     let onlineStatus: Record<string, boolean> = {};
     if (userIds.length > 0) {
       const { data: presence } = await supabase
         .from("user_presence")
-        .select("user_id, status")
+        .select("user_id, last_active_at")
         .in("user_id", userIds);
 
       if (presence) {
+        const now = Date.now();
+        const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+
         onlineStatus = Object.fromEntries(
-          presence.map((p: { user_id: string; status: string }) => [
-            p.user_id,
-            p.status === "online",
-          ])
+          presence.map((p: { user_id: string; last_active_at: string | null }) => {
+            // Compute online status from last_active_at (Matrix SDK pattern)
+            if (!p.last_active_at) return [p.user_id, false];
+            const lastActive = new Date(p.last_active_at).getTime();
+            const isOnline = now - lastActive < ONLINE_THRESHOLD_MS;
+            return [p.user_id, isOnline];
+          })
         );
       }
     }

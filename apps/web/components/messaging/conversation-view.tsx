@@ -41,11 +41,14 @@ import {
   markConversationAsRead,
   getReadReceipts,
   searchUsersForMention,
+  getProfilesByUsernames,
   type Message,
   type ConversationParticipant,
   type ReadReceipt,
   type Reaction,
 } from "@/app/actions/messaging";
+import { extractMentions } from "@/lib/mentions";
+import type { MentionedUser } from "@/components/messaging/message-bubble";
 import { generateAIChatResponse } from "@/app/actions/ai-chat-response";
 import {
   useConversationRealtime,
@@ -95,6 +98,8 @@ export function ConversationView({
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   // Search state
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  // Mentioned users cache for displaying @mentions with display names
+  const [mentionedUsers, setMentionedUsers] = useState<Record<string, MentionedUser>>({});
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
@@ -131,6 +136,48 @@ export function ConversationView({
         avatarUrl: p.avatarUrl,
       }));
   }, [participants, currentUserId]);
+
+  // Extract unique @mentioned usernames from all messages (for batch profile fetch)
+  const mentionedUsernames = useMemo(() => {
+    const allUsernames = new Set<string>();
+    for (const msg of messages) {
+      const usernames = extractMentions(msg.content);
+      usernames.forEach((u) => allUsernames.add(u));
+    }
+    return Array.from(allUsernames);
+  }, [messages]);
+
+  // Fetch profile data for mentioned usernames (batch fetch)
+  useEffect(() => {
+    if (mentionedUsernames.length === 0) return;
+
+    // Filter out usernames we already have
+    const newUsernames = mentionedUsernames.filter(
+      (u) => !mentionedUsers[u.toLowerCase()]
+    );
+    if (newUsernames.length === 0) return;
+
+    const fetchProfiles = async () => {
+      const result = await getProfilesByUsernames(newUsernames);
+      if (result.success && result.profiles) {
+        // Convert MentionProfile to MentionedUser and merge with existing
+        const newUsers: Record<string, MentionedUser> = {};
+        for (const [username, profile] of Object.entries(result.profiles)) {
+          newUsers[username] = {
+            id: profile.id,
+            name: profile.name,
+            username: profile.username,
+            image: profile.image,
+            bio: profile.bio,
+            isOnline: profile.isOnline,
+          };
+        }
+        setMentionedUsers((prev) => ({ ...prev, ...newUsers }));
+      }
+    };
+
+    fetchProfiles();
+  }, [mentionedUsernames]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Search ALL users (like Telegram) - called when query is 2+ chars
   // Prioritizes: exact match > following > followers > other users
@@ -763,6 +810,7 @@ export function ConversationView({
         onReply={handleReply}
         reactionsMap={reactionsMap}
         onReact={react}
+        mentionedUsers={mentionedUsers}
         className="p-4"
       />
 

@@ -83,7 +83,9 @@ function createSafeDefaults(): UseE2EEReturn {
     // State
     status: "uninitialized" as E2EEStatus,
     isInitialized: false,
-    isLoading: false,
+    // Set isLoading to true so the E2EE badge shows "Initializing..."
+    // instead of "Not encrypted" before the provider loads
+    isLoading: true,
     error: null,
     deviceId: null,
     identityKey: null,
