@@ -631,8 +631,8 @@ export async function getMessagesSince(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data: profiles } = await (supabase as any)
       .from("profiles")
-      .select("id, display_name, username, avatar_url")
-      .in("id", senderIds);
+      .select("user_id, display_name, username, avatar_url")
+      .in("user_id", senderIds);
 
     interface ProfileData {
       displayName: string | null;
@@ -642,7 +642,7 @@ export async function getMessagesSince(
     const profileMap = new Map<string, ProfileData>(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (profiles || []).map((p: any) => [
-        p.id,
+        p.user_id,
         {
           displayName: p.display_name,
           username: p.username,
@@ -663,6 +663,30 @@ export async function getMessagesSince(
         .in("id", replyIds);
 
       if (replyMessages) {
+        // Get additional sender IDs from reply messages that aren't in profileMap
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const replySenderIds = [...new Set((replyMessages as any[]).map((r) => r.sender_id))].filter(
+          (id) => !profileMap.has(id)
+        );
+
+        if (replySenderIds.length > 0) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: replyProfiles } = await (supabase as any)
+            .from("profiles")
+            .select("user_id, display_name, avatar_url, username")
+            .in("user_id", replySenderIds);
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (replyProfiles || []).forEach((p: any) => {
+            profileMap.set(p.user_id, {
+              displayName: p.display_name,
+              username: p.username,
+              avatarUrl: p.avatar_url,
+            });
+          });
+        }
+
+        // Build reply message map
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (replyMessages as any[]).forEach((r) => {
           const replyProfile = profileMap.get(r.sender_id);
