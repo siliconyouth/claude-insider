@@ -40,7 +40,7 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
       { href: "/resources", labelKey: "resources" },
       { href: "/prompts", label: "Prompt Library" },
       { href: "#", label: "AI Assistant", badge: "New", action: "openAIAssistant" },
-      { href: "/messages", label: "Chat" },
+      { href: "/inbox", label: "Chat" },
     ],
   },
   documentation: {
