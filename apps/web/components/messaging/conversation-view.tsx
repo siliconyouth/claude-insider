@@ -24,6 +24,7 @@ import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
+import { useDeferredLoading } from "@/components/providers/deferred-loading-context";
 import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
 import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 import { ReplyPreview } from "@/components/messaging/reply-preview";
@@ -109,6 +110,11 @@ export function ConversationView({
 
   // E2EE context for encryption status
   const e2ee = useE2EEContext();
+
+  // Check if deferred providers have loaded (Matrix SDK pattern)
+  // E2EE provider is deferred for 2 seconds, so we show "Initializing..." during this time
+  const isDeferredReady = useDeferredLoading();
+  const isE2EELoading = !isDeferredReady || e2ee.isLoading;
 
   // Get other participant for DM header
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
@@ -695,6 +701,7 @@ export function ConversationView({
             e2eeEnabled={e2ee.isInitialized}
             allParticipantsHaveE2EE={e2ee.isInitialized}
             isVerified={isVerified}
+            isLoading={isE2EELoading}
             size="sm"
             onVerifyClick={() => setShowVerificationModal(true)}
             targetUserId={otherParticipant?.userId}

@@ -21,6 +21,7 @@ import { LazyRealtimeProvider } from "@/components/providers/lazy-realtime-provi
 import { VersionUpdatePopup } from "@/components/version-update-popup";
 import { LazyFingerprintProvider } from "@/components/providers/lazy-fingerprint-provider";
 import { LazyE2EEProvider } from "@/components/providers/lazy-e2ee-provider";
+import { LazyPresenceProvider } from "@/components/providers/lazy-presence-provider";
 import { NotificationPopup } from "@/components/notifications/notification-popup";
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
@@ -556,6 +557,7 @@ export default async function MainLayout({
           <DeferredLoadingProvider timeout={2000}>
           <LazyFingerprintProvider>
             <AuthProvider>
+              <LazyPresenceProvider>
               <LazyRealtimeProvider>
               <LazyE2EEProvider>
               <UnifiedChatProvider>
@@ -592,6 +594,7 @@ export default async function MainLayout({
               </UnifiedChatProvider>
               </LazyE2EEProvider>
               </LazyRealtimeProvider>
+              </LazyPresenceProvider>
             </AuthProvider>
           </LazyFingerprintProvider>
           </DeferredLoadingProvider>

@@ -24,6 +24,7 @@ import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
+import { useDeferredLoading } from "@/components/providers/deferred-loading-context";
 import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
 import type { MentionedUser } from "@/components/messaging/message-bubble";
 import { ReplyPreview } from "@/components/messaging/reply-preview";
@@ -50,6 +51,7 @@ import {
 } from "@/app/actions/messaging";
 import { extractMentions } from "@/lib/mentions";
 import { useConversationRealtime, type MessagePayload, type ReadReceiptPayload } from "@/lib/realtime/realtime-context";
+import { useGapDetection } from "@/hooks/use-gap-detection";
 
 // ============================================================================
 // Component
@@ -369,6 +371,11 @@ function ConversationView({
   // E2EE context for encryption status
   const e2ee = useE2EEContext();
 
+  // Check if deferred providers have loaded (Matrix SDK pattern)
+  // E2EE provider is deferred for 2 seconds, so we show "Initializing..." during this time
+  const isDeferredReady = useDeferredLoading();
+  const isE2EELoading = !isDeferredReady || e2ee.isLoading;
+
   // Get other participant
   const otherParticipant = participants.find((p) => p.userId !== currentUserId);
 
@@ -605,13 +612,38 @@ function ConversationView({
 
   // Use optimized realtime hook - pools subscriptions, uses Broadcast for typing
   // This replaces the old postgres_changes subscriptions (7.6x faster for typing)
-  const { sendTyping, sendReadReceipt } = useConversationRealtime({
+  const { sendTyping, sendReadReceipt, isConnected } = useConversationRealtime({
     conversationId,
     currentUserId,
     onMessage: handleRealtimeMessage,
     onTypingChange: handleTypingChange,
     onReadReceipt: handleReadReceipt,
     enabled: !isLoading, // Only subscribe after initial load
+  });
+
+  // Handle missing messages found by gap detection (Matrix SDK pattern)
+  const handleMissingMessages = useCallback((missingMessages: Message[]) => {
+    setMessages((prev) => {
+      // Merge and sort by createdAt
+      const existingIds = new Set(prev.map((m) => m.id));
+      const newMessages = missingMessages.filter((m) => !existingIds.has(m.id));
+      if (newMessages.length === 0) return prev;
+
+      const merged = [...prev, ...newMessages];
+      merged.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      return merged;
+    });
+  }, []);
+
+  // Gap detection - fetches missed messages after reconnection AND periodically
+  // This is essential for cross-browser/device sync (Matrix SDK pattern)
+  useGapDetection({
+    conversationId,
+    currentUserId,
+    messages,
+    onMissingMessages: handleMissingMessages,
+    isConnected,
+    enabled: !isLoading,
   });
 
   // Message IDs for fetching reactions
@@ -904,6 +936,7 @@ function ConversationView({
           e2eeEnabled={e2ee.isInitialized}
           allParticipantsHaveE2EE={e2ee.isInitialized}
           isVerified={isVerified}
+          isLoading={isE2EELoading}
           size="sm"
           onVerifyClick={() => setShowVerificationModal(true)}
           targetUserId={otherParticipant?.userId}

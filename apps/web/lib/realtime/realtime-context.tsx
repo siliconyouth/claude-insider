@@ -271,6 +271,7 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
   );
 
   // Send typing indicator via broadcast (NO DB write!)
+  // Matrix SDK pattern: verify channel is connected before sending
   const sendTyping = useCallback(
     (conversationId: string, userId: string, isTyping: boolean) => {
       const state = channelsRef.current.get(conversationId);
@@ -282,29 +283,45 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
         clearTimeout(existingTimer);
       }
 
+      // Helper to actually send the typing event
+      const doSendTyping = (typing: boolean) => {
+        // Only send if channel is in "joined" state (Matrix SDK pattern)
+        if (state.channel.state !== "joined") {
+          // Channel not ready - queue for retry after short delay
+          setTimeout(() => {
+            if (state.channel.state === "joined") {
+              state.channel.send({
+                type: "broadcast",
+                event: "typing",
+                payload: {
+                  userId,
+                  isTyping: typing,
+                  timestamp: Date.now(),
+                } as TypingPayload,
+              });
+            }
+          }, 100);
+          return;
+        }
+
+        state.channel.send({
+          type: "broadcast",
+          event: "typing",
+          payload: {
+            userId,
+            isTyping: typing,
+            timestamp: Date.now(),
+          } as TypingPayload,
+        });
+      };
+
       // Send typing indicator immediately
-      state.channel.send({
-        type: "broadcast",
-        event: "typing",
-        payload: {
-          userId,
-          isTyping,
-          timestamp: Date.now(),
-        } as TypingPayload,
-      });
+      doSendTyping(isTyping);
 
       // Auto-clear typing after 5 seconds of no activity
       if (isTyping) {
         const timer = setTimeout(() => {
-          state.channel.send({
-            type: "broadcast",
-            event: "typing",
-            payload: {
-              userId,
-              isTyping: false,
-              timestamp: Date.now(),
-            } as TypingPayload,
-          });
+          doSendTyping(false);
           typingTimersRef.current.delete(conversationId);
         }, 5000);
         typingTimersRef.current.set(conversationId, timer);
@@ -415,9 +432,54 @@ export function useConversationRealtime({
 }: UseConversationRealtimeOptions) {
   const { subscribe, sendTyping, sendReadReceipt, trackPresence, isConnected } = useRealtime();
   const typingUsersRef = useRef<Map<string, number>>(new Map()); // userId -> timestamp
+  const onTypingChangeRef = useRef(onTypingChange);
+
+  // Keep callback ref updated (Matrix SDK pattern - avoids stale closure issues)
+  useEffect(() => {
+    onTypingChangeRef.current = onTypingChange;
+  }, [onTypingChange]);
+
+  // Periodic cleanup interval for stale typing indicators (Matrix SDK pattern)
+  // This ensures typing indicators are cleared even if "stop typing" event is missed
+  useEffect(() => {
+    if (!enabled || !conversationId || !currentUserId) return;
+
+    const STALE_THRESHOLD_MS = 6000; // 6 seconds
+    const CLEANUP_INTERVAL_MS = 1000; // Check every 1 second
+
+    // Function to clean up stale typing and notify
+    const cleanupStaleTyping = () => {
+      const now = Date.now();
+      let hasChanges = false;
+
+      typingUsersRef.current.forEach((timestamp, userId) => {
+        if (now - timestamp > STALE_THRESHOLD_MS) {
+          typingUsersRef.current.delete(userId);
+          hasChanges = true;
+        }
+      });
+
+      if (hasChanges) {
+        // Sort alphabetically to prevent UI flicker (Matrix SDK pattern)
+        const sortedUserIds = Array.from(typingUsersRef.current.keys()).sort((a, b) =>
+          a.localeCompare(b)
+        );
+        onTypingChangeRef.current?.(sortedUserIds);
+      }
+    };
+
+    // Start periodic cleanup interval
+    const intervalId = setInterval(cleanupStaleTyping, CLEANUP_INTERVAL_MS);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [enabled, conversationId, currentUserId]);
 
   useEffect(() => {
     if (!enabled || !conversationId || !currentUserId) return;
+
+    const STALE_THRESHOLD_MS = 6000; // 6 seconds
 
     const handlers: ChannelHandlers = {
       onMessage: (payload) => {
@@ -435,12 +497,11 @@ export function useConversationRealtime({
           typingUsersRef.current.delete(payload.userId);
         }
 
-        // Clean up stale typing indicators (older than 6 seconds)
+        // Clean up stale typing indicators (Matrix SDK pattern)
         const now = Date.now();
-        const staleThreshold = 6000;
-        typingUsersRef.current.forEach((timestamp, odierUserId) => {
-          if (now - timestamp > staleThreshold) {
-            typingUsersRef.current.delete(odierUserId);
+        typingUsersRef.current.forEach((timestamp, otherUserId) => {
+          if (now - timestamp > STALE_THRESHOLD_MS) {
+            typingUsersRef.current.delete(otherUserId);
           }
         });
 
@@ -450,7 +511,7 @@ export function useConversationRealtime({
           a.localeCompare(b)
         );
 
-        onTypingChange?.(sortedUserIds);
+        onTypingChangeRef.current?.(sortedUserIds);
       },
       onReadReceipt: (payload) => {
         // Skip own read receipts
@@ -475,7 +536,6 @@ export function useConversationRealtime({
     subscribe,
     trackPresence,
     onMessage,
-    onTypingChange,
     onReadReceipt,
   ]);
 

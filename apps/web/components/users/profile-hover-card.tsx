@@ -80,10 +80,11 @@ interface Position {
   side: "top" | "bottom";
 }
 
-const CARD_WIDTH = 340;
+// Twitter-style dimensions - clean and compact
+const CARD_WIDTH = 300;
 const CARD_WIDTH_COMPACT = 280;
-const CARD_HEIGHT = 280;
-const CARD_HEIGHT_COMPACT = 180;
+const CARD_HEIGHT = 200; // Reduced height
+const CARD_HEIGHT_COMPACT = 160;
 const PADDING = 4; // Small gap to allow mouse to reach card
 const CLOSE_DELAY = 100; // Delay before closing to allow mouse to reach card
 
@@ -339,408 +340,106 @@ export function ProfileHoverCard({
       }}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Arrow indicator */}
-      <div
-        className={cn(
-          "absolute left-1/2 -translate-x-1/2",
-          "w-3 h-3 rotate-45",
-          "bg-white dark:bg-[#111111]",
-          "border border-gray-200 dark:border-[#262626]",
-          position.side === "top"
-            ? "bottom-[-7px] border-t-0 border-l-0"
-            : "top-[-7px] border-b-0 border-r-0"
-        )}
-      />
+      {/* Card content - Twitter-style clean design */}
+      <div className="relative bg-white dark:bg-[#16181c] rounded-2xl shadow-xl border border-gray-200 dark:border-[#2f3336] overflow-hidden">
+        <div className="p-4">
+          {/* Top row: Avatar + Follow button */}
+          <div className="flex items-start justify-between gap-3">
+            {/* Avatar with online indicator */}
+            <Link href={profileUrl} className="relative flex-shrink-0">
+              <UserAvatar
+                src={avatarSrc}
+                name={displayName}
+                size={compact ? "lg" : "xl"}
+                className="ring-0"
+              />
+              {/* Online indicator */}
+              {user.isOnline && (
+                <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#16181c]" />
+              )}
+            </Link>
 
-      {/* Card content */}
-      <div className="relative bg-white dark:bg-[#111111] rounded-xl shadow-xl border border-gray-200 dark:border-[#262626] overflow-hidden">
-        {compact ? (
-          /* ==================== COMPACT MODE ==================== */
-          <div className="p-3">
-            {/* Top row: Avatar + Info */}
-            <div className="flex gap-3">
-              {/* Avatar with online indicator */}
-              <Link href={profileUrl} className="relative flex-shrink-0">
-                <UserAvatar
-                  src={avatarSrc}
-                  name={displayName}
-                  size="lg"
-                  className="ring-2 ring-white dark:ring-[#111111]"
-                />
-                {/* Online indicator */}
-                {user.isOnline !== undefined && (
-                  <span
-                    className={cn(
-                      "absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-[#111111]",
-                      user.isOnline ? "bg-emerald-500" : "bg-gray-400"
-                    )}
-                  />
-                )}
-              </Link>
-
-              {/* User info */}
-              <div className="flex-1 min-w-0">
-                {/* Name row with badges */}
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <Link
-                    href={profileUrl}
-                    className="font-semibold text-sm text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 truncate"
-                  >
-                    {displayName}
-                  </Link>
-                  {/* Role badge */}
-                  {showRoleBadge && roleInfo && (
-                    <span
-                      className={cn(
-                        "px-1.5 py-0.5 text-[10px] font-medium rounded-full",
-                        roleInfo.bgColor,
-                        roleInfo.color
-                      )}
-                    >
-                      {roleInfo.label}
-                    </span>
-                  )}
-                  {/* Donor badge */}
-                  {user.donorTier && (
-                    <span
-                      className={cn(
-                        "p-0.5 rounded",
-                        donorTierBg[user.donorTier]
-                      )}
-                      title={`${user.donorTier.charAt(0).toUpperCase() + user.donorTier.slice(1)} Donor`}
-                    >
-                      <HeartIcon className={cn("w-3 h-3", donorTierColors[user.donorTier])} />
-                    </span>
-                  )}
-                </div>
-
-                {/* Username */}
-                {user.username && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    @{user.username}
-                  </p>
-                )}
-
-                {/* Status line */}
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                  {user.isOnline ? (
-                    <span className="text-emerald-600 dark:text-emerald-400">Online</span>
-                  ) : user.lastSeen ? (
-                    formatLastSeen(user.lastSeen)
-                  ) : user.joinedAt ? (
-                    `Joined ${formatDate(user.joinedAt)}`
-                  ) : null}
-                </p>
-              </div>
-            </div>
-
-            {/* Bio (compact - 1 line) */}
-            {user.bio && (
-              <p className="mt-2 text-xs text-gray-600 dark:text-gray-400 line-clamp-1">
-                {user.bio}
-              </p>
+            {/* Follow button - Twitter style */}
+            {canShowActions && (
+              <FollowButton
+                userId={user.id}
+                isFollowing={user.isFollowing || false}
+                size="sm"
+              />
             )}
-
-            {/* Stats row */}
-            <div className="mt-2 flex items-center gap-3 text-xs">
-              {user.stats?.followers !== undefined && (
-                <span className="text-gray-500 dark:text-gray-400">
-                  <strong className="text-gray-700 dark:text-gray-200">{formatNumber(user.stats.followers)}</strong> followers
-                </span>
-              )}
-              {user.stats?.following !== undefined && (
-                <span className="text-gray-500 dark:text-gray-400">
-                  <strong className="text-gray-700 dark:text-gray-200">{formatNumber(user.stats.following)}</strong> following
-                </span>
-              )}
-              {user.achievementPoints !== undefined && user.achievementPoints > 0 && (
-                <span className="text-gray-500 dark:text-gray-400 flex items-center gap-0.5">
-                  <TrophyIcon className="w-3 h-3 text-yellow-500" />
-                  <strong className="text-gray-700 dark:text-gray-200">{formatNumber(user.achievementPoints)}</strong>
-                </span>
-              )}
-            </div>
-
-            {/* Action row */}
-            <div className="mt-3 flex items-center gap-2">
-              {canShowActions && (
-                <>
-                  <FollowButton
-                    userId={user.id}
-                    isFollowing={user.isFollowing || false}
-                    size="sm"
-                    className="flex-1"
-                  />
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      openMessages({ userId: user.id });
-                    }}
-                    className={cn(
-                      "flex-1 py-1.5 px-2 text-xs font-medium rounded-lg",
-                      "border border-gray-200 dark:border-[#262626]",
-                      "text-gray-700 dark:text-gray-300",
-                      "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
-                      "hover:border-blue-500/50 dark:hover:border-cyan-500/50",
-                      "transition-colors inline-flex items-center justify-center gap-1"
-                    )}
-                  >
-                    <MessageIcon className="w-3 h-3" />
-                    Message
-                  </button>
-                </>
-              )}
-              {!canShowActions && (
-                <Link
-                  href={profileUrl}
-                  className={cn(
-                    "flex-1 text-center py-1.5 px-2 text-xs font-medium rounded-lg",
-                    "border border-gray-200 dark:border-[#262626]",
-                    "text-gray-700 dark:text-gray-300",
-                    "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
-                    "transition-colors"
-                  )}
-                >
-                  View Profile
-                </Link>
-              )}
-            </div>
           </div>
-        ) : (
-          /* ==================== NORMAL MODE ==================== */
-          <>
-            {/* Header with gradient */}
-            <div className="relative h-20 bg-gradient-to-r from-violet-600/30 via-blue-600/30 to-cyan-600/30">
-              {/* Pattern overlay */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.4'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
-                }} />
-              </div>
-            </div>
 
-            {/* Avatar overlapping header */}
-            <div className="px-4 -mt-10 relative">
-              <Link href={profileUrl} className="relative inline-block">
-                <UserAvatar
-                  src={avatarSrc}
-                  name={displayName}
-                  size="xl"
-                  className="ring-4 ring-white dark:ring-[#111111]"
-                />
-                {/* Online indicator */}
-                {user.isOnline !== undefined && (
-                  <span
-                    className={cn(
-                      "absolute bottom-1 right-1 w-4 h-4 rounded-full border-2 border-white dark:border-[#111111]",
-                      user.isOnline ? "bg-emerald-500" : "bg-gray-400"
-                    )}
-                  />
-                )}
-              </Link>
-            </div>
-
-            {/* User info */}
-            <div className="px-4 pb-4 pt-2">
-              {/* Name row with badges */}
-              <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <Link
-                      href={profileUrl}
-                      className="font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 truncate"
-                    >
-                      {displayName}
-                    </Link>
-                    {/* Donor badge */}
-                    {user.donorTier && (
-                      <span
-                        className={cn(
-                          "inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium",
-                          donorTierBg[user.donorTier],
-                          donorTierColors[user.donorTier]
-                        )}
-                        title={`${user.donorTier.charAt(0).toUpperCase() + user.donorTier.slice(1)} Donor`}
-                      >
-                        <HeartIcon className="w-3 h-3" />
-                        {user.donorTier.charAt(0).toUpperCase() + user.donorTier.slice(1)}
-                      </span>
-                    )}
-                  </div>
-                  {/* Username */}
-                  {user.username && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      @{user.username}
-                    </p>
-                  )}
-                </div>
-
-                {/* Role badge */}
-                {showRoleBadge && roleInfo && (
-                  <span
-                    className={cn(
-                      "px-2 py-0.5 text-xs font-medium rounded-full flex-shrink-0",
-                      roleInfo.bgColor,
-                      roleInfo.color
-                    )}
-                  >
-                    {roleInfo.label}
-                  </span>
-                )}
-              </div>
-
-              {/* Status line */}
-              <div className="mt-1 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                {user.isOnline ? (
-                  <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    Online now
-                  </span>
-                ) : user.lastSeen ? (
-                  <span>Last seen {formatLastSeen(user.lastSeen)}</span>
-                ) : null}
-                {user.joinedAt && (
-                  <>
-                    <span className="text-gray-300 dark:text-gray-600">•</span>
-                    <span className="flex items-center gap-1">
-                      <CalendarIcon className="w-3 h-3" />
-                      Joined {formatDate(user.joinedAt)}
-                    </span>
-                  </>
-                )}
-              </div>
-
-              {/* Bio */}
-              {user.bio && (
-                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                  {user.bio}
-                </p>
-              )}
-
-              {/* Stats grid */}
-              <div className="mt-3 grid grid-cols-4 gap-2">
-                {user.stats?.followers !== undefined && (
-                  <div className="text-center p-2 rounded-lg bg-gray-50 dark:bg-[#1a1a1a]">
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                      {formatNumber(user.stats.followers)}
-                    </p>
-                    <p className="text-[10px] text-gray-500 dark:text-gray-400">Followers</p>
-                  </div>
-                )}
-                {user.stats?.following !== undefined && (
-                  <div className="text-center p-2 rounded-lg bg-gray-50 dark:bg-[#1a1a1a]">
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                      {formatNumber(user.stats.following)}
-                    </p>
-                    <p className="text-[10px] text-gray-500 dark:text-gray-400">Following</p>
-                  </div>
-                )}
-                {user.stats?.contributions !== undefined && (
-                  <div className="text-center p-2 rounded-lg bg-gray-50 dark:bg-[#1a1a1a]">
-                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
-                      {formatNumber(user.stats.contributions)}
-                    </p>
-                    <p className="text-[10px] text-gray-500 dark:text-gray-400">Contribs</p>
-                  </div>
-                )}
-                {user.achievementPoints !== undefined && user.achievementPoints > 0 && (
-                  <div className="text-center p-2 rounded-lg bg-yellow-50 dark:bg-yellow-900/20">
-                    <p className="text-sm font-semibold text-yellow-600 dark:text-yellow-400 flex items-center justify-center gap-1">
-                      <TrophyIcon className="w-3 h-3" />
-                      {formatNumber(user.achievementPoints)}
-                    </p>
-                    <p className="text-[10px] text-yellow-600/70 dark:text-yellow-400/70">Points</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Action buttons */}
-              {canShowActions && (
-                <div className="mt-3 flex items-center gap-2">
-                  <FollowButton
-                    userId={user.id}
-                    isFollowing={user.isFollowing || false}
-                    size="sm"
-                    className="flex-1"
-                  />
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      openMessages({ userId: user.id });
-                    }}
-                    className={cn(
-                      "flex-1 py-1.5 px-3 text-xs font-medium rounded-lg",
-                      "border border-gray-200 dark:border-[#262626]",
-                      "text-gray-700 dark:text-gray-300",
-                      "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
-                      "hover:border-blue-500/50 dark:hover:border-cyan-500/50",
-                      "transition-colors inline-flex items-center justify-center gap-1.5"
-                    )}
-                  >
-                    <MessageIcon className="w-4 h-4" />
-                    Message
-                  </button>
-                  {onInviteToGroup && (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onInviteToGroup(user.id);
-                      }}
-                      className={cn(
-                        "p-2 rounded-lg",
-                        "border border-gray-200 dark:border-[#262626]",
-                        "text-gray-500 dark:text-gray-400",
-                        "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
-                        "hover:text-blue-600 dark:hover:text-cyan-400",
-                        "transition-colors"
-                      )}
-                      title="Invite to group"
-                    >
-                      <UsersIcon className="w-4 h-4" />
-                    </button>
-                  )}
-                  {onReport && (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onReport(user.id);
-                      }}
-                      className={cn(
-                        "p-2 rounded-lg",
-                        "border border-gray-200 dark:border-[#262626]",
-                        "text-gray-500 dark:text-gray-400",
-                        "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
-                        "hover:text-red-500 dark:hover:text-red-400",
-                        "transition-colors"
-                      )}
-                      title="Report user"
-                    >
-                      <FlagIcon className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-              )}
-
-              {/* View profile link */}
+          {/* Name and username */}
+          <div className="mt-2">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <Link
                 href={profileUrl}
-                className={cn(
-                  "block w-full text-center mt-3 px-3 py-2 text-sm font-medium rounded-lg",
-                  "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-                  "text-white shadow-sm shadow-blue-500/25",
-                  "hover:shadow-md hover:shadow-blue-500/30 hover:-translate-y-0.5",
-                  "transition-all duration-200"
-                )}
+                className="font-bold text-[15px] text-gray-900 dark:text-[#e7e9ea] hover:underline"
               >
-                View Full Profile
+                {displayName}
               </Link>
+              {/* Verified/Role badge - inline like Twitter */}
+              {showRoleBadge && roleInfo && (
+                <span className={cn("w-[18px] h-[18px] flex items-center justify-center rounded-full", roleInfo.bgColor)}>
+                  <CheckIcon className={cn("w-3 h-3", roleInfo.color)} />
+                </span>
+              )}
+              {/* Donor badge */}
+              {user.donorTier && (
+                <HeartIcon className={cn("w-4 h-4", donorTierColors[user.donorTier])} />
+              )}
             </div>
-          </>
-        )}
+            {/* Username */}
+            {user.username && (
+              <p className="text-[15px] text-gray-500 dark:text-[#71767b] leading-tight">
+                @{user.username}
+              </p>
+            )}
+          </div>
+
+          {/* Bio - Twitter shows 2 lines max */}
+          {user.bio && (
+            <p className="mt-2 text-[15px] text-gray-900 dark:text-[#e7e9ea] leading-snug line-clamp-2">
+              {user.bio}
+            </p>
+          )}
+
+          {/* Stats row - Twitter style: "42 Following  128 Followers" */}
+          <div className="mt-3 flex items-center gap-4 text-[14px]">
+            {user.stats?.following !== undefined && (
+              <Link href={`/users/${user.username}/following`} className="hover:underline">
+                <span className="font-bold text-gray-900 dark:text-[#e7e9ea]">{formatNumber(user.stats.following)}</span>
+                <span className="text-gray-500 dark:text-[#71767b]"> Following</span>
+              </Link>
+            )}
+            {user.stats?.followers !== undefined && (
+              <Link href={`/users/${user.username}/followers`} className="hover:underline">
+                <span className="font-bold text-gray-900 dark:text-[#e7e9ea]">{formatNumber(user.stats.followers)}</span>
+                <span className="text-gray-500 dark:text-[#71767b]"> Followers</span>
+              </Link>
+            )}
+          </div>
+
+          {/* Message button - only show if can show actions and not compact */}
+          {canShowActions && !compact && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openMessages({ userId: user.id });
+              }}
+              className={cn(
+                "mt-3 w-full py-2 text-[14px] font-bold rounded-full",
+                "border border-gray-300 dark:border-[#536471]",
+                "text-gray-900 dark:text-[#e7e9ea]",
+                "hover:bg-gray-100 dark:hover:bg-[#1d1f23]",
+                "transition-colors"
+              )}
+            >
+              Message
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -763,6 +462,14 @@ export function ProfileHoverCard({
 }
 
 // Icon components
+function CheckIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
+
 function HeartIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">

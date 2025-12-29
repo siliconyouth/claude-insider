@@ -1,16 +1,29 @@
 "use server";
 
 /**
- * User Presence Server Actions
+ * User Presence Server Actions (Matrix SDK Pattern)
  *
- * Handles online status tracking:
- * - Online: User is active
- * - Idle: User hasn't been active for 1 hour
- * - Offline: User has disconnected
+ * Computes presence status at query time based on last_active_at:
+ * - Online: Activity within last 2 minutes
+ * - Idle: Activity within last 1 hour but not recent
+ * - Offline: No activity for over 1 hour
+ *
+ * This approach is more reliable than trusting stored status because
+ * browser crashes and network issues can leave stale "online" entries.
  */
 
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
+
+// ============================================
+// PRESENCE THRESHOLDS (Matrix SDK Pattern)
+// ============================================
+
+// User is online if active within this time
+const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+
+// User is idle if active within this time but not recent
+const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
 
 // ============================================
 // TYPES
@@ -114,6 +127,32 @@ export async function heartbeat(): Promise<{ success: boolean; error?: string }>
 }
 
 // ============================================
+// COMPUTE PRESENCE STATUS (Matrix SDK Pattern)
+// ============================================
+
+/**
+ * Computes presence status from last_active_at timestamp.
+ * This is more reliable than trusting stored status.
+ */
+function computePresenceStatus(lastActiveAt: string | null | undefined): PresenceStatus {
+  if (!lastActiveAt) {
+    return "offline";
+  }
+
+  const lastActive = new Date(lastActiveAt).getTime();
+  const now = Date.now();
+  const elapsed = now - lastActive;
+
+  if (elapsed < ONLINE_THRESHOLD_MS) {
+    return "online";
+  } else if (elapsed < IDLE_THRESHOLD_MS) {
+    return "idle";
+  } else {
+    return "offline";
+  }
+}
+
+// ============================================
 // GET ONLINE USERS (batch)
 // ============================================
 
@@ -131,10 +170,10 @@ export async function getOnlineUsers(
 
     const supabase = await createAdminClient();
 
-     
+    // Fetch last_active_at for computing status (Matrix SDK pattern)
     const { data, error } = await supabase
       .from("user_presence")
-      .select("user_id, status")
+      .select("user_id, last_active_at")
       .in("user_id", userIds);
 
     if (error) {
@@ -149,10 +188,10 @@ export async function getOnlineUsers(
       presences[id] = "offline";
     });
 
-    // Update with actual status
+    // Compute status from last_active_at (Matrix SDK pattern)
     const presenceRows = (data || []) as PresenceRow[];
     presenceRows.forEach((p) => {
-      presences[p.user_id] = p.status as PresenceStatus;
+      presences[p.user_id] = computePresenceStatus(p.last_active_at);
     });
 
     return { success: true, presences };
@@ -176,10 +215,9 @@ export async function getUserPresence(
   try {
     const supabase = await createAdminClient();
 
-     
     const { data, error } = await supabase
       .from("user_presence")
-      .select("user_id, status, last_seen_at, last_active_at")
+      .select("user_id, last_seen_at, last_active_at")
       .eq("user_id", userId)
       .single();
 
@@ -202,11 +240,14 @@ export async function getUserPresence(
     }
 
     const row = data as PresenceRow;
+    // Compute status from last_active_at (Matrix SDK pattern)
+    const computedStatus = computePresenceStatus(row.last_active_at);
+
     return {
       success: true,
       presence: {
         userId: row.user_id,
-        status: row.status as PresenceStatus,
+        status: computedStatus,
         lastSeenAt: row.last_seen_at || new Date().toISOString(),
         lastActiveAt: row.last_active_at || new Date().toISOString(),
       },

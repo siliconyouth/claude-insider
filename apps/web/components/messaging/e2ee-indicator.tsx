@@ -42,6 +42,8 @@ export interface ConversationE2EEBadgeProps {
   allParticipantsHaveE2EE: boolean;
   /** Whether device verification is complete */
   isVerified?: boolean;
+  /** Whether E2EE is still initializing (Matrix SDK pattern) */
+  isLoading?: boolean;
   /** Size variant */
   size?: "sm" | "md" | "lg";
   /** Additional classes */
@@ -154,6 +156,7 @@ export function ConversationE2EEBadge({
   e2eeEnabled,
   allParticipantsHaveE2EE,
   isVerified = false,
+  isLoading = false,
   size = "sm",
   className,
   onVerifyClick,
@@ -172,6 +175,20 @@ export function ConversationE2EEBadge({
   const clickableClasses = isClickable
     ? "cursor-pointer hover:opacity-80 transition-opacity"
     : "";
+
+  // Matrix SDK pattern: Show loading state while E2EE is initializing
+  // This prevents showing "Not encrypted" while the WASM module loads
+  if (isLoading) {
+    return (
+      <span
+        className={cn(baseClasses, "bg-blue-900/30 text-blue-400")}
+        title="Initializing end-to-end encryption..."
+      >
+        <Lock className={cn(config.icon, "animate-pulse")} />
+        <span>Initializing...</span>
+      </span>
+    );
+  }
 
   if (!e2eeEnabled) {
     return (

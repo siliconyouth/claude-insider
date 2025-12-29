@@ -1,21 +1,34 @@
 /**
- * Gap Detection Hook
+ * Gap Detection Hook (Matrix SDK Pattern)
  *
- * Matrix SDK pattern - detects and fills message gaps after reconnection.
+ * Ensures message integrity across browsers/devices with multiple strategies:
  *
- * When a user goes offline (phone sleep, network drop, tab backgrounded),
- * they might miss messages that arrived via realtime. This hook:
+ * 1. **Periodic Sync Polling** (NEW - Matrix SDK pattern)
+ *    - Polls every 10 seconds for new messages
+ *    - Doesn't rely solely on push events which can be unreliable
+ *    - Essential for cross-browser/device sync
  *
- * 1. Tracks the timestamp of the last received message
- * 2. Listens for reconnection events
- * 3. Fetches messages after the last known timestamp
- * 4. Inserts any missing messages into the list
+ * 2. **Reconnection Detection**
+ *    - Fetches missed messages after network reconnects
  *
- * This ensures message integrity even with unreliable connections.
+ * 3. **Tab Visibility**
+ *    - Syncs when tab becomes visible after being hidden
+ *
+ * 4. **Online/Offline Events**
+ *    - Syncs when network comes back online
+ *
+ * This ensures message integrity even with unreliable realtime connections.
  */
 
 import { useCallback, useRef, useEffect } from "react";
 import { getMessagesSince, type Message } from "@/app/actions/messaging";
+
+// Matrix SDK-style sync interval (10 seconds)
+// Balances freshness with network efficiency
+const SYNC_INTERVAL_MS = 10000;
+
+// Minimum time between syncs to prevent hammering the server
+const MIN_SYNC_INTERVAL_MS = 3000;
 
 interface UseGapDetectionOptions {
   conversationId: string;
@@ -43,6 +56,20 @@ export function useGapDetection({
   const wasConnectedRef = useRef(isConnected);
   // Prevent duplicate gap fills
   const isFetchingRef = useRef(false);
+  // Track last sync time to prevent too-frequent syncs
+  const lastSyncTimeRef = useRef(0);
+  // Keep callback ref updated to avoid stale closure in interval
+  const onMissingMessagesRef = useRef(onMissingMessages);
+  const messagesRef = useRef(messages);
+
+  // Keep refs updated
+  useEffect(() => {
+    onMissingMessagesRef.current = onMissingMessages;
+  }, [onMissingMessages]);
+
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   // Update last known timestamp when messages change
   useEffect(() => {
@@ -55,10 +82,17 @@ export function useGapDetection({
   }, [messages]);
 
   // Fetch missing messages since last known timestamp
-  const fetchMissingMessages = useCallback(async () => {
+  const fetchMissingMessages = useCallback(async (silent = false) => {
     if (!lastKnownTimestampRef.current || isFetchingRef.current) return;
 
+    // Throttle syncs to prevent hammering the server
+    const now = Date.now();
+    if (now - lastSyncTimeRef.current < MIN_SYNC_INTERVAL_MS) {
+      return;
+    }
+
     isFetchingRef.current = true;
+    lastSyncTimeRef.current = now;
 
     try {
       const result = await getMessagesSince(
@@ -67,17 +101,19 @@ export function useGapDetection({
       );
 
       if (result.success && result.messages && result.messages.length > 0) {
-        // Filter out messages we already have
-        const existingIds = new Set(messages.map((m) => m.id));
+        // Filter out messages we already have (use ref for latest value)
+        const existingIds = new Set(messagesRef.current.map((m) => m.id));
         const newMessages = result.messages.filter(
           (m) => !existingIds.has(m.id)
         );
 
         if (newMessages.length > 0) {
-          console.log(
-            `[GapDetection] Found ${newMessages.length} missing messages after reconnect`
-          );
-          onMissingMessages(newMessages);
+          if (!silent) {
+            console.log(
+              `[GapDetection] Found ${newMessages.length} missing messages`
+            );
+          }
+          onMissingMessagesRef.current(newMessages);
         }
       }
     } catch (error) {
@@ -85,7 +121,30 @@ export function useGapDetection({
     } finally {
       isFetchingRef.current = false;
     }
-  }, [conversationId, messages, onMissingMessages]);
+  }, [conversationId]);
+
+  // MATRIX SDK PATTERN: Periodic sync polling
+  // This is the key addition - don't rely solely on push events
+  useEffect(() => {
+    if (!enabled || !isConnected) return;
+
+    // Initial sync after a short delay to let realtime settle
+    const initialSyncTimeout = setTimeout(() => {
+      fetchMissingMessages(true); // silent = true for periodic syncs
+    }, 2000);
+
+    // Periodic sync interval
+    const intervalId = setInterval(() => {
+      if (document.visibilityState === "visible") {
+        fetchMissingMessages(true); // silent = true for periodic syncs
+      }
+    }, SYNC_INTERVAL_MS);
+
+    return () => {
+      clearTimeout(initialSyncTimeout);
+      clearInterval(intervalId);
+    };
+  }, [enabled, isConnected, fetchMissingMessages]);
 
   // Detect reconnection and fill gaps
   useEffect(() => {
