@@ -193,9 +193,9 @@ export async function GET(request: NextRequest) {
     const total = parseInt(countResult.rows[0]?.total || "0");
     const totalPages = Math.ceil(total / limit);
 
-    // Fetch users
+    // Fetch users (no DISTINCT needed - all JOINs are 1:1 relationships)
     const usersQuery = `
-      SELECT DISTINCT
+      SELECT
         u.id,
         u.username,
         u.name,
