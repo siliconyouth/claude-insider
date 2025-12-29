@@ -39,6 +39,7 @@ import {
   getConversations,
   getMessages,
   sendMessage,
+  editMessage,
   markConversationAsRead,
   markMessagesAsRead,
   getReadReceipts,
@@ -675,6 +676,21 @@ function ConversationView({
     setTimeout(() => inputRef.current?.focus(), 0);
   }, []);
 
+  // Handle edit action
+  const handleEdit = useCallback(async (messageId: string, newContent: string) => {
+    const result = await editMessage(messageId, newContent);
+    if (result.success && result.message) {
+      // Update message in local state
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === messageId
+            ? { ...m, content: newContent, editedAt: result.message!.editedAt }
+            : m
+        )
+      );
+    }
+  }, []);
+
   // Handle scroll to message (for clicking on reply previews)
   const handleScrollToMessage = useCallback((messageId: string) => {
     const index = messages.findIndex((m) => m.id === messageId);
@@ -1000,6 +1016,7 @@ function ConversationView({
         participantCount={participants.length - 1}
         mentionedUsers={mentionedUsers}
         onReply={handleReply}
+        onEdit={handleEdit}
         reactionsMap={reactionsMap}
         onReact={react}
         className="p-4"
