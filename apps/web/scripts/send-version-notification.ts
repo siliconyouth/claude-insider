@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.13.4 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.13.5 notification to all opted-in users...\n");
 
-  const version = "1.13.4";
-  const title = "Claude Insider v1.13.4 - Matrix SDK Chat Features";
+  const version = "1.13.5";
+  const title = "Claude Insider v1.13.5 - Messaging Consolidation & Presence";
   const message =
-    "💬 Emoji Reactions: Optimistic updates with realtime broadcast sync • 🔗 Reply Threading: Click-to-scroll with quoted preview • 🔍 In-Conversation Search: 300ms debounced ILIKE with keyboard navigation • 📝 Message Drafts: localStorage persistence per conversation • ⚡ Batched Read Receipts: Broadcast-first, DB writes every 30s • 🔄 Retry Queue: Automatic redelivery for failed messages";
+    "🔗 ConversationView Consolidation: Single source of truth, removed 826 lines of duplicate code • 🔐 E2EE Setup Flow: Clickable 'Not encrypted' badge opens setup modal • 👤 Matrix SDK Presence: Heartbeat-based (30s) with reliable online/idle/offline status • ✨ Display Names: Consistent @DisplayName in mentions, replies, and community page";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
