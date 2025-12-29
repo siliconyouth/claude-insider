@@ -9,6 +9,7 @@ import { LazyResourcesSection } from "@/components/home/lazy-resources-section";
 import { LazyCategoriesSection } from "@/components/home/lazy-categories-section";
 import { LazyHighlightsSection } from "@/components/home/lazy-highlights-section";
 import { cn } from "@/lib/design-system";
+import buildInfo from "@/data/build-info.json";
 
 export default function HomePage() {
   return (
@@ -34,7 +35,7 @@ export default function HomePage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
                   </span>
-                  v1.13.6 • 56 Features • 1,952 Resources • AI Assistant
+                  v{buildInfo.version} • 57 Features • 1,952 Resources • AI Assistant
                 </div>
 
                 {/* Headline - Stripe-style large typography */}
@@ -117,7 +118,7 @@ export default function HomePage() {
 
                 {/* Trust badge */}
                 <p className="mt-6 text-xs text-gray-500 dark:text-gray-400">
-                  v1.13.6 • Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
+                  v{buildInfo.version} • Built with Claude Code • Powered by Claude Opus 4.5 • Open Source
                 </p>
               </div>
 

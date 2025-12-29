@@ -475,7 +475,7 @@ import buildInfo from "@/data/build-info.json";
 const APP_VERSION = buildInfo.version;
 ```
 
-**Files using this pattern**: `footer.tsx`, `version-update-popup.tsx`, `content-meta.tsx`
+**Files using this pattern**: `page.tsx` (homepage), `footer.tsx`, `version-update-popup.tsx`, `content-meta.tsx`
 
 #### Build Cache Checklist
 
