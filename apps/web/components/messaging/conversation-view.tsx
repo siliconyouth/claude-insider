@@ -591,12 +591,16 @@ export function ConversationView({
    * Key insight: Show the message IMMEDIATELY, don't wait for server.
    * 1. Create optimistic message with temp ID → add to state → message appears INSTANTLY
    * 2. Play sound → user hears confirmation
-   * 3. Send to server in background (non-blocking)
-   * 4. Server responds → replace temp ID with real ID (or realtime handles it)
-   * 5. If error → show retry button on the message
+   * 3. Clear isSending immediately (user can type next message)
+   * 4. Send to server in background (non-blocking)
+   * 5. Server responds → replace temp ID with real ID (or realtime handles it)
+   * 6. If error → show retry button on the message
    */
   const handleSend = async () => {
     if (!inputValue.trim() || isSending) return;
+
+    // Set sending flag briefly to prevent double-clicks
+    setIsSending(true);
 
     const content = inputValue.trim();
     const replyToId = replyingTo?.id;
@@ -647,9 +651,14 @@ export function ConversationView({
       messageListRef.current?.scrollToBottom();
     });
 
-    // Now send to server in background (user already sees the message)
-    setIsSending(true);
+    // Re-focus input IMMEDIATELY - user can type next message right away!
+    inputRef.current?.focus();
 
+    // Clear sending flag NOW - user can send another message immediately!
+    // The optimistic message is visible, no need to block the button.
+    setIsSending(false);
+
+    // Server sync happens in background - completely non-blocking
     try {
       const result = await sendMessage(conversationId, content, replyToId);
 
@@ -695,9 +704,7 @@ export function ConversationView({
       // Remove optimistic message on error
       setMessages((prev) => prev.filter((m) => m.id !== tempId));
     }
-
-    setIsSending(false);
-    inputRef.current?.focus();
+    // Note: isSending is already cleared, input is already focused - nothing to do here!
   };
 
   // Handle message edit
@@ -949,7 +956,7 @@ export function ConversationView({
             />
             <button
               onClick={handleSend}
-              disabled={!inputValue.trim() || isSending}
+              disabled={!inputValue.trim()}
               className={cn(
                 "p-3 rounded-xl transition-all",
                 "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
@@ -958,11 +965,7 @@ export function ConversationView({
                 "hover:shadow-lg hover:shadow-blue-500/25"
               )}
             >
-              {isSending ? (
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              ) : (
-                <SendIcon className="h-5 w-5" />
-              )}
+              <SendIcon className="h-5 w-5" />
             </button>
           </div>
 
