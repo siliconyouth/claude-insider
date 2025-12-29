@@ -16,7 +16,10 @@
  * - Unfilling: removes messages far off-screen (>6000px) for memory efficiency
  */
 
-import { useRef, useEffect, useLayoutEffect, useCallback, useState, forwardRef, useImperativeHandle, useMemo } from "react";
+import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle, useMemo } from "react";
+
+// useLayoutEffect that's safe for SSR - falls back to useEffect on server
+const useIsomorphicLayoutEffect = typeof window !== "undefined" ? require("react").useLayoutEffect : useEffect;
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
 import { MessageBubble, TypingIndicator, DateSeparator, type MentionedUser } from "./message-bubble";
@@ -560,7 +563,7 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
 
   // Scroll to bottom when new messages arrive (if already at bottom)
   // Matrix SDK pattern: useLayoutEffect for synchronous DOM access + rAF for after paint
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const newMessagesAdded = messages.length > prevMessagesLengthRef.current;
     prevMessagesLengthRef.current = messages.length;
 
