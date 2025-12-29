@@ -843,7 +843,7 @@ export function ConversationView({
           </div>
         )}
 
-        <div ref={inputWrapperRef} className="relative flex items-end gap-2 p-4 pt-3">
+        <div ref={inputWrapperRef} className="relative p-4 pt-3">
           {/* Mention Autocomplete - positioned above input */}
           <MentionAutocomplete
             inputValue={inputValue}
@@ -856,50 +856,54 @@ export function ConversationView({
             position={{ top: 8, left: 0 }}
           />
 
-          <textarea
-            ref={inputRef}
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            onSelect={handleSelect}
-            placeholder={
-              isAIConversation
-                ? "Ask Claude anything..."
-                : "Type a message... Use @ to mention"
-            }
-            rows={1}
-            className={cn(
-              "flex-1 resize-none rounded-xl px-4 py-3",
-              "bg-gray-100 dark:bg-gray-800",
-              "text-gray-900 dark:text-white",
-              "placeholder-gray-500",
-              "border-0 focus:ring-2 focus:ring-blue-500",
-              "max-h-32"
-            )}
-          />
-          <button
-            onClick={handleSend}
-            disabled={!inputValue.trim() || isSending}
-            className={cn(
-              "p-3 rounded-xl transition-all",
-              "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
-              "text-white",
-              "disabled:opacity-50 disabled:cursor-not-allowed",
-              "hover:shadow-lg hover:shadow-blue-500/25"
-            )}
-          >
-            {isSending ? (
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-            ) : (
-              <SendIcon className="h-5 w-5" />
-            )}
-          </button>
+          <div className="flex items-end gap-2">
+            <textarea
+              ref={inputRef}
+              value={inputValue}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              onSelect={handleSelect}
+              placeholder={
+                isAIConversation
+                  ? "Ask Claude anything..."
+                  : "Type a message... Use @ to mention"
+              }
+              rows={1}
+              className={cn(
+                "flex-1 resize-none rounded-xl px-4 py-3",
+                "bg-gray-100 dark:bg-gray-800",
+                "text-gray-900 dark:text-white",
+                "placeholder-gray-500",
+                "border-0 focus:ring-2 focus:ring-blue-500",
+                "max-h-32"
+              )}
+            />
+            <button
+              onClick={handleSend}
+              disabled={!inputValue.trim() || isSending}
+              className={cn(
+                "p-3 rounded-xl transition-all",
+                "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+                "text-white",
+                "disabled:opacity-50 disabled:cursor-not-allowed",
+                "hover:shadow-lg hover:shadow-blue-500/25"
+              )}
+            >
+              {isSending ? (
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <SendIcon className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+
+          {/* Helper text - properly spaced within the input area */}
+          {!isAIConversation && (
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Type @claudeinsider to get AI help • Chat members appear first
+            </p>
+          )}
         </div>
-        {!isAIConversation && (
-          <p className="text-xs text-gray-400 mt-2 ml-1">
-            Type @claudeinsider to get AI help • Chat members appear first
-          </p>
-        )}
       </div>
     </div>
   );

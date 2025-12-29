@@ -1696,7 +1696,7 @@ export async function editMessage(
     const { data: profile } = await (supabase as any)
       .from("profiles")
       .select("display_name, username, avatar_url")
-      .eq("id", session.user.id)
+      .eq("user_id", session.user.id)
       .single();
 
     const updated = updatedMessage as MessageRow;
