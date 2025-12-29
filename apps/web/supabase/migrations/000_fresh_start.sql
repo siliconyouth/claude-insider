@@ -2243,6 +2243,7 @@ CREATE TABLE IF NOT EXISTS public.dm_messages (
   content TEXT NOT NULL,
   mentions TEXT[] DEFAULT '{}',
   ai_response_to UUID REFERENCES public.dm_messages(id),
+  reply_to_message_id UUID REFERENCES public.dm_messages(id) ON DELETE SET NULL,
   is_ai_generated BOOLEAN DEFAULT FALSE,
   metadata JSONB DEFAULT '{}',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -2252,6 +2253,7 @@ CREATE TABLE IF NOT EXISTS public.dm_messages (
 
 CREATE INDEX IF NOT EXISTS idx_dm_messages_conversation ON public.dm_messages(conversation_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_dm_messages_sender ON public.dm_messages(sender_id);
+CREATE INDEX IF NOT EXISTS idx_dm_messages_reply_to ON public.dm_messages(reply_to_message_id) WHERE reply_to_message_id IS NOT NULL;
 ALTER TABLE public.dm_messages ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "dm_messages_all" ON public.dm_messages FOR ALL USING (true) WITH CHECK (true);
 

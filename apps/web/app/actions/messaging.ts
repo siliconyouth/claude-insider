@@ -66,6 +66,15 @@ export interface Message {
   sessionId?: string;
   // Read receipts (populated separately)
   readReceipts?: ReadReceipt[];
+  // Reply threading
+  replyToMessageId?: string;
+  replyToMessage?: {
+    id: string;
+    senderId: string;
+    senderName?: string;
+    content: string;
+    isDeleted?: boolean;
+  };
 }
 
 export interface ReadReceipt {
@@ -136,6 +145,8 @@ interface MessageRow {
   sender_device_id?: string;
   sender_key?: string;
   session_id?: string;
+  // Reply threading
+  reply_to_message_id?: string;
 }
 
 interface ReadReceiptRow {
@@ -390,9 +401,9 @@ export async function getMessages(
       return { success: false, error: "You are not a participant in this conversation" };
     }
 
-    // Build query
-     
-    let query = supabase
+    // Build query (using any cast since reply_to_message_id may not be in generated types yet)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let query = (supabase as any)
       .from("dm_messages")
       .select(`
         id,
@@ -412,6 +423,7 @@ export async function getMessages(
         sender_device_id,
         sender_key,
         session_id,
+        reply_to_message_id,
         sender:sender_id (
           id,
           name
@@ -438,7 +450,7 @@ export async function getMessages(
     const resultMessages = messages?.slice(0, limit) || [];
 
     // Get sender profiles (including username for hovercards)
-    const messageRows = resultMessages as MessageRow[];
+    const messageRows = resultMessages as (MessageRow & { reply_to_message_id?: string })[];
     const senderIds = [...new Set(messageRows.map((m) => m.sender_id))];
     const { data: profiles } = await supabase
       .from("profiles")
@@ -447,10 +459,54 @@ export async function getMessages(
 
     const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
 
+    // Batch-fetch reply-to messages (Matrix SDK pattern for efficient loading)
+    const replyIds = [...new Set(messageRows.filter((m) => m.reply_to_message_id).map((m) => m.reply_to_message_id!))] as string[];
+    const replyMessageMap = new Map<string, { id: string; senderId: string; senderName: string; content: string; isDeleted: boolean }>();
+
+    if (replyIds.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: replyMessages } = await (supabase as any)
+        .from("dm_messages")
+        .select("id, sender_id, content, deleted_at")
+        .in("id", replyIds);
+
+      if (replyMessages) {
+        // Get additional sender IDs from reply messages
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const replySenderIds = [...new Set((replyMessages as any[]).map((r) => r.sender_id))].filter(
+          (id) => !profileMap.has(id)
+        );
+
+        if (replySenderIds.length > 0) {
+          const { data: replyProfiles } = await supabase
+            .from("profiles")
+            .select("user_id, display_name, avatar_url, username")
+            .in("user_id", replySenderIds);
+
+          (replyProfiles as ProfileRow[] | null)?.forEach((p) => profileMap.set(p.user_id, p));
+        }
+
+        // Build reply message map
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (replyMessages as any[]).forEach((r) => {
+          const replyProfile = profileMap.get(r.sender_id);
+          replyMessageMap.set(r.id, {
+            id: r.id,
+            senderId: r.sender_id,
+            senderName: replyProfile?.display_name || replyProfile?.username || "Unknown",
+            content: r.deleted_at ? "[Message deleted]" : r.content,
+            isDeleted: !!r.deleted_at,
+          });
+        });
+      }
+    }
+
     // Transform messages
     const transformedMessages: Message[] = messageRows.map((m) => {
       const sender = m.sender;
       const profile = profileMap.get(m.sender_id);
+      const replyToMsg = m.reply_to_message_id ? replyMessageMap.get(m.reply_to_message_id) : undefined;
+
       return {
         id: m.id,
         conversationId: m.conversation_id,
@@ -473,6 +529,9 @@ export async function getMessages(
         senderDeviceId: m.sender_device_id,
         senderKey: m.sender_key,
         sessionId: m.session_id,
+        // Reply threading
+        replyToMessageId: m.reply_to_message_id,
+        replyToMessage: replyToMsg,
       };
     });
 
@@ -487,12 +546,184 @@ export async function getMessages(
 }
 
 // ============================================
+// GET MESSAGES SINCE (Gap Detection)
+// ============================================
+
+/**
+ * Fetch messages created after a given timestamp.
+ * Used for gap detection after reconnection.
+ */
+export async function getMessagesSince(
+  conversationId: string,
+  afterTimestamp: string
+): Promise<{
+  success: boolean;
+  messages?: Message[];
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify user is a participant
+    const { data: participant } = await supabase
+      .from("dm_participants")
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    if (!participant) {
+      return { success: false, error: "You are not a participant in this conversation" };
+    }
+
+    // Fetch messages after the given timestamp (max 100 for safety)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: messages, error } = await (supabase as any)
+      .from("dm_messages")
+      .select(`
+        id,
+        conversation_id,
+        sender_id,
+        content,
+        mentions,
+        is_ai_generated,
+        ai_response_to,
+        metadata,
+        created_at,
+        edited_at,
+        deleted_at,
+        encrypted_content,
+        is_encrypted,
+        encryption_algorithm,
+        sender_device_id,
+        sender_key,
+        session_id,
+        reply_to_message_id,
+        sender:sender_id (
+          id,
+          name
+        )
+      `)
+      .eq("conversation_id", conversationId)
+      .is("deleted_at", null)
+      .gt("created_at", afterTimestamp)
+      .order("created_at", { ascending: true })
+      .limit(100);
+
+    if (error) {
+      console.error("Get messages since error:", error);
+      return { success: false, error: "Failed to fetch messages" };
+    }
+
+    if (!messages || messages.length === 0) {
+      return { success: true, messages: [] };
+    }
+
+    // Get sender profiles
+    const messageRows = messages as (MessageRow & { reply_to_message_id?: string })[];
+    const senderIds = [...new Set(messageRows.map((m) => m.sender_id))];
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: profiles } = await (supabase as any)
+      .from("profiles")
+      .select("id, display_name, username, avatar_url")
+      .in("id", senderIds);
+
+    interface ProfileData {
+      displayName: string | null;
+      username: string | null;
+      avatarUrl: string | null;
+    }
+    const profileMap = new Map<string, ProfileData>(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (profiles || []).map((p: any) => [
+        p.id,
+        {
+          displayName: p.display_name,
+          username: p.username,
+          avatarUrl: p.avatar_url,
+        },
+      ])
+    );
+
+    // Batch-fetch reply-to messages
+    const replyIds = [...new Set(messageRows.filter((m) => m.reply_to_message_id).map((m) => m.reply_to_message_id!))] as string[];
+    const replyMessageMap = new Map<string, { id: string; senderId: string; senderName: string; content: string; isDeleted: boolean }>();
+
+    if (replyIds.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: replyMessages } = await (supabase as any)
+        .from("dm_messages")
+        .select("id, sender_id, content, deleted_at")
+        .in("id", replyIds);
+
+      if (replyMessages) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (replyMessages as any[]).forEach((r) => {
+          const replyProfile = profileMap.get(r.sender_id);
+          replyMessageMap.set(r.id, {
+            id: r.id,
+            senderId: r.sender_id,
+            senderName: replyProfile?.displayName || replyProfile?.username || "Unknown",
+            content: r.deleted_at ? "[Message deleted]" : r.content,
+            isDeleted: !!r.deleted_at,
+          });
+        });
+      }
+    }
+
+    // Transform to Message type
+    const transformedMessages: Message[] = messageRows.map((m) => {
+      const profile = profileMap.get(m.sender_id);
+      const replyToMsg = m.reply_to_message_id ? replyMessageMap.get(m.reply_to_message_id) : undefined;
+
+      return {
+        id: m.id,
+        conversationId: m.conversation_id,
+        senderId: m.sender_id,
+        senderName: profile?.displayName || m.sender?.name || "Unknown",
+        senderUsername: profile?.username ?? undefined,
+        senderAvatar: profile?.avatarUrl ?? undefined,
+        content: m.content,
+        mentions: m.mentions || [],
+        isAiGenerated: m.is_ai_generated || false,
+        aiResponseTo: m.ai_response_to,
+        metadata: m.metadata,
+        createdAt: m.created_at,
+        editedAt: m.edited_at,
+        deletedAt: m.deleted_at,
+        encryptedContent: m.encrypted_content,
+        isEncrypted: m.is_encrypted || false,
+        encryptionAlgorithm: m.encryption_algorithm as Message["encryptionAlgorithm"],
+        senderDeviceId: m.sender_device_id,
+        senderKey: m.sender_key,
+        sessionId: m.session_id,
+        // Reply threading
+        replyToMessageId: m.reply_to_message_id,
+        replyToMessage: replyToMsg,
+      };
+    });
+
+    return { success: true, messages: transformedMessages };
+  } catch (error) {
+    console.error("Get messages since error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
 // SEND MESSAGE
 // ============================================
 
 export async function sendMessage(
   conversationId: string,
-  content: string
+  content: string,
+  replyToMessageId?: string
 ): Promise<{
   success: boolean;
   message?: Message;
@@ -607,9 +838,40 @@ export async function sendMessage(
       });
     }
 
+    // Fetch reply-to message details if replying
+    let replyToMessage: Message["replyToMessage"] | undefined;
+    if (replyToMessageId) {
+      const { data: replyMsg } = await supabase
+        .from("dm_messages")
+        .select("id, sender_id, content, deleted_at")
+        .eq("id", replyToMessageId)
+        .eq("conversation_id", conversationId)
+        .single();
+
+      if (replyMsg) {
+        // Get sender name for the reply preview
+        const { data: replySenderProfile } = await supabase
+          .from("profiles")
+          .select("display_name, username")
+          .eq("user_id", (replyMsg as { sender_id: string }).sender_id)
+          .single();
+
+        const replySender = replySenderProfile as { display_name?: string; username?: string } | null;
+        const replyMsgData = replyMsg as { id: string; sender_id: string; content: string; deleted_at?: string };
+
+        replyToMessage = {
+          id: replyMsgData.id,
+          senderId: replyMsgData.sender_id,
+          senderName: replySender?.display_name || replySender?.username || "Unknown",
+          content: replyMsgData.deleted_at ? "[Message deleted]" : replyMsgData.content,
+          isDeleted: !!replyMsgData.deleted_at,
+        };
+      }
+    }
+
     // Insert message
-     
-    const { data: newMessage, error } = await supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: newMessage, error } = await (supabase as any)
       .from("dm_messages")
       .insert({
         conversation_id: conversationId,
@@ -617,6 +879,7 @@ export async function sendMessage(
         content: content.trim(),
         mentions: mentionedUserIds,
         is_ai_generated: false,
+        reply_to_message_id: replyToMessageId || null,
       })
       .select()
       .single();
@@ -678,6 +941,8 @@ export async function sendMessage(
       mentions: msg.mentions || [],
       isAiGenerated: false,
       createdAt: msg.created_at,
+      replyToMessageId: replyToMessageId,
+      replyToMessage: replyToMessage,
     };
 
     return { success: true, message, aiMentioned, mentionedUserIds };
@@ -1243,6 +1508,139 @@ export async function deleteMessage(
 }
 
 // ============================================
+// EDIT MESSAGE
+// ============================================
+
+/**
+ * Edit a message's content.
+ * Only the sender can edit their own messages.
+ * Sets edited_at timestamp for "Edited" badge display.
+ */
+export async function editMessage(
+  messageId: string,
+  newContent: string
+): Promise<{
+  success: boolean;
+  message?: Message;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    if (!newContent.trim()) {
+      return { success: false, error: "Message cannot be empty" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify ownership and get message details
+    const { data: message } = await supabase
+      .from("dm_messages")
+      .select("id, sender_id, conversation_id, deleted_at")
+      .eq("id", messageId)
+      .single();
+
+    if (!message) {
+      return { success: false, error: "Message not found" };
+    }
+
+    const msg = message as { id: string; sender_id: string; conversation_id: string; deleted_at?: string };
+
+    if (msg.sender_id !== session.user.id) {
+      return { success: false, error: "You can only edit your own messages" };
+    }
+
+    if (msg.deleted_at) {
+      return { success: false, error: "Cannot edit a deleted message" };
+    }
+
+    // Update message content and set edited_at
+    const now = new Date().toISOString();
+    const { error: updateError } = await supabase
+      .from("dm_messages")
+      .update({
+        content: newContent.trim(),
+        edited_at: now,
+      })
+      .eq("id", messageId);
+
+    if (updateError) {
+      console.error("Edit message error:", updateError);
+      return { success: false, error: "Failed to edit message" };
+    }
+
+    // Fetch the updated message with sender info
+    const { data: updatedMessage } = await supabase
+      .from("dm_messages")
+      .select(`
+        id,
+        conversation_id,
+        sender_id,
+        content,
+        mentions,
+        is_ai_generated,
+        ai_response_to,
+        metadata,
+        created_at,
+        edited_at,
+        deleted_at,
+        encrypted_content,
+        is_encrypted,
+        encryption_algorithm,
+        sender_device_id,
+        sender_key,
+        session_id
+      `)
+      .eq("id", messageId)
+      .single();
+
+    if (!updatedMessage) {
+      return { success: false, error: "Failed to fetch updated message" };
+    }
+
+    // Get sender profile
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: profile } = await (supabase as any)
+      .from("profiles")
+      .select("display_name, username, avatar_url")
+      .eq("id", session.user.id)
+      .single();
+
+    const updated = updatedMessage as MessageRow;
+    const resultMessage: Message = {
+      id: updated.id,
+      conversationId: updated.conversation_id,
+      senderId: updated.sender_id,
+      senderName: profile?.display_name || "Unknown",
+      senderUsername: profile?.username,
+      senderAvatar: profile?.avatar_url,
+      content: updated.content,
+      mentions: updated.mentions || [],
+      isAiGenerated: updated.is_ai_generated || false,
+      aiResponseTo: updated.ai_response_to,
+      metadata: updated.metadata,
+      createdAt: updated.created_at,
+      editedAt: updated.edited_at,
+      deletedAt: updated.deleted_at,
+      encryptedContent: updated.encrypted_content,
+      isEncrypted: updated.is_encrypted || false,
+      encryptionAlgorithm: updated.encryption_algorithm as Message["encryptionAlgorithm"],
+      senderDeviceId: updated.sender_device_id,
+      senderKey: updated.sender_key,
+      sessionId: updated.session_id,
+    };
+
+    return { success: true, message: resultMessage };
+  } catch (error) {
+    console.error("Edit message error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
 // READ RECEIPTS (Seen Feature)
 // ============================================
 
@@ -1652,6 +2050,344 @@ export async function getProfilesByUsernames(
     return { success: true, profiles: profileMap };
   } catch (error) {
     console.error("Error in getProfilesByUsernames:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// MESSAGE REACTIONS (Matrix SDK pattern)
+// ============================================
+
+export interface Reaction {
+  emoji: string;
+  count: number;
+  users: {
+    id: string;
+    name?: string;
+    username?: string;
+  }[];
+  hasReacted: boolean; // Whether current user has reacted with this emoji
+}
+
+export interface ReactionSummary {
+  messageId: string;
+  reactions: Reaction[];
+}
+
+/**
+ * Toggle a reaction on a message.
+ * If the user has already reacted with this emoji, it removes the reaction.
+ * Otherwise, it adds the reaction.
+ */
+export async function toggleReaction(
+  messageId: string,
+  emoji: string
+): Promise<{ success: boolean; action?: "added" | "removed"; error?: string }> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "Not authenticated" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Check if user already has this reaction
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: existing } = await (supabase as any)
+      .from("message_reactions")
+      .select("id")
+      .eq("message_id", messageId)
+      .eq("user_id", session.user.id)
+      .eq("emoji", emoji)
+      .maybeSingle();
+
+    if (existing) {
+      // Remove existing reaction
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any)
+        .from("message_reactions")
+        .delete()
+        .eq("id", existing.id);
+
+      if (error) {
+        console.error("Remove reaction error:", error);
+        return { success: false, error: "Failed to remove reaction" };
+      }
+
+      return { success: true, action: "removed" };
+    } else {
+      // Add new reaction
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any).from("message_reactions").insert({
+        message_id: messageId,
+        user_id: session.user.id,
+        emoji,
+      });
+
+      if (error) {
+        console.error("Add reaction error:", error);
+        return { success: false, error: "Failed to add reaction" };
+      }
+
+      return { success: true, action: "added" };
+    }
+  } catch (error) {
+    console.error("Toggle reaction error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+/**
+ * Get all reactions for a list of messages, aggregated by emoji.
+ */
+export async function getReactionsForMessages(
+  messageIds: string[]
+): Promise<{ success: boolean; reactions?: Record<string, ReactionSummary>; error?: string }> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "Not authenticated" };
+    }
+
+    if (messageIds.length === 0) {
+      return { success: true, reactions: {} };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Get all reactions for these messages
+    interface ReactionRow {
+      id: string;
+      message_id: string;
+      user_id: string;
+      emoji: string;
+      created_at: string;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: reactionsData, error } = await (supabase as any)
+      .from("message_reactions")
+      .select("id, message_id, user_id, emoji, created_at")
+      .in("message_id", messageIds)
+      .order("created_at", { ascending: true });
+
+    const reactions = (reactionsData || []) as ReactionRow[];
+
+    if (error) {
+      console.error("Get reactions error:", error);
+      return { success: false, error: "Failed to get reactions" };
+    }
+
+    // Get user profiles for reaction users
+    const userIds = [...new Set(reactions.map((r) => r.user_id))];
+    let userProfiles: Record<string, { name?: string; username?: string }> = {};
+
+    if (userIds.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: profiles } = await (supabase as any)
+        .from("profiles")
+        .select("user_id, display_name, username")
+        .in("user_id", userIds);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      userProfiles = Object.fromEntries(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (profiles || []).map((p: any) => [
+          p.user_id,
+          { name: p.display_name, username: p.username },
+        ])
+      );
+    }
+
+    // Aggregate reactions by message and emoji
+    const result: Record<string, ReactionSummary> = {};
+
+    for (const reaction of reactions) {
+      if (!result[reaction.message_id]) {
+        result[reaction.message_id] = {
+          messageId: reaction.message_id,
+          reactions: [],
+        };
+      }
+
+      // We just created it above if it didn't exist
+      const summary = result[reaction.message_id]!;
+      let emojiReaction = summary.reactions.find((r) => r.emoji === reaction.emoji);
+
+      if (!emojiReaction) {
+        emojiReaction = {
+          emoji: reaction.emoji,
+          count: 0,
+          users: [],
+          hasReacted: false,
+        };
+        summary.reactions.push(emojiReaction);
+      }
+
+      emojiReaction.count++;
+      emojiReaction.users.push({
+        id: reaction.user_id,
+        name: userProfiles[reaction.user_id]?.name,
+        username: userProfiles[reaction.user_id]?.username,
+      });
+
+      if (reaction.user_id === session.user.id) {
+        emojiReaction.hasReacted = true;
+      }
+    }
+
+    return { success: true, reactions: result };
+  } catch (error) {
+    console.error("Get reactions error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// SEARCH MESSAGES (In-Conversation Search)
+// ============================================
+
+export interface SearchResult {
+  message: Message;
+  matchContext: string;
+  matchIndex: number;
+}
+
+/**
+ * Search messages within a conversation.
+ * Returns matching messages with context snippets.
+ *
+ * Matrix SDK pattern: Simple text search with highlighted matches.
+ */
+export async function searchMessages(
+  conversationId: string,
+  query: string,
+  limit: number = 50
+): Promise<{
+  success: boolean;
+  results?: SearchResult[];
+  totalCount?: number;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const trimmedQuery = query.trim();
+    if (!trimmedQuery || trimmedQuery.length < 2) {
+      return { success: false, error: "Search query must be at least 2 characters" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify user is a participant
+    const { data: participant } = await supabase
+      .from("dm_participants")
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    if (!participant) {
+      return { success: false, error: "You are not a participant in this conversation" };
+    }
+
+    // Search messages using ILIKE for case-insensitive partial match
+    // PostgreSQL text search is more efficient than client-side filtering
+    const { data: messages, error } = await supabase
+      .from("dm_messages")
+      .select(`
+        id,
+        conversation_id,
+        sender_id,
+        content,
+        mentions,
+        is_ai_generated,
+        ai_response_to,
+        metadata,
+        created_at,
+        edited_at,
+        deleted_at,
+        sender:sender_id (
+          id,
+          name
+        )
+      `)
+      .eq("conversation_id", conversationId)
+      .is("deleted_at", null)
+      .ilike("content", `%${trimmedQuery}%`)
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error("Search messages error:", error);
+      return { success: false, error: "Failed to search messages" };
+    }
+
+    if (!messages || messages.length === 0) {
+      return { success: true, results: [], totalCount: 0 };
+    }
+
+    // Get sender profiles
+    const messageRows = messages as MessageRow[];
+    const senderIds = [...new Set(messageRows.map((m) => m.sender_id))];
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("user_id, display_name, avatar_url, username")
+      .in("user_id", senderIds);
+
+    const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
+
+    // Transform to search results with context
+    const queryLower = trimmedQuery.toLowerCase();
+    const results: SearchResult[] = messageRows.map((m) => {
+      const sender = m.sender;
+      const profile = profileMap.get(m.sender_id);
+
+      // Find match position for context extraction
+      const contentLower = m.content.toLowerCase();
+      const matchIndex = contentLower.indexOf(queryLower);
+
+      // Extract context snippet around match (50 chars on each side)
+      const contextStart = Math.max(0, matchIndex - 50);
+      const contextEnd = Math.min(m.content.length, matchIndex + trimmedQuery.length + 50);
+      let matchContext = m.content.slice(contextStart, contextEnd);
+      if (contextStart > 0) matchContext = "..." + matchContext;
+      if (contextEnd < m.content.length) matchContext = matchContext + "...";
+
+      const message: Message = {
+        id: m.id,
+        conversationId: m.conversation_id,
+        senderId: m.sender_id,
+        senderName: profile?.display_name || sender?.name || "Unknown",
+        senderUsername: profile?.username ?? undefined,
+        senderAvatar: profile?.avatar_url ?? undefined,
+        content: m.content,
+        mentions: m.mentions || [],
+        isAiGenerated: m.is_ai_generated || false,
+        aiResponseTo: m.ai_response_to,
+        metadata: m.metadata as Record<string, unknown>,
+        createdAt: m.created_at,
+        editedAt: m.edited_at,
+        deletedAt: m.deleted_at,
+      };
+
+      return {
+        message,
+        matchContext,
+        matchIndex,
+      };
+    });
+
+    return {
+      success: true,
+      results,
+      totalCount: results.length,
+    };
+  } catch (error) {
+    console.error("Search messages error:", error);
     return { success: false, error: "An unexpected error occurred" };
   }
 }

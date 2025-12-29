@@ -80,6 +80,12 @@ export interface VirtualizedMessageListHandle {
   scrollToBottom: () => void;
 }
 
+/** Queued message status from retry queue */
+interface QueuedMessageInfo {
+  tempId: string;
+  status: "sending" | "failed";
+}
+
 interface VirtualizedMessageListProps {
   messages: Message[];
   currentUserId: string;
@@ -98,6 +104,14 @@ interface VirtualizedMessageListProps {
   participantCount?: number;
   /** Map of lowercase username -> user data for @mention hover cards */
   mentionedUsers?: Record<string, MentionedUser>;
+  /** Callback when user edits a message */
+  onEdit?: (messageId: string, newContent: string) => Promise<void>;
+  /** Map of message ID to queued status for retry queue */
+  queuedMessages?: Map<string, QueuedMessageInfo>;
+  /** Callback to retry a failed message */
+  onRetryMessage?: (tempId: string) => void;
+  /** Callback to remove a message from retry queue */
+  onRemoveMessage?: (tempId: string) => void;
   /**
    * Callback to unfill (remove) messages that are far off-screen.
    * Called when content exceeds UNPAGINATION_PADDING (6000px) from viewport.
@@ -108,6 +122,12 @@ interface VirtualizedMessageListProps {
    * Matrix SDK pattern for memory efficiency in long conversations.
    */
   onUnfill?: (backwards: boolean, messageCount: number) => void;
+  /** Callback when user clicks reply on a message */
+  onReply?: (message: Message) => void;
+  /** Reactions map: messageId -> Reaction[] */
+  reactionsMap?: Record<string, import("@/app/actions/messaging").Reaction[]>;
+  /** Callback when user reacts to a message */
+  onReact?: (messageId: string, emoji: string) => void;
   className?: string;
 }
 
@@ -196,7 +216,14 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     readReceipts = {},
     participantCount = 1,
     mentionedUsers = {},
+    onEdit,
+    queuedMessages,
+    onRetryMessage,
+    onRemoveMessage,
     onUnfill,
+    onReply,
+    reactionsMap = {},
+    onReact,
     className,
   }, ref) {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -262,6 +289,26 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     setIsAtBottom(true);
     scrollStateRef.current = { stuckAtBottom: true };
   }, []);
+
+  /**
+   * Scroll to a specific message by ID.
+   * Used for jumping to replied-to messages.
+   */
+  const scrollToMessage = useCallback((messageId: string) => {
+    // Find the index of the message in items
+    const itemIndex = items.findIndex(
+      (item) => item.type === "message" && item.message?.id === messageId
+    );
+
+    if (itemIndex === -1) {
+      // Message not in current items - might need to load more
+      console.log("Message not found in current items:", messageId);
+      return;
+    }
+
+    // Use virtualizer to scroll to the item
+    virtualizer.scrollToIndex(itemIndex, { align: "center" });
+  }, [items, virtualizer]);
 
   // Expose scrollToBottom method via ref
   useImperativeHandle(ref, () => ({
@@ -705,6 +752,18 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
                   participantCount={participantCount}
                   // Mentioned users for @mention hover cards
                   mentionedUsers={mentionedUsers}
+                  // Edit handler for own messages
+                  onEdit={onEdit}
+                  // Retry queue status (for optimistic UI)
+                  sendStatus={queuedMessages?.get(msg.id)?.status}
+                  onRetry={onRetryMessage ? () => onRetryMessage(msg.id) : undefined}
+                  onRemove={onRemoveMessage ? () => onRemoveMessage(msg.id) : undefined}
+                  // Reply functionality
+                  onReply={onReply ? () => onReply(msg) : undefined}
+                  onScrollToMessage={scrollToMessage}
+                  // Reactions
+                  reactions={reactionsMap[msg.id]}
+                  onReact={onReact ? (emoji) => onReact(msg.id, emoji) : undefined}
                 />
               </div>
             );

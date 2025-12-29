@@ -19,12 +19,15 @@ import { cn } from "@/lib/design-system";
 import { useUnifiedChat } from "../unified-chat-provider";
 import { useSession } from "@/lib/auth-client";
 import { useSound } from "@/hooks/use-sound-effects";
+import { useReactions } from "@/hooks/use-reactions";
 import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
 import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
 import type { MentionedUser } from "@/components/messaging/message-bubble";
+import { ReplyPreview } from "@/components/messaging/reply-preview";
+import { MessageSearchBar, SearchToggleButton } from "@/components/messaging/message-search";
 import {
   MentionAutocomplete,
   useMentionDetection,
@@ -43,6 +46,7 @@ import {
   type Message,
   type ReadReceipt,
   type MentionProfile,
+  type Reaction,
 } from "@/app/actions/messaging";
 import { extractMentions } from "@/lib/mentions";
 import { useConversationRealtime, type MessagePayload, type ReadReceiptPayload } from "@/lib/realtime/realtime-context";
@@ -346,6 +350,10 @@ function ConversationView({
   const [readReceipts, setReadReceipts] = useState<Record<string, ReadReceipt[]>>({});
   // Mentioned users for @mention hover cards: lowercase username -> user data
   const [mentionedUsers, setMentionedUsers] = useState<Record<string, MentionedUser>>({});
+  // Reply state - message being replied to
+  const [replyingTo, setReplyingTo] = useState<Message | null>(null);
+  // Search state
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
@@ -578,6 +586,46 @@ function ConversationView({
     enabled: !isLoading, // Only subscribe after initial load
   });
 
+  // Message IDs for fetching reactions
+  const messageIds = useMemo(() => messages.map((m) => m.id), [messages]);
+
+  // Reactions hook - manages emoji reactions with optimistic updates
+  const { reactions, react } = useReactions({
+    conversationId,
+    currentUserId,
+    messageIds,
+    enabled: !isLoading && messages.length > 0,
+  });
+
+  // Convert reactions to the format expected by VirtualizedMessageList
+  const reactionsMap = useMemo(() => {
+    const map: Record<string, Reaction[]> = {};
+    for (const [msgId, summary] of Object.entries(reactions)) {
+      map[msgId] = summary.reactions;
+    }
+    return map;
+  }, [reactions]);
+
+  // Handle reply action
+  const handleReply = useCallback((message: Message) => {
+    setReplyingTo(message);
+    // Focus the input when replying
+    setTimeout(() => inputRef.current?.focus(), 0);
+  }, []);
+
+  // Handle scroll to message (for clicking on reply previews)
+  const handleScrollToMessage = useCallback((messageId: string) => {
+    const index = messages.findIndex((m) => m.id === messageId);
+    if (index >= 0) {
+      // Highlight and scroll
+      setHighlightedMessageId(messageId);
+      const element = document.querySelector(`[data-message-id="${messageId}"]`);
+      element?.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Clear highlight after animation
+      setTimeout(() => setHighlightedMessageId(null), 2000);
+    }
+  }, [messages]);
+
   // Get current user's profile info for read receipt broadcasts
   const currentUserProfile = useMemo(() => {
     // Try to find current user in participants (they might be there as a member)
@@ -719,7 +767,9 @@ function ConversationView({
     if (!inputValue.trim() || isSending) return;
 
     const content = inputValue.trim();
+    const replyToId = replyingTo?.id; // Capture before clearing
     setInputValue("");
+    setReplyingTo(null); // Clear reply state immediately for UX
     setIsSending(true);
 
     if (typingTimeoutRef.current) {
@@ -728,7 +778,8 @@ function ConversationView({
     // Clear typing indicator immediately via Broadcast
     sendTyping(false);
 
-    const result = await sendMessage(conversationId, content);
+    // Send message with optional reply reference
+    const result = await sendMessage(conversationId, content, replyToId);
 
     if (result.success && result.message) {
       setMessages((prev) => [...prev, result.message!]);
@@ -830,7 +881,21 @@ function ConversationView({
           targetUserId={otherParticipant?.userId}
           targetUserName={otherParticipant?.displayName || otherParticipant?.name}
         />
+
+        {/* Search toggle button */}
+        <SearchToggleButton
+          onClick={() => setIsSearchOpen((prev) => !prev)}
+          isActive={isSearchOpen}
+        />
       </div>
+
+      {/* In-conversation search bar */}
+      <MessageSearchBar
+        conversationId={conversationId}
+        onJumpToMessage={handleScrollToMessage}
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
 
       {/* Device Verification Modal */}
       <DeviceVerificationModal
@@ -863,12 +928,28 @@ function ConversationView({
         readReceipts={readReceipts}
         participantCount={participants.length - 1}
         mentionedUsers={mentionedUsers}
+        onReply={handleReply}
+        reactionsMap={reactionsMap}
+        onReact={react}
         className="p-4"
       />
 
       {/* Input */}
-      <div className="p-4 border-t border-gray-200 dark:border-[#262626]">
-        <div ref={inputWrapperRef} className="relative flex items-end gap-2">
+      <div className="border-t border-gray-200 dark:border-[#262626]">
+        {/* Reply preview when replying to a message */}
+        {replyingTo && (
+          <div className="px-4 pt-3">
+            <ReplyPreview
+              senderName={replyingTo.senderName || "Unknown"}
+              content={replyingTo.content}
+              isDeleted={!!replyingTo.deletedAt}
+              variant="composer"
+              onDismiss={() => setReplyingTo(null)}
+            />
+          </div>
+        )}
+
+        <div ref={inputWrapperRef} className="relative flex items-end gap-2 p-4 pt-3">
           {/* Mention Autocomplete - positioned above input */}
           <MentionAutocomplete
             inputValue={inputValue}

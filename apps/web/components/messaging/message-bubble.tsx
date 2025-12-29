@@ -7,14 +7,19 @@
  * - Sender avatar and name with hovercards
  * - Message content with linkified URLs
  * - Special styling for AI-generated messages
- * - Timestamp
+ * - Timestamp and "edited" badge
+ * - Inline editing for own messages
  */
 
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
 import type { Message, ReadReceipt } from "@/app/actions/messaging";
 import Link from "next/link";
 import { ProfileHoverCard, type ProfileHoverCardUser } from "@/components/users/profile-hover-card";
+import { ReactionButton } from "./emoji-picker";
+import { ReactionDisplay } from "./reaction-display";
+import { ReplyPreview, ReplyButton } from "./reply-preview";
 
 /** User data for @mention hover cards */
 export interface MentionedUser {
@@ -44,6 +49,22 @@ interface MessageBubbleProps {
   participantCount?: number;
   /** Map of lowercase username -> user data for @mention hover cards */
   mentionedUsers?: Record<string, MentionedUser>;
+  /** Callback when user edits a message */
+  onEdit?: (messageId: string, newContent: string) => Promise<void>;
+  /** Send status for queued messages (optimistic UI) */
+  sendStatus?: "sending" | "failed";
+  /** Callback to retry sending a failed message */
+  onRetry?: () => void;
+  /** Callback to remove a failed message from queue */
+  onRemove?: () => void;
+  /** Reactions on this message */
+  reactions?: import("@/app/actions/messaging").Reaction[];
+  /** Callback when user reacts to this message */
+  onReact?: (emoji: string) => void;
+  /** Callback when user wants to reply to this message */
+  onReply?: () => void;
+  /** Callback to scroll to the replied message */
+  onScrollToMessage?: (messageId: string) => void;
   className?: string;
 }
 
@@ -345,9 +366,67 @@ export function MessageBubble({
   conversationType = "direct",
   participantCount = 1,
   mentionedUsers,
+  onEdit,
+  sendStatus,
+  onRetry,
+  onRemove,
+  reactions,
+  onReact,
+  onReply,
+  onScrollToMessage,
   className,
 }: MessageBubbleProps) {
   const isAI = message.senderId === AI_ASSISTANT_USER_ID || message.isAiGenerated;
+
+  // Edit mode state
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState(message.content);
+  const [isSaving, setIsSaving] = useState(false);
+  const editInputRef = useRef<HTMLTextAreaElement>(null);
+
+  // Focus input when entering edit mode
+  useEffect(() => {
+    if (isEditing && editInputRef.current) {
+      editInputRef.current.focus();
+      editInputRef.current.setSelectionRange(editContent.length, editContent.length);
+    }
+  }, [isEditing, editContent.length]);
+
+  // Handle save edit
+  const handleSaveEdit = async () => {
+    if (!editContent.trim() || editContent === message.content || !onEdit) {
+      setIsEditing(false);
+      setEditContent(message.content);
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      await onEdit(message.id, editContent);
+      setIsEditing(false);
+    } catch {
+      // Reset on error
+      setEditContent(message.content);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Handle cancel edit
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditContent(message.content);
+  };
+
+  // Handle keyboard in edit mode
+  const handleEditKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      handleCancelEdit();
+    } else if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSaveEdit();
+    }
+  };
 
   // Calculate read status for own messages
   const readStatus = isOwnMessage
@@ -484,49 +563,170 @@ export function MessageBubble({
           )
         )}
 
+        {/* Reply preview - shown above the message bubble */}
+        {message.replyToMessage && (
+          <ReplyPreview
+            senderName={message.replyToMessage.senderName || "Unknown"}
+            content={message.replyToMessage.content}
+            isDeleted={message.replyToMessage.isDeleted}
+            variant="bubble"
+            onClickMessage={
+              onScrollToMessage && message.replyToMessageId
+                ? () => onScrollToMessage(message.replyToMessageId!)
+                : undefined
+            }
+            className="mb-1 max-w-[90%]"
+          />
+        )}
+
         {/* Bubble - rounded corners vary based on position in group */}
-        <div
-          className={cn(
-            "px-4 py-2",
-            isOwnMessage
-              ? cn(
-                  "bg-blue-600 text-white",
-                  // Rounded corners based on position in group
-                  isFirstInGroup && isLastInGroup
-                    ? "rounded-2xl rounded-br-md"
-                    : isFirstInGroup
-                    ? "rounded-2xl rounded-br-md rounded-bl-2xl"
-                    : isLastInGroup
-                    ? "rounded-2xl rounded-br-md rounded-tr-md"
-                    : "rounded-2xl rounded-r-md"
-                )
-              : isAI
-              ? cn(
-                  "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-gray-900 dark:text-gray-100",
-                  isFirstInGroup && isLastInGroup
-                    ? "rounded-2xl rounded-bl-md"
-                    : isFirstInGroup
-                    ? "rounded-2xl rounded-bl-md rounded-br-2xl"
-                    : isLastInGroup
-                    ? "rounded-2xl rounded-bl-md rounded-tl-md"
-                    : "rounded-2xl rounded-l-md"
-                )
-              : cn(
-                  "bg-gray-100 dark:bg-[#1a1a1a] text-gray-900 dark:text-gray-100",
-                  // Rounded corners based on position in group
-                  isFirstInGroup && isLastInGroup
-                    ? "rounded-2xl rounded-bl-md"
-                    : isFirstInGroup
-                    ? "rounded-2xl rounded-bl-md rounded-br-2xl"
-                    : isLastInGroup
-                    ? "rounded-2xl rounded-bl-md rounded-tl-md"
-                    : "rounded-2xl rounded-l-md"
-                )
+        <div className="relative group/bubble">
+          {isEditing ? (
+            // Edit mode - inline textarea
+            <div
+              className={cn(
+                "px-3 py-2 rounded-2xl",
+                "bg-blue-600/10 dark:bg-blue-600/20 border-2 border-blue-500"
+              )}
+            >
+              <textarea
+                ref={editInputRef}
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+                onKeyDown={handleEditKeyDown}
+                disabled={isSaving}
+                className={cn(
+                  "w-full min-w-[200px] resize-none bg-transparent",
+                  "text-sm text-gray-900 dark:text-white",
+                  "focus:outline-none",
+                  isSaving && "opacity-50"
+                )}
+                rows={Math.min(editContent.split("\n").length + 1, 5)}
+              />
+              <div className="flex items-center justify-end gap-2 mt-2 pt-2 border-t border-blue-500/30">
+                <button
+                  onClick={handleCancelEdit}
+                  disabled={isSaving}
+                  className="text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveEdit}
+                  disabled={isSaving || !editContent.trim()}
+                  className={cn(
+                    "text-xs font-medium px-2 py-1 rounded",
+                    "bg-blue-600 text-white",
+                    "hover:bg-blue-700 disabled:opacity-50"
+                  )}
+                >
+                  {isSaving ? "Saving..." : "Save"}
+                </button>
+              </div>
+              <p className="text-[10px] text-gray-400 mt-1">
+                Press Enter to save, Esc to cancel
+              </p>
+            </div>
+          ) : (
+            // Normal mode - message content with edit button
+            <>
+              <div
+                className={cn(
+                  "px-4 py-2",
+                  isOwnMessage
+                    ? cn(
+                        "bg-blue-600 text-white",
+                        // Rounded corners based on position in group
+                        isFirstInGroup && isLastInGroup
+                          ? "rounded-2xl rounded-br-md"
+                          : isFirstInGroup
+                          ? "rounded-2xl rounded-br-md rounded-bl-2xl"
+                          : isLastInGroup
+                          ? "rounded-2xl rounded-br-md rounded-tr-md"
+                          : "rounded-2xl rounded-r-md",
+                        // Sending/failed states
+                        sendStatus === "sending" && "opacity-60",
+                        sendStatus === "failed" && "bg-red-600"
+                      )
+                    : isAI
+                    ? cn(
+                        "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-gray-900 dark:text-gray-100",
+                        isFirstInGroup && isLastInGroup
+                          ? "rounded-2xl rounded-bl-md"
+                          : isFirstInGroup
+                          ? "rounded-2xl rounded-bl-md rounded-br-2xl"
+                          : isLastInGroup
+                          ? "rounded-2xl rounded-bl-md rounded-tl-md"
+                          : "rounded-2xl rounded-l-md"
+                      )
+                    : cn(
+                        "bg-gray-100 dark:bg-[#1a1a1a] text-gray-900 dark:text-gray-100",
+                        // Rounded corners based on position in group
+                        isFirstInGroup && isLastInGroup
+                          ? "rounded-2xl rounded-bl-md"
+                          : isFirstInGroup
+                          ? "rounded-2xl rounded-bl-md rounded-br-2xl"
+                          : isLastInGroup
+                          ? "rounded-2xl rounded-bl-md rounded-tl-md"
+                          : "rounded-2xl rounded-l-md"
+                      )
+                )}
+              >
+                <p className="text-sm whitespace-pre-wrap break-words">
+                  {linkifyContent(message.content, mentionedUsers)}
+                </p>
+              </div>
+
+              {/* Message actions - show on hover */}
+              <div
+                className={cn(
+                  "absolute top-1/2 -translate-y-1/2 flex items-center gap-0.5",
+                  "opacity-0 group-hover/bubble:opacity-100 transition-opacity duration-150",
+                  isOwnMessage ? "-left-20" : "-right-20"
+                )}
+              >
+                {/* Reply button */}
+                {onReply && !sendStatus && (
+                  <ReplyButton onClick={onReply} />
+                )}
+
+                {/* Edit button - for own messages (not AI) */}
+                {isOwnMessage && onEdit && !isAI && (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className={cn(
+                      "p-1.5 rounded-full",
+                      "bg-gray-100 dark:bg-gray-800",
+                      "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300",
+                      "focus:opacity-100"
+                    )}
+                    title="Edit message"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                  </button>
+                )}
+
+                {/* Reaction button */}
+                {onReact && !sendStatus && (
+                  <ReactionButton
+                    onReact={onReact}
+                    className="opacity-100"
+                  />
+                )}
+              </div>
+            </>
           )}
-        >
-          <p className="text-sm whitespace-pre-wrap break-words">
-            {linkifyContent(message.content, mentionedUsers)}
-          </p>
+
+          {/* Reaction display - show below message */}
+          {reactions && reactions.length > 0 && onReact && (
+            <ReactionDisplay
+              reactions={reactions}
+              onReact={onReact}
+              className={isOwnMessage ? "justify-end" : "justify-start"}
+            />
+          )}
         </div>
 
         {/* Timestamp and read status - only show for last message in group */}
@@ -537,10 +737,45 @@ export function MessageBubble({
               isOwnMessage ? "mr-1 flex-row-reverse" : "ml-1"
             )}
           >
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              {formatTime(message.createdAt)}
-              {message.editedAt && " (edited)"}
-            </span>
+            {/* Sending/Failed status for queued messages */}
+            {sendStatus === "sending" && (
+              <span className="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
+                <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+                Sending...
+              </span>
+            )}
+            {sendStatus === "failed" && (
+              <span className="flex items-center gap-2 text-xs">
+                <span className="text-red-500 dark:text-red-400">Failed to send</span>
+                {onRetry && (
+                  <button
+                    onClick={onRetry}
+                    className="text-blue-500 hover:text-blue-600 dark:text-cyan-400 dark:hover:text-cyan-300 font-medium"
+                  >
+                    Retry
+                  </button>
+                )}
+                {onRemove && (
+                  <button
+                    onClick={onRemove}
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    title="Remove message"
+                  >
+                    ×
+                  </button>
+                )}
+              </span>
+            )}
+            {/* Normal timestamp when not queued */}
+            {!sendStatus && (
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {formatTime(message.createdAt)}
+                {message.editedAt && " (edited)"}
+              </span>
+            )}
 
             {/* Read status for own messages */}
             {isOwnMessage && readStatus && (

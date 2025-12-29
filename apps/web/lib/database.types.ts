@@ -14,6 +14,589 @@ export type Database = {
   }
   public: {
     Tables: {
+      _payload_resources_v: {
+        Row: {
+          created_at: string
+          id: number
+          latest: boolean | null
+          parent_id: number | null
+          published_locale:
+            | Database["public"]["Enums"]["enum__payload_resources_v_published_locale"]
+            | null
+          snapshot: boolean | null
+          updated_at: string
+          version__status:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_status"]
+            | null
+          version_added_date: string | null
+          version_ai_overview: Json | null
+          version_ai_summary: string | null
+          version_category_id: number | null
+          version_content_hash: string | null
+          version_created_at: string | null
+          version_description: string | null
+          version_difficulty_id: number | null
+          version_discovery_ai_confidence_score: number | null
+          version_discovery_ai_notes: string | null
+          version_discovery_discovered_at: string | null
+          version_discovery_discovered_by:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_discovery_discovered_by"]
+            | null
+          version_discovery_source_id: number | null
+          version_enhancement_metadata_ai_enhanced_at: string | null
+          version_enhancement_metadata_ai_model: string | null
+          version_enhancement_metadata_enhancement_notes: string | null
+          version_enhancement_status:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_enhancement_status"]
+            | null
+          version_featured: boolean | null
+          version_featured_reason:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_featured_reason"]
+            | null
+          version_github_forks: number | null
+          version_github_language_id: number | null
+          version_github_last_updated: string | null
+          version_github_owner: string | null
+          version_github_repo: string | null
+          version_github_stars: number | null
+          version_last_verified: string | null
+          version_meta_keywords: string | null
+          version_meta_no_index: boolean | null
+          version_namespace: string | null
+          version_publish_status:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_publish_status"]
+            | null
+          version_relationship_count: number | null
+          version_resource_type:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_resource_type"]
+            | null
+          version_review_rejection_reason: string | null
+          version_review_review_notes: string | null
+          version_review_reviewed_at: string | null
+          version_review_reviewed_by_id: number | null
+          version_subcategory_id: number | null
+          version_title: string | null
+          version_updated_at: string | null
+          version_url: string | null
+          version_version: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          latest?: boolean | null
+          parent_id?: number | null
+          published_locale?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_published_locale"]
+            | null
+          snapshot?: boolean | null
+          updated_at?: string
+          version__status?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_status"]
+            | null
+          version_added_date?: string | null
+          version_ai_overview?: Json | null
+          version_ai_summary?: string | null
+          version_category_id?: number | null
+          version_content_hash?: string | null
+          version_created_at?: string | null
+          version_description?: string | null
+          version_difficulty_id?: number | null
+          version_discovery_ai_confidence_score?: number | null
+          version_discovery_ai_notes?: string | null
+          version_discovery_discovered_at?: string | null
+          version_discovery_discovered_by?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_discovery_discovered_by"]
+            | null
+          version_discovery_source_id?: number | null
+          version_enhancement_metadata_ai_enhanced_at?: string | null
+          version_enhancement_metadata_ai_model?: string | null
+          version_enhancement_metadata_enhancement_notes?: string | null
+          version_enhancement_status?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_enhancement_status"]
+            | null
+          version_featured?: boolean | null
+          version_featured_reason?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_featured_reason"]
+            | null
+          version_github_forks?: number | null
+          version_github_language_id?: number | null
+          version_github_last_updated?: string | null
+          version_github_owner?: string | null
+          version_github_repo?: string | null
+          version_github_stars?: number | null
+          version_last_verified?: string | null
+          version_meta_keywords?: string | null
+          version_meta_no_index?: boolean | null
+          version_namespace?: string | null
+          version_publish_status?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_publish_status"]
+            | null
+          version_relationship_count?: number | null
+          version_resource_type?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_resource_type"]
+            | null
+          version_review_rejection_reason?: string | null
+          version_review_review_notes?: string | null
+          version_review_reviewed_at?: string | null
+          version_review_reviewed_by_id?: number | null
+          version_subcategory_id?: number | null
+          version_title?: string | null
+          version_updated_at?: string | null
+          version_url?: string | null
+          version_version?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          latest?: boolean | null
+          parent_id?: number | null
+          published_locale?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_published_locale"]
+            | null
+          snapshot?: boolean | null
+          updated_at?: string
+          version__status?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_status"]
+            | null
+          version_added_date?: string | null
+          version_ai_overview?: Json | null
+          version_ai_summary?: string | null
+          version_category_id?: number | null
+          version_content_hash?: string | null
+          version_created_at?: string | null
+          version_description?: string | null
+          version_difficulty_id?: number | null
+          version_discovery_ai_confidence_score?: number | null
+          version_discovery_ai_notes?: string | null
+          version_discovery_discovered_at?: string | null
+          version_discovery_discovered_by?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_discovery_discovered_by"]
+            | null
+          version_discovery_source_id?: number | null
+          version_enhancement_metadata_ai_enhanced_at?: string | null
+          version_enhancement_metadata_ai_model?: string | null
+          version_enhancement_metadata_enhancement_notes?: string | null
+          version_enhancement_status?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_enhancement_status"]
+            | null
+          version_featured?: boolean | null
+          version_featured_reason?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_featured_reason"]
+            | null
+          version_github_forks?: number | null
+          version_github_language_id?: number | null
+          version_github_last_updated?: string | null
+          version_github_owner?: string | null
+          version_github_repo?: string | null
+          version_github_stars?: number | null
+          version_last_verified?: string | null
+          version_meta_keywords?: string | null
+          version_meta_no_index?: boolean | null
+          version_namespace?: string | null
+          version_publish_status?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_publish_status"]
+            | null
+          version_relationship_count?: number | null
+          version_resource_type?:
+            | Database["public"]["Enums"]["enum__payload_resources_v_version_resource_type"]
+            | null
+          version_review_rejection_reason?: string | null
+          version_review_review_notes?: string | null
+          version_review_reviewed_at?: string | null
+          version_review_reviewed_by_id?: number | null
+          version_subcategory_id?: number | null
+          version_title?: string | null
+          version_updated_at?: string | null
+          version_url?: string | null
+          version_version?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_parent_id_payload_resources_id_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_version_category_id_categories_id_fk"
+            columns: ["version_category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_version_difficulty_id_difficulty_levels_id"
+            columns: ["version_difficulty_id"]
+            isOneToOne: false
+            referencedRelation: "difficulty_levels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_version_discovery_source_id_payload_resour"
+            columns: ["version_discovery_source_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_version_github_language_id_programming_lan"
+            columns: ["version_github_language_id"]
+            isOneToOne: false
+            referencedRelation: "programming_languages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_version_review_reviewed_by_id_users_id_fk"
+            columns: ["version_review_reviewed_by_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_version_subcategory_id_subcategories_id_fk"
+            columns: ["version_subcategory_id"]
+            isOneToOne: false
+            referencedRelation: "subcategories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      _payload_resources_v_locales: {
+        Row: {
+          _locale: unknown[]
+          _parent_id: number
+          id: number
+          version_meta_description: string | null
+          version_meta_image_id: number | null
+          version_meta_title: string | null
+        }
+        Insert: {
+          _locale: unknown[]
+          _parent_id: number
+          id?: number
+          version_meta_description?: string | null
+          version_meta_image_id?: number | null
+          version_meta_title?: string | null
+        }
+        Update: {
+          _locale?: unknown[]
+          _parent_id?: number
+          id?: number
+          version_meta_description?: string | null
+          version_meta_image_id?: number | null
+          version_meta_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_locales_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "_payload_resources_v"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_locales_version_meta_image_id_media_id_fk"
+            columns: ["version_meta_image_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      _payload_resources_v_rels: {
+        Row: {
+          documents_id: number | null
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+          payload_resources_id: number | null
+          tags_id: number | null
+        }
+        Insert: {
+          documents_id?: number | null
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Update: {
+          documents_id?: number | null
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_rels_documents_fk"
+            columns: ["documents_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "_payload_resources_v"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_rels_resources_fk"
+            columns: ["payload_resources_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "_payload_resources_v_rels_tags_fk"
+            columns: ["tags_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      _payload_resources_v_version_ai_doc_relationships: {
+        Row: {
+          _order: number
+          _parent_id: number
+          _uuid: string | null
+          confidence: number | null
+          doc_slug: string | null
+          doc_title: string | null
+          id: number
+          is_approved: boolean | null
+          reasoning: string | null
+          relationship_type:
+            | Database["public"]["Enums"]["res_doc_rel_type"]
+            | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          _uuid?: string | null
+          confidence?: number | null
+          doc_slug?: string | null
+          doc_title?: string | null
+          id?: number
+          is_approved?: boolean | null
+          reasoning?: string | null
+          relationship_type?:
+            | Database["public"]["Enums"]["res_doc_rel_type"]
+            | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          _uuid?: string | null
+          confidence?: number | null
+          doc_slug?: string | null
+          doc_title?: string | null
+          id?: number
+          is_approved?: boolean | null
+          reasoning?: string | null
+          relationship_type?:
+            | Database["public"]["Enums"]["res_doc_rel_type"]
+            | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_version_ai_doc_relationships_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "_payload_resources_v"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      _payload_resources_v_version_ai_resource_relationships: {
+        Row: {
+          _order: number
+          _parent_id: number
+          _uuid: string | null
+          confidence: number | null
+          id: number
+          relationship_type:
+            | Database["public"]["Enums"]["res_res_rel_type"]
+            | null
+          resource_id: string | null
+          resource_title: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          _uuid?: string | null
+          confidence?: number | null
+          id?: number
+          relationship_type?:
+            | Database["public"]["Enums"]["res_res_rel_type"]
+            | null
+          resource_id?: string | null
+          resource_title?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          _uuid?: string | null
+          confidence?: number | null
+          id?: number
+          relationship_type?:
+            | Database["public"]["Enums"]["res_res_rel_type"]
+            | null
+          resource_id?: string | null
+          resource_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_version_ai_resource_relationships_parent_i"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "_payload_resources_v"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      _payload_resources_v_version_cons: {
+        Row: {
+          _order: number
+          _parent_id: number
+          _uuid: string | null
+          con: string | null
+          id: number
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          _uuid?: string | null
+          con?: string | null
+          id?: number
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          _uuid?: string | null
+          con?: string | null
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_version_cons_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "_payload_resources_v"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      _payload_resources_v_version_key_features: {
+        Row: {
+          _order: number
+          _parent_id: number
+          _uuid: string | null
+          description: string | null
+          feature: string | null
+          id: number
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          _uuid?: string | null
+          description?: string | null
+          feature?: string | null
+          id?: number
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          _uuid?: string | null
+          description?: string | null
+          feature?: string | null
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_version_key_features_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "_payload_resources_v"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      _payload_resources_v_version_pros: {
+        Row: {
+          _order: number
+          _parent_id: number
+          _uuid: string | null
+          id: number
+          pro: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          _uuid?: string | null
+          id?: number
+          pro?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          _uuid?: string | null
+          id?: number
+          pro?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_version_pros_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "_payload_resources_v"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      _payload_resources_v_version_use_cases: {
+        Row: {
+          _order: number
+          _parent_id: number
+          _uuid: string | null
+          description: string | null
+          id: number
+          use_case: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          _uuid?: string | null
+          description?: string | null
+          id?: number
+          use_case?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          _uuid?: string | null
+          description?: string | null
+          id?: number
+          use_case?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "_payload_resources_v_version_use_cases_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "_payload_resources_v"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       account: {
         Row: {
           accessToken: string | null
@@ -70,6 +653,42 @@ export type Database = {
           },
         ]
       }
+      achievement_categories: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          icon: string
+          id: number
+          name: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon: string
+          id?: number
+          name: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string
+          id?: number
+          name?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       achievement_progress: {
         Row: {
           achievement_slug: string
@@ -101,6 +720,57 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      achievement_tiers: {
+        Row: {
+          animation: Database["public"]["Enums"]["enum_achievement_tiers_animation"]
+          color_gradient_from: string
+          color_gradient_to: string
+          color_gradient_via: string | null
+          created_at: string
+          description: string | null
+          glow_color: string | null
+          id: number
+          name: string
+          point_multiplier: number
+          slug: string
+          sort_order: number
+          text_color: string | null
+          updated_at: string
+        }
+        Insert: {
+          animation?: Database["public"]["Enums"]["enum_achievement_tiers_animation"]
+          color_gradient_from?: string
+          color_gradient_to?: string
+          color_gradient_via?: string | null
+          created_at?: string
+          description?: string | null
+          glow_color?: string | null
+          id?: number
+          name: string
+          point_multiplier?: number
+          slug: string
+          sort_order?: number
+          text_color?: string | null
+          updated_at?: string
+        }
+        Update: {
+          animation?: Database["public"]["Enums"]["enum_achievement_tiers_animation"]
+          color_gradient_from?: string
+          color_gradient_to?: string
+          color_gradient_via?: string | null
+          created_at?: string
+          description?: string | null
+          glow_color?: string | null
+          id?: number
+          name?: string
+          point_multiplier?: number
+          slug?: string
+          sort_order?: number
+          text_color?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       achievements: {
         Row: {
@@ -465,35 +1135,264 @@ export type Database = {
       }
       ai_pipeline_settings: {
         Row: {
-          description: string | null
-          id: string
-          key: string
+          cli_commands_analyze_relationships_command: string | null
+          cli_commands_bulk_analyze_command: string | null
+          cli_commands_bulk_enhance_command: string | null
+          cli_commands_enhance_resource_command: string | null
+          cli_commands_rewrite_doc_command: string | null
+          cost_tracking_cost_per_input_token: number | null
+          cost_tracking_cost_per_output_token: number | null
+          cost_tracking_enabled: boolean | null
+          cost_tracking_monthly_budget_u_s_d: number | null
+          cost_tracking_pause_on_budget_exceeded: boolean | null
+          cost_tracking_warning_threshold_percent: number | null
+          created_at: string | null
+          documentation_auto_rewrite_schedule:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_documentation_auto_rewrite_schedule"]
+            | null
+          documentation_max_sources_per_doc: number | null
+          documentation_require_source_urls: boolean | null
+          enhancement_auto_enhance_new_resources: boolean | null
+          enhancement_max_features_count: number | null
+          enhancement_min_features_count: number | null
+          enhancement_required_fields_require_key_features: boolean | null
+          enhancement_required_fields_require_pros_and_cons: boolean | null
+          enhancement_required_fields_require_summary: boolean | null
+          enhancement_required_fields_require_use_cases: boolean | null
+          id: number
+          model_config_fallback_model:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_model_config_fallback_model"]
+            | null
+          model_config_max_tokens_per_operation: number | null
+          model_config_preferred_model:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_model_config_preferred_model"]
+            | null
+          model_config_temperature: number | null
+          operation_tracking_keep_completed_days: number | null
+          operation_tracking_keep_failed_days: number | null
+          operation_tracking_notify_on_completion: boolean | null
+          operation_tracking_notify_on_failure: boolean | null
+          rate_limits_cooldown_minutes: number | null
+          rate_limits_max_concurrent_operations: number | null
+          rate_limits_max_operations_per_day: number | null
+          rate_limits_max_operations_per_hour: number | null
+          rate_limits_prioritize_manual_requests: boolean | null
+          relationships_auto_analyze_new_content: boolean | null
+          relationships_max_relationships_per_doc: number
+          relationships_min_confidence: number
+          relationships_reanalyze_on_content_change: boolean | null
+          scheduling_enable_scheduled_operations: boolean | null
+          scheduling_max_batch_size: number | null
+          scheduling_preferred_time_u_t_c: string | null
           updated_at: string | null
-          updated_by: string | null
-          value: Json
         }
         Insert: {
-          description?: string | null
-          id?: string
-          key: string
+          cli_commands_analyze_relationships_command?: string | null
+          cli_commands_bulk_analyze_command?: string | null
+          cli_commands_bulk_enhance_command?: string | null
+          cli_commands_enhance_resource_command?: string | null
+          cli_commands_rewrite_doc_command?: string | null
+          cost_tracking_cost_per_input_token?: number | null
+          cost_tracking_cost_per_output_token?: number | null
+          cost_tracking_enabled?: boolean | null
+          cost_tracking_monthly_budget_u_s_d?: number | null
+          cost_tracking_pause_on_budget_exceeded?: boolean | null
+          cost_tracking_warning_threshold_percent?: number | null
+          created_at?: string | null
+          documentation_auto_rewrite_schedule?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_documentation_auto_rewrite_schedule"]
+            | null
+          documentation_max_sources_per_doc?: number | null
+          documentation_require_source_urls?: boolean | null
+          enhancement_auto_enhance_new_resources?: boolean | null
+          enhancement_max_features_count?: number | null
+          enhancement_min_features_count?: number | null
+          enhancement_required_fields_require_key_features?: boolean | null
+          enhancement_required_fields_require_pros_and_cons?: boolean | null
+          enhancement_required_fields_require_summary?: boolean | null
+          enhancement_required_fields_require_use_cases?: boolean | null
+          id?: number
+          model_config_fallback_model?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_model_config_fallback_model"]
+            | null
+          model_config_max_tokens_per_operation?: number | null
+          model_config_preferred_model?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_model_config_preferred_model"]
+            | null
+          model_config_temperature?: number | null
+          operation_tracking_keep_completed_days?: number | null
+          operation_tracking_keep_failed_days?: number | null
+          operation_tracking_notify_on_completion?: boolean | null
+          operation_tracking_notify_on_failure?: boolean | null
+          rate_limits_cooldown_minutes?: number | null
+          rate_limits_max_concurrent_operations?: number | null
+          rate_limits_max_operations_per_day?: number | null
+          rate_limits_max_operations_per_hour?: number | null
+          rate_limits_prioritize_manual_requests?: boolean | null
+          relationships_auto_analyze_new_content?: boolean | null
+          relationships_max_relationships_per_doc?: number
+          relationships_min_confidence?: number
+          relationships_reanalyze_on_content_change?: boolean | null
+          scheduling_enable_scheduled_operations?: boolean | null
+          scheduling_max_batch_size?: number | null
+          scheduling_preferred_time_u_t_c?: string | null
           updated_at?: string | null
-          updated_by?: string | null
-          value: Json
         }
         Update: {
-          description?: string | null
-          id?: string
-          key?: string
+          cli_commands_analyze_relationships_command?: string | null
+          cli_commands_bulk_analyze_command?: string | null
+          cli_commands_bulk_enhance_command?: string | null
+          cli_commands_enhance_resource_command?: string | null
+          cli_commands_rewrite_doc_command?: string | null
+          cost_tracking_cost_per_input_token?: number | null
+          cost_tracking_cost_per_output_token?: number | null
+          cost_tracking_enabled?: boolean | null
+          cost_tracking_monthly_budget_u_s_d?: number | null
+          cost_tracking_pause_on_budget_exceeded?: boolean | null
+          cost_tracking_warning_threshold_percent?: number | null
+          created_at?: string | null
+          documentation_auto_rewrite_schedule?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_documentation_auto_rewrite_schedule"]
+            | null
+          documentation_max_sources_per_doc?: number | null
+          documentation_require_source_urls?: boolean | null
+          enhancement_auto_enhance_new_resources?: boolean | null
+          enhancement_max_features_count?: number | null
+          enhancement_min_features_count?: number | null
+          enhancement_required_fields_require_key_features?: boolean | null
+          enhancement_required_fields_require_pros_and_cons?: boolean | null
+          enhancement_required_fields_require_summary?: boolean | null
+          enhancement_required_fields_require_use_cases?: boolean | null
+          id?: number
+          model_config_fallback_model?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_model_config_fallback_model"]
+            | null
+          model_config_max_tokens_per_operation?: number | null
+          model_config_preferred_model?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_model_config_preferred_model"]
+            | null
+          model_config_temperature?: number | null
+          operation_tracking_keep_completed_days?: number | null
+          operation_tracking_keep_failed_days?: number | null
+          operation_tracking_notify_on_completion?: boolean | null
+          operation_tracking_notify_on_failure?: boolean | null
+          rate_limits_cooldown_minutes?: number | null
+          rate_limits_max_concurrent_operations?: number | null
+          rate_limits_max_operations_per_day?: number | null
+          rate_limits_max_operations_per_hour?: number | null
+          rate_limits_prioritize_manual_requests?: boolean | null
+          relationships_auto_analyze_new_content?: boolean | null
+          relationships_max_relationships_per_doc?: number
+          relationships_min_confidence?: number
+          relationships_reanalyze_on_content_change?: boolean | null
+          scheduling_enable_scheduled_operations?: boolean | null
+          scheduling_max_batch_size?: number | null
+          scheduling_preferred_time_u_t_c?: string | null
           updated_at?: string | null
-          updated_by?: string | null
-          value?: Json
+        }
+        Relationships: []
+      }
+      ai_pipeline_settings_documentation_preserve_sections: {
+        Row: {
+          id: number
+          order: number
+          parent_id: number
+          value:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_documentation_preserve_sections"]
+            | null
+        }
+        Insert: {
+          id?: number
+          order: number
+          parent_id: number
+          value?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_documentation_preserve_sections"]
+            | null
+        }
+        Update: {
+          id?: number
+          order?: number
+          parent_id?: number
+          value?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_documentation_preserve_sections"]
+            | null
         }
         Relationships: [
           {
-            foreignKeyName: "ai_pipeline_settings_updated_by_fkey"
-            columns: ["updated_by"]
+            foreignKeyName: "ai_pipeline_settings_documentation_preserve_sections_parent_fk"
+            columns: ["parent_id"]
             isOneToOne: false
-            referencedRelation: "user"
+            referencedRelation: "ai_pipeline_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_pipeline_settings_relationships_enabled_types: {
+        Row: {
+          id: number
+          order: number
+          parent_id: number
+          value:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_relationships_enabled_types"]
+            | null
+        }
+        Insert: {
+          id?: number
+          order: number
+          parent_id: number
+          value?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_relationships_enabled_types"]
+            | null
+        }
+        Update: {
+          id?: number
+          order?: number
+          parent_id?: number
+          value?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_relationships_enabled_types"]
+            | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_pipeline_settings_relationships_enabled_types_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "ai_pipeline_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_pipeline_settings_scheduling_preferred_days: {
+        Row: {
+          id: number
+          order: number
+          parent_id: number
+          value:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_scheduling_preferred_days"]
+            | null
+        }
+        Insert: {
+          id?: number
+          order: number
+          parent_id: number
+          value?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_scheduling_preferred_days"]
+            | null
+        }
+        Update: {
+          id?: number
+          order?: number
+          parent_id?: number
+          value?:
+            | Database["public"]["Enums"]["enum_ai_pipeline_settings_scheduling_preferred_days"]
+            | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_pipeline_settings_scheduling_preferred_days_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "ai_pipeline_settings"
             referencedColumns: ["id"]
           },
         ]
@@ -604,6 +1503,190 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: true
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audit_logs: {
+        Row: {
+          action: Database["public"]["Enums"]["enum_audit_logs_action"]
+          changes: Json | null
+          collection: string | null
+          context_affected_count: number | null
+          context_notes: string | null
+          context_reason: string | null
+          context_source_url: string | null
+          created_at: string
+          document_id: string | null
+          error_code: string | null
+          error_message: string | null
+          error_stack: string | null
+          id: number
+          metadata_duration: number | null
+          metadata_endpoint: string | null
+          metadata_ip_address: string | null
+          metadata_method: string | null
+          metadata_status_code: number | null
+          metadata_user_agent: string | null
+          status: Database["public"]["Enums"]["enum_audit_logs_status"]
+          updated_at: string
+          user_id: number
+          user_snapshot_email: string | null
+          user_snapshot_name: string | null
+          user_snapshot_role: string | null
+        }
+        Insert: {
+          action: Database["public"]["Enums"]["enum_audit_logs_action"]
+          changes?: Json | null
+          collection?: string | null
+          context_affected_count?: number | null
+          context_notes?: string | null
+          context_reason?: string | null
+          context_source_url?: string | null
+          created_at?: string
+          document_id?: string | null
+          error_code?: string | null
+          error_message?: string | null
+          error_stack?: string | null
+          id?: number
+          metadata_duration?: number | null
+          metadata_endpoint?: string | null
+          metadata_ip_address?: string | null
+          metadata_method?: string | null
+          metadata_status_code?: number | null
+          metadata_user_agent?: string | null
+          status?: Database["public"]["Enums"]["enum_audit_logs_status"]
+          updated_at?: string
+          user_id: number
+          user_snapshot_email?: string | null
+          user_snapshot_name?: string | null
+          user_snapshot_role?: string | null
+        }
+        Update: {
+          action?: Database["public"]["Enums"]["enum_audit_logs_action"]
+          changes?: Json | null
+          collection?: string | null
+          context_affected_count?: number | null
+          context_notes?: string | null
+          context_reason?: string | null
+          context_source_url?: string | null
+          created_at?: string
+          document_id?: string | null
+          error_code?: string | null
+          error_message?: string | null
+          error_stack?: string | null
+          id?: number
+          metadata_duration?: number | null
+          metadata_endpoint?: string | null
+          metadata_ip_address?: string | null
+          metadata_method?: string | null
+          metadata_status_code?: number | null
+          metadata_user_agent?: string | null
+          status?: Database["public"]["Enums"]["enum_audit_logs_status"]
+          updated_at?: string
+          user_id?: number
+          user_snapshot_email?: string | null
+          user_snapshot_name?: string | null
+          user_snapshot_role?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_user_id_users_id_fk"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      badges: {
+        Row: {
+          achievement_required_id: number | null
+          bg_color: string | null
+          border_color: string | null
+          created_at: string
+          description: string | null
+          donor_tier_required:
+            | Database["public"]["Enums"]["enum_badges_donor_tier_required"]
+            | null
+          gradient_enabled: boolean | null
+          gradient_from: string | null
+          gradient_to: string | null
+          gradient_via: string | null
+          icon: string
+          id: number
+          is_active: boolean | null
+          manual_only: boolean | null
+          name: string
+          priority: number
+          role_required:
+            | Database["public"]["Enums"]["enum_badges_role_required"]
+            | null
+          slug: string
+          text_color: string | null
+          type: Database["public"]["Enums"]["enum_badges_type"]
+          updated_at: string
+        }
+        Insert: {
+          achievement_required_id?: number | null
+          bg_color?: string | null
+          border_color?: string | null
+          created_at?: string
+          description?: string | null
+          donor_tier_required?:
+            | Database["public"]["Enums"]["enum_badges_donor_tier_required"]
+            | null
+          gradient_enabled?: boolean | null
+          gradient_from?: string | null
+          gradient_to?: string | null
+          gradient_via?: string | null
+          icon: string
+          id?: number
+          is_active?: boolean | null
+          manual_only?: boolean | null
+          name: string
+          priority?: number
+          role_required?:
+            | Database["public"]["Enums"]["enum_badges_role_required"]
+            | null
+          slug: string
+          text_color?: string | null
+          type: Database["public"]["Enums"]["enum_badges_type"]
+          updated_at?: string
+        }
+        Update: {
+          achievement_required_id?: number | null
+          bg_color?: string | null
+          border_color?: string | null
+          created_at?: string
+          description?: string | null
+          donor_tier_required?:
+            | Database["public"]["Enums"]["enum_badges_donor_tier_required"]
+            | null
+          gradient_enabled?: boolean | null
+          gradient_from?: string | null
+          gradient_to?: string | null
+          gradient_via?: string | null
+          icon?: string
+          id?: number
+          is_active?: boolean | null
+          manual_only?: boolean | null
+          name?: string
+          priority?: number
+          role_required?:
+            | Database["public"]["Enums"]["enum_badges_role_required"]
+            | null
+          slug?: string
+          text_color?: string | null
+          type?: Database["public"]["Enums"]["enum_badges_type"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "badges_achievement_required_id_payload_achievements_id_fk"
+            columns: ["achievement_required_id"]
+            isOneToOne: false
+            referencedRelation: "payload_achievements"
             referencedColumns: ["id"]
           },
         ]
@@ -786,6 +1869,164 @@ export type Database = {
           },
         ]
       }
+      categories: {
+        Row: {
+          color: Database["public"]["Enums"]["enum_categories_color"]
+          created_at: string
+          description: string
+          icon: string
+          id: number
+          name: string
+          short_name: string
+          slug: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          color?: Database["public"]["Enums"]["enum_categories_color"]
+          created_at?: string
+          description: string
+          icon: string
+          id?: number
+          name: string
+          short_name: string
+          slug: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          color?: Database["public"]["Enums"]["enum_categories_color"]
+          created_at?: string
+          description?: string
+          icon?: string
+          id?: number
+          name?: string
+          short_name?: string
+          slug?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      code_examples: {
+        Row: {
+          code_id: string
+          code_preview: string | null
+          created_at: string
+          document_id: number
+          filename: string | null
+          id: number
+          language_id: number | null
+          metadata_line_count: number | null
+          metadata_patterns: Json | null
+          order: number
+          section_id: number | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          code_id: string
+          code_preview?: string | null
+          created_at?: string
+          document_id: number
+          filename?: string | null
+          id?: number
+          language_id?: number | null
+          metadata_line_count?: number | null
+          metadata_patterns?: Json | null
+          order: number
+          section_id?: number | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          code_id?: string
+          code_preview?: string | null
+          created_at?: string
+          document_id?: number
+          filename?: string | null
+          id?: number
+          language_id?: number | null
+          metadata_line_count?: number | null
+          metadata_patterns?: Json | null
+          order?: number
+          section_id?: number | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "code_examples_document_id_documents_id_fk"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "code_examples_language_id_programming_languages_id_fk"
+            columns: ["language_id"]
+            isOneToOne: false
+            referencedRelation: "programming_languages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "code_examples_section_id_document_sections_id_fk"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "document_sections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      code_examples_rels: {
+        Row: {
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+          payload_resources_id: number | null
+          tags_id: number | null
+        }
+        Insert: {
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Update: {
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "code_examples_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "code_examples"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "code_examples_rels_resources_fk"
+            columns: ["payload_resources_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "code_examples_rels_tags_fk"
+            columns: ["tags_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       collection_items: {
         Row: {
           added_at: string | null
@@ -925,8 +2166,8 @@ export type Database = {
           id: string
           is_edited: boolean | null
           moderated_at: string | null
-          moderated_by: string | null
-          moderation_reason: string | null
+          moderation_notes: string | null
+          moderator_id: string | null
           parent_id: string | null
           resource_id: string
           resource_type: string
@@ -943,8 +2184,8 @@ export type Database = {
           id?: string
           is_edited?: boolean | null
           moderated_at?: string | null
-          moderated_by?: string | null
-          moderation_reason?: string | null
+          moderation_notes?: string | null
+          moderator_id?: string | null
           parent_id?: string | null
           resource_id: string
           resource_type: string
@@ -961,8 +2202,8 @@ export type Database = {
           id?: string
           is_edited?: boolean | null
           moderated_at?: string | null
-          moderated_by?: string | null
-          moderation_reason?: string | null
+          moderation_notes?: string | null
+          moderator_id?: string | null
           parent_id?: string | null
           resource_id?: string
           resource_type?: string
@@ -974,7 +2215,7 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "comments_moderated_by_fkey"
-            columns: ["moderated_by"]
+            columns: ["moderator_id"]
             isOneToOne: false
             referencedRelation: "user"
             referencedColumns: ["id"]
@@ -991,6 +2232,146 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cross_link_settings: {
+        Row: {
+          auto_matching_enabled: boolean | null
+          auto_matching_max_auto_matches: number
+          auto_matching_min_score_threshold: number
+          auto_matching_min_tag_overlap: number
+          created_at: string | null
+          display_defaults_default_display_mode: Database["public"]["Enums"]["enum_cross_link_settings_display_defaults_default_display_mode"]
+          display_defaults_hover_delay_ms: number
+          display_defaults_max_cards_per_section: number | null
+          display_defaults_show_resource_cards_after_section: boolean | null
+          display_defaults_show_resource_cards_at_document_end: boolean | null
+          features_enable_bidirectional_links: boolean | null
+          features_enable_code_block_links: boolean | null
+          features_enable_hover_cards: boolean | null
+          features_enable_inline_cards: boolean | null
+          features_enable_section_links: boolean | null
+          id: number
+          scoring_weights_category_mapping_weight: number
+          scoring_weights_tag_overlap_weight: number
+          scoring_weights_title_similarity_weight: number
+          updated_at: string | null
+        }
+        Insert: {
+          auto_matching_enabled?: boolean | null
+          auto_matching_max_auto_matches?: number
+          auto_matching_min_score_threshold?: number
+          auto_matching_min_tag_overlap?: number
+          created_at?: string | null
+          display_defaults_default_display_mode?: Database["public"]["Enums"]["enum_cross_link_settings_display_defaults_default_display_mode"]
+          display_defaults_hover_delay_ms?: number
+          display_defaults_max_cards_per_section?: number | null
+          display_defaults_show_resource_cards_after_section?: boolean | null
+          display_defaults_show_resource_cards_at_document_end?: boolean | null
+          features_enable_bidirectional_links?: boolean | null
+          features_enable_code_block_links?: boolean | null
+          features_enable_hover_cards?: boolean | null
+          features_enable_inline_cards?: boolean | null
+          features_enable_section_links?: boolean | null
+          id?: number
+          scoring_weights_category_mapping_weight?: number
+          scoring_weights_tag_overlap_weight?: number
+          scoring_weights_title_similarity_weight?: number
+          updated_at?: string | null
+        }
+        Update: {
+          auto_matching_enabled?: boolean | null
+          auto_matching_max_auto_matches?: number
+          auto_matching_min_score_threshold?: number
+          auto_matching_min_tag_overlap?: number
+          created_at?: string | null
+          display_defaults_default_display_mode?: Database["public"]["Enums"]["enum_cross_link_settings_display_defaults_default_display_mode"]
+          display_defaults_hover_delay_ms?: number
+          display_defaults_max_cards_per_section?: number | null
+          display_defaults_show_resource_cards_after_section?: boolean | null
+          display_defaults_show_resource_cards_at_document_end?: boolean | null
+          features_enable_bidirectional_links?: boolean | null
+          features_enable_code_block_links?: boolean | null
+          features_enable_hover_cards?: boolean | null
+          features_enable_inline_cards?: boolean | null
+          features_enable_section_links?: boolean | null
+          id?: number
+          scoring_weights_category_mapping_weight?: number
+          scoring_weights_tag_overlap_weight?: number
+          scoring_weights_title_similarity_weight?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      cross_link_settings_category_mappings: {
+        Row: {
+          _order: number
+          _parent_id: number
+          boost_weight: number
+          doc_category: string
+          id: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          boost_weight?: number
+          doc_category: string
+          id: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          boost_weight?: number
+          doc_category?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cross_link_settings_category_mappings_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "cross_link_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cross_link_settings_rels: {
+        Row: {
+          categories_id: number | null
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+        }
+        Insert: {
+          categories_id?: number | null
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+        }
+        Update: {
+          categories_id?: number | null
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cross_link_settings_rels_categories_fk"
+            columns: ["categories_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cross_link_settings_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "cross_link_settings"
             referencedColumns: ["id"]
           },
         ]
@@ -1072,6 +2453,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      difficulty_levels: {
+        Row: {
+          color: Database["public"]["Enums"]["enum_difficulty_levels_color"]
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: number
+          name: string
+          resource_count: number | null
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          color?: Database["public"]["Enums"]["enum_difficulty_levels_color"]
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: number
+          name: string
+          resource_count?: number | null
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          color?: Database["public"]["Enums"]["enum_difficulty_levels_color"]
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: number
+          name?: string
+          resource_count?: number | null
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
       }
       dm_conversations: {
         Row: {
@@ -1239,6 +2659,7 @@ export type Database = {
           is_encrypted: boolean | null
           mentions: string[] | null
           metadata: Json | null
+          reply_to_message_id: string | null
           sender_device_id: string | null
           sender_id: string
           sender_key: string | null
@@ -1258,6 +2679,7 @@ export type Database = {
           is_encrypted?: boolean | null
           mentions?: string[] | null
           metadata?: Json | null
+          reply_to_message_id?: string | null
           sender_device_id?: string | null
           sender_id: string
           sender_key?: string | null
@@ -1277,6 +2699,7 @@ export type Database = {
           is_encrypted?: boolean | null
           mentions?: string[] | null
           metadata?: Json | null
+          reply_to_message_id?: string | null
           sender_device_id?: string | null
           sender_id?: string
           sender_key?: string | null
@@ -1302,6 +2725,13 @@ export type Database = {
             columns: ["conversation_id"]
             isOneToOne: false
             referencedRelation: "user_dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dm_messages_reply_to_message_id_fkey"
+            columns: ["reply_to_message_id"]
+            isOneToOne: false
+            referencedRelation: "dm_messages"
             referencedColumns: ["id"]
           },
           {
@@ -1492,6 +2922,111 @@ export type Database = {
             columns: ["resource_id"]
             isOneToOne: false
             referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      document_sections: {
+        Row: {
+          content_preview: string | null
+          created_at: string
+          display_mode:
+            | Database["public"]["Enums"]["enum_document_sections_display_mode"]
+            | null
+          document_id: number
+          heading_id: string
+          heading_level: number
+          heading_text: string
+          id: number
+          order: number
+          show_related_resources: boolean | null
+          updated_at: string
+        }
+        Insert: {
+          content_preview?: string | null
+          created_at?: string
+          display_mode?:
+            | Database["public"]["Enums"]["enum_document_sections_display_mode"]
+            | null
+          document_id: number
+          heading_id: string
+          heading_level: number
+          heading_text: string
+          id?: number
+          order: number
+          show_related_resources?: boolean | null
+          updated_at?: string
+        }
+        Update: {
+          content_preview?: string | null
+          created_at?: string
+          display_mode?:
+            | Database["public"]["Enums"]["enum_document_sections_display_mode"]
+            | null
+          document_id?: number
+          heading_id?: string
+          heading_level?: number
+          heading_text?: string
+          id?: number
+          order?: number
+          show_related_resources?: boolean | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_sections_document_id_documents_id_fk"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      document_sections_rels: {
+        Row: {
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+          payload_resources_id: number | null
+          tags_id: number | null
+        }
+        Insert: {
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Update: {
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_sections_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "document_sections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_sections_rels_resources_fk"
+            columns: ["payload_resources_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "document_sections_rels_tags_fk"
+            columns: ["tags_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
             referencedColumns: ["id"]
           },
         ]
@@ -1813,6 +3348,284 @@ export type Database = {
             columns: ["triggered_by"]
             isOneToOne: false
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents: {
+        Row: {
+          analysis_metadata_ai_model: string | null
+          analysis_metadata_analysis_content_hash: string | null
+          analysis_metadata_analysis_duration: number | null
+          analysis_metadata_analysis_notes: string | null
+          analysis_metadata_relationships_found: number | null
+          analysis_status:
+            | Database["public"]["Enums"]["enum_documents_analysis_status"]
+            | null
+          auto_match_enabled: boolean | null
+          created_at: string
+          description: string | null
+          display_mode:
+            | Database["public"]["Enums"]["enum_documents_display_mode"]
+            | null
+          doc_category: string
+          id: number
+          last_analyzed_at: string | null
+          meta_keywords: string | null
+          meta_no_index: boolean | null
+          metadata_code_block_count: number | null
+          metadata_heading_count: number | null
+          metadata_reading_time: string | null
+          metadata_word_count: number | null
+          relationship_count: number | null
+          rewrite_info_last_rewrite_at: string | null
+          rewrite_info_rewrite_status:
+            | Database["public"]["Enums"]["enum_documents_rewrite_info_rewrite_status"]
+            | null
+          slug: string
+          sync_info_content_hash: string | null
+          sync_info_last_synced: string | null
+          sync_info_mdx_path: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          analysis_metadata_ai_model?: string | null
+          analysis_metadata_analysis_content_hash?: string | null
+          analysis_metadata_analysis_duration?: number | null
+          analysis_metadata_analysis_notes?: string | null
+          analysis_metadata_relationships_found?: number | null
+          analysis_status?:
+            | Database["public"]["Enums"]["enum_documents_analysis_status"]
+            | null
+          auto_match_enabled?: boolean | null
+          created_at?: string
+          description?: string | null
+          display_mode?:
+            | Database["public"]["Enums"]["enum_documents_display_mode"]
+            | null
+          doc_category: string
+          id?: number
+          last_analyzed_at?: string | null
+          meta_keywords?: string | null
+          meta_no_index?: boolean | null
+          metadata_code_block_count?: number | null
+          metadata_heading_count?: number | null
+          metadata_reading_time?: string | null
+          metadata_word_count?: number | null
+          relationship_count?: number | null
+          rewrite_info_last_rewrite_at?: string | null
+          rewrite_info_rewrite_status?:
+            | Database["public"]["Enums"]["enum_documents_rewrite_info_rewrite_status"]
+            | null
+          slug: string
+          sync_info_content_hash?: string | null
+          sync_info_last_synced?: string | null
+          sync_info_mdx_path?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          analysis_metadata_ai_model?: string | null
+          analysis_metadata_analysis_content_hash?: string | null
+          analysis_metadata_analysis_duration?: number | null
+          analysis_metadata_analysis_notes?: string | null
+          analysis_metadata_relationships_found?: number | null
+          analysis_status?:
+            | Database["public"]["Enums"]["enum_documents_analysis_status"]
+            | null
+          auto_match_enabled?: boolean | null
+          created_at?: string
+          description?: string | null
+          display_mode?:
+            | Database["public"]["Enums"]["enum_documents_display_mode"]
+            | null
+          doc_category?: string
+          id?: number
+          last_analyzed_at?: string | null
+          meta_keywords?: string | null
+          meta_no_index?: boolean | null
+          metadata_code_block_count?: number | null
+          metadata_heading_count?: number | null
+          metadata_reading_time?: string | null
+          metadata_word_count?: number | null
+          relationship_count?: number | null
+          rewrite_info_last_rewrite_at?: string | null
+          rewrite_info_rewrite_status?:
+            | Database["public"]["Enums"]["enum_documents_rewrite_info_rewrite_status"]
+            | null
+          slug?: string
+          sync_info_content_hash?: string | null
+          sync_info_last_synced?: string | null
+          sync_info_mdx_path?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      documents_ai_relationships: {
+        Row: {
+          _order: number
+          _parent_id: number
+          confidence: number | null
+          id: string
+          is_approved: boolean | null
+          reasoning: string | null
+          relationship_type: Database["public"]["Enums"]["enum_documents_ai_relationships_relationship_type"]
+          resource_id: string
+          resource_title: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          confidence?: number | null
+          id: string
+          is_approved?: boolean | null
+          reasoning?: string | null
+          relationship_type: Database["public"]["Enums"]["enum_documents_ai_relationships_relationship_type"]
+          resource_id: string
+          resource_title?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          confidence?: number | null
+          id?: string
+          is_approved?: boolean | null
+          reasoning?: string | null
+          relationship_type?: Database["public"]["Enums"]["enum_documents_ai_relationships_relationship_type"]
+          resource_id?: string
+          resource_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_ai_relationships_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents_locales: {
+        Row: {
+          _locale: unknown[]
+          _parent_id: number
+          id: number
+          meta_description: string | null
+          meta_image_id: number | null
+          meta_title: string | null
+        }
+        Insert: {
+          _locale: unknown[]
+          _parent_id: number
+          id?: number
+          meta_description?: string | null
+          meta_image_id?: number | null
+          meta_title?: string | null
+        }
+        Update: {
+          _locale?: unknown[]
+          _parent_id?: number
+          id?: number
+          meta_description?: string | null
+          meta_image_id?: number | null
+          meta_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_locales_meta_image_id_media_id_fk"
+            columns: ["meta_image_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_locales_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents_rels: {
+        Row: {
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+          payload_resources_id: number | null
+          tags_id: number | null
+        }
+        Insert: {
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Update: {
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_rels_resources_fk"
+            columns: ["payload_resources_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_rels_tags_fk"
+            columns: ["tags_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents_rewrite_info_source_urls: {
+        Row: {
+          _order: number
+          _parent_id: number
+          id: string
+          title: string | null
+          url: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          id: string
+          title?: string | null
+          url: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          id?: string
+          title?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_rewrite_info_source_urls_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
             referencedColumns: ["id"]
           },
         ]
@@ -2722,6 +4535,57 @@ export type Database = {
           },
         ]
       }
+      email_templates: {
+        Row: {
+          created_at: string
+          html_content: Json
+          id: number
+          name: string
+          notes: string | null
+          plain_text_content: string | null
+          preview_text: string | null
+          slug: Database["public"]["Enums"]["enum_email_templates_slug"]
+          status: Database["public"]["Enums"]["enum_email_templates_status"]
+          styling_primary_color: string | null
+          styling_show_footer: boolean | null
+          styling_show_logo: boolean | null
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          html_content: Json
+          id?: number
+          name: string
+          notes?: string | null
+          plain_text_content?: string | null
+          preview_text?: string | null
+          slug: Database["public"]["Enums"]["enum_email_templates_slug"]
+          status?: Database["public"]["Enums"]["enum_email_templates_status"]
+          styling_primary_color?: string | null
+          styling_show_footer?: boolean | null
+          styling_show_logo?: boolean | null
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          html_content?: Json
+          id?: number
+          name?: string
+          notes?: string | null
+          plain_text_content?: string | null
+          preview_text?: string | null
+          slug?: Database["public"]["Enums"]["enum_email_templates_slug"]
+          status?: Database["public"]["Enums"]["enum_email_templates_status"]
+          styling_primary_color?: string | null
+          styling_show_footer?: boolean | null
+          styling_show_logo?: boolean | null
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       email_verification_codes: {
         Row: {
           attempts: number | null
@@ -2889,39 +4753,39 @@ export type Database = {
         Row: {
           created_at: string | null
           description: string
+          feedback_type: string
           id: string
           page_url: string | null
-          priority: string | null
           screenshot_url: string | null
+          severity: string | null
           status: string | null
           title: string
-          type: string
           updated_at: string | null
           user_id: string
         }
         Insert: {
           created_at?: string | null
           description: string
+          feedback_type: string
           id?: string
           page_url?: string | null
-          priority?: string | null
           screenshot_url?: string | null
+          severity?: string | null
           status?: string | null
           title: string
-          type: string
           updated_at?: string | null
           user_id: string
         }
         Update: {
           created_at?: string | null
           description?: string
+          feedback_type?: string
           id?: string
           page_url?: string | null
-          priority?: string | null
           screenshot_url?: string | null
+          severity?: string | null
           status?: string | null
           title?: string
-          type?: string
           updated_at?: string | null
           user_id?: string
         }
@@ -2931,6 +4795,252 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gamification_settings: {
+        Row: {
+          achievements_enabled: boolean | null
+          achievements_max_badges_displayed: number | null
+          achievements_retroactive_awards: boolean | null
+          achievements_show_hidden_progress: boolean | null
+          achievements_showcase_limit: number | null
+          created_at: string | null
+          event_triggers_award_on_first_action: boolean | null
+          event_triggers_award_on_quality: boolean | null
+          event_triggers_delay_awards_minutes: number | null
+          event_triggers_first_action_multiplier: number | null
+          event_triggers_quality_bonus_points: number | null
+          id: number
+          leaderboard_display_limit: number | null
+          leaderboard_enabled: boolean | null
+          leaderboard_minimum_points_to_show: number | null
+          leaderboard_refresh_interval: number | null
+          leaderboard_show_anonymous_users: boolean | null
+          levels_enabled: boolean | null
+          moderation_auto_suspend_on_abuse: boolean | null
+          moderation_enable_abuse_detection: boolean | null
+          moderation_max_actions_per_hour: number | null
+          moderation_max_points_adjustment: number | null
+          moderation_moderator_can_adjust_points: boolean | null
+          moderation_moderator_can_revoke_achievements: boolean | null
+          moderation_require_adjustment_reason: boolean | null
+          moderation_suspicious_threshold: number | null
+          notifications_default_confetti_enabled: boolean | null
+          notifications_default_sound_enabled: boolean | null
+          notifications_show_achievement_popups: boolean | null
+          notifications_show_level_up_popups: boolean | null
+          notifications_show_points_toast: boolean | null
+          points_system_daily_points_cap: number | null
+          points_system_enabled: boolean | null
+          points_system_points_per_comment: number | null
+          points_system_points_per_edit_suggestion: number | null
+          points_system_points_per_favorite: number | null
+          points_system_points_per_login: number | null
+          points_system_points_per_message: number | null
+          points_system_points_per_rating: number | null
+          points_system_points_per_review: number | null
+          points_system_points_per_share: number | null
+          streaks_enabled: boolean | null
+          streaks_grace_period_hours: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          achievements_enabled?: boolean | null
+          achievements_max_badges_displayed?: number | null
+          achievements_retroactive_awards?: boolean | null
+          achievements_show_hidden_progress?: boolean | null
+          achievements_showcase_limit?: number | null
+          created_at?: string | null
+          event_triggers_award_on_first_action?: boolean | null
+          event_triggers_award_on_quality?: boolean | null
+          event_triggers_delay_awards_minutes?: number | null
+          event_triggers_first_action_multiplier?: number | null
+          event_triggers_quality_bonus_points?: number | null
+          id?: number
+          leaderboard_display_limit?: number | null
+          leaderboard_enabled?: boolean | null
+          leaderboard_minimum_points_to_show?: number | null
+          leaderboard_refresh_interval?: number | null
+          leaderboard_show_anonymous_users?: boolean | null
+          levels_enabled?: boolean | null
+          moderation_auto_suspend_on_abuse?: boolean | null
+          moderation_enable_abuse_detection?: boolean | null
+          moderation_max_actions_per_hour?: number | null
+          moderation_max_points_adjustment?: number | null
+          moderation_moderator_can_adjust_points?: boolean | null
+          moderation_moderator_can_revoke_achievements?: boolean | null
+          moderation_require_adjustment_reason?: boolean | null
+          moderation_suspicious_threshold?: number | null
+          notifications_default_confetti_enabled?: boolean | null
+          notifications_default_sound_enabled?: boolean | null
+          notifications_show_achievement_popups?: boolean | null
+          notifications_show_level_up_popups?: boolean | null
+          notifications_show_points_toast?: boolean | null
+          points_system_daily_points_cap?: number | null
+          points_system_enabled?: boolean | null
+          points_system_points_per_comment?: number | null
+          points_system_points_per_edit_suggestion?: number | null
+          points_system_points_per_favorite?: number | null
+          points_system_points_per_login?: number | null
+          points_system_points_per_message?: number | null
+          points_system_points_per_rating?: number | null
+          points_system_points_per_review?: number | null
+          points_system_points_per_share?: number | null
+          streaks_enabled?: boolean | null
+          streaks_grace_period_hours?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          achievements_enabled?: boolean | null
+          achievements_max_badges_displayed?: number | null
+          achievements_retroactive_awards?: boolean | null
+          achievements_show_hidden_progress?: boolean | null
+          achievements_showcase_limit?: number | null
+          created_at?: string | null
+          event_triggers_award_on_first_action?: boolean | null
+          event_triggers_award_on_quality?: boolean | null
+          event_triggers_delay_awards_minutes?: number | null
+          event_triggers_first_action_multiplier?: number | null
+          event_triggers_quality_bonus_points?: number | null
+          id?: number
+          leaderboard_display_limit?: number | null
+          leaderboard_enabled?: boolean | null
+          leaderboard_minimum_points_to_show?: number | null
+          leaderboard_refresh_interval?: number | null
+          leaderboard_show_anonymous_users?: boolean | null
+          levels_enabled?: boolean | null
+          moderation_auto_suspend_on_abuse?: boolean | null
+          moderation_enable_abuse_detection?: boolean | null
+          moderation_max_actions_per_hour?: number | null
+          moderation_max_points_adjustment?: number | null
+          moderation_moderator_can_adjust_points?: boolean | null
+          moderation_moderator_can_revoke_achievements?: boolean | null
+          moderation_require_adjustment_reason?: boolean | null
+          moderation_suspicious_threshold?: number | null
+          notifications_default_confetti_enabled?: boolean | null
+          notifications_default_sound_enabled?: boolean | null
+          notifications_show_achievement_popups?: boolean | null
+          notifications_show_level_up_popups?: boolean | null
+          notifications_show_points_toast?: boolean | null
+          points_system_daily_points_cap?: number | null
+          points_system_enabled?: boolean | null
+          points_system_points_per_comment?: number | null
+          points_system_points_per_edit_suggestion?: number | null
+          points_system_points_per_favorite?: number | null
+          points_system_points_per_login?: number | null
+          points_system_points_per_message?: number | null
+          points_system_points_per_rating?: number | null
+          points_system_points_per_review?: number | null
+          points_system_points_per_share?: number | null
+          streaks_enabled?: boolean | null
+          streaks_grace_period_hours?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      gamification_settings_levels: {
+        Row: {
+          _order: number
+          _parent_id: number
+          color: string | null
+          icon: string | null
+          id: string
+          level: number | null
+          name: string | null
+          points_required: number | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          color?: string | null
+          icon?: string | null
+          id: string
+          level?: number | null
+          name?: string | null
+          points_required?: number | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          color?: string | null
+          icon?: string | null
+          id?: string
+          level?: number | null
+          name?: string | null
+          points_required?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gamification_settings_levels_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "gamification_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gamification_settings_levels_perks: {
+        Row: {
+          _order: number
+          _parent_id: string
+          id: string
+          perk: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: string
+          id: string
+          perk?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: string
+          id?: string
+          perk?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gamification_settings_levels_perks_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "gamification_settings_levels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gamification_settings_streaks_milestones: {
+        Row: {
+          _order: number
+          _parent_id: number
+          achievement_slug: string | null
+          bonus_points: number | null
+          days: number | null
+          id: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          achievement_slug?: string | null
+          bonus_points?: number | null
+          days?: number | null
+          id: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          achievement_slug?: string | null
+          bonus_points?: number | null
+          days?: number | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gamification_settings_streaks_milestones_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "gamification_settings"
             referencedColumns: ["id"]
           },
         ]
@@ -3120,6 +5230,132 @@ export type Database = {
           },
         ]
       }
+      media: {
+        Row: {
+          alt: string
+          caption: string | null
+          category: Database["public"]["Enums"]["enum_media_category"] | null
+          created_at: string
+          filename: string | null
+          filesize: number | null
+          focal_x: number | null
+          focal_y: number | null
+          height: number | null
+          id: number
+          mime_type: string | null
+          sizes_avatar_filename: string | null
+          sizes_avatar_filesize: number | null
+          sizes_avatar_height: number | null
+          sizes_avatar_mime_type: string | null
+          sizes_avatar_url: string | null
+          sizes_avatar_width: number | null
+          sizes_card_filename: string | null
+          sizes_card_filesize: number | null
+          sizes_card_height: number | null
+          sizes_card_mime_type: string | null
+          sizes_card_url: string | null
+          sizes_card_width: number | null
+          sizes_feature_filename: string | null
+          sizes_feature_filesize: number | null
+          sizes_feature_height: number | null
+          sizes_feature_mime_type: string | null
+          sizes_feature_url: string | null
+          sizes_feature_width: number | null
+          sizes_thumbnail_filename: string | null
+          sizes_thumbnail_filesize: number | null
+          sizes_thumbnail_height: number | null
+          sizes_thumbnail_mime_type: string | null
+          sizes_thumbnail_url: string | null
+          sizes_thumbnail_width: number | null
+          thumbnail_u_r_l: string | null
+          updated_at: string
+          url: string | null
+          width: number | null
+        }
+        Insert: {
+          alt: string
+          caption?: string | null
+          category?: Database["public"]["Enums"]["enum_media_category"] | null
+          created_at?: string
+          filename?: string | null
+          filesize?: number | null
+          focal_x?: number | null
+          focal_y?: number | null
+          height?: number | null
+          id?: number
+          mime_type?: string | null
+          sizes_avatar_filename?: string | null
+          sizes_avatar_filesize?: number | null
+          sizes_avatar_height?: number | null
+          sizes_avatar_mime_type?: string | null
+          sizes_avatar_url?: string | null
+          sizes_avatar_width?: number | null
+          sizes_card_filename?: string | null
+          sizes_card_filesize?: number | null
+          sizes_card_height?: number | null
+          sizes_card_mime_type?: string | null
+          sizes_card_url?: string | null
+          sizes_card_width?: number | null
+          sizes_feature_filename?: string | null
+          sizes_feature_filesize?: number | null
+          sizes_feature_height?: number | null
+          sizes_feature_mime_type?: string | null
+          sizes_feature_url?: string | null
+          sizes_feature_width?: number | null
+          sizes_thumbnail_filename?: string | null
+          sizes_thumbnail_filesize?: number | null
+          sizes_thumbnail_height?: number | null
+          sizes_thumbnail_mime_type?: string | null
+          sizes_thumbnail_url?: string | null
+          sizes_thumbnail_width?: number | null
+          thumbnail_u_r_l?: string | null
+          updated_at?: string
+          url?: string | null
+          width?: number | null
+        }
+        Update: {
+          alt?: string
+          caption?: string | null
+          category?: Database["public"]["Enums"]["enum_media_category"] | null
+          created_at?: string
+          filename?: string | null
+          filesize?: number | null
+          focal_x?: number | null
+          focal_y?: number | null
+          height?: number | null
+          id?: number
+          mime_type?: string | null
+          sizes_avatar_filename?: string | null
+          sizes_avatar_filesize?: number | null
+          sizes_avatar_height?: number | null
+          sizes_avatar_mime_type?: string | null
+          sizes_avatar_url?: string | null
+          sizes_avatar_width?: number | null
+          sizes_card_filename?: string | null
+          sizes_card_filesize?: number | null
+          sizes_card_height?: number | null
+          sizes_card_mime_type?: string | null
+          sizes_card_url?: string | null
+          sizes_card_width?: number | null
+          sizes_feature_filename?: string | null
+          sizes_feature_filesize?: number | null
+          sizes_feature_height?: number | null
+          sizes_feature_mime_type?: string | null
+          sizes_feature_url?: string | null
+          sizes_feature_width?: number | null
+          sizes_thumbnail_filename?: string | null
+          sizes_thumbnail_filesize?: number | null
+          sizes_thumbnail_height?: number | null
+          sizes_thumbnail_mime_type?: string | null
+          sizes_thumbnail_url?: string | null
+          sizes_thumbnail_width?: number | null
+          thumbnail_u_r_l?: string | null
+          updated_at?: string
+          url?: string | null
+          width?: number | null
+        }
+        Relationships: []
+      }
       megolm_session_shares: {
         Row: {
           claimed_at: string | null
@@ -3191,6 +5427,45 @@ export type Database = {
           {
             foreignKeyName: "megolm_session_shares_sender_user_id_fkey"
             columns: ["sender_user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      message_reactions: {
+        Row: {
+          created_at: string
+          emoji: string
+          id: string
+          message_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emoji: string
+          id?: string
+          message_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emoji?: string
+          id?: string
+          message_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_reactions_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "dm_messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "message_reactions_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user"
             referencedColumns: ["id"]
@@ -3432,6 +5707,1751 @@ export type Database = {
           },
         ]
       }
+      payload_achievements: {
+        Row: {
+          base_points: number
+          category_id: number
+          compound_conditions: Json | null
+          compound_logic:
+            | Database["public"]["Enums"]["enum_payload_achievements_compound_logic"]
+            | null
+          condition_type: Database["public"]["Enums"]["enum_payload_achievements_condition_type"]
+          confetti_duration: number | null
+          created_at: string
+          description: string
+          display_duration: number | null
+          end_date: string | null
+          icon: string
+          id: number
+          is_active: boolean | null
+          is_hidden: boolean | null
+          is_limited: boolean | null
+          is_secret: boolean | null
+          metric:
+            | Database["public"]["Enums"]["enum_payload_achievements_metric"]
+            | null
+          name: string
+          notification_message: string | null
+          notification_sound:
+            | Database["public"]["Enums"]["enum_payload_achievements_notification_sound"]
+            | null
+          notification_title: string | null
+          show_confetti: boolean | null
+          slug: string
+          start_date: string | null
+          threshold: number | null
+          tier_id: number
+          time_window: string | null
+          updated_at: string
+        }
+        Insert: {
+          base_points?: number
+          category_id: number
+          compound_conditions?: Json | null
+          compound_logic?:
+            | Database["public"]["Enums"]["enum_payload_achievements_compound_logic"]
+            | null
+          condition_type?: Database["public"]["Enums"]["enum_payload_achievements_condition_type"]
+          confetti_duration?: number | null
+          created_at?: string
+          description: string
+          display_duration?: number | null
+          end_date?: string | null
+          icon: string
+          id?: number
+          is_active?: boolean | null
+          is_hidden?: boolean | null
+          is_limited?: boolean | null
+          is_secret?: boolean | null
+          metric?:
+            | Database["public"]["Enums"]["enum_payload_achievements_metric"]
+            | null
+          name: string
+          notification_message?: string | null
+          notification_sound?:
+            | Database["public"]["Enums"]["enum_payload_achievements_notification_sound"]
+            | null
+          notification_title?: string | null
+          show_confetti?: boolean | null
+          slug: string
+          start_date?: string | null
+          threshold?: number | null
+          tier_id: number
+          time_window?: string | null
+          updated_at?: string
+        }
+        Update: {
+          base_points?: number
+          category_id?: number
+          compound_conditions?: Json | null
+          compound_logic?:
+            | Database["public"]["Enums"]["enum_payload_achievements_compound_logic"]
+            | null
+          condition_type?: Database["public"]["Enums"]["enum_payload_achievements_condition_type"]
+          confetti_duration?: number | null
+          created_at?: string
+          description?: string
+          display_duration?: number | null
+          end_date?: string | null
+          icon?: string
+          id?: number
+          is_active?: boolean | null
+          is_hidden?: boolean | null
+          is_limited?: boolean | null
+          is_secret?: boolean | null
+          metric?:
+            | Database["public"]["Enums"]["enum_payload_achievements_metric"]
+            | null
+          name?: string
+          notification_message?: string | null
+          notification_sound?:
+            | Database["public"]["Enums"]["enum_payload_achievements_notification_sound"]
+            | null
+          notification_title?: string | null
+          show_confetti?: boolean | null
+          slug?: string
+          start_date?: string | null
+          threshold?: number | null
+          tier_id?: number
+          time_window?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_achievements_category_id_achievement_categories_id_fk"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "achievement_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_achievements_tier_id_achievement_tiers_id_fk"
+            columns: ["tier_id"]
+            isOneToOne: false
+            referencedRelation: "achievement_tiers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_edit_suggestions: {
+        Row: {
+          created_at: string
+          current_content: string | null
+          id: number
+          priority:
+            | Database["public"]["Enums"]["enum_payload_edit_suggestions_priority"]
+            | null
+          reason: string | null
+          rejection_reason: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by_id: number | null
+          status: Database["public"]["Enums"]["enum_payload_edit_suggestions_status"]
+          submitter_email: string | null
+          submitter_name: string | null
+          submitter_type:
+            | Database["public"]["Enums"]["enum_payload_edit_suggestions_submitter_type"]
+            | null
+          submitter_user_id: string | null
+          suggested_content: string
+          target_id: string
+          target_type: Database["public"]["Enums"]["enum_payload_edit_suggestions_target_type"]
+          target_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          current_content?: string | null
+          id?: number
+          priority?:
+            | Database["public"]["Enums"]["enum_payload_edit_suggestions_priority"]
+            | null
+          reason?: string | null
+          rejection_reason?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by_id?: number | null
+          status?: Database["public"]["Enums"]["enum_payload_edit_suggestions_status"]
+          submitter_email?: string | null
+          submitter_name?: string | null
+          submitter_type?:
+            | Database["public"]["Enums"]["enum_payload_edit_suggestions_submitter_type"]
+            | null
+          submitter_user_id?: string | null
+          suggested_content: string
+          target_id: string
+          target_type: Database["public"]["Enums"]["enum_payload_edit_suggestions_target_type"]
+          target_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          current_content?: string | null
+          id?: number
+          priority?:
+            | Database["public"]["Enums"]["enum_payload_edit_suggestions_priority"]
+            | null
+          reason?: string | null
+          rejection_reason?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by_id?: number | null
+          status?: Database["public"]["Enums"]["enum_payload_edit_suggestions_status"]
+          submitter_email?: string | null
+          submitter_name?: string | null
+          submitter_type?:
+            | Database["public"]["Enums"]["enum_payload_edit_suggestions_submitter_type"]
+            | null
+          submitter_user_id?: string | null
+          suggested_content?: string
+          target_id?: string
+          target_type?: Database["public"]["Enums"]["enum_payload_edit_suggestions_target_type"]
+          target_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_edit_suggestions_reviewed_by_id_users_id_fk"
+            columns: ["reviewed_by_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_kv: {
+        Row: {
+          data: Json
+          id: number
+          key: string
+        }
+        Insert: {
+          data: Json
+          id?: number
+          key: string
+        }
+        Update: {
+          data?: Json
+          id?: number
+          key?: string
+        }
+        Relationships: []
+      }
+      payload_locked_documents: {
+        Row: {
+          created_at: string
+          global_slug: string | null
+          id: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          global_slug?: string | null
+          id?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          global_slug?: string | null
+          id?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      payload_locked_documents_rels: {
+        Row: {
+          achievement_categories_id: number | null
+          achievement_tiers_id: number | null
+          audit_logs_id: number | null
+          badges_id: number | null
+          categories_id: number | null
+          code_examples_id: number | null
+          difficulty_levels_id: number | null
+          document_sections_id: number | null
+          documents_id: number | null
+          email_templates_id: number | null
+          id: number
+          media_id: number | null
+          order: number | null
+          parent_id: number
+          path: string
+          payload_achievements_id: number | null
+          payload_edit_suggestions_id: number | null
+          payload_resource_authors_id: number | null
+          payload_resource_discovery_queue_id: number | null
+          payload_resource_reviews_id: number | null
+          payload_resource_sources_id: number | null
+          payload_resources_id: number | null
+          programming_languages_id: number | null
+          subcategories_id: number | null
+          tags_id: number | null
+          translations_id: number | null
+          users_id: number | null
+        }
+        Insert: {
+          achievement_categories_id?: number | null
+          achievement_tiers_id?: number | null
+          audit_logs_id?: number | null
+          badges_id?: number | null
+          categories_id?: number | null
+          code_examples_id?: number | null
+          difficulty_levels_id?: number | null
+          document_sections_id?: number | null
+          documents_id?: number | null
+          email_templates_id?: number | null
+          id?: number
+          media_id?: number | null
+          order?: number | null
+          parent_id: number
+          path: string
+          payload_achievements_id?: number | null
+          payload_edit_suggestions_id?: number | null
+          payload_resource_authors_id?: number | null
+          payload_resource_discovery_queue_id?: number | null
+          payload_resource_reviews_id?: number | null
+          payload_resource_sources_id?: number | null
+          payload_resources_id?: number | null
+          programming_languages_id?: number | null
+          subcategories_id?: number | null
+          tags_id?: number | null
+          translations_id?: number | null
+          users_id?: number | null
+        }
+        Update: {
+          achievement_categories_id?: number | null
+          achievement_tiers_id?: number | null
+          audit_logs_id?: number | null
+          badges_id?: number | null
+          categories_id?: number | null
+          code_examples_id?: number | null
+          difficulty_levels_id?: number | null
+          document_sections_id?: number | null
+          documents_id?: number | null
+          email_templates_id?: number | null
+          id?: number
+          media_id?: number | null
+          order?: number | null
+          parent_id?: number
+          path?: string
+          payload_achievements_id?: number | null
+          payload_edit_suggestions_id?: number | null
+          payload_resource_authors_id?: number | null
+          payload_resource_discovery_queue_id?: number | null
+          payload_resource_reviews_id?: number | null
+          payload_resource_sources_id?: number | null
+          payload_resources_id?: number | null
+          programming_languages_id?: number | null
+          subcategories_id?: number | null
+          tags_id?: number | null
+          translations_id?: number | null
+          users_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_locked_documents_rels_achievement_categories_fk"
+            columns: ["achievement_categories_id"]
+            isOneToOne: false
+            referencedRelation: "achievement_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_achievement_tiers_fk"
+            columns: ["achievement_tiers_id"]
+            isOneToOne: false
+            referencedRelation: "achievement_tiers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_achievements_fk"
+            columns: ["payload_achievements_id"]
+            isOneToOne: false
+            referencedRelation: "payload_achievements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_audit_logs_fk"
+            columns: ["audit_logs_id"]
+            isOneToOne: false
+            referencedRelation: "audit_logs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_badges_fk"
+            columns: ["badges_id"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_categories_fk"
+            columns: ["categories_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_code_examples_fk"
+            columns: ["code_examples_id"]
+            isOneToOne: false
+            referencedRelation: "code_examples"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_difficulty_levels_fk"
+            columns: ["difficulty_levels_id"]
+            isOneToOne: false
+            referencedRelation: "difficulty_levels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_document_sections_fk"
+            columns: ["document_sections_id"]
+            isOneToOne: false
+            referencedRelation: "document_sections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_documents_fk"
+            columns: ["documents_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_edit_suggestions_fk"
+            columns: ["payload_edit_suggestions_id"]
+            isOneToOne: false
+            referencedRelation: "payload_edit_suggestions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_email_templates_fk"
+            columns: ["email_templates_id"]
+            isOneToOne: false
+            referencedRelation: "email_templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_media_fk"
+            columns: ["media_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_locked_documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_programming_languages_fk"
+            columns: ["programming_languages_id"]
+            isOneToOne: false
+            referencedRelation: "programming_languages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_resource_authors_fk"
+            columns: ["payload_resource_authors_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_authors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_resource_discovery_queue_fk"
+            columns: ["payload_resource_discovery_queue_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_discovery_queue"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_resource_reviews_fk"
+            columns: ["payload_resource_reviews_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_reviews"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_resource_sources_fk"
+            columns: ["payload_resource_sources_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_resources_fk"
+            columns: ["payload_resources_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_subcategories_fk"
+            columns: ["subcategories_id"]
+            isOneToOne: false
+            referencedRelation: "subcategories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_tags_fk"
+            columns: ["tags_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_translations_fk"
+            columns: ["translations_id"]
+            isOneToOne: false
+            referencedRelation: "translations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_locked_documents_rels_users_fk"
+            columns: ["users_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_migrations: {
+        Row: {
+          batch: number | null
+          created_at: string
+          id: number
+          name: string | null
+          updated_at: string
+        }
+        Insert: {
+          batch?: number | null
+          created_at?: string
+          id?: number
+          name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          batch?: number | null
+          created_at?: string
+          id?: number
+          name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      payload_preferences: {
+        Row: {
+          created_at: string
+          id: number
+          key: string | null
+          updated_at: string
+          value: Json | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          key?: string | null
+          updated_at?: string
+          value?: Json | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          key?: string | null
+          updated_at?: string
+          value?: Json | null
+        }
+        Relationships: []
+      }
+      payload_preferences_rels: {
+        Row: {
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+          users_id: number | null
+        }
+        Insert: {
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+          users_id?: number | null
+        }
+        Update: {
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+          users_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_preferences_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_preferences"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_preferences_rels_users_fk"
+            columns: ["users_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resource_authors: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          github_username: string | null
+          id: number
+          is_primary: boolean | null
+          name: string
+          resource_id: number
+          role: Database["public"]["Enums"]["enum_payload_resource_authors_role"]
+          twitter_username: string | null
+          updated_at: string
+          user_id: number | null
+          website_url: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          github_username?: string | null
+          id?: number
+          is_primary?: boolean | null
+          name: string
+          resource_id: number
+          role?: Database["public"]["Enums"]["enum_payload_resource_authors_role"]
+          twitter_username?: string | null
+          updated_at?: string
+          user_id?: number | null
+          website_url?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          github_username?: string | null
+          id?: number
+          is_primary?: boolean | null
+          name?: string
+          resource_id?: number
+          role?: Database["public"]["Enums"]["enum_payload_resource_authors_role"]
+          twitter_username?: string | null
+          updated_at?: string
+          user_id?: number | null
+          website_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resource_authors_resource_id_payload_resources_id_fk"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_authors_user_id_users_id_fk"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resource_discovery_queue: {
+        Row: {
+          ai_analysis_analyzed_at: string | null
+          ai_analysis_confidence_score: number | null
+          ai_analysis_quality_score: number | null
+          ai_analysis_reasoning: string | null
+          ai_analysis_relevance_score: number | null
+          ai_analysis_suggested_improvements: string | null
+          ai_analysis_warnings: string | null
+          created_at: string
+          created_resource_id: number | null
+          description: string
+          duplicate_of_id: number | null
+          github_forks: number | null
+          github_language: string | null
+          github_last_commit: string | null
+          github_license: string | null
+          github_open_issues: number | null
+          github_owner: string | null
+          github_repo: string | null
+          github_stars: number | null
+          id: number
+          package_name: string | null
+          package_registry:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_package_registry"]
+            | null
+          package_version: string | null
+          package_weekly_downloads: number | null
+          priority:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_priority"]
+            | null
+          raw_data: Json | null
+          rejection_reason: string | null
+          review_notes: string | null
+          reviewed_at: string | null
+          reviewed_by_id: number | null
+          source_id: number | null
+          source_url: string | null
+          status: Database["public"]["Enums"]["enum_payload_resource_discovery_queue_status"]
+          suggested_category_id: number | null
+          suggested_difficulty_id: number | null
+          suggested_status:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_suggested_status"]
+            | null
+          suggested_subcategory_id: number | null
+          title: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          ai_analysis_analyzed_at?: string | null
+          ai_analysis_confidence_score?: number | null
+          ai_analysis_quality_score?: number | null
+          ai_analysis_reasoning?: string | null
+          ai_analysis_relevance_score?: number | null
+          ai_analysis_suggested_improvements?: string | null
+          ai_analysis_warnings?: string | null
+          created_at?: string
+          created_resource_id?: number | null
+          description: string
+          duplicate_of_id?: number | null
+          github_forks?: number | null
+          github_language?: string | null
+          github_last_commit?: string | null
+          github_license?: string | null
+          github_open_issues?: number | null
+          github_owner?: string | null
+          github_repo?: string | null
+          github_stars?: number | null
+          id?: number
+          package_name?: string | null
+          package_registry?:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_package_registry"]
+            | null
+          package_version?: string | null
+          package_weekly_downloads?: number | null
+          priority?:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_priority"]
+            | null
+          raw_data?: Json | null
+          rejection_reason?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by_id?: number | null
+          source_id?: number | null
+          source_url?: string | null
+          status?: Database["public"]["Enums"]["enum_payload_resource_discovery_queue_status"]
+          suggested_category_id?: number | null
+          suggested_difficulty_id?: number | null
+          suggested_status?:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_suggested_status"]
+            | null
+          suggested_subcategory_id?: number | null
+          title: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          ai_analysis_analyzed_at?: string | null
+          ai_analysis_confidence_score?: number | null
+          ai_analysis_quality_score?: number | null
+          ai_analysis_reasoning?: string | null
+          ai_analysis_relevance_score?: number | null
+          ai_analysis_suggested_improvements?: string | null
+          ai_analysis_warnings?: string | null
+          created_at?: string
+          created_resource_id?: number | null
+          description?: string
+          duplicate_of_id?: number | null
+          github_forks?: number | null
+          github_language?: string | null
+          github_last_commit?: string | null
+          github_license?: string | null
+          github_open_issues?: number | null
+          github_owner?: string | null
+          github_repo?: string | null
+          github_stars?: number | null
+          id?: number
+          package_name?: string | null
+          package_registry?:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_package_registry"]
+            | null
+          package_version?: string | null
+          package_weekly_downloads?: number | null
+          priority?:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_priority"]
+            | null
+          raw_data?: Json | null
+          rejection_reason?: string | null
+          review_notes?: string | null
+          reviewed_at?: string | null
+          reviewed_by_id?: number | null
+          source_id?: number | null
+          source_url?: string | null
+          status?: Database["public"]["Enums"]["enum_payload_resource_discovery_queue_status"]
+          suggested_category_id?: number | null
+          suggested_difficulty_id?: number | null
+          suggested_status?:
+            | Database["public"]["Enums"]["enum_payload_resource_discovery_queue_suggested_status"]
+            | null
+          suggested_subcategory_id?: number | null
+          title?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resource_discovery_queue_created_resource_id_payload_re"
+            columns: ["created_resource_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_discovery_queue_duplicate_of_id_payload_resour"
+            columns: ["duplicate_of_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_discovery_queue_reviewed_by_id_users_id_fk"
+            columns: ["reviewed_by_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_discovery_queue_source_id_payload_resource_sou"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_discovery_queue_suggested_category_id_categori"
+            columns: ["suggested_category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_discovery_queue_suggested_difficulty_id_diffic"
+            columns: ["suggested_difficulty_id"]
+            isOneToOne: false
+            referencedRelation: "difficulty_levels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_discovery_queue_suggested_subcategory_id_subca"
+            columns: ["suggested_subcategory_id"]
+            isOneToOne: false
+            referencedRelation: "subcategories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resource_discovery_queue_rels: {
+        Row: {
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+          tags_id: number | null
+        }
+        Insert: {
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+          tags_id?: number | null
+        }
+        Update: {
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+          tags_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resource_discovery_queue_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_discovery_queue"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_discovery_queue_rels_tags_fk"
+            columns: ["tags_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resource_reviews: {
+        Row: {
+          content: string
+          created_at: string
+          helpful_count: number | null
+          id: number
+          moderated_at: string | null
+          moderated_by_id: number | null
+          moderation_notes: string | null
+          not_helpful_count: number | null
+          rating: number
+          rejection_reason:
+            | Database["public"]["Enums"]["enum_payload_resource_reviews_rejection_reason"]
+            | null
+          resource_slug: string | null
+          resource_title: string | null
+          status: Database["public"]["Enums"]["enum_payload_resource_reviews_status"]
+          submitted_at: string | null
+          supabase_id: string
+          title: string | null
+          updated_at: string
+          user_email: string | null
+          user_id: string | null
+          user_name: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          helpful_count?: number | null
+          id?: number
+          moderated_at?: string | null
+          moderated_by_id?: number | null
+          moderation_notes?: string | null
+          not_helpful_count?: number | null
+          rating: number
+          rejection_reason?:
+            | Database["public"]["Enums"]["enum_payload_resource_reviews_rejection_reason"]
+            | null
+          resource_slug?: string | null
+          resource_title?: string | null
+          status?: Database["public"]["Enums"]["enum_payload_resource_reviews_status"]
+          submitted_at?: string | null
+          supabase_id: string
+          title?: string | null
+          updated_at?: string
+          user_email?: string | null
+          user_id?: string | null
+          user_name?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          helpful_count?: number | null
+          id?: number
+          moderated_at?: string | null
+          moderated_by_id?: number | null
+          moderation_notes?: string | null
+          not_helpful_count?: number | null
+          rating?: number
+          rejection_reason?:
+            | Database["public"]["Enums"]["enum_payload_resource_reviews_rejection_reason"]
+            | null
+          resource_slug?: string | null
+          resource_title?: string | null
+          status?: Database["public"]["Enums"]["enum_payload_resource_reviews_status"]
+          submitted_at?: string | null
+          supabase_id?: string
+          title?: string | null
+          updated_at?: string
+          user_email?: string | null
+          user_id?: string | null
+          user_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resource_reviews_moderated_by_id_users_id_fk"
+            columns: ["moderated_by_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resource_reviews_cons: {
+        Row: {
+          _order: number
+          _parent_id: number
+          id: string
+          text: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          id: string
+          text?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          id?: string
+          text?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resource_reviews_cons_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_reviews"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resource_reviews_pros: {
+        Row: {
+          _order: number
+          _parent_id: number
+          id: string
+          text: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          id: string
+          text?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          id?: string
+          text?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resource_reviews_pros_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_reviews"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resource_sources: {
+        Row: {
+          created_at: string
+          description: string | null
+          discovery_settings_auto_approve: boolean | null
+          discovery_settings_default_category_id: number | null
+          discovery_settings_default_subcategory_id: number | null
+          discovery_settings_exclude_patterns: string | null
+          discovery_settings_include_patterns: string | null
+          discovery_settings_min_downloads: number | null
+          discovery_settings_min_stars: number | null
+          github_branch: string | null
+          github_owner: string | null
+          github_path: string | null
+          github_repo: string | null
+          github_search_query: string | null
+          github_topics: string | null
+          id: number
+          is_active: boolean | null
+          last_scan_error: string | null
+          last_scan_status:
+            | Database["public"]["Enums"]["enum_payload_resource_sources_last_scan_status"]
+            | null
+          last_scanned_at: string | null
+          name: string
+          notes: string | null
+          pending_count: number | null
+          registry_keywords: string | null
+          registry_scope: string | null
+          registry_search_query: string | null
+          resource_count: number | null
+          scan_frequency:
+            | Database["public"]["Enums"]["enum_payload_resource_sources_scan_frequency"]
+            | null
+          supabase_id: string | null
+          type: Database["public"]["Enums"]["enum_payload_resource_sources_type"]
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          discovery_settings_auto_approve?: boolean | null
+          discovery_settings_default_category_id?: number | null
+          discovery_settings_default_subcategory_id?: number | null
+          discovery_settings_exclude_patterns?: string | null
+          discovery_settings_include_patterns?: string | null
+          discovery_settings_min_downloads?: number | null
+          discovery_settings_min_stars?: number | null
+          github_branch?: string | null
+          github_owner?: string | null
+          github_path?: string | null
+          github_repo?: string | null
+          github_search_query?: string | null
+          github_topics?: string | null
+          id?: number
+          is_active?: boolean | null
+          last_scan_error?: string | null
+          last_scan_status?:
+            | Database["public"]["Enums"]["enum_payload_resource_sources_last_scan_status"]
+            | null
+          last_scanned_at?: string | null
+          name: string
+          notes?: string | null
+          pending_count?: number | null
+          registry_keywords?: string | null
+          registry_scope?: string | null
+          registry_search_query?: string | null
+          resource_count?: number | null
+          scan_frequency?:
+            | Database["public"]["Enums"]["enum_payload_resource_sources_scan_frequency"]
+            | null
+          supabase_id?: string | null
+          type: Database["public"]["Enums"]["enum_payload_resource_sources_type"]
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          discovery_settings_auto_approve?: boolean | null
+          discovery_settings_default_category_id?: number | null
+          discovery_settings_default_subcategory_id?: number | null
+          discovery_settings_exclude_patterns?: string | null
+          discovery_settings_include_patterns?: string | null
+          discovery_settings_min_downloads?: number | null
+          discovery_settings_min_stars?: number | null
+          github_branch?: string | null
+          github_owner?: string | null
+          github_path?: string | null
+          github_repo?: string | null
+          github_search_query?: string | null
+          github_topics?: string | null
+          id?: number
+          is_active?: boolean | null
+          last_scan_error?: string | null
+          last_scan_status?:
+            | Database["public"]["Enums"]["enum_payload_resource_sources_last_scan_status"]
+            | null
+          last_scanned_at?: string | null
+          name?: string
+          notes?: string | null
+          pending_count?: number | null
+          registry_keywords?: string | null
+          registry_scope?: string | null
+          registry_search_query?: string | null
+          resource_count?: number | null
+          scan_frequency?:
+            | Database["public"]["Enums"]["enum_payload_resource_sources_scan_frequency"]
+            | null
+          supabase_id?: string | null
+          type?: Database["public"]["Enums"]["enum_payload_resource_sources_type"]
+          updated_at?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resource_sources_discovery_settings_default_category_id"
+            columns: ["discovery_settings_default_category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_sources_discovery_settings_default_subcategory"
+            columns: ["discovery_settings_default_subcategory_id"]
+            isOneToOne: false
+            referencedRelation: "subcategories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resource_sources_rels: {
+        Row: {
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+          tags_id: number | null
+        }
+        Insert: {
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+          tags_id?: number | null
+        }
+        Update: {
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+          tags_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resource_sources_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resource_sources_rels_tags_fk"
+            columns: ["tags_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources: {
+        Row: {
+          _status:
+            | Database["public"]["Enums"]["enum_payload_resources_status"]
+            | null
+          added_date: string | null
+          ai_overview: Json | null
+          ai_summary: string | null
+          category_id: number | null
+          content_hash: string | null
+          created_at: string
+          description: string | null
+          difficulty_id: number | null
+          discovery_ai_confidence_score: number | null
+          discovery_ai_notes: string | null
+          discovery_discovered_at: string | null
+          discovery_discovered_by:
+            | Database["public"]["Enums"]["enum_payload_resources_discovery_discovered_by"]
+            | null
+          discovery_source_id: number | null
+          enhancement_metadata_ai_enhanced_at: string | null
+          enhancement_metadata_ai_model: string | null
+          enhancement_metadata_enhancement_notes: string | null
+          enhancement_status:
+            | Database["public"]["Enums"]["enum_payload_resources_enhancement_status"]
+            | null
+          featured: boolean | null
+          featured_reason:
+            | Database["public"]["Enums"]["enum_payload_resources_featured_reason"]
+            | null
+          github_forks: number | null
+          github_language_id: number | null
+          github_last_updated: string | null
+          github_owner: string | null
+          github_repo: string | null
+          github_stars: number | null
+          id: number
+          last_verified: string | null
+          meta_keywords: string | null
+          meta_no_index: boolean | null
+          namespace: string | null
+          publish_status:
+            | Database["public"]["Enums"]["enum_payload_resources_publish_status"]
+            | null
+          relationship_count: number | null
+          resource_type:
+            | Database["public"]["Enums"]["enum_payload_resources_resource_type"]
+            | null
+          review_rejection_reason: string | null
+          review_review_notes: string | null
+          review_reviewed_at: string | null
+          review_reviewed_by_id: number | null
+          subcategory_id: number | null
+          title: string | null
+          updated_at: string
+          url: string | null
+          version: string | null
+        }
+        Insert: {
+          _status?:
+            | Database["public"]["Enums"]["enum_payload_resources_status"]
+            | null
+          added_date?: string | null
+          ai_overview?: Json | null
+          ai_summary?: string | null
+          category_id?: number | null
+          content_hash?: string | null
+          created_at?: string
+          description?: string | null
+          difficulty_id?: number | null
+          discovery_ai_confidence_score?: number | null
+          discovery_ai_notes?: string | null
+          discovery_discovered_at?: string | null
+          discovery_discovered_by?:
+            | Database["public"]["Enums"]["enum_payload_resources_discovery_discovered_by"]
+            | null
+          discovery_source_id?: number | null
+          enhancement_metadata_ai_enhanced_at?: string | null
+          enhancement_metadata_ai_model?: string | null
+          enhancement_metadata_enhancement_notes?: string | null
+          enhancement_status?:
+            | Database["public"]["Enums"]["enum_payload_resources_enhancement_status"]
+            | null
+          featured?: boolean | null
+          featured_reason?:
+            | Database["public"]["Enums"]["enum_payload_resources_featured_reason"]
+            | null
+          github_forks?: number | null
+          github_language_id?: number | null
+          github_last_updated?: string | null
+          github_owner?: string | null
+          github_repo?: string | null
+          github_stars?: number | null
+          id?: number
+          last_verified?: string | null
+          meta_keywords?: string | null
+          meta_no_index?: boolean | null
+          namespace?: string | null
+          publish_status?:
+            | Database["public"]["Enums"]["enum_payload_resources_publish_status"]
+            | null
+          relationship_count?: number | null
+          resource_type?:
+            | Database["public"]["Enums"]["enum_payload_resources_resource_type"]
+            | null
+          review_rejection_reason?: string | null
+          review_review_notes?: string | null
+          review_reviewed_at?: string | null
+          review_reviewed_by_id?: number | null
+          subcategory_id?: number | null
+          title?: string | null
+          updated_at?: string
+          url?: string | null
+          version?: string | null
+        }
+        Update: {
+          _status?:
+            | Database["public"]["Enums"]["enum_payload_resources_status"]
+            | null
+          added_date?: string | null
+          ai_overview?: Json | null
+          ai_summary?: string | null
+          category_id?: number | null
+          content_hash?: string | null
+          created_at?: string
+          description?: string | null
+          difficulty_id?: number | null
+          discovery_ai_confidence_score?: number | null
+          discovery_ai_notes?: string | null
+          discovery_discovered_at?: string | null
+          discovery_discovered_by?:
+            | Database["public"]["Enums"]["enum_payload_resources_discovery_discovered_by"]
+            | null
+          discovery_source_id?: number | null
+          enhancement_metadata_ai_enhanced_at?: string | null
+          enhancement_metadata_ai_model?: string | null
+          enhancement_metadata_enhancement_notes?: string | null
+          enhancement_status?:
+            | Database["public"]["Enums"]["enum_payload_resources_enhancement_status"]
+            | null
+          featured?: boolean | null
+          featured_reason?:
+            | Database["public"]["Enums"]["enum_payload_resources_featured_reason"]
+            | null
+          github_forks?: number | null
+          github_language_id?: number | null
+          github_last_updated?: string | null
+          github_owner?: string | null
+          github_repo?: string | null
+          github_stars?: number | null
+          id?: number
+          last_verified?: string | null
+          meta_keywords?: string | null
+          meta_no_index?: boolean | null
+          namespace?: string | null
+          publish_status?:
+            | Database["public"]["Enums"]["enum_payload_resources_publish_status"]
+            | null
+          relationship_count?: number | null
+          resource_type?:
+            | Database["public"]["Enums"]["enum_payload_resources_resource_type"]
+            | null
+          review_rejection_reason?: string | null
+          review_review_notes?: string | null
+          review_reviewed_at?: string | null
+          review_reviewed_by_id?: number | null
+          subcategory_id?: number | null
+          title?: string | null
+          updated_at?: string
+          url?: string | null
+          version?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_category_id_categories_id_fk"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_difficulty_id_difficulty_levels_id_fk"
+            columns: ["difficulty_id"]
+            isOneToOne: false
+            referencedRelation: "difficulty_levels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_discovery_source_id_payload_resource_sources_"
+            columns: ["discovery_source_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resource_sources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_github_language_id_programming_languages_id_f"
+            columns: ["github_language_id"]
+            isOneToOne: false
+            referencedRelation: "programming_languages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_review_reviewed_by_id_users_id_fk"
+            columns: ["review_reviewed_by_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_subcategory_id_subcategories_id_fk"
+            columns: ["subcategory_id"]
+            isOneToOne: false
+            referencedRelation: "subcategories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources_ai_doc_relationships: {
+        Row: {
+          _order: number
+          _parent_id: number
+          confidence: number | null
+          doc_slug: string | null
+          doc_title: string | null
+          id: string
+          is_approved: boolean | null
+          reasoning: string | null
+          relationship_type:
+            | Database["public"]["Enums"]["res_doc_rel_type"]
+            | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          confidence?: number | null
+          doc_slug?: string | null
+          doc_title?: string | null
+          id: string
+          is_approved?: boolean | null
+          reasoning?: string | null
+          relationship_type?:
+            | Database["public"]["Enums"]["res_doc_rel_type"]
+            | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          confidence?: number | null
+          doc_slug?: string | null
+          doc_title?: string | null
+          id?: string
+          is_approved?: boolean | null
+          reasoning?: string | null
+          relationship_type?:
+            | Database["public"]["Enums"]["res_doc_rel_type"]
+            | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_ai_doc_relationships_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources_ai_resource_relationships: {
+        Row: {
+          _order: number
+          _parent_id: number
+          confidence: number | null
+          id: string
+          relationship_type:
+            | Database["public"]["Enums"]["res_res_rel_type"]
+            | null
+          resource_id: string | null
+          resource_title: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          confidence?: number | null
+          id: string
+          relationship_type?:
+            | Database["public"]["Enums"]["res_res_rel_type"]
+            | null
+          resource_id?: string | null
+          resource_title?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          confidence?: number | null
+          id?: string
+          relationship_type?:
+            | Database["public"]["Enums"]["res_res_rel_type"]
+            | null
+          resource_id?: string | null
+          resource_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_ai_resource_relationships_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources_cons: {
+        Row: {
+          _order: number
+          _parent_id: number
+          con: string | null
+          id: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          con?: string | null
+          id: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          con?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_cons_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources_key_features: {
+        Row: {
+          _order: number
+          _parent_id: number
+          description: string | null
+          feature: string | null
+          id: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          description?: string | null
+          feature?: string | null
+          id: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          description?: string | null
+          feature?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_key_features_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources_locales: {
+        Row: {
+          _locale: unknown[]
+          _parent_id: number
+          id: number
+          meta_description: string | null
+          meta_image_id: number | null
+          meta_title: string | null
+        }
+        Insert: {
+          _locale: unknown[]
+          _parent_id: number
+          id?: number
+          meta_description?: string | null
+          meta_image_id?: number | null
+          meta_title?: string | null
+        }
+        Update: {
+          _locale?: unknown[]
+          _parent_id?: number
+          id?: number
+          meta_description?: string | null
+          meta_image_id?: number | null
+          meta_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_locales_meta_image_id_media_id_fk"
+            columns: ["meta_image_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_locales_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources_pros: {
+        Row: {
+          _order: number
+          _parent_id: number
+          id: string
+          pro: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          id: string
+          pro?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          id?: string
+          pro?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_pros_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources_rels: {
+        Row: {
+          documents_id: number | null
+          id: number
+          order: number | null
+          parent_id: number
+          path: string
+          payload_resources_id: number | null
+          tags_id: number | null
+        }
+        Insert: {
+          documents_id?: number | null
+          id?: number
+          order?: number | null
+          parent_id: number
+          path: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Update: {
+          documents_id?: number | null
+          id?: number
+          order?: number | null
+          parent_id?: number
+          path?: string
+          payload_resources_id?: number | null
+          tags_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_rels_documents_fk"
+            columns: ["documents_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_rels_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_rels_resources_fk"
+            columns: ["payload_resources_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payload_resources_rels_tags_fk"
+            columns: ["tags_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payload_resources_use_cases: {
+        Row: {
+          _order: number
+          _parent_id: number
+          description: string | null
+          id: string
+          use_case: string | null
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          description?: string | null
+          id: string
+          use_case?: string | null
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          description?: string | null
+          id?: string
+          use_case?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payload_resources_use_cases_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "payload_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -3481,6 +7501,71 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: true
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      programming_languages: {
+        Row: {
+          color: string
+          created_at: string
+          icon: string | null
+          id: number
+          name: string
+          resource_count: number | null
+          slug: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          icon?: string | null
+          id?: number
+          name: string
+          resource_count?: number | null
+          slug: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          icon?: string | null
+          id?: number
+          name?: string
+          resource_count?: number | null
+          slug?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      programming_languages_aliases: {
+        Row: {
+          _order: number
+          _parent_id: number
+          alias: string | null
+          id: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          alias?: string | null
+          id: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          alias?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "programming_languages_aliases_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "programming_languages"
             referencedColumns: ["id"]
           },
         ]
@@ -5160,6 +9245,7 @@ export type Database = {
           changelog_url: string | null
           comments_count: number | null
           cons: string[] | null
+          content_hash: string | null
           created_at: string | null
           description: string
           difficulty: string | null
@@ -5242,6 +9328,7 @@ export type Database = {
           changelog_url?: string | null
           comments_count?: number | null
           cons?: string[] | null
+          content_hash?: string | null
           created_at?: string | null
           description: string
           difficulty?: string | null
@@ -5324,6 +9411,7 @@ export type Database = {
           changelog_url?: string | null
           comments_count?: number | null
           cons?: string[] | null
+          content_hash?: string | null
           created_at?: string | null
           description?: string
           difficulty?: string | null
@@ -5739,6 +9827,279 @@ export type Database = {
           },
         ]
       }
+      seo_settings: {
+        Row: {
+          advanced_canonical_domain: string | null
+          advanced_default_hreflang: string | null
+          advanced_hreflang_enabled: boolean | null
+          advanced_trailing_slash: boolean | null
+          advanced_www_redirect:
+            | Database["public"]["Enums"]["enum_seo_settings_advanced_www_redirect"]
+            | null
+          analytics_enable_vercel_analytics: boolean | null
+          analytics_google_analytics_id: string | null
+          analytics_google_tag_manager_id: string | null
+          analytics_plausible_domain: string | null
+          created_at: string | null
+          id: number
+          index_now_api_key: string | null
+          index_now_enabled: boolean | null
+          meta_author: string | null
+          meta_default_description: string | null
+          meta_default_title: string | null
+          meta_keywords: string | null
+          meta_theme_color: string | null
+          meta_title_template: string | null
+          open_graph_default_image_id: number | null
+          open_graph_image_alt: string | null
+          open_graph_locale: string | null
+          open_graph_site_name: string | null
+          open_graph_type:
+            | Database["public"]["Enums"]["enum_seo_settings_open_graph_type"]
+            | null
+          robots_follow_links: boolean | null
+          robots_index_site: boolean | null
+          robots_sitemap_change_freq:
+            | Database["public"]["Enums"]["enum_seo_settings_robots_sitemap_change_freq"]
+            | null
+          robots_sitemap_enabled: boolean | null
+          robots_sitemap_priority: number | null
+          structured_data_contact_email: string | null
+          structured_data_contact_type: string | null
+          structured_data_logo_id: number | null
+          structured_data_organization_name: string | null
+          structured_data_organization_type:
+            | Database["public"]["Enums"]["enum_seo_settings_structured_data_organization_type"]
+            | null
+          twitter_card_type:
+            | Database["public"]["Enums"]["enum_seo_settings_twitter_card_type"]
+            | null
+          twitter_creator: string | null
+          twitter_site: string | null
+          updated_at: string | null
+          verification_bing: string | null
+          verification_google: string | null
+          verification_pinterest: string | null
+          verification_yandex: string | null
+        }
+        Insert: {
+          advanced_canonical_domain?: string | null
+          advanced_default_hreflang?: string | null
+          advanced_hreflang_enabled?: boolean | null
+          advanced_trailing_slash?: boolean | null
+          advanced_www_redirect?:
+            | Database["public"]["Enums"]["enum_seo_settings_advanced_www_redirect"]
+            | null
+          analytics_enable_vercel_analytics?: boolean | null
+          analytics_google_analytics_id?: string | null
+          analytics_google_tag_manager_id?: string | null
+          analytics_plausible_domain?: string | null
+          created_at?: string | null
+          id?: number
+          index_now_api_key?: string | null
+          index_now_enabled?: boolean | null
+          meta_author?: string | null
+          meta_default_description?: string | null
+          meta_default_title?: string | null
+          meta_keywords?: string | null
+          meta_theme_color?: string | null
+          meta_title_template?: string | null
+          open_graph_default_image_id?: number | null
+          open_graph_image_alt?: string | null
+          open_graph_locale?: string | null
+          open_graph_site_name?: string | null
+          open_graph_type?:
+            | Database["public"]["Enums"]["enum_seo_settings_open_graph_type"]
+            | null
+          robots_follow_links?: boolean | null
+          robots_index_site?: boolean | null
+          robots_sitemap_change_freq?:
+            | Database["public"]["Enums"]["enum_seo_settings_robots_sitemap_change_freq"]
+            | null
+          robots_sitemap_enabled?: boolean | null
+          robots_sitemap_priority?: number | null
+          structured_data_contact_email?: string | null
+          structured_data_contact_type?: string | null
+          structured_data_logo_id?: number | null
+          structured_data_organization_name?: string | null
+          structured_data_organization_type?:
+            | Database["public"]["Enums"]["enum_seo_settings_structured_data_organization_type"]
+            | null
+          twitter_card_type?:
+            | Database["public"]["Enums"]["enum_seo_settings_twitter_card_type"]
+            | null
+          twitter_creator?: string | null
+          twitter_site?: string | null
+          updated_at?: string | null
+          verification_bing?: string | null
+          verification_google?: string | null
+          verification_pinterest?: string | null
+          verification_yandex?: string | null
+        }
+        Update: {
+          advanced_canonical_domain?: string | null
+          advanced_default_hreflang?: string | null
+          advanced_hreflang_enabled?: boolean | null
+          advanced_trailing_slash?: boolean | null
+          advanced_www_redirect?:
+            | Database["public"]["Enums"]["enum_seo_settings_advanced_www_redirect"]
+            | null
+          analytics_enable_vercel_analytics?: boolean | null
+          analytics_google_analytics_id?: string | null
+          analytics_google_tag_manager_id?: string | null
+          analytics_plausible_domain?: string | null
+          created_at?: string | null
+          id?: number
+          index_now_api_key?: string | null
+          index_now_enabled?: boolean | null
+          meta_author?: string | null
+          meta_default_description?: string | null
+          meta_default_title?: string | null
+          meta_keywords?: string | null
+          meta_theme_color?: string | null
+          meta_title_template?: string | null
+          open_graph_default_image_id?: number | null
+          open_graph_image_alt?: string | null
+          open_graph_locale?: string | null
+          open_graph_site_name?: string | null
+          open_graph_type?:
+            | Database["public"]["Enums"]["enum_seo_settings_open_graph_type"]
+            | null
+          robots_follow_links?: boolean | null
+          robots_index_site?: boolean | null
+          robots_sitemap_change_freq?:
+            | Database["public"]["Enums"]["enum_seo_settings_robots_sitemap_change_freq"]
+            | null
+          robots_sitemap_enabled?: boolean | null
+          robots_sitemap_priority?: number | null
+          structured_data_contact_email?: string | null
+          structured_data_contact_type?: string | null
+          structured_data_logo_id?: number | null
+          structured_data_organization_name?: string | null
+          structured_data_organization_type?:
+            | Database["public"]["Enums"]["enum_seo_settings_structured_data_organization_type"]
+            | null
+          twitter_card_type?:
+            | Database["public"]["Enums"]["enum_seo_settings_twitter_card_type"]
+            | null
+          twitter_creator?: string | null
+          twitter_site?: string | null
+          updated_at?: string | null
+          verification_bing?: string | null
+          verification_google?: string | null
+          verification_pinterest?: string | null
+          verification_yandex?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_settings_open_graph_default_image_id_media_id_fk"
+            columns: ["open_graph_default_image_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seo_settings_structured_data_logo_id_media_id_fk"
+            columns: ["structured_data_logo_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      seo_settings_index_now_search_engines: {
+        Row: {
+          id: number
+          order: number
+          parent_id: number
+          value:
+            | Database["public"]["Enums"]["enum_seo_settings_index_now_search_engines"]
+            | null
+        }
+        Insert: {
+          id?: number
+          order: number
+          parent_id: number
+          value?:
+            | Database["public"]["Enums"]["enum_seo_settings_index_now_search_engines"]
+            | null
+        }
+        Update: {
+          id?: number
+          order?: number
+          parent_id?: number
+          value?:
+            | Database["public"]["Enums"]["enum_seo_settings_index_now_search_engines"]
+            | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_settings_index_now_search_engines_parent_fk"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "seo_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      seo_settings_open_graph_alternate_locales: {
+        Row: {
+          _order: number
+          _parent_id: number
+          id: string
+          locale: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          id: string
+          locale: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          id?: string
+          locale?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_settings_open_graph_alternate_locales_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "seo_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      seo_settings_structured_data_same_as: {
+        Row: {
+          _order: number
+          _parent_id: number
+          id: string
+          url: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          id: string
+          url: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_settings_structured_data_same_as_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "seo_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       session: {
         Row: {
           createdAt: string
@@ -5776,6 +10137,331 @@ export type Database = {
             columns: ["userId"]
             isOneToOne: false
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_settings: {
+        Row: {
+          announcement_dismissible: boolean | null
+          announcement_enabled: boolean | null
+          announcement_expires_at: string | null
+          announcement_link: string | null
+          announcement_message: string | null
+          announcement_type:
+            | Database["public"]["Enums"]["enum_site_settings_announcement_type"]
+            | null
+          api_api_cors_origins: string | null
+          api_api_rate_limit: number | null
+          api_api_version: string | null
+          api_enable_public_a_p_i: boolean | null
+          contact_email: string | null
+          contact_privacy_email: string | null
+          contact_support_url: string | null
+          created_at: string | null
+          features_enable_achievements: boolean | null
+          features_enable_analytics: boolean | null
+          features_enable_chat: boolean | null
+          features_enable_donations: boolean | null
+          features_enable_search: boolean | null
+          features_enable_sound_effects: boolean | null
+          features_enable_user_registration: boolean | null
+          features_enable_voice_assistant: boolean | null
+          features_maintenance_allowed_i_ps: string | null
+          features_maintenance_message: string | null
+          features_maintenance_mode: boolean | null
+          footer_copyright_text: string | null
+          footer_show_build_info: boolean | null
+          footer_show_version: boolean | null
+          general_description: string
+          general_favicon_id: number | null
+          general_logo_id: number | null
+          general_site_name: string
+          general_tagline: string
+          general_version: string | null
+          id: number
+          notifications_digest_frequency:
+            | Database["public"]["Enums"]["enum_site_settings_notifications_digest_frequency"]
+            | null
+          notifications_email_from_address: string | null
+          notifications_email_from_name: string | null
+          notifications_enable_email_notifications: boolean | null
+          notifications_enable_push_notifications: boolean | null
+          notifications_notification_types_achievements: boolean | null
+          notifications_notification_types_marketing: boolean | null
+          notifications_notification_types_mentions: boolean | null
+          notifications_notification_types_messages: boolean | null
+          notifications_notification_types_security: boolean | null
+          notifications_notification_types_updates: boolean | null
+          performance_cache_revalidate_seconds: number | null
+          performance_enable_i_s_r: boolean | null
+          performance_enable_image_optimization: boolean | null
+          performance_enable_lazy_providers: boolean | null
+          performance_enable_prefetching: boolean | null
+          performance_static_page_paths: string | null
+          security_blocked_i_ps: string | null
+          security_enable_bot_challenge: boolean | null
+          security_enable_e2_e_e: boolean | null
+          security_enable_fingerprinting: boolean | null
+          security_enable_honeypots: boolean | null
+          security_rate_limit_per_minute: number | null
+          security_trusted_domains: string | null
+          seo_google_analytics_id: string | null
+          seo_og_image: string | null
+          seo_twitter_handle: string | null
+          social_bluesky: string | null
+          social_discord: string | null
+          social_github: string | null
+          social_linkedin: string | null
+          social_twitter: string | null
+          social_youtube: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          announcement_dismissible?: boolean | null
+          announcement_enabled?: boolean | null
+          announcement_expires_at?: string | null
+          announcement_link?: string | null
+          announcement_message?: string | null
+          announcement_type?:
+            | Database["public"]["Enums"]["enum_site_settings_announcement_type"]
+            | null
+          api_api_cors_origins?: string | null
+          api_api_rate_limit?: number | null
+          api_api_version?: string | null
+          api_enable_public_a_p_i?: boolean | null
+          contact_email?: string | null
+          contact_privacy_email?: string | null
+          contact_support_url?: string | null
+          created_at?: string | null
+          features_enable_achievements?: boolean | null
+          features_enable_analytics?: boolean | null
+          features_enable_chat?: boolean | null
+          features_enable_donations?: boolean | null
+          features_enable_search?: boolean | null
+          features_enable_sound_effects?: boolean | null
+          features_enable_user_registration?: boolean | null
+          features_enable_voice_assistant?: boolean | null
+          features_maintenance_allowed_i_ps?: string | null
+          features_maintenance_message?: string | null
+          features_maintenance_mode?: boolean | null
+          footer_copyright_text?: string | null
+          footer_show_build_info?: boolean | null
+          footer_show_version?: boolean | null
+          general_description?: string
+          general_favicon_id?: number | null
+          general_logo_id?: number | null
+          general_site_name?: string
+          general_tagline?: string
+          general_version?: string | null
+          id?: number
+          notifications_digest_frequency?:
+            | Database["public"]["Enums"]["enum_site_settings_notifications_digest_frequency"]
+            | null
+          notifications_email_from_address?: string | null
+          notifications_email_from_name?: string | null
+          notifications_enable_email_notifications?: boolean | null
+          notifications_enable_push_notifications?: boolean | null
+          notifications_notification_types_achievements?: boolean | null
+          notifications_notification_types_marketing?: boolean | null
+          notifications_notification_types_mentions?: boolean | null
+          notifications_notification_types_messages?: boolean | null
+          notifications_notification_types_security?: boolean | null
+          notifications_notification_types_updates?: boolean | null
+          performance_cache_revalidate_seconds?: number | null
+          performance_enable_i_s_r?: boolean | null
+          performance_enable_image_optimization?: boolean | null
+          performance_enable_lazy_providers?: boolean | null
+          performance_enable_prefetching?: boolean | null
+          performance_static_page_paths?: string | null
+          security_blocked_i_ps?: string | null
+          security_enable_bot_challenge?: boolean | null
+          security_enable_e2_e_e?: boolean | null
+          security_enable_fingerprinting?: boolean | null
+          security_enable_honeypots?: boolean | null
+          security_rate_limit_per_minute?: number | null
+          security_trusted_domains?: string | null
+          seo_google_analytics_id?: string | null
+          seo_og_image?: string | null
+          seo_twitter_handle?: string | null
+          social_bluesky?: string | null
+          social_discord?: string | null
+          social_github?: string | null
+          social_linkedin?: string | null
+          social_twitter?: string | null
+          social_youtube?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          announcement_dismissible?: boolean | null
+          announcement_enabled?: boolean | null
+          announcement_expires_at?: string | null
+          announcement_link?: string | null
+          announcement_message?: string | null
+          announcement_type?:
+            | Database["public"]["Enums"]["enum_site_settings_announcement_type"]
+            | null
+          api_api_cors_origins?: string | null
+          api_api_rate_limit?: number | null
+          api_api_version?: string | null
+          api_enable_public_a_p_i?: boolean | null
+          contact_email?: string | null
+          contact_privacy_email?: string | null
+          contact_support_url?: string | null
+          created_at?: string | null
+          features_enable_achievements?: boolean | null
+          features_enable_analytics?: boolean | null
+          features_enable_chat?: boolean | null
+          features_enable_donations?: boolean | null
+          features_enable_search?: boolean | null
+          features_enable_sound_effects?: boolean | null
+          features_enable_user_registration?: boolean | null
+          features_enable_voice_assistant?: boolean | null
+          features_maintenance_allowed_i_ps?: string | null
+          features_maintenance_message?: string | null
+          features_maintenance_mode?: boolean | null
+          footer_copyright_text?: string | null
+          footer_show_build_info?: boolean | null
+          footer_show_version?: boolean | null
+          general_description?: string
+          general_favicon_id?: number | null
+          general_logo_id?: number | null
+          general_site_name?: string
+          general_tagline?: string
+          general_version?: string | null
+          id?: number
+          notifications_digest_frequency?:
+            | Database["public"]["Enums"]["enum_site_settings_notifications_digest_frequency"]
+            | null
+          notifications_email_from_address?: string | null
+          notifications_email_from_name?: string | null
+          notifications_enable_email_notifications?: boolean | null
+          notifications_enable_push_notifications?: boolean | null
+          notifications_notification_types_achievements?: boolean | null
+          notifications_notification_types_marketing?: boolean | null
+          notifications_notification_types_mentions?: boolean | null
+          notifications_notification_types_messages?: boolean | null
+          notifications_notification_types_security?: boolean | null
+          notifications_notification_types_updates?: boolean | null
+          performance_cache_revalidate_seconds?: number | null
+          performance_enable_i_s_r?: boolean | null
+          performance_enable_image_optimization?: boolean | null
+          performance_enable_lazy_providers?: boolean | null
+          performance_enable_prefetching?: boolean | null
+          performance_static_page_paths?: string | null
+          security_blocked_i_ps?: string | null
+          security_enable_bot_challenge?: boolean | null
+          security_enable_e2_e_e?: boolean | null
+          security_enable_fingerprinting?: boolean | null
+          security_enable_honeypots?: boolean | null
+          security_rate_limit_per_minute?: number | null
+          security_trusted_domains?: string | null
+          seo_google_analytics_id?: string | null
+          seo_og_image?: string | null
+          seo_twitter_handle?: string | null
+          social_bluesky?: string | null
+          social_discord?: string | null
+          social_github?: string | null
+          social_linkedin?: string | null
+          social_twitter?: string | null
+          social_youtube?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "site_settings_general_favicon_id_media_id_fk"
+            columns: ["general_favicon_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "site_settings_general_logo_id_media_id_fk"
+            columns: ["general_logo_id"]
+            isOneToOne: false
+            referencedRelation: "media"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_settings_footer_custom_footer_links: {
+        Row: {
+          _order: number
+          _parent_id: number
+          external: boolean | null
+          id: string
+          label: string
+          url: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          external?: boolean | null
+          id: string
+          label: string
+          url: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          external?: boolean | null
+          id?: string
+          label?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "site_settings_footer_custom_footer_links_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "site_settings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subcategories: {
+        Row: {
+          category_id: number
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: number
+          name: string
+          resource_count: number | null
+          slug: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          category_id: number
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: number
+          name: string
+          resource_count?: number | null
+          slug: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category_id?: number
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: number
+          name?: string
+          resource_count?: number | null
+          slug?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subcategories_category_id_categories_id_fk"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
             referencedColumns: ["id"]
           },
         ]
@@ -5820,6 +10506,121 @@ export type Database = {
             columns: ["superadmin_id"]
             isOneToOne: false
             referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tags: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: number
+          name: string
+          resource_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          name: string
+          resource_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          name?: string
+          resource_count?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      translations: {
+        Row: {
+          context: string | null
+          created_at: string
+          id: number
+          key: string
+          namespace: Database["public"]["Enums"]["enum_translations_namespace"]
+          updated_at: string
+        }
+        Insert: {
+          context?: string | null
+          created_at?: string
+          id?: number
+          key: string
+          namespace: Database["public"]["Enums"]["enum_translations_namespace"]
+          updated_at?: string
+        }
+        Update: {
+          context?: string | null
+          created_at?: string
+          id?: number
+          key?: string
+          namespace?: Database["public"]["Enums"]["enum_translations_namespace"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      translations_locales: {
+        Row: {
+          _locale: unknown[]
+          _parent_id: number
+          id: number
+          value: string
+        }
+        Insert: {
+          _locale: unknown[]
+          _parent_id: number
+          id?: number
+          value: string
+        }
+        Update: {
+          _locale?: unknown[]
+          _parent_id?: number
+          id?: number
+          value?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "translations_locales_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "translations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      translations_placeholders: {
+        Row: {
+          _order: number
+          _parent_id: number
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          _order: number
+          _parent_id: number
+          description?: string | null
+          id: string
+          name: string
+        }
+        Update: {
+          _order?: number
+          _parent_id?: number
+          description?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "translations_placeholders_parent_id_fk"
+            columns: ["_parent_id"]
+            isOneToOne: false
+            referencedRelation: "translations"
             referencedColumns: ["id"]
           },
         ]
@@ -6393,6 +11194,75 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      users: {
+        Row: {
+          bio: string | null
+          created_at: string
+          email: string
+          hash: string | null
+          id: number
+          is_active: boolean | null
+          last_login_at: string | null
+          lock_until: string | null
+          login_attempts: number | null
+          login_count: number | null
+          name: string
+          permissions_can_approve_comments: boolean | null
+          permissions_can_approve_edits: boolean | null
+          permissions_can_manage_resources: boolean | null
+          permissions_can_view_analytics: boolean | null
+          reset_password_expiration: string | null
+          reset_password_token: string | null
+          role: Database["public"]["Enums"]["enum_users_role"]
+          salt: string | null
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          email: string
+          hash?: string | null
+          id?: number
+          is_active?: boolean | null
+          last_login_at?: string | null
+          lock_until?: string | null
+          login_attempts?: number | null
+          login_count?: number | null
+          name: string
+          permissions_can_approve_comments?: boolean | null
+          permissions_can_approve_edits?: boolean | null
+          permissions_can_manage_resources?: boolean | null
+          permissions_can_view_analytics?: boolean | null
+          reset_password_expiration?: string | null
+          reset_password_token?: string | null
+          role?: Database["public"]["Enums"]["enum_users_role"]
+          salt?: string | null
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          email?: string
+          hash?: string | null
+          id?: number
+          is_active?: boolean | null
+          last_login_at?: string | null
+          lock_until?: string | null
+          login_attempts?: number | null
+          login_count?: number | null
+          name?: string
+          permissions_can_approve_comments?: boolean | null
+          permissions_can_approve_edits?: boolean | null
+          permissions_can_manage_resources?: boolean | null
+          permissions_can_view_analytics?: boolean | null
+          reset_password_expiration?: string | null
+          reset_password_token?: string | null
+          role?: Database["public"]["Enums"]["enum_users_role"]
+          salt?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       verification: {
         Row: {
@@ -7438,6 +12308,7 @@ export type Database = {
         }
         Returns: string
       }
+      sync_follow_counts: { Args: never; Returns: undefined }
       update_ai_pipeline_setting: {
         Args: { p_key: string; p_user_id?: string; p_value: Json }
         Returns: boolean
@@ -7483,6 +12354,158 @@ export type Database = {
       }
     }
     Enums: {
+      _locales:
+        | "en"
+        | "es"
+        | "fr"
+        | "de"
+        | "ja"
+        | "zh"
+        | "ko"
+        | "pt"
+        | "sr"
+        | "ru"
+        | "it"
+        | "nl"
+        | "pl"
+        | "sv"
+        | "no"
+        | "da"
+        | "fi"
+        | "el"
+      enum__payload_resources_v_published_locale:
+        | "en"
+        | "es"
+        | "fr"
+        | "de"
+        | "ja"
+        | "zh"
+        | "ko"
+        | "pt"
+        | "sr"
+        | "ru"
+        | "it"
+        | "nl"
+        | "pl"
+        | "sv"
+        | "no"
+        | "da"
+        | "fi"
+        | "el"
+      enum__payload_resources_v_version_discovery_discovered_by:
+        | "ai"
+        | "manual"
+        | "import"
+        | "suggestion"
+      enum__payload_resources_v_version_enhancement_status:
+        | "not_enhanced"
+        | "pending"
+        | "enhanced"
+        | "needs_update"
+        | "failed"
+      enum__payload_resources_v_version_featured_reason:
+        | "editors-pick"
+        | "most-popular"
+        | "popular"
+        | "new"
+        | "trending"
+        | "essential"
+        | "official"
+        | "official-source"
+        | "official-repository"
+        | "official-community"
+        | "official-courses"
+        | "official-examples"
+        | "active-community"
+        | "built-with-claude"
+        | "industry-standard"
+        | "industry-example"
+      enum__payload_resources_v_version_publish_status:
+        | "published"
+        | "hidden"
+        | "pending_review"
+        | "rejected"
+        | "draft"
+      enum__payload_resources_v_version_resource_type:
+        | "official"
+        | "community"
+        | "beta"
+        | "deprecated"
+        | "archived"
+      enum__payload_resources_v_version_status: "draft" | "published"
+      enum_achievement_tiers_animation:
+        | "none"
+        | "pulse"
+        | "glow"
+        | "shine"
+        | "rainbow"
+      enum_ai_pipeline_settings_documentation_auto_rewrite_schedule:
+        | "disabled"
+        | "weekly"
+        | "monthly"
+      enum_ai_pipeline_settings_documentation_preserve_sections:
+        | "code_examples"
+        | "content_meta"
+        | "custom_components"
+      enum_ai_pipeline_settings_model_config_fallback_model:
+        | "claude-opus-4-5-20251101"
+        | "claude-sonnet-4-20250514"
+        | "claude-3-5-haiku-20241022"
+      enum_ai_pipeline_settings_model_config_preferred_model:
+        | "claude-opus-4-5-20251101"
+        | "claude-sonnet-4-20250514"
+        | "claude-3-5-haiku-20241022"
+      enum_ai_pipeline_settings_relationships_enabled_types:
+        | "required"
+        | "recommended"
+        | "related"
+        | "example"
+        | "alternative"
+        | "extends"
+        | "implements"
+      enum_ai_pipeline_settings_scheduling_preferred_days:
+        | "monday"
+        | "tuesday"
+        | "wednesday"
+        | "thursday"
+        | "friday"
+        | "saturday"
+        | "sunday"
+      enum_audit_logs_action:
+        | "create"
+        | "update"
+        | "delete"
+        | "approve"
+        | "reject"
+        | "discover"
+        | "scrape"
+        | "analyze"
+        | "import"
+        | "export"
+        | "login"
+        | "logout"
+        | "settings"
+        | "bulk"
+      enum_audit_logs_status: "success" | "failed" | "partial"
+      enum_badges_donor_tier_required:
+        | ""
+        | "bronze"
+        | "silver"
+        | "gold"
+        | "platinum"
+      enum_badges_role_required:
+        | ""
+        | "editor"
+        | "moderator"
+        | "admin"
+        | "superadmin"
+      enum_badges_type:
+        | "role"
+        | "donor"
+        | "special"
+        | "event"
+        | "verified"
+        | "achievement"
       enum_categories_color:
         | "violet"
         | "blue"
@@ -7494,6 +12517,10 @@ export type Database = {
         | "indigo"
         | "amber"
         | "rose"
+      enum_cross_link_settings_display_defaults_default_display_mode:
+        | "hover"
+        | "cards"
+        | "both"
       enum_difficulty_levels_color:
         | "green"
         | "blue"
@@ -7502,24 +12529,252 @@ export type Database = {
         | "red"
         | "purple"
         | "gray"
-      enum_resources_featured_reason:
+      enum_document_sections_display_mode: "inherit" | "hover" | "cards"
+      enum_documents_ai_relationships_relationship_type:
+        | "required"
+        | "recommended"
+        | "related"
+        | "example"
+        | "alternative"
+        | "extends"
+        | "implements"
+      enum_documents_analysis_status:
+        | "pending"
+        | "analyzed"
+        | "needs_update"
+        | "failed"
+      enum_documents_display_mode: "hover" | "cards" | "both"
+      enum_documents_rewrite_info_rewrite_status:
+        | "none"
+        | "queued"
+        | "in_progress"
+        | "completed"
+      enum_email_templates_slug:
+        | "verification"
+        | "verification-code"
+        | "password-reset"
+        | "welcome"
+        | "notification"
+        | "digest"
+        | "mention"
+        | "follow"
+        | "comment-reply"
+        | "donation-receipt"
+        | "donation-thank-you"
+        | "feedback-confirmation"
+        | "admin-alert"
+        | "import-complete"
+        | "discovery-complete"
+      enum_email_templates_status: "draft" | "active"
+      enum_media_category: "avatar" | "resource" | "doc" | "general"
+      enum_payload_achievements_compound_logic: "and" | "or"
+      enum_payload_achievements_condition_type:
+        | "special"
+        | "count"
+        | "streak"
+        | "time"
+        | "first"
+        | "compound"
+      enum_payload_achievements_metric:
+        | "messages_sent"
+        | "messages_received"
+        | "conversations_started"
+        | "groups_created"
+        | "followers_count"
+        | "following_count"
+        | "profile_views"
+        | "reviews_written"
+        | "comments_posted"
+        | "favorites_count"
+        | "ratings_count"
+        | "login_days"
+        | "account_age_days"
+        | "streak_days"
+        | "2fa_enabled"
+        | "passkeys_count"
+        | "ai_conversations"
+        | "ai_messages"
+      enum_payload_achievements_notification_sound:
+        | "achievement"
+        | "level_up"
+        | "fanfare"
+        | "subtle"
+        | "none"
+      enum_payload_edit_suggestions_priority:
+        | "low"
+        | "normal"
+        | "high"
+        | "critical"
+      enum_payload_edit_suggestions_status:
+        | "pending"
+        | "reviewing"
+        | "approved"
+        | "rejected"
+        | "merged"
+      enum_payload_edit_suggestions_submitter_type:
+        | "public"
+        | "cms"
+        | "anonymous"
+      enum_payload_edit_suggestions_target_type: "doc" | "resource"
+      enum_payload_resource_authors_role:
+        | "creator"
+        | "maintainer"
+        | "contributor"
+        | "author"
+        | "organization"
+      enum_payload_resource_discovery_queue_package_registry: "npm" | "pypi"
+      enum_payload_resource_discovery_queue_priority: "high" | "normal" | "low"
+      enum_payload_resource_discovery_queue_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "duplicate"
+        | "needs_info"
+      enum_payload_resource_discovery_queue_suggested_status:
+        | "official"
+        | "community"
+        | "beta"
+        | "deprecated"
+      enum_payload_resource_reviews_rejection_reason:
+        | "spam"
+        | "inappropriate"
+        | "off-topic"
+        | "fake"
+        | "duplicate"
+        | "other"
+      enum_payload_resource_reviews_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "flagged"
+      enum_payload_resource_sources_last_scan_status:
+        | "success"
+        | "partial"
+        | "failed"
+        | "never"
+      enum_payload_resource_sources_scan_frequency:
+        | "daily"
+        | "weekly"
+        | "monthly"
+        | "manual"
+      enum_payload_resource_sources_type:
+        | "github_repo"
+        | "github_search"
+        | "awesome_list"
+        | "npm"
+        | "pypi"
+        | "website"
+        | "rss"
+        | "api"
+        | "manual"
+      enum_payload_resources_discovery_discovered_by:
+        | "ai"
+        | "manual"
+        | "import"
+        | "suggestion"
+      enum_payload_resources_enhancement_status:
+        | "not_enhanced"
+        | "pending"
+        | "enhanced"
+        | "needs_update"
+        | "failed"
+      enum_payload_resources_featured_reason:
         | "editors-pick"
         | "most-popular"
+        | "popular"
         | "new"
         | "trending"
         | "essential"
-      enum_resources_status:
+        | "official"
+        | "official-source"
+        | "official-repository"
+        | "official-community"
+        | "official-courses"
+        | "official-examples"
+        | "active-community"
+        | "built-with-claude"
+        | "industry-standard"
+        | "industry-example"
+      enum_payload_resources_publish_status:
+        | "published"
+        | "hidden"
+        | "pending_review"
+        | "rejected"
+        | "draft"
+      enum_payload_resources_resource_type:
         | "official"
         | "community"
         | "beta"
         | "deprecated"
         | "archived"
+      enum_payload_resources_status: "draft" | "published"
+      enum_seo_settings_advanced_www_redirect: "www" | "non-www" | "none"
+      enum_seo_settings_index_now_search_engines:
+        | "bing"
+        | "yandex"
+        | "seznam"
+        | "naver"
+      enum_seo_settings_open_graph_type: "website" | "article" | "product"
+      enum_seo_settings_robots_sitemap_change_freq:
+        | "always"
+        | "hourly"
+        | "daily"
+        | "weekly"
+        | "monthly"
+        | "yearly"
+        | "never"
+      enum_seo_settings_structured_data_organization_type:
+        | "Organization"
+        | "Corporation"
+        | "EducationalOrganization"
+        | "LocalBusiness"
+      enum_seo_settings_twitter_card_type:
+        | "summary"
+        | "summary_large_image"
+        | "app"
+        | "player"
       enum_site_settings_announcement_type:
         | "info"
         | "success"
         | "warning"
         | "feature"
-      enum_users_role: "admin" | "editor"
+        | "critical"
+      enum_site_settings_notifications_digest_frequency:
+        | "immediate"
+        | "daily"
+        | "weekly"
+        | "never"
+      enum_translations_namespace:
+        | "common"
+        | "navigation"
+        | "home"
+        | "search"
+        | "favorites"
+        | "collections"
+        | "readingLists"
+        | "notifications"
+        | "profile"
+        | "settings"
+        | "auth"
+        | "pwa"
+        | "errors"
+        | "footer"
+      enum_users_role: "superadmin" | "admin" | "editor" | "moderator"
+      res_doc_rel_type:
+        | "required"
+        | "recommended"
+        | "related"
+        | "example"
+        | "alternative"
+        | "extends"
+        | "implements"
+      res_res_rel_type:
+        | "alternative"
+        | "complement"
+        | "dependency"
+        | "fork"
+        | "successor"
+        | "related"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -7647,6 +12902,176 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      _locales: [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "zh",
+        "ko",
+        "pt",
+        "sr",
+        "ru",
+        "it",
+        "nl",
+        "pl",
+        "sv",
+        "no",
+        "da",
+        "fi",
+        "el",
+      ],
+      enum__payload_resources_v_published_locale: [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "zh",
+        "ko",
+        "pt",
+        "sr",
+        "ru",
+        "it",
+        "nl",
+        "pl",
+        "sv",
+        "no",
+        "da",
+        "fi",
+        "el",
+      ],
+      enum__payload_resources_v_version_discovery_discovered_by: [
+        "ai",
+        "manual",
+        "import",
+        "suggestion",
+      ],
+      enum__payload_resources_v_version_enhancement_status: [
+        "not_enhanced",
+        "pending",
+        "enhanced",
+        "needs_update",
+        "failed",
+      ],
+      enum__payload_resources_v_version_featured_reason: [
+        "editors-pick",
+        "most-popular",
+        "popular",
+        "new",
+        "trending",
+        "essential",
+        "official",
+        "official-source",
+        "official-repository",
+        "official-community",
+        "official-courses",
+        "official-examples",
+        "active-community",
+        "built-with-claude",
+        "industry-standard",
+        "industry-example",
+      ],
+      enum__payload_resources_v_version_publish_status: [
+        "published",
+        "hidden",
+        "pending_review",
+        "rejected",
+        "draft",
+      ],
+      enum__payload_resources_v_version_resource_type: [
+        "official",
+        "community",
+        "beta",
+        "deprecated",
+        "archived",
+      ],
+      enum__payload_resources_v_version_status: ["draft", "published"],
+      enum_achievement_tiers_animation: [
+        "none",
+        "pulse",
+        "glow",
+        "shine",
+        "rainbow",
+      ],
+      enum_ai_pipeline_settings_documentation_auto_rewrite_schedule: [
+        "disabled",
+        "weekly",
+        "monthly",
+      ],
+      enum_ai_pipeline_settings_documentation_preserve_sections: [
+        "code_examples",
+        "content_meta",
+        "custom_components",
+      ],
+      enum_ai_pipeline_settings_model_config_fallback_model: [
+        "claude-opus-4-5-20251101",
+        "claude-sonnet-4-20250514",
+        "claude-3-5-haiku-20241022",
+      ],
+      enum_ai_pipeline_settings_model_config_preferred_model: [
+        "claude-opus-4-5-20251101",
+        "claude-sonnet-4-20250514",
+        "claude-3-5-haiku-20241022",
+      ],
+      enum_ai_pipeline_settings_relationships_enabled_types: [
+        "required",
+        "recommended",
+        "related",
+        "example",
+        "alternative",
+        "extends",
+        "implements",
+      ],
+      enum_ai_pipeline_settings_scheduling_preferred_days: [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+      ],
+      enum_audit_logs_action: [
+        "create",
+        "update",
+        "delete",
+        "approve",
+        "reject",
+        "discover",
+        "scrape",
+        "analyze",
+        "import",
+        "export",
+        "login",
+        "logout",
+        "settings",
+        "bulk",
+      ],
+      enum_audit_logs_status: ["success", "failed", "partial"],
+      enum_badges_donor_tier_required: [
+        "",
+        "bronze",
+        "silver",
+        "gold",
+        "platinum",
+      ],
+      enum_badges_role_required: [
+        "",
+        "editor",
+        "moderator",
+        "admin",
+        "superadmin",
+      ],
+      enum_badges_type: [
+        "role",
+        "donor",
+        "special",
+        "event",
+        "verified",
+        "achievement",
+      ],
       enum_categories_color: [
         "violet",
         "blue",
@@ -7659,6 +13084,11 @@ export const Constants = {
         "amber",
         "rose",
       ],
+      enum_cross_link_settings_display_defaults_default_display_mode: [
+        "hover",
+        "cards",
+        "both",
+      ],
       enum_difficulty_levels_color: [
         "green",
         "blue",
@@ -7668,27 +13098,284 @@ export const Constants = {
         "purple",
         "gray",
       ],
-      enum_resources_featured_reason: [
+      enum_document_sections_display_mode: ["inherit", "hover", "cards"],
+      enum_documents_ai_relationships_relationship_type: [
+        "required",
+        "recommended",
+        "related",
+        "example",
+        "alternative",
+        "extends",
+        "implements",
+      ],
+      enum_documents_analysis_status: [
+        "pending",
+        "analyzed",
+        "needs_update",
+        "failed",
+      ],
+      enum_documents_display_mode: ["hover", "cards", "both"],
+      enum_documents_rewrite_info_rewrite_status: [
+        "none",
+        "queued",
+        "in_progress",
+        "completed",
+      ],
+      enum_email_templates_slug: [
+        "verification",
+        "verification-code",
+        "password-reset",
+        "welcome",
+        "notification",
+        "digest",
+        "mention",
+        "follow",
+        "comment-reply",
+        "donation-receipt",
+        "donation-thank-you",
+        "feedback-confirmation",
+        "admin-alert",
+        "import-complete",
+        "discovery-complete",
+      ],
+      enum_email_templates_status: ["draft", "active"],
+      enum_media_category: ["avatar", "resource", "doc", "general"],
+      enum_payload_achievements_compound_logic: ["and", "or"],
+      enum_payload_achievements_condition_type: [
+        "special",
+        "count",
+        "streak",
+        "time",
+        "first",
+        "compound",
+      ],
+      enum_payload_achievements_metric: [
+        "messages_sent",
+        "messages_received",
+        "conversations_started",
+        "groups_created",
+        "followers_count",
+        "following_count",
+        "profile_views",
+        "reviews_written",
+        "comments_posted",
+        "favorites_count",
+        "ratings_count",
+        "login_days",
+        "account_age_days",
+        "streak_days",
+        "2fa_enabled",
+        "passkeys_count",
+        "ai_conversations",
+        "ai_messages",
+      ],
+      enum_payload_achievements_notification_sound: [
+        "achievement",
+        "level_up",
+        "fanfare",
+        "subtle",
+        "none",
+      ],
+      enum_payload_edit_suggestions_priority: [
+        "low",
+        "normal",
+        "high",
+        "critical",
+      ],
+      enum_payload_edit_suggestions_status: [
+        "pending",
+        "reviewing",
+        "approved",
+        "rejected",
+        "merged",
+      ],
+      enum_payload_edit_suggestions_submitter_type: [
+        "public",
+        "cms",
+        "anonymous",
+      ],
+      enum_payload_edit_suggestions_target_type: ["doc", "resource"],
+      enum_payload_resource_authors_role: [
+        "creator",
+        "maintainer",
+        "contributor",
+        "author",
+        "organization",
+      ],
+      enum_payload_resource_discovery_queue_package_registry: ["npm", "pypi"],
+      enum_payload_resource_discovery_queue_priority: ["high", "normal", "low"],
+      enum_payload_resource_discovery_queue_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "duplicate",
+        "needs_info",
+      ],
+      enum_payload_resource_discovery_queue_suggested_status: [
+        "official",
+        "community",
+        "beta",
+        "deprecated",
+      ],
+      enum_payload_resource_reviews_rejection_reason: [
+        "spam",
+        "inappropriate",
+        "off-topic",
+        "fake",
+        "duplicate",
+        "other",
+      ],
+      enum_payload_resource_reviews_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "flagged",
+      ],
+      enum_payload_resource_sources_last_scan_status: [
+        "success",
+        "partial",
+        "failed",
+        "never",
+      ],
+      enum_payload_resource_sources_scan_frequency: [
+        "daily",
+        "weekly",
+        "monthly",
+        "manual",
+      ],
+      enum_payload_resource_sources_type: [
+        "github_repo",
+        "github_search",
+        "awesome_list",
+        "npm",
+        "pypi",
+        "website",
+        "rss",
+        "api",
+        "manual",
+      ],
+      enum_payload_resources_discovery_discovered_by: [
+        "ai",
+        "manual",
+        "import",
+        "suggestion",
+      ],
+      enum_payload_resources_enhancement_status: [
+        "not_enhanced",
+        "pending",
+        "enhanced",
+        "needs_update",
+        "failed",
+      ],
+      enum_payload_resources_featured_reason: [
         "editors-pick",
         "most-popular",
+        "popular",
         "new",
         "trending",
         "essential",
+        "official",
+        "official-source",
+        "official-repository",
+        "official-community",
+        "official-courses",
+        "official-examples",
+        "active-community",
+        "built-with-claude",
+        "industry-standard",
+        "industry-example",
       ],
-      enum_resources_status: [
+      enum_payload_resources_publish_status: [
+        "published",
+        "hidden",
+        "pending_review",
+        "rejected",
+        "draft",
+      ],
+      enum_payload_resources_resource_type: [
         "official",
         "community",
         "beta",
         "deprecated",
         "archived",
       ],
+      enum_payload_resources_status: ["draft", "published"],
+      enum_seo_settings_advanced_www_redirect: ["www", "non-www", "none"],
+      enum_seo_settings_index_now_search_engines: [
+        "bing",
+        "yandex",
+        "seznam",
+        "naver",
+      ],
+      enum_seo_settings_open_graph_type: ["website", "article", "product"],
+      enum_seo_settings_robots_sitemap_change_freq: [
+        "always",
+        "hourly",
+        "daily",
+        "weekly",
+        "monthly",
+        "yearly",
+        "never",
+      ],
+      enum_seo_settings_structured_data_organization_type: [
+        "Organization",
+        "Corporation",
+        "EducationalOrganization",
+        "LocalBusiness",
+      ],
+      enum_seo_settings_twitter_card_type: [
+        "summary",
+        "summary_large_image",
+        "app",
+        "player",
+      ],
       enum_site_settings_announcement_type: [
         "info",
         "success",
         "warning",
         "feature",
+        "critical",
       ],
-      enum_users_role: ["admin", "editor"],
+      enum_site_settings_notifications_digest_frequency: [
+        "immediate",
+        "daily",
+        "weekly",
+        "never",
+      ],
+      enum_translations_namespace: [
+        "common",
+        "navigation",
+        "home",
+        "search",
+        "favorites",
+        "collections",
+        "readingLists",
+        "notifications",
+        "profile",
+        "settings",
+        "auth",
+        "pwa",
+        "errors",
+        "footer",
+      ],
+      enum_users_role: ["superadmin", "admin", "editor", "moderator"],
+      res_doc_rel_type: [
+        "required",
+        "recommended",
+        "related",
+        "example",
+        "alternative",
+        "extends",
+        "implements",
+      ],
+      res_res_rel_type: [
+        "alternative",
+        "complement",
+        "dependency",
+        "fork",
+        "successor",
+        "related",
+      ],
     },
   },
 } as const

@@ -16,12 +16,18 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { cn } from "@/lib/design-system";
 import { useSound } from "@/hooks/use-sound-effects";
+import { useDraftMessage } from "@/hooks/use-draft-message";
+import { useBatchedReadReceipts } from "@/hooks/use-batched-read-receipts";
+import { useGapDetection } from "@/hooks/use-gap-detection";
+import { useReactions } from "@/hooks/use-reactions";
 import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
 import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
 import { ProfileHoverCard } from "@/components/users/profile-hover-card";
+import { ReplyPreview } from "@/components/messaging/reply-preview";
+import { MessageSearchBar, SearchToggleButton } from "@/components/messaging/message-search";
 import {
   MentionAutocomplete,
   useMentionDetection,
@@ -30,13 +36,14 @@ import {
 import {
   getMessages,
   sendMessage,
+  editMessage,
   markConversationAsRead,
-  markMessagesAsRead,
   getReadReceipts,
   searchUsersForMention,
   type Message,
   type ConversationParticipant,
   type ReadReceipt,
+  type Reaction,
 } from "@/app/actions/messaging";
 import { generateAIChatResponse } from "@/app/actions/ai-chat-response";
 import {
@@ -70,7 +77,11 @@ export function ConversationView({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+
+  // Message drafts - persisted to localStorage per conversation
+  const { draft: inputValue, setDraft: setInputValue, clearDraft } = useDraftMessage({
+    conversationId,
+  });
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [isMentionOpen, setIsMentionOpen] = useState(false);
@@ -79,6 +90,10 @@ export function ConversationView({
   const [isVerified, setIsVerified] = useState(false);
   // Read receipts state: messageId -> ReadReceipt[]
   const [readReceipts, setReadReceipts] = useState<Record<string, ReadReceipt[]>>({});
+  // Reply state - message being replied to
+  const [replyingTo, setReplyingTo] = useState<Message | null>(null);
+  // Search state
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
@@ -158,7 +173,7 @@ export function ConversationView({
         }
       }, 0);
     },
-    [inputValue, cursorPosition, mentionStart]
+    [inputValue, cursorPosition, mentionStart, setInputValue]
   );
 
   // Handle incoming messages from realtime subscription
@@ -218,9 +233,7 @@ export function ConversationView({
 
       // Mark as read in background (non-blocking)
       markConversationAsRead(conversationId);
-      // Also mark messages as read for read receipts
-      markMessagesAsRead(conversationId, payload.id);
-      // Queue read receipt broadcast (processed by useEffect to avoid circular dependency)
+      // Queue read receipt for batched system (processed by useEffect)
       pendingReadReceiptIdsRef.current.push(payload.id);
     },
     [conversationId, participants, currentUserId, playMessageReceived, playMention]
@@ -262,7 +275,7 @@ export function ConversationView({
 
   // Use optimized realtime hook - pools subscriptions, uses Broadcast for typing
   // This replaces the old postgres_changes subscriptions (7.6x faster for typing)
-  const { sendTyping, sendReadReceipt } = useConversationRealtime({
+  const { sendTyping, sendReadReceipt, isConnected } = useConversationRealtime({
     conversationId,
     currentUserId,
     onMessage: handleRealtimeMessage,
@@ -270,6 +283,70 @@ export function ConversationView({
     onReadReceipt: handleReadReceipt,
     enabled: !isLoading, // Only subscribe after initial load
   });
+
+  // Handle missing messages found by gap detection
+  const handleMissingMessages = useCallback((missingMessages: Message[]) => {
+    setMessages((prev) => {
+      // Merge and sort by createdAt
+      const existingIds = new Set(prev.map((m) => m.id));
+      const newMessages = missingMessages.filter((m) => !existingIds.has(m.id));
+      if (newMessages.length === 0) return prev;
+
+      const merged = [...prev, ...newMessages];
+      merged.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      return merged;
+    });
+  }, []);
+
+  // Gap detection - fetches missed messages after reconnection
+  useGapDetection({
+    conversationId,
+    currentUserId,
+    messages,
+    onMissingMessages: handleMissingMessages,
+    isConnected,
+    enabled: !isLoading,
+  });
+
+  // Message IDs for fetching reactions
+  const messageIds = useMemo(() => messages.map((m) => m.id), [messages]);
+
+  // Reactions hook - manages emoji reactions with optimistic updates
+  const { reactions, react } = useReactions({
+    conversationId,
+    currentUserId,
+    messageIds,
+    enabled: !isLoading && messages.length > 0,
+  });
+
+  // Convert reactions to the format expected by VirtualizedMessageList
+  const reactionsMap = useMemo(() => {
+    const map: Record<string, Reaction[]> = {};
+    for (const [msgId, summary] of Object.entries(reactions)) {
+      map[msgId] = summary.reactions;
+    }
+    return map;
+  }, [reactions]);
+
+  // Handle reply action
+  const handleReply = useCallback((message: Message) => {
+    setReplyingTo(message);
+    // Focus the input when replying
+    setTimeout(() => inputRef.current?.focus(), 0);
+  }, []);
+
+  // Handle scroll to message (for clicking on reply previews)
+  const handleScrollToMessage = useCallback((messageId: string) => {
+    const index = messages.findIndex((m) => m.id === messageId);
+    if (index >= 0 && messageListRef.current) {
+      // Highlight and scroll
+      setHighlightedMessageId(messageId);
+      const element = document.querySelector(`[data-message-id="${messageId}"]`);
+      element?.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Clear highlight after animation
+      setTimeout(() => setHighlightedMessageId(null), 2000);
+    }
+  }, [messages]);
 
   // Get current user's profile info for read receipt broadcasts
   const currentUserProfile = useMemo(() => {
@@ -281,15 +358,27 @@ export function ConversationView({
     };
   }, [participants, currentUserId]);
 
+  // Batched read receipts - broadcasts immediately, batches DB writes every 30s
+  // This reduces DB load while maintaining real-time "Seen" indicators
+  const { markMultipleAsRead } = useBatchedReadReceipts({
+    conversationId,
+    currentUserId,
+    broadcastReadReceipt: sendReadReceipt,
+    userName: currentUserProfile.name,
+    userAvatar: currentUserProfile.avatar,
+    enabled: !isLoading,
+  });
+
   // Process pending read receipt broadcasts (avoids circular dependency with handleRealtimeMessage)
-  // This useEffect runs after new messages are added and broadcasts read receipts to other participants
+  // This useEffect runs after new messages are added and marks them as read via batched system
   useEffect(() => {
     if (pendingReadReceiptIdsRef.current.length > 0 && !isLoading) {
       const pendingIds = [...pendingReadReceiptIdsRef.current];
       pendingReadReceiptIdsRef.current = []; // Clear the queue
-      sendReadReceipt(pendingIds, currentUserProfile.name, currentUserProfile.avatar);
+      // Use batched system - broadcasts immediately, batches DB writes
+      markMultipleAsRead(pendingIds);
     }
-  }, [messages.length, isLoading, sendReadReceipt, currentUserProfile]);
+  }, [messages.length, isLoading, markMultipleAsRead]);
 
   // Load initial messages and read receipts
   useEffect(() => {
@@ -312,15 +401,13 @@ export function ConversationView({
           }
         }
 
-        // Mark messages as read and broadcast to others
+        // Mark messages as read via batched system (broadcasts immediately, batches DB writes)
         const otherMessageIds = result.messages
           .filter((m) => m.senderId !== currentUserId)
           .map((m) => m.id);
 
         if (otherMessageIds.length > 0) {
-          await markMessagesAsRead(conversationId);
-          // Broadcast read receipt to other participants
-          sendReadReceipt(otherMessageIds, currentUserProfile.name, currentUserProfile.avatar);
+          markMultipleAsRead(otherMessageIds);
         }
 
         await markConversationAsRead(conversationId);
@@ -329,7 +416,7 @@ export function ConversationView({
     };
 
     loadMessages();
-  }, [conversationId, currentUserId, currentUserProfile, sendReadReceipt]);
+  }, [conversationId, currentUserId, markMultipleAsRead]);
 
   // Scroll to target message when deep linking from notifications
   useEffect(() => {
@@ -410,7 +497,9 @@ export function ConversationView({
     if (!inputValue.trim() || isSending) return;
 
     const content = inputValue.trim();
-    setInputValue("");
+    const replyToId = replyingTo?.id; // Capture before clearing
+    clearDraft(); // Clear draft from localStorage immediately
+    setReplyingTo(null); // Clear reply state immediately for UX
     setIsSending(true);
 
     if (typingTimeoutRef.current) {
@@ -419,7 +508,8 @@ export function ConversationView({
     // Clear typing indicator immediately via Broadcast
     sendTyping(false);
 
-    const result = await sendMessage(conversationId, content);
+    // Send message with optional reply reference
+    const result = await sendMessage(conversationId, content, replyToId);
 
     if (result.success && result.message) {
       setMessages((prev) => [...prev, result.message!]);
@@ -455,6 +545,23 @@ export function ConversationView({
     setIsSending(false);
     inputRef.current?.focus();
   };
+
+  // Handle message edit
+  const handleEditMessage = useCallback(async (messageId: string, newContent: string) => {
+    const result = await editMessage(messageId, newContent);
+    if (result.success && result.message) {
+      // Update the message in the local state
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === messageId
+            ? { ...m, content: result.message!.content, editedAt: result.message!.editedAt }
+            : m
+        )
+      );
+    } else {
+      throw new Error(result.error || "Failed to edit message");
+    }
+  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     // Don't intercept keys when mention autocomplete is open
@@ -573,7 +680,21 @@ export function ConversationView({
             AI Assistant
           </span>
         )}
+
+        {/* Search toggle button */}
+        <SearchToggleButton
+          onClick={() => setIsSearchOpen((prev) => !prev)}
+          isActive={isSearchOpen}
+        />
       </div>
+
+      {/* In-conversation search bar */}
+      <MessageSearchBar
+        conversationId={conversationId}
+        onJumpToMessage={handleScrollToMessage}
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
 
       {/* Device Verification Modal */}
       {!isAIConversation && (
@@ -603,12 +724,29 @@ export function ConversationView({
         highlightedMessageId={highlightedMessageId}
         readReceipts={readReceipts}
         participantCount={participants.length - 1}
+        onEdit={handleEditMessage}
+        onReply={handleReply}
+        reactionsMap={reactionsMap}
+        onReact={react}
         className="p-4"
       />
 
       {/* Input - flex-shrink-0 ensures this stays fixed at bottom */}
-      <div className="flex-shrink-0 p-4 border-t border-gray-200 dark:border-[#262626]">
-        <div ref={inputWrapperRef} className="relative flex items-end gap-2">
+      <div className="flex-shrink-0 border-t border-gray-200 dark:border-[#262626]">
+        {/* Reply preview when replying to a message */}
+        {replyingTo && (
+          <div className="px-4 pt-3">
+            <ReplyPreview
+              senderName={replyingTo.senderName || "Unknown"}
+              content={replyingTo.content}
+              isDeleted={!!replyingTo.deletedAt}
+              variant="composer"
+              onDismiss={() => setReplyingTo(null)}
+            />
+          </div>
+        )}
+
+        <div ref={inputWrapperRef} className="relative flex items-end gap-2 p-4 pt-3">
           {/* Mention Autocomplete - positioned above input */}
           <MentionAutocomplete
             inputValue={inputValue}
