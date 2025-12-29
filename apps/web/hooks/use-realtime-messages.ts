@@ -7,7 +7,7 @@
 
 "use client";
 
-import { useEffect, useCallback, useState, useRef } from "react";
+import { useEffect, useCallback, useState, useRef, useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useSession } from "@/lib/auth-client";
 import type { RealtimeChannel } from "@supabase/supabase-js";
@@ -95,6 +95,19 @@ export function useRealtimeMessages(
   const [error, setError] = useState<Error | null>(null);
   const channelRef = useRef<RealtimeChannel | null>(null);
 
+  // Use refs to store callbacks - prevents infinite loops from unstable callback references
+  const onNewMessageRef = useRef(onNewMessage);
+  const onUnreadCountChangeRef = useRef(onUnreadCountChange);
+
+  // Keep refs up to date
+  useEffect(() => {
+    onNewMessageRef.current = onNewMessage;
+  }, [onNewMessage]);
+
+  useEffect(() => {
+    onUnreadCountChangeRef.current = onUnreadCountChange;
+  }, [onUnreadCountChange]);
+
   // Fetch current unread count directly from Supabase using RPC function
   const refreshCount = useCallback(async () => {
     if (!session?.user?.id) return;
@@ -115,11 +128,11 @@ export function useRealtimeMessages(
 
       const totalUnread = data ?? 0;
       setUnreadCount(totalUnread);
-      onUnreadCountChange?.(totalUnread);
+      onUnreadCountChangeRef.current?.(totalUnread);
     } catch (err) {
       console.error("[Realtime Messages] Failed to fetch count:", err);
     }
-  }, [session?.user?.id, onUnreadCountChange]);
+  }, [session?.user?.id]); // Removed onUnreadCountChange - using ref instead
 
   // Show browser push notification for new message
   const showPushNotification = useCallback(
@@ -228,7 +241,7 @@ export function useRealtimeMessages(
               if (message.sender_id !== userId) {
                 setUnreadCount((prev) => {
                   const newCount = prev + 1;
-                  onUnreadCountChange?.(newCount);
+                  onUnreadCountChangeRef.current?.(newCount);
                   return newCount;
                 });
 
@@ -238,7 +251,7 @@ export function useRealtimeMessages(
               }
 
               // Trigger callback
-              onNewMessage?.(message);
+              onNewMessageRef.current?.(message);
             }
           );
         }
@@ -263,7 +276,7 @@ export function useRealtimeMessages(
               if (message.sender_id !== userId) {
                 setUnreadCount((prev) => {
                   const newCount = prev + 1;
-                  onUnreadCountChange?.(newCount);
+                  onUnreadCountChangeRef.current?.(newCount);
                   return newCount;
                 });
 
@@ -273,7 +286,7 @@ export function useRealtimeMessages(
               }
 
               // Trigger callback
-              onNewMessage?.(message);
+              onNewMessageRef.current?.(message);
             }
           );
         }
@@ -330,9 +343,8 @@ export function useRealtimeMessages(
     conversationId,
     groupId,
     refreshCount,
-    onNewMessage,
-    onUnreadCountChange,
     showPushNotification,
+    // Note: onNewMessage and onUnreadCountChange removed - using refs to prevent infinite loops
   ]);
 
   return {
