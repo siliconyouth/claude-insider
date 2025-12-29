@@ -23,6 +23,7 @@ import { useReactions } from "@/hooks/use-reactions";
 import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
+import { E2EESetupModal } from "@/components/e2ee/e2ee-setup-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
 import { useDeferredLoading } from "@/components/providers/deferred-loading-context";
 import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
@@ -347,6 +348,7 @@ function ConversationView({
   const [isMentionOpen, setIsMentionOpen] = useState(false);
   const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null);
   const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [showSetupModal, setShowSetupModal] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   // Read receipts state: messageId -> ReadReceipt[]
   const [readReceipts, setReadReceipts] = useState<Record<string, ReadReceipt[]>>({});
@@ -931,7 +933,7 @@ function ConversationView({
             <p className="text-xs text-green-600 dark:text-green-400">Online</p>
           )}
         </div>
-        {/* E2EE badge - shows encryption status and enables verification */}
+        {/* E2EE badge - shows encryption status and enables verification or setup */}
         <ConversationE2EEBadge
           e2eeEnabled={e2ee.isInitialized}
           allParticipantsHaveE2EE={e2ee.isInitialized}
@@ -939,6 +941,7 @@ function ConversationView({
           isLoading={isE2EELoading}
           size="sm"
           onVerifyClick={() => setShowVerificationModal(true)}
+          onSetupClick={() => setShowSetupModal(true)}
           targetUserId={otherParticipant?.userId}
           targetUserName={otherParticipant?.displayName || otherParticipant?.name}
         />
@@ -968,6 +971,13 @@ function ConversationView({
           setIsVerified(true);
           setShowVerificationModal(false);
         }}
+      />
+
+      {/* E2EE Setup Modal - for setting up E2EE when not initialized */}
+      <E2EESetupModal
+        isOpen={showSetupModal}
+        onClose={() => setShowSetupModal(false)}
+        onSuccess={() => setShowSetupModal(false)}
       />
 
       {/* Messages - Virtualized for performance */}

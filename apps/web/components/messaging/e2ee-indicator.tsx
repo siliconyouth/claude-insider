@@ -50,6 +50,8 @@ export interface ConversationE2EEBadgeProps {
   className?: string;
   /** Callback when badge is clicked (for verification flow) */
   onVerifyClick?: () => void;
+  /** Callback when "Not encrypted" badge is clicked (for E2EE setup) */
+  onSetupClick?: () => void;
   /** Target user info for verification */
   targetUserId?: string;
   targetDeviceId?: string;
@@ -160,6 +162,7 @@ export function ConversationE2EEBadge({
   size = "sm",
   className,
   onVerifyClick,
+  onSetupClick,
 }: ConversationE2EEBadgeProps) {
   const config = sizeConfig[size];
   const isClickable = onVerifyClick && e2eeEnabled && allParticipantsHaveE2EE && !isVerified;
@@ -191,6 +194,24 @@ export function ConversationE2EEBadge({
   }
 
   if (!e2eeEnabled) {
+    // Make clickable to open setup modal if onSetupClick is provided
+    if (onSetupClick) {
+      return (
+        <button
+          onClick={onSetupClick}
+          className={cn(
+            baseClasses,
+            "bg-amber-900/30 text-amber-400 border border-amber-500/30",
+            "hover:bg-amber-900/50 hover:border-amber-500/50",
+            "cursor-pointer transition-all"
+          )}
+          title="Click to set up end-to-end encryption"
+        >
+          <ShieldAlert className={cn(config.icon, "animate-pulse")} />
+          <span>Set up E2EE</span>
+        </button>
+      );
+    }
     return (
       <span
         className={cn(baseClasses, "bg-gray-800/50 text-gray-400")}
