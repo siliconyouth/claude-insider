@@ -253,28 +253,25 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   const totalCount = items.length + (showTyping ? 1 : 0);
 
   // Initialize virtualizer
+  // Note: We intentionally avoid getItemKey - TanStack Virtual handles index-based
+  // keys internally, and our message identity is tracked via data-message-id attributes
+  // on DOM elements (Matrix SDK pattern). Custom getItemKey causes crashes when
+  // items array changes during conversation loading.
   const virtualizer = useVirtualizer({
     count: totalCount,
     getScrollElement: () => parentRef.current,
-    // Stable item keys for proper tracking across re-renders (Matrix SDK pattern)
-    getItemKey: (index) => {
-      if (index >= items.length) return "typing-indicator";
-      const item = items[index];
-      if (item?.type === "date") return `date-${item.date?.toISOString()}`;
-      return item?.message?.id || `item-${index}`;
-    },
-    // Estimate sizes closer to actual content (Matrix SDK pattern: tight estimates)
-    // Date separators: 32px, Messages: 52px average (single line + padding)
+    // Estimate sizes for smooth scrolling
+    // Date separators: ~40px, Messages: ~80px average (content + padding)
     estimateSize: (index) => {
-      if (index >= items.length) return 32; // Typing indicator
+      if (index >= items.length) return 40; // Typing indicator
       const item = items[index];
-      return item?.type === "date" ? 32 : 52;
+      return item?.type === "date" ? 40 : 80;
     },
     overscan: 10, // Render 10 extra items for smooth scrolling
-    // Enable dynamic measurement for accurate heights
+    // Enable dynamic measurement for accurate heights after render
     measureElement: (element) => element.getBoundingClientRect().height,
     // Padding at the end for read receipts visibility
-    paddingEnd: 32,
+    paddingEnd: 48,
   });
 
   const virtualItems = virtualizer.getVirtualItems();
