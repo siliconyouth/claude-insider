@@ -537,7 +537,7 @@ function getWelcomeEmailHtml(userName?: string): string {
 export interface NotificationEmailParams {
   email: string;
   userName?: string;
-  type: "reply" | "comment" | "suggestion_approved" | "suggestion_rejected" | "suggestion_merged" | "follow" | "mention";
+  type: "reply" | "comment" | "suggestion_approved" | "suggestion_rejected" | "suggestion_merged" | "follow" | "mention" | "resource_submission_received" | "resource_submission_approved" | "resource_submission_rejected";
   title: string;
   message: string;
   actorName?: string;
@@ -591,6 +591,12 @@ function getNotificationSubject(type: NotificationEmailParams["type"], actorName
       return `${actor} started following you on ${APP_NAME}`;
     case "mention":
       return `${actor} mentioned you on ${APP_NAME}`;
+    case "resource_submission_received":
+      return `Your resource submission was received on ${APP_NAME}`;
+    case "resource_submission_approved":
+      return `🎉 Your resource submission was approved on ${APP_NAME}`;
+    case "resource_submission_rejected":
+      return `Update on your resource submission on ${APP_NAME}`;
     default:
       return `New notification on ${APP_NAME}`;
   }
@@ -649,10 +655,12 @@ function getNotificationIcon(type: NotificationEmailParams["type"]): string {
       </svg>`;
     case "suggestion_approved":
     case "suggestion_merged":
+    case "resource_submission_approved":
       return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
       </svg>`;
     case "suggestion_rejected":
+    case "resource_submission_rejected":
       return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>`;
@@ -663,6 +671,10 @@ function getNotificationIcon(type: NotificationEmailParams["type"]): string {
     case "mention":
       return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
         <path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+      </svg>`;
+    case "resource_submission_received":
+      return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>`;
     default:
       return `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" style="width: 24px; height: 24px;">
@@ -687,6 +699,10 @@ function getNotificationButtonText(type: NotificationEmailParams["type"]): strin
       return "View Profile";
     case "mention":
       return "View Mention";
+    case "resource_submission_received":
+    case "resource_submission_approved":
+    case "resource_submission_rejected":
+      return "View Submission";
     default:
       return "View Notification";
   }

@@ -24,7 +24,10 @@ export type NotificationType =
   | "welcome"
   | "system"
   | "admin_notification"
-  | "version_update";
+  | "version_update"
+  | "resource_submission_received"
+  | "resource_submission_approved"
+  | "resource_submission_rejected";
 
 export interface Notification {
   id: string;
@@ -54,11 +57,13 @@ export interface NotificationPreferences {
   in_app_follows: boolean;
   in_app_mentions: boolean;
   in_app_version_updates: boolean;
+  in_app_submissions: boolean;
   email_comments: boolean;
   email_replies: boolean;
   email_suggestions: boolean;
   email_follows: boolean;
   email_version_updates: boolean;
+  email_submissions: boolean;
   email_digest: boolean;
   email_digest_frequency: "daily" | "weekly" | "monthly";
   browser_notifications: boolean;
@@ -71,11 +76,13 @@ const defaultPreferences: NotificationPreferences = {
   in_app_follows: true,
   in_app_mentions: true,
   in_app_version_updates: true,
+  in_app_submissions: true,
   email_comments: false,
   email_replies: true,
   email_suggestions: true,
   email_follows: false,
   email_version_updates: false,
+  email_submissions: true, // Enable by default since users want to know about their submissions
   email_digest: false,
   email_digest_frequency: "weekly",
   browser_notifications: false,
@@ -337,11 +344,13 @@ export async function getNotificationPreferences(): Promise<{
             in_app_follows: data.in_app_follows ?? defaultPreferences.in_app_follows,
             in_app_mentions: data.in_app_mentions ?? defaultPreferences.in_app_mentions,
             in_app_version_updates: data.in_app_version_updates ?? defaultPreferences.in_app_version_updates,
+            in_app_submissions: data.in_app_submissions ?? defaultPreferences.in_app_submissions,
             email_comments: data.email_comments ?? defaultPreferences.email_comments,
             email_replies: data.email_replies ?? defaultPreferences.email_replies,
             email_suggestions: data.email_suggestions ?? defaultPreferences.email_suggestions,
             email_follows: data.email_follows ?? defaultPreferences.email_follows,
             email_version_updates: data.email_version_updates ?? defaultPreferences.email_version_updates,
+            email_submissions: data.email_submissions ?? defaultPreferences.email_submissions,
             email_digest: data.email_digest ?? defaultPreferences.email_digest,
             email_digest_frequency: data.email_digest_frequency ?? defaultPreferences.email_digest_frequency,
             browser_notifications: data.browser_notifications ?? defaultPreferences.browser_notifications,
@@ -500,7 +509,11 @@ export async function createNotification(params: {
       const emailType = params.type as NotificationEmailParams["type"];
 
       // Only send for supported email types
-      if (["reply", "comment", "suggestion_approved", "suggestion_rejected", "suggestion_merged", "follow", "mention"].includes(params.type)) {
+      if ([
+        "reply", "comment", "suggestion_approved", "suggestion_rejected", "suggestion_merged",
+        "follow", "mention", "resource_submission_received", "resource_submission_approved",
+        "resource_submission_rejected"
+      ].includes(params.type)) {
         try {
           await sendNotificationEmail({
             email: user.email,
@@ -569,6 +582,10 @@ function getInAppPrefKey(type: NotificationType): keyof NotificationPreferences 
       return "in_app_mentions";
     case "version_update":
       return "in_app_version_updates";
+    case "resource_submission_received":
+    case "resource_submission_approved":
+    case "resource_submission_rejected":
+      return "in_app_submissions";
     default:
       return "in_app_comments"; // Default fallback
   }
@@ -591,6 +608,10 @@ function getEmailPrefKey(type: NotificationType): keyof NotificationPreferences 
       return "email_follows";
     case "version_update":
       return "email_version_updates";
+    case "resource_submission_received":
+    case "resource_submission_approved":
+    case "resource_submission_rejected":
+      return "email_submissions";
     default:
       return "email_comments"; // Default fallback
   }
@@ -624,6 +645,12 @@ function getActionUrl(
     case "suggestion":
       // Link to user's suggestions page - they can see their suggestion status there
       return `${baseUrl}/profile/suggestions`;
+
+    case "submission":
+      // Link to user's submissions page with optional anchor to specific submission
+      return resourceId
+        ? `${baseUrl}/profile/submissions#${resourceId}`
+        : `${baseUrl}/profile/submissions`;
 
     case "user":
       // For follow notifications, link to the actor's profile

@@ -315,9 +315,25 @@ function ResourcesContent() {
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
               Claude AI <span className="gradient-text-stripe">Resources</span>
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-6">
               Curated collection of tools, MCP servers, SDKs, tutorials, and community resources
             </p>
+            <Link
+              href="/resources/submit"
+              className={cn(
+                'inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium',
+                'bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600',
+                'text-white shadow-lg shadow-blue-500/25',
+                'hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500',
+                'hover:shadow-xl hover:shadow-blue-500/30',
+                'transition-all duration-200'
+              )}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Submit Resource
+            </Link>
           </div>
 
           {/* Resource Insights Charts */}

@@ -241,6 +241,16 @@ export const ResourceDiscoveryQueue: CollectionConfig = {
       },
     },
 
+    // User submission reference (if from user-submitted resource)
+    {
+      name: 'sourceSubmissionId',
+      type: 'text',
+      admin: {
+        description: 'ID of the user resource submission that initiated this queue item',
+        condition: (data) => !!data?.sourceSubmissionId,
+      },
+    },
+
     // Raw scraped data (for debugging)
     {
       name: 'rawData',

@@ -735,8 +735,9 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
                   transform: `translateY(${virtualRow.start}px)`,
                 }}
                 className={cn(
-                  isHighlighted && "animate-highlight-message",
-                  "transition-all duration-300"
+                  isHighlighted && "animate-highlight-message"
+                  // Note: DO NOT add transition-all here - it breaks virtualization
+                  // The transform property is used for positioning and must not be animated
                 )}
               >
                 <MessageBubble

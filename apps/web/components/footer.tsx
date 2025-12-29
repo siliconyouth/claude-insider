@@ -64,6 +64,7 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
       { href: "/resources/prompts", label: "Prompts" },
       { href: "/resources/showcases", label: "Showcases" },
       { href: "/resources/community", label: "Community" },
+      { href: "/resources/submit", label: "Submit Resource", badge: "New" },
     ],
   },
   project: {
