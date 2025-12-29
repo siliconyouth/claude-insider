@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.13.6 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.13.7 notification to all opted-in users...\n");
 
-  const version = "1.13.6";
-  const title = "Claude Insider v1.13.6 - Resource Submissions & Chat Performance";
+  const version = "1.13.7";
+  const title = "Claude Insider v1.13.7 - Optimistic UI & Resource Submissions OPEN";
   const message =
-    "📤 Resource Submissions: Users can now submit resources at /resources/submit with AI-powered analysis • ⚡ Chat Performance: 4x faster conversations with optimized RPC functions (200ms → 50ms) • 🔔 Smart Notifications: Deep-linking to messages with auto-scroll and highlight animation • 🛠️ Edit Fix: Message bubble overlap resolved";
+    "🎉 Resource Submissions OPEN: Community can now submit resources at /resources/submit with AI analysis • ⚡ Optimistic UI (MANDATORY): Messages appear instantly (~2ms) with background server sync • 🗑️ TanStack Virtual Removed: Replaced with simple flexbox + CSS overflow-anchor for scroll preservation • 🔓 Send Button Unblocked: Button re-enables immediately after optimistic update";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
