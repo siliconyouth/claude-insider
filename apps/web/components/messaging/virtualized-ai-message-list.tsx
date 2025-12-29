@@ -1,20 +1,25 @@
 "use client";
 
 /**
- * Virtualized AI Message List
+ * AI Message List
  *
- * High-performance AI chat message list using TanStack Virtual for efficient rendering
- * of long AI conversations. Optimized for the AI Assistant tab with streaming support.
+ * Simple, reliable AI chat message list using native document flow (Matrix SDK pattern).
+ *
+ * Why NOT virtualization for AI chat:
+ * - TanStack Virtual's absolute positioning causes timing issues with streaming
+ * - AI conversations are typically shorter (not 10,000+ messages)
+ * - Streaming content needs instant updates without measurement delays
+ * - Simple flexbox layout is faster and more reliable for this use case
  *
  * Features:
- * - Dynamic height measurement for variable-length messages (including code blocks)
- * - Auto-scroll to bottom for new messages and streaming content
+ * - Native flexbox layout (no positioning bugs)
+ * - Auto-scroll to bottom for new messages and streaming
  * - Supports streaming content, loading indicators, and error states
  * - Actions (Listen, Copy) for assistant messages
+ * - Inline recommendations
  */
 
 import { useRef, useEffect, useCallback, useState, type ReactNode } from "react";
-import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
 import {
   ChatMessage,
@@ -72,48 +77,35 @@ export function VirtualizedAIMessageList({
   isSpeaking = false,
   onStopSpeaking,
 }: VirtualizedAIMessageListProps) {
-  const parentRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const prevMessagesLengthRef = useRef(messages.length);
   const prevStreamingRef = useRef(streamingContent);
 
-  // Calculate total items: messages + streaming + loading + error + recommendations
   const hasStreaming = streamingContent.length > 0;
   const hasLoading = isLoading && !hasStreaming;
   const hasError = error !== null;
   const hasRecommendations = recommendations.length > 0 && !isLoading && !hasStreaming;
 
-  const extraItems = (hasStreaming ? 1 : 0) + (hasLoading ? 1 : 0) + (hasError ? 1 : 0) + (hasRecommendations ? 1 : 0);
-  const totalCount = messages.length + extraItems;
+  /**
+   * Scroll to bottom - simple and direct.
+   */
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = "auto") => {
+    const el = containerRef.current;
+    if (!el) return;
 
-  // Initialize virtualizer
-  const virtualizer = useVirtualizer({
-    count: totalCount,
-    getScrollElement: () => parentRef.current,
-    // Estimate: user messages ~60px, assistant messages ~120px (longer with code)
-    estimateSize: (index) => {
-      if (index >= messages.length) {
-        // Extra items (streaming, loading, error, recommendations)
-        if (hasStreaming && index === messages.length) return 100;
-        if (hasLoading) return 60;
-        if (hasError) return 50;
-        if (hasRecommendations) return 80; // Recommendations row
-        return 60;
-      }
-      const msg = messages[index];
-      // Assistant messages tend to be longer
-      return msg?.role === "assistant" ? 120 : 60;
-    },
-    overscan: 5, // Fewer overscan items since AI chats are typically shorter
-    // Enable dynamic measurement for accurate heights
-    measureElement: (element) => element.getBoundingClientRect().height,
-  });
+    el.scrollTo({
+      top: el.scrollHeight,
+      behavior,
+    });
+    setIsAtBottom(true);
+  }, []);
 
-  const virtualItems = virtualizer.getVirtualItems();
-
-  // Check if scrolled to bottom
+  /**
+   * Check if scrolled to bottom
+   */
   const checkIfAtBottom = useCallback(() => {
-    const el = parentRef.current;
+    const el = containerRef.current;
     if (!el) return;
 
     const threshold = 100;
@@ -121,12 +113,16 @@ export function VirtualizedAIMessageList({
     setIsAtBottom(atBottom);
   }, []);
 
-  // Handle scroll for bottom detection
+  /**
+   * Handle scroll events
+   */
   const handleScroll = useCallback(() => {
     checkIfAtBottom();
   }, [checkIfAtBottom]);
 
-  // Scroll to bottom when new messages arrive or streaming updates (if at bottom)
+  /**
+   * Scroll to bottom when new messages arrive or streaming updates (if at bottom)
+   */
   useEffect(() => {
     const newMessagesAdded = messages.length > prevMessagesLengthRef.current;
     const streamingUpdated = streamingContent !== prevStreamingRef.current;
@@ -135,240 +131,154 @@ export function VirtualizedAIMessageList({
     prevStreamingRef.current = streamingContent;
 
     if ((newMessagesAdded || streamingUpdated) && isAtBottom) {
-      virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
+      requestAnimationFrame(() => {
+        scrollToBottom(streamingUpdated ? "auto" : "smooth");
+      });
     }
-  }, [messages.length, streamingContent, isAtBottom, totalCount, virtualizer]);
+  }, [messages.length, streamingContent, isAtBottom, scrollToBottom]);
 
-  // Initial scroll to bottom
+  /**
+   * Initial scroll to bottom
+   */
   useEffect(() => {
     if (messages.length > 0) {
-      virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "auto" });
-      setIsAtBottom(true);
+      scrollToBottom();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Only on mount
 
-  // Scroll to bottom when loading starts (user sent a message)
+  /**
+   * Scroll to bottom when loading starts (user sent a message)
+   */
   useEffect(() => {
     if (isLoading && isAtBottom) {
-      virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
+      requestAnimationFrame(() => {
+        scrollToBottom("smooth");
+      });
     }
-  }, [isLoading, isAtBottom, totalCount, virtualizer]);
+  }, [isLoading, isAtBottom, scrollToBottom]);
 
-  // Scroll to bottom when recommendations appear
+  /**
+   * Scroll to bottom when recommendations appear
+   */
   useEffect(() => {
     if (hasRecommendations) {
-      // Small delay to let the recommendations render and be measured
       setTimeout(() => {
-        virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
+        scrollToBottom("smooth");
       }, 100);
     }
-  }, [hasRecommendations, totalCount, virtualizer]);
+  }, [hasRecommendations, scrollToBottom]);
 
   return (
     <div
-      ref={parentRef}
+      ref={containerRef}
       onScroll={handleScroll}
       className={cn(
         "flex-1 overflow-y-auto overflow-x-hidden",
         className
       )}
+      style={{ overflowAnchor: "auto" }}
     >
-      {/* Virtual list container */}
-      <div
-        style={{
-          height: `${virtualizer.getTotalSize()}px`,
-          width: "100%",
-          position: "relative",
-        }}
-      >
-        {virtualItems.map((virtualRow) => {
-          const index = virtualRow.index;
+      {/* Messages - simple flexbox layout */}
+      <div className="flex flex-col">
+        {messages.map((msg, index) => (
+          <ChatMessage
+            key={`msg-${index}`}
+            role={msg.role}
+            content={msg.content}
+            actions={renderActions?.(msg, index)}
+          />
+        ))}
 
-          // Determine what to render at this index
-          const isMessageIndex = index < messages.length;
-          const extraIndex = index - messages.length;
-
-          // Message
-          if (isMessageIndex) {
-            const msg = messages[index];
-            if (!msg) return null;
-
-            return (
-              <div
-                key={`msg-${index}`}
-                data-index={index}
-                ref={virtualizer.measureElement}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-              >
-                <ChatMessage
-                  role={msg.role}
-                  content={msg.content}
-                  actions={renderActions?.(msg, index)}
-                />
-              </div>
-            );
-          }
-
-          // Streaming content
-          if (hasStreaming && extraIndex === 0) {
-            return (
-              <div
-                key="streaming"
-                data-index={index}
-                ref={virtualizer.measureElement}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-              >
-                <ChatMessageStreaming content={streamingContent} />
-                {/* Stop button when auto-speaking during fake-stream */}
-                {isSpeaking && onStopSpeaking && (
-                  <div className="flex justify-end px-4 -mt-2 mb-2">
-                    <button
-                      onClick={onStopSpeaking}
-                      className={cn(
-                        "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm",
-                        "bg-red-500/10 text-red-600 dark:text-red-400",
-                        "hover:bg-red-500/20 transition-colors"
-                      )}
-                      aria-label="Stop speaking"
-                    >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <rect x="6" y="6" width="12" height="12" rx="1" />
-                      </svg>
-                      Stop
-                    </button>
-                  </div>
-                )}
-              </div>
-            );
-          }
-
-          // Loading indicator - animated typing dots while waiting for response
-          const loadingIndex = hasStreaming ? 1 : 0;
-          if (hasLoading && extraIndex === loadingIndex) {
-            return (
-              <div
-                key="loading"
-                data-index={index}
-                ref={virtualizer.measureElement}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-              >
-                <ChatMessageLoading />
-              </div>
-            );
-          }
-
-          // Error message
-          const errorIndex = (hasStreaming ? 1 : 0) + (hasLoading ? 1 : 0);
-          if (hasError && extraIndex === errorIndex) {
-            return (
-              <div
-                key="error"
-                data-index={index}
-                ref={virtualizer.measureElement}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-                className="flex justify-center py-2"
-              >
-                <div className="px-4 py-2 rounded-lg bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm">
-                  {error}
-                </div>
-              </div>
-            );
-          }
-
-          // Inline recommendations
-          const recsIndex = (hasStreaming ? 1 : 0) + (hasLoading ? 1 : 0) + (hasError ? 1 : 0);
-          if (hasRecommendations && extraIndex === recsIndex) {
-            return (
-              <div
-                key="recommendations"
-                data-index={index}
-                ref={virtualizer.measureElement}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-                className="px-4 py-3"
-              >
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                  Suggested follow-ups:
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {recommendations.map((rec, i) => (
-                    <button
-                      key={i}
-                      onClick={rec.onClick}
-                      className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm",
-                        "bg-gray-100 dark:bg-gray-800",
-                        "text-gray-700 dark:text-gray-300",
-                        "hover:bg-blue-100 dark:hover:bg-blue-900/30",
-                        "border border-transparent hover:border-blue-300 dark:hover:border-blue-700",
-                        "transition-all duration-200"
-                      )}
-                    >
-                      {rec.text}
-                    </button>
-                  ))}
-                  {hasMoreRecommendations && onSomethingElse && (
-                    <button
-                      onClick={onSomethingElse}
-                      className={cn(
-                        "px-3 py-1.5 rounded-lg text-sm",
-                        "bg-gradient-to-r from-violet-100 to-blue-100",
-                        "dark:from-violet-900/30 dark:to-blue-900/30",
-                        "text-violet-700 dark:text-violet-300",
-                        "hover:from-violet-200 hover:to-blue-200",
-                        "dark:hover:from-violet-800/40 dark:hover:to-blue-800/40",
-                        "transition-all duration-200"
-                      )}
-                    >
-                      Something else →
-                    </button>
+        {/* Streaming content */}
+        {hasStreaming && (
+          <div>
+            <ChatMessageStreaming content={streamingContent} />
+            {/* Stop button when auto-speaking during fake-stream */}
+            {isSpeaking && onStopSpeaking && (
+              <div className="flex justify-end px-4 -mt-2 mb-2">
+                <button
+                  onClick={onStopSpeaking}
+                  className={cn(
+                    "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm",
+                    "bg-red-500/10 text-red-600 dark:text-red-400",
+                    "hover:bg-red-500/20 transition-colors"
                   )}
-                </div>
+                  aria-label="Stop speaking"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12" rx="1" />
+                  </svg>
+                  Stop
+                </button>
               </div>
-            );
-          }
+            )}
+          </div>
+        )}
 
-          return null;
-        })}
+        {/* Loading indicator */}
+        {hasLoading && <ChatMessageLoading />}
+
+        {/* Error message */}
+        {hasError && (
+          <div className="flex justify-center py-2">
+            <div className="px-4 py-2 rounded-lg bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm">
+              {error}
+            </div>
+          </div>
+        )}
+
+        {/* Inline recommendations */}
+        {hasRecommendations && (
+          <div className="px-4 py-3">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+              Suggested follow-ups:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {recommendations.map((rec, i) => (
+                <button
+                  key={i}
+                  onClick={rec.onClick}
+                  className={cn(
+                    "px-3 py-1.5 rounded-lg text-sm",
+                    "bg-gray-100 dark:bg-gray-800",
+                    "text-gray-700 dark:text-gray-300",
+                    "hover:bg-blue-100 dark:hover:bg-blue-900/30",
+                    "border border-transparent hover:border-blue-300 dark:hover:border-blue-700",
+                    "transition-all duration-200"
+                  )}
+                >
+                  {rec.text}
+                </button>
+              ))}
+              {hasMoreRecommendations && onSomethingElse && (
+                <button
+                  onClick={onSomethingElse}
+                  className={cn(
+                    "px-3 py-1.5 rounded-lg text-sm",
+                    "bg-gradient-to-r from-violet-100 to-blue-100",
+                    "dark:from-violet-900/30 dark:to-blue-900/30",
+                    "text-violet-700 dark:text-violet-300",
+                    "hover:from-violet-200 hover:to-blue-200",
+                    "dark:hover:from-violet-800/40 dark:hover:to-blue-800/40",
+                    "transition-all duration-200"
+                  )}
+                >
+                  Something else →
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Bottom padding */}
+      <div className="h-4" />
 
       {/* Scroll to bottom button */}
       {!isAtBottom && messages.length > 0 && (
         <button
-          onClick={() => {
-            virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
-            setIsAtBottom(true);
-          }}
+          onClick={() => scrollToBottom("smooth")}
           className={cn(
             "fixed bottom-24 right-8 z-10",
             "w-10 h-10 rounded-full",
