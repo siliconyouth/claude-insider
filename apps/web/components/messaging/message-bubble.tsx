@@ -176,7 +176,7 @@ function linkifyContent(
     } else if (m.type === "mention" && m.username) {
       const user = mentionedUsers?.[m.username];
       if (user) {
-        // Render with ProfileHoverCard
+        // Render with ProfileHoverCard - show display name without @ for readability
         const hoverUser: ProfileHoverCardUser = {
           id: user.id,
           name: user.name,
@@ -190,23 +190,23 @@ function linkifyContent(
             <Link
               href={`/users/${user.username}`}
               className={cn(
-                "inline-flex items-center font-medium",
+                "inline-flex items-center font-semibold",
                 "text-blue-600 dark:text-cyan-400",
                 "hover:underline"
               )}
             >
-              @{user.username}
+              {user.name}
             </Link>
           </ProfileHoverCard>
         );
       } else {
-        // Fallback: simple link without hover card
+        // Fallback: simple link without hover card - keep @ since we only have username
         parts.push(
           <Link
             key={`mention-${m.index}`}
             href={`/users/${m.username}`}
             className={cn(
-              "inline-flex items-center font-medium",
+              "inline-flex items-center font-semibold",
               "text-blue-600 dark:text-cyan-400",
               "hover:underline"
             )}
