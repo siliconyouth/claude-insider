@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **55 implemented features** with detailed capabilities.
+Complete list of all **56 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (55 total)
+## Implemented Features (56 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -65,6 +65,7 @@ Complete list of all **55 implemented features** with detailed capabilities.
 | FR-53 | Comprehensive Admin Settings | SEO dashboard, 10 new settings sections (Security, Performance, Notifications, API, Moderation, Cost Tracking, Rate Limits, Scheduling), role-based access control, `lib/payload-access.ts` |
 | FR-54 | Bidirectional Sync System | Content hash change detection (MD5), incremental sync (--hours, --since, --ids), CTE queries, batched operations, ~70% faster syncs when unchanged, ETA calculation |
 | FR-55 | Matrix SDK Chat Features | Emoji reactions (optimistic updates, realtime broadcast), reply threading (click-to-scroll, quoted preview), in-conversation search (300ms debounce, keyboard nav), message drafts (localStorage), gap detection, batched read receipts, retry queue |
+| FR-56 | Resource Submissions | User-submitted resources, `/resources/submit` form, rate limiting (1/5/10 per day by trust level), duplicate detection, AI-powered analysis queue, admin moderation workflow, status notifications (received/reviewing/approved/rejected), IP-hashed anonymous limits |
 
 ---
 
@@ -97,11 +98,12 @@ Complete list of all **55 implemented features** with detailed capabilities.
 - Comprehensive admin settings system with role-based access
 - SEO dashboard with health checks and previews
 
-### AI & Automation (FR-38, FR-39, FR-40, FR-42, FR-46)
+### AI & Automation (FR-38, FR-39, FR-40, FR-42, FR-46, FR-56)
 - Resource auto-update pipeline
 - Doc-resource cross-linking
 - AI writing assistant
 - Resource discovery pipeline
+- User resource submissions with AI analysis
 
 ### Messaging & Social (FR-22, FR-29, FR-33, FR-35, FR-55)
 - Group chat with roles

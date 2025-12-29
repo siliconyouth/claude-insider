@@ -28,9 +28,9 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 134 |
+| **Total Tables** | 126 |
 | **Categories** | 20 |
-| **Migrations** | 106 |
+| **Migrations** | 110 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -84,7 +84,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 ---
 
-## Table Catalog (134 Tables)
+## Table Catalog (126 Tables)
 
 ### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 
@@ -143,6 +143,21 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 ### Resources (7 tables)
 
 `resources`, `resource_tags`, `resource_comments`, `resource_reviews`, `resource_changelog`, `resource_update_jobs`, `resource_authors`
+
+### Resource Discovery (2 tables)
+
+`resource_discovery_queue`, `resource_submissions`
+
+**Key columns in `resource_submissions` (v1.13.6):**
+- `url` (VARCHAR(2048)) - Submitted resource URL
+- `submitter_type` ('public', 'anonymous') - Submission type
+- `submitter_user_id` (TEXT, FK → user) - User who submitted
+- `submitter_ip_hash` (VARCHAR(64)) - Hashed IP for anonymous rate limiting
+- `status` ('pending', 'analyzing', 'queued', 'approved', 'rejected') - Workflow status
+- `ai_analysis` (JSONB) - AI analysis results (category, tags, etc.)
+- `ai_confidence`, `ai_relevance`, `ai_quality` (DECIMAL) - AI scores
+- `discovery_queue_id` (UUID, FK → resource_discovery_queue) - Links after analysis
+- `created_resource_id` (UUID) - Links after approval
 
 **Key columns in `resources`:**
 - `slug` (TEXT, PK) - URL-friendly identifier

@@ -9,6 +9,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.6] - 2025-12-29
+### User Resource Submissions & Chat Performance
+- **Resource Submissions System**: Community-driven resource discovery
+  - `/resources/submit` page for user submissions
+  - Form with URL, title, description, notes fields
+  - Support for both logged-in and anonymous submissions
+  - Rate limiting: 1/day anonymous, 5/day logged-in, 10/day verified users
+  - Duplicate detection across 3 tables (resources, submissions, discovery queue)
+  - IP-hashed rate limiting for anonymous users (privacy-compliant)
+  - AI-powered analysis queued for Claude Opus 4.5 processing
+  - Admin notification workflow with moderation dashboard
+  - User notifications: received, reviewing, approved, rejected
+  - Status tracking: pending → analyzing → queued → approved/rejected
+- **Chat Performance Optimizations**: 4x faster conversation loading
+  - `get_conversations_optimized` RPC function replaces 4 separate queries
+  - `get_messages_paginated` RPC for efficient virtual scrolling
+  - `get_total_unread_dm_count` RPC for fast unread badge
+  - 6 new performance indexes for dm_participants, dm_messages, user_presence
+  - Inbox dropdown: ~200ms → ~50ms
+  - Conversation loading: ~400ms → ~100ms
+- **Message Edit Fix**: Resolved bubble overlap when editing messages
+  - TanStack Virtual key now includes `editedAt` for re-measurement
+  - Forces re-mount and height recalculation on edit
+- **Notification Deep Linking**: Fixed scroll-to-message in virtualized lists
+  - `VirtualizedMessageList` now accepts `highlightedMessageId` prop
+  - Auto-scrolls to highlighted message with visual pulse animation
+- **Database**: Migrations 107-110
+  - `resource_submissions` table with RLS policies
+  - `source_submission_id` column in `resource_discovery_queue`
+  - Optimized RPC functions with correct column mappings
+
+---
+
 ## [1.13.5] - 2025-12-29
 ### Messaging Consolidation & Presence System
 - **ConversationView Consolidation**: Single source of truth for conversation UI

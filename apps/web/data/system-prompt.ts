@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-29 for v1.13.5 (Messaging Consolidation & Presence)
+ * Updated: 2025-12-29 for v1.13.6 (Resource Submissions & Chat Performance)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.13.5",
+  version: "1.13.6",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -1141,6 +1141,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.13.5", "conversationview", "consolidation", "presence", "heartbeat", "display names", "e2ee setup", "profilehovercard", "messaging"],
+  },
+  {
+    id: "v1136-features",
+    title: "Version 1.13.6 Features",
+    section: "New in v1.13.6",
+    content: `Claude Insider v1.13.6 introduces user resource submissions and chat performance optimizations. Resource Submissions: Users can submit resources at /resources/submit for addition to the platform. Form supports URL, title, description, and notes fields. Rate limiting by trust level: 1/day anonymous, 5/day logged-in, 10/day verified users. IP-hashed rate limiting for anonymous users (privacy-compliant). Duplicate detection across resources, submissions, and discovery queue tables. AI-powered analysis queued for Claude Opus 4.5 processing. Admin notification workflow with moderation dashboard. User notifications for submission status: received, reviewing, approved, rejected. Status workflow: pending → analyzing → queued → approved/rejected. Chat Performance: 4x faster conversation loading with optimized RPC functions. get_conversations_optimized replaces 4 separate queries (inbox dropdown: 200ms → 50ms). get_messages_paginated for efficient virtual scrolling. get_total_unread_dm_count for fast unread badge. 6 new performance indexes on dm_participants, dm_messages, user_presence. Message Edit Fix: Resolved bubble overlap when editing messages by including editedAt in TanStack Virtual key for proper height re-measurement. Notification Deep Linking: VirtualizedMessageList accepts highlightedMessageId prop for auto-scroll with visual pulse animation. 126 total database tables with 110 migrations.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.13.6", "resource submissions", "submit resources", "chat performance", "rpc functions", "message edit", "notification deep linking", "rate limiting"],
   },
 ];
 

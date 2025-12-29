@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.6",
+    date: "2025-12-29",
+    type: "patch",
+    highlights: [
+      "📤 Resource Submissions: Users can submit resources via /resources/submit with AI-powered analysis",
+      "⚡ Chat Performance: 4x faster conversations with optimized RPC functions (200ms → 50ms)",
+      "🔔 Smart Notifications: Deep-linking to messages with auto-scroll and highlight animation",
+      "🛠️ Edit Fix: Message bubble overlap resolved with TanStack Virtual key updates",
+    ],
+  },
+  {
     version: "1.13.5",
     date: "2025-12-29",
     type: "patch",

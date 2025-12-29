@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.5**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.6**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.5**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 55 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 56 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -142,7 +142,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**55 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**56 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -151,8 +151,8 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | **User Features** | Achievements (50+), Sound Effects (10 themes), Profiles, Notifications |
 | **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging |
 | **Admin** | Diagnostics, Content Management, Audit Export, Resource Updates, Settings System (5 globals, SEO dashboard) |
-| **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant |
-| **Infrastructure** | 134 DB tables, PWA, Doc Versioning, Prompt Library |
+| **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant, Resource Submissions |
+| **Infrastructure** | 126 DB tables, PWA, Doc Versioning, Prompt Library |
 
 ### Non-Functional Requirements
 
