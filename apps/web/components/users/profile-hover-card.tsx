@@ -25,6 +25,7 @@ import { UserAvatar } from "./user-avatar";
 import { FollowButton } from "./follow-button";
 import { ROLE_INFO, type UserRole } from "@/lib/roles";
 import { useSession } from "@/lib/auth-client";
+import { openMessages } from "@/components/unified-chat";
 
 export interface ProfileHoverCardUser {
   id: string;
@@ -444,25 +445,47 @@ export function ProfileHoverCard({
             {/* Action row */}
             <div className="mt-3 flex items-center gap-2">
               {canShowActions && (
-                <FollowButton
-                  userId={user.id}
-                  isFollowing={user.isFollowing || false}
-                  size="sm"
-                  className="flex-1"
-                />
+                <>
+                  <FollowButton
+                    userId={user.id}
+                    isFollowing={user.isFollowing || false}
+                    size="sm"
+                    className="flex-1"
+                  />
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      openMessages({ userId: user.id });
+                    }}
+                    className={cn(
+                      "flex-1 py-1.5 px-2 text-xs font-medium rounded-lg",
+                      "border border-gray-200 dark:border-[#262626]",
+                      "text-gray-700 dark:text-gray-300",
+                      "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
+                      "hover:border-blue-500/50 dark:hover:border-cyan-500/50",
+                      "transition-colors inline-flex items-center justify-center gap-1"
+                    )}
+                  >
+                    <MessageIcon className="w-3 h-3" />
+                    Message
+                  </button>
+                </>
               )}
-              <Link
-                href={profileUrl}
-                className={cn(
-                  "flex-1 text-center py-1.5 px-2 text-xs font-medium rounded-lg",
-                  "border border-gray-200 dark:border-[#262626]",
-                  "text-gray-700 dark:text-gray-300",
-                  "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
-                  "transition-colors"
-                )}
-              >
-                View Profile
-              </Link>
+              {!canShowActions && (
+                <Link
+                  href={profileUrl}
+                  className={cn(
+                    "flex-1 text-center py-1.5 px-2 text-xs font-medium rounded-lg",
+                    "border border-gray-200 dark:border-[#262626]",
+                    "text-gray-700 dark:text-gray-300",
+                    "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
+                    "transition-colors"
+                  )}
+                >
+                  View Profile
+                </Link>
+              )}
             </div>
           </div>
         ) : (
@@ -622,6 +645,24 @@ export function ProfileHoverCard({
                     size="sm"
                     className="flex-1"
                   />
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      openMessages({ userId: user.id });
+                    }}
+                    className={cn(
+                      "flex-1 py-1.5 px-3 text-xs font-medium rounded-lg",
+                      "border border-gray-200 dark:border-[#262626]",
+                      "text-gray-700 dark:text-gray-300",
+                      "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
+                      "hover:border-blue-500/50 dark:hover:border-cyan-500/50",
+                      "transition-colors inline-flex items-center justify-center gap-1.5"
+                    )}
+                  >
+                    <MessageIcon className="w-4 h-4" />
+                    Message
+                  </button>
                   {onInviteToGroup && (
                     <button
                       onClick={(e) => {
@@ -739,6 +780,14 @@ function FlagIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+    </svg>
+  );
+}
+
+function MessageIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
     </svg>
   );
 }
