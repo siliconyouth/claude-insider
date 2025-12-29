@@ -165,8 +165,8 @@ const nextConfig: NextConfig = {
               // Supabase (REST API + Realtime WebSocket), PayPal, ElevenLabs, Vercel analytics/live
               // CDN sources for fetching vodozemac WASM binaries
               "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io https://vercel.live https://*.vercel.live wss://vercel.live wss://*.vercel.live https://unpkg.com https://cdn.jsdelivr.net https://*.matrix.org https://github.com https://raw.githubusercontent.com",
-              // PayPal buttons render in iframes
-              "frame-src 'self' https://*.paypal.com https://*.paypalobjects.com",
+              // PayPal buttons and Vercel Live preview render in iframes
+              "frame-src 'self' https://*.paypal.com https://*.paypalobjects.com https://vercel.live https://*.vercel.live",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self' https://*.paypal.com",
