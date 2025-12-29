@@ -79,7 +79,7 @@ export function DonutChartCard({
       <div className="flex items-center gap-6">
         {/* Chart */}
         <div className="relative" style={{ width: outerRadius * 2 + 20, height }}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={60} minHeight={60}>
             <PieChart>
               <Pie
                 data={data}
@@ -233,7 +233,7 @@ export function DonutChart({
 
   return (
     <div className={cn("relative", className)} style={{ width: size, height: size }}>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" minWidth={60} minHeight={60}>
         <PieChart>
           <Pie
             data={data}

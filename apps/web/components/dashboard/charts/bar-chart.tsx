@@ -86,7 +86,7 @@ export function BarChartCard({
 
       {/* Chart */}
       <div style={{ height }}>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={100}>
           <BarChart
             data={data}
             layout={horizontal ? "vertical" : "horizontal"}
@@ -247,7 +247,7 @@ export function HorizontalBarChart({
 
   return (
     <div className={cn("w-full", className)} style={{ height }}>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={100}>
         <BarChart
           data={data}
           layout="vertical"
