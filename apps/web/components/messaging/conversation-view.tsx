@@ -20,7 +20,7 @@ import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
-import { VirtualizedMessageList } from "@/components/messaging/virtualized-message-list";
+import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
 import { ProfileHoverCard } from "@/components/users/profile-hover-card";
 import {
   MentionAutocomplete,
@@ -86,6 +86,8 @@ export function ConversationView({
   const prevTypingUsersCount = useRef(0);
   // Queue for messages that need read receipt broadcast (to avoid circular dependency)
   const pendingReadReceiptIdsRef = useRef<string[]>([]);
+  // Reference to the message list for scroll control
+  const messageListRef = useRef<VirtualizedMessageListHandle>(null);
 
   // Sound effects for chat
   const { playMessageReceived, playMessageSent, playTyping, playMention } = useSound();
@@ -424,6 +426,11 @@ export function ConversationView({
       // Play sent sound on success
       playMessageSent();
 
+      // Scroll to bottom after sending a message
+      requestAnimationFrame(() => {
+        messageListRef.current?.scrollToBottom();
+      });
+
       // If AI was mentioned, trigger AI response
       if (result.aiMentioned) {
         // Generate AI response (async, will appear via realtime)
@@ -432,6 +439,10 @@ export function ConversationView({
         const refreshResult = await getMessages(conversationId, 10);
         if (refreshResult.success && refreshResult.messages) {
           setMessages(refreshResult.messages);
+          // Scroll to show AI response
+          requestAnimationFrame(() => {
+            messageListRef.current?.scrollToBottom();
+          });
         }
         // Fetch read receipt for the user's message (AI marked it as "Seen")
         const receiptsResult = await getReadReceipts([result.message.id]);
@@ -580,6 +591,7 @@ export function ConversationView({
 
       {/* Messages - Virtualized for performance */}
       <VirtualizedMessageList
+        ref={messageListRef}
         messages={messages}
         currentUserId={currentUserId}
         typingUsers={typingUsers}

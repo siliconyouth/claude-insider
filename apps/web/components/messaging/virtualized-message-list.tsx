@@ -238,25 +238,54 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     // Enable dynamic measurement for accurate heights
     measureElement: (element) => element.getBoundingClientRect().height,
     // Add padding at the end for read receipts visibility (included in scroll calculations)
-    paddingEnd: 24,
+    // 48px ensures read receipts below last message are fully visible when scrolled to bottom
+    paddingEnd: 48,
   });
 
   const virtualItems = virtualizer.getVirtualItems();
 
+  // Robust scroll to bottom function that ensures we reach the actual bottom
+  const scrollToActualBottom = useCallback((smooth = true) => {
+    const el = parentRef.current;
+    if (!el) return;
+
+    // Step 1: Use virtualizer to scroll to last index (this triggers measurement)
+    virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "auto" });
+
+    // Step 2: Wait for virtualizer measurements to complete, then scroll to actual bottom
+    // We need multiple frames because:
+    // - Frame 1: Virtualizer starts measuring
+    // - Frame 2: Measurements complete
+    // - Frame 3: Final scroll adjustment
+    const scrollToBottom = () => {
+      const scrollEl = parentRef.current;
+      if (!scrollEl) return;
+
+      if (smooth) {
+        scrollEl.scrollTo({
+          top: scrollEl.scrollHeight,
+          behavior: "smooth",
+        });
+      } else {
+        scrollEl.scrollTop = scrollEl.scrollHeight;
+      }
+      setIsAtBottom(true);
+    };
+
+    // Chain multiple animation frames to ensure measurements settle
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollToBottom();
+        });
+      });
+    });
+  }, [virtualizer, totalCount]);
+
   // Expose scrollToBottom method via ref
   useImperativeHandle(ref, () => ({
-    scrollToBottom: () => {
-      // Use multiple frames to ensure measurements are complete
-      virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
-      requestAnimationFrame(() => {
-        const el = parentRef.current;
-        if (el) {
-          el.scrollTop = el.scrollHeight;
-        }
-        setIsAtBottom(true);
-      });
-    },
-  }), [virtualizer, totalCount]);
+    scrollToBottom: () => scrollToActualBottom(true),
+  }), [scrollToActualBottom]);
 
   // Check if scrolled to bottom
   const checkIfAtBottom = useCallback(() => {
@@ -497,22 +526,22 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     prevMessagesLengthRef.current = messages.length;
 
     if (newMessagesAdded && isAtBottom) {
-      // Use scrollToIndex for smooth scroll to last item
-      virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
+      // Use robust scroll that ensures we reach the actual bottom
+      scrollToActualBottom(true);
     }
-  }, [messages.length, isAtBottom, totalCount, virtualizer]);
+  }, [messages.length, isAtBottom, scrollToActualBottom]);
 
   // Scroll to bottom when read receipts update (if already at bottom)
   // This ensures the "Seen" indicator is visible after sending a message
   const readReceiptsCount = Object.keys(readReceipts).length;
   useEffect(() => {
     if (readReceiptsCount > 0 && isAtBottom) {
-      // Small delay to let the read indicator render
+      // Small delay to let the read indicator render, then scroll to actual bottom
       setTimeout(() => {
-        virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
+        scrollToActualBottom(true);
       }, 100);
     }
-  }, [readReceiptsCount, isAtBottom, totalCount, virtualizer]);
+  }, [readReceiptsCount, isAtBottom, scrollToActualBottom]);
 
   // Shrink prevention for typing indicator transitions (Matrix SDK pattern)
   // When typing indicator appears, mark the last message position.
@@ -557,27 +586,9 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   // Initial scroll to bottom
   useEffect(() => {
     if (messages.length > 0 && !isLoading) {
-      // Scroll to bottom after items are measured
-      // Use multiple frames to ensure measurements are complete
-      const scrollToBottom = () => {
-        const el = parentRef.current;
-        if (el) {
-          el.scrollTop = el.scrollHeight;
-        }
-        setIsAtBottom(true);
-      };
-
-      // First frame: trigger initial render and measurement
-      virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "auto" });
-
-      // Second frame: measurements start completing
-      requestAnimationFrame(() => {
-        scrollToBottom();
-        // Third frame: ensure we're still at bottom after any final adjustments
-        requestAnimationFrame(() => {
-          scrollToBottom();
-        });
-      });
+      // Use robust scroll to ensure we're at the actual bottom after initial load
+      // Use instant scroll (not smooth) for initial load
+      scrollToActualBottom(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]); // Only on initial load
@@ -726,10 +737,7 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
       {/* Scroll to bottom button */}
       {!isAtBottom && messages.length > 0 && (
         <button
-          onClick={() => {
-            virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "smooth" });
-            setIsAtBottom(true);
-          }}
+          onClick={() => scrollToActualBottom(true)}
           className={cn(
             "fixed bottom-24 right-8 z-10",
             "w-10 h-10 rounded-full",
