@@ -556,18 +556,15 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     const newMessagesAdded = messages.length > prevMessagesLengthRef.current;
     prevMessagesLengthRef.current = messages.length;
 
-    if (newMessagesAdded) {
-      // Force virtualizer to re-measure all items after DOM update
-      // This prevents overlap when new messages are added
+    if (newMessagesAdded && isAtBottom) {
+      // Wait for DOM update then scroll - double rAF ensures paint is complete
       requestAnimationFrame(() => {
-        virtualizer.measure();
-        if (isAtBottom) {
-          // Use Matrix SDK style - simple instant scroll after measurement
+        requestAnimationFrame(() => {
           scrollToActualBottom();
-        }
+        });
       });
     }
-  }, [messages.length, isAtBottom, scrollToActualBottom, virtualizer]);
+  }, [messages.length, isAtBottom, scrollToActualBottom]);
 
   // Scroll to bottom when read receipts update (if already at bottom)
   // This ensures the "Seen" indicator is visible after sending a message
