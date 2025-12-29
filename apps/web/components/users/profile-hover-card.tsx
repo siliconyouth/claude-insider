@@ -151,18 +151,19 @@ export function ProfileHoverCard({
     let actualSide: "top" | "bottom";
     let top: number;
 
+    // Note: Using position: fixed, so top is relative to viewport (no scrollY needed)
     if (preferredSide === "top" && spaceAbove >= cardHeight + PADDING) {
       actualSide = "top";
-      top = rect.top - cardHeight - PADDING + window.scrollY;
+      top = rect.top - cardHeight - PADDING;
     } else if (preferredSide === "bottom" && spaceBelow >= cardHeight + PADDING) {
       actualSide = "bottom";
-      top = rect.bottom + PADDING + window.scrollY;
+      top = rect.bottom + PADDING;
     } else if (spaceBelow >= spaceAbove) {
       actualSide = "bottom";
-      top = rect.bottom + PADDING + window.scrollY;
+      top = rect.bottom + PADDING;
     } else {
       actualSide = "top";
-      top = rect.top - cardHeight - PADDING + window.scrollY;
+      top = rect.top - cardHeight - PADDING;
     }
 
     return { top, left, side: actualSide };
