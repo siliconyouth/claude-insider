@@ -3235,9 +3235,11 @@ BEGIN
   )
   SELECT
     c.id,
-    c.is_group,
-    c.group_name,
-    c.group_avatar,
+    -- Derive is_group from type column (actual schema uses 'type' not 'is_group')
+    (c.type = 'group')::BOOLEAN as is_group,
+    -- Use actual column names with aliases
+    c.name as group_name,
+    c.avatar_url as group_avatar,
     c.created_at,
     c.updated_at,
     c.last_message_at,
@@ -3251,7 +3253,7 @@ BEGIN
   FROM dm_conversations c
   JOIN dm_participants my_p ON my_p.conversation_id = c.id AND my_p.user_id = p_user_id
   LEFT JOIN conversation_participants cp ON cp.conversation_id = c.id
-  GROUP BY c.id, c.is_group, c.group_name, c.group_avatar, c.created_at, c.updated_at,
+  GROUP BY c.id, c.type, c.name, c.avatar_url, c.created_at, c.updated_at,
            c.last_message_at, c.last_message_preview, my_p.unread_count
   ORDER BY c.last_message_at DESC NULLS LAST, c.updated_at DESC;
 END;
