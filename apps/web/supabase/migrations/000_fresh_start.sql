@@ -1526,6 +1526,58 @@ CREATE OR REPLACE TRIGGER trigger_update_follow_counts
   AFTER INSERT OR DELETE ON public.user_follows
   FOR EACH ROW EXECUTE FUNCTION update_follow_counts();
 
+-- Sync follow counts function (for repairing desync)
+CREATE OR REPLACE FUNCTION sync_follow_counts()
+RETURNS void AS $$
+BEGIN
+  -- Update followers_count for all users (only count non-banned, non-AI)
+  UPDATE public."user" u
+  SET followers_count = COALESCE(counts.follower_count, 0)
+  FROM (
+    SELECT following_id, COUNT(*) as follower_count
+    FROM user_follows uf
+    JOIN public."user" follower ON follower.id = uf.follower_id
+    WHERE follower.banned = false AND follower.role != 'ai_assistant'
+    GROUP BY following_id
+  ) counts
+  WHERE u.id = counts.following_id;
+
+  -- Reset counts to 0 for users with no followers
+  UPDATE public."user"
+  SET followers_count = 0
+  WHERE id NOT IN (
+    SELECT DISTINCT following_id FROM user_follows uf
+    JOIN public."user" follower ON follower.id = uf.follower_id
+    WHERE follower.banned = false AND follower.role != 'ai_assistant'
+  );
+
+  -- Update following_count for all users (only count non-banned, non-AI)
+  UPDATE public."user" u
+  SET following_count = COALESCE(counts.following_count, 0)
+  FROM (
+    SELECT follower_id, COUNT(*) as following_count
+    FROM user_follows uf
+    JOIN public."user" followed ON followed.id = uf.following_id
+    WHERE followed.banned = false AND followed.role != 'ai_assistant'
+    GROUP BY follower_id
+  ) counts
+  WHERE u.id = counts.follower_id;
+
+  -- Reset counts to 0 for users following nobody
+  UPDATE public."user"
+  SET following_count = 0
+  WHERE id NOT IN (
+    SELECT DISTINCT follower_id FROM user_follows uf
+    JOIN public."user" followed ON followed.id = uf.following_id
+    WHERE followed.banned = false AND followed.role != 'ai_assistant'
+  );
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION sync_follow_counts() IS
+  'Syncs followers_count and following_count columns with actual user_follows data.
+   Excludes banned users and AI assistants. Call via: SELECT sync_follow_counts();';
+
 -- Following helper function
 CREATE OR REPLACE FUNCTION is_following(p_follower_id TEXT, p_following_id TEXT)
 RETURNS BOOLEAN AS $$
