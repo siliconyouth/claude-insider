@@ -16,7 +16,7 @@
  * - Unfilling: removes messages far off-screen (>6000px) for memory efficiency
  */
 
-import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle } from "react";
+import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle, useMemo } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
 import { MessageBubble, TypingIndicator, DateSeparator, type MentionedUser } from "./message-bubble";
@@ -245,8 +245,8 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   // Unfill debounce timer (Matrix SDK pattern)
   const unfillDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Group messages with date separators
-  const items = groupMessagesWithDates(messages);
+  // Group messages with date separators - memoized for stable references (Matrix SDK pattern)
+  const items = useMemo(() => groupMessagesWithDates(messages), [messages]);
 
   // Add typing indicator as a virtual item if someone is typing
   const showTyping = typingUsers.length > 0;
@@ -256,18 +256,18 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   const virtualizer = useVirtualizer({
     count: totalCount,
     getScrollElement: () => parentRef.current,
-    // Estimate: date separators are ~40px, messages average ~80px
+    // Estimate sizes closer to actual content (Matrix SDK pattern: tight estimates)
+    // Date separators: 32px, Messages: 52px average (single line + padding)
     estimateSize: (index) => {
-      if (index >= items.length) return 40; // Typing indicator
+      if (index >= items.length) return 32; // Typing indicator
       const item = items[index];
-      return item?.type === "date" ? 40 : 80;
+      return item?.type === "date" ? 32 : 52;
     },
     overscan: 10, // Render 10 extra items for smooth scrolling
     // Enable dynamic measurement for accurate heights
     measureElement: (element) => element.getBoundingClientRect().height,
-    // Add padding at the end for read receipts visibility (included in scroll calculations)
-    // 48px ensures read receipts below last message are fully visible when scrolled to bottom
-    paddingEnd: 48,
+    // Padding at the end for read receipts visibility
+    paddingEnd: 32,
   });
 
   const virtualItems = virtualizer.getVirtualItems();
@@ -552,17 +552,14 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   }, [hasMore, isLoading, onLoadMore, checkIfAtBottom, saveScrollState, clearShrinkPreventionIfNeeded, checkUnfillState]);
 
   // Scroll to bottom when new messages arrive (if already at bottom)
+  // Matrix SDK pattern: simple, direct scroll without complex timing
   useEffect(() => {
     const newMessagesAdded = messages.length > prevMessagesLengthRef.current;
     prevMessagesLengthRef.current = messages.length;
 
     if (newMessagesAdded && isAtBottom) {
-      // Wait for DOM update then scroll - double rAF ensures paint is complete
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          scrollToActualBottom();
-        });
-      });
+      // Direct scroll - Matrix SDK style
+      scrollToActualBottom();
     }
   }, [messages.length, isAtBottom, scrollToActualBottom]);
 
