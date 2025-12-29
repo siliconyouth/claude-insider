@@ -87,9 +87,9 @@ export interface SubmitResourceResult {
 // ============================================================================
 
 const RATE_LIMITS = {
-  anonymous: { maxPerDay: 1, description: "1 submission per day" },
-  logged_in: { maxPerDay: 5, description: "5 submissions per day" },
-  verified: { maxPerDay: 10, description: "10 submissions per day" },
+  anonymous: { maxPerDay: 10, description: "10 submissions per day" },
+  logged_in: { maxPerDay: 50, description: "50 submissions per day" },
+  verified: { maxPerDay: 100, description: "100 submissions per day" },
 } as const;
 
 // ============================================================================

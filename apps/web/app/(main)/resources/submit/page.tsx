@@ -278,7 +278,7 @@ export default function SubmitResourcePage() {
                   Submission Limits
                 </p>
                 <p className="text-gray-600 dark:text-gray-400 text-xs">
-                  Anonymous: 1/day • Signed in: 5/day • Verified: 10/day
+                  Anonymous: 10/day • Signed in: 50/day • Verified: 100/day
                 </p>
               </div>
             </div>
