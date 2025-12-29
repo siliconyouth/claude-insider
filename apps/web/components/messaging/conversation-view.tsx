@@ -23,6 +23,7 @@ import { useReactions } from "@/hooks/use-reactions";
 import { AvatarWithStatus } from "@/components/presence";
 import { ConversationE2EEBadge } from "@/components/messaging/e2ee-indicator";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
+import { E2EESetupModal } from "@/components/e2ee/e2ee-setup-modal";
 import { useE2EEContext } from "@/components/providers/e2ee-provider";
 import { useDeferredLoading } from "@/components/providers/deferred-loading-context";
 import { VirtualizedMessageList, type VirtualizedMessageListHandle } from "@/components/messaging/virtualized-message-list";
@@ -61,6 +62,7 @@ interface ConversationViewProps {
   conversationId: string;
   currentUserId: string;
   participants: ConversationParticipant[];
+  isGroupChat?: boolean;
   onBack?: () => void;
   targetMessageId?: string | null;
   onTargetMessageScrolled?: () => void;
@@ -71,6 +73,7 @@ export function ConversationView({
   conversationId,
   currentUserId,
   participants,
+  isGroupChat = false,
   onBack,
   targetMessageId,
   onTargetMessageScrolled,
@@ -91,6 +94,7 @@ export function ConversationView({
   const [isMentionOpen, setIsMentionOpen] = useState(false);
   const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null);
   const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [showSetupModal, setShowSetupModal] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   // Read receipts state: messageId -> ReadReceipt[]
   const [readReceipts, setReadReceipts] = useState<Record<string, ReadReceipt[]>>({});
@@ -742,7 +746,7 @@ export function ConversationView({
           </>
         )}
 
-        {/* E2EE badge - shows encryption status and enables verification */}
+        {/* E2EE badge - shows encryption status and enables verification or setup */}
         {!isAIConversation && (
           <ConversationE2EEBadge
             e2eeEnabled={e2ee.isInitialized}
@@ -751,6 +755,7 @@ export function ConversationView({
             isLoading={isE2EELoading}
             size="sm"
             onVerifyClick={() => setShowVerificationModal(true)}
+            onSetupClick={() => setShowSetupModal(true)}
             targetUserId={otherParticipant?.userId}
             targetUserName={otherParticipant?.displayName || otherParticipant?.name}
           />
@@ -792,6 +797,15 @@ export function ConversationView({
         />
       )}
 
+      {/* E2EE Setup Modal - for setting up E2EE when not initialized */}
+      {!isAIConversation && (
+        <E2EESetupModal
+          isOpen={showSetupModal}
+          onClose={() => setShowSetupModal(false)}
+          onSuccess={() => setShowSetupModal(false)}
+        />
+      )}
+
       {/* Messages - Virtualized for performance */}
       <VirtualizedMessageList
         ref={messageListRef}
@@ -802,7 +816,7 @@ export function ConversationView({
         isLoading={isLoading || isLoadingMore}
         hasMore={hasMore}
         onLoadMore={handleLoadMore}
-        isGroupChat={false}
+        isGroupChat={isGroupChat}
         highlightedMessageId={highlightedMessageId}
         readReceipts={readReceipts}
         participantCount={participants.length - 1}
