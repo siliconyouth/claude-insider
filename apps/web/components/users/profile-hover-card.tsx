@@ -84,7 +84,8 @@ const CARD_WIDTH = 340;
 const CARD_WIDTH_COMPACT = 280;
 const CARD_HEIGHT = 280;
 const CARD_HEIGHT_COMPACT = 180;
-const PADDING = 12;
+const PADDING = 4; // Small gap to allow mouse to reach card
+const CLOSE_DELAY = 100; // Delay before closing to allow mouse to reach card
 
 // Donor tier colors
 const donorTierColors = {
@@ -123,6 +124,7 @@ export function ProfileHoverCard({
   const triggerRef = useRef<HTMLSpanElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [mounted, setMounted] = useState(false);
 
   const isTouchDevice = useRef(false);
@@ -173,6 +175,12 @@ export function ProfileHoverCard({
   const handleMouseEnter = useCallback(() => {
     if (disabled) return;
 
+    // Clear any pending close timeout
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+
     timeoutRef.current = setTimeout(() => {
       const pos = calculatePosition();
       if (pos) {
@@ -187,8 +195,11 @@ export function ProfileHoverCard({
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    setIsOpen(false);
-    touchOpenedRef.current = false;
+    // Delay closing to allow mouse to reach the card
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+      touchOpenedRef.current = false;
+    }, CLOSE_DELAY);
   }, []);
 
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -215,6 +226,9 @@ export function ProfileHoverCard({
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+      }
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
       }
     };
   }, []);
@@ -313,9 +327,14 @@ export function ProfileHoverCard({
         width: cardWidth,
       }}
       onMouseEnter={() => {
+        // Clear both open and close timeouts - card is being hovered
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
           timeoutRef.current = null;
+        }
+        if (closeTimeoutRef.current) {
+          clearTimeout(closeTimeoutRef.current);
+          closeTimeoutRef.current = null;
         }
       }}
       onMouseLeave={handleMouseLeave}
