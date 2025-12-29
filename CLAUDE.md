@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.3**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.4**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.3**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 54 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 55 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -43,7 +43,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.3**.
 11. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 12. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
 13. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
-14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 126 tables, RLS, migrations
+14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 134 tables, RLS, migrations
 15. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
 16. [Internationalization](#internationalization-i18n) - 18 languages
 17. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
@@ -142,7 +142,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**54 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**55 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -1217,6 +1217,18 @@ const jsonLd = {
 |-----|----------|
 | **AI Assistant** | Claude streaming, TTS, speech recognition, localStorage history |
 | **Messages** | Supabase real-time, typing indicators, E2EE, unread badges |
+
+### Matrix SDK Features (v1.13.4)
+
+| Feature | Component/Hook | Description |
+|---------|----------------|-------------|
+| **Emoji Reactions** | `use-reactions.ts`, `emoji-picker.tsx` | Optimistic updates, realtime sync via broadcast |
+| **Reply Threading** | `reply-preview.tsx`, `sendMessage()` | Click-to-scroll, quoted message preview |
+| **In-Conversation Search** | `use-message-search.ts`, `message-search.tsx` | 300ms debounce, keyboard navigation, ILIKE |
+| **Message Drafts** | `use-draft-message.ts` | localStorage persistence per conversation |
+| **Gap Detection** | `use-gap-detection.ts` | Fetch missed messages on reconnect |
+| **Batched Read Receipts** | `use-batched-read-receipts.ts` | Broadcast-first, batched DB writes |
+| **Retry Queue** | `use-retry-queue.ts` | Retry/remove failed sends |
 
 ### Realtime System (`lib/realtime/realtime-context.tsx`)
 

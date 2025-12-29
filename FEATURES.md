@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **54 implemented features** with detailed capabilities.
+Complete list of all **55 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (53 total)
+## Implemented Features (55 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -26,7 +26,7 @@ Complete list of all **54 implemented features** with detailed capabilities.
 | FR-14 | Notification Popups | Persistent until dismissed, deep-linking, ARIA regions |
 | FR-15 | Settings Model | Model selector in settings with feedback |
 | FR-16 | Header Model Display | Smart API key indicators, BEST badge, tier colors |
-| FR-17 | Database Types | 126 tables, auto-generated TypeScript types |
+| FR-17 | Database Types | 134 tables, auto-generated TypeScript types |
 | FR-18 | Passkey/WebAuthn | Face ID, Touch ID, security keys, discoverable credentials |
 | FR-19 | Multi-Device 2FA | Multiple authenticators, primary device, backup codes |
 | FR-20 | Achievement System | 50+ achievements, 9 categories, 4 rarity tiers, confetti |
@@ -64,6 +64,7 @@ Complete list of all **54 implemented features** with detailed capabilities.
 | FR-52 | Resource Enhanced Fields | 21 enhanced fields (keyFeatures, targetAudience, useCases, pros, cons, prerequisites), URL parameter sync, homepage audience grid |
 | FR-53 | Comprehensive Admin Settings | SEO dashboard, 10 new settings sections (Security, Performance, Notifications, API, Moderation, Cost Tracking, Rate Limits, Scheduling), role-based access control, `lib/payload-access.ts` |
 | FR-54 | Bidirectional Sync System | Content hash change detection (MD5), incremental sync (--hours, --since, --ids), CTE queries, batched operations, ~70% faster syncs when unchanged, ETA calculation |
+| FR-55 | Matrix SDK Chat Features | Emoji reactions (optimistic updates, realtime broadcast), reply threading (click-to-scroll, quoted preview), in-conversation search (300ms debounce, keyboard nav), message drafts (localStorage), gap detection, batched read receipts, retry queue |
 
 ---
 
@@ -102,14 +103,15 @@ Complete list of all **54 implemented features** with detailed capabilities.
 - AI writing assistant
 - Resource discovery pipeline
 
-### Messaging & Social (FR-22, FR-29, FR-33, FR-35)
+### Messaging & Social (FR-22, FR-29, FR-33, FR-35, FR-55)
 - Group chat with roles
 - Unified chat window
 - User directory
 - Smart AI messaging (@mentions)
+- Matrix SDK features (reactions, replies, search, drafts)
 
 ### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50)
-- Database types (126 tables)
+- Database types (134 tables)
 - PWA enhancements
 - Advanced search
 - GitHub sync, doc versioning

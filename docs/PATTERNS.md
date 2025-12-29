@@ -15,7 +15,8 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 7. [Realtime Patterns](#realtime-patterns)
 8. [Admin Settings Patterns](#admin-settings-patterns-v1130) - Payload CMS access control (v1.13.0)
 9. [Resource Patterns](#resource-patterns) - Enhanced fields, insights dashboard, filters (MANDATORY)
-10. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
+10. [Matrix SDK Patterns](#matrix-sdk-patterns-v1134) - Reactions, replies, search, drafts (v1.13.4)
+11. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
 
 ---
 
@@ -1060,6 +1061,247 @@ export default function ResourcesLayout({ children }) {
 }
 ```
 
+
+---
+
+## Matrix SDK Patterns (v1.13.4)
+
+### Emoji Reactions with Optimistic Updates
+
+```tsx
+// hooks/messaging/use-reactions.ts
+import { useCallback, useMemo } from 'react';
+
+export function useReactions(conversationId: string, userId: string) {
+  const [localReactions, setLocalReactions] = useState<Map<string, Reaction[]>>(new Map());
+
+  const toggleReaction = useCallback(async (messageId: string, emoji: string) => {
+    // 1. Optimistic update (immediate UI feedback)
+    setLocalReactions((prev) => {
+      const existing = prev.get(messageId) || [];
+      const hasReaction = existing.some(r => r.emoji === emoji && r.userId === userId);
+
+      if (hasReaction) {
+        return new Map(prev).set(messageId, existing.filter(r => !(r.emoji === emoji && r.userId === userId)));
+      } else {
+        return new Map(prev).set(messageId, [...existing, { emoji, userId, createdAt: new Date().toISOString() }]);
+      }
+    });
+
+    // 2. Broadcast via realtime (6ms latency)
+    supabase.channel(`conv:${conversationId}`).send({
+      type: 'broadcast',
+      event: 'reaction',
+      payload: { messageId, emoji, userId, action: hasReaction ? 'remove' : 'add' }
+    });
+
+    // 3. Persist to database (async)
+    await fetch('/api/reactions', { method: 'POST', body: JSON.stringify({ messageId, emoji }) });
+  }, [conversationId, userId]);
+
+  return { toggleReaction, reactionsMap: localReactions };
+}
+```
+
+### Reply Threading Pattern
+
+```tsx
+// components/messaging/reply-preview.tsx
+interface ReplyPreviewProps {
+  replyToMessage: Message;
+  onScrollToMessage: (messageId: string) => void;
+  onCancelReply: () => void;
+}
+
+export function ReplyPreview({ replyToMessage, onScrollToMessage, onCancelReply }: ReplyPreviewProps) {
+  return (
+    <div className="flex items-center gap-2 px-3 py-2 border-l-2 border-violet-500 bg-violet-50/50 dark:bg-violet-950/20">
+      <button
+        onClick={() => onScrollToMessage(replyToMessage.id)}
+        className="flex-1 text-left text-sm truncate text-gray-600 dark:text-gray-400"
+      >
+        Replying to {replyToMessage.sender?.name}: {replyToMessage.content.slice(0, 50)}...
+      </button>
+      <button onClick={onCancelReply} className="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded">
+        <X className="w-4 h-4" />
+      </button>
+    </div>
+  );
+}
+
+// Usage: Send with reply_to_message_id
+const handleSend = async (content: string, replyToId?: string) => {
+  await fetch('/api/messages', {
+    method: 'POST',
+    body: JSON.stringify({ content, conversationId, replyToMessageId: replyToId })
+  });
+};
+```
+
+### In-Conversation Message Search
+
+```tsx
+// hooks/messaging/use-message-search.ts
+export function useMessageSearch(conversationId: string) {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<Message[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // 300ms debounce for search
+  const debouncedQuery = useDebounce(query, 300);
+
+  useEffect(() => {
+    if (!debouncedQuery || debouncedQuery.length < 2) {
+      setResults([]);
+      return;
+    }
+
+    const search = async () => {
+      const { data } = await supabase
+        .from('dm_messages')
+        .select('*')
+        .eq('conversation_id', conversationId)
+        .ilike('content', `%${debouncedQuery}%`)
+        .order('created_at', { ascending: false })
+        .limit(20);
+
+      setResults(data || []);
+    };
+
+    search();
+  }, [debouncedQuery, conversationId]);
+
+  // Keyboard navigation
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'ArrowDown') setSelectedIndex(i => Math.min(i + 1, results.length - 1));
+    if (e.key === 'ArrowUp') setSelectedIndex(i => Math.max(i - 1, 0));
+    if (e.key === 'Enter' && results[selectedIndex]) scrollToMessage(results[selectedIndex].id);
+  };
+
+  return { query, setQuery, results, selectedIndex, handleKeyDown };
+}
+```
+
+### Message Drafts (localStorage Persistence)
+
+```tsx
+// hooks/messaging/use-draft-message.ts
+export function useDraftMessage(conversationId: string) {
+  const key = `draft:${conversationId}`;
+
+  const [draft, setDraft] = useState<string>(() => {
+    if (typeof window === 'undefined') return '';
+    return localStorage.getItem(key) || '';
+  });
+
+  // Auto-save on change (debounced)
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (draft) {
+        localStorage.setItem(key, draft);
+      } else {
+        localStorage.removeItem(key);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [draft, key]);
+
+  const clearDraft = useCallback(() => {
+    setDraft('');
+    localStorage.removeItem(key);
+  }, [key]);
+
+  return { draft, setDraft, clearDraft };
+}
+```
+
+### Batched Read Receipts
+
+```tsx
+// hooks/messaging/use-batched-read-receipts.ts
+export function useBatchedReadReceipts(conversationId: string, userId: string) {
+  const pendingReads = useRef<Set<string>>(new Set());
+  const flushTimeoutRef = useRef<NodeJS.Timeout>();
+
+  const markAsRead = useCallback((messageId: string) => {
+    // 1. Broadcast immediately (realtime presence)
+    supabase.channel(`conv:${conversationId}`).send({
+      type: 'broadcast',
+      event: 'read_receipt',
+      payload: { messageId, userId, readAt: new Date().toISOString() }
+    });
+
+    // 2. Queue for batched DB write
+    pendingReads.current.add(messageId);
+
+    // 3. Flush after 30 seconds of inactivity
+    clearTimeout(flushTimeoutRef.current);
+    flushTimeoutRef.current = setTimeout(flushPendingReads, 30000);
+  }, [conversationId, userId]);
+
+  const flushPendingReads = useCallback(async () => {
+    if (pendingReads.current.size === 0) return;
+
+    const messageIds = Array.from(pendingReads.current);
+    pendingReads.current.clear();
+
+    await fetch('/api/read-receipts/batch', {
+      method: 'POST',
+      body: JSON.stringify({ conversationId, messageIds })
+    });
+  }, [conversationId]);
+
+  // Flush on unmount
+  useEffect(() => {
+    return () => {
+      clearTimeout(flushTimeoutRef.current);
+      flushPendingReads();
+    };
+  }, [flushPendingReads]);
+
+  return { markAsRead };
+}
+```
+
+### Message Retry Queue
+
+```tsx
+// hooks/messaging/use-retry-queue.ts
+interface PendingMessage {
+  id: string;
+  content: string;
+  replyToId?: string;
+  retryCount: number;
+  error?: string;
+}
+
+export function useRetryQueue() {
+  const [pendingMessages, setPendingMessages] = useState<PendingMessage[]>([]);
+
+  const retry = useCallback(async (pendingId: string) => {
+    const pending = pendingMessages.find(m => m.id === pendingId);
+    if (!pending) return;
+
+    try {
+      await sendMessage(pending.content, pending.replyToId);
+      setPendingMessages(prev => prev.filter(m => m.id !== pendingId));
+    } catch (error) {
+      setPendingMessages(prev => prev.map(m =>
+        m.id === pendingId
+          ? { ...m, retryCount: m.retryCount + 1, error: error.message }
+          : m
+      ));
+    }
+  }, [pendingMessages]);
+
+  const remove = useCallback((pendingId: string) => {
+    setPendingMessages(prev => prev.filter(m => m.id !== pendingId));
+  }, []);
+
+  return { pendingMessages, retry, remove };
+}
+```
 
 ---
 

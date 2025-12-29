@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-29 for v1.13.3 (Bidirectional Sync Optimization)
+ * Updated: 2025-12-29 for v1.13.4 (Matrix SDK Chat Features)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.13.3",
+  version: "1.13.4",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -119,7 +119,7 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.89.0",
     engine: "PostgreSQL 15+",
-    tables: 133,
+    tables: 134,
     categories: 20,
     features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library"],
   },
@@ -264,7 +264,7 @@ export const USER_FEATURES = {
   },
   messaging: {
     types: ["Direct messages", "Group chats (up to 50 members)"],
-    features: ["Typing indicators", "Online presence", "Message mentions", "AI assistant @mentions"],
+    features: ["Typing indicators", "Online presence", "Message mentions", "AI assistant @mentions", "Emoji reactions", "Reply threading", "In-conversation search", "Message drafts", "Retry queue"],
     roles: ["Owner", "Admin", "Member"],
   },
   apiKeys: {
@@ -1123,6 +1123,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.13.3", "bidirectional sync", "content hash", "incremental sync", "CTE queries", "batched operations", "payload cms", "supabase"],
+  },
+  {
+    id: "v1134-features",
+    title: "Version 1.13.4 Features",
+    section: "New in v1.13.4",
+    content: `Claude Insider v1.13.4 implements comprehensive Matrix SDK chat features for enhanced messaging experience. Emoji Reactions: Full emoji picker with optimistic updates and realtime broadcast sync. Users can react to any message with emojis stored in new message_reactions table (migration 105). Reply Threading: Quote and reply to messages with click-to-scroll navigation. Uses self-referential FK (reply_to_message_id) on dm_messages table (migration 106). ON DELETE SET NULL preserves replies when original is deleted. In-Conversation Search: Find messages within any chat using 300ms debounced ILIKE search with keyboard navigation (arrow keys, Enter to jump). Message Drafts: localStorage-based draft persistence per conversation with auto-save on change. Drafts survive page refreshes and navigation. Gap Detection: Fetch missed messages on reconnect when connection gaps are detected. Batched Read Receipts: Broadcast-first for instant UI updates, with batched database writes every 30 seconds for efficiency. Retry Queue: Failed message sends are queued with retry/remove options. 134 total database tables with 106 migrations.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.13.4", "matrix sdk", "emoji reactions", "reply threading", "message search", "drafts", "gap detection", "read receipts", "retry queue", "messaging"],
   },
 ];
 

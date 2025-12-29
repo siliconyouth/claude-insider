@@ -283,7 +283,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.13.3
+ * Realistic terminal content showing Claude Insider v1.13.4
  */
 function MacBookTerminalContent() {
   return (
@@ -311,11 +311,11 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.13.3</span>
+          <span className="text-[#8b949e]"> v1.13.4</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Features: 54 • Resources: 1,952+</span>
+          <span className="text-[#8b949e]"> Features: 55 • Resources: 1,952+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>
@@ -323,10 +323,10 @@ function MacBookTerminalContent() {
         </div>
 
         <div className="mt-2 space-y-[3px]">
-          <div className="text-[#7ee787]">✓ ElevenLabs Turbo v2.5 TTS</div>
-          <div className="text-[#7ee787]">✓ Immediate Text Streaming</div>
-          <div className="text-[#7ee787]">✓ Code Block TTS Support</div>
-          <div className="text-[#7ee787]">✓ 42 Premium AI Voices</div>
+          <div className="text-[#7ee787]">✓ Matrix SDK Chat Features</div>
+          <div className="text-[#7ee787]">✓ Emoji Reactions & Replies</div>
+          <div className="text-[#7ee787]">✓ In-Conversation Search</div>
+          <div className="text-[#7ee787]">✓ Message Drafts & Retry</div>
           <div className="text-[#7ee787]">✓ RAG v7.0 (6,983 chunks)</div>
         </div>
 
@@ -342,7 +342,7 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.13.3 with proper aspect ratio handling and LCP optimization
+ * Updated for v1.13.4 with proper aspect ratio handling and LCP optimization
  *
  * MANDATORY MOCKUP RULES:
  * 1. Screenshot MUST be taken at 446×932 viewport (matches mockup 224:468 aspect ratio)

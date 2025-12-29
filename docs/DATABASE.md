@@ -28,9 +28,9 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 133 |
+| **Total Tables** | 134 |
 | **Categories** | 20 |
-| **Migrations** | 103 |
+| **Migrations** | 106 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -84,7 +84,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 ---
 
-## Table Catalog (126 Tables)
+## Table Catalog (134 Tables)
 
 ### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 
@@ -103,9 +103,18 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 `achievements`, `user_achievements`, `achievement_progress`
 
-### Messaging (7 tables)
+### Messaging (8 tables)
 
-`user_presence`, `dm_conversations`, `dm_participants`, `dm_messages`, `dm_typing_indicators`, `dm_group_invitations`, `user_chat_settings`
+`user_presence`, `dm_conversations`, `dm_participants`, `dm_messages`, `dm_typing_indicators`, `dm_group_invitations`, `user_chat_settings`, `message_reactions`
+
+**Key columns in `dm_messages`:**
+- `reply_to_message_id` (UUID, FK → self, ON DELETE SET NULL) - Reply threading (v1.13.4)
+
+**Key columns in `message_reactions`:**
+- `message_id` (UUID, FK → dm_messages) - Target message
+- `user_id` (TEXT, FK → user) - Reactor
+- `emoji` (TEXT) - Unicode emoji character
+- UNIQUE constraint: `(message_id, user_id, emoji)`
 
 ### Security (4 tables)
 
@@ -244,7 +253,11 @@ supabase/migrations/
 ├── 091                          # Resource-resource relationships fix
 ├── 092-095                      # Release notifications
 ├── 096                          # Prompts system (categories, prompts, saves, ratings, usage)
-└── 097-100                      # Export jobs, release notifications
+├── 097-100                      # Export jobs, release notifications
+├── 101-103                      # Dashboard fixes, content_hash column
+├── 104                          # Sync follow counts
+├── 105                          # Message reactions table (Matrix SDK)
+└── 106                          # Reply threading column (reply_to_message_id)
 ```
 
 ---

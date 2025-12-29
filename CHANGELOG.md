@@ -9,6 +9,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.4] - 2025-12-29
+### Matrix SDK Features - Reactions, Replies, Search
+- **Emoji Reactions**: Full emoji picker with optimistic updates
+  - `emoji-picker.tsx` with EmojiPicker and ReactionButton components
+  - `reaction-display.tsx` with tooltips showing who reacted
+  - `use-reactions.ts` hook with realtime sync via broadcast
+  - Database: `message_reactions` table with unique constraint
+- **Reply Threading**: Quote and reply to messages
+  - `reply-preview.tsx` with ReplyPreview and ReplyButton
+  - Click-to-scroll to original message
+  - Reply reference stored as `reply_to_message_id` self-referencing FK
+  - Batch-loads reply messages for O(1) lookup
+- **In-Conversation Search**: Find messages within a chat
+  - `message-search.tsx` with MessageSearchBar and SearchToggleButton
+  - `use-message-search.ts` with 300ms debounce and keyboard navigation
+  - PostgreSQL ILIKE search with highlighted results
+- **Message Drafts**: localStorage persistence per conversation
+  - `use-draft-message.ts` hook preserves unsent messages
+- **Gap Detection**: Fetch missed messages on reconnect
+  - `use-gap-detection.ts` hook compares latest message timestamps
+- **Batched Read Receipts**: Broadcast-first with batched DB writes
+  - `use-batched-read-receipts.ts` broadcasts immediately, writes every 30s
+- **Message Retry Queue**: Retry or remove failed sends
+  - `use-retry-queue.ts` with optimistic UI and status indicators
+- **Migrations**: 105 (reactions table), 106 (reply column)
+
+---
+
 ## [1.13.3] - 2025-12-29
 ### Optimized Bidirectional Sync System
 - **Content Hash Change Detection**: Skip syncing unchanged resources via MD5 hash comparison
