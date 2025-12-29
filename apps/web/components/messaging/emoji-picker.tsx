@@ -143,7 +143,6 @@ export function EmojiPicker({
     [onSelect, onClose]
   );
 
-  const emojisToShow = showAll ? REACTION_EMOJIS : QUICK_REACTIONS;
   const pickerWidth = showAll ? PICKER_WIDTH_FULL : PICKER_WIDTH_QUICK;
 
   // If no position yet or not mounted, don't render
@@ -168,25 +167,26 @@ export function EmojiPicker({
         width: pickerWidth,
       }}
     >
-      <div className="flex items-center gap-1">
-        {emojisToShow.map((emoji) => (
-          <button
-            key={emoji}
-            onClick={() => handleSelect(emoji)}
-            className={cn(
-              "p-1.5 rounded-lg text-lg",
-              "hover:bg-gray-100 dark:hover:bg-gray-800",
-              "transition-transform hover:scale-110",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500"
-            )}
-            title={`React with ${emoji}`}
-          >
-            {emoji}
-          </button>
-        ))}
+      {/* Quick reactions row - only shown when collapsed */}
+      {!showAll && (
+        <div className="flex items-center gap-1">
+          {QUICK_REACTIONS.map((emoji) => (
+            <button
+              key={emoji}
+              onClick={() => handleSelect(emoji)}
+              className={cn(
+                "p-1.5 rounded-lg text-lg",
+                "hover:bg-gray-100 dark:hover:bg-gray-800",
+                "transition-transform hover:scale-110",
+                "focus:outline-none focus:ring-2 focus:ring-blue-500"
+              )}
+              title={`React with ${emoji}`}
+            >
+              {emoji}
+            </button>
+          ))}
 
-        {/* Toggle to show more emojis */}
-        {!showAll && (
+          {/* Toggle to show more emojis */}
           <button
             onClick={() => setShowAll(true)}
             className={cn(
@@ -198,28 +198,26 @@ export function EmojiPicker({
           >
             +
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Full emoji grid */}
+      {/* Full emoji grid - only shown when expanded */}
       {showAll && (
-        <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-          <div className="grid grid-cols-8 gap-1">
-            {REACTION_EMOJIS.map((emoji) => (
-              <button
-                key={`all-${emoji}`}
-                onClick={() => handleSelect(emoji)}
-                className={cn(
-                  "p-1 rounded text-lg",
-                  "hover:bg-gray-100 dark:hover:bg-gray-800",
-                  "transition-transform hover:scale-110",
-                  "focus:outline-none focus:ring-2 focus:ring-blue-500"
-                )}
-              >
-                {emoji}
-              </button>
-            ))}
-          </div>
+        <div className="grid grid-cols-8 gap-1">
+          {REACTION_EMOJIS.map((emoji) => (
+            <button
+              key={`all-${emoji}`}
+              onClick={() => handleSelect(emoji)}
+              className={cn(
+                "p-1.5 rounded-lg text-lg",
+                "hover:bg-gray-100 dark:hover:bg-gray-800",
+                "transition-transform hover:scale-110",
+                "focus:outline-none focus:ring-2 focus:ring-blue-500"
+              )}
+            >
+              {emoji}
+            </button>
+          ))}
         </div>
       )}
     </div>
