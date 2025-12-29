@@ -507,22 +507,27 @@ export function ConversationView({
   useEffect(() => {
     if (!targetMessageId || isLoading || messages.length === 0) return;
 
-    // Find the target message index
+    // Find the target message in the messages array
     const targetIndex = messages.findIndex((m) => m.id === targetMessageId);
 
     if (targetIndex >= 0) {
       // Highlight the message
       setHighlightedMessageId(targetMessageId);
 
-      // Scroll to the message element
+      // Use the virtualizer's scrollToMessage for proper virtual list scrolling
+      // This ensures the message is scrolled into view even if not currently rendered
       setTimeout(() => {
-        const messageElement = document.querySelector(
-          `[data-message-id="${targetMessageId}"]`
-        );
-        if (messageElement) {
-          messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        const scrolled = messageListRef.current?.scrollToMessage(targetMessageId);
+        if (!scrolled) {
+          // Fallback to DOM query if ref method didn't work
+          const messageElement = document.querySelector(
+            `[data-message-id="${targetMessageId}"]`
+          );
+          if (messageElement) {
+            messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
         }
-      }, 100);
+      }, 150); // Slightly longer delay to ensure virtualizer is ready
 
       // Clear highlight and target after animation
       setTimeout(() => {

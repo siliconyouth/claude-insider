@@ -78,6 +78,7 @@ const MIN_MESSAGES_TO_KEEP = 50;
 
 export interface VirtualizedMessageListHandle {
   scrollToBottom: () => void;
+  scrollToMessage: (messageId: string) => boolean;
 }
 
 /** Queued message status from retry queue */
@@ -292,9 +293,10 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
 
   /**
    * Scroll to a specific message by ID.
-   * Used for jumping to replied-to messages.
+   * Used for jumping to replied-to messages and deep linking from notifications.
+   * Returns true if message was found and scrolled to, false otherwise.
    */
-  const scrollToMessage = useCallback((messageId: string) => {
+  const scrollToMessage = useCallback((messageId: string): boolean => {
     // Find the index of the message in items
     const itemIndex = items.findIndex(
       (item) => item.type === "message" && item.message?.id === messageId
@@ -302,18 +304,19 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
 
     if (itemIndex === -1) {
       // Message not in current items - might need to load more
-      console.log("Message not found in current items:", messageId);
-      return;
+      return false;
     }
 
-    // Use virtualizer to scroll to the item
+    // Use virtualizer to scroll to the item (this handles virtualization properly)
     virtualizer.scrollToIndex(itemIndex, { align: "center" });
+    return true;
   }, [items, virtualizer]);
 
-  // Expose scrollToBottom method via ref
+  // Expose methods via ref for external control (deep linking, reply navigation)
   useImperativeHandle(ref, () => ({
     scrollToBottom: scrollToActualBottom,
-  }), [scrollToActualBottom]);
+    scrollToMessage,
+  }), [scrollToActualBottom, scrollToMessage]);
 
   // Check if scrolled to bottom
   const checkIfAtBottom = useCallback(() => {
