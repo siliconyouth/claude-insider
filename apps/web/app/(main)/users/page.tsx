@@ -545,7 +545,9 @@ export default function UsersDirectoryPage() {
     }));
 
     try {
-      const res = await fetch(`/api/user-directory?list=${listType}&limit=${limit}`);
+      const res = await fetch(`/api/user-directory?list=${listType}&limit=${limit}`, {
+        credentials: "include", // Include cookies for authenticated requests
+      });
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
 
@@ -610,7 +612,9 @@ export default function UsersDirectoryPage() {
       if (roleFilter) params.set("role", roleFilter);
       if (donorFilter) params.set("donor", donorFilter);
 
-      const res = await fetch(`/api/user-directory?${params}`);
+      const res = await fetch(`/api/user-directory?${params}`, {
+        credentials: "include", // Include cookies for authenticated requests
+      });
       if (!res.ok) throw new Error("Search failed");
       const data = await res.json();
 
@@ -638,7 +642,9 @@ export default function UsersDirectoryPage() {
   const fetchExpandedList = useCallback(async (listType: ListType, page: number) => {
     setExpandedLoading(true);
     try {
-      const res = await fetch(`/api/user-directory?list=${listType}&page=${page}&limit=20`);
+      const res = await fetch(`/api/user-directory?list=${listType}&page=${page}&limit=20`, {
+        credentials: "include", // Include cookies for authenticated requests
+      });
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
 
