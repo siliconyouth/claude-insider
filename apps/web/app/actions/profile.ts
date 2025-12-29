@@ -698,7 +698,7 @@ export async function getCompleteProfileData(options?: {
       // Presence status
       supabase
         .from("user_presence")
-        .select("status, last_seen_at")
+        .select("last_active_at, last_seen_at")
         .eq("user_id", userId)
         .single(),
     ]);
@@ -721,10 +721,16 @@ export async function getCompleteProfileData(options?: {
         unlockedAt: a.earned_at,
       }));
 
-    // Get presence status
-    const presence = presenceData.data;
-    const isOnline = presence?.status === "online";
-    const lastSeen = presence?.last_seen_at;
+    // Get presence status - compute from last_active_at (Matrix SDK pattern)
+    const presence = presenceData.data as { last_active_at: string | null; last_seen_at: string | null } | null;
+    const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+    const now = Date.now();
+    let isOnline = false;
+    if (presence?.last_active_at) {
+      const lastActive = new Date(presence.last_active_at).getTime();
+      isOnline = now - lastActive < ONLINE_THRESHOLD_MS;
+    }
+    const lastSeen = presence?.last_seen_at ?? undefined;
 
     return {
       data: {

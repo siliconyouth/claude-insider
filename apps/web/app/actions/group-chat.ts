@@ -84,11 +84,6 @@ interface ProfileRow {
   avatar_url?: string;
 }
 
-interface PresenceRow {
-  user_id: string;
-  status: string;
-}
-
 interface ChatSettingsRow {
   user_id: string;
   sound_enabled?: boolean;
@@ -685,13 +680,25 @@ export async function getGroupMembers(
 
     const [{ data: profiles }, { data: presences }] = await Promise.all([
       supabase.from("profiles").select("user_id, display_name, avatar_url").in("user_id", userIds),
-       
-      supabase.from("user_presence").select("user_id, status").in("user_id", userIds),
+
+      supabase.from("user_presence").select("user_id, last_active_at").in("user_id", userIds),
     ]);
 
+    // Compute status from last_active_at (Matrix SDK pattern)
+    const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+    const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
+    const now = Date.now();
+
     const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
-    const presenceRows = (presences || []) as PresenceRow[];
-    const presenceMap = new Map(presenceRows.map((p) => [p.user_id, p.status]));
+    const presenceRows = (presences || []) as { user_id: string; last_active_at: string | null }[];
+    const presenceMap = new Map(presenceRows.map((p) => {
+      if (!p.last_active_at) return [p.user_id, "offline"];
+      const lastActive = new Date(p.last_active_at).getTime();
+      const diff = now - lastActive;
+      if (diff < ONLINE_THRESHOLD_MS) return [p.user_id, "online"];
+      if (diff < IDLE_THRESHOLD_MS) return [p.user_id, "idle"];
+      return [p.user_id, "offline"];
+    }));
 
     const memberList: GroupMember[] = memberRows.map((m) => {
       const user = m.user;

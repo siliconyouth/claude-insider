@@ -104,7 +104,9 @@ export function useE2EE(): UseE2EEReturn {
 
   // Derived state
   const isInitialized = status === "ready";
-  const isLoading = status === "loading" || status === "generating";
+  // Include "uninitialized" in loading state to prevent "Not encrypted" flash
+  // before auto-initialization useEffect fires
+  const isLoading = status === "uninitialized" || status === "loading" || status === "generating";
 
   // ============================================================================
   // INITIALIZATION

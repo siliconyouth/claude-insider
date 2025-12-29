@@ -120,11 +120,6 @@ interface ProfileRow {
   username?: string;
 }
 
-interface PresenceRow {
-  user_id: string;
-  status: string;
-}
-
 interface MessageRow {
   id: string;
   conversation_id: string;
@@ -309,7 +304,7 @@ async function getConversationsLegacy(userId: string, supabase: any): Promise<{
       .in("user_id", otherUserIds),
     supabase
       .from("user_presence")
-      .select("user_id, status")
+      .select("user_id, last_active_at")
       .in("user_id", otherUserIds),
   ]);
 
@@ -317,9 +312,21 @@ async function getConversationsLegacy(userId: string, supabase: any): Promise<{
   const presences = presencesResult.data;
 
   // Build profile and presence maps
+  // Compute status from last_active_at (Matrix SDK pattern)
+  const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+  const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
+  const now = Date.now();
+
   const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
-  const presenceRows = (presences || []) as PresenceRow[];
-  const presenceMap = new Map(presenceRows.map((p) => [p.user_id, p.status]));
+  const presenceRows = (presences || []) as { user_id: string; last_active_at: string | null }[];
+  const presenceMap = new Map(presenceRows.map((p) => {
+    if (!p.last_active_at) return [p.user_id, "offline"];
+    const lastActive = new Date(p.last_active_at).getTime();
+    const diff = now - lastActive;
+    if (diff < ONLINE_THRESHOLD_MS) return [p.user_id, "online"];
+    if (diff < IDLE_THRESHOLD_MS) return [p.user_id, "idle"];
+    return [p.user_id, "offline"];
+  }));
 
   // Build conversations with participants
   const conversations: Conversation[] = participationRows.map((p) => {
@@ -1250,16 +1257,28 @@ export async function getUsersForMessaging(
         .in("user_id", userIds),
       supabase
         .from("user_presence")
-        .select("user_id, status")
+        .select("user_id, last_active_at")
         .in("user_id", userIds),
     ]);
 
     const profiles = profilesResult.data;
     const presences = presencesResult.data;
 
+    // Compute status from last_active_at (Matrix SDK pattern)
+    const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+    const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
+    const now = Date.now();
+
     const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
-    const presenceRows = (presences || []) as PresenceRow[];
-    const presenceMap = new Map(presenceRows.map((p) => [p.user_id, p.status]));
+    const presenceRows = (presences || []) as { user_id: string; last_active_at: string | null }[];
+    const presenceMap = new Map(presenceRows.map((p) => {
+      if (!p.last_active_at) return [p.user_id, "offline"];
+      const lastActive = new Date(p.last_active_at).getTime();
+      const diff = now - lastActive;
+      if (diff < ONLINE_THRESHOLD_MS) return [p.user_id, "online"];
+      if (diff < IDLE_THRESHOLD_MS) return [p.user_id, "idle"];
+      return [p.user_id, "offline"];
+    }));
 
     // Transform and sort (online first, then AI assistant)
     const result = filteredUsers.map((u) => {
@@ -1454,16 +1473,27 @@ export async function searchUsersForMention(
         .in("user_id", userIds),
       supabase
         .from("user_presence")
-        .select("user_id, status")
+        .select("user_id, last_active_at")
         .in("user_id", userIds),
     ]);
+
+    // Compute status from last_active_at (Matrix SDK pattern)
+    const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+    const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
+    const now = Date.now();
 
     const profileMap = new Map(
       (profilesResult.data as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []
     );
-    const presenceMap = new Map(
-      (presencesResult.data as PresenceRow[] | null)?.map((p) => [p.user_id, p.status]) || []
-    );
+    const presenceRows = (presencesResult.data || []) as { user_id: string; last_active_at: string | null }[];
+    const presenceMap = new Map(presenceRows.map((p) => {
+      if (!p.last_active_at) return [p.user_id, "offline"];
+      const lastActive = new Date(p.last_active_at).getTime();
+      const diff = now - lastActive;
+      if (diff < ONLINE_THRESHOLD_MS) return [p.user_id, "online"];
+      if (diff < IDLE_THRESHOLD_MS) return [p.user_id, "idle"];
+      return [p.user_id, "offline"];
+    }));
 
     // Build and sort result
     const users = Array.from(userMap.values()).map((u) => {
