@@ -37,7 +37,6 @@ export function OnboardingModalWrapper() {
       // IMPORTANT: Check if the "welcome_aboard" achievement is queued.
       // This indicates onboarding JUST completed and we're in a reload.
       if (isAchievementPending("welcome_aboard")) {
-        console.log("[Onboarding] Skipping - welcome_aboard achievement pending (just completed)");
         setHasChecked(true);
         return;
       }
@@ -54,10 +53,8 @@ export function OnboardingModalWrapper() {
           }
 
           const data = await response.json();
-          console.log("[Onboarding] Database status:", data);
 
           if (data.needsOnboarding) {
-            console.log("[Onboarding] User needs onboarding (from DB)");
             setShowOnboarding(true);
           }
         } catch (error) {
