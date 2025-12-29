@@ -277,23 +277,32 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   const virtualItems = virtualizer.getVirtualItems();
 
   /**
-   * Scroll to bottom - Matrix SDK style.
+   * Scroll to bottom using virtualizer's scrollToIndex.
    *
-   * Simple and direct: just set scrollTop = scrollHeight.
-   * No animations, no chains, no fighting with the virtualizer.
+   * Key insight: Using scrollToIndex instead of raw scrollTop ensures the
+   * virtualizer properly accounts for dynamic measurements. When measureElement
+   * updates heights after render, scrollToIndex handles repositioning correctly.
    *
-   * The key insight from Matrix is that smooth scrolling causes jitter
-   * when multiple scroll events fire in quick succession.
+   * The double-rAF pattern ensures:
+   * 1. First rAF: DOM has updated with new items
+   * 2. Second rAF: measureElement has run and heights are accurate
    */
   const scrollToActualBottom = useCallback(() => {
-    const el = parentRef.current;
-    if (!el) return;
+    if (totalCount === 0) return;
 
-    // Direct assignment - no animation, no delays
-    el.scrollTop = el.scrollHeight;
+    // Use virtualizer's scrollToIndex for proper virtualization handling
+    virtualizer.scrollToIndex(totalCount - 1, { align: "end" });
+
+    // After measurements settle, ensure we're truly at the end
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        virtualizer.scrollToIndex(totalCount - 1, { align: "end" });
+      });
+    });
+
     setIsAtBottom(true);
     scrollStateRef.current = { stuckAtBottom: true };
-  }, []);
+  }, [totalCount, virtualizer]);
 
   /**
    * Scroll to a specific message by ID.
@@ -569,17 +578,11 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     }
   }, [messages, isAtBottom, scrollToActualBottom]);
 
-  // Scroll to bottom when read receipts update (if already at bottom)
-  // This ensures the "Seen" indicator is visible after sending a message
-  const readReceiptsCount = Object.keys(readReceipts).length;
-  useEffect(() => {
-    if (readReceiptsCount > 0 && isAtBottom) {
-      // Small delay to let the read indicator render, then instant scroll
-      setTimeout(() => {
-        scrollToActualBottom();
-      }, 50);
-    }
-  }, [readReceiptsCount, isAtBottom, scrollToActualBottom]);
+  // Track read receipts count for potential future use
+  // Note: We removed the scroll effect here because it was causing overlap issues.
+  // The double-rAF in scrollToActualBottom now handles measurement settling,
+  // ensuring read receipt indicators are visible without a separate delayed scroll.
+  const _readReceiptsCount = Object.keys(readReceipts).length;
 
   // Shrink prevention for typing indicator transitions (Matrix SDK pattern)
   // When typing indicator appears, mark the last message position.
