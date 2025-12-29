@@ -509,7 +509,7 @@ function UserListSection({
 // ============================================================================
 
 export default function UsersDirectoryPage() {
-  const { isAuthenticated, user: currentUser } = useAuth();
+  const { isAuthenticated, isLoading: authLoading, user: currentUser } = useAuth();
 
   // State for each list
   const [lists, setLists] = useState<Record<ListType, { users: DirectoryUser[]; total: number; isLoading: boolean }>>({
@@ -577,8 +577,11 @@ export default function UsersDirectoryPage() {
     fetchList("donors");
   }, [fetchList]);
 
-  // Fetch authenticated lists when user is authenticated
+  // Fetch authenticated lists when user is authenticated (wait for auth to load)
   useEffect(() => {
+    // Wait for auth to finish loading before checking authentication
+    if (authLoading) return;
+
     if (isAuthenticated) {
       setLists((prev) => ({
         ...prev,
@@ -588,7 +591,7 @@ export default function UsersDirectoryPage() {
       fetchList("following");
       fetchList("followers");
     }
-  }, [isAuthenticated, fetchList]);
+  }, [authLoading, isAuthenticated, fetchList]);
 
   // Search handler
   const handleSearch = useCallback(async () => {
