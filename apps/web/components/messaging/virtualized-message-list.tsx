@@ -244,47 +244,28 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
 
   const virtualItems = virtualizer.getVirtualItems();
 
-  // Robust scroll to bottom function that ensures we reach the actual bottom
-  const scrollToActualBottom = useCallback((smooth = true) => {
+  /**
+   * Scroll to bottom - Matrix SDK style.
+   *
+   * Simple and direct: just set scrollTop = scrollHeight.
+   * No animations, no chains, no fighting with the virtualizer.
+   *
+   * The key insight from Matrix is that smooth scrolling causes jitter
+   * when multiple scroll events fire in quick succession.
+   */
+  const scrollToActualBottom = useCallback(() => {
     const el = parentRef.current;
     if (!el) return;
 
-    // Step 1: Use virtualizer to scroll to last index (this triggers measurement)
-    virtualizer.scrollToIndex(totalCount - 1, { align: "end", behavior: "auto" });
-
-    // Step 2: Wait for virtualizer measurements to complete, then scroll to actual bottom
-    // We need multiple frames because:
-    // - Frame 1: Virtualizer starts measuring
-    // - Frame 2: Measurements complete
-    // - Frame 3: Final scroll adjustment
-    const scrollToBottom = () => {
-      const scrollEl = parentRef.current;
-      if (!scrollEl) return;
-
-      if (smooth) {
-        scrollEl.scrollTo({
-          top: scrollEl.scrollHeight,
-          behavior: "smooth",
-        });
-      } else {
-        scrollEl.scrollTop = scrollEl.scrollHeight;
-      }
-      setIsAtBottom(true);
-    };
-
-    // Chain multiple animation frames to ensure measurements settle
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          scrollToBottom();
-        });
-      });
-    });
-  }, [virtualizer, totalCount]);
+    // Direct assignment - no animation, no delays
+    el.scrollTop = el.scrollHeight;
+    setIsAtBottom(true);
+    scrollStateRef.current = { stuckAtBottom: true };
+  }, []);
 
   // Expose scrollToBottom method via ref
   useImperativeHandle(ref, () => ({
-    scrollToBottom: () => scrollToActualBottom(true),
+    scrollToBottom: scrollToActualBottom,
   }), [scrollToActualBottom]);
 
   // Check if scrolled to bottom
@@ -526,8 +507,8 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
     prevMessagesLengthRef.current = messages.length;
 
     if (newMessagesAdded && isAtBottom) {
-      // Use robust scroll that ensures we reach the actual bottom
-      scrollToActualBottom(true);
+      // Use Matrix SDK style - simple instant scroll
+      scrollToActualBottom();
     }
   }, [messages.length, isAtBottom, scrollToActualBottom]);
 
@@ -536,10 +517,10 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   const readReceiptsCount = Object.keys(readReceipts).length;
   useEffect(() => {
     if (readReceiptsCount > 0 && isAtBottom) {
-      // Small delay to let the read indicator render, then scroll to actual bottom
+      // Small delay to let the read indicator render, then instant scroll
       setTimeout(() => {
-        scrollToActualBottom(true);
-      }, 100);
+        scrollToActualBottom();
+      }, 50);
     }
   }, [readReceiptsCount, isAtBottom, scrollToActualBottom]);
 
@@ -586,9 +567,8 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   // Initial scroll to bottom
   useEffect(() => {
     if (messages.length > 0 && !isLoading) {
-      // Use robust scroll to ensure we're at the actual bottom after initial load
-      // Use instant scroll (not smooth) for initial load
-      scrollToActualBottom(false);
+      // Matrix SDK style - instant scroll on initial load
+      scrollToActualBottom();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]); // Only on initial load
@@ -737,7 +717,7 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
       {/* Scroll to bottom button */}
       {!isAtBottom && messages.length > 0 && (
         <button
-          onClick={() => scrollToActualBottom(true)}
+          onClick={scrollToActualBottom}
           className={cn(
             "fixed bottom-24 right-8 z-10",
             "w-10 h-10 rounded-full",
