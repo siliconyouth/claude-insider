@@ -26,6 +26,28 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.13.5",
+    date: "2025-12-29",
+    type: "patch",
+    highlights: [
+      "🔗 ConversationView Consolidation: Single source of truth, removed 826 lines of duplicate code",
+      "🔐 E2EE Setup Flow: Clickable 'Not encrypted' badge opens setup modal with success/error feedback",
+      "👤 Matrix SDK Presence: Heartbeat-based (30s) presence with reliable online/idle/offline status",
+      "✨ Display Names Everywhere: Consistent @DisplayName in mentions, replies, and community page",
+    ],
+  },
+  {
+    version: "1.13.4",
+    date: "2025-12-29",
+    type: "patch",
+    highlights: [
+      "💬 Emoji Reactions: Full emoji picker with optimistic updates and realtime sync via broadcast",
+      "↩️ Reply Threading: Quote and reply to messages with click-to-scroll functionality",
+      "🔍 In-Conversation Search: Find messages within chats with 300ms debounce and keyboard navigation",
+      "📝 Message Drafts: localStorage persistence preserves unsent messages per conversation",
+    ],
+  },
+  {
     version: "1.13.3",
     date: "2025-12-29",
     type: "patch",

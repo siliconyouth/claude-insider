@@ -9,7 +9,7 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.13.4-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.13.5-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
 [![Features](https://img.shields.io/badge/55-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/1,952+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
@@ -122,7 +122,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 
 ---
 
-## 50 Platform Features
+## 55 Platform Features
 
 <details>
 <summary><b>Content & Documentation</b></summary>
@@ -270,7 +270,7 @@ pnpm dev
 - Claude Sonnet 4
 - ElevenLabs TTS
 - Web Speech API
-- RAG (3,809 chunks)
+- RAG (6,983 chunks)
 
 </td>
 <td>

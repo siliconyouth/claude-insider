@@ -9,6 +9,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.13.5] - 2025-12-29
+### Messaging Consolidation & Presence System
+- **ConversationView Consolidation**: Single source of truth for conversation UI
+  - Removed 826 lines of duplicate code from `messages-tab.tsx`
+  - `conversation-view.tsx` now canonical implementation
+  - Added `isGroupChat` prop for context-aware behavior
+  - All features unified: draft persistence, batched read receipts, ProfileHoverCard
+- **E2EE Setup Flow**: Improved end-to-end encryption initialization
+  - Clickable "Not encrypted" badge opens setup modal
+  - `onSetupClick` callback added to `ConversationE2EEBadge`
+  - Informative success/error feedback after restore operations
+  - Completion type tracking: "generated", "restored", "generated-with-backup"
+- **Matrix SDK Presence Pattern**: Reliable online status
+  - Heartbeat-based presence (30s interval)
+  - Status computed from `last_active_at` timestamp everywhere
+  - Fixes users showing online when idle/offline
+- **Display Names Everywhere**: Consistent user identification
+  - Community page shows display names from profiles table
+  - Mentions show `@DisplayName` instead of `@username`
+  - Reply sender names resolved correctly in realtime messages
+- **ProfileHoverCard Improvements**:
+  - Added "Message" button for quick DM access
+  - Smart viewport-aware positioning (avoids edge overflow)
+  - Better hover behavior and touch support
+  - Fixed emoji picker duplication when expanding
+- **Message Edit in Unified Chat**: Edit functionality wired to messages tab
+  - Import `editMessage` action
+  - `handleEdit` callback passed to `VirtualizedMessageList`
+
+---
+
 ## [1.13.4] - 2025-12-29
 ### Matrix SDK Features - Reactions, Replies, Search
 - **Emoji Reactions**: Full emoji picker with optimistic updates

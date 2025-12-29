@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.4**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.5**.
 
 | Link | URL |
 |------|-----|
@@ -152,7 +152,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging |
 | **Admin** | Diagnostics, Content Management, Audit Export, Resource Updates, Settings System (5 globals, SEO dashboard) |
 | **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant |
-| **Infrastructure** | 126 DB tables, PWA, Doc Versioning, Prompt Library |
+| **Infrastructure** | 134 DB tables, PWA, Doc Versioning, Prompt Library |
 
 ### Non-Functional Requirements
 
@@ -1218,7 +1218,7 @@ const jsonLd = {
 | **AI Assistant** | Claude streaming, TTS, speech recognition, localStorage history |
 | **Messages** | Supabase real-time, typing indicators, E2EE, unread badges |
 
-### Matrix SDK Features (v1.13.4)
+### Matrix SDK Features (v1.13.5)
 
 | Feature | Component/Hook | Description |
 |---------|----------------|-------------|
@@ -1229,6 +1229,10 @@ const jsonLd = {
 | **Gap Detection** | `use-gap-detection.ts` | Fetch missed messages on reconnect |
 | **Batched Read Receipts** | `use-batched-read-receipts.ts` | Broadcast-first, batched DB writes |
 | **Retry Queue** | `use-retry-queue.ts` | Retry/remove failed sends |
+| **Presence System** | `presence-context.tsx`, `compute-status.ts` | Heartbeat-based (30s), `last_active_at` status computation |
+| **ConversationView** | `conversation-view.tsx` | Single source of truth (consolidated from 2 components) |
+
+**v1.13.5 Consolidation**: `messages-tab.tsx` now imports `ConversationView` from `conversation-view.tsx`, eliminating 826 lines of duplicate code. All conversation features unified: draft persistence, batched receipts, ProfileHoverCard, E2EE setup modal.
 
 ### Realtime System (`lib/realtime/realtime-context.tsx`)
 

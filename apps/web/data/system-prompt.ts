@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-29 for v1.13.4 (Matrix SDK Chat Features)
+ * Updated: 2025-12-29 for v1.13.5 (Messaging Consolidation & Presence)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.13.4",
+  version: "1.13.5",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -1132,6 +1132,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.13.4", "matrix sdk", "emoji reactions", "reply threading", "message search", "drafts", "gap detection", "read receipts", "retry queue", "messaging"],
+  },
+  {
+    id: "v1135-features",
+    title: "Version 1.13.5 Features",
+    section: "New in v1.13.5",
+    content: `Claude Insider v1.13.5 consolidates messaging architecture and improves presence system reliability. ConversationView Consolidation: Single source of truth in conversation-view.tsx, eliminating 826 lines of duplicate code from messages-tab.tsx. Now uses component composition - MessagesTab imports ConversationView. All features unified: draft persistence, batched read receipts, ProfileHoverCard, E2EE setup modal. E2EE Setup Flow: Clickable "Not encrypted" badge opens E2EESetupModal. onSetupClick callback added to ConversationE2EEBadge. Informative success/error feedback after restore operations with completion type tracking (generated/restored/generated-with-backup). Matrix SDK Presence Pattern: Heartbeat-based presence system (30s interval). Status computed from last_active_at timestamp everywhere. Fixes users showing online when they should be idle/offline. Display Names Everywhere: Consistent user identification across platform. Community page shows display names from profiles table. Mentions show @DisplayName instead of @username. Reply sender names resolved correctly in realtime messages. ProfileHoverCard Improvements: Added "Message" button for quick DM access. Smart viewport-aware positioning avoids edge overflow. Fixed emoji picker duplication when expanding.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.13.5", "conversationview", "consolidation", "presence", "heartbeat", "display names", "e2ee setup", "profilehovercard", "messaging"],
   },
 ];
 
