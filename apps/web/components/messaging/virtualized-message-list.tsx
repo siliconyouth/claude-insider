@@ -16,7 +16,7 @@
  * - Unfilling: removes messages far off-screen (>6000px) for memory efficiency
  */
 
-import { useRef, useEffect, useCallback, useState, forwardRef, useImperativeHandle, useMemo } from "react";
+import { useRef, useEffect, useLayoutEffect, useCallback, useState, forwardRef, useImperativeHandle, useMemo } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { cn } from "@/lib/design-system";
 import { MessageBubble, TypingIndicator, DateSeparator, type MentionedUser } from "./message-bubble";
@@ -256,6 +256,13 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   const virtualizer = useVirtualizer({
     count: totalCount,
     getScrollElement: () => parentRef.current,
+    // Stable item keys for proper tracking across re-renders (Matrix SDK pattern)
+    getItemKey: (index) => {
+      if (index >= items.length) return "typing-indicator";
+      const item = items[index];
+      if (item?.type === "date") return `date-${item.date?.toISOString()}`;
+      return item?.message?.id || `item-${index}`;
+    },
     // Estimate sizes closer to actual content (Matrix SDK pattern: tight estimates)
     // Date separators: 32px, Messages: 52px average (single line + padding)
     estimateSize: (index) => {
@@ -552,16 +559,19 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
   }, [hasMore, isLoading, onLoadMore, checkIfAtBottom, saveScrollState, clearShrinkPreventionIfNeeded, checkUnfillState]);
 
   // Scroll to bottom when new messages arrive (if already at bottom)
-  // Matrix SDK pattern: simple, direct scroll without complex timing
-  useEffect(() => {
+  // Matrix SDK pattern: useLayoutEffect for synchronous DOM access + rAF for after paint
+  useLayoutEffect(() => {
     const newMessagesAdded = messages.length > prevMessagesLengthRef.current;
     prevMessagesLengthRef.current = messages.length;
 
     if (newMessagesAdded && isAtBottom) {
-      // Direct scroll - Matrix SDK style
-      scrollToActualBottom();
+      // Schedule scroll after browser paint when elements are rendered and measured
+      // This is the Matrix SDK pattern: scroll after content is visible
+      requestAnimationFrame(() => {
+        scrollToActualBottom();
+      });
     }
-  }, [messages.length, isAtBottom, scrollToActualBottom]);
+  }, [messages, isAtBottom, scrollToActualBottom]);
 
   // Scroll to bottom when read receipts update (if already at bottom)
   // This ensures the "Seen" indicator is visible after sending a message
