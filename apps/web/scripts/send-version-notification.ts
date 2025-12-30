@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.13.7 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.14.0 notification to all opted-in users...\n");
 
-  const version = "1.13.7";
-  const title = "Claude Insider v1.13.7 - Optimistic UI & Resource Submissions OPEN";
+  const version = "1.14.0";
+  const title = "Claude Insider v1.14.0 - Dashboard Modernization with TanStack Query";
   const message =
-    "🎉 Resource Submissions OPEN: Community can now submit resources at /resources/submit with AI analysis • ⚡ Optimistic UI (MANDATORY): Messages appear instantly (~2ms) with background server sync • 🗑️ TanStack Virtual Removed: Replaced with simple flexbox + CSS overflow-anchor for scroll preservation • 🔓 Send Button Unblocked: Button re-enables immediately after optimistic update";
+    "🚀 All 32 dashboard pages migrated to TanStack Query v5 • ⌨️ Command Palette (Cmd+K) with 32+ navigation commands • 📁 Grouped sidebar navigation (6 collapsible groups) • 🔔 Real-time badge counts with 30-second polling • ⚡ Promise.all() parallelization fixes Discovery and Donations APIs • 🎨 Extended design tokens (ui-nav-*, ui-cmd-*)";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
