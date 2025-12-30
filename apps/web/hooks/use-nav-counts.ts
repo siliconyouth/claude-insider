@@ -30,6 +30,8 @@ export interface NavCounts {
   autoUpdates: number;
   /** Pending notifications to send */
   notifications: number;
+  /** Broken links pending review */
+  brokenLinks: number;
 }
 
 interface NavCountsResponse {
@@ -69,6 +71,7 @@ export function useNavCounts() {
       reports: 0,
       autoUpdates: 0,
       notifications: 0,
+      brokenLinks: 0,
     },
     isLoading,
     error,

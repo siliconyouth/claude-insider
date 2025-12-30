@@ -38,6 +38,7 @@ export async function GET() {
       reports,
       autoUpdates,
       notifications,
+      brokenLinks,
     ] = await Promise.all([
       // Beta applications pending
       pool.query<{ count: string }>(`
@@ -88,6 +89,13 @@ export async function GET() {
         WHERE is_read = false
         AND created_at > NOW() - INTERVAL '7 days'
       `),
+
+      // Broken links pending review
+      pool.query<{ count: string }>(`
+        SELECT COUNT(*) as count
+        FROM broken_link_queue
+        WHERE status = 'pending'
+      `),
     ]);
 
     return NextResponse.json({
@@ -99,6 +107,7 @@ export async function GET() {
         reports: parseInt(reports.rows[0]?.count || "0", 10),
         autoUpdates: parseInt(autoUpdates.rows[0]?.count || "0", 10),
         notifications: parseInt(notifications.rows[0]?.count || "0", 10),
+        brokenLinks: parseInt(brokenLinks.rows[0]?.count || "0", 10),
       },
       timestamp: new Date().toISOString(),
     });

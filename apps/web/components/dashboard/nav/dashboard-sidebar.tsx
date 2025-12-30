@@ -114,7 +114,8 @@ function SidebarContent() {
     (counts.feedback || 0) +
     (counts.suggestions || 0) +
     (counts.comments || 0) +
-    (counts.reports || 0);
+    (counts.reports || 0) +
+    (counts.brokenLinks || 0);
   const adminTotal = (counts.notifications || 0);
 
   return (
@@ -187,6 +188,11 @@ function SidebarContent() {
           label="Reports"
           badge={counts.reports}
           badgeUrgent
+        />
+        <NavItem
+          href="/dashboard/broken-links"
+          label="Broken Links"
+          badge={counts.brokenLinks}
         />
       </NavGroup>
 
