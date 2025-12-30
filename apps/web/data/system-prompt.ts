@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-29 for v1.13.7 (Optimistic UI MANDATORY, Resource Submissions OPEN)
+ * Updated: 2025-12-30 for v1.14.0 (Dashboard Modernization with TanStack Query, Command Palette)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.13.7",
+  version: "1.14.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -1159,6 +1159,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.13.7", "resource submissions open", "optimistic ui", "mandatory", "matrix sdk pattern", "tanstack virtual removed", "flexbox", "overflow-anchor", "instant messaging"],
+  },
+  {
+    id: "v1140-features",
+    title: "Version 1.14.0 Features",
+    section: "New in v1.14.0",
+    content: `Claude Insider v1.14.0 modernizes the entire admin dashboard with TanStack Query and introduces major UX improvements. Dashboard Modernization (FR-58): All 32 dashboard pages migrated from useState+fetch to TanStack Query v5 for server state management. Query Key Factory pattern (queryKeys.*) for consistent cache keys. Global error.tsx and loading.tsx skeletons for all dashboard routes. Promise.all() parallelization fixes Discovery API (5→parallel) and Donations API (9→parallel) eliminating infinite loading issues. Command Palette: New Cmd+K keyboard shortcut opens a searchable command palette with 32+ navigation commands, recent history, and role-based filtering. Uses Fuse.js for fuzzy search. Grouped Sidebar Navigation: Dashboard sidebar reorganized into 6 collapsible groups (Overview, Content, Moderation, Analytics, Security, Admin) with localStorage persistence. Real-Time Badge Counts: Pending item counts (beta applications, feedback, suggestions, comments, reports) update in real-time with 30-second polling via useNavCounts hook. Optimistic Mutations: All dashboard forms use TanStack Query mutations with instant UI feedback and automatic cache invalidation. Extended Design Tokens: New ui-nav-* and ui-cmd-* CSS tokens for consistent dashboard styling. STALE_TIMES constants define cache durations (static: 5min, dashboard: 1min, realtime: 30s). MANDATORY Rules: New "Dashboard Data Fetching Patterns" section in CLAUDE.md and PATTERNS.md with required patterns for Query Key Factory, page structure, API parallelization, and optimistic mutations.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.14.0", "dashboard modernization", "tanstack query", "command palette", "grouped navigation", "real-time badges", "optimistic mutations", "fr-58", "promise.all", "query key factory"],
   },
 ];
 

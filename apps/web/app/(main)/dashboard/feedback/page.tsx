@@ -4,13 +4,16 @@
  * Feedback Management Page
  *
  * Moderators and admins can view and manage feedback from beta testers.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Background refetch keeps data fresh
+ * - Smooth pagination (keeps previous data while loading)
  */
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/design-system";
 import {
-  usePaginatedList,
-  useStatusAction,
   FEEDBACK_STATUS,
   FEEDBACK_TYPE,
   SEVERITY,
@@ -24,61 +27,60 @@ import {
   ReviewModal,
   DetailRow,
 } from "@/components/dashboard/shared";
+import {
+  useFeedbackList,
+  useUpdateFeedbackStatus,
+} from "@/lib/query/hooks";
 import type { AdminFeedback } from "@/types/admin";
 
 type FilterStatus = FeedbackStatus | "all";
 type FilterType = FeedbackType | "all";
 
 export default function FeedbackPage() {
+  // Filter state (local)
   const [statusFilter, setStatusFilter] = useState<FilterStatus>("open");
   const [typeFilter, setTypeFilter] = useState<FilterType>("all");
+  const [page, setPage] = useState(1);
+
+  // Modal state (local)
   const [selectedItem, setSelectedItem] = useState<AdminFeedback | null>(null);
 
-  // Fetch feedback with pagination
-  const {
-    items: feedback,
-    isLoading,
+  // TanStack Query hooks
+  const feedbackQuery = useFeedbackList({
     page,
-    totalPages,
-    setPage,
-    refetch,
-  } = usePaginatedList<AdminFeedback>("feedback", {
     limit: 20,
-    initialFilters: { status: statusFilter, feedbackType: typeFilter },
+    status: statusFilter,
+    feedbackType: typeFilter,
   });
 
-  // Status update action
-  const { updateStatus, isLoading: isUpdating } = useStatusAction("feedback", {
-    successMessage: "Status updated successfully",
-    onSuccess: () => {
-      if (selectedItem) {
-        refetch();
-      }
-    },
-  });
+  // Status update mutation
+  const updateStatusMutation = useUpdateFeedbackStatus();
 
-  const handleStatusUpdate = useCallback(
-    async (newStatus: string) => {
-      if (!selectedItem) return;
-      const result = await updateStatus(selectedItem.id, newStatus);
-      if (result.success) {
-        setSelectedItem({ ...selectedItem, status: newStatus as FeedbackStatus });
-      }
-    },
-    [selectedItem, updateStatus]
-  );
+  // Derived data
+  const feedback = feedbackQuery.data?.items || [];
+  const totalPages = feedbackQuery.data?.totalPages || 1;
 
-  const handleFilterChange = useCallback(
-    (type: "status" | "type", value: string) => {
-      if (type === "status") {
-        setStatusFilter(value as FilterStatus);
-      } else {
-        setTypeFilter(value as FilterType);
+  const handleStatusUpdate = (newStatus: string) => {
+    if (!selectedItem) return;
+    updateStatusMutation.mutate(
+      { feedbackId: selectedItem.id, status: newStatus },
+      {
+        onSuccess: () => {
+          // Update local modal state optimistically
+          setSelectedItem({ ...selectedItem, status: newStatus as FeedbackStatus });
+        },
       }
-      setPage(1);
-    },
-    [setPage]
-  );
+    );
+  };
+
+  const handleFilterChange = (type: "status" | "type", value: string) => {
+    if (type === "status") {
+      setStatusFilter(value as FilterStatus);
+    } else {
+      setTypeFilter(value as FilterType);
+    }
+    setPage(1);
+  };
 
   return (
     <div className="space-y-6">
@@ -109,7 +111,7 @@ export default function FeedbackPage() {
 
       {/* Feedback List */}
       <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 overflow-hidden">
-        {isLoading ? (
+        {feedbackQuery.isPending ? (
           <div className="p-8 space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="h-20 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse" />
@@ -161,12 +163,12 @@ export default function FeedbackPage() {
           onClose={() => setSelectedItem(null)}
           title={selectedItem.title}
           size="lg"
-          isLoading={isUpdating}
+          isLoading={updateStatusMutation.isPending}
         >
           <FeedbackDetail
             item={selectedItem}
             onStatusUpdate={handleStatusUpdate}
-            isUpdating={isUpdating}
+            isUpdating={updateStatusMutation.isPending}
           />
         </ReviewModal>
       )}

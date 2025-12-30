@@ -5,9 +5,14 @@
  *
  * Manage all prompts including system and user prompts.
  * Admins can feature, edit, and delete prompts.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Smooth pagination (keeps previous data visible)
+ * - Optimistic UI for mutations
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import {
@@ -19,131 +24,63 @@ import {
   StatGrid,
 } from "@/components/dashboard/shared";
 import { MODERATION_STATUS } from "@/lib/dashboard/status-config";
-
-interface Prompt {
-  id: string;
-  slug: string;
-  title: string;
-  description: string | null;
-  content: string;
-  category: {
-    id: string;
-    slug: string;
-    name: string;
-    icon: string;
-  } | null;
-  tags: string[];
-  author: {
-    id: string;
-    name: string;
-    email: string;
-  } | null;
-  visibility: string;
-  status: string;
-  isFeatured: boolean;
-  isSystem: boolean;
-  useCount: number;
-  saveCount: number;
-  avgRating: number;
-  ratingCount: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Category {
-  id: string;
-  slug: string;
-  name: string;
-  icon: string;
-}
-
-interface Stats {
-  activeCount: number;
-  systemCount: number;
-  featuredCount: number;
-  publicCount: number;
-  privateCount: number;
-  totalUses: number;
-}
+import {
+  usePromptsList,
+  useTogglePromptFeatured,
+  useDeletePrompt,
+  type PromptItem,
+} from "@/lib/query/hooks";
 
 export default function PromptsAdminPage() {
-  const [prompts, setPrompts] = useState<Prompt[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Filter state (local)
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
-  const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
 
-  const fetchPrompts = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams({
-        page: page.toString(),
-        limit: "20",
-      });
-      if (search) params.set("search", search);
-      if (categoryFilter) params.set("category", categoryFilter);
-      if (typeFilter) params.set("type", typeFilter);
+  // Selected item for detail view
+  const [selectedPrompt, setSelectedPrompt] = useState<PromptItem | null>(null);
 
-      const response = await fetch(`/api/dashboard/prompts?${params}`);
-      if (response.ok) {
-        const data = await response.json();
-        setPrompts(data.prompts);
-        setCategories(data.categories);
-        setStats(data.stats);
-        setTotalPages(data.pagination.totalPages);
-      }
-    } catch (error) {
-      console.error("Failed to fetch prompts:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, search, categoryFilter, typeFilter]);
+  // TanStack Query hook
+  const promptsQuery = usePromptsList({
+    page,
+    search,
+    category: categoryFilter,
+    type: typeFilter as "system" | "user" | "",
+  });
 
+  // Mutations
+  const toggleFeaturedMutation = useTogglePromptFeatured();
+  const deleteMutation = useDeletePrompt();
+
+  // Derived data
+  const prompts = promptsQuery.data?.prompts || [];
+  const categories = promptsQuery.data?.categories || [];
+  const stats = promptsQuery.data?.stats;
+  const totalPages = promptsQuery.data?.pagination?.totalPages || 1;
+
+  // Combined loading state for mutations
+  const isUpdating = toggleFeaturedMutation.isPending || deleteMutation.isPending;
+
+  // Reset page when filters change
   useEffect(() => {
-    fetchPrompts();
-  }, [fetchPrompts]);
+    setPage(1);
+  }, [search, categoryFilter, typeFilter]);
 
-  const handleToggleFeatured = async (prompt: Prompt) => {
-    setIsUpdating(true);
-    try {
-      const response = await fetch(`/api/dashboard/prompts/${prompt.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isFeatured: !prompt.isFeatured }),
-      });
-      if (response.ok) {
-        fetchPrompts();
-      }
-    } catch (error) {
-      console.error("Failed to toggle featured:", error);
-    } finally {
-      setIsUpdating(false);
-    }
+  const handleToggleFeatured = (prompt: PromptItem) => {
+    toggleFeaturedMutation.mutate({
+      id: prompt.id,
+      isFeatured: !prompt.isFeatured,
+    });
   };
 
-  const handleDelete = async (prompt: Prompt) => {
+  const handleDelete = (prompt: PromptItem) => {
     if (!confirm(`Are you sure you want to delete "${prompt.title}"?`)) return;
-
-    setIsUpdating(true);
-    try {
-      const response = await fetch(`/api/dashboard/prompts/${prompt.id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        fetchPrompts();
+    deleteMutation.mutate(prompt.id, {
+      onSuccess: () => {
         setSelectedPrompt(null);
-      }
-    } catch (error) {
-      console.error("Failed to delete prompt:", error);
-    } finally {
-      setIsUpdating(false);
-    }
+      },
+    });
   };
 
   return (
@@ -259,13 +196,17 @@ export default function PromptsAdminPage() {
 
       {/* Table */}
       <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
-        {isLoading ? (
+        {promptsQuery.isPending ? (
           <div className="p-8">
             <div className="space-y-4">
               {[1, 2, 3, 4, 5].map((i) => (
                 <div key={i} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
               ))}
             </div>
+          </div>
+        ) : promptsQuery.isError ? (
+          <div className="p-8 text-center text-red-400">
+            {promptsQuery.error?.message || "Failed to load prompts"}
           </div>
         ) : prompts.length === 0 ? (
           <EmptyState

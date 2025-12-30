@@ -2,14 +2,23 @@
  * Honeypot Configuration Page
  *
  * Create, edit, and manage honeypot configurations.
+ * Uses TanStack Query for data fetching and mutations.
  */
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { format } from "date-fns";
+import {
+  useHoneypotsList,
+  useCreateHoneypot,
+  useUpdateHoneypot,
+  useToggleHoneypot,
+  useDeleteHoneypot,
+  type CreateHoneypotInput,
+} from "@/lib/query/hooks";
 import type { HoneypotConfig, HoneypotResponseType } from "@/lib/honeypot";
 import {
   BugAntIcon,
@@ -22,76 +31,33 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function HoneypotsPage() {
-  const [honeypots, setHoneypots] = useState<HoneypotConfig[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [editingHoneypot, setEditingHoneypot] = useState<HoneypotConfig | null>(
     null
   );
 
-  const fetchHoneypots = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const response = await fetch("/api/dashboard/security/honeypots");
-      const data = await response.json();
+  const honeypotsQuery = useHoneypotsList();
+  const deleteMutation = useDeleteHoneypot();
+  const toggleMutation = useToggleHoneypot();
 
-      if (!data.success) {
-        throw new Error(data.error || "Failed to fetch honeypots");
-      }
+  const honeypots = honeypotsQuery.data?.honeypots || [];
+  const isLoading = honeypotsQuery.isPending;
+  const error = honeypotsQuery.error;
 
-      setHoneypots(data.honeypots);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch honeypots");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchHoneypots();
-  }, []);
+  const isMutating = deleteMutation.isPending || toggleMutation.isPending;
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this honeypot?")) {
       return;
     }
-
-    try {
-      const response = await fetch(
-        `/api/dashboard/security/honeypots?id=${id}`,
-        { method: "DELETE" }
-      );
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || "Failed to delete honeypot");
-      }
-
-      fetchHoneypots();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete honeypot");
-    }
+    await deleteMutation.mutateAsync(id);
   };
 
   const handleToggleEnabled = async (honeypot: HoneypotConfig) => {
-    try {
-      const response = await fetch("/api/dashboard/security/honeypots", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: honeypot.id, enabled: !honeypot.enabled }),
-      });
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || "Failed to update honeypot");
-      }
-
-      fetchHoneypots();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to update honeypot");
-    }
+    await toggleMutation.mutateAsync({
+      id: honeypot.id,
+      enabled: !honeypot.enabled,
+    });
   };
 
   const responseTypeColors: Record<HoneypotResponseType, string> = {
@@ -125,8 +91,8 @@ export default function HoneypotsPage() {
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={fetchHoneypots}
-            disabled={isLoading}
+            onClick={() => honeypotsQuery.refetch()}
+            disabled={honeypotsQuery.isFetching}
             className={cn(
               "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium",
               "border border-gray-200 dark:border-[#262626]",
@@ -134,7 +100,7 @@ export default function HoneypotsPage() {
             )}
           >
             <ArrowPathIcon
-              className={cn("h-4 w-4", isLoading && "animate-spin")}
+              className={cn("h-4 w-4", honeypotsQuery.isFetching && "animate-spin")}
             />
             Refresh
           </button>
@@ -158,7 +124,7 @@ export default function HoneypotsPage() {
       {/* Error Message */}
       {error && (
         <div className="rounded-lg bg-red-500/10 p-4 text-red-500">
-          <p className="text-sm">{error}</p>
+          <p className="text-sm">{error.message}</p>
         </div>
       )}
 
@@ -233,8 +199,9 @@ export default function HoneypotsPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleToggleEnabled(honeypot)}
+                    disabled={isMutating}
                     className={cn(
-                      "rounded-lg px-3 py-1 text-sm",
+                      "rounded-lg px-3 py-1 text-sm disabled:opacity-50",
                       honeypot.enabled
                         ? "bg-emerald-500/10 text-emerald-500"
                         : "bg-gray-500/10 text-gray-500"
@@ -254,7 +221,8 @@ export default function HoneypotsPage() {
                   </button>
                   <button
                     onClick={() => handleDelete(honeypot.id)}
-                    className="rounded-lg p-2 text-red-500 hover:bg-red-500/10"
+                    disabled={isMutating}
+                    className="rounded-lg p-2 text-red-500 hover:bg-red-500/10 disabled:opacity-50"
                     title="Delete"
                   >
                     <TrashIcon className="h-5 w-5" />
@@ -277,7 +245,6 @@ export default function HoneypotsPage() {
           onSave={() => {
             setShowForm(false);
             setEditingHoneypot(null);
-            fetchHoneypots();
           }}
         />
       )}
@@ -295,16 +262,19 @@ function HoneypotForm({
   onClose: () => void;
   onSave: () => void;
 }) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const createMutation = useCreateHoneypot();
+  const updateMutation = useUpdateHoneypot();
 
-  const [formData, setFormData] = useState({
+  const isSubmitting = createMutation.isPending || updateMutation.isPending;
+  const mutationError = createMutation.error || updateMutation.error;
+
+  const [formData, setFormData] = useState<CreateHoneypotInput>({
     name: honeypot?.name || "",
     description: honeypot?.description || "",
     pathPattern: honeypot?.pathPattern || "/api/*",
     method: honeypot?.method || "ALL",
     priority: honeypot?.priority || 100,
-    responseType: honeypot?.responseType || ("fake_data" as HoneypotResponseType),
+    responseType: honeypot?.responseType || "fake_data",
     responseDelayMs: honeypot?.responseDelayMs || 0,
     redirectUrl: honeypot?.redirectUrl || "",
     statusCode: honeypot?.statusCode || 200,
@@ -316,31 +286,14 @@ function HoneypotForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setError(null);
 
-    try {
-      const url = "/api/dashboard/security/honeypots";
-      const method = honeypot ? "PATCH" : "POST";
-      const body = honeypot ? { id: honeypot.id, ...formData } : formData;
-
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      const data = await response.json();
-      if (!data.success) {
-        throw new Error(data.error || "Failed to save honeypot");
-      }
-
-      onSave();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save honeypot");
-    } finally {
-      setIsSubmitting(false);
+    if (honeypot) {
+      await updateMutation.mutateAsync({ id: honeypot.id, ...formData });
+    } else {
+      await createMutation.mutateAsync(formData);
     }
+
+    onSave();
   };
 
   return (
@@ -358,9 +311,9 @@ function HoneypotForm({
           </button>
         </div>
 
-        {error && (
+        {mutationError && (
           <div className="mt-4 rounded-lg bg-red-500/10 p-3 text-sm text-red-500">
-            {error}
+            {mutationError.message}
           </div>
         )}
 

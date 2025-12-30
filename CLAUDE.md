@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.7**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.14.0**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.7**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 57 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 58 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -44,14 +44,15 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.13.7**.
 12. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
 13. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
 14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 135 tables, RLS, migrations
-15. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
-16. [Internationalization](#internationalization-i18n) - 18 languages
-17. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-18. [Content Structure](#content-structure) - Documentation, resources, legal pages
-19. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-20. [Success Metrics](#success-metrics)
-21. [Updating Guidelines](#updating-guidelines)
-22. [License](#license)
+15. [Dashboard Data Fetching (MANDATORY)](#dashboard-data-fetching-mandatory) - TanStack Query, query keys, parallelization
+16. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
+17. [Internationalization](#internationalization-i18n) - 18 languages
+18. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+19. [Content Structure](#content-structure) - Documentation, resources, legal pages
+20. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+21. [Success Metrics](#success-metrics)
+22. [Updating Guidelines](#updating-guidelines)
+23. [License](#license)
 
 ---
 
@@ -85,6 +86,7 @@ All technologies are **free and/or open source** (except hosting services with f
 | @paypal/react-paypal-js | 8.9.2 | Apache-2.0 | PayPal integration |
 | react-image-crop | 11.x | ISC | Client-side image cropping |
 | recharts | 3.6.0 | MIT | Animated charts (Area, Bar, Pie, Line) |
+| @tanstack/react-query | 5.x | MIT | Server state management, caching, mutations |
 | Playwright | 1.53.1 | Apache-2.0 | Icon generation (SVG rendering) |
 | sharp | 0.34.3 | Apache-2.0 | Image resizing for icons |
 | next-seo | 7.0.1 | MIT | JSON-LD structured data components |
@@ -141,7 +143,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**57 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**58 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -1080,6 +1082,131 @@ The "Ci" text height is exactly **58.6% of the container** (300/512 in source SV
 3. **Defensive migrations** - Use `IF EXISTS`, conditional DDL
 
 **See [docs/DATABASE.md](docs/DATABASE.md) for:** Table catalog, API route template, SQL examples, common queries
+
+---
+
+## Dashboard Data Fetching (MANDATORY)
+
+**All dashboard pages MUST use TanStack Query** for server state management. This ensures consistent caching, background updates, and optimistic mutations.
+
+### Query Hook Pattern (MANDATORY)
+
+```typescript
+// lib/query/hooks/use-example-query.ts
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "../keys";
+import { STALE_TIMES } from "..";
+
+// Query hook for fetching data
+export function useExampleList(filters: ExampleFilters) {
+  return useQuery({
+    queryKey: queryKeys.example.list(filters),
+    queryFn: async () => {
+      const params = new URLSearchParams(filters as Record<string, string>);
+      const response = await fetch(`/api/admin/example?${params}`);
+      if (!response.ok) throw new Error("Failed to fetch");
+      return response.json();
+    },
+    staleTime: STALE_TIMES.dashboard, // 30 seconds
+  });
+}
+
+// Mutation hook for updates
+export function useUpdateExample() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: UpdateInput) => {
+      const response = await fetch("/api/admin/example", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("Failed to update");
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.example.all });
+    },
+  });
+}
+```
+
+### Query Key Factory (MANDATORY)
+
+```typescript
+// lib/query/keys.ts
+export const queryKeys = {
+  // Simple keys
+  navCounts: ["dashboard", "nav-counts"] as const,
+
+  // Nested keys with filters
+  users: {
+    all: ["dashboard", "users"] as const,
+    list: (filters: UserFilters) => ["dashboard", "users", "list", filters] as const,
+    detail: (id: string) => ["dashboard", "users", id] as const,
+  },
+};
+```
+
+### Dashboard Page Pattern (MANDATORY)
+
+```typescript
+// app/(main)/dashboard/example/page.tsx
+"use client";
+
+import { useExampleList, useUpdateExample } from "@/lib/query/hooks";
+
+export default function ExamplePage() {
+  const [filters, setFilters] = useState<Filters>({});
+
+  // ✅ CORRECT: Use TanStack Query hooks
+  const { data, isPending, error, refetch } = useExampleList(filters);
+  const updateMutation = useUpdateExample();
+
+  // ❌ WRONG: useState + useEffect for server data
+  // const [data, setData] = useState(null);
+  // useEffect(() => { fetch(...).then(setData) }, []);
+
+  if (isPending) return <LoadingSkeleton />;
+  if (error) return <ErrorState onRetry={refetch} />;
+
+  return <Content data={data} onUpdate={updateMutation.mutate} />;
+}
+```
+
+### API Route Parallelization (MANDATORY)
+
+```typescript
+// ✅ CORRECT: Parallel queries
+const [stats, users, activity] = await Promise.all([
+  pool.query("SELECT COUNT(*) FROM items"),
+  pool.query("SELECT * FROM users LIMIT 10"),
+  pool.query("SELECT * FROM activity ORDER BY created_at DESC LIMIT 5"),
+]);
+
+// ❌ WRONG: Sequential queries (causes slow loading)
+const stats = await pool.query("SELECT COUNT(*) FROM items");
+const users = await pool.query("SELECT * FROM users LIMIT 10");
+const activity = await pool.query("SELECT * FROM activity...");
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `lib/query/index.ts` | Query client config, stale times |
+| `lib/query/keys.ts` | Query key factory |
+| `lib/query/hooks/*.ts` | 14 hook files for all dashboard sections |
+| `components/providers/query-provider.tsx` | QueryClientProvider setup |
+| `app/(main)/dashboard/components/dashboard-providers.tsx` | Dashboard provider tree |
+
+### Stale Times
+
+| Constant | Value | Use For |
+|----------|-------|---------|
+| `STALE_TIMES.realtime` | 5 seconds | Badge counts, presence |
+| `STALE_TIMES.dashboard` | 30 seconds | Dashboard lists, stats |
+| `STALE_TIMES.static` | 5 minutes | Rarely changing data |
 
 ---
 

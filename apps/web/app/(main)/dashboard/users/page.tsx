@@ -5,180 +5,107 @@
  *
  * Admin-only page for viewing and managing users.
  * Supports editing, banning, and deleting users.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching and background refetch
+ * - Optimistic updates on mutations
+ * - Conditional fetching (detail/activity only when modal opens)
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
 import { ROLE_INFO, getAssignableRoles, type UserRole } from "@/lib/roles";
 import { useAuth } from "@/components/providers/auth-provider";
-import { banUser, unbanUser } from "@/app/actions/ban-appeals";
-import { getAdminUserActivity, getActivityStats, type ActivityItem, type ActivityStats as ActivityStatsType } from "@/app/actions/user-activity";
 import { ActivityTimeline, ActivityStats } from "@/components/activity";
 import { PageHeader, EmptyState } from "@/components/dashboard/shared";
-import type { AdminUserListItem, AdminUserDetail, PaginatedResponse } from "@/types/admin";
+import {
+  useUsersList,
+  useUserDetail,
+  useUserActivity,
+  useUpdateUserRole,
+  useBanUser,
+  useUnbanUser,
+} from "@/lib/query/hooks";
+import type { AdminUserListItem, AdminUserDetail } from "@/types/admin";
+import type { ActivityItem, ActivityStats as ActivityStatsType } from "@/app/actions/user-activity";
 
 type FilterRole = "all" | UserRole;
 type ModalView = "view" | "ban";
 
 export default function UsersPage() {
-  const toast = useToast();
   const { user: currentUser } = useAuth();
-  const [users, setUsers] = useState<AdminUserListItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Filter state (local)
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState<FilterRole>("all");
   const [betaFilter, setBetaFilter] = useState<"all" | "yes" | "no">("all");
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [selectedUser, setSelectedUser] = useState<AdminUserDetail | null>(null);
-  const [isLoadingUser, setIsLoadingUser] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+
+  // Modal state (local)
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [modalView, setModalView] = useState<ModalView>("view");
   const [banReason, setBanReason] = useState("");
-
-  // Activity state
-  const [userActivity, setUserActivity] = useState<ActivityItem[]>([]);
-  const [activityStats, setActivityStats] = useState<ActivityStatsType | null>(null);
-  const [isLoadingActivity, setIsLoadingActivity] = useState(false);
   const [showActivity, setShowActivity] = useState(false);
 
-  const fetchUsers = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams({ page: page.toString(), limit: "20" });
-      if (search) params.set("search", search);
-      if (roleFilter !== "all") params.set("role", roleFilter);
-      if (betaFilter !== "all") params.set("isBetaTester", betaFilter === "yes" ? "true" : "false");
+  // Debounced search
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
-      const response = await fetch(`/api/dashboard/users?${params}`);
-      if (response.ok) {
-        const data: PaginatedResponse<AdminUserListItem> = await response.json();
-        setUsers(data.items);
-        setTotalPages(data.totalPages);
-        setTotal(data.total);
-      } else if (response.status === 401) {
-        toast.error("Please sign in to view users");
-      } else if (response.status === 403) {
-        toast.error("You don't have permission to view users");
-      } else {
-        toast.error("Failed to load users");
-      }
-    } catch {
-      toast.error("Failed to load users");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [search, roleFilter, betaFilter, page, toast]);
+  // Debounce search input
+  useMemo(() => {
+    const timer = setTimeout(() => setDebouncedSearch(search), 300);
+    return () => clearTimeout(timer);
+  }, [search]);
 
-  useEffect(() => {
-    const debounce = setTimeout(fetchUsers, search ? 300 : 0);
-    return () => clearTimeout(debounce);
-  }, [fetchUsers, search]);
+  // TanStack Query hooks
+  const usersQuery = useUsersList({
+    page,
+    limit: 20,
+    search: debouncedSearch || undefined,
+    role: roleFilter !== "all" ? roleFilter : undefined,
+    isBetaTester: betaFilter === "all" ? undefined : betaFilter === "yes",
+  });
 
-  const loadUserDetail = async (userId: string) => {
-    setIsLoadingUser(true);
-    try {
-      const response = await fetch(`/api/dashboard/users/${userId}`);
-      if (response.ok) {
-        const data: AdminUserDetail = await response.json();
-        setSelectedUser(data);
-      } else {
-        toast.error("Failed to load user details");
-      }
-    } catch {
-      toast.error("Failed to load user details");
-    } finally {
-      setIsLoadingUser(false);
-    }
+  const userDetailQuery = useUserDetail(selectedUserId);
+  const userActivityQuery = useUserActivity(selectedUserId, showActivity);
+
+  // Mutations
+  const updateRoleMutation = useUpdateUserRole();
+  const banUserMutation = useBanUser();
+  const unbanUserMutation = useUnbanUser();
+
+  // Derived data
+  const users = usersQuery.data?.items || [];
+  const totalPages = usersQuery.data?.totalPages || 1;
+  const total = usersQuery.data?.total || 0;
+  const selectedUser = userDetailQuery.data || null;
+  const isUpdating = updateRoleMutation.isPending || banUserMutation.isPending || unbanUserMutation.isPending;
+
+  const handleRoleChange = (newRole: UserRole) => {
+    if (!selectedUserId) return;
+    updateRoleMutation.mutate({ userId: selectedUserId, role: newRole });
   };
 
-  const loadUserActivity = async (userId: string) => {
-    setIsLoadingActivity(true);
-    try {
-      const [activityResult, statsResult] = await Promise.all([
-        getAdminUserActivity(userId, 50),
-        getActivityStats(userId),
-      ]);
-      if (activityResult.success && activityResult.activities) setUserActivity(activityResult.activities);
-      if (statsResult.success && statsResult.stats) setActivityStats(statsResult.stats);
-    } catch {
-      toast.error("Failed to load user activity");
-    } finally {
-      setIsLoadingActivity(false);
-    }
+  const handleBan = () => {
+    if (!selectedUserId || !banReason.trim()) return;
+    banUserMutation.mutate(
+      { userId: selectedUserId, reason: banReason.trim() },
+      {
+        onSuccess: () => {
+          setBanReason("");
+          setModalView("view");
+        },
+      }
+    );
   };
 
-  const handleRoleChange = async (newRole: UserRole) => {
-    if (!selectedUser) return;
-    setIsUpdating(true);
-    try {
-      const response = await fetch(`/api/dashboard/users/${selectedUser.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role: newRole }),
-      });
-      if (response.ok) {
-        toast.success(`Role updated to ${newRole}`);
-        setSelectedUser({ ...selectedUser, role: newRole });
-        fetchUsers();
-      } else {
-        const data = await response.json();
-        toast.error(data.error || "Failed to update role");
-      }
-    } catch {
-      toast.error("Failed to update role");
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
-  const handleBan = async () => {
-    if (!selectedUser || !banReason.trim()) return;
-    setIsUpdating(true);
-    try {
-      const result = await banUser(selectedUser.id, banReason.trim());
-      if (result.success) {
-        toast.success("User banned successfully");
-        setSelectedUser({ ...selectedUser, banned: true, banReason: banReason.trim() });
-        setBanReason("");
-        setModalView("view");
-        fetchUsers();
-      } else {
-        toast.error(result.error || "Failed to ban user");
-      }
-    } catch {
-      toast.error("Failed to ban user");
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
-  const handleUnban = async () => {
-    if (!selectedUser) return;
-    setIsUpdating(true);
-    try {
-      const result = await unbanUser(selectedUser.id);
-      if (result.success) {
-        toast.success("User unbanned successfully");
-        setSelectedUser({ ...selectedUser, banned: false, banReason: undefined });
-        fetchUsers();
-      } else {
-        toast.error(result.error || "Failed to unban user");
-      }
-    } catch {
-      toast.error("Failed to unban user");
-    } finally {
-      setIsUpdating(false);
-    }
+  const handleUnban = () => {
+    if (!selectedUserId) return;
+    unbanUserMutation.mutate(selectedUserId);
   };
 
   const closeModal = () => {
-    setSelectedUser(null);
+    setSelectedUserId(null);
     setShowActivity(false);
-    setUserActivity([]);
-    setActivityStats(null);
     setModalView("view");
     setBanReason("");
   };
@@ -203,9 +130,9 @@ export default function UsersPage() {
       {/* Users Table */}
       <UsersTable
         users={users}
-        isLoading={isLoading}
-        search={search}
-        onSelectUser={loadUserDetail}
+        isLoading={usersQuery.isPending}
+        search={debouncedSearch}
+        onSelectUser={setSelectedUserId}
       />
 
       {/* Pagination */}
@@ -214,28 +141,25 @@ export default function UsersPage() {
       )}
 
       {/* User Detail Modal */}
-      {(selectedUser || isLoadingUser) && (
+      {(selectedUserId || userDetailQuery.isPending) && (
         <UserDetailModal
           user={selectedUser}
-          isLoading={isLoadingUser}
+          isLoading={userDetailQuery.isPending}
           isUpdating={isUpdating}
           currentUserRole={currentUser?.role as UserRole}
           modalView={modalView}
           banReason={banReason}
           showActivity={showActivity}
-          isLoadingActivity={isLoadingActivity}
-          userActivity={userActivity}
-          activityStats={activityStats}
+          isLoadingActivity={userActivityQuery.isPending}
+          userActivity={userActivityQuery.data?.activities || []}
+          activityStats={userActivityQuery.data?.stats || null}
           onClose={closeModal}
           onRoleChange={handleRoleChange}
           onBanReasonChange={setBanReason}
           onBan={handleBan}
           onUnban={handleUnban}
           onSetModalView={setModalView}
-          onToggleActivity={() => {
-            if (!showActivity && selectedUser) loadUserActivity(selectedUser.id);
-            setShowActivity(!showActivity);
-          }}
+          onToggleActivity={() => setShowActivity(!showActivity)}
         />
       )}
     </div>

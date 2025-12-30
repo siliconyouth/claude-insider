@@ -4,34 +4,23 @@
  * Admin Suggestions Review Page
  *
  * Moderators and admins can review, approve, or reject edit suggestions.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Optimistic UI updates on mutations
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
-import { useDashboardAction, MODERATION_STATUS } from "@/lib/dashboard";
+import { MODERATION_STATUS } from "@/lib/dashboard";
 import { PageHeader, StatusBadge, EmptyState } from "@/components/dashboard/shared";
-
-type SuggestionStatus = "pending" | "approved" | "rejected" | "merged";
-
-interface SuggestionWithUser {
-  id: string;
-  user_id: string;
-  user_name: string | null;
-  user_email: string | null;
-  user_username: string | null;
-  resource_type: "resource" | "doc";
-  resource_id: string;
-  suggestion_type: "content" | "metadata" | "typo" | "other";
-  title: string;
-  description: string;
-  suggested_changes: string | null;
-  status: SuggestionStatus;
-  reviewer_notes: string | null;
-  created_at: string;
-  updated_at: string;
-}
+import {
+  useSuggestionsList,
+  useReviewSuggestion,
+  type SuggestionStatus,
+  type SuggestionWithUser,
+} from "@/lib/query/hooks";
 
 // Extended status config for suggestions (includes "merged")
 const SUGGESTION_STATUS = {
@@ -52,64 +41,35 @@ const TYPE_LABELS: Record<string, string> = {
 };
 
 export default function AdminSuggestionsPage() {
-  const [suggestions, setSuggestions] = useState<SuggestionWithUser[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [filter, setFilter] = useState<SuggestionStatus | "all">("pending");
+  // Filter state (local)
+  const [filter, setFilter] = useState<SuggestionStatus>("pending");
+
+  // Modal state (local)
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [reviewNotes, setReviewNotes] = useState("");
-  const toast = useToast();
 
-  // Action hook for reviews
-  const { execute, isLoading: isSubmitting } = useDashboardAction({
-    onSuccess: () => {
-      setSelectedId(null);
-      setReviewNotes("");
-    },
+  // TanStack Query hooks
+  const suggestionsQuery = useSuggestionsList({
+    status: filter,
   });
 
-  // Fetch suggestions
-  const fetchSuggestions = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (filter !== "all") {
-        params.set("status", filter);
-      }
-      const res = await fetch(`/api/dashboard/suggestions?${params}`);
-      if (!res.ok) throw new Error("Failed to fetch");
-      const data = await res.json();
-      setSuggestions(data.suggestions || []);
-    } catch {
-      toast.error("Failed to load suggestions");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [filter, toast]);
+  const reviewMutation = useReviewSuggestion();
 
-  useEffect(() => {
-    fetchSuggestions();
-  }, [fetchSuggestions]);
-
-  const handleReview = useCallback(
-    async (suggestionId: string, status: "approved" | "rejected" | "merged") => {
-      const result = await execute(`suggestions/${suggestionId}`, "PATCH", {
-        status,
-        reviewerNotes: reviewNotes,
-      });
-
-      if (result.success) {
-        toast.success(`Suggestion ${status}`);
-        setSuggestions((prev) =>
-          prev.map((s) =>
-            s.id === suggestionId ? { ...s, status, reviewer_notes: reviewNotes } : s
-          )
-        );
-      }
-    },
-    [execute, reviewNotes, toast]
-  );
-
+  // Derived data
+  const suggestions = suggestionsQuery.data?.suggestions || [];
   const pendingCount = suggestions.filter((s) => s.status === "pending").length;
+
+  const handleReview = (suggestionId: string, status: "approved" | "rejected" | "merged") => {
+    reviewMutation.mutate(
+      { suggestionId, status, reviewerNotes: reviewNotes },
+      {
+        onSuccess: () => {
+          setSelectedId(null);
+          setReviewNotes("");
+        },
+      }
+    );
+  };
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -127,7 +87,7 @@ export default function AdminSuggestionsPage() {
 
       {/* Filters */}
       <div className="flex items-center gap-2 mb-6">
-        {(["all", "pending", "approved", "rejected", "merged"] as const).map((status) => (
+        {(["all", "pending", "approved", "rejected", "merged"] as SuggestionStatus[]).map((status) => (
           <button
             key={status}
             onClick={() => setFilter(status)}
@@ -138,13 +98,13 @@ export default function AdminSuggestionsPage() {
                 : "ui-bg-card ui-text-secondary hover:ui-bg-card-hover"
             )}
           >
-            {status === "all" ? "All" : SUGGESTION_STATUS[status].label}
+            {status === "all" ? "All" : SUGGESTION_STATUS[status as keyof typeof SUGGESTION_STATUS]?.label || status}
           </button>
         ))}
       </div>
 
       {/* Suggestions List */}
-      {isLoading ? (
+      {suggestionsQuery.isPending ? (
         <div className="space-y-4">
           {[...Array(5)].map((_, i) => (
             <div key={i} className="p-4 rounded-xl ui-bg-card border ui-border">
@@ -179,7 +139,7 @@ export default function AdminSuggestionsPage() {
               reviewNotes={reviewNotes}
               onNotesChange={setReviewNotes}
               onReview={handleReview}
-              isSubmitting={isSubmitting}
+              isSubmitting={reviewMutation.isPending}
             />
           ))}
         </div>
@@ -206,7 +166,7 @@ function SuggestionRow({
   onReview: (id: string, status: "approved" | "rejected" | "merged") => void;
   isSubmitting: boolean;
 }) {
-  const statusStyle = SUGGESTION_STATUS[suggestion.status];
+  const statusStyle = SUGGESTION_STATUS[suggestion.status as keyof typeof SUGGESTION_STATUS] || SUGGESTION_STATUS.pending;
 
   return (
     <div

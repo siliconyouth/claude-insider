@@ -4,81 +4,58 @@
  * Beta Applications Review Page
  *
  * Moderators and admins can review, approve, or reject beta applications.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Smooth pagination (keeps previous data visible)
+ * - Optimistic mutation updates
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
-import type { AdminBetaApplication, PaginatedResponse } from "@/types/admin";
+import {
+  useBetaApplicationsList,
+  useReviewBetaApplication,
+  type BetaStatus,
+} from "@/lib/query/hooks";
+import type { AdminBetaApplication } from "@/types/admin";
 
-type FilterStatus = "all" | "pending" | "approved" | "rejected";
+type FilterStatus = BetaStatus;
 
 export default function BetaApplicationsPage() {
-  const toast = useToast();
-  const [applications, setApplications] = useState<AdminBetaApplication[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // Filter state (local)
   const [filter, setFilter] = useState<FilterStatus>("pending");
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+
+  // Modal state (local)
   const [selectedApp, setSelectedApp] = useState<AdminBetaApplication | null>(null);
   const [reviewNotes, setReviewNotes] = useState("");
-  const [isReviewing, setIsReviewing] = useState(false);
 
-  const fetchApplications = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams({
-        status: filter,
-        page: page.toString(),
-        limit: "20",
-      });
-      const response = await fetch(`/api/dashboard/beta?${params}`);
-      if (response.ok) {
-        const data: PaginatedResponse<AdminBetaApplication> = await response.json();
-        setApplications(data.items);
-        setTotalPages(data.totalPages);
-      }
-    } catch (error) {
-      console.error("Failed to fetch applications:", error);
-      toast.error("Failed to load applications");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [filter, page, toast]);
+  // TanStack Query hooks
+  const applicationsQuery = useBetaApplicationsList({
+    page,
+    limit: 20,
+    status: filter,
+  });
 
-  useEffect(() => {
-    fetchApplications();
-  }, [fetchApplications]);
+  const reviewMutation = useReviewBetaApplication();
 
-  const handleReview = async (status: "approved" | "rejected") => {
+  // Derived data
+  const applications = applicationsQuery.data?.items || [];
+  const totalPages = applicationsQuery.data?.totalPages || 1;
+
+  const handleReview = (status: "approved" | "rejected") => {
     if (!selectedApp) return;
 
-    setIsReviewing(true);
-    try {
-      const response = await fetch(`/api/dashboard/beta/${selectedApp.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status, reviewNotes }),
-      });
-
-      if (response.ok) {
-        toast.success(
-          status === "approved"
-            ? "Application approved! User is now a beta tester."
-            : "Application rejected."
-        );
-        setSelectedApp(null);
-        setReviewNotes("");
-        fetchApplications();
-      } else {
-        const data = await response.json();
-        toast.error(data.error || "Failed to review application");
+    reviewMutation.mutate(
+      { applicationId: selectedApp.id, status, reviewNotes },
+      {
+        onSuccess: () => {
+          setSelectedApp(null);
+          setReviewNotes("");
+        },
       }
-    } catch {
-      toast.error("Failed to review application");
-    } finally {
-      setIsReviewing(false);
-    }
+    );
   };
 
   return (
@@ -116,7 +93,7 @@ export default function BetaApplicationsPage() {
 
       {/* Applications List */}
       <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 overflow-hidden">
-        {isLoading ? (
+        {applicationsQuery.isPending ? (
           <div className="p-8 space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="h-24 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
@@ -279,17 +256,17 @@ export default function BetaApplicationsPage() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => handleReview("approved")}
-                      disabled={isReviewing}
+                      disabled={reviewMutation.isPending}
                       className="flex-1 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:opacity-90 disabled:opacity-50 transition-all"
                     >
-                      {isReviewing ? "Processing..." : "✓ Approve"}
+                      {reviewMutation.isPending ? "Processing..." : "✓ Approve"}
                     </button>
                     <button
                       onClick={() => handleReview("rejected")}
-                      disabled={isReviewing}
+                      disabled={reviewMutation.isPending}
                       className="flex-1 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-red-600 to-red-500 hover:opacity-90 disabled:opacity-50 transition-all"
                     >
-                      {isReviewing ? "Processing..." : "✕ Reject"}
+                      {reviewMutation.isPending ? "Processing..." : "✕ Reject"}
                     </button>
                   </div>
                 </div>

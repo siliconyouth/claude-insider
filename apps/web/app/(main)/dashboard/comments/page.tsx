@@ -4,123 +4,76 @@
  * Admin Comments Moderation Page
  *
  * Moderators and admins can review, approve, reject, or flag comments.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Optimistic UI updates on mutations
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
-import {
-  MODERATION_STATUS,
-  type ModerationStatus,
-  useDashboardAction,
-} from "@/lib/dashboard";
+import { MODERATION_STATUS } from "@/lib/dashboard";
 import {
   PageHeader,
   StatusBadge,
   EmptyState,
 } from "@/components/dashboard/shared";
-
-interface CommentWithUser {
-  id: string;
-  user_id: string;
-  user_name: string | null;
-  user_email: string | null;
-  user_image: string | null;
-  user_username: string | null;
-  resource_type: "resource" | "doc";
-  resource_id: string;
-  parent_id: string | null;
-  content: string;
-  status: ModerationStatus;
-  is_edited: boolean;
-  upvotes: number;
-  downvotes: number;
-  moderator_name: string | null;
-  moderation_notes: string | null;
-  moderated_at: string | null;
-  created_at: string;
-  updated_at: string;
-}
+import {
+  useCommentsList,
+  useModerateComment,
+  useDeleteComment,
+  type CommentModerationStatus,
+  type CommentWithUser,
+} from "@/lib/query/hooks";
 
 export default function AdminCommentsPage() {
-  const [comments, setComments] = useState<CommentWithUser[]>([]);
-  const [counts, setCounts] = useState<Record<string, number>>({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [filter, setFilter] = useState<ModerationStatus | "all">("pending");
+  // Filter state (local)
+  const [filter, setFilter] = useState<CommentModerationStatus>("pending");
+
+  // Modal state (local)
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [moderationNotes, setModerationNotes] = useState("");
-  const toast = useToast();
 
-  // Action hook for moderation
-  const { execute, isLoading: isSubmitting } = useDashboardAction({
-    onSuccess: () => {
-      setSelectedId(null);
-      setModerationNotes("");
-    },
+  // TanStack Query hooks
+  const commentsQuery = useCommentsList({
+    status: filter,
   });
 
-  // Fetch comments
-  const fetchComments = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (filter !== "all") {
-        params.set("status", filter);
-      }
-      const res = await fetch(`/api/dashboard/comments?${params}`);
-      if (!res.ok) throw new Error("Failed to fetch");
-      const data = await res.json();
-      setComments(data.comments || []);
-      setCounts(data.counts || {});
-    } catch {
-      toast.error("Failed to load comments");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [filter, toast]);
+  const moderateMutation = useModerateComment();
+  const deleteMutation = useDeleteComment();
 
-  useEffect(() => {
-    fetchComments();
-  }, [fetchComments]);
-
-  const handleModerate = useCallback(
-    async (commentId: string, status: "approved" | "rejected" | "flagged") => {
-      const result = await execute(`comments/${commentId}`, "PATCH", {
-        status,
-        moderationNotes,
-      });
-
-      if (result.success) {
-        toast.success(`Comment ${status}`);
-        setComments((prev) =>
-          prev.map((c) =>
-            c.id === commentId
-              ? { ...c, status, moderation_notes: moderationNotes }
-              : c
-          )
-        );
-      }
-    },
-    [execute, moderationNotes, toast]
-  );
-
-  const handleDelete = useCallback(
-    async (commentId: string) => {
-      if (!confirm("Are you sure you want to delete this comment? This cannot be undone.")) {
-        return;
-      }
-
-      const result = await execute(`comments/${commentId}`, "DELETE");
-      if (result.success) {
-        toast.success("Comment deleted");
-        setComments((prev) => prev.filter((c) => c.id !== commentId));
-      }
-    },
-    [execute, toast]
-  );
-
+  // Derived data
+  const comments = commentsQuery.data?.comments || [];
+  const counts = commentsQuery.data?.counts || {};
   const pendingCount = counts.pending || 0;
+
+  const handleModerate = (commentId: string, status: "approved" | "rejected" | "flagged") => {
+    moderateMutation.mutate(
+      { commentId, status, moderationNotes },
+      {
+        onSuccess: () => {
+          setSelectedId(null);
+          setModerationNotes("");
+        },
+      }
+    );
+  };
+
+  const handleDelete = (commentId: string) => {
+    if (!confirm("Are you sure you want to delete this comment? This cannot be undone.")) {
+      return;
+    }
+
+    deleteMutation.mutate(commentId, {
+      onSuccess: () => {
+        setSelectedId(null);
+        setModerationNotes("");
+      },
+    });
+  };
+
+  const isSubmitting = moderateMutation.isPending || deleteMutation.isPending;
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -162,7 +115,7 @@ export default function AdminCommentsPage() {
 
       {/* Filters */}
       <div className="flex items-center gap-2 mb-6">
-        {(["all", "pending", "approved", "rejected", "flagged"] as const).map((status) => (
+        {(["all", "pending", "approved", "rejected", "flagged"] as CommentModerationStatus[]).map((status) => (
           <button
             key={status}
             onClick={() => setFilter(status)}
@@ -173,13 +126,13 @@ export default function AdminCommentsPage() {
                 : "ui-bg-card ui-text-secondary hover:ui-bg-card-hover"
             )}
           >
-            {status === "all" ? "All" : MODERATION_STATUS[status].label}
+            {status === "all" ? "All" : MODERATION_STATUS[status as keyof typeof MODERATION_STATUS]?.label || status}
           </button>
         ))}
       </div>
 
       {/* Comments List */}
-      {isLoading ? (
+      {commentsQuery.isPending ? (
         <div className="space-y-4">
           {[...Array(5)].map((_, i) => (
             <div
@@ -247,7 +200,7 @@ function CommentRow({
   onDelete: (id: string) => void;
   isSubmitting: boolean;
 }) {
-  const statusStyle = MODERATION_STATUS[comment.status];
+  const statusStyle = MODERATION_STATUS[comment.status as keyof typeof MODERATION_STATUS] || MODERATION_STATUS.pending;
 
   return (
     <div

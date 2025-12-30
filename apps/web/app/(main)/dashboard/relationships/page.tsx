@@ -5,9 +5,14 @@
  *
  * Manage all relationships between documentation and resources.
  * View AI-generated and manual relationships with confidence scores.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Smooth pagination (keeps previous data visible)
+ * - Tab-aware caching (each tab cached separately)
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 import { PageHeader } from "@/components/dashboard/shared";
 import {
@@ -21,84 +26,12 @@ import {
   SearchIcon,
   ArrowRightIcon,
 } from "lucide-react";
-
-interface DocResourceRelationship {
-  id: string;
-  docSlug: string;
-  docTitle: string;
-  docCategory: string;
-  resourceId: string;
-  resourceSlug: string;
-  resourceTitle: string;
-  resourceCategory: string;
-  relationshipType: string;
-  confidenceScore: number;
-  aiReasoning: string | null;
-  isManual: boolean;
-  displayPriority: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface ResourceResourceRelationship {
-  id: string;
-  sourceResourceId: string;
-  sourceSlug: string;
-  sourceTitle: string;
-  sourceCategory: string;
-  targetResourceId: string;
-  targetSlug: string;
-  targetTitle: string;
-  targetCategory: string;
-  relationshipType: string;
-  confidenceScore: number;
-  aiReasoning: string | null;
-  isManual: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface DocResourceStats {
-  total: number;
-  manual: number;
-  aiGenerated: number;
-  avgConfidence: number;
-  uniqueDocs: number;
-  uniqueResources: number;
-}
-
-interface ResourceResourceStats {
-  total: number;
-  manual: number;
-  aiGenerated: number;
-  avgConfidence: number;
-}
-
-interface DocResourceApiResponse {
-  type: "doc_resource";
-  relationships: DocResourceRelationship[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-  stats: DocResourceStats;
-  typeCounts: Record<string, number>;
-}
-
-interface ResourceResourceApiResponse {
-  type: "resource_resource";
-  relationships: ResourceResourceRelationship[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-  stats: ResourceResourceStats;
-  typeCounts: Record<string, number>;
-}
+import {
+  useRelationshipsList,
+  isDocResourceResponse,
+  type DocResourceRelationship,
+  type ResourceResourceRelationship,
+} from "@/lib/query/hooks";
 
 const RELATIONSHIP_TYPE_COLORS: Record<string, string> = {
   required: "bg-red-500/20 text-red-400 border-red-500/30",
@@ -111,80 +44,38 @@ const RELATIONSHIP_TYPE_COLORS: Record<string, string> = {
 };
 
 export default function RelationshipsPage() {
+  // Tab and filter state (local)
   const [activeTab, setActiveTab] = useState<"doc_resource" | "resource_resource">("doc_resource");
-  const [docResourceRels, setDocResourceRels] = useState<DocResourceRelationship[]>([]);
-  const [resResourceRels, setResResourceRels] = useState<ResourceResourceRelationship[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [docResStats, setDocResStats] = useState<DocResourceStats | null>(null);
-  const [resResStats, setResResStats] = useState<ResourceResourceStats | null>(null);
-  const [typeCounts, setTypeCounts] = useState<Record<string, number>>({});
-
-  // Filters
   const [searchQuery, setSearchQuery] = useState("");
   const [relationshipTypeFilter, setRelationshipTypeFilter] = useState<string>("all");
   const [isManualFilter, setIsManualFilter] = useState<string>("all");
   const [minConfidence, setMinConfidence] = useState<string>("");
 
-  // Fetch relationships
-  const fetchRelationships = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
+  // TanStack Query hook
+  const relationshipsQuery = useRelationshipsList({
+    page,
+    type: activeTab,
+    search: searchQuery,
+    relationshipType: relationshipTypeFilter !== "all" ? relationshipTypeFilter : undefined,
+    isManual: isManualFilter as "true" | "false" | "all",
+    minConfidence: minConfidence || undefined,
+  });
 
-    try {
-      const params = new URLSearchParams({
-        page: String(page),
-        limit: "30",
-        type: activeTab,
-      });
+  // Derived data - type-safe based on response type
+  const data = relationshipsQuery.data;
+  const isDocResource = data && isDocResourceResponse(data);
+  const docResourceRels = isDocResource ? data.relationships : [];
+  const resResourceRels = !isDocResource && data ? data.relationships : [];
+  const stats = data?.stats;
+  const typeCounts = data?.typeCounts || {};
+  const totalPages = data?.pagination?.totalPages || 1;
+  const total = data?.pagination?.total || 0;
 
-      if (searchQuery) params.set("search", searchQuery);
-      if (relationshipTypeFilter !== "all") params.set("relationshipType", relationshipTypeFilter);
-      if (isManualFilter !== "all") params.set("isManual", isManualFilter);
-      if (minConfidence) params.set("minConfidence", minConfidence);
-
-      const response = await fetch(`/api/dashboard/relationships?${params}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch relationships");
-      }
-
-      const data = await response.json();
-
-      if (activeTab === "doc_resource") {
-        const typedData = data as DocResourceApiResponse;
-        setDocResourceRels(typedData.relationships);
-        setDocResStats(typedData.stats);
-        setTotalPages(typedData.pagination.totalPages);
-        setTotal(typedData.pagination.total);
-        setTypeCounts(typedData.typeCounts);
-      } else {
-        const typedData = data as ResourceResourceApiResponse;
-        setResResourceRels(typedData.relationships);
-        setResResStats(typedData.stats);
-        setTotalPages(typedData.pagination.totalPages);
-        setTotal(typedData.pagination.total);
-        setTypeCounts(typedData.typeCounts);
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, activeTab, searchQuery, relationshipTypeFilter, isManualFilter, minConfidence]);
-
-  useEffect(() => {
-    fetchRelationships();
-  }, [fetchRelationships]);
-
-  // Reset page when filters change
+  // Reset page when filters or tab change
   useEffect(() => {
     setPage(1);
   }, [activeTab, searchQuery, relationshipTypeFilter, isManualFilter, minConfidence]);
-
-  const currentStats = activeTab === "doc_resource" ? docResStats : resResStats;
 
   return (
     <div className="space-y-6">
@@ -234,25 +125,25 @@ export default function RelationshipsPage() {
         <StatCard
           icon={<LinkIcon className="w-5 h-5" />}
           label="Total"
-          value={currentStats?.total || 0}
+          value={stats?.total || 0}
           color="blue"
         />
         <StatCard
           icon={<SparklesIcon className="w-5 h-5" />}
           label="AI Generated"
-          value={currentStats?.aiGenerated || 0}
+          value={stats?.aiGenerated || 0}
           color="violet"
         />
         <StatCard
           icon={<UserIcon className="w-5 h-5" />}
           label="Manual"
-          value={currentStats?.manual || 0}
+          value={stats?.manual || 0}
           color="green"
         />
         <StatCard
           icon={<LinkIcon className="w-5 h-5" />}
           label="Avg Confidence"
-          value={`${Math.round((currentStats?.avgConfidence || 0) * 100)}%`}
+          value={`${Math.round((stats?.avgConfidence || 0) * 100)}%`}
           color="cyan"
         />
       </div>
@@ -329,14 +220,16 @@ export default function RelationshipsPage() {
 
       {/* Relationships List */}
       <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
-        {isLoading ? (
+        {relationshipsQuery.isPending ? (
           <div className="p-8 space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
             ))}
           </div>
-        ) : error ? (
-          <div className="p-8 text-center text-red-400">{error}</div>
+        ) : relationshipsQuery.isError ? (
+          <div className="p-8 text-center text-red-400">
+            {relationshipsQuery.error?.message || "Failed to load relationships"}
+          </div>
         ) : (activeTab === "doc_resource" ? docResourceRels : resResourceRels).length === 0 ? (
           <div className="p-8 text-center text-gray-500">No relationships found</div>
         ) : activeTab === "doc_resource" ? (

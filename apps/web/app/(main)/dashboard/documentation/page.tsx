@@ -5,9 +5,13 @@
  *
  * Admins can view documentation pages, manage relationships,
  * and queue AI analysis jobs.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Smooth pagination (keeps previous data visible)
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/design-system";
 import { PageHeader } from "@/components/dashboard/shared";
@@ -23,44 +27,11 @@ import {
   SearchIcon,
   ExternalLinkIcon,
 } from "lucide-react";
-
-interface DocumentationItem {
-  slug: string;
-  title: string;
-  description: string | null;
-  category: string;
-  isPublished: boolean;
-  isFeatured: boolean;
-  wordCount: number;
-  readingTimeMinutes: number;
-  version: number;
-  scrapeStatus: string | null;
-  relationshipCount: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface CategoryStats {
-  total: number;
-  published: number;
-  featured: number;
-}
-
-interface ApiResponse {
-  documentation: DocumentationItem[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-  categories: Record<string, CategoryStats>;
-  stats: {
-    totalDocResourceRelationships: number;
-    docsWithRelationships: number;
-    avgConfidence: number;
-  } | null;
-}
+import {
+  useDocumentationList,
+  type DocumentationItem,
+  type CategoryStats,
+} from "@/lib/query/hooks";
 
 const CATEGORY_COLORS: Record<string, string> = {
   "getting-started": "bg-green-500/20 text-green-400 border-green-500/30",
@@ -74,68 +45,40 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export default function DocumentationPage() {
   const router = useRouter();
-  const [documentation, setDocumentation] = useState<DocumentationItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [categories, setCategories] = useState<Record<string, CategoryStats>>({});
-  const [stats, setStats] = useState<ApiResponse["stats"]>(null);
 
-  // Filters
+  // Filter state (local)
+  const [page, setPage] = useState(1);
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [hasRelationships, setHasRelationships] = useState<string>("all");
 
-  // Navigate to detail page
-  const handleDocClick = (slug: string) => {
-    router.push(`/dashboard/documentation/${encodeURIComponent(slug)}`);
-  };
+  // TanStack Query hook
+  const docsQuery = useDocumentationList({
+    page,
+    category: categoryFilter,
+    status: statusFilter as "published" | "unpublished" | "all",
+    search: searchQuery,
+    hasRelationships: hasRelationships as "true" | "false" | "all",
+  });
 
-  // Fetch documentation
-  const fetchDocs = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const params = new URLSearchParams({
-        page: String(page),
-        limit: "20",
-      });
-
-      if (categoryFilter !== "all") params.set("category", categoryFilter);
-      if (statusFilter !== "all") params.set("status", statusFilter);
-      if (searchQuery) params.set("search", searchQuery);
-      if (hasRelationships !== "all") params.set("hasRelationships", hasRelationships);
-
-      const response = await fetch(`/api/dashboard/documentation?${params}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch documentation");
-      }
-
-      const data: ApiResponse = await response.json();
-      setDocumentation(data.documentation);
-      setTotalPages(data.pagination.totalPages);
-      setTotal(data.pagination.total);
-      setCategories(data.categories);
-      setStats(data.stats);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, categoryFilter, statusFilter, searchQuery, hasRelationships]);
-
-  useEffect(() => {
-    fetchDocs();
-  }, [fetchDocs]);
+  // Derived data
+  const documentation = docsQuery.data?.documentation || [];
+  const pagination = docsQuery.data?.pagination;
+  const categories = docsQuery.data?.categories || {};
+  const stats = docsQuery.data?.stats;
+  const totalPages = pagination?.totalPages || 1;
+  const total = pagination?.total || 0;
 
   // Reset page when filters change
   useEffect(() => {
     setPage(1);
   }, [categoryFilter, statusFilter, searchQuery, hasRelationships]);
+
+  // Navigate to detail page
+  const handleDocClick = (slug: string) => {
+    router.push(`/dashboard/documentation/${encodeURIComponent(slug)}`);
+  };
 
   return (
     <div className="space-y-6">
@@ -242,14 +185,16 @@ export default function DocumentationPage() {
 
       {/* Documentation List */}
       <div className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden">
-        {isLoading ? (
+        {docsQuery.isPending ? (
           <div className="p-8 space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
             ))}
           </div>
-        ) : error ? (
-          <div className="p-8 text-center text-red-400">{error}</div>
+        ) : docsQuery.isError ? (
+          <div className="p-8 text-center text-red-400">
+            {docsQuery.error?.message || "Failed to load documentation"}
+          </div>
         ) : documentation.length === 0 ? (
           <div className="p-8 text-center text-gray-500">No documentation found</div>
         ) : (

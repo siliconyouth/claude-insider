@@ -3,24 +3,26 @@
 /**
  * Admin Data Export Page
  *
- * Dashboard for managing bulk data exports:
+ * Dashboard for managing bulk data exports.
+ * Uses TanStack Query for data fetching with auto-refresh for active jobs.
+ * Features:
  * - Create new exports with wizard
  * - View export history
  * - Download completed exports
  * - Track progress of active exports
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/design-system";
 import {
-  createExportJob,
-  getExportJobs,
-  getExportDownloadUrl,
-  cancelExportJob,
-  deleteExportJob,
+  useExportJobs,
+  useCreateExport,
+  useGetExportDownloadUrl,
+  useCancelExport,
+  useDeleteExport,
   type ExportJob,
   type ExportType,
-} from "@/app/actions/admin-export";
+} from "@/lib/query/hooks";
 import { type ExportFormat } from "@/lib/export-formats";
 import {
   DownloadIcon,
@@ -42,75 +44,33 @@ import {
 } from "lucide-react";
 
 export default function ExportsPage() {
-  const [jobs, setJobs] = useState<ExportJob[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [showWizard, setShowWizard] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  // Fetch export jobs
-  const fetchJobs = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const result = await getExportJobs(1, 50);
-      if (result.error) {
-        setError(result.error);
-      } else {
-        setJobs(result.jobs || []);
-        setError(null);
-      }
-    } catch {
-      setError("Failed to load exports");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  // TanStack Query hooks
+  const jobsQuery = useExportJobs();
+  const downloadMutation = useGetExportDownloadUrl();
+  const cancelMutation = useCancelExport();
+  const deleteMutation = useDeleteExport();
+  const createMutation = useCreateExport();
 
-  useEffect(() => {
-    fetchJobs();
-  }, [fetchJobs]);
-
-  // Auto-refresh for active jobs
-  useEffect(() => {
-    const hasActiveJobs = jobs.some(
-      (j) => j.status === "pending" || j.status === "processing"
-    );
-    if (!hasActiveJobs) return;
-
-    const interval = setInterval(fetchJobs, 5000);
-    return () => clearInterval(interval);
-  }, [jobs, fetchJobs]);
+  const jobs = jobsQuery.data || [];
+  const isLoading = jobsQuery.isPending;
+  const error = jobsQuery.error?.message || null;
 
   // Handle download
-  const handleDownload = async (jobId: string) => {
-    const result = await getExportDownloadUrl(jobId);
-    if (result.error) {
-      alert(result.error);
-      return;
-    }
-    if (result.url) {
-      window.open(result.url, "_blank");
-    }
+  const handleDownload = (jobId: string) => {
+    downloadMutation.mutate(jobId);
   };
 
   // Handle cancel
-  const handleCancel = async (jobId: string) => {
-    const result = await cancelExportJob(jobId);
-    if (result.error) {
-      alert(result.error);
-    } else {
-      fetchJobs();
-    }
+  const handleCancel = (jobId: string) => {
+    cancelMutation.mutate(jobId);
   };
 
   // Handle delete
-  const handleDelete = async (jobId: string) => {
+  const handleDelete = (jobId: string) => {
     if (!confirm("Are you sure you want to delete this export?")) return;
-    const result = await deleteExportJob(jobId);
-    if (result.error) {
-      alert(result.error);
-    } else {
-      fetchJobs();
-    }
+    deleteMutation.mutate(jobId);
   };
 
   return (
@@ -125,12 +85,12 @@ export default function ExportsPage() {
         </div>
         <div className="flex gap-2">
           <button
-            onClick={fetchJobs}
-            disabled={isLoading}
+            onClick={() => jobsQuery.refetch()}
+            disabled={jobsQuery.isFetching}
             className="flex items-center gap-2 px-3 py-2 text-sm text-gray-400 hover:text-white bg-gray-800 rounded-lg transition-colors"
           >
             <RefreshCwIcon
-              className={cn("w-4 h-4", isLoading && "animate-spin")}
+              className={cn("w-4 h-4", jobsQuery.isFetching && "animate-spin")}
             />
             Refresh
           </button>
@@ -155,10 +115,8 @@ export default function ExportsPage() {
       {showWizard && (
         <ExportWizard
           onClose={() => setShowWizard(false)}
-          onComplete={() => {
-            setShowWizard(false);
-            fetchJobs();
-          }}
+          onComplete={() => setShowWizard(false)}
+          createMutation={createMutation}
         />
       )}
 
@@ -187,6 +145,9 @@ export default function ExportsPage() {
                 onDownload={handleDownload}
                 onCancel={handleCancel}
                 onDelete={handleDelete}
+                isDownloading={downloadMutation.isPending && downloadMutation.variables === job.id}
+                isCancelling={cancelMutation.isPending && cancelMutation.variables === job.id}
+                isDeleting={deleteMutation.isPending && deleteMutation.variables === job.id}
               />
             ))}
           </div>
@@ -202,11 +163,17 @@ function ExportJobRow({
   onDownload,
   onCancel,
   onDelete,
+  isDownloading,
+  isCancelling,
+  isDeleting,
 }: {
   job: ExportJob;
   onDownload: (id: string) => void;
   onCancel: (id: string) => void;
   onDelete: (id: string) => void;
+  isDownloading?: boolean;
+  isCancelling?: boolean;
+  isDeleting?: boolean;
 }) {
   const formatBytes = (bytes: number | null) => {
     if (!bytes) return "-";
@@ -311,19 +278,29 @@ function ExportJobRow({
         {job.status === "completed" && (
           <button
             onClick={() => onDownload(job.id)}
-            className="p-2 text-green-400 hover:bg-green-500/10 rounded-lg transition-colors"
+            disabled={isDownloading}
+            className="p-2 text-green-400 hover:bg-green-500/10 rounded-lg transition-colors disabled:opacity-50"
             title="Download"
           >
-            <DownloadIcon className="w-4 h-4" />
+            {isDownloading ? (
+              <RefreshCwIcon className="w-4 h-4 animate-spin" />
+            ) : (
+              <DownloadIcon className="w-4 h-4" />
+            )}
           </button>
         )}
         {(job.status === "pending" || job.status === "processing") && (
           <button
             onClick={() => onCancel(job.id)}
-            className="p-2 text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-colors"
+            disabled={isCancelling}
+            className="p-2 text-yellow-400 hover:bg-yellow-500/10 rounded-lg transition-colors disabled:opacity-50"
             title="Cancel"
           >
-            <XIcon className="w-4 h-4" />
+            {isCancelling ? (
+              <RefreshCwIcon className="w-4 h-4 animate-spin" />
+            ) : (
+              <XIcon className="w-4 h-4" />
+            )}
           </button>
         )}
         {(job.status === "completed" ||
@@ -331,10 +308,15 @@ function ExportJobRow({
           job.status === "cancelled") && (
           <button
             onClick={() => onDelete(job.id)}
-            className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+            disabled={isDeleting}
+            className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors disabled:opacity-50"
             title="Delete"
           >
-            <TrashIcon className="w-4 h-4" />
+            {isDeleting ? (
+              <RefreshCwIcon className="w-4 h-4 animate-spin" />
+            ) : (
+              <TrashIcon className="w-4 h-4" />
+            )}
           </button>
         )}
       </div>
@@ -346,39 +328,33 @@ function ExportJobRow({
 function ExportWizard({
   onClose,
   onComplete,
+  createMutation,
 }: {
   onClose: () => void;
   onComplete: () => void;
+  createMutation: ReturnType<typeof useCreateExport>;
 }) {
   const [step, setStep] = useState(1);
   const [exportType, setExportType] = useState<ExportType>("users");
   const [format, setFormat] = useState<ExportFormat>("csv");
   const [anonymize, setAnonymize] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async () => {
-    try {
-      setIsSubmitting(true);
-      setError(null);
+  const isSubmitting = createMutation.isPending;
+  const error = createMutation.error?.message || null;
 
-      const result = await createExportJob({
+  const handleSubmit = () => {
+    createMutation.mutate(
+      {
         exportType,
         format,
         options: { anonymize },
-      });
-
-      if (result.error) {
-        setError(result.error);
-        return;
+      },
+      {
+        onSuccess: () => {
+          onComplete();
+        },
       }
-
-      onComplete();
-    } catch {
-      setError("Failed to create export");
-    } finally {
-      setIsSubmitting(false);
-    }
+    );
   };
 
   const typeOptions: Array<{

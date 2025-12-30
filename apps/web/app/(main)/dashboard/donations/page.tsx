@@ -4,6 +4,7 @@
  * Admin Donations Dashboard
  *
  * Comprehensive donation analytics and management for admins.
+ * Uses TanStack Query for data fetching and mutations.
  * Features:
  * - Overview statistics
  * - Trend chart
@@ -17,49 +18,13 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/design-system';
 import { useToast } from '@/components/toast';
-import { BADGE_CONFIG, formatDonationAmount, type DonorBadgeTier } from '@/lib/donations/types';
-
-interface DonationStats {
-  overview: {
-    total_raised: number;
-    completed_donations: number;
-    pending_donations: number;
-    failed_donations: number;
-    unique_donors: number;
-    recurring_donations: number;
-    average_donation: number;
-    largest_donation: number;
-  };
-  periods: {
-    today: { amount: number; count: number };
-    week: { amount: number; count: number };
-    month: { amount: number; count: number };
-  };
-  trend: Array<{ date: string; amount: number; count: number }>;
-  by_method: Record<string, { amount: number; count: number }>;
-  by_tier: Array<{ tier: DonorBadgeTier; count: number; total_amount: number }>;
-  recent_donations: Array<{
-    id: string;
-    amount: number;
-    currency: string;
-    payment_method: string;
-    status: string;
-    donor_name: string;
-    donor_email?: string | null;
-    is_anonymous: boolean;
-    message: string | null;
-    created_at: string;
-  }>;
-  pending_transfers: Array<{
-    id: string;
-    amount: number;
-    currency: string;
-    donor_name: string;
-    donor_email: string;
-    message: string | null;
-    created_at: string;
-  }>;
-}
+import { BADGE_CONFIG, formatDonationAmount } from '@/lib/donations/types';
+import {
+  useDonationStats,
+  useConfirmTransfer,
+  useResendThankYou,
+  type DonationStats,
+} from '@/lib/query/hooks';
 
 interface ResendModalState {
   isOpen: boolean;
@@ -71,9 +36,6 @@ interface ResendModalState {
 }
 
 export default function DonationsDashboardPage() {
-  const [stats, setStats] = useState<DonationStats | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [processingId, setProcessingId] = useState<string | null>(null);
   const [actionMenuId, setActionMenuId] = useState<string | null>(null);
   const [resendModal, setResendModal] = useState<ResendModalState>({
     isOpen: false,
@@ -83,9 +45,16 @@ export default function DonationsDashboardPage() {
     amount: 0,
     currency: 'USD',
   });
-  const [resending, setResending] = useState(false);
   const actionMenuRef = useRef<HTMLDivElement>(null);
   const { success, error: showError } = useToast();
+
+  // TanStack Query hooks
+  const statsQuery = useDonationStats();
+  const confirmTransferMutation = useConfirmTransfer();
+  const resendThankYouMutation = useResendThankYou();
+
+  const stats = statsQuery.data;
+  const loading = statsQuery.isPending;
 
   // Close action menu when clicking outside
   useEffect(() => {
@@ -98,45 +67,8 @@ export default function DonationsDashboardPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const fetchStats = async () => {
-    try {
-      const response = await fetch('/api/dashboard/donations');
-      if (!response.ok) throw new Error('Failed to load donation stats');
-      const data = await response.json();
-      setStats(data);
-    } catch {
-      showError('Failed to load donation statistics');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchStats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleConfirmTransfer = async (donationId: string, action: 'confirm' | 'reject') => {
-    setProcessingId(donationId);
-    try {
-      const response = await fetch('/api/dashboard/donations/confirm', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ donation_id: donationId, action }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to process transfer');
-      }
-
-      success(action === 'confirm' ? 'Transfer confirmed!' : 'Transfer rejected');
-      fetchStats(); // Refresh data
-    } catch (err) {
-      showError(err instanceof Error ? err.message : 'Failed to process transfer');
-    } finally {
-      setProcessingId(null);
-    }
+    confirmTransferMutation.mutate({ donationId, action });
   };
 
   const openResendModal = (donation: DonationStats['recent_donations'][0]) => {
@@ -157,32 +89,18 @@ export default function DonationsDashboardPage() {
       return;
     }
 
-    setResending(true);
-    try {
-      const response = await fetch('/api/dashboard/donations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'resend_thank_you',
-          donation_id: resendModal.donationId,
-          donor_email: resendModal.donorEmail,
-          donor_name: resendModal.donorName || undefined,
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to send email');
+    resendThankYouMutation.mutate(
+      {
+        donationId: resendModal.donationId,
+        donorEmail: resendModal.donorEmail,
+        donorName: resendModal.donorName || undefined,
+      },
+      {
+        onSuccess: () => {
+          setResendModal({ ...resendModal, isOpen: false });
+        },
       }
-
-      success(`Thank you email queued for ${resendModal.donorEmail}`);
-      setResendModal({ ...resendModal, isOpen: false });
-      fetchStats(); // Refresh to show updated donor info
-    } catch (err) {
-      showError(err instanceof Error ? err.message : 'Failed to send email');
-    } finally {
-      setResending(false);
-    }
+    );
   };
 
   const handleCopyDonationId = (id: string) => {
@@ -193,6 +111,11 @@ export default function DonationsDashboardPage() {
 
   // Calculate max for chart scaling
   const maxAmount = stats?.trend.reduce((max, d) => Math.max(max, d.amount), 0) || 0;
+
+  // Track which donation is being processed
+  const processingId = confirmTransferMutation.isPending
+    ? (confirmTransferMutation.variables as { donationId: string } | undefined)?.donationId
+    : null;
 
   if (loading) {
     return (
@@ -207,7 +130,7 @@ export default function DonationsDashboardPage() {
       <div className="text-center py-20">
         <p className="text-gray-400">Failed to load donation data</p>
         <button
-          onClick={fetchStats}
+          onClick={() => statsQuery.refetch()}
           className="mt-4 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
         >
           Retry
@@ -591,7 +514,7 @@ export default function DonationsDashboardPage() {
               </button>
               <button
                 onClick={handleResendThankYou}
-                disabled={resending || !resendModal.donorEmail}
+                disabled={resendThankYouMutation.isPending || !resendModal.donorEmail}
                 className={cn(
                   'flex-1 px-4 py-2.5 rounded-lg font-medium transition-all',
                   'bg-gradient-to-r from-violet-600 to-blue-600 text-white',
@@ -599,7 +522,7 @@ export default function DonationsDashboardPage() {
                   'disabled:opacity-50 disabled:cursor-not-allowed'
                 )}
               >
-                {resending ? (
+                {resendThankYouMutation.isPending ? (
                   <span className="flex items-center justify-center gap-2">
                     <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
                       <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="opacity-25" />

@@ -5,9 +5,13 @@
  *
  * Admins can view resources, manage relationships,
  * and queue AI enhancement jobs.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Smooth pagination (keeps previous data visible)
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/design-system";
 import { PageHeader } from "@/components/dashboard/shared";
 import {
@@ -25,58 +29,11 @@ import {
   PencilIcon,
 } from "lucide-react";
 import Link from "next/link";
-
-interface ResourceItem {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  category: string;
-  status: string;
-  isPublished: boolean;
-  isFeatured: boolean;
-  githubStars: number | null;
-  githubLanguage: string | null;
-  npmDownloads: number | null;
-  pypiDownloads: number | null;
-  viewsCount: number;
-  favoritesCount: number;
-  averageRating: number | null;
-  aiSummary: string | null;
-  aiAnalyzedAt: string | null;
-  keyFeatures: string[];
-  relatedDocsCount: number;
-  relatedResourcesCount: number;
-  docRelationshipCount: number;
-  resourceRelationshipCount: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface CategoryStats {
-  total: number;
-  published: number;
-  featured: number;
-  enhanced: number;
-}
-
-interface ApiResponse {
-  resources: ResourceItem[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-  categories: Record<string, CategoryStats>;
-  stats: {
-    total: number;
-    enhanced: number;
-    withSummary: number;
-    withFeatures: number;
-    withRelationships: number;
-  };
-}
+import {
+  useResourcesAdminList,
+  type ResourceAdminItem,
+  type ResourceCategoryStats,
+} from "@/lib/query/hooks";
 
 const CATEGORY_COLORS: Record<string, string> = {
   official: "bg-violet-500/20 text-violet-400 border-violet-500/30",
@@ -92,16 +49,8 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 export default function ResourcesAdminPage() {
-  const [resources, setResources] = useState<ResourceItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Filter state (local)
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [categories, setCategories] = useState<Record<string, CategoryStats>>({});
-  const [stats, setStats] = useState<ApiResponse["stats"] | null>(null);
-
-  // Filters
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [enhancementFilter, setEnhancementFilter] = useState<string>("all");
@@ -110,47 +59,26 @@ export default function ResourcesAdminPage() {
   const [sortBy, setSortBy] = useState<string>("updated_at");
 
   // Selected item for detail view
-  const [selectedResource, setSelectedResource] = useState<ResourceItem | null>(null);
+  const [selectedResource, setSelectedResource] = useState<ResourceAdminItem | null>(null);
 
-  // Fetch resources
-  const fetchResources = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
+  // TanStack Query hook
+  const resourcesQuery = useResourcesAdminList({
+    page,
+    category: categoryFilter,
+    status: statusFilter as "published" | "unpublished" | "all",
+    enhancement: enhancementFilter as "enhanced" | "pending" | "all",
+    search: searchQuery,
+    hasRelationships: hasRelationships as "true" | "false" | "all",
+    sortBy: sortBy as "updated_at" | "stars" | "views" | "rating" | "title",
+  });
 
-    try {
-      const params = new URLSearchParams({
-        page: String(page),
-        limit: "20",
-        sortBy,
-      });
-
-      if (categoryFilter !== "all") params.set("category", categoryFilter);
-      if (statusFilter !== "all") params.set("status", statusFilter);
-      if (enhancementFilter !== "all") params.set("enhancement", enhancementFilter);
-      if (searchQuery) params.set("search", searchQuery);
-      if (hasRelationships !== "all") params.set("hasRelationships", hasRelationships);
-
-      const response = await fetch(`/api/dashboard/resources-admin?${params}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch resources");
-      }
-
-      const data: ApiResponse = await response.json();
-      setResources(data.resources);
-      setTotalPages(data.pagination.totalPages);
-      setTotal(data.pagination.total);
-      setCategories(data.categories);
-      setStats(data.stats);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, categoryFilter, statusFilter, enhancementFilter, searchQuery, hasRelationships, sortBy]);
-
-  useEffect(() => {
-    fetchResources();
-  }, [fetchResources]);
+  // Derived data
+  const resources = resourcesQuery.data?.resources || [];
+  const pagination = resourcesQuery.data?.pagination;
+  const categories = resourcesQuery.data?.categories || {};
+  const stats = resourcesQuery.data?.stats;
+  const totalPages = pagination?.totalPages || 1;
+  const total = pagination?.total || 0;
 
   // Reset page when filters change
   useEffect(() => {
@@ -300,14 +228,16 @@ export default function ResourcesAdminPage() {
 
       {/* Resources List */}
       <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 overflow-hidden">
-        {isLoading ? (
+        {resourcesQuery.isPending ? (
           <div className="p-8 space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="h-16 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />
             ))}
           </div>
-        ) : error ? (
-          <div className="p-8 text-center text-red-600 dark:text-red-400">{error}</div>
+        ) : resourcesQuery.isError ? (
+          <div className="p-8 text-center text-red-600 dark:text-red-400">
+            {resourcesQuery.error?.message || "Failed to load resources"}
+          </div>
         ) : resources.length === 0 ? (
           <div className="p-8 text-center text-gray-600 dark:text-gray-500">No resources found</div>
         ) : (
@@ -439,7 +369,7 @@ function ResourceRow({
   isSelected,
   onSelect,
 }: {
-  resource: ResourceItem;
+  resource: ResourceAdminItem;
   isSelected: boolean;
   onSelect: () => void;
 }) {

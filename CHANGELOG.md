@@ -9,6 +9,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.0] - 2025-12-30
+### 🚀 Admin Dashboard Modernization
+- **TanStack Query Migration (MANDATORY)**: All 32 dashboard pages now use TanStack Query
+  - Automatic caching with 30-second stale time
+  - Background refetching on window focus
+  - Optimistic mutations with instant UI feedback
+  - 14 custom hook files covering all dashboard sections
+  - Query key factory pattern for consistent cache invalidation
+- **API Query Parallelization**: Massive performance improvements
+  - Discovery Stats API: 5 sequential → parallel queries (~5x faster)
+  - Donations API: 9 sequential → parallel queries (~9x faster)
+  - Resources Analytics API: Already optimized (verified)
+- **Global Error & Loading States**: Consistent UX across all pages
+  - `app/(main)/dashboard/error.tsx`: Catches all errors with retry functionality
+  - `app/(main)/dashboard/loading.tsx`: Skeleton with stat cards, tabs, table variants
+  - Next.js error boundaries integrate with TanStack Query reset
+- **Command Palette (Cmd+K)**: Quick navigation across entire dashboard
+  - 32+ navigation commands for all dashboard pages
+  - Action commands for common operations
+  - Fuzzy search with Fuse.js
+  - Role-based command filtering
+  - Recent commands history
+- **Grouped Sidebar Navigation**: Vercel/Stripe-style organization
+  - 6 collapsible groups: Content, Moderation, Analytics, Security, Admin, Settings
+  - localStorage persistence for collapse state
+  - Real-time badge counts (30-second polling)
+  - Urgent badges for high-priority items (red styling)
+- **Design Tokens Extended**: New CSS classes in globals.css
+  - Navigation: `ui-nav-group-header`, `ui-nav-badge`, `ui-nav-badge-urgent`
+  - Command palette: `ui-cmd-modal`, `ui-cmd-key`, `ui-cmd-item`
+- **Files Created**:
+  - `lib/query/` - Query client, keys, 14 hook files
+  - `components/dashboard/nav/` - Sidebar, groups, items, context
+  - `components/command-palette/` - Provider, modal, commands
+  - `hooks/use-nav-counts.ts` - Real-time badge counts
+  - `api/dashboard/nav-counts/route.ts` - Badge counts API
+
+---
+
 ## [1.13.7] - 2025-12-29
 ### 🎉 Resource Submissions OPEN & Optimistic UI
 - **Resource Submissions Now Live**: Community can submit resources at `/resources/submit`

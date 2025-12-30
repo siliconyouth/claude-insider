@@ -8,11 +8,17 @@
  * - Zero-result queries (content opportunities)
  * - Search trend over time
  * - Filter usage statistics
+ *
+ * Uses TanStack Query for data fetching with auto-refresh.
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/design-system";
-import { getSession } from "@/lib/auth-client";
+import {
+  useSearchAnalytics,
+  type SearchAnalyticsData,
+  type SearchDateRange,
+} from "@/lib/query/hooks";
 import {
   SearchIcon,
   TrendingUpIcon,
@@ -24,86 +30,17 @@ import {
   XCircleIcon,
 } from "lucide-react";
 
-interface SearchAnalyticsData {
-  topSearches: Array<{
-    query: string;
-    search_count: number;
-    last_searched_at: string;
-    avg_result_count: number;
-  }>;
-  noResultsQueries: Array<{
-    query: string;
-    no_results_count: number;
-    last_searched_at: string;
-  }>;
-  recentSearches: Array<{
-    query: string;
-    searched_at: string;
-    result_count: number;
-    user_id: string | null;
-  }>;
-  stats: {
-    totalSearches: number;
-    uniqueQueries: number;
-    avgResultCount: number;
-    noResultsRate: number;
-  };
-}
-
 export default function SearchAnalyticsPage() {
   const [activeTab, setActiveTab] = useState<
     "top" | "no-results" | "recent" | "trends"
   >("top");
-  const [data, setData] = useState<SearchAnalyticsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [dateRange, setDateRange] = useState<"week" | "month" | "all">("week");
+  const [dateRange, setDateRange] = useState<SearchDateRange>("week");
 
-  // Fetch analytics data
-  const fetchData = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const sessionResult = await getSession();
-      if (!sessionResult?.data?.user?.id) {
-        setError("Not authenticated");
-        return;
-      }
-
-      const response = await fetch(
-        `/api/admin/search-analytics?range=${dateRange}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to fetch analytics");
-      }
-
-      const analyticsData = await response.json();
-      setData(analyticsData);
-    } catch (err) {
-      console.error("Error fetching search analytics:", err);
-      setError(err instanceof Error ? err.message : "Failed to load analytics");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [dateRange]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  // Auto-refresh every minute
-  useEffect(() => {
-    const interval = setInterval(fetchData, 60000);
-    return () => clearInterval(interval);
-  }, [fetchData]);
+  // TanStack Query with auto-refresh
+  const analyticsQuery = useSearchAnalytics(dateRange);
+  const data = analyticsQuery.data || null;
+  const isLoading = analyticsQuery.isPending;
+  const error = analyticsQuery.error?.message || null;
 
   if (isLoading && !data) {
     return (
@@ -124,7 +61,7 @@ export default function SearchAnalyticsPage() {
           <AlertCircleIcon className="w-8 h-8 text-red-500 mx-auto mb-4" />
           <p className="text-red-400">{error}</p>
           <button
-            onClick={fetchData}
+            onClick={() => analyticsQuery.refetch()}
             className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
           >
             Retry
@@ -213,13 +150,13 @@ export default function SearchAnalyticsPage() {
             <option value="all">All Time</option>
           </select>
           <button
-            onClick={fetchData}
-            disabled={isLoading}
+            onClick={() => analyticsQuery.refetch()}
+            disabled={analyticsQuery.isFetching}
             className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-700 transition-colors"
             title="Refresh data"
           >
             <RefreshCwIcon
-              className={cn("w-4 h-4", isLoading && "animate-spin")}
+              className={cn("w-4 h-4", analyticsQuery.isFetching && "animate-spin")}
             />
           </button>
         </div>

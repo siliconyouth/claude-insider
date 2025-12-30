@@ -2,14 +2,14 @@
  * Bot Analytics Page
  *
  * Charts and statistics for bot detection and security trends.
+ * Uses TanStack Query for data fetching and caching.
  */
 
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
-import type { SecurityStatsData } from "@/components/dashboard/security";
+import { useSecurityStats } from "@/lib/query/hooks";
 import {
   ChartBarIcon,
   ArrowLeftIcon,
@@ -17,32 +17,11 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function AnalyticsPage() {
-  const [stats, setStats] = useState<SecurityStatsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const statsQuery = useSecurityStats();
 
-  const fetchStats = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const response = await fetch("/api/dashboard/security/stats");
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || "Failed to fetch stats");
-      }
-
-      setStats(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch stats");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchStats();
-  }, []);
+  const stats = statsQuery.data;
+  const isLoading = statsQuery.isPending;
+  const error = statsQuery.error;
 
   // Calculate percentages for display
   const botPercentage =
@@ -80,8 +59,8 @@ export default function AnalyticsPage() {
           </div>
         </div>
         <button
-          onClick={fetchStats}
-          disabled={isLoading}
+          onClick={() => statsQuery.refetch()}
+          disabled={statsQuery.isFetching}
           className={cn(
             "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium",
             "bg-blue-500 text-white",
@@ -89,7 +68,7 @@ export default function AnalyticsPage() {
             "disabled:opacity-50"
           )}
         >
-          <ArrowPathIcon className={cn("h-4 w-4", isLoading && "animate-spin")} />
+          <ArrowPathIcon className={cn("h-4 w-4", statsQuery.isFetching && "animate-spin")} />
           Refresh
         </button>
       </div>
@@ -97,7 +76,7 @@ export default function AnalyticsPage() {
       {/* Error Message */}
       {error && (
         <div className="rounded-lg bg-red-500/10 p-4 text-red-500">
-          <p className="text-sm">{error}</p>
+          <p className="text-sm">{error.message}</p>
         </div>
       )}
 

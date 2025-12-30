@@ -4,13 +4,25 @@
  * Resource Discovery Dashboard
  *
  * Admin page for managing resource discovery sources and reviewing
- * discovered resources from Awesome lists, GitHub, npm, and other sources.
+ * discovered resources. Now powered by TanStack Query for caching
+ * and automatic revalidation.
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/design-system";
 import { PageHeader, StatusBadge, EmptyState, StatCard, StatGrid } from "@/components/dashboard/shared";
-import { useToast } from "@/components/toast";
+import {
+  useDiscoveryStats,
+  useDiscoveryQueue,
+  useDiscoverySources,
+  useQueueAction,
+  useSourceToggle,
+  type QueueStatus,
+  type QueueItem,
+  type Source,
+  type DiscoveryStats,
+} from "@/lib/query/hooks";
+import { QueryErrorBoundary } from "@/components/dashboard/query-error-boundary";
 
 // Queue status configuration
 const QUEUE_STATUS = {
@@ -30,243 +42,71 @@ const SOURCE_TYPE_ICONS: Record<string, string> = {
   website: "🌐",
 };
 
-type QueueStatus = keyof typeof QUEUE_STATUS;
 type Tab = "overview" | "queue" | "sources";
-
-interface QueueItem {
-  id: string;
-  source_id: string;
-  source_name?: string;
-  source_type?: string;
-  discovered_url: string;
-  discovered_title: string | null;
-  discovered_description: string | null;
-  discovered_data: Record<string, unknown>;
-  status: QueueStatus;
-  reviewed_by: string | null;
-  reviewer_name?: string | null;
-  reviewed_at: string | null;
-  review_notes: string | null;
-  created_at: string;
-}
-
-interface Source {
-  id: string;
-  name: string;
-  description: string | null;
-  type: string;
-  url: string;
-  default_category: string | null;
-  default_tags: string[];
-  is_active: boolean;
-  scan_frequency: string;
-  last_scan_at: string | null;
-  last_scan_status: string | null;
-  last_scan_count: number;
-  next_scan_at: string | null;
-  queue_counts: {
-    pending: number;
-    approved: number;
-    rejected: number;
-  };
-}
-
-interface Stats {
-  queue: {
-    pending: number;
-    reviewing: number;
-    approved: number;
-    rejected: number;
-    total: number;
-  };
-  sources: {
-    active: number;
-    inactive: number;
-    total: number;
-    dueForScan: number;
-    byType: Record<string, number>;
-  };
-  recentScans: Array<{
-    id: string;
-    name: string;
-    last_scan_at: string | null;
-    last_scan_status: string | null;
-    last_scan_count: number;
-  }>;
-}
 
 export default function DiscoveryDashboardPage() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
-  const [stats, setStats] = useState<Stats | null>(null);
-  const [queueItems, setQueueItems] = useState<QueueItem[]>([]);
-  const [sources, setSources] = useState<Source[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [queueFilter, setQueueFilter] = useState<QueueStatus | "all">("pending");
   const [queuePage, setQueuePage] = useState(1);
-  const [queueTotalPages, setQueueTotalPages] = useState(1);
-  const toastApi = useToast();
 
-  // Fetch stats
-  const fetchStats = useCallback(async () => {
-    try {
-      const response = await fetch("/api/admin/discovery/stats");
-      if (!response.ok) throw new Error("Failed to fetch stats");
-      const data = await response.json();
-      setStats(data);
-    } catch (error) {
-      console.error("Failed to fetch stats:", error);
-    }
-  }, []);
-
-  // Fetch queue items
-  const fetchQueue = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const params = new URLSearchParams({
-        page: queuePage.toString(),
-        limit: "20",
-        status: queueFilter,
-      });
-      const response = await fetch(`/api/admin/discovery/queue?${params}`);
-      if (!response.ok) throw new Error("Failed to fetch queue");
-      const data = await response.json();
-      setQueueItems(data.items || []);
-      setQueueTotalPages(data.totalPages || 1);
-    } catch {
-      toastApi.error("Error", "Failed to load discovery queue");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [queuePage, queueFilter, toastApi]);
-
-  // Fetch sources
-  const fetchSources = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/admin/discovery/sources");
-      if (!response.ok) throw new Error("Failed to fetch sources");
-      const data = await response.json();
-      setSources(data.sources || []);
-    } catch {
-      toastApi.error("Error", "Failed to load sources");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [toastApi]);
-
-  // Initial load
-  useEffect(() => {
-    fetchStats();
-  }, [fetchStats]);
-
-  // Fetch data based on active tab
-  useEffect(() => {
-    if (activeTab === "queue") {
-      fetchQueue();
-    } else if (activeTab === "sources") {
-      fetchSources();
-    }
-  }, [activeTab, fetchQueue, fetchSources]);
-
-  // Handle queue item action
-  const handleQueueAction = useCallback(
-    async (id: string, action: "approve" | "reject") => {
-      try {
-        const response = await fetch("/api/admin/discovery/queue", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id, action }),
-        });
-        if (!response.ok) throw new Error("Failed to update");
-        toastApi.success("Success", `Resource ${action === "approve" ? "approved" : "rejected"}`);
-        fetchQueue();
-        fetchStats();
-      } catch {
-        toastApi.error("Error", "Failed to update resource");
-      }
-    },
-    [fetchQueue, fetchStats, toastApi]
-  );
-
-  // Handle source toggle
-  const handleSourceToggle = useCallback(
-    async (id: string, isActive: boolean) => {
-      try {
-        const response = await fetch("/api/admin/discovery/sources", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id, action: "toggle", isActive }),
-        });
-        if (!response.ok) throw new Error("Failed to toggle");
-        toastApi.success("Success", `Source ${isActive ? "enabled" : "disabled"}`);
-        fetchSources();
-        fetchStats();
-      } catch {
-        toastApi.error("Error", "Failed to toggle source");
-      }
-    },
-    [fetchSources, fetchStats, toastApi]
-  );
+  // Use TanStack Query for stats (auto-refreshes every 30s)
+  const { data: stats } = useDiscoveryStats();
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Resource Discovery"
-        description="Manage discovery sources and review discovered resources"
-        badge={stats?.queue.pending || undefined}
-      />
-
-      {/* Tabs */}
-      <div className="flex border-b border-gray-200 dark:border-[#262626]">
-        {(["overview", "queue", "sources"] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={cn(
-              "px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors",
-              activeTab === tab
-                ? "border-blue-500 text-blue-600 dark:text-cyan-400"
-                : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-            )}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            {tab === "queue" && stats?.queue.pending ? (
-              <span className="ml-2 px-1.5 py-0.5 text-xs rounded-full bg-yellow-500/20 text-yellow-600 dark:text-yellow-400">
-                {stats.queue.pending}
-              </span>
-            ) : null}
-          </button>
-        ))}
-      </div>
-
-      {/* Tab Content */}
-      {activeTab === "overview" && <OverviewTab stats={stats} />}
-      {activeTab === "queue" && (
-        <QueueTab
-          items={queueItems}
-          isLoading={isLoading}
-          filter={queueFilter}
-          onFilterChange={(f) => {
-            setQueueFilter(f);
-            setQueuePage(1);
-          }}
-          page={queuePage}
-          totalPages={queueTotalPages}
-          onPageChange={setQueuePage}
-          onAction={handleQueueAction}
+    <QueryErrorBoundary>
+      <div className="space-y-6">
+        <PageHeader
+          title="Resource Discovery"
+          description="Manage discovery sources and review discovered resources"
+          badge={stats?.queue.pending || undefined}
         />
-      )}
-      {activeTab === "sources" && (
-        <SourcesTab sources={sources} isLoading={isLoading} onToggle={handleSourceToggle} />
-      )}
-    </div>
+
+        {/* Tabs */}
+        <div className="flex border-b border-gray-200 dark:border-[#262626]">
+          {(["overview", "queue", "sources"] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={cn(
+                "px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors",
+                activeTab === tab
+                  ? "border-blue-500 text-blue-600 dark:text-cyan-400"
+                  : "border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              )}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {tab === "queue" && stats?.queue.pending ? (
+                <span className="ml-2 px-1.5 py-0.5 text-xs rounded-full bg-yellow-500/20 text-yellow-600 dark:text-yellow-400">
+                  {stats.queue.pending}
+                </span>
+              ) : null}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === "overview" && <OverviewTab stats={stats} />}
+        {activeTab === "queue" && (
+          <QueueTab
+            filter={queueFilter}
+            onFilterChange={(f) => {
+              setQueueFilter(f);
+              setQueuePage(1);
+            }}
+            page={queuePage}
+            onPageChange={setQueuePage}
+          />
+        )}
+        {activeTab === "sources" && <SourcesTab />}
+      </div>
+    </QueryErrorBoundary>
   );
 }
 
 /**
  * Overview Tab - Stats and recent activity
  */
-function OverviewTab({ stats }: { stats: Stats | null }) {
+function OverviewTab({ stats }: { stats: DiscoveryStats | undefined }) {
   if (!stats) {
     return (
       <div className="space-y-4">
@@ -403,30 +243,40 @@ function OverviewTab({ stats }: { stats: Stats | null }) {
 
 /**
  * Queue Tab - List of discovered resources to review
+ * Uses TanStack Query with placeholderData for smooth pagination
  */
 function QueueTab({
-  items,
-  isLoading,
   filter,
   onFilterChange,
   page,
-  totalPages,
   onPageChange,
-  onAction,
 }: {
-  items: QueueItem[];
-  isLoading: boolean;
   filter: QueueStatus | "all";
   onFilterChange: (f: QueueStatus | "all") => void;
   page: number;
-  totalPages: number;
   onPageChange: (p: number) => void;
-  onAction: (id: string, action: "approve" | "reject") => void;
 }) {
+  // TanStack Query handles caching and loading states
+  const { data, isLoading, isFetching } = useDiscoveryQueue({
+    status: filter,
+    page,
+    limit: 20,
+  });
+
+  const items = data?.items || [];
+  const totalPages = data?.totalPages || 1;
+
+  // Mutation hook for approve/reject actions
+  const queueAction = useQueueAction();
+
+  const handleAction = (id: string, action: "approve" | "reject") => {
+    queueAction.mutate({ id, action });
+  };
+
   return (
     <div className="space-y-4">
       {/* Filters */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {(["all", "pending", "approved", "rejected"] as const).map((status) => (
           <button
             key={status}
@@ -441,6 +291,13 @@ function QueueTab({
             {status === "all" ? "All" : QUEUE_STATUS[status]?.label || status}
           </button>
         ))}
+
+        {/* Loading indicator for background refetch */}
+        {isFetching && !isLoading && (
+          <span className="text-xs text-gray-400 dark:text-gray-500 animate-pulse">
+            Updating...
+          </span>
+        )}
       </div>
 
       {/* Items */}
@@ -462,7 +319,12 @@ function QueueTab({
       ) : (
         <div className="space-y-3">
           {items.map((item) => (
-            <QueueItemCard key={item.id} item={item} onAction={onAction} />
+            <QueueItemCard
+              key={item.id}
+              item={item}
+              onAction={handleAction}
+              isPending={queueAction.isPending && queueAction.variables?.id === item.id}
+            />
           ))}
         </div>
       )}
@@ -499,9 +361,11 @@ function QueueTab({
 function QueueItemCard({
   item,
   onAction,
+  isPending,
 }: {
   item: QueueItem;
   onAction: (id: string, action: "approve" | "reject") => void;
+  isPending?: boolean;
 }) {
   const statusConfig = QUEUE_STATUS[item.status];
   const githubData = item.discovered_data?.github as { stars?: number; forks?: number } | undefined;
@@ -512,7 +376,8 @@ function QueueItemCard({
         "p-4 rounded-xl border",
         "bg-white dark:bg-[#111111]",
         "border-gray-200 dark:border-[#262626]",
-        "hover:border-blue-500/30 transition-colors"
+        "hover:border-blue-500/30 transition-colors",
+        isPending && "opacity-50 pointer-events-none"
       )}
     >
       <div className="flex items-start justify-between gap-4">
@@ -558,13 +423,15 @@ function QueueItemCard({
           <div className="flex items-center gap-2">
             <button
               onClick={() => onAction(item.id, "reject")}
-              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
+              disabled={isPending}
+              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
             >
               Reject
             </button>
             <button
               onClick={() => onAction(item.id, "approve")}
-              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors"
+              disabled={isPending}
+              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors disabled:opacity-50"
             >
               Approve
             </button>
@@ -577,16 +444,14 @@ function QueueItemCard({
 
 /**
  * Sources Tab - List of configured discovery sources
+ * Uses TanStack Query for automatic caching
  */
-function SourcesTab({
-  sources,
-  isLoading,
-  onToggle,
-}: {
-  sources: Source[];
-  isLoading: boolean;
-  onToggle: (id: string, isActive: boolean) => void;
-}) {
+function SourcesTab() {
+  const { data, isLoading } = useDiscoverySources();
+  const sourceToggle = useSourceToggle();
+
+  const sources = data?.sources || [];
+
   // Group by type
   const groupedSources = sources.reduce<Record<string, Source[]>>(
     (acc, source) => {
@@ -596,6 +461,10 @@ function SourcesTab({
     },
     {}
   );
+
+  const handleToggle = (id: string, isActive: boolean) => {
+    sourceToggle.mutate({ id, isActive });
+  };
 
   if (isLoading) {
     return (
@@ -622,7 +491,12 @@ function SourcesTab({
           </h3>
           <div className="space-y-2">
             {typeSources.map((source) => (
-              <SourceCard key={source.id} source={source} onToggle={onToggle} />
+              <SourceCard
+                key={source.id}
+                source={source}
+                onToggle={handleToggle}
+                isPending={sourceToggle.isPending && sourceToggle.variables?.id === source.id}
+              />
             ))}
           </div>
         </div>
@@ -637,9 +511,11 @@ function SourcesTab({
 function SourceCard({
   source,
   onToggle,
+  isPending,
 }: {
   source: Source;
   onToggle: (id: string, isActive: boolean) => void;
+  isPending?: boolean;
 }) {
   return (
     <div
@@ -647,7 +523,8 @@ function SourceCard({
         "p-4 rounded-xl border",
         "bg-white dark:bg-[#111111]",
         "border-gray-200 dark:border-[#262626]",
-        !source.is_active && "opacity-60"
+        !source.is_active && "opacity-60",
+        isPending && "opacity-50 pointer-events-none"
       )}
     >
       <div className="flex items-start justify-between gap-4">
@@ -697,8 +574,9 @@ function SourceCard({
 
         <button
           onClick={() => onToggle(source.id, !source.is_active)}
+          disabled={isPending}
           className={cn(
-            "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors",
+            "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors disabled:opacity-50",
             source.is_active
               ? "bg-gray-100 dark:bg-[#1a1a1a] text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#262626]"
               : "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50"

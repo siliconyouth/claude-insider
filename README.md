@@ -9,9 +9,9 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.13.7-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.14.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
-[![Features](https://img.shields.io/badge/57-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Features](https://img.shields.io/badge/58-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/1,952+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
@@ -122,7 +122,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 
 ---
 
-## 57 Platform Features
+## 58 Platform Features
 
 <details>
 <summary><b>Content & Documentation</b></summary>
@@ -182,7 +182,8 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 
 | Feature | Description |
 |---------|-------------|
-| Admin Dashboard | 23 pages across 5 sections with animated Recharts visualizations |
+| Admin Dashboard | 32 pages across 6 sections with TanStack Query, Cmd+K navigation, grouped sidebar |
+| Dashboard Modernization | TanStack Query v5, parallel API queries, global error/loading states, command palette |
 | Security Dashboard | Fingerprinting, trust scores, honeypots, activity feed |
 | Bot Challenge | Slider puzzle, math captcha, rate limit warnings, trust-based difficulty |
 | Audit Export | Bulk exports (JSON/CSV/XLSX), async job queue, anonymization |
@@ -300,19 +301,20 @@ pnpm dev
 
 | Category | Technology | Version |
 |----------|------------|---------|
-| Framework | Next.js (App Router, Turbopack) | 16.0.10 |
+| Framework | Next.js (App Router, Turbopack) | 16.1.1 |
 | UI Library | React | 19.2.3 |
 | Language | TypeScript (strict mode) | 5.9.3 |
-| Styling | Tailwind CSS | 4.1.5 |
+| Styling | Tailwind CSS | 4.1.18 |
 | Monorepo | Turborepo | 2.6.3 |
 | Package Manager | pnpm | 10.19.0 |
-| AI Provider | Anthropic SDK | latest |
-| Voice | ElevenLabs SDK | latest |
+| AI Provider | Anthropic SDK | 0.71.2 |
+| Voice | ElevenLabs SDK | 2.28.0 |
 | Search | Fuse.js | 7.1.0 |
-| Auth | Better Auth | 1.4.6 |
-| Database | Supabase | 2.87.1 |
-| CMS | Payload CMS | 3.68.3 |
+| Auth | Better Auth | 1.4.9 |
+| Database | Supabase | 2.89.0 |
+| CMS | Payload CMS | 3.69.0 |
 | Charts | Recharts | 3.6.0 |
+| State | TanStack Query | 5.90.15 |
 | E2EE | Matrix Olm/Megolm WASM | 16.0.0 |
 | Fingerprint | FingerprintJS | 5.0.1 |
 
@@ -326,7 +328,7 @@ See [CLAUDE.md](CLAUDE.md) for complete documentation.
 
 | Document | Description |
 |:---------|:------------|
-| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 57 feature requirements |
+| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 58 feature requirements |
 | [**CHANGELOG.md**](CHANGELOG.md) | Version history with detailed release notes |
 | [**ROADMAP.md**](ROADMAP.md) | Future feature planning and priorities |
 

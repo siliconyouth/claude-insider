@@ -4,20 +4,20 @@
  * Banned Users Management Page
  *
  * Admin page for managing banned users and reviewing ban appeals.
+ * Uses TanStack Query for data fetching and mutations.
  * Supports viewing banned users, reviewing appeals, and unbanning users.
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
 import {
-  getBannedUsers,
-  getBanAppeals,
-  reviewBanAppeal,
-  unbanUser,
+  useBannedUsers,
+  useBanAppeals,
+  useReviewBanAppeal,
+  useUnbanUser,
   type BannedUser,
   type BanAppeal,
-} from "@/app/actions/ban-appeals";
+} from "@/lib/query/hooks";
 import {
   PageHeader,
   EmptyState,
@@ -37,96 +37,62 @@ const APPEAL_STATUS = {
 };
 
 export default function BannedUsersPage() {
-  const toast = useToast();
-
   // Tab state
   const [activeTab, setActiveTab] = useState<TabView>("appeals");
 
-  // Banned users state
-  const [bannedUsers, setBannedUsers] = useState<BannedUser[]>([]);
-  const [bannedUsersLoading, setBannedUsersLoading] = useState(true);
-  const [bannedUsersTotal, setBannedUsersTotal] = useState(0);
-
-  // Appeals state
-  const [appeals, setAppeals] = useState<BanAppeal[]>([]);
-  const [appealsLoading, setAppealsLoading] = useState(true);
+  // Filter state
   const [appealFilter, setAppealFilter] = useState<AppealFilter>("pending");
 
   // Modal state
   const [selectedAppeal, setSelectedAppeal] = useState<BanAppeal | null>(null);
   const [reviewNotes, setReviewNotes] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
-  const [isReviewing, setIsReviewing] = useState(false);
 
   // Unban modal
   const [unbanTarget, setUnbanTarget] = useState<BannedUser | null>(null);
-  const [isUnbanning, setIsUnbanning] = useState(false);
 
-  const loadBannedUsers = useCallback(async () => {
-    setBannedUsersLoading(true);
-    const result = await getBannedUsers();
-    if (!result.error && result.users) {
-      setBannedUsers(result.users);
-      setBannedUsersTotal(result.total || 0);
-    }
-    setBannedUsersLoading(false);
-  }, []);
+  // TanStack Query hooks
+  const bannedUsersQuery = useBannedUsers();
+  const appealsQuery = useBanAppeals(appealFilter);
+  const reviewMutation = useReviewBanAppeal();
+  const unbanMutation = useUnbanUser();
 
-  const loadAppeals = useCallback(async () => {
-    setAppealsLoading(true);
-    const result = await getBanAppeals({
-      status: appealFilter === "all" ? "all" : appealFilter,
-    });
-    if (!result.error && result.appeals) {
-      setAppeals(result.appeals);
-    }
-    setAppealsLoading(false);
-  }, [appealFilter]);
+  // Derived data
+  const bannedUsers = bannedUsersQuery.data?.users || [];
+  const bannedUsersTotal = bannedUsersQuery.data?.total || 0;
+  const bannedUsersLoading = bannedUsersQuery.isPending;
 
-  useEffect(() => {
-    if (activeTab === "banned") {
-      loadBannedUsers();
-    } else {
-      loadAppeals();
-    }
-  }, [activeTab, loadBannedUsers, loadAppeals]);
+  const appeals = appealsQuery.data || [];
+  const appealsLoading = appealsQuery.isPending;
 
-  const handleReviewAppeal = async (decision: "approved" | "rejected") => {
+  const handleReviewAppeal = (decision: "approved" | "rejected") => {
     if (!selectedAppeal) return;
 
-    setIsReviewing(true);
-    const result = await reviewBanAppeal(selectedAppeal.id, decision, {
-      reviewNotes: reviewNotes.trim() || undefined,
-      responseMessage: responseMessage.trim() || undefined,
-    });
-
-    if (result.error) {
-      toast.error(result.error);
-    } else {
-      toast.success(decision === "approved" ? "Appeal approved! User has been unbanned." : "Appeal rejected.");
-      setSelectedAppeal(null);
-      setReviewNotes("");
-      setResponseMessage("");
-      loadAppeals();
-      loadBannedUsers();
-    }
-    setIsReviewing(false);
+    reviewMutation.mutate(
+      {
+        appealId: selectedAppeal.id,
+        decision,
+        reviewNotes: reviewNotes.trim() || undefined,
+        responseMessage: responseMessage.trim() || undefined,
+      },
+      {
+        onSuccess: () => {
+          setSelectedAppeal(null);
+          setReviewNotes("");
+          setResponseMessage("");
+        },
+      }
+    );
   };
 
-  const handleUnban = async () => {
+  const handleUnban = () => {
     if (!unbanTarget) return;
 
-    setIsUnbanning(true);
-    const result = await unbanUser(unbanTarget.id);
-
-    if (result.error) {
-      toast.error(result.error);
-    } else {
-      toast.success("User has been unbanned.");
-      setUnbanTarget(null);
-      loadBannedUsers();
-    }
-    setIsUnbanning(false);
+    unbanMutation.mutate(unbanTarget.id, {
+      onSuccess: () => {
+        setUnbanTarget(null);
+      },
+    });
   };
 
   const pendingCount = appeals.filter((a) => a.status === "pending").length;
@@ -186,7 +152,7 @@ export default function BannedUsersPage() {
           onClose={() => setSelectedAppeal(null)}
           title="Review Appeal"
           size="md"
-          isLoading={isReviewing}
+          isLoading={reviewMutation.isPending}
           primaryAction={{
             label: "Approve & Unban",
             onClick: () => handleReviewAppeal("approved"),
@@ -234,7 +200,7 @@ export default function BannedUsersPage() {
         title="Unban User"
         message={`Are you sure you want to unban ${unbanTarget?.name}? They will regain full access to their account.`}
         confirmLabel="Confirm Unban"
-        isLoading={isUnbanning}
+        isLoading={unbanMutation.isPending}
         variant="warning"
       />
     </div>

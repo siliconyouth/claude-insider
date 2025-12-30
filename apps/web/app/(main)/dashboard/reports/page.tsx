@@ -5,23 +5,26 @@
  *
  * Admin page for reviewing and managing user/comment reports.
  * Supports filtering by status and type, and taking action on reports.
+ *
+ * Migrated to TanStack Query for:
+ * - Automatic caching with stale-while-revalidate
+ * - Optimistic UI updates on mutations
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
 import {
-  getReports,
-  getReportStats,
-  reviewReport,
+  useReportsList,
+  useReportStats,
+  useReviewReport,
   type Report,
   type ReportStatus,
-  type ReportType,
-} from "@/app/actions/reports";
+  type ReportTypeFilter,
+} from "@/lib/query/hooks";
 
 type Tab = "all" | "pending" | "investigating" | "action_taken" | "dismissed";
 
-const STATUS_CONFIG: Record<ReportStatus, { label: string; bgColor: string; color: string }> = {
+const STATUS_CONFIG: Record<Exclude<ReportStatus, "all">, { label: string; bgColor: string; color: string }> = {
   pending: { label: "Pending", bgColor: "bg-yellow-100 dark:bg-yellow-900/30", color: "text-yellow-700 dark:text-yellow-400" },
   investigating: { label: "Investigating", bgColor: "bg-blue-100 dark:bg-blue-900/30", color: "text-blue-700 dark:text-blue-400" },
   action_taken: { label: "Action Taken", bgColor: "bg-emerald-100 dark:bg-emerald-900/30", color: "text-emerald-700 dark:text-emerald-400" },
@@ -38,94 +41,49 @@ const REASON_LABELS: Record<string, string> = {
 };
 
 export default function ReportsPage() {
-  const toast = useToast();
-  const [reports, setReports] = useState<Report[]>([]);
-  const [stats, setStats] = useState<{
-    total: number;
-    pending: number;
-    investigating: number;
-    actionTaken: number;
-    dismissed: number;
-    byType: { user: number; comment: number };
-  } | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Filter state (local)
   const [activeTab, setActiveTab] = useState<Tab>("pending");
-  const [typeFilter, setTypeFilter] = useState<ReportType | "all">("all");
+  const [typeFilter, setTypeFilter] = useState<ReportTypeFilter>("all");
+
+  // Modal state (local)
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
-  const [isReviewing, setIsReviewing] = useState(false);
   const [reviewNotes, setReviewNotes] = useState("");
   const [actionTaken, setActionTaken] = useState("");
   const [reporterMessage, setReporterMessage] = useState("");
 
-  const loadReports = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const status = activeTab === "all" ? undefined : activeTab;
-      const result = await getReports({
-        status: status as ReportStatus | undefined,
-        type: typeFilter === "all" ? undefined : typeFilter,
-      });
+  // TanStack Query hooks
+  const reportsQuery = useReportsList({
+    status: activeTab === "all" ? "all" : activeTab,
+    type: typeFilter,
+  });
 
-      if (result.success && result.reports) {
-        setReports(result.reports);
-      } else {
-        toast.error(result.error || "Failed to load reports");
-      }
-    } catch (error) {
-      console.error("Failed to load reports:", error);
-      toast.error("Failed to load reports");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [activeTab, typeFilter, toast]);
+  const statsQuery = useReportStats();
+  const reviewMutation = useReviewReport();
 
-  const loadStats = useCallback(async () => {
-    try {
-      const result = await getReportStats();
-      if (result.success && result.stats) {
-        setStats(result.stats);
-      }
-    } catch (error) {
-      console.error("Failed to load stats:", error);
-    }
-  }, []);
+  // Derived data
+  const reports = reportsQuery.data?.reports || [];
+  const stats = statsQuery.data;
 
-  useEffect(() => {
-    loadReports();
-  }, [loadReports]);
-
-  useEffect(() => {
-    loadStats();
-  }, [loadStats]);
-
-  const handleReview = async (decision: "investigating" | "action_taken" | "dismissed") => {
+  const handleReview = (decision: "investigating" | "action_taken" | "dismissed") => {
     if (!selectedReport) return;
 
-    setIsReviewing(true);
-    try {
-      const result = await reviewReport(selectedReport.id, decision, {
+    reviewMutation.mutate(
+      {
+        reportId: selectedReport.id,
+        status: decision,
         reviewNotes: reviewNotes.trim() || undefined,
         actionTaken: actionTaken.trim() || undefined,
         reporterMessage: reporterMessage.trim() || undefined,
-        sendNotifications: true,
-      });
-
-      if (result.success) {
-        toast.success("Report updated successfully");
-        setSelectedReport(null);
-        setReviewNotes("");
-        setActionTaken("");
-        setReporterMessage("");
-        loadReports();
-        loadStats();
-      } else {
-        toast.error(result.error || "Failed to update report");
+      },
+      {
+        onSuccess: () => {
+          setSelectedReport(null);
+          setReviewNotes("");
+          setActionTaken("");
+          setReporterMessage("");
+        },
       }
-    } catch {
-      toast.error("An unexpected error occurred");
-    } finally {
-      setIsReviewing(false);
-    }
+    );
   };
 
   const openReport = (report: Report) => {
@@ -196,7 +154,7 @@ export default function ReportsPage() {
           <span className="text-xs text-gray-500">Type:</span>
           <select
             value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value as ReportType | "all")}
+            onChange={(e) => setTypeFilter(e.target.value as ReportTypeFilter)}
             className="px-3 py-1.5 rounded-lg ui-select text-sm"
           >
             <option value="all">All Types</option>
@@ -208,7 +166,7 @@ export default function ReportsPage() {
 
       {/* Reports List */}
       <div className="rounded-xl border ui-border ui-bg-card overflow-hidden">
-        {isLoading ? (
+        {reportsQuery.isPending ? (
           <div className="p-8 space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="h-20 ui-bg-skeleton rounded-lg animate-pulse" />
@@ -226,76 +184,11 @@ export default function ReportsPage() {
         ) : (
           <div className="ui-divide divide-y">
             {reports.map((report) => (
-              <div
+              <ReportRow
                 key={report.id}
+                report={report}
                 onClick={() => openReport(report)}
-                className="p-4 ui-hover-row cursor-pointer transition-colors"
-              >
-                <div className="flex items-start gap-4">
-                  {/* Type Icon */}
-                  <div className={cn(
-                    "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0",
-                    report.reportType === "user" ? "bg-violet-100 dark:bg-violet-900/30" : "bg-cyan-100 dark:bg-cyan-900/30"
-                  )}>
-                    {report.reportType === "user" ? (
-                      <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
-                    ) : (
-                      <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                      </svg>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={cn(
-                        "px-2 py-0.5 rounded text-xs font-medium",
-                        STATUS_CONFIG[report.status].bgColor,
-                        STATUS_CONFIG[report.status].color
-                      )}>
-                        {STATUS_CONFIG[report.status].label}
-                      </span>
-                      <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
-                        {REASON_LABELS[report.reason] || report.reason}
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        {new Date(report.createdAt).toLocaleString()}
-                      </span>
-                    </div>
-
-                    <div className="mt-2">
-                      {report.reportType === "user" ? (
-                        <p className="text-sm text-gray-900 dark:text-white">
-                          <span className="text-gray-600 dark:text-gray-400">Reported user:</span>{" "}
-                          {report.reportedUserName || report.reportedUserEmail || "Unknown"}
-                        </p>
-                      ) : (
-                        <p className="text-sm text-gray-900 dark:text-white truncate">
-                          <span className="text-gray-600 dark:text-gray-400">Comment:</span>{" "}
-                          {report.reportedCommentContent?.slice(0, 100) || "Unknown comment"}
-                        </p>
-                      )}
-                      <p className="text-xs text-gray-500 mt-1">
-                        Reported by: {report.reporterName || report.reporterEmail || "Unknown"}
-                      </p>
-                    </div>
-
-                    {report.description && (
-                      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                        {report.description}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Arrow */}
-                  <svg className="w-5 h-5 text-gray-400 dark:text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
+              />
             ))}
           </div>
         )}
@@ -303,192 +196,317 @@ export default function ReportsPage() {
 
       {/* Report Detail Modal */}
       {selectedReport && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setSelectedReport(null)}
-          />
-          <div className="relative w-full max-w-2xl ui-bg-modal border ui-border rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            {/* Modal Header */}
-            <div className="sticky top-0 ui-bg-modal border-b ui-border p-6 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className={cn(
-                  "w-10 h-10 rounded-full flex items-center justify-center",
-                  selectedReport.reportType === "user" ? "bg-violet-100 dark:bg-violet-900/30" : "bg-cyan-100 dark:bg-cyan-900/30"
-                )}>
-                  {selectedReport.reportType === "user" ? (
-                    <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  ) : (
-                    <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
-                  )}
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold ui-text-heading">
-                    {selectedReport.reportType === "user" ? "User Report" : "Comment Report"}
-                  </h3>
-                  <p className="text-sm ui-text-secondary">
-                    {new Date(selectedReport.createdAt).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedReport(null)}
-                className="p-2 rounded-lg ui-btn-ghost"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        <ReportModal
+          report={selectedReport}
+          reviewNotes={reviewNotes}
+          actionTaken={actionTaken}
+          reporterMessage={reporterMessage}
+          onReviewNotesChange={setReviewNotes}
+          onActionTakenChange={setActionTaken}
+          onReporterMessageChange={setReporterMessage}
+          onReview={handleReview}
+          onClose={() => setSelectedReport(null)}
+          isReviewing={reviewMutation.isPending}
+        />
+      )}
+    </div>
+  );
+}
+
+// Report row component
+function ReportRow({
+  report,
+  onClick,
+}: {
+  report: Report;
+  onClick: () => void;
+}) {
+  const statusConfig = STATUS_CONFIG[report.status as keyof typeof STATUS_CONFIG];
+
+  return (
+    <div
+      onClick={onClick}
+      className="p-4 ui-hover-row cursor-pointer transition-colors"
+    >
+      <div className="flex items-start gap-4">
+        {/* Type Icon */}
+        <div className={cn(
+          "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0",
+          report.reportType === "user" ? "bg-violet-100 dark:bg-violet-900/30" : "bg-cyan-100 dark:bg-cyan-900/30"
+        )}>
+          {report.reportType === "user" ? (
+            <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className={cn(
+              "px-2 py-0.5 rounded text-xs font-medium",
+              statusConfig?.bgColor,
+              statusConfig?.color
+            )}>
+              {statusConfig?.label || report.status}
+            </span>
+            <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
+              {REASON_LABELS[report.reason] || report.reason}
+            </span>
+            <span className="text-xs text-gray-500">
+              {new Date(report.createdAt).toLocaleString()}
+            </span>
+          </div>
+
+          <div className="mt-2">
+            {report.reportType === "user" ? (
+              <p className="text-sm text-gray-900 dark:text-white">
+                <span className="text-gray-600 dark:text-gray-400">Reported user:</span>{" "}
+                {report.reportedUserName || report.reportedUserEmail || "Unknown"}
+              </p>
+            ) : (
+              <p className="text-sm text-gray-900 dark:text-white truncate">
+                <span className="text-gray-600 dark:text-gray-400">Comment:</span>{" "}
+                {report.reportedCommentContent?.slice(0, 100) || "Unknown comment"}
+              </p>
+            )}
+            <p className="text-xs text-gray-500 mt-1">
+              Reported by: {report.reporterName || report.reporterEmail || "Unknown"}
+            </p>
+          </div>
+
+          {report.description && (
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+              {report.description}
+            </p>
+          )}
+        </div>
+
+        {/* Arrow */}
+        <svg className="w-5 h-5 text-gray-400 dark:text-gray-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+// Report modal component
+function ReportModal({
+  report,
+  reviewNotes,
+  actionTaken,
+  reporterMessage,
+  onReviewNotesChange,
+  onActionTakenChange,
+  onReporterMessageChange,
+  onReview,
+  onClose,
+  isReviewing,
+}: {
+  report: Report;
+  reviewNotes: string;
+  actionTaken: string;
+  reporterMessage: string;
+  onReviewNotesChange: (value: string) => void;
+  onActionTakenChange: (value: string) => void;
+  onReporterMessageChange: (value: string) => void;
+  onReview: (decision: "investigating" | "action_taken" | "dismissed") => void;
+  onClose: () => void;
+  isReviewing: boolean;
+}) {
+  const statusConfig = STATUS_CONFIG[report.status as keyof typeof STATUS_CONFIG];
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div className="relative w-full max-w-2xl ui-bg-modal border ui-border rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+        {/* Modal Header */}
+        <div className="sticky top-0 ui-bg-modal border-b ui-border p-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className={cn(
+              "w-10 h-10 rounded-full flex items-center justify-center",
+              report.reportType === "user" ? "bg-violet-100 dark:bg-violet-900/30" : "bg-cyan-100 dark:bg-cyan-900/30"
+            )}>
+              {report.reportType === "user" ? (
+                <svg className="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-              </button>
+              ) : (
+                <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              )}
             </div>
-
-            {/* Modal Content */}
-            <div className="p-6 space-y-6">
-              {/* Status & Reason */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className={cn(
-                  "px-2 py-0.5 rounded text-xs font-medium",
-                  STATUS_CONFIG[selectedReport.status].bgColor,
-                  STATUS_CONFIG[selectedReport.status].color
-                )}>
-                  {STATUS_CONFIG[selectedReport.status].label}
-                </span>
-                <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
-                  {REASON_LABELS[selectedReport.reason] || selectedReport.reason}
-                </span>
-              </div>
-
-              {/* Reporter Info */}
-              <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
-                <h4 className="text-sm font-medium ui-text-secondary mb-2">Reporter</h4>
-                <p className="ui-text-heading">{selectedReport.reporterName || "Unknown"}</p>
-                <p className="text-sm ui-text-muted">{selectedReport.reporterEmail}</p>
-              </div>
-
-              {/* Reported Content */}
-              <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
-                <h4 className="text-sm font-medium ui-text-secondary mb-2">
-                  {selectedReport.reportType === "user" ? "Reported User" : "Reported Comment"}
-                </h4>
-                {selectedReport.reportType === "user" ? (
-                  <>
-                    <p className="ui-text-heading">{selectedReport.reportedUserName || "Unknown"}</p>
-                    <p className="text-sm ui-text-muted">{selectedReport.reportedUserEmail}</p>
-                  </>
-                ) : (
-                  <p className="ui-text-heading whitespace-pre-wrap">
-                    {selectedReport.reportedCommentContent || "Comment not available"}
-                  </p>
-                )}
-              </div>
-
-              {/* Description */}
-              {selectedReport.description && (
-                <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
-                  <h4 className="text-sm font-medium ui-text-secondary mb-2">Reporter&apos;s Description</h4>
-                  <p className="ui-text-heading whitespace-pre-wrap">{selectedReport.description}</p>
-                </div>
-              )}
-
-              {/* Review Section */}
-              {selectedReport.status !== "action_taken" && selectedReport.status !== "dismissed" && (
-                <>
-                  <div className="pt-4 border-t ui-border">
-                    <h4 className="text-sm font-medium ui-text-secondary mb-3">Review Notes (internal)</h4>
-                    <textarea
-                      value={reviewNotes}
-                      onChange={(e) => setReviewNotes(e.target.value)}
-                      placeholder="Add notes about your review..."
-                      rows={2}
-                      className="w-full px-3 py-2 rounded-lg ui-input text-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium ui-text-secondary mb-3">Action Taken</h4>
-                    <input
-                      type="text"
-                      value={actionTaken}
-                      onChange={(e) => setActionTaken(e.target.value)}
-                      placeholder="e.g., Warning issued, Comment hidden, User banned..."
-                      className="w-full px-3 py-2 rounded-lg ui-input text-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium ui-text-secondary mb-3">Message to Reporter</h4>
-                    <textarea
-                      value={reporterMessage}
-                      onChange={(e) => setReporterMessage(e.target.value)}
-                      placeholder="Optional message to send to the reporter..."
-                      rows={2}
-                      className="w-full px-3 py-2 rounded-lg ui-input text-sm"
-                    />
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-3 pt-4">
-                    {selectedReport.status === "pending" && (
-                      <button
-                        onClick={() => handleReview("investigating")}
-                        disabled={isReviewing}
-                        className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
-                      >
-                        {isReviewing ? "Updating..." : "Mark as Investigating"}
-                      </button>
-                    )}
-                    <button
-                      onClick={() => handleReview("action_taken")}
-                      disabled={isReviewing || !actionTaken.trim()}
-                      className="px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50"
-                    >
-                      {isReviewing ? "Updating..." : "Action Taken"}
-                    </button>
-                    <button
-                      onClick={() => handleReview("dismissed")}
-                      disabled={isReviewing}
-                      className="px-4 py-2 rounded-lg bg-gray-700 text-white text-sm font-medium hover:bg-gray-600 disabled:opacity-50"
-                    >
-                      {isReviewing ? "Updating..." : "Dismiss"}
-                    </button>
-                  </div>
-                </>
-              )}
-
-              {/* Completed Review Info */}
-              {(selectedReport.status === "action_taken" || selectedReport.status === "dismissed") && (
-                <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
-                  <h4 className="text-sm font-medium ui-text-secondary mb-2">Review Completed</h4>
-                  {selectedReport.reviewedByName && (
-                    <p className="text-sm ui-text-body">
-                      <span className="ui-text-muted">Reviewed by:</span> {selectedReport.reviewedByName}
-                    </p>
-                  )}
-                  {selectedReport.reviewedAt && (
-                    <p className="text-sm ui-text-body">
-                      <span className="ui-text-muted">Reviewed at:</span>{" "}
-                      {new Date(selectedReport.reviewedAt).toLocaleString()}
-                    </p>
-                  )}
-                  {selectedReport.actionTaken && (
-                    <p className="text-sm ui-text-body mt-2">
-                      <span className="ui-text-muted">Action:</span> {selectedReport.actionTaken}
-                    </p>
-                  )}
-                  {selectedReport.reviewNotes && (
-                    <p className="text-sm ui-text-body mt-2">
-                      <span className="ui-text-muted">Notes:</span> {selectedReport.reviewNotes}
-                    </p>
-                  )}
-                </div>
-              )}
+            <div>
+              <h3 className="text-lg font-semibold ui-text-heading">
+                {report.reportType === "user" ? "User Report" : "Comment Report"}
+              </h3>
+              <p className="text-sm ui-text-secondary">
+                {new Date(report.createdAt).toLocaleString()}
+              </p>
             </div>
           </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-lg ui-btn-ghost"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-      )}
+
+        {/* Modal Content */}
+        <div className="p-6 space-y-6">
+          {/* Status & Reason */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className={cn(
+              "px-2 py-0.5 rounded text-xs font-medium",
+              statusConfig?.bgColor,
+              statusConfig?.color
+            )}>
+              {statusConfig?.label || report.status}
+            </span>
+            <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400">
+              {REASON_LABELS[report.reason] || report.reason}
+            </span>
+          </div>
+
+          {/* Reporter Info */}
+          <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
+            <h4 className="text-sm font-medium ui-text-secondary mb-2">Reporter</h4>
+            <p className="ui-text-heading">{report.reporterName || "Unknown"}</p>
+            <p className="text-sm ui-text-muted">{report.reporterEmail}</p>
+          </div>
+
+          {/* Reported Content */}
+          <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
+            <h4 className="text-sm font-medium ui-text-secondary mb-2">
+              {report.reportType === "user" ? "Reported User" : "Reported Comment"}
+            </h4>
+            {report.reportType === "user" ? (
+              <>
+                <p className="ui-text-heading">{report.reportedUserName || "Unknown"}</p>
+                <p className="text-sm ui-text-muted">{report.reportedUserEmail}</p>
+              </>
+            ) : (
+              <p className="ui-text-heading whitespace-pre-wrap">
+                {report.reportedCommentContent || "Comment not available"}
+              </p>
+            )}
+          </div>
+
+          {/* Description */}
+          {report.description && (
+            <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
+              <h4 className="text-sm font-medium ui-text-secondary mb-2">Reporter&apos;s Description</h4>
+              <p className="ui-text-heading whitespace-pre-wrap">{report.description}</p>
+            </div>
+          )}
+
+          {/* Review Section */}
+          {report.status !== "action_taken" && report.status !== "dismissed" && (
+            <>
+              <div className="pt-4 border-t ui-border">
+                <h4 className="text-sm font-medium ui-text-secondary mb-3">Review Notes (internal)</h4>
+                <textarea
+                  value={reviewNotes}
+                  onChange={(e) => onReviewNotesChange(e.target.value)}
+                  placeholder="Add notes about your review..."
+                  rows={2}
+                  className="w-full px-3 py-2 rounded-lg ui-input text-sm"
+                />
+              </div>
+
+              <div>
+                <h4 className="text-sm font-medium ui-text-secondary mb-3">Action Taken</h4>
+                <input
+                  type="text"
+                  value={actionTaken}
+                  onChange={(e) => onActionTakenChange(e.target.value)}
+                  placeholder="e.g., Warning issued, Comment hidden, User banned..."
+                  className="w-full px-3 py-2 rounded-lg ui-input text-sm"
+                />
+              </div>
+
+              <div>
+                <h4 className="text-sm font-medium ui-text-secondary mb-3">Message to Reporter</h4>
+                <textarea
+                  value={reporterMessage}
+                  onChange={(e) => onReporterMessageChange(e.target.value)}
+                  placeholder="Optional message to send to the reporter..."
+                  rows={2}
+                  className="w-full px-3 py-2 rounded-lg ui-input text-sm"
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 pt-4">
+                {report.status === "pending" && (
+                  <button
+                    onClick={() => onReview("investigating")}
+                    disabled={isReviewing}
+                    className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+                  >
+                    {isReviewing ? "Updating..." : "Mark as Investigating"}
+                  </button>
+                )}
+                <button
+                  onClick={() => onReview("action_taken")}
+                  disabled={isReviewing || !actionTaken.trim()}
+                  className="px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50"
+                >
+                  {isReviewing ? "Updating..." : "Action Taken"}
+                </button>
+                <button
+                  onClick={() => onReview("dismissed")}
+                  disabled={isReviewing}
+                  className="px-4 py-2 rounded-lg bg-gray-700 text-white text-sm font-medium hover:bg-gray-600 disabled:opacity-50"
+                >
+                  {isReviewing ? "Updating..." : "Dismiss"}
+                </button>
+              </div>
+            </>
+          )}
+
+          {/* Completed Review Info */}
+          {(report.status === "action_taken" || report.status === "dismissed") && (
+            <div className="p-4 rounded-lg ui-bg-card-hover border ui-border">
+              <h4 className="text-sm font-medium ui-text-secondary mb-2">Review Completed</h4>
+              {report.reviewedByName && (
+                <p className="text-sm ui-text-body">
+                  <span className="ui-text-muted">Reviewed by:</span> {report.reviewedByName}
+                </p>
+              )}
+              {report.reviewedAt && (
+                <p className="text-sm ui-text-body">
+                  <span className="ui-text-muted">Reviewed at:</span>{" "}
+                  {new Date(report.reviewedAt).toLocaleString()}
+                </p>
+              )}
+              {report.actionTaken && (
+                <p className="text-sm ui-text-body mt-2">
+                  <span className="ui-text-muted">Action:</span> {report.actionTaken}
+                </p>
+              )}
+              {report.reviewNotes && (
+                <p className="text-sm ui-text-body mt-2">
+                  <span className="ui-text-muted">Notes:</span> {report.reviewNotes}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

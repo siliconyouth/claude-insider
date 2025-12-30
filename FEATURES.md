@@ -1,6 +1,6 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **57 implemented features** with detailed capabilities.
+Complete list of all **58 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
@@ -67,6 +67,7 @@ Complete list of all **57 implemented features** with detailed capabilities.
 | FR-55 | Matrix SDK Chat Features | Emoji reactions (optimistic updates, realtime broadcast), reply threading (click-to-scroll, quoted preview), in-conversation search (300ms debounce, keyboard nav), message drafts (localStorage), gap detection, batched read receipts, retry queue |
 | FR-56 | Resource Submissions | User-submitted resources, `/resources/submit` form, rate limiting (10/50/100 per day by trust level), duplicate detection, AI-powered analysis queue, admin moderation workflow, status notifications (received/reviewing/approved/rejected), IP-hashed anonymous limits |
 | FR-57 | Optimistic UI | Matrix SDK pattern for instant messaging, temp IDs for optimistic messages, immediate sound/scroll feedback, background server sync, send button unblocked in ~2ms, CSS `overflow-anchor` scroll preservation, flexbox layout (no TanStack Virtual) |
+| FR-58 | Dashboard Modernization | TanStack Query v5 for all 32 dashboard pages, Query Key Factory pattern (`queryKeys.*`), Promise.all() API parallelization (Discovery 5→parallel, Donations 9→parallel), global error.tsx and loading.tsx, Command Palette (Cmd+K) with 32+ navigation commands, grouped sidebar navigation (6 collapsible groups), real-time badge counts (30s polling), optimistic mutations, extended design tokens (ui-nav-*, ui-cmd-*) |
 
 ---
 
@@ -92,12 +93,13 @@ Complete list of all **57 implemented features** with detailed capabilities.
 - User profiles with covers, OG images
 - Sound effects with 10 themes
 
-### Admin & Moderation (FR-9, FR-23, FR-24, FR-41, FR-44, FR-53)
+### Admin & Moderation (FR-9, FR-23, FR-24, FR-41, FR-44, FR-53, FR-58)
 - Admin diagnostics dashboard
 - Content management pages
 - Audit export with anonymization
 - Comprehensive admin settings system with role-based access
 - SEO dashboard with health checks and previews
+- Dashboard modernization with TanStack Query, command palette, grouped navigation
 
 ### AI & Automation (FR-38, FR-39, FR-40, FR-42, FR-46, FR-56)
 - Resource auto-update pipeline

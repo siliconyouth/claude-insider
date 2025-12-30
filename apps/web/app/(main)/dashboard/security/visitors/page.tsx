@@ -2,15 +2,21 @@
  * Visitor Management Page
  *
  * List, view, block, and manage visitor fingerprints.
+ * Uses TanStack Query for data fetching and caching.
  */
 
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { TrustScoreBadge, TrustScoreBar } from "@/components/dashboard/security";
 import { format } from "date-fns";
+import {
+  useSecurityVisitors,
+  useBlockVisitor,
+  useUnblockVisitor,
+} from "@/lib/query/hooks";
 import type { VisitorFingerprint } from "@/lib/fingerprint";
 import type { TrustLevel } from "@/lib/trust-score";
 import {
@@ -26,11 +32,7 @@ import {
 const PAGE_SIZE = 25;
 
 export default function VisitorsPage() {
-  const [visitors, setVisitors] = useState<VisitorFingerprint[]>([]);
-  const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedVisitor, setSelectedVisitor] =
     useState<VisitorFingerprint | null>(null);
 
@@ -38,65 +40,34 @@ export default function VisitorsPage() {
   const [filterBlocked, setFilterBlocked] = useState<boolean | undefined>();
   const [filterTrust, setFilterTrust] = useState<TrustLevel | undefined>();
 
-  const fetchVisitors = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
+  const visitorsQuery = useSecurityVisitors({
+    page,
+    limit: PAGE_SIZE,
+    isBlocked: filterBlocked,
+    trustLevel: filterTrust,
+  });
 
-      const params = new URLSearchParams({
-        limit: String(PAGE_SIZE),
-        offset: String((page - 1) * PAGE_SIZE),
-        sortBy: "last_seen",
-        sortOrder: "desc",
-      });
+  const blockMutation = useBlockVisitor();
+  const unblockMutation = useUnblockVisitor();
 
-      if (filterBlocked !== undefined)
-        params.set("isBlocked", String(filterBlocked));
-      if (filterTrust) params.set("trustLevel", filterTrust);
+  const visitors = visitorsQuery.data?.visitors || [];
+  const total = visitorsQuery.data?.pagination?.total || 0;
+  const isLoading = visitorsQuery.isPending;
+  const error = visitorsQuery.error;
 
-      const response = await fetch(`/api/dashboard/security/visitors?${params}`);
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || "Failed to fetch visitors");
-      }
-
-      setVisitors(data.visitors);
-      setTotal(data.pagination.total);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch visitors");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, filterBlocked, filterTrust]);
-
-  useEffect(() => {
-    fetchVisitors();
-  }, [fetchVisitors]);
+  const isMutating = blockMutation.isPending || unblockMutation.isPending;
 
   const handleAction = async (
     visitorId: string,
     action: "block" | "unblock",
     reason?: string
   ) => {
-    try {
-      const response = await fetch("/api/dashboard/security/visitors", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ visitorId, action, reason }),
-      });
-
-      const data = await response.json();
-      if (!data.success) {
-        throw new Error(data.error || "Action failed");
-      }
-
-      // Refresh list
-      fetchVisitors();
-      setSelectedVisitor(null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Action failed");
+    if (action === "block") {
+      await blockMutation.mutateAsync({ visitorId, reason });
+    } else {
+      await unblockMutation.mutateAsync(visitorId);
     }
+    setSelectedVisitor(null);
   };
 
   return (
@@ -121,8 +92,8 @@ export default function VisitorsPage() {
           </div>
         </div>
         <button
-          onClick={fetchVisitors}
-          disabled={isLoading}
+          onClick={() => visitorsQuery.refetch()}
+          disabled={visitorsQuery.isFetching}
           className={cn(
             "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium",
             "bg-emerald-500 text-white",
@@ -130,7 +101,7 @@ export default function VisitorsPage() {
             "disabled:opacity-50"
           )}
         >
-          <ArrowPathIcon className={cn("h-4 w-4", isLoading && "animate-spin")} />
+          <ArrowPathIcon className={cn("h-4 w-4", visitorsQuery.isFetching && "animate-spin")} />
           Refresh
         </button>
       </div>
@@ -171,7 +142,7 @@ export default function VisitorsPage() {
       {/* Error Message */}
       {error && (
         <div className="rounded-lg bg-red-500/10 p-4 text-red-500">
-          <p className="text-sm">{error}</p>
+          <p className="text-sm">{error.message}</p>
         </div>
       )}
 
@@ -242,7 +213,8 @@ export default function VisitorsPage() {
                   {visitor.isBlocked ? (
                     <button
                       onClick={() => handleAction(visitor.visitorId, "unblock")}
-                      className="rounded-lg p-2 text-emerald-500 hover:bg-emerald-500/10"
+                      disabled={isMutating}
+                      className="rounded-lg p-2 text-emerald-500 hover:bg-emerald-500/10 disabled:opacity-50"
                       title="Unblock"
                     >
                       <ShieldCheckIcon className="h-5 w-5" />
@@ -252,7 +224,8 @@ export default function VisitorsPage() {
                       onClick={() =>
                         handleAction(visitor.visitorId, "block", "Manual block")
                       }
-                      className="rounded-lg p-2 text-red-500 hover:bg-red-500/10"
+                      disabled={isMutating}
+                      className="rounded-lg p-2 text-red-500 hover:bg-red-500/10 disabled:opacity-50"
                       title="Block"
                     >
                       <ShieldExclamationIcon className="h-5 w-5" />

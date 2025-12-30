@@ -2,14 +2,16 @@
  * Security Logs Page
  *
  * Browse and filter security events with pagination.
+ * Uses TanStack Query for data fetching and caching.
  */
 
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import { LogTable, type LogFilters } from "@/components/dashboard/security";
+import { useSecurityLogs } from "@/lib/query/hooks";
 import type { SecurityLogEntry } from "@/lib/security-logger";
 import {
   DocumentTextIcon,
@@ -21,48 +23,22 @@ import {
 const PAGE_SIZE = 50;
 
 export default function SecurityLogsPage() {
-  const [logs, setLogs] = useState<SecurityLogEntry[]>([]);
-  const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<LogFilters>({});
 
-  const fetchLogs = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
+  const logsQuery = useSecurityLogs({
+    page,
+    limit: PAGE_SIZE,
+    severity: filters.severity,
+    eventType: filters.eventType,
+    isBot: filters.isBot,
+    honeypotServed: filters.honeypotServed,
+  });
 
-      const params = new URLSearchParams({
-        limit: String(PAGE_SIZE),
-        offset: String((page - 1) * PAGE_SIZE),
-      });
-
-      if (filters.eventType) params.set("eventType", filters.eventType);
-      if (filters.severity) params.set("severity", filters.severity);
-      if (filters.isBot !== undefined) params.set("isBot", String(filters.isBot));
-      if (filters.honeypotServed !== undefined)
-        params.set("honeypotServed", String(filters.honeypotServed));
-
-      const response = await fetch(`/api/dashboard/security/logs?${params}`);
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || "Failed to fetch logs");
-      }
-
-      setLogs(data.logs);
-      setTotal(data.pagination.total);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch logs");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [page, filters]);
-
-  useEffect(() => {
-    fetchLogs();
-  }, [fetchLogs]);
+  const logs = logsQuery.data?.logs || [];
+  const total = logsQuery.data?.pagination?.total || 0;
+  const isLoading = logsQuery.isPending;
+  const error = logsQuery.error;
 
   const handleFilterChange = (newFilters: LogFilters) => {
     setFilters(newFilters);
@@ -165,8 +141,8 @@ export default function SecurityLogsPage() {
             Export CSV
           </button>
           <button
-            onClick={fetchLogs}
-            disabled={isLoading}
+            onClick={() => logsQuery.refetch()}
+            disabled={logsQuery.isFetching}
             className={cn(
               "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium",
               "bg-purple-500 text-white",
@@ -174,7 +150,7 @@ export default function SecurityLogsPage() {
               "disabled:opacity-50"
             )}
           >
-            <ArrowPathIcon className={cn("h-4 w-4", isLoading && "animate-spin")} />
+            <ArrowPathIcon className={cn("h-4 w-4", logsQuery.isFetching && "animate-spin")} />
             Refresh
           </button>
         </div>
@@ -183,7 +159,7 @@ export default function SecurityLogsPage() {
       {/* Error Message */}
       {error && (
         <div className="rounded-lg bg-red-500/10 p-4 text-red-500">
-          <p className="text-sm">{error}</p>
+          <p className="text-sm">{error.message}</p>
         </div>
       )}
 

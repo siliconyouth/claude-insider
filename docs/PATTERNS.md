@@ -18,6 +18,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 10. [Matrix SDK Patterns](#matrix-sdk-patterns-v1134) - Reactions, replies, search, drafts (v1.13.4)
 11. [Optimistic Messaging Patterns](#optimistic-messaging-patterns-mandatory---v1137) - Instant feedback, scroll preservation (MANDATORY)
 12. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
+13. [Dashboard Data Fetching Patterns](#dashboard-data-fetching-patterns-mandatory---v1140) - TanStack Query, query keys, parallelization (MANDATORY)
 
 ---
 
@@ -1590,4 +1591,250 @@ console.log(
   `Created: ${created}, Updated: ${updated}, Skipped: ${skipped} - ETA: ${etaStr}`
 );
 ```
+
+---
+
+## Dashboard Data Fetching Patterns (MANDATORY - v1.14.0)
+
+**CRITICAL**: All dashboard pages MUST use TanStack Query for data fetching. The old `useState + useEffect + fetch` pattern is PROHIBITED.
+
+### Query Key Factory (MANDATORY)
+
+```typescript
+// lib/query/keys.ts - Centralized query key factory
+export const queryKeys = {
+  // Dashboard stats
+  stats: ['dashboard', 'stats'] as const,
+  chartStats: ['dashboard', 'chart-stats'] as const,
+  navCounts: ['dashboard', 'nav-counts'] as const,
+
+  // Users
+  users: {
+    all: ['dashboard', 'users'] as const,
+    list: (filters: UsersFilters) => ['dashboard', 'users', 'list', filters] as const,
+    detail: (id: string) => ['dashboard', 'users', id] as const,
+  },
+
+  // Discovery
+  discovery: {
+    stats: ['dashboard', 'discovery', 'stats'] as const,
+    queue: (filters: QueueFilters) => ['dashboard', 'discovery', 'queue', filters] as const,
+    sources: ['dashboard', 'discovery', 'sources'] as const,
+  },
+
+  // Feedback
+  feedback: {
+    all: ['dashboard', 'feedback'] as const,
+    list: (filters: FeedbackFilters) => ['dashboard', 'feedback', 'list', filters] as const,
+  },
+} as const;
+```
+
+### Dashboard Page Pattern (MANDATORY)
+
+```tsx
+// ✅ CORRECT: TanStack Query with Suspense
+'use client';
+
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { queryKeys, STALE_TIMES } from '@/lib/query';
+
+function DashboardPageContent() {
+  const queryClient = useQueryClient();
+
+  // Data fetching with proper cache configuration
+  const { data, isLoading, error } = useQuery({
+    queryKey: queryKeys.discovery.stats,
+    queryFn: () => fetch('/api/admin/discovery/stats').then(r => r.json()),
+    staleTime: STALE_TIMES.STATS,      // 30 seconds for stats
+    gcTime: STALE_TIMES.STATS * 2,     // Keep in cache 60 seconds
+  });
+
+  // Mutations with cache invalidation
+  const mutation = useMutation({
+    mutationFn: (id: string) => fetch(`/api/admin/items/${id}`, { method: 'DELETE' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.discovery.stats });
+    },
+  });
+
+  if (isLoading) return <PageSkeleton />;
+  if (error) return <ErrorState error={error} />;
+
+  return <PageContent data={data} onDelete={mutation.mutate} />;
+}
+
+// ❌ WRONG: Old useState + useEffect pattern (PROHIBITED)
+function OldPattern() {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/admin/discovery/stats')
+      .then(r => r.json())
+      .then(setData)
+      .finally(() => setIsLoading(false));
+  }, []);
+  // This causes: no caching, no refetch, no error boundaries, infinite loading bugs
+}
+```
+
+### Stale Time Constants
+
+```typescript
+// lib/query/index.ts
+export const STALE_TIMES = {
+  STATS: 30 * 1000,        // 30 seconds - dashboard statistics
+  LIST: 60 * 1000,         // 1 minute - paginated lists
+  DETAIL: 5 * 60 * 1000,   // 5 minutes - individual item details
+  NAV_COUNTS: 30 * 1000,   // 30 seconds - navigation badge counts
+} as const;
+```
+
+### API Route Parallelization (MANDATORY)
+
+```typescript
+// ✅ CORRECT: Promise.all() for parallel queries
+export async function GET() {
+  const [statsResult, trendResult, recentResult] = await Promise.all([
+    pool.query(`SELECT COUNT(*) FROM resources`),
+    pool.query(`SELECT DATE(created_at), COUNT(*) FROM resources GROUP BY 1`),
+    pool.query(`SELECT * FROM resources ORDER BY created_at DESC LIMIT 10`),
+  ]);
+
+  return NextResponse.json({
+    stats: statsResult.rows[0],
+    trend: trendResult.rows,
+    recent: recentResult.rows,
+  });
+}
+
+// ❌ WRONG: Sequential queries (causes infinite loading, 3x slower)
+export async function GET() {
+  const stats = await pool.query(`SELECT COUNT(*) FROM resources`);        // 100ms
+  const trend = await pool.query(`SELECT DATE(created_at)...`);            // 100ms
+  const recent = await pool.query(`SELECT * FROM resources...`);           // 100ms
+  // Total: 300ms+ (vs ~100ms with Promise.all)
+}
+```
+
+### Optimistic Mutations Pattern
+
+```typescript
+// Dashboard mutation with optimistic update
+const deleteMutation = useMutation({
+  mutationFn: async (id: string) => {
+    const res = await fetch(`/api/admin/items/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Delete failed');
+    return id;
+  },
+  // Optimistic update
+  onMutate: async (deletedId) => {
+    await queryClient.cancelQueries({ queryKey: queryKeys.items.all });
+    const previousItems = queryClient.getQueryData(queryKeys.items.all);
+
+    queryClient.setQueryData(queryKeys.items.all, (old: Item[]) =>
+      old?.filter(item => item.id !== deletedId)
+    );
+
+    return { previousItems };
+  },
+  // Rollback on error
+  onError: (_err, _id, context) => {
+    queryClient.setQueryData(queryKeys.items.all, context?.previousItems);
+    toast.error('Failed to delete item');
+  },
+  // Refetch on success
+  onSettled: () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.items.all });
+  },
+});
+```
+
+### Real-Time Badge Counts
+
+```typescript
+// hooks/use-nav-counts.ts
+export function useNavCounts() {
+  return useQuery({
+    queryKey: queryKeys.navCounts,
+    queryFn: () => fetch('/api/dashboard/nav-counts').then(r => r.json()),
+    staleTime: STALE_TIMES.NAV_COUNTS,
+    refetchInterval: 30 * 1000,  // Poll every 30 seconds
+  });
+}
+
+// Usage in sidebar
+function NavBadge({ type }: { type: keyof NavCounts }) {
+  const { data: counts } = useNavCounts();
+  const count = counts?.[type] || 0;
+
+  if (count === 0) return null;
+
+  return (
+    <span className="ui-nav-badge">
+      {count > 99 ? '99+' : count}
+    </span>
+  );
+}
+```
+
+### Command Palette Navigation
+
+```typescript
+// lib/commands/navigation-commands.ts
+export const navigationCommands: Command[] = [
+  {
+    id: 'nav-dashboard',
+    label: 'Dashboard Overview',
+    category: 'navigation',
+    keywords: ['home', 'main', 'overview'],
+    action: () => router.push('/dashboard'),
+  },
+  {
+    id: 'nav-users',
+    label: 'User Management',
+    category: 'navigation',
+    keywords: ['users', 'accounts', 'members'],
+    action: () => router.push('/dashboard/users'),
+  },
+  // ... 32+ navigation commands for all dashboard pages
+];
+
+// Cmd+K opens command palette
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      setOpen(true);
+    }
+  };
+  document.addEventListener('keydown', handleKeyDown);
+  return () => document.removeEventListener('keydown', handleKeyDown);
+}, []);
+```
+
+### Key Files Reference
+
+| File | Purpose |
+|------|---------|
+| `lib/query/index.ts` | QueryClient config, STALE_TIMES |
+| `lib/query/keys.ts` | Query key factory |
+| `lib/query/hooks/*.ts` | Custom query hooks |
+| `components/providers/query-provider.tsx` | TanStack Query provider |
+| `app/(main)/dashboard/error.tsx` | Global error boundary |
+| `app/(main)/dashboard/loading.tsx` | Global loading skeleton |
+| `components/command-palette/index.tsx` | Cmd+K navigation |
+| `components/dashboard/nav/*.tsx` | Grouped sidebar navigation |
+
+### Implementation Checklist
+
+- [ ] Page uses `useQuery` from `@tanstack/react-query`
+- [ ] Query key from `queryKeys` factory (not inline arrays)
+- [ ] `staleTime` configured from `STALE_TIMES` constants
+- [ ] API route uses `Promise.all()` for multiple queries
+- [ ] Mutations use `onSuccess` to invalidate related queries
+- [ ] No `useState + useEffect + fetch` pattern
+- [ ] Error states handled via query error or error boundary
+- [ ] Loading states use skeleton or Suspense fallback
 

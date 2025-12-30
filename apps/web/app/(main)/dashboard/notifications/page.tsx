@@ -4,26 +4,28 @@
  * Admin Notifications Management
  *
  * Create, edit, schedule, and manage notifications for users.
+ * Uses TanStack Query for data fetching and mutations.
  * Supports multi-channel delivery (in-app, push, email) and targeting.
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/design-system";
-import { useToast } from "@/components/toast";
 import {
-  getAdminNotifications,
-  createAdminNotification,
-  updateAdminNotification,
-  scheduleAdminNotification,
-  cancelAdminNotification,
-  deleteAdminNotification,
-  searchUsersForNotification,
-  getRecipientCount,
-  sendVersionNotification,
+  useAdminNotifications,
+  useCreateNotification,
+  useUpdateNotification,
+  useScheduleNotification,
+  useCancelNotification,
+  useDeleteNotification,
+  useSendVersionNotification,
   type AdminNotification,
   type AdminNotificationStatus,
-  type TargetType,
   type CreateAdminNotificationParams,
+} from "@/lib/query/hooks";
+import {
+  searchUsersForNotification,
+  getRecipientCount,
+  type TargetType,
 } from "@/app/actions/admin-notifications";
 
 const STATUS_COLORS: Record<AdminNotificationStatus, { bg: string; text: string }> = {
@@ -53,17 +55,12 @@ interface SearchedUser {
 }
 
 export default function NotificationsPage() {
-  const toast = useToast();
-  const [notifications, setNotifications] = useState<AdminNotification[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<FilterStatus>("all");
-  const [total, setTotal] = useState(0);
 
   // Modal state
   const [showModal, setShowModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
 
   // Form state
   const [title, setTitle] = useState("");
@@ -92,33 +89,23 @@ export default function NotificationsPage() {
   const [versionNumber, setVersionNumber] = useState("");
   const [versionTitle, setVersionTitle] = useState("");
   const [versionHighlights, setVersionHighlights] = useState("");
-  const [isSendingVersion, setIsSendingVersion] = useState(false);
 
-  // Fetch notifications
-  const fetchNotifications = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const result = await getAdminNotifications({
-        status: statusFilter === "all" ? undefined : statusFilter,
-        limit: 50,
-      });
+  // TanStack Query hooks
+  const notificationsQuery = useAdminNotifications(
+    statusFilter === "all" ? undefined : statusFilter
+  );
+  const createMutation = useCreateNotification();
+  const updateMutation = useUpdateNotification();
+  const scheduleMutation = useScheduleNotification();
+  const cancelMutation = useCancelNotification();
+  const deleteMutation = useDeleteNotification();
+  const versionMutation = useSendVersionNotification();
 
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        setNotifications(result.data || []);
-        setTotal(result.total || 0);
-      }
-    } catch {
-      toast.error("Failed to load notifications");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [statusFilter, toast]);
-
-  useEffect(() => {
-    fetchNotifications();
-  }, [fetchNotifications]);
+  // Derived data
+  const notifications = notificationsQuery.data?.notifications || [];
+  const total = notificationsQuery.data?.total || 0;
+  const isLoading = notificationsQuery.isPending;
+  const isSaving = createMutation.isPending || updateMutation.isPending;
 
   // Search users with debounce
   useEffect(() => {
@@ -212,111 +199,54 @@ export default function NotificationsPage() {
   };
 
   // Handle save
-  const handleSave = async () => {
-    if (!title.trim()) {
-      toast.error("Title is required");
-      return;
-    }
+  const handleSave = () => {
+    const params: CreateAdminNotificationParams = {
+      title: title.trim(),
+      message: message.trim() || undefined,
+      link: link.trim() || undefined,
+      send_in_app: sendInApp,
+      send_push: sendPush,
+      send_email: sendEmail,
+      target_type: targetType,
+      target_roles: targetType === "role" ? targetRoles : undefined,
+      target_user_ids: targetType === "users" ? targetUserIds : undefined,
+      scheduled_at: !sendImmediately && scheduledAt ? scheduledAt : undefined,
+    };
 
-    if (targetType === "role" && targetRoles.length === 0) {
-      toast.error("Please select at least one role");
-      return;
-    }
-
-    if (targetType === "users" && targetUserIds.length === 0) {
-      toast.error("Please select at least one user");
-      return;
-    }
-
-    setIsSaving(true);
-
-    try {
-      const params: CreateAdminNotificationParams = {
-        title: title.trim(),
-        message: message.trim() || undefined,
-        link: link.trim() || undefined,
-        send_in_app: sendInApp,
-        send_push: sendPush,
-        send_email: sendEmail,
-        target_type: targetType,
-        target_roles: targetType === "role" ? targetRoles : undefined,
-        target_user_ids: targetType === "users" ? targetUserIds : undefined,
-        scheduled_at: !sendImmediately && scheduledAt ? scheduledAt : undefined,
-      };
-
-      if (isEditing && editingId) {
-        const result = await updateAdminNotification(editingId, params);
-        if (result.error) {
-          toast.error(result.error);
-        } else {
-          toast.success("Notification updated");
+    if (isEditing && editingId) {
+      updateMutation.mutate(
+        { id: editingId, params },
+        {
+          onSuccess: () => {
+            setShowModal(false);
+            resetForm();
+          },
+        }
+      );
+    } else {
+      createMutation.mutate(params, {
+        onSuccess: () => {
           setShowModal(false);
           resetForm();
-          fetchNotifications();
-        }
-      } else {
-        const result = await createAdminNotification(params);
-        if (result.error) {
-          toast.error(result.error);
-        } else {
-          toast.success("Notification created");
-          setShowModal(false);
-          resetForm();
-          fetchNotifications();
-        }
-      }
-    } catch {
-      toast.error("Failed to save notification");
-    } finally {
-      setIsSaving(false);
+        },
+      });
     }
   };
 
   // Handle schedule/send
-  const handleSchedule = async (id: string, immediate: boolean) => {
-    try {
-      const result = await scheduleAdminNotification(id, immediate);
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        toast.success(immediate ? "Notification queued for sending" : "Notification scheduled");
-        fetchNotifications();
-      }
-    } catch {
-      toast.error("Failed to schedule notification");
-    }
+  const handleSchedule = (id: string, immediate: boolean) => {
+    scheduleMutation.mutate({ id, immediate });
   };
 
   // Handle cancel
-  const handleCancel = async (id: string) => {
-    try {
-      const result = await cancelAdminNotification(id);
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        toast.success("Notification cancelled");
-        fetchNotifications();
-      }
-    } catch {
-      toast.error("Failed to cancel notification");
-    }
+  const handleCancel = (id: string) => {
+    cancelMutation.mutate(id);
   };
 
   // Handle delete
-  const handleDelete = async (id: string) => {
+  const handleDelete = (id: string) => {
     if (!confirm("Are you sure you want to delete this notification?")) return;
-
-    try {
-      const result = await deleteAdminNotification(id);
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        toast.success("Notification deleted");
-        fetchNotifications();
-      }
-    } catch {
-      toast.error("Failed to delete notification");
-    }
+    deleteMutation.mutate(id);
   };
 
   // Add user to targets
@@ -349,46 +279,25 @@ export default function NotificationsPage() {
   };
 
   // Handle sending version notification
-  const handleSendVersionNotification = async () => {
-    if (!versionNumber.trim()) {
-      toast.error("Version number is required");
-      return;
-    }
+  const handleSendVersionNotification = () => {
+    // Parse highlights (one per line)
+    const highlights = versionHighlights
+      .split("\n")
+      .map((h) => h.trim())
+      .filter((h) => h.length > 0);
 
-    if (!versionTitle.trim()) {
-      toast.error("Title is required");
-      return;
-    }
-
-    setIsSendingVersion(true);
-
-    try {
-      // Parse highlights (one per line)
-      const highlights = versionHighlights
-        .split("\n")
-        .map((h) => h.trim())
-        .filter((h) => h.length > 0);
-
-      const result = await sendVersionNotification({
+    versionMutation.mutate(
+      {
         version: versionNumber.trim(),
         title: versionTitle.trim(),
         highlights: highlights.length > 0 ? highlights : undefined,
-      });
-
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        toast.success(
-          `Version update notification sent to ${result.notifiedCount} users!`
-        );
-        resetVersionModal();
-        fetchNotifications();
+      },
+      {
+        onSuccess: () => {
+          resetVersionModal();
+        },
       }
-    } catch {
-      toast.error("Failed to send version notification");
-    } finally {
-      setIsSendingVersion(false);
-    }
+    );
   };
 
   return (
@@ -988,7 +897,7 @@ export default function NotificationsPage() {
               </button>
               <button
                 onClick={handleSendVersionNotification}
-                disabled={isSendingVersion}
+                disabled={versionMutation.isPending}
                 className={cn(
                   "px-4 py-2 rounded-lg text-sm font-medium",
                   "bg-emerald-600 text-white",
@@ -996,7 +905,7 @@ export default function NotificationsPage() {
                   "disabled:opacity-50 disabled:cursor-not-allowed"
                 )}
               >
-                {isSendingVersion ? (
+                {versionMutation.isPending ? (
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />

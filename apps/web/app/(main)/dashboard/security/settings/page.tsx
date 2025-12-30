@@ -2,6 +2,7 @@
  * Security Settings Page
  *
  * Configure bot detection, fingerprinting, honeypots, and logging.
+ * Uses TanStack Query for data fetching and batch updates.
  */
 
 "use client";
@@ -10,22 +11,16 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
 import {
+  useSecuritySettings,
+  useUpdateSecuritySettings,
+  type SecuritySetting,
+} from "@/lib/query/hooks";
+import {
   CogIcon,
   ArrowLeftIcon,
   ArrowPathIcon,
   CheckIcon,
 } from "@heroicons/react/24/outline";
-
-interface SecuritySetting {
-  id: string;
-  key: string;
-  value: unknown;
-  valueType: string;
-  description: string | null;
-  category: string;
-}
-
-type GroupedSettings = Record<string, SecuritySetting[]>;
 
 const categoryLabels: Record<string, { title: string; description: string }> = {
   general: {
@@ -54,38 +49,33 @@ const categoryLabels: Record<string, { title: string; description: string }> = {
   },
 };
 
+function formatSettingLabel(key: string): string {
+  return key
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 export default function SecuritySettingsPage() {
-  const [settings, setSettings] = useState<GroupedSettings>({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [pendingChanges, setPendingChanges] = useState<
     Record<string, unknown>
   >({});
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const fetchSettings = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      const response = await fetch("/api/dashboard/security/settings");
-      const data = await response.json();
+  const settingsQuery = useSecuritySettings();
+  const updateMutation = useUpdateSecuritySettings();
 
-      if (!data.success) {
-        throw new Error(data.error || "Failed to fetch settings");
-      }
+  const grouped = settingsQuery.data?.grouped || {};
+  const isLoading = settingsQuery.isPending;
+  const error = settingsQuery.error;
 
-      setSettings(data.grouped);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch settings");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  // Clear success message after 3 seconds
   useEffect(() => {
-    fetchSettings();
-  }, []);
+    if (successMessage) {
+      const timer = setTimeout(() => setSuccessMessage(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
 
   const handleChange = (key: string, value: unknown) => {
     setPendingChanges((prev) => ({ ...prev, [key]: value }));
@@ -96,38 +86,14 @@ export default function SecuritySettingsPage() {
       return;
     }
 
-    try {
-      setIsSaving(true);
-      setError(null);
-      setSuccessMessage(null);
+    const updates = Object.entries(pendingChanges).map(([key, value]) => ({
+      key,
+      value,
+    }));
 
-      const updates = Object.entries(pendingChanges).map(([key, value]) => ({
-        key,
-        value,
-      }));
-
-      const response = await fetch("/api/dashboard/security/settings", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ updates }),
-      });
-
-      const data = await response.json();
-      if (!data.success) {
-        throw new Error(data.error || "Failed to save settings");
-      }
-
-      setPendingChanges({});
-      setSuccessMessage(`${data.updated} setting(s) updated`);
-      fetchSettings();
-
-      // Clear success message after 3 seconds
-      setTimeout(() => setSuccessMessage(null), 3000);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save settings");
-    } finally {
-      setIsSaving(false);
-    }
+    await updateMutation.mutateAsync({ updates });
+    setPendingChanges({});
+    setSuccessMessage(`${updates.length} setting(s) updated`);
   };
 
   const getValue = (setting: SecuritySetting) => {
@@ -162,8 +128,8 @@ export default function SecuritySettingsPage() {
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={fetchSettings}
-            disabled={isLoading}
+            onClick={() => settingsQuery.refetch()}
+            disabled={settingsQuery.isFetching}
             className={cn(
               "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium",
               "border border-gray-200 dark:border-[#262626]",
@@ -171,13 +137,13 @@ export default function SecuritySettingsPage() {
             )}
           >
             <ArrowPathIcon
-              className={cn("h-4 w-4", isLoading && "animate-spin")}
+              className={cn("h-4 w-4", settingsQuery.isFetching && "animate-spin")}
             />
             Refresh
           </button>
           <button
             onClick={handleSave}
-            disabled={!hasChanges || isSaving}
+            disabled={!hasChanges || updateMutation.isPending}
             className={cn(
               "flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium",
               "bg-blue-500 text-white",
@@ -185,7 +151,7 @@ export default function SecuritySettingsPage() {
               "disabled:opacity-50 disabled:cursor-not-allowed"
             )}
           >
-            {isSaving ? (
+            {updateMutation.isPending ? (
               <ArrowPathIcon className="h-4 w-4 animate-spin" />
             ) : (
               <CheckIcon className="h-4 w-4" />
@@ -198,7 +164,12 @@ export default function SecuritySettingsPage() {
       {/* Messages */}
       {error && (
         <div className="rounded-lg bg-red-500/10 p-4 text-red-500">
-          <p className="text-sm">{error}</p>
+          <p className="text-sm">{error.message}</p>
+        </div>
+      )}
+      {updateMutation.error && (
+        <div className="rounded-lg bg-red-500/10 p-4 text-red-500">
+          <p className="text-sm">{updateMutation.error.message}</p>
         </div>
       )}
       {successMessage && (
@@ -223,7 +194,7 @@ export default function SecuritySettingsPage() {
       ) : (
         <div className="space-y-6">
           {Object.entries(categoryLabels).map(([category, info]) => {
-            const categorySettings = settings[category] || [];
+            const categorySettings = grouped[category] || [];
             if (categorySettings.length === 0) return null;
 
             return (
@@ -311,11 +282,4 @@ export default function SecuritySettingsPage() {
       )}
     </div>
   );
-}
-
-function formatSettingLabel(key: string): string {
-  return key
-    .split("_")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
 }

@@ -60,112 +60,125 @@ export async function GET(request: NextRequest) {
     const days = parseInt(searchParams.get('days') || '30');
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);
 
-    // Aggregate stats
-    const statsResult = await pool.query(`
-      SELECT
-        COALESCE(SUM(CASE WHEN status = 'completed' THEN amount ELSE 0 END), 0) as total_raised,
-        COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_donations,
-        COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending_donations,
-        COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_donations,
-        COUNT(DISTINCT CASE WHEN status = 'completed' THEN user_id END) as unique_donors,
-        COUNT(CASE WHEN status = 'completed' AND is_recurring THEN 1 END) as recurring_donations,
-        COALESCE(AVG(CASE WHEN status = 'completed' THEN amount END), 0) as average_donation,
-        MAX(CASE WHEN status = 'completed' THEN amount END) as largest_donation
-      FROM donations
-    `);
+    // Run all queries in parallel for better performance
+    const [
+      statsResult,
+      todayResult,
+      weekResult,
+      monthResult,
+      trendResult,
+      methodResult,
+      tierResult,
+      recentResult,
+      pendingTransfersResult,
+    ] = await Promise.all([
+      // Aggregate stats
+      pool.query(`
+        SELECT
+          COALESCE(SUM(CASE WHEN status = 'completed' THEN amount ELSE 0 END), 0) as total_raised,
+          COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_donations,
+          COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending_donations,
+          COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_donations,
+          COUNT(DISTINCT CASE WHEN status = 'completed' THEN user_id END) as unique_donors,
+          COUNT(CASE WHEN status = 'completed' AND is_recurring THEN 1 END) as recurring_donations,
+          COALESCE(AVG(CASE WHEN status = 'completed' THEN amount END), 0) as average_donation,
+          MAX(CASE WHEN status = 'completed' THEN amount END) as largest_donation
+        FROM donations
+      `),
 
-    // Today's stats
-    const todayResult = await pool.query(`
-      SELECT
-        COALESCE(SUM(amount), 0) as amount,
-        COUNT(*) as count
-      FROM donations
-      WHERE status = 'completed'
-        AND created_at >= CURRENT_DATE
-    `);
+      // Today's stats
+      pool.query(`
+        SELECT
+          COALESCE(SUM(amount), 0) as amount,
+          COUNT(*) as count
+        FROM donations
+        WHERE status = 'completed'
+          AND created_at >= CURRENT_DATE
+      `),
 
-    // This week's stats
-    const weekResult = await pool.query(`
-      SELECT
-        COALESCE(SUM(amount), 0) as amount,
-        COUNT(*) as count
-      FROM donations
-      WHERE status = 'completed'
-        AND created_at >= date_trunc('week', CURRENT_DATE)
-    `);
+      // This week's stats
+      pool.query(`
+        SELECT
+          COALESCE(SUM(amount), 0) as amount,
+          COUNT(*) as count
+        FROM donations
+        WHERE status = 'completed'
+          AND created_at >= date_trunc('week', CURRENT_DATE)
+      `),
 
-    // This month's stats
-    const monthResult = await pool.query(`
-      SELECT
-        COALESCE(SUM(amount), 0) as amount,
-        COUNT(*) as count
-      FROM donations
-      WHERE status = 'completed'
-        AND created_at >= date_trunc('month', CURRENT_DATE)
-    `);
+      // This month's stats
+      pool.query(`
+        SELECT
+          COALESCE(SUM(amount), 0) as amount,
+          COUNT(*) as count
+        FROM donations
+        WHERE status = 'completed'
+          AND created_at >= date_trunc('month', CURRENT_DATE)
+      `),
 
-    // Daily trend for chart
-    const trendResult = await pool.query<DonationTrend>(`
-      SELECT
-        DATE(created_at) as date,
-        COALESCE(SUM(amount), 0) as amount,
-        COUNT(*) as count
-      FROM donations
-      WHERE status = 'completed'
-        AND created_at >= CURRENT_DATE - $1 * INTERVAL '1 day'
-      GROUP BY DATE(created_at)
-      ORDER BY date ASC
-    `, [days]);
+      // Daily trend for chart
+      pool.query<DonationTrend>(`
+        SELECT
+          DATE(created_at) as date,
+          COALESCE(SUM(amount), 0) as amount,
+          COUNT(*) as count
+        FROM donations
+        WHERE status = 'completed'
+          AND created_at >= CURRENT_DATE - $1 * INTERVAL '1 day'
+        GROUP BY DATE(created_at)
+        ORDER BY date ASC
+      `, [days]),
 
-    // By payment method
-    const methodResult = await pool.query(`
-      SELECT
-        payment_method,
-        COALESCE(SUM(amount), 0) as amount,
-        COUNT(*) as count
-      FROM donations
-      WHERE status = 'completed'
-      GROUP BY payment_method
-    `);
+      // By payment method
+      pool.query(`
+        SELECT
+          payment_method,
+          COALESCE(SUM(amount), 0) as amount,
+          COUNT(*) as count
+        FROM donations
+        WHERE status = 'completed'
+        GROUP BY payment_method
+      `),
 
-    // By badge tier
-    const tierResult = await pool.query(`
-      SELECT
-        tier,
-        COUNT(*) as count,
-        COALESCE(SUM(total_donated), 0) as total_amount
-      FROM donor_badges
-      GROUP BY tier
-      ORDER BY
-        CASE tier
-          WHEN 'platinum' THEN 1
-          WHEN 'gold' THEN 2
-          WHEN 'silver' THEN 3
-          WHEN 'bronze' THEN 4
-        END
-    `);
+      // By badge tier
+      pool.query(`
+        SELECT
+          tier,
+          COUNT(*) as count,
+          COALESCE(SUM(total_donated), 0) as total_amount
+        FROM donor_badges
+        GROUP BY tier
+        ORDER BY
+          CASE tier
+            WHEN 'platinum' THEN 1
+            WHEN 'gold' THEN 2
+            WHEN 'silver' THEN 3
+            WHEN 'bronze' THEN 4
+          END
+      `),
 
-    // Recent donations (with user info)
-    const recentResult = await pool.query<RecentDonation>(`
-      SELECT
-        d.id, d.amount, d.currency, d.payment_method, d.status,
-        d.donor_name, d.donor_email, d.is_anonymous, d.message,
-        d.created_at, d.user_id,
-        u.name as user_name
-      FROM donations d
-      LEFT JOIN "user" u ON u.id = d.user_id
-      ORDER BY d.created_at DESC
-      LIMIT $1
-    `, [limit]);
+      // Recent donations (with user info)
+      pool.query<RecentDonation>(`
+        SELECT
+          d.id, d.amount, d.currency, d.payment_method, d.status,
+          d.donor_name, d.donor_email, d.is_anonymous, d.message,
+          d.created_at, d.user_id,
+          u.name as user_name
+        FROM donations d
+        LEFT JOIN "user" u ON u.id = d.user_id
+        ORDER BY d.created_at DESC
+        LIMIT $1
+      `, [limit]),
 
-    // Pending bank transfers (need admin confirmation)
-    const pendingTransfersResult = await pool.query(`
-      SELECT
-        id, amount, currency, donor_name, donor_email, message, created_at
-      FROM donations
-      WHERE payment_method = 'bank_transfer' AND status = 'pending'
-      ORDER BY created_at ASC
-    `);
+      // Pending bank transfers (need admin confirmation)
+      pool.query(`
+        SELECT
+          id, amount, currency, donor_name, donor_email, message, created_at
+        FROM donations
+        WHERE payment_method = 'bank_transfer' AND status = 'pending'
+        ORDER BY created_at ASC
+      `),
+    ]);
 
     const stats = statsResult.rows[0];
     const today = todayResult.rows[0];

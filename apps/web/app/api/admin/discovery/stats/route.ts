@@ -28,51 +28,56 @@ export async function GET() {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Get queue counts by status
-    const queueStats = await pool.query<{ status: string; count: string }>(`
-      SELECT status, COUNT(*) as count
-      FROM resource_discovery_queue
-      GROUP BY status
-    `);
+    // Run all queries in parallel for better performance
+    // Previously these were sequential, causing infinite loading when any query was slow
+    const [queueStats, sourceStats, sourcesByType, recentScans, dueForScan] =
+      await Promise.all([
+        // Get queue counts by status
+        pool.query<{ status: string; count: string }>(`
+          SELECT status, COUNT(*) as count
+          FROM resource_discovery_queue
+          GROUP BY status
+        `),
 
-    // Get source counts
-    const sourceStats = await pool.query<{ is_active: boolean; count: string }>(`
-      SELECT is_active, COUNT(*) as count
-      FROM resource_sources
-      GROUP BY is_active
-    `);
+        // Get source counts
+        pool.query<{ is_active: boolean; count: string }>(`
+          SELECT is_active, COUNT(*) as count
+          FROM resource_sources
+          GROUP BY is_active
+        `),
 
-    // Get sources by type
-    const sourcesByType = await pool.query<{ type: string; count: string }>(`
-      SELECT type, COUNT(*) as count
-      FROM resource_sources
-      GROUP BY type
-      ORDER BY count DESC
-    `);
+        // Get sources by type
+        pool.query<{ type: string; count: string }>(`
+          SELECT type, COUNT(*) as count
+          FROM resource_sources
+          GROUP BY type
+          ORDER BY count DESC
+        `),
 
-    // Get recent scan activity
-    const recentScans = await pool.query<{
-      id: string;
-      name: string;
-      last_scan_at: string | null;
-      last_scan_status: string | null;
-      last_scan_count: number;
-    }>(`
-      SELECT id, name, last_scan_at, last_scan_status, last_scan_count
-      FROM resource_sources
-      WHERE last_scan_at IS NOT NULL
-      ORDER BY last_scan_at DESC
-      LIMIT 5
-    `);
+        // Get recent scan activity
+        pool.query<{
+          id: string;
+          name: string;
+          last_scan_at: string | null;
+          last_scan_status: string | null;
+          last_scan_count: number;
+        }>(`
+          SELECT id, name, last_scan_at, last_scan_status, last_scan_count
+          FROM resource_sources
+          WHERE last_scan_at IS NOT NULL
+          ORDER BY last_scan_at DESC
+          LIMIT 5
+        `),
 
-    // Get sources due for scan
-    const dueForScan = await pool.query<{ count: string }>(`
-      SELECT COUNT(*) as count
-      FROM resource_sources
-      WHERE is_active = TRUE
-        AND scan_frequency != 'manual'
-        AND (next_scan_at IS NULL OR next_scan_at <= NOW())
-    `);
+        // Get sources due for scan
+        pool.query<{ count: string }>(`
+          SELECT COUNT(*) as count
+          FROM resource_sources
+          WHERE is_active = TRUE
+            AND scan_frequency != 'manual'
+            AND (next_scan_at IS NULL OR next_scan_at <= NOW())
+        `),
+      ]);
 
     // Aggregate stats
     const queueCounts = {
