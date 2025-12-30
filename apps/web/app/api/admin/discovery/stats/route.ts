@@ -62,10 +62,10 @@ export async function GET() {
           last_scan_status: string | null;
           last_scan_count: number;
         }>(`
-          SELECT id, name, last_scan_at, last_scan_status, last_scan_count
+          SELECT id, name, last_scanned_at as last_scan_at, last_scan_status, last_discovered_count as last_scan_count
           FROM resource_sources
-          WHERE last_scan_at IS NOT NULL
-          ORDER BY last_scan_at DESC
+          WHERE last_scanned_at IS NOT NULL
+          ORDER BY last_scanned_at DESC
           LIMIT 5
         `),
 
