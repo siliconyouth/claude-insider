@@ -123,8 +123,21 @@ export async function GET() {
     });
   } catch (error) {
     console.error("[Discovery Stats API] Error:", error);
+
+    // Check if it's a "relation does not exist" error (tables not created)
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    if (errorMessage.includes("does not exist") || errorMessage.includes("relation")) {
+      // Return empty stats if tables don't exist yet
+      return NextResponse.json({
+        queue: { pending: 0, reviewing: 0, approved: 0, rejected: 0, total: 0 },
+        sources: { active: 0, inactive: 0, total: 0, dueForScan: 0, byType: {} },
+        recentScans: [],
+        _notice: "Discovery tables not yet created. Run migration 090_resource_sources.sql",
+      });
+    }
+
     return NextResponse.json(
-      { error: "Failed to fetch discovery stats" },
+      { error: "Failed to fetch discovery stats", details: errorMessage },
       { status: 500 }
     );
   }
