@@ -24,6 +24,7 @@ export {
   useQueueAction,
   useSourceToggle,
   useTriggerScan,
+  useTriggerAllScans,
   useBulkQueueAction,
   type QueueStatus,
   type QueueItem,

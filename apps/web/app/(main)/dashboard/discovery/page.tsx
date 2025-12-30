@@ -17,6 +17,8 @@ import {
   useDiscoverySources,
   useQueueAction,
   useSourceToggle,
+  useTriggerScan,
+  useTriggerAllScans,
   useBulkQueueAction,
   type QueueStatus,
   type QueueItem,
@@ -646,12 +648,17 @@ function QueueItemCard({
 /**
  * Sources Tab - List of configured discovery sources
  * Uses TanStack Query for automatic caching
+ * Includes manual scan triggers for individual sources and bulk scanning
  */
 function SourcesTab() {
   const { data, isLoading } = useDiscoverySources();
+  const { data: stats } = useDiscoveryStats();
   const sourceToggle = useSourceToggle();
+  const triggerScan = useTriggerScan();
+  const triggerAllScans = useTriggerAllScans();
 
   const sources = data?.sources || [];
+  const dueForScan = stats?.sources.dueForScan || 0;
 
   // Group by type
   const groupedSources = sources.reduce<Record<string, Source[]>>(
@@ -665,6 +672,10 @@ function SourcesTab() {
 
   const handleToggle = (id: string, isActive: boolean) => {
     sourceToggle.mutate({ id, isActive });
+  };
+
+  const handleTriggerScan = (id: string) => {
+    triggerScan.mutate(id);
   };
 
   if (isLoading) {
@@ -683,6 +694,37 @@ function SourcesTab() {
 
   return (
     <div className="space-y-6">
+      {/* Scan All Button */}
+      {dueForScan > 0 && (
+        <div className="flex items-center justify-between p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
+          <div>
+            <p className="text-sm font-medium text-yellow-700 dark:text-yellow-300">
+              {dueForScan} source{dueForScan !== 1 ? "s" : ""} due for scan
+            </p>
+            <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-0.5">
+              Cron runs every 6 hours. Trigger manually to scan now.
+            </p>
+          </div>
+          <button
+            onClick={() => triggerAllScans.mutate()}
+            disabled={triggerAllScans.isPending}
+            className="px-4 py-2 text-sm font-medium rounded-lg bg-yellow-600 text-white hover:bg-yellow-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+          >
+            {triggerAllScans.isPending ? (
+              <>
+                <SpinnerIcon className="w-4 h-4 animate-spin" />
+                Scanning...
+              </>
+            ) : (
+              <>
+                <RefreshIcon className="w-4 h-4" />
+                Scan All Due
+              </>
+            )}
+          </button>
+        </div>
+      )}
+
       {Object.entries(groupedSources).map(([type, typeSources]) => (
         <div key={type}>
           <h3 className="flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
@@ -696,7 +738,9 @@ function SourcesTab() {
                 key={source.id}
                 source={source}
                 onToggle={handleToggle}
-                isPending={sourceToggle.isPending && sourceToggle.variables?.id === source.id}
+                onTriggerScan={handleTriggerScan}
+                isTogglePending={sourceToggle.isPending && sourceToggle.variables?.id === source.id}
+                isScanPending={triggerScan.isPending && triggerScan.variables === source.id}
               />
             ))}
           </div>
@@ -708,16 +752,26 @@ function SourcesTab() {
 
 /**
  * Source Card
+ * Includes toggle for active status and manual scan trigger
  */
 function SourceCard({
   source,
   onToggle,
-  isPending,
+  onTriggerScan,
+  isTogglePending,
+  isScanPending,
 }: {
   source: Source;
   onToggle: (id: string, isActive: boolean) => void;
-  isPending?: boolean;
+  onTriggerScan: (id: string) => void;
+  isTogglePending?: boolean;
+  isScanPending?: boolean;
 }) {
+  const isPending = isTogglePending || isScanPending;
+
+  // Check if source is due for scan
+  const isDue = source.is_active && source.next_scan_at && new Date(source.next_scan_at) <= new Date();
+
   return (
     <div
       className={cn(
@@ -742,6 +796,11 @@ function SourceCard({
             >
               {source.is_active ? "Active" : "Inactive"}
             </span>
+            {isDue && (
+              <span className="px-2 py-0.5 text-xs rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">
+                Due
+              </span>
+            )}
           </div>
 
           <a
@@ -773,18 +832,39 @@ function SourceCard({
           </div>
         </div>
 
-        <button
-          onClick={() => onToggle(source.id, !source.is_active)}
-          disabled={isPending}
-          className={cn(
-            "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors disabled:opacity-50",
-            source.is_active
-              ? "bg-gray-100 dark:bg-[#1a1a1a] text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#262626]"
-              : "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50"
+        {/* Actions */}
+        <div className="flex items-center gap-2">
+          {/* Scan Now Button - only for active sources */}
+          {source.is_active && (
+            <button
+              onClick={() => onTriggerScan(source.id)}
+              disabled={isPending}
+              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors disabled:opacity-50 flex items-center gap-1.5"
+              title="Queue this source for immediate scan"
+            >
+              {isScanPending ? (
+                <SpinnerIcon className="w-3.5 h-3.5 animate-spin" />
+              ) : (
+                <RefreshIcon className="w-3.5 h-3.5" />
+              )}
+              Scan
+            </button>
           )}
-        >
-          {source.is_active ? "Disable" : "Enable"}
-        </button>
+
+          {/* Toggle Active/Inactive */}
+          <button
+            onClick={() => onToggle(source.id, !source.is_active)}
+            disabled={isPending}
+            className={cn(
+              "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors disabled:opacity-50",
+              source.is_active
+                ? "bg-gray-100 dark:bg-[#1a1a1a] text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#262626]"
+                : "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50"
+            )}
+          >
+            {source.is_active ? "Disable" : "Enable"}
+          </button>
+        </div>
       </div>
     </div>
   );

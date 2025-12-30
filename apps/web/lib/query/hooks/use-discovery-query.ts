@@ -233,6 +233,42 @@ export function useTriggerScan() {
 }
 
 /**
+ * Trigger discovery scan for all due sources
+ */
+export function useTriggerAllScans() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/cron/discover", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to trigger scans");
+      }
+      return response.json();
+    },
+    onSuccess: (data) => {
+      // Invalidate sources and stats
+      queryClient.invalidateQueries({ queryKey: queryKeys.discovery.sources });
+      queryClient.invalidateQueries({ queryKey: queryKeys.discovery.stats });
+      queryClient.invalidateQueries({ queryKey: ["dashboard", "discovery", "queue"] });
+
+      toast.success(
+        "Discovery Complete",
+        `Processed ${data.summary?.sourcesProcessed || 0} sources, queued ${data.summary?.totalQueued || 0} new resources`
+      );
+    },
+    onError: (error) => {
+      toast.error("Error", error.message || "Failed to trigger discovery");
+    },
+  });
+}
+
+/**
  * Bulk approve/reject queue items
  */
 export function useBulkQueueAction() {
