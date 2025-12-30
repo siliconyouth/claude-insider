@@ -24,6 +24,7 @@ import {
   type QueueItem,
   type Source,
   type DiscoveryStats,
+  type DiscoveryScanResponse,
 } from "@/lib/query/hooks";
 import { QueryErrorBoundary } from "@/components/dashboard/query-error-boundary";
 
@@ -649,8 +650,12 @@ function QueueItemCard({
  * Sources Tab - List of configured discovery sources
  * Uses TanStack Query for automatic caching
  * Includes manual scan triggers for individual sources and bulk scanning
+ * Shows live scan results after triggering
  */
 function SourcesTab() {
+  const [scanResults, setScanResults] = useState<DiscoveryScanResponse | null>(null);
+  const [showResults, setShowResults] = useState(false);
+
   const { data, isLoading } = useDiscoverySources();
   const { data: stats } = useDiscoveryStats();
   const sourceToggle = useSourceToggle();
@@ -678,6 +683,19 @@ function SourcesTab() {
     triggerScan.mutate(id);
   };
 
+  const handleTriggerAllScans = () => {
+    setScanResults(null);
+    setShowResults(true);
+    triggerAllScans.mutate(undefined, {
+      onSuccess: (data) => {
+        setScanResults(data);
+      },
+      onError: (error) => {
+        setScanResults({ success: false, error: error.message });
+      },
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -695,33 +713,151 @@ function SourcesTab() {
   return (
     <div className="space-y-6">
       {/* Scan All Button */}
-      {dueForScan > 0 && (
-        <div className="flex items-center justify-between p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
-          <div>
-            <p className="text-sm font-medium text-yellow-700 dark:text-yellow-300">
-              {dueForScan} source{dueForScan !== 1 ? "s" : ""} due for scan
-            </p>
-            <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-0.5">
-              Cron runs every 6 hours. Trigger manually to scan now.
-            </p>
+      {(dueForScan > 0 || showResults) && (
+        <div className="rounded-lg border border-yellow-200 dark:border-yellow-800 overflow-hidden">
+          <div className="flex items-center justify-between p-4 bg-yellow-50 dark:bg-yellow-900/20">
+            <div>
+              <p className="text-sm font-medium text-yellow-700 dark:text-yellow-300">
+                {triggerAllScans.isPending
+                  ? "Scanning sources..."
+                  : dueForScan > 0
+                    ? `${dueForScan} source${dueForScan !== 1 ? "s" : ""} due for scan`
+                    : "All sources up to date"}
+              </p>
+              <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-0.5">
+                {triggerAllScans.isPending
+                  ? "This may take a few minutes. Results will appear below."
+                  : "Cron runs every 6 hours. Trigger manually to scan now."}
+              </p>
+            </div>
+            <button
+              onClick={handleTriggerAllScans}
+              disabled={triggerAllScans.isPending}
+              className="px-4 py-2 text-sm font-medium rounded-lg bg-yellow-600 text-white hover:bg-yellow-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+            >
+              {triggerAllScans.isPending ? (
+                <>
+                  <SpinnerIcon className="w-4 h-4 animate-spin" />
+                  Scanning...
+                </>
+              ) : (
+                <>
+                  <RefreshIcon className="w-4 h-4" />
+                  Scan All Due
+                </>
+              )}
+            </button>
           </div>
-          <button
-            onClick={() => triggerAllScans.mutate()}
-            disabled={triggerAllScans.isPending}
-            className="px-4 py-2 text-sm font-medium rounded-lg bg-yellow-600 text-white hover:bg-yellow-700 transition-colors disabled:opacity-50 flex items-center gap-2"
-          >
-            {triggerAllScans.isPending ? (
-              <>
-                <SpinnerIcon className="w-4 h-4 animate-spin" />
-                Scanning...
-              </>
-            ) : (
-              <>
-                <RefreshIcon className="w-4 h-4" />
-                Scan All Due
-              </>
-            )}
-          </button>
+
+          {/* Scan Results */}
+          {showResults && (
+            <div className="border-t border-yellow-200 dark:border-yellow-800">
+              {triggerAllScans.isPending ? (
+                <div className="p-4 space-y-3">
+                  <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+                    <SpinnerIcon className="w-5 h-5 animate-spin text-yellow-600" />
+                    <span>Processing sources... This can take up to 5 minutes.</span>
+                  </div>
+                  <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-full bg-yellow-500 rounded-full animate-pulse" style={{ width: "30%" }} />
+                  </div>
+                </div>
+              ) : scanResults?.success ? (
+                <div className="p-4 space-y-4">
+                  {/* Summary */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="text-green-600 dark:text-green-400">✓</span>
+                        <span className="font-medium">{scanResults.summary?.sourcesProcessed || 0} sources processed</span>
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {scanResults.summary?.totalDiscovered || 0} discovered · {scanResults.summary?.totalQueued || 0} queued
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      Completed in {scanResults.totalDuration}
+                    </div>
+                  </div>
+
+                  {/* Results Table */}
+                  {scanResults.results && scanResults.results.length > 0 && (
+                    <div className="border border-gray-200 dark:border-[#262626] rounded-lg overflow-hidden">
+                      <table className="w-full text-sm">
+                        <thead className="bg-gray-50 dark:bg-[#1a1a1a]">
+                          <tr>
+                            <th className="text-left px-3 py-2 font-medium text-gray-600 dark:text-gray-400">Source</th>
+                            <th className="text-left px-3 py-2 font-medium text-gray-600 dark:text-gray-400">Status</th>
+                            <th className="text-right px-3 py-2 font-medium text-gray-600 dark:text-gray-400">Found</th>
+                            <th className="text-right px-3 py-2 font-medium text-gray-600 dark:text-gray-400">Queued</th>
+                            <th className="text-right px-3 py-2 font-medium text-gray-600 dark:text-gray-400">Dupes</th>
+                            <th className="text-right px-3 py-2 font-medium text-gray-600 dark:text-gray-400">Time</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200 dark:divide-[#262626]">
+                          {scanResults.results.map((result, idx) => (
+                            <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-[#1a1a1a]">
+                              <td className="px-3 py-2">
+                                <div className="flex items-center gap-2">
+                                  <span>{SOURCE_TYPE_ICONS[result.type] || "📄"}</span>
+                                  <span className="truncate max-w-[200px]" title={result.source}>{result.source}</span>
+                                </div>
+                              </td>
+                              <td className="px-3 py-2">
+                                <span
+                                  className={cn(
+                                    "px-2 py-0.5 text-xs rounded-full",
+                                    result.status === "success"
+                                      ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+                                      : result.status === "failed"
+                                        ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400"
+                                        : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400"
+                                  )}
+                                >
+                                  {result.status}
+                                </span>
+                                {result.error && (
+                                  <span className="ml-2 text-xs text-red-500" title={result.error}>⚠</span>
+                                )}
+                              </td>
+                              <td className="px-3 py-2 text-right text-gray-600 dark:text-gray-400">{result.discovered}</td>
+                              <td className="px-3 py-2 text-right">
+                                <span className={result.queued > 0 ? "text-green-600 dark:text-green-400 font-medium" : "text-gray-400"}>
+                                  {result.queued}
+                                </span>
+                              </td>
+                              <td className="px-3 py-2 text-right text-gray-400">{result.duplicates}</td>
+                              <td className="px-3 py-2 text-right text-gray-500 dark:text-gray-400">{result.duration}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  <button
+                    onClick={() => setShowResults(false)}
+                    className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  >
+                    Hide results
+                  </button>
+                </div>
+              ) : scanResults?.error ? (
+                <div className="p-4">
+                  <div className="flex items-center gap-3 text-sm text-red-600 dark:text-red-400">
+                    <XIcon className="w-5 h-5" />
+                    <span>Scan failed: {scanResults.error}</span>
+                  </div>
+                  <button
+                    onClick={() => setShowResults(false)}
+                    className="mt-3 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              ) : null}
+            </div>
+          )}
         </div>
       )}
 

@@ -31,6 +31,8 @@ export {
   type Source,
   type DiscoveryStats,
   type QueueFilters,
+  type ScanResult,
+  type DiscoveryScanResponse,
 } from "./use-discovery-query";
 
 // Dashboard overview hooks

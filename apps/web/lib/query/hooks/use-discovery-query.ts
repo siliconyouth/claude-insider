@@ -233,23 +233,54 @@ export function useTriggerScan() {
 }
 
 /**
+ * Discovery scan result types
+ */
+export interface ScanResult {
+  source: string;
+  type: string;
+  status: "success" | "failed" | "skipped";
+  discovered: number;
+  queued: number;
+  duplicates: number;
+  duration: string;
+  error?: string;
+}
+
+export interface DiscoveryScanResponse {
+  success: boolean;
+  message?: string;
+  runId?: string;
+  startTime?: string;
+  endTime?: string;
+  totalDuration?: string;
+  summary?: {
+    sourcesProcessed: number;
+    totalDiscovered: number;
+    totalQueued: number;
+  };
+  results?: ScanResult[];
+  error?: string;
+}
+
+/**
  * Trigger discovery scan for all due sources
+ * Returns detailed results for display in UI
  */
 export function useTriggerAllScans() {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<DiscoveryScanResponse, Error>({
     mutationFn: async () => {
       const response = await fetch("/api/cron/discover", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
+      const data = await response.json();
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Failed to trigger scans");
+        throw new Error(data.error || "Failed to trigger scans");
       }
-      return response.json();
+      return data;
     },
     onSuccess: (data) => {
       // Invalidate sources and stats
@@ -257,13 +288,14 @@ export function useTriggerAllScans() {
       queryClient.invalidateQueries({ queryKey: queryKeys.discovery.stats });
       queryClient.invalidateQueries({ queryKey: ["dashboard", "discovery", "queue"] });
 
+      // Show summary toast - detailed results shown in UI
       toast.success(
         "Discovery Complete",
         `Processed ${data.summary?.sourcesProcessed || 0} sources, queued ${data.summary?.totalQueued || 0} new resources`
       );
     },
     onError: (error) => {
-      toast.error("Error", error.message || "Failed to trigger discovery");
+      toast.error("Discovery Failed", error.message || "Failed to trigger discovery");
     },
   });
 }

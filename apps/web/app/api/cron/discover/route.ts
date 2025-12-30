@@ -12,6 +12,9 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { runScheduledDiscovery } from "@/lib/scheduled-discovery";
+import { getSession } from "@/lib/auth";
+import { pool } from "@/lib/db";
+import { hasMinRole, ROLES, type UserRole } from "@/lib/roles";
 
 export const runtime = "nodejs";
 export const maxDuration = 300; // 5 minutes max
@@ -85,39 +88,61 @@ export async function GET(request: Request) {
 }
 
 /**
- * POST endpoint for manual triggering (admin only)
+ * POST endpoint for manual triggering (moderator+ only)
+ * Uses Better Auth session for authentication
  */
-export async function POST(request: Request) {
+export async function POST(_request: Request) {
   try {
-    // Check for admin authentication
-    const headersList = await headers();
-    const cookie = headersList.get("cookie") || "";
-
-    // Simple auth check - in production this should use proper auth
-    const hasToken = cookie.includes("payload-token=");
-
-    if (!hasToken) {
+    // Check for Better Auth session
+    const session = await getSession();
+    if (!session?.user?.id) {
       return NextResponse.json(
-        { error: "Unauthorized - admin login required" },
+        { error: "Unauthorized - login required" },
         { status: 401 }
       );
     }
 
-    // Parse request body for options (reserved for future use)
-    try {
-      await request.json();
-    } catch {
-      // No body provided, use defaults
+    // Check role - moderator+ can trigger scans
+    const roleResult = await pool.query<{ role: string }>(
+      `SELECT role FROM "user" WHERE id = $1`,
+      [session.user.id]
+    );
+    const userRole = (roleResult.rows[0]?.role as UserRole) || "user";
+    if (!hasMinRole(userRole, ROLES.MODERATOR)) {
+      return NextResponse.json(
+        { error: "Forbidden - moderator access required" },
+        { status: 403 }
+      );
     }
 
-    console.log("[Cron] Manual discovery triggered");
+    console.log(`[Cron] Manual discovery triggered by user ${session.user.id}`);
 
     const result = await runScheduledDiscovery();
+
+    console.log(`[Cron] Manual discovery completed: ${result.totalQueued} queued`);
 
     return NextResponse.json({
       success: true,
       message: "Manual discovery completed",
-      ...result,
+      runId: result.runId,
+      startTime: result.startTime.toISOString(),
+      endTime: result.endTime.toISOString(),
+      totalDuration: `${Math.round(result.totalDuration / 1000)}s`,
+      summary: {
+        sourcesProcessed: result.sourcesProcessed,
+        totalDiscovered: result.totalDiscovered,
+        totalQueued: result.totalQueued,
+      },
+      results: result.results.map((r) => ({
+        source: r.sourceName,
+        type: r.sourceType,
+        status: r.status,
+        discovered: r.discoveredCount,
+        queued: r.queuedCount,
+        duplicates: r.duplicateCount,
+        duration: `${Math.round(r.duration / 1000)}s`,
+        error: r.error,
+      })),
     });
   } catch (error) {
     console.error("[Cron] Manual discovery failed:", error);
