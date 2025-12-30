@@ -231,6 +231,14 @@ export const queryKeys = {
     indexnow: ["dashboard", "seo", "indexnow"] as const,
   },
 
+  // Broken Links Section
+  brokenLinks: {
+    all: ["dashboard", "broken-links"] as const,
+    queue: (filters: { status?: string; page?: number }) =>
+      ["dashboard", "broken-links", "queue", filters] as const,
+    stats: ["dashboard", "broken-links", "stats"] as const,
+  },
+
   // Admin Section (consolidated admin-specific queries)
   admin: {
     all: ["dashboard", "admin"] as const,

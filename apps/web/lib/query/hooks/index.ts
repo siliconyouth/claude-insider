@@ -222,3 +222,17 @@ export {
   type SearchAnalyticsData,
   type SearchDateRange,
 } from "./use-analytics-query";
+
+// Broken Links hooks
+export {
+  useBrokenLinksQueue,
+  useBrokenLinksStats,
+  useFixBrokenLink,
+  useHideBrokenLink,
+  useDismissBrokenLink,
+  useTriggerValidation,
+  type BrokenLinkEntry,
+  type BrokenLinkQueueFilters,
+  type BrokenLinkStats,
+  type BrokenLinkStatus,
+} from "./use-broken-links-query";

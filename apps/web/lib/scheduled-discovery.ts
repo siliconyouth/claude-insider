@@ -11,6 +11,7 @@ import "server-only";
 import { pool } from "@/lib/db";
 import { adapterRegistry, discoverResources, type SourceType } from "./adapters";
 import { createAuditLog } from "./audit";
+import { validateUrl } from "@/lib/resources/link-validator";
 
 export interface DiscoveryRunResult {
   sourceId: string;
@@ -20,6 +21,7 @@ export interface DiscoveryRunResult {
   discoveredCount: number;
   queuedCount: number;
   duplicateCount: number;
+  invalidLinkCount: number; // Resources skipped due to broken links
   duration: number;
   error?: string;
 }
@@ -93,6 +95,7 @@ async function processSource(source: ResourceSource): Promise<DiscoveryRunResult
         discoveredCount: 0,
         queuedCount: 0,
         duplicateCount: 0,
+        invalidLinkCount: 0,
         duration: Date.now() - startTime,
         error: `No adapter found for source type: ${source.type}`,
       };
@@ -121,41 +124,76 @@ async function processSource(source: ResourceSource): Promise<DiscoveryRunResult
     const newResources = discoveredResources.filter((r) => !existingUrls.has(r.url));
     const duplicateCount = discoveredResources.length - newResources.length;
 
-    // Add new resources to discovery queue
+    // Validate URLs before adding to queue (parallel validation with rate limiting)
     let queuedCount = 0;
-    for (const resource of newResources) {
-      try {
-        // Check if already in queue
-        const existingQueue = await pool.query(
-          `SELECT id FROM resource_discovery_queue WHERE discovered_url = $1`,
-          [resource.url]
-        );
+    let invalidLinkCount = 0;
+    const VALIDATION_BATCH_SIZE = 5;
 
-        if (existingQueue.rows.length === 0) {
-          await pool.query(
-            `INSERT INTO resource_discovery_queue (
-              source_id, discovered_url, discovered_title, discovered_description,
-              discovered_data, status
-            ) VALUES ($1, $2, $3, $4, $5, $6)`,
-            [
-              source.id,
-              resource.url,
-              resource.title,
-              resource.description,
-              JSON.stringify({
-                github: resource.metadata?.github,
-                npm: resource.metadata?.npm,
-                sourceType: resource.sourceType,
-                discoveredAt: resource.discoveredAt,
-                context: resource.context,
-              }),
-              "pending",
-            ]
+    for (let i = 0; i < newResources.length; i += VALIDATION_BATCH_SIZE) {
+      const batch = newResources.slice(i, i + VALIDATION_BATCH_SIZE);
+
+      // Validate URLs in parallel
+      const validationResults = await Promise.all(
+        batch.map(async (resource) => {
+          const validation = await validateUrl(resource.url, 8000); // 8s timeout
+          return { resource, validation };
+        })
+      );
+
+      // Add valid resources to discovery queue
+      for (const { resource, validation } of validationResults) {
+        // Skip resources with broken links
+        if (!validation.isValid) {
+          console.log(
+            `[ScheduledDiscovery] Skipping broken link: ${resource.url} - ${validation.errorMessage}`
           );
-          queuedCount++;
+          invalidLinkCount++;
+          continue;
         }
-      } catch (err) {
-        console.error(`[ScheduledDiscovery] Failed to queue resource: ${resource.url}`, err);
+
+        try {
+          // Check if already in queue
+          const existingQueue = await pool.query(
+            `SELECT id FROM resource_discovery_queue WHERE discovered_url = $1`,
+            [resource.url]
+          );
+
+          if (existingQueue.rows.length === 0) {
+            await pool.query(
+              `INSERT INTO resource_discovery_queue (
+                source_id, discovered_url, discovered_title, discovered_description,
+                discovered_data, status
+              ) VALUES ($1, $2, $3, $4, $5, $6)`,
+              [
+                source.id,
+                resource.url,
+                resource.title,
+                resource.description,
+                JSON.stringify({
+                  github: resource.metadata?.github,
+                  npm: resource.metadata?.npm,
+                  sourceType: resource.sourceType,
+                  discoveredAt: resource.discoveredAt,
+                  context: resource.context,
+                  linkValidation: {
+                    validatedAt: new Date().toISOString(),
+                    statusCode: validation.statusCode,
+                    responseTimeMs: validation.responseTimeMs,
+                  },
+                }),
+                "pending",
+              ]
+            );
+            queuedCount++;
+          }
+        } catch (err) {
+          console.error(`[ScheduledDiscovery] Failed to queue resource: ${resource.url}`, err);
+        }
+      }
+
+      // Rate limiting between batches
+      if (i + VALIDATION_BATCH_SIZE < newResources.length) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
       }
     }
 
@@ -173,6 +211,7 @@ async function processSource(source: ResourceSource): Promise<DiscoveryRunResult
       discoveredCount: discoveredResources.length,
       queuedCount,
       duplicateCount,
+      invalidLinkCount,
       duration: Date.now() - startTime,
     };
   } catch (error) {
@@ -194,6 +233,7 @@ async function processSource(source: ResourceSource): Promise<DiscoveryRunResult
       discoveredCount: 0,
       queuedCount: 0,
       duplicateCount: 0,
+      invalidLinkCount: 0,
       duration: Date.now() - startTime,
       error: error instanceof Error ? error.message : "Unknown error",
     };
