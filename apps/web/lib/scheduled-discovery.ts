@@ -202,16 +202,30 @@ async function processSource(source: ResourceSource): Promise<DiscoveryRunResult
 
 /**
  * Map our source types to adapter types
+ *
+ * IMPORTANT: This maps database source types to actual adapter types.
+ * Adapters have fixed types: github_repo, npm_package, awesome_list, website
+ * The adapter handles different modes (search, topic, scope) via config.
  */
 function mapSourceTypeToAdapter(sourceType: string): SourceType {
   const mapping: Record<string, SourceType> = {
+    // GitHub adapters - all use github_repo adapter with different configs
     github_repo: "github_repo",
-    github_search: "github_search",
+    github_search: "github_repo", // GitHub adapter handles search via config.github.searchQuery
+    github_topic: "github_repo", // GitHub adapter handles topics via config.github.topics
+    github_org: "github_repo", // GitHub adapter handles org repos via config.github.owner
+
+    // npm adapters - all use npm_package adapter with different configs
+    npm: "npm_package", // npm adapter handles search via config.npm.searchQuery
+    npm_search: "npm_package",
+    npm_package: "npm_package",
+    pypi: "npm_package", // Use npm adapter structure for PyPI (similar registry format)
+
+    // Other adapters
     awesome_list: "awesome_list",
-    npm: "npm_search",
-    pypi: "npm_search", // Use npm adapter structure for PyPI for now
     website: "website",
     rss: "website",
+    rss_feed: "website",
     api: "website",
     manual: "manual",
   };
@@ -255,6 +269,20 @@ function buildAdapterConfig(source: ResourceSource): Parameters<typeof discoverR
         github: {
           searchQuery: githubConfig?.searchQuery,
           topics: githubConfig?.topics,
+        },
+      };
+
+    case "github_topic":
+      return {
+        github: {
+          topics: githubConfig?.topics,
+        },
+      };
+
+    case "github_org":
+      return {
+        github: {
+          owner: githubConfig?.owner,
         },
       };
 
