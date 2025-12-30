@@ -112,7 +112,7 @@ export function NavGroup({
           expanded ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0",
         )}
       >
-        <div className="py-1 pl-2">{children}</div>
+        <div className="flex flex-col gap-0.5 py-1 pl-2">{children}</div>
       </div>
     </div>
   );

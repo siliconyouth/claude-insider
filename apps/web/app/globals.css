@@ -357,7 +357,7 @@ body {
 
 /* === Navigation Items === */
 .ui-nav-item {
-  @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium
+  @apply flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium
          text-gray-700 dark:text-gray-300
          hover:bg-gray-100 dark:hover:bg-[#1a1a1a]
          hover:text-gray-900 dark:hover:text-white
