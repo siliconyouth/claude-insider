@@ -17,6 +17,7 @@ import {
   useDiscoverySources,
   useQueueAction,
   useSourceToggle,
+  useBulkQueueAction,
   type QueueStatus,
   type QueueItem,
   type Source,
@@ -282,6 +283,7 @@ function OverviewTab({ stats, isLoading }: { stats: DiscoveryStats | undefined; 
 /**
  * Queue Tab - List of discovered resources to review
  * Uses TanStack Query with placeholderData for smooth pagination
+ * Supports batch selection and bulk approve/reject actions
  */
 function QueueTab({
   filter,
@@ -294,6 +296,9 @@ function QueueTab({
   page: number;
   onPageChange: (p: number) => void;
 }) {
+  // Selection state
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
   // TanStack Query handles caching and loading states
   const { data, isLoading, isFetching } = useDiscoveryQueue({
     status: filter,
@@ -304,11 +309,73 @@ function QueueTab({
   const items = data?.items || [];
   const totalPages = data?.totalPages || 1;
 
-  // Mutation hook for approve/reject actions
+  // Get only pending items (these are the ones that can be selected for bulk actions)
+  const pendingItems = items.filter((item) => item.status === "pending");
+  const allPendingSelected = pendingItems.length > 0 && pendingItems.every((item) => selectedIds.has(item.id));
+  const somePendingSelected = pendingItems.some((item) => selectedIds.has(item.id));
+
+  // Mutation hooks
   const queueAction = useQueueAction();
+  const bulkAction = useBulkQueueAction();
 
   const handleAction = (id: string, action: "approve" | "reject") => {
     queueAction.mutate({ id, action });
+  };
+
+  const handleSelectAll = () => {
+    if (allPendingSelected) {
+      // Deselect all pending items
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        pendingItems.forEach((item) => next.delete(item.id));
+        return next;
+      });
+    } else {
+      // Select all pending items
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        pendingItems.forEach((item) => next.add(item.id));
+        return next;
+      });
+    }
+  };
+
+  const handleSelect = (id: string, selected: boolean) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (selected) {
+        next.add(id);
+      } else {
+        next.delete(id);
+      }
+      return next;
+    });
+  };
+
+  const handleBulkAction = (action: "approve" | "reject") => {
+    const ids = Array.from(selectedIds);
+    if (ids.length === 0) return;
+
+    bulkAction.mutate(
+      { ids, action },
+      {
+        onSuccess: () => {
+          // Clear selection after successful bulk action
+          setSelectedIds(new Set());
+        },
+      }
+    );
+  };
+
+  // Clear selection when filter or page changes
+  const handleFilterChange = (f: QueueStatus | "all") => {
+    setSelectedIds(new Set());
+    onFilterChange(f);
+  };
+
+  const handlePageChange = (p: number) => {
+    setSelectedIds(new Set());
+    onPageChange(p);
   };
 
   return (
@@ -318,7 +385,7 @@ function QueueTab({
         {(["all", "pending", "approved", "rejected"] as const).map((status) => (
           <button
             key={status}
-            onClick={() => onFilterChange(status)}
+            onClick={() => handleFilterChange(status)}
             className={cn(
               "px-3 py-1.5 text-sm rounded-lg font-medium transition-colors",
               filter === status
@@ -337,6 +404,73 @@ function QueueTab({
           </span>
         )}
       </div>
+
+      {/* Batch Actions Bar - Shows when items are selected */}
+      {selectedIds.size > 0 && (
+        <div className="flex items-center justify-between p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
+              {selectedIds.size} item{selectedIds.size !== 1 ? "s" : ""} selected
+            </span>
+            <button
+              onClick={() => setSelectedIds(new Set())}
+              className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Clear selection
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleBulkAction("reject")}
+              disabled={bulkAction.isPending}
+              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
+            >
+              {bulkAction.isPending && bulkAction.variables?.action === "reject" ? (
+                <span className="flex items-center gap-2">
+                  <SpinnerIcon className="w-4 h-4 animate-spin" />
+                  Rejecting...
+                </span>
+              ) : (
+                `Reject ${selectedIds.size}`
+              )}
+            </button>
+            <button
+              onClick={() => handleBulkAction("approve")}
+              disabled={bulkAction.isPending}
+              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors disabled:opacity-50"
+            >
+              {bulkAction.isPending && bulkAction.variables?.action === "approve" ? (
+                <span className="flex items-center gap-2">
+                  <SpinnerIcon className="w-4 h-4 animate-spin" />
+                  Approving...
+                </span>
+              ) : (
+                `Approve ${selectedIds.size}`
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Select All Header - Shows when there are pending items */}
+      {!isLoading && pendingItems.length > 0 && (
+        <div className="flex items-center gap-3 px-1">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={allPendingSelected}
+              ref={(el) => {
+                if (el) el.indeterminate = somePendingSelected && !allPendingSelected;
+              }}
+              onChange={handleSelectAll}
+              className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-[#1a1a1a]"
+            />
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              Select all pending ({pendingItems.length})
+            </span>
+          </label>
+        </div>
+      )}
 
       {/* Items */}
       {isLoading ? (
@@ -362,6 +496,9 @@ function QueueTab({
               item={item}
               onAction={handleAction}
               isPending={queueAction.isPending && queueAction.variables?.id === item.id}
+              isSelected={selectedIds.has(item.id)}
+              onSelect={handleSelect}
+              isBulkPending={bulkAction.isPending}
             />
           ))}
         </div>
@@ -371,7 +508,7 @@ function QueueTab({
       {totalPages > 1 && (
         <div className="flex justify-center gap-2">
           <button
-            onClick={() => onPageChange(Math.max(1, page - 1))}
+            onClick={() => handlePageChange(Math.max(1, page - 1))}
             disabled={page === 1}
             className="px-3 py-1.5 text-sm rounded-lg bg-gray-100 dark:bg-[#1a1a1a] disabled:opacity-50"
           >
@@ -381,7 +518,7 @@ function QueueTab({
             Page {page} of {totalPages}
           </span>
           <button
-            onClick={() => onPageChange(Math.min(totalPages, page + 1))}
+            onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
             disabled={page === totalPages}
             className="px-3 py-1.5 text-sm rounded-lg bg-gray-100 dark:bg-[#1a1a1a] disabled:opacity-50"
           >
@@ -395,18 +532,27 @@ function QueueTab({
 
 /**
  * Queue Item Card
+ * Now includes checkbox for batch selection
  */
 function QueueItemCard({
   item,
   onAction,
   isPending,
+  isSelected,
+  onSelect,
+  isBulkPending,
 }: {
   item: QueueItem;
   onAction: (id: string, action: "approve" | "reject") => void;
   isPending?: boolean;
+  isSelected?: boolean;
+  onSelect?: (id: string, selected: boolean) => void;
+  isBulkPending?: boolean;
 }) {
   const statusConfig = QUEUE_STATUS[item.status];
   const githubData = item.discovered_data?.github as { stars?: number; forks?: number } | undefined;
+  const canSelect = item.status === "pending";
+  const isDisabled = isPending || (isBulkPending && isSelected);
 
   return (
     <div
@@ -415,66 +561,83 @@ function QueueItemCard({
         "bg-white dark:bg-[#111111]",
         "border-gray-200 dark:border-[#262626]",
         "hover:border-blue-500/30 transition-colors",
-        isPending && "opacity-50 pointer-events-none"
+        isSelected && "ring-2 ring-blue-500 border-blue-500 dark:border-blue-500",
+        isDisabled && "opacity-50 pointer-events-none"
       )}
     >
-      <div className="flex items-start justify-between gap-4">
-        {/* Left: Resource info */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span>{SOURCE_TYPE_ICONS[item.source_type || ""] || "📄"}</span>
-            <a
-              href={item.discovered_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 transition-colors truncate"
-            >
-              {item.discovered_title || item.discovered_url}
-            </a>
-            <StatusBadge style={statusConfig} />
-          </div>
-
-          {item.discovered_description && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-2">
-              {item.discovered_description}
-            </p>
-          )}
-
-          <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-            <span>from {item.source_name || "Unknown source"}</span>
-            {githubData?.stars !== undefined && (
-              <span className="flex items-center gap-1">
-                ⭐ {githubData.stars.toLocaleString()}
-              </span>
-            )}
-            <span>
-              {new Date(item.created_at).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })}
-            </span>
-          </div>
-        </div>
-
-        {/* Right: Actions */}
-        {item.status === "pending" && (
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => onAction(item.id, "reject")}
-              disabled={isPending}
-              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
-            >
-              Reject
-            </button>
-            <button
-              onClick={() => onAction(item.id, "approve")}
-              disabled={isPending}
-              className="px-3 py-1.5 text-sm font-medium rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors disabled:opacity-50"
-            >
-              Approve
-            </button>
+      <div className="flex items-start gap-3">
+        {/* Checkbox - Only show for pending items */}
+        {canSelect && onSelect && (
+          <div className="flex items-center pt-0.5">
+            <input
+              type="checkbox"
+              checked={isSelected || false}
+              onChange={(e) => onSelect(item.id, e.target.checked)}
+              disabled={isDisabled}
+              className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-[#1a1a1a]"
+            />
           </div>
         )}
+
+        {/* Main content */}
+        <div className="flex-1 min-w-0 flex items-start justify-between gap-4">
+          {/* Left: Resource info */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-1">
+              <span>{SOURCE_TYPE_ICONS[item.source_type || ""] || "📄"}</span>
+              <a
+                href={item.discovered_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-cyan-400 transition-colors truncate"
+              >
+                {item.discovered_title || item.discovered_url}
+              </a>
+              <StatusBadge style={statusConfig} />
+            </div>
+
+            {item.discovered_description && (
+              <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-2">
+                {item.discovered_description}
+              </p>
+            )}
+
+            <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+              <span>from {item.source_name || "Unknown source"}</span>
+              {githubData?.stars !== undefined && (
+                <span className="flex items-center gap-1">
+                  ⭐ {githubData.stars.toLocaleString()}
+                </span>
+              )}
+              <span>
+                {new Date(item.created_at).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+            </div>
+          </div>
+
+          {/* Right: Actions */}
+          {item.status === "pending" && (
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => onAction(item.id, "reject")}
+                disabled={isDisabled}
+                className="px-3 py-1.5 text-sm font-medium rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
+              >
+                Reject
+              </button>
+              <button
+                onClick={() => onAction(item.id, "approve")}
+                disabled={isDisabled}
+                className="px-3 py-1.5 text-sm font-medium rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors disabled:opacity-50"
+              >
+                Approve
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -667,5 +830,12 @@ const FolderIcon = ({ className }: { className?: string }) => (
 const RefreshIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+  </svg>
+);
+
+const SpinnerIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
   </svg>
 );
