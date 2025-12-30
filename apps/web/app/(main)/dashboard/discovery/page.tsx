@@ -50,7 +50,45 @@ export default function DiscoveryDashboardPage() {
   const [queuePage, setQueuePage] = useState(1);
 
   // Use TanStack Query for stats (auto-refreshes every 30s)
-  const { data: stats } = useDiscoveryStats();
+  const { data: stats, isLoading, isError, error, refetch } = useDiscoveryStats();
+
+  // Handle error state
+  if (isError) {
+    return (
+      <div className="space-y-6">
+        <PageHeader
+          title="Resource Discovery"
+          description="Manage discovery sources and review discovered resources"
+        />
+        <div className="rounded-xl border border-red-200 dark:border-red-800/50 bg-red-50 dark:bg-red-900/20 p-6">
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 rounded-full bg-red-100 dark:bg-red-900/30 p-3">
+              <svg className="h-6 w-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-red-700 dark:text-red-400">
+                Failed to load discovery stats
+              </h3>
+              <p className="mt-1 text-sm text-red-600 dark:text-red-300">
+                {error?.message || "An unexpected error occurred"}
+              </p>
+              <button
+                onClick={() => refetch()}
+                className="mt-4 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Try Again
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <QueryErrorBoundary>
@@ -85,7 +123,7 @@ export default function DiscoveryDashboardPage() {
         </div>
 
         {/* Tab Content */}
-        {activeTab === "overview" && <OverviewTab stats={stats} />}
+        {activeTab === "overview" && <OverviewTab stats={stats} isLoading={isLoading} />}
         {activeTab === "queue" && (
           <QueueTab
             filter={queueFilter}
@@ -106,8 +144,8 @@ export default function DiscoveryDashboardPage() {
 /**
  * Overview Tab - Stats and recent activity
  */
-function OverviewTab({ stats }: { stats: DiscoveryStats | undefined }) {
-  if (!stats) {
+function OverviewTab({ stats, isLoading }: { stats: DiscoveryStats | undefined; isLoading: boolean }) {
+  if (isLoading || !stats) {
     return (
       <div className="space-y-4">
         {[1, 2].map((i) => (
