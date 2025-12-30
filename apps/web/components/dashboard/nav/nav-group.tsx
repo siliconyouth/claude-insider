@@ -37,7 +37,7 @@ function ChevronIcon({ expanded }: { expanded: boolean }) {
   return (
     <svg
       className={cn(
-        "w-4 h-4 transition-transform duration-200",
+        "w-4 h-4 flex-shrink-0 transition-transform duration-200",
         expanded ? "rotate-180" : "rotate-0",
       )}
       fill="none"
@@ -82,17 +82,17 @@ export function NavGroup({
         aria-expanded={expanded}
         aria-controls={`nav-group-${id}`}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 min-w-0">
           {icon && (
-            <span className="w-4 h-4 flex items-center justify-center opacity-60">
+            <span className="w-4 h-4 flex-shrink-0 flex items-center justify-center opacity-60">
               {icon}
             </span>
           )}
-          <span>{label}</span>
+          <span className="truncate">{label}</span>
           {typeof badge === "number" && badge > 0 && (
             <span
               className={cn(
-                "ui-nav-badge-group",
+                "ui-nav-badge-group flex-shrink-0",
                 "text-[10px] px-1.5 py-0.5 rounded-full",
                 badgeUrgent && "ui-nav-badge-urgent",
               )}
