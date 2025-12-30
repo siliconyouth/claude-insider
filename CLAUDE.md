@@ -147,7 +147,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 | Category | Key Features |
 |----------|--------------|
-| **Content** | MDX docs (34 pages), 1,952+ resources, AI Voice Assistant, Advanced Search |
+| **Content** | MDX docs (34 pages), 1,900+ resources (dynamic), AI Voice Assistant, Advanced Search |
 | **Auth & Security** | OAuth, Passkeys/2FA, E2EE (Matrix), Bot Challenge, Security Dashboard |
 | **User Features** | Achievements (50+), Sound Effects (10 themes), Profiles, Notifications |
 | **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging, **Optimistic UI** |
@@ -1212,7 +1212,7 @@ const activity = await pool.query("SELECT * FROM activity...");
 
 ## Resources System (MANDATORY)
 
-**1,952 resources** across 10 categories with **21 enhanced fields** (Migration 088). Database is source of truth.
+**1,900+ resources** across 10 categories with **21 enhanced fields** (Migration 088). Database is source of truth. Homepage displays dynamic count from database.
 
 ### Enhanced Fields (MANDATORY - v1.12.8)
 
@@ -1415,7 +1415,7 @@ Matrix Olm/Megolm with Double Ratchet. Private keys never leave device.
 
 **See [Resources System (MANDATORY)](#resources-system-mandatory) for complete documentation.**
 
-1,952 resources, 21 enhanced fields, insights dashboard, advanced filtering.
+1,900+ resources (dynamic count), 21 enhanced fields, insights dashboard, advanced filtering.
 
 **Auto-Update System**: AI-powered via Claude Opus 4.5, cron weekly Sunday 3 AM UTC, admin approval required.
 
@@ -1593,7 +1593,7 @@ diagnostics/
 
 - User engagement (time on site, pages per session)
 - Search usage and success rate
-- Content coverage: 34 docs + 1,952 resources
+- Content coverage: 34 docs + 1,900+ resources (live count on homepage)
 - Core Web Vitals performance
 - GitHub stars and contributions
 

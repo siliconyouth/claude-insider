@@ -10,8 +10,10 @@ import { LazyCategoriesSection } from "@/components/home/lazy-categories-section
 import { LazyHighlightsSection } from "@/components/home/lazy-highlights-section";
 import { cn } from "@/lib/design-system";
 import buildInfo from "@/data/build-info.json";
+import { getSiteStats } from "@/app/actions/site-stats";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const stats = await getSiteStats();
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
       <Header activePage="home" />
@@ -35,7 +37,7 @@ export default function HomePage() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
                   </span>
-                  v{buildInfo.version} • 57 Features • 1,952 Resources • AI Assistant
+                  v{buildInfo.version} • {stats.totalFeatures} Features • {stats.totalResources.toLocaleString()} Resources • AI Assistant
                 </div>
 
                 {/* Headline - Stripe-style large typography */}
