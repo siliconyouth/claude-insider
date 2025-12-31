@@ -48,10 +48,23 @@ export interface BrokenLinkEntry {
 function extractNpmPackage(url: string): string | null {
   // Match: https://www.npmjs.com/package/PACKAGE_NAME
   // Also handles scoped packages: https://www.npmjs.com/package/@scope/name
+  // Use greedy match to capture full scoped package names
   const match = url.match(
-    /^https?:\/\/(?:www\.)?npmjs\.com\/package\/(.+?)(?:\/|$|\?)/
+    /^https?:\/\/(?:www\.)?npmjs\.com\/package\/(@[^/]+\/[^/?#]+|[^/?#]+)/
   );
   return match && match[1] ? decodeURIComponent(match[1]) : null;
+}
+
+/**
+ * Encode npm package name for registry API
+ * Scoped packages like @scope/name need special encoding: @scope%2Fname
+ */
+function encodeNpmPackageName(packageName: string): string {
+  if (packageName.startsWith("@")) {
+    // For scoped packages, keep @ but encode the rest (including /)
+    return "@" + encodeURIComponent(packageName.slice(1));
+  }
+  return encodeURIComponent(packageName);
 }
 
 /**
@@ -66,7 +79,8 @@ async function validateNpmPackage(
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     // Use npm registry API which doesn't have bot protection
-    const registryUrl = `https://registry.npmjs.org/${encodeURIComponent(packageName)}`;
+    // Scoped packages need special encoding: @scope/name -> @scope%2Fname
+    const registryUrl = `https://registry.npmjs.org/${encodeNpmPackageName(packageName)}`;
     const response = await fetch(registryUrl, {
       method: "GET",
       signal: controller.signal,

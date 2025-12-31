@@ -14,7 +14,7 @@ import {
   getValidationStats,
 } from "@/lib/resources/link-validator";
 
-export const maxDuration = 60; // 1 minute max for manual trigger
+export const maxDuration = 300; // 5 minutes max for re-validation
 
 export async function POST(request: NextRequest) {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -37,10 +37,14 @@ export async function POST(request: NextRequest) {
 
     const startTime = Date.now();
 
+    // Use faster settings for re-validating broken links (npm registry is tolerant)
+    const delay = onlyBroken ? 200 : 1000;
+    const batch = onlyBroken ? 20 : batchSize;
+
     const results = await validateResourcesBatch(pool, {
-      limit,
-      batchSize,
-      delayBetweenBatches: 1000,
+      limit: onlyBroken ? 200 : limit, // Process more when re-validating
+      batchSize: batch,
+      delayBetweenBatches: delay,
       onlyUnchecked,
       onlyStale,
       onlyBroken,

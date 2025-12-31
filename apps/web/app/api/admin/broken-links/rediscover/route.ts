@@ -58,12 +58,23 @@ async function searchGitHub(name: string): Promise<string | null> {
 }
 
 /**
+ * Encode npm package name for registry API
+ * Scoped packages like @scope/name need special encoding: @scope%2Fname
+ */
+function encodeNpmPackageName(packageName: string): string {
+  if (packageName.startsWith("@")) {
+    return "@" + encodeURIComponent(packageName.slice(1));
+  }
+  return encodeURIComponent(packageName);
+}
+
+/**
  * Check if an npm package exists using the registry API
  */
 async function checkNpmPackageExists(packageName: string): Promise<boolean> {
   try {
     const response = await fetch(
-      `https://registry.npmjs.org/${encodeURIComponent(packageName)}`,
+      `https://registry.npmjs.org/${encodeNpmPackageName(packageName)}`,
       {
         method: "GET",
         headers: {
@@ -86,7 +97,7 @@ async function getNpmPackageDetails(
 ): Promise<{ homepage?: string; repository?: string } | null> {
   try {
     const response = await fetch(
-      `https://registry.npmjs.org/${encodeURIComponent(packageName)}`,
+      `https://registry.npmjs.org/${encodeNpmPackageName(packageName)}`,
       {
         headers: {
           Accept: "application/json",
