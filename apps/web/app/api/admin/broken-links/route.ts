@@ -29,80 +29,97 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "50", 10);
     const offset = (page - 1) * limit;
 
-    // Status filtering logic:
-    // - "all": Show all invalid links
-    // - "pending": Invalid links not in queue OR in queue with pending status
-    // - "fixed"/"hidden"/"dismissed": Only from queue with that status
-    let whereClause = "";
-    let params: (string | number)[] = [];
+    console.log("[BrokenLinks] Request:", { status, page, limit, offset });
 
-    if (status === "all") {
-      // All invalid links
-      whereClause = "WHERE v.is_valid = false";
-      params = [limit, offset];
-    } else if (status === "pending") {
-      // Invalid links that are either not in queue or pending in queue
-      whereClause = "WHERE v.is_valid = false AND (q.id IS NULL OR q.status = 'pending')";
-      params = [limit, offset];
-    } else {
-      // Specific queue status (fixed, hidden, dismissed)
-      whereClause = "WHERE q.status = $1";
-      params = [status, limit, offset];
-    }
-
-    const { rows: items } = await pool.query(
-      `
+    // Debug: Check what's in the tables
+    const debugResult = await pool.query(`
       SELECT
-        COALESCE(q.id, v.id::text) as id,
-        v.resource_id as "resourceId",
-        r.title as "resourceTitle",
-        r.slug as "resourceSlug",
-        v.url as "originalUrl",
-        v.status_code as "statusCode",
-        v.error_message as "errorMessage",
-        q.suggested_url as "suggestedUrl",
-        COALESCE(q.status, 'pending') as status,
-        COALESCE(q.created_at, v.last_checked_at) as "createdAt"
-      FROM resource_link_validations v
-      JOIN resources r ON r.id = v.resource_id
-      LEFT JOIN broken_link_queue q ON q.resource_id = v.resource_id
-      ${whereClause}
-      ORDER BY v.last_checked_at DESC
-      LIMIT $${params.length - 1} OFFSET $${params.length}
-    `,
-      params
-    );
+        (SELECT COUNT(*) FROM resource_link_validations) as total_validations,
+        (SELECT COUNT(*) FROM resource_link_validations WHERE is_valid = false) as invalid_validations,
+        (SELECT COUNT(*) FROM broken_link_queue) as queue_entries,
+        (SELECT COUNT(*) FROM resources) as total_resources
+    `);
+    console.log("[BrokenLinks] Debug counts:", debugResult.rows[0]);
 
-    // Get total count with same logic
-    let countQuery = "";
-    let countParams: string[] = [];
+    let items: object[] = [];
+    let total = 0;
 
-    if (status === "all") {
-      countQuery = `
-        SELECT COUNT(*) FROM resource_link_validations v
-        WHERE v.is_valid = false
-      `;
-    } else if (status === "pending") {
-      countQuery = `
-        SELECT COUNT(*) FROM resource_link_validations v
+    if (status === "all" || status === "pending") {
+      // For "all" and "pending", query from validations table
+      // Use separate queries for clarity and debugging
+      const listQuery = `
+        SELECT
+          v.id::text as id,
+          v.resource_id as "resourceId",
+          r.title as "resourceTitle",
+          r.slug as "resourceSlug",
+          v.url as "originalUrl",
+          v.status_code as "statusCode",
+          v.error_message as "errorMessage",
+          COALESCE(q.suggested_url, NULL) as "suggestedUrl",
+          COALESCE(q.status, 'pending') as status,
+          v.last_checked_at as "createdAt"
+        FROM resource_link_validations v
+        INNER JOIN resources r ON r.id = v.resource_id
         LEFT JOIN broken_link_queue q ON q.resource_id = v.resource_id
-        WHERE v.is_valid = false AND (q.id IS NULL OR q.status = 'pending')
+        WHERE v.is_valid = false
+        ${status === "pending" ? "AND (q.id IS NULL OR q.status = 'pending')" : ""}
+        ORDER BY v.last_checked_at DESC
+        LIMIT $1 OFFSET $2
       `;
-    } else {
-      countQuery = `
-        SELECT COUNT(*) FROM broken_link_queue q
-        WHERE q.status = $1
-      `;
-      countParams = [status];
-    }
 
-    const {
-      rows: [{ count }],
-    } = await pool.query(countQuery, countParams);
+      console.log("[BrokenLinks] Query:", listQuery);
+      const listResult = await pool.query(listQuery, [limit, offset]);
+      items = listResult.rows;
+      console.log("[BrokenLinks] Items found:", items.length);
+
+      // Count query
+      const countQuery = `
+        SELECT COUNT(*) as count
+        FROM resource_link_validations v
+        INNER JOIN resources r ON r.id = v.resource_id
+        LEFT JOIN broken_link_queue q ON q.resource_id = v.resource_id
+        WHERE v.is_valid = false
+        ${status === "pending" ? "AND (q.id IS NULL OR q.status = 'pending')" : ""}
+      `;
+      const countResult = await pool.query(countQuery);
+      total = parseInt(countResult.rows[0].count, 10);
+      console.log("[BrokenLinks] Total count:", total);
+
+    } else {
+      // For specific queue statuses (fixed, hidden, dismissed)
+      const listQuery = `
+        SELECT
+          q.id::text as id,
+          q.resource_id as "resourceId",
+          r.title as "resourceTitle",
+          r.slug as "resourceSlug",
+          q.original_url as "originalUrl",
+          v.status_code as "statusCode",
+          v.error_message as "errorMessage",
+          q.suggested_url as "suggestedUrl",
+          q.status,
+          q.created_at as "createdAt"
+        FROM broken_link_queue q
+        INNER JOIN resources r ON r.id = q.resource_id
+        LEFT JOIN resource_link_validations v ON v.resource_id = q.resource_id
+        WHERE q.status = $1
+        ORDER BY q.created_at DESC
+        LIMIT $2 OFFSET $3
+      `;
+      const listResult = await pool.query(listQuery, [status, limit, offset]);
+      items = listResult.rows;
+
+      const countResult = await pool.query(
+        `SELECT COUNT(*) as count FROM broken_link_queue WHERE status = $1`,
+        [status]
+      );
+      total = parseInt(countResult.rows[0].count, 10);
+    }
 
     return NextResponse.json({
       items,
-      total: parseInt(count, 10),
+      total,
       page,
       limit,
     });
