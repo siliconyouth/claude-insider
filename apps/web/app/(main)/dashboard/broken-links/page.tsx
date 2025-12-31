@@ -196,6 +196,21 @@ export default function BrokenLinksPage() {
         ))}
       </div>
 
+      {/* Debug Info */}
+      <div className="mb-4 p-4 ui-bg-card border ui-border rounded-lg text-sm font-mono">
+        <div className="ui-text-secondary">
+          Query Status: {queueQuery.isLoading ? "Loading" : queueQuery.isError ? "Error" : "Success"} |
+          Items: {queueQuery.data?.items?.length ?? "null"} |
+          Total: {queueQuery.data?.total ?? "null"} |
+          Filter: {filter}
+        </div>
+        {queueQuery.isError && (
+          <div className="text-red-500 mt-2">
+            Error: {queueQuery.error instanceof Error ? queueQuery.error.message : "Unknown error"}
+          </div>
+        )}
+      </div>
+
       {/* Queue List */}
       {queueQuery.isLoading ? (
         <div className="space-y-4">
@@ -206,6 +221,17 @@ export default function BrokenLinksPage() {
             />
           ))}
         </div>
+      ) : queueQuery.isError ? (
+        <EmptyState
+          message="Error loading broken links"
+          description={queueQuery.error instanceof Error ? queueQuery.error.message : "Failed to fetch data"}
+          icon={
+            <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          }
+        />
       ) : entries.length === 0 ? (
         <EmptyState
           message="No broken links"
