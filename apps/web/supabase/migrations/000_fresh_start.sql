@@ -540,6 +540,8 @@ CREATE TABLE IF NOT EXISTS public.feedback (
   assigned_to TEXT REFERENCES public."user"(id) ON DELETE SET NULL,
   resolved_at TIMESTAMPTZ,
   resolution_notes TEXT,
+  console_logs JSONB,
+  browser_info JSONB,
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now()
 );
