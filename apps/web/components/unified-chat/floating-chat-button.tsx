@@ -117,7 +117,7 @@ export function FloatingChatButton() {
       />
 
       {/* Tooltip Balloon - Glass morphism */}
-      <div className="absolute bottom-full right-0 mb-3 animate-bounce">
+      <div className="absolute bottom-full right-0 mb-3">
         <div
           className={cn(
             "relative rounded-xl px-3 py-2 text-sm whitespace-nowrap",
