@@ -43,8 +43,57 @@ export interface BrokenLinkEntry {
 }
 
 /**
+ * Check if a URL is an npm package page and extract the package name
+ */
+function extractNpmPackage(url: string): string | null {
+  // Match: https://www.npmjs.com/package/PACKAGE_NAME
+  // Also handles scoped packages: https://www.npmjs.com/package/@scope/name
+  const match = url.match(
+    /^https?:\/\/(?:www\.)?npmjs\.com\/package\/(.+?)(?:\/|$|\?)/
+  );
+  return match && match[1] ? decodeURIComponent(match[1]) : null;
+}
+
+/**
+ * Validate an npm package using the registry API (bypasses website bot protection)
+ */
+async function validateNpmPackage(
+  packageName: string,
+  timeoutMs: number
+): Promise<{ isValid: boolean; statusCode: number | null; errorMessage: string | null }> {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    // Use npm registry API which doesn't have bot protection
+    const registryUrl = `https://registry.npmjs.org/${encodeURIComponent(packageName)}`;
+    const response = await fetch(registryUrl, {
+      method: "GET",
+      signal: controller.signal,
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "ClaudeInsider-LinkValidator/1.0",
+      },
+    });
+
+    clearTimeout(timeoutId);
+
+    if (response.status === 200) {
+      return { isValid: true, statusCode: 200, errorMessage: null };
+    } else if (response.status === 404) {
+      return { isValid: false, statusCode: 404, errorMessage: "Package not found on npm" };
+    } else {
+      return { isValid: false, statusCode: response.status, errorMessage: `HTTP ${response.status}` };
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return { isValid: false, statusCode: null, errorMessage };
+  }
+}
+
+/**
  * Get appropriate headers for a URL
- * Some sites (npm, etc.) block bot-like User-Agents, so we use browser-like headers
+ * Some sites block bot-like User-Agents, so we use browser-like headers
  */
 function getHeadersForUrl(url: string): Record<string, string> {
   const browserUserAgent =
@@ -52,8 +101,6 @@ function getHeadersForUrl(url: string): Record<string, string> {
 
   // Sites that require browser-like headers to avoid 403
   const requiresBrowserHeaders =
-    url.includes("npmjs.com") ||
-    url.includes("registry.npmjs.org") ||
     url.includes("perplexity.ai") ||
     url.includes("console.anthropic.com");
 
@@ -90,16 +137,26 @@ export async function validateUrl(
 ): Promise<Omit<ValidationResult, "resourceId">> {
   const startTime = Date.now();
 
+  // Special handling for npm package URLs - use registry API instead
+  const npmPackage = extractNpmPackage(url);
+  if (npmPackage) {
+    const result = await validateNpmPackage(npmPackage, timeoutMs);
+    return {
+      url,
+      isValid: result.isValid,
+      statusCode: result.statusCode,
+      redirectUrl: null,
+      errorMessage: result.errorMessage,
+      responseTimeMs: Date.now() - startTime,
+    };
+  }
+
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-    // Use GET for sites that don't like HEAD requests (npm, etc.)
-    const useGetMethod =
-      url.includes("npmjs.com") || url.includes("registry.npmjs.org");
-
     const response = await fetch(url, {
-      method: useGetMethod ? "GET" : "HEAD",
+      method: "HEAD",
       signal: controller.signal,
       redirect: "manual", // Don't follow redirects automatically
       headers: getHeadersForUrl(url),
@@ -192,13 +249,8 @@ async function validateRedirectTarget(
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-    // Use GET for sites that don't like HEAD requests
-    const useGetMethod =
-      absoluteUrl.includes("npmjs.com") ||
-      absoluteUrl.includes("registry.npmjs.org");
-
     const response = await fetch(absoluteUrl, {
-      method: useGetMethod ? "GET" : "HEAD",
+      method: "HEAD",
       signal: controller.signal,
       redirect: "follow", // Follow further redirects
       headers: getHeadersForUrl(absoluteUrl),
