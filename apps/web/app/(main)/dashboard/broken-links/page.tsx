@@ -264,6 +264,9 @@ export default function BrokenLinksPage() {
         />
       ) : (
         <div className="space-y-4">
+          <div className="p-4 bg-green-500 text-white font-bold rounded">
+            ✅ RENDERING {entries.length} ENTRIES - If you see this, the list should be below
+          </div>
           {entries.map((entry) => (
             <div
               key={entry.id}
