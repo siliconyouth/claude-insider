@@ -107,6 +107,8 @@ export default function BrokenLinksPage() {
   const totalPages = Math.ceil(total / limit);
   const stats = statsQuery.data;
   const pendingCount = stats?.pendingReview || 0;
+  // Use invalid count for bulk actions (all broken links, not just those in queue)
+  const invalidCount = stats?.invalid || 0;
 
   // Reset page when filter changes
   const handleFilterChange = (newFilter: BrokenLinkStatus) => {
@@ -175,7 +177,7 @@ export default function BrokenLinksPage() {
                   }
                 );
               }}
-              disabled={rediscoverMutation.isPending || pendingCount === 0}
+              disabled={rediscoverMutation.isPending || invalidCount === 0}
               className={cn(
                 "px-4 py-2 rounded-lg text-sm font-medium",
                 "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white",
@@ -190,7 +192,7 @@ export default function BrokenLinksPage() {
             {/* Bulk Actions */}
             <button
               onClick={() => setShowBulkConfirm("hide-all")}
-              disabled={bulkMutation.isPending || pendingCount === 0}
+              disabled={bulkMutation.isPending || invalidCount === 0}
               className={cn(
                 "px-4 py-2 rounded-lg text-sm font-medium",
                 "bg-gray-600 text-white hover:bg-gray-700",
@@ -202,7 +204,7 @@ export default function BrokenLinksPage() {
             </button>
             <button
               onClick={() => setShowBulkConfirm("dismiss-all")}
-              disabled={bulkMutation.isPending || pendingCount === 0}
+              disabled={bulkMutation.isPending || invalidCount === 0}
               className={cn(
                 "px-4 py-2 rounded-lg text-sm font-medium",
                 "ui-bg-card border ui-border ui-text-secondary",
@@ -563,13 +565,13 @@ export default function BrokenLinksPage() {
             <div className="mb-6">
               {showBulkConfirm === "hide-all" ? (
                 <p className="ui-text-secondary">
-                  This will unpublish <strong>{pendingCount} resources</strong>{" "}
+                  This will unpublish <strong>{invalidCount} resources</strong>{" "}
                   with broken links. They can be republished later from the
                   resources admin page.
                 </p>
               ) : (
                 <p className="ui-text-secondary">
-                  This will mark <strong>{pendingCount} entries</strong> as
+                  This will mark <strong>{invalidCount} entries</strong> as
                   false positives. The resources will remain published with
                   their current URLs.
                 </p>
