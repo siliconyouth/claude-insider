@@ -6421,7 +6421,7 @@
     "id": "api-overview-pricing",
     "title": "API Overview & Pricing",
     "description": "SDK library for API Overview & Pricing. Provides programmatic access to AI capabilities with type-safe interfaces and helper utilities.",
-    "url": "https://platform.claude.com/docs/en/about-claude/models/overview",
+    "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
     "category": "sdks",
     "tags": [],
     "status": "community",

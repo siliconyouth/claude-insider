@@ -1,7 +1,7 @@
 {
   "version": "7.0",
-  "contentHash": "732c0986b8f0588491fdaf49316d4b4311e7fe89cba4867d8da8b3e35494696e",
-  "generatedAt": "2025-12-31T08:01:56.889Z",
+  "contentHash": "d19940540b9f9cfabcdb45402063faacca847f3f0388d3d29496b93f6817bd18",
+  "generatedAt": "2025-12-31T21:25:19.799Z",
   "builtWith": "Claude Code powered by Claude Opus 4.5",
   "documentCount": 6983,
   "documentationChunks": 453,
@@ -55739,7 +55739,7 @@
       "title": "API Overview & Pricing",
       "section": "API Overview & Pricing - SDKs & Libraries",
       "content": "API Overview & Pricing: SDK library for API Overview & Pricing. Provides programmatic access to AI capabilities with type-safe interfaces and helper utilities. [Status: community]",
-      "url": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
       "category": "Resources",
       "subcategory": "SDKs & Libraries",
       "keywords": [
@@ -66634,7 +66634,7 @@
       "title": "Official Documentation",
       "section": "Official Documentation - Development Tools",
       "content": "[curious] Official Documentation: Developer tool for Official Documentation. Enhances productivity and streamlines workflows for AI-assisted development. [Status: community]",
-      "url": "https://platform.claude.com/docs/en/get-started",
+      "url": "https://docs.anthropic.com/",
       "category": "Resources",
       "subcategory": "Development Tools",
       "keywords": [
@@ -199251,7 +199251,7 @@
       "title": "Resource: API Overview & Pricing",
       "section": "sdks",
       "content": "Resource: API Overview & Pricing\nSDK library for API Overview & Pricing. Provides programmatic access to AI capabilities with type-safe interfaces and helper utilities.",
-      "url": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "url": "https://docs.anthropic.com/en/docs/about-claude/models/overview",
       "category": "ResourceContext",
       "subcategory": "sdks",
       "keywords": [
@@ -211015,7 +211015,7 @@
       "title": "Resource: Official Documentation",
       "section": "tools",
       "content": "Resource: Official Documentation\nDeveloper tool for Official Documentation. Enhances productivity and streamlines workflows for AI-assisted development.",
-      "url": "https://platform.claude.com/docs/en/get-started",
+      "url": "https://docs.anthropic.com/",
       "category": "ResourceContext",
       "subcategory": "tools",
       "keywords": [
