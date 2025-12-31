@@ -9,6 +9,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.14.1] - 2025-12-31
+### 🔗 Link Validation System & MCP Discovery
+- **Link Validation Infrastructure (MANDATORY)**: Automated broken link detection
+  - `lib/resources/link-validator.ts`: Core validation module
+  - Trusted domains whitelist (claude.ai, twitter.com, reddit.com, etc.)
+  - npm Registry API validation (bypasses website bot protection)
+  - HEAD fallback to GET for 405 responses
+  - URL normalization (removes `.git` suffix from GitHub URLs)
+  - Batch validation with rate limiting
+  - Consecutive failure tracking before flagging
+- **Broken Links Dashboard**: Admin moderation workflow
+  - `/dashboard/broken-links`: Dedicated admin page
+  - Pagination with 15 items per page
+  - Re-validate Broken button with faster settings
+  - Bulk actions: Validate Unchecked, Validate Stale
+  - Fix/Hide/Dismiss individual broken links
+- **MCP Servers Discovery**: Automated resource discovery from awesome lists
+  - Added `modelcontextprotocol/servers` as awesome_list source
+  - Parsed 1,475 external links from README.md
+  - Queued 1,141 unique MCP servers for review
+  - Approved and inserted 1,136 new resources (99.6% success rate)
+  - Auto-enhancement: key_features, target_audience, difficulty from text analysis
+  - GitHub API integration for stars, language, topics
+- **Database Tables**: Migrations 111-113
+  - `resource_link_validations`: URL validation history
+  - `broken_link_queue`: Moderation workflow
+  - Added `link_status`, `link_last_validated_at` to resources
+- **Resources Growth**: 1,952 → 3,035 total resources (+55%)
+  - mcp-servers: 1,073 → 2,136 (+99%)
+  - tools: 330 → 377 (+14%)
+  - sdks: 200 → 226 (+13%)
+
+---
+
 ## [1.14.0] - 2025-12-30
 ### 🚀 Admin Dashboard Modernization
 - **TanStack Query Migration (MANDATORY)**: All 32 dashboard pages now use TanStack Query

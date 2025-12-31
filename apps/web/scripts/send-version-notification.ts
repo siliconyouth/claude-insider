@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.14.0 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.14.1 notification to all opted-in users...\n");
 
-  const version = "1.14.0";
-  const title = "Claude Insider v1.14.0 - Dashboard Modernization with TanStack Query";
+  const version = "1.14.1";
+  const title = "Claude Insider v1.14.1 - Link Validation System & MCP Discovery";
   const message =
-    "🚀 All 32 dashboard pages migrated to TanStack Query v5 • ⌨️ Command Palette (Cmd+K) with 32+ navigation commands • 📁 Grouped sidebar navigation (6 collapsible groups) • 🔔 Real-time badge counts with 30-second polling • ⚡ Promise.all() parallelization fixes Discovery and Donations APIs • 🎨 Extended design tokens (ui-nav-*, ui-cmd-*)";
+    "🔗 Automated broken link detection with admin moderation queue • 🔌 1,136 new MCP servers discovered (99.6% success rate) • 📈 Resources grew from 1,952 to 3,035 (+55%) • 📦 npm Registry API validation (bypasses 403 bot protection) • 🎯 Trusted domains whitelist for reliable validation • 🔄 Weekly cron validation with consecutive failure tracking";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

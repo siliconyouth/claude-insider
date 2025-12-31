@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **58 implemented features** with detailed capabilities.
+Complete list of all **59 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (57 total)
+## Implemented Features (59 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -15,7 +15,7 @@ Complete list of all **58 implemented features** with detailed capabilities.
 | FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
 | FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
 | FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (6,983 chunks with 14% audio-enriched), ElevenLabs Turbo v2.5 TTS (42 voices, immediate text streaming, low-latency audio), speech-to-text |
-| FR-6 | Resources Section | 1,952 curated resources, 10 categories, search, GitHub integration |
+| FR-6 | Resources Section | 3,035 curated resources, 10 categories, search, GitHub integration |
 | FR-7 | Account Security | Password management, OAuth linking, safety checks |
 | FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |
 | FR-9 | Admin Notifications | In-app, push, email channels; scheduling; targeting by role |
@@ -68,17 +68,19 @@ Complete list of all **58 implemented features** with detailed capabilities.
 | FR-56 | Resource Submissions | User-submitted resources, `/resources/submit` form, rate limiting (10/50/100 per day by trust level), duplicate detection, AI-powered analysis queue, admin moderation workflow, status notifications (received/reviewing/approved/rejected), IP-hashed anonymous limits |
 | FR-57 | Optimistic UI | Matrix SDK pattern for instant messaging, temp IDs for optimistic messages, immediate sound/scroll feedback, background server sync, send button unblocked in ~2ms, CSS `overflow-anchor` scroll preservation, flexbox layout (no TanStack Virtual) |
 | FR-58 | Dashboard Modernization | TanStack Query v5 for all 32 dashboard pages, Query Key Factory pattern (`queryKeys.*`), Promise.all() API parallelization (Discovery 5→parallel, Donations 9→parallel), global error.tsx and loading.tsx, Command Palette (Cmd+K) with 32+ navigation commands, grouped sidebar navigation (6 collapsible groups), real-time badge counts (30s polling), optimistic mutations, extended design tokens (ui-nav-*, ui-cmd-*) |
+| FR-59 | Link Validation System | Automated broken link detection (`lib/resources/link-validator.ts`), trusted domains whitelist (claude.ai, twitter, reddit, perplexity), npm Registry API validation (bypasses 403 bot protection), scoped package encoding (@scope%2Fname), GitHub URL normalization (.git removal), HEAD→GET fallback for 405, consecutive failure tracking (threshold: 3), admin moderation queue (`/dashboard/broken-links`), weekly cron validation |
 
 ---
 
 ## Feature Categories
 
-### Content & Documentation (FR-1 to FR-6, FR-51, FR-52)
+### Content & Documentation (FR-1 to FR-6, FR-51, FR-52, FR-59)
 - MDX documentation with 34 pages
-- 1,952 curated resources with 21 enhanced fields
+- 3,035 curated resources with 21 enhanced fields
 - Advanced search with fuzzy matching and URL parameter sync
 - AI Voice Assistant with RAG
 - Resource insights dashboard with interactive charts
+- Automated link validation with admin moderation
 
 ### User Authentication & Security (FR-7, FR-10, FR-18, FR-19, FR-27, FR-28, FR-45)
 - OAuth (GitHub, Google) + email/password
@@ -117,7 +119,7 @@ Complete list of all **58 implemented features** with detailed capabilities.
 - Optimistic UI for instant messaging
 
 ### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50)
-- Database types (135 tables)
+- Database types (137 tables)
 - PWA enhancements
 - Advanced search
 - GitHub sync, doc versioning

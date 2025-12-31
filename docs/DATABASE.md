@@ -28,9 +28,9 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 135 |
-| **Categories** | 20 |
-| **Migrations** | 110 |
+| **Total Tables** | 137 |
+| **Categories** | 21 |
+| **Migrations** | 111 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -159,6 +159,36 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 - `discovery_queue_id` (UUID, FK → resource_discovery_queue) - Links after analysis
 - `created_resource_id` (UUID) - Links after approval
 
+### Link Validation (2 tables) - v1.14.1
+
+`resource_link_validations`, `broken_link_queue`
+
+**Key columns in `resource_link_validations`:**
+- `resource_id` (UUID, PK, FK → resources) - Link to validated resource
+- `url` (VARCHAR(2048)) - URL being validated
+- `last_checked_at` (TIMESTAMPTZ) - Last validation timestamp
+- `is_valid` (BOOLEAN) - Current validation status
+- `consecutive_failures` (INTEGER) - Failure count before flagging broken
+- `last_status_code` (INTEGER) - HTTP status from last check
+- `last_error` (TEXT) - Error message from last check
+- `created_at`, `updated_at` (TIMESTAMPTZ) - Timestamps
+
+**Key columns in `broken_link_queue`:**
+- `id` (UUID, PK) - Queue item ID
+- `resource_id` (UUID, FK → resources) - Broken resource
+- `reason` (TEXT) - Why link was flagged
+- `consecutive_failures` (INTEGER) - How many times validation failed
+- `detected_at` (TIMESTAMPTZ) - When broken link was detected
+- `status` ('pending', 'fixed', 'removed', 'ignored') - Moderation status
+- `reviewed_at` (TIMESTAMPTZ) - When admin reviewed
+- `reviewed_by` (TEXT, FK → user) - Admin who reviewed
+
+**Indexes:**
+- `idx_link_validations_resource` on `resource_link_validations(resource_id)`
+- `idx_link_validations_invalid` on `resource_link_validations(is_valid) WHERE is_valid = FALSE`
+- `idx_broken_link_queue_status` on `broken_link_queue(status)`
+- `idx_broken_link_queue_resource` on `broken_link_queue(resource_id)` UNIQUE
+
 **Key columns in `resources`:**
 - `slug` (TEXT, PK) - URL-friendly identifier
 - `title`, `description`, `url` - Basic resource info
@@ -272,7 +302,8 @@ supabase/migrations/
 ├── 101-103                      # Dashboard fixes, content_hash column
 ├── 104                          # Sync follow counts
 ├── 105                          # Message reactions table (Matrix SDK)
-└── 106                          # Reply threading column (reply_to_message_id)
+├── 106                          # Reply threading column (reply_to_message_id)
+└── 107                          # Link validation tables (resource_link_validations, broken_link_queue)
 ```
 
 ---

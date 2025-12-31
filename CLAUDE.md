@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.14.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.14.1**.
 
 | Link | URL |
 |------|-----|
@@ -46,13 +46,14 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.14.0**.
 14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 135 tables, RLS, migrations
 15. [Dashboard Data Fetching (MANDATORY)](#dashboard-data-fetching-mandatory) - TanStack Query, query keys, parallelization
 16. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
-17. [Internationalization](#internationalization-i18n) - 18 languages
-18. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-19. [Content Structure](#content-structure) - Documentation, resources, legal pages
-20. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-21. [Success Metrics](#success-metrics)
-22. [Updating Guidelines](#updating-guidelines)
-23. [License](#license)
+17. [Link Validation System (MANDATORY)](#link-validation-system-mandatory) - Broken link detection, trusted domains, npm validation
+18. [Internationalization](#internationalization-i18n) - 18 languages
+19. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+20. [Content Structure](#content-structure) - Documentation, resources, legal pages
+21. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+22. [Success Metrics](#success-metrics)
+23. [Updating Guidelines](#updating-guidelines)
+24. [License](#license)
 
 ---
 
@@ -147,7 +148,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 | Category | Key Features |
 |----------|--------------|
-| **Content** | MDX docs (34 pages), 1,900+ resources (dynamic), AI Voice Assistant, Advanced Search |
+| **Content** | MDX docs (34 pages), 3,000+ resources (dynamic), AI Voice Assistant, Advanced Search |
 | **Auth & Security** | OAuth, Passkeys/2FA, E2EE (Matrix), Bot Challenge, Security Dashboard |
 | **User Features** | Achievements (50+), Sound Effects (10 themes), Profiles, Notifications |
 | **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging, **Optimistic UI** |
@@ -1212,7 +1213,7 @@ const activity = await pool.query("SELECT * FROM activity...");
 
 ## Resources System (MANDATORY)
 
-**1,900+ resources** across 10 categories with **21 enhanced fields** (Migration 088). Database is source of truth. Homepage displays dynamic count from database.
+**3,000+ resources** across 10 categories with **21 enhanced fields** (Migration 088). Database is source of truth. Homepage displays dynamic count from database.
 
 ### Enhanced Fields (MANDATORY - v1.12.8)
 
@@ -1344,6 +1345,89 @@ const jsonLd = {
 
 ---
 
+## Link Validation System (MANDATORY)
+
+**Location**: `lib/resources/link-validator.ts` | **Dashboard**: `/dashboard/broken-links`
+
+All external resource URLs MUST be validated periodically. Broken links damage SEO and user experience.
+
+### Trusted Domains (No HTTP Validation)
+
+Sites with aggressive bot protection that return false 403/401 errors are whitelisted:
+
+```typescript
+const TRUSTED_DOMAINS = new Set([
+  "claude.ai", "console.anthropic.com",     // Anthropic
+  "twitter.com", "x.com",                    // Twitter/X
+  "www.reddit.com", "reddit.com",            // Reddit
+  "www.facebook.com", "facebook.com",        // Facebook
+  "poe.com", "www.perplexity.ai", "perplexity.ai", // AI platforms
+]);
+```
+
+### npm Package Validation (MANDATORY)
+
+npm website blocks bots with 403/405. **Always use Registry API**:
+
+```typescript
+// ❌ WRONG: Website returns 403
+fetch("https://www.npmjs.com/package/@scope/name");
+
+// ✅ CORRECT: Registry API works reliably
+const encoded = "@" + encodeURIComponent("scope/name"); // @scope%2Fname
+fetch(`https://registry.npmjs.org/${encoded}`);
+```
+
+### Validation Flow
+
+| Step | Action | Result |
+|------|--------|--------|
+| 1 | Check trusted domains | Skip HTTP if matched |
+| 2 | Extract npm package name | Use Registry API if npm URL |
+| 3 | Normalize URL | Remove `.git` suffix from GitHub |
+| 4 | HEAD request | Try HEAD first (faster) |
+| 5 | GET fallback | If HEAD returns 405 |
+| 6 | Record result | `resource_link_validations` table |
+| 7 | Track failures | Consecutive failures before flagging |
+
+### Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `resource_link_validations` | Validation history per resource |
+| `broken_link_queue` | Moderation workflow for broken links |
+| `resources.link_status` | Current status (valid/invalid/unknown) |
+| `resources.link_last_validated_at` | Last validation timestamp |
+
+### Key Functions
+
+| Function | Purpose |
+|----------|---------|
+| `validateUrl(url, timeout)` | Single URL validation |
+| `validateResource(pool, resourceId, url)` | Validate and record to DB |
+| `validateResourcesBatch(pool, options)` | Batch validation with rate limiting |
+| `getValidationStats(pool)` | Get validation statistics |
+| `getBrokenLinkQueue(pool, options)` | Fetch broken links for moderation |
+| `fixBrokenLink(pool, entryId, newUrl, reviewedBy)` | Update resource URL |
+| `hideBrokenResource(pool, entryId, reviewedBy)` | Unpublish broken resource |
+
+### Cron Schedule
+
+| Job | Schedule | Purpose |
+|-----|----------|---------|
+| Link validation | Daily 3 AM UTC | Validate stale resources (>24h) |
+| Broken link report | Weekly Monday | Admin notification of broken count |
+
+### Admin Dashboard
+
+The `/dashboard/broken-links` page provides:
+- **Pagination**: 15 items per page
+- **Re-validate Broken**: Re-check currently invalid links
+- **Bulk Actions**: Validate Unchecked, Validate Stale (>24h)
+- **Individual Actions**: Fix URL, Hide Resource, Dismiss
+
+---
+
 ## Internationalization (i18n)
 
 **18 Supported Languages**:
@@ -1415,7 +1499,7 @@ Matrix Olm/Megolm with Double Ratchet. Private keys never leave device.
 
 **See [Resources System (MANDATORY)](#resources-system-mandatory) for complete documentation.**
 
-1,900+ resources (dynamic count), 21 enhanced fields, insights dashboard, advanced filtering.
+3,000+ resources (dynamic count), 21 enhanced fields, insights dashboard, advanced filtering, link validation.
 
 **Auto-Update System**: AI-powered via Claude Opus 4.5, cron weekly Sunday 3 AM UTC, admin approval required.
 

@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-30 for v1.14.0 (Dashboard Modernization with TanStack Query, Command Palette)
+ * Updated: 2025-12-31 for v1.14.1 (Link Validation System, MCP Discovery, 3,035 resources)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.14.0",
+  version: "1.14.1",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -1168,6 +1168,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.14.0", "dashboard modernization", "tanstack query", "command palette", "grouped navigation", "real-time badges", "optimistic mutations", "fr-58", "promise.all", "query key factory"],
+  },
+  {
+    id: "v1141-features",
+    title: "Version 1.14.1 Features",
+    section: "New in v1.14.1",
+    content: `Claude Insider v1.14.1 introduces automated Link Validation System and MCP Discovery expanding resources from 1,952 to 3,035 (+55%). Link Validation System (FR-59): Automated broken link detection via lib/resources/link-validator.ts. Trusted domains whitelist (claude.ai, twitter.com, reddit.com, perplexity.ai) skip HTTP validation. npm Registry API validation bypasses 403 bot protection on npmjs.com website. Scoped packages properly encoded (@scope%2Fname). GitHub URL normalization removes .git suffix. HEAD→GET fallback for 405 responses. Consecutive failure tracking with threshold of 3 before flagging broken. Admin moderation queue at /dashboard/broken-links. Weekly cron validation schedule. MCP Servers Discovery: 1,136 new MCP servers discovered from modelcontextprotocol/servers README (99.6% success rate). Resources Database Growth: From 1,952 to 3,035 total resources (+55%). mcp-servers category: 1,073 → 2,136 (+99%). New Database Tables: resource_link_validations (validation history), broken_link_queue (admin moderation). MANDATORY Patterns: New "Link Validation Patterns" section in PATTERNS.md with npm Registry API validation, GitHub normalization, trusted domains, and consecutive failure tracking.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.14.1", "link validation", "broken links", "mcp discovery", "npm registry api", "trusted domains", "fr-59", "3035 resources", "consecutive failures", "moderation queue"],
   },
 ];
 

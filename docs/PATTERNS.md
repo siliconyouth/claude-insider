@@ -19,6 +19,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 11. [Optimistic Messaging Patterns](#optimistic-messaging-patterns-mandatory---v1137) - Instant feedback, scroll preservation (MANDATORY)
 12. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
 13. [Dashboard Data Fetching Patterns](#dashboard-data-fetching-patterns-mandatory---v1140) - TanStack Query, query keys, parallelization (MANDATORY)
+14. [Link Validation Patterns](#link-validation-patterns-mandatory---v1141) - Trusted domains, npm Registry API, broken link detection (MANDATORY)
 
 ---
 
@@ -1837,4 +1838,303 @@ useEffect(() => {
 - [ ] No `useState + useEffect + fetch` pattern
 - [ ] Error states handled via query error or error boundary
 - [ ] Loading states use skeleton or Suspense fallback
+
+---
+
+## Link Validation Patterns (MANDATORY - v1.14.1)
+
+**CRITICAL**: All external resource URLs MUST be validated periodically to prevent broken links. This is an automated system with admin approval workflow.
+
+### Trusted Domains (Skip HTTP Validation)
+
+```typescript
+// lib/resources/link-validator.ts
+const TRUSTED_DOMAINS = new Set([
+  // Anthropic domains - always accessible
+  "claude.ai",
+  "console.anthropic.com",
+
+  // Social media - blocks automated requests
+  "twitter.com",
+  "x.com",
+  "www.reddit.com",
+  "reddit.com",
+
+  // AI platforms with bot detection
+  "poe.com",
+  "www.perplexity.ai",
+  "perplexity.ai",
+]);
+
+// ✅ CORRECT: Skip validation for trusted domains
+function shouldSkipValidation(url: string): boolean {
+  try {
+    const hostname = new URL(url).hostname;
+    return TRUSTED_DOMAINS.has(hostname);
+  } catch {
+    return false;
+  }
+}
+```
+
+### npm Package URL Validation (MANDATORY)
+
+**CRITICAL**: npm website blocks automated requests with 403. MUST use Registry API instead.
+
+```typescript
+// ✅ CORRECT: Use npm Registry API (works reliably)
+async function validateNpmPackage(url: string): Promise<ValidationResult> {
+  // Parse: https://www.npmjs.com/package/@scope/name
+  const match = url.match(/npmjs\.com\/package\/(@[^/]+\/[^/?#]+|[^/?#]+)/);
+  if (!match) return { valid: false, reason: 'Invalid npm URL format' };
+
+  const packageName = decodeURIComponent(match[1]);
+
+  // Scoped packages need special encoding: @scope/name → @scope%2Fname
+  const encodedName = packageName.startsWith('@')
+    ? '@' + encodeURIComponent(packageName.slice(1))
+    : encodeURIComponent(packageName);
+
+  const response = await fetch(`https://registry.npmjs.org/${encodedName}`, {
+    headers: { 'Accept': 'application/json' },
+    signal: AbortSignal.timeout(5000),
+  });
+
+  if (response.status === 200) {
+    return { valid: true, statusCode: 200 };
+  } else if (response.status === 404) {
+    return { valid: false, statusCode: 404, reason: 'Package not found' };
+  }
+  return { valid: false, statusCode: response.status, reason: 'Registry error' };
+}
+
+// ❌ WRONG: Direct npm website fetch (always returns 403)
+const response = await fetch('https://www.npmjs.com/package/@scope/name');
+// Returns 403 Forbidden due to bot detection
+```
+
+### GitHub URL Normalization
+
+```typescript
+// ✅ CORRECT: Normalize GitHub URLs before validation
+function normalizeGitHubUrl(url: string): string {
+  // Remove .git suffix: https://github.com/org/repo.git → https://github.com/org/repo
+  if (url.endsWith('.git')) {
+    url = url.slice(0, -4);
+  }
+
+  // Normalize trailing slashes
+  url = url.replace(/\/+$/, '');
+
+  return url;
+}
+```
+
+### Validation Strategy
+
+```typescript
+// lib/resources/link-validator.ts
+async function validateUrl(url: string): Promise<ValidationResult> {
+  // 1. Skip trusted domains
+  if (shouldSkipValidation(url)) {
+    return { valid: true, reason: 'Trusted domain' };
+  }
+
+  // 2. Special handling for npm
+  if (url.includes('npmjs.com/package/')) {
+    return validateNpmPackage(url);
+  }
+
+  // 3. Normalize GitHub URLs
+  if (url.includes('github.com')) {
+    url = normalizeGitHubUrl(url);
+  }
+
+  // 4. Standard HTTP validation with HEAD → GET fallback
+  try {
+    let response = await fetch(url, {
+      method: 'HEAD',
+      headers: { 'User-Agent': 'ClaudeInsider-LinkValidator/1.0' },
+      signal: AbortSignal.timeout(10000),
+      redirect: 'follow',
+    });
+
+    // Some servers return 405 for HEAD, fallback to GET
+    if (response.status === 405) {
+      response = await fetch(url, {
+        method: 'GET',
+        signal: AbortSignal.timeout(10000),
+        redirect: 'follow',
+      });
+    }
+
+    return {
+      valid: response.ok,
+      statusCode: response.status,
+      finalUrl: response.url !== url ? response.url : undefined,
+    };
+  } catch (error) {
+    return {
+      valid: false,
+      reason: error instanceof Error ? error.message : 'Network error',
+    };
+  }
+}
+```
+
+### Consecutive Failure Tracking
+
+```typescript
+// ✅ CORRECT: Only flag as broken after multiple failures
+interface LinkValidation {
+  resource_id: string;
+  url: string;
+  last_checked_at: Date;
+  is_valid: boolean;
+  consecutive_failures: number;  // Key field!
+  last_status_code: number | null;
+  last_error: string | null;
+}
+
+// Mark as broken only after 3 consecutive failures
+const FAILURE_THRESHOLD = 3;
+
+async function checkAndUpdateLink(resourceId: string, url: string) {
+  const result = await validateUrl(url);
+
+  if (result.valid) {
+    // Reset failure counter on success
+    await pool.query(`
+      UPDATE resource_link_validations
+      SET is_valid = TRUE, consecutive_failures = 0, last_checked_at = NOW()
+      WHERE resource_id = $1
+    `, [resourceId]);
+  } else {
+    // Increment failure counter
+    const { rows } = await pool.query(`
+      UPDATE resource_link_validations
+      SET consecutive_failures = consecutive_failures + 1,
+          last_status_code = $2,
+          last_error = $3,
+          last_checked_at = NOW()
+      WHERE resource_id = $1
+      RETURNING consecutive_failures
+    `, [resourceId, result.statusCode, result.reason]);
+
+    // Only mark as broken after threshold
+    if (rows[0].consecutive_failures >= FAILURE_THRESHOLD) {
+      await pool.query(`
+        UPDATE resource_link_validations
+        SET is_valid = FALSE
+        WHERE resource_id = $1
+      `, [resourceId]);
+
+      // Add to broken links queue for admin review
+      await pool.query(`
+        INSERT INTO broken_link_queue (resource_id, reason, detected_at)
+        VALUES ($1, $2, NOW())
+        ON CONFLICT (resource_id) DO NOTHING
+      `, [resourceId, result.reason]);
+    }
+  }
+}
+```
+
+### Admin Moderation Workflow
+
+```typescript
+// Dashboard: /dashboard/broken-links
+interface BrokenLinkQueueItem {
+  id: string;
+  resource_id: string;
+  resource_title: string;
+  url: string;
+  reason: string;
+  consecutive_failures: number;
+  detected_at: Date;
+  status: 'pending' | 'fixed' | 'removed' | 'ignored';
+}
+
+// Admin actions
+async function handleBrokenLink(queueId: string, action: 'revalidate' | 'remove' | 'ignore') {
+  switch (action) {
+    case 'revalidate':
+      // Re-check URL and update status
+      break;
+    case 'remove':
+      // Unpublish resource
+      await pool.query(`UPDATE resources SET is_published = FALSE WHERE id = $1`, [resourceId]);
+      break;
+    case 'ignore':
+      // Keep resource, mark as reviewed
+      break;
+  }
+
+  await pool.query(`
+    UPDATE broken_link_queue
+    SET status = $1, reviewed_at = NOW(), reviewed_by = $2
+    WHERE id = $3
+  `, [action === 'revalidate' ? 'fixed' : action, adminId, queueId]);
+}
+```
+
+### Batch Validation Script Pattern
+
+```typescript
+// scripts/validate-resource-links.cjs
+async function validateAllResources() {
+  const { rows: resources } = await pool.query(`
+    SELECT id, title, url
+    FROM resources
+    WHERE is_published = TRUE
+    ORDER BY COALESCE(
+      (SELECT last_checked_at FROM resource_link_validations WHERE resource_id = resources.id),
+      '1970-01-01'
+    ) ASC
+    LIMIT 500  -- Batch size
+  `);
+
+  console.log(`Validating ${resources.length} resources...`);
+
+  for (const resource of resources) {
+    await checkAndUpdateLink(resource.id, resource.url);
+
+    // Rate limiting: 100ms between requests
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+}
+```
+
+### Cron Schedule
+
+```typescript
+// vercel.json or cron configuration
+{
+  "crons": [
+    {
+      "path": "/api/cron/validate-links",
+      "schedule": "0 4 * * 1"  // Weekly Monday 4 AM UTC
+    }
+  ]
+}
+```
+
+### Key Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `resource_link_validations` | Tracks validation history per resource |
+| `broken_link_queue` | Admin moderation queue for broken links |
+
+### Implementation Checklist
+
+- [ ] npm URLs use Registry API (`registry.npmjs.org`), NOT website
+- [ ] Scoped packages properly encoded (`@scope%2Fname`)
+- [ ] GitHub URLs normalized (remove `.git` suffix)
+- [ ] Trusted domains skip HTTP validation
+- [ ] HEAD request with GET fallback for 405
+- [ ] Consecutive failure tracking (threshold: 3)
+- [ ] Admin dashboard for broken link moderation
+- [ ] Rate limiting in batch validation (100ms delay)
+- [ ] Cron job scheduled for weekly validation
 
