@@ -283,6 +283,7 @@ export async function validateResourcesBatch(
     delayBetweenBatches?: number;
     onlyUnchecked?: boolean;
     onlyStale?: boolean; // Resources not checked in 24h
+    onlyBroken?: boolean; // Re-validate currently broken links
   } = {}
 ): Promise<ValidationStats> {
   const {
@@ -291,11 +292,19 @@ export async function validateResourcesBatch(
     delayBetweenBatches = 2000,
     onlyUnchecked = false,
     onlyStale = false,
+    onlyBroken = false,
   } = options;
 
   // Build query based on options
   let whereClause = "WHERE r.is_published = true AND r.url IS NOT NULL";
-  if (onlyUnchecked) {
+  let orderClause = "ORDER BY COALESCE(r.link_last_validated_at, '1970-01-01') ASC";
+
+  if (onlyBroken) {
+    // Re-validate resources currently marked as broken
+    whereClause +=
+      " AND EXISTS (SELECT 1 FROM resource_link_validations v WHERE v.resource_id = r.id AND v.is_valid = false)";
+    orderClause = "ORDER BY r.link_last_validated_at DESC"; // Most recently broken first
+  } else if (onlyUnchecked) {
     whereClause +=
       " AND NOT EXISTS (SELECT 1 FROM resource_link_validations v WHERE v.resource_id = r.id)";
   } else if (onlyStale) {
@@ -308,7 +317,7 @@ export async function validateResourcesBatch(
     SELECT r.id, r.url
     FROM resources r
     ${whereClause}
-    ORDER BY COALESCE(r.link_last_validated_at, '1970-01-01') ASC
+    ${orderClause}
     LIMIT $1
   `,
     [limit]

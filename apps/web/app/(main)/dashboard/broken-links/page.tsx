@@ -216,15 +216,33 @@ export default function BrokenLinksPage() {
               Dismiss All
             </button>
 
+            {/* Re-validate Broken Links */}
+            <button
+              onClick={() =>
+                validateMutation.mutate({ limit: 100, onlyBroken: true })
+              }
+              disabled={validateMutation.isPending || invalidCount === 0}
+              className={cn(
+                "px-4 py-2 rounded-lg text-sm font-medium",
+                "bg-green-600 text-white hover:bg-green-700",
+                "disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+              title="Re-check all currently broken links with updated validation"
+            >
+              {validateMutation.isPending ? "Validating..." : "Re-validate Broken"}
+            </button>
+
             {/* Run Validation */}
             <button
               onClick={() => validateMutation.mutate({ limit: 50 })}
               disabled={validateMutation.isPending}
               className={cn(
                 "px-4 py-2 rounded-lg text-sm font-medium",
-                "bg-blue-600 text-white hover:bg-blue-700",
+                "ui-bg-card border ui-border ui-text-secondary",
+                "hover:bg-gray-100 dark:hover:bg-gray-800",
                 "disabled:opacity-50 disabled:cursor-not-allowed"
               )}
+              title="Validate oldest-checked resources"
             >
               {validateMutation.isPending ? "Validating..." : "Run Validation"}
             </button>

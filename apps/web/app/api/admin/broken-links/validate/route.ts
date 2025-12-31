@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
       batchSize = 5,
       onlyUnchecked = false,
       onlyStale = false,
+      onlyBroken = false,
     } = body;
 
     const startTime = Date.now();
@@ -42,6 +43,7 @@ export async function POST(request: NextRequest) {
       delayBetweenBatches: 1000,
       onlyUnchecked,
       onlyStale,
+      onlyBroken,
     });
 
     const stats = await getValidationStats(pool);

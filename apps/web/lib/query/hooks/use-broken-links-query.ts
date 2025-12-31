@@ -167,15 +167,22 @@ export function useTriggerValidation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (options?: { limit?: number; onlyUnchecked?: boolean }) =>
+    mutationFn: (options?: {
+      limit?: number;
+      onlyUnchecked?: boolean;
+      onlyBroken?: boolean;
+    }) =>
       dashboardMutator<{ success: boolean; results: object }>(
         "/api/admin/broken-links/validate",
         "POST",
         options || {}
       ),
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.brokenLinks.all });
-      toast.success("Validation triggered");
+      const message = variables?.onlyBroken
+        ? "Re-validation of broken links complete"
+        : "Validation triggered";
+      toast.success(message);
     },
     onError: (error) => {
       toast.error(
