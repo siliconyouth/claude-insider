@@ -202,11 +202,17 @@ export default function BrokenLinksPage() {
           Query Status: {queueQuery.isLoading ? "Loading" : queueQuery.isError ? "Error" : "Success"} |
           Items: {queueQuery.data?.items?.length ?? "null"} |
           Total: {queueQuery.data?.total ?? "null"} |
-          Filter: {filter}
+          Filter: {filter} |
+          Entries length: {entries.length}
         </div>
         {queueQuery.isError && (
           <div className="text-red-500 mt-2">
             Error: {queueQuery.error instanceof Error ? queueQuery.error.message : "Unknown error"}
+          </div>
+        )}
+        {entries.length > 0 && (
+          <div className="mt-2 text-xs ui-text-secondary">
+            First entry: id={entries[0]?.id}, title={entries[0]?.resourceTitle}, status={entries[0]?.status}
           </div>
         )}
       </div>
