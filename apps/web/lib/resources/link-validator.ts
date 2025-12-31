@@ -43,6 +43,45 @@ export interface BrokenLinkEntry {
 }
 
 /**
+ * Get appropriate headers for a URL
+ * Some sites (npm, etc.) block bot-like User-Agents, so we use browser-like headers
+ */
+function getHeadersForUrl(url: string): Record<string, string> {
+  const browserUserAgent =
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+
+  // Sites that require browser-like headers to avoid 403
+  const requiresBrowserHeaders =
+    url.includes("npmjs.com") ||
+    url.includes("registry.npmjs.org") ||
+    url.includes("perplexity.ai") ||
+    url.includes("console.anthropic.com");
+
+  if (requiresBrowserHeaders) {
+    return {
+      "User-Agent": browserUserAgent,
+      Accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+      "Accept-Language": "en-US,en;q=0.5",
+      "Accept-Encoding": "gzip, deflate, br",
+      Connection: "keep-alive",
+      "Upgrade-Insecure-Requests": "1",
+      "Sec-Fetch-Dest": "document",
+      "Sec-Fetch-Mode": "navigate",
+      "Sec-Fetch-Site": "none",
+      "Sec-Fetch-User": "?1",
+    };
+  }
+
+  // Default headers for other sites
+  return {
+    "User-Agent":
+      "ClaudeInsider-LinkValidator/1.0 (https://www.claudeinsider.com)",
+    Accept: "*/*",
+  };
+}
+
+/**
  * Validate a single URL with timeout and redirect detection
  */
 export async function validateUrl(
@@ -55,15 +94,15 @@ export async function validateUrl(
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
+    // Use GET for sites that don't like HEAD requests (npm, etc.)
+    const useGetMethod =
+      url.includes("npmjs.com") || url.includes("registry.npmjs.org");
+
     const response = await fetch(url, {
-      method: "HEAD",
+      method: useGetMethod ? "GET" : "HEAD",
       signal: controller.signal,
       redirect: "manual", // Don't follow redirects automatically
-      headers: {
-        "User-Agent":
-          "ClaudeInsider-LinkValidator/1.0 (https://www.claudeinsider.com)",
-        Accept: "*/*",
-      },
+      headers: getHeadersForUrl(url),
     });
 
     clearTimeout(timeoutId);
@@ -153,14 +192,16 @@ async function validateRedirectTarget(
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
+    // Use GET for sites that don't like HEAD requests
+    const useGetMethod =
+      absoluteUrl.includes("npmjs.com") ||
+      absoluteUrl.includes("registry.npmjs.org");
+
     const response = await fetch(absoluteUrl, {
-      method: "HEAD",
+      method: useGetMethod ? "GET" : "HEAD",
       signal: controller.signal,
       redirect: "follow", // Follow further redirects
-      headers: {
-        "User-Agent":
-          "ClaudeInsider-LinkValidator/1.0 (https://www.claudeinsider.com)",
-      },
+      headers: getHeadersForUrl(absoluteUrl),
     });
 
     clearTimeout(timeoutId);
