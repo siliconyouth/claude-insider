@@ -73,6 +73,8 @@ function getStatusStyle(status: string): StatusStyle {
 export default function BrokenLinksPage() {
   // Filter state
   const [filter, setFilter] = useState<BrokenLinkStatus>("pending");
+  const [page, setPage] = useState(1);
+  const limit = 50;
 
   // Modal state
   const [selectedEntry, setSelectedEntry] = useState<BrokenLinkEntry | null>(null);
@@ -80,7 +82,7 @@ export default function BrokenLinksPage() {
   const [actionType, setActionType] = useState<"fix" | "hide" | "dismiss" | null>(null);
 
   // TanStack Query hooks
-  const queueQuery = useBrokenLinksQueue({ status: filter });
+  const queueQuery = useBrokenLinksQueue({ status: filter, page, limit });
   const statsQuery = useBrokenLinksStats();
   const fixMutation = useFixBrokenLink();
   const hideMutation = useHideBrokenLink();
@@ -89,8 +91,16 @@ export default function BrokenLinksPage() {
 
   // Derived data
   const entries = queueQuery.data?.items || [];
+  const total = queueQuery.data?.total || 0;
+  const totalPages = Math.ceil(total / limit);
   const stats = statsQuery.data;
   const pendingCount = stats?.pendingReview || 0;
+
+  // Reset page when filter changes
+  const handleFilterChange = (newFilter: BrokenLinkStatus) => {
+    setFilter(newFilter);
+    setPage(1);
+  };
 
   const handleAction = (entry: BrokenLinkEntry, action: "fix" | "hide" | "dismiss") => {
     setSelectedEntry(entry);
@@ -177,43 +187,29 @@ export default function BrokenLinksPage() {
       )}
 
       {/* Filters */}
-      <div className="flex items-center gap-2 mb-6">
-        {(
-          ["all", "pending", "fixed", "hidden", "dismissed"] as BrokenLinkStatus[]
-        ).map((status) => (
-          <button
-            key={status}
-            onClick={() => setFilter(status)}
-            className={cn(
-              "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
-              filter === status
-                ? "bg-blue-600 text-white"
-                : "ui-bg-card ui-text-secondary hover:ui-bg-card-hover"
-            )}
-          >
-            {status.charAt(0).toUpperCase() + status.slice(1)}
-          </button>
-        ))}
-      </div>
-
-      {/* Debug Info */}
-      <div className="mb-4 p-4 ui-bg-card border ui-border rounded-lg text-sm font-mono">
-        <div className="ui-text-secondary">
-          Query Status: {queueQuery.isLoading ? "Loading" : queueQuery.isError ? "Error" : "Success"} |
-          Items: {queueQuery.data?.items?.length ?? "null"} |
-          Total: {queueQuery.data?.total ?? "null"} |
-          Filter: {filter} |
-          Entries length: {entries.length}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          {(
+            ["all", "pending", "fixed", "hidden", "dismissed"] as BrokenLinkStatus[]
+          ).map((status) => (
+            <button
+              key={status}
+              onClick={() => handleFilterChange(status)}
+              className={cn(
+                "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
+                filter === status
+                  ? "bg-blue-600 text-white"
+                  : "ui-bg-card ui-text-secondary hover:ui-bg-card-hover"
+              )}
+            >
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </button>
+          ))}
         </div>
-        {queueQuery.isError && (
-          <div className="text-red-500 mt-2">
-            Error: {queueQuery.error instanceof Error ? queueQuery.error.message : "Unknown error"}
-          </div>
-        )}
-        {entries.length > 0 && (
-          <div className="mt-2 text-xs ui-text-secondary">
-            First entry: id={entries[0]?.id}, title={entries[0]?.resourceTitle}, status={entries[0]?.status}
-          </div>
+        {total > 0 && (
+          <span className="text-sm ui-text-secondary">
+            Showing {(page - 1) * limit + 1}-{Math.min(page * limit, total)} of {total}
+          </span>
         )}
       </div>
 
@@ -264,9 +260,6 @@ export default function BrokenLinksPage() {
         />
       ) : (
         <div className="space-y-4">
-          <div className="p-4 bg-green-500 text-white font-bold rounded">
-            ✅ RENDERING {entries.length} ENTRIES - If you see this, the list should be below
-          </div>
           {entries.map((entry) => (
             <div
               key={entry.id}
@@ -338,6 +331,69 @@ export default function BrokenLinksPage() {
               </div>
             </div>
           ))}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 pt-4">
+              <button
+                onClick={() => setPage(1)}
+                disabled={page === 1}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-sm font-medium",
+                  "ui-bg-card border ui-border",
+                  page === 1
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                )}
+              >
+                First
+              </button>
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-sm font-medium",
+                  "ui-bg-card border ui-border",
+                  page === 1
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                )}
+              >
+                Previous
+              </button>
+
+              <span className="px-4 py-1.5 text-sm ui-text-secondary">
+                Page {page} of {totalPages}
+              </span>
+
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-sm font-medium",
+                  "ui-bg-card border ui-border",
+                  page === totalPages
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                )}
+              >
+                Next
+              </button>
+              <button
+                onClick={() => setPage(totalPages)}
+                disabled={page === totalPages}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-sm font-medium",
+                  "ui-bg-card border ui-border",
+                  page === totalPages
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                )}
+              >
+                Last
+              </button>
+            </div>
+          )}
         </div>
       )}
 

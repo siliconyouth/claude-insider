@@ -29,18 +29,6 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "50", 10);
     const offset = (page - 1) * limit;
 
-    console.log("[BrokenLinks] Request:", { status, page, limit, offset });
-
-    // Debug: Check what's in the tables
-    const debugResult = await pool.query(`
-      SELECT
-        (SELECT COUNT(*) FROM resource_link_validations) as total_validations,
-        (SELECT COUNT(*) FROM resource_link_validations WHERE is_valid = false) as invalid_validations,
-        (SELECT COUNT(*) FROM broken_link_queue) as queue_entries,
-        (SELECT COUNT(*) FROM resources) as total_resources
-    `);
-    console.log("[BrokenLinks] Debug counts:", debugResult.rows[0]);
-
     let items: object[] = [];
     let total = 0;
 
@@ -68,10 +56,8 @@ export async function GET(request: NextRequest) {
         LIMIT $1 OFFSET $2
       `;
 
-      console.log("[BrokenLinks] Query:", listQuery);
       const listResult = await pool.query(listQuery, [limit, offset]);
       items = listResult.rows;
-      console.log("[BrokenLinks] Items found:", items.length);
 
       // Count query
       const countQuery = `
@@ -84,7 +70,6 @@ export async function GET(request: NextRequest) {
       `;
       const countResult = await pool.query(countQuery);
       total = parseInt(countResult.rows[0].count, 10);
-      console.log("[BrokenLinks] Total count:", total);
 
     } else {
       // For specific queue statuses (fixed, hidden, dismissed)
