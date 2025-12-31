@@ -173,13 +173,91 @@ export function useTriggerValidation() {
         "POST",
         options || {}
       ),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.brokenLinks.all });
       toast.success("Validation triggered");
     },
     onError: (error) => {
       toast.error(
         error instanceof Error ? error.message : "Failed to trigger validation"
+      );
+    },
+  });
+}
+
+/**
+ * Bulk actions: hide-all or dismiss-all
+ */
+export function useBulkBrokenLinkAction() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (action: "hide-all" | "dismiss-all") =>
+      dashboardMutator<{ success: boolean; affected: number }>(
+        "/api/admin/broken-links/bulk",
+        "POST",
+        { action }
+      ),
+    onSuccess: (data, action) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.brokenLinks.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.resources.all });
+      const actionLabel = action === "hide-all" ? "hidden" : "dismissed";
+      toast.success(`${data.affected} resources ${actionLabel}`);
+    },
+    onError: (error) => {
+      toast.error(
+        error instanceof Error ? error.message : "Bulk action failed"
+      );
+    },
+  });
+}
+
+/**
+ * Rediscover response types
+ */
+export interface RediscoverResult {
+  resourceId: string;
+  resourceTitle: string;
+  originalUrl: string;
+  suggestedUrl: string | null;
+  source: string | null;
+  status: "found" | "not_found" | "error";
+  error?: string;
+}
+
+export interface RediscoverResponse {
+  success: boolean;
+  results: RediscoverResult[];
+  summary: {
+    total: number;
+    found: number;
+    notFound: number;
+    errors: number;
+  };
+  message: string;
+}
+
+/**
+ * Auto-rediscover broken links
+ * Searches GitHub/npm for resources by name
+ */
+export function useRediscoverBrokenLinks() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (options?: { limit?: number }) =>
+      dashboardMutator<RediscoverResponse>(
+        "/api/admin/broken-links/rediscover",
+        "POST",
+        options || { limit: 20 }
+      ),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.brokenLinks.all });
+      toast.success(data.message);
+    },
+    onError: (error) => {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to rediscover resources"
       );
     },
   });

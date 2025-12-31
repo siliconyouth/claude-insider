@@ -22,8 +22,11 @@ import {
   useHideBrokenLink,
   useDismissBrokenLink,
   useTriggerValidation,
+  useBulkBrokenLinkAction,
+  useRediscoverBrokenLinks,
   type BrokenLinkStatus,
   type BrokenLinkEntry,
+  type RediscoverResponse,
 } from "@/lib/query/hooks";
 
 // Status configuration with proper type
@@ -80,6 +83,13 @@ export default function BrokenLinksPage() {
   const [selectedEntry, setSelectedEntry] = useState<BrokenLinkEntry | null>(null);
   const [newUrl, setNewUrl] = useState("");
   const [actionType, setActionType] = useState<"fix" | "hide" | "dismiss" | null>(null);
+  const [showBulkConfirm, setShowBulkConfirm] = useState<"hide-all" | "dismiss-all" | null>(null);
+  const [rediscoverResults, setRediscoverResults] = useState<{
+    found: number;
+    notFound: number;
+    errors: number;
+    total: number;
+  } | null>(null);
 
   // TanStack Query hooks
   const queueQuery = useBrokenLinksQueue({ status: filter, page, limit });
@@ -88,6 +98,8 @@ export default function BrokenLinksPage() {
   const hideMutation = useHideBrokenLink();
   const dismissMutation = useDismissBrokenLink();
   const validateMutation = useTriggerValidation();
+  const bulkMutation = useBulkBrokenLinkAction();
+  const rediscoverMutation = useRediscoverBrokenLinks();
 
   // Derived data
   const entries = queueQuery.data?.items || [];
@@ -150,17 +162,71 @@ export default function BrokenLinksPage() {
           ) : undefined
         }
         actions={
-          <button
-            onClick={() => validateMutation.mutate({ limit: 50 })}
-            disabled={validateMutation.isPending}
-            className={cn(
-              "px-4 py-2 rounded-lg text-sm font-medium",
-              "bg-blue-600 text-white hover:bg-blue-700",
-              "disabled:opacity-50 disabled:cursor-not-allowed"
-            )}
-          >
-            {validateMutation.isPending ? "Validating..." : "Run Validation"}
-          </button>
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Auto-Rediscover - searches GitHub/npm for new URLs */}
+            <button
+              onClick={() => {
+                rediscoverMutation.mutate(
+                  { limit: 20 },
+                  {
+                    onSuccess: (data: RediscoverResponse) => {
+                      setRediscoverResults(data.summary);
+                    },
+                  }
+                );
+              }}
+              disabled={rediscoverMutation.isPending || pendingCount === 0}
+              className={cn(
+                "px-4 py-2 rounded-lg text-sm font-medium",
+                "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600 text-white",
+                "hover:from-violet-700 hover:via-blue-700 hover:to-cyan-700",
+                "disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+              title="Search GitHub and npm for updated URLs"
+            >
+              {rediscoverMutation.isPending ? "Searching..." : "Auto-Rediscover"}
+            </button>
+
+            {/* Bulk Actions */}
+            <button
+              onClick={() => setShowBulkConfirm("hide-all")}
+              disabled={bulkMutation.isPending || pendingCount === 0}
+              className={cn(
+                "px-4 py-2 rounded-lg text-sm font-medium",
+                "bg-gray-600 text-white hover:bg-gray-700",
+                "disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+              title="Hide all resources with broken links"
+            >
+              Hide All
+            </button>
+            <button
+              onClick={() => setShowBulkConfirm("dismiss-all")}
+              disabled={bulkMutation.isPending || pendingCount === 0}
+              className={cn(
+                "px-4 py-2 rounded-lg text-sm font-medium",
+                "ui-bg-card border ui-border ui-text-secondary",
+                "hover:bg-gray-100 dark:hover:bg-gray-800",
+                "disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+              title="Dismiss all as false positives"
+            >
+              Dismiss All
+            </button>
+
+            {/* Run Validation */}
+            <button
+              onClick={() => validateMutation.mutate({ limit: 50 })}
+              disabled={validateMutation.isPending}
+              className={cn(
+                "px-4 py-2 rounded-lg text-sm font-medium",
+                "bg-blue-600 text-white hover:bg-blue-700",
+                "disabled:opacity-50 disabled:cursor-not-allowed"
+              )}
+            >
+              {validateMutation.isPending ? "Validating..." : "Run Validation"}
+            </button>
+          </div>
         }
       />
 
@@ -296,6 +362,19 @@ export default function BrokenLinksPage() {
                           {entry.statusCode && `HTTP ${entry.statusCode} - `}
                           {entry.errorMessage}
                         </span>
+                      </div>
+                    )}
+                    {entry.suggestedUrl && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-green-600 dark:text-green-400">✓ Suggested:</span>
+                        <a
+                          href={entry.suggestedUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-600 dark:text-green-400 hover:underline truncate max-w-md"
+                        >
+                          {entry.suggestedUrl}
+                        </a>
                       </div>
                     )}
                     <div className="ui-text-secondary">
@@ -465,6 +544,125 @@ export default function BrokenLinksPage() {
                 )}
               >
                 {isLoading ? "Processing..." : "Confirm"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bulk Action Confirmation Modal */}
+      {showBulkConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="ui-bg-modal rounded-xl shadow-xl max-w-lg w-full p-6">
+            <h3 className="text-lg font-semibold ui-text-heading mb-4">
+              {showBulkConfirm === "hide-all"
+                ? "Hide All Resources with Broken Links?"
+                : "Dismiss All Broken Link Entries?"}
+            </h3>
+
+            <div className="mb-6">
+              {showBulkConfirm === "hide-all" ? (
+                <p className="ui-text-secondary">
+                  This will unpublish <strong>{pendingCount} resources</strong>{" "}
+                  with broken links. They can be republished later from the
+                  resources admin page.
+                </p>
+              ) : (
+                <p className="ui-text-secondary">
+                  This will mark <strong>{pendingCount} entries</strong> as
+                  false positives. The resources will remain published with
+                  their current URLs.
+                </p>
+              )}
+            </div>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowBulkConfirm(null)}
+                className="px-4 py-2 rounded-lg text-sm font-medium ui-btn-secondary"
+                disabled={bulkMutation.isPending}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  bulkMutation.mutate(showBulkConfirm, {
+                    onSuccess: () => setShowBulkConfirm(null),
+                  });
+                }}
+                disabled={bulkMutation.isPending}
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium text-white",
+                  showBulkConfirm === "hide-all"
+                    ? "bg-gray-600 hover:bg-gray-700"
+                    : "bg-blue-600 hover:bg-blue-700",
+                  "disabled:opacity-50 disabled:cursor-not-allowed"
+                )}
+              >
+                {bulkMutation.isPending
+                  ? "Processing..."
+                  : showBulkConfirm === "hide-all"
+                    ? "Hide All"
+                    : "Dismiss All"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Rediscover Results Modal */}
+      {rediscoverResults && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="ui-bg-modal rounded-xl shadow-xl max-w-lg w-full p-6">
+            <h3 className="text-lg font-semibold ui-text-heading mb-4">
+              Auto-Rediscover Results
+            </h3>
+
+            <div className="space-y-4 mb-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="ui-bg-card border ui-border rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                    {rediscoverResults.found}
+                  </div>
+                  <div className="text-sm ui-text-secondary">Found</div>
+                </div>
+                <div className="ui-bg-card border ui-border rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-gray-600 dark:text-gray-400">
+                    {rediscoverResults.notFound}
+                  </div>
+                  <div className="text-sm ui-text-secondary">Not Found</div>
+                </div>
+              </div>
+
+              {rediscoverResults.found > 0 ? (
+                <p className="ui-text-secondary">
+                  Found <strong>{rediscoverResults.found}</strong> potential
+                  replacement URLs from GitHub and npm. These have been saved as
+                  suggestions - you can apply them using the &quot;Fix&quot; button on
+                  each entry.
+                </p>
+              ) : (
+                <p className="ui-text-secondary">
+                  No replacement URLs could be found automatically. You may need
+                  to search manually or consider hiding/dismissing these
+                  resources.
+                </p>
+              )}
+
+              {rediscoverResults.errors > 0 && (
+                <p className="text-sm text-red-600 dark:text-red-400">
+                  {rediscoverResults.errors} entries encountered errors during
+                  search.
+                </p>
+              )}
+            </div>
+
+            <div className="flex justify-end">
+              <button
+                onClick={() => setRediscoverResults(null)}
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Close
               </button>
             </div>
           </div>

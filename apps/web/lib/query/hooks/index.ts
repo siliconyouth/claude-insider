@@ -231,8 +231,12 @@ export {
   useHideBrokenLink,
   useDismissBrokenLink,
   useTriggerValidation,
+  useBulkBrokenLinkAction,
+  useRediscoverBrokenLinks,
   type BrokenLinkEntry,
   type BrokenLinkQueueFilters,
   type BrokenLinkStats,
   type BrokenLinkStatus,
+  type RediscoverResult,
+  type RediscoverResponse,
 } from "./use-broken-links-query";
