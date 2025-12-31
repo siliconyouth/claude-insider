@@ -58,15 +58,83 @@ async function searchGitHub(name: string): Promise<string | null> {
 }
 
 /**
- * Search npm for a package by name
+ * Check if an npm package exists using the registry API
+ */
+async function checkNpmPackageExists(packageName: string): Promise<boolean> {
+  try {
+    const response = await fetch(
+      `https://registry.npmjs.org/${encodeURIComponent(packageName)}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "ClaudeInsider/1.0",
+        },
+      }
+    );
+    return response.status === 200;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Get npm package details from registry API
+ */
+async function getNpmPackageDetails(
+  packageName: string
+): Promise<{ homepage?: string; repository?: string } | null> {
+  try {
+    const response = await fetch(
+      `https://registry.npmjs.org/${encodeURIComponent(packageName)}`,
+      {
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "ClaudeInsider/1.0",
+        },
+      }
+    );
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    return {
+      homepage: data.homepage || undefined,
+      repository:
+        typeof data.repository === "string"
+          ? data.repository
+          : data.repository?.url?.replace(/^git\+/, "").replace(/\.git$/, ""),
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Search npm for a package by name using registry API
  */
 async function searchNpm(name: string): Promise<string | null> {
   try {
-    // For scoped packages, use the exact name
-    const searchName = name.startsWith("@") ? name : name.split("/").pop() || name;
+    // First, try exact package name lookup via registry
+    const exactName = name.startsWith("@") ? name : name.split("/").pop() || name;
 
+    if (await checkNpmPackageExists(exactName)) {
+      const details = await getNpmPackageDetails(exactName);
+      // Prefer homepage or repository, fallback to npm page
+      if (details?.homepage) return details.homepage;
+      if (details?.repository) return details.repository;
+      return `https://www.npmjs.com/package/${exactName}`;
+    }
+
+    // If exact match not found, search the registry
     const response = await fetch(
-      `https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(searchName)}&size=5`
+      `https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(exactName)}&size=5`,
+      {
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "ClaudeInsider/1.0",
+        },
+      }
     );
 
     if (!response.ok) return null;
@@ -74,10 +142,13 @@ async function searchNpm(name: string): Promise<string | null> {
     const data = await response.json();
     if (data.objects && data.objects.length > 0) {
       const pkg = data.objects[0].package;
-      // Prefer homepage or repository URL, fallback to npm page
-      if (pkg.links?.homepage) return pkg.links.homepage;
-      if (pkg.links?.repository) return pkg.links.repository;
-      return `https://www.npmjs.com/package/${pkg.name}`;
+      // Verify the package actually exists before suggesting
+      if (await checkNpmPackageExists(pkg.name)) {
+        // Prefer homepage or repository URL, fallback to npm page
+        if (pkg.links?.homepage) return pkg.links.homepage;
+        if (pkg.links?.repository) return pkg.links.repository;
+        return `https://www.npmjs.com/package/${pkg.name}`;
+      }
     }
 
     return null;
