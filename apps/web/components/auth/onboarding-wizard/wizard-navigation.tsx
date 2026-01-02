@@ -81,7 +81,18 @@ export function WizardNavigation({
   };
 
   return (
-    <div className="flex items-center gap-3 pt-4">
+    <div
+      className={cn(
+        "relative flex items-center gap-3 pt-4 pb-2",
+        // Sticky at bottom so navigation is always visible on mobile
+        "sticky bottom-0 -mx-6 px-6 -mb-3",
+        "bg-white dark:bg-[#111111]",
+        // Gradient fade effect at top to show content continues
+        "before:absolute before:inset-x-0 before:-top-4 before:h-4",
+        "before:bg-gradient-to-t before:from-white before:dark:from-[#111111] before:to-transparent",
+        "before:pointer-events-none"
+      )}
+    >
       {/* Back button */}
       {canGoPrev && (
         <button
