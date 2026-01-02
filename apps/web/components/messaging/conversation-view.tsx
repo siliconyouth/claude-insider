@@ -72,13 +72,16 @@ interface ConversationViewProps {
 export function ConversationView({
   conversationId,
   currentUserId,
-  participants,
+  participants: participantsProp,
   isGroupChat = false,
   onBack,
   targetMessageId,
   onTargetMessageScrolled,
   className,
 }: ConversationViewProps) {
+  // DEFENSIVE: Ensure participants is always an array (fixes "Display Error" when prop is undefined)
+  const participants = Array.isArray(participantsProp) ? participantsProp : [];
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);

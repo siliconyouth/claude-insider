@@ -219,13 +219,14 @@ export async function getConversations(): Promise<{
       updatedAt: row.updated_at,
       unreadCount: row.unread_count,
       isMuted: false, // RPC doesn't return this - can be added if needed
-      participants: row.participant_ids.map((userId, index) => ({
+      // DEFENSIVE: Ensure participant_ids is an array before mapping (fixes "Display Error" if RPC returns null)
+      participants: (row.participant_ids || []).map((userId, index) => ({
         userId,
-        name: row.participant_names[index] || undefined,
+        name: (row.participant_names || [])[index] || undefined,
         avatarUrl: row.participant_avatars?.[index] ?? undefined,
         username: row.participant_usernames?.[index] ?? undefined,
-        status: (row.participant_statuses[index] || "offline") as "online" | "offline" | "idle",
-        isOnline: row.participant_statuses[index] === "online",
+        status: ((row.participant_statuses || [])[index] || "offline") as "online" | "offline" | "idle",
+        isOnline: (row.participant_statuses || [])[index] === "online",
       })),
     }));
 

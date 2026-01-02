@@ -156,7 +156,8 @@ export function MessagesTab() {
   // Filter conversations
   const filteredConversations = conversations.filter((conv) => {
     if (!searchQuery.trim()) return true;
-    const participant = conv.participants[0];
+    // DEFENSIVE: Safely access first participant (may be undefined if participants array is empty/missing)
+    const participant = Array.isArray(conv.participants) ? conv.participants[0] : undefined;
     const name = participant?.displayName || participant?.name || "";
     return name.toLowerCase().includes(searchQuery.toLowerCase());
   });
@@ -189,7 +190,7 @@ export function MessagesTab() {
         <ConversationView
           conversationId={selectedConversationId}
           currentUserId={currentUserId}
-          participants={conversation.participants}
+          participants={conversation.participants || []}
           isGroupChat={conversation.type === "group"}
           onBack={() => handleSelectConversation(null)}
           targetMessageId={targetMessageId}
@@ -311,7 +312,8 @@ export function MessagesTab() {
         ) : (
           <div className="divide-y divide-gray-100 dark:divide-[#1a1a1a]">
             {filteredConversations.map((conversation) => {
-              const participant = conversation.participants[0];
+              // DEFENSIVE: Safely access first participant (may be undefined if participants array is empty/missing)
+              const participant = Array.isArray(conversation.participants) ? conversation.participants[0] : undefined;
               const isUnread = conversation.unreadCount > 0;
 
               return (
