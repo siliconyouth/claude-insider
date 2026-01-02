@@ -38,6 +38,11 @@ import {
 import { VoiceRecorderButton } from "@/components/chat/voice-recorder";
 import type { VoiceRecorderResult } from "@/lib/chat/voice";
 import {
+  PinnedMessagesBadge,
+  PinnedMessagesPanel,
+} from "@/components/chat/pinned-messages";
+import { getPinnedMessages } from "@/app/actions/pinning";
+import {
   getMessages,
   editMessage,
   markConversationAsRead,
@@ -118,6 +123,9 @@ export function ConversationView({
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   // Search state
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  // Pinned messages state
+  const [showPinnedPanel, setShowPinnedPanel] = useState(false);
+  const [pinnedCount, setPinnedCount] = useState(0);
   // Mentioned users cache for displaying @mentions with display names
   const [mentionedUsers, setMentionedUsers] = useState<Record<string, MentionedUser>>({});
 
@@ -201,6 +209,20 @@ export function ConversationView({
 
     fetchProfiles();
   }, [mentionedUsernames]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Fetch pinned messages count on mount
+  useEffect(() => {
+    if (!conversationId || isAIConversation) return;
+
+    const fetchPinnedCount = async () => {
+      const result = await getPinnedMessages(conversationId);
+      if (result.success && result.pins) {
+        setPinnedCount(result.pins.length);
+      }
+    };
+
+    fetchPinnedCount();
+  }, [conversationId, isAIConversation]);
 
   // Search ALL users (like Telegram) - called when query is 2+ chars
   // Prioritizes: exact match > following > followers > other users
@@ -885,6 +907,14 @@ export function ConversationView({
           </span>
         )}
 
+        {/* Pinned messages badge - shows count and opens panel */}
+        {!isAIConversation && (
+          <PinnedMessagesBadge
+            count={pinnedCount}
+            onClick={() => setShowPinnedPanel(true)}
+          />
+        )}
+
         {/* Search toggle button */}
         <SearchToggleButton
           onClick={() => setIsSearchOpen((prev) => !prev)}
@@ -920,6 +950,17 @@ export function ConversationView({
           isOpen={showSetupModal}
           onClose={() => setShowSetupModal(false)}
           onSuccess={() => setShowSetupModal(false)}
+        />
+      )}
+
+      {/* Pinned Messages Panel - slide-out panel showing all pins */}
+      {!isAIConversation && (
+        <PinnedMessagesPanel
+          conversationId={conversationId}
+          isOpen={showPinnedPanel}
+          onClose={() => setShowPinnedPanel(false)}
+          onJumpToMessage={handleScrollToMessage}
+          canUnpin={true}
         />
       )}
 
@@ -995,6 +1036,44 @@ export function ConversationView({
                 "max-h-32"
               )}
             />
+            {/* Attachment button - always visible for non-AI chats */}
+            {!isAIConversation && (
+              <>
+                <input
+                  type="file"
+                  id="chat-file-input"
+                  className="hidden"
+                  multiple
+                  accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.txt,.zip"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (files && files.length > 0) {
+                      // TODO: Implement file upload when backend is ready
+                      console.log("[Attachment] Files selected:", files.length);
+                      alert(
+                        `${files.length} file(s) selected\n\n` +
+                        `File attachments are coming soon! This feature is in development.`
+                      );
+                      e.target.value = ""; // Reset input
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("chat-file-input")?.click()}
+                  className={cn(
+                    "p-2 rounded-full shrink-0",
+                    "text-gray-500 dark:text-gray-400",
+                    "hover:bg-gray-100 dark:hover:bg-gray-800",
+                    "hover:text-gray-700 dark:hover:text-gray-200",
+                    "transition-colors"
+                  )}
+                  title="Attach file"
+                >
+                  <AttachmentIcon className="w-5 h-5" />
+                </button>
+              </>
+            )}
             {/* Voice recorder button - hidden when typing */}
             {!inputValue.trim() && !isAIConversation && (
               <VoiceRecorderButton
@@ -1073,6 +1152,24 @@ function SendIcon({ className }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
+      />
+    </svg>
+  );
+}
+
+function AttachmentIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"
       />
     </svg>
   );
