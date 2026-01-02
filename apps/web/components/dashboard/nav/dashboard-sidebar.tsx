@@ -146,7 +146,7 @@ function SidebarContent() {
         <NavItem href="/dashboard/relationships" label="Relationships" />
         <NavItem href="/dashboard/discovery" label="Discovery" />
         <NavItem
-          href="/dashboard/auto-updates"
+          href="/dashboard/resource-updates"
           label="Auto-Updates"
           badge={counts.autoUpdates}
         />
