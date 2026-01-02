@@ -19,6 +19,8 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { cn } from "@/lib/design-system";
 import { useAuth } from "@/components/providers/auth-provider";
 import { useMCPAutoSave } from "@/hooks/use-mcp-autosave";
@@ -232,8 +234,10 @@ export default function MCPPlaygroundPage() {
   }, [config]);
 
   return (
-    <div className="min-h-screen ui-bg-page">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen ui-bg-page flex flex-col">
+      <Header activePage="tools" />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex-1">
         {/* Restore banner */}
         {hasUnsavedWork && (
           <div className="mb-4 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between">
@@ -531,6 +535,8 @@ export default function MCPPlaygroundPage() {
           </div>
         </div>
       )}
+
+      <Footer />
     </div>
   );
 }
