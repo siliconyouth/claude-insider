@@ -11,16 +11,19 @@
  * to avoid code duplication. See: components/messaging/conversation-view.tsx
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { cn } from "@/lib/design-system";
 import { useUnifiedChat } from "../unified-chat-provider";
 import { useSession } from "@/lib/auth-client";
 import { AvatarWithStatus } from "@/components/presence";
 import { DeviceVerificationModal } from "@/components/e2ee/device-verification-modal";
 import { ConversationView } from "@/components/messaging/conversation-view";
+import { NewChatModal } from "@/components/messaging/new-chat-modal";
+import { NewGroupModal } from "@/components/messaging/new-group-modal";
 import {
   getConversations,
   markConversationAsRead,
+  startConversation,
   type Conversation,
 } from "@/app/actions/messaging";
 
@@ -29,7 +32,18 @@ import {
 // ============================================================================
 
 export function MessagesTab() {
-  const { selectedConversationId, selectConversation, unreadCount, setUnreadCount, targetMessageId, clearTargetMessage, pendingVerificationId, clearPendingVerification } = useUnifiedChat();
+  const {
+    selectedConversationId,
+    selectedUserId,
+    selectConversation,
+    startConversationWithUser,
+    unreadCount,
+    setUnreadCount,
+    targetMessageId,
+    clearTargetMessage,
+    pendingVerificationId,
+    clearPendingVerification
+  } = useUnifiedChat();
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
 
@@ -42,6 +56,14 @@ export function MessagesTab() {
     initiatorUserId: string;
     initiatorName: string;
   } | null>(null);
+
+  // Modal states for new chat/group
+  const [showNewChatModal, setShowNewChatModal] = useState(false);
+  const [showNewGroupModal, setShowNewGroupModal] = useState(false);
+
+  // Track if we're currently starting a conversation
+  const [isStartingConversation, setIsStartingConversation] = useState(false);
+  const processedUserIdRef = useRef<string | null>(null);
 
   // Load conversations
   useEffect(() => {
@@ -89,6 +111,47 @@ export function MessagesTab() {
 
     fetchVerification();
   }, [pendingVerificationId]);
+
+  // Handle selectedUserId - start or find conversation with user
+  useEffect(() => {
+    if (!selectedUserId || !currentUserId || isStartingConversation) return;
+    if (selectedUserId === currentUserId) return; // Can't message yourself
+    if (processedUserIdRef.current === selectedUserId) return; // Already processed
+
+    const handleStartConversation = async () => {
+      setIsStartingConversation(true);
+      processedUserIdRef.current = selectedUserId;
+
+      // First check if we already have a conversation with this user
+      const existingConversation = conversations.find((conv) =>
+        conv.type === "direct" &&
+        conv.participants.some((p) => p.userId === selectedUserId)
+      );
+
+      if (existingConversation) {
+        // Already have a conversation, just select it
+        selectConversation(existingConversation.id);
+        startConversationWithUser(""); // Clear the selectedUserId
+      } else {
+        // Need to create a new conversation
+        const result = await startConversation(selectedUserId);
+        if (result.success && result.conversationId) {
+          // Reload conversations to get the new one
+          const convResult = await getConversations();
+          if (convResult.success && convResult.conversations) {
+            setConversations(convResult.conversations);
+            // Select the new conversation
+            selectConversation(result.conversationId);
+          }
+        }
+        startConversationWithUser(""); // Clear the selectedUserId
+      }
+
+      setIsStartingConversation(false);
+    };
+
+    handleStartConversation();
+  }, [selectedUserId, currentUserId, conversations, isStartingConversation, selectConversation, startConversationWithUser]);
 
   // Filter conversations
   const filteredConversations = conversations.filter((conv) => {
@@ -153,11 +216,62 @@ export function MessagesTab() {
     );
   }
 
+  // Handle new chat selection
+  const handleNewChatSelect = useCallback(async (userId: string) => {
+    setShowNewChatModal(false);
+    const result = await startConversation(userId);
+    if (result.success && result.conversationId) {
+      const convResult = await getConversations();
+      if (convResult.success && convResult.conversations) {
+        setConversations(convResult.conversations);
+        selectConversation(result.conversationId);
+      }
+    }
+  }, [selectConversation]);
+
+  // Handle new group creation
+  const handleNewGroupCreated = useCallback(async (conversationId: string) => {
+    setShowNewGroupModal(false);
+    const convResult = await getConversations();
+    if (convResult.success && convResult.conversations) {
+      setConversations(convResult.conversations);
+      selectConversation(conversationId);
+    }
+  }, [selectConversation]);
+
   // Conversation list
   return (
     <div className="flex flex-col h-full">
-      {/* Search */}
+      {/* Header with new chat/group buttons */}
       <div className="p-3 border-b border-gray-200 dark:border-[#262626]">
+        <div className="flex items-center gap-2 mb-3">
+          <button
+            onClick={() => setShowNewChatModal(true)}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium",
+              "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",
+              "text-white shadow-lg shadow-blue-500/25",
+              "hover:shadow-blue-500/40 transition-all"
+            )}
+          >
+            <PlusIcon className="w-4 h-4" />
+            New Chat
+          </button>
+          <button
+            onClick={() => setShowNewGroupModal(true)}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium",
+              "border border-gray-200 dark:border-[#262626]",
+              "text-gray-700 dark:text-gray-300",
+              "hover:bg-gray-50 dark:hover:bg-[#1a1a1a]",
+              "transition-colors"
+            )}
+          >
+            <UsersIcon className="w-4 h-4" />
+            New Group
+          </button>
+        </div>
+        {/* Search */}
         <div className="relative">
           <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -280,6 +394,21 @@ export function MessagesTab() {
           }}
         />
       )}
+
+      {/* New Chat Modal */}
+      <NewChatModal
+        isOpen={showNewChatModal}
+        onClose={() => setShowNewChatModal(false)}
+        onSelectUser={handleNewChatSelect}
+        currentUserId={currentUserId}
+      />
+
+      {/* New Group Modal */}
+      <NewGroupModal
+        isOpen={showNewGroupModal}
+        onClose={() => setShowNewGroupModal(false)}
+        onGroupCreated={handleNewGroupCreated}
+      />
     </div>
   );
 }
@@ -329,6 +458,22 @@ function MessageIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
       <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+    </svg>
+  );
+}
+
+function PlusIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    </svg>
+  );
+}
+
+function UsersIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
     </svg>
   );
 }
