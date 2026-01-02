@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.15.0] - 2026-01-02
+### 🔗 Resource Relationship Analysis System
+- **Resource Relationship Analysis (MANDATORY)**: Claude Code subscription-based relationship detection
+  - 1,863 total cross-references (63 doc-resource + 1,800 resource-resource)
+  - 7 relationship types: similar, alternative, complement, uses, integrates, fork, inspired_by
+  - Bidirectional relationship support with confidence scores (0-1)
+  - Manual JSON workflow with helper scripts (`list-category.mjs`, `manual-relationship-analysis.mjs`)
+  - Category-based batch analysis for efficient processing
+- **MANDATORY Pattern**: All relationship analysis uses Claude Code subscription (NOT API credits)
+  - Cost savings: ~$50-100 API cost avoided per analysis cycle
+  - Interactive workflow enables better judgment and edge case handling
+- **Documentation Updates**:
+  - New "Resource Relationship Analysis (MANDATORY)" section in CLAUDE.md
+  - New "Claude Code Subscription Pattern" in PATTERNS.md
+  - DATABASE.md updated with relationship table schema and stats
+  - FR-60 added to FEATURES.md
+- **Database Stats**:
+  - 137 tables (up from 135)
+  - 111 migrations
+  - 60 features implemented
+
+---
+
 ## [1.14.1] - 2025-12-31
 ### 🔗 Link Validation System & MCP Discovery
 - **Link Validation Infrastructure (MANDATORY)**: Automated broken link detection

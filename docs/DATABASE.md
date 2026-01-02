@@ -11,7 +11,7 @@ This document contains the complete database schema, table catalog, and SQL refe
 1. [Overview](#overview)
 2. [Column Naming Convention](#column-naming-convention-critical)
 3. [Database Clients](#database-clients)
-4. [Table Catalog](#table-catalog-135-tables)
+4. [Table Catalog](#table-catalog-137-tables)
 5. [Extended User Columns](#extended-user-columns)
 6. [Role Hierarchy](#role-hierarchy)
 7. [RLS Security Model](#rls-security-model)
@@ -84,7 +84,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 ---
 
-## Table Catalog (135 Tables)
+## Table Catalog (137 Tables)
 
 ### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 
@@ -201,9 +201,23 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 `reading_lists`, `reading_list_items`, `view_history`, `resource_views`, `resource_view_stats`, `saved_searches`, `search_history`, `search_analytics`
 
-### Documentation & Relationships (7 tables)
+### Documentation & Relationships (9 tables)
 
 `documentation`, `documentation_sections`, `documentation_history`, `documentation_update_jobs`, `doc_resource_relationships`, `resource_relationships`, `relationship_analysis_jobs`
+
+**Relationship Stats (v1.15.0):**
+- `doc_resource_relationships`: 63 relationships linking docs to resources
+- `resource_relationships`: 1,800 relationships linking resources to each other
+- **Total**: 1,863 cross-references
+
+**Key columns in `resource_relationships`:**
+- `source_slug` (TEXT, FK → resources) - Source resource
+- `target_slug` (TEXT, FK → resources) - Target resource
+- `relationship_type` ('similar', 'alternative', 'complement', 'uses', 'integrates', 'fork', 'inspired_by') - Type
+- `confidence` (DECIMAL 0-1) - AI confidence score
+- `reason` (TEXT) - Human-readable explanation
+- `is_bidirectional` (BOOLEAN) - If true, relationship applies both ways
+- UNIQUE constraint: `(source_slug, target_slug)`
 
 ### AI Conversations (2 tables)
 

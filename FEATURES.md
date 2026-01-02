@@ -1,6 +1,6 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **59 implemented features** with detailed capabilities.
+Complete list of all **60 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
@@ -49,7 +49,7 @@ Complete list of all **59 implemented features** with detailed capabilities.
 | FR-37 | Profile Enhancements | Location/timezone display, mandatory onboarding, share modal, OG images, mobile actions |
 | FR-38 | Resource Auto-Update | AI-powered updates via Claude Opus 4.5, Firecrawl scraping, admin review workflow, changelog tracking |
 | FR-39 | AI Pipeline Integration | Payload CMS settings, Documents/Resources tab redesign, CLI scripts for analysis/enhancement, operation queue |
-| FR-40 | Doc-Resource Cross-Linking | 147 doc-resource + 3,087 resource-resource relationships, DocRelatedResources component, confidence scores, 10 relationship types |
+| FR-40 | Doc-Resource Cross-Linking | 63 doc-resource + 1,800 resource-resource relationships, DocRelatedResources component, confidence scores, 7 relationship types |
 | FR-41 | Admin Dashboard Content Management | Documentation, Resources, Relationships pages; role-based access; manual relationship editing |
 | FR-42 | Resource Discovery Pipeline | 6 adapter types (GitHub, ProductHunt, npm, etc.), discovery queue, data quality review scripts |
 | FR-43 | Advanced Search | Smart autocomplete, boolean operators (AND/OR/NOT), search filters, admin analytics dashboard |
@@ -69,6 +69,7 @@ Complete list of all **59 implemented features** with detailed capabilities.
 | FR-57 | Optimistic UI | Matrix SDK pattern for instant messaging, temp IDs for optimistic messages, immediate sound/scroll feedback, background server sync, send button unblocked in ~2ms, CSS `overflow-anchor` scroll preservation, flexbox layout (no TanStack Virtual) |
 | FR-58 | Dashboard Modernization | TanStack Query v5 for all 32 dashboard pages, Query Key Factory pattern (`queryKeys.*`), Promise.all() API parallelization (Discovery 5→parallel, Donations 9→parallel), global error.tsx and loading.tsx, Command Palette (Cmd+K) with 32+ navigation commands, grouped sidebar navigation (6 collapsible groups), real-time badge counts (30s polling), optimistic mutations, extended design tokens (ui-nav-*, ui-cmd-*) |
 | FR-59 | Link Validation System | Automated broken link detection (`lib/resources/link-validator.ts`), trusted domains whitelist (claude.ai, twitter, reddit, perplexity), npm Registry API validation (bypasses 403 bot protection), scoped package encoding (@scope%2Fname), GitHub URL normalization (.git removal), HEAD→GET fallback for 405, consecutive failure tracking (threshold: 3), admin moderation queue (`/dashboard/broken-links`), weekly cron validation |
+| FR-60 | Resource Relationship Analysis | Claude Code subscription-based analysis (NOT API credits), 7 relationship types (similar, alternative, complement, uses, integrates, fork, inspired_by), bidirectional relationships, manual JSON workflow with helper scripts, 1,863 total relationships (63 doc-resource + 1,800 resource-resource), confidence scores (0-1), category-based batch analysis |
 
 ---
 
@@ -103,12 +104,13 @@ Complete list of all **59 implemented features** with detailed capabilities.
 - SEO dashboard with health checks and previews
 - Dashboard modernization with TanStack Query, command palette, grouped navigation
 
-### AI & Automation (FR-38, FR-39, FR-40, FR-42, FR-46, FR-56)
+### AI & Automation (FR-38, FR-39, FR-40, FR-42, FR-46, FR-56, FR-60)
 - Resource auto-update pipeline
 - Doc-resource cross-linking
 - AI writing assistant
 - Resource discovery pipeline
 - User resource submissions with AI analysis
+- Resource relationship analysis (Claude Code subscription)
 
 ### Messaging & Social (FR-22, FR-29, FR-33, FR-35, FR-55, FR-57)
 - Group chat with roles

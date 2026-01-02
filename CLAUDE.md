@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.14.1**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.15.0**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.14.1**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 58 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 60 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -43,17 +43,18 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.14.1**.
 11. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 12. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
 13. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
-14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 135 tables, RLS, migrations
+14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 137 tables, RLS, migrations
 15. [Dashboard Data Fetching (MANDATORY)](#dashboard-data-fetching-mandatory) - TanStack Query, query keys, parallelization
 16. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
 17. [Link Validation System (MANDATORY)](#link-validation-system-mandatory) - Broken link detection, trusted domains, npm validation
-18. [Internationalization](#internationalization-i18n) - 18 languages
-19. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-20. [Content Structure](#content-structure) - Documentation, resources, legal pages
-21. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-22. [Success Metrics](#success-metrics)
-23. [Updating Guidelines](#updating-guidelines)
-24. [License](#license)
+18. [Resource Relationship Analysis (MANDATORY)](#resource-relationship-analysis-mandatory) - Claude Code subscription, relationship types
+19. [Internationalization](#internationalization-i18n) - 18 languages
+20. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+21. [Content Structure](#content-structure) - Documentation, resources, legal pages
+22. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+23. [Success Metrics](#success-metrics)
+24. [Updating Guidelines](#updating-guidelines)
+25. [License](#license)
 
 ---
 
@@ -144,7 +145,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**58 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**60 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -153,8 +154,8 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | **User Features** | Achievements (50+), Sound Effects (10 themes), Profiles, Notifications |
 | **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging, **Optimistic UI** |
 | **Admin** | Diagnostics, Content Management, Audit Export, Resource Updates, Settings System (5 globals, SEO dashboard) |
-| **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant, **Resource Submissions** |
-| **Infrastructure** | 135 DB tables, PWA, Doc Versioning, Prompt Library |
+| **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant, **Resource Submissions**, **Relationship Analysis** |
+| **Infrastructure** | 137 DB tables, PWA, Doc Versioning, Prompt Library |
 
 ### Non-Functional Requirements
 
@@ -215,7 +216,7 @@ claude-insider/
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 103 SQL migration files
+│   └── supabase/migrations/      # 111 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -1041,7 +1042,7 @@ The "Ci" text height is exactly **58.6% of the container** (300/512 in source SV
 
 ## Data Layer Architecture (MANDATORY)
 
-**135 tables** across 20 categories, **110 migrations** in `supabase/migrations/`.
+**137 tables** across 21 categories, **111 migrations** in `supabase/migrations/`.
 
 **Full schema reference:** [docs/DATABASE.md](docs/DATABASE.md)
 
@@ -1425,6 +1426,85 @@ The `/dashboard/broken-links` page provides:
 - **Re-validate Broken**: Re-check currently invalid links
 - **Bulk Actions**: Validate Unchecked, Validate Stale (>24h)
 - **Individual Actions**: Fix URL, Hide Resource, Dismiss
+
+---
+
+## Resource Relationship Analysis (MANDATORY)
+
+**CRITICAL**: All resource relationship analysis MUST use Claude Code subscription (via Claude Code CLI), NOT API credits. This is a cost-saving measure that leverages the unlimited subscription model.
+
+### Why Claude Code Subscription (NOT API)
+
+| Approach | Cost | Use For |
+|----------|------|---------|
+| **Claude Code CLI** | $0 (subscription) | Relationship analysis, bulk categorization |
+| **Anthropic API** | $0.015-$0.075/1K tokens | Real-time AI features, RAG chat |
+
+**API credits** are reserved for real-time features (AI chat, TTS, resource submissions). Batch analysis operations MUST use the CLI.
+
+### Relationship Types
+
+| Type | Bidirectional | Description | Example |
+|------|--------------|-------------|---------|
+| `similar` | Yes | Same category/purpose | Two Postgres MCP servers |
+| `alternative` | Yes | Interchangeable options | Playwright vs Puppeteer |
+| `complement` | Yes | Work well together | Docker + Kubernetes |
+| `uses` | No | Depends on | LangChain uses Anthropic SDK |
+| `integrates` | No | Built-in integration | VS Code Cline integrates with Claude |
+| `fork` | No | Forked from | Community fork of official server |
+| `inspired_by` | No | Design influenced by | Tool inspired by another |
+
+### Analysis Workflow (MANDATORY)
+
+```bash
+# Step 1: Create helper scripts for analysis
+apps/web/scripts/manual-relationship-analysis.mjs  # Insert relationships from JSON
+apps/web/scripts/find-mcp-groups.mjs              # Group servers by function
+
+# Step 2: Analyze by category using Claude Code
+# Use Opus/Sonnet via Claude Code CLI (NOT API) for analysis
+# Output JSON array with relationships
+
+# Step 3: Insert relationships via helper script
+echo '[{"source": "a", "target": "b", "type": "similar", ...}]' | \
+  node scripts/manual-relationship-analysis.mjs
+
+# Step 4: Verify stats
+node scripts/manual-relationship-analysis.mjs --stats
+```
+
+### Current Stats (v1.15.0)
+
+| Relationship Type | Count |
+|-------------------|-------|
+| Doc-Resource | 63 |
+| Resource-Resource | 1,800 |
+| **Total** | **1,863** |
+
+### Key Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `doc_resource_relationships` | Links docs to related resources |
+| `resource_relationships` | Links resources to each other |
+| `relationship_analysis_jobs` | Tracks analysis job history |
+
+### Prohibited Patterns
+
+| ❌ Prohibited | ✅ Required |
+|---------------|-------------|
+| Using API credits for batch analysis | Use Claude Code CLI subscription |
+| Manual database inserts | Use helper scripts for consistency |
+| Analyzing without grouping | Group by category/function first |
+| Skipping bidirectional flag | Always set `bidirectional` correctly |
+
+### Checklist for Relationship Analysis
+
+- [ ] Using Claude Code CLI (NOT Anthropic API)
+- [ ] Grouped resources by category/function before analysis
+- [ ] JSON output follows schema: `{source, target, type, confidence, reason, bidirectional}`
+- [ ] Used helper script for database insertion
+- [ ] Verified stats after insertion
 
 ---
 

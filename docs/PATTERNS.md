@@ -20,6 +20,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 12. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
 13. [Dashboard Data Fetching Patterns](#dashboard-data-fetching-patterns-mandatory---v1140) - TanStack Query, query keys, parallelization (MANDATORY)
 14. [Link Validation Patterns](#link-validation-patterns-mandatory---v1141) - Trusted domains, npm Registry API, broken link detection (MANDATORY)
+15. [Claude Code Subscription Pattern](#claude-code-subscription-pattern-mandatory---v1150) - Resource relationship analysis using Claude Code subscription (MANDATORY)
 
 ---
 
@@ -2137,4 +2138,128 @@ async function validateAllResources() {
 - [ ] Admin dashboard for broken link moderation
 - [ ] Rate limiting in batch validation (100ms delay)
 - [ ] Cron job scheduled for weekly validation
+
+---
+
+## Claude Code Subscription Pattern (MANDATORY - v1.15.0)
+
+**CRITICAL**: All resource relationship analysis MUST use Claude Code subscription (via Claude Code CLI), NOT Anthropic API credits. This saves significant costs for batch analysis operations.
+
+### Why Claude Code Subscription (NOT API)
+
+| Approach | Cost | Speed | Use For |
+|----------|------|-------|---------|
+| **Claude Code CLI** | $0 (subscription) | Interactive | Relationship analysis, bulk categorization, pattern discovery |
+| **Anthropic API** | $0.015-$0.075/1K tokens | Programmatic | Real-time AI features, RAG chat, user-facing AI |
+
+**Cost Savings Example** (v1.15.0):
+- Analyzed 3,012 resources for relationships
+- Would cost ~$50-100 via API
+- Cost with Claude Code subscription: **$0**
+
+### Relationship Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `similar` | Same function, different implementation | Two Postgres MCP servers |
+| `alternative` | Interchangeable solutions | Redis MCP server A vs B |
+| `complement` | Work together, enhance each other | SQLAlchemy + Postgres |
+| `uses` | Depends on or requires | SDK uses API |
+| `integrates` | Connects to external service | GitHub Actions integration |
+| `fork` | Derived from another project | Fork of original repo |
+| `inspired_by` | Conceptually influenced | Similar design patterns |
+
+### Analysis Workflow (MANDATORY)
+
+```bash
+# Step 1: List resources in a category using helper script
+node scripts/list-category.mjs mcp-servers
+
+# Step 2: Use Claude Code CLI to analyze relationships
+# Claude Code reads the list and identifies relationships
+# Output: JSON file with relationship definitions
+
+# Step 3: Insert relationships using helper script
+node scripts/manual-relationship-analysis.mjs /tmp/mcp-relationships.json
+
+# Step 4: Verify insertion
+# Script outputs: "Inserted X relationships (Y new, Z existing)"
+```
+
+### Helper Scripts
+
+| Script | Location | Purpose |
+|--------|----------|---------|
+| `list-category.mjs` | `apps/web/scripts/` | List resources by category for analysis |
+| `find-mcp-groups.mjs` | `apps/web/scripts/` | Group MCP servers by function |
+| `manual-relationship-analysis.mjs` | `apps/web/scripts/` | Insert relationships from JSON |
+
+### Relationship JSON Format
+
+```json
+[
+  {
+    "source": "modelcontextprotocol-server-postgres",
+    "target": "mcp-postgres",
+    "type": "similar",
+    "confidence": 0.95,
+    "reason": "Both are Postgres MCP servers",
+    "bidirectional": true
+  },
+  {
+    "source": "aider",
+    "target": "cline-vscode",
+    "type": "alternative",
+    "confidence": 0.90,
+    "reason": "Both are AI coding assistants - Aider is CLI, Cline is VS Code",
+    "bidirectional": true
+  }
+]
+```
+
+### Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `doc_resource_relationships` | Links docs to resources (63 relationships) |
+| `resource_relationships` | Links resources to each other (1,800 relationships) |
+| `relationship_analysis_jobs` | Tracks analysis job status |
+
+### PROHIBITED Patterns
+
+```typescript
+// ❌ WRONG: Using Anthropic API for batch relationship analysis
+const anthropic = new Anthropic();
+for (const resource of resources) {
+  const response = await anthropic.messages.create({
+    model: "claude-opus-4-5-20251101",
+    messages: [{ role: "user", content: `Find relationships for ${resource.title}` }]
+  });
+  // This costs $0.015-$0.075 per 1K tokens!
+}
+
+// ✅ CORRECT: Use Claude Code CLI interactively
+// 1. Export resource list to file
+// 2. Ask Claude Code to analyze relationships
+// 3. Save output as JSON
+// 4. Run insertion script
+```
+
+### Implementation Checklist
+
+- [ ] Analysis uses Claude Code CLI, NOT Anthropic API
+- [ ] Relationships saved as JSON with required fields (source, target, type, confidence, reason)
+- [ ] `bidirectional: true` for symmetric relationships (most are)
+- [ ] Confidence scores between 0-1 (0.8+ recommended)
+- [ ] Reason is human-readable explanation
+- [ ] Insertion script validates slugs exist before insert
+- [ ] Duplicate relationships handled gracefully (ON CONFLICT DO NOTHING)
+
+### Category Analysis Order (Recommended)
+
+1. **MCP Servers** (2,118 resources) - Largest category, many similar implementations
+2. **Tools** (375 resources) - IDE plugins, CLI tools, utilities
+3. **SDKs** (226 resources) - Official and community SDKs
+4. **Official** (48 resources) - Anthropic official resources
+5. **Prompts/Rules/Tutorials** - Smaller categories, cross-reference each other
 
