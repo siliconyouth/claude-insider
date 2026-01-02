@@ -18,7 +18,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 10. [Matrix SDK Patterns](#matrix-sdk-patterns-v1134) - Reactions, replies, search, drafts (v1.13.4)
 11. [Optimistic Messaging Patterns](#optimistic-messaging-patterns-mandatory---v1137) - Instant feedback, scroll preservation (MANDATORY)
 12. [Sync Patterns](#sync-patterns-v1133) - Bidirectional sync with change detection (v1.13.3)
-13. [Dashboard Data Fetching Patterns](#dashboard-data-fetching-patterns-mandatory---v1140) - TanStack Query, query keys, parallelization (MANDATORY)
+13. [Dashboard Data Fetching Patterns](#dashboard-data-fetching-patterns-mandatory---v1140) - TanStack Query, query keys, parallelization, **v5 isPending gotcha** (MANDATORY)
 14. [Link Validation Patterns](#link-validation-patterns-mandatory---v1141) - Trusted domains, npm Registry API, broken link detection (MANDATORY)
 15. [Claude Code Subscription Pattern](#claude-code-subscription-pattern-mandatory---v1150) - Resource relationship analysis using Claude Code subscription (MANDATORY)
 16. [MCP Playground Patterns](#mcp-playground-patterns-v1160) - Interactive config builder, storage system (v1.16.0)
@@ -1631,6 +1631,56 @@ export const queryKeys = {
     list: (filters: FeedbackFilters) => ['dashboard', 'feedback', 'list', filters] as const,
   },
 } as const;
+```
+
+### TanStack Query v5 `isPending` Gotcha (MANDATORY)
+
+**CRITICAL**: In TanStack Query v5, when `enabled: false`, the query is still in `isPending: true` state. This differs from v4 behavior and can cause infinite loading states.
+
+```tsx
+// ❌ WRONG: isPending is true even when enabled: false
+const { data, isPending } = useQuery({
+  queryKey: ['user', userId],
+  queryFn: () => fetch(`/api/users/${userId}`),
+  enabled: !!userId,  // When userId is null, query is disabled
+});
+
+// This renders loading spinner forever when userId is null!
+if (isPending) return <Spinner />;
+
+// ✅ CORRECT: Check for data availability or use the condition
+const { data, isPending, isFetching } = useQuery({
+  queryKey: ['user', userId],
+  queryFn: () => fetch(`/api/users/${userId}`),
+  enabled: !!userId,
+});
+
+// Option 1: Only show loading when actually fetching
+if (isFetching) return <Spinner />;
+
+// Option 2: Check the same condition as enabled
+if (userId && isPending) return <Spinner />;
+
+// Option 3: For conditional modals, check the condition first
+{userId && (  // Only render modal when we have userId
+  <Modal>
+    {isPending ? <Spinner /> : <Content data={data} />}
+  </Modal>
+)}
+```
+
+**Real-world example (fixed in v1.16.1):**
+```tsx
+// Dashboard users page - modal that opens on user selection
+// ❌ WRONG: Modal renders forever when selectedUserId is null
+{(selectedUserId || userDetailQuery.isPending) && (
+  <UserDetailModal />
+)}
+
+// ✅ CORRECT: Only render modal when we have a selection
+{selectedUserId && (
+  <UserDetailModal isPending={userDetailQuery.isPending} />
+)}
 ```
 
 ### Dashboard Page Pattern (MANDATORY)

@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.16.1] - 2026-01-02
+### 🔧 Navigation, Messaging & Dashboard Fixes
+- **MCP Playground Navigation**: Added to header dropdown, footer links, and homepage showcase section
+  - Featured item in Resources dropdown with "NEW" badge
+  - Homepage section with Monaco editor mockup and feature cards
+  - Hero section updated to mention MCP Playground
+- **SEO Improvements**: Comprehensive metadata for MCP Playground pages
+  - Sitemap entries with priority 0.85/0.8
+  - OpenGraph images for all playground pages
+  - Dynamic SEO for gallery detail pages with DB-fetched titles
+  - JSON-LD structured data for prompts, stats, donate pages
+- **Messaging System Fixes**:
+  - Fixed Message button on profile pages and hovercards (was non-functional)
+  - Added "New Chat" button with user search modal
+  - Added "New Group" button with group creation modal
+  - Created `/api/users/search` endpoint for user lookup
+- **Dashboard Fixes**:
+  - Fixed Users page modal opening on load (TanStack Query v5 isPending bug)
+  - Fixed Auto-Updates link pointing to wrong URL
+- **New Components**:
+  - `mcp-playground-section.tsx`: Homepage showcase
+  - `new-chat-modal.tsx`: User search for new DM
+  - `new-group-modal.tsx`: Group creation dialog
+
+---
+
 ## [1.16.0] - 2026-01-02
 ### 🎮 MCP Playground - Interactive Configuration Builder
 - **MCP Playground (`/mcp-playground`)**: Full-featured interactive sandbox for MCP server configurations

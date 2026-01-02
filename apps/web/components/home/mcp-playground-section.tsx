@@ -252,7 +252,7 @@ export function MCPPlaygroundSection() {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-violet-500/10 to-cyan-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 text-xs font-medium mb-6">
               <PlayIcon className="w-4 h-4" />
               <span>New Feature</span>
-              <span className="px-1.5 py-0.5 rounded bg-violet-500/20 text-[10px] font-bold">v1.16.0</span>
+              <span className="px-1.5 py-0.5 rounded bg-violet-500/20 text-[10px] font-bold">v1.16.1</span>
             </div>
 
             {/* Heading */}

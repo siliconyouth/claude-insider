@@ -38,7 +38,7 @@ Complete list of all **60 implemented features** with detailed capabilities.
 | FR-26 | Link Checker | Connectivity tests, error handling |
 | FR-27 | Security Dashboard | Fingerprinting, trust scores, honeypots, activity feed |
 | FR-28 | E2EE | Matrix Olm/Megolm, device verification, cloud backup |
-| FR-29 | Unified Chat | AI + Messages tabs, portal-rendered, focus trap |
+| FR-29 | Unified Chat | AI + Messages tabs, portal-rendered, focus trap, New Chat/Group creation modals with user search |
 | FR-30 | Donation System | PayPal, bank transfer, donor badges, receipts |
 | FR-31 | PWA Enhancements | 15 icons, service worker, push notifications |
 | FR-32 | ProfileHoverCard | Touch-friendly previews, two-touch navigation |

@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.16.0 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.16.1 notification to all opted-in users...\n");
 
-  const version = "1.16.0";
-  const title = "Claude Insider v1.16.0 - MCP Playground: Interactive Configuration Builder";
+  const version = "1.16.1";
+  const title = "Claude Insider v1.16.1 - Messaging & Dashboard Improvements";
   const message =
-    "🎮 MCP Playground: Build & share MCP server configs interactively • 📝 Monaco JSON editor with IntelliSense and live validation • 📚 2,136+ server templates with search/filtering • 🔗 URL-based config sharing (base64 encoded) • 💾 Save drafts, publish to gallery, fork configs • ⭐ Star & fork your favorite configurations • 🔐 RLS-enforced access control • 👥 Admin moderation queue for published configs";
+    "💬 New Chat/Group modals: Start new DMs and create group chats directly from the Messages tab • 🔍 User search: Find users by name or display name • 🔧 Dashboard fixes: Fixed Users modal loading issue, Auto-Updates navigation • 📄 SEO: Added layouts for Donate, Stats, Prompts, and MCP Gallery pages • 📝 TanStack Query v5 pattern fix documented";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
