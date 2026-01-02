@@ -34,7 +34,7 @@ export const getSiteStats = unstable_cache(
       return {
         totalResources: resourceCount || 0,
         totalDocs: 34, // Static - MDX files don't change often
-        totalFeatures: 57, // From FEATURES.md
+        totalFeatures: 67, // From FEATURES.md
       };
     } catch (error) {
       console.error("[SiteStats] Error fetching stats:", error);
@@ -42,7 +42,7 @@ export const getSiteStats = unstable_cache(
       return {
         totalResources: 1952, // Last known value
         totalDocs: 34,
-        totalFeatures: 57,
+        totalFeatures: 67,
       };
     }
   },
