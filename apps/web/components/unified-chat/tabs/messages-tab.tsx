@@ -20,12 +20,11 @@ import { DeviceVerificationModal } from "@/components/e2ee/device-verification-m
 import { ConversationView } from "@/components/messaging/conversation-view";
 import { NewChatModal } from "@/components/messaging/new-chat-modal";
 import { NewGroupModal } from "@/components/messaging/new-group-modal";
+import { useChatConversations } from "@/lib/chat/hooks";
+import type { Conversation, Participant } from "@/lib/chat/types";
 import {
-  getConversations,
   markConversationAsRead,
   startConversation,
-  type Conversation,
-  type ConversationParticipant,
 } from "@/app/actions/messaging";
 
 // ============================================================================
@@ -48,8 +47,16 @@ export function MessagesTab() {
   const { data: session } = useSession();
   const currentUserId = session?.user?.id;
 
+  // Use the new chat bridge hook for conversations (uses ChatEngine when available, falls back to server actions)
+  const {
+    conversations: chatConversations,
+    isLoading: isLoadingConversations,
+    refresh: refreshConversations,
+    isUsingEngine: _isUsingEngine, // Prefixed for debugging purposes
+  } = useChatConversations();
+
+  // Local state for conversations (allows optimistic updates)
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [isLoadingConversations, setIsLoadingConversations] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showPendingVerificationModal, setShowPendingVerificationModal] = useState(false);
   const [pendingVerification, setPendingVerification] = useState<{
@@ -66,27 +73,18 @@ export function MessagesTab() {
   const [isStartingConversation, setIsStartingConversation] = useState(false);
   const processedUserIdRef = useRef<string | null>(null);
 
-  // Load conversations
+  // Sync conversations from hook to local state and update unread count
   useEffect(() => {
-    if (!currentUserId) return;
-
-    const loadConversations = async () => {
-      setIsLoadingConversations(true);
-      const result = await getConversations();
-      if (result.success && result.conversations) {
-        setConversations(result.conversations);
-        // Update unread count
-        const totalUnread = result.conversations.reduce(
-          (sum, c) => sum + (c.unreadCount || 0),
-          0
-        );
-        setUnreadCount(totalUnread);
-      }
-      setIsLoadingConversations(false);
-    };
-
-    loadConversations();
-  }, [currentUserId, setUnreadCount]);
+    if (chatConversations.length > 0 || !isLoadingConversations) {
+      setConversations(chatConversations);
+      // Update unread count
+      const totalUnread = chatConversations.reduce(
+        (sum, c) => sum + (c.unreadCount || 0),
+        0
+      );
+      setUnreadCount(totalUnread);
+    }
+  }, [chatConversations, isLoadingConversations, setUnreadCount]);
 
   // Handle pending verification from deep link
   useEffect(() => {
@@ -139,13 +137,10 @@ export function MessagesTab() {
         // Need to create a new conversation
         const result = await startConversation(selectedUserId);
         if (result.success && result.conversationId) {
-          // Reload conversations to get the new one
-          const convResult = await getConversations();
-          if (convResult.success && convResult.conversations) {
-            setConversations(convResult.conversations);
-            // Select the new conversation
-            selectConversation(result.conversationId);
-          }
+          // Refresh conversations using the chat hook (uses ChatEngine when available)
+          await refreshConversations();
+          // Select the new conversation
+          selectConversation(result.conversationId);
         }
         startConversationWithUser(""); // Clear the selectedUserId
       }
@@ -154,14 +149,15 @@ export function MessagesTab() {
     };
 
     handleStartConversation();
-  }, [selectedUserId, currentUserId, conversations, isStartingConversation, selectConversation, startConversationWithUser]);
+  }, [selectedUserId, currentUserId, conversations, isStartingConversation, selectConversation, startConversationWithUser, refreshConversations]);
 
   // Filter conversations
   const filteredConversations = conversations.filter((conv) => {
     if (!searchQuery.trim()) return true;
     // DEFENSIVE: Safely access first participant (may be undefined if participants array is empty/missing)
     const participant = Array.isArray(conv.participants) ? conv.participants[0] : undefined;
-    const name = participant?.displayName || participant?.name || "";
+    // Support both new type (name) and legacy type (displayName)
+    const name = participant?.name || (participant as { displayName?: string })?.displayName || "";
     return name.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
@@ -185,6 +181,25 @@ export function MessagesTab() {
     selectConversation(conversation?.id || null);
   }, [selectConversation, setUnreadCount, unreadCount]);
 
+  // Handle new chat selection - moved before conditional returns
+  const handleNewChatSelect = useCallback(async (userId: string) => {
+    setShowNewChatModal(false);
+    const result = await startConversation(userId);
+    if (result.success && result.conversationId) {
+      // Refresh conversations using the chat hook (uses ChatEngine when available)
+      await refreshConversations();
+      selectConversation(result.conversationId);
+    }
+  }, [selectConversation, refreshConversations]);
+
+  // Handle new group creation - moved before conditional returns
+  const handleNewGroupCreated = useCallback(async (conversationId: string) => {
+    setShowNewGroupModal(false);
+    // Refresh conversations using the chat hook (uses ChatEngine when available)
+    await refreshConversations();
+    selectConversation(conversationId);
+  }, [selectConversation, refreshConversations]);
+
   // Show conversation view if one is selected
   if (selectedConversationId && currentUserId) {
     const conversation = conversations.find((c) => c.id === selectedConversationId);
@@ -193,7 +208,7 @@ export function MessagesTab() {
       // This prevents React Error #300 if participants is somehow a Promise or invalid
       const validParticipants = Array.isArray(conversation.participants)
         ? conversation.participants.filter(
-            (p): p is ConversationParticipant =>
+            (p): p is Participant =>
               p != null && typeof p === "object" && typeof p.userId === "string"
           )
         : [];
@@ -228,29 +243,6 @@ export function MessagesTab() {
       </div>
     );
   }
-
-  // Handle new chat selection
-  const handleNewChatSelect = useCallback(async (userId: string) => {
-    setShowNewChatModal(false);
-    const result = await startConversation(userId);
-    if (result.success && result.conversationId) {
-      const convResult = await getConversations();
-      if (convResult.success && convResult.conversations) {
-        setConversations(convResult.conversations);
-        selectConversation(result.conversationId);
-      }
-    }
-  }, [selectConversation]);
-
-  // Handle new group creation
-  const handleNewGroupCreated = useCallback(async (conversationId: string) => {
-    setShowNewGroupModal(false);
-    const convResult = await getConversations();
-    if (convResult.success && convResult.conversations) {
-      setConversations(convResult.conversations);
-      selectConversation(conversationId);
-    }
-  }, [selectConversation]);
 
   // Conversation list
   return (
@@ -327,6 +319,9 @@ export function MessagesTab() {
               // DEFENSIVE: Safely access first participant (may be undefined if participants array is empty/missing)
               const participant = Array.isArray(conversation.participants) ? conversation.participants[0] : undefined;
               const isUnread = conversation.unreadCount > 0;
+              // Support both new type (name, avatar) and legacy type (displayName, avatarUrl)
+              const participantName = participant?.name || (participant as { displayName?: string })?.displayName || "Unknown";
+              const participantAvatar = participant?.avatar || (participant as { avatarUrl?: string })?.avatarUrl;
 
               return (
                 <button
@@ -340,8 +335,8 @@ export function MessagesTab() {
                 >
                   {/* Avatar */}
                   <AvatarWithStatus
-                    src={participant?.avatarUrl}
-                    name={participant?.displayName || participant?.name}
+                    src={participantAvatar}
+                    name={participantName}
                     status={participant?.status || "offline"}
                     size="md"
                   />
@@ -357,7 +352,7 @@ export function MessagesTab() {
                             : "text-gray-700 dark:text-gray-300"
                         )}
                       >
-                        {participant?.displayName || participant?.name || "Unknown"}
+                        {participantName}
                       </span>
                       <span className="text-xs text-gray-400 flex-shrink-0">
                         {conversation.lastMessageAt

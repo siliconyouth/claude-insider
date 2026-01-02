@@ -1318,6 +1318,10 @@ export interface ResourceDiscoveryQueue {
    */
   sourceUrl?: string | null;
   /**
+   * ID of the user resource submission that initiated this queue item
+   */
+  sourceSubmissionId?: string | null;
+  /**
    * Raw scraped data (for debugging)
    */
   rawData?:
@@ -2810,6 +2814,7 @@ export interface ResourceDiscoveryQueueSelect<T extends boolean = true> {
       };
   source?: T;
   sourceUrl?: T;
+  sourceSubmissionId?: T;
   rawData?: T;
   aiAnalysis?:
     | T

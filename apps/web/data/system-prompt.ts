@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-02 for v1.16.2 (MCP Playground design compliance, messaging Display Error fix, AI context improvements)
+ * Updated: 2026-01-02 for v1.17.0 (Chat System Rewrite - LRU cache, delivery tracking, voice messages, link unfurling, pinning, E2EE default)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.16.2",
+  version: "1.17.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.12.5 - updated 2025-12-23)
+// TECH STACK KNOWLEDGE (v1.17.0 - updated 2026-01-02)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -119,9 +119,9 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.89.0",
     engine: "PostgreSQL 15+",
-    tables: 135,
-    categories: 20,
-    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library"],
+    tables: 147,
+    categories: 23,
+    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library", "LRU caching"],
   },
   cms: {
     provider: "Payload CMS",
@@ -264,7 +264,7 @@ export const USER_FEATURES = {
   },
   messaging: {
     types: ["Direct messages", "Group chats (up to 50 members)"],
-    features: ["Optimistic UI (instant ~2ms)", "Typing indicators", "Online presence", "Message mentions", "AI assistant @mentions", "Emoji reactions", "Reply threading", "In-conversation search", "Message drafts", "Retry queue"],
+    features: ["Optimistic UI (instant ~2ms)", "Typing indicators", "Online presence", "Message mentions", "AI assistant @mentions", "Emoji reactions", "Reply threading", "In-conversation search", "Message drafts", "Retry queue", "Delivery status tracking (sent/delivered/read)", "Voice messages with waveform", "Link unfurling with Open Graph", "Message pinning", "LRU caching", "E2EE auto-setup for DMs"],
     roles: ["Owner", "Admin", "Member"],
   },
   apiKeys: {
@@ -1205,6 +1205,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.14.1", "link validation", "broken links", "mcp discovery", "npm registry api", "trusted domains", "fr-59", "3035 resources", "consecutive failures", "moderation queue"],
+  },
+  {
+    id: "v1170-features",
+    title: "Version 1.17.0 Features",
+    section: "New in v1.17.0",
+    content: `Claude Insider v1.17.0 is a comprehensive chat system rewrite with ~13,100 lines of new code following Matrix SDK patterns. Phase 1 - LRU Cache System: Generic LRUCache<K,V> class with TTL and auto-cleanup. Specialized caches: MessageCache (5min TTL, 1000 items), ConversationCache (2min, 100), PresenceCache (30s, 500), UserProfileCache (10min, 200). Phase 2 - Delivery Status Tracking: DeliveryTracker class with sending→sent→delivered→read progression. DeliveryStatusIndicator component with visual checkmarks. Per-recipient tracking in dm_delivery_receipts table. Phase 3 - Voice Messages: VoiceRecorder class with Web Audio API + MediaRecorder. Real-time waveform visualization during recording. VoicePlayer component with 0.5x-2x playback speed. WebM (Opus) primary, MP4 (AAC) fallback. Metadata stored in dm_voice_metadata table. Phase 4 - Rich Media Preview: LinkUnfurler service with URL extraction. Server-side /api/chat/unfurl endpoint bypasses CORS. Open Graph metadata parsing. LinkPreviewCard with YouTube/Vimeo detection. ImageGallery with lightbox zoom/pan. 7-day cache in link_previews table. Phase 5 - Message Pinning: Server actions (pinMessage, unpinMessage, getPinnedMessages). PinnedMessagesPanel slide-out UI with jump-to-message. Admin/owner-only permissions with optional pin notes. Phase 6 - Chat Performance Optimizations: Batched realtime updates (50ms window, max 20 items). Subscription pooling with reference counting. RequestDeduplicator for concurrent request coalescing. Optimized SQL functions (get_messages_with_context, get_users_presence, get_conversations_with_context). Phase 7 - E2EE Default for DMs: setupDMEncryption() and upgradeDMToE2EE() utilities. Automatic encryption setup for new DMs. Device key sync via dm_device_keys table. Graceful fallback when E2EE unavailable. Phase 8 - Integration: All features combined via lib/chat/index.ts exports. 147 database tables with 119 migrations. New features: FR-62 Delivery Status, FR-63 Voice Messages, FR-64 Rich Media Preview, FR-65 Message Pinning, FR-66 Chat Performance, FR-67 E2EE Default.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.17.0", "chat system rewrite", "lru cache", "delivery status", "voice messages", "link unfurling", "message pinning", "e2ee default", "matrix sdk", "realtime optimization", "fr-62", "fr-63", "fr-64", "fr-65", "fr-66", "fr-67"],
   },
 ];
 

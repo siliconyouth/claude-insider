@@ -1,6 +1,6 @@
 // Cache version - UPDATE THIS ON EACH DEPLOY to bust old caches
-// v7: Force icon refresh after new "Ci" gradient icons (2025-12-29)
-const CACHE_VERSION = 'v7';
+// v8: Chat Engine offline support with IndexedDB sync (2026-01-02)
+const CACHE_VERSION = 'v8';
 const STATIC_CACHE = `claude-insider-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE = `claude-insider-dynamic-${CACHE_VERSION}`;
 const OFFLINE_CACHE = `claude-insider-offline-${CACHE_VERSION}`;
@@ -13,7 +13,14 @@ const SYNC_TAGS = {
   RATINGS: 'sync-ratings',
   MESSAGES: 'sync-messages',
   PREFERENCES: 'sync-preferences',
+  CHAT_MESSAGES: 'sync-chat-messages',
+  CHAT_REACTIONS: 'sync-chat-reactions',
+  CHAT_READ_RECEIPTS: 'sync-chat-read-receipts',
 };
+
+// Chat IndexedDB Constants (must match lib/chat/store.ts)
+const CHAT_DB_NAME = 'claude-insider-chat';
+const CHAT_PENDING_STORE = 'pending_operations';
 
 // Static assets to cache immediately (shell)
 const STATIC_ASSETS = [
@@ -151,6 +158,78 @@ async function clearPendingRequests(tag) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Chat IndexedDB Helpers (access ChatEngine's offline queue)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function openChatDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(CHAT_DB_NAME, 1);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => resolve(request.result);
+    // Don't create stores here - ChatEngine handles schema
+    request.onupgradeneeded = () => {
+      // Let the main thread handle schema upgrades
+    };
+  });
+}
+
+async function getChatPendingOperations() {
+  try {
+    const db = await openChatDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(CHAT_PENDING_STORE, 'readonly');
+      const store = tx.objectStore(CHAT_PENDING_STORE);
+      const request = store.getAll();
+
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+  } catch (err) {
+    console.warn('[SW] Chat DB not ready:', err);
+    return [];
+  }
+}
+
+async function removeChatPendingOperation(id) {
+  try {
+    const db = await openChatDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(CHAT_PENDING_STORE, 'readwrite');
+      const store = tx.objectStore(CHAT_PENDING_STORE);
+      const request = store.delete(id);
+
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  } catch (err) {
+    console.warn('[SW] Failed to remove pending operation:', err);
+  }
+}
+
+async function updateChatPendingOperation(id, updates) {
+  try {
+    const db = await openChatDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(CHAT_PENDING_STORE, 'readwrite');
+      const store = tx.objectStore(CHAT_PENDING_STORE);
+      const getRequest = store.get(id);
+
+      getRequest.onsuccess = () => {
+        const operation = getRequest.result;
+        if (operation) {
+          const updated = { ...operation, ...updates };
+          store.put(updated);
+        }
+        resolve();
+      };
+      getRequest.onerror = () => reject(getRequest.error);
+    });
+  } catch (err) {
+    console.warn('[SW] Failed to update pending operation:', err);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Install event - cache static assets
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -189,8 +268,16 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('sync', (event) => {
   console.log('[SW] Background sync triggered:', event.tag);
 
-  // Handle different sync tags
-  if (Object.values(SYNC_TAGS).includes(event.tag)) {
+  // Chat-specific sync tags
+  const chatSyncTags = [
+    SYNC_TAGS.CHAT_MESSAGES,
+    SYNC_TAGS.CHAT_REACTIONS,
+    SYNC_TAGS.CHAT_READ_RECEIPTS,
+  ];
+
+  if (chatSyncTags.includes(event.tag)) {
+    event.waitUntil(processChatBackgroundSync(event.tag));
+  } else if (Object.values(SYNC_TAGS).includes(event.tag)) {
     event.waitUntil(processBackgroundSync(event.tag));
   }
 });
@@ -235,6 +322,129 @@ async function processBackgroundSync(tag) {
   } catch (err) {
     console.error('[SW] Background sync failed:', err);
     throw err; // Throw to trigger retry
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Chat-Specific Background Sync Processing
+// ─────────────────────────────────────────────────────────────────────────────
+
+const CHAT_API_ENDPOINTS = {
+  send_message: '/api/messaging/send',
+  edit_message: '/api/messaging/edit',
+  delete_message: '/api/messaging/delete',
+  toggle_reaction: '/api/messaging/reactions',
+  mark_read: '/api/messaging/read-receipts',
+  send_typing: '/api/messaging/typing',
+};
+
+const MAX_CHAT_RETRY_COUNT = 5;
+
+async function processChatBackgroundSync(tag) {
+  try {
+    const operations = await getChatPendingOperations();
+
+    // Filter operations by type based on sync tag
+    const relevantOps = operations.filter((op) => {
+      switch (tag) {
+        case SYNC_TAGS.CHAT_MESSAGES:
+          return ['send_message', 'edit_message', 'delete_message'].includes(op.type);
+        case SYNC_TAGS.CHAT_REACTIONS:
+          return op.type === 'toggle_reaction';
+        case SYNC_TAGS.CHAT_READ_RECEIPTS:
+          return op.type === 'mark_read';
+        default:
+          return false;
+      }
+    });
+
+    console.log(`[SW] Processing ${relevantOps.length} chat operations for ${tag}`);
+
+    for (const operation of relevantOps) {
+      // Skip if max retries exceeded
+      if (operation.retryCount >= MAX_CHAT_RETRY_COUNT) {
+        console.warn(`[SW] Max retries exceeded for operation ${operation.id}, removing`);
+        await removeChatPendingOperation(operation.id);
+
+        // Notify client of permanent failure
+        const clients = await self.clients.matchAll();
+        clients.forEach((client) => {
+          client.postMessage({
+            type: 'CHAT_SYNC_FAILED',
+            operationId: operation.id,
+            operationType: operation.type,
+            error: 'Max retries exceeded',
+          });
+        });
+        continue;
+      }
+
+      try {
+        const endpoint = CHAT_API_ENDPOINTS[operation.type];
+        if (!endpoint) {
+          console.warn(`[SW] Unknown operation type: ${operation.type}`);
+          await removeChatPendingOperation(operation.id);
+          continue;
+        }
+
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(operation.payload),
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          await removeChatPendingOperation(operation.id);
+          console.log(`[SW] Chat operation synced:`, operation.type, operation.id);
+
+          // Notify client of successful sync
+          const clients = await self.clients.matchAll();
+          clients.forEach((client) => {
+            client.postMessage({
+              type: 'CHAT_SYNC_COMPLETE',
+              operationId: operation.id,
+              operationType: operation.type,
+              result,
+            });
+          });
+        } else if (response.status >= 400 && response.status < 500) {
+          // Client error - permanent failure, remove from queue
+          await removeChatPendingOperation(operation.id);
+          const errorText = await response.text();
+          console.warn(`[SW] Chat operation failed permanently:`, operation.type, errorText);
+
+          // Notify client of failure
+          const clients = await self.clients.matchAll();
+          clients.forEach((client) => {
+            client.postMessage({
+              type: 'CHAT_SYNC_FAILED',
+              operationId: operation.id,
+              operationType: operation.type,
+              error: errorText,
+            });
+          });
+        } else {
+          // Server error - increment retry count
+          await updateChatPendingOperation(operation.id, {
+            retryCount: operation.retryCount + 1,
+            lastError: `Server error: ${response.status}`,
+          });
+        }
+      } catch (err) {
+        console.warn(`[SW] Chat operation failed, will retry:`, operation.type, err);
+        await updateChatPendingOperation(operation.id, {
+          retryCount: operation.retryCount + 1,
+          lastError: err.message,
+        });
+      }
+    }
+  } catch (err) {
+    console.error('[SW] Chat background sync failed:', err);
+    throw err;
   }
 }
 
@@ -473,6 +683,68 @@ self.addEventListener('message', (event) => {
             console.error('[SW] Failed to trigger sync:', err);
           });
       }
+      break;
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Chat-Specific Messages
+    // ─────────────────────────────────────────────────────────────────────────
+
+    case 'CHAT_TRIGGER_SYNC':
+      // Trigger chat message sync when coming back online
+      if (self.registration.sync) {
+        Promise.all([
+          self.registration.sync.register(SYNC_TAGS.CHAT_MESSAGES),
+          self.registration.sync.register(SYNC_TAGS.CHAT_REACTIONS),
+          self.registration.sync.register(SYNC_TAGS.CHAT_READ_RECEIPTS),
+        ])
+          .then(() => {
+            event.source?.postMessage({ type: 'CHAT_SYNC_TRIGGERED' });
+          })
+          .catch((err) => {
+            console.error('[SW] Failed to trigger chat sync:', err);
+          });
+      }
+      break;
+
+    case 'CHAT_GET_PENDING_COUNT':
+      // Return count of pending chat operations
+      getChatPendingOperations()
+        .then((operations) => {
+          event.source?.postMessage({
+            type: 'CHAT_PENDING_COUNT',
+            count: operations.length,
+            byType: {
+              messages: operations.filter((op) =>
+                ['send_message', 'edit_message', 'delete_message'].includes(op.type)
+              ).length,
+              reactions: operations.filter((op) => op.type === 'toggle_reaction').length,
+              readReceipts: operations.filter((op) => op.type === 'mark_read').length,
+            },
+          });
+        })
+        .catch((err) => {
+          console.error('[SW] Failed to get pending count:', err);
+        });
+      break;
+
+    case 'CHAT_CLEAR_FAILED':
+      // Clear failed operations (exceeding retry limit)
+      getChatPendingOperations()
+        .then(async (operations) => {
+          const failedOps = operations.filter(
+            (op) => op.retryCount >= MAX_CHAT_RETRY_COUNT
+          );
+          for (const op of failedOps) {
+            await removeChatPendingOperation(op.id);
+          }
+          event.source?.postMessage({
+            type: 'CHAT_FAILED_CLEARED',
+            count: failedOps.length,
+          });
+        })
+        .catch((err) => {
+          console.error('[SW] Failed to clear failed operations:', err);
+        });
       break;
   }
 });

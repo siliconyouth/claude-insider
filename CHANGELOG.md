@@ -9,6 +9,79 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.17.0] - 2026-01-02
+### 💬 Comprehensive Chat System Rewrite
+Complete 8-phase rewrite of the messaging system following Matrix SDK patterns for offline-first architecture with optimistic updates. **~13,100 lines** of new chat infrastructure.
+
+#### Phase 1: Database Migrations (114-119)
+- **Delivery Receipts** (`dm_delivery_receipts`): Per-recipient message delivery tracking
+- **Voice Messages** (`dm_voice_metadata`): Audio duration, waveform, transcription storage
+- **Message Pinning** (`dm_pinned_messages`): Pin messages with notes, admin-only
+- **Link Previews** (`link_previews`): Server-side Open Graph metadata caching
+- **Optimized Chat Functions**: Single-query message fetching with all context
+- **E2EE Default Settings**: Automatic encryption for new DMs
+
+#### Phase 2: E2EE by Default for DMs
+- Automatic key exchange on first message in new DMs
+- `setupDMEncryption()` and `upgradeDMToE2EE()` utilities
+- Device key synchronization via `dm_device_keys` table
+- E2EE availability checking with graceful fallback
+
+#### Phase 3: Message Delivery Status
+- `DeliveryTracker` class with `sent → delivered → read` progression
+- Real-time status updates via Supabase subscriptions
+- Visual indicators: single check (sent), double check (delivered), blue check (read)
+- `DeliveryStatusIndicator` component with tooltip details
+
+#### Phase 4: Voice Messages
+- `VoiceRecorder` class with Web Audio API + MediaRecorder
+- Real-time waveform visualization during recording
+- `VoicePlayer` component with playback controls and speed adjustment
+- Supported formats: WebM (Opus), MP4 (AAC) with automatic detection
+- Duration tracking and waveform storage
+
+#### Phase 5: Rich Media Preview
+- `LinkUnfurler` service with URL extraction and metadata fetching
+- Server-side Open Graph parsing (bypasses CORS)
+- `LinkPreviewCard` with YouTube/Vimeo video detection
+- `ImageGallery` with lightbox, zoom, pan, keyboard navigation
+- `FilePreview` for documents, code, archives with type detection
+
+#### Phase 6: Message Pinning
+- Server actions: `pinMessage()`, `unpinMessage()`, `getPinnedMessages()`
+- `PinnedMessagesPanel` slide-out UI with jump-to-message
+- `PinnedMessagesBadge` showing pin count in header
+- `PinIndicator` for inline message display
+- Admin/owner-only permissions with note support
+
+#### Phase 7: Performance Optimizations
+- `LRUCache<K,V>` with TTL and automatic cleanup
+- Specialized caches: `MessageCache`, `ConversationCache`, `PresenceCache`
+- Batched realtime updates (50ms window, max 20 items)
+- Subscription pooling with reference counting
+- `RequestDeduplicator` for concurrent request coalescing
+- Optimized SQL functions for single-query data fetching
+
+#### Phase 8: UI/UX Integration Hooks
+- `useMessageInput`: Draft persistence, typing indicators, character limits
+- `useMessageActions`: Reactions, pins, delete, edit, copy, reply
+- `useDeliveryStatus`: Read receipts and delivery tracking
+- `usePresence`: Real-time user presence with batch updates
+- `useDebouncedTyping`: Typing indicator with auto-stop
+
+#### New Files Created
+- **lib/chat/**: `cache.ts`, `delivery.ts`, `e2ee-auto.ts`, `realtime-optimized.ts`, `unfurl.ts`, `voice.ts` (~6,748 lines)
+- **components/chat/**: `delivery-status.tsx`, `e2ee-status.tsx`, `file-preview.tsx`, `image-gallery.tsx`, `link-preview.tsx`, `pinned-messages.tsx`, `voice-player.tsx`, `voice-recorder.tsx` (~5,972 lines)
+- **app/actions/**: `pinning.ts` (381 lines)
+- **app/api/chat/**: `unfurl/route.ts`, `unfurl/batch/route.ts`
+
+#### Database Stats
+- 147 tables (up from 141)
+- 119 migrations (up from 113)
+- 67 features implemented (up from 61)
+
+---
+
 ## [1.16.2] - 2026-01-02
 ### 🔧 Bug Fixes & MCP Playground Improvements
 - **MCP Playground Design Compliance**: Added Header and Footer navigation components

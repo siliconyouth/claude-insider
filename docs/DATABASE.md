@@ -28,9 +28,9 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 141 |
-| **Categories** | 22 |
-| **Migrations** | 113 |
+| **Total Tables** | 147 |
+| **Categories** | 23 |
+| **Migrations** | 119 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -84,7 +84,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 ---
 
-## Table Catalog (141 Tables)
+## Table Catalog (147 Tables)
 
 ### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 
@@ -103,9 +103,9 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 `achievements`, `user_achievements`, `achievement_progress`
 
-### Messaging (8 tables)
+### Messaging (14 tables)
 
-`user_presence`, `dm_conversations`, `dm_participants`, `dm_messages`, `dm_typing_indicators`, `dm_group_invitations`, `user_chat_settings`, `message_reactions`
+`user_presence`, `dm_conversations`, `dm_participants`, `dm_messages`, `dm_typing_indicators`, `dm_group_invitations`, `user_chat_settings`, `message_reactions`, `dm_delivery_receipts`, `dm_voice_metadata`, `dm_pinned_messages`, `dm_device_keys`, `dm_e2ee_settings`, `link_previews`
 
 **Key columns in `dm_messages`:**
 - `reply_to_message_id` (UUID, FK → self, ON DELETE SET NULL) - Reply threading (v1.13.4)
@@ -115,6 +115,64 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 - `user_id` (TEXT, FK → user) - Reactor
 - `emoji` (TEXT) - Unicode emoji character
 - UNIQUE constraint: `(message_id, user_id, emoji)`
+
+**Key columns in `dm_delivery_receipts` (v1.17.0):**
+- `id` (UUID, PK) - Receipt identifier
+- `message_id` (UUID, FK → dm_messages) - Message being tracked
+- `recipient_id` (TEXT, FK → user) - Recipient user
+- `status` ('sent', 'delivered', 'read') - Delivery status
+- `delivered_at`, `read_at` (TIMESTAMPTZ) - Status timestamps
+- UNIQUE constraint: `(message_id, recipient_id)`
+
+**Key columns in `dm_voice_metadata` (v1.17.0):**
+- `id` (UUID, PK) - Metadata identifier
+- `message_id` (UUID, FK → dm_messages) - Associated message
+- `duration_ms` (INTEGER) - Audio duration in milliseconds
+- `waveform` (FLOAT8[]) - Normalized amplitude array for visualization
+- `mime_type` (TEXT) - Audio MIME type (webm, mp4)
+- `transcription` (TEXT) - Optional speech-to-text
+- `transcription_language` (TEXT) - Detected language
+
+**Key columns in `dm_pinned_messages` (v1.17.0):**
+- `id` (UUID, PK) - Pin identifier
+- `conversation_id` (UUID, FK → dm_conversations) - Conversation
+- `message_id` (UUID, FK → dm_messages) - Pinned message
+- `pinned_by` (TEXT, FK → user) - User who pinned
+- `pinned_at` (TIMESTAMPTZ) - When pinned
+- `note` (TEXT) - Optional pin note
+- UNIQUE constraint: `(conversation_id, message_id)`
+
+**Key columns in `dm_device_keys` (v1.17.0):**
+- `id` (UUID, PK) - Key identifier
+- `user_id` (TEXT, FK → user) - Key owner
+- `device_id` (TEXT) - Device identifier
+- `identity_key` (TEXT) - Curve25519 identity public key
+- `signing_key` (TEXT) - Ed25519 signing public key
+- `one_time_keys` (JSONB) - Pre-key bundle
+- `is_active` (BOOLEAN) - Whether device is currently active
+- UNIQUE constraint: `(user_id, device_id)`
+
+**Key columns in `dm_e2ee_settings` (v1.17.0):**
+- `conversation_id` (UUID, PK, FK → dm_conversations) - Conversation
+- `e2ee_enabled` (BOOLEAN DEFAULT true) - E2EE status
+- `auto_enabled_at` (TIMESTAMPTZ) - When auto-enabled
+- `algorithm` ('olm', 'megolm') - Encryption algorithm
+
+**Key columns in `link_previews` (v1.17.0):**
+- `id` (UUID, PK) - Preview identifier
+- `url` (TEXT UNIQUE) - Normalized URL (source of truth)
+- `title`, `description`, `image` (TEXT) - Open Graph metadata
+- `site_name`, `favicon` (TEXT) - Site identification
+- `type` ('website', 'article', 'video', 'image') - Content type
+- `video_url`, `video_type` (TEXT) - Video embed info
+- `fetched_at`, `expires_at` (TIMESTAMPTZ) - Cache validity
+- `fetch_error` (TEXT) - Error message if fetch failed
+- `retry_count` (INTEGER) - Failed fetch attempts
+
+**Optimized SQL Functions (v1.17.0):**
+- `get_messages_with_context(uuid, int, timestamptz)` - Single-query message fetch with sender, reactions, replies, delivery status, pins
+- `get_users_presence(text[])` - Batch presence lookup
+- `get_conversations_with_context(text)` - Conversation list with all metadata
 
 ### Security (4 tables)
 
@@ -368,7 +426,16 @@ supabase/migrations/
 ├── 104                          # Sync follow counts
 ├── 105                          # Message reactions table (Matrix SDK)
 ├── 106                          # Reply threading column (reply_to_message_id)
-└── 107                          # Link validation tables (resource_link_validations, broken_link_queue)
+├── 107                          # Resource submissions
+├── 108-110                      # Chat performance functions, RPC fixes
+├── 111-112                      # Link validation tables
+├── 113                          # MCP configs storage (playground)
+├── 114                          # Delivery receipts (dm_delivery_receipts)
+├── 115                          # Voice messages (dm_voice_metadata)
+├── 116                          # Message pinning (dm_pinned_messages)
+├── 117                          # Link previews cache (link_previews)
+├── 118                          # Optimized chat SQL functions
+└── 119                          # E2EE default for DMs (dm_device_keys, dm_e2ee_settings)
 ```
 
 ---

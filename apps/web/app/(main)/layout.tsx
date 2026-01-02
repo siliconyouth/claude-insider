@@ -26,6 +26,7 @@ import { NotificationPopup } from "@/components/notifications/notification-popup
 import { AchievementNotificationProvider } from "@/components/achievements/achievement-notification";
 import { DonorBadgeProvider } from "@/components/donations/donor-badge-modal";
 import { LazySoundProvider } from "@/components/providers/lazy-sound-provider";
+import { LazyChatProvider } from "@/components/providers/lazy-chat-provider";
 import { DeferredLoadingProvider } from "@/components/providers/deferred-loading-context";
 import { PrefetchProvider } from "@/components/providers/prefetch-provider";
 import { InstallPrompt } from "@/components/pwa/install-prompt";
@@ -560,6 +561,7 @@ export default async function MainLayout({
               <LazyPresenceProvider>
               <LazyRealtimeProvider>
               <LazyE2EEProvider>
+              <LazyChatProvider>
               <UnifiedChatProvider>
               <AskAIProvider>
               <KeyboardShortcutsProvider>
@@ -592,6 +594,7 @@ export default async function MainLayout({
               </KeyboardShortcutsProvider>
               </AskAIProvider>
               </UnifiedChatProvider>
+              </LazyChatProvider>
               </LazyE2EEProvider>
               </LazyRealtimeProvider>
               </LazyPresenceProvider>

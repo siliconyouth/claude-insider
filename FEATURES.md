@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **60 implemented features** with detailed capabilities.
+Complete list of all **67 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (61 total)
+## Implemented Features (67 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -71,6 +71,12 @@ Complete list of all **60 implemented features** with detailed capabilities.
 | FR-59 | Link Validation System | Automated broken link detection (`lib/resources/link-validator.ts`), trusted domains whitelist (claude.ai, twitter, reddit, perplexity), npm Registry API validation (bypasses 403 bot protection), scoped package encoding (@scope%2Fname), GitHub URL normalization (.git removal), HEAD→GET fallback for 405, consecutive failure tracking (threshold: 3), admin moderation queue (`/dashboard/broken-links`), weekly cron validation |
 | FR-60 | Resource Relationship Analysis | Claude Code subscription-based analysis (NOT API credits), 7 relationship types (similar, alternative, complement, uses, integrates, fork, inspired_by), bidirectional relationships, manual JSON workflow with helper scripts, 1,863 total relationships (63 doc-resource + 1,800 resource-resource), confidence scores (0-1), category-based batch analysis |
 | FR-61 | MCP Playground | Interactive MCP config builder (`/mcp-playground`), Monaco JSON editor with IntelliSense, live schema validation, 2,136+ server templates, URL-based config sharing (base64), AI assistance via Unified Chat, config storage (draft/publish workflow), version history with change tracking, public gallery (`/mcp-playground/gallery`), starring/forking system, admin moderation queue, RLS-enforced access control |
+| FR-62 | Delivery Status Indicators | `DeliveryTracker` class with `sent → delivered → read` progression, real-time status updates via Supabase subscriptions, visual indicators (single/double/blue checkmarks), `DeliveryStatusIndicator` component with tooltip details, per-recipient tracking in `dm_delivery_receipts` table |
+| FR-63 | Voice Messages | `VoiceRecorder` class with Web Audio API + MediaRecorder, real-time waveform visualization during recording, `VoicePlayer` component with playback controls and speed adjustment (0.5x-2x), WebM (Opus) and MP4 (AAC) format support, duration tracking and waveform storage in `dm_voice_metadata` table |
+| FR-64 | Rich Media Preview | `LinkUnfurler` service with URL extraction and metadata fetching, server-side Open Graph parsing (`/api/chat/unfurl`), `LinkPreviewCard` with YouTube/Vimeo video detection, `ImageGallery` with lightbox zoom/pan/keyboard navigation, `FilePreview` for documents/code/archives, 7-day cache in `link_previews` table |
+| FR-65 | Message Pinning | Server actions (`pinMessage`, `unpinMessage`, `getPinnedMessages`), `PinnedMessagesPanel` slide-out UI with jump-to-message, `PinnedMessagesBadge` for header pin count, `PinIndicator` for inline display, admin/owner-only permissions with optional pin notes, stored in `dm_pinned_messages` table |
+| FR-66 | Chat Performance Optimizations | `LRUCache<K,V>` with TTL and automatic cleanup, specialized caches (`MessageCache`, `ConversationCache`, `PresenceCache`, `UserProfileCache`), batched realtime updates (50ms window, max 20 items), subscription pooling with reference counting, `RequestDeduplicator` for concurrent request coalescing, optimized SQL functions (`get_messages_with_context`, `get_users_presence`, `get_conversations_with_context`) |
+| FR-67 | E2EE Default for DMs | Automatic encryption setup for new DMs, `setupDMEncryption()` and `upgradeDMToE2EE()` utilities, device key synchronization via `dm_device_keys` table, E2EE availability checking with graceful fallback, per-conversation settings in `dm_e2ee_settings` table, Olm/Megolm algorithm support |
 
 ---
 
@@ -113,16 +119,22 @@ Complete list of all **60 implemented features** with detailed capabilities.
 - User resource submissions with AI analysis
 - Resource relationship analysis (Claude Code subscription)
 
-### Messaging & Social (FR-22, FR-29, FR-33, FR-35, FR-55, FR-57)
+### Messaging & Social (FR-22, FR-29, FR-33, FR-35, FR-55, FR-57, FR-62 to FR-67)
 - Group chat with roles
 - Unified chat window
 - User directory
 - Smart AI messaging (@mentions)
 - Matrix SDK features (reactions, replies, search, drafts)
 - Optimistic UI for instant messaging
+- Delivery status indicators (sent/delivered/read)
+- Voice messages with waveform visualization
+- Rich media preview (link unfurling, image gallery)
+- Message pinning with slide-out panel
+- Chat performance optimizations (LRU cache, batching)
+- E2EE by default for DMs
 
 ### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50, FR-61)
-- Database types (141 tables)
+- Database types (147 tables)
 - PWA enhancements
 - Advanced search
 - GitHub sync, doc versioning

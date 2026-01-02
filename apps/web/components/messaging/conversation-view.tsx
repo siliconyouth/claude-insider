@@ -37,7 +37,6 @@ import {
 } from "@/components/messaging/mention-autocomplete";
 import {
   getMessages,
-  sendMessage,
   editMessage,
   markConversationAsRead,
   getReadReceipts,
@@ -48,6 +47,7 @@ import {
   type ReadReceipt,
   type Reaction,
 } from "@/app/actions/messaging";
+import { useChatMessages } from "@/lib/chat/hooks";
 import { extractMentions } from "@/lib/mentions";
 import type { MentionedUser } from "@/components/messaging/message-bubble";
 import { generateAIChatResponse } from "@/app/actions/ai-chat-response";
@@ -82,6 +82,17 @@ export function ConversationView({
   // DEFENSIVE: Ensure participants is always an array (fixes "Display Error" when prop is undefined)
   const participants = Array.isArray(participantsProp) ? participantsProp : [];
 
+  // Use the new chat bridge hook for messages (uses ChatEngine when available, falls back to server actions)
+  const {
+    messages: hookMessages,
+    isLoading: hookIsLoading,
+    hasMore: hookHasMore,
+    sendMessage: hookSendMessage,
+    loadMore: hookLoadMore,
+    isUsingEngine, // eslint-disable-line @typescript-eslint/no-unused-vars -- Used for debugging when ChatEngine is active
+  } = useChatMessages(conversationId);
+
+  // Local state for messages - allows realtime updates and optimistic updates to work
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -483,43 +494,60 @@ export function ConversationView({
     }
   }, [messages.length, isLoading, markMultipleAsRead]);
 
-  // Load initial messages and read receipts
+  // Sync messages from hook to local state
+  // The hook handles initial loading via ChatEngine or server actions
   useEffect(() => {
-    const loadMessages = async () => {
-      setIsLoading(true);
-      const result = await getMessages(conversationId, 50);
-      if (result.success && result.messages) {
-        setMessages(result.messages);
-        setHasMore(result.hasMore || false);
+    // Transform hook messages to legacy Message format if needed
+    const transformedMessages = hookMessages.map((msg) => {
+      // The hook returns messages in the new format, we need to adapt for display
+      // Most fields are compatible, but we may need to add sender info
+      return msg as unknown as Message;
+    });
 
-        // Fetch read receipts for the sender's own messages
-        const ownMessageIds = result.messages
-          .filter((m) => m.senderId === currentUserId)
-          .map((m) => m.id);
+    if (transformedMessages.length > 0 || !hookIsLoading) {
+      setMessages(transformedMessages);
+      setHasMore(hookHasMore);
+      setIsLoading(hookIsLoading);
+    }
+  }, [hookMessages, hookIsLoading, hookHasMore]);
 
-        if (ownMessageIds.length > 0) {
-          const receiptsResult = await getReadReceipts(ownMessageIds);
-          if (receiptsResult.success && receiptsResult.receipts) {
-            setReadReceipts(receiptsResult.receipts);
-          }
+  // Track if we've already loaded read receipts for this conversation
+  const loadedReceiptsRef = useRef<string | null>(null);
+
+  // Load read receipts and mark as read after messages are loaded (once per conversation)
+  useEffect(() => {
+    if (isLoading || messages.length === 0) return;
+    // Only load once per conversation to avoid repeated calls
+    if (loadedReceiptsRef.current === conversationId) return;
+    loadedReceiptsRef.current = conversationId;
+
+    const loadReadReceipts = async () => {
+      // Fetch read receipts for the sender's own messages
+      const ownMessageIds = messages
+        .filter((m) => m.senderId === currentUserId)
+        .map((m) => m.id);
+
+      if (ownMessageIds.length > 0) {
+        const receiptsResult = await getReadReceipts(ownMessageIds);
+        if (receiptsResult.success && receiptsResult.receipts) {
+          setReadReceipts(receiptsResult.receipts);
         }
-
-        // Mark messages as read via batched system (broadcasts immediately, batches DB writes)
-        const otherMessageIds = result.messages
-          .filter((m) => m.senderId !== currentUserId)
-          .map((m) => m.id);
-
-        if (otherMessageIds.length > 0) {
-          markMultipleAsRead(otherMessageIds);
-        }
-
-        await markConversationAsRead(conversationId);
       }
-      setIsLoading(false);
+
+      // Mark messages as read via batched system (broadcasts immediately, batches DB writes)
+      const otherMessageIds = messages
+        .filter((m) => m.senderId !== currentUserId)
+        .map((m) => m.id);
+
+      if (otherMessageIds.length > 0) {
+        markMultipleAsRead(otherMessageIds);
+      }
+
+      await markConversationAsRead(conversationId);
     };
 
-    loadMessages();
-  }, [conversationId, currentUserId, markMultipleAsRead]);
+    loadReadReceipts();
+  }, [conversationId, currentUserId, messages, isLoading, markMultipleAsRead]);
 
   // Scroll to target message when deep linking from notifications
   useEffect(() => {
@@ -559,23 +587,15 @@ export function ConversationView({
   }, [targetMessageId, isLoading, messages, onTargetMessageScrolled]);
 
   // Load more (older) messages - for pagination
+  // Uses the hook's loadMore which handles ChatEngine/server action fallback
   const handleLoadMore = useCallback(async () => {
     if (isLoadingMore || !hasMore || messages.length === 0) return;
 
-    const oldestMessage = messages[0];
-    if (!oldestMessage) return;
-
     setIsLoadingMore(true);
-    // Get the oldest message's created_at as cursor
-    const result = await getMessages(conversationId, 50, oldestMessage.createdAt);
-
-    if (result.success && result.messages) {
-      // Prepend older messages
-      setMessages((prev) => [...result.messages!, ...prev]);
-      setHasMore(result.hasMore || false);
-    }
+    // The hook's loadMore handles pagination internally
+    await hookLoadMore();
     setIsLoadingMore(false);
-  }, [conversationId, messages, hasMore, isLoadingMore]);
+  }, [messages, hasMore, isLoadingMore, hookLoadMore]);
 
   // Handle input with optimized typing indicator (no DB write!)
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -674,25 +694,28 @@ export function ConversationView({
     setIsSending(false);
 
     // Server sync happens in background - completely non-blocking
+    // Use the hook's sendMessage which handles ChatEngine/server action fallback
     try {
-      const result = await sendMessage(conversationId, content, replyToId);
+      const result = await hookSendMessage(content, { replyToMessageId: replyToId });
 
       if (result.success && result.message) {
         // Replace temp message with real message from server
+        const realMessage = result.message as unknown as Message;
         setMessages((prev) => {
           // Check if realtime already added the real message
-          const hasRealMessage = prev.some((m) => m.id === result.message!.id);
+          const hasRealMessage = prev.some((m) => m.id === realMessage.id);
           if (hasRealMessage) {
             // Remove the temp message, real one is already there
             return prev.filter((m) => m.id !== tempId);
           }
           // Replace temp with real
-          return prev.map((m) => (m.id === tempId ? result.message! : m));
+          return prev.map((m) => (m.id === tempId ? realMessage : m));
         });
 
-        // If AI was mentioned, trigger AI response
-        if (result.aiMentioned) {
-          await generateAIChatResponse(conversationId, result.message.id);
+        // Check if AI was mentioned - need to use legacy action for AI response
+        const mentionedAI = content.includes("@claudeinsider") || content.includes("@ClaudeInsider");
+        if (mentionedAI) {
+          await generateAIChatResponse(conversationId, realMessage.id);
           // Refresh to get AI message
           const refreshResult = await getMessages(conversationId, 10);
           if (refreshResult.success && refreshResult.messages) {
@@ -702,7 +725,7 @@ export function ConversationView({
             });
           }
           // Fetch read receipt for the user's message
-          const receiptsResult = await getReadReceipts([result.message.id]);
+          const receiptsResult = await getReadReceipts([realMessage.id]);
           if (receiptsResult.success && receiptsResult.receipts) {
             setReadReceipts((prev) => ({ ...prev, ...receiptsResult.receipts }));
           }

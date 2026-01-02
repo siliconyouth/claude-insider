@@ -9,10 +9,10 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.16.2-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.17.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
-[![Features](https://img.shields.io/badge/61-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
-[![Resources](https://img.shields.io/badge/3,012+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
+[![Features](https://img.shields.io/badge/67-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Resources](https://img.shields.io/badge/3,035+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
 <br />
@@ -57,7 +57,7 @@ Comprehensive guides across **7 categories**: Getting Started, Configuration, AP
 </td>
 <td width="50%">
 
-### 3,012+ Curated Resources
+### 3,035+ Curated Resources
 Tools, MCP servers, SDKs, and community resources across **10 categories** with GitHub integration, **21 enhanced fields**, insights dashboard, and advanced filtering by audience/use case.
 
 ### Enterprise Security
@@ -122,7 +122,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 
 ---
 
-## 61 Platform Features
+## 67 Platform Features
 
 <details>
 <summary><b>Content & Documentation</b></summary>
@@ -171,10 +171,15 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 |---------|-------------|
 | Direct Messages | Real-time messaging with typing indicators and online presence |
 | Group Chat | Up to 50 members, roles (owner/admin/member), invitations |
-| E2EE Messaging | Matrix Olm/Megolm protocol, device verification, cloud backup |
+| E2EE Messaging | Matrix Olm/Megolm protocol, device verification, auto-setup for DMs |
+| **Delivery Tracking** | **Sent → delivered → read status with visual checkmarks** |
+| **Voice Messages** | **Web Audio API recording, waveform visualization, 0.5x-2x playback** |
+| **Link Unfurling** | **Rich previews with OG metadata, YouTube/Vimeo detection, 7-day cache** |
+| **Message Pinning** | **Admin pinning with slide-out panel, jump-to-message** |
 | User Directory | Search, filters, 7 list types, deep linking to messages |
 | ProfileHoverCard | Touch-friendly previews, two-touch navigation on mobile |
 | Optimistic UI | Instant message display (~2ms), CSS scroll anchoring, background sync |
+| **LRU Caching** | **TTL-based caches for messages, conversations, presence, profiles** |
 
 </details>
 
@@ -243,7 +248,7 @@ pnpm dev
 
 ![Resources Section](docs/screenshots/resources.png)
 
-*3,012+ curated resources with interactive charts, category filters, and GitHub stats*
+*3,035+ curated resources with interactive charts, category filters, and GitHub stats*
 
 </div>
 
@@ -280,7 +285,7 @@ pnpm dev
 
 - Supabase
 - PostgreSQL 15+
-- 137 Tables
+- 147 Tables
 - Payload CMS 3.69
 
 </td>
@@ -329,7 +334,7 @@ See [CLAUDE.md](CLAUDE.md) for complete documentation.
 
 | Document | Description |
 |:---------|:------------|
-| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 60 feature requirements |
+| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 67 feature requirements |
 | [**CHANGELOG.md**](CHANGELOG.md) | Version history with detailed release notes |
 | [**ROADMAP.md**](ROADMAP.md) | Future feature planning and priorities |
 

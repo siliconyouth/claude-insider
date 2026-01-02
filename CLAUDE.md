@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.16.2**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.0**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.16.2**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 61 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 67 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -43,19 +43,20 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.16.2**.
 11. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 12. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
 13. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
-14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 141 tables, RLS, migrations
+14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 147 tables, RLS, migrations
 15. [Dashboard Data Fetching (MANDATORY)](#dashboard-data-fetching-mandatory) - TanStack Query, query keys, parallelization
 16. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
 17. [Link Validation System (MANDATORY)](#link-validation-system-mandatory) - Broken link detection, trusted domains, npm validation
 18. [Resource Relationship Analysis (MANDATORY)](#resource-relationship-analysis-mandatory) - Claude Code subscription, relationship types
 19. [MCP Playground (MANDATORY)](#mcp-playground-mandatory) - Interactive config builder, templates, storage
-20. [Internationalization](#internationalization-i18n) - 18 languages
-21. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-22. [Content Structure](#content-structure) - Documentation, resources, legal pages
-23. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-24. [Success Metrics](#success-metrics)
-25. [Updating Guidelines](#updating-guidelines)
-26. [License](#license)
+20. [Chat System (MANDATORY)](#chat-system-mandatory) - LRU cache, delivery tracking, voice, E2EE
+21. [Internationalization](#internationalization-i18n) - 18 languages
+22. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+23. [Content Structure](#content-structure) - Documentation, resources, legal pages
+24. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+25. [Success Metrics](#success-metrics)
+26. [Updating Guidelines](#updating-guidelines)
+27. [License](#license)
 
 ---
 
@@ -146,17 +147,17 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**61 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**67 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
 | **Content** | MDX docs (34 pages), 3,000+ resources (dynamic), AI Voice Assistant, Advanced Search |
 | **Auth & Security** | OAuth, Passkeys/2FA, E2EE (Matrix), Bot Challenge, Security Dashboard |
 | **User Features** | Achievements (50+), Sound Effects (10 themes), Profiles, Notifications |
-| **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging, **Optimistic UI** |
+| **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging, **Optimistic UI**, **Delivery Status**, **Voice Messages**, **Link Unfurling**, **Message Pinning**, **E2EE Default** |
 | **Admin** | Diagnostics, Content Management, Audit Export, Resource Updates, Settings System (5 globals, SEO dashboard) |
 | **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant, **Resource Submissions**, **Relationship Analysis** |
-| **Infrastructure** | 141 DB tables, PWA, Doc Versioning, Prompt Library, **MCP Playground** |
+| **Infrastructure** | 147 DB tables, PWA, Doc Versioning, Prompt Library, **MCP Playground**, **LRU Cache System** |
 
 ### Non-Functional Requirements
 
@@ -189,8 +190,9 @@ claude-insider/
 │   │   ├── api/e2ee/             # E2EE API (12 endpoints)
 │   │   ├── actions/              # Server actions (passkeys, 2FA, group-chat)
 │   │   └── (main)/dashboard/     # Admin dashboard pages
-│   ├── components/               # 80+ React components
+│   ├── components/               # 90+ React components
 │   │   ├── unified-chat/         # Unified Chat Window
+│   │   ├── chat/                 # Chat system components (messages, voice, pins)
 │   │   ├── auth/                 # Authentication components
 │   │   ├── settings/             # Account settings
 │   │   ├── interactions/         # Favorites, ratings, comments
@@ -212,13 +214,14 @@ claude-insider/
 │   │   ├── supabase/             # Database clients
 │   │   ├── dashboard/            # Dashboard hooks & utilities
 │   │   ├── e2ee/                 # E2EE library
+│   │   ├── chat/                 # Chat system (~6,700 lines)
 │   │   ├── realtime/             # Realtime subscriptions & typing
 │   │   └── resources/            # Resources library
 │   ├── content/                  # 34 MDX documentation pages
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 113 SQL migration files
+│   └── supabase/migrations/      # 119 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -1044,7 +1047,7 @@ The "Ci" text height is exactly **58.6% of the container** (300/512 in source SV
 
 ## Data Layer Architecture (MANDATORY)
 
-**137 tables** across 21 categories, **111 migrations** in `supabase/migrations/`.
+**147 tables** across 23 categories, **119 migrations** in `supabase/migrations/`.
 
 **Full schema reference:** [docs/DATABASE.md](docs/DATABASE.md)
 
@@ -1617,6 +1620,158 @@ function MCPPlayground() {
 
 ---
 
+## Chat System (MANDATORY)
+
+**Location**: `lib/chat/` (~6,700 lines) | **Components**: `components/chat/` (~6,000 lines)
+
+The chat system follows Matrix SDK patterns for offline-first, optimistic messaging with full E2EE support.
+
+### Architecture Overview (v1.17.0)
+
+```
+lib/chat/
+├── index.ts              # Public API exports
+├── types.ts              # Core types and interfaces
+├── store.ts              # IndexedDB-backed chat store
+├── engine.ts             # Chat engine singleton
+├── sync.ts               # Sync engine with gap detection
+├── provider.tsx          # React context and hooks
+├── cache.ts              # LRU cache with TTL (~500 lines)
+├── delivery.ts           # Delivery status tracking (~400 lines)
+├── voice.ts              # Voice recording/playback (~600 lines)
+├── unfurl.ts             # Link preview extraction (~300 lines)
+├── e2ee-auto.ts          # Automatic E2EE for DMs (~400 lines)
+├── realtime-optimized.ts # Batched updates, request dedup (~700 lines)
+└── hooks.ts              # High-level React hooks
+```
+
+### LRU Cache System (MANDATORY)
+
+All chat data MUST use the LRU cache system for performance optimization.
+
+| Cache | TTL | Max Items | Purpose |
+|-------|-----|-----------|---------|
+| `MessageCache` | 5 min | 1,000 | Recent messages per conversation |
+| `ConversationCache` | 2 min | 100 | Conversation metadata and participants |
+| `PresenceCache` | 30s | 500 | User online/offline status |
+| `UserProfileCache` | 10 min | 200 | User profiles for hover cards |
+
+```typescript
+import { getMessageCache, getConversationCache } from '@/lib/chat';
+
+// Get or fetch with automatic caching
+const messages = await getMessageCache().getOrSet(
+  `conv:${conversationId}`,
+  () => fetchMessages(conversationId)
+);
+```
+
+### Delivery Status Tracking
+
+Messages flow through: `sending` → `sent` → `delivered` → `read`
+
+| Status | Description | Visual |
+|--------|-------------|--------|
+| `sending` | Optimistic, not yet confirmed | ○ (empty) |
+| `sent` | Server confirmed receipt | ✓ (single check) |
+| `delivered` | Delivered to recipient device | ✓✓ (double check) |
+| `read` | Recipient viewed message | ✓✓ (blue checks) |
+
+### Voice Messages
+
+| Feature | Implementation |
+|---------|----------------|
+| **Recording** | `VoiceRecorder` class with Web Audio API + MediaRecorder |
+| **Waveform** | Real-time visualization during recording |
+| **Playback** | `VoicePlayer` component with speed controls (0.5x-2x) |
+| **Formats** | WebM (Opus) primary, MP4 (AAC) fallback |
+| **Storage** | Audio URLs in messages, metadata in `dm_voice_metadata` |
+
+### Link Unfurling
+
+| Step | Description |
+|------|-------------|
+| 1. Extract URLs | Parse message content for URLs |
+| 2. Server fetch | `/api/chat/unfurl` bypasses CORS |
+| 3. OG metadata | Parse Open Graph title, description, image |
+| 4. Cache | 7-day cache in `link_previews` table |
+| 5. Display | `LinkPreviewCard` with video detection |
+
+### Message Pinning
+
+| Permission | Action |
+|------------|--------|
+| Admin/Owner | Pin/unpin any message |
+| Member | View pinned messages only |
+
+Components: `PinnedMessagesPanel` (slide-out), `PinnedMessagesBadge` (header), `PinIndicator` (inline)
+
+### E2EE Auto-Setup (MANDATORY)
+
+New DMs MUST automatically enable E2EE when both users have device keys.
+
+```typescript
+import { setupDMEncryption, isE2EEAvailable } from '@/lib/chat';
+
+// Check if E2EE is available for conversation
+const available = await isE2EEAvailable(conversationId);
+
+// Automatic setup for new DMs
+if (isNewDM && available) {
+  await setupDMEncryption(conversationId);
+}
+```
+
+### Realtime Optimizations
+
+| Optimization | Description | Benefit |
+|--------------|-------------|---------|
+| **Batched Updates** | 50ms window, max 20 items | Fewer re-renders |
+| **Subscription Pooling** | Reference counting for channels | 50% fewer subscriptions |
+| **Request Deduplication** | Coalesce concurrent fetches | Reduced API calls |
+| **Debounced Typing** | 500ms debounce | Smooth typing indicators |
+
+### Database Tables (v1.17.0)
+
+| Table | Purpose |
+|-------|---------|
+| `dm_delivery_receipts` | Per-recipient delivery tracking |
+| `dm_voice_metadata` | Voice message duration, waveform |
+| `dm_pinned_messages` | Pinned message references |
+| `dm_device_keys` | E2EE device public keys |
+| `dm_e2ee_settings` | Per-conversation encryption settings |
+| `link_previews` | Cached Open Graph metadata |
+
+### Optimized SQL Functions
+
+| Function | Purpose | Benefit |
+|----------|---------|---------|
+| `get_messages_with_context` | Fetch messages + sender + reactions | Single query |
+| `get_users_presence` | Batch user presence lookup | N+1 elimination |
+| `get_conversations_with_context` | Conversations + participants + last message | Single query |
+
+### Key Hooks
+
+| Hook | Purpose |
+|------|---------|
+| `useChat()` | Main chat context with send/receive |
+| `useDeliveryStatus(messageId)` | Real-time delivery tracking |
+| `usePresence(userId)` | User online/offline status |
+| `useBatchedUpdates()` | Batched realtime subscriptions |
+| `useOptimizedChannel()` | Pooled channel management |
+
+### Checklist for Chat Features
+
+- [ ] Uses LRU cache for data fetching
+- [ ] Delivery status tracked through full lifecycle
+- [ ] Voice messages use `VoiceRecorder`/`VoicePlayer`
+- [ ] Link previews fetched via server-side unfurl API
+- [ ] E2EE auto-enabled for new DMs when available
+- [ ] Realtime updates batched (not individual subscriptions)
+- [ ] Uses optimized SQL functions for queries
+
+---
+
 ## Internationalization (i18n)
 
 **18 Supported Languages**:
@@ -1644,7 +1799,7 @@ function MCPPlayground() {
 | **AI Assistant** | Claude streaming, TTS, speech recognition, localStorage history |
 | **Messages** | Supabase real-time, typing indicators, E2EE, unread badges |
 
-### Matrix SDK Features (v1.13.5)
+### Matrix SDK Features (v1.17.0)
 
 | Feature | Component/Hook | Description |
 |---------|----------------|-------------|
@@ -1657,8 +1812,14 @@ function MCPPlayground() {
 | **Retry Queue** | `use-retry-queue.ts` | Retry/remove failed sends |
 | **Presence System** | `presence-context.tsx`, `compute-status.ts` | Heartbeat-based (30s), `last_active_at` status computation |
 | **ConversationView** | `conversation-view.tsx` | Single source of truth (consolidated from 2 components) |
+| **Delivery Status** | `DeliveryTracker`, `DeliveryStatusIndicator` | Sent → delivered → read with visual checkmarks |
+| **Voice Messages** | `VoiceRecorder`, `VoicePlayer` | Web Audio API recording, waveform visualization |
+| **Link Unfurling** | `LinkUnfurler`, `LinkPreviewCard` | Server-side OG metadata, 7-day cache |
+| **Message Pinning** | `PinnedMessagesPanel`, `pinMessage()` | Admin/owner pinning with slide-out panel |
+| **LRU Cache** | `MessageCache`, `PresenceCache` | TTL-based caching with auto-cleanup |
+| **E2EE Auto-Setup** | `setupDMEncryption()` | Automatic encryption for new DMs |
 
-**v1.13.5 Consolidation**: `messages-tab.tsx` now imports `ConversationView` from `conversation-view.tsx`, eliminating 826 lines of duplicate code. All conversation features unified: draft persistence, batched receipts, ProfileHoverCard, E2EE setup modal.
+**v1.17.0 Chat Rewrite**: Complete chat system rewrite with ~13,100 lines of new code. Follows Matrix SDK patterns for offline-first messaging, LRU caching, batched realtime updates, and automatic E2EE. See [Chat System (MANDATORY)](#chat-system-mandatory) for full documentation.
 
 ### Realtime System (`lib/realtime/realtime-context.tsx`)
 

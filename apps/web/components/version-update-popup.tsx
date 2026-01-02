@@ -26,6 +26,20 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.17.0",
+    date: "2026-01-02",
+    type: "major",
+    highlights: [
+      "💬 Complete Chat System Rewrite: 8-phase Matrix SDK-style architecture with ~13,100 lines of new code",
+      "📊 LRU Cache System: TTL-based caching for messages, conversations, presence, and profiles",
+      "✅ Delivery Status: Sent → delivered → read tracking with visual checkmarks",
+      "🎤 Voice Messages: Web Audio API recording, waveform visualization, 0.5x-2x playback",
+      "🔗 Link Unfurling: Rich previews with Open Graph metadata, video detection",
+      "📌 Message Pinning: Admin pinning with slide-out panel and jump-to-message",
+      "🔐 E2EE Default: Automatic encryption setup for new DMs",
+    ],
+  },
+  {
     version: "1.13.7",
     date: "2025-12-29",
     type: "patch",

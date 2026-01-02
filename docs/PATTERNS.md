@@ -22,6 +22,11 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 14. [Link Validation Patterns](#link-validation-patterns-mandatory---v1141) - Trusted domains, npm Registry API, broken link detection (MANDATORY)
 15. [Claude Code Subscription Pattern](#claude-code-subscription-pattern-mandatory---v1150) - Resource relationship analysis using Claude Code subscription (MANDATORY)
 16. [MCP Playground Patterns](#mcp-playground-patterns-v1160) - Interactive config builder, storage system (v1.16.0)
+17. [Chat Performance Patterns](#chat-performance-patterns-v1170) - LRU cache, batching, subscription pooling (v1.17.0)
+18. [Voice Messages Pattern](#voice-messages-pattern-v1170) - Recording, playback, waveform (v1.17.0)
+19. [Link Unfurling Pattern](#link-unfurling-pattern-v1170) - Open Graph metadata fetching (v1.17.0)
+20. [Message Pinning Pattern](#message-pinning-pattern-v1170) - Pin/unpin, panel UI (v1.17.0)
+21. [E2EE Auto-Setup Pattern](#e2ee-auto-setup-pattern-v1170) - Automatic encryption for DMs (v1.17.0)
 
 ---
 
@@ -2535,4 +2540,396 @@ draft → pending_review → published
 - [ ] RLS policies enforce ownership
 - [ ] Version history tracks changes
 - [ ] Moderation queue accessible to admins only
+
+---
+
+## Chat Performance Patterns (v1.17.0)
+
+Comprehensive chat system optimizations following Matrix SDK patterns.
+
+### LRU Cache Pattern
+
+```typescript
+import { LRUCache, getMessageCache } from "@/lib/chat/cache";
+
+// Generic LRU with TTL
+const cache = new LRUCache<string, Data>(
+  100,  // max entries
+  5 * 60 * 1000  // 5 minute TTL
+);
+
+// Get with automatic fetch
+const data = await cache.get(key, async () => {
+  const response = await fetch(`/api/data/${key}`);
+  return response.json();
+});
+
+// Specialized message cache with conversation index
+const messageCache = getMessageCache();
+messageCache.set(message.id, message);  // Auto-indexes by conversationId
+const messages = messageCache.getConversationMessages(conversationId);
+messageCache.invalidateConversation(conversationId);  // Bulk invalidate
+```
+
+### Batched Updates Pattern
+
+```typescript
+import { useBatchedUpdates } from "@/lib/chat/realtime-optimized";
+
+function ChatMessages({ conversationId }) {
+  const { items: messages, addItem } = useBatchedUpdates<Message>({
+    batchWindow: 50,     // Collect updates for 50ms
+    maxBatchSize: 20,    // Force flush at 20 items
+    getKey: (msg) => msg.id,  // Deduplicate by ID
+  });
+
+  // Rapid updates batched into single state update
+  useEffect(() => {
+    const channel = supabase.channel(`chat:${conversationId}`)
+      .on("broadcast", { event: "new_message" }, (payload) => {
+        addItem(payload.message);  // Batched, not immediate
+      })
+      .subscribe();
+    return () => channel.unsubscribe();
+  }, [conversationId, addItem]);
+}
+```
+
+### Subscription Pooling Pattern
+
+```typescript
+import { subscriptionManager } from "@/lib/chat/realtime-optimized";
+
+// Multiple components subscribing to same channel
+// Only creates ONE actual subscription
+const { id, unsubscribe } = subscriptionManager.subscribe(
+  `chat:${conversationId}`,  // Channel key
+  () => {
+    const channel = supabase.channel(`chat:${conversationId}`)
+      .on("broadcast", { event: "*" }, handleEvent)
+      .subscribe();
+    return () => channel.unsubscribe();
+  }
+);
+
+// When component unmounts, decrements refCount
+// Only actually unsubscribes when refCount hits 0
+useEffect(() => unsubscribe, []);
+```
+
+### Request Deduplication Pattern
+
+```typescript
+import { messageDeduplicator } from "@/lib/chat/realtime-optimized";
+
+// Multiple components requesting same data
+// Only ONE request sent, all get same response
+const data = await messageDeduplicator.execute(
+  `messages:${conversationId}:page:${page}`,  // Unique key
+  async () => {
+    const response = await fetch(`/api/messages?id=${conversationId}&page=${page}`);
+    return response.json();
+  }
+);
+```
+
+### Debounced Typing Pattern
+
+```typescript
+import { useDebouncedTyping } from "@/lib/chat/realtime-optimized";
+
+function ChatInput({ conversationId }) {
+  const { startTyping, stopTyping } = useDebouncedTyping(
+    async (isTyping) => {
+      await fetch("/api/chat/typing", {
+        method: "POST",
+        body: JSON.stringify({ conversationId, isTyping }),
+      });
+    },
+    { debounceMs: 300, autoStopMs: 5000 }
+  );
+
+  return (
+    <textarea
+      onChange={(e) => {
+        if (e.target.value) startTyping();
+        else stopTyping();
+      }}
+    />
+  );
+}
+```
+
+### Optimized SQL Functions
+
+```sql
+-- Single-query message fetch with all context
+SELECT * FROM get_messages_with_context(
+  conversation_uuid,  -- Conversation ID
+  50,                 -- Limit
+  '2024-01-01'::timestamptz  -- Before timestamp
+);
+
+-- Returns: message + sender + reactions[] + replyTo + deliveryStatus + isPinned
+
+-- Batch presence lookup
+SELECT * FROM get_users_presence(ARRAY['user1', 'user2', 'user3']);
+
+-- Conversation list with metadata
+SELECT * FROM get_conversations_with_context('current_user_id');
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `lib/chat/cache.ts` | LRU cache with TTL, specialized caches |
+| `lib/chat/realtime-optimized.ts` | Batching, pooling, deduplication |
+| `lib/chat/hooks.ts` | High-level React hooks |
+| `supabase/migrations/118_optimized_chat_functions.sql` | SQL functions |
+
+---
+
+## Voice Messages Pattern (v1.17.0)
+
+Recording and playback with Web Audio API.
+
+### Recording Pattern
+
+```typescript
+import { VoiceRecorder } from "@/lib/chat/voice";
+
+function VoiceRecordButton({ onRecorded }) {
+  const recorderRef = useRef<VoiceRecorder | null>(null);
+  const [waveform, setWaveform] = useState<number[]>([]);
+
+  const startRecording = async () => {
+    const recorder = new VoiceRecorder({
+      sampleRate: 44100,
+      channels: 1,
+      onWaveformUpdate: setWaveform,  // Real-time visualization
+    });
+    await recorder.start();
+    recorderRef.current = recorder;
+  };
+
+  const stopRecording = async () => {
+    const result = await recorderRef.current?.stop();
+    if (result) {
+      onRecorded({
+        blob: result.blob,
+        duration: result.durationMs,
+        waveform: result.waveform,
+        mimeType: result.mimeType,
+      });
+    }
+  };
+}
+```
+
+### Playback Pattern
+
+```typescript
+import { VoicePlayer } from "@/lib/chat/voice";
+
+function VoiceMessage({ audioUrl, duration, waveform }) {
+  const playerRef = useRef<VoicePlayer | null>(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    playerRef.current = new VoicePlayer({
+      onTimeUpdate: (current, total) => setProgress(current / total),
+      onEnded: () => setProgress(0),
+    });
+    return () => playerRef.current?.destroy();
+  }, []);
+
+  return (
+    <div className="voice-message">
+      <WaveformDisplay waveform={waveform} progress={progress} />
+      <button onClick={() => playerRef.current?.togglePlay(audioUrl)}>
+        {playerRef.current?.isPlaying ? "⏸" : "▶"}
+      </button>
+      <span>{formatDuration(duration)}</span>
+    </div>
+  );
+}
+```
+
+---
+
+## Link Unfurling Pattern (v1.17.0)
+
+Server-side Open Graph metadata fetching.
+
+### Client-Side Usage
+
+```typescript
+import { getLinkUnfurler, isPreviewableUrl } from "@/lib/chat/unfurl";
+
+function MessageWithLinks({ content }) {
+  const [previews, setPreviews] = useState<Map<string, UnfurlData>>(new Map());
+  const unfurler = getLinkUnfurler();
+
+  useEffect(() => {
+    const urls = extractUrls(content).filter(isPreviewableUrl);
+
+    Promise.all(
+      urls.map(async (url) => {
+        const data = await unfurler.unfurl(url);
+        if (data) setPreviews(prev => new Map(prev).set(url, data));
+      })
+    );
+  }, [content]);
+
+  return (
+    <div>
+      <p>{content}</p>
+      {Array.from(previews.values()).map(preview => (
+        <LinkPreviewCard key={preview.url} data={preview} />
+      ))}
+    </div>
+  );
+}
+```
+
+### Server-Side API
+
+```typescript
+// POST /api/chat/unfurl
+// Body: { url: string }
+// Returns: UnfurlData
+
+// Handles:
+// - URL validation and normalization
+// - Database cache lookup (7-day TTL)
+// - HTML fetch with timeout (8s)
+// - Open Graph tag parsing
+// - Cache storage
+```
+
+---
+
+## Message Pinning Pattern (v1.17.0)
+
+Pin important messages for quick access.
+
+### Server Actions
+
+```typescript
+// app/actions/pinning.ts
+import { pinMessage, unpinMessage, getPinnedMessages } from "@/app/actions/pinning";
+
+// Pin with optional note
+const result = await pinMessage(conversationId, messageId, "Important decision");
+if (result.success) {
+  // Pin created
+}
+
+// Get all pins for conversation
+const { pins } = await getPinnedMessages(conversationId);
+// pins: PinnedMessage[] with message content, sender, pinned by, note
+```
+
+### UI Components
+
+```tsx
+import {
+  PinnedMessagesBadge,
+  PinnedMessagesPanel,
+  PinIndicator,
+} from "@/components/chat/pinned-messages";
+
+function ChatHeader({ conversationId, pinnedCount }) {
+  const [showPanel, setShowPanel] = useState(false);
+
+  return (
+    <>
+      <PinnedMessagesBadge count={pinnedCount} onClick={() => setShowPanel(true)} />
+      <PinnedMessagesPanel
+        conversationId={conversationId}
+        isOpen={showPanel}
+        onClose={() => setShowPanel(false)}
+        onJumpToMessage={(id) => scrollToMessage(id)}
+        canUnpin={isAdmin}
+      />
+    </>
+  );
+}
+
+// On individual messages
+<div className="message">
+  {message.isPinned && <PinIndicator size="sm" />}
+  {message.content}
+</div>
+```
+
+---
+
+## E2EE Auto-Setup Pattern (v1.17.0)
+
+Automatic encryption for new DMs.
+
+### Setup Flow
+
+```typescript
+import { shouldEncrypt, setupDMEncryption } from "@/lib/chat/e2ee-auto";
+
+// When creating a new DM conversation
+async function createDMConversation(otherUserId: string) {
+  const conversation = await createConversation({ type: "dm", participants: [otherUserId] });
+
+  // Check if both parties have device keys
+  if (await shouldEncrypt(conversation.id)) {
+    const result = await setupDMEncryption(conversation.id);
+    if (result.success) {
+      // E2EE enabled automatically
+    }
+  }
+
+  return conversation;
+}
+
+// When sending first message in existing DM
+async function sendMessage(conversationId: string, content: string) {
+  const status = await getConversationE2EEStatus(conversationId);
+
+  if (status.canUpgrade && !status.isEncrypted) {
+    await upgradeDMToE2EE(conversationId);
+  }
+
+  // Send message (encrypted if E2EE enabled)
+}
+```
+
+### Device Key Sync
+
+```typescript
+// On login/device registration
+async function syncDeviceKeys() {
+  const localKeys = await getLocalDeviceKeys();
+
+  // Upload to server
+  await fetch("/api/chat/device-keys", {
+    method: "POST",
+    body: JSON.stringify({
+      deviceId: localKeys.deviceId,
+      identityKey: localKeys.identityKey,
+      signingKey: localKeys.signingKey,
+      oneTimeKeys: localKeys.oneTimeKeys,
+    }),
+  });
+}
+```
+
+### Implementation Checklist
+
+- [ ] LRU caches use appropriate TTLs (messages: 2min, conversations: 5min, presence: 30s)
+- [ ] Batched updates have 50ms window, 20 item max
+- [ ] Subscription pooling uses reference counting
+- [ ] Request deduplication has 5s max age
+- [ ] Voice recording supports WebM (Opus) and MP4 (AAC)
+- [ ] Link unfurling caches for 7 days
+- [ ] Pinning restricted to admin/owner roles
+- [ ] E2EE auto-setup checks device key availability
 
