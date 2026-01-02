@@ -28,9 +28,9 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 137 |
-| **Categories** | 21 |
-| **Migrations** | 111 |
+| **Total Tables** | 141 |
+| **Categories** | 22 |
+| **Migrations** | 113 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -84,7 +84,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 ---
 
-## Table Catalog (137 Tables)
+## Table Catalog (141 Tables)
 
 ### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 
@@ -234,6 +234,57 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 ### Prompts (5 tables)
 
 `prompt_categories`, `prompts`, `user_prompt_saves`, `prompt_ratings`, `prompt_usage`
+
+### MCP Playground (4 tables) - v1.16.0
+
+`mcp_configs`, `mcp_config_versions`, `mcp_config_stars`, `mcp_config_reviews`
+
+**Key columns in `mcp_configs`:**
+- `id` (UUID, PK) - Config identifier
+- `user_id` (TEXT, FK → user) - Owner
+- `name`, `description` (TEXT) - Metadata
+- `config_json` (JSONB) - MCP server configuration
+- `tags`, `use_cases` (TEXT[]) - Classification
+- `difficulty` ('beginner', 'intermediate', 'advanced') - Skill level
+- `status` ('draft', 'pending_review', 'published', 'rejected') - Publishing workflow
+- `is_public` (BOOLEAN) - Visibility
+- `stars_count`, `forks_count`, `views_count` (INTEGER) - Denormalized metrics
+- `forked_from_id` (UUID, FK → mcp_configs) - Fork attribution
+- `server_count` (INTEGER, GENERATED) - Extracted from config_json
+
+**Key columns in `mcp_config_versions`:**
+- `config_id` (UUID, FK → mcp_configs) - Parent config
+- `version_number` (INTEGER) - Incremental version
+- `config_json` (JSONB) - Snapshot of config
+- `change_summary` (TEXT) - Description of changes
+- UNIQUE constraint: `(config_id, version_number)`
+
+**Key columns in `mcp_config_stars`:**
+- `user_id` (TEXT, FK → user) - User who starred
+- `config_id` (UUID, FK → mcp_configs) - Starred config
+- PRIMARY KEY: `(user_id, config_id)`
+
+**Key columns in `mcp_config_reviews`:**
+- `config_id` (UUID, FK → mcp_configs) - Config under review
+- `reviewer_id` (TEXT, FK → user) - Moderator
+- `status` ('pending', 'approved', 'rejected') - Review status
+- `feedback` (TEXT) - Review comments
+
+**Views:**
+- `mcp_configs_gallery` - Public configs with author info
+- `mcp_configs_moderation_queue` - Pending configs for review
+
+**Triggers:**
+- `trg_mcp_config_stars_count` - Updates `stars_count` on star/unstar
+- `trg_mcp_config_forks_count` - Updates `forks_count` on fork/delete
+- `trg_mcp_config_updated_at` - Updates `updated_at` on modification
+
+**RLS Policies:**
+- `mcp_configs_select_own` - Users see their own configs
+- `mcp_configs_select_public` - Anyone sees published public configs
+- `mcp_configs_insert` - Users insert their own configs
+- `mcp_configs_update_own` - Users update their own configs
+- `mcp_configs_delete_own` - Users delete their own configs
 
 ---
 

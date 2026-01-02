@@ -9,6 +9,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.16.0] - 2026-01-02
+### 🎮 MCP Playground - Interactive Configuration Builder
+- **MCP Playground (`/mcp-playground`)**: Full-featured interactive sandbox for MCP server configurations
+  - **Monaco Editor Integration**: JSON editing with syntax highlighting, IntelliSense, and real-time error markers
+  - **Live Validation**: Schema validation for mcpServers structure, command/args verification, env variable checks
+  - **2,136+ Templates**: Browse and insert from 2,136 MCP server configurations with search and filtering
+  - **Server Capability Preview**: Parse and display resources, tools, and prompts from MCP documentation
+  - **Export Options**: Copy for Claude Desktop, Claude Code, raw JSON, download as file
+  - **URL Sharing**: Base64-encoded config sharing via URL parameters
+  - **AI Assistance**: Integrated "Ask AI" button for configuration help via Unified Chat
+- **MCP Config Storage System**: Full CRUD operations with versioning and social features
+  - **Draft/Save/Publish Workflow**: Save private drafts, submit for review, publish to gallery
+  - **Version History**: Track changes with version numbers and change summaries
+  - **Public Gallery (`/mcp-playground/gallery`)**: Browse published configurations with search
+  - **Starring**: Favorite configurations with denormalized count tracking
+  - **Forking**: Clone any public configuration with fork attribution
+  - **Moderation Queue**: Admin review workflow for published configs
+- **Components Created** (10):
+  - `mcp-config-editor.tsx`: Monaco wrapper with JSON schema hints
+  - `mcp-validation-panel.tsx`: Error/success display with fix suggestions
+  - `mcp-template-selector.tsx`: Searchable modal with 2,136 templates
+  - `mcp-toolbar.tsx`: Format, copy, share, reset actions
+  - `mcp-capabilities-preview.tsx`: Resources/tools/prompts display
+  - `mcp-server-list.tsx`: Visual list of servers in current config
+  - `mcp-export-modal.tsx`: Multi-format export dialog
+  - `mcp-save-modal.tsx`: Save/publish workflow with metadata
+  - `mcp-my-configs.tsx`: User's saved configurations panel
+  - `mcp-version-history.tsx`: Version diff and rollback UI
+- **Database Tables** (Migration 113):
+  - `mcp_configs`: Main config storage with status (draft/pending/published/rejected)
+  - `mcp_config_versions`: Version history with change tracking
+  - `mcp_config_stars`: User favorites with count triggers
+  - `mcp_config_reviews`: Moderation queue with feedback
+  - Views: `mcp_configs_gallery`, `mcp_configs_moderation_queue`
+- **Database Stats**:
+  - 141 tables (up from 137)
+  - 113 migrations
+  - 61 features implemented
+
+---
+
 ## [1.15.0] - 2026-01-02
 ### 🔗 Resource Relationship Analysis System
 - **Resource Relationship Analysis (MANDATORY)**: Claude Code subscription-based relationship detection

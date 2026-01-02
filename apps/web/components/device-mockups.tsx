@@ -283,7 +283,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.15.0
+ * Realistic terminal content showing Claude Insider v1.16.0
  */
 function MacBookTerminalContent() {
   return (
@@ -311,11 +311,11 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.15.0</span>
+          <span className="text-[#8b949e]"> v1.16.0</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Features: 60 • Resources: 3,012+</span>
+          <span className="text-[#8b949e]"> Features: 61 • Resources: 3,012+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>
@@ -323,8 +323,8 @@ function MacBookTerminalContent() {
         </div>
 
         <div className="mt-2 space-y-[3px]">
-          <div className="text-[#7ee787]">✓ 1,863 Resource Relationships</div>
-          <div className="text-[#7ee787]">✓ MCP Discovery (2,136+)</div>
+          <div className="text-[#7ee787]">✓ MCP Playground (config builder)</div>
+          <div className="text-[#7ee787]">✓ 2,136+ MCP Server Templates</div>
           <div className="text-[#7ee787]">✓ E2EE Matrix Protocol</div>
           <div className="text-[#7ee787]">✓ 50+ Achievements</div>
           <div className="text-[#7ee787]">✓ RAG v7.0 (6,983 chunks)</div>
@@ -342,7 +342,7 @@ function MacBookTerminalContent() {
 /**
  * Real screenshot of Claude Insider mobile homepage
  * Shows the actual mobile header and bottom navigation bar
- * Updated for v1.15.0 with proper aspect ratio handling and LCP optimization
+ * Updated for v1.16.0 with proper aspect ratio handling and LCP optimization
  *
  * MANDATORY MOCKUP RULES:
  * 1. Screenshot MUST be taken at 446×932 viewport (matches mockup 224:468 aspect ratio)

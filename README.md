@@ -9,9 +9,9 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.15.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.16.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
-[![Features](https://img.shields.io/badge/60-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Features](https://img.shields.io/badge/61-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/3,012+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
@@ -122,7 +122,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 
 ---
 
-## 60 Platform Features
+## 61 Platform Features
 
 <details>
 <summary><b>Content & Documentation</b></summary>
@@ -131,6 +131,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 |---------|-------------|
 | MDX Documentation | 34 pages with syntax highlighting (33 languages), copy-to-clipboard, ToC with scroll spy |
 | Resources Section | 3,012 curated resources, 10 categories, GitHub integration, AI-enhanced descriptions, community submissions |
+| **MCP Playground** | **Interactive MCP config builder with Monaco editor, 2,136 templates, validation, save/share, public gallery** |
 | Prompt Library | 10 system prompts, 8 categories, variable syntax, save/rate/use tracking |
 | Doc Versioning | Version history, line-by-line diff, unified/split view, rollback capability |
 | Cross-Linking | 63 doc-resource + 1,800 resource-resource relationships with confidence scores |

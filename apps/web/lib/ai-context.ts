@@ -14,7 +14,7 @@ export interface AIContext {
   };
   // Content context (what the user is looking at)
   content?: {
-    type: "code" | "heading" | "paragraph" | "resource" | "setting" | "feature";
+    type: "code" | "heading" | "paragraph" | "resource" | "setting" | "feature" | "mcp-config";
     title?: string;
     text?: string;
     code?: string;
@@ -47,6 +47,30 @@ export function generateContextualQuestion(context: AIContext, userQuestion?: st
   // Add content context
   if (context.content) {
     switch (context.content.type) {
+      case "mcp-config":
+        parts.push(`[MCP Configuration:]`);
+        if (context.content.code) {
+          parts.push("```json");
+          parts.push(context.content.code.slice(0, 1000)); // Allow more for MCP configs
+          if (context.content.code.length > 1000) parts.push("... (truncated)");
+          parts.push("```");
+        }
+        // Add MCP-specific metadata
+        if (context.content.metadata) {
+          if (context.content.metadata.serverCount) {
+            parts.push(`[Configured servers: ${context.content.metadata.serverCount}]`);
+          }
+          if (context.content.metadata.serverNames) {
+            parts.push(`[Server names: ${context.content.metadata.serverNames}]`);
+          }
+          if (context.content.metadata.errors) {
+            parts.push(`[Validation errors: ${context.content.metadata.errors}]`);
+          }
+          if (context.content.metadata.warnings) {
+            parts.push(`[Warnings: ${context.content.metadata.warnings}]`);
+          }
+        }
+        break;
       case "code":
         parts.push(`[Code Block (${context.content.language || "unknown"}):]`);
         if (context.content.code) {
@@ -103,7 +127,12 @@ export function generateContextualQuestion(context: AIContext, userQuestion?: st
 export function generateSuggestedQuestions(context: AIContext): string[] {
   const suggestions: string[] = [];
 
-  if (context.content?.type === "code") {
+  if (context.content?.type === "mcp-config") {
+    suggestions.push("What capabilities do these servers provide?");
+    suggestions.push("How do I add environment variables?");
+    suggestions.push("Is my configuration correct?");
+    suggestions.push("What other servers would complement this setup?");
+  } else if (context.content?.type === "code") {
     suggestions.push("Explain this code step by step");
     suggestions.push("How can I modify this for my use case?");
     suggestions.push("What are common issues with this approach?");

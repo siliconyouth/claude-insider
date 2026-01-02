@@ -1,410 +1,581 @@
-# Claude Insider Roadmap 2025
+# Claude Insider Roadmap 2026
 
-> **Generated:** December 21, 2025
-> **Current Version:** 1.9.0
-> **Analysis Basis:** Full comparison of original roadmap (36 planned features) vs CHANGELOG.md (90+ releases)
+> **Generated:** January 2, 2026
+> **Current Version:** 1.16.0
+> **Total Features:** 61 implemented (FR-1 through FR-61)
+> **Analysis Basis:** Full codebase scan (943 TypeScript files), CHANGELOG.md (139 versions), FEATURES.md
 
 ---
 
 ## Executive Summary
 
-Claude Insider has achieved remarkable progress, already surpassing the originally planned v1.0.0 milestone. The project is now at **v1.9.0** with **45 implemented features**, far exceeding initial projections. This document provides:
+Claude Insider has achieved exceptional maturity with **61 production features**, **3,012+ curated resources**, **141 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
 
-1. **Gap Analysis**: What's implemented vs originally planned
-2. **New Opportunities**: Emerging priorities based on actual usage
-3. **Revised Roadmap**: Realistic timeline for remaining features
-4. **Strategic Recommendations**: High-impact features to prioritize
-
----
-
-## Part 1: Gap Analysis
-
-### Features Status Overview
-
-| Status | Count | Percentage |
-|--------|-------|------------|
-| **Fully Implemented** | 26 | 72% |
-| **In Progress** | 0 | 0% |
-| **Not Started** | 8 | 22% |
-| **Backlog** | 2 | 6% |
-
-### Fully Implemented Features (26)
-
-These features from the original roadmap are complete:
-
-| ID | Feature | Version | Notes |
-|----|---------|---------|-------|
-| F-001 | Donation System | v0.82.0 | PayPal, bank transfer, 4 donor tiers |
-| F-002 | Doc Versioning | v1.10.0 | Version history, line-by-line diff, rollback, admin controls |
-| F-005 | Prompt Library | v1.10.0 | 10 system prompts, 8 categories, save/rate/use tracking, variables |
-| F-006 | AI Writing Assistant | v1.9.0 | In-place doc editing, 8 AI commands, diff preview, streaming |
-| F-009 | Usage Analytics | v1.9.0 | Personal dashboard with level, streak, achievements, category charts |
-| F-010 | Community Statistics | v1.9.0 | Public /stats page with leaderboards, activity, achievements |
-| F-017 | GitHub Integration | v1.9.0 | CLAUDE.md sync to repos, repo selector, OAuth scopes |
-| F-023 | Audit Export | v1.9.0 | Bulk admin exports, JSON/CSV/XLSX, job queue, download API |
-| F-024 | Bot Challenge | v1.9.0 | Slider puzzle, math captcha, rate limit warning, trust-based difficulty |
-| F-025 | Mobile PWA Enhancement | v1.8.2 | Bottom nav, gestures, pull-to-refresh, background sync |
-| F-028 | RSS Feeds | v1.8.2 | 9 feeds: main, resources, 7 doc categories with autodiscovery |
-| F-035 | Advanced Search | v1.9.0 | Smart autocomplete, boolean operators, saved filters, search analytics |
-| - | Unified Chat Window | v0.82.0 | AI + Messages in tabbed interface |
-| - | End-to-End Encryption | v0.82.0 | Matrix Olm/Megolm, device verification |
-| - | PWA Foundation | v0.47.0-0.48.0 | Service worker, offline support, push |
-| - | Sound Effects System | v0.97.0-0.99.0 | 10 themes, 26 sounds, Web Audio API |
-| - | Achievement System | v0.39.0 | 50+ achievements, 4 tiers, CMS managed |
-| - | Security Dashboard | v0.78.0 | Fingerprinting, trust scores, honeypots |
-| - | Group Chat | v0.63.0 | Roles, invitations, ownership transfer |
-| - | Direct Messaging | v0.67.0 | Real-time, typing indicators, read receipts |
-| - | Voice Assistant | v0.11.0-0.35.0 | RAG, TTS, speech recognition |
-| - | Resource Discovery | v1.8.0 | 6 adapters, 1,952 resources discovered |
-| - | AI Pipeline | v1.5.0-1.8.0 | Auto-update, relationships, CMS integration |
-
-### Not Started Features (8)
-
-These are entirely new work:
-
-| Priority | ID | Feature | Complexity | Strategic Value |
-|----------|-----|---------|------------|-----------------|
-| **CRITICAL** | F-013 | MCP Playground | XL | Core Claude differentiator |
-| **HIGH** | F-014 | VS Code Extension | L | Developer reach |
-| **HIGH** | F-015 | API Sandbox | L | Developer onboarding |
-| **HIGH** | F-033 | Agent Marketplace | XL | Community ecosystem |
-| **MEDIUM** | F-003 | Personalized Dashboard | M | User engagement |
-| **MEDIUM** | F-016 | CLI Tool | M | Power users |
-| **MEDIUM** | F-021 | SSO/SAML | L | Enterprise customers |
-| **LOW** | F-004 | Progressive Tutorial | M | Onboarding |
-| **LOW** | F-007 | Collaborative Annotations | M | Social features |
-| **LOW** | F-012 | A/B Testing | M | Optimization |
-| **LOW** | F-018/19 | Slack/Discord Bots | M each | Community reach |
+1. **Developer Experience**: MCP Playground, VS Code Extension, API Sandbox
+2. **Enterprise Readiness**: SSO/SAML, Teams, Analytics
+3. **Infrastructure Maturity**: Testing, Monitoring, Feature Flags
+4. **Community Growth**: Agent Marketplace, Mobile App, Integrations
 
 ---
 
-## Part 2: Implemented But Not in Original Roadmap
+## Part 1: Current State Analysis
 
-The project has delivered significant features that weren't in the original plan:
+### Implementation Summary
 
-### Infrastructure Wins
+| Metric | Value | Notes |
+|--------|-------|-------|
+| **Version** | 1.16.0 | Released January 2, 2026 |
+| **Features** | 61 | Documented in FEATURES.md |
+| **Database Tables** | 141 | PostgreSQL with RLS |
+| **Resources** | 3,012+ | 10 categories, 21 enhanced fields |
+| **RAG Chunks** | 6,983 | 14% audio-enriched |
+| **Doc Pages** | 34 | 7 categories |
+| **Lighthouse Desktop** | 100% | FCP 0.4s, LCP 0.7s, TBT 0ms |
+| **Lighthouse Mobile** | 98% | With provider deferral |
+| **Languages** | 18 | Full i18n coverage |
+| **TypeScript Files** | 943 | ~288k lines |
 
-| Feature | Version | Impact |
-|---------|---------|--------|
-| **Better Auth Integration** | v0.65.0 | OAuth, sessions, 2FA, passkeys |
-| **Supabase Real-time** | v0.92.0 | Connection pooling, broadcast typing |
-| **Virtual Scrolling** | v0.92.0 | TanStack Virtual for 10,000+ messages |
-| **RAG System v6.3** | v1.7.0 | 1,979 chunks, relationships context |
-| **Database (120 tables)** | v1.8.0 | Full TypeScript coverage |
+### Features Completed Since v1.10.0
 
-### User Experience Wins
+| Version | Date | Features |
+|---------|------|----------|
+| **v1.16.0** | Jan 2 | MCP Playground (Monaco editor, validation, templates, save/share, gallery) |
+| **v1.15.0** | Jan 2 | Resource Relationship Analysis (confidence scoring, graph viz) |
+| **v1.14.4** | Jan 1 | Link Validation Pipeline, Dead Link Dashboard |
+| **v1.14.2** | Dec 31 | Community Resource Submissions |
+| **v1.13.2** | Dec 30 | Settings System (5 Payload Globals), Design Tokens |
+| **v1.12.6** | Dec 28 | Vercel Remote Cache (70% faster builds) |
+| **v1.12.5** | Dec 27 | Synchronized Provider Deferral |
+| **v1.12.4** | Dec 26 | 100% Lighthouse Desktop (performance optimization) |
+| **v1.12.3** | Dec 24 | Parallel Audio Prefetch |
+| **v1.12.0** | Dec 23 | Dashboard Modernization (TanStack Query, Command Palette) |
+| **v1.11.0** | Dec 22 | Cross-Link Insights UI |
 
-| Feature | Version | Impact |
-|---------|---------|--------|
-| **Profile Redesign** | v1.1.0-1.3.0 | Hero covers, badges, location/timezone |
-| **User Directory** | v0.93.0 | 7 list types, search, filters |
-| **ProfileHoverCard** | v0.84.0 | Touch-friendly, two-touch navigation |
-| **Read Receipts** | v0.98.0 | Seen indicators, group status |
-| **@Mention System** | v0.93.0 | Deep linking to specific messages |
+### Platform Capabilities
 
-### Admin & Content Wins
-
-| Feature | Version | Impact |
-|---------|---------|--------|
-| **Gamification CMS** | v1.2.0 | Payload CMS for achievements, badges |
-| **Resource Discovery** | v1.8.0 | 6 adapters, automated curation |
-| **Doc-Resource Linking** | v1.7.0 | 147 AI-analyzed relationships |
-| **Data Quality Scripts** | v1.8.1 | Automated title/description fixes |
-| **Diagnostics Dashboard** | v0.76.0 | TEST ALL, AI analysis, fix prompts |
+| Category | Capabilities |
+|----------|--------------|
+| **Content** | MDX docs (34 pages), 3,012 resources, Prompt Library (10 prompts), Doc Versioning, Cross-Linking |
+| **AI** | Claude Sonnet 4 streaming, ElevenLabs TTS (42 voices), RAG search, AI Writing Assistant, Relationship Analysis |
+| **Auth** | OAuth (GitHub, Google), Passkeys/WebAuthn, Multi-device 2FA, E2EE (Matrix), Bot Challenge |
+| **Messaging** | Direct Messages, Group Chat (50 members), Unified Chat, Typing Indicators, Read Receipts |
+| **Admin** | 32-page Dashboard, TanStack Query, Command Palette (Cmd+K), Audit Export, Settings System |
+| **Performance** | Provider Deferral, Virtual Scrolling, Lazy Sections, Remote Build Cache |
 
 ---
 
-## Part 3: Strategic Recommendations
+## Part 2: Features Not Yet Implemented
 
-### Priority Matrix
+### From Original Roadmap
+
+| Priority | Feature | Complexity | Strategic Value |
+|----------|---------|------------|-----------------|
+| ~~CRITICAL~~ | ~~MCP Playground~~ | ~~XL~~ | ✅ **Completed v1.16.0** |
+| **HIGH** | VS Code Extension | L | Developer reach, IDE integration |
+| **HIGH** | API Sandbox | L | Developer onboarding, API testing |
+| **HIGH** | Agent Marketplace | XL | Community ecosystem, revenue |
+| **MEDIUM** | CLI Tool | M | Power users, CI/CD integration |
+| **MEDIUM** | SSO/SAML | L | Enterprise customers |
+| **LOW** | Slack Bot | M | Community reach |
+| **LOW** | Discord Bot | M | Community reach |
+
+### New Strategic Features (2026)
+
+| Priority | Feature | Description | Value |
+|----------|---------|-------------|-------|
+| **CRITICAL** | Integration Tests | Playwright + API tests, CI/CD | Code quality, confidence |
+| **HIGH** | Feature Flags | LaunchDarkly/Flagsmith integration | Safe rollouts |
+| **HIGH** | Mobile App | React Native, offline support | Mobile-first users |
+| **HIGH** | Monitoring | Sentry + custom observability | Production reliability |
+| **MEDIUM** | API v2 | Versioned public API | External developers |
+| **MEDIUM** | Teams & Organizations | Multi-user workspaces | Enterprise |
+| **MEDIUM** | Webhooks | Event notifications | Integrations |
+| **LOW** | Browser Extension | Chrome/Firefox | Quick access |
+
+---
+
+## Part 3: 2026 Roadmap
+
+### Q1 2026 (January - March)
+
+**Theme: MCP Ecosystem & Developer Experience** ⚡ AGGRESSIVE
+
+| Version | Target | Features | Status |
+|---------|--------|----------|--------|
+| **1.16.0** | Jan W1 | **MCP Playground** (Monaco editor, validation, 2,136 templates, save/share, gallery, moderation) | ✅ Done |
+| **2.0.0** | Jan W2 | Integration Test Framework (Playwright, 50+ tests) | 🔥 Next |
+| **2.1.0** | Feb W1 | Error Monitoring (Sentry integration) | Planned |
+| **2.2.0** | Feb W2 | VS Code Extension MVP (search, favorites) | Planned |
+| **2.3.0** | Feb W3 | API Sandbox MVP (interactive documentation) | Planned |
+| **2.4.0** | Feb W4 | Feature Flags (environment-based toggles) | Planned |
+| **2.5.0** | Mar W1 | CLI Tool MVP (search, favorites, sync) | Planned |
+| **2.6.0** | Mar W2 | Browser Extension (Chrome, Firefox) | Planned |
+| **2.7.0** | Mar W4 | Agent Marketplace MVP (browse, submit) | Planned |
+
+**Q1 Deliverables:**
+- **MCP Playground** - Full featured by end of January (TOP PRIORITY)
+- 50+ integration tests with 80% coverage target
+- Sentry error tracking across all API routes
+- VS Code extension with 1,000+ installs target
+- CLI tool published on npm
+- Agent Marketplace MVP launched
+
+### Q2 2026 (April - June)
+
+**Theme: Enterprise & Scale** ⚡ AGGRESSIVE
+
+| Version | Target | Features | Status |
+|---------|--------|----------|--------|
+| **2.8.0** | Apr W1 | Agent Marketplace Phase 2 (ratings, analytics, monetization) | Planned |
+| **2.9.0** | Apr W2 | SSO/SAML (enterprise authentication) | Planned |
+| **3.0.0** | Apr W3 | Teams & Organizations (workspaces, roles) | Planned |
+| **3.1.0** | Apr W4 | Webhooks (event notifications) | Planned |
+| **3.2.0** | May W1 | API v2 (versioned public API, rate limits) | Planned |
+| **3.3.0** | May W2 | Slack Bot (search, notifications, commands) | Planned |
+| **3.4.0** | May W3 | Discord Bot (community integration) | Planned |
+| **3.5.0** | May W4 | Advanced Analytics Dashboard | Planned |
+| **3.6.0** | Jun W1 | A/B Testing Framework | Planned |
+| **3.7.0** | Jun W2 | Notion/Confluence Integration | Planned |
+| **3.8.0** | Jun W4 | Zapier/Make Connectors | Planned |
+
+**Q2 Deliverables:**
+- Agent Marketplace with 200+ community agents and monetization
+- Enterprise SSO for 25+ pilot organizations
+- Teams & Organizations for collaborative workspaces
+- Slack/Discord bots for 100+ communities
+- API v2 with proper versioning and documentation
+- 5+ third-party integrations (Notion, Zapier, Make)
+
+### Q3 2026 (July - September)
+
+**Theme: Mobile First & Global Scale** ⚡ AGGRESSIVE
+
+| Version | Target | Features | Status |
+|---------|--------|----------|--------|
+| **3.9.0** | Jul W1 | React Native App Phase 1 (iOS/Android core features) | Planned |
+| **4.0.0** | Jul W2 | React Native App Phase 2 (offline mode, sync) | Planned |
+| **4.1.0** | Jul W3 | Mobile Push Notifications (native) | Planned |
+| **4.2.0** | Jul W4 | App Store/Play Store Launch | Planned |
+| **4.3.0** | Aug W1 | Multi-region Deployment (US, EU, Asia) | Planned |
+| **4.4.0** | Aug W2 | CDN Optimization (edge caching) | Planned |
+| **4.5.0** | Aug W3 | Real-time Collaboration v2 (cursors, presence) | Planned |
+| **4.6.0** | Aug W4 | AI Agents v2 (custom training) | Planned |
+| **4.7.0** | Sep W1 | Voice Commands (hands-free navigation) | Planned |
+| **4.8.0** | Sep W2 | Video Tutorials Integration | Planned |
+| **4.9.0** | Sep W4 | Community Challenges & Events | Planned |
+
+**Q3 Deliverables:**
+- **Mobile apps on App Store and Play Store** (50,000+ downloads target)
+- Multi-region deployment for global performance
+- AI Agents v2 with custom training capabilities
+- Real-time collaboration features
+- Voice navigation commands
+
+### Q4 2026 (October - December)
+
+**Theme: AI Innovation & Market Leadership** ⚡ AGGRESSIVE
+
+| Version | Target | Features | Status |
+|---------|--------|----------|--------|
+| **5.0.0** | Oct W1 | MCP Marketplace (community MCP servers) | Planned |
+| **5.1.0** | Oct W2 | AI-Powered Code Review Integration | Planned |
+| **5.2.0** | Oct W3 | Claude Desktop App (Electron) | Planned |
+| **5.3.0** | Oct W4 | Prompt Engineering Certification | Planned |
+| **5.4.0** | Nov W1 | Enterprise Admin Console | Planned |
+| **5.5.0** | Nov W2 | Audit Logging & Compliance (SOC2) | Planned |
+| **5.6.0** | Nov W3 | White-label Solution | Planned |
+| **5.7.0** | Nov W4 | Partner API Program | Planned |
+| **5.8.0** | Dec W1 | AI Model Comparison Tool | Planned |
+| **5.9.0** | Dec W2 | Community Governance System | Planned |
+| **6.0.0** | Dec W4 | **Claude Insider v6** (LTS) | Planned |
+
+**Q4 Deliverables:**
+- **MCP Marketplace** for community-built MCP servers
+- Claude Desktop App for native experience
+- Enterprise Admin Console with SOC2 compliance
+- Prompt Engineering Certification program
+- Partner API Program for external developers
+- **v6.0 LTS release** - production-ready for enterprise
+
+---
+
+## Part 4: Priority Matrix
 
 ```
-                    HIGH IMPACT
-                        │
-     ┌──────────────────┼──────────────────┐
-     │                  │                  │
-     │   MCP Playground │  VS Code Ext     │
-     │   (F-013)        │  (F-014)         │
-     │                  │                  │
-     │   Agent Market   │  API Sandbox     │
-     │   (F-033)        │  (F-015)         │
-LOW  │──────────────────┼──────────────────│ HIGH
-EFFORT│                  │                  │ EFFORT
-     │   ✅ Doc Version │  SSO/SAML        │
-     │   ✅ Prompts     │  (F-021)         │
-     │                  │                  │
-     │   CLI Tool       │  Dashboard       │
-     │   (F-016)        │  (F-003)         │
-     │                  │                  │
-     └──────────────────┼──────────────────┘
-                        │
-                   LOW IMPACT
+                        HIGH IMPACT
+                            │
+         ┌──────────────────┼──────────────────┐
+         │                  │                  │
+         │  MCP Playground  │  Mobile App      │
+         │  (Q1)            │  (Q3)            │
+         │                  │                  │
+         │  Agent Market    │  VS Code Ext     │
+         │  (Q2)            │  (Q1)            │
+         │                  │                  │
+  LOW    │──────────────────┼──────────────────│ HIGH
+  EFFORT │                  │                  │ EFFORT
+         │                  │                  │
+         │  Integration     │  SSO/SAML        │
+         │  Tests (Q1)      │  (Q2)            │
+         │                  │                  │
+         │  CLI Tool        │  Teams           │
+         │  (Q2)            │  (Q2)            │
+         │                  │                  │
+         └──────────────────┼──────────────────┘
+                            │
+                       LOW IMPACT
 ```
 
-### Top 5 Recommendations
+### Top 5 Priorities for 2026
 
-#### 1. MCP Playground (F-013) - **DO FIRST**
+#### 1. MCP Playground (Q1) - **CRITICAL**
 
-**Why Critical:**
+**Why:**
 - Core differentiator for Claude Insider
 - No other site offers this for MCP development
 - Aligns with Anthropic's MCP ecosystem growth
-- Drives repeat traffic from developers
+- Estimated 10,000+ monthly users
 
-**Quick Win Path:**
-- Start with read-only MCP config viewer/validator
-- Add Monaco Editor for JSON editing
-- Integrate with existing resource discovery for templates
-- Defer live Claude execution to phase 2
+**Implementation Path:**
+1. Phase 1: Read-only MCP config viewer/validator
+2. Phase 2: Monaco Editor for JSON editing
+3. Phase 3: Live Claude execution sandbox
+4. Phase 4: Template library from existing resources
 
-**Estimated Effort:** 3-4 weeks for MVP
+**Estimated Effort:** 6 weeks total
 
-#### 2. Agent Marketplace (F-033) - **HIGH PRIORITY**
+#### 2. Integration Test Framework (Q1) - **CRITICAL**
 
-**Why Important:**
+**Why:**
+- 943 TypeScript files with no integration tests
+- Prevents regressions during rapid development
+- Required for enterprise confidence
+- Enables safe refactoring
+
+**Implementation Path:**
+1. Playwright setup with CI/CD integration
+2. Critical path tests (auth, resources, chat)
+3. API endpoint coverage
+4. Visual regression testing
+
+**Estimated Effort:** 3 weeks
+
+#### 3. Agent Marketplace (Q2) - **HIGH**
+
+**Why:**
 - Claude Code agents are exploding in popularity
-- 1,952+ resources already curated (foundation exists)
+- 3,012+ resources already curated (foundation exists)
 - Community contribution model drives growth
 - Revenue potential for premium agents
 
-**Quick Win Path:**
-- Extend existing resources infrastructure
-- Add "agent" category with system prompt field
-- Enable user submissions with moderation queue
-- Use existing rating/review system
+**Implementation Path:**
+1. Extend resources infrastructure
+2. Add "agent" category with system prompt field
+3. Enable user submissions with moderation queue
+4. Integrate with existing rating system
 
-**Estimated Effort:** 2-3 weeks leveraging existing code
+**Estimated Effort:** 4 weeks
 
-#### 3. VS Code Extension (F-014) - **HIGH PRIORITY**
+#### 4. VS Code Extension (Q1) - **HIGH**
 
-**Why Important:**
+**Why:**
 - Developers live in VS Code
 - 5,000+ installs = significant reach
 - Low ongoing maintenance
-- Syncs favorites and search from existing APIs
+- Syncs with existing APIs
 
-**Quick Win Path:**
-- Use Plasmo framework for rapid development
-- OAuth login using existing Better Auth
-- Start with search + favorites only
-- Add AI chat in phase 2
+**Implementation Path:**
+1. Use official vscode-extension generator
+2. OAuth login using existing Better Auth
+3. Resource search + favorites
+4. Inline documentation viewer
 
-**Estimated Effort:** 2 weeks for MVP
+**Estimated Effort:** 2 weeks
 
-#### 4. Prompt Library (F-005) - ✅ **IMPLEMENTED**
+#### 5. Mobile App (Q3) - **HIGH**
 
-**Status:** Completed in v1.10.0
+**Why:**
+- Mobile traffic is 60%+ of web traffic
+- PWA has limitations (no push on iOS)
+- React Native for cross-platform
+- Offline-first architecture
 
-**Delivered:**
-- 10 system prompts across 8 categories (coding, writing, analysis, creative, productivity, learning, conversation, business)
-- User save/unsave with count tracking
-- 5-star rating system with averages
-- Usage tracking for popularity metrics
-- Variable syntax (`{{placeholder}}`) with auto-detection
-- Public/private/unlisted visibility
-- Full-text search with category filtering
-- Create new prompts with live preview
+**Implementation Path:**
+1. React Native + Expo setup
+2. Core features (resources, docs, chat)
+3. Offline support with sync
+4. App Store/Play Store submission
 
-#### 5. Complete Partial Features - **ONGOING**
-
-Focus on finishing the 4 remaining partially implemented features:
-
-| Feature | Remaining Work | Effort |
-|---------|---------------|--------|
-| AI Writing Assistant | In-place doc editing | 2 weeks |
-| Custom Themes | Theme builder + presets | 1 week |
-| GitHub Sync | CLAUDE.md push to repos | 2-3 days |
-| Voice Navigation | Wake word + navigation commands | 1 week |
-| ~~Mobile PWA~~ | ~~Bottom nav + gesture navigation~~ | ✅ **DONE** |
-| ~~Advanced Search~~ | ~~Filters, saved queries, analytics~~ | ✅ **DONE** |
-| ~~Audit Export~~ | ~~Bulk exports, JSON/CSV/XLSX~~ | ✅ **DONE** |
-| ~~Bot Challenge~~ | ~~User challenges, rate limit UI~~ | ✅ **DONE** |
+**Estimated Effort:** 8 weeks
 
 ---
 
-## Part 4: Revised Roadmap
+## Part 5: Technical Debt & Infrastructure
 
-### Q1 2025 (January - March)
+### Identified Gaps
 
-**Theme: Developer Experience**
+| Area | Current State | Target State | Priority |
+|------|---------------|--------------|----------|
+| **Testing** | Manual only | 80% coverage | CRITICAL |
+| **Monitoring** | Basic logging | Sentry + metrics | HIGH |
+| **Feature Flags** | None | Environment-based | HIGH |
+| **API Versioning** | None | v1/v2 support | MEDIUM |
+| **Rate Limiting** | Basic | Tiered + Redis | MEDIUM |
+| **Caching** | In-memory | Redis/Upstash | MEDIUM |
+| **Job Queue** | Inline | BullMQ/Inngest | LOW |
 
-| Version | Target | Features |
-|---------|--------|----------|
-| **1.8.2** | Dec W4 | ✅ Mobile PWA Enhancement (bottom nav, gestures, background sync) |
-| **1.9.0** | Dec W4 | ✅ Advanced Search, Audit Export, Bot Challenge, 1,952 resources |
-| **1.10.0** | Dec W4 | ✅ Doc Versioning, Prompt Library (10 prompts, 8 categories, save/rate/use) |
-| **1.11.0** | Jan W2 | MCP Playground Phase 1 (viewer/validator) |
-| **2.0.0** | Feb W1 | MCP Playground Phase 2 (live testing) |
-| **2.1.0** | Feb W2 | VS Code Extension MVP |
-| **2.2.0** | Feb W3 | Agent Marketplace MVP |
-| **2.3.0** | Mar W1 | CLI Tool MVP |
-| **2.4.0** | Mar W3 | API Sandbox MVP |
+### Database Improvements
 
-### Q2 2025 (April - June)
+| Table Count | Current | Notes |
+|-------------|---------|-------|
+| Core | 45 | Users, auth, profiles |
+| Resources | 18 | Including relationships |
+| Messaging | 12 | DMs, groups, E2EE |
+| Gamification | 15 | Achievements, streaks |
+| Security | 12 | Trust, honeypots |
+| Admin | 20 | Settings, audit |
+| Discovery | 15 | Pipeline, jobs |
 
-**Theme: Enterprise & Integrations**
+**Planned Improvements:**
+- [ ] Add database indexes for slow queries
+- [ ] Implement connection pooling optimization
+- [ ] Add read replicas for scaling
+- [ ] Migrate to dedicated Postgres (from Supabase) if needed
 
-| Version | Target | Features |
-|---------|--------|----------|
-| **2.5.0** | Apr W2 | SSO/SAML for enterprise |
-| **2.6.0** | Apr W4 | GitHub CLAUDE.md sync |
-| **2.7.0** | May W2 | Webhook Integration |
-| **2.8.0** | May W4 | Browser Extension |
-| **2.9.0** | Jun W2 | Slack Bot |
-| **3.0.0** | Jun W4 | Discord Bot + Enterprise Bundle |
+### Architecture Evolution
 
-### Q3 2025 (July - September)
+```
+Current (v1.15.0):
+┌─────────────────────────────────────────────────┐
+│ Next.js Monolith                                │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────┐  │
+│ │ App Routes   │ │ API Routes   │ │ Payload  │  │
+│ └──────────────┘ └──────────────┘ └──────────┘  │
+│         │               │               │       │
+│         └───────────────┴───────────────┘       │
+│                         │                       │
+└─────────────────────────┼───────────────────────┘
+                          │
+              ┌───────────┴───────────┐
+              │   Supabase (Postgres) │
+              └───────────────────────┘
 
-**Theme: Content & Community**
-
-| Version | Target | Features |
-|---------|--------|----------|
-| **3.1.0** | Jul W2 | Personalized Dashboard (F-003) |
-| **3.2.0** | Jul W4 | Custom Themes |
-| **3.3.0** | Aug W2 | Collaborative Annotations (F-007) |
-| **3.4.0** | Aug W4 | Progressive Tutorial (F-004) |
-| **3.5.0** | Sep W2 | Notion Integration |
-| **3.6.0** | Sep W4 | Zapier/Make Connectors |
-
-### Q4 2025 (October - December)
-
-**Theme: Innovation & Scale**
-
-| Version | Target | Features |
-|---------|--------|----------|
-| **4.0.0** | Oct W2 | A/B Testing Framework |
-| **4.1.0** | Oct W4 | SEO Dashboard |
-| **4.2.0** | Nov W2 | IP Allowlisting |
-| **4.3.0** | Nov W4 | API Key Rotation |
-| **4.4.0** | Dec W2 | Advanced Bot Challenge |
-| **4.5.0** | Dec W4 | Progressive Tutorial System |
-
----
-
-## Part 5: Features Deprioritized
-
-These features are moved to backlog or cancelled:
-
-| ID | Feature | Reason |
-|----|---------|--------|
-| F-008 | Custom Themes | **Backlog** - Light/dark sufficient; custom colors low demand |
-| F-034 | Voice Navigation | **Backlog** - Voice input works; hands-free nav lower priority |
-| F-020 | Real-time Collaboration | Existing chat + voice covers core use case |
-| F-035 | Enhanced Collaboration | Dependent on F-020; low ROI |
-| F-036 | AR/VR Documentation | **Removed** - Overkill for documentation site |
-| F-011 | SEO Dashboard | Lower priority; GSC integration sufficient |
+Target (v4.0.0):
+┌─────────────────────────────────────────────────┐
+│ Next.js (Web + API)                             │
+│ ┌──────────────┐ ┌──────────────┐ ┌──────────┐  │
+│ │ App Routes   │ │ API Routes   │ │ Payload  │  │
+│ └──────────────┘ └──────────────┘ └──────────┘  │
+└─────────────┬───────────────────────────────────┘
+              │
+    ┌─────────┴─────────┬─────────────────┐
+    │                   │                 │
+┌───┴───┐         ┌─────┴─────┐     ┌─────┴─────┐
+│ Redis │         │ Postgres  │     │ Sentry    │
+│ Cache │         │ (Primary) │     │ Monitor   │
+└───────┘         └───────────┘     └───────────┘
+    │                   │
+    │           ┌───────┴───────┐
+    │           │ Read Replica  │
+    │           └───────────────┘
+    │
+┌───┴───────────────────────────────────┐
+│ Edge Workers (Vercel Edge Functions)  │
+│ - MCP Sandbox                         │
+│ - API Rate Limiting                   │
+│ - Cache Layer                         │
+└───────────────────────────────────────┘
+```
 
 ---
 
 ## Part 6: Success Metrics
 
-### Current State (v1.10.0)
+### Current Metrics (v1.15.0)
 
-| Metric | Current | Note |
-|--------|---------|------|
-| Database Tables | 126 | +5 for prompts system |
-| Documentation Pages | 34 | With AI relationships |
-| System Prompts | 10 | 8 categories |
-| Curated Resources | 1,952 | Live in production |
-| Resource Relationships | 121 | AI-analyzed |
-| Doc-Resource Links | 147 | AI-analyzed |
-| RAG Chunks | 3,809 | v6.3 index (docs + resources + knowledge) |
-| Sound Themes | 10 | 26 sounds each |
-| Achievements | 50+ | 4 rarity tiers |
-| Languages | 18 | Full i18n |
-| Implemented Features | 47 | From FR-1 to FR-47 |
+| Metric | Value |
+|--------|-------|
+| Database Tables | 137 |
+| Documentation Pages | 34 |
+| Curated Resources | 3,012+ |
+| Resource Relationships | 1,800+ |
+| Doc-Resource Links | 63 |
+| RAG Chunks | 6,983 |
+| Sound Themes | 10 |
+| Achievements | 50+ |
+| Languages | 18 |
+| TypeScript Files | 943 |
+| Lines of Code | ~288,000 |
 
-### Target State (v4.5.0, End of 2025)
+### Target Metrics (v6.0.0 LTS, End of 2026) ⚡ AGGRESSIVE
 
 | Metric | Target | Growth |
 |--------|--------|--------|
-| Monthly Active Users | 50,000+ | New metric |
-| Registered Users | 25,000+ | New metric |
-| Published Resources | 3,000+ | +53% from current 1,952 |
-| Community Prompts | 5,000+ | New |
-| Agent Marketplace Items | 500+ | New |
-| VS Code Extension Users | 5,000+ | New |
-| CLI Tool Users | 2,000+ | New |
-| Enterprise SSO Orgs | 50+ | New |
-| Browser Extension Users | 10,000+ | New |
+| Monthly Active Users | **250,000+** | New |
+| Registered Users | **100,000+** | New |
+| Curated Resources | 7,500+ | +150% |
+| Community Prompts | 25,000+ | New |
+| Agent Marketplace Items | 2,500+ | New |
+| MCP Server Templates | 500+ | New |
+| VS Code Extension Users | 25,000+ | New |
+| CLI Tool Users | 10,000+ | New |
+| Mobile App Downloads | **100,000+** | New |
+| Desktop App Users | 15,000+ | New |
+| Enterprise SSO Orgs | 250+ | New |
+| Partner API Developers | 500+ | New |
+| Integration Tests | 1,000+ | New |
+| API Uptime | **99.99%** | New |
+| Lighthouse Score | 100% desktop/99% mobile | Maintained |
 
 ---
 
-## Part 7: Technical Debt & Improvements
-
-### Identified Improvements
-
-| Area | Issue | Proposed Fix |
-|------|-------|--------------|
-| **Table Naming** | `resource_relationships` vs `resource_resource_relationships` confusion | Standardize naming, add aliases |
-| **Scripts** | 34 scripts, some with duplicated logic | Continue dotenvx migration, shared utilities |
-| **RAG Index** | Rebuild required after content changes | Auto-rebuild on content save |
-| **Types** | Manual regeneration needed | CI/CD auto-generation |
-| **Diagnostics** | 33 modules, could use lazy loading | Dynamic imports for test suites |
-
-### Architecture Recommendations
-
-1. **Microservices Consideration:** As features grow (MCP Playground, Agent Marketplace), consider splitting into microservices
-2. **Edge Functions:** Move read-heavy endpoints to Vercel Edge for latency
-3. **Cache Strategy:** Add Redis/Upstash for API responses, rate limiting
-4. **CDN for Assets:** Agent icons, prompt thumbnails should be CDN-served
-
----
-
-## Appendix A: Feature Dependencies
+## Part 7: Feature Dependencies (Aggressive Timeline)
 
 ```
-                     MCP Playground (F-013)
-                           │
-                           ▼
-                    Agent Marketplace (F-033)
-                           │
-              ┌────────────┼────────────┐
-              ▼            ▼            ▼
-        VS Code Ext   CLI Tool    API Sandbox
-         (F-014)      (F-016)      (F-015)
-              │            │            │
-              └────────────┼────────────┘
-                           ▼
-               ✅ Prompt Library (F-005) ────┐
-                           │                 │
-              ┌────────────┼────────────┐    │
-              ▼            ▼            ▼    ▼
-     ✅ GitHub Sync  Slack Bot   Discord Bot  ✅ Doc Versioning
-        (F-017)      (F-018)      (F-019)        (F-002)
-              │
-              ▼
-        SSO/SAML (F-021) ──► Enterprise Bundle
+                       MCP Playground (1.16-1.18) 🔥 TOP PRIORITY
+                                    │
+         ┌──────────────────────────┼──────────────────────────┐
+         ▼                          ▼                          ▼
+ Integration Tests (2.0)     VS Code Ext (2.2)          CLI Tool (2.5)
+         │                          │                          │
+         ▼                          │                          │
+ Error Monitoring (2.1)             │                          │
+         │                          │                          │
+         └──────────────────────────┼──────────────────────────┘
+                                    ▼
+                          Agent Marketplace (2.7)
+                                    │
+              ┌─────────────────────┼─────────────────────┐
+              ▼                     ▼                     ▼
+       SSO/SAML (2.9)        Teams (3.0)           Webhooks (3.1)
+              │                     │                     │
+              └─────────────────────┼─────────────────────┘
+                                    ▼
+                    ┌───────────────┼───────────────┐
+                    ▼               ▼               ▼
+            Slack Bot (3.3)   Discord (3.4)   API v2 (3.2)
+                    │               │               │
+                    └───────────────┼───────────────┘
+                                    ▼
+                          Mobile App (3.9-4.2)
+                                    │
+              ┌─────────────────────┼─────────────────────┐
+              ▼                     ▼                     ▼
+     Multi-region (4.3)    AI Agents v2 (4.6)    Desktop App (5.2)
+              │                     │                     │
+              └─────────────────────┼─────────────────────┘
+                                    ▼
+                          MCP Marketplace (5.0)
+                                    │
+              ┌─────────────────────┼─────────────────────┐
+              ▼                     ▼                     ▼
+    Enterprise Console      SOC2 Compliance       Partner API
+         (5.4)                  (5.5)               (5.7)
+              │                     │                     │
+              └─────────────────────┼─────────────────────┘
+                                    ▼
+                           v6.0.0 LTS (Dec 2026)
 ```
 
 ---
 
-## Appendix B: Risk Assessment
+## Part 8: Risk Assessment
 
 | Risk | Probability | Impact | Mitigation |
 |------|-------------|--------|------------|
 | MCP specification changes | Medium | High | Abstract MCP layer, version support |
-| Anthropic API changes | Low | High | SDK abstraction, graceful degradation |
-| Supabase scaling limits | Medium | Medium | Prepare migration path to dedicated Postgres |
-| VS Code marketplace rejection | Low | Medium | Follow guidelines strictly, iterative review |
+| Anthropic API deprecations | Low | High | SDK abstraction, graceful degradation |
+| Supabase scaling limits | Medium | Medium | Prepare dedicated Postgres migration |
+| VS Code marketplace rejection | Low | Medium | Follow guidelines, iterative review |
+| Mobile app store rejection | Low | Medium | Early compliance review |
 | Enterprise demand exceeds capacity | Medium | Medium | Prioritize SSO/SAML in Q2 |
+| Team bandwidth constraints | Medium | High | Phase deliverables, MVP approach |
+| Security vulnerability | Low | Critical | Automated scanning, bug bounty |
+
+---
+
+## Part 9: Resource Requirements
+
+### Team Capacity
+
+| Role | Current | Needed | Gap |
+|------|---------|--------|-----|
+| Full-stack Developer | 1 | 2 | +1 |
+| Frontend Specialist | 0 | 1 | +1 |
+| Mobile Developer | 0 | 1 | +1 |
+| DevOps/SRE | 0 | 0.5 | +0.5 |
+| QA Engineer | 0 | 0.5 | +0.5 |
+
+### Infrastructure Costs (Estimated)
+
+| Service | Current | Q4 2026 |
+|---------|---------|---------|
+| Vercel | $20/mo | $100/mo |
+| Supabase | Free | $50/mo |
+| Sentry | $0 | $26/mo |
+| Redis/Upstash | $0 | $20/mo |
+| Anthropic API | $50/mo | $200/mo |
+| ElevenLabs | $22/mo | $99/mo |
+| **Total** | **$92/mo** | **$495/mo** |
+
+---
+
+## Appendix A: Feature Status Legend
+
+| Status | Description |
+|--------|-------------|
+| ✅ Complete | Shipped and in production |
+| 🔄 In Progress | Currently under development |
+| 📋 Planned | Scheduled for specific quarter |
+| 💡 Proposed | Under consideration |
+| ❌ Deprioritized | Moved to backlog |
+
+---
+
+## Appendix B: Version History
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 3.0 | Jan 2, 2026 | Claude Opus 4.5 | Complete rewrite for v1.15.0, 2026 roadmap |
+| 2.1 | Dec 21, 2025 | Claude Opus 4.5 | v1.10.0 release, 47 features |
+| 2.0 | Dec 20, 2025 | Claude Opus 4.5 | Gap analysis, priority matrix |
+| 1.0 | Dec 8, 2025 | Vladimir Dukelic | Initial roadmap |
 
 ---
 
 ## Conclusion
 
-Claude Insider has achieved exceptional velocity, delivering 90+ releases in 10 days and surpassing the originally planned v1.0.0 milestone. The focus now shifts to:
+Claude Insider has achieved exceptional maturity with 60 production features and 100% Lighthouse performance. The **AGGRESSIVE 2026 roadmap** focuses on:
 
-1. **Developer Tools** (Q1): MCP Playground, VS Code Extension, CLI
-2. **Community Growth** (Q1-Q2): Agent Marketplace, Prompt Library
-3. **Enterprise Readiness** (Q2): SSO/SAML, Webhooks, Integrations
-4. **Content Excellence** (Q3): Doc Versioning, Collaborative Features
+1. **Q1 - MCP Ecosystem**: MCP Playground (TOP PRIORITY), VS Code Extension, CLI Tool, Agent Marketplace MVP
+2. **Q2 - Enterprise**: SSO/SAML, Teams, Webhooks, Slack/Discord Bots, API v2, Integrations
+3. **Q3 - Mobile First**: React Native Apps, Multi-region, AI Agents v2, Voice Commands
+4. **Q4 - Market Leadership**: MCP Marketplace, Desktop App, Enterprise Console, SOC2, v6.0 LTS
 
-The revised roadmap provides a realistic, prioritized path forward that builds on the strong foundation while addressing market opportunities in the Claude AI ecosystem.
+### Key Milestones
+
+| Milestone | Target | Status |
+|-----------|--------|--------|
+| **MCP Playground Launch** | Jan W3 | 🔥 TOP PRIORITY |
+| **v2.0.0** | Jan W4 | Integration Tests |
+| **v3.0.0** | Apr W3 | Teams & Orgs |
+| **Mobile App Launch** | Jul W4 | App Store/Play Store |
+| **v5.0.0** | Oct W1 | MCP Marketplace |
+| **v6.0.0 LTS** | Dec W4 | Enterprise-ready |
+
+### Success Definition
+
+By December 2026, Claude Insider will be:
+- The **#1 resource hub** for Claude AI ecosystem
+- Serving **250,000+ monthly active users**
+- Powering **250+ enterprise organizations**
+- Running **2,500+ community agents**
+- Available on **web, mobile, desktop, CLI, and browser extension**
 
 ---
 
-*Document Version: 2.1*
-*Last Updated: December 21, 2025*
+*Document Version: 3.0*
+*Last Updated: January 2, 2026*
 *Author: Claude Opus 4.5 via Claude Code*
-*Revision Notes: v1.10.0 release - 47 features implemented, F-002 Doc Versioning and F-005 Prompt Library completed*
+*Timeline: AGGRESSIVE*
+*Next Review: January 31, 2026 (after MCP Playground launch)*

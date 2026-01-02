@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.15.0 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.16.0 notification to all opted-in users...\n");
 
-  const version = "1.15.0";
-  const title = "Claude Insider v1.15.0 - 1,863 Resource Relationships via AI Analysis";
+  const version = "1.16.0";
+  const title = "Claude Insider v1.16.0 - MCP Playground: Interactive Configuration Builder";
   const message =
-    "🔗 1,863 resource relationships analyzed (63 doc-resource + 1,800 resource-resource) • 🤖 Claude Code subscription workflow (no API credits used) • 📊 7 relationship types: similar, alternative, complement, uses, integrates, fork, inspired_by • 🎯 Bidirectional links with confidence scores (0-1) • 📈 Enhanced cross-referencing for better resource discovery • ⚡ Manual JSON workflow with helper scripts for quality control";
+    "🎮 MCP Playground: Build & share MCP server configs interactively • 📝 Monaco JSON editor with IntelliSense and live validation • 📚 2,136+ server templates with search/filtering • 🔗 URL-based config sharing (base64 encoded) • 💾 Save drafts, publish to gallery, fork configs • ⭐ Star & fork your favorite configurations • 🔐 RLS-enforced access control • 👥 Admin moderation queue for published configs";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

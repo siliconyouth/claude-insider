@@ -6,7 +6,7 @@ Complete list of all **60 implemented features** with detailed capabilities.
 
 ---
 
-## Implemented Features (59 total)
+## Implemented Features (61 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -70,6 +70,7 @@ Complete list of all **60 implemented features** with detailed capabilities.
 | FR-58 | Dashboard Modernization | TanStack Query v5 for all 32 dashboard pages, Query Key Factory pattern (`queryKeys.*`), Promise.all() API parallelization (Discovery 5→parallel, Donations 9→parallel), global error.tsx and loading.tsx, Command Palette (Cmd+K) with 32+ navigation commands, grouped sidebar navigation (6 collapsible groups), real-time badge counts (30s polling), optimistic mutations, extended design tokens (ui-nav-*, ui-cmd-*) |
 | FR-59 | Link Validation System | Automated broken link detection (`lib/resources/link-validator.ts`), trusted domains whitelist (claude.ai, twitter, reddit, perplexity), npm Registry API validation (bypasses 403 bot protection), scoped package encoding (@scope%2Fname), GitHub URL normalization (.git removal), HEAD→GET fallback for 405, consecutive failure tracking (threshold: 3), admin moderation queue (`/dashboard/broken-links`), weekly cron validation |
 | FR-60 | Resource Relationship Analysis | Claude Code subscription-based analysis (NOT API credits), 7 relationship types (similar, alternative, complement, uses, integrates, fork, inspired_by), bidirectional relationships, manual JSON workflow with helper scripts, 1,863 total relationships (63 doc-resource + 1,800 resource-resource), confidence scores (0-1), category-based batch analysis |
+| FR-61 | MCP Playground | Interactive MCP config builder (`/mcp-playground`), Monaco JSON editor with IntelliSense, live schema validation, 2,136+ server templates, URL-based config sharing (base64), AI assistance via Unified Chat, config storage (draft/publish workflow), version history with change tracking, public gallery (`/mcp-playground/gallery`), starring/forking system, admin moderation queue, RLS-enforced access control |
 
 ---
 
@@ -120,13 +121,14 @@ Complete list of all **60 implemented features** with detailed capabilities.
 - Matrix SDK features (reactions, replies, search, drafts)
 - Optimistic UI for instant messaging
 
-### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50)
-- Database types (137 tables)
+### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50, FR-61)
+- Database types (141 tables)
 - PWA enhancements
 - Advanced search
 - GitHub sync, doc versioning
 - Prompt library
 - Logo component system
+- MCP Playground with config storage
 
 ---
 

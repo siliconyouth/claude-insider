@@ -21,6 +21,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 13. [Dashboard Data Fetching Patterns](#dashboard-data-fetching-patterns-mandatory---v1140) - TanStack Query, query keys, parallelization (MANDATORY)
 14. [Link Validation Patterns](#link-validation-patterns-mandatory---v1141) - Trusted domains, npm Registry API, broken link detection (MANDATORY)
 15. [Claude Code Subscription Pattern](#claude-code-subscription-pattern-mandatory---v1150) - Resource relationship analysis using Claude Code subscription (MANDATORY)
+16. [MCP Playground Patterns](#mcp-playground-patterns-v1160) - Interactive config builder, storage system (v1.16.0)
 
 ---
 
@@ -2262,4 +2263,226 @@ for (const resource of resources) {
 3. **SDKs** (226 resources) - Official and community SDKs
 4. **Official** (48 resources) - Anthropic official resources
 5. **Prompts/Rules/Tutorials** - Smaller categories, cross-reference each other
+
+---
+
+## MCP Playground Patterns (v1.16.0)
+
+Interactive MCP configuration builder with storage, versioning, and sharing capabilities.
+
+### Monaco Editor Integration
+
+```tsx
+import dynamic from "next/dynamic";
+
+// Dynamic import to avoid SSR issues with Monaco
+const MonacoEditor = dynamic(
+  () => import("@monaco-editor/react"),
+  { ssr: false, loading: () => <div className="h-[400px] animate-pulse bg-gray-800 rounded" /> }
+);
+
+interface MCPConfigEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+  onValidate: (errors: ValidationError[]) => void;
+}
+
+export function MCPConfigEditor({ value, onChange, onValidate }: MCPConfigEditorProps) {
+  return (
+    <MonacoEditor
+      height="400px"
+      language="json"
+      theme="vs-dark"
+      value={value}
+      onChange={(v) => onChange(v || "")}
+      options={{
+        minimap: { enabled: false },
+        fontSize: 14,
+        formatOnPaste: true,
+        formatOnType: true,
+        scrollBeyondLastLine: false,
+        tabSize: 2,
+      }}
+    />
+  );
+}
+```
+
+### Validation Pattern
+
+```tsx
+// Debounce validation to avoid excessive API calls
+const debouncedValidate = useMemo(
+  () => debounce(async (config: string) => {
+    try {
+      const parsed = JSON.parse(config);
+      const errors: ValidationError[] = [];
+
+      // Schema validation
+      if (!parsed.mcpServers || typeof parsed.mcpServers !== "object") {
+        errors.push({ type: "schema", message: 'Missing "mcpServers" object', line: 1 });
+      }
+
+      // Server entry validation
+      for (const [name, server] of Object.entries(parsed.mcpServers || {})) {
+        const srv = server as { command?: string; args?: unknown };
+        if (!srv.command) {
+          errors.push({ type: "required", message: `Server "${name}" missing "command"` });
+        }
+        if (srv.args && !Array.isArray(srv.args)) {
+          errors.push({ type: "type", message: `Server "${name}": "args" must be array` });
+        }
+      }
+
+      onValidate(errors);
+    } catch (e) {
+      onValidate([{ type: "syntax", message: (e as Error).message }]);
+    }
+  }, 300),
+  [onValidate]
+);
+```
+
+### URL Sharing Pattern
+
+```tsx
+// Encode config for URL sharing
+function encodeConfig(config: string): string {
+  return btoa(encodeURIComponent(config));
+}
+
+// Decode config from URL
+function decodeConfig(encoded: string): string {
+  return decodeURIComponent(atob(encoded));
+}
+
+// Usage in component
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const encoded = params.get("config");
+  if (encoded) {
+    try {
+      const decoded = decodeConfig(encoded);
+      setConfig(decoded);
+    } catch {
+      // Invalid encoding, use default
+    }
+  }
+}, []);
+
+// Generate share URL
+function getShareUrl(): string {
+  const encoded = encodeConfig(config);
+  return `${window.location.origin}/mcp-playground?config=${encoded}`;
+}
+```
+
+### Storage Operations
+
+```tsx
+import { saveConfig, getUserConfigs, forkConfig, toggleStar } from "@/lib/mcp/storage";
+
+// Save as draft
+async function handleSave() {
+  const result = await saveConfig(supabase, {
+    name: configName,
+    description,
+    config_json: JSON.parse(configValue),
+    tags: selectedTags,
+    difficulty: selectedDifficulty,
+    status: "draft", // Private until published
+  });
+  if (result.success) {
+    toast.success("Saved as draft");
+  }
+}
+
+// Submit for review
+async function handlePublish() {
+  await saveConfig(supabase, {
+    ...existingConfig,
+    status: "pending_review",
+  });
+  toast.success("Submitted for review");
+}
+
+// Fork public config
+async function handleFork(configId: string) {
+  const newId = await forkConfig(supabase, configId);
+  router.push(`/mcp-playground?id=${newId}`);
+}
+```
+
+### Template Selector Pattern
+
+```tsx
+// Lazy load templates when modal opens
+const [templates, setTemplates] = useState<MCPTemplate[]>([]);
+const [isLoading, setIsLoading] = useState(false);
+
+const loadTemplates = useCallback(async () => {
+  if (templates.length > 0) return; // Already loaded
+  setIsLoading(true);
+  const data = await fetch("/api/mcp/templates").then(r => r.json());
+  setTemplates(data.templates);
+  setIsLoading(false);
+}, [templates.length]);
+
+// Load when modal opens
+useEffect(() => {
+  if (isOpen) loadTemplates();
+}, [isOpen, loadTemplates]);
+```
+
+### RLS Policies (Database)
+
+```sql
+-- Users can view their own configs
+CREATE POLICY mcp_configs_select_own ON mcp_configs
+  FOR SELECT USING (user_id = auth.uid()::TEXT);
+
+-- Anyone can view published public configs
+CREATE POLICY mcp_configs_select_public ON mcp_configs
+  FOR SELECT USING (is_public = true AND status = 'published');
+
+-- Users can only insert their own configs
+CREATE POLICY mcp_configs_insert ON mcp_configs
+  FOR INSERT WITH CHECK (user_id = auth.uid()::TEXT);
+
+-- Users can only update their own configs
+CREATE POLICY mcp_configs_update_own ON mcp_configs
+  FOR UPDATE USING (user_id = auth.uid()::TEXT);
+```
+
+### Status Workflow
+
+```
+draft → pending_review → published
+         ↓                  ↓
+      rejected          (visible in gallery)
+         ↓
+    (edit & resubmit)
+```
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `lib/mcp/storage.ts` | CRUD operations, fork, star |
+| `lib/mcp/schema.ts` | TypeScript types |
+| `components/mcp-playground/mcp-config-editor.tsx` | Monaco wrapper |
+| `components/mcp-playground/mcp-save-modal.tsx` | Save/publish UI |
+| `components/mcp-playground/mcp-my-configs.tsx` | User's configs list |
+| `components/mcp-playground/mcp-version-history.tsx` | Version diff |
+
+### Implementation Checklist
+
+- [ ] Monaco editor loads with `ssr: false`
+- [ ] Validation debounced (300ms)
+- [ ] Templates loaded lazily on modal open
+- [ ] URL encoding uses `btoa(encodeURIComponent(config))`
+- [ ] Save requires authenticated user
+- [ ] RLS policies enforce ownership
+- [ ] Version history tracks changes
+- [ ] Moderation queue accessible to admins only
 

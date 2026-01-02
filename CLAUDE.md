@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.15.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.16.0**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.15.0**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 60 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 61 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -43,18 +43,19 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.15.0**.
 11. [Design System (MANDATORY)](#design-system-mandatory) - Colors, gradients, typography
 12. [Icon System (MANDATORY)](#icon-system-mandatory) - PWA icons, favicon, generation script
 13. [Component Patterns](#component-patterns) - Buttons, cards, modals, device mockups, header/footer navigation (MANDATORY)
-14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 137 tables, RLS, migrations
+14. [Data Layer Architecture (MANDATORY)](#data-layer-architecture-mandatory) - 141 tables, RLS, migrations
 15. [Dashboard Data Fetching (MANDATORY)](#dashboard-data-fetching-mandatory) - TanStack Query, query keys, parallelization
 16. [Resources System (MANDATORY)](#resources-system-mandatory) - Enhanced fields, insights dashboard, filtering
 17. [Link Validation System (MANDATORY)](#link-validation-system-mandatory) - Broken link detection, trusted domains, npm validation
 18. [Resource Relationship Analysis (MANDATORY)](#resource-relationship-analysis-mandatory) - Claude Code subscription, relationship types
-19. [Internationalization](#internationalization-i18n) - 18 languages
-20. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
-21. [Content Structure](#content-structure) - Documentation, resources, legal pages
-22. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-23. [Success Metrics](#success-metrics)
-24. [Updating Guidelines](#updating-guidelines)
-25. [License](#license)
+19. [MCP Playground (MANDATORY)](#mcp-playground-mandatory) - Interactive config builder, templates, storage
+20. [Internationalization](#internationalization-i18n) - 18 languages
+21. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
+22. [Content Structure](#content-structure) - Documentation, resources, legal pages
+23. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
+24. [Success Metrics](#success-metrics)
+25. [Updating Guidelines](#updating-guidelines)
+26. [License](#license)
 
 ---
 
@@ -145,7 +146,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**60 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**61 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -155,7 +156,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 | **Messaging** | Group Chat, Unified Chat, User Directory, Smart AI Messaging, **Optimistic UI** |
 | **Admin** | Diagnostics, Content Management, Audit Export, Resource Updates, Settings System (5 globals, SEO dashboard) |
 | **AI & Automation** | RAG (6,983 chunks), Resource Auto-Update, AI Writing Assistant, **Resource Submissions**, **Relationship Analysis** |
-| **Infrastructure** | 137 DB tables, PWA, Doc Versioning, Prompt Library |
+| **Infrastructure** | 141 DB tables, PWA, Doc Versioning, Prompt Library, **MCP Playground** |
 
 ### Non-Functional Requirements
 
@@ -188,7 +189,7 @@ claude-insider/
 │   │   ├── api/e2ee/             # E2EE API (12 endpoints)
 │   │   ├── actions/              # Server actions (passkeys, 2FA, group-chat)
 │   │   └── (main)/dashboard/     # Admin dashboard pages
-│   ├── components/               # 70+ React components
+│   ├── components/               # 80+ React components
 │   │   ├── unified-chat/         # Unified Chat Window
 │   │   ├── auth/                 # Authentication components
 │   │   ├── settings/             # Account settings
@@ -203,7 +204,8 @@ claude-insider/
 │   │   ├── universal-search/     # Search modal
 │   │   ├── resources/            # Resources components
 │   │   ├── cross-linking/        # Doc-resource relationship components
-│   │   └── messaging/            # Virtualized message lists
+│   │   ├── messaging/            # Virtualized message lists
+│   │   └── mcp-playground/       # MCP Playground components (10)
 │   ├── hooks/                    # Custom React hooks
 │   ├── lib/                      # Core libraries
 │   │   ├── design-system.ts      # Design tokens & cn()
@@ -216,7 +218,7 @@ claude-insider/
 │   ├── data/                     # System prompt, RAG index, resources
 │   ├── i18n/                     # 18 languages
 │   ├── collections/              # Payload CMS collections
-│   └── supabase/migrations/      # 111 SQL migration files
+│   └── supabase/migrations/      # 113 SQL migration files
 ├── packages/                     # Shared configs
 ├── docs/                         # Documentation
 │   ├── archive/                  # Archived implementation plans
@@ -1505,6 +1507,113 @@ node scripts/manual-relationship-analysis.mjs --stats
 - [ ] JSON output follows schema: `{source, target, type, confidence, reason, bidirectional}`
 - [ ] Used helper script for database insertion
 - [ ] Verified stats after insertion
+
+---
+
+## MCP Playground (MANDATORY)
+
+**Location**: `/mcp-playground` | **Components**: `components/mcp-playground/`
+
+The MCP Playground is an interactive sandbox for building, validating, and sharing MCP (Model Context Protocol) server configurations.
+
+### Architecture
+
+```
+/mcp-playground
+├── page.tsx              # Main playground with Monaco editor
+├── layout.tsx            # SEO metadata
+├── loading.tsx           # Skeleton loader
+└── gallery/
+    ├── page.tsx          # Public config gallery
+    └── [id]/page.tsx     # Individual config detail
+
+components/mcp-playground/
+├── mcp-config-editor.tsx       # Monaco JSON editor wrapper
+├── mcp-validation-panel.tsx    # Error/success display
+├── mcp-template-selector.tsx   # 2,136+ template browser
+├── mcp-toolbar.tsx             # Format, copy, share, reset
+├── mcp-capabilities-preview.tsx # Resources/tools/prompts display
+├── mcp-server-list.tsx         # Visual server list
+├── mcp-export-modal.tsx        # Multi-format export
+├── mcp-save-modal.tsx          # Save/publish workflow
+├── mcp-my-configs.tsx          # User's saved configs
+└── mcp-version-history.tsx     # Version diff and rollback
+
+lib/mcp/
+├── schema.ts                   # MCPConfig types
+├── storage.ts                  # CRUD operations
+└── validator.ts                # Schema validation
+```
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Monaco Editor** | JSON editing with syntax highlighting, IntelliSense |
+| **Live Validation** | Schema validation, command/args checks, env variable hints |
+| **2,136+ Templates** | Browse and insert from MCP server database |
+| **URL Sharing** | Base64-encoded config sharing via URL |
+| **AI Assistance** | "Ask AI" button for config help |
+
+### Storage System
+
+| Status | Description |
+|--------|-------------|
+| `draft` | Private, only visible to owner |
+| `pending_review` | Submitted for moderation |
+| `published` | Approved, visible in gallery |
+| `rejected` | Rejected by moderator with feedback |
+
+### Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `mcp_configs` | Main config storage with status tracking |
+| `mcp_config_versions` | Version history with change summaries |
+| `mcp_config_stars` | User favorites (triggers update count) |
+| `mcp_config_reviews` | Moderation queue with feedback |
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `lib/mcp/storage.ts` | CRUD: `saveConfig`, `getUserConfigs`, `forkConfig`, `toggleStar` |
+| `lib/mcp/schema.ts` | TypeScript types for MCPConfig, validation schemas |
+| `app/api/mcp/validate/route.ts` | Real-time validation endpoint |
+| `app/api/mcp/templates/route.ts` | Template search and filtering |
+
+### Usage Pattern
+
+```tsx
+import { MCPConfigEditor } from "@/components/mcp-playground/mcp-config-editor";
+import { MCPValidationPanel } from "@/components/mcp-playground/mcp-validation-panel";
+import { MCPToolbar } from "@/components/mcp-playground/mcp-toolbar";
+
+function MCPPlayground() {
+  const [config, setConfig] = useState(DEFAULT_CONFIG);
+  const [errors, setErrors] = useState([]);
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div>
+        <MCPToolbar config={config} onChange={setConfig} />
+        <MCPConfigEditor value={config} onChange={setConfig} onValidate={setErrors} />
+      </div>
+      <MCPValidationPanel errors={errors} serverCount={getServerCount(config)} />
+    </div>
+  );
+}
+```
+
+### Checklist for MCP Playground Changes
+
+- [ ] Editor uses Monaco with JSON language mode
+- [ ] Validation debounced (300ms) to avoid API spam
+- [ ] Templates loaded lazily when modal opens
+- [ ] URL encoding uses `btoa(encodeURIComponent(config))`
+- [ ] Save modal validates required fields (name, description)
+- [ ] Version history shows diff between versions
+- [ ] Moderation queue uses admin role check
 
 ---
 

@@ -32,6 +32,8 @@ export interface AIContext {
     title?: string;
     code?: string;
     language?: string;
+    text?: string;
+    metadata?: Record<string, string>;
   };
 }
 
