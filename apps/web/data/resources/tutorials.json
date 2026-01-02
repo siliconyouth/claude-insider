@@ -11,20 +11,20 @@
       "learning",
       "beginner"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "subcategory": "Official",
     "difficulty": "beginner",
     "featured": true,
-    "featuredReason": "Official Courses",
+    "featuredReason": "official-courses",
     "github": {
       "owner": "anthropics",
       "repo": "courses",
-      "stars": 8200,
-      "forks": 750,
-      "lastUpdated": "2024-12-10",
-      "language": "Jupyter Notebook"
+      "stars": 17881,
+      "forks": 1668,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-courses/1766535180273-anthropic-courses.png",
     "aiSummary": "Official courses and tutorials from Anthropic for learning Claude.",
@@ -64,7 +64,7 @@
       "Dedicated time for learning"
     ],
     "relatedDocsCount": 2,
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedDocSlugs": [
       "tips-and-tricks/advanced-prompting",
       "tutorials/index"
@@ -77,9 +77,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -102,8 +100,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -119,13 +115,13 @@
       "getting-started",
       "official"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2024-12-11",
     "subcategory": "Official",
     "difficulty": "beginner",
     "featured": true,
-    "featuredReason": "Essential",
+    "featuredReason": "essential",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-tutorial/1766535186275-claude-code-tutorial.png",
     "aiSummary": "Official tutorial for getting started with Claude Code CLI.",
     "aiAnalyzedAt": "2025-12-21",
@@ -186,7 +182,7 @@
     "subcategory": "Course",
     "difficulty": "intermediate",
     "featured": true,
-    "featuredReason": "Industry Standard",
+    "featuredReason": "industry-standard",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/deeplearning-claude/1766535186728-deeplearning-claude.png",
     "aiSummary": "Professional courses on Claude from DeepLearning. AI.",
     "aiAnalyzedAt": "2025-12-21",
@@ -241,7 +237,7 @@
       "official",
       "guide"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2024-01-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Official",
@@ -294,57 +290,46 @@
     "description": "Tutorial for creating custom MCP servers.",
     "url": "https://modelcontextprotocol.io/docs/server/",
     "category": "tutorials",
-    "tags": [
-      "mcp",
-      "servers",
-      "building",
-      "typescript"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2024-06-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "MCP",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-server-tutorial/1766535189572-mcp-server-tutorial.png",
-    "aiSummary": "Tutorial for creating custom MCP servers.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official tutorial for creating custom MCP servers to extend Claude capabilities",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Creating custom MCP servers",
-      "Step-by-step instructions",
-      "Beginner-friendly content",
-      "Hands-on examples"
+      "MCP server creation",
+      "Official documentation",
+      "Step-by-step guide",
+      "SDK usage"
     ],
     "useCases": [
-      "Learn Claude development fundamentals",
-      "Build first AI integration",
-      "Master advanced Claude features",
-      "Follow structured learning path"
+      "Build custom MCP servers",
+      "Extend Claude capabilities",
+      "Create integrations",
+      "Learn MCP protocol"
     ],
     "pros": [
-      "Structured step-by-step learning",
-      "Beginner-friendly explanations",
-      "Hands-on practical examples",
-      "Progressive skill building"
+      "Official tutorial",
+      "Comprehensive guide",
+      "SDK examples",
+      "Community support"
     ],
     "cons": [
-      "May become outdated with API changes",
-      "Pace may not suit all learning styles",
-      "May not cover advanced topics"
+      "Development required",
+      "Programming knowledge needed",
+      "Protocol complexity"
     ],
     "targetAudience": [
-      "Developers new to Claude",
-      "Teams onboarding to AI development",
-      "Students learning AI integration"
+      "MCP developers",
+      "Integration builders",
+      "Claude extenders"
     ],
     "prerequisites": [
-      "Basic programming knowledge",
-      "Claude account for hands-on practice",
-      "Dedicated time for learning"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "integrations/mcp-servers"
+      "Programming experience",
+      "Node.js or Python",
+      "MCP understanding"
     ]
   },
   {
@@ -353,53 +338,46 @@
     "description": "Guide to preparing data and fine-tuning models.",
     "url": "https://docs.anthropic.com/en/docs/fine-tuning",
     "category": "tutorials",
-    "tags": [
-      "fine-tuning",
-      "training",
-      "data",
-      "advanced"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2024-07-01",
     "lastVerified": "2025-12-20",
-    "subcategory": "Advanced",
     "difficulty": "expert",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fine-tuning-guide/1766535187915-fine-tuning-guide.png",
-    "aiSummary": "Guide to preparing data and fine-tuning models.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official Anthropic guide for preparing data and fine-tuning Claude models",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Step-by-step instructions",
-      "Beginner-friendly content",
-      "Hands-on examples",
-      "Progressive learning path"
+      "Fine-tuning guidance",
+      "Data preparation",
+      "Best practices",
+      "Official documentation"
     ],
     "useCases": [
-      "Learn Claude development fundamentals",
-      "Build first AI integration",
-      "Master advanced Claude features",
-      "Follow structured learning path"
+      "Fine-tune Claude models",
+      "Prepare training data",
+      "Customize Claude behavior",
+      "Enterprise customization"
     ],
     "pros": [
-      "Structured step-by-step learning",
-      "Beginner-friendly explanations",
-      "Hands-on practical examples",
-      "Progressive skill building"
+      "Official guide",
+      "Best practices",
+      "Data preparation tips",
+      "Quality focus"
     ],
     "cons": [
-      "May become outdated with API changes",
-      "Pace may not suit all learning styles",
-      "May not cover advanced topics"
+      "Enterprise feature",
+      "Resource intensive",
+      "Requires data preparation"
     ],
     "targetAudience": [
-      "Developers new to Claude",
-      "Teams onboarding to AI development",
-      "Students learning AI integration"
+      "Enterprise teams",
+      "ML engineers",
+      "Customization projects"
     ],
     "prerequisites": [
-      "Basic programming knowledge",
-      "Claude account for hands-on practice",
-      "Dedicated time for learning"
+      "Enterprise account",
+      "Training data",
+      "Fine-tuning access"
     ]
   },
   {
@@ -461,55 +439,48 @@
     "id": "llamaindex-tutorial",
     "title": "LlamaIndex Getting Started",
     "description": "Build your first RAG application with LlamaIndex.",
-    "url": "https://docs.llamaindex.ai/en/stable/getting_started/",
+    "url": "https://developers.llamaindex.ai/python/framework/getting_started/installation/",
     "category": "tutorials",
-    "tags": [
-      "llamaindex",
-      "rag",
-      "getting-started",
-      "python"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-04-15",
     "lastVerified": "2024-12-11",
-    "subcategory": "Framework",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-tutorial/1766535187894-llamaindex-tutorial.png",
-    "aiSummary": "Build your first RAG application with LlamaIndex.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Getting started guide for building RAG applications with LlamaIndex",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "LlamaIndex",
-      "RAG (Retrieval-Augmented Generation) integration",
-      "Step-by-step instructions",
-      "Beginner-friendly content"
+      "RAG tutorial",
+      "LlamaIndex basics",
+      "Document indexing",
+      "Query interface"
     ],
     "useCases": [
-      "Learn Claude development fundamentals",
-      "Build first AI integration",
-      "Master advanced Claude features",
-      "Follow structured learning path"
+      "Build RAG applications",
+      "Index documents for AI",
+      "Create knowledge-based AI",
+      "Document Q&A systems"
     ],
     "pros": [
-      "Structured step-by-step learning",
-      "Beginner-friendly explanations",
-      "Hands-on practical examples",
-      "Progressive skill building"
+      "Comprehensive guide",
+      "Hands-on examples",
+      "LlamaIndex ecosystem",
+      "Active community"
     ],
     "cons": [
-      "May become outdated with API changes",
-      "Pace may not suit all learning styles",
-      "May not cover advanced topics"
+      "LlamaIndex specific",
+      "Setup required",
+      "Learning curve"
     ],
     "targetAudience": [
-      "Developers new to Claude",
-      "Teams onboarding to AI development",
-      "Students learning AI integration"
+      "RAG developers",
+      "Knowledge base builders",
+      "Document AI creators"
     ],
     "prerequisites": [
-      "Basic programming knowledge",
-      "Claude account for hands-on practice",
-      "Dedicated time for learning"
+      "Python experience",
+      "Document corpus",
+      "LLM API access"
     ]
   },
   {
@@ -532,10 +503,10 @@
     "github": {
       "owner": "langchain-ai",
       "repo": "rag-from-scratch",
-      "stars": 3500,
-      "forks": 600,
-      "lastUpdated": "2024-12-08",
-      "language": "Python"
+      "stars": 6127,
+      "forks": 1617,
+      "lastUpdated": "2024-03-01",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rag-from-scratch/1766535187724-rag-from-scratch.png",
     "aiSummary": "Step-by-step guide to building RAG systems with Claude.",
@@ -586,56 +557,46 @@
     "description": "Implement streaming responses for real-time Claude interactions.",
     "url": "https://docs.anthropic.com/en/api/streaming",
     "category": "tutorials",
-    "tags": [
-      "streaming",
-      "real-time",
-      "api",
-      "official"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
-    "subcategory": "Official",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/streaming-tutorial/1766535188640-streaming-tutorial.png",
-    "aiSummary": "Implement streaming responses for real-time Claude interactions.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official tutorial for implementing streaming responses with Claude API",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Real-time Claude interactions",
-      "Real-time processing and updates",
-      "Streaming response support"
+      "Streaming responses",
+      "Real-time output",
+      "Official documentation",
+      "Implementation examples"
     ],
     "useCases": [
-      "Learn Claude development fundamentals",
-      "Build first AI integration",
-      "Master advanced Claude features",
-      "Follow structured learning path"
+      "Implement real-time responses",
+      "Build streaming interfaces",
+      "Improve user experience",
+      "Create chat applications"
     ],
     "pros": [
-      "Structured step-by-step learning",
-      "Beginner-friendly explanations",
-      "Hands-on practical examples",
-      "Progressive skill building"
+      "Official guide",
+      "Performance improvement",
+      "User experience",
+      "Code examples"
     ],
     "cons": [
-      "May become outdated with API changes",
-      "Pace may not suit all learning styles",
-      "May not cover advanced topics"
+      "Implementation complexity",
+      "Error handling needed",
+      "Connection management"
     ],
     "targetAudience": [
-      "Developers new to Claude",
-      "Teams onboarding to AI development",
-      "Students learning AI integration"
+      "API developers",
+      "Chat app builders",
+      "Real-time application developers"
     ],
     "prerequisites": [
-      "Basic programming knowledge",
-      "Claude account for hands-on practice",
-      "Dedicated time for learning"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "api/streaming"
+      "Claude API access",
+      "Programming experience",
+      "HTTP/WebSocket knowledge"
     ]
   },
   {
@@ -650,7 +611,7 @@
       "official",
       "api"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2024-02-15",
     "lastVerified": "2025-12-20",
     "subcategory": "Official",
@@ -701,59 +662,48 @@
     "id": "vector-databases",
     "title": "Vector Databases for RAG",
     "description": "Guide to choosing and using vector databases with Claude.",
-    "url": "https://docs.anthropic.com/en/docs/build-with-claude/retrieval",
+    "url": "https://docs.anthropic.com/claude/docs/embeddings",
     "category": "tutorials",
-    "tags": [
-      "vector-db",
-      "embeddings",
-      "rag",
-      "storage"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2024-05-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "RAG",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vector-databases/1766535186276-vector-databases.png",
-    "aiSummary": "Guide to choosing and using vector databases with Claude.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official guide for choosing and using vector databases with Claude RAG systems",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Vector database integration",
-      "Step-by-step instructions",
-      "Beginner-friendly content",
-      "Hands-on examples"
+      "Vector database guide",
+      "RAG integration",
+      "Database comparison",
+      "Best practices"
     ],
     "useCases": [
-      "Learn Claude development fundamentals",
-      "Build first AI integration",
-      "Master advanced Claude features",
-      "Follow structured learning path"
+      "Choose vector database",
+      "Build RAG systems",
+      "Optimize retrieval",
+      "Scale AI search"
     ],
     "pros": [
-      "Structured step-by-step learning",
-      "Beginner-friendly explanations",
-      "Hands-on practical examples",
-      "Progressive skill building"
+      "Official guidance",
+      "Multiple options",
+      "Integration tips",
+      "Performance advice"
     ],
     "cons": [
-      "May become outdated with API changes",
-      "Pace may not suit all learning styles",
-      "May not cover advanced topics"
+      "Many choices",
+      "Setup complexity",
+      "Cost considerations"
     ],
     "targetAudience": [
-      "Developers new to Claude",
-      "Teams onboarding to AI development",
-      "Students learning AI integration"
+      "RAG developers",
+      "Database architects",
+      "AI infrastructure teams"
     ],
     "prerequisites": [
-      "Basic programming knowledge",
-      "Claude account for hands-on practice",
-      "Dedicated time for learning"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "integrations/databases"
+      "RAG understanding",
+      "Database experience",
+      "Claude API access"
     ]
   }
 ]

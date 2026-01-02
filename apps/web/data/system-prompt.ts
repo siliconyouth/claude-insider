@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2025-12-31 for v1.14.1 (Link Validation System, MCP Discovery, 3,035 resources)
+ * Updated: 2026-01-02 for v1.14.1 (Link Validation System, MCP Discovery, 3,012 resources)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";

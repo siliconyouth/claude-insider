@@ -17,14 +17,14 @@
     "subcategory": "Documentation",
     "difficulty": "intermediate",
     "featured": true,
-    "featuredReason": "Built with Claude",
+    "featuredReason": "built-with-claude",
     "github": {
       "owner": "siliconyouth",
       "repo": "claude-insider",
-      "stars": 50,
-      "forks": 5,
-      "lastUpdated": "2024-12-11",
-      "language": "TypeScript"
+      "stars": 1,
+      "forks": 0,
+      "lastUpdated": "2024-12-01",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-insider/1766534788463-claude-insider.png",
     "aiSummary": "This website - comprehensive Claude documentation and resources, built entirely with Claude Code.",
@@ -87,7 +87,7 @@
     "subcategory": "Production",
     "difficulty": "intermediate",
     "featured": true,
-    "featuredReason": "Industry Example",
+    "featuredReason": "industry-example",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/v0-vercel/1766534792691-v0-vercel.png",
     "aiSummary": "AI-powered UI generation tool using Claude for component creation.",
     "aiAnalyzedAt": "2025-12-21",
@@ -150,10 +150,10 @@
     "github": {
       "owner": "sigoden",
       "repo": "aichat",
-      "stars": 5200,
-      "forks": 400,
-      "lastUpdated": "2024-12-11",
-      "language": "Rust"
+      "stars": 8933,
+      "forks": 587,
+      "lastUpdated": "2024-06-01",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aichat/1766534786537-aichat.png",
     "aiSummary": "All-in-one AI CLI tool supporting Claude with RAG.",
@@ -204,7 +204,7 @@
       "web",
       "interface"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2024-12-11",
     "subcategory": "Official",
@@ -253,53 +253,46 @@
     "description": "Private AI chat using Claude without tracking.",
     "url": "https://duckduckgo.com/aichat",
     "category": "showcases",
-    "tags": [
-      "privacy",
-      "search",
-      "chat",
-      "production"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
-    "subcategory": "Production",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/duckduckgo-ai/1766534792682-duckduckgo-ai.png",
-    "aiSummary": "Private AI chat using Claude without tracking.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Private AI chat interface using Claude without tracking or data collection",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Working implementation example",
-      "Source code availability",
-      "Real-world use case",
-      "Learning resource"
+      "Privacy-focused",
+      "No tracking",
+      "DuckDuckGo integration",
+      "Free access"
     ],
     "useCases": [
-      "Learn from real implementations",
-      "Understand Claude integration patterns",
-      "Get inspired for new projects",
-      "Evaluate Claude capabilities"
+      "Chat with Claude privately",
+      "Anonymous AI assistance",
+      "Privacy-conscious AI use",
+      "Quick AI queries"
     ],
     "pros": [
-      "Real-world implementation examples",
-      "Demonstrates practical Claude applications",
-      "Source code available for learning",
-      "Inspiration for your own projects"
+      "Complete privacy",
+      "No account needed",
+      "Free access",
+      "Trusted platform"
     ],
     "cons": [
-      "May be tailored to specific use cases",
-      "Could require adaptation for your needs",
-      "Maintenance varies by project"
+      "Limited features",
+      "No conversation history",
+      "Usage limits"
     ],
     "targetAudience": [
-      "Developers seeking implementation examples",
-      "Teams evaluating Claude capabilities",
-      "Anyone learning Claude integration patterns"
+      "Privacy-conscious users",
+      "Casual AI users",
+      "Anonymous queries"
     ],
     "prerequisites": [
-      "Interest in Claude AI applications",
-      "Basic development knowledge",
-      "Claude access for experimentation"
+      "Web browser",
+      "No account needed",
+      "Internet access"
     ]
   },
   {
@@ -322,10 +315,10 @@
     "github": {
       "owner": "khoj-ai",
       "repo": "khoj",
-      "stars": 17000,
-      "forks": 900,
-      "lastUpdated": "2024-12-11",
-      "language": "Python"
+      "stars": 32015,
+      "forks": 1904,
+      "lastUpdated": "2024-07-01",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/khoj/1766534792689-khoj.png",
     "aiSummary": "Self-hosted AI second brain with Claude support.",
@@ -448,10 +441,10 @@
     "github": {
       "owner": "logancyang",
       "repo": "obsidian-copilot",
-      "stars": 4500,
-      "forks": 300,
-      "lastUpdated": "2024-12-09",
-      "language": "TypeScript"
+      "stars": 5828,
+      "forks": 515,
+      "lastUpdated": "2024-05-01",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/obsidian-copilot/1766534792535-obsidian-copilot.png",
     "aiSummary": "Claude-powered AI assistant for Obsidian note-taking.",

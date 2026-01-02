@@ -11,13 +11,13 @@
       "chat",
       "support"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2024-12-11",
     "subcategory": "Discord",
     "difficulty": "intermediate",
     "featured": true,
-    "featuredReason": "Official Community",
+    "featuredReason": "official-community",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-discord/1766532490164-anthropic-discord.png",
     "aiSummary": "Official Anthropic Discord server for Claude discussions.",
     "aiAnalyzedAt": "2025-12-21",
@@ -78,7 +78,7 @@
     "subcategory": "Forum",
     "difficulty": "intermediate",
     "featured": true,
-    "featuredReason": "Active Community",
+    "featuredReason": "active-community",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reddit-claudeai/1766532489947-reddit-claudeai.png",
     "aiSummary": "Reddit community for Claude AI discussions and tips.",
     "aiAnalyzedAt": "2025-12-21",
@@ -117,14 +117,14 @@
       "Interest in community participation"
     ],
     "relatedDocsCount": 1,
-    "relatedResourcesCount": 49,
+    "relatedResourcesCount": 44,
     "relatedDocSlugs": [
       "getting-started/troubleshooting"
     ],
     "relatedResourceSlugs": [
       "agent-rules",
       "agentcheck",
-      "agents-1",
+      "agents-2",
       "agentvibes",
       "areweai-tsgram-mcp",
       "askbudi-roundtable",
@@ -135,7 +135,6 @@
       "champpaba-claude-agent-kit",
       "claude-agent-server",
       "claude-agents",
-      "claude-agents-1",
       "claude-code-agent-farm",
       "claude-code-agents",
       "claude-code-gemini-mcp",
@@ -143,7 +142,6 @@
       "claude-code-mcp",
       "claude-code-mcpinstall",
       "claude-code-sub-agents",
-      "claude-code-subagents",
       "claude-code-subagents-1",
       "claude-code-subagents-collection",
       "claude-code-unified-agents",
@@ -158,15 +156,12 @@
       "executeautomation-playwright-mcp-server",
       "eyaltoledano-claude-task-master",
       "freema-mcp-gsheets",
-      "github-discussions",
       "github-stats-for-claude-code-mcp-enhanced",
       "github-stats-for-claude-swarm",
-      "hacker-news",
       "imprvhub-mcp-browser-agent",
       "infinite-agentic-loop",
       "multi-agent-squad",
       "openagents-1",
-      "stack-overflow",
       "steipete-claude-code-mcp",
       "sub-agents",
       "voltagent-awesome-claude-code-subagents",
@@ -179,53 +174,46 @@
     "description": "In-depth explanations of Claude and AI concepts.",
     "url": "https://www.youtube.com/@aiexplained-official",
     "category": "community",
-    "tags": [
-      "youtube",
-      "explanations",
-      "tutorials",
-      "learning"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-06-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Video",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-explained/1766532480913-ai-explained.png",
-    "aiSummary": "In-depth explanations of Claude and AI concepts.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "In-depth YouTube explanations of Claude AI capabilities and broader AI concepts",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Open source development",
-      "Community contributions",
-      "Collaborative support",
-      "Diverse solutions"
+      "In-depth AI explanations",
+      "Claude-focused content",
+      "Educational videos",
+      "Regular updates"
     ],
     "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
+      "Learn about Claude capabilities",
+      "Understand AI concepts deeply",
+      "Stay updated on AI developments",
+      "Educational resource for teams"
     ],
     "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
+      "High-quality explanations",
+      "Regular content",
+      "Deep technical coverage",
+      "Free resource"
     ],
     "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
+      "Video format only",
+      "Time commitment to watch",
+      "May not cover all topics"
     ],
     "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
+      "AI learners",
+      "Developers understanding Claude",
+      "Technical teams"
     ],
     "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
+      "YouTube access",
+      "Interest in AI",
+      "Time for video content"
     ]
   },
   {
@@ -234,53 +222,46 @@
     "description": "Official Anthropic LinkedIn page.",
     "url": "https://www.linkedin.com/company/anthropic/",
     "category": "community",
-    "tags": [
-      "linkedin",
-      "official",
-      "professional",
-      "jobs"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2024-12-11",
-    "subcategory": "Social Media",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/linkedin-anthropic/1766532489787-linkedin-anthropic.png",
-    "aiSummary": "Official Anthropic LinkedIn page.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official Anthropic LinkedIn presence for company news, updates, and professional networking",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Open source development",
-      "Community contributions",
-      "Collaborative support",
-      "Diverse solutions"
+      "Official company updates",
+      "Professional networking",
+      "Industry news",
+      "Hiring information"
     ],
     "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
+      "Follow Anthropic updates",
+      "Network with AI professionals",
+      "Find job opportunities",
+      "Stay informed on company news"
     ],
     "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
+      "Official source",
+      "Professional platform",
+      "Hiring updates",
+      "Company insights"
     ],
     "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
+      "LinkedIn platform required",
+      "Marketing-focused content",
+      "Less technical depth"
     ],
     "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
+      "AI professionals",
+      "Job seekers",
+      "Industry followers"
     ],
     "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
+      "LinkedIn account",
+      "Interest in Anthropic",
+      "Professional networking goals"
     ]
   },
   {
@@ -289,53 +270,46 @@
     "description": "Official Anthropic account for news and updates.",
     "url": "https://twitter.com/AnthropicAI",
     "category": "community",
-    "tags": [
-      "twitter",
-      "official",
-      "news",
-      "updates"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
-    "subcategory": "Social Media",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/twitter-anthropic/1766535654662-twitter-anthropic.png",
-    "aiSummary": "Official Anthropic account for news and updates.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official Anthropic Twitter account for real-time news, announcements, and community engagement",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "News and updates",
-      "Open source development",
-      "Community contributions",
-      "Collaborative support"
+      "Real-time updates",
+      "Official announcements",
+      "Community engagement",
+      "Quick news access"
     ],
     "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
+      "Get instant Claude updates",
+      "Follow AI announcements",
+      "Engage with AI community",
+      "Stay current on releases"
     ],
     "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
+      "Real-time updates",
+      "Official source",
+      "Community interaction",
+      "Quick information"
     ],
     "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
+      "Character-limited content",
+      "Noisy platform",
+      "Requires Twitter account"
     ],
     "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
+      "AI enthusiasts",
+      "Developers following Claude",
+      "News followers"
     ],
     "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
+      "Twitter/X account",
+      "Interest in AI news",
+      "Social media engagement"
     ]
   },
   {
@@ -344,166 +318,46 @@
     "description": "Official YouTube channel with demos and explanations.",
     "url": "https://www.youtube.com/@anthropic-ai",
     "category": "community",
-    "tags": [
-      "youtube",
-      "official",
-      "videos",
-      "tutorials"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2024-02-15",
     "lastVerified": "2024-12-11",
-    "subcategory": "Video",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/youtube-anthropic/1766532490158-youtube-anthropic.png",
-    "aiSummary": "Official YouTube channel with demos and explanations.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official Anthropic YouTube channel featuring demos, explanations, and AI insights",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Demos and explanations",
-      "Open source development",
-      "Community contributions",
-      "Collaborative support"
+      "Official demos",
+      "AI explanations",
+      "Research insights",
+      "Product updates"
     ],
     "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
+      "Watch Claude demos",
+      "Learn from official tutorials",
+      "Understand research direction",
+      "See new feature announcements"
     ],
     "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
+      "Official content",
+      "High production quality",
+      "Direct from Anthropic",
+      "Visual learning"
     ],
     "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
+      "Video format only",
+      "Update frequency varies",
+      "May not cover all topics"
     ],
     "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
+      "Visual learners",
+      "Claude users",
+      "AI enthusiasts"
     ],
     "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
-    ]
-  },
-  {
-    "id": "github-discussions",
-    "title": "Claude Code GitHub Discussions",
-    "description": "Official discussions for Claude Code on GitHub.",
-    "url": "https://github.com/anthropics/claude-code/discussions",
-    "category": "community",
-    "tags": [
-      "github",
-      "discussions",
-      "official",
-      "support"
-    ],
-    "status": "official",
-    "addedDate": "2024-02-01",
-    "lastVerified": "2025-12-20",
-    "subcategory": "Forum",
-    "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-discussions/1766532489599-github-discussions.png",
-    "aiSummary": "Official discussions for Claude Code on GitHub.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
-    "keyFeatures": [
-      "Claude Code on GitHub",
-      "Open source development",
-      "Community contributions",
-      "Collaborative support"
-    ],
-    "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
-    ],
-    "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
-    ],
-    "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
-    ],
-    "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
-    ],
-    "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
-    ],
-    "relatedDocsCount": 3,
-    "relatedResourcesCount": 49,
-    "relatedDocSlugs": [
-      "getting-started/migration",
-      "getting-started/troubleshooting",
-      "integrations/github-actions"
-    ],
-    "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-1",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-agents-1",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "hacker-news",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "stack-overflow",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "YouTube access",
+      "Interest in Claude",
+      "Time for video content"
     ]
   },
   {
@@ -567,105 +421,46 @@
     "description": "Claude-related discussions on Hacker News.",
     "url": "https://hn.algolia.com/?q=claude+anthropic",
     "category": "community",
-    "tags": [
-      "hackernews",
-      "tech",
-      "discussions",
-      "news"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-03-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Forum",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/hacker-news/1766532489605-hacker-news.png",
-    "aiSummary": "Claude-related discussions on Hacker News.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Hacker News discussions and insights about Claude AI from the tech community",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Open source development",
-      "Community contributions",
-      "Collaborative support",
-      "Diverse solutions"
+      "Community discussions",
+      "Technical insights",
+      "Real user experiences",
+      "Industry perspectives"
     ],
     "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
+      "Read community opinions",
+      "Find technical discussions",
+      "Discover use cases",
+      "Learn from experiences"
     ],
     "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
+      "Authentic discussions",
+      "Technical community",
+      "Diverse perspectives",
+      "Historical archive"
     ],
     "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
+      "Unfiltered opinions",
+      "Signal-to-noise ratio",
+      "Time to navigate"
     ],
     "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
+      "Tech professionals",
+      "Developers seeking insights",
+      "Community researchers"
     ],
     "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
-    ],
-    "relatedResourcesCount": 49,
-    "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-1",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-agents-1",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-discussions",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "stack-overflow",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "Hacker News familiarity",
+      "Critical reading skills",
+      "Time for exploration"
     ]
   },
   {
@@ -674,105 +469,46 @@
     "description": "Claude-related questions on Stack Overflow.",
     "url": "https://stackoverflow.com/questions/tagged/claude-ai",
     "category": "community",
-    "tags": [
-      "stackoverflow",
-      "qa",
-      "programming",
-      "help"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
-    "subcategory": "Q&A",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stack-overflow/1766532489880-stack-overflow.png",
-    "aiSummary": "Claude-related questions on Stack Overflow.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Stack Overflow Q&A for Claude AI implementation questions and troubleshooting",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Open source development",
-      "Community contributions",
-      "Collaborative support",
-      "Diverse solutions"
+      "Q&A format",
+      "Implementation help",
+      "Troubleshooting",
+      "Code examples"
     ],
     "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
+      "Find implementation solutions",
+      "Troubleshoot Claude issues",
+      "Learn from code examples",
+      "Ask technical questions"
     ],
     "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
+      "Structured Q&A",
+      "Searchable archive",
+      "Community answers",
+      "Code snippets"
     ],
     "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
+      "May have outdated answers",
+      "Varies in quality",
+      "Not all questions answered"
     ],
     "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
+      "Developers implementing Claude",
+      "Troubleshooters",
+      "Code seekers"
     ],
     "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
-    ],
-    "relatedResourcesCount": 49,
-    "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-1",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-agents-1",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-discussions",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "hacker-news",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "Stack Overflow account for asking",
+      "Specific questions",
+      "Search skills"
     ]
   },
   {
@@ -781,53 +517,46 @@
     "description": "Weekly AI newsletter covering Claude and other developments.",
     "url": "https://www.deeplearning.ai/the-batch/",
     "category": "community",
-    "tags": [
-      "newsletter",
-      "ai-news",
-      "weekly",
-      "deeplearning"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
-    "subcategory": "Newsletter",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-news-newsletter/1766532489875-ai-news-newsletter.png",
-    "aiSummary": "Weekly AI newsletter covering Claude and other developments.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Weekly AI newsletter from DeepLearning.AI covering Claude and broader AI developments",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Open source development",
-      "Community contributions",
-      "Collaborative support",
-      "Diverse solutions"
+      "Weekly AI digest",
+      "Curated content",
+      "Industry coverage",
+      "Expert perspectives"
     ],
     "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
+      "Stay updated on AI weekly",
+      "Learn industry trends",
+      "Discover new developments",
+      "Get curated AI content"
     ],
     "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
+      "Curated quality",
+      "Regular schedule",
+      "Broad coverage",
+      "Expert curation"
     ],
     "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
+      "Weekly only",
+      "General AI focus",
+      "Email format"
     ],
     "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
+      "AI professionals",
+      "Weekly readers",
+      "Industry followers"
     ],
     "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
+      "Email subscription",
+      "Interest in AI news",
+      "Weekly reading time"
     ]
   },
   {
@@ -836,53 +565,46 @@
     "description": "Daily AI news digest including Claude updates.",
     "url": "https://tldr.tech/ai",
     "category": "community",
-    "tags": [
-      "newsletter",
-      "ai-news",
-      "daily",
-      "tldr"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-05-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Newsletter",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tldr-ai/1766532489895-tldr-ai.png",
-    "aiSummary": "Daily AI news digest including Claude updates.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Daily AI news digest including Claude updates in a concise, scannable format",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Open source development",
-      "Community contributions",
-      "Collaborative support",
-      "Diverse solutions"
+      "Daily updates",
+      "Concise format",
+      "Claude coverage",
+      "Quick reads"
     ],
     "useCases": [
-      "Explore community innovations",
-      "Contribute to ecosystem growth",
-      "Learn from peer implementations",
-      "Access alternative solutions"
+      "Get daily AI updates",
+      "Stay current quickly",
+      "Scan AI headlines",
+      "Track industry news"
     ],
     "pros": [
-      "Community-driven and collaborative",
-      "Often free and open source",
-      "Diverse perspectives and solutions",
-      "Active discussion and support"
+      "Daily delivery",
+      "Concise summaries",
+      "Time-efficient",
+      "Broad coverage"
     ],
     "cons": [
-      "Support depends on community activity",
-      "Quality varies between projects",
-      "May lack official endorsement"
+      "Brief coverage",
+      "May miss depth",
+      "Email overload risk"
     ],
     "targetAudience": [
-      "Open source enthusiasts",
-      "Developers seeking community solutions",
-      "Contributors wanting to give back"
+      "Busy professionals",
+      "Daily readers",
+      "News followers"
     ],
     "prerequisites": [
-      "Willingness to explore community tools",
-      "Ability to troubleshoot independently",
-      "Interest in community participation"
+      "Email subscription",
+      "Daily reading habit",
+      "Interest in AI news"
     ]
   }
 ]

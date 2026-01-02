@@ -17,14 +17,14 @@
     "subcategory": "Curated List",
     "difficulty": "advanced",
     "featured": true,
-    "featuredReason": "Trending",
+    "featuredReason": "trending",
     "github": {
       "owner": "PatrickJS",
       "repo": "awesome-cursorrules",
-      "stars": 36000,
-      "forks": 2400,
-      "lastUpdated": "2024-12-11",
-      "language": "Markdown"
+      "stars": 36477,
+      "forks": 3096,
+      "lastUpdated": "2024-07-01",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1766534684887-awesome-cursorrules.png",
     "aiSummary": "Curated list of cursor rules organized by framework and use case.",
@@ -87,7 +87,7 @@
     "subcategory": "Directory",
     "difficulty": "advanced",
     "featured": true,
-    "featuredReason": "Most Popular",
+    "featuredReason": "most-popular",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1766534683529-cursor-directory.png",
     "aiSummary": "Community-driven directory of cursor rules for various frameworks and languages.",
     "aiAnalyzedAt": "2025-12-21",
@@ -141,7 +141,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1766534691993-secretlint-secretlint-rule-anthropic.png",
     "aiSummary": "Secretlint rule for detecting Anthropic Claude API keys",
@@ -190,7 +190,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "intermediate",
     "github": {
       "owner": "johnbenac",
@@ -244,57 +244,46 @@
     "description": "Rules for generating clear and consistent documentation.",
     "url": "https://cursor.directory/documentation",
     "category": "rules",
-    "tags": [
-      "documentation",
-      "jsdoc",
-      "markdown",
-      "readme"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-10-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Documentation",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1766534683525-rules-documentation.png",
-    "aiSummary": "Rules for generating clear and consistent documentation.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for generating clear and consistent documentation with AI",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Generating clear and consistent documentation",
-      "Coding standard enforcement",
-      "AI assistant guidance",
-      "Project-specific customization"
+      "Documentation standards",
+      "Consistency rules",
+      "AI writing guidance",
+      "Style enforcement"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Standardize AI-generated docs",
+      "Maintain consistency",
+      "Guide AI documentation",
+      "Improve doc quality"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Clear standards",
+      "Consistency",
+      "Easy to implement",
+      "Quality improvement"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "May be too rigid",
+      "Customization needed",
+      "Style preferences vary"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Documentation teams",
+      "AI-assisted writers",
+      "Project maintainers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tutorials/documentation-generation"
+      "CLAUDE.md setup",
+      "Documentation needs",
+      "Style preferences"
     ]
   },
   {
@@ -303,54 +292,46 @@
     "description": "FastAPI backend development rules with Pydantic and async patterns.",
     "url": "https://cursor.directory/fastapi",
     "category": "rules",
-    "tags": [
-      "fastapi",
-      "python",
-      "api",
-      "async",
-      "backend"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-09-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1766534687441-rules-fastapi.png",
-    "aiSummary": "FastAPI backend development rules with Pydantic and async patterns.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for FastAPI development with Pydantic and async patterns",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Pydantic and async patterns",
-      "API integration support",
-      "Coding standard enforcement",
-      "AI assistant guidance"
+      "FastAPI patterns",
+      "Pydantic usage",
+      "Async best practices",
+      "API development"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Build FastAPI apps with AI",
+      "Follow FastAPI best practices",
+      "Async API development",
+      "Pydantic integration"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "FastAPI-specific",
+      "Modern patterns",
+      "Async support",
+      "Type safety"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "FastAPI-only focus",
+      "Opinionated",
+      "May conflict with team style"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "FastAPI developers",
+      "Python API builders",
+      "Async Python developers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
+      "FastAPI knowledge",
+      "Python experience",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -359,53 +340,46 @@
     "description": "Go development rules following idiomatic Go patterns.",
     "url": "https://cursor.directory/go",
     "category": "rules",
-    "tags": [
-      "go",
-      "golang",
-      "backend",
-      "systems"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-09-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Language",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1766534687696-rules-go.png",
-    "aiSummary": "Go development rules following idiomatic Go patterns.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules following idiomatic Go patterns and best practices",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Coding standard enforcement",
-      "AI assistant guidance",
-      "Project-specific customization",
-      "Team workflow integration"
+      "Idiomatic Go",
+      "Go best practices",
+      "Error handling",
+      "Package structure"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Write idiomatic Go with AI",
+      "Follow Go conventions",
+      "Build Go applications",
+      "Learn Go patterns"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Go-specific",
+      "Idiomatic focus",
+      "Best practices",
+      "Community conventions"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Go-only focus",
+      "Opinionated",
+      "May need customization"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Go developers",
+      "Systems programmers",
+      "Backend engineers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
+      "Go experience",
+      "CLAUDE.md setup",
+      "Go project"
     ]
   },
   {
@@ -414,57 +388,46 @@
     "description": "Optimized rules for Next.js App Router projects with TypeScript.",
     "url": "https://cursor.directory/nextjs",
     "category": "rules",
-    "tags": [
-      "nextjs",
-      "react",
-      "typescript",
-      "app-router"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-08-01",
     "lastVerified": "2025-12-20",
-    "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1766534687900-rules-nextjs.png",
-    "aiSummary": "Optimized rules for Next. js App Router projects with TypeScript.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Optimized CLAUDE.md rules for Next.js App Router with TypeScript best practices",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "TypeScript",
-      "TypeScript support",
-      "Coding standard enforcement",
-      "AI assistant guidance"
+      "Next.js App Router",
+      "TypeScript integration",
+      "React patterns",
+      "Performance focus"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Build Next.js apps with AI",
+      "Follow App Router patterns",
+      "TypeScript development",
+      "React best practices"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Next.js focused",
+      "Modern patterns",
+      "TypeScript support",
+      "Performance aware"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Next.js specific",
+      "Opinionated",
+      "Rapid framework evolution"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Next.js developers",
+      "React developers",
+      "Full-stack TypeScript developers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "configuration/claude-md"
+      "Next.js knowledge",
+      "TypeScript experience",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -473,53 +436,46 @@
     "description": "Python development rules with type hints and modern practices.",
     "url": "https://cursor.directory/python",
     "category": "rules",
-    "tags": [
-      "python",
-      "type-hints",
-      "pep8",
-      "backend"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-08-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Language",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1766534687618-rules-python.png",
-    "aiSummary": "Python development rules with type hints and modern practices.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for Python development with type hints and modern practices",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Type hints and modern practices",
-      "Python support",
-      "Coding standard enforcement",
-      "AI assistant guidance"
+      "Python type hints",
+      "Modern Python",
+      "Best practices",
+      "Code quality"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Write typed Python with AI",
+      "Follow Python best practices",
+      "Modern Python development",
+      "Code quality improvement"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Python-specific",
+      "Type hint focus",
+      "Modern practices",
+      "Quality emphasis"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Python-only focus",
+      "Type hint learning curve",
+      "Opinionated"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Python developers",
+      "Type-safety advocates",
+      "Modern Python users"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
+      "Python experience",
+      "Type hint familiarity",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -528,53 +484,46 @@
     "description": "Best practices rules for React applications with hooks and modern patterns.",
     "url": "https://cursor.directory/react",
     "category": "rules",
-    "tags": [
-      "react",
-      "hooks",
-      "javascript",
-      "frontend"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-08-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Framework",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1766534687718-rules-react.png",
-    "aiSummary": "Best practices rules for React applications with hooks and modern patterns.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for React applications with hooks and modern patterns",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Hooks and modern patterns",
-      "React applications with hooks and modern patterns",
-      "Coding standard enforcement",
-      "AI assistant guidance"
+      "React hooks",
+      "Modern patterns",
+      "Component design",
+      "State management"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Build React apps with AI",
+      "Follow React best practices",
+      "Modern React development",
+      "Component architecture"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "React-specific",
+      "Hooks focus",
+      "Modern patterns",
+      "Component-driven"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "React-only focus",
+      "Opinionated",
+      "Framework evolution"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "React developers",
+      "Frontend engineers",
+      "Component architects"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
+      "React experience",
+      "Hooks knowledge",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -583,53 +532,46 @@
     "description": "Rust development rules for safe and performant code.",
     "url": "https://cursor.directory/rust",
     "category": "rules",
-    "tags": [
-      "rust",
-      "systems",
-      "memory-safety",
-      "performance"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-09-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Language",
     "difficulty": "advanced",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1766534687903-rules-rust.png",
-    "aiSummary": "Rust development rules for safe and performant code.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for Rust development emphasizing safety and performance",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Safe and performant code",
-      "Coding standard enforcement",
-      "AI assistant guidance",
-      "Project-specific customization"
+      "Rust safety",
+      "Performance focus",
+      "Memory management",
+      "Idiomatic Rust"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Write safe Rust with AI",
+      "Follow Rust best practices",
+      "Performance-critical development",
+      "Systems programming"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Rust-specific",
+      "Safety emphasis",
+      "Performance focus",
+      "Idiomatic patterns"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Rust-only focus",
+      "Steep learning curve",
+      "Opinionated"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Rust developers",
+      "Systems programmers",
+      "Performance engineers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
+      "Rust experience",
+      "Ownership understanding",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -638,53 +580,46 @@
     "description": "Svelte 5 and SvelteKit rules for modern web apps.",
     "url": "https://cursor.directory/svelte",
     "category": "rules",
-    "tags": [
-      "svelte",
-      "sveltekit",
-      "runes",
-      "frontend"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-08-15",
     "lastVerified": "2024-12-11",
-    "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1766534687763-rules-svelte.png",
-    "aiSummary": "Svelte 5 and SvelteKit rules for modern web apps.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for Svelte 5 and SvelteKit development with modern patterns",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Modern web apps",
-      "Coding standard enforcement",
-      "AI assistant guidance",
-      "Project-specific customization"
+      "Svelte 5 patterns",
+      "SvelteKit integration",
+      "Runes syntax",
+      "Modern web apps"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Build Svelte apps with AI",
+      "Follow SvelteKit patterns",
+      "Modern Svelte development",
+      "Component architecture"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Svelte-specific",
+      "Modern Svelte 5",
+      "SvelteKit support",
+      "Lightweight focus"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Svelte-only focus",
+      "Svelte 5 specific",
+      "Smaller ecosystem"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Svelte developers",
+      "Frontend engineers",
+      "Lightweight framework advocates"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
+      "Svelte experience",
+      "SvelteKit knowledge",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -693,53 +628,46 @@
     "description": "Tailwind CSS utility-first styling rules.",
     "url": "https://cursor.directory/tailwind",
     "category": "rules",
-    "tags": [
-      "tailwind",
-      "css",
-      "styling",
-      "utility-first"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-09-15",
     "lastVerified": "2024-12-11",
-    "subcategory": "Styling",
     "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1766534687612-rules-tailwind.png",
-    "aiSummary": "Tailwind CSS utility-first styling rules.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for Tailwind CSS utility-first styling best practices",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Coding standard enforcement",
-      "AI assistant guidance",
-      "Project-specific customization",
-      "Team workflow integration"
+      "Tailwind utilities",
+      "Responsive design",
+      "Component patterns",
+      "CSS best practices"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Style with Tailwind and AI",
+      "Follow utility-first patterns",
+      "Responsive development",
+      "Consistent styling"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Tailwind-specific",
+      "Utility-first focus",
+      "Responsive patterns",
+      "Consistent style"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Tailwind-only focus",
+      "Utility-first paradigm",
+      "Learning curve"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Tailwind users",
+      "CSS developers",
+      "Frontend engineers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
+      "Tailwind knowledge",
+      "CSS experience",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -748,58 +676,46 @@
     "description": "Rules for writing effective tests with Jest, Vitest, and Playwright.",
     "url": "https://cursor.directory/testing",
     "category": "rules",
-    "tags": [
-      "testing",
-      "jest",
-      "vitest",
-      "playwright",
-      "tdd"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-10-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Testing",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1766534687620-rules-testing.png",
-    "aiSummary": "Rules for writing effective tests with Jest, Vitest, and Playwright.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for effective testing with Jest, Vitest, and Playwright",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Writing effective tests with Jest",
-      "Coding standard enforcement",
-      "AI assistant guidance",
-      "Project-specific customization"
+      "Jest support",
+      "Vitest patterns",
+      "Playwright E2E",
+      "Testing best practices"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Write tests with AI",
+      "Follow testing best practices",
+      "E2E test development",
+      "Test coverage improvement"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Multi-framework support",
+      "E2E testing",
+      "Best practices",
+      "Coverage focus"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Framework-specific",
+      "Opinionated",
+      "Test philosophy varies"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Test engineers",
+      "QA developers",
+      "Full-stack developers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tutorials/test-generation"
+      "Testing framework experience",
+      "JavaScript/TypeScript",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -808,56 +724,46 @@
     "description": "Strict TypeScript rules for type-safe development.",
     "url": "https://cursor.directory/typescript",
     "category": "rules",
-    "tags": [
-      "typescript",
-      "types",
-      "strict-mode"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-08-01",
     "lastVerified": "2024-12-11",
-    "subcategory": "Language",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1766534687419-rules-typescript.png",
-    "aiSummary": "Strict TypeScript rules for type-safe development.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Strict CLAUDE.md rules for type-safe TypeScript development",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "Type-safe development",
-      "TypeScript support",
-      "Coding standard enforcement",
-      "AI assistant guidance"
+      "Strict TypeScript",
+      "Type safety",
+      "Modern TS patterns",
+      "Best practices"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Write type-safe code with AI",
+      "Follow TypeScript best practices",
+      "Strict mode development",
+      "Type system mastery"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Type-safety focus",
+      "Strict mode",
+      "Modern patterns",
+      "Error prevention"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Strict can be limiting",
+      "Learning curve",
+      "Opinionated"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "TypeScript developers",
+      "Type-safety advocates",
+      "Full-stack engineers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "configuration/claude-md"
+      "TypeScript experience",
+      "Strict mode understanding",
+      "CLAUDE.md setup"
     ]
   },
   {
@@ -866,53 +772,46 @@
     "description": "Vue 3 Composition API rules with TypeScript support.",
     "url": "https://cursor.directory/vue",
     "category": "rules",
-    "tags": [
-      "vue",
-      "composition-api",
-      "typescript",
-      "frontend"
-    ],
+    "tags": [],
     "status": "community",
     "addedDate": "2024-08-15",
     "lastVerified": "2024-12-11",
-    "subcategory": "Framework",
     "difficulty": "intermediate",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1766534690456-rules-vue.png",
-    "aiSummary": "Vue 3 Composition API rules with TypeScript support.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "CLAUDE.md rules for Vue 3 Composition API with TypeScript support",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "TypeScript support",
-      "API integration support",
-      "Coding standard enforcement",
-      "AI assistant guidance"
+      "Vue 3 Composition API",
+      "TypeScript integration",
+      "Reactivity patterns",
+      "Modern Vue"
     ],
     "useCases": [
-      "Enforce coding standards with AI",
-      "Maintain code quality automatically",
-      "Guide AI assistants effectively",
-      "Standardize team workflows"
+      "Build Vue apps with AI",
+      "Follow Vue 3 patterns",
+      "Composition API development",
+      "TypeScript Vue apps"
     ],
     "pros": [
-      "Enforces consistent coding standards",
-      "Integrates seamlessly with AI coding tools",
-      "Improves code quality automatically",
-      "Customizable to team preferences"
+      "Vue 3 focused",
+      "Composition API",
+      "TypeScript support",
+      "Modern patterns"
     ],
     "cons": [
-      "May conflict with existing linting rules",
-      "Requires initial configuration",
-      "Team adoption requires coordination"
+      "Vue-only focus",
+      "Composition API specific",
+      "Opinionated"
     ],
     "targetAudience": [
-      "Development teams using AI assistants",
-      "Technical leads establishing standards",
-      "Code quality engineers"
+      "Vue developers",
+      "Frontend engineers",
+      "TypeScript Vue developers"
     ],
     "prerequisites": [
-      "Claude Code or compatible AI coding tool",
-      "Project with CLAUDE.md or rules file",
-      "Access to project configuration"
+      "Vue 3 experience",
+      "Composition API knowledge",
+      "CLAUDE.md setup"
     ]
   }
 ]

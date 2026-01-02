@@ -315,7 +315,7 @@ function MacBookTerminalContent() {
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Features: 59 • Resources: 3,035+</span>
+          <span className="text-[#8b949e]"> Features: 59 • Resources: 3,012+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>

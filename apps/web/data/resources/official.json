@@ -11,20 +11,20 @@
       "official",
       "python"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "subcategory": "Examples",
     "difficulty": "beginner",
     "featured": true,
-    "featuredReason": "Official Examples",
+    "featuredReason": "official-examples",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-cookbook",
-      "stars": 8500,
-      "forks": 1200,
-      "lastUpdated": "2024-12-10",
-      "language": "Python"
+      "stars": 30051,
+      "forks": 3049,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1766534635550-anthropic-cookbook.png",
     "aiSummary": "Code examples and recipes for using Claude API effectively.",
@@ -64,7 +64,7 @@
       "Compliance with usage guidelines"
     ],
     "relatedDocsCount": 8,
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedDocSlugs": [
       "api/index",
       "api/models",
@@ -83,9 +83,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -108,8 +106,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -125,13 +121,13 @@
       "official",
       "guides"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "subcategory": "Documentation",
     "difficulty": "beginner",
     "featured": true,
-    "featuredReason": "Official Source",
+    "featuredReason": "official-source",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1766534636008-anthropic-docs.png",
     "aiSummary": "Official documentation for Claude API, including guides, tutorials, and API reference.",
     "aiAnalyzedAt": "2025-12-21",
@@ -193,13 +189,13 @@
       "official",
       "documentation"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "subcategory": "Documentation",
     "difficulty": "beginner",
     "featured": true,
-    "featuredReason": "Official Source",
+    "featuredReason": "official-source",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1766534655875-claude-code-docs.png",
     "aiSummary": "Official documentation for Claude Code CLI tool - the AI-powered coding assistant.",
     "aiAnalyzedAt": "2025-12-21",
@@ -269,20 +265,20 @@
       "official",
       "cli"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "subcategory": "Repository",
     "difficulty": "intermediate",
     "featured": true,
-    "featuredReason": "Official Repository",
+    "featuredReason": "official-repository",
     "github": {
       "owner": "anthropics",
       "repo": "claude-code",
-      "stars": 45000,
-      "forks": 3500,
-      "lastUpdated": "2024-12-11",
-      "language": "TypeScript"
+      "stars": 48882,
+      "forks": 3445,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
     },
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1766534655061-claude-code-repo.png",
     "aiSummary": "Official Claude Code repository - issues, discussions, and release information.",
@@ -322,7 +318,7 @@
       "Compliance with usage guidelines"
     ],
     "relatedDocsCount": 9,
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedDocSlugs": [
       "configuration/index",
       "configuration/claude-md",
@@ -343,9 +339,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -367,8 +361,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -384,13 +376,13 @@
       "official",
       "documentation"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
     "difficulty": "beginner",
     "featured": true,
-    "featuredReason": "Official Source",
+    "featuredReason": "official-source",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1766534668194-mcp-docs.png",
     "aiSummary": "Official MCP documentation - the open protocol for connecting AI assistants to external tools.",
     "aiAnalyzedAt": "2025-12-21",
@@ -435,7 +427,7 @@
     ]
   },
   {
-    "id": "announcement-1",
+    "id": "announcement-2",
     "title": "Announcement",
     "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
     "url": "https://www.anthropic.com/news/claude-sonnet-4-5",
@@ -443,107 +435,9 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-1/1766534635020-announcement-1.png",
-    "aiSummary": "Official Anthropic resource for Announcement.  Part of the Claude ecosystem maintained by Anthropic.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
-    "keyFeatures": [
-      "Announcement",
-      "Official Anthropic support",
-      "Enterprise-grade reliability",
-      "Comprehensive documentation"
-    ],
-    "useCases": [
-      "Build enterprise AI solutions",
-      "Deploy production-grade Claude integrations",
-      "Access latest Claude capabilities",
-      "Develop with official support"
-    ],
-    "pros": [
-      "Officially supported by Anthropic",
-      "Enterprise-grade reliability and security",
-      "Comprehensive documentation",
-      "Regular updates and feature additions"
-    ],
-    "cons": [
-      "Usage limits based on subscription tier",
-      "May require specific account types",
-      "Bound to official service terms"
-    ],
-    "targetAudience": [
-      "Enterprise developers",
-      "Teams requiring official support",
-      "Organizations with compliance requirements"
-    ],
-    "prerequisites": [
-      "Anthropic account with appropriate tier",
-      "Understanding of Claude's capabilities",
-      "Compliance with usage guidelines"
-    ]
-  },
-  {
-    "id": "announcement",
-    "title": "Announcement",
-    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
-    "url": "https://www.anthropic.com/news/claude-opus-4-5",
-    "category": "official",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement/1766534635510-announcement.png",
-    "aiSummary": "Official Anthropic resource for Announcement.  Part of the Claude ecosystem maintained by Anthropic.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
-    "keyFeatures": [
-      "Announcement",
-      "Official Anthropic support",
-      "Enterprise-grade reliability",
-      "Comprehensive documentation"
-    ],
-    "useCases": [
-      "Build enterprise AI solutions",
-      "Deploy production-grade Claude integrations",
-      "Access latest Claude capabilities",
-      "Develop with official support"
-    ],
-    "pros": [
-      "Officially supported by Anthropic",
-      "Enterprise-grade reliability and security",
-      "Comprehensive documentation",
-      "Regular updates and feature additions"
-    ],
-    "cons": [
-      "Usage limits based on subscription tier",
-      "May require specific account types",
-      "Bound to official service terms"
-    ],
-    "targetAudience": [
-      "Enterprise developers",
-      "Teams requiring official support",
-      "Organizations with compliance requirements"
-    ],
-    "prerequisites": [
-      "Anthropic account with appropriate tier",
-      "Understanding of Claude's capabilities",
-      "Compliance with usage guidelines"
-    ]
-  },
-  {
-    "id": "announcement-2",
-    "title": "Announcement",
-    "description": "Official Anthropic resource for Announcement. Part of the Claude ecosystem maintained by Anthropic.",
-    "url": "https://www.anthropic.com/news/claude-haiku-4-5",
-    "category": "official",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
-    "difficulty": "beginner",
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1766534635294-announcement-2.png",
     "aiSummary": "Official Anthropic resource for Announcement.  Part of the Claude ecosystem maintained by Anthropic.",
     "aiAnalyzedAt": "2025-12-21",
     "aiConfidence": 0.85,
@@ -593,7 +487,7 @@
       "official",
       "news"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "subcategory": "Blog",
@@ -645,7 +539,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1766534634870-anthropic-claude-code-best-practices.png",
     "aiSummary": "Official Anthropic engineering blog - Claude Code best practices",
@@ -686,220 +580,115 @@
     ]
   },
   {
-    "id": "anthropic-sdk-python",
+    "id": "sdk-python-official",
     "title": "Anthropic Python SDK",
     "description": "Official Python SDK for the Anthropic API.",
     "url": "https://github.com/anthropics/anthropic-sdk-python",
     "category": "official",
-    "tags": [
-      "sdk",
-      "python",
-      "official",
-      "api"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
-    "subcategory": "SDK",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-python",
-      "stars": 5800,
-      "forks": 650,
-      "lastUpdated": "2024-12-10",
-      "language": "Python"
+      "stars": 2555,
+      "forks": 415,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-python/1766534641847-anthropic-sdk-python.png",
-    "aiSummary": "Official Python SDK for the Anthropic API.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official Python SDK from Anthropic for building Claude-powered applications",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "The Anthropic API",
-      "API integration support",
-      "Python support"
+      "Official Python client",
+      "Type hints",
+      "Async support",
+      "Full API coverage"
     ],
     "useCases": [
-      "Build enterprise AI solutions",
-      "Deploy production-grade Claude integrations",
-      "Access latest Claude capabilities",
-      "Develop with official support"
+      "Build Python AI apps",
+      "Integrate Claude API",
+      "Create chatbots",
+      "Develop AI features"
     ],
     "pros": [
-      "Officially supported by Anthropic",
-      "Enterprise-grade reliability and security",
-      "Comprehensive documentation",
-      "Regular updates and feature additions"
+      "Official support",
+      "Full API coverage",
+      "Well-documented",
+      "Regular updates"
     ],
     "cons": [
-      "Usage limits based on subscription tier",
-      "May require specific account types",
-      "Bound to official service terms"
+      "Python only",
+      "API costs",
+      "Learning curve for advanced features"
     ],
     "targetAudience": [
-      "Enterprise developers",
-      "Teams requiring official support",
-      "Organizations with compliance requirements"
+      "Python developers",
+      "AI application builders",
+      "Backend engineers"
     ],
     "prerequisites": [
-      "Anthropic account with appropriate tier",
-      "Understanding of Claude's capabilities",
-      "Compliance with usage guidelines"
-    ],
-    "relatedDocsCount": 5,
-    "relatedResourcesCount": 35,
-    "relatedDocSlugs": [
-      "api/index",
-      "api/authentication",
-      "api/streaming",
-      "api/error-handling",
-      "configuration/environment"
-    ],
-    "relatedResourceSlugs": [
-      "anthropic-bedrock-python",
-      "anthropic-bedrock-typescript",
-      "anthropic-cookbook",
-      "anthropic-courses",
-      "anthropic-sdk-csharp",
-      "anthropic-sdk-go",
-      "anthropic-sdk-java",
-      "anthropic-sdk-php",
-      "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
-      "anthropic-tokenizer-typescript",
-      "blobfile",
-      "claude-agent-sdk-demos",
-      "claude-agent-sdk-python",
-      "claude-agent-sdk-typescript",
-      "claude-code-action",
-      "claude-code-base-action",
-      "claude-code-monitoring-guide",
-      "claude-code-repo",
-      "claude-code-sdk-python",
-      "claude-code-security-review",
-      "claude-cookbook",
-      "claude-plugins-official",
-      "claude-quickstarts",
-      "devcontainer-features",
-      "evals",
-      "life-sciences",
-      "political-neutrality-eval",
-      "prompt-eng-interactive-tutorial",
-      "redis-py",
-      "riv2025-long-horizon-coding-agent-demo",
-      "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
-      "skills"
+      "Python 3.8+",
+      "Anthropic API key",
+      "pip/poetry for installation"
     ]
   },
   {
-    "id": "anthropic-sdk-typescript",
+    "id": "sdk-typescript-official",
     "title": "Anthropic TypeScript SDK",
     "description": "Official TypeScript/JavaScript SDK for the Anthropic API.",
     "url": "https://github.com/anthropics/anthropic-sdk-typescript",
     "category": "official",
-    "tags": [
-      "sdk",
-      "typescript",
-      "javascript",
-      "official",
-      "api"
-    ],
-    "status": "official",
+    "tags": [],
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
-    "subcategory": "SDK",
     "difficulty": "intermediate",
     "github": {
       "owner": "anthropics",
       "repo": "anthropic-sdk-typescript",
-      "stars": 3200,
-      "forks": 380,
-      "lastUpdated": "2024-12-10",
-      "language": "TypeScript"
+      "stars": 1453,
+      "forks": 184,
+      "lastUpdated": "2025-12-20",
+      "language": "Unknown"
     },
-    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-typescript/1766534643166-anthropic-sdk-typescript.png",
-    "aiSummary": "Official TypeScript/JavaScript SDK for the Anthropic API.",
-    "aiAnalyzedAt": "2025-12-21",
-    "aiConfidence": 0.85,
+    "aiSummary": "Official TypeScript SDK from Anthropic for Node.js and browser Claude integration",
+    "aiAnalyzedAt": "2025-12-30",
+    "aiConfidence": 0.9,
     "keyFeatures": [
-      "The Anthropic API",
-      "API integration support",
-      "TypeScript support"
+      "TypeScript support",
+      "Node.js and browser",
+      "Type-safe API",
+      "Official client"
     ],
     "useCases": [
-      "Build enterprise AI solutions",
-      "Deploy production-grade Claude integrations",
-      "Access latest Claude capabilities",
-      "Develop with official support"
+      "Build TypeScript AI apps",
+      "Add Claude to web apps",
+      "Create Node.js services",
+      "Develop full-stack AI"
     ],
     "pros": [
-      "Officially supported by Anthropic",
-      "Enterprise-grade reliability and security",
-      "Comprehensive documentation",
-      "Regular updates and feature additions"
+      "Official support",
+      "TypeScript types",
+      "Browser compatible",
+      "Well-maintained"
     ],
     "cons": [
-      "Usage limits based on subscription tier",
-      "May require specific account types",
-      "Bound to official service terms"
+      "JavaScript ecosystem only",
+      "API costs",
+      "Bundle size consideration"
     ],
     "targetAudience": [
-      "Enterprise developers",
-      "Teams requiring official support",
-      "Organizations with compliance requirements"
+      "TypeScript developers",
+      "Web developers",
+      "Full-stack engineers"
     ],
     "prerequisites": [
-      "Anthropic account with appropriate tier",
-      "Understanding of Claude's capabilities",
-      "Compliance with usage guidelines"
-    ],
-    "relatedDocsCount": 5,
-    "relatedResourcesCount": 35,
-    "relatedDocSlugs": [
-      "api/index",
-      "api/authentication",
-      "api/streaming",
-      "api/error-handling",
-      "configuration/environment"
-    ],
-    "relatedResourceSlugs": [
-      "anthropic-bedrock-python",
-      "anthropic-bedrock-typescript",
-      "anthropic-cookbook",
-      "anthropic-courses",
-      "anthropic-sdk-csharp",
-      "anthropic-sdk-go",
-      "anthropic-sdk-java",
-      "anthropic-sdk-php",
-      "anthropic-sdk-python",
-      "anthropic-sdk-ruby",
-      "anthropic-tokenizer-typescript",
-      "blobfile",
-      "claude-agent-sdk-demos",
-      "claude-agent-sdk-python",
-      "claude-agent-sdk-typescript",
-      "claude-code-action",
-      "claude-code-base-action",
-      "claude-code-monitoring-guide",
-      "claude-code-repo",
-      "claude-code-sdk-python",
-      "claude-code-security-review",
-      "claude-cookbook",
-      "claude-plugins-official",
-      "claude-quickstarts",
-      "devcontainer-features",
-      "evals",
-      "life-sciences",
-      "political-neutrality-eval",
-      "prompt-eng-interactive-tutorial",
-      "redis-py",
-      "riv2025-long-horizon-coding-agent-demo",
-      "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
-      "skills"
+      "Node.js 18+",
+      "Anthropic API key",
+      "npm/yarn/pnpm"
     ]
   },
   {
@@ -911,7 +700,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -958,7 +747,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-typescript",
       "anthropic-cookbook",
@@ -967,9 +756,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -992,8 +779,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1006,7 +791,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1053,7 +838,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-cookbook",
@@ -1062,9 +847,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -1087,8 +870,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1101,7 +882,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1148,7 +929,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1157,9 +938,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -1182,8 +961,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1196,7 +973,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1243,7 +1020,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1252,9 +1029,7 @@
       "anthropic-sdk-csharp",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -1277,8 +1052,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1291,7 +1064,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1338,7 +1111,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1347,9 +1120,7 @@
       "anthropic-sdk-csharp",
       "anthropic-sdk-go",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -1372,8 +1143,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1386,7 +1155,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1433,7 +1202,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1442,9 +1211,7 @@
       "anthropic-sdk-csharp",
       "anthropic-sdk-go",
       "anthropic-sdk-java",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -1467,8 +1234,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1481,7 +1246,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1528,7 +1293,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1538,8 +1303,6 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -1562,8 +1325,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1576,7 +1337,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1623,7 +1384,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1633,9 +1394,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
       "claude-agent-sdk-python",
@@ -1657,8 +1416,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1671,7 +1428,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1766534639885-anthropic-s-article.png",
     "aiSummary": "Official Anthropic resource for Anthropic's article.  Part of the Claude ecosystem maintained by Anthropic.",
@@ -1720,7 +1477,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1767,7 +1524,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1777,9 +1534,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "claude-agent-sdk-demos",
       "claude-agent-sdk-python",
@@ -1801,8 +1556,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1815,7 +1568,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "advanced",
     "github": {
       "owner": "anthropics",
@@ -1864,7 +1617,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1874,9 +1627,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -1898,8 +1649,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -1912,7 +1661,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -1958,7 +1707,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -1968,9 +1717,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -1992,8 +1739,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -2006,7 +1751,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1766534656528-claude-agent-skills.png",
     "aiSummary": "Official Anthropic resource for Claude Agent Skills.  Part of the Claude ecosystem maintained by Anthropic.",
@@ -2055,7 +1800,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "intermediate",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1766534662759-claude-code-with-plugins.png",
     "aiSummary": "Official Anthropic resource for Claude Code with plugins.  Part of the Claude ecosystem maintained by Anthropic.",
@@ -2107,7 +1852,7 @@
       "official",
       "dashboard"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2024-12-11",
     "subcategory": "Tool",
@@ -2167,7 +1912,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -2214,7 +1959,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -2224,9 +1969,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -2248,8 +1991,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -2262,7 +2003,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-haiku-4-5-system-card/1766535454878-claude-haiku-4-5-system-card.png",
     "aiSummary": "Official Anthropic resource for Claude Haiku 4. 5 System Card.",
@@ -2311,7 +2052,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-opus-4-5-system-card/1766535454561-claude-opus-4-5-system-card.png",
     "aiSummary": "Official Anthropic resource for Claude Opus 4. 5 System Card.",
@@ -2360,7 +2101,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -2407,7 +2148,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -2417,9 +2158,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -2441,8 +2180,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -2455,7 +2192,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sonnet-4-5-system-card/1766535454602-claude-sonnet-4-5-system-card.png",
     "aiSummary": "Official Anthropic resource for Claude Sonnet 4. 5 System Card.",
@@ -2504,7 +2241,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -2551,7 +2288,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -2561,9 +2298,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-python",
@@ -2585,8 +2320,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -2599,7 +2332,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "advanced",
     "github": {
       "owner": "anthropics",
@@ -2646,7 +2379,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -2656,9 +2389,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -2680,8 +2411,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -2694,7 +2423,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -2741,7 +2470,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -2751,9 +2480,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -2775,8 +2502,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -2789,7 +2514,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -2836,7 +2561,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -2846,9 +2571,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -2870,8 +2593,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -2884,7 +2605,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -2930,7 +2651,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -2940,9 +2661,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -2964,8 +2683,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -2978,7 +2695,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3025,7 +2742,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3035,9 +2752,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3059,8 +2774,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3073,7 +2786,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "intermediate",
     "github": {
       "owner": "anthropics",
@@ -3120,7 +2833,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3130,9 +2843,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3154,8 +2865,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3168,7 +2877,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3215,7 +2924,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3225,9 +2934,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3249,8 +2956,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3263,7 +2968,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3310,7 +3015,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3320,9 +3025,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3344,8 +3047,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3358,7 +3059,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3405,7 +3106,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3415,9 +3116,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3439,8 +3138,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3453,7 +3150,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3500,7 +3197,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3510,9 +3207,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3534,8 +3229,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3551,7 +3244,7 @@
       "official",
       "best-practices"
     ],
-    "status": "official",
+    "status": "community",
     "addedDate": "2025-12-20",
     "lastVerified": "2024-12-11",
     "subcategory": "Documentation",
@@ -3609,7 +3302,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3656,7 +3349,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3666,9 +3359,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3690,8 +3381,6 @@
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3704,7 +3393,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3751,7 +3440,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3761,9 +3450,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3785,8 +3472,6 @@
       "prompt-eng-interactive-tutorial",
       "riv2025-long-horizon-coding-agent-demo",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3799,7 +3484,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3846,7 +3531,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3856,9 +3541,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3880,8 +3563,6 @@
       "prompt-eng-interactive-tutorial",
       "redis-py",
       "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3894,7 +3575,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -3941,7 +3622,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -3951,9 +3632,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -3975,8 +3654,6 @@
       "prompt-eng-interactive-tutorial",
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
-      "sdk-python-official",
-      "sdk-typescript-official",
       "skills"
     ]
   },
@@ -3989,7 +3666,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "github": {
       "owner": "anthropics",
@@ -4036,7 +3713,7 @@
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
     ],
-    "relatedResourcesCount": 35,
+    "relatedResourcesCount": 31,
     "relatedResourceSlugs": [
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript",
@@ -4046,9 +3723,7 @@
       "anthropic-sdk-go",
       "anthropic-sdk-java",
       "anthropic-sdk-php",
-      "anthropic-sdk-python",
       "anthropic-sdk-ruby",
-      "anthropic-sdk-typescript",
       "anthropic-tokenizer-typescript",
       "blobfile",
       "claude-agent-sdk-demos",
@@ -4070,9 +3745,7 @@
       "prompt-eng-interactive-tutorial",
       "redis-py",
       "riv2025-long-horizon-coding-agent-demo",
-      "s5cmd",
-      "sdk-python-official",
-      "sdk-typescript-official"
+      "s5cmd"
     ]
   },
   {
@@ -4084,7 +3757,7 @@
     "tags": [],
     "status": "community",
     "addedDate": "2025-12-20",
-    "lastVerified": "2025-12-20",
+    "lastVerified": "2025-12-28",
     "difficulty": "beginner",
     "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1766534669604-transparency-hub.png",
     "aiSummary": "Official Anthropic resource for Transparency Hub.  Part of the Claude ecosystem maintained by Anthropic.",
