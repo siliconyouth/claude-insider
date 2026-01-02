@@ -17,13 +17,22 @@ interface ChatRequest {
   userName?: string;
   shouldAskForName?: boolean;
   userContext?: string; // Context from behavior tracking
-  // AI context from Ask AI buttons
+  // AI context from Ask AI buttons (matches AIContext interface from unified-chat)
   aiContext?: {
-    type?: string;
-    category?: string;
-    code?: string;
-    language?: string;
-    title?: string;
+    page?: {
+      path: string;
+      title?: string;
+      section?: string;
+      category?: string;
+    };
+    content?: {
+      type: string;
+      title?: string;
+      code?: string;
+      language?: string;
+      text?: string;
+      metadata?: Record<string, string>;
+    };
   };
 }
 
@@ -97,7 +106,12 @@ export async function POST(request: Request) {
       .pop()?.content || "";
 
     // Search documentation for relevant context with AI context for better ranking
-    const ragContext = getRAGContext(latestUserMessage, 3, aiContext);
+    // Extract flat context values for RAG search boosting
+    const ragSearchContext = aiContext?.content ? {
+      type: aiContext.content.type,
+      category: aiContext.page?.category,
+    } : undefined;
+    const ragContext = getRAGContext(latestUserMessage, 3, ragSearchContext);
 
     // Build system prompt with context (async - fetches CMS settings)
     const systemPrompt = await buildSystemPrompt({
@@ -109,6 +123,7 @@ export async function POST(request: Request) {
       userName,
       shouldAskForName,
       userContext,
+      aiContext,
     });
 
     // Convert messages to Anthropic format

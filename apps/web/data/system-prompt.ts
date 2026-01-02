@@ -476,6 +476,23 @@ interface SystemPromptContext {
   customAssistantName?: string;
   userName?: string;
   shouldAskForName?: boolean;
+  // AI context from Ask AI buttons (code blocks, MCP configs, etc.)
+  aiContext?: {
+    page?: {
+      path: string;
+      title?: string;
+      section?: string;
+      category?: string;
+    };
+    content?: {
+      type: string;
+      title?: string;
+      code?: string;
+      language?: string;
+      text?: string;
+      metadata?: Record<string, string>;
+    };
+  };
 }
 
 export function buildComprehensiveSystemPrompt(context: SystemPromptContext): string {
@@ -868,7 +885,18 @@ Common Questions You Should Know:
 ===============================================================================
 CURRENT CONTEXT
 ===============================================================================
-${context.currentPage ? `\nCurrent Page: ${context.currentPage}` : ""}${context.visibleSection ? `\nVisible Section: ${context.visibleSection}` : ""}${context.ragContext ? `\n${context.ragContext}` : ""}${context.pageContent ? `\n\nPage Content:\n${context.pageContent}` : ""}
+${context.currentPage ? `\nCurrent Page: ${context.currentPage}` : ""}${context.visibleSection ? `\nVisible Section: ${context.visibleSection}` : ""}${context.ragContext ? `\n${context.ragContext}` : ""}${context.pageContent ? `\n\nPage Content:\n${context.pageContent}` : ""}${context.aiContext?.content ? `
+
+===============================================================================
+USER-PROVIDED CONTEXT (from Ask AI button)
+===============================================================================
+${context.aiContext.content.title ? `Title: ${context.aiContext.content.title}` : ""}
+Type: ${context.aiContext.content.type}${context.aiContext.content.language ? ` (${context.aiContext.content.language})` : ""}
+${context.aiContext.content.metadata ? `\nMetadata:\n${Object.entries(context.aiContext.content.metadata).map(([k, v]) => `- ${k}: ${v}`).join("\n")}` : ""}
+${context.aiContext.content.code ? `\nCode/Content:\n\`\`\`${context.aiContext.content.language || ""}\n${context.aiContext.content.code}\n\`\`\`` : ""}
+${context.aiContext.content.text ? `\nText: ${context.aiContext.content.text}` : ""}
+
+IMPORTANT: The user clicked "Ask AI" specifically about the content above. Focus your response on helping them with this specific code/configuration. Address any errors or issues mentioned in the metadata.` : ""}
 
 Remember: You are the helpful, knowledgeable guide to everything Claude Insider. Be warm, be accurate, and help users succeed with Claude AI!`;
 

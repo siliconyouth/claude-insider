@@ -49,6 +49,23 @@ export async function buildSystemPrompt(context: {
   userName?: string;
   shouldAskForName?: boolean;
   userContext?: string; // Context from behavior tracking
+  // AI context from Ask AI buttons (code blocks, MCP configs, etc.)
+  aiContext?: {
+    page?: {
+      path: string;
+      title?: string;
+      section?: string;
+      category?: string;
+    };
+    content?: {
+      type: string;
+      title?: string;
+      code?: string;
+      language?: string;
+      text?: string;
+      metadata?: Record<string, string>;
+    };
+  };
 }): Promise<string> {
   // Fetch site settings from CMS (cached)
   const siteSettings = await getSiteSettings();
