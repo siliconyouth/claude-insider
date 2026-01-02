@@ -38,8 +38,9 @@ const footerColumns: Record<FooterColumnKeys, FooterColumn> = {
     links: [
       { href: "/docs", labelKey: "documentation" },
       { href: "/resources", labelKey: "resources" },
+      { href: "/mcp-playground", label: "MCP Playground", badge: "New" },
       { href: "/prompts", label: "Prompt Library" },
-      { href: "#", label: "AI Assistant", badge: "New", action: "openAIAssistant" },
+      { href: "#", label: "AI Assistant", action: "openAIAssistant" },
       { href: "/inbox", label: "Chat" },
     ],
   },

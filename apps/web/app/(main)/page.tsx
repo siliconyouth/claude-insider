@@ -6,6 +6,7 @@ import { DeviceShowcase } from "@/components/device-mockups";
 import { LazyVoiceAssistantDemo } from "@/components/lazy-voice-assistant-demo";
 import { OpenAssistantButton } from "@/components/open-assistant-button";
 import { LazyResourcesSection } from "@/components/home/lazy-resources-section";
+import { LazyMCPPlaygroundSection } from "@/components/home/lazy-mcp-playground-section";
 import { LazyCategoriesSection } from "@/components/home/lazy-categories-section";
 import { LazyHighlightsSection } from "@/components/home/lazy-highlights-section";
 import { cn } from "@/lib/design-system";
@@ -67,7 +68,7 @@ export default async function HomePage() {
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    MCP Server Directory
+                    MCP Playground
                   </span>
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,6 +144,9 @@ export default async function HomePage() {
 
         {/* Resources Section - lazy loaded for better LCP */}
         <LazyResourcesSection />
+
+        {/* MCP Playground Section - lazy loaded */}
+        <LazyMCPPlaygroundSection />
 
         {/* AI Assistant Section - content-visibility for deferred rendering */}
         <div
