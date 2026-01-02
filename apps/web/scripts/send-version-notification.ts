@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.14.1 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.15.0 notification to all opted-in users...\n");
 
-  const version = "1.14.1";
-  const title = "Claude Insider v1.14.1 - Link Validation System & MCP Discovery";
+  const version = "1.15.0";
+  const title = "Claude Insider v1.15.0 - 1,863 Resource Relationships via AI Analysis";
   const message =
-    "🔗 Automated broken link detection with admin moderation queue • 🔌 1,136 new MCP servers discovered (99.6% success rate) • 📈 Resources grew from 1,952 to 3,035 (+55%) • 📦 npm Registry API validation (bypasses 403 bot protection) • 🎯 Trusted domains whitelist for reliable validation • 🔄 Weekly cron validation with consecutive failure tracking";
+    "🔗 1,863 resource relationships analyzed (63 doc-resource + 1,800 resource-resource) • 🤖 Claude Code subscription workflow (no API credits used) • 📊 7 relationship types: similar, alternative, complement, uses, integrates, fork, inspired_by • 🎯 Bidirectional links with confidence scores (0-1) • 📈 Enhanced cross-referencing for better resource discovery • ⚡ Manual JSON workflow with helper scripts for quality control";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
