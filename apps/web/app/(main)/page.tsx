@@ -42,16 +42,17 @@ export default async function HomePage() {
 
                 {/* Headline - Stripe-style large typography */}
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white leading-[1.1]">
-                  Master{" "}
+                  The{" "}
                   <span className="gradient-text-stripe">Claude AI</span>
                   <br />
-                  development
+                  knowledge hub
                 </h1>
 
                 {/* Subheadline */}
                 <p className="mt-6 text-xl sm:text-2xl leading-relaxed text-gray-700 dark:text-gray-300 max-w-xl">
-                  Comprehensive docs, curated resources, and tools for Claude AI.
-                  From setup to production-ready applications.
+                  {stats.totalResources.toLocaleString()}+ resources, 34 docs, 1,863 cross-references.
+                  Everything you need to build with Claude—organized,
+                  searchable, and always up to date.
                 </p>
 
                 {/* Feature list */}
@@ -60,7 +61,13 @@ export default async function HomePage() {
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Dashboard Charts
+                    Voice AI Assistant
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    MCP Server Directory
                   </span>
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,13 +79,7 @@ export default async function HomePage() {
                     <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    50+ Achievements
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    E2E Encrypted
+                    E2E Encrypted Chat
                   </span>
                 </div>
 
