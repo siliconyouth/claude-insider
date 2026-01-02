@@ -128,7 +128,7 @@ export function MCPTemplateSelector({
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-4xl max-h-[85vh] overflow-hidden ui-bg-modal rounded-2xl shadow-2xl flex flex-col">
+      <div className="relative w-full max-w-4xl max-h-[85vh] overflow-hidden ui-bg-modal border ui-border rounded-2xl shadow-2xl flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b ui-border shrink-0">
           <div>
