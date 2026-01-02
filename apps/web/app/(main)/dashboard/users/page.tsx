@@ -141,7 +141,7 @@ export default function UsersPage() {
       )}
 
       {/* User Detail Modal */}
-      {(selectedUserId || userDetailQuery.isPending) && (
+      {selectedUserId && (
         <UserDetailModal
           user={selectedUser}
           isLoading={userDetailQuery.isPending}
