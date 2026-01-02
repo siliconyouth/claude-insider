@@ -124,6 +124,16 @@ export function UnifiedChatWindow() {
           <ErrorBoundary
             category="render"
             severity="error"
+            showDetails={process.env.NODE_ENV === "development"}
+            onError={(error, errorInfo) => {
+              // Log detailed error info for debugging
+              console.error("[Chat] ErrorBoundary caught error:", {
+                message: error.message,
+                name: error.name,
+                stack: error.stack,
+                componentStack: errorInfo.componentStack,
+              });
+            }}
             onReset={() => {
               // Reset handled by ErrorBoundary internally
               console.log("[Chat] Error boundary reset triggered");

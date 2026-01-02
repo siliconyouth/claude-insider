@@ -123,8 +123,10 @@ export function MessagesTab() {
       processedUserIdRef.current = selectedUserId;
 
       // First check if we already have a conversation with this user
+      // DEFENSIVE: Use Array.isArray() to prevent "Cannot read property 'some' of undefined" error
       const existingConversation = conversations.find((conv) =>
         conv.type === "direct" &&
+        Array.isArray(conv.participants) &&
         conv.participants.some((p) => p.userId === selectedUserId)
       );
 
