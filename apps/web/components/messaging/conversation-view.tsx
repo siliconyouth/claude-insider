@@ -712,9 +712,10 @@ export function ConversationView({
           return prev.map((m) => (m.id === tempId ? realMessage : m));
         });
 
-        // Check if AI was mentioned - need to use legacy action for AI response
+        // Check if AI should respond - either @mentioned, or this is a 1-on-1 AI conversation
         const mentionedAI = content.includes("@claudeinsider") || content.includes("@ClaudeInsider");
-        if (mentionedAI) {
+        const shouldTriggerAI = mentionedAI || isAIConversation;
+        if (shouldTriggerAI) {
           await generateAIChatResponse(conversationId, realMessage.id);
           // Refresh to get AI message
           const refreshResult = await getMessages(conversationId, 10);
