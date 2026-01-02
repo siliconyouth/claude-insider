@@ -398,14 +398,49 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
 }
 
 // ============================================================================
+// Safe Defaults (for when provider hasn't loaded yet)
+// ============================================================================
+
+/**
+ * Create safe default values when RealtimeProvider isn't available yet.
+ * This happens during deferred loading (first 2 seconds after page load).
+ * All functions are no-ops and isConnected returns false.
+ */
+function createSafeDefaults(): RealtimeContextValue {
+  const noOp = () => () => {}; // subscribe returns unsubscribe function
+  const noOpVoid = () => {};
+
+  return {
+    subscribe: noOp,
+    sendTyping: noOpVoid,
+    sendReadReceipt: noOpVoid,
+    trackPresence: noOpVoid,
+    isConnected: () => false,
+  };
+}
+
+// ============================================================================
 // Hook
 // ============================================================================
 
+/**
+ * Access realtime context from any component.
+ *
+ * Returns safe defaults when:
+ * - Running on server (SSR)
+ * - Used before RealtimeProvider has loaded (deferred loading)
+ *
+ * This pattern matches useE2EEContext() for consistency.
+ */
 export function useRealtime(): RealtimeContextValue {
   const context = useContext(RealtimeContext);
+
   if (!context) {
-    throw new Error("useRealtime must be used within a RealtimeProvider");
+    // Return safe defaults when provider hasn't loaded yet
+    // This prevents errors during deferred loading
+    return createSafeDefaults();
   }
+
   return context;
 }
 
