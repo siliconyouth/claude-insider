@@ -25,6 +25,7 @@ import {
   markConversationAsRead,
   startConversation,
   type Conversation,
+  type ConversationParticipant,
 } from "@/app/actions/messaging";
 
 // ============================================================================
@@ -188,11 +189,20 @@ export function MessagesTab() {
   if (selectedConversationId && currentUserId) {
     const conversation = conversations.find((c) => c.id === selectedConversationId);
     if (conversation) {
+      // DEFENSIVE: Ensure participants is a valid array before rendering
+      // This prevents React Error #300 if participants is somehow a Promise or invalid
+      const validParticipants = Array.isArray(conversation.participants)
+        ? conversation.participants.filter(
+            (p): p is ConversationParticipant =>
+              p != null && typeof p === "object" && typeof p.userId === "string"
+          )
+        : [];
+
       return (
         <ConversationView
           conversationId={selectedConversationId}
           currentUserId={currentUserId}
-          participants={conversation.participants || []}
+          participants={validParticipants}
           isGroupChat={conversation.type === "group"}
           onBack={() => handleSelectConversation(null)}
           targetMessageId={targetMessageId}

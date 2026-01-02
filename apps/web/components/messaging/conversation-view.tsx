@@ -403,12 +403,24 @@ export function ConversationView({
   const messageIds = useMemo(() => messages.map((m) => m.id), [messages]);
 
   // Reactions hook - manages emoji reactions with optimistic updates
-  const { reactions, react } = useReactions({
+  const { reactions, react: reactAsync } = useReactions({
     conversationId,
     currentUserId,
     messageIds,
     enabled: !isLoading && messages.length > 0,
   });
+
+  // DEFENSIVE: Wrap async react function to prevent any unhandled Promise errors
+  // This ensures the Promise is always handled and won't accidentally be rendered
+  const react = useCallback(
+    (messageId: string, emoji: string) => {
+      // Fire-and-forget pattern with error handling
+      reactAsync(messageId, emoji).catch((error) => {
+        console.error("[ConversationView] Reaction error:", error);
+      });
+    },
+    [reactAsync]
+  );
 
   // Convert reactions to the format expected by VirtualizedMessageList
   const reactionsMap = useMemo(() => {

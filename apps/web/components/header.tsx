@@ -13,7 +13,7 @@ import { GradientLogo } from "@/components/gradient-logo";
 import { cn } from "@/lib/design-system";
 
 interface HeaderProps {
-  activePage?: "home" | "docs" | "getting-started" | "resources" | "stats" | "prompts" | "community";
+  activePage?: "home" | "docs" | "getting-started" | "resources" | "stats" | "prompts" | "community" | "tools";
 }
 
 // Icons for navigation items
