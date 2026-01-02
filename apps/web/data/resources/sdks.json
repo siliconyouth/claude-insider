@@ -62,11 +62,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedDocsCount": 2,
-    "relatedDocSlugs": [
-      "api/streaming",
-      "integrations/index"
     ]
   },
   {
@@ -5645,23 +5640,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 14,
-    "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentpilot",
-      "agentverse",
-      "agentvibes",
-      "claudecode-nvim"
     ]
   },
   {
@@ -5737,14 +5715,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "ai-fallback",
-      "ai-ql-tuui",
-      "ai-sdk-provider-claude-code",
-      "ai-sdk-provider-gemini-cli",
-      "ai-sdk-v5-anthropic-custom"
     ]
   },
   {
@@ -5794,14 +5764,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "ai-elements",
-      "ai-ql-tuui",
-      "ai-sdk-provider-claude-code",
-      "ai-sdk-provider-gemini-cli",
-      "ai-sdk-v5-anthropic-custom"
     ]
   },
   {
@@ -5851,14 +5813,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "ai-elements",
-      "ai-fallback",
-      "ai-ql-tuui",
-      "ai-sdk-provider-gemini-cli",
-      "ai-sdk-v5-anthropic-custom"
     ]
   },
   {
@@ -5908,14 +5862,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "ai-elements",
-      "ai-fallback",
-      "ai-ql-tuui",
-      "ai-sdk-provider-claude-code",
-      "ai-sdk-v5-anthropic-custom"
     ]
   },
   {
@@ -5965,14 +5911,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "ai-elements",
-      "ai-fallback",
-      "ai-ql-tuui",
-      "ai-sdk-provider-claude-code",
-      "ai-sdk-provider-gemini-cli"
     ]
   },
   {
@@ -6410,14 +6348,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "e2b",
-      "e2b-cookbook",
-      "e2b-dev-code-interpreter",
-      "e2b-dev-fragments",
-      "e2b-dev-open-computer-use"
     ]
   },
   {
@@ -7314,10 +7244,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "cc-monitor-rs"
     ]
   },
   {
@@ -7945,41 +7871,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -8310,41 +8201,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -8486,41 +8342,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -8633,41 +8454,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -9541,41 +9327,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -9729,41 +9480,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -9978,41 +9694,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -10088,41 +9769,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -10455,10 +10101,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "strands-agents-tools"
     ]
   },
   {
@@ -10573,41 +10215,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -10762,41 +10369,6 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-client",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "use-mcp"
     ]
   },
   {

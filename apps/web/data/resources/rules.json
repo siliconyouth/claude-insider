@@ -62,11 +62,6 @@
       "Claude Code or compatible AI coding tool",
       "Project with CLAUDE.md or rules file",
       "Access to project configuration"
-    ],
-    "relatedDocsCount": 2,
-    "relatedDocSlugs": [
-      "configuration/index",
-      "configuration/claude-md"
     ]
   },
   {
@@ -124,12 +119,6 @@
       "Claude Code or compatible AI coding tool",
       "Project with CLAUDE.md or rules file",
       "Access to project configuration"
-    ],
-    "relatedDocsCount": 3,
-    "relatedDocSlugs": [
-      "configuration/index",
-      "configuration/claude-md",
-      "integrations/ide-plugins"
     ]
   },
   {

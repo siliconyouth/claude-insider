@@ -54,11 +54,6 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ],
-    "relatedDocsCount": 2,
-    "relatedDocSlugs": [
-      "tips-and-tricks/index",
-      "tips-and-tricks/prompting"
     ]
   },
   {
@@ -124,10 +119,6 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tips-and-tricks/prompting"
     ]
   },
   {
@@ -193,10 +184,6 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tips-and-tricks/prompting"
     ]
   },
   {
@@ -358,11 +345,6 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ],
-    "relatedDocsCount": 2,
-    "relatedDocSlugs": [
-      "tips-and-tricks/prompting",
-      "tips-and-tricks/advanced-prompting"
     ]
   },
   {
@@ -420,10 +402,6 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "claude-code-auto-memory"
     ]
   },
   {
@@ -732,10 +710,6 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "friuns2-leaked-gpts"
     ]
   },
   {
@@ -948,10 +922,6 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "langgptai-langgpt"
     ]
   },
   {
@@ -1063,10 +1033,6 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tips-and-tricks/prompting"
     ]
   },
   {

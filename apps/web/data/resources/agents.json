@@ -63,10 +63,20 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedDocsCount": 2,
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 8,
     "relatedDocSlugs": [
-      "examples/index",
-      "examples/real-world-projects"
+      "examples/index"
+    ],
+    "relatedResourceSlugs": [
+      "crew-ai-wiki-with-examples-and-guides",
+      "stackwise",
+      "llm-agents",
+      "e2b-cookbook",
+      "community",
+      "awesome-claude-code-agents",
+      "demogpt",
+      "awesome-claude-agents"
     ]
   },
   {
@@ -133,20 +143,22 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedDocsCount": 1,
-    "relatedResourcesCount": 8,
+    "relatedDocsCount": 7,
+    "relatedResourcesCount": 4,
     "relatedDocSlugs": [
-      "api/tool-use"
+      "api/index",
+      "api/authentication",
+      "api/models",
+      "api/rate-limits",
+      "api/streaming",
+      "api/tool-use",
+      "api/error-handling"
     ],
     "relatedResourceSlugs": [
-      "agentforge",
-      "agents-1",
-      "agentverse",
+      "haystack",
+      "dspy",
       "autogen",
-      "babyagi",
-      "crewai-1",
-      "langchain-ai-open-swe",
-      "rag-from-scratch"
+      "llamaindex"
     ]
   },
   {
@@ -194,6 +206,15 @@
       "Python or JavaScript knowledge",
       "LLM API access",
       "Understanding of agent architectures"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "graphai-anthropic-agent",
+      "aiwaves-inc",
+      "automata",
+      "cody-by-ajhous44",
+      "agentforge",
+      "artisian-ai"
     ]
   },
   {
@@ -242,6 +263,14 @@
       "Azure account",
       "Node.js or JavaScript experience",
       "Familiarity with Azure services"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "agentops-ai-agentops",
+      "agentera-agently",
+      "awslabs-agent-squad",
+      "autogen",
+      "github-9"
     ]
   },
   {
@@ -290,52 +319,18 @@
       "Basic understanding of agent systems",
       "Development environment setup"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 10,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
       "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-subagents-collection",
+      "claude-code-sub-agents",
+      "claudecodeagents",
+      "claude-sub-agent",
+      "claude-code-subagents-1",
+      "awesome-claude-code-agents",
+      "claude-code-unified-agents",
+      "claude-code-agents",
+      "voltagent-awesome-claude-code-subagents"
     ]
   },
   {
@@ -383,6 +378,14 @@
       "GraphAI framework knowledge",
       "Anthropic API access",
       "Python programming experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "ajhous44",
+      "aiwaves-inc",
+      "automata",
+      "agentforge",
+      "artisian-ai"
     ]
   },
   {
@@ -431,6 +434,17 @@
       "Node.js environment",
       "Understanding of AI agent concepts",
       "npm/pnpm package manager"
+    ],
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 4,
+    "relatedDocSlugs": [
+      "configuration/environment"
+    ],
+    "relatedResourceSlugs": [
+      "agentops-ai-agentops",
+      "blinky",
+      "e2b",
+      "claude-code-hooks-multi-agent-observability"
     ]
   },
   {
@@ -488,9 +502,13 @@
       "Understanding of data labeling",
       "LLM API access"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "humansignal-label-studio-mcp-server"
+      "agentera-agently",
+      "autogen",
+      "crewai-1",
+      "camel",
+      "agentverse"
     ]
   },
   {
@@ -549,21 +567,15 @@
       "Codebase to index",
       "Basic understanding of RAG systems"
     ],
-    "relatedResourcesCount": 13,
+    "relatedResourcesCount": 7,
     "relatedResourceSlugs": [
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentpilot",
-      "agentverse",
-      "agentvibes"
+      "github-2",
+      "dspy",
+      "awesome-llm-apps",
+      "memfree",
+      "github-19",
+      "local-gpt",
+      "bloop-apps"
     ]
   },
   {
@@ -621,63 +633,20 @@
       "CLAUDE.md or rules.md setup",
       "Basic agent configuration knowledge"
     ],
-    "relatedResourcesCount": 55,
+    "relatedDocsCount": 4,
+    "relatedResourcesCount": 5,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "configuration/claude-md",
+      "configuration/permissions",
+      "configuration/settings"
+    ],
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentpilot",
-      "agents-2",
-      "agentverse",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
       "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "agentcheck",
+      "awesome-claude-code-agents",
+      "claude-agents",
+      "claude-code-agents"
     ]
   },
   {
@@ -735,21 +704,12 @@
       "Python/PyTorch experience",
       "Understanding of recommendation systems"
     ],
-    "relatedResourcesCount": 13,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentpilot",
-      "agentverse",
-      "agentvibes"
+      "gpt-researcher",
+      "bambooai",
+      "github-29",
+      "data-to-paper"
     ]
   },
   {
@@ -807,63 +767,13 @@
       "Local AI model setup",
       "Code review standards defined"
     ],
-    "relatedResourcesCount": 55,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
       "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentpilot",
-      "agents-2",
-      "agentverse",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
+      "blinky",
       "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "autopr",
+      "claude-code-agents"
     ]
   },
   {
@@ -921,21 +831,14 @@
       "Understanding of GenAI concepts",
       "API keys for target models"
     ],
-    "relatedResourcesCount": 13,
+    "relatedResourcesCount": 6,
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentpilot",
-      "agentverse",
-      "agentvibes"
+      "adala",
+      "azure-ai-agents",
+      "autogen",
+      "crewai-1",
+      "github-9",
+      "camel"
     ]
   },
   {
@@ -992,26 +895,22 @@
       "LLM API access",
       "Agent architecture understanding"
     ],
-    "relatedResourcesCount": 18,
+    "relatedResourcesCount": 14,
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentpilot",
-      "agents-2",
-      "agentverse",
-      "agentvibes",
-      "autogen",
-      "babyagi",
-      "crewai-1",
-      "langchain"
+      "eumemic",
+      "ajhous44",
+      "graphai-anthropic-agent",
+      "github-10",
+      "ted-spare",
+      "uri-shamay",
+      "github-7",
+      "aiwaves-inc",
+      "yagents",
+      "automata",
+      "specialized-ai-agents",
+      "github-6",
+      "xataio-agent",
+      "artisian-ai"
     ]
   },
   {
@@ -1070,21 +969,19 @@
       "Existing agent implementation",
       "AgentOps account (for full features)"
     ],
-    "relatedResourcesCount": 13,
+    "relatedDocsCount": 3,
+    "relatedResourcesCount": 5,
+    "relatedDocSlugs": [
+      "api/rate-limits",
+      "api/error-handling",
+      "configuration/environment"
+    ],
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
+      "vercel-detect-agent",
       "agentops-ai-tokencost",
-      "agentpilot",
-      "agentverse",
-      "agentvibes"
+      "autogen",
+      "crewai-1",
+      "claude-code-hooks-multi-agent-observability"
     ]
   },
   {
@@ -1142,21 +1039,14 @@
       "Understanding of LLM pricing models",
       "pip package manager"
     ],
-    "relatedResourcesCount": 13,
+    "relatedDocsCount": 2,
+    "relatedResourcesCount": 1,
+    "relatedDocSlugs": [
+      "api/models",
+      "api/rate-limits"
+    ],
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentpilot",
-      "agentverse",
-      "agentvibes"
+      "agentops-ai-agentops"
     ]
   },
   {
@@ -1214,21 +1104,15 @@
       "Basic AI understanding",
       "Workflow design knowledge"
     ],
-    "relatedResourcesCount": 13,
+    "relatedResourcesCount": 7,
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentverse",
-      "agentvibes"
+      "github-10",
+      "workgpt",
+      "lemon-agent",
+      "autogen",
+      "crewai-1",
+      "github-9",
+      "agentverse"
     ]
   },
   {
@@ -1285,59 +1169,13 @@
       "Development workflow knowledge",
       "Multi-agent concepts understanding"
     ],
-    "relatedResourcesCount": 51,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agentforge",
-      "agentverse",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "autogen",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "babyagi",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
       "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
       "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "commands",
-      "coplaydev-unity-mcp",
-      "crewai-1",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "langchain",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "awesome-claude-agents",
+      "claude-code-unified-agents",
+      "claude-code-agents"
     ]
   },
   {
@@ -1395,28 +1233,19 @@
       "Multi-agent system knowledge",
       "Significant compute resources"
     ],
-    "relatedResourcesCount": 20,
+    "relatedResourcesCount": 11,
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
+      "claude-swarm",
+      "adala",
+      "github-28",
       "agentpilot",
-      "agents-2",
-      "agentvibes",
+      "ai-legion",
       "autogen",
-      "babyagi",
-      "chatdev",
       "crewai-1",
-      "langchain",
-      "xagent"
+      "chatdev",
+      "github-9",
+      "camel",
+      "github-4"
     ]
   },
   {
@@ -1466,63 +1295,11 @@
       "TTS provider account",
       "Audio output capability"
     ],
-    "relatedResourcesCount": 55,
+    "relatedResourcesCount": 3,
     "relatedResourceSlugs": [
-      "agent-fusion",
-      "agent-infra-mcp-server-browser",
-      "agent-rules",
-      "agent4rec",
-      "agentapi",
-      "agentcheck",
-      "agentdeskai-browser-tools-mcp",
-      "agentera-agently",
-      "agentforge",
-      "agentops-ai-agentops",
-      "agentops-ai-tokencost",
-      "agentpilot",
-      "agents-2",
-      "agentverse",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
       "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
       "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-agents"
     ]
   },
   {
@@ -1578,6 +1355,17 @@
       "Programming experience",
       "LLM API access",
       "Agent system understanding"
+    ],
+    "relatedResourcesCount": 8,
+    "relatedResourceSlugs": [
+      "babyagi",
+      "autogen",
+      "crewai-1",
+      "yourgoal",
+      "xagent",
+      "agentverse",
+      "ailice",
+      "ufo"
     ]
   },
   {
@@ -1634,6 +1422,31 @@
       "Understanding of autonomous AI",
       "Task monitoring setup",
       "API access"
+    ],
+    "relatedResourcesCount": 22,
+    "relatedResourceSlugs": [
+      "eumemic",
+      "babyagi",
+      "infinite-agentic-loop",
+      "l2mac",
+      "loop-gpt",
+      "ted-spare",
+      "openagi",
+      "uri-shamay",
+      "mini-agi",
+      "ai-legion",
+      "yagents",
+      "xagent",
+      "automata",
+      "cody-by-ajhous44",
+      "specialized-ai-agents",
+      "devon",
+      "jarvis",
+      "devika",
+      "memgpt",
+      "ufo",
+      "beebot",
+      "image-1"
     ]
   },
   {
@@ -1690,6 +1503,17 @@
       "Python programming experience",
       "Understanding of AI agent concepts",
       "Production deployment knowledge"
+    ],
+    "relatedResourcesCount": 8,
+    "relatedResourceSlugs": [
+      "agentera-agently",
+      "github-7",
+      "agentpilot",
+      "azure-ai-agents",
+      "autogen",
+      "crewai-1",
+      "agentverse",
+      "superagent-ai-superagent"
     ]
   },
   {
@@ -1737,6 +1561,14 @@
       "Enterprise development experience",
       "LLM API access",
       "Business use case defined"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "ajhous44",
+      "graphai-anthropic-agent",
+      "automata",
+      "agentforge",
+      "artisian-ai"
     ]
   },
   {
@@ -1793,6 +1625,23 @@
       "Python environment",
       "OpenAI or Claude API access",
       "Basic CLI familiarity"
+    ],
+    "relatedResourcesCount": 14,
+    "relatedResourceSlugs": [
+      "swe-agent",
+      "smol-developer",
+      "gabrielmaialva33-winx-code-agent",
+      "friday",
+      "github-21",
+      "chatdev",
+      "devopsgpt",
+      "gpt-pilot",
+      "genia",
+      "devon",
+      "devika",
+      "english-compiler",
+      "devgpt",
+      "fullagent-fulling"
     ]
   },
   {
@@ -1840,6 +1689,14 @@
       "Business use case",
       "Enterprise engagement",
       "LLM API access"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "ajhous44",
+      "graphai-anthropic-agent",
+      "aiwaves-inc",
+      "automata",
+      "agentforge"
     ]
   },
   {
@@ -1904,24 +1761,43 @@
       "Multi-agent concepts",
       "Microsoft Azure familiarity (optional)"
     ],
-    "relatedResourcesCount": 16,
+    "relatedResourcesCount": 35,
     "relatedResourceSlugs": [
-      "agentforge",
-      "agents-1",
-      "agentverse",
-      "automata",
-      "automatalabs-mcp-server-playwright",
-      "automateyournetwork-pyats-mcp",
-      "automation-ai-labs-mcp-link",
-      "autonomous-hr-chatbot",
+      "eumemic",
       "babyagi",
+      "loop-gpt",
+      "crew-ai-wiki-with-examples-and-guides",
+      "gpt-runner",
+      "github-23",
+      "agentera-agently",
+      "github-10",
+      "awslabs-agent-squad",
+      "claude-swarm",
+      "adala",
+      "github-7",
+      "workgpt",
+      "agentpilot",
+      "ai-legion",
+      "azure-ai-agents",
+      "yagents",
       "crewai-1",
+      "dotagent",
+      "chatdev",
+      "xagent",
+      "github-9",
+      "automata",
+      "specialized-ai-agents",
+      "metagpt",
+      "github-6",
+      "camel",
       "jarvis",
-      "langchain",
-      "microsoft-markitdown",
-      "microsoft-playwright-mcp",
-      "semantic-kernel",
-      "ufo"
+      "agentverse",
+      "memgpt",
+      "github-4",
+      "ufo",
+      "langroid",
+      "superagent-ai-superagent",
+      "image-1"
     ]
   },
   {
@@ -1978,13 +1854,21 @@
       "LLM API access",
       "Agent architecture understanding"
     ],
-    "relatedResourcesCount": 5,
+    "relatedResourcesCount": 13,
     "relatedResourceSlugs": [
+      "ajhous44",
+      "graphai-anthropic-agent",
+      "awslabs-agent-squad",
+      "ted-spare",
+      "aiwaves-inc",
       "autogen",
-      "automatalabs-mcp-server-playwright",
-      "automateyournetwork-pyats-mcp",
-      "automation-ai-labs-mcp-link",
-      "autonomous-hr-chatbot"
+      "dotagent",
+      "specialized-ai-agents",
+      "camel",
+      "ailice",
+      "xataio-agent",
+      "agentforge",
+      "artisian-ai"
     ]
   },
   {
@@ -2042,13 +1926,18 @@
       "Python experience",
       "Company HR data access"
     ],
-    "relatedResourcesCount": 5,
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 6,
+    "relatedDocSlugs": [
+      "api/tool-use"
+    ],
     "relatedResourceSlugs": [
+      "telecom-mas-agent",
+      "ferdousbhai-tasty-agent",
       "autogen",
-      "automata",
-      "automatalabs-mcp-server-playwright",
-      "automateyournetwork-pyats-mcp",
-      "automation-ai-labs-mcp-link"
+      "ferdousbhai-investor-agent",
+      "gpt-discord",
+      "codefuse-chatbot"
     ]
   },
   {
@@ -2105,6 +1994,18 @@
       "Git repository",
       "CI/CD pipeline",
       "LLM API access"
+    ],
+    "relatedResourcesCount": 9,
+    "relatedResourceSlugs": [
+      "swe-agent",
+      "gpt-migrate",
+      "lemon-agent",
+      "devopsgpt",
+      "gpt-pilot",
+      "bumpgen",
+      "github-15",
+      "agentcheck",
+      "devon"
     ]
   },
   {
@@ -2163,52 +2064,18 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 10,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
       "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
       "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "awesome-llm-apps",
+      "claude-sub-agent",
+      "claude-code-subagents-1",
+      "awesome-claude-code-agents",
+      "claude-agents",
+      "agents-2",
+      "claude-code-agents",
+      "voltagent-awesome-claude-code-subagents"
     ]
   },
   {
@@ -2267,53 +2134,24 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 45,
+    "relatedDocsCount": 3,
+    "relatedResourcesCount": 10,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "configuration/claude-md",
+      "examples/index"
+    ],
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "hesreallyhim-awesome-claude-code",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
       "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-subagents-collection",
+      "claude-code-sub-agents",
+      "awesome-llm-apps",
+      "community",
+      "claude-code-subagents-1",
+      "claude-agents",
+      "awesome-claude-agents",
+      "claude-code-agents",
+      "voltagent-awesome-claude-code-subagents"
     ]
   },
   {
@@ -2372,9 +2210,19 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 11,
     "relatedResourceSlugs": [
-      "awslabs-mcp"
+      "claude-code-agent-farm",
+      "claude-swarm",
+      "azure-ai-agents",
+      "swarm",
+      "autogen",
+      "crewai-1",
+      "chatdev",
+      "automata",
+      "camel",
+      "multi-agent-squad",
+      "superagent-ai-superagent"
     ]
   },
   {
@@ -2433,15 +2281,21 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 7,
+    "relatedResourcesCount": 13,
     "relatedResourceSlugs": [
-      "agentforge",
-      "agents-2",
-      "agentverse",
-      "autogen",
+      "infinite-agentic-loop",
+      "loop-gpt",
+      "openagi",
+      "mini-agi",
+      "ai-legion",
       "babycommandagi",
-      "crewai-1",
-      "langchain"
+      "autogen",
+      "xagent",
+      "ailice",
+      "github-1",
+      "multi-gpt",
+      "beebot",
+      "image-1"
     ]
   },
   {
@@ -2500,9 +2354,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "babyagi"
+      "babyagi",
+      "yourgoal",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -2560,6 +2417,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "gpt-researcher",
+      "github-25",
+      "dspy",
+      "github-29",
+      "data-to-paper",
+      "agent4rec"
     ]
   },
   {
@@ -2617,6 +2483,16 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 7,
+    "relatedResourceSlugs": [
+      "babyagi",
+      "cody-by-ajhous44",
+      "gpt-pilot",
+      "devon",
+      "devika",
+      "ailice",
+      "instrukt"
     ]
   },
   {
@@ -2667,6 +2543,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "blinky",
+      "e2b",
+      "devon"
     ]
   },
   {
@@ -2723,6 +2605,16 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 7,
+    "relatedResourceSlugs": [
+      "github-issue-only",
+      "taxy-ai",
+      "blackbox-ai-code-interpreter-in-terminal",
+      "github-copilot-x",
+      "agentcheck",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -2781,9 +2673,10 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 2,
     "relatedResourceSlugs": [
-      "vibe-kanban"
+      "github-2",
+      "agent-fusion"
     ]
   },
   {
@@ -2840,6 +2733,11 @@
       "Rust runtime or compiled binary",
       "Git repository to index",
       "Sufficient disk space for indexing"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "agent-fusion",
+      "bloop-apps"
     ]
   },
   {
@@ -2897,6 +2795,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "gpt-migrate",
+      "devopsgpt",
+      "autopr"
     ]
   },
   {
@@ -3011,6 +2915,23 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 14,
+    "relatedResourceSlugs": [
+      "crew-ai-wiki-with-examples-and-guides",
+      "agentera-agently",
+      "awslabs-agent-squad",
+      "claude-swarm",
+      "adala",
+      "github-28",
+      "autogen",
+      "crewai-1",
+      "chatdev",
+      "automata",
+      "metagpt",
+      "agentverse",
+      "github-4",
+      "langroid"
     ]
   },
   {
@@ -3067,6 +2988,13 @@
       "Database connection",
       "Python environment",
       "Understanding of data schemas"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "github-25",
+      "bambooai",
+      "agent4rec",
+      "github-6"
     ]
   },
   {
@@ -3125,10 +3053,19 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 11,
     "relatedResourceSlugs": [
+      "crew-ai-wiki-with-examples-and-guides",
+      "awslabs-agent-squad",
+      "autogen",
+      "crewai-1",
+      "devopsgpt",
+      "metagpt",
+      "github-12",
+      "camel",
       "agentverse",
-      "xagent"
+      "github-4",
+      "codefuse-chatbot"
     ]
   },
   {
@@ -3186,6 +3123,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "gpt-researcher",
+      "autogen",
+      "data-to-paper"
     ]
   },
   {
@@ -3244,52 +3187,14 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 6,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
+      "awslabs-agent-squad",
       "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-agents",
+      "agents-2",
+      "claude-code-unified-agents",
+      "claude-code-agents"
     ]
   },
   {
@@ -3348,52 +3253,10 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 2,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
       "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-agents"
     ]
   },
   {
@@ -3451,52 +3314,24 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedDocsCount": 2,
+    "relatedResourcesCount": 11,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "examples/index"
+    ],
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
       "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
+      "claude-code-agent-farm",
       "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-subagents-collection",
+      "claudecodeagents",
+      "claude-sub-agent",
+      "claude-agent-server",
+      "claude-code-subagents-1",
+      "awesome-claude-code-agents",
+      "awesome-claude-agents",
+      "claude-code-agents"
     ]
   },
   {
@@ -3556,52 +3391,23 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 11,
+    "relatedDocSlugs": [
+      "configuration/index"
+    ],
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
       "claude-code-agent-farm",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
+      "champpaba-claude-agent-kit",
       "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
       "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-sub-agent",
+      "claude-agent-server",
+      "claude-code-subagents-1",
+      "awesome-claude-code-agents",
+      "claude-agents",
+      "awesome-claude-agents",
+      "agents-2"
     ]
   },
   {
@@ -3659,54 +3465,18 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 46,
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 6,
+    "relatedDocSlugs": [
+      "configuration/environment"
+    ],
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
+      "vercel-detect-agent",
+      "agentops-ai-agentops",
       "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-mastery",
-      "claude-code-is-programmable",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
       "claude-code-sub-agents",
       "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-unified-agents"
     ]
   },
   {
@@ -3765,52 +3535,21 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedDocsCount": 2,
+    "relatedResourcesCount": 8,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "examples/index"
+    ],
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
       "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
       "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-subagents-collection",
+      "claudecodeagents",
+      "claude-sub-agent",
+      "claude-code-subagents-1",
+      "awesome-claude-code-agents",
+      "voltagent-awesome-claude-code-subagents"
     ]
   },
   {
@@ -3869,52 +3608,25 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedDocsCount": 2,
+    "relatedResourcesCount": 12,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "examples/index"
+    ],
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
       "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
+      "champpaba-claude-agent-kit",
       "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-subagents-collection",
+      "claude-code-sub-agents",
+      "claudecodeagents",
+      "claude-sub-agent",
+      "awesome-claude-code-agents",
+      "claude-agents",
+      "awesome-claude-agents",
+      "claude-code-agents",
+      "voltagent-awesome-claude-code-subagents"
     ]
   },
   {
@@ -3972,52 +3684,23 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedDocsCount": 3,
+    "relatedResourcesCount": 9,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "configuration/claude-md",
+      "configuration/settings"
+    ],
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
       "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
       "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
       "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-sub-agent",
+      "claude-code-subagents-1",
+      "awesome-claude-code-agents",
+      "claude-agents",
+      "awesome-claude-agents",
+      "claude-code-agents"
     ]
   },
   {
@@ -4075,52 +3758,18 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedDocsCount": 2,
+    "relatedResourcesCount": 5,
+    "relatedDocSlugs": [
+      "configuration/index",
+      "configuration/settings"
+    ],
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
       "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
+      "champpaba-claude-agent-kit",
       "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-sub-agent",
+      "agents-2"
     ]
   },
   {
@@ -4179,53 +3828,16 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 45,
+    "relatedResourcesCount": 8,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
       "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
       "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-swarm",
+      "claude-code-sub-agents",
       "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zhsama-duckduckgo-mcp-server",
-      "zilliz-claude-context-mcp"
+      "claude-code-subagents-1",
+      "claude-agents",
+      "awesome-claude-agents",
+      "claude-code-agents"
     ]
   },
   {
@@ -4286,52 +3898,15 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 7,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
       "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "awslabs-agent-squad",
+      "autogen",
+      "crewai-1",
+      "camel",
+      "agentverse",
+      "agents-2"
     ]
   },
   {
@@ -4390,52 +3965,17 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 9,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
       "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
       "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
+      "claude-code-sub-agents",
       "claude-sub-agent",
-      "claude-swarm",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "agentcheck",
+      "claude-code-subagents-1",
+      "claude-agents",
+      "awesome-claude-agents",
+      "claude-code-agents"
     ]
   },
   {
@@ -4493,6 +4033,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "autonomous-hr-chatbot",
+      "chatdev",
+      "devopsgpt",
+      "gpt-pilot",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -4551,6 +4100,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "ajhous44",
+      "devon",
+      "devika",
+      "ailice",
+      "beebot"
     ]
   },
   {
@@ -4601,6 +4158,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "autogen",
+      "crewai-1",
+      "awesome-llm-apps",
+      "awesome-claude-code-agents"
     ]
   },
   {
@@ -4658,9 +4222,13 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "crewai-1"
+      "autogen",
+      "crewai-1",
+      "awesome-llm-apps",
+      "chatdev",
+      "camel"
     ]
   },
   {
@@ -4718,15 +4286,34 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 7,
+    "relatedResourcesCount": 26,
     "relatedResourceSlugs": [
-      "agentforge",
-      "agents-1",
-      "agentverse",
+      "eumemic",
+      "gpt-runner",
+      "github-23",
+      "agentera-agently",
+      "github-10",
+      "awslabs-agent-squad",
+      "claude-swarm",
+      "adala",
+      "github-7",
+      "workgpt",
+      "agentpilot",
+      "ai-legion",
+      "phidata",
+      "swarm",
       "autogen",
-      "babyagi",
-      "crew-ai-wiki-with-examples-and-guides",
-      "langchain"
+      "chatdev",
+      "github-9",
+      "metagpt",
+      "github-6",
+      "camel",
+      "jarvis",
+      "agentverse",
+      "multi-agent-squad",
+      "github-4",
+      "langroid",
+      "superagent-ai-superagent"
     ]
   },
   {
@@ -4784,6 +4371,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "gpt-researcher",
+      "bambooai",
+      "chemcrow",
+      "agent4rec",
+      "gemy411-multi-research-agents"
     ]
   },
   {
@@ -4841,6 +4436,16 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 7,
+    "relatedResourceSlugs": [
+      "stackwise",
+      "dspy",
+      "friday",
+      "awesome-llm-apps",
+      "gpt-pilot",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -4898,6 +4503,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "devopsgpt",
+      "gpt-pilot",
+      "github-12",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -4955,6 +4568,35 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 26,
+    "relatedResourceSlugs": [
+      "swe-agent",
+      "smol-developer",
+      "gabrielmaialva33-winx-code-agent",
+      "mentat",
+      "friday",
+      "babycommandagi",
+      "github-21",
+      "blinky",
+      "devopsgpt",
+      "cody-by-ajhous44",
+      "gpt-pilot",
+      "genia",
+      "opendevin",
+      "github-12",
+      "devon",
+      "demogpt",
+      "ailice",
+      "codefuse-chatbot",
+      "instrukt",
+      "github-1",
+      "multi-gpt",
+      "english-compiler",
+      "beebot",
+      "github-17",
+      "devgpt",
+      "fullagent-fulling"
     ]
   },
   {
@@ -5012,6 +4654,33 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 24,
+    "relatedResourceSlugs": [
+      "swe-agent",
+      "gabrielmaialva33-winx-code-agent",
+      "mentat",
+      "friday",
+      "babycommandagi",
+      "github-21",
+      "blinky",
+      "devopsgpt",
+      "cody-by-ajhous44",
+      "gpt-pilot",
+      "blackbox-ai-code-interpreter-in-terminal",
+      "genia",
+      "opendevin",
+      "github-12",
+      "demogpt",
+      "devika",
+      "ailice",
+      "codefuse-chatbot",
+      "autopr",
+      "english-compiler",
+      "beebot",
+      "github-17",
+      "devgpt",
+      "fullagent-fulling"
     ]
   },
   {
@@ -5070,6 +4739,19 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 10,
+    "relatedResourceSlugs": [
+      "chatdev",
+      "gpt-pilot",
+      "bumpgen",
+      "github-12",
+      "devon",
+      "devika",
+      "codefuse-chatbot",
+      "autopr",
+      "devgpt",
+      "fullagent-fulling"
     ]
   },
   {
@@ -5227,6 +4909,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "dspy",
+      "autogen",
+      "automata"
     ]
   },
   {
@@ -5291,9 +4979,16 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tips-and-tricks/advanced-prompting"
+    "relatedResourcesCount": 8,
+    "relatedResourceSlugs": [
+      "haystack",
+      "bambooai",
+      "autogen",
+      "crewai-1",
+      "dotagent",
+      "camel",
+      "langchain",
+      "llamaindex"
     ]
   },
   {
@@ -5353,13 +5048,17 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
+    "relatedDocsCount": 1,
     "relatedResourcesCount": 5,
+    "relatedDocSlugs": [
+      "configuration/permissions"
+    ],
     "relatedResourceSlugs": [
-      "awesome-sdks-for-ai-agents",
       "e2b-cookbook",
-      "e2b-dev-code-interpreter",
-      "e2b-dev-fragments",
-      "e2b-dev-open-computer-use"
+      "gpt-pilot",
+      "blackbox-ai-code-interpreter-in-terminal",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -5419,13 +5118,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 5,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "awesome-sdks-for-ai-agents",
-      "e2b",
-      "e2b-dev-code-interpreter",
-      "e2b-dev-fragments",
-      "e2b-dev-open-computer-use"
+      "awesome-llm-apps",
+      "gpt-pilot",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -5482,6 +5180,18 @@
       "Python programming",
       "Understanding of agent architectures",
       "Cloud deployment experience"
+    ],
+    "relatedResourcesCount": 9,
+    "relatedResourceSlugs": [
+      "eumemic",
+      "github-10",
+      "autogen",
+      "crewai-1",
+      "e2b",
+      "github-9",
+      "github-6",
+      "superagent-ai-superagent",
+      "agentforge"
     ]
   },
   {
@@ -5539,6 +5249,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "gpt-migrate",
+      "gpt-pilot",
+      "github-12",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -5588,6 +5306,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "github-7",
+      "autogen",
+      "crewai-1",
+      "ailice",
+      "agentforge"
     ]
   },
   {
@@ -5644,6 +5370,14 @@
       "React.js experience",
       "LLM API access",
       "Understanding of autonomous agent concepts"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "gpt-pilot",
+      "github-12",
+      "devon",
+      "devika",
+      "fullagent-fulling"
     ]
   },
   {
@@ -5700,6 +5434,16 @@
       "Python programming",
       "Understanding of multi-agent systems",
       "Research methodology familiarity"
+    ],
+    "relatedResourcesCount": 7,
+    "relatedResourceSlugs": [
+      "suspicion-agent",
+      "github-28",
+      "autogen",
+      "crewai-1",
+      "chatdev",
+      "camel",
+      "agentverse"
     ]
   },
   {
@@ -5758,10 +5502,17 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 2,
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 5,
+    "relatedDocSlugs": [
+      "api/tool-use"
+    ],
     "relatedResourceSlugs": [
       "ferdousbhai-tasty-agent",
-      "ferdousbhai-wsb-analyst-mcp"
+      "autonomous-hr-chatbot",
+      "autogen",
+      "github-29",
+      "crewai-1"
     ]
   },
   {
@@ -5820,10 +5571,17 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 2,
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 5,
+    "relatedDocSlugs": [
+      "api/tool-use"
+    ],
     "relatedResourceSlugs": [
-      "ferdousbhai-investor-agent",
-      "ferdousbhai-wsb-analyst-mcp"
+      "autonomous-hr-chatbot",
+      "autogen",
+      "github-29",
+      "crewai-1",
+      "ferdousbhai-investor-agent"
     ]
   },
   {
@@ -5880,6 +5638,18 @@
       "Basic understanding of AI concepts",
       "Flowise account or self-hosted setup",
       "API keys for LLM services"
+    ],
+    "relatedResourcesCount": 9,
+    "relatedResourceSlugs": [
+      "github-14",
+      "stackwise",
+      "github-7",
+      "github-16",
+      "agentpilot",
+      "autogen",
+      "crewai-1",
+      "github-6",
+      "agentforge"
     ]
   },
   {
@@ -5936,6 +5706,13 @@
       "Web browser",
       "OpenAI API access",
       "Basic understanding of AI prompting"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "github-10",
+      "autogen",
+      "github-6",
+      "gpt-discord"
     ]
   },
   {
@@ -5986,6 +5763,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "github-21",
+      "gpt-pilot",
+      "github-12",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -6043,6 +5828,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "gpt-pilot",
+      "github-12",
+      "devon",
+      "demogpt",
+      "devika",
+      "fullagent-fulling"
     ]
   },
   {
@@ -6100,6 +5894,17 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 8,
+    "relatedResourceSlugs": [
+      "friday",
+      "github-21",
+      "devopsgpt",
+      "gpt-pilot",
+      "genia",
+      "github-12",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -6157,6 +5962,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "blinky",
+      "gpt-pilot",
+      "github-12",
+      "devon",
+      "devika"
     ]
   },
   {
@@ -6213,6 +6026,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "gpt-researcher",
+      "autogen",
+      "crewai-1",
+      "data-to-paper",
+      "chatdev"
     ]
   },
   {
@@ -6270,6 +6091,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "gpt-pilot",
+      "github-12",
+      "devon",
+      "devika",
+      "fullagent-fulling"
     ]
   },
   {
@@ -6328,6 +6157,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "github-42",
+      "blinky",
+      "github-copilot-x",
+      "devon",
+      "devika",
+      "autopr"
     ]
   },
   {
@@ -6377,6 +6215,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "github-2",
+      "github-issue-only",
+      "github-repository-1",
+      "blinky",
+      "github-copilot-x",
+      "autopr"
     ]
   },
   {
@@ -6427,6 +6274,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "github-42",
+      "github-issue-only",
+      "github-repository-1",
+      "blinky",
+      "devika",
+      "autopr"
     ]
   },
   {
@@ -6486,9 +6342,13 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "yagents"
+      "github-42",
+      "github-2",
+      "blinky",
+      "github-copilot-x",
+      "autopr"
     ]
   },
   {
@@ -6540,52 +6400,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
+      "agentops-ai-agentops",
       "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "agentops-ai-tokencost",
+      "claude-code-hooks-multi-agent-observability"
     ]
   },
   {
@@ -6642,6 +6462,17 @@
       "Account on platform",
       "LLM API access",
       "Understanding of chatbot use cases"
+    ],
+    "relatedResourcesCount": 8,
+    "relatedResourceSlugs": [
+      "github-14",
+      "github-10",
+      "stackwise",
+      "github-7",
+      "autogen",
+      "github-29",
+      "crewai-1",
+      "agentforge"
     ]
   },
   {
@@ -6699,6 +6530,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "autonomous-hr-chatbot",
+      "autogen",
+      "crewai-1",
+      "github-6",
+      "github-11"
     ]
   },
   {
@@ -6756,6 +6595,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "gpt-pilot",
+      "bumpgen",
+      "github-12",
+      "devika",
+      "autopr",
+      "english-compiler"
     ]
   },
   {
@@ -6813,6 +6661,30 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 21,
+    "relatedResourceSlugs": [
+      "swe-agent",
+      "smol-developer",
+      "gpt-runner",
+      "gabrielmaialva33-winx-code-agent",
+      "friday",
+      "github-21",
+      "devopsgpt",
+      "genia",
+      "opendevin",
+      "github-12",
+      "devon",
+      "demogpt",
+      "devika",
+      "codefuse-chatbot",
+      "autopr",
+      "github-1",
+      "multi-gpt",
+      "english-compiler",
+      "beebot",
+      "devgpt",
+      "fullagent-fulling"
     ]
   },
   {
@@ -6869,6 +6741,17 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 8,
+    "relatedResourceSlugs": [
+      "gpt-runner",
+      "bambooai",
+      "autogen",
+      "chemcrow",
+      "crewai-1",
+      "data-to-paper",
+      "memfree",
+      "gemy411-multi-research-agents"
     ]
   },
   {
@@ -6927,9 +6810,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "nicepkg-aide"
+      "gpt-researcher",
+      "autogen",
+      "crewai-1",
+      "gpt-pilot"
     ]
   },
   {
@@ -6993,6 +6879,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "dspy",
+      "langchain",
+      "agent-fusion",
+      "llamaindex"
     ]
   },
   {
@@ -7049,6 +6942,17 @@
       "Understanding of AI safety",
       "Security requirements clarity",
       "Enterprise deployment experience"
+    ],
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 4,
+    "relatedDocSlugs": [
+      "configuration/permissions"
+    ],
+    "relatedResourceSlugs": [
+      "agentops-ai-agentops",
+      "autogen",
+      "crewai-1",
+      "e2b"
     ]
   },
   {
@@ -7107,9 +7011,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "loop-gpt"
+      "babyagi",
+      "loop-gpt",
+      "autogen",
+      "ailice"
     ]
   },
   {
@@ -7166,6 +7073,13 @@
       "Local GPU or sufficient CPU",
       "Python environment",
       "Storage for local models"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "haystack",
+      "local-gpt",
+      "agent-fusion",
+      "llamaindex"
     ]
   },
   {
@@ -7224,54 +7138,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 46,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
+      "babyagi",
+      "ailice",
       "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-mastery",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-is-programmable",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "claude-code-agents"
     ]
   },
   {
@@ -7329,6 +7201,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "mentat",
+      "devika",
+      "beebot",
+      "github-17"
     ]
   },
   {
@@ -7387,13 +7266,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 5,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
       "autogen",
-      "microsoft-markitdown",
-      "microsoft-playwright-mcp",
-      "semantic-kernel",
-      "ufo"
+      "crewai-1",
+      "metagpt",
+      "ailice"
     ]
   },
   {
@@ -7500,6 +7378,13 @@
       "Python environment",
       "LLM API access",
       "Understanding of system permissions"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "mentat",
+      "devon",
+      "devika",
+      "instrukt"
     ]
   },
   {
@@ -7557,6 +7442,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "devika",
+      "ailice",
+      "instrukt",
+      "github-17"
     ]
   },
   {
@@ -7614,6 +7506,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "autogen",
+      "crewai-1",
+      "metagpt",
+      "camel",
+      "memgpt"
     ]
   },
   {
@@ -7671,6 +7571,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "agentpilot",
+      "autogen",
+      "crewai-1",
+      "autopr"
     ]
   },
   {
@@ -7735,9 +7642,22 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedDocsCount": 1,
+    "relatedDocsCount": 7,
+    "relatedResourcesCount": 4,
     "relatedDocSlugs": [
-      "integrations/databases"
+      "api/index",
+      "api/authentication",
+      "api/models",
+      "api/rate-limits",
+      "api/streaming",
+      "api/tool-use",
+      "api/error-handling"
+    ],
+    "relatedResourceSlugs": [
+      "haystack",
+      "dspy",
+      "langchain",
+      "agent-fusion"
     ]
   },
   {
@@ -7795,6 +7715,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "autogen",
+      "crewai-1",
+      "awesome-llm-apps",
+      "langroid"
     ]
   },
   {
@@ -7852,6 +7779,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "haystack",
+      "github-19",
+      "agent-fusion",
+      "llamaindex"
     ]
   },
   {
@@ -7910,8 +7844,11 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
+      "babyagi",
+      "autogen",
+      "ailice",
       "image-1"
     ]
   },
@@ -7969,6 +7906,13 @@
       "Basic blockchain understanding",
       "Wallet setup",
       "LLM API access"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "github-2",
+      "autogen",
+      "gpt-pilot",
+      "devika"
     ]
   },
   {
@@ -8026,6 +7970,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "gpt-researcher",
+      "haystack",
+      "agent-fusion",
+      "llamaindex"
     ]
   },
   {
@@ -8083,6 +8034,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "agentops-ai-agentops",
+      "autogen",
+      "ailice",
+      "langroid"
     ]
   },
   {
@@ -8140,6 +8098,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "devon",
+      "devika",
+      "instrukt",
+      "github-17"
     ]
   },
   {
@@ -8197,6 +8162,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "autogen",
+      "crewai-1",
+      "chatdev",
+      "camel",
+      "jarvis",
+      "langroid"
     ]
   },
   {
@@ -8253,6 +8227,13 @@
       "Strong AI/ML background",
       "Python expertise",
       "Understanding of swarm intelligence"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "autogen",
+      "crewai-1",
+      "metagpt",
+      "camel"
     ]
   },
   {
@@ -8309,6 +8290,13 @@
       "Minecraft setup",
       "Python environment",
       "GPU resources for training"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "babyagi",
+      "autogen",
+      "e2b",
+      "ailice"
     ]
   },
   {
@@ -8366,6 +8354,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "babyagi",
+      "openagi",
+      "autogen",
+      "smolagents",
+      "ailice"
     ]
   },
   {
@@ -8423,6 +8419,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "babyagi",
+      "gpt-pilot",
+      "opendevin",
+      "devika",
+      "github-1"
     ]
   },
   {
@@ -8480,52 +8484,13 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
       "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "awslabs-agent-squad",
+      "swarm",
+      "autogen",
+      "crewai-1"
     ]
   },
   {
@@ -8583,6 +8548,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "autogen",
+      "crewai-1",
+      "camel",
+      "github-4"
     ]
   },
   {
@@ -8640,6 +8612,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "blinky",
+      "agentcheck",
+      "autopr"
     ]
   },
   {
@@ -8697,6 +8675,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "crewai-1",
+      "camel",
+      "agentverse"
     ]
   },
   {
@@ -8753,6 +8737,13 @@
       "AI development experience",
       "Node.js or Python",
       "Experimental mindset"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "semantic-kernel",
+      "github-10",
+      "phidata",
+      "github-6"
     ]
   },
   {
@@ -8810,52 +8801,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
+      "smolagents",
       "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "awesome-claude-code-agents",
+      "claude-agents"
     ]
   },
   {
@@ -8913,6 +8864,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "babyagi",
+      "mini-agi",
+      "autogen",
+      "ailice"
     ]
   },
   {
@@ -8969,6 +8927,14 @@
       "OpenAI API access",
       "Python programming",
       "Understanding of agent patterns"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "awslabs-agent-squad",
+      "claude-swarm",
+      "autogen",
+      "crewai-1",
+      "multi-agent-squad"
     ]
   },
   {
@@ -9026,6 +8992,15 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 6,
+    "relatedResourceSlugs": [
+      "smol-developer",
+      "gpt-pilot",
+      "devon",
+      "devika",
+      "github-1",
+      "multi-gpt"
     ]
   },
   {
@@ -9083,6 +9058,10 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedDocsCount": 1,
+    "relatedDocSlugs": [
+      "api/tool-use"
     ]
   },
   {
@@ -9139,6 +9118,11 @@
       "Python environment",
       "Multimodal LLM access",
       "Screen capture capabilities"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "e2b",
+      "opendevin"
     ]
   },
   {
@@ -9245,6 +9229,11 @@
       "LLM development experience",
       "Team collaboration needs",
       "Infrastructure for hosting"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "agentops-ai-agentops",
+      "semantic-kernel"
     ]
   },
   {
@@ -9308,6 +9297,22 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedDocsCount": 6,
+    "relatedResourcesCount": 4,
+    "relatedDocSlugs": [
+      "api/index",
+      "api/authentication",
+      "api/models",
+      "api/streaming",
+      "api/tool-use",
+      "api/error-handling"
+    ],
+    "relatedResourceSlugs": [
+      "semantic-kernel",
+      "autogen",
+      "crewai-1",
+      "smolagents"
     ]
   },
   {
@@ -9422,9 +9427,10 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 2,
     "relatedResourceSlugs": [
-      "topoteretes-cognee"
+      "phidata",
+      "crewai-1"
     ]
   },
   {
@@ -9489,9 +9495,20 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedDocsCount": 6,
+    "relatedResourcesCount": 3,
+    "relatedDocSlugs": [
+      "api/index",
+      "api/authentication",
+      "api/models",
+      "api/streaming",
+      "api/tool-use",
+      "api/error-handling"
+    ],
     "relatedResourceSlugs": [
-      "pydantic-logfire-mcp"
+      "phidata",
+      "crewai-1",
+      "smolagents"
     ]
   },
   {
@@ -9548,6 +9565,11 @@
       "GitHub repository",
       "Node.js environment",
       "LLM API access"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "github-12",
+      "autopr"
     ]
   },
   {
@@ -9613,13 +9635,17 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 5,
+    "relatedDocsCount": 3,
+    "relatedResourcesCount": 3,
+    "relatedDocSlugs": [
+      "api/index",
+      "api/models",
+      "api/tool-use"
+    ],
     "relatedResourceSlugs": [
+      "phidata",
       "autogen",
-      "jarvis",
-      "microsoft-markitdown",
-      "microsoft-playwright-mcp",
-      "ufo"
+      "crewai-1"
     ]
   },
   {
@@ -9726,6 +9752,14 @@
       "Python environment",
       "LLM API access",
       "Understanding of AI agents"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "babyagi",
+      "gpt-pilot",
+      "opendevin",
+      "devika",
+      "multi-gpt"
     ]
   },
   {
@@ -9783,6 +9817,13 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "gpt-pilot",
+      "opendevin",
+      "github-12",
+      "devika"
     ]
   },
   {
@@ -9846,6 +9887,17 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedDocsCount": 1,
+    "relatedResourcesCount": 4,
+    "relatedDocSlugs": [
+      "api/index"
+    ],
+    "relatedResourceSlugs": [
+      "mini-agi",
+      "phidata",
+      "crewai-1",
+      "pydantic-ai"
     ]
   },
   {
@@ -9904,6 +9956,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "champpaba-claude-agent-kit",
+      "autogen",
+      "automata",
+      "ailice",
+      "agentforge"
     ]
   },
   {
@@ -9961,6 +10021,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "github-10",
+      "crewai-1",
+      "awesome-llm-apps",
+      "github-6",
+      "demogpt"
     ]
   },
   {
@@ -10018,53 +10086,13 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 45,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
       "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
       "claude-code-sub-agents",
       "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "context-forge",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "awesome-claude-code-agents",
+      "claude-agents"
     ]
   },
   {
@@ -10122,10 +10150,13 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "grok-cli",
-      "vibekit"
+      "awslabs-agent-squad",
+      "github-7",
+      "autogen",
+      "crewai-1",
+      "github-9"
     ]
   },
   {
@@ -10183,6 +10214,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "camel",
+      "agentverse",
+      "github-4"
     ]
   },
   {
@@ -10240,6 +10277,14 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "gpt-pilot",
+      "github-12",
+      "devon",
+      "devika",
+      "autopr"
     ]
   },
   {
@@ -10297,6 +10342,10 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "blinky"
     ]
   },
   {
@@ -10347,6 +10396,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "automata",
+      "ailice",
+      "agentforge"
     ]
   },
   {
@@ -10396,6 +10451,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "autonomous-hr-chatbot",
+      "autogen",
+      "camel"
     ]
   },
   {
@@ -10452,6 +10513,13 @@
       "Python programming",
       "Understanding of simulations",
       "Agent modeling concepts"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "autogen",
+      "camel",
+      "agentverse",
+      "github-4"
     ]
   },
   {
@@ -10508,6 +10576,13 @@
       "Platform account",
       "Data sources to integrate",
       "Use case clarity"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "github-10",
+      "autogen",
+      "crewai-1",
+      "github-6"
     ]
   },
   {
@@ -10566,13 +10641,11 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 5,
+    "relatedResourcesCount": 3,
     "relatedResourceSlugs": [
+      "ai-legion",
       "autogen",
-      "jarvis",
-      "microsoft-markitdown",
-      "microsoft-playwright-mcp",
-      "semantic-kernel"
+      "ailice"
     ]
   },
   {
@@ -10623,6 +10696,11 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "ailice",
+      "agentforge"
     ]
   },
   {
@@ -10679,6 +10757,11 @@
       "Database connection",
       "Python environment",
       "LLM API access"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "bambooai",
+      "github-29"
     ]
   },
   {
@@ -10736,52 +10819,13 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 44,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
       "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
       "claude-code-sub-agents",
       "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "reddit-claudeai",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "zilliz-claude-context-mcp"
+      "awesome-claude-code-agents",
+      "awesome-claude-agents"
     ]
   },
   {
@@ -10838,6 +10882,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "agentpilot",
+      "autogen",
+      "crewai-1"
     ]
   },
   {
@@ -10895,10 +10945,12 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "agentverse",
-      "chatdev"
+      "babyagi",
+      "ai-legion",
+      "autogen",
+      "ailice"
     ]
   },
   {
@@ -10957,6 +11009,11 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "automata",
+      "agentforge"
     ]
   },
   {
@@ -11015,9 +11072,11 @@
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 3,
     "relatedResourceSlugs": [
-      "github-repository-1"
+      "autogen",
+      "ailice",
+      "agentforge"
     ]
   },
   {
@@ -11075,6 +11134,12 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "babyagi",
+      "ai-legion",
+      "babycommandagi"
     ]
   }
 ]

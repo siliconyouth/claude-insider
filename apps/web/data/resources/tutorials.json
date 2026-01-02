@@ -62,45 +62,6 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
-    ],
-    "relatedDocsCount": 2,
-    "relatedResourcesCount": 31,
-    "relatedDocSlugs": [
-      "tips-and-tricks/advanced-prompting",
-      "tutorials/index"
-    ],
-    "relatedResourceSlugs": [
-      "anthropic-bedrock-python",
-      "anthropic-bedrock-typescript",
-      "anthropic-cookbook",
-      "anthropic-sdk-csharp",
-      "anthropic-sdk-go",
-      "anthropic-sdk-java",
-      "anthropic-sdk-php",
-      "anthropic-sdk-ruby",
-      "anthropic-tokenizer-typescript",
-      "blobfile",
-      "claude-agent-sdk-demos",
-      "claude-agent-sdk-python",
-      "claude-agent-sdk-typescript",
-      "claude-code-action",
-      "claude-code-base-action",
-      "claude-code-monitoring-guide",
-      "claude-code-repo",
-      "claude-code-sdk-python",
-      "claude-code-security-review",
-      "claude-cookbook",
-      "claude-plugins-official",
-      "claude-quickstarts",
-      "devcontainer-features",
-      "evals",
-      "life-sciences",
-      "political-neutrality-eval",
-      "prompt-eng-interactive-tutorial",
-      "redis-py",
-      "riv2025-long-horizon-coding-agent-demo",
-      "s5cmd",
-      "skills"
     ]
   },
   {
@@ -157,11 +118,6 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
-    ],
-    "relatedDocsCount": 2,
-    "relatedDocSlugs": [
-      "getting-started/quickstart",
-      "getting-started/installation"
     ]
   },
   {
@@ -219,10 +175,6 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tutorials/index"
     ]
   },
   {
@@ -278,10 +230,6 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tutorials/index"
     ]
   },
   {
@@ -544,11 +492,6 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
-    ],
-    "relatedResourcesCount": 2,
-    "relatedResourceSlugs": [
-      "langchain",
-      "langchain-ai-open-swe"
     ]
   },
   {
@@ -652,10 +595,6 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "api/tool-use"
     ]
   },
   {

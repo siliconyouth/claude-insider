@@ -55,9 +55,13 @@
       "Ability to troubleshoot independently",
       "Interest in community participation"
     ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "getting-started/troubleshooting"
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "stack-overflow",
+      "linkedin-anthropic",
+      "twitter-anthropic",
+      "youtube-anthropic",
+      "reddit-claudeai"
     ]
   },
   {
@@ -116,56 +120,13 @@
       "Ability to troubleshoot independently",
       "Interest in community participation"
     ],
-    "relatedDocsCount": 1,
-    "relatedResourcesCount": 44,
-    "relatedDocSlugs": [
-      "getting-started/troubleshooting"
-    ],
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "agent-rules",
-      "agentcheck",
-      "agents-2",
-      "agentvibes",
-      "areweai-tsgram-mcp",
-      "askbudi-roundtable",
-      "augmnt-augments-mcp-server",
-      "awesome-claude-agents",
-      "awesome-claude-code-agents",
-      "calclavia-mcp-obsidian",
-      "champpaba-claude-agent-kit",
-      "claude-agent-server",
-      "claude-agents",
-      "claude-code-agent-farm",
-      "claude-code-agents",
-      "claude-code-gemini-mcp",
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-mcp",
-      "claude-code-mcpinstall",
-      "claude-code-sub-agents",
-      "claude-code-subagents-1",
-      "claude-code-subagents-collection",
-      "claude-code-unified-agents",
-      "claude-gemini-mcp-slim",
-      "claude-sessions-mcp",
-      "claude-sub-agent",
-      "claude-swarm",
-      "claudecodeagents",
-      "claudelog-mcp-directory",
-      "coplaydev-unity-mcp",
-      "evalstate-mcp-hfspace",
-      "executeautomation-playwright-mcp-server",
-      "eyaltoledano-claude-task-master",
-      "freema-mcp-gsheets",
-      "github-stats-for-claude-code-mcp-enhanced",
-      "github-stats-for-claude-swarm",
-      "imprvhub-mcp-browser-agent",
-      "infinite-agentic-loop",
-      "multi-agent-squad",
-      "openagents-1",
-      "steipete-claude-code-mcp",
-      "sub-agents",
-      "voltagent-awesome-claude-code-subagents",
-      "zilliz-claude-context-mcp"
+      "anthropic-discord",
+      "stack-overflow",
+      "ai-explained",
+      "hacker-news",
+      "cursor-directory-community"
     ]
   },
   {
@@ -214,6 +175,13 @@
       "YouTube access",
       "Interest in AI",
       "Time for video content"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "anthropic-discord",
+      "ai-news-newsletter",
+      "youtube-anthropic",
+      "reddit-claudeai"
     ]
   },
   {
@@ -262,6 +230,13 @@
       "LinkedIn account",
       "Interest in Anthropic",
       "Professional networking goals"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "anthropic-discord",
+      "ai-news-newsletter",
+      "twitter-anthropic",
+      "youtube-anthropic"
     ]
   },
   {
@@ -310,6 +285,14 @@
       "Twitter/X account",
       "Interest in AI news",
       "Social media engagement"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "anthropic-discord",
+      "ai-news-newsletter",
+      "linkedin-anthropic",
+      "tldr-ai",
+      "youtube-anthropic"
     ]
   },
   {
@@ -358,6 +341,14 @@
       "YouTube access",
       "Interest in Claude",
       "Time for video content"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "anthropic-discord",
+      "ai-explained",
+      "linkedin-anthropic",
+      "twitter-anthropic",
+      "reddit-claudeai"
     ]
   },
   {
@@ -413,6 +404,13 @@
       "Willingness to explore community tools",
       "Ability to troubleshoot independently",
       "Interest in community participation"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "anthropic-discord",
+      "stack-overflow",
+      "hacker-news",
+      "reddit-claudeai"
     ]
   },
   {
@@ -461,6 +459,13 @@
       "Hacker News familiarity",
       "Critical reading skills",
       "Time for exploration"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "anthropic-discord",
+      "stack-overflow",
+      "ai-news-newsletter",
+      "reddit-claudeai"
     ]
   },
   {
@@ -509,6 +514,13 @@
       "Stack Overflow account for asking",
       "Specific questions",
       "Search skills"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "anthropic-discord",
+      "hacker-news",
+      "cursor-directory-community",
+      "reddit-claudeai"
     ]
   },
   {
@@ -557,6 +569,14 @@
       "Email subscription",
       "Interest in AI news",
       "Weekly reading time"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "ai-explained",
+      "linkedin-anthropic",
+      "hacker-news",
+      "tldr-ai",
+      "twitter-anthropic"
     ]
   },
   {
@@ -605,6 +625,13 @@
       "Email subscription",
       "Daily reading habit",
       "Interest in AI news"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "ai-news-newsletter",
+      "linkedin-anthropic",
+      "hacker-news",
+      "twitter-anthropic"
     ]
   }
 ]

@@ -62,10 +62,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "tips-and-tricks/debugging"
     ]
   },
   {
@@ -131,12 +127,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 3,
-    "relatedDocSlugs": [
-      "integrations/ide-plugins",
-      "tips-and-tricks/debugging",
-      "tutorials/code-review"
     ]
   },
   {
@@ -201,11 +191,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 2,
-    "relatedDocSlugs": [
-      "integrations/ide-plugins",
-      "tutorials/code-review"
     ]
   },
   {
@@ -263,10 +248,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "integrations/ide-plugins"
     ]
   },
   {
@@ -1004,14 +985,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "ai-elements",
-      "ai-fallback",
-      "ai-sdk-provider-claude-code",
-      "ai-sdk-provider-gemini-cli",
-      "ai-sdk-v5-anthropic-custom"
     ]
   },
   {
@@ -1475,10 +1448,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "integrations/ide-plugins"
     ]
   },
   {
@@ -2451,10 +2420,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "claude-code-api-rs"
     ]
   },
   {
@@ -2683,10 +2648,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "claude-commands"
     ]
   },
   {
@@ -2743,10 +2704,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "claude-balancer"
     ]
   },
   {
@@ -2973,10 +2930,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "ccmate-release"
     ]
   },
   {
@@ -3034,10 +2987,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "ccmate"
     ]
   },
   {
@@ -3151,10 +3100,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "claudiatron"
     ]
   },
   {
@@ -3502,10 +3447,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "examples/real-world-projects"
     ]
   },
   {
@@ -4360,10 +4301,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "ccflare"
     ]
   },
   {
@@ -4421,10 +4358,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "kiliczsh-mcp-mongo-server"
     ]
   },
   {
@@ -4482,10 +4415,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "claude-code-prompt-improver"
     ]
   },
   {
@@ -5113,12 +5042,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 3,
-    "relatedResourceSlugs": [
-      "claude-code-hooks-multi-agent-observability",
-      "claude-code-is-programmable",
-      "infinite-agentic-loop"
     ]
   },
   {
@@ -5232,12 +5155,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 3,
-    "relatedResourceSlugs": [
-      "claude-code-hooks-mastery",
-      "claude-code-hooks-multi-agent-observability",
-      "infinite-agentic-loop"
     ]
   },
   {
@@ -6832,10 +6749,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "cccost"
     ]
   },
   {
@@ -8371,10 +8284,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "agentapi"
     ]
   },
   {
@@ -8658,10 +8567,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "ccometixline"
     ]
   },
   {
@@ -8946,10 +8851,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "agents-1"
     ]
   },
   {
@@ -9007,10 +8908,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "sub-agents"
     ]
   },
   {
@@ -9934,14 +9831,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "awesome-sdks-for-ai-agents",
-      "e2b",
-      "e2b-cookbook",
-      "e2b-dev-fragments",
-      "e2b-dev-open-computer-use"
     ]
   },
   {
@@ -9999,14 +9888,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "awesome-sdks-for-ai-agents",
-      "e2b",
-      "e2b-cookbook",
-      "e2b-dev-code-interpreter",
-      "e2b-dev-open-computer-use"
     ]
   },
   {
@@ -10064,14 +9945,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 5,
-    "relatedResourceSlugs": [
-      "awesome-sdks-for-ai-agents",
-      "e2b",
-      "e2b-cookbook",
-      "e2b-dev-code-interpreter",
-      "e2b-dev-fragments"
     ]
   },
   {
@@ -10300,41 +10173,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 32,
-    "relatedResourceSlugs": [
-      "access",
-      "conformance",
-      "csharp-sdk",
-      "example-remote-server",
-      "ext-apps",
-      "ext-auth",
-      "financial-services-interest-group",
-      "github-47",
-      "go-sdk",
-      "inspector",
-      "java-sdk",
-      "kotlin-sdk",
-      "mcpb",
-      "modelcontextprotocol",
-      "modelcontextprotocol-server-fetch",
-      "modelcontextprotocol-server-git",
-      "modelcontextprotocol-server-gitlab",
-      "modelcontextprotocol-server-google-maps",
-      "modelcontextprotocol-server-postgres",
-      "modelcontextprotocol-server-puppeteer",
-      "modelcontextprotocol-server-sqlite",
-      "php-sdk",
-      "python-sdk",
-      "quickstart-resources",
-      "registry",
-      "ruby-sdk",
-      "rust-sdk",
-      "servers",
-      "static",
-      "swift-sdk",
-      "typescript-sdk",
-      "use-mcp"
     ]
   },
   {
@@ -10620,10 +10458,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "friuns2-blackfriday-gpts-prompts"
     ]
   },
   {
@@ -12825,11 +12659,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 2,
-    "relatedResourceSlugs": [
-      "superagent-ai-superagent",
-      "vibekit"
     ]
   },
   {
@@ -13047,10 +12876,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "awesome-claude-code-agents"
     ]
   },
   {
@@ -13183,10 +13008,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "jetbrains-mcpproxy"
     ]
   },
   {
@@ -13301,10 +13122,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "k-dense-ai-claude-skills-mcp"
     ]
   },
   {
@@ -13834,11 +13651,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 2,
-    "relatedResourceSlugs": [
-      "langchain",
-      "rag-from-scratch"
     ]
   },
   {
@@ -13955,10 +13767,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "langgptai-awesome-claude-prompts"
     ]
   },
   {
@@ -14655,6 +14463,24 @@
     ]
   },
   {
+    "id": "mcphub",
+    "title": "MCPHub",
+    "description": "Website to list high quality MCP servers and reviews by real users. Also provide online chatbot for popular LLM models with MCP server support.",
+    "url": "https://www.mcphub.com",
+    "category": "tools",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Resources",
+    "difficulty": "intermediate",
+    "aiSummary": "Website to list high quality MCP servers and reviews by real users. Also provide online chatbot for popular LLM models with MCP server support.",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Developers"
+    ]
+  },
+  {
     "id": "jeamee-mcphub-desktop",
     "title": "MCPHub",
     "description": "An Open Source macOS & Windows GUI Desktop app for discovering, installing and managing MCP servers by **[Jeamee](https://github.com/jeamee)**",
@@ -14675,24 +14501,6 @@
       "language": "Unknown"
     },
     "aiSummary": "An Open Source macOS & Windows GUI Desktop app for discovering, installing and managing MCP servers by **[Jeamee](https://github.com/jeamee)**",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Developers"
-    ]
-  },
-  {
-    "id": "mcphub",
-    "title": "MCPHub",
-    "description": "Website to list high quality MCP servers and reviews by real users. Also provide online chatbot for popular LLM models with MCP server support.",
-    "url": "https://www.mcphub.com",
-    "category": "tools",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Resources",
-    "difficulty": "intermediate",
-    "aiSummary": "Website to list high quality MCP servers and reviews by real users. Also provide online chatbot for popular LLM models with MCP server support.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
@@ -15489,10 +15297,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "gpt-runner"
     ]
   },
   {
@@ -15948,11 +15752,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 2,
-    "relatedDocSlugs": [
-      "integrations/docker",
-      "examples/real-world-projects"
     ]
   },
   {
@@ -16949,10 +16748,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "rinadelph-agent-mcp"
     ]
   },
   {
@@ -17566,10 +17361,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "strands-agents-sdk-python"
     ]
   },
   {
@@ -18174,10 +17965,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "travisvn-openai-edge-tts"
     ]
   },
   {
@@ -18235,10 +18022,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "travisvn-awesome-claude-skills"
     ]
   },
   {
@@ -18635,10 +18418,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "bloop-apps"
     ]
   },
   {
@@ -18696,11 +18475,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 2,
-    "relatedResourceSlugs": [
-      "grok-cli",
-      "superagent-ai-superagent"
     ]
   },
   {
@@ -19234,10 +19008,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "integrations/ide-plugins"
     ]
   },
   {
@@ -19295,10 +19065,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "winfunc-opcode"
     ]
   },
   {
@@ -19355,10 +19121,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "winfunc-deepreasoning"
     ]
   },
   {
@@ -19536,10 +19298,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedDocsCount": 1,
-    "relatedDocSlugs": [
-      "integrations/ide-plugins"
     ]
   },
   {
@@ -19654,10 +19412,6 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "zilliztech-mcp-server-milvus"
     ]
   }
 ]

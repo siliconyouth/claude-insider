@@ -1,7 +1,7 @@
 {
   "version": "7.0",
-  "contentHash": "1a7b96ab1e11aa3821cd4251e65f2621a1a9643894428e3ab9f047a382563f42",
-  "generatedAt": "2026-01-02T00:08:13.111Z",
+  "contentHash": "175cc9ea4e20704b2ec1a7478588be8390d43b01367ca656b9e6ee8692dcebc7",
+  "generatedAt": "2026-01-02T01:33:16.655Z",
   "builtWith": "Claude Code powered by Claude Opus 4.5",
   "documentCount": 9103,
   "documentationChunks": 453,
@@ -19617,39 +19617,6 @@
       }
     },
     {
-      "id": "resource-ahujasid-ableton-mcp",
-      "title": "Ableton Live",
-      "section": "Ableton Live - MCP Servers",
-      "content": "Ableton Live:  [Status: community]",
-      "url": "https://github.com/ahujasid/ableton-mcp",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "ahujasid-ableton-mcp",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "ahujasid",
-          "repo": "ableton-mcp",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-simon-kansara-ableton-live-mcp-server",
       "title": "Ableton Live",
       "section": "Ableton Live - MCP Servers",
@@ -19673,6 +19640,39 @@
         "github": {
           "owner": "Simon-Kansara",
           "repo": "ableton-live-mcp-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-ahujasid-ableton-mcp",
+      "title": "Ableton Live",
+      "section": "Ableton Live - MCP Servers",
+      "content": "Ableton Live:  [Status: community]",
+      "url": "https://github.com/ahujasid/ableton-mcp",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "ahujasid-ableton-mcp",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "ahujasid",
+          "repo": "ableton-mcp",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -21988,39 +21988,6 @@
       }
     },
     {
-      "id": "resource-scorzeth-anki-mcp-server",
-      "title": "Anki",
-      "section": "Anki - MCP Servers",
-      "content": "[curious] Anki: An MCP server for interacting with your [Anki](https://apps.ankiweb.net) decks and cards. [Status: community]",
-      "url": "https://github.com/scorzeth/anki-mcp-server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "scorzeth-anki-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "scorzeth",
-          "repo": "anki-mcp-server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-nietus-anki-mcp",
       "title": "Anki",
       "section": "Anki - MCP Servers",
@@ -22044,6 +22011,39 @@
         "github": {
           "owner": "nietus",
           "repo": "anki-mcp",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-scorzeth-anki-mcp-server",
+      "title": "Anki",
+      "section": "Anki - MCP Servers",
+      "content": "[curious] Anki: An MCP server for interacting with your [Anki](https://apps.ankiweb.net) decks and cards. [Status: community]",
+      "url": "https://github.com/scorzeth/anki-mcp-server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "scorzeth-anki-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "scorzeth",
+          "repo": "anki-mcp-server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -24712,39 +24712,6 @@
       }
     },
     {
-      "id": "resource-microsoft-azure-devops-mcp",
-      "title": "Azure DevOps",
-      "section": "Azure DevOps - MCP Servers",
-      "content": "Azure DevOps: Interact with Azure DevOps services like repositories, work items, builds, releases, test plans, and code search. [Status: official]",
-      "url": "https://github.com/microsoft/azure-devops-mcp",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "microsoft-azure-devops-mcp",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": {
-          "owner": "microsoft",
-          "repo": "azure-devops-mcp",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-vortiago-mcp-azure-devops",
       "title": "Azure DevOps",
       "section": "Azure DevOps - MCP Servers",
@@ -24768,6 +24735,39 @@
         "github": {
           "owner": "Vortiago",
           "repo": "mcp-azure-devops",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-microsoft-azure-devops-mcp",
+      "title": "Azure DevOps",
+      "section": "Azure DevOps - MCP Servers",
+      "content": "Azure DevOps: Interact with Azure DevOps services like repositories, work items, builds, releases, test plans, and code search. [Status: official]",
+      "url": "https://github.com/microsoft/azure-devops-mcp",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "microsoft-azure-devops-mcp",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": {
+          "owner": "microsoft",
+          "repo": "azure-devops-mcp",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -25624,39 +25624,6 @@
       }
     },
     {
-      "id": "resource-analyticace-binance-mcp-server",
-      "title": "Binance",
-      "section": "Binance - MCP Servers",
-      "content": "Binance:  [Status: community]",
-      "url": "https://github.com/AnalyticAce/binance-mcp-server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "analyticace-binance-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "AnalyticAce",
-          "repo": "binance-mcp-server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-ethancod1ng-binance-mcp-server",
       "title": "Binance",
       "section": "Binance - MCP Servers",
@@ -25679,6 +25646,39 @@
         "status": "community",
         "github": {
           "owner": "ethancod1ng",
+          "repo": "binance-mcp-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-analyticace-binance-mcp-server",
+      "title": "Binance",
+      "section": "Binance - MCP Servers",
+      "content": "Binance:  [Status: community]",
+      "url": "https://github.com/AnalyticAce/binance-mcp-server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "analyticace-binance-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "AnalyticAce",
           "repo": "binance-mcp-server",
           "stars": 0,
           "forks": 0,
@@ -29329,39 +29329,6 @@
       }
     },
     {
-      "id": "resource-cloudinary-mcp-servers",
-      "title": "Cloudinary",
-      "section": "Cloudinary - MCP Servers",
-      "content": "[curious] Cloudinary: Exposes Cloudinary's media upload, transformation, AI analysis, management, optimization and delivery as tools usable by AI agents [Status: official]",
-      "url": "https://github.com/cloudinary/mcp-servers",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "cloudinary-mcp-servers",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": {
-          "owner": "cloudinary",
-          "repo": "mcp-servers",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-felores-cloudinary-mcp-server",
       "title": "Cloudinary",
       "section": "Cloudinary - MCP Servers",
@@ -29385,6 +29352,39 @@
         "github": {
           "owner": "felores",
           "repo": "cloudinary-mcp-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-cloudinary-mcp-servers",
+      "title": "Cloudinary",
+      "section": "Cloudinary - MCP Servers",
+      "content": "[curious] Cloudinary: Exposes Cloudinary's media upload, transformation, AI analysis, management, optimization and delivery as tools usable by AI agents [Status: official]",
+      "url": "https://github.com/cloudinary/mcp-servers",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "cloudinary-mcp-servers",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": {
+          "owner": "cloudinary",
+          "repo": "mcp-servers",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -40222,39 +40222,6 @@
       }
     },
     {
-      "id": "resource-v-3-google-calendar",
-      "title": "Google Calendar",
-      "section": "Google Calendar - MCP Servers",
-      "content": "Google Calendar: Integration with Google Calendar to check schedules, find time, and add/delete events [Status: community]",
-      "url": "https://github.com/v-3/google-calendar",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "v-3-google-calendar",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "v-3",
-          "repo": "google-calendar",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-nspady-google-calendar-mcp",
       "title": "Google Calendar",
       "section": "Google Calendar - MCP Servers",
@@ -40278,6 +40245,39 @@
         "github": {
           "owner": "nspady",
           "repo": "google-calendar-mcp",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-v-3-google-calendar",
+      "title": "Google Calendar",
+      "section": "Google Calendar - MCP Servers",
+      "content": "Google Calendar: Integration with Google Calendar to check schedules, find time, and add/delete events [Status: community]",
+      "url": "https://github.com/v-3/google-calendar",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "v-3-google-calendar",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "v-3",
+          "repo": "google-calendar",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -42837,6 +42837,31 @@
       }
     },
     {
+      "id": "resource-hubspot",
+      "title": "HubSpot",
+      "section": "HubSpot - MCP Servers",
+      "content": "HubSpot: Connect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data [Status: official]",
+      "url": "https://developer.hubspot.com/mcp",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "hubspot",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
       "id": "resource-buryhuang-mcp-hubspot",
       "title": "HubSpot",
       "section": "HubSpot - MCP Servers",
@@ -42865,31 +42890,6 @@
           "lastUpdated": "2025-12-31",
           "language": "Unknown"
         },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
-      "id": "resource-hubspot",
-      "title": "HubSpot",
-      "section": "HubSpot - MCP Servers",
-      "content": "HubSpot: Connect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data [Status: official]",
-      "url": "https://developer.hubspot.com/mcp",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "hubspot",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": null,
         "changelog": null,
         "lastUpdated": null
       }
@@ -55408,39 +55408,6 @@
       }
     },
     {
-      "id": "resource-pnp-cli-microsoft365-mcp-server",
-      "title": "Microsoft 365",
-      "section": "Microsoft 365 - MCP Servers",
-      "content": "[curious] Microsoft 365: Single MCP server that allows to manage many different areas of Microsoft 365, for example: Entra ID, OneDrive, OneNote, Outlook, Planner, Power Apps, Power Automate, Power Platform, SharePoint Embedded, SharePoint Online, Teams, Viva Engage, and many more. [Status: community]",
-      "url": "https://github.com/pnp/cli-microsoft365-mcp-server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "pnp-cli-microsoft365-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "pnp",
-          "repo": "cli-microsoft365-mcp-server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-merill-lokka",
       "title": "Microsoft 365",
       "section": "Microsoft 365 - MCP Servers",
@@ -55464,6 +55431,39 @@
         "github": {
           "owner": "merill",
           "repo": "lokka",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-pnp-cli-microsoft365-mcp-server",
+      "title": "Microsoft 365",
+      "section": "Microsoft 365 - MCP Servers",
+      "content": "[curious] Microsoft 365: Single MCP server that allows to manage many different areas of Microsoft 365, for example: Entra ID, OneDrive, OneNote, Outlook, Planner, Power Apps, Power Automate, Power Platform, SharePoint Embedded, SharePoint Online, Teams, Viva Engage, and many more. [Status: community]",
+      "url": "https://github.com/pnp/cli-microsoft365-mcp-server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "pnp-cli-microsoft365-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "pnp",
+          "repo": "cli-microsoft365-mcp-server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -57025,39 +57025,6 @@
       }
     },
     {
-      "id": "resource-jexinsam-mssql-mcp-server",
-      "title": "MSSQL",
-      "section": "MSSQL - MCP Servers",
-      "content": "MSSQL:  [Status: community]",
-      "url": "https://github.com/JexinSam/mssql_mcp_server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "jexinsam-mssql-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "JexinSam",
-          "repo": "mssql_mcp_server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-aekanun2020-mcp-server",
       "title": "MSSQL",
       "section": "MSSQL - MCP Servers",
@@ -57081,6 +57048,39 @@
         "github": {
           "owner": "aekanun2020",
           "repo": "mcp-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-jexinsam-mssql-mcp-server",
+      "title": "MSSQL",
+      "section": "MSSQL - MCP Servers",
+      "content": "MSSQL:  [Status: community]",
+      "url": "https://github.com/JexinSam/mssql_mcp_server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "jexinsam-mssql-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "JexinSam",
+          "repo": "mssql_mcp_server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -58942,39 +58942,6 @@
       }
     },
     {
-      "id": "resource-njbrake-notion-mcp-server",
-      "title": "Notion",
-      "section": "Notion - MCP Servers",
-      "content": "Notion:  [Status: community]",
-      "url": "https://github.com/njbrake/notion-mcp-server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "njbrake-notion-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "njbrake",
-          "repo": "notion-mcp-server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-v-3-notion-server",
       "title": "Notion",
       "section": "Notion - MCP Servers",
@@ -58998,6 +58965,39 @@
         "github": {
           "owner": "v-3",
           "repo": "notion-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-njbrake-notion-mcp-server",
+      "title": "Notion",
+      "section": "Notion - MCP Servers",
+      "content": "Notion:  [Status: community]",
+      "url": "https://github.com/njbrake/notion-mcp-server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "njbrake-notion-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "njbrake",
+          "repo": "notion-mcp-server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -66666,39 +66666,6 @@
       }
     },
     {
-      "id": "resource-redis-mcp-redis-mjtof34r",
-      "title": "Redis",
-      "section": "Redis - MCP Servers",
-      "content": "Redis: The Redis official MCP Server offers an interface to manage and search data in Redis. [Status: official]",
-      "url": "https://github.com/redis/mcp-redis/",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "redis-mcp-redis-mjtof34r",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": {
-          "owner": "redis",
-          "repo": "mcp-redis",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-gongrzhe-redis-mcp-server",
       "title": "Redis",
       "section": "Redis - MCP Servers",
@@ -66722,6 +66689,39 @@
         "github": {
           "owner": "GongRzhe",
           "repo": "REDIS-MCP-Server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-redis-mcp-redis-mjtof34r",
+      "title": "Redis",
+      "section": "Redis - MCP Servers",
+      "content": "Redis: The Redis official MCP Server offers an interface to manage and search data in Redis. [Status: official]",
+      "url": "https://github.com/redis/mcp-redis/",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "redis-mcp-redis-mjtof34r",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": {
+          "owner": "redis",
+          "repo": "mcp-redis",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -72360,39 +72360,6 @@
       }
     },
     {
-      "id": "resource-stripe-agent-toolkit",
-      "title": "Stripe",
-      "section": "Stripe - MCP Servers",
-      "content": "Stripe: Interact with Stripe API [Status: official]",
-      "url": "https://github.com/stripe/agent-toolkit",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "stripe-agent-toolkit",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": {
-          "owner": "stripe",
-          "repo": "agent-toolkit",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-atharvagupta2003-mcp-stripe",
       "title": "Stripe",
       "section": "Stripe - MCP Servers",
@@ -72416,6 +72383,39 @@
         "github": {
           "owner": "atharvagupta2003",
           "repo": "mcp-stripe",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-stripe-agent-toolkit",
+      "title": "Stripe",
+      "section": "Stripe - MCP Servers",
+      "content": "Stripe: Interact with Stripe API [Status: official]",
+      "url": "https://github.com/stripe/agent-toolkit",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "stripe-agent-toolkit",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": {
+          "owner": "stripe",
+          "repo": "agent-toolkit",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -99611,6 +99611,31 @@
       }
     },
     {
+      "id": "resource-mcphub",
+      "title": "MCPHub",
+      "section": "MCPHub - Development Tools",
+      "content": "[curious] MCPHub: Website to list high quality MCP servers and reviews by real users. [excited] Also provide online chatbot for popular LLM models with MCP server support. [Status: community]",
+      "url": "https://www.mcphub.com",
+      "category": "Resources",
+      "subcategory": "Development Tools",
+      "keywords": [
+        "tools",
+        "resources",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "mcphub",
+        "category": "tools",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
       "id": "resource-jeamee-mcphub-desktop",
       "title": "MCPHub",
       "section": "MCPHub - Development Tools",
@@ -99639,31 +99664,6 @@
           "lastUpdated": "2025-12-31",
           "language": "Unknown"
         },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
-      "id": "resource-mcphub",
-      "title": "MCPHub",
-      "section": "MCPHub - Development Tools",
-      "content": "[curious] MCPHub: Website to list high quality MCP servers and reviews by real users. [excited] Also provide online chatbot for popular LLM models with MCP server support. [Status: community]",
-      "url": "https://www.mcphub.com",
-      "category": "Resources",
-      "subcategory": "Development Tools",
-      "keywords": [
-        "tools",
-        "resources",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "mcphub",
-        "category": "tools",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": null,
         "changelog": null,
         "lastUpdated": null
       }
@@ -194695,11 +194695,11 @@
       ]
     },
     {
-      "id": "resource-context-ahujasid-ableton-mcp",
+      "id": "resource-context-simon-kansara-ableton-live-mcp-server",
       "title": "Resource: Ableton Live",
       "section": "Community Servers",
-      "content": "Resource: Ableton Live\nLanguage: Unknown",
-      "url": "https://github.com/ahujasid/ableton-mcp",
+      "content": "Resource: Ableton Live\nan MCP server to control Ableton Live.\nLanguage: Unknown",
+      "url": "https://github.com/Simon-Kansara/ableton-live-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -194709,7 +194709,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "ahujasid-ableton-mcp",
+        "id": "simon-kansara-ableton-live-mcp-server",
         "title": "Ableton Live",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -194729,11 +194729,11 @@
       ]
     },
     {
-      "id": "resource-context-simon-kansara-ableton-live-mcp-server",
+      "id": "resource-context-ahujasid-ableton-mcp",
       "title": "Resource: Ableton Live",
       "section": "Community Servers",
-      "content": "Resource: Ableton Live\nan MCP server to control Ableton Live.\nLanguage: Unknown",
-      "url": "https://github.com/Simon-Kansara/ableton-live-mcp-server",
+      "content": "Resource: Ableton Live\nLanguage: Unknown",
+      "url": "https://github.com/ahujasid/ableton-mcp",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -194743,7 +194743,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "simon-kansara-ableton-live-mcp-server",
+        "id": "ahujasid-ableton-mcp",
         "title": "Ableton Live",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -197157,11 +197157,11 @@
       ]
     },
     {
-      "id": "resource-context-scorzeth-anki-mcp-server",
+      "id": "resource-context-nietus-anki-mcp",
       "title": "Resource: Anki",
       "section": "Community Servers",
-      "content": "Resource: Anki\nAn MCP server for interacting with your [Anki](https://apps.ankiweb.net) decks and cards.\nLanguage: Unknown",
-      "url": "https://github.com/scorzeth/anki-mcp-server",
+      "content": "Resource: Anki\nMCP server to run locally with Anki and Ankiconnect. Supports creating, updating, searching and filtering cards and decks. Include mass update and other advanced tools.\nLanguage: Unknown",
+      "url": "https://github.com/nietus/anki-mcp",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -197171,7 +197171,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "scorzeth-anki-mcp-server",
+        "id": "nietus-anki-mcp",
         "title": "Anki",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -197191,11 +197191,11 @@
       ]
     },
     {
-      "id": "resource-context-nietus-anki-mcp",
+      "id": "resource-context-scorzeth-anki-mcp-server",
       "title": "Resource: Anki",
       "section": "Community Servers",
-      "content": "Resource: Anki\nMCP server to run locally with Anki and Ankiconnect. Supports creating, updating, searching and filtering cards and decks. Include mass update and other advanced tools.\nLanguage: Unknown",
-      "url": "https://github.com/nietus/anki-mcp",
+      "content": "Resource: Anki\nAn MCP server for interacting with your [Anki](https://apps.ankiweb.net) decks and cards.\nLanguage: Unknown",
+      "url": "https://github.com/scorzeth/anki-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -197205,7 +197205,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "nietus-anki-mcp",
+        "id": "scorzeth-anki-mcp-server",
         "title": "Anki",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -200003,40 +200003,6 @@
       ]
     },
     {
-      "id": "resource-context-microsoft-azure-devops-mcp",
-      "title": "Resource: Azure DevOps",
-      "section": "Official Integrations",
-      "content": "Resource: Azure DevOps\nInteract with Azure DevOps services like repositories, work items, builds, releases, test plans, and code search.\nLanguage: Unknown",
-      "url": "https://github.com/microsoft/azure-devops-mcp",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "microsoft-azure-devops-mcp",
-        "title": "Azure DevOps",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": "Unknown",
-        "status": "official"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Azure DevOps?",
-        "What are the alternatives to Azure DevOps?",
-        "Show me example usage of Azure DevOps",
-        "What are the pros and cons of Azure DevOps?",
-        "Is Azure DevOps right for my project?",
-        "How do I integrate Azure DevOps with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-vortiago-mcp-azure-devops",
       "title": "Resource: Azure DevOps",
       "section": "Community Servers",
@@ -200060,6 +200026,40 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Azure DevOps?",
+        "What are the alternatives to Azure DevOps?",
+        "Show me example usage of Azure DevOps",
+        "What are the pros and cons of Azure DevOps?",
+        "Is Azure DevOps right for my project?",
+        "How do I integrate Azure DevOps with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-microsoft-azure-devops-mcp",
+      "title": "Resource: Azure DevOps",
+      "section": "Official Integrations",
+      "content": "Resource: Azure DevOps\nInteract with Azure DevOps services like repositories, work items, builds, releases, test plans, and code search.\nLanguage: Unknown",
+      "url": "https://github.com/microsoft/azure-devops-mcp",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "microsoft-azure-devops-mcp",
+        "title": "Azure DevOps",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": "Unknown",
+        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with Azure DevOps?",
@@ -200959,11 +200959,11 @@
       ]
     },
     {
-      "id": "resource-context-analyticace-binance-mcp-server",
+      "id": "resource-context-ethancod1ng-binance-mcp-server",
       "title": "Resource: Binance",
       "section": "Community Servers",
-      "content": "Resource: Binance\nLanguage: Unknown",
-      "url": "https://github.com/AnalyticAce/binance-mcp-server",
+      "content": "Resource: Binance\nCryptocurrency trading and market data access through Binance API integration.\nLanguage: Unknown",
+      "url": "https://github.com/ethancod1ng/binance-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -200973,7 +200973,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "analyticace-binance-mcp-server",
+        "id": "ethancod1ng-binance-mcp-server",
         "title": "Binance",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -200993,11 +200993,11 @@
       ]
     },
     {
-      "id": "resource-context-ethancod1ng-binance-mcp-server",
+      "id": "resource-context-analyticace-binance-mcp-server",
       "title": "Resource: Binance",
       "section": "Community Servers",
-      "content": "Resource: Binance\nCryptocurrency trading and market data access through Binance API integration.\nLanguage: Unknown",
-      "url": "https://github.com/ethancod1ng/binance-mcp-server",
+      "content": "Resource: Binance\nLanguage: Unknown",
+      "url": "https://github.com/AnalyticAce/binance-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -201007,7 +201007,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "ethancod1ng-binance-mcp-server",
+        "id": "analyticace-binance-mcp-server",
         "title": "Binance",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -204805,40 +204805,6 @@
       ]
     },
     {
-      "id": "resource-context-cloudinary-mcp-servers",
-      "title": "Resource: Cloudinary",
-      "section": "Official Integrations",
-      "content": "Resource: Cloudinary\nExposes Cloudinary's media upload, transformation, AI analysis, management, optimization and delivery as tools usable by AI agents\nLanguage: Unknown",
-      "url": "https://github.com/cloudinary/mcp-servers",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "cloudinary-mcp-servers",
-        "title": "Cloudinary",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": "Unknown",
-        "status": "official"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Cloudinary?",
-        "What are the alternatives to Cloudinary?",
-        "Show me example usage of Cloudinary",
-        "What are the pros and cons of Cloudinary?",
-        "Is Cloudinary right for my project?",
-        "How do I integrate Cloudinary with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-felores-cloudinary-mcp-server",
       "title": "Resource: Cloudinary",
       "section": "Community Servers",
@@ -204862,6 +204828,40 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Cloudinary?",
+        "What are the alternatives to Cloudinary?",
+        "Show me example usage of Cloudinary",
+        "What are the pros and cons of Cloudinary?",
+        "Is Cloudinary right for my project?",
+        "How do I integrate Cloudinary with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-cloudinary-mcp-servers",
+      "title": "Resource: Cloudinary",
+      "section": "Official Integrations",
+      "content": "Resource: Cloudinary\nExposes Cloudinary's media upload, transformation, AI analysis, management, optimization and delivery as tools usable by AI agents\nLanguage: Unknown",
+      "url": "https://github.com/cloudinary/mcp-servers",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "cloudinary-mcp-servers",
+        "title": "Cloudinary",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": "Unknown",
+        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with Cloudinary?",
@@ -216206,11 +216206,11 @@
       ]
     },
     {
-      "id": "resource-context-v-3-google-calendar",
+      "id": "resource-context-nspady-google-calendar-mcp",
       "title": "Resource: Google Calendar",
       "section": "Community Servers",
-      "content": "Resource: Google Calendar\nIntegration with Google Calendar to check schedules, find time, and add/delete events\nLanguage: Unknown",
-      "url": "https://github.com/v-3/google-calendar",
+      "content": "Resource: Google Calendar\nGoogle Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location.\nLanguage: Unknown",
+      "url": "https://github.com/nspady/google-calendar-mcp",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -216220,7 +216220,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "v-3-google-calendar",
+        "id": "nspady-google-calendar-mcp",
         "title": "Google Calendar",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -216240,11 +216240,11 @@
       ]
     },
     {
-      "id": "resource-context-nspady-google-calendar-mcp",
+      "id": "resource-context-v-3-google-calendar",
       "title": "Resource: Google Calendar",
       "section": "Community Servers",
-      "content": "Resource: Google Calendar\nGoogle Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location.\nLanguage: Unknown",
-      "url": "https://github.com/nspady/google-calendar-mcp",
+      "content": "Resource: Google Calendar\nIntegration with Google Calendar to check schedules, find time, and add/delete events\nLanguage: Unknown",
+      "url": "https://github.com/v-3/google-calendar",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -216254,7 +216254,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "nspady-google-calendar-mcp",
+        "id": "v-3-google-calendar",
         "title": "Google Calendar",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -218902,6 +218902,39 @@
       ]
     },
     {
+      "id": "resource-context-hubspot",
+      "title": "Resource: HubSpot",
+      "section": "Official Integrations",
+      "content": "Resource: HubSpot\nConnect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data",
+      "url": "https://developer.hubspot.com/mcp",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "hubspot",
+        "title": "HubSpot",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": null,
+        "status": "official"
+      },
+      "suggestedQuestions": [
+        "How do I get started with HubSpot?",
+        "What are the alternatives to HubSpot?",
+        "Show me example usage of HubSpot",
+        "What are the pros and cons of HubSpot?",
+        "Is HubSpot right for my project?",
+        "How do I integrate HubSpot with my workflow?"
+      ]
+    },
+    {
       "id": "resource-context-buryhuang-mcp-hubspot",
       "title": "Resource: HubSpot",
       "section": "Community Servers",
@@ -218925,39 +218958,6 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
-      },
-      "suggestedQuestions": [
-        "How do I get started with HubSpot?",
-        "What are the alternatives to HubSpot?",
-        "Show me example usage of HubSpot",
-        "What are the pros and cons of HubSpot?",
-        "Is HubSpot right for my project?",
-        "How do I integrate HubSpot with my workflow?"
-      ]
-    },
-    {
-      "id": "resource-context-hubspot",
-      "title": "Resource: HubSpot",
-      "section": "Official Integrations",
-      "content": "Resource: HubSpot\nConnect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data",
-      "url": "https://developer.hubspot.com/mcp",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "hubspot",
-        "title": "HubSpot",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": null,
-        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with HubSpot?",
@@ -231856,11 +231856,11 @@
       ]
     },
     {
-      "id": "resource-context-pnp-cli-microsoft365-mcp-server",
+      "id": "resource-context-merill-lokka",
       "title": "Resource: Microsoft 365",
       "section": "Community Servers",
-      "content": "Resource: Microsoft 365\nSingle MCP server that allows to manage many different areas of Microsoft 365, for example: Entra ID, OneDrive, OneNote, Outlook, Planner, Power Apps, Power Automate, Power Platform, SharePoint Embedded, SharePoint Online, Teams, Viva Engage, and many more.\nLanguage: Unknown",
-      "url": "https://github.com/pnp/cli-microsoft365-mcp-server",
+      "content": "Resource: Microsoft 365\n(by Merill) A Model Context Protocol (MCP) server for Microsoft 365. Includes support for all services including Teams, SharePoint, Exchange, OneDrive, Entra, Intune and more. See [Lokka](https://lokka.dev/) for more details.\nLanguage: Unknown",
+      "url": "https://github.com/merill/lokka",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -231870,7 +231870,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "pnp-cli-microsoft365-mcp-server",
+        "id": "merill-lokka",
         "title": "Microsoft 365",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -231890,11 +231890,11 @@
       ]
     },
     {
-      "id": "resource-context-merill-lokka",
+      "id": "resource-context-pnp-cli-microsoft365-mcp-server",
       "title": "Resource: Microsoft 365",
       "section": "Community Servers",
-      "content": "Resource: Microsoft 365\n(by Merill) A Model Context Protocol (MCP) server for Microsoft 365. Includes support for all services including Teams, SharePoint, Exchange, OneDrive, Entra, Intune and more. See [Lokka](https://lokka.dev/) for more details.\nLanguage: Unknown",
-      "url": "https://github.com/merill/lokka",
+      "content": "Resource: Microsoft 365\nSingle MCP server that allows to manage many different areas of Microsoft 365, for example: Entra ID, OneDrive, OneNote, Outlook, Planner, Power Apps, Power Automate, Power Platform, SharePoint Embedded, SharePoint Online, Teams, Viva Engage, and many more.\nLanguage: Unknown",
+      "url": "https://github.com/pnp/cli-microsoft365-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -231904,7 +231904,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "merill-lokka",
+        "id": "pnp-cli-microsoft365-mcp-server",
         "title": "Microsoft 365",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -233561,11 +233561,11 @@
       ]
     },
     {
-      "id": "resource-context-jexinsam-mssql-mcp-server",
+      "id": "resource-context-aekanun2020-mcp-server",
       "title": "Resource: MSSQL",
       "section": "Community Servers",
-      "content": "Resource: MSSQL\nLanguage: Unknown",
-      "url": "https://github.com/JexinSam/mssql_mcp_server",
+      "content": "Resource: MSSQL\nMSSQL database integration with configurable access controls and schema inspection\nLanguage: Unknown",
+      "url": "https://github.com/aekanun2020/mcp-server/",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -233575,7 +233575,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "jexinsam-mssql-mcp-server",
+        "id": "aekanun2020-mcp-server",
         "title": "MSSQL",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -233595,11 +233595,11 @@
       ]
     },
     {
-      "id": "resource-context-aekanun2020-mcp-server",
+      "id": "resource-context-jexinsam-mssql-mcp-server",
       "title": "Resource: MSSQL",
       "section": "Community Servers",
-      "content": "Resource: MSSQL\nMSSQL database integration with configurable access controls and schema inspection\nLanguage: Unknown",
-      "url": "https://github.com/aekanun2020/mcp-server/",
+      "content": "Resource: MSSQL\nLanguage: Unknown",
+      "url": "https://github.com/JexinSam/mssql_mcp_server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -233609,7 +233609,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "aekanun2020-mcp-server",
+        "id": "jexinsam-mssql-mcp-server",
         "title": "MSSQL",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -235578,11 +235578,11 @@
       ]
     },
     {
-      "id": "resource-context-njbrake-notion-mcp-server",
+      "id": "resource-context-v-3-notion-server",
       "title": "Resource: Notion",
       "section": "Community Servers",
       "content": "Resource: Notion\nLanguage: Unknown",
-      "url": "https://github.com/njbrake/notion-mcp-server",
+      "url": "https://github.com/v-3/notion-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -235592,7 +235592,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "njbrake-notion-mcp-server",
+        "id": "v-3-notion-server",
         "title": "Notion",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -235612,11 +235612,11 @@
       ]
     },
     {
-      "id": "resource-context-v-3-notion-server",
+      "id": "resource-context-njbrake-notion-mcp-server",
       "title": "Resource: Notion",
       "section": "Community Servers",
       "content": "Resource: Notion\nLanguage: Unknown",
-      "url": "https://github.com/v-3/notion-server",
+      "url": "https://github.com/njbrake/notion-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -235626,7 +235626,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "v-3-notion-server",
+        "id": "njbrake-notion-mcp-server",
         "title": "Notion",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -243666,40 +243666,6 @@
       ]
     },
     {
-      "id": "resource-context-redis-mcp-redis-mjtof34r",
-      "title": "Resource: Redis",
-      "section": "Official Integrations",
-      "content": "Resource: Redis\nThe Redis official MCP Server offers an interface to manage and search data in Redis.\nLanguage: Unknown",
-      "url": "https://github.com/redis/mcp-redis/",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "redis-mcp-redis-mjtof34r",
-        "title": "Redis",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": "Unknown",
-        "status": "official"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Redis?",
-        "What are the alternatives to Redis?",
-        "Show me example usage of Redis",
-        "What are the pros and cons of Redis?",
-        "Is Redis right for my project?",
-        "How do I integrate Redis with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-gongrzhe-redis-mcp-server",
       "title": "Resource: Redis",
       "section": "Community Servers",
@@ -243723,6 +243689,40 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Redis?",
+        "What are the alternatives to Redis?",
+        "Show me example usage of Redis",
+        "What are the pros and cons of Redis?",
+        "Is Redis right for my project?",
+        "How do I integrate Redis with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-redis-mcp-redis-mjtof34r",
+      "title": "Resource: Redis",
+      "section": "Official Integrations",
+      "content": "Resource: Redis\nThe Redis official MCP Server offers an interface to manage and search data in Redis.\nLanguage: Unknown",
+      "url": "https://github.com/redis/mcp-redis/",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "redis-mcp-redis-mjtof34r",
+        "title": "Redis",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": "Unknown",
+        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with Redis?",
@@ -249609,40 +249609,6 @@
       ]
     },
     {
-      "id": "resource-context-stripe-agent-toolkit",
-      "title": "Resource: Stripe",
-      "section": "Official Integrations",
-      "content": "Resource: Stripe\nInteract with Stripe API\nLanguage: Unknown",
-      "url": "https://github.com/stripe/agent-toolkit",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "stripe-agent-toolkit",
-        "title": "Stripe",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": "Unknown",
-        "status": "official"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Stripe?",
-        "What are the alternatives to Stripe?",
-        "Show me example usage of Stripe",
-        "What are the pros and cons of Stripe?",
-        "Is Stripe right for my project?",
-        "How do I integrate Stripe with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-atharvagupta2003-mcp-stripe",
       "title": "Resource: Stripe",
       "section": "Community Servers",
@@ -249666,6 +249632,40 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Stripe?",
+        "What are the alternatives to Stripe?",
+        "Show me example usage of Stripe",
+        "What are the pros and cons of Stripe?",
+        "Is Stripe right for my project?",
+        "How do I integrate Stripe with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-stripe-agent-toolkit",
+      "title": "Resource: Stripe",
+      "section": "Official Integrations",
+      "content": "Resource: Stripe\nInteract with Stripe API\nLanguage: Unknown",
+      "url": "https://github.com/stripe/agent-toolkit",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "stripe-agent-toolkit",
+        "title": "Stripe",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": "Unknown",
+        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with Stripe?",
@@ -279346,6 +279346,39 @@
       ]
     },
     {
+      "id": "resource-context-mcphub",
+      "title": "Resource: MCPHub",
+      "section": "Resources",
+      "content": "Resource: MCPHub\nWebsite to list high quality MCP servers and reviews by real users. Also provide online chatbot for popular LLM models with MCP server support.",
+      "url": "https://www.mcphub.com",
+      "category": "ResourceContext",
+      "subcategory": "tools",
+      "keywords": [
+        "tools",
+        "resources"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "mcphub",
+        "title": "MCPHub",
+        "category": "tools",
+        "subcategory": "Resources",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": null,
+        "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with MCPHub?",
+        "What are the alternatives to MCPHub?",
+        "Show me example usage of MCPHub",
+        "What are the pros and cons of MCPHub?",
+        "Is MCPHub right for my project?",
+        "How do I integrate MCPHub with my workflow?"
+      ]
+    },
+    {
       "id": "resource-context-jeamee-mcphub-desktop",
       "title": "Resource: MCPHub",
       "section": "Resources",
@@ -279368,39 +279401,6 @@
         "featured": false,
         "githubStars": null,
         "language": "Unknown",
-        "status": "community"
-      },
-      "suggestedQuestions": [
-        "How do I get started with MCPHub?",
-        "What are the alternatives to MCPHub?",
-        "Show me example usage of MCPHub",
-        "What are the pros and cons of MCPHub?",
-        "Is MCPHub right for my project?",
-        "How do I integrate MCPHub with my workflow?"
-      ]
-    },
-    {
-      "id": "resource-context-mcphub",
-      "title": "Resource: MCPHub",
-      "section": "Resources",
-      "content": "Resource: MCPHub\nWebsite to list high quality MCP servers and reviews by real users. Also provide online chatbot for popular LLM models with MCP server support.",
-      "url": "https://www.mcphub.com",
-      "category": "ResourceContext",
-      "subcategory": "tools",
-      "keywords": [
-        "tools",
-        "resources"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "mcphub",
-        "title": "MCPHub",
-        "category": "tools",
-        "subcategory": "Resources",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": null,
         "status": "community"
       },
       "suggestedQuestions": [
@@ -299611,14 +299611,6 @@
       "community": 0.14285714285714285,
       "servers": 0.14285714285714285
     },
-    "resource-ahujasid-ableton-mcp": {
-      "ableton": 1,
-      "live": 1,
-      "status": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "mcp": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-simon-kansara-ableton-live-mcp-server": {
       "ableton": 1,
       "live": 1,
@@ -299628,6 +299620,14 @@
       "status": 0.25,
       "community": 0.25,
       "servers": 0.25
+    },
+    "resource-ahujasid-ableton-mcp": {
+      "ableton": 1,
+      "live": 1,
+      "status": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "mcp": 0.3333333333333333,
+      "servers": 0.3333333333333333
     },
     "resource-abrinsmead-mindpilot-mcp": {
       "abrinsmead": 0.75,
@@ -301140,22 +301140,6 @@
       "community": 0.14285714285714285,
       "servers": 0.14285714285714285
     },
-    "resource-scorzeth-anki-mcp-server": {
-      "curious": 0.25,
-      "anki": 1,
-      "mcp": 0.5,
-      "server": 0.25,
-      "interacting": 0.25,
-      "https": 0.25,
-      "apps": 0.25,
-      "ankiweb": 0.25,
-      "net": 0.25,
-      "decks": 0.25,
-      "cards": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "servers": 0.25
-    },
     "resource-nietus-anki-mcp": {
       "curious": 0.25,
       "anki": 1,
@@ -301176,6 +301160,22 @@
       "update": 0.25,
       "advanced": 0.25,
       "tools": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "servers": 0.25
+    },
+    "resource-scorzeth-anki-mcp-server": {
+      "curious": 0.25,
+      "anki": 1,
+      "mcp": 0.5,
+      "server": 0.25,
+      "interacting": 0.25,
+      "https": 0.25,
+      "apps": 0.25,
+      "ankiweb": 0.25,
+      "net": 0.25,
+      "decks": 0.25,
+      "cards": 0.25,
       "status": 0.25,
       "community": 0.25,
       "servers": 0.25
@@ -302894,6 +302894,24 @@
       "official": 0.14285714285714285,
       "servers": 0.14285714285714285
     },
+    "resource-vortiago-mcp-azure-devops": {
+      "azure": 1,
+      "devops": 1,
+      "mcp": 0.5,
+      "server": 0.25,
+      "provides": 0.25,
+      "bridge": 0.25,
+      "services": 0.25,
+      "enabling": 0.25,
+      "assistants": 0.25,
+      "query": 0.25,
+      "manage": 0.25,
+      "work": 0.25,
+      "items": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "servers": 0.25
+    },
     "resource-microsoft-azure-devops-mcp": {
       "azure": 1,
       "devops": 1,
@@ -302912,24 +302930,6 @@
       "status": 0.25,
       "official": 0.25,
       "mcp": 0.25,
-      "servers": 0.25
-    },
-    "resource-vortiago-mcp-azure-devops": {
-      "azure": 1,
-      "devops": 1,
-      "mcp": 0.5,
-      "server": 0.25,
-      "provides": 0.25,
-      "bridge": 0.25,
-      "services": 0.25,
-      "enabling": 0.25,
-      "assistants": 0.25,
-      "query": 0.25,
-      "manage": 0.25,
-      "work": 0.25,
-      "items": 0.25,
-      "status": 0.25,
-      "community": 0.25,
       "servers": 0.25
     },
     "resource-azure-samples-mcp": {
@@ -303467,13 +303467,6 @@
       "community": 0.2,
       "servers": 0.2
     },
-    "resource-analyticace-binance-mcp-server": {
-      "binance": 1,
-      "status": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "mcp": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-ethancod1ng-binance-mcp-server": {
       "binance": 1,
       "cryptocurrency": 0.25,
@@ -303488,6 +303481,13 @@
       "community": 0.25,
       "mcp": 0.25,
       "servers": 0.25
+    },
+    "resource-analyticace-binance-mcp-server": {
+      "binance": 1,
+      "status": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "mcp": 0.3333333333333333,
+      "servers": 0.3333333333333333
     },
     "resource-jackkuo666-biorxiv-mcp-server": {
       "happy": 0.25,
@@ -305652,6 +305652,23 @@
       "community": 0.1,
       "servers": 0.1
     },
+    "resource-felores-cloudinary-mcp-server": {
+      "cloudinary": 1,
+      "model": 0.2,
+      "context": 0.2,
+      "protocol": 0.2,
+      "server": 0.2,
+      "upload": 0.2,
+      "media": 0.4,
+      "get": 0.2,
+      "back": 0.2,
+      "link": 0.2,
+      "details": 0.2,
+      "status": 0.2,
+      "community": 0.2,
+      "mcp": 0.2,
+      "servers": 0.2
+    },
     "resource-cloudinary-mcp-servers": {
       "curious": 0.25,
       "cloudinary": 1,
@@ -305670,23 +305687,6 @@
       "official": 0.25,
       "mcp": 0.25,
       "servers": 0.25
-    },
-    "resource-felores-cloudinary-mcp-server": {
-      "cloudinary": 1,
-      "model": 0.2,
-      "context": 0.2,
-      "protocol": 0.2,
-      "server": 0.2,
-      "upload": 0.2,
-      "media": 0.4,
-      "get": 0.2,
-      "back": 0.2,
-      "link": 0.2,
-      "details": 0.2,
-      "status": 0.2,
-      "community": 0.2,
-      "mcp": 0.2,
-      "servers": 0.2
     },
     "resource-cloudsway-ai-smartsearch": {
       "cloudsway": 1,
@@ -312524,22 +312524,6 @@
       "community": 0.25,
       "servers": 0.25
     },
-    "resource-v-3-google-calendar": {
-      "google": 1,
-      "calendar": 1,
-      "integration": 0.25,
-      "check": 0.25,
-      "schedules": 0.25,
-      "find": 0.25,
-      "time": 0.25,
-      "add": 0.25,
-      "delete": 0.25,
-      "events": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "mcp": 0.25,
-      "servers": 0.25
-    },
     "resource-nspady-google-calendar-mcp": {
       "curious": 0.2,
       "google": 1,
@@ -312557,6 +312541,22 @@
       "status": 0.2,
       "community": 0.2,
       "servers": 0.2
+    },
+    "resource-v-3-google-calendar": {
+      "google": 1,
+      "calendar": 1,
+      "integration": 0.25,
+      "check": 0.25,
+      "schedules": 0.25,
+      "find": 0.25,
+      "time": 0.25,
+      "add": 0.25,
+      "delete": 0.25,
+      "events": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "mcp": 0.25,
+      "servers": 0.25
     },
     "resource-googlecloudplatform-cloud-run-mcp": {
       "curious": 0.25,
@@ -314148,6 +314148,21 @@
       "community": 0.14285714285714285,
       "servers": 0.14285714285714285
     },
+    "resource-hubspot": {
+      "hubspot": 1,
+      "connect": 0.2,
+      "manage": 0.2,
+      "interact": 0.2,
+      "https": 0.2,
+      "www": 0.2,
+      "com": 0.2,
+      "crm": 0.2,
+      "data": 0.2,
+      "status": 0.2,
+      "official": 0.2,
+      "mcp": 0.2,
+      "servers": 0.2
+    },
     "resource-buryhuang-mcp-hubspot": {
       "hubspot": 1,
       "crm": 0.5,
@@ -314167,21 +314182,6 @@
       "community": 0.25,
       "mcp": 0.25,
       "servers": 0.25
-    },
-    "resource-hubspot": {
-      "hubspot": 1,
-      "connect": 0.2,
-      "manage": 0.2,
-      "interact": 0.2,
-      "https": 0.2,
-      "www": 0.2,
-      "com": 0.2,
-      "crm": 0.2,
-      "data": 0.2,
-      "status": 0.2,
-      "official": 0.2,
-      "mcp": 0.2,
-      "servers": 0.2
     },
     "resource-huggingagi-mcp-baostock-server": {
       "curious": 0.14285714285714285,
@@ -322000,6 +322000,35 @@
       "community": 0.25,
       "servers": 0.25
     },
+    "resource-merill-lokka": {
+      "365": 1,
+      "curious": 0.25,
+      "microsoft": 1,
+      "merill": 0.25,
+      "model": 0.25,
+      "context": 0.25,
+      "protocol": 0.25,
+      "mcp": 0.5,
+      "server": 0.25,
+      "includes": 0.25,
+      "support": 0.25,
+      "services": 0.25,
+      "including": 0.25,
+      "teams": 0.25,
+      "sharepoint": 0.25,
+      "exchange": 0.25,
+      "onedrive": 0.25,
+      "entra": 0.25,
+      "intune": 0.25,
+      "see": 0.25,
+      "lokka": 0.5,
+      "https": 0.25,
+      "dev": 0.25,
+      "details": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "servers": 0.25
+    },
     "resource-pnp-cli-microsoft365-mcp-server": {
       "365": 1,
       "curious": 0.25,
@@ -322028,35 +322057,6 @@
       "teams": 0.25,
       "viva": 0.25,
       "engage": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "servers": 0.25
-    },
-    "resource-merill-lokka": {
-      "365": 1,
-      "curious": 0.25,
-      "microsoft": 1,
-      "merill": 0.25,
-      "model": 0.25,
-      "context": 0.25,
-      "protocol": 0.25,
-      "mcp": 0.5,
-      "server": 0.25,
-      "includes": 0.25,
-      "support": 0.25,
-      "services": 0.25,
-      "including": 0.25,
-      "teams": 0.25,
-      "sharepoint": 0.25,
-      "exchange": 0.25,
-      "onedrive": 0.25,
-      "entra": 0.25,
-      "intune": 0.25,
-      "see": 0.25,
-      "lokka": 0.5,
-      "https": 0.25,
-      "dev": 0.25,
-      "details": 0.25,
       "status": 0.25,
       "community": 0.25,
       "servers": 0.25
@@ -323019,13 +323019,6 @@
       "community": 0.14285714285714285,
       "servers": 0.14285714285714285
     },
-    "resource-jexinsam-mssql-mcp-server": {
-      "mssql": 1,
-      "status": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "mcp": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-aekanun2020-mcp-server": {
       "curious": 0.25,
       "mssql": 1,
@@ -323040,6 +323033,13 @@
       "community": 0.25,
       "mcp": 0.25,
       "servers": 0.25
+    },
+    "resource-jexinsam-mssql-mcp-server": {
+      "mssql": 1,
+      "status": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "mcp": 0.3333333333333333,
+      "servers": 0.3333333333333333
     },
     "resource-daobataotie-mssql-mcp": {
       "mssql": 0.75,
@@ -324059,14 +324059,14 @@
       "official": 0.2,
       "servers": 0.2
     },
-    "resource-njbrake-notion-mcp-server": {
+    "resource-v-3-notion-server": {
       "notion": 1,
       "status": 0.3333333333333333,
       "community": 0.3333333333333333,
       "mcp": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
-    "resource-v-3-notion-server": {
+    "resource-njbrake-notion-mcp-server": {
       "notion": 1,
       "status": 0.3333333333333333,
       "community": 0.3333333333333333,
@@ -328770,19 +328770,6 @@
       "mcp": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
-    "resource-redis-mcp-redis-mjtof34r": {
-      "redis": 1,
-      "official": 0.4,
-      "mcp": 0.4,
-      "server": 0.2,
-      "offers": 0.2,
-      "interface": 0.2,
-      "manage": 0.2,
-      "search": 0.2,
-      "data": 0.2,
-      "status": 0.2,
-      "servers": 0.2
-    },
     "resource-gongrzhe-redis-mcp-server": {
       "redis": 1,
       "database": 0.25,
@@ -328802,6 +328789,19 @@
       "community": 0.25,
       "mcp": 0.25,
       "servers": 0.25
+    },
+    "resource-redis-mcp-redis-mjtof34r": {
+      "redis": 1,
+      "official": 0.4,
+      "mcp": 0.4,
+      "server": 0.2,
+      "offers": 0.2,
+      "interface": 0.2,
+      "manage": 0.2,
+      "search": 0.2,
+      "data": 0.2,
+      "status": 0.2,
+      "servers": 0.2
     },
     "resource-redis-mcp-redis-cloud-mjtof3fl": {
       "redis": 1,
@@ -332150,15 +332150,6 @@
       "community": 0.25,
       "servers": 0.25
     },
-    "resource-stripe-agent-toolkit": {
-      "stripe": 1,
-      "interact": 0.25,
-      "api": 0.25,
-      "status": 0.25,
-      "official": 0.25,
-      "mcp": 0.25,
-      "servers": 0.25
-    },
     "resource-atharvagupta2003-mcp-stripe": {
       "curious": 0.25,
       "stripe": 1,
@@ -332171,6 +332162,15 @@
       "refunds": 0.25,
       "status": 0.25,
       "community": 0.25,
+      "servers": 0.25
+    },
+    "resource-stripe-agent-toolkit": {
+      "stripe": 1,
+      "interact": 0.25,
+      "api": 0.25,
+      "status": 0.25,
+      "official": 0.25,
+      "mcp": 0.25,
       "servers": 0.25
     },
     "resource-strowk-mcp-k8s-go": {
@@ -349559,29 +349559,6 @@
       "development": 0.25,
       "tools": 0.25
     },
-    "resource-jeamee-mcphub-desktop": {
-      "mcphub": 1,
-      "open": 0.3333333333333333,
-      "source": 0.3333333333333333,
-      "macos": 0.3333333333333333,
-      "windows": 0.3333333333333333,
-      "gui": 0.3333333333333333,
-      "desktop": 0.3333333333333333,
-      "app": 0.3333333333333333,
-      "discovering": 0.3333333333333333,
-      "installing": 0.3333333333333333,
-      "managing": 0.3333333333333333,
-      "mcp": 0.3333333333333333,
-      "servers": 0.3333333333333333,
-      "jeamee": 0.6666666666666666,
-      "https": 0.3333333333333333,
-      "github": 0.3333333333333333,
-      "com": 0.3333333333333333,
-      "status": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "development": 0.3333333333333333,
-      "tools": 0.3333333333333333
-    },
     "resource-mcphub": {
       "curious": 0.3333333333333333,
       "mcphub": 1,
@@ -349603,6 +349580,29 @@
       "models": 0.3333333333333333,
       "server": 0.3333333333333333,
       "support": 0.3333333333333333,
+      "status": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "development": 0.3333333333333333,
+      "tools": 0.3333333333333333
+    },
+    "resource-jeamee-mcphub-desktop": {
+      "mcphub": 1,
+      "open": 0.3333333333333333,
+      "source": 0.3333333333333333,
+      "macos": 0.3333333333333333,
+      "windows": 0.3333333333333333,
+      "gui": 0.3333333333333333,
+      "desktop": 0.3333333333333333,
+      "app": 0.3333333333333333,
+      "discovering": 0.3333333333333333,
+      "installing": 0.3333333333333333,
+      "managing": 0.3333333333333333,
+      "mcp": 0.3333333333333333,
+      "servers": 0.3333333333333333,
+      "jeamee": 0.6666666666666666,
+      "https": 0.3333333333333333,
+      "github": 0.3333333333333333,
+      "com": 0.3333333333333333,
       "status": 0.3333333333333333,
       "community": 0.3333333333333333,
       "development": 0.3333333333333333,
@@ -414363,15 +414363,6 @@
       "stars": 0.16666666666666666,
       "servers": 0.16666666666666666
     },
-    "resource-context-ahujasid-ableton-mcp": {
-      "resource": 1,
-      "ableton": 1,
-      "live": 1,
-      "language": 0.5,
-      "unknown": 0.5,
-      "community": 0.5,
-      "servers": 0.5
-    },
     "resource-context-simon-kansara-ableton-live-mcp-server": {
       "resource": 0.6666666666666666,
       "ableton": 1,
@@ -414383,6 +414374,15 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
+    },
+    "resource-context-ahujasid-ableton-mcp": {
+      "resource": 1,
+      "ableton": 1,
+      "live": 1,
+      "language": 0.5,
+      "unknown": 0.5,
+      "community": 0.5,
+      "servers": 0.5
     },
     "resource-context-abrinsmead-mindpilot-mcp": {
       "resource": 0.6666666666666666,
@@ -415931,23 +415931,6 @@
       "stars": 0.16666666666666666,
       "servers": 0.16666666666666666
     },
-    "resource-context-scorzeth-anki-mcp-server": {
-      "resource": 0.6666666666666666,
-      "anki": 1,
-      "mcp": 0.3333333333333333,
-      "server": 0.3333333333333333,
-      "interacting": 0.3333333333333333,
-      "https": 0.3333333333333333,
-      "apps": 0.3333333333333333,
-      "ankiweb": 0.3333333333333333,
-      "net": 0.3333333333333333,
-      "decks": 0.3333333333333333,
-      "cards": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-context-nietus-anki-mcp": {
       "resource": 0.6666666666666666,
       "anki": 1,
@@ -415968,6 +415951,23 @@
       "update": 0.3333333333333333,
       "advanced": 0.3333333333333333,
       "tools": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
+    },
+    "resource-context-scorzeth-anki-mcp-server": {
+      "resource": 0.6666666666666666,
+      "anki": 1,
+      "mcp": 0.3333333333333333,
+      "server": 0.3333333333333333,
+      "interacting": 0.3333333333333333,
+      "https": 0.3333333333333333,
+      "apps": 0.3333333333333333,
+      "ankiweb": 0.3333333333333333,
+      "net": 0.3333333333333333,
+      "decks": 0.3333333333333333,
+      "cards": 0.3333333333333333,
       "language": 0.3333333333333333,
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
@@ -417737,6 +417737,26 @@
       "official": 0.16666666666666666,
       "integrations": 0.16666666666666666
     },
+    "resource-context-vortiago-mcp-azure-devops": {
+      "resource": 0.6666666666666666,
+      "azure": 1,
+      "devops": 1,
+      "mcp": 0.3333333333333333,
+      "server": 0.3333333333333333,
+      "provides": 0.3333333333333333,
+      "bridge": 0.3333333333333333,
+      "services": 0.3333333333333333,
+      "enabling": 0.3333333333333333,
+      "assistants": 0.3333333333333333,
+      "query": 0.3333333333333333,
+      "manage": 0.3333333333333333,
+      "work": 0.3333333333333333,
+      "items": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
+    },
     "resource-context-microsoft-azure-devops-mcp": {
       "resource": 0.6666666666666666,
       "azure": 1,
@@ -417757,26 +417777,6 @@
       "unknown": 0.3333333333333333,
       "official": 0.3333333333333333,
       "integrations": 0.3333333333333333
-    },
-    "resource-context-vortiago-mcp-azure-devops": {
-      "resource": 0.6666666666666666,
-      "azure": 1,
-      "devops": 1,
-      "mcp": 0.3333333333333333,
-      "server": 0.3333333333333333,
-      "provides": 0.3333333333333333,
-      "bridge": 0.3333333333333333,
-      "services": 0.3333333333333333,
-      "enabling": 0.3333333333333333,
-      "assistants": 0.3333333333333333,
-      "query": 0.3333333333333333,
-      "manage": 0.3333333333333333,
-      "work": 0.3333333333333333,
-      "items": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
     },
     "resource-context-azure-samples-mcp": {
       "resource": 0.6666666666666666,
@@ -418330,14 +418330,6 @@
       "stars": 0.25,
       "servers": 0.25
     },
-    "resource-context-analyticace-binance-mcp-server": {
-      "resource": 1,
-      "binance": 1,
-      "language": 0.5,
-      "unknown": 0.5,
-      "community": 0.5,
-      "servers": 0.5
-    },
     "resource-context-ethancod1ng-binance-mcp-server": {
       "resource": 0.6666666666666666,
       "binance": 1,
@@ -418353,6 +418345,14 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
+    },
+    "resource-context-analyticace-binance-mcp-server": {
+      "resource": 1,
+      "binance": 1,
+      "language": 0.5,
+      "unknown": 0.5,
+      "community": 0.5,
+      "servers": 0.5
     },
     "resource-context-jackkuo666-biorxiv-mcp-server": {
       "resource": 0.6666666666666666,
@@ -420593,6 +420593,24 @@
       "stars": 0.125,
       "servers": 0.125
     },
+    "resource-context-felores-cloudinary-mcp-server": {
+      "resource": 0.5,
+      "cloudinary": 1,
+      "model": 0.25,
+      "context": 0.25,
+      "protocol": 0.25,
+      "server": 0.25,
+      "upload": 0.25,
+      "media": 0.5,
+      "get": 0.25,
+      "back": 0.25,
+      "link": 0.25,
+      "details": 0.25,
+      "language": 0.25,
+      "unknown": 0.25,
+      "community": 0.25,
+      "servers": 0.25
+    },
     "resource-context-cloudinary-mcp-servers": {
       "resource": 0.6666666666666666,
       "cloudinary": 1,
@@ -420611,24 +420629,6 @@
       "unknown": 0.3333333333333333,
       "official": 0.3333333333333333,
       "integrations": 0.3333333333333333
-    },
-    "resource-context-felores-cloudinary-mcp-server": {
-      "resource": 0.5,
-      "cloudinary": 1,
-      "model": 0.25,
-      "context": 0.25,
-      "protocol": 0.25,
-      "server": 0.25,
-      "upload": 0.25,
-      "media": 0.5,
-      "get": 0.25,
-      "back": 0.25,
-      "link": 0.25,
-      "details": 0.25,
-      "language": 0.25,
-      "unknown": 0.25,
-      "community": 0.25,
-      "servers": 0.25
     },
     "resource-context-cloudsway-ai-smartsearch": {
       "resource": 0.6666666666666666,
@@ -427669,23 +427669,6 @@
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
-    "resource-context-v-3-google-calendar": {
-      "resource": 0.6666666666666666,
-      "google": 1,
-      "calendar": 1,
-      "integration": 0.3333333333333333,
-      "check": 0.3333333333333333,
-      "schedules": 0.3333333333333333,
-      "find": 0.3333333333333333,
-      "time": 0.3333333333333333,
-      "add": 0.3333333333333333,
-      "delete": 0.3333333333333333,
-      "events": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-context-nspady-google-calendar-mcp": {
       "resource": 0.5,
       "google": 1,
@@ -427704,6 +427687,23 @@
       "unknown": 0.25,
       "community": 0.25,
       "servers": 0.25
+    },
+    "resource-context-v-3-google-calendar": {
+      "resource": 0.6666666666666666,
+      "google": 1,
+      "calendar": 1,
+      "integration": 0.3333333333333333,
+      "check": 0.3333333333333333,
+      "schedules": 0.3333333333333333,
+      "find": 0.3333333333333333,
+      "time": 0.3333333333333333,
+      "add": 0.3333333333333333,
+      "delete": 0.3333333333333333,
+      "events": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
     },
     "resource-context-googlecloudplatform-cloud-run-mcp": {
       "resource": 0.6666666666666666,
@@ -429342,6 +429342,20 @@
       "stars": 0.16666666666666666,
       "servers": 0.16666666666666666
     },
+    "resource-context-hubspot": {
+      "resource": 0.5,
+      "hubspot": 1,
+      "connect": 0.25,
+      "manage": 0.25,
+      "interact": 0.25,
+      "https": 0.25,
+      "www": 0.25,
+      "com": 0.25,
+      "crm": 0.25,
+      "data": 0.25,
+      "official": 0.25,
+      "integrations": 0.25
+    },
     "resource-context-buryhuang-mcp-hubspot": {
       "resource": 0.6666666666666666,
       "hubspot": 1,
@@ -429361,20 +429375,6 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
-    },
-    "resource-context-hubspot": {
-      "resource": 0.5,
-      "hubspot": 1,
-      "connect": 0.25,
-      "manage": 0.25,
-      "interact": 0.25,
-      "https": 0.25,
-      "www": 0.25,
-      "com": 0.25,
-      "crm": 0.25,
-      "data": 0.25,
-      "official": 0.25,
-      "integrations": 0.25
     },
     "resource-context-huggingagi-mcp-baostock-server": {
       "resource": 0.3333333333333333,
@@ -437487,6 +437487,36 @@
       "stars": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
+    "resource-context-merill-lokka": {
+      "365": 1,
+      "resource": 0.6666666666666666,
+      "microsoft": 1,
+      "merill": 0.3333333333333333,
+      "model": 0.3333333333333333,
+      "context": 0.3333333333333333,
+      "protocol": 0.3333333333333333,
+      "mcp": 0.3333333333333333,
+      "server": 0.3333333333333333,
+      "includes": 0.3333333333333333,
+      "support": 0.3333333333333333,
+      "services": 0.3333333333333333,
+      "including": 0.3333333333333333,
+      "teams": 0.3333333333333333,
+      "sharepoint": 0.3333333333333333,
+      "exchange": 0.3333333333333333,
+      "onedrive": 0.3333333333333333,
+      "entra": 0.3333333333333333,
+      "intune": 0.3333333333333333,
+      "see": 0.3333333333333333,
+      "lokka": 0.6666666666666666,
+      "https": 0.3333333333333333,
+      "dev": 0.3333333333333333,
+      "details": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
+    },
     "resource-context-pnp-cli-microsoft365-mcp-server": {
       "365": 1,
       "resource": 0.6666666666666666,
@@ -437515,36 +437545,6 @@
       "teams": 0.3333333333333333,
       "viva": 0.3333333333333333,
       "engage": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
-    "resource-context-merill-lokka": {
-      "365": 1,
-      "resource": 0.6666666666666666,
-      "microsoft": 1,
-      "merill": 0.3333333333333333,
-      "model": 0.3333333333333333,
-      "context": 0.3333333333333333,
-      "protocol": 0.3333333333333333,
-      "mcp": 0.3333333333333333,
-      "server": 0.3333333333333333,
-      "includes": 0.3333333333333333,
-      "support": 0.3333333333333333,
-      "services": 0.3333333333333333,
-      "including": 0.3333333333333333,
-      "teams": 0.3333333333333333,
-      "sharepoint": 0.3333333333333333,
-      "exchange": 0.3333333333333333,
-      "onedrive": 0.3333333333333333,
-      "entra": 0.3333333333333333,
-      "intune": 0.3333333333333333,
-      "see": 0.3333333333333333,
-      "lokka": 0.6666666666666666,
-      "https": 0.3333333333333333,
-      "dev": 0.3333333333333333,
-      "details": 0.3333333333333333,
       "language": 0.3333333333333333,
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
@@ -438528,14 +438528,6 @@
       "stars": 0.16666666666666666,
       "servers": 0.16666666666666666
     },
-    "resource-context-jexinsam-mssql-mcp-server": {
-      "resource": 1,
-      "mssql": 1,
-      "language": 0.5,
-      "unknown": 0.5,
-      "community": 0.5,
-      "servers": 0.5
-    },
     "resource-context-aekanun2020-mcp-server": {
       "resource": 0.6666666666666666,
       "mssql": 1,
@@ -438550,6 +438542,14 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
+    },
+    "resource-context-jexinsam-mssql-mcp-server": {
+      "resource": 1,
+      "mssql": 1,
+      "language": 0.5,
+      "unknown": 0.5,
+      "community": 0.5,
+      "servers": 0.5
     },
     "resource-context-daobataotie-mssql-mcp": {
       "resource": 1,
@@ -439605,7 +439605,7 @@
       "unknown": 0.25,
       "official": 0.25
     },
-    "resource-context-njbrake-notion-mcp-server": {
+    "resource-context-v-3-notion-server": {
       "resource": 1,
       "notion": 1,
       "language": 0.5,
@@ -439613,7 +439613,7 @@
       "community": 0.5,
       "servers": 0.5
     },
-    "resource-context-v-3-notion-server": {
+    "resource-context-njbrake-notion-mcp-server": {
       "resource": 1,
       "notion": 1,
       "language": 0.5,
@@ -444462,21 +444462,6 @@
       "community": 0.5,
       "servers": 0.5
     },
-    "resource-context-redis-mcp-redis-mjtof34r": {
-      "resource": 0.5,
-      "redis": 1,
-      "official": 0.5,
-      "mcp": 0.25,
-      "server": 0.25,
-      "offers": 0.25,
-      "interface": 0.25,
-      "manage": 0.25,
-      "search": 0.25,
-      "data": 0.25,
-      "language": 0.25,
-      "unknown": 0.25,
-      "integrations": 0.25
-    },
     "resource-context-gongrzhe-redis-mcp-server": {
       "resource": 0.6666666666666666,
       "redis": 1,
@@ -444497,6 +444482,21 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
+    },
+    "resource-context-redis-mcp-redis-mjtof34r": {
+      "resource": 0.5,
+      "redis": 1,
+      "official": 0.5,
+      "mcp": 0.25,
+      "server": 0.25,
+      "offers": 0.25,
+      "interface": 0.25,
+      "manage": 0.25,
+      "search": 0.25,
+      "data": 0.25,
+      "language": 0.25,
+      "unknown": 0.25,
+      "integrations": 0.25
     },
     "resource-context-redis-mcp-redis-cloud-mjtof3fl": {
       "resource": 0.5,
@@ -447961,16 +447961,6 @@
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
-    "resource-context-stripe-agent-toolkit": {
-      "resource": 0.6666666666666666,
-      "stripe": 1,
-      "interact": 0.3333333333333333,
-      "api": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "official": 0.3333333333333333,
-      "integrations": 0.3333333333333333
-    },
     "resource-context-atharvagupta2003-mcp-stripe": {
       "resource": 0.6666666666666666,
       "stripe": 1,
@@ -447985,6 +447975,16 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
+    },
+    "resource-context-stripe-agent-toolkit": {
+      "resource": 0.6666666666666666,
+      "stripe": 1,
+      "interact": 0.3333333333333333,
+      "api": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "official": 0.3333333333333333,
+      "integrations": 0.3333333333333333
     },
     "resource-context-strowk-mcp-k8s-go": {
       "365": 0.25,
@@ -464950,6 +464950,28 @@
       "servers": 0.3333333333333333,
       "resources": 0.3333333333333333
     },
+    "resource-context-mcphub": {
+      "resource": 1,
+      "mcphub": 1,
+      "website": 0.5,
+      "list": 0.5,
+      "high": 0.5,
+      "quality": 0.5,
+      "mcp": 1,
+      "servers": 0.5,
+      "reviews": 0.5,
+      "real": 0.5,
+      "users": 0.5,
+      "provide": 0.5,
+      "online": 0.5,
+      "chatbot": 0.5,
+      "popular": 0.5,
+      "llm": 0.5,
+      "models": 0.5,
+      "server": 0.5,
+      "support": 0.5,
+      "resources": 0.5
+    },
     "resource-context-jeamee-mcphub-desktop": {
       "resource": 1,
       "mcphub": 1,
@@ -464971,28 +464993,6 @@
       "com": 0.5,
       "language": 0.5,
       "unknown": 0.5,
-      "resources": 0.5
-    },
-    "resource-context-mcphub": {
-      "resource": 1,
-      "mcphub": 1,
-      "website": 0.5,
-      "list": 0.5,
-      "high": 0.5,
-      "quality": 0.5,
-      "mcp": 1,
-      "servers": 0.5,
-      "reviews": 0.5,
-      "real": 0.5,
-      "users": 0.5,
-      "provide": 0.5,
-      "online": 0.5,
-      "chatbot": 0.5,
-      "popular": 0.5,
-      "llm": 0.5,
-      "models": 0.5,
-      "server": 0.5,
-      "support": 0.5,
       "resources": 0.5
     },
     "resource-context-pathintegral-institute-mcpm-sh": {
@@ -470736,11 +470736,11 @@
     "anjor": 8.017747019837179,
     "coinmarket": 8.017747019837179,
     "anki": 7.1704491594499755,
-    "ankiweb": 8.017747019837179,
-    "decks": 7.5069213960711885,
-    "cards": 6.718464035706918,
     "ankiconnect": 8.017747019837179,
+    "cards": 6.718464035706918,
+    "decks": 7.5069213960711885,
     "mass": 8.017747019837179,
+    "ankiweb": 8.017747019837179,
     "spaced": 8.017747019837179,
     "flashcard": 8.017747019837179,
     "antom": 8.017747019837179,
@@ -471277,10 +471277,10 @@
     "html": 6.0718368707818655,
     "cloudflare": 6.718464035706918,
     "cloudinary": 7.5069213960711885,
+    "details": 5.682372104020143,
     "exposes": 5.897483483637088,
     "transformation": 7.730064947385398,
     "usable": 7.1704491594499755,
-    "details": 5.682372104020143,
     "cloudsway": 8.017747019837179,
     "smartsearch": 8.017747019837179,
     "keyword": 7.036917766825453,
@@ -472860,14 +472860,14 @@
     "webdav": 8.017747019837179,
     "micl2e2": 8.017747019837179,
     "regardless": 8.017747019837179,
-    "areas": 8.017747019837179,
-    "entra": 7.5069213960711885,
-    "onedrive": 6.91913473116907,
-    "onenote": 7.5069213960711885,
-    "viva": 8.017747019837179,
     "merill": 8.017747019837179,
+    "onedrive": 6.91913473116907,
+    "entra": 7.5069213960711885,
     "intune": 8.017747019837179,
     "lokka": 8.017747019837179,
+    "areas": 8.017747019837179,
+    "onenote": 7.5069213960711885,
+    "viva": 8.017747019837179,
     "invoices": 8.017747019837179,
     "vendors": 8.017747019837179,
     "insert": 8.017747019837179,
