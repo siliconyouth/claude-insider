@@ -1,7 +1,7 @@
 # Claude Insider Roadmap 2026
 
 > **Generated:** January 2, 2026
-> **Current Version:** 1.16.1
+> **Current Version:** 1.16.2
 > **Total Features:** 61 implemented (FR-1 through FR-61)
 > **Analysis Basis:** Full codebase scan (943 TypeScript files), CHANGELOG.md (139 versions), FEATURES.md
 
@@ -24,7 +24,7 @@ Claude Insider has achieved exceptional maturity with **61 production features**
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| **Version** | 1.16.1 | Released January 2, 2026 |
+| **Version** | 1.16.2 | Released January 2, 2026 |
 | **Features** | 61 | Documented in FEATURES.md |
 | **Database Tables** | 141 | PostgreSQL with RLS |
 | **Resources** | 3,012+ | 10 categories, 21 enhanced fields |
@@ -102,7 +102,7 @@ Claude Insider has achieved exceptional maturity with **61 production features**
 
 | Version | Target | Features | Status |
 |---------|--------|----------|--------|
-| **1.16.1** | Jan W1 | **MCP Playground** (Monaco editor, validation, 2,136 templates, save/share, gallery, moderation), messaging fixes, SEO layouts | ✅ Done |
+| **1.16.2** | Jan W1 | MCP Playground design compliance, messaging Display Error fix, AI context improvements | ✅ Done |
 | **2.0.0** | Jan W2 | Integration Test Framework (Playwright, 50+ tests) | 🔥 Next |
 | **2.1.0** | Feb W1 | Error Monitoring (Sentry integration) | Planned |
 | **2.2.0** | Feb W2 | VS Code Extension MVP (search, favorites) | Planned |

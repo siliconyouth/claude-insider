@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.16.2] - 2026-01-02
+### 🔧 Bug Fixes & MCP Playground Improvements
+- **MCP Playground Design Compliance**: Added Header and Footer navigation components
+  - Page now follows site-wide design rules with proper navigation
+  - Added flexbox layout for proper footer positioning
+- **Messaging System Fix**: Fixed critical "Display Error" when selecting chat conversations
+  - Added defensive `Array.isArray()` guard for participants array
+  - Prevents crash when conversation data structure varies
+- **AI Context Improvements**:
+  - FAQ "Ask AI for more" button now passes proper page context
+  - Code Playground "Ask AI" button includes code and page context
+  - MCP Playground passes configuration context to AI assistant
+- **MCP Playground Stability**:
+  - Added CSP rules for Monaco Editor CDN resources
+  - Added fallback CSS for Monaco editor styling
+  - Added border to template selector modal for better visibility
+- **Realtime Provider Safety**: Returns safe defaults instead of throwing when provider not loaded
+- **Mobile Screenshot**: Updated device mockup with v1.16.1 dark theme
+
+---
+
 ## [1.16.1] - 2026-01-02
 ### 🔧 Navigation, Messaging & Dashboard Fixes
 - **MCP Playground Navigation**: Added to header dropdown, footer links, and homepage showcase section

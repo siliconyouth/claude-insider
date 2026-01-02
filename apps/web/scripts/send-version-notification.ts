@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.16.1 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.16.2 notification to all opted-in users...\n");
 
-  const version = "1.16.1";
-  const title = "Claude Insider v1.16.1 - Messaging & Dashboard Improvements";
+  const version = "1.16.2";
+  const title = "Claude Insider v1.16.2 - Bug Fixes & MCP Playground Improvements";
   const message =
-    "💬 New Chat/Group modals: Start new DMs and create group chats directly from the Messages tab • 🔍 User search: Find users by name or display name • 🔧 Dashboard fixes: Fixed Users modal loading issue, Auto-Updates navigation • 📄 SEO: Added layouts for Donate, Stats, Prompts, and MCP Gallery pages • 📝 TanStack Query v5 pattern fix documented";
+    "🔧 MCP Playground: Added Header/Footer navigation for design compliance • 💬 Messaging Fix: Resolved critical Display Error when selecting chat conversations • 🤖 AI Context: FAQ, Code Playground, and MCP Playground now pass proper context to AI assistant • 🛡️ Stability: CSP fixes for Monaco Editor, realtime provider safe defaults";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

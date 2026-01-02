@@ -283,7 +283,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.16.1
+ * Realistic terminal content showing Claude Insider v1.16.2
  */
 function MacBookTerminalContent() {
   return (
@@ -311,7 +311,7 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.16.1</span>
+          <span className="text-[#8b949e]"> v1.16.2</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
