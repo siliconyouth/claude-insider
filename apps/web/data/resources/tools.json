@@ -62,6 +62,13 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "aider-ai-aider",
+      "cline-vscode",
+      "continue-dev",
+      "cursor-editor"
     ]
   },
   {
@@ -127,6 +134,13 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "aider",
+      "continue-dev",
+      "cursor-editor",
+      "neovim-avante"
     ]
   },
   {
@@ -191,6 +205,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "aider",
+      "cline-vscode",
+      "neovim-avante"
     ]
   },
   {
@@ -248,6 +268,13 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "aider",
+      "cline-vscode",
+      "windsurf",
+      "zed-editor"
     ]
   },
   {
@@ -1042,6 +1069,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "aider"
     ]
   },
   {
@@ -1215,6 +1246,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "berriai-litellm"
     ]
   },
   {
@@ -1329,6 +1364,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "berriai-litellm"
     ]
   },
   {
@@ -1385,6 +1424,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "ccpm"
     ]
   },
   {
@@ -1448,6 +1491,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "claude-code-nvim",
+      "cline-vscode",
+      "continue-dev"
     ]
   },
   {
@@ -1632,6 +1681,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-guide"
     ]
   },
   {
@@ -1851,6 +1904,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-proxy",
+      "arize-ai-phoenix"
     ]
   },
   {
@@ -2363,6 +2421,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-open"
     ]
   },
   {
@@ -2420,6 +2482,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "ccseva"
     ]
   },
   {
@@ -2534,6 +2600,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-sessions"
     ]
   },
   {
@@ -2591,6 +2661,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "ccometixline",
+      "claude-code-usage-bar",
+      "claude-powerline"
     ]
   },
   {
@@ -2648,6 +2724,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "ccseva",
+      "claude-code-usage-monitor"
     ]
   },
   {
@@ -2761,6 +2842,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-boost"
     ]
   },
   {
@@ -2817,6 +2902,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "ccundo",
+      "claude-sessions"
     ]
   },
   {
@@ -2873,6 +2963,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-squad"
     ]
   },
   {
@@ -3043,6 +3137,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-code-proxy-2",
+      "claude-code-router"
     ]
   },
   {
@@ -3100,6 +3199,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "cc-statusline",
+      "claude-powerline"
     ]
   },
   {
@@ -3214,6 +3318,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "async-code",
+      "claude-squad"
     ]
   },
   {
@@ -3271,6 +3380,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "cc-monitor-rs",
+      "cccost",
+      "claude-code-usage-monitor"
     ]
   },
   {
@@ -3328,6 +3443,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-log"
     ]
   },
   {
@@ -3384,6 +3503,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "ccheckpoints"
     ]
   },
   {
@@ -3447,6 +3570,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "chatboxai-chatbox",
+      "chatgptnextweb-nextchat",
+      "cherryhq-cherry-studio"
     ]
   },
   {
@@ -3504,6 +3633,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "chatbox"
     ]
   },
   {
@@ -3561,6 +3694,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "chatbox",
+      "cherryhq-cherry-studio"
     ]
   },
   {
@@ -3617,6 +3755,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "chatbox",
+      "chatgptnextweb-nextchat"
     ]
   },
   {
@@ -3883,6 +4026,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "chatgpt-alternative"
     ]
   },
   {
@@ -3989,6 +4136,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-container"
     ]
   },
   {
@@ -4244,6 +4395,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-boost"
     ]
   },
   {
@@ -4415,6 +4570,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-mem",
+      "claude-user-memory"
     ]
   },
   {
@@ -4472,6 +4632,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "ccguard",
+      "claude-autopilot"
     ]
   },
   {
@@ -4529,6 +4694,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-viewer"
     ]
   },
   {
@@ -4700,6 +4869,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-code-sandbox",
+      "claude-in-a-box"
     ]
   },
   {
@@ -4757,6 +4931,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-hub"
     ]
   },
   {
@@ -4871,6 +5049,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-modular"
     ]
   },
   {
@@ -4928,6 +5110,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "awesome-claude-skills"
     ]
   },
   {
@@ -4985,6 +5171,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-flow"
     ]
   },
   {
@@ -5099,6 +5289,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-el"
     ]
   },
   {
@@ -5212,6 +5406,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-open"
     ]
   },
   {
@@ -5325,6 +5523,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "cctrace"
     ]
   },
   {
@@ -5439,6 +5641,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "castari-proxy",
+      "claude-code-kimi-groq"
     ]
   },
   {
@@ -5553,6 +5760,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "ccnexus"
     ]
   },
   {
@@ -5724,6 +5935,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "ccnexus"
     ]
   },
   {
@@ -5781,6 +5996,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-container"
     ]
   },
   {
@@ -6008,6 +6227,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-modular"
     ]
   },
   {
@@ -6237,6 +6460,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "cc-statusline"
     ]
   },
   {
@@ -6294,6 +6521,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "cccost",
+      "ccseva"
     ]
   },
   {
@@ -6350,6 +6582,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "claude-code-chat",
+      "claude-code-web-gui",
+      "claude-code-webui"
     ]
   },
   {
@@ -6464,6 +6702,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-code-viewer",
+      "claude-code-webui"
     ]
   },
   {
@@ -6521,6 +6764,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-code-viewer",
+      "claude-code-web-gui"
     ]
   },
   {
@@ -6578,6 +6826,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-ide-el"
     ]
   },
   {
@@ -6635,6 +6887,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "neovim-avante"
     ]
   },
   {
@@ -6692,6 +6948,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-commands"
     ]
   },
   {
@@ -6749,6 +7009,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-command-suite",
+      "claude-sessions"
     ]
   },
   {
@@ -6864,6 +7129,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-mem"
     ]
   },
   {
@@ -6971,6 +7240,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-code-heavy",
+      "claude-squad"
     ]
   },
   {
@@ -7142,6 +7416,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-containers"
     ]
   },
   {
@@ -7256,6 +7534,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-code-auto-memory",
+      "claude-context-local"
     ]
   },
   {
@@ -7313,6 +7596,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-code-development-kit",
+      "claude-code-studio"
     ]
   },
   {
@@ -7427,6 +7715,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-simone"
     ]
   },
   {
@@ -7484,6 +7776,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "cc-statusline",
+      "ccometixline"
     ]
   },
   {
@@ -7655,6 +7952,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-user-memory"
     ]
   },
   {
@@ -7712,6 +8013,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "cc-sessions",
+      "ccheckpoints",
+      "claude-commands"
     ]
   },
   {
@@ -7826,6 +8133,10 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-on-rails"
     ]
   },
   {
@@ -7997,6 +8308,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "ccmanager",
+      "ccpm",
+      "claude-flow"
     ]
   },
   {
@@ -8056,6 +8373,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "claude-code-auto-memory",
+      "claude-self-reflect"
     ]
   },
   {
@@ -19008,6 +19330,12 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "codeium-windsurf",
+      "cursor-editor",
+      "zed-editor"
     ]
   },
   {
@@ -19298,6 +19626,11 @@
       "Development environment with required runtimes",
       "Claude API access or subscription",
       "Familiarity with command-line tools"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "cursor-editor",
+      "windsurf"
     ]
   },
   {

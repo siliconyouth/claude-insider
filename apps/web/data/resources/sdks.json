@@ -62,6 +62,27 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 18,
+    "relatedResourceSlugs": [
+      "ai-sdk-amazon-bedrock",
+      "ai-sdk-anthropic",
+      "ai-sdk-azure",
+      "ai-sdk-cohere",
+      "ai-sdk-google",
+      "ai-sdk-groq",
+      "ai-sdk-langchain",
+      "ai-sdk-mistral",
+      "ai-sdk-openai",
+      "ai-sdk-provider-claude-code",
+      "ai-sdk-react",
+      "ai-sdk-rsc",
+      "ai-sdk-svelte",
+      "ai-sdk-vue",
+      "mastra",
+      "ollama-ai-provider",
+      "openrouter-ai-sdk-provider",
+      "voyage-ai-provider"
     ]
   },
   {
@@ -258,6 +279,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -307,6 +332,11 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk",
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -356,6 +386,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -453,6 +487,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -695,6 +733,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -795,6 +837,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -844,6 +890,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -893,6 +943,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -941,6 +995,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -1185,6 +1243,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -1283,6 +1345,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -1381,6 +1447,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -1576,6 +1646,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -1722,6 +1796,12 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk",
+      "anthropic-bedrock-python",
+      "anthropic-bedrock-typescript"
     ]
   },
   {
@@ -1773,6 +1853,14 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sandbox-runtime",
+      "anthropic-ai-sdk",
+      "claude-agent-sdk-python",
+      "claude-agent-sdk-typescript",
+      "claude-code-sdk-ts"
     ]
   },
   {
@@ -1822,6 +1910,11 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk",
+      "claude-code-sdk-python"
     ]
   },
   {
@@ -1870,6 +1963,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk"
     ]
   },
   {
@@ -1919,6 +2016,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-claude-agent-sdk"
     ]
   },
   {
@@ -1967,6 +2068,17 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 8,
+    "relatedResourceSlugs": [
+      "anthropic-ai-bedrock-sdk",
+      "anthropic-ai-claude-agent-sdk",
+      "anthropic-ai-foundry-sdk",
+      "anthropic-ai-tokenizer",
+      "anthropic-ai-vertex-sdk",
+      "claude-sdk",
+      "sdk-python-official",
+      "sdk-typescript-official"
     ]
   },
   {
@@ -2016,6 +2128,11 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk",
+      "anthropic-tokenizer-typescript"
     ]
   },
   {
@@ -2064,6 +2181,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk"
     ]
   },
   {
@@ -2651,6 +2772,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk"
     ]
   },
   {
@@ -2748,6 +2873,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk"
     ]
   },
   {
@@ -4459,6 +4588,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "typescript-sdk"
     ]
   },
   {
@@ -4655,6 +4788,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -5242,6 +5379,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk"
     ]
   },
   {
@@ -5640,6 +5781,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-claude-code"
     ]
   },
   {
@@ -5813,6 +5958,11 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-ai-claude-agent-sdk",
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -7349,6 +7499,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-claude-agent-sdk"
     ]
   },
   {
@@ -7593,6 +7747,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-claude-agent-sdk"
     ]
   },
   {
@@ -7691,6 +7849,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk"
     ]
   },
   {
@@ -7871,6 +8033,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "python-sdk"
     ]
   },
   {
@@ -8046,6 +8212,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "genkitx-anthropic"
     ]
   },
   {
@@ -8095,6 +8265,11 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk",
+      "genkit"
     ]
   },
   {
@@ -8201,6 +8376,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "python-sdk"
     ]
   },
   {
@@ -8342,6 +8521,11 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "kotlin-sdk",
+      "python-sdk"
     ]
   },
   {
@@ -8454,6 +8638,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "java-sdk"
     ]
   },
   {
@@ -8528,6 +8716,11 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk",
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -9045,6 +9238,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {
@@ -9246,6 +9443,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "php-mcp-server"
     ]
   },
   {
@@ -9271,6 +9472,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "php-mcp-client"
     ]
   },
   {
@@ -9327,6 +9532,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "python-sdk"
     ]
   },
   {
@@ -9375,6 +9584,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-ai-sdk"
     ]
   },
   {
@@ -9480,6 +9693,17 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 8,
+    "relatedResourceSlugs": [
+      "csharp-sdk",
+      "go-sdk",
+      "java-sdk",
+      "php-sdk",
+      "ruby-sdk",
+      "rust-sdk",
+      "swift-sdk",
+      "typescript-sdk"
     ]
   },
   {
@@ -9694,6 +9918,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "python-sdk"
     ]
   },
   {
@@ -9769,6 +9997,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "python-sdk"
     ]
   },
   {
@@ -10026,6 +10258,11 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "java-sdk",
+      "spring-ai-mcp-server"
     ]
   },
   {
@@ -10044,6 +10281,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "spring-ai-mcp-client"
     ]
   },
   {
@@ -10215,6 +10456,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "python-sdk"
     ]
   },
   {
@@ -10369,6 +10614,11 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-sdk",
+      "python-sdk"
     ]
   },
   {
@@ -10443,6 +10693,10 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "vercel-ai-sdk"
     ]
   },
   {

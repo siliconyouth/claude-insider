@@ -123,6 +123,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-server-puppeteer"
     ]
   },
   {
@@ -1946,12 +1950,12 @@
     ],
     "relatedResourcesCount": 6,
     "relatedResourceSlugs": [
-      "metorial-mcp-sdk-utils",
-      "oncorporation-filesystem-server",
+      "flesler-mcp-files",
       "langchain-mcp-adapters",
       "mcp-filesystem",
-      "flesler-mcp-files",
-      "modelcontextprotocol-server-filesystem-1"
+      "metorial-mcp-sdk-utils",
+      "modelcontextprotocol-server-filesystem-1",
+      "oncorporation-filesystem-server"
     ]
   },
   {
@@ -3178,16 +3182,17 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 8,
+    "relatedResourcesCount": 9,
     "relatedResourceSlugs": [
-      "mcp-fetch",
-      "oncorporation-filesystem-server",
-      "mcp-use-inspector",
-      "mcp-filesystem",
+      "anthropic-ai-mcpb",
+      "filesystem-quarkiverse-quarkus-mcp-servers",
       "flesler-mcp-files",
       "gabrielmaialva33-mcp-filesystem",
-      "filesystem-quarkiverse-quarkus-mcp-servers",
-      "anthropic-ai-mcpb"
+      "mark3labs-mcp-filesystem-server",
+      "mcp-fetch",
+      "mcp-filesystem",
+      "mcp-use-inspector",
+      "oncorporation-filesystem-server"
     ]
   },
   {
@@ -3237,12 +3242,13 @@
     "targetAudience": [
       "Developers"
     ],
-    "relatedResourcesCount": 4,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "mcp-use-inspector",
-      "langchain-mcp-adapters",
+      "anthropic-ai-mcpb",
       "github-47",
-      "anthropic-ai-mcpb"
+      "github-mcp-agent",
+      "langchain-mcp-adapters",
+      "mcp-use-inspector"
     ]
   },
   {
@@ -3401,14 +3407,18 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 6,
+    "relatedResourcesCount": 10,
     "relatedResourceSlugs": [
-      "badhansen-notion-mcp",
       "azure-devops-mcp",
+      "badhansen-notion-mcp",
+      "calclavia-mcp-obsidian",
+      "danhilse-notion-mcp",
       "dynatrace-oss-dynatrace-mcp-server",
-      "notion-mcp-agent",
       "heroku-mcp-server",
-      "salesforce-mcp"
+      "mcp-notion",
+      "notion-mcp-agent",
+      "salesforce-mcp",
+      "suekou-mcp-notion-server"
     ]
   },
   {
@@ -3844,13 +3854,17 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 5,
+    "relatedResourcesCount": 9,
     "relatedResourceSlugs": [
+      "automatalabs-mcp-server-playwright",
       "bb-fat-browser-use-rs",
+      "browser-mcp-agent",
       "browsermcp-mcp-1",
-      "steipete-claude-code-mcp",
+      "executeautomation-playwright-mcp-server",
       "mcp-use-inspector",
-      "browser-mcp-agent"
+      "microsoft-playwright-mcp",
+      "modelcontextprotocol-server-puppeteer",
+      "steipete-claude-code-mcp"
     ]
   },
   {
@@ -6122,10 +6136,11 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 3,
     "relatedResourceSlugs": [
+      "azure-devops-mcp",
       "composio-mcp",
-      "azure-devops-mcp"
+      "modelcontextprotocol-server-gitlab"
     ]
   },
   {
@@ -6350,10 +6365,13 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
-      "zereight-mcp-gitlab",
-      "azure-devops-mcp"
+      "adhikasp-mcp-git-ingest",
+      "azure-devops-mcp",
+      "ddukbg-github-enterprise-mcp",
+      "modelcontextprotocol-servers",
+      "zereight-mcp-gitlab"
     ]
   },
   {
@@ -8111,10 +8129,11 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 3,
     "relatedResourceSlugs": [
+      "8b-is-smart-tree",
       "admica-filescopemcp",
-      "8b-is-smart-tree"
+      "github-mcp-agent"
     ]
   },
   {
@@ -9372,6 +9391,12 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "awslabs-mcp",
+      "azure-samples-mcp",
+      "rishikavikondala-mcp-server-aws"
     ]
   },
   {
@@ -9429,6 +9454,12 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "manusa-kubernetes-mcp-server",
+      "mcp-docker",
+      "silenceper-mcp-k8s"
     ]
   },
   {
@@ -13329,8 +13360,9 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 2,
     "relatedResourceSlugs": [
+      "playwright-mcp",
       "vishalmysore-choturobo"
     ]
   },
@@ -13667,6 +13699,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "alexei-led-aws-mcp-server"
     ]
   },
   {
@@ -13801,6 +13837,10 @@
     ],
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "awslabs-mcp"
     ]
   },
   {
@@ -13958,6 +13998,11 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "alexei-led-aws-mcp-server",
+      "baryhuang-mcp-server-aws-resources-python"
     ]
   },
   {
@@ -14347,6 +14392,36 @@
     ]
   },
   {
+    "id": "microsoft-azure-devops-mcp",
+    "title": "Azure DevOps",
+    "description": "Interact with Azure DevOps services like repositories, work items, builds, releases, test plans, and code search.",
+    "url": "https://github.com/microsoft/azure-devops-mcp",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "official",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Official Integrations",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "microsoft",
+      "repo": "azure-devops-mcp",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "Interact with Azure DevOps services like repositories, work items, builds, releases, test plans, and code search.",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "azure-samples-mcp"
+    ]
+  },
+  {
     "id": "vortiago-mcp-azure-devops",
     "title": "Azure DevOps",
     "description": "An MCP server that provides a bridge to Azure DevOps services, enabling AI assistants to query and manage work items.",
@@ -14378,32 +14453,6 @@
     ]
   },
   {
-    "id": "microsoft-azure-devops-mcp",
-    "title": "Azure DevOps",
-    "description": "Interact with Azure DevOps services like repositories, work items, builds, releases, test plans, and code search.",
-    "url": "https://github.com/microsoft/azure-devops-mcp",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "official",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Official Integrations",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "microsoft",
-      "repo": "azure-devops-mcp",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "Interact with Azure DevOps services like repositories, work items, builds, releases, test plans, and code search.",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Developers"
-    ]
-  },
-  {
     "id": "azure-samples-mcp",
     "title": "Azure MCP Hub",
     "description": "A curated list of all MCP servers and related resources for Azure developers by **[Arun Sekhar](https://github.com/achandmsft)**",
@@ -14428,10 +14477,13 @@
     "targetAudience": [
       "Developers"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 5,
     "relatedResourceSlugs": [
+      "alexei-led-aws-mcp-server",
+      "azure-azure-mcp",
       "azure-devops-mcp",
-      "azure-mcp"
+      "azure-mcp",
+      "microsoft-azure-devops-mcp"
     ]
   },
   {
@@ -14551,10 +14603,11 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 3,
     "relatedResourceSlugs": [
       "azure-devops-mcp",
-      "azure-mcp"
+      "azure-mcp",
+      "azure-samples-mcp"
     ]
   },
   {
@@ -15248,9 +15301,12 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "modelcontextprotocol-server-filesystem-1"
+      "designcomputer-mysql-mcp-server",
+      "modelcontextprotocol-server-filesystem-1",
+      "tonycai-mcp-mysql-server",
+      "wenb1n-dev-mysql-mcp-server-pro"
     ]
   },
   {
@@ -15706,6 +15762,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "stevenstavrakis-obsidian-mcp"
     ]
   },
   {
@@ -17681,6 +17741,13 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "louis030195-easy-obsidian-mcp",
+      "markuspfundstein-mcp-obsidian",
+      "notionhq-notion-mcp-server",
+      "piotr1215-mcp-obsidian"
     ]
   },
   {
@@ -18698,6 +18765,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "jamesanz-memory-mcp"
     ]
   },
   {
@@ -23067,6 +23138,11 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "mcp-postgres",
+      "modelcontextprotocol-server-postgres"
     ]
   },
   {
@@ -23889,6 +23965,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "notionhq-notion-mcp-server"
     ]
   },
   {
@@ -24649,10 +24729,11 @@
     "targetAudience": [
       "Data Engineers"
     ],
-    "relatedResourcesCount": 2,
+    "relatedResourcesCount": 3,
     "relatedResourceSlugs": [
+      "dataring-engineering-mcp-server-trino",
       "davewind-mysql-mcp-server",
-      "dataring-engineering-mcp-server-trino"
+      "modelcontextprotocol-server-postgres"
     ]
   },
   {
@@ -24774,9 +24855,10 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 2,
     "relatedResourceSlugs": [
-      "github-47"
+      "github-47",
+      "github-mcp-agent"
     ]
   },
   {
@@ -25338,6 +25420,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "benborla29-mcp-server-mysql"
     ]
   },
   {
@@ -25851,32 +25937,6 @@
     ]
   },
   {
-    "id": "v-3-discordmcp",
-    "title": "Discord",
-    "description": "An MCP server to connect to Discord guilds through a bot and read and write messages in channels",
-    "url": "https://github.com/v-3/discordmcp",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "v-3",
-      "repo": "discordmcp",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "An MCP server to connect to Discord guilds through a bot and read and write messages in channels",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Developers"
-    ]
-  },
-  {
     "id": "klavis-ai-klavis-mjtohn7k",
     "title": "Discord",
     "description": "For Discord API integration by Klavis AI",
@@ -25905,6 +25965,36 @@
     "targetAudience": [
       "Developers",
       "AI Engineers"
+    ]
+  },
+  {
+    "id": "v-3-discordmcp",
+    "title": "Discord",
+    "description": "An MCP server to connect to Discord guilds through a bot and read and write messages in channels",
+    "url": "https://github.com/v-3/discordmcp",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "v-3",
+      "repo": "discordmcp",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "An MCP server to connect to Discord guilds through a bot and read and write messages in channels",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "discord-server"
     ]
   },
   {
@@ -25954,6 +26044,12 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "mcp-slack",
+      "saseq-discord-mcp",
+      "v-3-discordmcp"
     ]
   },
   {
@@ -26229,9 +26325,11 @@
       "MCP configuration",
       "Container experience"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 3,
     "relatedResourceSlugs": [
-      "0xshariq-docker-mcp-server"
+      "0xshariq-docker-mcp-server",
+      "alexei-led-k8s-mcp-server",
+      "docker-hub-mcp"
     ]
   },
   {
@@ -26292,8 +26390,8 @@
     ],
     "relatedResourcesCount": 2,
     "relatedResourceSlugs": [
-      "mcp-docker",
-      "0xshariq-docker-mcp-server"
+      "0xshariq-docker-mcp-server",
+      "mcp-docker"
     ]
   },
   {
@@ -28609,6 +28707,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "playwright-mcp"
     ]
   },
   {
@@ -28935,6 +29037,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mcp-memory"
     ]
   },
   {
@@ -29429,6 +29535,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mcp-filesystem"
     ]
   },
   {
@@ -30152,13 +30262,14 @@
       "File system permissions",
       "Claude Desktop or Claude Code"
     ],
-    "relatedResourcesCount": 5,
+    "relatedResourcesCount": 6,
     "relatedResourceSlugs": [
-      "oncorporation-filesystem-server",
+      "efforthye-fast-filesystem-mcp",
+      "filesystem-quarkiverse-quarkus-mcp-servers",
       "flesler-mcp-files",
       "gabrielmaialva33-mcp-filesystem",
-      "filesystem-quarkiverse-quarkus-mcp-servers",
-      "modelcontextprotocol-server-filesystem-1"
+      "modelcontextprotocol-server-filesystem-1",
+      "oncorporation-filesystem-server"
     ]
   },
   {
@@ -30844,6 +30955,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "rohitg00-kubectl-mcp-server"
     ]
   },
   {
@@ -31485,6 +31600,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "giuseppe-coco-google-workspace-mcp-server"
     ]
   },
   {
@@ -31599,6 +31718,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mongodb-js-mongodb-mcp-server"
     ]
   },
   {
@@ -33795,6 +33918,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "freema-mcp-gsheets"
     ]
   },
   {
@@ -33853,6 +33980,39 @@
     ]
   },
   {
+    "id": "longyi1207-glean-mcp-server",
+    "title": "Glean",
+    "description": "A server that uses Glean API to search and chat.",
+    "url": "https://github.com/longyi1207/glean-mcp-server",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "longyi1207",
+      "repo": "glean-mcp-server",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "A server that uses Glean API to search and chat.",
+    "aiAnalyzedAt": "2025-12-31",
+    "keyFeatures": [
+      "Api"
+    ],
+    "targetAudience": [
+      "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "gleanwork-mcp-server"
+    ]
+  },
+  {
     "id": "gleanwork-mcp-server",
     "title": "Glean",
     "description": "Enterprise search and chat using Glean's API.",
@@ -33884,39 +34044,6 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "longyi1207-glean-mcp-server"
-    ]
-  },
-  {
-    "id": "longyi1207-glean-mcp-server",
-    "title": "Glean",
-    "description": "A server that uses Glean API to search and chat.",
-    "url": "https://github.com/longyi1207/glean-mcp-server",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "longyi1207",
-      "repo": "glean-mcp-server",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "A server that uses Glean API to search and chat.",
-    "aiAnalyzedAt": "2025-12-31",
-    "keyFeatures": [
-      "Api"
-    ],
-    "targetAudience": [
-      "Developers"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "gleanwork-mcp-server"
     ]
   },
   {
@@ -34039,6 +34166,38 @@
     ]
   },
   {
+    "id": "ayush-k-shukla-gmail-mcp-server",
+    "title": "Gmail",
+    "description": "A Simple MCP server for Gmail with support for all basic operations with oauth2.0.",
+    "url": "https://github.com/Ayush-k-Shukla/gmail-mcp-server",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "beginner",
+    "github": {
+      "owner": "Ayush-k-Shukla",
+      "repo": "gmail-mcp-server",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "A Simple MCP server for Gmail with support for all basic operations with oauth2.0.",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "AI Engineers"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "baryhuang-mcp-headless-gmail",
+      "gongrzhe-gmail-mcp-server",
+      "gangradeamitesh-mcp-google-email"
+    ]
+  },
+  {
     "id": "gongrzhe-gmail-mcp-server",
     "title": "Gmail",
     "description": "A Model Context Protocol (MCP) server for Gmail integration in Claude Desktop with auto authentication support.",
@@ -34071,38 +34230,6 @@
       "baryhuang-mcp-headless-gmail",
       "gangradeamitesh-mcp-google-email",
       "ayush-k-shukla-gmail-mcp-server"
-    ]
-  },
-  {
-    "id": "ayush-k-shukla-gmail-mcp-server",
-    "title": "Gmail",
-    "description": "A Simple MCP server for Gmail with support for all basic operations with oauth2.0.",
-    "url": "https://github.com/Ayush-k-Shukla/gmail-mcp-server",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "beginner",
-    "github": {
-      "owner": "Ayush-k-Shukla",
-      "repo": "gmail-mcp-server",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "A Simple MCP server for Gmail with support for all basic operations with oauth2.0.",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "AI Engineers"
-    ],
-    "relatedResourcesCount": 3,
-    "relatedResourceSlugs": [
-      "baryhuang-mcp-headless-gmail",
-      "gongrzhe-gmail-mcp-server",
-      "gangradeamitesh-mcp-google-email"
     ]
   },
   {
@@ -34506,6 +34633,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "gomakers-ai-mcp-google-analytics"
     ]
   },
   {
@@ -34593,39 +34724,10 @@
       "Developers",
       "Data Engineers"
     ],
-    "relatedResourcesCount": 1,
+    "relatedResourcesCount": 2,
     "relatedResourceSlugs": [
+      "gomarble-ai-google-ads-mcp-server",
       "surendranb-google-analytics-mcp"
-    ]
-  },
-  {
-    "id": "nspady-google-calendar-mcp",
-    "title": "Google Calendar",
-    "description": "Google Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location.",
-    "url": "https://github.com/nspady/google-calendar-mcp",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "nspady",
-      "repo": "google-calendar-mcp",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "Google Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location.",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Developers"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "v-3-google-calendar"
     ]
   },
   {
@@ -34659,6 +34761,36 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "nspady-google-calendar-mcp"
+    ]
+  },
+  {
+    "id": "nspady-google-calendar-mcp",
+    "title": "Google Calendar",
+    "description": "Google Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location.",
+    "url": "https://github.com/nspady/google-calendar-mcp",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "nspady",
+      "repo": "google-calendar-mcp",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "Google Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location.",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "v-3-google-calendar"
     ]
   },
   {
@@ -34877,36 +35009,6 @@
     ]
   },
   {
-    "id": "mochow13-google-scholar-mcp",
-    "title": "Google-Scholar",
-    "description": "An MCP server for Google Scholar written in TypeScript with Streamable HTTP transport, along with a `client` implementations that integrates with the server and interacts with `gemini-2.5-flash`.",
-    "url": "https://github.com/mochow13/google-scholar-mcp",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "mochow13",
-      "repo": "google-scholar-mcp",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "An MCP server for Google Scholar written in TypeScript with Streamable HTTP transport, along with a `client` implementations that integrates with the server and",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Developers"
-    ],
-    "relatedResourcesCount": 1,
-    "relatedResourceSlugs": [
-      "jackkuo666-google-scholar-mcp-server"
-    ]
-  },
-  {
     "id": "jackkuo666-google-scholar-mcp-server",
     "title": "Google-Scholar",
     "description": "Enable AI assistants to search and access Google Scholar papers through a simple MCP interface.",
@@ -34934,6 +35036,36 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "mochow13-google-scholar-mcp"
+    ]
+  },
+  {
+    "id": "mochow13-google-scholar-mcp",
+    "title": "Google-Scholar",
+    "description": "An MCP server for Google Scholar written in TypeScript with Streamable HTTP transport, along with a `client` implementations that integrates with the server and interacts with `gemini-2.5-flash`.",
+    "url": "https://github.com/mochow13/google-scholar-mcp",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "mochow13",
+      "repo": "google-scholar-mcp",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "An MCP server for Google Scholar written in TypeScript with Streamable HTTP transport, along with a `client` implementations that integrates with the server and",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "jackkuo666-google-scholar-mcp-server"
     ]
   },
   {
@@ -36296,6 +36428,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-server-sqlite"
     ]
   },
   {
@@ -38150,24 +38286,6 @@
     ]
   },
   {
-    "id": "hubspot",
-    "title": "HubSpot",
-    "description": "Connect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data",
-    "url": "https://developer.hubspot.com/mcp",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "official",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Official Integrations",
-    "difficulty": "intermediate",
-    "aiSummary": "Connect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Data Engineers"
-    ]
-  },
-  {
     "id": "buryhuang-mcp-hubspot",
     "title": "HubSpot",
     "description": "HubSpot CRM integration for managing contacts and companies. Create and retrieve CRM data directly through Claude chat.",
@@ -38192,6 +38310,24 @@
     "keyFeatures": [
       "Integration"
     ],
+    "targetAudience": [
+      "Data Engineers"
+    ]
+  },
+  {
+    "id": "hubspot",
+    "title": "HubSpot",
+    "description": "Connect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data",
+    "url": "https://developer.hubspot.com/mcp",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "official",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Official Integrations",
+    "difficulty": "intermediate",
+    "aiSummary": "Connect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data",
+    "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Data Engineers"
     ]
@@ -42202,6 +42338,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "chemiguel23-memorymesh"
     ]
   },
   {
@@ -42709,6 +42849,24 @@
     ]
   },
   {
+    "id": "jenkins",
+    "title": "Jenkins",
+    "description": "Official Jenkins MCP Server plugin enabling AI assistants to manage builds, check job statuses, retrieve logs, and integrate with CI/CD pipelines through standardized MCP interface.",
+    "url": "https://plugins.jenkins.io/mcp-server/",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "official",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Official Integrations",
+    "difficulty": "intermediate",
+    "aiSummary": "Official Jenkins MCP Server plugin enabling AI assistants to manage builds, check job statuses, retrieve logs, and integrate with CI/CD pipelines through standa",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "AI Engineers"
+    ]
+  },
+  {
     "id": "jasonkylelol-jenkins-mcp-server",
     "title": "Jenkins",
     "description": "This MCP server allow you to create Jenkins tasks.",
@@ -42732,24 +42890,6 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
-  },
-  {
-    "id": "jenkins",
-    "title": "Jenkins",
-    "description": "Official Jenkins MCP Server plugin enabling AI assistants to manage builds, check job statuses, retrieve logs, and integrate with CI/CD pipelines through standardized MCP interface.",
-    "url": "https://plugins.jenkins.io/mcp-server/",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "official",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Official Integrations",
-    "difficulty": "intermediate",
-    "aiSummary": "Official Jenkins MCP Server plugin enabling AI assistants to manage builds, check job statuses, retrieve logs, and integrate with CI/CD pipelines through standa",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "AI Engineers"
     ]
   },
   {
@@ -43849,11 +43989,12 @@
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
     ],
-    "relatedResourcesCount": 3,
+    "relatedResourcesCount": 4,
     "relatedResourceSlugs": [
-      "jovezhong-mcp-timeplus",
       "gabrielmaialva33-mcp-filesystem",
-      "modelcontextprotocol-server-filesystem-1"
+      "jovezhong-mcp-timeplus",
+      "modelcontextprotocol-server-filesystem-1",
+      "modelcontextprotocol-server-sqlite"
     ]
   },
   {
@@ -45910,6 +46051,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mongodb-js-mongodb-mcp-server"
     ]
   },
   {
@@ -46641,6 +46786,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-server-gitlab"
     ]
   },
   {
@@ -46724,6 +46873,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mcp-slack"
     ]
   },
   {
@@ -49689,36 +49842,6 @@
     ]
   },
   {
-    "id": "linkupplatform-python-mcp-server",
-    "title": "Linkup",
-    "description": "(Python version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries.",
-    "url": "https://github.com/LinkupPlatform/python-mcp-server",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "official",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Official Integrations",
-    "difficulty": "advanced",
-    "github": {
-      "owner": "LinkupPlatform",
-      "repo": "python-mcp-server",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "(Python version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools ",
-    "aiAnalyzedAt": "2025-12-31",
-    "keyFeatures": [
-      "Api"
-    ],
-    "targetAudience": [
-      "Developers",
-      "AI Engineers"
-    ]
-  },
-  {
     "id": "linkupplatform-js-mcp-server",
     "title": "Linkup",
     "description": "(JS version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries.",
@@ -49739,6 +49862,36 @@
       "language": "Unknown"
     },
     "aiSummary": "(JS version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to p",
+    "aiAnalyzedAt": "2025-12-31",
+    "keyFeatures": [
+      "Api"
+    ],
+    "targetAudience": [
+      "Developers",
+      "AI Engineers"
+    ]
+  },
+  {
+    "id": "linkupplatform-python-mcp-server",
+    "title": "Linkup",
+    "description": "(Python version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries.",
+    "url": "https://github.com/LinkupPlatform/python-mcp-server",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "official",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Official Integrations",
+    "difficulty": "advanced",
+    "github": {
+      "owner": "LinkupPlatform",
+      "repo": "python-mcp-server",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "(Python version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools ",
     "aiAnalyzedAt": "2025-12-31",
     "keyFeatures": [
       "Api"
@@ -50438,6 +50591,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "calclavia-mcp-obsidian"
     ]
   },
   {
@@ -51386,6 +51543,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "alexei-led-k8s-mcp-server"
     ]
   },
   {
@@ -51641,6 +51802,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-server-filesystem-1"
     ]
   },
   {
@@ -51973,6 +52138,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "calclavia-mcp-obsidian"
     ]
   },
   {
@@ -53337,6 +53506,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "AI Engineers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mcp-memory"
     ]
   },
   {
@@ -53458,6 +53631,32 @@
     ]
   },
   {
+    "id": "sparfenyuk-mcp-proxy",
+    "title": "mcp-proxy",
+    "description": "Connect to MCP servers that run on SSE transport, or expose stdio servers as an SSE server.",
+    "url": "https://github.com/sparfenyuk/mcp-proxy",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "sparfenyuk",
+      "repo": "mcp-proxy",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "Connect to MCP servers that run on SSE transport, or expose stdio servers as an SSE server.",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Developers"
+    ]
+  },
+  {
     "id": "mcp-proxy",
     "title": "mcp-proxy",
     "description": "A TypeScript SSE proxy for MCP servers that use stdio transport.",
@@ -53504,32 +53703,6 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
-    ]
-  },
-  {
-    "id": "sparfenyuk-mcp-proxy",
-    "title": "mcp-proxy",
-    "description": "Connect to MCP servers that run on SSE transport, or expose stdio servers as an SSE server.",
-    "url": "https://github.com/sparfenyuk/mcp-proxy",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "sparfenyuk",
-      "repo": "mcp-proxy",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "Connect to MCP servers that run on SSE transport, or expose stdio servers as an SSE server.",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Developers"
     ]
   },
   {
@@ -54338,6 +54511,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mcp-memory"
     ]
   },
   {
@@ -54443,6 +54620,12 @@
       "MCP configuration",
       "Storage setup",
       "Memory strategy"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "doobidoo-mcp-memory-service",
+      "gannonh-memento-mcp",
+      "ssmirnovpro-extended-memory-mcp"
     ]
   },
   {
@@ -55187,6 +55370,11 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "oguzc-playwright-wizard-mcp",
+      "playwright-mcp"
     ]
   },
   {
@@ -56262,6 +56450,11 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "kopfrechner-gitlab-mr-mcp",
+      "zereight-mcp-gitlab"
     ]
   },
   {
@@ -56376,6 +56569,14 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 5,
+    "relatedResourceSlugs": [
+      "ahmedmustahid-postgres-mcp-server",
+      "bytebase-dbhub-mjtohho5",
+      "crystaldba-postgres-mcp",
+      "mcp-postgres",
+      "runekaagaard-mcp-alchemy"
     ]
   },
   {
@@ -56433,6 +56634,12 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "djannot-puppeteer-vision-mcp",
+      "mcp-puppeteer",
+      "playwright-mcp"
     ]
   },
   {
@@ -56490,6 +56697,13 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "hannesrudolph-sqlite-explorer-fastmcp-mcp-server",
+      "jparkerweb-mcp-sqlite",
+      "mcp-sqlite",
+      "runekaagaard-mcp-alchemy"
     ]
   },
   {
@@ -56594,6 +56808,12 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "furey-mongodb-lens",
+      "kiliczsh-mcp-mongo-server",
+      "quantgeekdev-mongo-mcp"
     ]
   },
   {
@@ -57326,6 +57546,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "benborla29-mcp-server-mysql"
     ]
   },
   {
@@ -58081,32 +58305,6 @@
     ]
   },
   {
-    "id": "da-okazaki-mcp-neo4j-server",
-    "title": "Neo4j",
-    "description": "A community built server that interacts with Neo4j Graph Database.",
-    "url": "https://github.com/da-okazaki/mcp-neo4j-server",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "da-okazaki",
-      "repo": "mcp-neo4j-server",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "A community built server that interacts with Neo4j Graph Database.",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Data Engineers"
-    ]
-  },
-  {
     "id": "neo4j-contrib-mcp-neo4j-mjtoe80f",
     "title": "Neo4j",
     "description": "Neo4j graph database server (schema + read/write-cypher) and separate graph database backed memory",
@@ -58127,6 +58325,32 @@
       "language": "Unknown"
     },
     "aiSummary": "Neo4j graph database server (schema + read/write-cypher) and separate graph database backed memory",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Data Engineers"
+    ]
+  },
+  {
+    "id": "da-okazaki-mcp-neo4j-server",
+    "title": "Neo4j",
+    "description": "A community built server that interacts with Neo4j Graph Database.",
+    "url": "https://github.com/da-okazaki/mcp-neo4j-server",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "da-okazaki",
+      "repo": "mcp-neo4j-server",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "A community built server that interacts with Neo4j Graph Database.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Data Engineers"
@@ -59381,6 +59605,10 @@
       "Notion account",
       "API integration token",
       "MCP configuration"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "notionhq-notion-mcp-server"
     ]
   },
   {
@@ -59572,6 +59800,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "calclavia-mcp-obsidian"
     ]
   },
   {
@@ -59598,6 +59830,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "bitbonsai-mcp-obsidian"
     ]
   },
   {
@@ -60902,25 +61138,6 @@
     ]
   },
   {
-    "id": "openmetadata",
-    "title": "OpenMetadata",
-    "description": "The first Enterprise-grade MCP server for metadata",
-    "url": "https://open-metadata.org/mcp",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "official",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Official Integrations",
-    "difficulty": "advanced",
-    "aiSummary": "The first Enterprise-grade MCP server for metadata",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Teams",
-      "Data Engineers"
-    ]
-  },
-  {
     "id": "yangkyeongmo-mcp-server-openmetadata",
     "title": "OpenMetadata",
     "description": "MCP Server for OpenMetadata, an open-source metadata management platform.",
@@ -60943,6 +61160,25 @@
     "aiSummary": "MCP Server for OpenMetadata, an open-source metadata management platform.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
+      "Data Engineers"
+    ]
+  },
+  {
+    "id": "openmetadata",
+    "title": "OpenMetadata",
+    "description": "The first Enterprise-grade MCP server for metadata",
+    "url": "https://open-metadata.org/mcp",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "official",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Official Integrations",
+    "difficulty": "advanced",
+    "aiSummary": "The first Enterprise-grade MCP server for metadata",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Teams",
       "Data Engineers"
     ]
   },
@@ -63810,6 +64046,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "microsoft-playwright-mcp"
     ]
   },
   {
@@ -64165,6 +64405,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Data Engineers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-server-postgres"
     ]
   },
   {
@@ -64213,6 +64457,11 @@
       "PostgreSQL database",
       "Connection credentials",
       "MCP configuration"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "crystaldba-postgres-mcp",
+      "modelcontextprotocol-server-postgres"
     ]
   },
   {
@@ -65934,6 +66183,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "AI Engineers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-server-puppeteer"
     ]
   },
   {
@@ -67141,6 +67394,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mongodb-js-mongodb-mcp-server"
     ]
   },
   {
@@ -68781,32 +69038,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
-  },
-  {
-    "id": "gongrzhe-redis-mcp-server",
-    "title": "Redis",
-    "description": "Redis database operations and caching microservice server with support for key-value operations, expiration management, and pattern-based key listing.",
-    "url": "https://github.com/GongRzhe/REDIS-MCP-Server",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "GongRzhe",
-      "repo": "REDIS-MCP-Server",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "Redis database operations and caching microservice server with support for key-value operations, expiration management, and pattern-based key listing.",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Data Engineers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "redis-mcp-redis"
     ]
   },
   {
@@ -68833,6 +69068,36 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Data Engineers"
+    ]
+  },
+  {
+    "id": "gongrzhe-redis-mcp-server",
+    "title": "Redis",
+    "description": "Redis database operations and caching microservice server with support for key-value operations, expiration management, and pattern-based key listing.",
+    "url": "https://github.com/GongRzhe/REDIS-MCP-Server",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "GongRzhe",
+      "repo": "REDIS-MCP-Server",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "Redis database operations and caching microservice server with support for key-value operations, expiration management, and pattern-based key listing.",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Data Engineers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "redis-mcp-redis"
     ]
   },
   {
@@ -68969,6 +69234,12 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "gongrzhe-redis-mcp-server",
+      "prajwalnayak7-mcp-server-redis",
+      "upstash-mcp-server"
     ]
   },
   {
@@ -70131,6 +70402,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "flux159-mcp-server-kubernetes"
     ]
   },
   {
@@ -70579,6 +70854,11 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-server-postgres",
+      "modelcontextprotocol-server-sqlite"
     ]
   },
   {
@@ -71193,6 +71473,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "discord-server"
     ]
   },
   {
@@ -73039,6 +73323,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "alexei-led-k8s-mcp-server"
     ]
   },
   {
@@ -73423,6 +73711,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "AI Engineers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mcp-slack"
     ]
   },
   {
@@ -73471,6 +73763,12 @@
       "Slack workspace",
       "Bot token",
       "MCP configuration"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "discord-server",
+      "korotovsky-slack-mcp-server",
+      "zencoderai-slack-mcp-server"
     ]
   },
   {
@@ -74476,6 +74774,10 @@
       "SQLite database file",
       "MCP configuration",
       "SQL knowledge"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "modelcontextprotocol-server-sqlite"
     ]
   },
   {
@@ -74508,32 +74810,6 @@
     ]
   },
   {
-    "id": "aiondadotcom-mcp-ssh",
-    "title": "SSH",
-    "description": "Agent for managing and controlling SSH connections.",
-    "url": "https://github.com/AiondaDotCom/mcp-ssh",
-    "category": "mcp-servers",
-    "tags": [],
-    "status": "community",
-    "addedDate": "2025-12-31",
-    "lastVerified": "2025-12-31",
-    "subcategory": "Community Servers",
-    "difficulty": "intermediate",
-    "github": {
-      "owner": "AiondaDotCom",
-      "repo": "mcp-ssh",
-      "stars": 0,
-      "forks": 0,
-      "lastUpdated": "2025-12-31",
-      "language": "Unknown"
-    },
-    "aiSummary": "Agent for managing and controlling SSH connections.",
-    "aiAnalyzedAt": "2025-12-31",
-    "targetAudience": [
-      "Developers"
-    ]
-  },
-  {
     "id": "classfang-ssh-mcp-server",
     "title": "SSH",
     "description": "An MCP server that can execute SSH commands remotely, upload files, download files, and so on.",
@@ -74554,6 +74830,32 @@
       "language": "Unknown"
     },
     "aiSummary": "An MCP server that can execute SSH commands remotely, upload files, download files, and so on.",
+    "aiAnalyzedAt": "2025-12-31",
+    "targetAudience": [
+      "Developers"
+    ]
+  },
+  {
+    "id": "aiondadotcom-mcp-ssh",
+    "title": "SSH",
+    "description": "Agent for managing and controlling SSH connections.",
+    "url": "https://github.com/AiondaDotCom/mcp-ssh",
+    "category": "mcp-servers",
+    "tags": [],
+    "status": "community",
+    "addedDate": "2025-12-31",
+    "lastVerified": "2025-12-31",
+    "subcategory": "Community Servers",
+    "difficulty": "intermediate",
+    "github": {
+      "owner": "AiondaDotCom",
+      "repo": "mcp-ssh",
+      "stars": 0,
+      "forks": 0,
+      "lastUpdated": "2025-12-31",
+      "language": "Unknown"
+    },
+    "aiSummary": "Agent for managing and controlling SSH connections.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
@@ -76202,6 +76504,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "notionhq-notion-mcp-server"
     ]
   },
   {
@@ -81668,6 +81974,10 @@
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Data Engineers"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "redis-mcp-redis"
     ]
   },
   {
@@ -84193,6 +84503,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "weibaohui-kom"
     ]
   },
   {
@@ -84250,6 +84564,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "weibaohui-k8m"
     ]
   },
   {
@@ -84336,6 +84654,10 @@
       "Claude Desktop or Claude Code installed",
       "Basic understanding of MCP server configuration",
       "Node.js or Python runtime (depending on server type)"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "benborla29-mcp-server-mysql"
     ]
   },
   {

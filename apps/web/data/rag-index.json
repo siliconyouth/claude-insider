@@ -1,7 +1,7 @@
 {
   "version": "7.0",
-  "contentHash": "175cc9ea4e20704b2ec1a7478588be8390d43b01367ca656b9e6ee8692dcebc7",
-  "generatedAt": "2026-01-02T01:33:16.655Z",
+  "contentHash": "c7f03dd2ce12a19b3c8aa33ce05e1d38d8fd93e6a5c550920f53335f3562cd7a",
+  "generatedAt": "2026-01-02T01:46:29.144Z",
   "builtWith": "Claude Code powered by Claude Opus 4.5",
   "documentCount": 9103,
   "documentationChunks": 453,
@@ -24712,39 +24712,6 @@
       }
     },
     {
-      "id": "resource-vortiago-mcp-azure-devops",
-      "title": "Azure DevOps",
-      "section": "Azure DevOps - MCP Servers",
-      "content": "Azure DevOps: An MCP server that provides a bridge to Azure DevOps services, enabling AI assistants to query and manage work items. [Status: community]",
-      "url": "https://github.com/Vortiago/mcp-azure-devops",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "vortiago-mcp-azure-devops",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "Vortiago",
-          "repo": "mcp-azure-devops",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-microsoft-azure-devops-mcp",
       "title": "Azure DevOps",
       "section": "Azure DevOps - MCP Servers",
@@ -24768,6 +24735,39 @@
         "github": {
           "owner": "microsoft",
           "repo": "azure-devops-mcp",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-vortiago-mcp-azure-devops",
+      "title": "Azure DevOps",
+      "section": "Azure DevOps - MCP Servers",
+      "content": "Azure DevOps: An MCP server that provides a bridge to Azure DevOps services, enabling AI assistants to query and manage work items. [Status: community]",
+      "url": "https://github.com/Vortiago/mcp-azure-devops",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "vortiago-mcp-azure-devops",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "Vortiago",
+          "repo": "mcp-azure-devops",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -33672,39 +33672,6 @@
       }
     },
     {
-      "id": "resource-v-3-discordmcp",
-      "title": "Discord",
-      "section": "Discord - MCP Servers",
-      "content": "[curious] Discord: An MCP server to connect to Discord guilds through a bot and read and write messages in channels [Status: community]",
-      "url": "https://github.com/v-3/discordmcp",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "v-3-discordmcp",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "v-3",
-          "repo": "discordmcp",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-klavis-ai-klavis-mjtohn7k",
       "title": "Discord",
       "section": "Discord - MCP Servers",
@@ -33728,6 +33695,39 @@
         "github": {
           "owner": "Klavis-AI",
           "repo": "klavis",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-v-3-discordmcp",
+      "title": "Discord",
+      "section": "Discord - MCP Servers",
+      "content": "[curious] Discord: An MCP server to connect to Discord guilds through a bot and read and write messages in channels [Status: community]",
+      "url": "https://github.com/v-3/discordmcp",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "v-3-discordmcp",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "v-3",
+          "repo": "discordmcp",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -39601,39 +39601,6 @@
       }
     },
     {
-      "id": "resource-gleanwork-mcp-server",
-      "title": "Glean",
-      "section": "Glean - MCP Servers",
-      "content": "Glean: Enterprise search and chat using Glean's API. [Status: official]",
-      "url": "https://github.com/gleanwork/mcp-server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "gleanwork-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": {
-          "owner": "gleanwork",
-          "repo": "mcp-server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-longyi1207-glean-mcp-server",
       "title": "Glean",
       "section": "Glean - MCP Servers",
@@ -39657,6 +39624,39 @@
         "github": {
           "owner": "longyi1207",
           "repo": "glean-mcp-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-gleanwork-mcp-server",
+      "title": "Glean",
+      "section": "Glean - MCP Servers",
+      "content": "Glean: Enterprise search and chat using Glean's API. [Status: official]",
+      "url": "https://github.com/gleanwork/mcp-server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "gleanwork-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": {
+          "owner": "gleanwork",
+          "repo": "mcp-server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -39731,39 +39731,6 @@
       }
     },
     {
-      "id": "resource-gongrzhe-gmail-mcp-server",
-      "title": "Gmail",
-      "section": "Gmail - MCP Servers",
-      "content": "[thoughtful] Gmail: A Model Context Protocol (MCP) server for Gmail integration in Claude Desktop with auto authentication support. [Status: community]",
-      "url": "https://github.com/GongRzhe/Gmail-MCP-Server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "gongrzhe-gmail-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "GongRzhe",
-          "repo": "Gmail-MCP-Server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-ayush-k-shukla-gmail-mcp-server",
       "title": "Gmail",
       "section": "Gmail - MCP Servers",
@@ -39787,6 +39754,39 @@
         "github": {
           "owner": "Ayush-k-Shukla",
           "repo": "gmail-mcp-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-gongrzhe-gmail-mcp-server",
+      "title": "Gmail",
+      "section": "Gmail - MCP Servers",
+      "content": "[thoughtful] Gmail: A Model Context Protocol (MCP) server for Gmail integration in Claude Desktop with auto authentication support. [Status: community]",
+      "url": "https://github.com/GongRzhe/Gmail-MCP-Server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "gongrzhe-gmail-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "GongRzhe",
+          "repo": "Gmail-MCP-Server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -40222,39 +40222,6 @@
       }
     },
     {
-      "id": "resource-nspady-google-calendar-mcp",
-      "title": "Google Calendar",
-      "section": "Google Calendar - MCP Servers",
-      "content": "[curious] Google Calendar: Google Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location. [Status: community]",
-      "url": "https://github.com/nspady/google-calendar-mcp",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "nspady-google-calendar-mcp",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "nspady",
-          "repo": "google-calendar-mcp",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-v-3-google-calendar",
       "title": "Google Calendar",
       "section": "Google Calendar - MCP Servers",
@@ -40278,6 +40245,39 @@
         "github": {
           "owner": "v-3",
           "repo": "google-calendar",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-nspady-google-calendar-mcp",
+      "title": "Google Calendar",
+      "section": "Google Calendar - MCP Servers",
+      "content": "[curious] Google Calendar: Google Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location. [Status: community]",
+      "url": "https://github.com/nspady/google-calendar-mcp",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "nspady-google-calendar-mcp",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "nspady",
+          "repo": "google-calendar-mcp",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -40510,39 +40510,6 @@
       }
     },
     {
-      "id": "resource-mochow13-google-scholar-mcp",
-      "title": "Google-Scholar",
-      "section": "Google-Scholar - MCP Servers",
-      "content": "Google-Scholar: An MCP server for Google Scholar written in TypeScript with Streamable HTTP transport, along with a `client` implementations that integrates with the server and interacts with `gemini-2.5-flash`. [Status: community]",
-      "url": "https://github.com/mochow13/google-scholar-mcp",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "mochow13-google-scholar-mcp",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "mochow13",
-          "repo": "google-scholar-mcp",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-jackkuo666-google-scholar-mcp-server",
       "title": "Google-Scholar",
       "section": "Google-Scholar - MCP Servers",
@@ -40566,6 +40533,39 @@
         "github": {
           "owner": "JackKuo666",
           "repo": "Google-Scholar-MCP-Server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-mochow13-google-scholar-mcp",
+      "title": "Google-Scholar",
+      "section": "Google-Scholar - MCP Servers",
+      "content": "Google-Scholar: An MCP server for Google Scholar written in TypeScript with Streamable HTTP transport, along with a `client` implementations that integrates with the server and interacts with `gemini-2.5-flash`. [Status: community]",
+      "url": "https://github.com/mochow13/google-scholar-mcp",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "mochow13-google-scholar-mcp",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "mochow13",
+          "repo": "google-scholar-mcp",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -42837,31 +42837,6 @@
       }
     },
     {
-      "id": "resource-hubspot",
-      "title": "HubSpot",
-      "section": "HubSpot - MCP Servers",
-      "content": "HubSpot: Connect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data [Status: official]",
-      "url": "https://developer.hubspot.com/mcp",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "hubspot",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": null,
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-buryhuang-mcp-hubspot",
       "title": "HubSpot",
       "section": "HubSpot - MCP Servers",
@@ -42890,6 +42865,31 @@
           "lastUpdated": "2025-12-31",
           "language": "Unknown"
         },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-hubspot",
+      "title": "HubSpot",
+      "section": "HubSpot - MCP Servers",
+      "content": "HubSpot: Connect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data [Status: official]",
+      "url": "https://developer.hubspot.com/mcp",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "hubspot",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": null,
         "changelog": null,
         "lastUpdated": null
       }
@@ -45975,6 +45975,31 @@
       }
     },
     {
+      "id": "resource-jenkins",
+      "title": "Jenkins",
+      "section": "Jenkins - MCP Servers",
+      "content": "Jenkins: Official Jenkins MCP Server plugin enabling AI assistants to manage builds, check job statuses, retrieve logs, and integrate with CI/CD pipelines through standardized MCP interface. [Status: official]",
+      "url": "https://plugins.jenkins.io/mcp-server/",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "jenkins",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": null,
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
       "id": "resource-jasonkylelol-jenkins-mcp-server",
       "title": "Jenkins",
       "section": "Jenkins - MCP Servers",
@@ -46003,31 +46028,6 @@
           "lastUpdated": "2025-12-31",
           "language": "Unknown"
         },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
-      "id": "resource-jenkins",
-      "title": "Jenkins",
-      "section": "Jenkins - MCP Servers",
-      "content": "Jenkins: Official Jenkins MCP Server plugin enabling AI assistants to manage builds, check job statuses, retrieve logs, and integrate with CI/CD pipelines through standardized MCP interface. [Status: official]",
-      "url": "https://plugins.jenkins.io/mcp-server/",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "jenkins",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": null,
         "changelog": null,
         "lastUpdated": null
       }
@@ -50926,39 +50926,6 @@
       }
     },
     {
-      "id": "resource-linkupplatform-python-mcp-server",
-      "title": "Linkup",
-      "section": "Linkup - MCP Servers",
-      "content": "Linkup: (Python version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries. [Status: official]",
-      "url": "https://github.com/LinkupPlatform/python-mcp-server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "linkupplatform-python-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": {
-          "owner": "LinkupPlatform",
-          "repo": "python-mcp-server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-linkupplatform-js-mcp-server",
       "title": "Linkup",
       "section": "Linkup - MCP Servers",
@@ -50982,6 +50949,39 @@
         "github": {
           "owner": "LinkupPlatform",
           "repo": "js-mcp-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-linkupplatform-python-mcp-server",
+      "title": "Linkup",
+      "section": "Linkup - MCP Servers",
+      "content": "Linkup: (Python version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries. [Status: official]",
+      "url": "https://github.com/LinkupPlatform/python-mcp-server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "linkupplatform-python-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": {
+          "owner": "LinkupPlatform",
+          "repo": "python-mcp-server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -54217,30 +54217,6 @@
       }
     },
     {
-      "id": "resource-mcp-proxy",
-      "title": "mcp-proxy",
-      "section": "mcp-proxy - MCP Servers",
-      "content": "[curious] mcp-proxy: A TypeScript SSE proxy for MCP servers that use stdio transport. [Status: community]",
-      "url": "https://www.npmjs.com/package/mcp-proxy",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "mcp-proxy",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": null,
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-sparfenyuk-mcp-proxy",
       "title": "mcp-proxy",
       "section": "mcp-proxy - MCP Servers",
@@ -54269,6 +54245,30 @@
           "lastUpdated": "2025-12-31",
           "language": "Unknown"
         },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-mcp-proxy",
+      "title": "mcp-proxy",
+      "section": "mcp-proxy - MCP Servers",
+      "content": "[curious] mcp-proxy: A TypeScript SSE proxy for MCP servers that use stdio transport. [Status: community]",
+      "url": "https://www.npmjs.com/package/mcp-proxy",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "mcp-proxy",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": null,
         "changelog": null,
         "lastUpdated": null
       }
@@ -57990,39 +57990,6 @@
       }
     },
     {
-      "id": "resource-da-okazaki-mcp-neo4j-server",
-      "title": "Neo4j",
-      "section": "Neo4j - MCP Servers",
-      "content": "Neo4j: A community built server that interacts with Neo4j Graph Database. [Status: community]",
-      "url": "https://github.com/da-okazaki/mcp-neo4j-server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "da-okazaki-mcp-neo4j-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "da-okazaki",
-          "repo": "mcp-neo4j-server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-neo4j-contrib-mcp-neo4j-mjtoe80f",
       "title": "Neo4j",
       "section": "Neo4j - MCP Servers",
@@ -58046,6 +58013,39 @@
         "github": {
           "owner": "neo4j-contrib",
           "repo": "mcp-neo4j",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-da-okazaki-mcp-neo4j-server",
+      "title": "Neo4j",
+      "section": "Neo4j - MCP Servers",
+      "content": "Neo4j: A community built server that interacts with Neo4j Graph Database. [Status: community]",
+      "url": "https://github.com/da-okazaki/mcp-neo4j-server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "da-okazaki-mcp-neo4j-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "da-okazaki",
+          "repo": "mcp-neo4j-server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -60431,31 +60431,6 @@
       }
     },
     {
-      "id": "resource-openmetadata",
-      "title": "OpenMetadata",
-      "section": "OpenMetadata - MCP Servers",
-      "content": "OpenMetadata: The first Enterprise-grade MCP server for metadata [Status: official]",
-      "url": "https://open-metadata.org/mcp",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "official"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "openmetadata",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "official",
-        "github": null,
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-yangkyeongmo-mcp-server-openmetadata",
       "title": "OpenMetadata",
       "section": "OpenMetadata - MCP Servers",
@@ -60484,6 +60459,31 @@
           "lastUpdated": "2025-12-31",
           "language": "Unknown"
         },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-openmetadata",
+      "title": "OpenMetadata",
+      "section": "OpenMetadata - MCP Servers",
+      "content": "OpenMetadata: The first Enterprise-grade MCP server for metadata [Status: official]",
+      "url": "https://open-metadata.org/mcp",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "official"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "openmetadata",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "official",
+        "github": null,
         "changelog": null,
         "lastUpdated": null
       }
@@ -66666,39 +66666,6 @@
       }
     },
     {
-      "id": "resource-gongrzhe-redis-mcp-server",
-      "title": "Redis",
-      "section": "Redis - MCP Servers",
-      "content": "Redis: Redis database operations and caching microservice server with support for key-value operations, expiration management, and pattern-based key listing. [Status: community]",
-      "url": "https://github.com/GongRzhe/REDIS-MCP-Server",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "gongrzhe-redis-mcp-server",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "GongRzhe",
-          "repo": "REDIS-MCP-Server",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-redis-mcp-redis-mjtof34r",
       "title": "Redis",
       "section": "Redis - MCP Servers",
@@ -66722,6 +66689,39 @@
         "github": {
           "owner": "redis",
           "repo": "mcp-redis",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-gongrzhe-redis-mcp-server",
+      "title": "Redis",
+      "section": "Redis - MCP Servers",
+      "content": "Redis: Redis database operations and caching microservice server with support for key-value operations, expiration management, and pattern-based key listing. [Status: community]",
+      "url": "https://github.com/GongRzhe/REDIS-MCP-Server",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "gongrzhe-redis-mcp-server",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "GongRzhe",
+          "repo": "REDIS-MCP-Server",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -71242,39 +71242,6 @@
       }
     },
     {
-      "id": "resource-aiondadotcom-mcp-ssh",
-      "title": "SSH",
-      "section": "SSH - MCP Servers",
-      "content": "SSH: Agent for managing and controlling SSH connections. [Status: community]",
-      "url": "https://github.com/AiondaDotCom/mcp-ssh",
-      "category": "Resources",
-      "subcategory": "MCP Servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown",
-        "community"
-      ],
-      "isResource": true,
-      "resourceData": {
-        "id": "aiondadotcom-mcp-ssh",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "status": "community",
-        "github": {
-          "owner": "AiondaDotCom",
-          "repo": "mcp-ssh",
-          "stars": 0,
-          "forks": 0,
-          "lastUpdated": "2025-12-31",
-          "language": "Unknown"
-        },
-        "changelog": null,
-        "lastUpdated": null
-      }
-    },
-    {
       "id": "resource-classfang-ssh-mcp-server",
       "title": "SSH",
       "section": "SSH - MCP Servers",
@@ -71298,6 +71265,39 @@
         "github": {
           "owner": "classfang",
           "repo": "ssh-mcp-server",
+          "stars": 0,
+          "forks": 0,
+          "lastUpdated": "2025-12-31",
+          "language": "Unknown"
+        },
+        "changelog": null,
+        "lastUpdated": null
+      }
+    },
+    {
+      "id": "resource-aiondadotcom-mcp-ssh",
+      "title": "SSH",
+      "section": "SSH - MCP Servers",
+      "content": "SSH: Agent for managing and controlling SSH connections. [Status: community]",
+      "url": "https://github.com/AiondaDotCom/mcp-ssh",
+      "category": "Resources",
+      "subcategory": "MCP Servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown",
+        "community"
+      ],
+      "isResource": true,
+      "resourceData": {
+        "id": "aiondadotcom-mcp-ssh",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "status": "community",
+        "github": {
+          "owner": "AiondaDotCom",
+          "repo": "mcp-ssh",
           "stars": 0,
           "forks": 0,
           "lastUpdated": "2025-12-31",
@@ -200003,40 +200003,6 @@
       ]
     },
     {
-      "id": "resource-context-vortiago-mcp-azure-devops",
-      "title": "Resource: Azure DevOps",
-      "section": "Community Servers",
-      "content": "Resource: Azure DevOps\nAn MCP server that provides a bridge to Azure DevOps services, enabling AI assistants to query and manage work items.\nLanguage: Unknown",
-      "url": "https://github.com/Vortiago/mcp-azure-devops",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "vortiago-mcp-azure-devops",
-        "title": "Azure DevOps",
-        "category": "mcp-servers",
-        "subcategory": "Community Servers",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": "Unknown",
-        "status": "community"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Azure DevOps?",
-        "What are the alternatives to Azure DevOps?",
-        "Show me example usage of Azure DevOps",
-        "What are the pros and cons of Azure DevOps?",
-        "Is Azure DevOps right for my project?",
-        "How do I integrate Azure DevOps with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-microsoft-azure-devops-mcp",
       "title": "Resource: Azure DevOps",
       "section": "Official Integrations",
@@ -200060,6 +200026,40 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "official"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Azure DevOps?",
+        "What are the alternatives to Azure DevOps?",
+        "Show me example usage of Azure DevOps",
+        "What are the pros and cons of Azure DevOps?",
+        "Is Azure DevOps right for my project?",
+        "How do I integrate Azure DevOps with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-vortiago-mcp-azure-devops",
+      "title": "Resource: Azure DevOps",
+      "section": "Community Servers",
+      "content": "Resource: Azure DevOps\nAn MCP server that provides a bridge to Azure DevOps services, enabling AI assistants to query and manage work items.\nLanguage: Unknown",
+      "url": "https://github.com/Vortiago/mcp-azure-devops",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "vortiago-mcp-azure-devops",
+        "title": "Azure DevOps",
+        "category": "mcp-servers",
+        "subcategory": "Community Servers",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": "Unknown",
+        "status": "community"
       },
       "suggestedQuestions": [
         "How do I get started with Azure DevOps?",
@@ -209347,11 +209347,11 @@
       ]
     },
     {
-      "id": "resource-context-v-3-discordmcp",
+      "id": "resource-context-klavis-ai-klavis-mjtohn7k",
       "title": "Resource: Discord",
       "section": "Community Servers",
-      "content": "Resource: Discord\nAn MCP server to connect to Discord guilds through a bot and read and write messages in channels\nLanguage: Unknown",
-      "url": "https://github.com/v-3/discordmcp",
+      "content": "Resource: Discord\nFor Discord API integration by Klavis AI\nLanguage: Unknown",
+      "url": "https://github.com/Klavis-AI/klavis/tree/main/mcp_servers/discord",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -209361,7 +209361,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "v-3-discordmcp",
+        "id": "klavis-ai-klavis-mjtohn7k",
         "title": "Discord",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -209381,11 +209381,11 @@
       ]
     },
     {
-      "id": "resource-context-klavis-ai-klavis-mjtohn7k",
+      "id": "resource-context-v-3-discordmcp",
       "title": "Resource: Discord",
       "section": "Community Servers",
-      "content": "Resource: Discord\nFor Discord API integration by Klavis AI\nLanguage: Unknown",
-      "url": "https://github.com/Klavis-AI/klavis/tree/main/mcp_servers/discord",
+      "content": "Resource: Discord\nAn MCP server to connect to Discord guilds through a bot and read and write messages in channels\nLanguage: Unknown",
+      "url": "https://github.com/v-3/discordmcp",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -209395,7 +209395,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "klavis-ai-klavis-mjtohn7k",
+        "id": "v-3-discordmcp",
         "title": "Discord",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -215572,40 +215572,6 @@
       ]
     },
     {
-      "id": "resource-context-gleanwork-mcp-server",
-      "title": "Resource: Glean",
-      "section": "Official Integrations",
-      "content": "Resource: Glean\nEnterprise search and chat using Glean's API.\nLanguage: Unknown",
-      "url": "https://github.com/gleanwork/mcp-server",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations",
-        "unknown"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "gleanwork-mcp-server",
-        "title": "Glean",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": "Unknown",
-        "status": "official"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Glean?",
-        "What are the alternatives to Glean?",
-        "Show me example usage of Glean",
-        "What are the pros and cons of Glean?",
-        "Is Glean right for my project?",
-        "How do I integrate Glean with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-longyi1207-glean-mcp-server",
       "title": "Resource: Glean",
       "section": "Community Servers",
@@ -215629,6 +215595,40 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Glean?",
+        "What are the alternatives to Glean?",
+        "Show me example usage of Glean",
+        "What are the pros and cons of Glean?",
+        "Is Glean right for my project?",
+        "How do I integrate Glean with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-gleanwork-mcp-server",
+      "title": "Resource: Glean",
+      "section": "Official Integrations",
+      "content": "Resource: Glean\nEnterprise search and chat using Glean's API.\nLanguage: Unknown",
+      "url": "https://github.com/gleanwork/mcp-server",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations",
+        "unknown"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "gleanwork-mcp-server",
+        "title": "Glean",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": "Unknown",
+        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with Glean?",
@@ -215704,11 +215704,11 @@
       ]
     },
     {
-      "id": "resource-context-gongrzhe-gmail-mcp-server",
+      "id": "resource-context-ayush-k-shukla-gmail-mcp-server",
       "title": "Resource: Gmail",
       "section": "Community Servers",
-      "content": "Resource: Gmail\nA Model Context Protocol (MCP) server for Gmail integration in Claude Desktop with auto authentication support.\nLanguage: Unknown",
-      "url": "https://github.com/GongRzhe/Gmail-MCP-Server",
+      "content": "Resource: Gmail\nA Simple MCP server for Gmail with support for all basic operations with oauth2.0.\nLanguage: Unknown",
+      "url": "https://github.com/Ayush-k-Shukla/gmail-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -215718,7 +215718,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "gongrzhe-gmail-mcp-server",
+        "id": "ayush-k-shukla-gmail-mcp-server",
         "title": "Gmail",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -215738,11 +215738,11 @@
       ]
     },
     {
-      "id": "resource-context-ayush-k-shukla-gmail-mcp-server",
+      "id": "resource-context-gongrzhe-gmail-mcp-server",
       "title": "Resource: Gmail",
       "section": "Community Servers",
-      "content": "Resource: Gmail\nA Simple MCP server for Gmail with support for all basic operations with oauth2.0.\nLanguage: Unknown",
-      "url": "https://github.com/Ayush-k-Shukla/gmail-mcp-server",
+      "content": "Resource: Gmail\nA Model Context Protocol (MCP) server for Gmail integration in Claude Desktop with auto authentication support.\nLanguage: Unknown",
+      "url": "https://github.com/GongRzhe/Gmail-MCP-Server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -215752,7 +215752,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "ayush-k-shukla-gmail-mcp-server",
+        "id": "gongrzhe-gmail-mcp-server",
         "title": "Gmail",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -216206,11 +216206,11 @@
       ]
     },
     {
-      "id": "resource-context-nspady-google-calendar-mcp",
+      "id": "resource-context-v-3-google-calendar",
       "title": "Resource: Google Calendar",
       "section": "Community Servers",
-      "content": "Resource: Google Calendar\nGoogle Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location.\nLanguage: Unknown",
-      "url": "https://github.com/nspady/google-calendar-mcp",
+      "content": "Resource: Google Calendar\nIntegration with Google Calendar to check schedules, find time, and add/delete events\nLanguage: Unknown",
+      "url": "https://github.com/v-3/google-calendar",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -216220,7 +216220,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "nspady-google-calendar-mcp",
+        "id": "v-3-google-calendar",
         "title": "Google Calendar",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -216240,11 +216240,11 @@
       ]
     },
     {
-      "id": "resource-context-v-3-google-calendar",
+      "id": "resource-context-nspady-google-calendar-mcp",
       "title": "Resource: Google Calendar",
       "section": "Community Servers",
-      "content": "Resource: Google Calendar\nIntegration with Google Calendar to check schedules, find time, and add/delete events\nLanguage: Unknown",
-      "url": "https://github.com/v-3/google-calendar",
+      "content": "Resource: Google Calendar\nGoogle Calendar MCP Server for managing Google calendar events. Also supports searching for events by attributes like title and location.\nLanguage: Unknown",
+      "url": "https://github.com/nspady/google-calendar-mcp",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -216254,7 +216254,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "v-3-google-calendar",
+        "id": "nspady-google-calendar-mcp",
         "title": "Google Calendar",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -216509,11 +216509,11 @@
       ]
     },
     {
-      "id": "resource-context-mochow13-google-scholar-mcp",
+      "id": "resource-context-jackkuo666-google-scholar-mcp-server",
       "title": "Resource: Google-Scholar",
       "section": "Community Servers",
-      "content": "Resource: Google-Scholar\nAn MCP server for Google Scholar written in TypeScript with Streamable HTTP transport, along with a `client` implementations that integrates with the server and interacts with `gemini-2.5-flash`.\nLanguage: Unknown",
-      "url": "https://github.com/mochow13/google-scholar-mcp",
+      "content": "Resource: Google-Scholar\nEnable AI assistants to search and access Google Scholar papers through a simple MCP interface.\nLanguage: Unknown",
+      "url": "https://github.com/JackKuo666/Google-Scholar-MCP-Server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -216523,7 +216523,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "mochow13-google-scholar-mcp",
+        "id": "jackkuo666-google-scholar-mcp-server",
         "title": "Google-Scholar",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -216543,11 +216543,11 @@
       ]
     },
     {
-      "id": "resource-context-jackkuo666-google-scholar-mcp-server",
+      "id": "resource-context-mochow13-google-scholar-mcp",
       "title": "Resource: Google-Scholar",
       "section": "Community Servers",
-      "content": "Resource: Google-Scholar\nEnable AI assistants to search and access Google Scholar papers through a simple MCP interface.\nLanguage: Unknown",
-      "url": "https://github.com/JackKuo666/Google-Scholar-MCP-Server",
+      "content": "Resource: Google-Scholar\nAn MCP server for Google Scholar written in TypeScript with Streamable HTTP transport, along with a `client` implementations that integrates with the server and interacts with `gemini-2.5-flash`.\nLanguage: Unknown",
+      "url": "https://github.com/mochow13/google-scholar-mcp",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -216557,7 +216557,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "jackkuo666-google-scholar-mcp-server",
+        "id": "mochow13-google-scholar-mcp",
         "title": "Google-Scholar",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -218902,39 +218902,6 @@
       ]
     },
     {
-      "id": "resource-context-hubspot",
-      "title": "Resource: HubSpot",
-      "section": "Official Integrations",
-      "content": "Resource: HubSpot\nConnect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data",
-      "url": "https://developer.hubspot.com/mcp",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "hubspot",
-        "title": "HubSpot",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": null,
-        "status": "official"
-      },
-      "suggestedQuestions": [
-        "How do I get started with HubSpot?",
-        "What are the alternatives to HubSpot?",
-        "Show me example usage of HubSpot",
-        "What are the pros and cons of HubSpot?",
-        "Is HubSpot right for my project?",
-        "How do I integrate HubSpot with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-buryhuang-mcp-hubspot",
       "title": "Resource: HubSpot",
       "section": "Community Servers",
@@ -218958,6 +218925,39 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with HubSpot?",
+        "What are the alternatives to HubSpot?",
+        "Show me example usage of HubSpot",
+        "What are the pros and cons of HubSpot?",
+        "Is HubSpot right for my project?",
+        "How do I integrate HubSpot with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-hubspot",
+      "title": "Resource: HubSpot",
+      "section": "Official Integrations",
+      "content": "Resource: HubSpot\nConnect, manage, and interact with [HubSpot](https://www.hubspot.com/) CRM data",
+      "url": "https://developer.hubspot.com/mcp",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "hubspot",
+        "title": "HubSpot",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": null,
+        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with HubSpot?",
@@ -222102,6 +222102,39 @@
       ]
     },
     {
+      "id": "resource-context-jenkins",
+      "title": "Resource: Jenkins",
+      "section": "Official Integrations",
+      "content": "Resource: Jenkins\nOfficial Jenkins MCP Server plugin enabling AI assistants to manage builds, check job statuses, retrieve logs, and integrate with CI/CD pipelines through standardized MCP interface.",
+      "url": "https://plugins.jenkins.io/mcp-server/",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "jenkins",
+        "title": "Jenkins",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": null,
+        "status": "official"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Jenkins?",
+        "What are the alternatives to Jenkins?",
+        "Show me example usage of Jenkins",
+        "What are the pros and cons of Jenkins?",
+        "Is Jenkins right for my project?",
+        "How do I integrate Jenkins with my workflow?"
+      ]
+    },
+    {
       "id": "resource-context-jasonkylelol-jenkins-mcp-server",
       "title": "Resource: Jenkins",
       "section": "Community Servers",
@@ -222125,39 +222158,6 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Jenkins?",
-        "What are the alternatives to Jenkins?",
-        "Show me example usage of Jenkins",
-        "What are the pros and cons of Jenkins?",
-        "Is Jenkins right for my project?",
-        "How do I integrate Jenkins with my workflow?"
-      ]
-    },
-    {
-      "id": "resource-context-jenkins",
-      "title": "Resource: Jenkins",
-      "section": "Official Integrations",
-      "content": "Resource: Jenkins\nOfficial Jenkins MCP Server plugin enabling AI assistants to manage builds, check job statuses, retrieve logs, and integrate with CI/CD pipelines through standardized MCP interface.",
-      "url": "https://plugins.jenkins.io/mcp-server/",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "jenkins",
-        "title": "Jenkins",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": null,
-        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with Jenkins?",
@@ -227207,11 +227207,11 @@
       ]
     },
     {
-      "id": "resource-context-linkupplatform-python-mcp-server",
+      "id": "resource-context-linkupplatform-js-mcp-server",
       "title": "Resource: Linkup",
       "section": "Official Integrations",
-      "content": "Resource: Linkup\n(Python version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries.\nLanguage: Unknown",
-      "url": "https://github.com/LinkupPlatform/python-mcp-server",
+      "content": "Resource: Linkup\n(JS version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries.\nLanguage: Unknown",
+      "url": "https://github.com/LinkupPlatform/js-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -227221,7 +227221,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "linkupplatform-python-mcp-server",
+        "id": "linkupplatform-js-mcp-server",
         "title": "Linkup",
         "category": "mcp-servers",
         "subcategory": "Official Integrations",
@@ -227241,11 +227241,11 @@
       ]
     },
     {
-      "id": "resource-context-linkupplatform-js-mcp-server",
+      "id": "resource-context-linkupplatform-python-mcp-server",
       "title": "Resource: Linkup",
       "section": "Official Integrations",
-      "content": "Resource: Linkup\n(JS version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries.\nLanguage: Unknown",
-      "url": "https://github.com/LinkupPlatform/js-mcp-server",
+      "content": "Resource: Linkup\n(Python version) MCP server that provides web search capabilities through Linkup's advanced search API. This server enables AI assistants and development tools to perform intelligent web searches with natural language queries.\nLanguage: Unknown",
+      "url": "https://github.com/LinkupPlatform/python-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -227255,7 +227255,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "linkupplatform-js-mcp-server",
+        "id": "linkupplatform-python-mcp-server",
         "title": "Linkup",
         "category": "mcp-servers",
         "subcategory": "Official Integrations",
@@ -230600,37 +230600,6 @@
       ]
     },
     {
-      "id": "resource-context-mcp-proxy",
-      "title": "Resource: mcp-proxy",
-      "section": "mcp-servers",
-      "content": "Resource: mcp-proxy\nA TypeScript SSE proxy for MCP servers that use stdio transport.",
-      "url": "https://www.npmjs.com/package/mcp-proxy",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "mcp-proxy",
-        "title": "mcp-proxy",
-        "category": "mcp-servers",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": null,
-        "status": "community"
-      },
-      "suggestedQuestions": [
-        "How do I get started with mcp-proxy?",
-        "What are the alternatives to mcp-proxy?",
-        "Show me example usage of mcp-proxy",
-        "What are the pros and cons of mcp-proxy?",
-        "Is mcp-proxy right for my project?",
-        "How do I integrate mcp-proxy with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-sparfenyuk-mcp-proxy",
       "title": "Resource: mcp-proxy",
       "section": "Community Servers",
@@ -230653,6 +230622,37 @@
         "featured": false,
         "githubStars": null,
         "language": "Unknown",
+        "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with mcp-proxy?",
+        "What are the alternatives to mcp-proxy?",
+        "Show me example usage of mcp-proxy",
+        "What are the pros and cons of mcp-proxy?",
+        "Is mcp-proxy right for my project?",
+        "How do I integrate mcp-proxy with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-mcp-proxy",
+      "title": "Resource: mcp-proxy",
+      "section": "mcp-servers",
+      "content": "Resource: mcp-proxy\nA TypeScript SSE proxy for MCP servers that use stdio transport.",
+      "url": "https://www.npmjs.com/package/mcp-proxy",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "mcp-proxy",
+        "title": "mcp-proxy",
+        "category": "mcp-servers",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": null,
         "status": "community"
       },
       "suggestedQuestions": [
@@ -234589,40 +234589,6 @@
       ]
     },
     {
-      "id": "resource-context-da-okazaki-mcp-neo4j-server",
-      "title": "Resource: Neo4j",
-      "section": "Community Servers",
-      "content": "Resource: Neo4j\nA community built server that interacts with Neo4j Graph Database.\nLanguage: Unknown",
-      "url": "https://github.com/da-okazaki/mcp-neo4j-server",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "da-okazaki-mcp-neo4j-server",
-        "title": "Neo4j",
-        "category": "mcp-servers",
-        "subcategory": "Community Servers",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": "Unknown",
-        "status": "community"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Neo4j?",
-        "What are the alternatives to Neo4j?",
-        "Show me example usage of Neo4j",
-        "What are the pros and cons of Neo4j?",
-        "Is Neo4j right for my project?",
-        "How do I integrate Neo4j with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-neo4j-contrib-mcp-neo4j-mjtoe80f",
       "title": "Resource: Neo4j",
       "section": "Official Integrations",
@@ -234646,6 +234612,40 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "official"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Neo4j?",
+        "What are the alternatives to Neo4j?",
+        "Show me example usage of Neo4j",
+        "What are the pros and cons of Neo4j?",
+        "Is Neo4j right for my project?",
+        "How do I integrate Neo4j with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-da-okazaki-mcp-neo4j-server",
+      "title": "Resource: Neo4j",
+      "section": "Community Servers",
+      "content": "Resource: Neo4j\nA community built server that interacts with Neo4j Graph Database.\nLanguage: Unknown",
+      "url": "https://github.com/da-okazaki/mcp-neo4j-server",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "da-okazaki-mcp-neo4j-server",
+        "title": "Neo4j",
+        "category": "mcp-servers",
+        "subcategory": "Community Servers",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": "Unknown",
+        "status": "community"
       },
       "suggestedQuestions": [
         "How do I get started with Neo4j?",
@@ -237114,39 +237114,6 @@
       ]
     },
     {
-      "id": "resource-context-openmetadata",
-      "title": "Resource: OpenMetadata",
-      "section": "Official Integrations",
-      "content": "Resource: OpenMetadata\nThe first Enterprise-grade MCP server for metadata",
-      "url": "https://open-metadata.org/mcp",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "official integrations"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "openmetadata",
-        "title": "OpenMetadata",
-        "category": "mcp-servers",
-        "subcategory": "Official Integrations",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": null,
-        "status": "official"
-      },
-      "suggestedQuestions": [
-        "How do I get started with OpenMetadata?",
-        "What are the alternatives to OpenMetadata?",
-        "Show me example usage of OpenMetadata",
-        "What are the pros and cons of OpenMetadata?",
-        "Is OpenMetadata right for my project?",
-        "How do I integrate OpenMetadata with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-yangkyeongmo-mcp-server-openmetadata",
       "title": "Resource: OpenMetadata",
       "section": "Community Servers",
@@ -237170,6 +237137,39 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "community"
+      },
+      "suggestedQuestions": [
+        "How do I get started with OpenMetadata?",
+        "What are the alternatives to OpenMetadata?",
+        "Show me example usage of OpenMetadata",
+        "What are the pros and cons of OpenMetadata?",
+        "Is OpenMetadata right for my project?",
+        "How do I integrate OpenMetadata with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-openmetadata",
+      "title": "Resource: OpenMetadata",
+      "section": "Official Integrations",
+      "content": "Resource: OpenMetadata\nThe first Enterprise-grade MCP server for metadata",
+      "url": "https://open-metadata.org/mcp",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "official integrations"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "openmetadata",
+        "title": "OpenMetadata",
+        "category": "mcp-servers",
+        "subcategory": "Official Integrations",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": null,
+        "status": "official"
       },
       "suggestedQuestions": [
         "How do I get started with OpenMetadata?",
@@ -243666,40 +243666,6 @@
       ]
     },
     {
-      "id": "resource-context-gongrzhe-redis-mcp-server",
-      "title": "Resource: Redis",
-      "section": "Community Servers",
-      "content": "Resource: Redis\nRedis database operations and caching microservice server with support for key-value operations, expiration management, and pattern-based key listing.\nLanguage: Unknown",
-      "url": "https://github.com/GongRzhe/REDIS-MCP-Server",
-      "category": "ResourceContext",
-      "subcategory": "mcp-servers",
-      "keywords": [
-        "mcp-servers",
-        "community servers",
-        "unknown"
-      ],
-      "isResourceContext": true,
-      "resourceContextData": {
-        "id": "gongrzhe-redis-mcp-server",
-        "title": "Redis",
-        "category": "mcp-servers",
-        "subcategory": "Community Servers",
-        "tags": [],
-        "featured": false,
-        "githubStars": null,
-        "language": "Unknown",
-        "status": "community"
-      },
-      "suggestedQuestions": [
-        "How do I get started with Redis?",
-        "What are the alternatives to Redis?",
-        "Show me example usage of Redis",
-        "What are the pros and cons of Redis?",
-        "Is Redis right for my project?",
-        "How do I integrate Redis with my workflow?"
-      ]
-    },
-    {
       "id": "resource-context-redis-mcp-redis-mjtof34r",
       "title": "Resource: Redis",
       "section": "Official Integrations",
@@ -243723,6 +243689,40 @@
         "githubStars": null,
         "language": "Unknown",
         "status": "official"
+      },
+      "suggestedQuestions": [
+        "How do I get started with Redis?",
+        "What are the alternatives to Redis?",
+        "Show me example usage of Redis",
+        "What are the pros and cons of Redis?",
+        "Is Redis right for my project?",
+        "How do I integrate Redis with my workflow?"
+      ]
+    },
+    {
+      "id": "resource-context-gongrzhe-redis-mcp-server",
+      "title": "Resource: Redis",
+      "section": "Community Servers",
+      "content": "Resource: Redis\nRedis database operations and caching microservice server with support for key-value operations, expiration management, and pattern-based key listing.\nLanguage: Unknown",
+      "url": "https://github.com/GongRzhe/REDIS-MCP-Server",
+      "category": "ResourceContext",
+      "subcategory": "mcp-servers",
+      "keywords": [
+        "mcp-servers",
+        "community servers",
+        "unknown"
+      ],
+      "isResourceContext": true,
+      "resourceContextData": {
+        "id": "gongrzhe-redis-mcp-server",
+        "title": "Redis",
+        "category": "mcp-servers",
+        "subcategory": "Community Servers",
+        "tags": [],
+        "featured": false,
+        "githubStars": null,
+        "language": "Unknown",
+        "status": "community"
       },
       "suggestedQuestions": [
         "How do I get started with Redis?",
@@ -248448,11 +248448,11 @@
       ]
     },
     {
-      "id": "resource-context-aiondadotcom-mcp-ssh",
+      "id": "resource-context-classfang-ssh-mcp-server",
       "title": "Resource: SSH",
       "section": "Community Servers",
-      "content": "Resource: SSH\nAgent for managing and controlling SSH connections.\nLanguage: Unknown",
-      "url": "https://github.com/AiondaDotCom/mcp-ssh",
+      "content": "Resource: SSH\nAn MCP server that can execute SSH commands remotely, upload files, download files, and so on.\nLanguage: Unknown",
+      "url": "https://github.com/classfang/ssh-mcp-server",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -248462,7 +248462,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "aiondadotcom-mcp-ssh",
+        "id": "classfang-ssh-mcp-server",
         "title": "SSH",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -248482,11 +248482,11 @@
       ]
     },
     {
-      "id": "resource-context-classfang-ssh-mcp-server",
+      "id": "resource-context-aiondadotcom-mcp-ssh",
       "title": "Resource: SSH",
       "section": "Community Servers",
-      "content": "Resource: SSH\nAn MCP server that can execute SSH commands remotely, upload files, download files, and so on.\nLanguage: Unknown",
-      "url": "https://github.com/classfang/ssh-mcp-server",
+      "content": "Resource: SSH\nAgent for managing and controlling SSH connections.\nLanguage: Unknown",
+      "url": "https://github.com/AiondaDotCom/mcp-ssh",
       "category": "ResourceContext",
       "subcategory": "mcp-servers",
       "keywords": [
@@ -248496,7 +248496,7 @@
       ],
       "isResourceContext": true,
       "resourceContextData": {
-        "id": "classfang-ssh-mcp-server",
+        "id": "aiondadotcom-mcp-ssh",
         "title": "SSH",
         "category": "mcp-servers",
         "subcategory": "Community Servers",
@@ -302894,24 +302894,6 @@
       "official": 0.14285714285714285,
       "servers": 0.14285714285714285
     },
-    "resource-vortiago-mcp-azure-devops": {
-      "azure": 1,
-      "devops": 1,
-      "mcp": 0.5,
-      "server": 0.25,
-      "provides": 0.25,
-      "bridge": 0.25,
-      "services": 0.25,
-      "enabling": 0.25,
-      "assistants": 0.25,
-      "query": 0.25,
-      "manage": 0.25,
-      "work": 0.25,
-      "items": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "servers": 0.25
-    },
     "resource-microsoft-azure-devops-mcp": {
       "azure": 1,
       "devops": 1,
@@ -302930,6 +302912,24 @@
       "status": 0.25,
       "official": 0.25,
       "mcp": 0.25,
+      "servers": 0.25
+    },
+    "resource-vortiago-mcp-azure-devops": {
+      "azure": 1,
+      "devops": 1,
+      "mcp": 0.5,
+      "server": 0.25,
+      "provides": 0.25,
+      "bridge": 0.25,
+      "services": 0.25,
+      "enabling": 0.25,
+      "assistants": 0.25,
+      "query": 0.25,
+      "manage": 0.25,
+      "work": 0.25,
+      "items": 0.25,
+      "status": 0.25,
+      "community": 0.25,
       "servers": 0.25
     },
     "resource-azure-samples-mcp": {
@@ -308495,6 +308495,16 @@
       "community": 0.2,
       "servers": 0.2
     },
+    "resource-klavis-ai-klavis-mjtohn7k": {
+      "discord": 1,
+      "api": 0.25,
+      "integration": 0.25,
+      "klavis": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "mcp": 0.25,
+      "servers": 0.25
+    },
     "resource-v-3-discordmcp": {
       "curious": 0.25,
       "discord": 1,
@@ -308510,16 +308520,6 @@
       "channels": 0.25,
       "status": 0.25,
       "community": 0.25,
-      "servers": 0.25
-    },
-    "resource-klavis-ai-klavis-mjtohn7k": {
-      "discord": 1,
-      "api": 0.25,
-      "integration": 0.25,
-      "klavis": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "mcp": 0.25,
       "servers": 0.25
     },
     "resource-discord-server": {
@@ -312179,18 +312179,6 @@
       "community": 0.14285714285714285,
       "servers": 0.14285714285714285
     },
-    "resource-gleanwork-mcp-server": {
-      "glean": 1,
-      "enterprise": 0.25,
-      "search": 0.25,
-      "chat": 0.25,
-      "using": 0.25,
-      "api": 0.25,
-      "status": 0.25,
-      "official": 0.25,
-      "mcp": 0.25,
-      "servers": 0.25
-    },
     "resource-longyi1207-glean-mcp-server": {
       "glean": 1,
       "server": 0.25,
@@ -312200,6 +312188,18 @@
       "chat": 0.25,
       "status": 0.25,
       "community": 0.25,
+      "mcp": 0.25,
+      "servers": 0.25
+    },
+    "resource-gleanwork-mcp-server": {
+      "glean": 1,
+      "enterprise": 0.25,
+      "search": 0.25,
+      "chat": 0.25,
+      "using": 0.25,
+      "api": 0.25,
+      "status": 0.25,
+      "official": 0.25,
       "mcp": 0.25,
       "servers": 0.25
     },
@@ -312244,6 +312244,19 @@
       "community": 0.2,
       "servers": 0.2
     },
+    "resource-ayush-k-shukla-gmail-mcp-server": {
+      "gmail": 1,
+      "simple": 0.25,
+      "mcp": 0.5,
+      "server": 0.25,
+      "support": 0.25,
+      "basic": 0.25,
+      "operations": 0.25,
+      "oauth2": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "servers": 0.25
+    },
     "resource-gongrzhe-gmail-mcp-server": {
       "thoughtful": 0.25,
       "gmail": 1,
@@ -312258,19 +312271,6 @@
       "auto": 0.25,
       "authentication": 0.25,
       "support": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "servers": 0.25
-    },
-    "resource-ayush-k-shukla-gmail-mcp-server": {
-      "gmail": 1,
-      "simple": 0.25,
-      "mcp": 0.5,
-      "server": 0.25,
-      "support": 0.25,
-      "basic": 0.25,
-      "operations": 0.25,
-      "oauth2": 0.25,
       "status": 0.25,
       "community": 0.25,
       "servers": 0.25
@@ -312524,6 +312524,22 @@
       "community": 0.25,
       "servers": 0.25
     },
+    "resource-v-3-google-calendar": {
+      "google": 1,
+      "calendar": 1,
+      "integration": 0.25,
+      "check": 0.25,
+      "schedules": 0.25,
+      "find": 0.25,
+      "time": 0.25,
+      "add": 0.25,
+      "delete": 0.25,
+      "events": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "mcp": 0.25,
+      "servers": 0.25
+    },
     "resource-nspady-google-calendar-mcp": {
       "curious": 0.2,
       "google": 1,
@@ -312541,22 +312557,6 @@
       "status": 0.2,
       "community": 0.2,
       "servers": 0.2
-    },
-    "resource-v-3-google-calendar": {
-      "google": 1,
-      "calendar": 1,
-      "integration": 0.25,
-      "check": 0.25,
-      "schedules": 0.25,
-      "find": 0.25,
-      "time": 0.25,
-      "add": 0.25,
-      "delete": 0.25,
-      "events": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "mcp": 0.25,
-      "servers": 0.25
     },
     "resource-googlecloudplatform-cloud-run-mcp": {
       "curious": 0.25,
@@ -312661,6 +312661,23 @@
       "mcp": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
+    "resource-jackkuo666-google-scholar-mcp-server": {
+      "curious": 0.25,
+      "google": 1,
+      "scholar": 1,
+      "enable": 0.25,
+      "assistants": 0.25,
+      "search": 0.25,
+      "access": 0.25,
+      "papers": 0.25,
+      "through": 0.25,
+      "simple": 0.25,
+      "mcp": 0.5,
+      "interface": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "servers": 0.25
+    },
     "resource-mochow13-google-scholar-mcp": {
       "google": 1,
       "scholar": 1,
@@ -312678,23 +312695,6 @@
       "interacts": 0.25,
       "gemini": 0.25,
       "flash": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "servers": 0.25
-    },
-    "resource-jackkuo666-google-scholar-mcp-server": {
-      "curious": 0.25,
-      "google": 1,
-      "scholar": 1,
-      "enable": 0.25,
-      "assistants": 0.25,
-      "search": 0.25,
-      "access": 0.25,
-      "papers": 0.25,
-      "through": 0.25,
-      "simple": 0.25,
-      "mcp": 0.5,
-      "interface": 0.25,
       "status": 0.25,
       "community": 0.25,
       "servers": 0.25
@@ -314148,21 +314148,6 @@
       "community": 0.14285714285714285,
       "servers": 0.14285714285714285
     },
-    "resource-hubspot": {
-      "hubspot": 1,
-      "connect": 0.2,
-      "manage": 0.2,
-      "interact": 0.2,
-      "https": 0.2,
-      "www": 0.2,
-      "com": 0.2,
-      "crm": 0.2,
-      "data": 0.2,
-      "status": 0.2,
-      "official": 0.2,
-      "mcp": 0.2,
-      "servers": 0.2
-    },
     "resource-buryhuang-mcp-hubspot": {
       "hubspot": 1,
       "crm": 0.5,
@@ -314182,6 +314167,21 @@
       "community": 0.25,
       "mcp": 0.25,
       "servers": 0.25
+    },
+    "resource-hubspot": {
+      "hubspot": 1,
+      "connect": 0.2,
+      "manage": 0.2,
+      "interact": 0.2,
+      "https": 0.2,
+      "www": 0.2,
+      "com": 0.2,
+      "crm": 0.2,
+      "data": 0.2,
+      "status": 0.2,
+      "official": 0.2,
+      "mcp": 0.2,
+      "servers": 0.2
     },
     "resource-huggingagi-mcp-baostock-server": {
       "curious": 0.14285714285714285,
@@ -316243,17 +316243,6 @@
       "community": 0.2,
       "servers": 0.2
     },
-    "resource-jasonkylelol-jenkins-mcp-server": {
-      "jenkins": 1,
-      "mcp": 0.5,
-      "server": 0.25,
-      "allow": 0.25,
-      "create": 0.25,
-      "tasks": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "servers": 0.25
-    },
     "resource-jenkins": {
       "jenkins": 1,
       "official": 0.5,
@@ -316275,6 +316264,17 @@
       "standardized": 0.25,
       "interface": 0.25,
       "status": 0.25,
+      "servers": 0.25
+    },
+    "resource-jasonkylelol-jenkins-mcp-server": {
+      "jenkins": 1,
+      "mcp": 0.5,
+      "server": 0.25,
+      "allow": 0.25,
+      "create": 0.25,
+      "tasks": 0.25,
+      "status": 0.25,
+      "community": 0.25,
       "servers": 0.25
     },
     "resource-jest-plugin-context": {
@@ -319352,9 +319352,9 @@
       "official": 0.25,
       "servers": 0.25
     },
-    "resource-linkupplatform-python-mcp-server": {
+    "resource-linkupplatform-js-mcp-server": {
+      "thoughtful": 0.25,
       "linkup": 1,
-      "python": 0.25,
       "version": 0.25,
       "mcp": 0.5,
       "server": 0.5,
@@ -319379,9 +319379,9 @@
       "official": 0.25,
       "servers": 0.25
     },
-    "resource-linkupplatform-js-mcp-server": {
-      "thoughtful": 0.25,
+    "resource-linkupplatform-python-mcp-server": {
       "linkup": 1,
+      "python": 0.25,
       "version": 0.25,
       "mcp": 0.5,
       "server": 0.5,
@@ -321291,19 +321291,6 @@
       "community": 0.2,
       "servers": 0.2
     },
-    "resource-mcp-proxy": {
-      "curious": 0.2,
-      "mcp": 1,
-      "proxy": 0.8,
-      "typescript": 0.2,
-      "sse": 0.2,
-      "servers": 0.4,
-      "use": 0.2,
-      "stdio": 0.2,
-      "transport": 0.2,
-      "status": 0.2,
-      "community": 0.2
-    },
     "resource-sparfenyuk-mcp-proxy": {
       "curious": 0.2,
       "mcp": 1,
@@ -321316,6 +321303,19 @@
       "expose": 0.2,
       "stdio": 0.2,
       "server": 0.2,
+      "status": 0.2,
+      "community": 0.2
+    },
+    "resource-mcp-proxy": {
+      "curious": 0.2,
+      "mcp": 1,
+      "proxy": 0.8,
+      "typescript": 0.2,
+      "sse": 0.2,
+      "servers": 0.4,
+      "use": 0.2,
+      "stdio": 0.2,
+      "transport": 0.2,
       "status": 0.2,
       "community": 0.2
     },
@@ -323518,18 +323518,6 @@
       "mcp": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
-    "resource-da-okazaki-mcp-neo4j-server": {
-      "neo4j": 1,
-      "community": 0.5,
-      "built": 0.25,
-      "server": 0.25,
-      "interacts": 0.25,
-      "graph": 0.25,
-      "database": 0.25,
-      "status": 0.25,
-      "mcp": 0.25,
-      "servers": 0.25
-    },
     "resource-neo4j-contrib-mcp-neo4j-mjtoe80f": {
       "curious": 0.25,
       "neo4j": 1,
@@ -323545,6 +323533,18 @@
       "memory": 0.25,
       "status": 0.25,
       "official": 0.25,
+      "mcp": 0.25,
+      "servers": 0.25
+    },
+    "resource-da-okazaki-mcp-neo4j-server": {
+      "neo4j": 1,
+      "community": 0.5,
+      "built": 0.25,
+      "server": 0.25,
+      "interacts": 0.25,
+      "graph": 0.25,
+      "database": 0.25,
+      "status": 0.25,
       "mcp": 0.25,
       "servers": 0.25
     },
@@ -324960,18 +324960,6 @@
       "community": 0.2,
       "servers": 0.2
     },
-    "resource-openmetadata": {
-      "openmetadata": 1,
-      "first": 0.3333333333333333,
-      "enterprise": 0.3333333333333333,
-      "grade": 0.3333333333333333,
-      "mcp": 0.6666666666666666,
-      "server": 0.3333333333333333,
-      "metadata": 0.3333333333333333,
-      "status": 0.3333333333333333,
-      "official": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-yangkyeongmo-mcp-server-openmetadata": {
       "openmetadata": 1,
       "mcp": 0.5,
@@ -324984,6 +324972,18 @@
       "status": 0.25,
       "community": 0.25,
       "servers": 0.25
+    },
+    "resource-openmetadata": {
+      "openmetadata": 1,
+      "first": 0.3333333333333333,
+      "enterprise": 0.3333333333333333,
+      "grade": 0.3333333333333333,
+      "mcp": 0.6666666666666666,
+      "server": 0.3333333333333333,
+      "metadata": 0.3333333333333333,
+      "status": 0.3333333333333333,
+      "official": 0.3333333333333333,
+      "servers": 0.3333333333333333
     },
     "resource-openmf-mcp-mifosx": {
       "thoughtful": 0.2,
@@ -328770,6 +328770,19 @@
       "mcp": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
+    "resource-redis-mcp-redis-mjtof34r": {
+      "redis": 1,
+      "official": 0.4,
+      "mcp": 0.4,
+      "server": 0.2,
+      "offers": 0.2,
+      "interface": 0.2,
+      "manage": 0.2,
+      "search": 0.2,
+      "data": 0.2,
+      "status": 0.2,
+      "servers": 0.2
+    },
     "resource-gongrzhe-redis-mcp-server": {
       "redis": 1,
       "database": 0.25,
@@ -328789,19 +328802,6 @@
       "community": 0.25,
       "mcp": 0.25,
       "servers": 0.25
-    },
-    "resource-redis-mcp-redis-mjtof34r": {
-      "redis": 1,
-      "official": 0.4,
-      "mcp": 0.4,
-      "server": 0.2,
-      "offers": 0.2,
-      "interface": 0.2,
-      "manage": 0.2,
-      "search": 0.2,
-      "data": 0.2,
-      "status": 0.2,
-      "servers": 0.2
     },
     "resource-redis-mcp-redis-cloud-mjtof3fl": {
       "redis": 1,
@@ -331521,17 +331521,6 @@
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
-    "resource-aiondadotcom-mcp-ssh": {
-      "ssh": 1,
-      "agent": 0.25,
-      "managing": 0.25,
-      "controlling": 0.25,
-      "connections": 0.25,
-      "status": 0.25,
-      "community": 0.25,
-      "mcp": 0.25,
-      "servers": 0.25
-    },
     "resource-classfang-ssh-mcp-server": {
       "ssh": 1,
       "mcp": 0.5,
@@ -331544,6 +331533,17 @@
       "download": 0.25,
       "status": 0.25,
       "community": 0.25,
+      "servers": 0.25
+    },
+    "resource-aiondadotcom-mcp-ssh": {
+      "ssh": 1,
+      "agent": 0.25,
+      "managing": 0.25,
+      "controlling": 0.25,
+      "connections": 0.25,
+      "status": 0.25,
+      "community": 0.25,
+      "mcp": 0.25,
       "servers": 0.25
     },
     "resource-sinjab-mcp-ssh": {
@@ -417737,26 +417737,6 @@
       "official": 0.16666666666666666,
       "integrations": 0.16666666666666666
     },
-    "resource-context-vortiago-mcp-azure-devops": {
-      "resource": 0.6666666666666666,
-      "azure": 1,
-      "devops": 1,
-      "mcp": 0.3333333333333333,
-      "server": 0.3333333333333333,
-      "provides": 0.3333333333333333,
-      "bridge": 0.3333333333333333,
-      "services": 0.3333333333333333,
-      "enabling": 0.3333333333333333,
-      "assistants": 0.3333333333333333,
-      "query": 0.3333333333333333,
-      "manage": 0.3333333333333333,
-      "work": 0.3333333333333333,
-      "items": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-context-microsoft-azure-devops-mcp": {
       "resource": 0.6666666666666666,
       "azure": 1,
@@ -417777,6 +417757,26 @@
       "unknown": 0.3333333333333333,
       "official": 0.3333333333333333,
       "integrations": 0.3333333333333333
+    },
+    "resource-context-vortiago-mcp-azure-devops": {
+      "resource": 0.6666666666666666,
+      "azure": 1,
+      "devops": 1,
+      "mcp": 0.3333333333333333,
+      "server": 0.3333333333333333,
+      "provides": 0.3333333333333333,
+      "bridge": 0.3333333333333333,
+      "services": 0.3333333333333333,
+      "enabling": 0.3333333333333333,
+      "assistants": 0.3333333333333333,
+      "query": 0.3333333333333333,
+      "manage": 0.3333333333333333,
+      "work": 0.3333333333333333,
+      "items": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
     },
     "resource-context-azure-samples-mcp": {
       "resource": 0.6666666666666666,
@@ -423524,6 +423524,17 @@
       "stars": 0.25,
       "servers": 0.25
     },
+    "resource-context-klavis-ai-klavis-mjtohn7k": {
+      "resource": 0.6666666666666666,
+      "discord": 1,
+      "api": 0.3333333333333333,
+      "integration": 0.3333333333333333,
+      "klavis": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
+    },
     "resource-context-v-3-discordmcp": {
       "resource": 0.6666666666666666,
       "discord": 1,
@@ -423537,17 +423548,6 @@
       "write": 0.3333333333333333,
       "messages": 0.3333333333333333,
       "channels": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
-    "resource-context-klavis-ai-klavis-mjtohn7k": {
-      "resource": 0.6666666666666666,
-      "discord": 1,
-      "api": 0.3333333333333333,
-      "integration": 0.3333333333333333,
-      "klavis": 0.3333333333333333,
       "language": 0.3333333333333333,
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
@@ -427305,19 +427305,6 @@
       "protocol": 0.16666666666666666,
       "servers": 0.16666666666666666
     },
-    "resource-context-gleanwork-mcp-server": {
-      "resource": 0.6666666666666666,
-      "glean": 1,
-      "enterprise": 0.3333333333333333,
-      "search": 0.3333333333333333,
-      "chat": 0.3333333333333333,
-      "using": 0.3333333333333333,
-      "api": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "official": 0.3333333333333333,
-      "integrations": 0.3333333333333333
-    },
     "resource-context-longyi1207-glean-mcp-server": {
       "resource": 0.6666666666666666,
       "glean": 1,
@@ -427330,6 +427317,19 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
+    },
+    "resource-context-gleanwork-mcp-server": {
+      "resource": 0.6666666666666666,
+      "glean": 1,
+      "enterprise": 0.3333333333333333,
+      "search": 0.3333333333333333,
+      "chat": 0.3333333333333333,
+      "using": 0.3333333333333333,
+      "api": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "official": 0.3333333333333333,
+      "integrations": 0.3333333333333333
     },
     "resource-context-glenngillen-mcpmcp-server": {
       "resource": 1,
@@ -427374,6 +427374,21 @@
       "stars": 0.25,
       "servers": 0.25
     },
+    "resource-context-ayush-k-shukla-gmail-mcp-server": {
+      "resource": 0.6666666666666666,
+      "gmail": 1,
+      "simple": 0.3333333333333333,
+      "mcp": 0.3333333333333333,
+      "server": 0.3333333333333333,
+      "support": 0.3333333333333333,
+      "basic": 0.3333333333333333,
+      "operations": 0.3333333333333333,
+      "oauth2": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
+    },
     "resource-context-gongrzhe-gmail-mcp-server": {
       "resource": 0.6666666666666666,
       "gmail": 1,
@@ -427388,21 +427403,6 @@
       "auto": 0.3333333333333333,
       "authentication": 0.3333333333333333,
       "support": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
-    "resource-context-ayush-k-shukla-gmail-mcp-server": {
-      "resource": 0.6666666666666666,
-      "gmail": 1,
-      "simple": 0.3333333333333333,
-      "mcp": 0.3333333333333333,
-      "server": 0.3333333333333333,
-      "support": 0.3333333333333333,
-      "basic": 0.3333333333333333,
-      "operations": 0.3333333333333333,
-      "oauth2": 0.3333333333333333,
       "language": 0.3333333333333333,
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
@@ -427669,6 +427669,23 @@
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
+    "resource-context-v-3-google-calendar": {
+      "resource": 0.6666666666666666,
+      "google": 1,
+      "calendar": 1,
+      "integration": 0.3333333333333333,
+      "check": 0.3333333333333333,
+      "schedules": 0.3333333333333333,
+      "find": 0.3333333333333333,
+      "time": 0.3333333333333333,
+      "add": 0.3333333333333333,
+      "delete": 0.3333333333333333,
+      "events": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
+    },
     "resource-context-nspady-google-calendar-mcp": {
       "resource": 0.5,
       "google": 1,
@@ -427687,23 +427704,6 @@
       "unknown": 0.25,
       "community": 0.25,
       "servers": 0.25
-    },
-    "resource-context-v-3-google-calendar": {
-      "resource": 0.6666666666666666,
-      "google": 1,
-      "calendar": 1,
-      "integration": 0.3333333333333333,
-      "check": 0.3333333333333333,
-      "schedules": 0.3333333333333333,
-      "find": 0.3333333333333333,
-      "time": 0.3333333333333333,
-      "add": 0.3333333333333333,
-      "delete": 0.3333333333333333,
-      "events": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
     },
     "resource-context-googlecloudplatform-cloud-run-mcp": {
       "resource": 0.6666666666666666,
@@ -427810,6 +427810,24 @@
       "mcp": 0.5,
       "servers": 0.5
     },
+    "resource-context-jackkuo666-google-scholar-mcp-server": {
+      "resource": 0.6666666666666666,
+      "google": 1,
+      "scholar": 1,
+      "enable": 0.3333333333333333,
+      "assistants": 0.3333333333333333,
+      "search": 0.3333333333333333,
+      "access": 0.3333333333333333,
+      "papers": 0.3333333333333333,
+      "through": 0.3333333333333333,
+      "simple": 0.3333333333333333,
+      "mcp": 0.3333333333333333,
+      "interface": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
+    },
     "resource-context-mochow13-google-scholar-mcp": {
       "resource": 0.6666666666666666,
       "google": 1,
@@ -427828,24 +427846,6 @@
       "interacts": 0.3333333333333333,
       "gemini": 0.3333333333333333,
       "flash": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
-    "resource-context-jackkuo666-google-scholar-mcp-server": {
-      "resource": 0.6666666666666666,
-      "google": 1,
-      "scholar": 1,
-      "enable": 0.3333333333333333,
-      "assistants": 0.3333333333333333,
-      "search": 0.3333333333333333,
-      "access": 0.3333333333333333,
-      "papers": 0.3333333333333333,
-      "through": 0.3333333333333333,
-      "simple": 0.3333333333333333,
-      "mcp": 0.3333333333333333,
-      "interface": 0.3333333333333333,
       "language": 0.3333333333333333,
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
@@ -429342,20 +429342,6 @@
       "stars": 0.16666666666666666,
       "servers": 0.16666666666666666
     },
-    "resource-context-hubspot": {
-      "resource": 0.5,
-      "hubspot": 1,
-      "connect": 0.25,
-      "manage": 0.25,
-      "interact": 0.25,
-      "https": 0.25,
-      "www": 0.25,
-      "com": 0.25,
-      "crm": 0.25,
-      "data": 0.25,
-      "official": 0.25,
-      "integrations": 0.25
-    },
     "resource-context-buryhuang-mcp-hubspot": {
       "resource": 0.6666666666666666,
       "hubspot": 1,
@@ -429375,6 +429361,20 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
+    },
+    "resource-context-hubspot": {
+      "resource": 0.5,
+      "hubspot": 1,
+      "connect": 0.25,
+      "manage": 0.25,
+      "interact": 0.25,
+      "https": 0.25,
+      "www": 0.25,
+      "com": 0.25,
+      "crm": 0.25,
+      "data": 0.25,
+      "official": 0.25,
+      "integrations": 0.25
     },
     "resource-context-huggingagi-mcp-baostock-server": {
       "resource": 0.3333333333333333,
@@ -431495,19 +431495,6 @@
       "stars": 0.25,
       "servers": 0.25
     },
-    "resource-context-jasonkylelol-jenkins-mcp-server": {
-      "resource": 0.6666666666666666,
-      "jenkins": 1,
-      "mcp": 0.3333333333333333,
-      "server": 0.3333333333333333,
-      "allow": 0.3333333333333333,
-      "create": 0.3333333333333333,
-      "tasks": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-context-jenkins": {
       "resource": 0.6666666666666666,
       "jenkins": 1,
@@ -431530,6 +431517,19 @@
       "standardized": 0.3333333333333333,
       "interface": 0.3333333333333333,
       "integrations": 0.3333333333333333
+    },
+    "resource-context-jasonkylelol-jenkins-mcp-server": {
+      "resource": 0.6666666666666666,
+      "jenkins": 1,
+      "mcp": 0.3333333333333333,
+      "server": 0.3333333333333333,
+      "allow": 0.3333333333333333,
+      "create": 0.3333333333333333,
+      "tasks": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
     },
     "resource-context-jest-plugin-context": {
       "resource": 0.6666666666666666,
@@ -434709,10 +434709,9 @@
       "official": 0.3333333333333333,
       "integrations": 0.3333333333333333
     },
-    "resource-context-linkupplatform-python-mcp-server": {
+    "resource-context-linkupplatform-js-mcp-server": {
       "resource": 0.6666666666666666,
       "linkup": 1,
-      "python": 0.3333333333333333,
       "version": 0.3333333333333333,
       "mcp": 0.3333333333333333,
       "server": 0.6666666666666666,
@@ -434737,9 +434736,10 @@
       "official": 0.3333333333333333,
       "integrations": 0.3333333333333333
     },
-    "resource-context-linkupplatform-js-mcp-server": {
+    "resource-context-linkupplatform-python-mcp-server": {
       "resource": 0.6666666666666666,
       "linkup": 1,
+      "python": 0.3333333333333333,
       "version": 0.3333333333333333,
       "mcp": 0.3333333333333333,
       "server": 0.6666666666666666,
@@ -436749,17 +436749,6 @@
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
     },
-    "resource-context-mcp-proxy": {
-      "resource": 0.5,
-      "mcp": 1,
-      "proxy": 0.75,
-      "typescript": 0.25,
-      "sse": 0.25,
-      "servers": 0.5,
-      "use": 0.25,
-      "stdio": 0.25,
-      "transport": 0.25
-    },
     "resource-context-sparfenyuk-mcp-proxy": {
       "resource": 0.6666666666666666,
       "mcp": 1,
@@ -436775,6 +436764,17 @@
       "language": 0.3333333333333333,
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333
+    },
+    "resource-context-mcp-proxy": {
+      "resource": 0.5,
+      "mcp": 1,
+      "proxy": 0.75,
+      "typescript": 0.25,
+      "sse": 0.25,
+      "servers": 0.5,
+      "use": 0.25,
+      "stdio": 0.25,
+      "transport": 0.25
     },
     "resource-context-mikluko-mcp-proxy": {
       "resource": 0.6666666666666666,
@@ -439049,19 +439049,6 @@
       "official": 0.5,
       "integrations": 0.5
     },
-    "resource-context-da-okazaki-mcp-neo4j-server": {
-      "resource": 0.6666666666666666,
-      "neo4j": 1,
-      "community": 0.6666666666666666,
-      "built": 0.3333333333333333,
-      "server": 0.3333333333333333,
-      "interacts": 0.3333333333333333,
-      "graph": 0.3333333333333333,
-      "database": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-context-neo4j-contrib-mcp-neo4j-mjtoe80f": {
       "resource": 0.6666666666666666,
       "neo4j": 1,
@@ -439079,6 +439066,19 @@
       "unknown": 0.3333333333333333,
       "official": 0.3333333333333333,
       "integrations": 0.3333333333333333
+    },
+    "resource-context-da-okazaki-mcp-neo4j-server": {
+      "resource": 0.6666666666666666,
+      "neo4j": 1,
+      "community": 0.6666666666666666,
+      "built": 0.3333333333333333,
+      "server": 0.3333333333333333,
+      "interacts": 0.3333333333333333,
+      "graph": 0.3333333333333333,
+      "database": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "servers": 0.3333333333333333
     },
     "resource-context-knowall-ai-mcp-neo4j-agent-memory": {
       "resource": 0.6666666666666666,
@@ -440545,18 +440545,6 @@
       "stars": 0.25,
       "servers": 0.25
     },
-    "resource-context-openmetadata": {
-      "resource": 1,
-      "openmetadata": 1,
-      "first": 0.5,
-      "enterprise": 0.5,
-      "grade": 0.5,
-      "mcp": 0.5,
-      "server": 0.5,
-      "metadata": 0.5,
-      "official": 0.5,
-      "integrations": 0.5
-    },
     "resource-context-yangkyeongmo-mcp-server-openmetadata": {
       "resource": 0.6666666666666666,
       "openmetadata": 1,
@@ -440571,6 +440559,18 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
+    },
+    "resource-context-openmetadata": {
+      "resource": 1,
+      "openmetadata": 1,
+      "first": 0.5,
+      "enterprise": 0.5,
+      "grade": 0.5,
+      "mcp": 0.5,
+      "server": 0.5,
+      "metadata": 0.5,
+      "official": 0.5,
+      "integrations": 0.5
     },
     "resource-context-openmf-mcp-mifosx": {
       "resource": 0.5,
@@ -444462,6 +444462,21 @@
       "community": 0.5,
       "servers": 0.5
     },
+    "resource-context-redis-mcp-redis-mjtof34r": {
+      "resource": 0.5,
+      "redis": 1,
+      "official": 0.5,
+      "mcp": 0.25,
+      "server": 0.25,
+      "offers": 0.25,
+      "interface": 0.25,
+      "manage": 0.25,
+      "search": 0.25,
+      "data": 0.25,
+      "language": 0.25,
+      "unknown": 0.25,
+      "integrations": 0.25
+    },
     "resource-context-gongrzhe-redis-mcp-server": {
       "resource": 0.6666666666666666,
       "redis": 1,
@@ -444482,21 +444497,6 @@
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
       "servers": 0.3333333333333333
-    },
-    "resource-context-redis-mcp-redis-mjtof34r": {
-      "resource": 0.5,
-      "redis": 1,
-      "official": 0.5,
-      "mcp": 0.25,
-      "server": 0.25,
-      "offers": 0.25,
-      "interface": 0.25,
-      "manage": 0.25,
-      "search": 0.25,
-      "data": 0.25,
-      "language": 0.25,
-      "unknown": 0.25,
-      "integrations": 0.25
     },
     "resource-context-redis-mcp-redis-cloud-mjtof3fl": {
       "resource": 0.5,
@@ -447302,18 +447302,6 @@
       "community": 0.5,
       "servers": 0.5
     },
-    "resource-context-aiondadotcom-mcp-ssh": {
-      "resource": 0.6666666666666666,
-      "ssh": 1,
-      "agent": 0.3333333333333333,
-      "managing": 0.3333333333333333,
-      "controlling": 0.3333333333333333,
-      "connections": 0.3333333333333333,
-      "language": 0.3333333333333333,
-      "unknown": 0.3333333333333333,
-      "community": 0.3333333333333333,
-      "servers": 0.3333333333333333
-    },
     "resource-context-classfang-ssh-mcp-server": {
       "resource": 0.6666666666666666,
       "ssh": 1,
@@ -447325,6 +447313,18 @@
       "upload": 0.3333333333333333,
       "files": 0.6666666666666666,
       "download": 0.3333333333333333,
+      "language": 0.3333333333333333,
+      "unknown": 0.3333333333333333,
+      "community": 0.3333333333333333,
+      "servers": 0.3333333333333333
+    },
+    "resource-context-aiondadotcom-mcp-ssh": {
+      "resource": 0.6666666666666666,
+      "ssh": 1,
+      "agent": 0.3333333333333333,
+      "managing": 0.3333333333333333,
+      "controlling": 0.3333333333333333,
+      "connections": 0.3333333333333333,
       "language": 0.3333333333333333,
       "unknown": 0.3333333333333333,
       "community": 0.3333333333333333,
@@ -471590,8 +471590,8 @@
     "dify": 7.5069213960711885,
     "diivi": 8.017747019837179,
     "aseprite": 8.017747019837179,
-    "guilds": 8.017747019837179,
     "klavis": 6.91913473116907,
+    "guilds": 8.017747019837179,
     "discourse": 7.5069213960711885,
     "posts": 6.551409951043752,
     "forum": 7.5069213960711885,

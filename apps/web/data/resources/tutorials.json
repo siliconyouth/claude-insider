@@ -62,6 +62,11 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "building-ai-apps",
+      "deeplearning-claude"
     ]
   },
   {
@@ -118,6 +123,10 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-docs"
     ]
   },
   {
@@ -175,6 +184,10 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-courses"
     ]
   },
   {
@@ -230,6 +243,11 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-courses",
+      "streaming-tutorial"
     ]
   },
   {
@@ -278,6 +296,10 @@
       "Programming experience",
       "Node.js or Python",
       "MCP understanding"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "mcp-docs"
     ]
   },
   {
@@ -381,6 +403,10 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "llamaindex-tutorial"
     ]
   },
   {
@@ -429,6 +455,11 @@
       "Python experience",
       "Document corpus",
       "LLM API access"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "langchain-crash-course",
+      "rag-from-scratch"
     ]
   },
   {
@@ -492,6 +523,11 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "llamaindex-tutorial",
+      "vector-databases"
     ]
   },
   {
@@ -540,6 +576,10 @@
       "Claude API access",
       "Programming experience",
       "HTTP/WebSocket knowledge"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "building-ai-apps"
     ]
   },
   {
@@ -595,6 +635,10 @@
       "Basic programming knowledge",
       "Claude account for hands-on practice",
       "Dedicated time for learning"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-docs"
     ]
   },
   {
@@ -643,6 +687,10 @@
       "RAG understanding",
       "Database experience",
       "Claude API access"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "rag-from-scratch"
     ]
   }
 ]

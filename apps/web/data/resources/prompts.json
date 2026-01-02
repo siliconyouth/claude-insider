@@ -54,6 +54,12 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "awesome-chatgpt-prompts",
+      "langgptai-awesome-claude-prompts",
+      "prompts-chat"
     ]
   },
   {
@@ -119,6 +125,11 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-prompt-library",
+      "langgptai-awesome-claude-prompts"
     ]
   },
   {
@@ -184,6 +195,10 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "prompt-senior-developer"
     ]
   },
   {
@@ -290,6 +305,10 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-system-prompt"
     ]
   },
   {
@@ -345,6 +364,12 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "few-shot-learning",
+      "self-reflection",
+      "structured-outputs"
     ]
   },
   {
@@ -402,6 +427,10 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-system-prompt"
     ]
   },
   {
@@ -459,6 +488,13 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 4,
+    "relatedResourceSlugs": [
+      "asgeirtj-system-prompts-leaks",
+      "claude-code-prompt-improver",
+      "claude-code-templates-1",
+      "mufeedvh-code2prompt"
     ]
   },
   {
@@ -508,6 +544,10 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-system-prompt"
     ]
   },
   {
@@ -605,6 +645,11 @@
       "Code to review",
       "Claude access",
       "Understanding of review goals"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "prompt-security-expert",
+      "prompt-senior-developer"
     ]
   },
   {
@@ -653,6 +698,10 @@
       "Claude access",
       "Understanding of prompting",
       "Use cases to improve"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "chain-of-thought"
     ]
   },
   {
@@ -922,6 +971,11 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "anthropic-prompt-library",
+      "awesome-chatgpt-prompts"
     ]
   },
   {
@@ -978,6 +1032,10 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "claude-code-system-prompt"
     ]
   },
   {
@@ -1033,6 +1091,10 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "anthropic-prompt-library"
     ]
   },
   {
@@ -1081,6 +1143,10 @@
       "Code to audit",
       "Security knowledge",
       "Claude access"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "prompt-code-reviewer"
     ]
   },
   {
@@ -1129,6 +1195,10 @@
       "Understanding of AI",
       "Claude access",
       "Quality improvement goals"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "chain-of-thought"
     ]
   },
   {
@@ -1177,6 +1247,12 @@
       "Code questions",
       "Claude access",
       "Openness to advice"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "prompt-code-reviewer",
+      "prompt-technical-writer",
+      "system-prompts-coding"
     ]
   },
   {
@@ -1225,6 +1301,10 @@
       "Claude access",
       "Output format needs",
       "JSON/XML knowledge"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "chain-of-thought"
     ]
   },
   {
@@ -1273,6 +1353,11 @@
       "Code/project to document",
       "Claude access",
       "Documentation goals"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "prompt-senior-developer",
+      "rules-documentation"
     ]
   }
 ]

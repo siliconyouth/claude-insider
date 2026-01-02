@@ -62,6 +62,10 @@
       "Claude Code or compatible AI coding tool",
       "Project with CLAUDE.md or rules file",
       "Access to project configuration"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "cursor-directory"
     ]
   },
   {
@@ -119,6 +123,10 @@
       "Claude Code or compatible AI coding tool",
       "Project with CLAUDE.md or rules file",
       "Access to project configuration"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "awesome-cursorrules"
     ]
   },
   {
@@ -273,6 +281,10 @@
       "CLAUDE.md setup",
       "Documentation needs",
       "Style preferences"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "prompt-technical-writer"
     ]
   },
   {
@@ -321,6 +333,10 @@
       "FastAPI knowledge",
       "Python experience",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "rules-python"
     ]
   },
   {
@@ -417,6 +433,11 @@
       "Next.js knowledge",
       "TypeScript experience",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "rules-react",
+      "rules-tailwind"
     ]
   },
   {
@@ -465,6 +486,10 @@
       "Python experience",
       "Type hint familiarity",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "rules-fastapi"
     ]
   },
   {
@@ -513,6 +538,11 @@
       "React experience",
       "Hooks knowledge",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "rules-nextjs",
+      "rules-typescript"
     ]
   },
   {
@@ -609,6 +639,10 @@
       "Svelte experience",
       "SvelteKit knowledge",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "rules-tailwind"
     ]
   },
   {
@@ -657,6 +691,11 @@
       "Tailwind knowledge",
       "CSS experience",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 2,
+    "relatedResourceSlugs": [
+      "rules-nextjs",
+      "rules-svelte"
     ]
   },
   {
@@ -705,6 +744,10 @@
       "Testing framework experience",
       "JavaScript/TypeScript",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "rules-typescript"
     ]
   },
   {
@@ -753,6 +796,12 @@
       "TypeScript experience",
       "Strict mode understanding",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 3,
+    "relatedResourceSlugs": [
+      "rules-react",
+      "rules-testing",
+      "rules-vue"
     ]
   },
   {
@@ -801,6 +850,10 @@
       "Vue 3 experience",
       "Composition API knowledge",
       "CLAUDE.md setup"
+    ],
+    "relatedResourcesCount": 1,
+    "relatedResourceSlugs": [
+      "rules-typescript"
     ]
   }
 ]
