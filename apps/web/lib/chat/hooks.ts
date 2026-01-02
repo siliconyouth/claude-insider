@@ -89,17 +89,29 @@ export function useChatMessages(conversationId: string | null) {
       setState((s) => ({ ...s, isLoading: true, error: null }));
 
       try {
+        // Try ChatEngine first, but fall back to server action if it returns no messages
+        // This handles the case where ChatEngine exists but hasn't synced messages yet
+        let useServerFallback = true;
+
         if (chatEngine) {
           // New system - get from engine
           const msgs = chatEngine.getMessages(conversationId);
-          setState({
-            messages: msgs,
-            isLoading: false,
-            error: null,
-            hasMore: msgs.length >= 50,
-          });
-        } else {
-          // Legacy system - call server action
+          if (msgs.length > 0) {
+            // Engine has messages - use them
+            setState({
+              messages: msgs,
+              isLoading: false,
+              error: null,
+              hasMore: msgs.length >= 50,
+            });
+            useServerFallback = false;
+          }
+          // If msgs.length === 0, fall through to server action
+          // This handles: new conversation, engine not synced, IndexedDB empty, etc.
+        }
+
+        if (useServerFallback) {
+          // Fall back to server action (legacy system or engine returned empty)
           const { getMessages } = await import("@/app/actions/messaging");
           const result = await getMessages(conversationId);
 
@@ -238,16 +250,28 @@ export function useChatConversations() {
       setState((s) => ({ ...s, isLoading: true, error: null }));
 
       try {
+        // Try ChatEngine first, but fall back to server action if it returns no conversations
+        // This handles the case where ChatEngine exists but hasn't synced conversations yet
+        let useServerFallback = true;
+
         if (chatEngine) {
           // New system
           const convs = chatEngine.getConversations();
-          setState({
-            conversations: convs,
-            isLoading: false,
-            error: null,
-          });
-        } else {
-          // Legacy system
+          if (convs.length > 0) {
+            // Engine has conversations - use them
+            setState({
+              conversations: convs,
+              isLoading: false,
+              error: null,
+            });
+            useServerFallback = false;
+          }
+          // If convs.length === 0, fall through to server action
+          // This handles: new user, engine not synced, IndexedDB empty, etc.
+        }
+
+        if (useServerFallback) {
+          // Fall back to server action (legacy system or engine returned empty)
           const { getConversations } = await import("@/app/actions/messaging");
           const result = await getConversations();
 
@@ -280,11 +304,19 @@ export function useChatConversations() {
 
   // Refresh conversations
   const refresh = useCallback(async () => {
+    // Try engine first, fall back to server if engine returns empty
+    let useServerFallback = true;
+
     if (chatEngine) {
       // Engine handles refresh via sync
       const convs = chatEngine.getConversations();
-      setState({ conversations: convs, isLoading: false, error: null });
-    } else {
+      if (convs.length > 0) {
+        setState({ conversations: convs, isLoading: false, error: null });
+        useServerFallback = false;
+      }
+    }
+
+    if (useServerFallback) {
       // Reload from server
       setState((s) => ({ ...s, isLoading: true }));
       const { getConversations } = await import("@/app/actions/messaging");
