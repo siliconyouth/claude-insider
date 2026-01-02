@@ -158,8 +158,10 @@ const nextConfig: NextConfig = {
               // CDN sources (unpkg, jsdelivr) for vodozemac WASM E2EE library
               // 'wasm-unsafe-eval' allows WebAssembly execution for E2EE crypto
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://www.paypal.com https://*.paypal.com https://*.paypalobjects.com https://vercel.live https://*.vercel.live https://va.vercel-scripts.com https://unpkg.com https://cdn.jsdelivr.net https://*.matrix.org",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
+              // Monaco Editor loads CSS from jsdelivr CDN
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
+              // Monaco Editor embeds fonts as data: URIs
+              "font-src 'self' https://fonts.gstatic.com data:",
               "img-src 'self' data: https: blob:",
               "media-src 'self' blob: https://*.elevenlabs.io",
               // Supabase (REST API + Realtime WebSocket), PayPal, ElevenLabs, Vercel analytics/live
