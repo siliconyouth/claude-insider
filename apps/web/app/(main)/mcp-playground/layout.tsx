@@ -9,7 +9,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'MCP Playground - Test & Validate MCP Server Configurations',
-  description: 'Interactive playground for testing, validating, and sharing MCP (Model Context Protocol) server configurations. Browse 2,000+ templates and get AI assistance for your Claude configurations.',
+  description: 'Interactive playground for testing, validating, and sharing MCP (Model Context Protocol) server configurations. Browse 2,136+ templates and get AI assistance for your Claude configurations.',
   keywords: [
     'MCP playground',
     'MCP server configuration',
@@ -23,15 +23,24 @@ export const metadata: Metadata = {
   ].join(', '),
   openGraph: {
     title: 'MCP Playground - Test MCP Server Configurations',
-    description: 'Interactive playground for testing and validating MCP server configurations. 2,000+ templates available.',
+    description: 'Interactive playground for testing and validating MCP server configurations. 2,136+ templates available.',
     type: 'website',
     siteName: 'Claude Insider',
     url: 'https://www.claudeinsider.com/mcp-playground',
+    images: [
+      {
+        url: 'https://www.claudeinsider.com/api/og?title=MCP%20Playground&description=Build%2C%20validate%2C%20and%20share%20MCP%20server%20configurations',
+        width: 1200,
+        height: 630,
+        alt: 'MCP Playground - Claude Insider',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'MCP Playground - Claude Insider',
     description: 'Test and validate MCP server configurations for Claude.',
+    images: ['https://www.claudeinsider.com/api/og?title=MCP%20Playground&description=Build%2C%20validate%2C%20and%20share%20MCP%20server%20configurations'],
   },
   alternates: {
     canonical: 'https://www.claudeinsider.com/mcp-playground',
@@ -58,11 +67,12 @@ function generateJsonLd() {
       priceCurrency: 'USD',
     },
     featureList: [
-      'JSON configuration editor with syntax highlighting',
-      'Real-time validation',
-      '2,000+ MCP server templates',
+      'Monaco JSON editor with syntax highlighting',
+      'Real-time schema validation',
+      '2,136+ MCP server templates',
       'URL-based config sharing',
-      'AI-powered assistance',
+      'Save, publish, and fork configurations',
+      'Community gallery with stars and forks',
     ],
     provider: {
       '@type': 'Organization',

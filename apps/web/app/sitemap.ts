@@ -100,6 +100,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
   // ============================================
+  // TIER 4.5: MCP Playground Pages (0.85)
+  // ============================================
+  const mcpPlaygroundPages: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/mcp-playground`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.85,
+      images: [`${BASE_URL}/api/og?title=MCP%20Playground`],
+    },
+    {
+      url: `${BASE_URL}/mcp-playground/gallery`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+  ];
+
+  // ============================================
   // TIER 5: Community & Feature Pages (0.7)
   // ============================================
   const communityPages: MetadataRoute.Sitemap = [
@@ -220,6 +239,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...resourceCategories,
     ...individualResources,
     ...docPages,
+    ...mcpPlaygroundPages,
     ...communityPages,
     ...donationPages,
     ...legalPages,
