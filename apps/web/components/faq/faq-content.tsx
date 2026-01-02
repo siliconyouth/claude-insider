@@ -64,10 +64,28 @@ export function FAQContent() {
     setFeedbackGiven((prev) => new Set(prev).add(faqId));
   }, []);
 
-  // Ask AI for more details
+  // Ask AI for more details about a specific FAQ
   const handleAskMore = useCallback(
-    (question: string) => {
-      openAIAssistant({ question: `Can you explain more about: ${question}` });
+    (faq: GeneratedFAQ) => {
+      openAIAssistant({
+        question: `Can you explain more about: ${faq.question}`,
+        context: {
+          page: {
+            path: "/faq",
+            title: "Frequently Asked Questions",
+            category: faq.category,
+          },
+          content: {
+            type: "faq",
+            title: faq.question,
+            text: faq.answer,
+            metadata: {
+              category: faq.category,
+              originalQuestion: faq.question,
+            },
+          },
+        },
+      });
     },
     []
   );
@@ -131,7 +149,7 @@ export function FAQContent() {
               hasFeedback={feedbackGiven.has(faq.id)}
               onToggle={() => toggleExpand(faq.id)}
               onFeedback={(helpful) => handleFeedback(faq.id, helpful)}
-              onAskMore={() => handleAskMore(faq.question)}
+              onAskMore={() => handleAskMore(faq)}
             />
           ))
         )}
@@ -150,7 +168,24 @@ export function FAQContent() {
           Our AI assistant can help you find answers to any question about Claude AI.
         </p>
         <button
-          onClick={() => openAIAssistant({ question: "I have a question about Claude Code" })}
+          onClick={() => openAIAssistant({
+            question: "I have a question about Claude Code",
+            context: {
+              page: {
+                path: "/faq",
+                title: "Frequently Asked Questions",
+                category: activeCategory || "all",
+              },
+              content: {
+                type: "faq-page",
+                title: "Claude Code FAQs",
+                metadata: {
+                  totalFaqs: String(faqs.length),
+                  activeCategory: activeCategory || "all",
+                },
+              },
+            },
+          })}
           className={cn(
             "inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium text-white",
             "bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-600",

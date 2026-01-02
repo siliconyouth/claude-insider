@@ -465,18 +465,46 @@ export function CodePlayground({
 
   const handleAIImprove = useCallback(() => {
     setShowAIMenu(false);
+    const pageContext = getPageContext();
     openAIAssistant({
-      question: `How can I improve this ${langConfig.name} code?\n\n\`\`\`${currentLanguage}\n${code}\n\`\`\``,
+      context: {
+        page: pageContext,
+        content: {
+          type: "code",
+          code,
+          language: langConfig.name,
+          title: `${langConfig.name} Code`,
+          metadata: {
+            action: "improve",
+          },
+        },
+      },
+      question: `How can I improve this ${langConfig.name} code?`,
     });
-  }, [code, currentLanguage, langConfig.name]);
+  }, [code, langConfig.name]);
 
   const handleAIDebug = useCallback(() => {
     setShowAIMenu(false);
-    const errorContext = result?.error ? `\n\nI'm getting this error: ${result.error}` : "";
+    const pageContext = getPageContext();
     openAIAssistant({
-      question: `Help me debug this ${langConfig.name} code${errorContext}\n\n\`\`\`${currentLanguage}\n${code}\n\`\`\``,
+      context: {
+        page: pageContext,
+        content: {
+          type: "code",
+          code,
+          language: langConfig.name,
+          title: `${langConfig.name} Code`,
+          metadata: {
+            action: "debug",
+            error: result?.error || "none",
+          },
+        },
+      },
+      question: result?.error
+        ? `Help me debug this ${langConfig.name} code. I'm getting this error: ${result.error}`
+        : `Help me debug this ${langConfig.name} code`,
     });
-  }, [code, currentLanguage, langConfig.name, result]);
+  }, [code, langConfig.name, result]);
 
   // Handle share
   const handleShare = useCallback(async () => {
