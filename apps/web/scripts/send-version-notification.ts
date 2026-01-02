@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.16.2 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.17.0 notification to all opted-in users...\n");
 
-  const version = "1.16.2";
-  const title = "Claude Insider v1.16.2 - Bug Fixes & MCP Playground Improvements";
+  const version = "1.17.0";
+  const title = "Claude Insider v1.17.0 - Complete Chat System Rewrite";
   const message =
-    "🔧 MCP Playground: Added Header/Footer navigation for design compliance • 💬 Messaging Fix: Resolved critical Display Error when selecting chat conversations • 🤖 AI Context: FAQ, Code Playground, and MCP Playground now pass proper context to AI assistant • 🛡️ Stability: CSP fixes for Monaco Editor, realtime provider safe defaults";
+    "💬 8-Phase Matrix SDK-style Chat Rewrite (~13,100 lines) • 📊 LRU Cache System for messages, conversations & presence • ✅ Delivery Status: sent → delivered → read tracking • 🎤 Voice Messages with waveform visualization • 🔗 Link Unfurling with Open Graph previews • 📌 Message Pinning with slide-out panel • 🔐 E2EE Default for new DMs";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
