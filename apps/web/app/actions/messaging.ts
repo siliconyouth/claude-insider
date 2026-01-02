@@ -57,6 +57,13 @@ export interface Message {
   createdAt: string;
   editedAt?: string;
   deletedAt?: string;
+  // Message type (v1.17.0 - voice messages, media)
+  messageType?: "text" | "voice" | "image" | "file";
+  // Voice message fields
+  voiceDuration?: number;
+  voiceWaveform?: number[];
+  voiceUrl?: string;
+  voiceTranscription?: string;
   // E2EE fields
   encryptedContent?: string;
   isEncrypted?: boolean;
@@ -133,6 +140,13 @@ interface MessageRow {
   edited_at?: string;
   deleted_at?: string;
   sender?: { id: string; name?: string };
+  // Message type (v1.17.0)
+  message_type?: string;
+  // Voice message fields
+  voice_duration?: number;
+  voice_waveform?: number[];
+  voice_url?: string;
+  voice_transcription?: string;
   // E2EE fields
   encrypted_content?: string;
   is_encrypted?: boolean;

@@ -20,6 +20,8 @@ import { ProfileHoverCard, type ProfileHoverCardUser } from "@/components/users/
 import { ReactionButton } from "./emoji-picker";
 import { ReactionDisplay } from "./reaction-display";
 import { ReplyPreview, ReplyButton } from "./reply-preview";
+import { LinkPreview } from "@/components/chat/link-preview";
+import { CompactVoicePlayer } from "@/components/chat/voice-player";
 
 /** User data for @mention hover cards */
 export interface MentionedUser {
@@ -226,6 +228,15 @@ function linkifyContent(
   }
 
   return parts;
+}
+
+// Extract URLs from message content for link preview
+// Only returns external URLs (not internal routes)
+function extractUrls(content: string): string[] {
+  const urlRegex = /https?:\/\/[^\s<>"']+/gi;
+  const matches = content.match(urlRegex) || [];
+  // Filter out very short URLs and dedup
+  return [...new Set(matches.filter((url) => url.length > 10))];
 }
 
 // Format timestamp
@@ -672,9 +683,34 @@ export function MessageBubble({
                       )
                 )}
               >
-                <p className="text-sm whitespace-pre-wrap break-words">
-                  {linkifyContent(message.content, mentionedUsers)}
-                </p>
+                {/* Voice message display */}
+                {message.messageType === "voice" && message.voiceUrl ? (
+                  <CompactVoicePlayer
+                    url={message.voiceUrl}
+                    duration={message.voiceDuration}
+                    waveform={message.voiceWaveform}
+                    isOwnMessage={isOwnMessage}
+                  />
+                ) : (
+                  /* Text message with optional link preview */
+                  <>
+                    <p className="text-sm whitespace-pre-wrap break-words">
+                      {linkifyContent(message.content, mentionedUsers)}
+                    </p>
+                    {/* Link preview for first URL in message */}
+                    {(() => {
+                      const urls = extractUrls(message.content);
+                      if (urls.length > 0 && urls[0]) {
+                        return (
+                          <div className="mt-2 -mx-1">
+                            <LinkPreview url={urls[0]} size="sm" />
+                          </div>
+                        );
+                      }
+                      return null;
+                    })()}
+                  </>
+                )}
               </div>
 
               {/* Message actions - show on hover */}

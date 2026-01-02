@@ -35,6 +35,8 @@ import {
   useMentionDetection,
   type MentionUser,
 } from "@/components/messaging/mention-autocomplete";
+import { VoiceRecorderButton } from "@/components/chat/voice-recorder";
+import type { VoiceRecorderResult } from "@/lib/chat/voice";
 import {
   getMessages,
   editMessage,
@@ -993,6 +995,26 @@ export function ConversationView({
                 "max-h-32"
               )}
             />
+            {/* Voice recorder button - hidden when typing */}
+            {!inputValue.trim() && !isAIConversation && (
+              <VoiceRecorderButton
+                onRecordingComplete={(result: VoiceRecorderResult) => {
+                  // TODO: Implement voice message sending when backend is ready
+                  console.log("[Voice] Recording complete:", {
+                    duration: result.duration,
+                    waveformLength: result.waveform.length,
+                    blobSize: result.blob.size,
+                  });
+                  // Show a toast or visual feedback
+                  alert(
+                    `Voice message recorded: ${Math.round(result.duration)}s\n\n` +
+                    `Voice messaging is coming soon! This feature is in development.`
+                  );
+                }}
+                size="md"
+                className="shrink-0"
+              />
+            )}
             <button
               onClick={handleSend}
               disabled={!inputValue.trim()}
