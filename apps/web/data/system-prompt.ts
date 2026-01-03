@@ -264,7 +264,7 @@ export const USER_FEATURES = {
   },
   messaging: {
     types: ["Direct messages", "Group chats (up to 50 members)"],
-    features: ["Optimistic UI (instant ~2ms)", "Typing indicators", "Online presence", "Message mentions", "AI assistant @mentions", "Emoji reactions", "Reply threading", "In-conversation search", "Message drafts", "Retry queue", "Delivery status tracking (sent/delivered/read)", "Voice messages with waveform", "Link unfurling with Open Graph", "Message pinning", "LRU caching", "E2EE auto-setup for DMs"],
+    features: ["Optimistic UI (instant ~2ms)", "Typing indicators", "Online presence", "Message mentions", "AI assistant @mentions", "Emoji reactions", "Reply threading", "In-conversation search", "Message drafts", "Retry queue", "Delivery status tracking (sent/delivered/read)", "Link unfurling with Open Graph", "Message pinning", "LRU caching", "E2EE auto-setup for DMs"],
     roles: ["Owner", "Admin", "Member"],
   },
   apiKeys: {
