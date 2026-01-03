@@ -6,11 +6,12 @@
 -- - Supports optional pin notes
 
 -- Create pinned messages table
+-- Note: pinned_by is TEXT to match Better Auth's user table schema
 CREATE TABLE IF NOT EXISTS dm_pinned_messages (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   conversation_id UUID NOT NULL REFERENCES dm_conversations(id) ON DELETE CASCADE,
   message_id UUID NOT NULL REFERENCES dm_messages(id) ON DELETE CASCADE,
-  pinned_by UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  pinned_by TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
   pinned_at TIMESTAMPTZ DEFAULT NOW(),
   note TEXT, -- Optional note explaining why pinned
   UNIQUE(conversation_id, message_id)
@@ -31,7 +32,7 @@ CREATE POLICY "Participants can view pins" ON dm_pinned_messages
     EXISTS (
       SELECT 1 FROM dm_participants
       WHERE conversation_id = dm_pinned_messages.conversation_id
-      AND user_id = auth.uid()
+      AND user_id = auth.uid()::TEXT
     )
   );
 
@@ -41,7 +42,7 @@ CREATE POLICY "Admins can pin messages" ON dm_pinned_messages
     EXISTS (
       SELECT 1 FROM dm_participants
       WHERE conversation_id = dm_pinned_messages.conversation_id
-      AND user_id = auth.uid()
+      AND user_id = auth.uid()::TEXT
       AND role IN ('owner', 'admin')
     )
   );
@@ -52,7 +53,7 @@ CREATE POLICY "Admins can unpin messages" ON dm_pinned_messages
     EXISTS (
       SELECT 1 FROM dm_participants
       WHERE conversation_id = dm_pinned_messages.conversation_id
-      AND user_id = auth.uid()
+      AND user_id = auth.uid()::TEXT
       AND role IN ('owner', 'admin')
     )
   );
@@ -63,7 +64,7 @@ CREATE POLICY "Admins can update pin notes" ON dm_pinned_messages
     EXISTS (
       SELECT 1 FROM dm_participants
       WHERE conversation_id = dm_pinned_messages.conversation_id
-      AND user_id = auth.uid()
+      AND user_id = auth.uid()::TEXT
       AND role IN ('owner', 'admin')
     )
   );

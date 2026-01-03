@@ -48,8 +48,9 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Add column to track if encryption was explicitly disabled (rare case)
+-- Note: encryption_disabled_by is TEXT to match Better Auth's user table schema
 ALTER TABLE dm_conversations ADD COLUMN IF NOT EXISTS encryption_disabled_at TIMESTAMPTZ;
-ALTER TABLE dm_conversations ADD COLUMN IF NOT EXISTS encryption_disabled_by UUID REFERENCES "user"(id);
+ALTER TABLE dm_conversations ADD COLUMN IF NOT EXISTS encryption_disabled_by TEXT REFERENCES "user"(id);
 ALTER TABLE dm_conversations ADD COLUMN IF NOT EXISTS encryption_disabled_reason TEXT;
 
 -- Function to check if conversation requires E2EE
@@ -137,7 +138,7 @@ BEGIN
   UPDATE dm_conversations
   SET is_encrypted = FALSE,
       encryption_disabled_at = NOW(),
-      encryption_disabled_by = p_user_id::UUID,
+      encryption_disabled_by = p_user_id,
       encryption_disabled_reason = p_reason
   WHERE id = p_conversation_id;
 

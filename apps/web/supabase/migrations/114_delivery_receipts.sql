@@ -19,10 +19,11 @@ EXCEPTION
 END $$;
 
 -- Create delivery receipts table for tracking per-user delivery status
+-- Note: user_id is TEXT to match Better Auth's user table schema
 CREATE TABLE IF NOT EXISTS dm_delivery_receipts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   message_id UUID NOT NULL REFERENCES dm_messages(id) ON DELETE CASCADE,
-  user_id UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
   status TEXT NOT NULL CHECK (status IN ('delivered', 'read')),
   received_at TIMESTAMPTZ DEFAULT NOW(),
   device_id TEXT, -- Track which device received
@@ -48,19 +49,19 @@ CREATE POLICY "Users can view delivery receipts" ON dm_delivery_receipts
       SELECT 1 FROM dm_messages m
       JOIN dm_participants p ON p.conversation_id = m.conversation_id
       WHERE m.id = dm_delivery_receipts.message_id
-      AND p.user_id = auth.uid()
+      AND p.user_id = auth.uid()::TEXT
     )
   );
 
 -- Policy: Users can insert their own delivery receipts
 CREATE POLICY "Users can insert own delivery receipts" ON dm_delivery_receipts
   FOR INSERT WITH CHECK (
-    user_id = auth.uid()
+    user_id = auth.uid()::TEXT
     AND EXISTS (
       SELECT 1 FROM dm_messages m
       JOIN dm_participants p ON p.conversation_id = m.conversation_id
       WHERE m.id = dm_delivery_receipts.message_id
-      AND p.user_id = auth.uid()
+      AND p.user_id = auth.uid()::TEXT
     )
   );
 
