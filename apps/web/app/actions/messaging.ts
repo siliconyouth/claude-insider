@@ -2595,8 +2595,24 @@ export async function sendVoiceMessage(
 
     // Decode base64 audio and upload to storage
     // Handle MIME types with codec suffix: data:audio/webm;codecs=opus;base64,...
-    const base64Data = audioData.replace(/^data:[^;]+;(?:codecs=[^;]+;)?base64,/, "");
+    console.log("[Voice Upload] mimeType:", mimeType, "duration:", duration, "dataLength:", audioData.length);
+
+    // Match the data URL format more robustly
+    const dataUrlMatch = audioData.match(/^data:([^;]+)(;[^;]+)*;base64,(.+)$/);
+    if (!dataUrlMatch) {
+      console.error("[Voice Upload] Invalid data URL format");
+      return { success: false, error: "Invalid audio data format" };
+    }
+
+    const base64Data = dataUrlMatch[3] || "";
     const audioBuffer = Buffer.from(base64Data, "base64");
+
+    console.log("[Voice Upload] base64Length:", base64Data.length, "bufferSize:", audioBuffer.length);
+
+    if (audioBuffer.length === 0) {
+      console.error("[Voice Upload] Empty audio buffer");
+      return { success: false, error: "Audio recording is empty" };
+    }
 
     // Normalize MIME type (remove codec suffix for file extension detection)
     const baseMimeType = mimeType.split(";")[0]; // 'audio/webm;codecs=opus' -> 'audio/webm'
@@ -2605,6 +2621,8 @@ export async function sendVoiceMessage(
     const timestamp = Date.now();
     const ext = baseMimeType === "audio/webm" ? "webm" : baseMimeType === "audio/mp4" ? "m4a" : baseMimeType === "audio/ogg" ? "ogg" : "mp3";
     const fileName = `${session.user.id}/${conversationId}/${timestamp}.${ext}`;
+
+    console.log("[Voice Upload] fileName:", fileName, "ext:", ext);
 
     // Upload to Supabase Storage
     const { error: uploadError } = await supabase.storage
@@ -2627,6 +2645,7 @@ export async function sendVoiceMessage(
       .getPublicUrl(fileName);
 
     const voiceUrl = urlData.publicUrl;
+    console.log("[Voice Upload] Success! voiceUrl:", voiceUrl);
 
     // Insert voice message into database
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

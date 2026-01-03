@@ -100,20 +100,31 @@ export const VoiceMessagePlayer = memo(function VoiceMessagePlayer({
 
   // Initialize player
   useEffect(() => {
+    console.log("[VoicePlayer] Initializing with url:", url, "initialDuration:", initialDuration);
+
+    if (!url) {
+      console.error("[VoicePlayer] No URL provided!");
+      setState((prev) => ({ ...prev, error: "No audio URL" }));
+      return;
+    }
+
     playerRef.current = new VoicePlayer();
 
-    const unsubscribe = playerRef.current.onStateChange(setState);
+    const unsubscribe = playerRef.current.onStateChange((newState) => {
+      console.log("[VoicePlayer] State change:", newState);
+      setState(newState);
+    });
 
     // Load audio
     playerRef.current.load(url).catch((error) => {
-      console.error("Failed to load audio:", error);
+      console.error("[VoicePlayer] Failed to load audio:", error, "URL:", url);
     });
 
     return () => {
       unsubscribe();
       playerRef.current?.destroy();
     };
-  }, [url]);
+  }, [url, initialDuration]);
 
   const handlePlayPause = useCallback(() => {
     playerRef.current?.togglePlay();
@@ -220,8 +231,9 @@ export const VoiceMessagePlayer = memo(function VoiceMessagePlayer({
             "text-red-500 dark:text-red-400",
             sizeConfig.text
           )}
+          title={state.error}
         >
-          ⚠️
+          ⚠️ {state.error}
         </span>
       )}
     </div>
