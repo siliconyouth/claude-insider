@@ -1063,7 +1063,7 @@ export function ConversationView({
               placeholder={
                 isAIConversation
                   ? "Ask Claude anything..."
-                  : "Type a message... Use @ to mention"
+                  : "Text or @ to mention..."
               }
               rows={1}
               className={cn(
