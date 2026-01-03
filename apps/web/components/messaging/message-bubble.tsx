@@ -22,6 +22,7 @@ import { ReactionDisplay } from "./reaction-display";
 import { ReplyPreview, ReplyButton } from "./reply-preview";
 import { LinkPreview } from "@/components/chat/link-preview";
 import { CompactVoicePlayer } from "@/components/chat/voice-player";
+import { DeliveryCheckmark } from "@/components/chat/delivery-status";
 
 /** User data for @mention hover cards */
 export interface MentionedUser {
@@ -469,8 +470,21 @@ export function MessageBubble({
   };
 
   // Calculate read status for own messages
+  // Priority: 1) message.deliveryStatus from DB, 2) readReceipts, 3) fallback to "sent"
   const readStatus = isOwnMessage
-    ? formatReadStatus(readReceipts, conversationType, participantCount)
+    ? (() => {
+        // If message has deliveryStatus from database (set by trigger), use it
+        if (message.deliveryStatus === "read") {
+          return conversationType === "direct"
+            ? { status: "seen" as const }
+            : { status: "seen_by" as const, seenBy: readReceipts?.map(r => r.userName || "Someone").slice(0, 3) };
+        }
+        if (message.deliveryStatus === "delivered") {
+          return { status: "delivered" as const };
+        }
+        // Fallback to readReceipts-based logic
+        return formatReadStatus(readReceipts, conversationType, participantCount);
+      })()
     : null;
 
   // Build user data for hover card

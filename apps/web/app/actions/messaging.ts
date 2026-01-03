@@ -80,6 +80,8 @@ export interface Message {
   sessionId?: string;
   // Read receipts (populated separately)
   readReceipts?: ReadReceipt[];
+  // Delivery status (v1.17.0 - WhatsApp-style checkmarks)
+  deliveryStatus?: "sending" | "sent" | "delivered" | "read" | "failed";
   // Reply threading
   replyToMessageId?: string;
   replyToMessage?: {
@@ -147,6 +149,8 @@ interface MessageRow {
   edited_at?: string;
   deleted_at?: string;
   sender?: { id: string; name?: string };
+  // Delivery status (v1.17.0 - read receipts)
+  delivery_status?: string;
   // Message type (v1.17.0)
   message_type?: string;
   // Voice message fields
@@ -453,6 +457,18 @@ export async function getMessages(
         created_at,
         edited_at,
         deleted_at,
+        delivery_status,
+        message_type,
+        voice_duration,
+        voice_waveform,
+        voice_url,
+        voice_transcription,
+        file_url,
+        file_name,
+        file_size,
+        file_type,
+        file_width,
+        file_height,
         encrypted_content,
         is_encrypted,
         encryption_algorithm,
@@ -576,6 +592,20 @@ export async function getMessages(
         createdAt: m.created_at,
         editedAt: m.edited_at,
         deletedAt: m.deleted_at,
+        // Delivery status (v1.17.0 - read receipts)
+        deliveryStatus: (m.delivery_status as Message["deliveryStatus"]) || "sent",
+        // Message type and media
+        messageType: (m.message_type as Message["messageType"]) || "text",
+        voiceDuration: m.voice_duration,
+        voiceWaveform: m.voice_waveform,
+        voiceUrl: m.voice_url,
+        voiceTranscription: m.voice_transcription,
+        fileUrl: m.file_url,
+        fileName: m.file_name,
+        fileSize: m.file_size,
+        fileType: m.file_type,
+        fileWidth: m.file_width,
+        fileHeight: m.file_height,
         // E2EE fields
         encryptedContent: m.encrypted_content,
         isEncrypted: m.is_encrypted || false,
