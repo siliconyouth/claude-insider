@@ -16,7 +16,7 @@
  */
 
 import { cn } from "@/lib/design-system";
-import type { PresenceStatus } from "@/app/actions/presence";
+import type { PresenceStatus } from "@/lib/presence-utils";
 
 // ============================================
 // HELPER: Format "X ago" duration (Matrix SDK pattern)

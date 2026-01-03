@@ -13,7 +13,7 @@
 
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
-import { computePresenceStatus } from "./presence";
+import { computePresenceStatus } from "@/lib/presence-utils";
 
 export interface UserProfile {
   id: string;

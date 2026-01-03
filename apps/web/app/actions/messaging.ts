@@ -13,7 +13,7 @@
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
-import { computePresenceStatus } from "./presence";
+import { computePresenceStatus } from "@/lib/presence-utils";
 
 // ============================================
 // TYPES

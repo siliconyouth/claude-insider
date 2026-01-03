@@ -14,42 +14,16 @@
 
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
-
-// ============================================
-// PRESENCE THRESHOLDS (Matrix SDK Pattern)
-// ============================================
-
-// User is online if active within this time
-export const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
-
-// User is idle if active within this time but not recent
-export const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
+import {
+  computePresenceStatus,
+  ONLINE_THRESHOLD_MS,
+  IDLE_THRESHOLD_MS,
+  type PresenceStatus,
+} from "@/lib/presence-utils";
 
 // ============================================
 // TYPES
 // ============================================
-
-export type PresenceStatus = "online" | "offline" | "idle";
-
-/**
- * Compute presence status from last_active_at timestamp.
- * Uses Matrix SDK pattern: compute at query time for reliability.
- *
- * @param lastActiveAt - ISO timestamp of last activity, or null
- * @param now - Current timestamp in ms (defaults to Date.now())
- * @returns PresenceStatus: "online", "idle", or "offline"
- */
-export function computePresenceStatus(
-  lastActiveAt: string | null | undefined,
-  now: number = Date.now()
-): PresenceStatus {
-  if (!lastActiveAt) return "offline";
-  const lastActive = new Date(lastActiveAt).getTime();
-  const diff = now - lastActive;
-  if (diff < ONLINE_THRESHOLD_MS) return "online";
-  if (diff < IDLE_THRESHOLD_MS) return "idle";
-  return "offline";
-}
 
 export interface UserPresence {
   userId: string;
