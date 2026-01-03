@@ -2,20 +2,25 @@
  * Batched Read Receipts Hook
  *
  * Matrix SDK pattern - broadcast read receipts immediately for real-time UI,
- * but batch database writes to reduce load.
+ * with smart database persistence for consistency.
  *
  * Flow:
- * 1. markAsRead(messageId) → broadcast instantly via realtime
+ * 1. markAsRead(messageId) → broadcast instantly via realtime for live "Seen" status
  * 2. Queue messageId for DB persist
- * 3. Flush queue to DB every BATCH_INTERVAL_MS or on unmount
+ * 3. First read triggers IMMEDIATE DB flush (eager persist for instant consistency)
+ * 4. Subsequent reads within BATCH_INTERVAL_MS are batched together
+ * 5. Queue also flushes on unmount or conversation change
  *
- * This reduces DB writes from N (per message) to 1 (per batch).
+ * This provides:
+ * - Instant UI feedback via realtime broadcast
+ * - Instant DB consistency for the first read (no "Seen" missing when reopening)
+ * - Efficient batching when scrolling through many messages
  */
 
 import { useCallback, useRef, useEffect } from "react";
 import { markMessagesAsRead } from "@/app/actions/messaging";
 
-const BATCH_INTERVAL_MS = 30000; // 30 seconds
+const BATCH_INTERVAL_MS = 3000; // 3 seconds - fast enough for consistency, still batches multiple reads
 
 interface UseBatchedReadReceiptsOptions {
   conversationId: string;
@@ -76,9 +81,11 @@ export function useBatchedReadReceipts({
     }
   }, [conversationId]);
 
-  // Schedule next flush
-  const scheduleFlush = useCallback(() => {
+  // Schedule next flush (with optional immediate mode for first read)
+  const scheduleFlush = useCallback((immediate = false) => {
     if (flushTimeoutRef.current) return; // Already scheduled
+
+    const delay = immediate ? 0 : BATCH_INTERVAL_MS;
 
     flushTimeoutRef.current = setTimeout(async () => {
       flushTimeoutRef.current = null;
@@ -88,7 +95,7 @@ export function useBatchedReadReceipts({
       if (pendingIdsRef.current.size > 0) {
         scheduleFlush();
       }
-    }, BATCH_INTERVAL_MS);
+    }, delay);
   }, [flushPending]);
 
   // Mark a single message as read
@@ -99,9 +106,14 @@ export function useBatchedReadReceipts({
       // Broadcast immediately for real-time "Seen" indicator
       broadcastReadReceipt([messageId], userName, userAvatar);
 
+      // Check if queue was empty (first read = eager persist for instant DB consistency)
+      const wasEmpty = pendingIdsRef.current.size === 0;
+
       // Queue for batched DB write
       pendingIdsRef.current.add(messageId);
-      scheduleFlush();
+
+      // Flush immediately for first read, batch subsequent ones
+      scheduleFlush(wasEmpty);
     },
     [enabled, broadcastReadReceipt, userName, userAvatar, scheduleFlush]
   );
@@ -114,9 +126,14 @@ export function useBatchedReadReceipts({
       // Broadcast immediately
       broadcastReadReceipt(messageIds, userName, userAvatar);
 
+      // Check if queue was empty (first batch = eager persist for instant DB consistency)
+      const wasEmpty = pendingIdsRef.current.size === 0;
+
       // Queue all for batched DB write
       messageIds.forEach((id) => pendingIdsRef.current.add(id));
-      scheduleFlush();
+
+      // Flush immediately for first batch, delay subsequent ones
+      scheduleFlush(wasEmpty);
     },
     [enabled, broadcastReadReceipt, userName, userAvatar, scheduleFlush]
   );
