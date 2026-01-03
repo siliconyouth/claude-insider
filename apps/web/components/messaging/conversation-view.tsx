@@ -535,11 +535,9 @@ export function ConversationView({
         const existingIds = new Set(prev.map((m) => m.id));
         const hookIds = new Set(transformedMessages.map((m) => m.id));
 
-        // Keep local messages that aren't in hook (realtime additions)
-        // Filter out temp IDs (start with 'temp-') that are placeholders
-        const localOnly = prev.filter(
-          (m) => !hookIds.has(m.id) && !m.id.startsWith("temp-")
-        );
+        // Keep local messages that aren't in hook (realtime additions + optimistic messages)
+        // IMPORTANT: Keep temp IDs (optimistic messages) - they'll be replaced when server responds
+        const localOnly = prev.filter((m) => !hookIds.has(m.id));
 
         // Add hook messages that aren't already local
         const hookOnly = transformedMessages.filter((m) => !existingIds.has(m.id));
