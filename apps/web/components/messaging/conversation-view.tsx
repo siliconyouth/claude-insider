@@ -18,6 +18,7 @@ import { cn } from "@/lib/design-system";
 import { useSound } from "@/hooks/use-sound-effects";
 import { useDraftMessage } from "@/hooks/use-draft-message";
 import { useBatchedReadReceipts } from "@/hooks/use-batched-read-receipts";
+import { emitInboxRefresh } from "@/hooks/use-realtime-messages";
 import { useGapDetection } from "@/hooks/use-gap-detection";
 import { useReactions } from "@/hooks/use-reactions";
 import { AvatarWithStatus } from "@/components/presence";
@@ -379,6 +380,8 @@ export function ConversationView({
 
       // Mark as read in background (non-blocking)
       markConversationAsRead(conversationId);
+      // Emit refresh event for instant inbox update
+      emitInboxRefresh();
       // Queue read receipt for batched system (processed by useEffect)
       pendingReadReceiptIdsRef.current.push(payload.id);
     },
@@ -622,6 +625,8 @@ export function ConversationView({
       }
 
       await markConversationAsRead(conversationId);
+      // Emit refresh event for instant inbox update
+      emitInboxRefresh();
     };
 
     loadReadReceipts();

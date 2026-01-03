@@ -16,7 +16,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { cn } from "@/lib/design-system";
 import { getConversations, type Conversation } from "@/app/actions/messaging";
-import { useRealtimeMessages } from "@/hooks/use-realtime-messages";
+import { useRealtimeMessages, useInboxRefreshListener } from "@/hooks/use-realtime-messages";
 import { useIsAuthenticated } from "@/lib/auth-client";
 import { useSound } from "@/hooks/use-sound-effects";
 import { AvatarWithStatus } from "@/components/presence";
@@ -57,23 +57,7 @@ export function InboxDropdown() {
   // Sound effects for new messages
   const { playMessageReceived } = useSound();
 
-  // Real-time message updates
-  const { unreadCount, refreshCount } = useRealtimeMessages({
-    enabled: isAuthenticated,
-    onNewMessage: () => {
-      // Refresh conversations when new message arrives
-      loadConversations();
-      // Play sound for new message
-      playMessageReceived();
-    },
-  });
-
-  // Sync unread count with unified chat provider
-  useEffect(() => {
-    setUnreadCount(unreadCount);
-  }, [unreadCount, setUnreadCount]);
-
-  // Load conversations
+  // Load conversations - defined early so it can be used in hooks below
   const loadConversations = useCallback(async () => {
     if (!isAuthenticated) return;
     setIsLoadingConversations(true);
@@ -83,6 +67,33 @@ export function InboxDropdown() {
     }
     setIsLoadingConversations(false);
   }, [isAuthenticated]);
+
+  // Real-time message updates
+  const { unreadCount, refreshCount } = useRealtimeMessages({
+    enabled: isAuthenticated,
+    onNewMessage: () => {
+      // Refresh conversations when new message arrives
+      loadConversations();
+      // Play sound for new message
+      playMessageReceived();
+    },
+    onReadStatusChange: () => {
+      // Refresh conversations when messages are marked as read
+      // This ensures the unread badges update immediately
+      loadConversations();
+    },
+  });
+
+  // Sync unread count with unified chat provider
+  useEffect(() => {
+    setUnreadCount(unreadCount);
+  }, [unreadCount, setUnreadCount]);
+
+  // Listen for custom inbox refresh events (instant updates from conversation view)
+  useInboxRefreshListener(() => {
+    loadConversations();
+    refreshCount();
+  });
 
   // Load conversations when dropdown opens
   useEffect(() => {

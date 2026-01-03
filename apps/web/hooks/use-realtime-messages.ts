@@ -3,6 +3,10 @@
  *
  * Subscribes to Supabase Realtime for instant message updates.
  * Automatically pushes browser notifications for new messages.
+ *
+ * Also provides a custom event system for instant cross-component updates:
+ * - Call `emitInboxRefresh()` when messages are marked as read
+ * - Components using `useRealtimeMessages` with `onReadStatusChange` will be notified
  */
 
 "use client";
@@ -58,6 +62,8 @@ interface UseRealtimeMessagesOptions {
   onNewMessage?: (message: Message | GroupMessage) => void;
   /** Called when unread count changes */
   onUnreadCountChange?: (count: number) => void;
+  /** Called when read status changes (user reads messages in any conversation) */
+  onReadStatusChange?: () => void;
   /** Whether to show browser push notifications (default: true) */
   showBrowserNotifications?: boolean;
   /** Whether realtime is enabled */
@@ -85,6 +91,7 @@ export function useRealtimeMessages(
     groupId,
     onNewMessage,
     onUnreadCountChange,
+    onReadStatusChange,
     showBrowserNotifications = true, // Always push by default
     enabled = true,
   } = options;
@@ -99,6 +106,7 @@ export function useRealtimeMessages(
   // Use refs to store callbacks - prevents infinite loops from unstable callback references
   const onNewMessageRef = useRef(onNewMessage);
   const onUnreadCountChangeRef = useRef(onUnreadCountChange);
+  const onReadStatusChangeRef = useRef(onReadStatusChange);
 
   // Keep refs up to date
   useEffect(() => {
@@ -108,6 +116,10 @@ export function useRealtimeMessages(
   useEffect(() => {
     onUnreadCountChangeRef.current = onUnreadCountChange;
   }, [onUnreadCountChange]);
+
+  useEffect(() => {
+    onReadStatusChangeRef.current = onReadStatusChange;
+  }, [onReadStatusChange]);
 
   // Fetch current unread count directly from Supabase using RPC function
   const refreshCount = useCallback(async () => {
@@ -305,6 +317,8 @@ export function useRealtimeMessages(
           () => {
             // Refresh count when participant record updates (e.g., marked as read)
             refreshCount();
+            // Notify listeners that read status changed (for inbox refresh)
+            onReadStatusChangeRef.current?.();
           }
         );
 
@@ -403,4 +417,39 @@ export function useUnreadMessageCount(): {
     isLoading,
     refresh: refreshCount,
   };
+}
+
+// ============================================================================
+// CUSTOM EVENT SYSTEM FOR INSTANT INBOX UPDATES
+// ============================================================================
+
+const INBOX_REFRESH_EVENT = "inbox:refresh";
+
+/**
+ * Emit an event to trigger immediate inbox refresh.
+ * Call this when messages are marked as read in any component.
+ * Components using `useRealtimeMessages` with `onReadStatusChange` will be notified.
+ */
+export function emitInboxRefresh(): void {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent(INBOX_REFRESH_EVENT));
+  }
+}
+
+/**
+ * Hook to listen for inbox refresh events.
+ * Used internally by useRealtimeMessages, but can also be used directly.
+ */
+export function useInboxRefreshListener(callback: () => void): void {
+  const callbackRef = useRef(callback);
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    const handler = () => callbackRef.current();
+    window.addEventListener(INBOX_REFRESH_EVENT, handler);
+    return () => window.removeEventListener(INBOX_REFRESH_EVENT, handler);
+  }, []);
 }

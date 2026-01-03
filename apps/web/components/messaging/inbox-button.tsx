@@ -4,35 +4,17 @@
  * Inbox Button Component
  *
  * Shows inbox icon with unread message count badge.
- * Used in the header for quick access to messages.
+ * Uses the UnifiedChatProvider for real-time unread count updates.
  */
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/design-system";
-import { getTotalUnreadCount } from "@/app/actions/messaging";
 import { useIsAuthenticated } from "@/lib/auth-client";
+import { useUnifiedChat } from "@/components/unified-chat/unified-chat-provider";
 
 export function InboxButton() {
   const { isAuthenticated, isLoading } = useIsAuthenticated();
-  const [unreadCount, setUnreadCount] = useState(0);
-
-  useEffect(() => {
-    if (!isAuthenticated) return;
-
-    const fetchUnread = async () => {
-      const result = await getTotalUnreadCount();
-      if (result.success) {
-        setUnreadCount(result.count || 0);
-      }
-    };
-
-    fetchUnread();
-
-    // Refresh every 30 seconds
-    const interval = setInterval(fetchUnread, 30000);
-    return () => clearInterval(interval);
-  }, [isAuthenticated]);
+  const { unreadCount } = useUnifiedChat();
 
   if (isLoading || !isAuthenticated) {
     return null;
