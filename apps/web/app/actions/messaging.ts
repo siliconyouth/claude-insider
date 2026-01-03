@@ -64,6 +64,13 @@ export interface Message {
   voiceWaveform?: number[];
   voiceUrl?: string;
   voiceTranscription?: string;
+  // File attachment fields
+  fileUrl?: string;
+  fileName?: string;
+  fileSize?: number;
+  fileType?: string;
+  fileWidth?: number;
+  fileHeight?: number;
   // E2EE fields
   encryptedContent?: string;
   isEncrypted?: boolean;
@@ -147,6 +154,13 @@ interface MessageRow {
   voice_waveform?: number[];
   voice_url?: string;
   voice_transcription?: string;
+  // File attachment fields
+  file_url?: string;
+  file_name?: string;
+  file_size?: number;
+  file_type?: string;
+  file_width?: number;
+  file_height?: number;
   // E2EE fields
   encrypted_content?: string;
   is_encrypted?: boolean;
@@ -2499,6 +2513,288 @@ export async function searchMessages(
     };
   } catch (error) {
     console.error("Search messages error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// SEND VOICE MESSAGE
+// ============================================
+
+export interface SendVoiceMessageParams {
+  conversationId: string;
+  audioData: string; // Base64 encoded audio
+  duration: number; // Duration in seconds
+  waveform: number[]; // Normalized amplitude values (0-1)
+  mimeType?: string; // Audio MIME type (default: audio/webm)
+}
+
+export async function sendVoiceMessage(
+  params: SendVoiceMessageParams
+): Promise<{
+  success: boolean;
+  message?: Message;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const { conversationId, audioData, duration, waveform, mimeType = "audio/webm" } = params;
+
+    // Validate duration (max 5 minutes = 300 seconds)
+    if (duration <= 0 || duration > 300) {
+      return { success: false, error: "Voice message must be between 1 second and 5 minutes" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify user is a participant
+    const { data: participant } = await supabase
+      .from("dm_participants")
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    if (!participant) {
+      return { success: false, error: "You are not a participant in this conversation" };
+    }
+
+    // Decode base64 audio and upload to storage
+    const base64Data = audioData.replace(/^data:audio\/\w+;base64,/, "");
+    const audioBuffer = Buffer.from(base64Data, "base64");
+
+    // Generate unique filename
+    const timestamp = Date.now();
+    const ext = mimeType === "audio/webm" ? "webm" : mimeType === "audio/mp4" ? "m4a" : "mp3";
+    const fileName = `${session.user.id}/${conversationId}/${timestamp}.${ext}`;
+
+    // Upload to Supabase Storage
+    const { error: uploadError } = await supabase.storage
+      .from("voice-messages")
+      .upload(fileName, audioBuffer, {
+        contentType: mimeType,
+        upsert: false,
+      });
+
+    if (uploadError) {
+      console.error("Voice upload error:", uploadError);
+      return { success: false, error: "Failed to upload voice message" };
+    }
+
+    // Get public URL
+    const { data: urlData } = supabase.storage
+      .from("voice-messages")
+      .getPublicUrl(fileName);
+
+    const voiceUrl = urlData.publicUrl;
+
+    // Insert voice message into database
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: newMessage, error } = await (supabase as any)
+      .from("dm_messages")
+      .insert({
+        conversation_id: conversationId,
+        sender_id: session.user.id,
+        content: "[Voice Message]",
+        message_type: "voice",
+        voice_duration: Math.round(duration),
+        voice_waveform: waveform,
+        voice_url: voiceUrl,
+        is_ai_generated: false,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Voice message insert error:", error);
+      // Clean up uploaded file on failure
+      await supabase.storage.from("voice-messages").remove([fileName]);
+      return { success: false, error: "Failed to send voice message" };
+    }
+
+    const msg = newMessage as MessageRow;
+
+    // Get sender info for response
+    const { data: profileData } = await supabase
+      .from("profiles")
+      .select("display_name, avatar_url, username")
+      .eq("user_id", session.user.id)
+      .single();
+
+    const profile = profileData as ProfileRow | null;
+
+    const message: Message = {
+      id: msg.id,
+      conversationId: msg.conversation_id,
+      senderId: msg.sender_id,
+      senderName: profile?.display_name || session.user.name || "You",
+      senderUsername: profile?.username ?? undefined,
+      senderAvatar: profile?.avatar_url ?? undefined,
+      content: msg.content,
+      mentions: [],
+      isAiGenerated: false,
+      createdAt: msg.created_at,
+      messageType: "voice",
+      voiceDuration: Math.round(duration),
+      voiceWaveform: waveform,
+      voiceUrl: voiceUrl,
+    };
+
+    return { success: true, message };
+  } catch (error) {
+    console.error("Send voice message error:", error);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+// ============================================
+// SEND FILE MESSAGE
+// ============================================
+
+export interface SendFileMessageParams {
+  conversationId: string;
+  fileData: string; // Base64 encoded file
+  fileName: string;
+  fileSize: number;
+  fileType: string; // MIME type
+  width?: number; // For images
+  height?: number; // For images
+}
+
+export async function sendFileMessage(
+  params: SendFileMessageParams
+): Promise<{
+  success: boolean;
+  message?: Message;
+  error?: string;
+}> {
+  try {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return { success: false, error: "You must be logged in" };
+    }
+
+    const { conversationId, fileData, fileName, fileSize, fileType, width, height } = params;
+
+    // Validate file size (max 50MB)
+    if (fileSize > 52428800) {
+      return { success: false, error: "File size cannot exceed 50MB" };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Verify user is a participant
+    const { data: participant } = await supabase
+      .from("dm_participants")
+      .select("id")
+      .eq("conversation_id", conversationId)
+      .eq("user_id", session.user.id)
+      .single();
+
+    if (!participant) {
+      return { success: false, error: "You are not a participant in this conversation" };
+    }
+
+    // Decode base64 file and upload to storage
+    const base64Data = fileData.replace(/^data:[^;]+;base64,/, "");
+    const fileBuffer = Buffer.from(base64Data, "base64");
+
+    // Generate unique filename (preserve extension)
+    const timestamp = Date.now();
+    const ext = fileName.split(".").pop() || "bin";
+    const safeFileName = fileName.replace(/[^a-zA-Z0-9.-]/g, "_").slice(0, 100);
+    const storagePath = `${session.user.id}/${conversationId}/${timestamp}_${safeFileName}`;
+
+    // Upload to Supabase Storage
+    const { error: uploadError } = await supabase.storage
+      .from("chat-attachments")
+      .upload(storagePath, fileBuffer, {
+        contentType: fileType,
+        upsert: false,
+      });
+
+    if (uploadError) {
+      console.error("File upload error:", uploadError);
+      return { success: false, error: "Failed to upload file" };
+    }
+
+    // Get public URL
+    const { data: urlData } = supabase.storage
+      .from("chat-attachments")
+      .getPublicUrl(storagePath);
+
+    const fileUrl = urlData.publicUrl;
+
+    // Determine message type
+    const isImage = fileType.startsWith("image/");
+    const messageType = isImage ? "image" : "file";
+    const contentPreview = isImage ? `[Image: ${fileName}]` : `[File: ${fileName}]`;
+
+    // Insert file message into database
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: newMessage, error } = await (supabase as any)
+      .from("dm_messages")
+      .insert({
+        conversation_id: conversationId,
+        sender_id: session.user.id,
+        content: contentPreview,
+        message_type: messageType,
+        file_url: fileUrl,
+        file_name: fileName,
+        file_size: fileSize,
+        file_type: fileType,
+        file_width: width || null,
+        file_height: height || null,
+        is_ai_generated: false,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error("File message insert error:", error);
+      // Clean up uploaded file on failure
+      await supabase.storage.from("chat-attachments").remove([storagePath]);
+      return { success: false, error: "Failed to send file" };
+    }
+
+    const msg = newMessage as MessageRow;
+
+    // Get sender info for response
+    const { data: profileData } = await supabase
+      .from("profiles")
+      .select("display_name, avatar_url, username")
+      .eq("user_id", session.user.id)
+      .single();
+
+    const profile = profileData as ProfileRow | null;
+
+    const message: Message = {
+      id: msg.id,
+      conversationId: msg.conversation_id,
+      senderId: msg.sender_id,
+      senderName: profile?.display_name || session.user.name || "You",
+      senderUsername: profile?.username ?? undefined,
+      senderAvatar: profile?.avatar_url ?? undefined,
+      content: msg.content,
+      mentions: [],
+      isAiGenerated: false,
+      createdAt: msg.created_at,
+      messageType: messageType,
+      fileUrl: fileUrl,
+      fileName: fileName,
+      fileSize: fileSize,
+      fileType: fileType,
+      fileWidth: width,
+      fileHeight: height,
+    };
+
+    return { success: true, message };
+  } catch (error) {
+    console.error("Send file message error:", error);
     return { success: false, error: "An unexpected error occurred" };
   }
 }

@@ -239,6 +239,15 @@ function extractUrls(content: string): string[] {
   return [...new Set(matches.filter((url) => url.length > 10))];
 }
 
+// Format file size in human-readable format
+function formatFileSize(bytes: number): string {
+  if (bytes === 0) return "0 B";
+  const k = 1024;
+  const sizes = ["B", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+}
+
 // Format timestamp
 function formatTime(dateString: string): string {
   const date = new Date(dateString);
@@ -691,6 +700,52 @@ export function MessageBubble({
                     waveform={message.voiceWaveform}
                     isOwnMessage={isOwnMessage}
                   />
+                ) : message.messageType === "image" && message.fileUrl ? (
+                  /* Image message */
+                  <div className="relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={message.fileUrl}
+                      alt={message.fileName || "Image"}
+                      className="max-w-[280px] max-h-[280px] rounded-lg object-cover cursor-pointer"
+                      onClick={() => window.open(message.fileUrl, "_blank")}
+                      loading="lazy"
+                    />
+                    {message.fileName && (
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">
+                        {message.fileName}
+                      </p>
+                    )}
+                  </div>
+                ) : message.messageType === "file" && message.fileUrl ? (
+                  /* File attachment */
+                  <a
+                    href={message.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "flex items-center gap-3 p-3 rounded-lg",
+                      "bg-gray-100 dark:bg-gray-800",
+                      "hover:bg-gray-200 dark:hover:bg-gray-700",
+                      "transition-colors"
+                    )}
+                  >
+                    <div className="shrink-0 w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                        {message.fileName || "File"}
+                      </p>
+                      {message.fileSize && (
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {formatFileSize(message.fileSize)}
+                        </p>
+                      )}
+                    </div>
+                  </a>
                 ) : (
                   /* Text message with optional link preview */
                   <>

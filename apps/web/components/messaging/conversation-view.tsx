@@ -49,6 +49,8 @@ import {
   getReadReceipts,
   searchUsersForMention,
   getProfilesByUsernames,
+  sendVoiceMessage,
+  sendFileMessage,
   type Message,
   type ConversationParticipant,
   type ReadReceipt,
@@ -105,6 +107,8 @@ export function ConversationView({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [isSendingVoice, setIsSendingVoice] = useState(false);
+  const [isSendingFile, setIsSendingFile] = useState(false);
 
   // Message drafts - persisted to localStorage per conversation
   const { draft: inputValue, setDraft: setInputValue, clearDraft } = useDraftMessage({
@@ -1045,15 +1049,63 @@ export function ConversationView({
                   className="hidden"
                   multiple
                   accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.txt,.zip"
-                  onChange={(e) => {
+                  onChange={async (e) => {
                     const files = e.target.files;
-                    if (files && files.length > 0) {
-                      // TODO: Implement file upload when backend is ready
-                      console.log("[Attachment] Files selected:", files.length);
-                      alert(
-                        `${files.length} file(s) selected\n\n` +
-                        `File attachments are coming soon! This feature is in development.`
-                      );
+                    if (!files || files.length === 0 || isSendingFile) return;
+
+                    setIsSendingFile(true);
+                    try {
+                      // Process files one at a time
+                      for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        if (!file) continue;
+
+                        // Convert file to base64
+                        const reader = new FileReader();
+                        const base64Promise = new Promise<string>((resolve) => {
+                          reader.onloadend = () => resolve(reader.result as string);
+                          reader.readAsDataURL(file);
+                        });
+                        const fileData = await base64Promise;
+
+                        // Get image dimensions if applicable
+                        let width: number | undefined;
+                        let height: number | undefined;
+                        if (file.type.startsWith("image/")) {
+                          const img = new Image();
+                          const dimensionsPromise = new Promise<{ w: number; h: number }>((resolve) => {
+                            img.onload = () => resolve({ w: img.width, h: img.height });
+                            img.src = fileData;
+                          });
+                          const dims = await dimensionsPromise;
+                          width = dims.w;
+                          height = dims.h;
+                        }
+
+                        // Send file message
+                        const response = await sendFileMessage({
+                          conversationId,
+                          fileData,
+                          fileName: file.name,
+                          fileSize: file.size,
+                          fileType: file.type,
+                          width,
+                          height,
+                        });
+
+                        if (response.success && response.message) {
+                          setMessages((prev) => [...prev, response.message!]);
+                          playMessageSent?.();
+                        } else {
+                          console.error("File upload failed:", response.error);
+                          alert(response.error || `Failed to send ${file.name}`);
+                        }
+                      }
+                    } catch (error) {
+                      console.error("File upload error:", error);
+                      alert("Failed to send file(s)");
+                    } finally {
+                      setIsSendingFile(false);
                       e.target.value = ""; // Reset input
                     }
                   }}
@@ -1061,14 +1113,16 @@ export function ConversationView({
                 <button
                   type="button"
                   onClick={() => document.getElementById("chat-file-input")?.click()}
+                  disabled={isSendingFile}
                   className={cn(
                     "p-2 rounded-full shrink-0",
                     "text-gray-500 dark:text-gray-400",
                     "hover:bg-gray-100 dark:hover:bg-gray-800",
                     "hover:text-gray-700 dark:hover:text-gray-200",
-                    "transition-colors"
+                    "transition-colors",
+                    isSendingFile && "opacity-50 cursor-not-allowed"
                   )}
-                  title="Attach file"
+                  title={isSendingFile ? "Uploading..." : "Attach file"}
                 >
                   <AttachmentIcon className="w-5 h-5" />
                 </button>
@@ -1077,21 +1131,46 @@ export function ConversationView({
             {/* Voice recorder button - hidden when typing */}
             {!inputValue.trim() && !isAIConversation && (
               <VoiceRecorderButton
-                onRecordingComplete={(result: VoiceRecorderResult) => {
-                  // TODO: Implement voice message sending when backend is ready
-                  console.log("[Voice] Recording complete:", {
-                    duration: result.duration,
-                    waveformLength: result.waveform.length,
-                    blobSize: result.blob.size,
-                  });
-                  // Show a toast or visual feedback
-                  alert(
-                    `Voice message recorded: ${Math.round(result.duration)}s\n\n` +
-                    `Voice messaging is coming soon! This feature is in development.`
-                  );
+                onRecordingComplete={async (result: VoiceRecorderResult) => {
+                  if (isSendingVoice) return;
+
+                  setIsSendingVoice(true);
+                  try {
+                    // Convert blob to base64
+                    const reader = new FileReader();
+                    const base64Promise = new Promise<string>((resolve) => {
+                      reader.onloadend = () => resolve(reader.result as string);
+                      reader.readAsDataURL(result.blob);
+                    });
+                    const audioData = await base64Promise;
+
+                    // Send voice message
+                    const response = await sendVoiceMessage({
+                      conversationId,
+                      audioData,
+                      duration: result.duration,
+                      waveform: result.waveform,
+                      mimeType: result.blob.type || "audio/webm",
+                    });
+
+                    if (response.success && response.message) {
+                      // Add to messages optimistically
+                      setMessages((prev) => [...prev, response.message!]);
+                      playMessageSent?.();
+                    } else {
+                      console.error("Voice message failed:", response.error);
+                      alert(response.error || "Failed to send voice message");
+                    }
+                  } catch (error) {
+                    console.error("Voice message error:", error);
+                    alert("Failed to send voice message");
+                  } finally {
+                    setIsSendingVoice(false);
+                  }
                 }}
                 size="md"
                 className="shrink-0"
+                disabled={isSendingVoice}
               />
             )}
             <button
