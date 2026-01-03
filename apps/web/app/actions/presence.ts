@@ -20,16 +20,36 @@ import { createAdminClient } from "@/lib/supabase/server";
 // ============================================
 
 // User is online if active within this time
-const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
+export const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
 
 // User is idle if active within this time but not recent
-const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
+export const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
 
 // ============================================
 // TYPES
 // ============================================
 
 export type PresenceStatus = "online" | "offline" | "idle";
+
+/**
+ * Compute presence status from last_active_at timestamp.
+ * Uses Matrix SDK pattern: compute at query time for reliability.
+ *
+ * @param lastActiveAt - ISO timestamp of last activity, or null
+ * @param now - Current timestamp in ms (defaults to Date.now())
+ * @returns PresenceStatus: "online", "idle", or "offline"
+ */
+export function computePresenceStatus(
+  lastActiveAt: string | null | undefined,
+  now: number = Date.now()
+): PresenceStatus {
+  if (!lastActiveAt) return "offline";
+  const lastActive = new Date(lastActiveAt).getTime();
+  const diff = now - lastActive;
+  if (diff < ONLINE_THRESHOLD_MS) return "online";
+  if (diff < IDLE_THRESHOLD_MS) return "idle";
+  return "offline";
+}
 
 export interface UserPresence {
   userId: string;
@@ -123,32 +143,6 @@ export async function heartbeat(): Promise<{ success: boolean; error?: string }>
   } catch (error) {
     console.error("Heartbeat error:", error);
     return { success: false, error: "An unexpected error occurred" };
-  }
-}
-
-// ============================================
-// COMPUTE PRESENCE STATUS (Matrix SDK Pattern)
-// ============================================
-
-/**
- * Computes presence status from last_active_at timestamp.
- * This is more reliable than trusting stored status.
- */
-function computePresenceStatus(lastActiveAt: string | null | undefined): PresenceStatus {
-  if (!lastActiveAt) {
-    return "offline";
-  }
-
-  const lastActive = new Date(lastActiveAt).getTime();
-  const now = Date.now();
-  const elapsed = now - lastActive;
-
-  if (elapsed < ONLINE_THRESHOLD_MS) {
-    return "online";
-  } else if (elapsed < IDLE_THRESHOLD_MS) {
-    return "idle";
-  } else {
-    return "offline";
   }
 }
 

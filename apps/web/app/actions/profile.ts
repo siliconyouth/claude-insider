@@ -13,6 +13,7 @@
 
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
+import { computePresenceStatus } from "./presence";
 
 export interface UserProfile {
   id: string;
@@ -721,15 +722,9 @@ export async function getCompleteProfileData(options?: {
         unlockedAt: a.earned_at,
       }));
 
-    // Get presence status - compute from last_active_at (Matrix SDK pattern)
+    // Get presence status - compute from last_active_at
     const presence = presenceData.data as { last_active_at: string | null; last_seen_at: string | null } | null;
-    const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
-    const now = Date.now();
-    let isOnline = false;
-    if (presence?.last_active_at) {
-      const lastActive = new Date(presence.last_active_at).getTime();
-      isOnline = now - lastActive < ONLINE_THRESHOLD_MS;
-    }
+    const isOnline = computePresenceStatus(presence?.last_active_at) === "online";
     const lastSeen = presence?.last_seen_at ?? undefined;
 
     return {

@@ -13,6 +13,7 @@
 import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
+import { computePresenceStatus } from "./presence";
 
 // ============================================
 // TYPES
@@ -197,12 +198,6 @@ export async function getConversations(): Promise<{
     });
 
     if (error) {
-      // Fallback to legacy implementation if RPC doesn't exist yet (migration not run)
-      if (error.code === "42883") {
-        // Function does not exist
-        console.log("[Messaging] Falling back to legacy getConversations");
-        return getConversationsLegacy(session.user.id, supabase);
-      }
       console.error("Get conversations error:", error);
       return { success: false, error: "Failed to fetch conversations" };
     }
@@ -235,143 +230,6 @@ export async function getConversations(): Promise<{
     console.error("Get conversations error:", error);
     return { success: false, error: "An unexpected error occurred" };
   }
-}
-
-// Legacy implementation for fallback (when RPC function not yet deployed)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function getConversationsLegacy(userId: string, supabase: any): Promise<{
-  success: boolean;
-  conversations?: Conversation[];
-  error?: string;
-}> {
-  // Get user's conversations with participants
-  const { data: participations, error: partError } = await supabase
-    .from("dm_participants")
-    .select(`
-      conversation_id,
-      unread_count,
-      is_muted,
-      last_read_at,
-      dm_conversations (
-        id,
-        type,
-        name,
-        last_message_at,
-        last_message_preview,
-        created_at,
-        updated_at
-      )
-    `)
-    .eq("user_id", userId)
-    .order("last_read_at", { ascending: false });
-
-  if (partError) {
-    console.error("Get conversations error:", partError);
-    return { success: false, error: "Failed to fetch conversations" };
-  }
-
-  // Get all conversation IDs
-  const participationRows = (participations || []) as ParticipationRow[];
-  const conversationIds = participationRows.map((p) => p.conversation_id);
-
-  if (conversationIds.length === 0) {
-    return { success: true, conversations: [] };
-  }
-
-  // Get all participants for these conversations
-  const { data: allParticipants } = await supabase
-    .from("dm_participants")
-    .select(`
-      conversation_id,
-      user_id,
-      user:user_id (
-        id,
-        name,
-        email
-      )
-    `)
-    .in("conversation_id", conversationIds)
-    .neq("user_id", userId);
-
-  // Get profiles and presence in PARALLEL (performance optimization)
-  const participantRows = (allParticipants || []) as unknown as ParticipantRow[];
-  const otherUserIds = participantRows.map((p) => p.user_id);
-
-  // Run both queries simultaneously instead of sequentially
-  const [profilesResult, presencesResult] = await Promise.all([
-    supabase
-      .from("profiles")
-      .select("user_id, display_name, avatar_url, username")
-      .in("user_id", otherUserIds),
-    supabase
-      .from("user_presence")
-      .select("user_id, last_active_at")
-      .in("user_id", otherUserIds),
-  ]);
-
-  const profiles = profilesResult.data;
-  const presences = presencesResult.data;
-
-  // Build profile and presence maps
-  // Compute status from last_active_at (Matrix SDK pattern)
-  const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
-  const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
-  const now = Date.now();
-
-  const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
-  const presenceRows = (presences || []) as { user_id: string; last_active_at: string | null }[];
-  const presenceMap = new Map(presenceRows.map((p) => {
-    if (!p.last_active_at) return [p.user_id, "offline"];
-    const lastActive = new Date(p.last_active_at).getTime();
-    const diff = now - lastActive;
-    if (diff < ONLINE_THRESHOLD_MS) return [p.user_id, "online"];
-    if (diff < IDLE_THRESHOLD_MS) return [p.user_id, "idle"];
-    return [p.user_id, "offline"];
-  }));
-
-  // Build conversations with participants
-  const conversations: Conversation[] = participationRows.map((p) => {
-    const conv = p.dm_conversations;
-    const convParticipants = participantRows.filter(
-      (ap) => ap.conversation_id === p.conversation_id
-    );
-
-    return {
-      id: conv?.id || "",
-      type: (conv?.type || "direct") as "direct" | "group",
-      name: conv?.name,
-      lastMessageAt: conv?.last_message_at,
-      lastMessagePreview: conv?.last_message_preview,
-      createdAt: conv?.created_at || "",
-      updatedAt: conv?.updated_at || "",
-      unreadCount: p.unread_count || 0,
-      isMuted: p.is_muted || false,
-      participants: convParticipants.map((cp) => {
-        const user = cp.user;
-        const profile = profileMap.get(cp.user_id);
-        const status = presenceMap.get(cp.user_id) || "offline";
-        return {
-          userId: cp.user_id,
-          name: user?.name,
-          email: user?.email,
-          avatarUrl: profile?.avatar_url ?? undefined,
-          displayName: profile?.display_name ?? undefined,
-          username: profile?.username ?? undefined,
-          isOnline: status === "online",
-          status: status as "online" | "offline" | "idle",
-        };
-      }),
-    };
-  });
-
-  // Sort by last message time (newest first)
-  conversations.sort((a, b) => {
-    const timeA = a.lastMessageAt ? new Date(a.lastMessageAt).getTime() : 0;
-    const timeB = b.lastMessageAt ? new Date(b.lastMessageAt).getTime() : 0;
-    return timeB - timeA;
-  });
-
-  return { success: true, conversations };
 }
 
 // ============================================
@@ -1265,21 +1123,12 @@ export async function getUsersForMessaging(
     const profiles = profilesResult.data;
     const presences = presencesResult.data;
 
-    // Compute status from last_active_at (Matrix SDK pattern)
-    const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
-    const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
-    const now = Date.now();
-
+    // Build maps for efficient lookup
     const profileMap = new Map((profiles as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []);
     const presenceRows = (presences || []) as { user_id: string; last_active_at: string | null }[];
-    const presenceMap = new Map(presenceRows.map((p) => {
-      if (!p.last_active_at) return [p.user_id, "offline"];
-      const lastActive = new Date(p.last_active_at).getTime();
-      const diff = now - lastActive;
-      if (diff < ONLINE_THRESHOLD_MS) return [p.user_id, "online"];
-      if (diff < IDLE_THRESHOLD_MS) return [p.user_id, "idle"];
-      return [p.user_id, "offline"];
-    }));
+    const presenceMap = new Map(
+      presenceRows.map((p) => [p.user_id, computePresenceStatus(p.last_active_at)])
+    );
 
     // Transform and sort (online first, then AI assistant)
     const result = filteredUsers.map((u) => {
@@ -1478,23 +1327,14 @@ export async function searchUsersForMention(
         .in("user_id", userIds),
     ]);
 
-    // Compute status from last_active_at (Matrix SDK pattern)
-    const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
-    const IDLE_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
-    const now = Date.now();
-
+    // Build maps for efficient lookup
     const profileMap = new Map(
       (profilesResult.data as ProfileRow[] | null)?.map((p) => [p.user_id, p]) || []
     );
     const presenceRows = (presencesResult.data || []) as { user_id: string; last_active_at: string | null }[];
-    const presenceMap = new Map(presenceRows.map((p) => {
-      if (!p.last_active_at) return [p.user_id, "offline"];
-      const lastActive = new Date(p.last_active_at).getTime();
-      const diff = now - lastActive;
-      if (diff < ONLINE_THRESHOLD_MS) return [p.user_id, "online"];
-      if (diff < IDLE_THRESHOLD_MS) return [p.user_id, "idle"];
-      return [p.user_id, "offline"];
-    }));
+    const presenceMap = new Map(
+      presenceRows.map((p) => [p.user_id, computePresenceStatus(p.last_active_at)])
+    );
 
     // Build and sort result
     const users = Array.from(userMap.values()).map((u) => {
@@ -1781,10 +1621,6 @@ export async function markMessagesAsRead(
     });
 
     if (error) {
-      // If RPC doesn't exist, fall back to manual implementation
-      if (error.code === "42883") {
-        return await markMessagesAsReadFallback(session.user.id, conversationId, upToMessageId, supabase);
-      }
       console.error("Mark messages read error:", error);
       return { success: false, error: "Failed to mark messages as read" };
     }
@@ -1794,83 +1630,6 @@ export async function markMessagesAsRead(
     console.error("Mark messages read error:", error);
     return { success: false, error: "An unexpected error occurred" };
   }
-}
-
-/**
- * Fallback implementation when RPC function doesn't exist
- */
-async function markMessagesAsReadFallback(
-  userId: string,
-  conversationId: string,
-  upToMessageId: string | undefined,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: any
-): Promise<{ success: boolean; markedCount?: number; error?: string }> {
-  // Get messages that need to be marked as read
-  let query = supabase
-    .from("dm_messages")
-    .select("id, created_at")
-    .eq("conversation_id", conversationId)
-    .neq("sender_id", userId)
-    .is("deleted_at", null);
-
-  if (upToMessageId) {
-    // Get the timestamp of the target message to use as cutoff
-    const { data: targetMsg } = await supabase
-      .from("dm_messages")
-      .select("created_at")
-      .eq("id", upToMessageId)
-      .single();
-
-    if (targetMsg) {
-      query = query.lte("created_at", targetMsg.created_at);
-    }
-  }
-
-  const { data: messages, error: msgError } = await query;
-
-  if (msgError) {
-    console.error("Get messages for read receipts error:", msgError);
-    return { success: false, error: "Failed to get messages" };
-  }
-
-  if (!messages || messages.length === 0) {
-    return { success: true, markedCount: 0 };
-  }
-
-  // Get existing read receipts to avoid duplicates
-  const messageIds = messages.map((m: { id: string }) => m.id);
-  const { data: existingReceipts } = await supabase
-    .from("dm_message_read_receipts")
-    .select("message_id")
-    .eq("user_id", userId)
-    .in("message_id", messageIds);
-
-  const existingIds = new Set((existingReceipts || []).map((r: { message_id: string }) => r.message_id));
-
-  // Filter out already read messages
-  const unreadMessageIds = messageIds.filter((id: string) => !existingIds.has(id));
-
-  if (unreadMessageIds.length === 0) {
-    return { success: true, markedCount: 0 };
-  }
-
-  // Insert read receipts
-  const receiptsToInsert = unreadMessageIds.map((messageId: string) => ({
-    message_id: messageId,
-    user_id: userId,
-  }));
-
-  const { error: insertError } = await supabase
-    .from("dm_message_read_receipts")
-    .insert(receiptsToInsert);
-
-  if (insertError) {
-    console.error("Insert read receipts error:", insertError);
-    return { success: false, error: "Failed to mark messages as read" };
-  }
-
-  return { success: true, markedCount: unreadMessageIds.length };
 }
 
 /**
@@ -1906,10 +1665,6 @@ export async function getReadReceipts(
     });
 
     if (error) {
-      // Fallback if RPC doesn't exist
-      if (error.code === "42883") {
-        return await getReadReceiptsFallback(messageIds, supabase);
-      }
       console.error("Get read receipts error:", error);
       return { success: false, error: "Failed to get read receipts" };
     }
@@ -1939,93 +1694,6 @@ export async function getReadReceipts(
     console.error("Get read receipts error:", error);
     return { success: false, error: "An unexpected error occurred" };
   }
-}
-
-/**
- * Fallback implementation when RPC function doesn't exist
- */
-async function getReadReceiptsFallback(
-  messageIds: string[],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: any
-): Promise<{ success: boolean; receipts?: Record<string, ReadReceipt[]>; error?: string }> {
-  // Get read receipts with user info
-  const { data: receipts, error } = await supabase
-    .from("dm_message_read_receipts")
-    .select(`
-      message_id,
-      user_id,
-      read_at,
-      user:user_id (
-        id,
-        name,
-        image
-      )
-    `)
-    .in("message_id", messageIds)
-    .order("read_at", { ascending: true });
-
-  if (error) {
-    console.error("Get read receipts fallback error:", error);
-    return { success: false, error: "Failed to get read receipts" };
-  }
-
-  // Get profiles for usernames
-  const userIds = [...new Set((receipts || []).map((r: { user_id: string }) => r.user_id))];
-  const { data: profiles } = await supabase
-    .from("profiles")
-    .select("user_id, display_name, avatar_url, username")
-    .in("user_id", userIds);
-
-  const profileMap = new Map<string, ProfileRow>(
-    (profiles || []).map((p: ProfileRow) => [p.user_id, p])
-  );
-
-  // Transform into map
-  const receiptsMap: Record<string, ReadReceipt[]> = {};
-
-  for (const row of receipts || []) {
-    const profile = profileMap.get(row.user_id);
-    const user = row.user as { id: string; name?: string; image?: string } | null;
-
-    if (!receiptsMap[row.message_id]) {
-      receiptsMap[row.message_id] = [];
-    }
-    const arr = receiptsMap[row.message_id];
-    if (arr) {
-      arr.push({
-        userId: row.user_id,
-        userName: profile?.display_name || user?.name || undefined,
-        userUsername: profile?.username || undefined,
-        userAvatar: profile?.avatar_url || user?.image || undefined,
-        readAt: row.read_at,
-      });
-    }
-  }
-
-  return { success: true, receipts: receiptsMap };
-}
-
-/**
- * Get read receipts for the sender's own messages in a conversation.
- * This is optimized for the common case where we want to show
- * "Seen" status on the sender's messages.
- *
- * @param conversationId - The conversation to get receipts for
- * @param senderMessageIds - Message IDs sent by the current user
- * @returns Map of message ID to read receipts
- */
-export async function getSenderMessageReadReceipts(
-  conversationId: string,
-  senderMessageIds: string[]
-): Promise<{
-  success: boolean;
-  receipts?: Record<string, ReadReceipt[]>;
-  error?: string;
-}> {
-  // This is just an alias to getReadReceipts but could be optimized
-  // in the future to only fetch receipts for the sender's messages
-  return getReadReceipts(senderMessageIds);
 }
 
 // ============================================
@@ -2103,7 +1771,7 @@ export async function getProfilesByUsernames(
       }
     }
 
-    // Fetch online status from user_presence (Matrix SDK pattern - compute from last_active_at)
+    // Fetch online status from user_presence
     let onlineStatus: Record<string, boolean> = {};
     if (userIds.length > 0) {
       const { data: presence } = await supabase
@@ -2112,17 +1780,11 @@ export async function getProfilesByUsernames(
         .in("user_id", userIds);
 
       if (presence) {
-        const now = Date.now();
-        const ONLINE_THRESHOLD_MS = 2 * 60 * 1000; // 2 minutes
-
         onlineStatus = Object.fromEntries(
-          presence.map((p: { user_id: string; last_active_at: string | null }) => {
-            // Compute online status from last_active_at (Matrix SDK pattern)
-            if (!p.last_active_at) return [p.user_id, false];
-            const lastActive = new Date(p.last_active_at).getTime();
-            const isOnline = now - lastActive < ONLINE_THRESHOLD_MS;
-            return [p.user_id, isOnline];
-          })
+          presence.map((p: { user_id: string; last_active_at: string | null }) => [
+            p.user_id,
+            computePresenceStatus(p.last_active_at) === "online",
+          ])
         );
       }
     }
