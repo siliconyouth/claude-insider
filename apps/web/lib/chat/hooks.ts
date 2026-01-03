@@ -166,11 +166,10 @@ export function useChatMessages(conversationId: string | null) {
         const { sendMessage: legacySend } = await import("@/app/actions/messaging");
         const result = await legacySend(conversationId, content);
         if (result.success && result.message) {
-          // Add to local state
-          setState((s) => ({
-            ...s,
-            messages: [...s.messages, transformLegacyMessage(result.message!)],
-          }));
+          // DON'T add to internal state here!
+          // The caller (ConversationView) handles optimistic updates and temp→real replacement.
+          // Adding here would trigger sync useEffect and cause a race condition where
+          // the message appears briefly then disappears.
           return { success: true, message: transformLegacyMessage(result.message) };
         }
         return { success: false, error: result.error || "Failed to send" };
