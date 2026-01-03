@@ -28,12 +28,12 @@ import { heartbeat, updatePresence } from "@/app/actions/presence";
 // Send heartbeat every 30 seconds while active
 const HEARTBEAT_INTERVAL_MS = 30000;
 
-// Stop sending heartbeats after 2 minutes of no user activity
-// This allows server to compute "idle" status (uses 2-minute threshold)
-const IDLE_AFTER_INACTIVE_MS = 2 * 60 * 1000;
+// Stop sending heartbeats after 45 seconds of no user activity
+// This matches ONLINE_THRESHOLD_MS - if no activity, user goes offline
+const IDLE_AFTER_INACTIVE_MS = 45 * 1000;
 
-// Mark as idle after 5 minutes of tab hidden
-const IDLE_AFTER_HIDDEN_MS = 5 * 60 * 1000;
+// Mark as idle after 2 minutes of tab hidden
+const IDLE_AFTER_HIDDEN_MS = 2 * 60 * 1000;
 
 // Minimum time between heartbeats to prevent hammering
 const MIN_HEARTBEAT_INTERVAL_MS = 10000;

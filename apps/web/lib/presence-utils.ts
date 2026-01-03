@@ -6,14 +6,23 @@
  */
 
 // ============================================
-// PRESENCE THRESHOLDS (Matrix SDK Pattern)
+// PRESENCE THRESHOLDS
 // ============================================
 
-/** User is online if active within this time (2 minutes) */
-export const ONLINE_THRESHOLD_MS = 2 * 60 * 1000;
+/**
+ * User is online ONLY if active within this time.
+ * Set to 45 seconds (1.5x heartbeat interval of 30s).
+ * This means missing just one heartbeat = offline.
+ *
+ * Philosophy: Default to offline, only show online with active signal.
+ */
+export const ONLINE_THRESHOLD_MS = 45 * 1000; // 45 seconds
 
-/** User is idle if active within this time but not recent (1 hour) */
-export const IDLE_THRESHOLD_MS = 60 * 60 * 1000;
+/**
+ * User is idle if active between online threshold and this time.
+ * After this, user is completely offline.
+ */
+export const IDLE_THRESHOLD_MS = 5 * 60 * 1000; // 5 minutes (was 1 hour)
 
 // ============================================
 // TYPES
