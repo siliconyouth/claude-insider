@@ -12,31 +12,6 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "13.0.5"
   }
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
       _payload_resources_v: {
@@ -2741,11 +2716,15 @@ export type Database = {
           created_at: string
           created_by: string | null
           description: string | null
+          encryption_disabled_at: string | null
+          encryption_disabled_by: string | null
+          encryption_disabled_reason: string | null
           id: string
           last_message_at: string | null
           last_message_preview: string | null
           max_participants: number | null
           name: string | null
+          pinned_count: number | null
           type: string
           updated_at: string
         }
@@ -2754,11 +2733,15 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          encryption_disabled_at?: string | null
+          encryption_disabled_by?: string | null
+          encryption_disabled_reason?: string | null
           id?: string
           last_message_at?: string | null
           last_message_preview?: string | null
           max_participants?: number | null
           name?: string | null
+          pinned_count?: number | null
           type?: string
           updated_at?: string
         }
@@ -2767,11 +2750,15 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          encryption_disabled_at?: string | null
+          encryption_disabled_by?: string | null
+          encryption_disabled_reason?: string | null
           id?: string
           last_message_at?: string | null
           last_message_preview?: string | null
           max_participants?: number | null
           name?: string | null
+          pinned_count?: number | null
           type?: string
           updated_at?: string
         }
@@ -2786,6 +2773,69 @@ export type Database = {
           {
             foreignKeyName: "dm_conversations_created_by_fkey"
             columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dm_conversations_encryption_disabled_by_fkey"
+            columns: ["encryption_disabled_by"]
+            isOneToOne: false
+            referencedRelation: "mcp_configs_gallery"
+            referencedColumns: ["author_id"]
+          },
+          {
+            foreignKeyName: "dm_conversations_encryption_disabled_by_fkey"
+            columns: ["encryption_disabled_by"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dm_delivery_receipts: {
+        Row: {
+          device_id: string | null
+          id: string
+          message_id: string
+          received_at: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          device_id?: string | null
+          id?: string
+          message_id: string
+          received_at?: string | null
+          status: string
+          user_id: string
+        }
+        Update: {
+          device_id?: string | null
+          id?: string
+          message_id?: string
+          received_at?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dm_delivery_receipts_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "dm_messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dm_delivery_receipts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "mcp_configs_gallery"
+            referencedColumns: ["author_id"]
+          },
+          {
+            foreignKeyName: "dm_delivery_receipts_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user"
             referencedColumns: ["id"]
@@ -3102,6 +3152,69 @@ export type Database = {
           {
             foreignKeyName: "dm_participants_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dm_pinned_messages: {
+        Row: {
+          conversation_id: string
+          id: string
+          message_id: string
+          note: string | null
+          pinned_at: string | null
+          pinned_by: string
+        }
+        Insert: {
+          conversation_id: string
+          id?: string
+          message_id: string
+          note?: string | null
+          pinned_at?: string | null
+          pinned_by: string
+        }
+        Update: {
+          conversation_id?: string
+          id?: string
+          message_id?: string
+          note?: string | null
+          pinned_at?: string | null
+          pinned_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dm_pinned_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dm_pinned_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "user_dm_conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dm_pinned_messages_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "dm_messages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dm_pinned_messages_pinned_by_fkey"
+            columns: ["pinned_by"]
+            isOneToOne: false
+            referencedRelation: "mcp_configs_gallery"
+            referencedColumns: ["author_id"]
+          },
+          {
+            foreignKeyName: "dm_pinned_messages_pinned_by_fkey"
+            columns: ["pinned_by"]
             isOneToOne: false
             referencedRelation: "user"
             referencedColumns: ["id"]
@@ -5698,6 +5811,60 @@ export type Database = {
           started_at?: string | null
           status?: string
           type?: string
+        }
+        Relationships: []
+      }
+      link_previews: {
+        Row: {
+          description: string | null
+          expires_at: string | null
+          favicon: string | null
+          fetch_error: string | null
+          fetched_at: string | null
+          id: string
+          image: string | null
+          retry_count: number | null
+          site_name: string | null
+          title: string | null
+          type: string | null
+          url: string
+          url_hash: string | null
+          video_type: string | null
+          video_url: string | null
+        }
+        Insert: {
+          description?: string | null
+          expires_at?: string | null
+          favicon?: string | null
+          fetch_error?: string | null
+          fetched_at?: string | null
+          id?: string
+          image?: string | null
+          retry_count?: number | null
+          site_name?: string | null
+          title?: string | null
+          type?: string | null
+          url: string
+          url_hash?: string | null
+          video_type?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          description?: string | null
+          expires_at?: string | null
+          favicon?: string | null
+          fetch_error?: string | null
+          fetched_at?: string | null
+          id?: string
+          image?: string | null
+          retry_count?: number | null
+          site_name?: string | null
+          title?: string | null
+          type?: string | null
+          url?: string
+          url_hash?: string | null
+          video_type?: string | null
+          video_url?: string | null
         }
         Relationships: []
       }
@@ -13271,6 +13438,7 @@ export type Database = {
         }[]
       }
       cleanup_expired_2fa_codes: { Args: never; Returns: undefined }
+      cleanup_expired_link_previews: { Args: never; Returns: number }
       cleanup_expired_sas_verifications: { Args: never; Returns: number }
       cleanup_old_jobs: { Args: { p_days?: number }; Returns: number }
       cleanup_stale_push_subscriptions: { Args: never; Returns: undefined }
@@ -13326,6 +13494,10 @@ export type Database = {
       decline_group_invitation: {
         Args: { p_invitation_id: string; p_user_id: string }
         Returns: undefined
+      }
+      disable_dm_encryption: {
+        Args: { p_conversation_id: string; p_reason: string; p_user_id: string }
+        Returns: boolean
       }
       fail_job: {
         Args: { p_error?: string; p_job_id: string }
@@ -13383,6 +13555,28 @@ export type Database = {
           participant_usernames: string[]
           unread_count: number
           updated_at: string
+        }[]
+      }
+      get_conversations_with_context: {
+        Args: { p_limit?: number; p_offset?: number; p_user_id?: string }
+        Returns: {
+          avatar_url: string
+          created_at: string
+          id: string
+          is_encrypted: boolean
+          is_muted: boolean
+          last_message_at: string
+          last_message_preview: string
+          last_message_sender_name: string
+          name: string
+          other_user_avatar: string
+          other_user_id: string
+          other_user_name: string
+          other_user_status: string
+          participants: Json
+          pinned_count: number
+          type: string
+          unread_count: number
         }[]
       }
       get_device_keys_for_users: {
@@ -13451,6 +13645,33 @@ export type Database = {
           status: string
         }[]
       }
+      get_link_previews_batch: {
+        Args: { p_urls: string[] }
+        Returns: {
+          description: string
+          favicon: string
+          image: string
+          is_cached: boolean
+          needs_refresh: boolean
+          site_name: string
+          title: string
+          type: string
+          url: string
+          video_type: string
+          video_url: string
+        }[]
+      }
+      get_message_delivery_status: {
+        Args: { p_message_ids: string[] }
+        Returns: {
+          delivered_by: Json
+          delivered_count: number
+          message_id: string
+          read_by: Json
+          read_count: number
+          status: string
+        }[]
+      }
       get_message_read_receipts: {
         Args: { p_message_ids: string[] }
         Returns: {
@@ -13493,6 +13714,40 @@ export type Database = {
           session_id: string
         }[]
       }
+      get_messages_with_context: {
+        Args: {
+          p_after_id?: string
+          p_before_id?: string
+          p_conversation_id: string
+          p_limit?: number
+        }
+        Returns: {
+          content: string
+          created_at: string
+          deleted_at: string
+          delivered_count: number
+          edited_at: string
+          encrypted_content: string
+          has_more: boolean
+          id: string
+          is_encrypted: boolean
+          is_pinned: boolean
+          mentions: string[]
+          pin_note: string
+          reactions: Json
+          read_by: Json
+          read_count: number
+          reply_content: string
+          reply_sender_id: string
+          reply_sender_name: string
+          reply_to_message_id: string
+          sender_avatar: string
+          sender_id: string
+          sender_name: string
+          sender_username: string
+          total_unread: number
+        }[]
+      }
       get_notification_target_users: {
         Args: { notification_id: string }
         Returns: {
@@ -13532,6 +13787,33 @@ export type Database = {
         Args: { p_user1: string; p_user2: string }
         Returns: string
       }
+      get_or_create_link_preview: {
+        Args: {
+          p_description?: string
+          p_favicon?: string
+          p_image?: string
+          p_site_name?: string
+          p_title?: string
+          p_type?: string
+          p_url: string
+          p_video_type?: string
+          p_video_url?: string
+        }
+        Returns: {
+          description: string
+          favicon: string
+          id: string
+          image: string
+          is_cached: boolean
+          needs_refresh: boolean
+          site_name: string
+          title: string
+          type: string
+          url: string
+          video_type: string
+          video_url: string
+        }[]
+      }
       get_pending_analysis_jobs: {
         Args: { p_limit?: number }
         Returns: {
@@ -13567,6 +13849,21 @@ export type Database = {
           status: string
           target_id: string
           target_type: string
+        }[]
+      }
+      get_pinned_messages: {
+        Args: { p_conversation_id: string }
+        Returns: {
+          message_content: string
+          message_created_at: string
+          message_id: string
+          message_sender_id: string
+          message_sender_name: string
+          note: string
+          pin_id: string
+          pinned_at: string
+          pinned_by: string
+          pinned_by_name: string
         }[]
       }
       get_related_resources: {
@@ -13633,6 +13930,16 @@ export type Database = {
       get_total_unread_dm_count: {
         Args: { p_user_id: string }
         Returns: number
+      }
+      get_users_presence: {
+        Args: { p_user_ids: string[] }
+        Returns: {
+          is_typing: boolean
+          last_active_at: string
+          status: string
+          typing_in_conversation: string
+          user_id: string
+        }[]
       }
       grant_ai_consent: {
         Args: {
@@ -13807,6 +14114,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      should_encrypt_conversation: {
+        Args: { p_conversation_id: string }
+        Returns: boolean
+      }
       start_ai_operation: { Args: { p_operation_id: string }; Returns: boolean }
       start_sas_verification: {
         Args: {
@@ -13845,6 +14156,10 @@ export type Database = {
       update_user_presence: {
         Args: { p_status: string; p_user_id: string }
         Returns: undefined
+      }
+      upgrade_dm_to_e2ee: {
+        Args: { p_conversation_id: string; p_user_id: string }
+        Returns: boolean
       }
       user_has_role: {
         Args: { required_role: string; user_id: string }
@@ -14415,9 +14730,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {
       _locales: [
