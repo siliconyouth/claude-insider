@@ -21,7 +21,7 @@ import { ReactionButton } from "./emoji-picker";
 import { ReactionDisplay } from "./reaction-display";
 import { ReplyPreview, ReplyButton } from "./reply-preview";
 import { LinkPreview } from "@/components/chat/link-preview";
-import { DeliveryCheckmark } from "@/components/chat/delivery-status";
+import { DeliveryCheckmark as _DeliveryCheckmark } from "@/components/chat/delivery-status";
 
 /** User data for @mention hover cards */
 export interface MentionedUser {

@@ -110,7 +110,7 @@ export function MCPMyConfigs({
   onRefresh,
   className,
 }: MCPMyConfigsProps) {
-  const { user, isLoading: authLoading, isAuthenticated } = useAuth();
+  const { user: _user, isLoading: authLoading, isAuthenticated } = useAuth();
 
   const [configs, setConfigs] = useState<ConfigItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);

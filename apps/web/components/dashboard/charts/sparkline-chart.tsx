@@ -7,6 +7,7 @@
  * Minimal styling, no axes or labels - just the data visualization.
  */
 
+import { useId } from "react";
 import { AreaChart, Area, ResponsiveContainer } from "recharts";
 import { cn } from "@/lib/design-system";
 import { CHART_COLORS } from "./index";
@@ -36,7 +37,8 @@ export function SparklineChart({
   showGradient = true,
   strokeWidth = 1.5,
 }: SparklineChartProps) {
-  const gradientId = `sparkline-${Math.random().toString(36).substr(2, 9)}`;
+  const id = useId();
+  const gradientId = `sparkline-${id}`;
   const fillColor = gradientColor || color;
 
   return (

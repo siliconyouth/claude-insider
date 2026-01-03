@@ -58,9 +58,9 @@ export class GitHubAdapter extends BaseAdapter {
       "X-GitHub-Api-Version": "2022-11-28",
       "User-Agent": "Claude-Insider-Resource-Discovery",
     };
-    // eslint-disable-next-line turbo/no-undeclared-env-vars
+     
     if (process.env.GITHUB_TOKEN) {
-      // eslint-disable-next-line turbo/no-undeclared-env-vars
+       
       this.headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
   }

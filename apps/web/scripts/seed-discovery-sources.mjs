@@ -1,6 +1,6 @@
 import './lib/env.mjs';
 import pg from 'pg';
-import { join } from 'path';
+import { join as _join } from 'path';
 
 const { Pool } = pg;
 
@@ -290,7 +290,7 @@ async function seedSources() {
 
       console.log(`✅ Added: ${source.name}`);
       inserted++;
-    } catch (err) {
+    } catch (_err) {
       console.log(`❌ Error adding ${source.name}:`, err.message);
     }
   }

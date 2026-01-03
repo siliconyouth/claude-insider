@@ -90,6 +90,7 @@ export default function AIPipelineInfoPanel() {
       <div style={styles.linksSection}>
         <h5 style={styles.linksTitle}>Quick Links</h5>
         <div style={styles.linksGrid}>
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- Payload CMS component uses native navigation */}
           <a href="/dashboard/documentation" style={styles.link}>
             <FileTextIcon />
             Documentation

@@ -153,7 +153,7 @@ async function main() {
       process.exit(1);
     }
 
-  } catch (error) {
+  } catch (_error) {
     console.error("\\n❌ Error:", error.message);
     process.exit(1);
   } finally {

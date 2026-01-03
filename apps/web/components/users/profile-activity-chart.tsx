@@ -38,8 +38,8 @@ const ACTIVITY_COLORS = {
   suggestions: "#22c55e", // green
 };
 
-// Achievement rarity tiers (should match lib/achievements.ts)
-const RARITY_COLORS = {
+// Achievement rarity tiers (reserved for future achievement display - should match lib/achievements.ts)
+const _RARITY_COLORS = {
   common: "#6b7280", // gray
   rare: "#3b82f6", // blue
   epic: "#8b5cf6", // violet

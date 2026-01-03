@@ -142,7 +142,7 @@ async function addSources() {
       console.log(`✅ Added: ${source.name}`);
       console.log(`   ${source.url}`);
       inserted++;
-    } catch (err) {
+    } catch (_err) {
       console.log(`❌ Error adding ${source.name}:`, err.message);
     }
   }

@@ -208,6 +208,7 @@ export function DonorCard({
           )}
         >
           {avatarUrl ? (
+            /* eslint-disable-next-line @next/next/no-img-element -- External user avatar URL */
             <img
               src={avatarUrl}
               alt={displayName}

@@ -61,14 +61,17 @@ interface MatrixRoomId {
   free(): void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type -- Placeholder for future Matrix encryption settings
 interface MatrixEncryptionSettings {
   // Settings for room encryption
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type -- Placeholder for future Matrix decryption settings
 interface MatrixDecryptionSettings {
   // Settings for room decryption
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type -- Placeholder for future Matrix device lists
 interface MatrixDeviceLists {
   // Device lists for sync
 }
@@ -589,7 +592,7 @@ class WasmAccount implements VodozemacAccount {
     }
   }
 
-  pickle(key: Uint8Array): string {
+  pickle(_key: Uint8Array): string {
     const data = {
       identityKeys: this._identityKeys,
       oneTimeKeys: Object.fromEntries(this.oneTimeKeysMap),
@@ -611,8 +614,8 @@ class WasmAccount implements VodozemacAccount {
   }
 
   createOutboundSession(
-    recipientIdentityKey: string,
-    recipientOneTimeKey: string
+    _recipientIdentityKey: string,
+    _recipientOneTimeKey: string
   ): WasmSession {
     return new WasmSession();
   }
@@ -1177,8 +1180,8 @@ class WebCryptoAccount implements VodozemacAccount {
   }
 
   createOutboundSession(
-    recipientIdentityKey: string,
-    recipientOneTimeKey: string
+    _recipientIdentityKey: string,
+    _recipientOneTimeKey: string
   ): WebCryptoSession {
     return new WebCryptoSession();
   }

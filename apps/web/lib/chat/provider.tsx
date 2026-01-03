@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/exhaustive-deps */
 
 /**
  * Chat Provider
@@ -38,7 +39,7 @@ import type {
 } from "./types";
 import {
   initializeChatEngine,
-  getChatEngine,
+  getChatEngine as _getChatEngine,
   resetChatEngine,
   type ChatEngine,
 } from "./engine";

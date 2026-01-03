@@ -35,7 +35,7 @@ async function fetchAwesomeList(owner, repo, branch = 'main', path = 'README.md'
       throw new Error(`HTTP ${response.status}`);
     }
     return await response.text();
-  } catch (error) {
+  } catch (_error) {
     console.log(`  ❌ Failed to fetch: ${error.message}`);
     return null;
   }
@@ -247,7 +247,7 @@ async function processGitHubOrg(source) {
 
     const repos = await response.json();
     return processRepos(repos, source);
-  } catch (error) {
+  } catch (_error) {
     console.log(`  ❌ Failed to fetch org: ${error.message}`);
     return [];
   }
@@ -386,7 +386,7 @@ async function processWebsite(source, existingUrls) {
     clearProgress();
     console.log(`  ✓ Processed ${resources.length} resources`);
     return resources;
-  } catch (error) {
+  } catch (_error) {
     console.log(`  ❌ Website scraping failed: ${error.message}`);
 
     // Fallback: add the website itself as a resource
@@ -485,7 +485,7 @@ async function processNpm(source, existingUrls) {
 
     console.log(`  ✓ Found ${resources.length} npm packages`);
     return resources;
-  } catch (error) {
+  } catch (_error) {
     console.log(`  ❌ npm search failed: ${error.message}`);
     return [];
   }
@@ -561,7 +561,7 @@ async function processPypi(source, existingUrls) {
 
     console.log(`  ✓ Found ${unique.length} PyPI packages`);
     return unique;
-  } catch (error) {
+  } catch (_error) {
     console.log(`  ❌ PyPI search failed: ${error.message}`);
     return [];
   }
@@ -651,7 +651,7 @@ async function processGitHubSearch(source, existingUrls) {
 
     console.log(`  ✓ Found ${resources.length} repositories`);
     return resources;
-  } catch (error) {
+  } catch (_error) {
     console.log(`  ❌ GitHub search failed: ${error.message}`);
     return [];
   }
@@ -717,7 +717,7 @@ async function runDiscovery() {
           console.log(`  ⏭️  Skipping unsupported type: ${source.type}`);
           continue;
       }
-    } catch (error) {
+    } catch (_error) {
       console.log(`  ❌ Error: ${error.message}`);
       continue;
     }
@@ -747,7 +747,7 @@ async function runDiscovery() {
 
         existingUrls.add(resource.url);
         queued++;
-      } catch (error) {
+      } catch (_error) {
         // Skip duplicates silently
       }
     }

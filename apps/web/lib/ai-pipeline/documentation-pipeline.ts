@@ -27,7 +27,7 @@ import type {
   ScrapeError,
   DocRewriteInput,
   DocRewriteOutput,
-  AI_MODELS,
+  AI_MODELS as _AI_MODELS,
 } from "./types";
 import { createHash } from "crypto";
 

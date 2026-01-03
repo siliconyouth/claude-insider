@@ -148,9 +148,9 @@ export class AwesomeListAdapter extends BaseAdapter {
       Accept: "application/vnd.github+json",
       "User-Agent": "Claude-Insider-Resource-Discovery",
     };
-    // eslint-disable-next-line turbo/no-undeclared-env-vars
+     
     if (process.env.GITHUB_TOKEN) {
-      // eslint-disable-next-line turbo/no-undeclared-env-vars
+       
       headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
 

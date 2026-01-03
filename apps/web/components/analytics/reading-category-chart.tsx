@@ -112,7 +112,12 @@ function DonutChart({
   const circumference = 2 * Math.PI * radius;
   const total = data.reduce((sum, d) => sum + d.count, 0);
 
-  let currentOffset = 0;
+  // Pre-calculate offsets to avoid mutation during render
+  const offsets = data.reduce<number[]>((acc, category, index) => {
+    const prevOffset = index === 0 ? 0 : acc[index - 1] + (data[index - 1].count / total) * circumference;
+    acc.push(prevOffset);
+    return acc;
+  }, []);
 
   return (
     <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
@@ -131,8 +136,7 @@ function DonutChart({
         {data.map((category, index) => {
           const percentage = (category.count / total) * 100;
           const strokeDasharray = `${(percentage / 100) * circumference} ${circumference}`;
-          const strokeDashoffset = -currentOffset;
-          currentOffset += (percentage / 100) * circumference;
+          const strokeDashoffset = -offsets[index];
 
           return (
             <circle

@@ -50,7 +50,7 @@ async function loadEnv() {
       }
     }
     return env;
-  } catch (err) {
+  } catch (_err) {
     console.error("Failed to load .env.local:", err.message);
     return {};
   }
@@ -254,7 +254,7 @@ async function main() {
       console.log(
         `  ✅ Updated ${jsonFileName}.json (${updatedCount} resources)`
       );
-    } catch (err) {
+    } catch (_err) {
       console.log(`  ❌ Failed to update ${jsonFileName}.json:`, err.message);
     }
   }

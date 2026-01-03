@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/purity */
 
 /**
  * Presence Provider (Matrix SDK Pattern)

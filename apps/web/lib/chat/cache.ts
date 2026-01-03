@@ -270,7 +270,7 @@ export class LRUCache<K, V> {
 // SPECIALIZED CACHES
 // ============================================================================
 
-import type { Message, Conversation, Participant } from "./types";
+import type { Message, Conversation, Participant as _Participant } from "./types";
 
 /**
  * Message cache with conversation-based invalidation

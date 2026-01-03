@@ -333,7 +333,7 @@ export const VirtualizedMessageList = forwardRef<VirtualizedMessageListHandle, V
 
         {/* Messages - simple flexbox layout */}
         <div className="flex flex-col">
-          {items.map((item, index) => {
+          {items.map((item, _index) => {
             // Date separator
             if (item.type === "date" && item.date) {
               return (

@@ -8,6 +8,7 @@
  */
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { cn } from "@/lib/design-system";
 
 interface ErrorPageProps {
@@ -96,7 +97,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
               >
                 Try Again
               </button>
-              <a
+              <Link
                 href="/"
                 className={cn(
                   "px-5 py-2.5 rounded-lg text-sm font-medium",
@@ -106,7 +107,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
                 )}
               >
                 Go Home
-              </a>
+              </Link>
             </div>
 
             {/* Error ID */}

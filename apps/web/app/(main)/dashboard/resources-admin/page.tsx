@@ -32,7 +32,7 @@ import Link from "next/link";
 import {
   useResourcesAdminList,
   type ResourceAdminItem,
-  type ResourceCategoryStats,
+  type ResourceCategoryStats as _ResourceCategoryStats,
 } from "@/lib/query/hooks";
 
 const CATEGORY_COLORS: Record<string, string> = {

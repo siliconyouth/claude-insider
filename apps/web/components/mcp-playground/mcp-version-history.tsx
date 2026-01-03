@@ -29,7 +29,7 @@ interface MCPVersionHistoryProps {
 
 export function MCPVersionHistory({
   configId,
-  currentConfig,
+  currentConfig: _currentConfig,
   onRestore,
   className,
 }: MCPVersionHistoryProps) {

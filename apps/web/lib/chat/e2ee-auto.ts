@@ -22,8 +22,8 @@ import {
   getDeviceIdentityKey,
   getCurrentDeviceId,
   createOutboundOlmSession,
-  getOrCreateOlmSession,
-  type DeviceInfo,
+  getOrCreateOlmSession as _getOrCreateOlmSession,
+  type DeviceInfo as _DeviceInfo,
 } from "@/lib/e2ee";
 import type { Conversation } from "./types";
 
@@ -68,8 +68,8 @@ export interface DeviceKeys {
 // CONSTANTS
 // ============================================================================
 
-const MAX_SETUP_RETRIES = 3;
-const SETUP_TIMEOUT_MS = 10_000;
+const _MAX_SETUP_RETRIES = 3;
+const _SETUP_TIMEOUT_MS = 10_000;
 
 // ============================================================================
 // E2EE READINESS CHECK

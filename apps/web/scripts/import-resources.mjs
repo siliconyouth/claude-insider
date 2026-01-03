@@ -163,7 +163,7 @@ async function importResources() {
           }
 
           totalImported++;
-        } catch (err) {
+        } catch (_err) {
           console.error(`  Error importing ${resource.id}:`, err.message);
         }
       }
@@ -176,7 +176,7 @@ async function importResources() {
     console.log(`Tags created: ${totalTags}`);
     console.log(`Authors created: ${totalAuthors}`);
 
-  } catch (error) {
+  } catch (_error) {
     await client.query("ROLLBACK");
     console.error("Import failed:", error);
     throw error;

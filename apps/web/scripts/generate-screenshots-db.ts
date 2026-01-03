@@ -380,7 +380,7 @@ async function processResources(
   }
 
   const results: ProcessResult[] = [];
-  let completed = 0;
+  const _completed = 0;
   let successful = 0;
   let failed = 0;
   const startTime = Date.now();

@@ -7,7 +7,7 @@
  */
 
 import { useState, useEffect, useRef, useTransition } from "react";
-import Link from "next/link";
+// Link import removed - using ProfileHoverCard for navigation instead
 import { cn } from "@/lib/design-system";
 import { searchUsers, type SearchUserResult } from "@/app/actions/users";
 import { FollowButton } from "@/components/users/follow-button";

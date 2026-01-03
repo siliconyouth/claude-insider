@@ -132,6 +132,7 @@ async function captureScreenshot(
 // Upload screenshot to Supabase Storage
  
 async function uploadToSupabase(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   filePath: string,
   resourceId: string,

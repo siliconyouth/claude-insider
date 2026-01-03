@@ -24,7 +24,7 @@ import type {
   TriggerType,
   DiscoveredRelationship,
   RelationshipAnalysisInput,
-  MIN_CONFIDENCE_THRESHOLDS,
+  MIN_CONFIDENCE_THRESHOLDS as _MIN_CONFIDENCE_THRESHOLDS,
 } from "./types";
 
 // =============================================================================
@@ -103,35 +103,40 @@ export class RelationshipAnalyzer {
       let tokensUsed = 0;
 
       switch (job.job_type) {
-        case "doc_to_resources":
+        case "doc_to_resources": {
           const docResult = await this.analyzeDocToResources(job.target_id);
           relationships = docResult.relationships;
           tokensUsed = docResult.tokensUsed;
           break;
+        }
 
-        case "resource_to_docs":
+        case "resource_to_docs": {
           const resDocResult = await this.analyzeResourceToDocs(job.target_id);
           relationships = resDocResult.relationships;
           tokensUsed = resDocResult.tokensUsed;
           break;
+        }
 
-        case "resource_to_resources":
+        case "resource_to_resources": {
           const resResResult = await this.analyzeResourceToResources(job.target_id);
           relationships = resResResult.relationships;
           tokensUsed = resResResult.tokensUsed;
           break;
+        }
 
-        case "batch_resources":
+        case "batch_resources": {
           const batchResResult = await this.analyzeBatchResources();
           relationships = batchResResult.relationships;
           tokensUsed = batchResResult.tokensUsed;
           break;
+        }
 
-        case "batch_docs":
+        case "batch_docs": {
           const batchDocResult = await this.analyzeBatchDocs();
           relationships = batchDocResult.relationships;
           tokensUsed = batchDocResult.tokensUsed;
           break;
+        }
 
         default:
           throw new Error(`Unknown job type: ${job.job_type}`);

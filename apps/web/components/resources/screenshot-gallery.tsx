@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/immutability -- document.body.style manipulation is intentional for lightbox modal */
 
 /**
  * Screenshot Gallery Component

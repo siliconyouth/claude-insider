@@ -247,7 +247,7 @@ async function approveResources() {
       if (added % 50 === 0) {
         console.log(`  ✅ Added ${added} resources so far...`);
       }
-    } catch (error) {
+    } catch (_error) {
       console.log(`  ❌ Error adding ${resource.discovered_title}: ${error.message}`);
       await pool.query(
         `UPDATE resource_discovery_queue SET status = 'rejected', review_notes = $2 WHERE id = $1`,

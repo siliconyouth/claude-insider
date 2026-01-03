@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/immutability -- offset calculation in render is intentional for SVG positioning */
 
 /**
  * Category Breakdown Component

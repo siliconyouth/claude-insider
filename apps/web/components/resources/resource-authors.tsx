@@ -92,106 +92,105 @@ function AuthorCard({ author }: { author: ResourceAuthorRow }) {
     ? `https://github.com/${author.github_username}.png`
     : null);
 
-  // If author is linked to a platform user, make the card linkable
-  const CardWrapper = author.user_id
-    ? ({ children }: { children: React.ReactNode }) => (
-        <Link href={`/u/${author.user_id}`} className="block">
-          {children}
-        </Link>
-      )
-    : ({ children }: { children: React.ReactNode }) => <>{children}</>;
-
-  return (
-    <CardWrapper>
-      <div
-        className={cn(
-          "flex items-start gap-3 p-3 rounded-lg",
-          "bg-gray-50 dark:bg-[#111111]",
-          "border border-gray-200 dark:border-[#262626]",
-          author.user_id && "hover:border-blue-500/50 transition-colors cursor-pointer"
+  // Card content component
+  const cardContent = (
+    <div
+      className={cn(
+        "flex items-start gap-3 p-3 rounded-lg",
+        "bg-gray-50 dark:bg-[#111111]",
+        "border border-gray-200 dark:border-[#262626]",
+        author.user_id && "hover:border-blue-500/50 transition-colors cursor-pointer"
+      )}
+    >
+      {/* Avatar */}
+      <div className="flex-shrink-0">
+        {avatarUrl ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={avatarUrl}
+            alt={author.name}
+            className="w-12 h-12 rounded-full object-cover"
+          />
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center text-white font-semibold text-lg">
+            {author.name.charAt(0).toUpperCase()}
+          </div>
         )}
-      >
-        {/* Avatar */}
-        <div className="flex-shrink-0">
-          {avatarUrl ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={avatarUrl}
-              alt={author.name}
-              className="w-12 h-12 rounded-full object-cover"
-            />
-          ) : (
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center text-white font-semibold text-lg">
-              {author.name.charAt(0).toUpperCase()}
-            </div>
+      </div>
+
+      {/* Info */}
+      <div className="flex-1 min-w-0">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-medium text-gray-900 dark:text-white">
+            {author.name}
+          </span>
+          <span
+            className={cn(
+              "px-2 py-0.5 rounded text-xs font-medium",
+              roleInfo.color
+            )}
+          >
+            {roleInfo.label}
+          </span>
+          {author.is_primary && (
+            <span className="px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">
+              Primary
+            </span>
           )}
         </div>
 
-        {/* Info */}
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-medium text-gray-900 dark:text-white">
-              {author.name}
-            </span>
-            <span
-              className={cn(
-                "px-2 py-0.5 rounded text-xs font-medium",
-                roleInfo.color
-              )}
+        {/* Social Links */}
+        <div className="flex items-center gap-3 mt-2">
+          {author.github_username && (
+            <a
+              href={`https://github.com/${author.github_username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              title={`@${author.github_username} on GitHub`}
             >
-              {roleInfo.label}
-            </span>
-            {author.is_primary && (
-              <span className="px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400">
-                Primary
-              </span>
-            )}
-          </div>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-3 mt-2">
-            {author.github_username && (
-              <a
-                href={`https://github.com/${author.github_username}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-                title={`@${author.github_username} on GitHub`}
-              >
-                <GithubIcon className="w-4 h-4" />
-                <span className="hidden sm:inline">@{author.github_username}</span>
-              </a>
-            )}
-            {author.twitter_username && (
-              <a
-                href={`https://twitter.com/${author.twitter_username}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-                title={`@${author.twitter_username} on X`}
-              >
-                <TwitterIcon className="w-4 h-4" />
-                <span className="hidden sm:inline">@{author.twitter_username}</span>
-              </a>
-            )}
-            {author.website_url && (
-              <a
-                href={author.website_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-                title="Website"
-              >
-                <LinkIcon className="w-4 h-4" />
-                <span className="hidden sm:inline">Website</span>
-              </a>
-            )}
-          </div>
+              <GithubIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">@{author.github_username}</span>
+            </a>
+          )}
+          {author.twitter_username && (
+            <a
+              href={`https://twitter.com/${author.twitter_username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              title={`@${author.twitter_username} on X`}
+            >
+              <TwitterIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">@{author.twitter_username}</span>
+            </a>
+          )}
+          {author.website_url && (
+            <a
+              href={author.website_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              title="Website"
+            >
+              <LinkIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Website</span>
+            </a>
+          )}
         </div>
       </div>
-    </CardWrapper>
+    </div>
+  );
+
+  // Wrap in Link if author is linked to a platform user
+  return author.user_id ? (
+    <Link href={`/u/${author.user_id}`} className="block">
+      {cardContent}
+    </Link>
+  ) : (
+    cardContent
   );
 }

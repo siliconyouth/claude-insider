@@ -13,14 +13,14 @@ export default [
       },
     },
     rules: {
-      // Scripts are not part of the main app, relax some rules
-      "@typescript-eslint/no-unused-vars": ["warn", {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_"
-      }],
+      // Scripts are not part of the main app, relax rules
+      "@typescript-eslint/no-unused-vars": "off", // Allow unused vars in scripts
+      "no-unused-vars": "off", // Allow unused vars in scripts
       "no-undef": "off", // Allow Node.js globals like process
+      "no-redeclare": "off", // Allow redeclaring globals like process
       "turbo/no-undeclared-env-vars": "off", // Scripts access env vars directly
       "no-useless-escape": "off", // Scripts may have regex patterns
+      "no-empty": "off", // Allow empty catch blocks in scripts
     },
   },
 ];

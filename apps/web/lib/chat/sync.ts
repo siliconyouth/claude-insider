@@ -20,7 +20,7 @@ import type {
   Message,
   Gap,
   SyncState,
-  ConversationSyncState,
+  ConversationSyncState as _ConversationSyncState,
 } from "./types";
 import { ChatStore, getChatStore } from "./store";
 
@@ -258,8 +258,8 @@ export class SyncEngine {
     this.log(`Syncing conversation: ${conversationId}`);
 
     try {
-      // Get current sync state for conversation
-      const convSyncState = await this.store.getConversationSyncState(
+      // Get current sync state for conversation (reserved for future gap detection)
+      const _convSyncState = await this.store.getConversationSyncState(
         conversationId
       );
 

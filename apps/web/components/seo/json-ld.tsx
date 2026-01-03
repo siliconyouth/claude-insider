@@ -8,7 +8,6 @@
  */
 
 import {
-  ArticleJsonLd,
   BreadcrumbJsonLd,
   FAQJsonLd,
   SoftwareApplicationJsonLd,
@@ -130,7 +129,7 @@ export function ResourceJsonLd({
     priceCurrency: string;
   };
 }) {
-  const pageUrl = `${SITE_URL}/resources/${slug}`;
+  const _pageUrl = `${SITE_URL}/resources/${slug}`; // Reserved for future use
   const imageUrl = `${SITE_URL}/api/og/resource?title=${encodeURIComponent(name)}&category=${encodeURIComponent(category)}`;
 
   return (

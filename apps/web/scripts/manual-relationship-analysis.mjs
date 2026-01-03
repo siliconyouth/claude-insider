@@ -121,7 +121,7 @@ async function insertRelationships() {
       ]);
       inserted++;
       console.log(`  ✓ ${rel.source} → ${rel.target} (${rel.type})`);
-    } catch (e) {
+    } catch (_e) {
       console.log(`  ✗ Error: ${rel.source} → ${rel.target}: ${e.message}`);
       skipped++;
     }

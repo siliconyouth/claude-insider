@@ -49,7 +49,7 @@ for (const check of tableChecks) {
   try {
     const result = await pool.query(`SELECT COUNT(*) as count FROM ${check.name}`);
     console.log(`✓ ${check.name.padEnd(35)} ${String(result.rows[0].count).padStart(6)} rows  (migration ${check.migration})`);
-  } catch (err) {
+  } catch (_err) {
     console.log(`✗ ${check.name.padEnd(35)} MISSING  (migration ${check.migration})`);
   }
 }
@@ -69,7 +69,7 @@ for (const col of m088Columns) {
   try {
     await pool.query(`SELECT ${col} FROM resources LIMIT 1`);
     console.log(`✓ resources.${col}`);
-  } catch (err) {
+  } catch (_err) {
     console.log(`✗ resources.${col} - MISSING`);
   }
 }
@@ -81,14 +81,14 @@ console.log('──────────────────────�
 try {
   await pool.query('SELECT * FROM get_relationship_stats()');
   console.log('✓ get_relationship_stats()');
-} catch (err) {
+} catch (_err) {
   console.log('✗ get_relationship_stats() - MISSING');
 }
 
 try {
   await pool.query('SELECT * FROM get_pending_analysis_jobs() LIMIT 1');
   console.log('✓ get_pending_analysis_jobs()');
-} catch (err) {
+} catch (_err) {
   console.log('✗ get_pending_analysis_jobs() - MISSING');
 }
 

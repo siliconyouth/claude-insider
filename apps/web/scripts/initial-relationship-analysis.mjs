@@ -203,7 +203,7 @@ Analyze which resources are related to this documentation page. Return JSON arra
 
     const relationships = JSON.parse(jsonMatch[0]);
     return relationships.filter(r => r.confidence >= MIN_CONFIDENCE);
-  } catch (error) {
+  } catch (_error) {
     log(`    Error analyzing: ${error.message}`, colors.red);
     return [];
   }

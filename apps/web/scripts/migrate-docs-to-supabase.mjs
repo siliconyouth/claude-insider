@@ -156,7 +156,7 @@ function extractContentMeta(content) {
     if (meta.sources.length === 0) {
       log(`No sources extracted from ContentMeta`, "warn");
     }
-  } catch (e) {
+  } catch (_e) {
     log(`Failed to parse sources: ${e.message}`, "warn");
   }
 
@@ -455,7 +455,7 @@ async function main() {
       const doc = parseMdxFile(filePath);
       docs.push(doc);
       log(`  Parsed: ${doc.slug} (${doc.wordCount} words, ${doc.headings.length} headings)`, "debug");
-    } catch (e) {
+    } catch (_e) {
       log(`  Failed to parse ${filePath}: ${e.message}`, "error");
     }
   }

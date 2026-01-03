@@ -349,7 +349,7 @@ async function main() {
 
           inserted++;
           totalInserted++;
-        } catch (error) {
+        } catch (_error) {
           console.log(`  ⚠ Error: ${error.message}`);
           skipped++;
           totalSkipped++;

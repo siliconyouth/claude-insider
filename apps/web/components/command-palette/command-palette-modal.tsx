@@ -193,6 +193,32 @@ export function CommandPaletteModal({
     selectedItem?.scrollIntoView({ block: "nearest" });
   }, [selectedIndex, flatResults.length]);
 
+  // Execute a command
+  const executeCommand = useCallback(
+    async (command: Command) => {
+      setIsExecuting(true);
+
+      const context: CommandContext = {
+        userRole,
+        pathname,
+        close,
+        navigate: (href: string) => {
+          close();
+          router.push(href);
+        },
+      };
+
+      try {
+        await command.action(context);
+      } catch (error) {
+        console.error("[CommandPalette] Command execution failed:", error);
+      } finally {
+        setIsExecuting(false);
+      }
+    },
+    [userRole, pathname, close, router],
+  );
+
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -220,33 +246,7 @@ export function CommandPaletteModal({
           break;
       }
     },
-    [flatResults, selectedIndex],
-  );
-
-  // Execute a command
-  const executeCommand = useCallback(
-    async (command: Command) => {
-      setIsExecuting(true);
-
-      const context: CommandContext = {
-        userRole,
-        pathname,
-        close,
-        navigate: (href: string) => {
-          close();
-          router.push(href);
-        },
-      };
-
-      try {
-        await command.action(context);
-      } catch (error) {
-        console.error("[CommandPalette] Command execution failed:", error);
-      } finally {
-        setIsExecuting(false);
-      }
-    },
-    [userRole, pathname, close, router],
+    [flatResults, selectedIndex, executeCommand],
   );
 
   // Click backdrop to close
@@ -290,7 +290,7 @@ export function CommandPaletteModal({
         <div ref={listRef} className="ui-cmd-list" role="listbox">
           {searchResults.length === 0 ? (
             <div className="ui-cmd-empty">
-              No commands found for "{query}"
+              No commands found for &quot;{query}&quot;
             </div>
           ) : (
             searchResults.map((group) => (

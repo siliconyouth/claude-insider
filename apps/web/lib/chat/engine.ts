@@ -41,7 +41,7 @@ import {
 
 const MAX_RETRY_COUNT = 5;
 const RETRY_BACKOFF_MS = 1000;
-const TYPING_DEBOUNCE_MS = 300;
+const _TYPING_DEBOUNCE_MS = 300;
 const TYPING_TIMEOUT_MS = 5000;
 
 // ============================================================================
@@ -791,7 +791,7 @@ export class ChatEngine {
     operation: PendingOperation,
     optimisticMessage?: Message
   ): Promise<void> {
-    const { localId, content, replyToMessageId, mentions } = operation.payload as {
+    const { localId, content, replyToMessageId, mentions: _mentions } = operation.payload as {
       localId: string;
       content: string;
       replyToMessageId?: string;

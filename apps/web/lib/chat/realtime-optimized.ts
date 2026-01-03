@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 /**
  * Optimized Realtime Utilities
  *

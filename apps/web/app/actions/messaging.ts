@@ -90,7 +90,7 @@ export interface ReadReceipt {
 // DATABASE ROW TYPES
 // ============================================
 
-interface ParticipationRow {
+interface _ParticipationRow {
   conversation_id: string;
   unread_count?: number;
   is_muted?: boolean;
@@ -108,7 +108,7 @@ interface ConversationRow {
   updated_at: string;
 }
 
-interface ParticipantRow {
+interface _ParticipantRow {
   conversation_id: string;
   user_id: string;
   user?: { id: string; name?: string; email?: string };
@@ -1948,7 +1948,6 @@ export async function getReactionsForMessages(
         .select("user_id, display_name, username")
         .in("user_id", userIds);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       userProfiles = Object.fromEntries(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (profiles || []).map((p: any) => [

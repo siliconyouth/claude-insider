@@ -32,14 +32,14 @@ try {
   try {
     const result = await pool.query('SELECT COUNT(*) as count FROM resource_resource_relationships');
     console.log(`  ✓ resource_resource_relationships: ${result.rows[0].count} rows`);
-  } catch (err) {
+  } catch (_err) {
     console.log('  ✗ resource_resource_relationships: MISSING');
   }
 
   try {
     await pool.query('SELECT * FROM get_pending_analysis_jobs() LIMIT 1');
     console.log('  ✓ get_pending_analysis_jobs() function exists');
-  } catch (err) {
+  } catch (_err) {
     console.log('  ✗ get_pending_analysis_jobs() function missing');
   }
 
@@ -47,11 +47,11 @@ try {
     const statsResult = await pool.query('SELECT * FROM get_relationship_stats()');
     console.log('  ✓ get_relationship_stats() function works');
     console.log('    Stats:', JSON.stringify(statsResult.rows[0], null, 2));
-  } catch (err) {
+  } catch (_err) {
     console.log('  ✗ get_relationship_stats() function missing');
   }
 
-} catch (err) {
+} catch (_err) {
   console.error('Error applying migration:', err.message);
   if (err.detail) console.error('Detail:', err.detail);
   process.exit(1);

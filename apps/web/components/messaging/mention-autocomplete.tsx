@@ -126,7 +126,7 @@ export function MentionAutocomplete({
   const listRef = useRef<HTMLDivElement>(null);
 
   // Use mention detection hook
-  const { mentionQuery, mentionStart } = useMentionDetection(inputValue, cursorPosition);
+  const { mentionQuery, mentionStart: _mentionStart } = useMentionDetection(inputValue, cursorPosition);
 
   // All mentionable users (participants + AI) - memoized
   const localUsers: MentionUser[] = useMemo(
@@ -191,6 +191,16 @@ export function MentionAutocomplete({
     setSelectedIndex(0);
   }, [mentionQuery]);
 
+  // Handle selection - defined before handleKeyDown to avoid reference before declaration
+  const handleSelect = useCallback(
+    (user: MentionUser) => {
+      const mentionText = `@${user.username || user.name.replace(/\s+/g, "")}`;
+      onSelect(user, mentionText);
+      onOpenChange(false);
+    },
+    [onSelect, onOpenChange]
+  );
+
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -218,7 +228,7 @@ export function MentionAutocomplete({
           break;
       }
     },
-    [isOpen, filteredUsers, selectedIndex, onOpenChange]
+    [isOpen, filteredUsers, selectedIndex, onOpenChange, handleSelect]
   );
 
   // Attach keyboard listener
@@ -236,13 +246,6 @@ export function MentionAutocomplete({
       }
     }
   }, [selectedIndex, isOpen]);
-
-  // Handle selection
-  const handleSelect = (user: MentionUser) => {
-    const mentionText = `@${user.username || user.name.replace(/\s+/g, "")}`;
-    onSelect(user, mentionText);
-    onOpenChange(false);
-  };
 
   // Show loading state when searching or results available
   const shouldShow = isOpen && (filteredUsers.length > 0 || isSearching);

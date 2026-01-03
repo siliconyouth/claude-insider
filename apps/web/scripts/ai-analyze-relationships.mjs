@@ -242,7 +242,7 @@ Return JSON array of relationships.`;
 
     const relationships = JSON.parse(jsonMatch[0]);
     return relationships.filter(r => r.confidence >= MIN_CONFIDENCE);
-  } catch (error) {
+  } catch (_error) {
     log(`    Error: ${error.message}`, colors.red);
     return [];
   }
@@ -332,7 +332,7 @@ Return JSON array of relationships. Set bidirectional=true if the relationship w
 
     const relationships = JSON.parse(jsonMatch[0]);
     return relationships.filter(r => r.confidence >= MIN_CONFIDENCE);
-  } catch (error) {
+  } catch (_error) {
     log(`    Error: ${error.message}`, colors.red);
     return [];
   }
@@ -634,7 +634,7 @@ async function main() {
     log(`   Resource-Resource relationships: ${totalResRels}`, colors.cyan);
     console.log("═".repeat(70) + "\n");
 
-  } catch (error) {
+  } catch (_error) {
     log(`\n❌ Error: ${error.message}`, colors.red);
     console.error(error);
     process.exit(1);

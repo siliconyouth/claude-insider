@@ -85,7 +85,7 @@ export function MCPSaveModal({
   existingConfig,
   onSaved,
 }: MCPSaveModalProps) {
-  const { user, isLoading: authLoading, isAuthenticated } = useAuth();
+  const { user: _user, isLoading: authLoading, isAuthenticated } = useAuth();
   const isUpdate = !!existingConfig;
 
   // Form state

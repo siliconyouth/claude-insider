@@ -325,7 +325,7 @@ async function main() {
           } else {
             updated++;
           }
-        } catch (err) {
+        } catch (_err) {
           errors++;
           if (errors <= 5) {
             console.error(`\n   Error: ${err.message}`);
@@ -339,7 +339,7 @@ async function main() {
       console.log(`   Errors: ${errors}\n`);
     }
 
-  } catch (error) {
+  } catch (_error) {
     console.error('\n❌ Error:', error.message);
     process.exit(1);
   } finally {

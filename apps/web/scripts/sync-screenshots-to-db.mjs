@@ -46,7 +46,7 @@ async function loadEnv() {
       }
     }
     return env;
-  } catch (err) {
+  } catch (_err) {
     console.error("Failed to load .env.local:", err.message);
     return {};
   }
@@ -91,7 +91,7 @@ async function main() {
             });
           }
         }
-      } catch (err) {
+      } catch (_err) {
         console.log(`  ⚠️  Skipping ${file} (invalid JSON)`);
       }
     }
@@ -124,7 +124,7 @@ async function main() {
           console.log("⚠️  (not in database)");
           notFoundCount++;
         }
-      } catch (err) {
+      } catch (_err) {
         console.log(`❌ ${err.message}`);
         errorCount++;
       }

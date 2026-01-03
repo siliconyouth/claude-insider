@@ -473,7 +473,7 @@ function getDefaultFeatures(title, category) {
  * Generate use cases from description and category
  */
 function generateUseCases(title, description, category) {
-  const useCases = new Set();
+  const _useCases = new Set();
   const name = title.replace(/[@\/\-_]/g, ' ').replace(/\s+/g, ' ').trim();
 
   // Category-specific use cases
@@ -623,7 +623,7 @@ async function enhanceAllResources() {
           ]);
 
           enhanced++;
-        } catch (err) {
+        } catch (_err) {
           console.error(`\n❌ Error: ${resource.title}: ${err.message}`);
           errors++;
         }

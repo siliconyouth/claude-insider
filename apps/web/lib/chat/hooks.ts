@@ -520,7 +520,7 @@ export function useMessageInput(
   );
 
   const send = useCallback(
-    async (sendOptions?: { replyTo?: string }): Promise<{ success: boolean; message?: Message; error?: string }> => {
+    async (_sendOptions?: { replyTo?: string }): Promise<{ success: boolean; message?: Message; error?: string }> => {
       if (!text.trim() || sending || !conversationId) {
         return { success: false, error: "Invalid state" };
       }

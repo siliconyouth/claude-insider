@@ -121,12 +121,12 @@ export function ResourceInsights({
   className,
   // Enhanced field props (Migration 088)
   audienceStats,
-  useCasesStats,
+  useCasesStats: _useCasesStats,
   enhancedCoverage,
   onAudienceClick,
-  onUseCaseClick,
+  onUseCaseClick: _onUseCaseClick,
   selectedAudiences = [],
-  selectedUseCases = [],
+  selectedUseCases: _selectedUseCases = [],
   showEnhancedInsights = false,
 }: ResourceInsightsProps) {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);

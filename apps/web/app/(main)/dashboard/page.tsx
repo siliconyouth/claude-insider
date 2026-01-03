@@ -26,7 +26,7 @@ import {
   useRecentFeedback,
   useRecentNotifications,
   useDonationOverview,
-  type DonationOverviewStats,
+  type DonationOverviewStats as _DonationOverviewStats,
 } from "@/lib/query/hooks";
 import type { AdminBetaApplication, AdminFeedback } from "@/types/admin";
 import type { AdminNotification } from "@/app/actions/admin-notifications";
@@ -40,7 +40,7 @@ export default function DashboardPage() {
   const { data: recentNotifications = [], isLoading: notificationsLoading } = useRecentNotifications();
 
   // Combined loading state for initial skeleton
-  const isLoading = statsLoading || chartsLoading;
+  const _isLoading = statsLoading || chartsLoading;
 
   return (
     <QueryErrorBoundary>

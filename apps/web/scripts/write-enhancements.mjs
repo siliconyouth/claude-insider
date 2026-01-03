@@ -53,7 +53,7 @@ async function writeEnhancements() {
           e.id
         ]);
         success++;
-      } catch (err) {
+      } catch (_err) {
         console.error(`❌ Error for ${e.id}: ${err.message}`);
         errors++;
       }

@@ -260,6 +260,7 @@ async function processExportJob(jobId: string): Promise<void> {
 // Helper to update progress
  
 async function updateProgress(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   jobId: string,
   progress: number,

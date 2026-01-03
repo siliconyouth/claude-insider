@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/incompatible-library -- TanStack Virtual's useVirtualizer is safe to use */
 
 /**
  * Virtualized User Grid

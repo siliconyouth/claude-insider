@@ -85,9 +85,6 @@ export function ConversationView({
   onTargetMessageScrolled,
   className,
 }: ConversationViewProps) {
-  // DEFENSIVE: Ensure participants is always an array (fixes "Display Error" when prop is undefined)
-  const participantsBase = Array.isArray(participantsProp) ? participantsProp : [];
-
   // Use the new chat bridge hook for messages (uses ChatEngine when available, falls back to server actions)
   const {
     messages: hookMessages,
@@ -132,7 +129,9 @@ export function ConversationView({
 
   // Merge prop participants with realtime presence status
   // Realtime status takes priority when available (more current than initial fetch)
+  // DEFENSIVE: Ensure participants is always an array (fixes "Display Error" when prop is undefined)
   const participants = useMemo(() => {
+    const participantsBase = Array.isArray(participantsProp) ? participantsProp : [];
     if (presenceStatus.size === 0) {
       return participantsBase; // No realtime data yet, use props as-is
     }
@@ -146,7 +145,7 @@ export function ConversationView({
       }
       return p;
     });
-  }, [participantsBase, presenceStatus]);
+  }, [participantsProp, presenceStatus]);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);

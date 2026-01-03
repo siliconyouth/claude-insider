@@ -4,7 +4,7 @@
 
 import './lib/env.mjs';
 import pg from 'pg';
-import { join } from 'path';
+import { join as _join } from 'path';
 
 const { Pool } = pg;
 
@@ -26,7 +26,7 @@ try {
   } else {
     console.log('✗ No v1.8.0 notification found');
   }
-} catch (err) {
+} catch (_err) {
   console.error('Error:', err.message);
 } finally {
   await pool.end();

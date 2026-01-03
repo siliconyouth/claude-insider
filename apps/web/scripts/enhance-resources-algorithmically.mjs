@@ -346,7 +346,7 @@ function extractKeyFeatures(description, category) {
   const features = new Set();
 
   if (!description) {
-    const template = CATEGORY_TEMPLATES[category] || CATEGORY_TEMPLATES['tools'];
+    const _template = CATEGORY_TEMPLATES[category] || CATEGORY_TEMPLATES['tools'];
     return template.defaultPros.slice(0, 4);
   }
 
@@ -368,7 +368,7 @@ function extractKeyFeatures(description, category) {
   }
 
   // Add category-specific features if we don't have enough
-  const template = CATEGORY_TEMPLATES[category] || CATEGORY_TEMPLATES['tools'];
+  const _template = CATEGORY_TEMPLATES[category] || CATEGORY_TEMPLATES['tools'];
   const featureArray = Array.from(features).slice(0, 6);
 
   while (featureArray.length < 3 && template.defaultPros.length > 0) {
@@ -386,7 +386,7 @@ function extractKeyFeatures(description, category) {
  */
 function generateUseCases(title, description, category) {
   const useCases = new Set();
-  const template = CATEGORY_TEMPLATES[category] || CATEGORY_TEMPLATES['tools'];
+  const _template = CATEGORY_TEMPLATES[category] || CATEGORY_TEMPLATES['tools'];
 
   // Extract domain-specific terms from description
   const domainTerms = [];
@@ -441,7 +441,7 @@ function generateUseCases(title, description, category) {
  */
 function enhanceResource(resource) {
   const { title, description, category } = resource;
-  const template = CATEGORY_TEMPLATES[category] || CATEGORY_TEMPLATES['tools'];
+  const _template = CATEGORY_TEMPLATES[category] || CATEGORY_TEMPLATES['tools'];
 
   return {
     ai_summary: generateSummary(title, description, category),
@@ -518,7 +518,7 @@ async function enhanceAllResources() {
           ]);
 
           enhanced++;
-        } catch (err) {
+        } catch (_err) {
           console.error(`  ❌ Error enhancing ${resource.title}: ${err.message}`);
           errors++;
         }

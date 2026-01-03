@@ -177,7 +177,7 @@ function SocialPreview({ meta, platform }: { meta: MetaPreview; platform: "twitt
 export default function SEODashboard() {
   const [checks, setChecks] = useState<SEOCheckResult[]>([]);
   const [isRunning, setIsRunning] = useState(false);
-  const [testUrl, setTestUrl] = useState(SEO_CONSTANTS.SITE_URL);
+  const [_testUrl, _setTestUrl] = useState(SEO_CONSTANTS.SITE_URL);
 
   // Default meta preview
   const metaPreview: MetaPreview = {

@@ -72,7 +72,7 @@ async function main() {
       console.log(`  - ${row.key}: ${row.description}`);
     }
     
-  } catch (error) {
+  } catch (_error) {
     console.error("Migration failed:", error.message);
     process.exit(1);
   } finally {

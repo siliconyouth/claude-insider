@@ -66,7 +66,7 @@ const FEATURED_TEMPLATES = getFeaturedTemplates().slice(0, 6);
 
 export default function MCPPlaygroundPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const _router = useRouter();
   const { isAuthenticated } = useAuth();
 
   // State

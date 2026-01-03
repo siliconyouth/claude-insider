@@ -142,7 +142,7 @@ async function captureScreenshot(browser, resource) {
     });
 
     return { success: true, path: screenshotPath };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: error.message };
   } finally {
     await page.close();

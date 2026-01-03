@@ -66,6 +66,7 @@ function findLocalScreenshots(): { resourceId: string; filePath: string; categor
 // Upload to Supabase
  
 async function uploadToSupabase(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   supabase: any,
   filePath: string,
   resourceId: string

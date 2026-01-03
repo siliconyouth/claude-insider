@@ -25,7 +25,6 @@ import {
   type ProposedChange,
   type ScrapedContent,
   type CurrentResource,
-  generateChangelogSummary,
 } from "@/lib/ai/resource-updater";
 import {
   captureScreenshots,

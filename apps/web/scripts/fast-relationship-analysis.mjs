@@ -22,7 +22,7 @@
 
 import './lib/env.mjs';
 import { readFileSync, existsSync } from "fs";
-import { join, dirname } from "path";
+import { join as _join, dirname } from "path";
 import { fileURLToPath } from "url";
 import pg from "pg";
 import Anthropic from "@anthropic-ai/sdk";
@@ -47,7 +47,7 @@ const BATCH_ARG = args.find(a => a.startsWith("--batch="));
 const BATCH_SIZE = BATCH_ARG ? parseInt(BATCH_ARG.split("=")[1], 10) : 25;
 
 const MODEL = "claude-sonnet-4-20250514"; // Fast model
-const MIN_CONFIDENCE = 0.65;
+const _MIN_CONFIDENCE = 0.65;
 
 // =============================================================================
 // CONSOLE STYLING
@@ -152,7 +152,7 @@ Return JSON object mapping each doc slug to its related resources.`;
     const text = response.content[0]?.text || "{}";
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     return jsonMatch ? JSON.parse(jsonMatch[0]) : {};
-  } catch (error) {
+  } catch (_error) {
     log(`    Error: ${error.message}`, c.red);
     return {};
   }
@@ -206,7 +206,7 @@ Return JSON mapping each source slug to related candidates.`;
     const text = response.content[0]?.text || "{}";
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     return jsonMatch ? JSON.parse(jsonMatch[0]) : {};
-  } catch (error) {
+  } catch (_error) {
     log(`    Error: ${error.message}`, c.red);
     return {};
   }
@@ -216,7 +216,7 @@ Return JSON mapping each source slug to related candidates.`;
 // PARALLEL PROCESSING
 // =============================================================================
 
-async function processInParallel(items, batchSize, parallelCount, processor) {
+async function _processInParallel(items, batchSize, parallelCount, processor) {
   const results = [];
   const batches = [];
 
@@ -270,7 +270,7 @@ async function insertDocRelationships(pool, docSlug, relationships, resourceMap)
           analyzed_at = NOW()
       `, [docSlug, resource.id, rel.type, rel.confidence, MODEL, rel.reason || ""]);
       count++;
-    } catch (e) { /* skip duplicates */ }
+    } catch (_e) { /* skip duplicates */ }
   }
   return count;
 }
@@ -299,7 +299,7 @@ async function insertResourceRelationships(pool, sourceSlug, relationships, reso
           analyzed_at = NOW()
       `, [source.id, target.id, rel.type, rel.confidence, MODEL, "", rel.bidirectional || false]);
       count++;
-    } catch (e) { /* skip duplicates */ }
+    } catch (_e) { /* skip duplicates */ }
   }
   return count;
 }

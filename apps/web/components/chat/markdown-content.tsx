@@ -15,7 +15,7 @@
 
 "use client";
 
-import { Fragment, useMemo } from "react";
+import { Fragment as _Fragment, useMemo } from "react";
 import { cn } from "@/lib/design-system";
 import { LinkifiedText } from "@/components/linkified-text";
 
@@ -49,7 +49,7 @@ interface ParsedBlock {
 function parseInlineMarkdown(text: string): React.ReactNode {
   // Split by code first to protect code content
   const parts: React.ReactNode[] = [];
-  let remaining = text;
+  const _remaining = text;
   let key = 0;
 
   // Process inline elements
@@ -311,7 +311,7 @@ export function MarkdownContent({ content, className }: MarkdownContentProps) {
               </div>
             );
 
-          case "list":
+          case "list": {
             const ListTag = block.ordered ? "ol" : "ul";
             return (
               <ListTag
@@ -328,6 +328,7 @@ export function MarkdownContent({ content, className }: MarkdownContentProps) {
                 ))}
               </ListTag>
             );
+          }
 
           case "blockquote":
             return (

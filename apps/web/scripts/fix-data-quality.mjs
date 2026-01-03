@@ -9,7 +9,7 @@
 
 import './lib/env.mjs';
 import pg from 'pg';
-import { join } from 'path';
+import { join as _join } from 'path';
 
 const { Pool } = pg;
 

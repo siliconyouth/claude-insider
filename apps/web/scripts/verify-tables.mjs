@@ -1,6 +1,6 @@
 import './lib/env.mjs';
 import pg from 'pg';
-import { join } from 'path';
+import { join as _join } from 'path';
 
 const { Pool } = pg;
 
@@ -26,7 +26,7 @@ async function verify() {
   try {
     const { rows: sources } = await pool.query('SELECT COUNT(*) as count FROM resource_sources');
     console.log('\nresource_sources count:', sources[0].count);
-  } catch (e) {
+  } catch (_e) {
     console.log('\nresource_sources error:', e.message);
   }
 
@@ -34,7 +34,7 @@ async function verify() {
   try {
     const { rows: queue } = await pool.query('SELECT COUNT(*) as count FROM resource_discovery_queue');
     console.log('resource_discovery_queue count:', queue[0].count);
-  } catch (e) {
+  } catch (_e) {
     console.log('resource_discovery_queue error:', e.message);
   }
 

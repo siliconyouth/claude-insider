@@ -1,6 +1,6 @@
 import './lib/env.mjs';
 import pg from 'pg';
-import { join } from 'path';
+import { join as _join } from 'path';
 
 const { Pool } = pg;
 
@@ -59,7 +59,7 @@ async function fetchNpmInfo(packageName) {
       homepage: data.homepage,
       repository: data.repository?.url,
     };
-  } catch (e) {
+  } catch (_e) {
     console.log(`  npm error for ${packageName}:`, e.message);
     return null;
   }
@@ -90,7 +90,7 @@ async function fetchPypiInfo(packageName) {
       homepage: data.info?.home_page || data.info?.project_url,
       repository: data.info?.project_urls?.Repository,
     };
-  } catch (e) {
+  } catch (_e) {
     console.log(`  pypi error for ${packageName}:`, e.message);
     return null;
   }

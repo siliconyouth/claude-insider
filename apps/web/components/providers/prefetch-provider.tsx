@@ -13,7 +13,7 @@
 
 import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { prefetchQueue, getRoutePriority } from "@/lib/prefetch-queue";
+import { prefetchQueue } from "@/lib/prefetch-queue";
 
 // Critical routes that should be prefetched on homepage
 const HOMEPAGE_CRITICAL_ROUTES = [

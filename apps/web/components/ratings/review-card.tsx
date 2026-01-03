@@ -7,7 +7,7 @@
  */
 
 import { useState, useTransition } from "react";
-import Link from "next/link";
+import Link from "next/link"; // eslint-disable-line @typescript-eslint/no-unused-vars -- reserved for future use
 import { cn } from "@/lib/design-system";
 import { voteHelpful, reportReview, type Review } from "@/app/actions/ratings";
 import { useToast } from "@/components/toast";

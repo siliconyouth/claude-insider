@@ -223,6 +223,7 @@ export const LinkPreviewCard = memo(function LinkPreviewCard({
           sizeConfig.imageWrapper
         )}>
           {youtubeId ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
               alt={data.title || "Video thumbnail"}

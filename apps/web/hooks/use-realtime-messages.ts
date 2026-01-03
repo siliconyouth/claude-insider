@@ -6,8 +6,9 @@
  */
 
 "use client";
+/* eslint-disable react-hooks/preserve-manual-memoization -- session property access intentionally less specific */
 
-import { useEffect, useCallback, useState, useRef, useMemo } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useSession } from "@/lib/auth-client";
 import type { RealtimeChannel } from "@supabase/supabase-js";

@@ -239,8 +239,8 @@ export function ResourceTabs({ resource }: ResourceTabsProps) {
 // =============================================================================
 
 function OverviewTab({ resource }: { resource: ResourceWithDetails }) {
-  // Check if we have AI-enhanced data
-  const hasEnhancedData = resource.ai_overview ||
+  // Check if we have AI-enhanced data (reserved for future conditional rendering)
+  const _hasEnhancedData = resource.ai_overview ||
     (resource.key_features && resource.key_features.length > 0) ||
     (resource.use_cases && resource.use_cases.length > 0) ||
     (resource.pros && resource.pros.length > 0) ||

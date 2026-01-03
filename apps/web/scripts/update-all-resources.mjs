@@ -75,7 +75,7 @@ async function checkUrl(url, timeout = 10000) {
       redirected: response.redirected,
       finalUrl: response.url,
     };
-  } catch (error) {
+  } catch (_error) {
     clearTimeout(timeoutId);
     // Try GET if HEAD fails (some servers don't support HEAD)
     try {
@@ -132,7 +132,7 @@ async function fetchGitHubStats(owner, repo) {
       description: data.description,
       topics: data.topics,
     };
-  } catch (error) {
+  } catch (_error) {
     return { error: error.message };
   }
 }
@@ -184,7 +184,7 @@ async function main() {
   const args = process.argv.slice(2);
   const checkOnly = args.includes("--check-only");
   const updateGitHub = args.includes("--github") || !checkOnly;
-  const generateScreenshots = args.includes("--screenshots");
+  const _generateScreenshots = args.includes("--screenshots");
 
   console.log("\n" + colors.cyan + colors.bright);
   console.log("╔══════════════════════════════════════════════════════════════╗");

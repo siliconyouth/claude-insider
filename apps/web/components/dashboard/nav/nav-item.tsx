@@ -30,6 +30,29 @@ interface NavItemProps {
 }
 
 // ============================================
+// EXTERNAL ICON
+// ============================================
+
+function ExternalIcon() {
+  return (
+    <svg
+      className="w-3 h-3 ui-nav-external"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+      />
+    </svg>
+  );
+}
+
+// ============================================
 // COMPONENT
 // ============================================
 
@@ -46,24 +69,6 @@ export function NavItem({
 
   // Check if this item is active
   const isActive = exact ? pathname === href : pathname.startsWith(href);
-
-  // External link icon
-  const ExternalIcon = () => (
-    <svg
-      className="w-3 h-3 ui-nav-external"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-      />
-    </svg>
-  );
 
   const content = (
     <>

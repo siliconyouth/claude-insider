@@ -36,7 +36,7 @@ async function runMigration() {
   try {
     await pool.query(sqlFile);
     console.log('✅ Migration executed successfully!\n');
-  } catch (err) {
+  } catch (_err) {
     if (err.message.includes('already exists')) {
       console.log('⚠️  Tables already exist, skipping...\n');
     } else {

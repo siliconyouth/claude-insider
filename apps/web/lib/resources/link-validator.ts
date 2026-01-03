@@ -470,7 +470,6 @@ export async function validateResourcesBatch(
   );
 
   const results: ValidationResult[] = [];
-  let processedCount = 0;
 
   // Process in batches
   for (let i = 0; i < resources.length; i += batchSize) {
@@ -482,7 +481,6 @@ export async function validateResourcesBatch(
     );
 
     results.push(...batchResults);
-    processedCount += batch.length;
 
     // Rate limiting between batches
     if (i + batchSize < resources.length) {

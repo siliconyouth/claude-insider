@@ -96,7 +96,8 @@ const donorTierColors = {
   platinum: "text-violet-500 dark:text-violet-400",
 };
 
-const donorTierBg = {
+// Reserved for future use with donor badge backgrounds
+const _donorTierBg = {
   bronze: "bg-amber-100 dark:bg-amber-900/30",
   silver: "bg-gray-100 dark:bg-gray-800",
   gold: "bg-yellow-100 dark:bg-yellow-900/30",
@@ -113,8 +114,8 @@ export function ProfileHoverCard({
   href,
   showActions = true,
   compact = false,
-  onInviteToGroup,
-  onReport,
+  onInviteToGroup: _onInviteToGroup,
+  onReport: _onReport,
 }: ProfileHoverCardProps) {
   const cardWidth = compact ? CARD_WIDTH_COMPACT : CARD_WIDTH;
   const cardHeight = compact ? CARD_HEIGHT_COMPACT : CARD_HEIGHT;
@@ -298,7 +299,8 @@ export function ProfileHoverCard({
     return num.toString();
   };
 
-  const formatLastSeen = (dateString: string) => {
+  // Reserved for future use when displaying user activity timestamps
+  const _formatLastSeen = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
@@ -478,7 +480,7 @@ function HeartIcon({ className }: { className?: string }) {
   );
 }
 
-function TrophyIcon({ className }: { className?: string }) {
+function _TrophyIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
       <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H8v2h8v-2h-3v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" />
@@ -486,7 +488,7 @@ function TrophyIcon({ className }: { className?: string }) {
   );
 }
 
-function CalendarIcon({ className }: { className?: string }) {
+function _CalendarIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -494,7 +496,7 @@ function CalendarIcon({ className }: { className?: string }) {
   );
 }
 
-function UsersIcon({ className }: { className?: string }) {
+function _UsersIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -502,7 +504,7 @@ function UsersIcon({ className }: { className?: string }) {
   );
 }
 
-function FlagIcon({ className }: { className?: string }) {
+function _FlagIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
@@ -510,7 +512,7 @@ function FlagIcon({ className }: { className?: string }) {
   );
 }
 
-function MessageIcon({ className }: { className?: string }) {
+function _MessageIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />

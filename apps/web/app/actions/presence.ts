@@ -16,8 +16,8 @@ import { getSession } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/server";
 import {
   computePresenceStatus,
-  ONLINE_THRESHOLD_MS,
-  IDLE_THRESHOLD_MS,
+  ONLINE_THRESHOLD_MS as _ONLINE_THRESHOLD_MS,
+  IDLE_THRESHOLD_MS as _IDLE_THRESHOLD_MS,
   type PresenceStatus,
 } from "@/lib/presence-utils";
 

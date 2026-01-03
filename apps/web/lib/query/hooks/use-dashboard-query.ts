@@ -12,7 +12,6 @@ import {
   useMutation,
   useQueryClient,
   type UseQueryOptions,
-  type UseMutationOptions,
 } from "@tanstack/react-query";
 import {
   dashboardFetcher,
@@ -102,7 +101,7 @@ export function useDashboardMutation<TData = unknown, TVariables = unknown>(
         options?.method || "PATCH",
         variables,
       ),
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, _context) => {
       // Invalidate related queries
       if (options?.invalidateKeys) {
         options.invalidateKeys.forEach((key) => {

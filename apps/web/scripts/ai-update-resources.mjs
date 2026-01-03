@@ -130,7 +130,7 @@ async function scrapeUrl(url, firecrawlApiKey) {
         metadata: data.data?.metadata || {},
         title: data.data?.metadata?.title || "",
       };
-    } catch (error) {
+    } catch (_error) {
       return { success: false, error: error.message };
     }
   }
@@ -175,7 +175,7 @@ async function scrapeUrl(url, firecrawlApiKey) {
       metadata: {},
       title,
     };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: error.message };
   }
 }
@@ -202,7 +202,7 @@ async function fetchGitHubReadme(owner, repo) {
 
     const readme = await response.text();
     return { success: true, readme };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: error.message };
   }
 }
@@ -242,7 +242,7 @@ async function fetchGitHubStats(owner, repo, githubToken) {
       openIssues: data.open_issues_count,
       license: data.license?.spdx_id,
     };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: error.message };
   }
 }
@@ -305,7 +305,7 @@ Return ONLY valid JSON, no markdown code blocks.`;
     }
 
     return { success: false, error: "No valid JSON in response" };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: error.message };
   }
 }

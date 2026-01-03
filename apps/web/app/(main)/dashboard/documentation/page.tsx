@@ -30,7 +30,7 @@ import {
 import {
   useDocumentationList,
   type DocumentationItem,
-  type CategoryStats,
+  type CategoryStats as _CategoryStats,
 } from "@/lib/query/hooks";
 
 const CATEGORY_COLORS: Record<string, string> = {
