@@ -275,12 +275,10 @@ export function ConversationView({
   // Handle incoming messages from realtime subscription
   const handleRealtimeMessage = useCallback(
     (payload: MessagePayload) => {
-      console.log("[DEBUG] Realtime message received - id:", payload.id, "sender_id:", payload.sender_id, "currentUserId:", currentUserId);
       // Skip if message already exists (deduplication)
       let isNew = false;
       setMessages((prev) => {
         if (prev.some((m) => m.id === payload.id)) {
-          console.log("[DEBUG] Realtime - message already exists, skipping");
           return prev;
         }
 
@@ -534,7 +532,6 @@ export function ConversationView({
     if (transformedMessages.length > 0 || !hookIsLoading) {
       // Merge hook messages with local state instead of replacing
       // This preserves realtime messages that the hook doesn't know about
-      console.log("[DEBUG] Sync useEffect running - hookMessages count:", transformedMessages.length, "hookIsLoading:", hookIsLoading);
       setMessages((prev) => {
         // Create a map of existing messages by ID for fast lookup
         const existingIds = new Set(prev.map((m) => m.id));
@@ -545,6 +542,7 @@ export function ConversationView({
         const localOnly = prev.filter((m) => !hookIds.has(m.id));
 
         // Add hook messages that aren't already local
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const hookOnly = transformedMessages.filter((m) => !existingIds.has(m.id));
 
         // Merge: keep all from hook (source of truth) + local-only realtime messages
@@ -553,8 +551,6 @@ export function ConversationView({
         // Sort by createdAt to maintain order
         merged.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
-        console.log("[DEBUG] Sync useEffect - prev count:", prev.length, "localOnly count:", localOnly.length, "merged count:", merged.length);
-        console.log("[DEBUG] Sync useEffect - localOnly IDs:", localOnly.map(m => m.id));
         return merged;
       });
       setHasMore(hookHasMore);
@@ -727,11 +723,7 @@ export function ConversationView({
     };
 
     // Add to state IMMEDIATELY - message appears NOW!
-    console.log("[DEBUG] Adding optimistic message:", tempId);
-    setMessages((prev) => {
-      console.log("[DEBUG] Adding optimistic - prev count:", prev.length, "prev IDs:", prev.slice(-3).map(m => m.id));
-      return [...prev, optimisticMessage];
-    });
+    setMessages((prev) => [...prev, optimisticMessage]);
 
     // Play sound IMMEDIATELY - user hears + sees together
     playMessageSent();
@@ -756,21 +748,14 @@ export function ConversationView({
       if (result.success && result.message) {
         // Replace temp message with real message from server
         const realMessage = result.message as unknown as Message;
-        console.log("[DEBUG] Server returned success - realMessage.id:", realMessage.id, "tempId:", tempId);
         setMessages((prev) => {
-          console.log("[DEBUG] Replace logic - prev count:", prev.length, "prev IDs:", prev.map(m => m.id));
-          const hasTempMessage = prev.some((m) => m.id === tempId);
-          console.log("[DEBUG] Replace logic - hasTempMessage:", hasTempMessage);
           // Check if realtime already added the real message
           const hasRealMessage = prev.some((m) => m.id === realMessage.id);
-          console.log("[DEBUG] Replace logic - hasRealMessage:", hasRealMessage);
           if (hasRealMessage) {
             // Remove the temp message, real one is already there
-            console.log("[DEBUG] Removing temp because real already exists");
             return prev.filter((m) => m.id !== tempId);
           }
           // Replace temp with real
-          console.log("[DEBUG] Replacing temp with real");
           return prev.map((m) => (m.id === tempId ? realMessage : m));
         });
 
@@ -806,16 +791,14 @@ export function ConversationView({
         }
       } else {
         // Failed - mark message as failed (could add retry UI here)
-        console.error("[DEBUG] Failed to send message:", result.error);
+        console.error("Failed to send message:", result.error);
         // For now, remove the optimistic message on failure
         // TODO: Add retry queue integration for failed messages
-        console.log("[DEBUG] Removing temp message due to failure - tempId:", tempId);
         setMessages((prev) => prev.filter((m) => m.id !== tempId));
       }
     } catch (error) {
-      console.error("[DEBUG] Error sending message:", error);
+      console.error("Error sending message:", error);
       // Remove optimistic message on error
-      console.log("[DEBUG] Removing temp message due to error - tempId:", tempId);
       setMessages((prev) => prev.filter((m) => m.id !== tempId));
     }
     // Note: isSending is already cleared, input is already focused - nothing to do here!

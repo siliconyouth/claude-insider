@@ -954,8 +954,7 @@ export async function sendMessage(
 
     if (error) {
       console.error("Send message error:", error);
-      // Return actual error details for debugging
-      return { success: false, error: `Failed to send message: ${error.message || error.code || JSON.stringify(error)}` };
+      return { success: false, error: "Failed to send message" };
     }
 
     const msg = newMessage as MessageRow;

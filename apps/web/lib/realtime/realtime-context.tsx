@@ -518,13 +518,10 @@ export function useConversationRealtime({
 
     const handlers: ChannelHandlers = {
       onMessage: (payload) => {
-        console.log("[DEBUG] Realtime context - message received, sender_id:", payload.sender_id, "currentUserId:", currentUserId);
         // Skip if message is from current user (already added optimistically)
         if (payload.sender_id === currentUserId) {
-          console.log("[DEBUG] Realtime context - SKIPPING own message");
           return;
         }
-        console.log("[DEBUG] Realtime context - PASSING message to handler");
         onMessage?.(payload);
       },
       onTyping: (payload) => {
