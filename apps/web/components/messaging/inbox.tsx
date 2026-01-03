@@ -23,6 +23,7 @@ import {
   type Conversation,
 } from "@/app/actions/messaging";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
+import { useRealtimeMessages } from "@/hooks/use-realtime-messages";
 
 interface InboxProps {
   currentUserId: string;
@@ -76,6 +77,15 @@ export function Inbox({
     }
     setIsLoading(false);
   }, [initialConversationId]);
+
+  // Real-time message updates - refresh conversation list when new messages arrive
+  useRealtimeMessages({
+    enabled: true,
+    onNewMessage: () => {
+      // Refresh conversations to update lastMessagePreview and unreadCount
+      loadConversations();
+    },
+  });
 
   useEffect(() => {
     loadConversations();
