@@ -2716,9 +2716,9 @@ export async function sendFileMessage(
 
     const { conversationId, fileData, fileName, fileSize, fileType, width, height } = params;
 
-    // Validate file size (max 50MB)
-    if (fileSize > 52428800) {
-      return { success: false, error: "File size cannot exceed 50MB" };
+    // Validate file size (max 150MB)
+    if (fileSize > 157286400) {
+      return { success: false, error: "File size cannot exceed 150MB" };
     }
 
     const supabase = await createAdminClient();
