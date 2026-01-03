@@ -86,7 +86,8 @@ export function FloatingChatButton() {
     <div
       className={cn(
         "fixed right-6 z-40",
-        "transition-all duration-300 ease-out",
+        // GPU-accelerated: only transform and opacity (no transition-all)
+        "transition-[transform,opacity] duration-300 ease-out",
         isOpen
           ? "scale-0 opacity-0 pointer-events-none"
           : "scale-100 opacity-100"
@@ -96,23 +97,9 @@ export function FloatingChatButton() {
         bottom: "calc(1.5rem + var(--mobile-nav-height, 0px))",
       }}
     >
-      {/* Attention-grabbing pulse ring */}
+      {/* Static glow ring - no animation for better performance */}
       <div
-        className={cn(
-          "absolute inset-0 -m-1 rounded-full",
-          "bg-gradient-to-r from-violet-500 via-blue-500 to-cyan-500",
-          "animate-ping opacity-20"
-        )}
-        aria-hidden="true"
-      />
-
-      {/* Secondary glow ring */}
-      <div
-        className={cn(
-          "absolute inset-0 -m-2 rounded-full",
-          "bg-gradient-to-r from-violet-600/30 via-blue-600/30 to-cyan-600/30",
-          "blur-md"
-        )}
+        className="absolute inset-0 -m-2 rounded-full bg-blue-500/20 blur-lg"
         aria-hidden="true"
       />
 
@@ -178,11 +165,9 @@ export function FloatingChatButton() {
           "text-white",
           // Shadow with glow (designSystem.shadows.glow)
           "shadow-lg shadow-blue-500/25",
-          // Hover effects (designSystem.animations.hover)
-          "transition-all duration-200 ease-out",
-          "hover:scale-110 hover:-translate-y-0.5",
-          "hover:shadow-xl hover:shadow-blue-500/40",
-          "hover:from-violet-500 hover:via-blue-500 hover:to-cyan-500",
+          // Hover effects - GPU-accelerated transform only (no transition-all)
+          "transition-transform duration-200 ease-out",
+          "hover:scale-110",
           // Focus states (designSystem.animations.focus.ring)
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
           "focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#0a0a0a]",
