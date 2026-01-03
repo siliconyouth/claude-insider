@@ -524,6 +524,7 @@ export function ConversationView({
 
   // Sync messages from hook to local state
   // The hook handles initial loading via ChatEngine or server actions
+  // IMPORTANT: We MERGE instead of REPLACE to preserve realtime messages
   useEffect(() => {
     // Transform hook messages to legacy Message format if needed
     const transformedMessages = hookMessages.map((msg) => {
@@ -533,7 +534,30 @@ export function ConversationView({
     });
 
     if (transformedMessages.length > 0 || !hookIsLoading) {
-      setMessages(transformedMessages);
+      // Merge hook messages with local state instead of replacing
+      // This preserves realtime messages that the hook doesn't know about
+      setMessages((prev) => {
+        // Create a map of existing messages by ID for fast lookup
+        const existingIds = new Set(prev.map((m) => m.id));
+        const hookIds = new Set(transformedMessages.map((m) => m.id));
+
+        // Keep local messages that aren't in hook (realtime additions)
+        // Filter out temp IDs (start with 'temp-') that are placeholders
+        const localOnly = prev.filter(
+          (m) => !hookIds.has(m.id) && !m.id.startsWith("temp-")
+        );
+
+        // Add hook messages that aren't already local
+        const hookOnly = transformedMessages.filter((m) => !existingIds.has(m.id));
+
+        // Merge: keep all from hook (source of truth) + local-only realtime messages
+        const merged = [...transformedMessages, ...localOnly];
+
+        // Sort by createdAt to maintain order
+        merged.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+
+        return merged;
+      });
       setHasMore(hookHasMore);
       setIsLoading(hookIsLoading);
     }
@@ -745,10 +769,21 @@ export function ConversationView({
         const shouldTriggerAI = mentionedAI || isAIConversation;
         if (shouldTriggerAI) {
           await generateAIChatResponse(conversationId, realMessage.id);
-          // Refresh to get AI message
+          // Refresh to get AI message - MERGE don't replace to preserve existing messages
           const refreshResult = await getMessages(conversationId, 10);
           if (refreshResult.success && refreshResult.messages) {
-            setMessages(refreshResult.messages);
+            setMessages((prev) => {
+              // Add any new messages from refresh that we don't already have
+              const existingIds = new Set(prev.map((m) => m.id));
+              const newMessages = refreshResult.messages!.filter(
+                (m) => !existingIds.has(m.id)
+              );
+              if (newMessages.length === 0) return prev;
+
+              const merged = [...prev, ...newMessages];
+              merged.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+              return merged;
+            });
             requestAnimationFrame(() => {
               messageListRef.current?.scrollToBottom();
             });
