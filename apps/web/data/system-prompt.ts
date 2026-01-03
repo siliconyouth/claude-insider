@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-02 for v1.17.0 (Chat System Rewrite - LRU cache, delivery tracking, voice messages, link unfurling, pinning, E2EE default)
+ * Updated: 2026-01-03 for v1.17.1 (Chat Stability - Presence overhaul with Matrix SDK pattern, message bug fixes, read receipts fix, code cleanup)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.17.0",
+  version: "1.17.1",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",

@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.17.0 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.17.1 notification to all opted-in users...\n");
 
-  const version = "1.17.0";
-  const title = "Claude Insider v1.17.0 - Complete Chat System Rewrite";
+  const version = "1.17.1";
+  const title = "Claude Insider v1.17.1 - Chat Stability & Presence Overhaul";
   const message =
-    "💬 8-Phase Matrix SDK-style Chat Rewrite (~13,100 lines) • 📊 LRU Cache System for messages, conversations & presence • ✅ Delivery Status: sent → delivered → read tracking • 🎤 Voice Messages with waveform visualization • 🔗 Link Unfurling with Open Graph previews • 📌 Message Pinning with slide-out panel • 🔐 E2EE Default for new DMs";
+    "🔧 Fixed messages disappearing after sending • 👁️ Presence overhaul: 'default offline, prove online' with 45s/5min thresholds • 📨 Fixed delayed read receipts • 📋 Inbox now updates in real-time • 🧹 Removed voice/file features, ~2,500 lines of unused code cleaned up";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

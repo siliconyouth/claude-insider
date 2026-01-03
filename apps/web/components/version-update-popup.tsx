@@ -26,14 +26,25 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.17.1",
+    date: "2026-01-03",
+    type: "patch",
+    highlights: [
+      "🔧 Chat Stability: Fixed messages disappearing after sending (orphaned trigger bug)",
+      "👁️ Presence Overhaul: Matrix SDK 'default offline, prove online' with 45s/5min thresholds",
+      "📨 Read Receipts: Fixed delayed 'Seen' indicator (race condition resolved)",
+      "📋 Inbox Updates: Conversation list now refreshes on new messages in real-time",
+      "🧹 Code Cleanup: Removed voice/file features, ~2,500 lines of unused code",
+    ],
+  },
+  {
     version: "1.17.0",
     date: "2026-01-02",
     type: "major",
     highlights: [
-      "💬 Complete Chat System Rewrite: 8-phase Matrix SDK-style architecture with ~13,100 lines of new code",
-      "📊 LRU Cache System: TTL-based caching for messages, conversations, presence, and profiles",
+      "💬 Complete Chat System Rewrite: 8-phase Matrix SDK-style architecture",
+      "📊 LRU Cache System: TTL-based caching for messages, conversations, presence",
       "✅ Delivery Status: Sent → delivered → read tracking with visual checkmarks",
-      "🎤 Voice Messages: Web Audio API recording, waveform visualization, 0.5x-2x playback",
       "🔗 Link Unfurling: Rich previews with Open Graph metadata, video detection",
       "📌 Message Pinning: Admin pinning with slide-out panel and jump-to-message",
       "🔐 E2EE Default: Automatic encryption setup for new DMs",

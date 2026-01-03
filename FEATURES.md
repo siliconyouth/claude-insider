@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **67 implemented features** with detailed capabilities.
+Complete list of all **66 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (67 total)
+## Implemented Features (66 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -72,7 +72,7 @@ Complete list of all **67 implemented features** with detailed capabilities.
 | FR-60 | Resource Relationship Analysis | Claude Code subscription-based analysis (NOT API credits), 7 relationship types (similar, alternative, complement, uses, integrates, fork, inspired_by), bidirectional relationships, manual JSON workflow with helper scripts, 1,863 total relationships (63 doc-resource + 1,800 resource-resource), confidence scores (0-1), category-based batch analysis |
 | FR-61 | MCP Playground | Interactive MCP config builder (`/mcp-playground`), Monaco JSON editor with IntelliSense, live schema validation, 2,136+ server templates, URL-based config sharing (base64), AI assistance via Unified Chat, config storage (draft/publish workflow), version history with change tracking, public gallery (`/mcp-playground/gallery`), starring/forking system, admin moderation queue, RLS-enforced access control |
 | FR-62 | Delivery Status Indicators | `DeliveryTracker` class with `sent → delivered → read` progression, real-time status updates via Supabase subscriptions, visual indicators (single/double/blue checkmarks), `DeliveryStatusIndicator` component with tooltip details, per-recipient tracking in `dm_delivery_receipts` table |
-| FR-63 | Voice Messages | `VoiceRecorder` class with Web Audio API + MediaRecorder, real-time waveform visualization during recording, `VoicePlayer` component with playback controls and speed adjustment (0.5x-2x), WebM (Opus) and MP4 (AAC) format support, duration tracking and waveform storage in `dm_voice_metadata` table |
+| FR-63 | ~~Voice Messages~~ | **REMOVED in v1.17.1** - Feature simplified away. Functionality was not production-ready. |
 | FR-64 | Rich Media Preview | `LinkUnfurler` service with URL extraction and metadata fetching, server-side Open Graph parsing (`/api/chat/unfurl`), `LinkPreviewCard` with YouTube/Vimeo video detection, `ImageGallery` with lightbox zoom/pan/keyboard navigation, `FilePreview` for documents/code/archives, 7-day cache in `link_previews` table |
 | FR-65 | Message Pinning | Server actions (`pinMessage`, `unpinMessage`, `getPinnedMessages`), `PinnedMessagesPanel` slide-out UI with jump-to-message, `PinnedMessagesBadge` for header pin count, `PinIndicator` for inline display, admin/owner-only permissions with optional pin notes, stored in `dm_pinned_messages` table |
 | FR-66 | Chat Performance Optimizations | `LRUCache<K,V>` with TTL and automatic cleanup, specialized caches (`MessageCache`, `ConversationCache`, `PresenceCache`, `UserProfileCache`), batched realtime updates (50ms window, max 20 items), subscription pooling with reference counting, `RequestDeduplicator` for concurrent request coalescing, optimized SQL functions (`get_messages_with_context`, `get_users_presence`, `get_conversations_with_context`) |
@@ -127,7 +127,7 @@ Complete list of all **67 implemented features** with detailed capabilities.
 - Matrix SDK features (reactions, replies, search, drafts)
 - Optimistic UI for instant messaging
 - Delivery status indicators (sent/delivered/read)
-- Voice messages with waveform visualization
+- ~~Voice messages~~ (removed in v1.17.1)
 - Rich media preview (link unfurling, image gallery)
 - Message pinning with slide-out panel
 - Chat performance optimizations (LRU cache, batching)

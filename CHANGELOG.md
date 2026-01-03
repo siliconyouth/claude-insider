@@ -9,6 +9,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.17.1] - 2026-01-03
+### 🔧 Chat Stability & Presence System Overhaul
+Critical bug fixes for messaging reliability and complete rewrite of the presence detection system.
+
+#### Bug Fixes
+- **Messages Disappearing**: Fixed race condition where sent messages would vanish after appearing
+  - Root cause: Trigger on `message_type` column (removed in migration) was still firing
+  - Solution: Dropped orphaned trigger, messages now persist correctly
+- **Read Receipts Delayed**: Fixed "Seen" indicator taking 30+ seconds to appear
+  - Root cause: Race condition between read receipt and message loading
+  - Solution: Separated concerns, receipts now update independently
+- **Presence Always Online**: Users appeared online indefinitely even when inactive
+  - Redesigned with Matrix SDK "default offline, prove online" philosophy
+  - Added user activity detection (mouse, keyboard, touch, scroll)
+  - Heartbeats pause when user is idle (no interaction for 45+ seconds)
+- **Inbox Not Updating**: Conversation list didn't show new message previews
+  - Added `useRealtimeMessages` hook to refresh on new messages
+- **Build Failure**: Server Actions constraint violation
+  - Moved sync `computePresenceStatus()` utility to separate file
+
+#### Presence System (Matrix SDK Pattern)
+- **New thresholds**: Online (45s), Idle (5min), Offline (after 5min)
+- **Activity detection**: Tracks mouse, keyboard, touch, scroll events
+- **Heartbeat optimization**: Pauses when user idle, resumes on activity
+- **Cleanup cron synced**: Uses shared thresholds from `presence-utils.ts`
+- **Manual cleanup endpoint**: POST `/api/cron/presence-cleanup` for admins
+
+#### Removed Features
+- **Voice Messages**: Removed `VoiceRecorder`, `VoicePlayer` components (~1,200 lines)
+- **File Attachments**: Removed `FilePreview`, attachment handling (~800 lines)
+- **Legacy fallbacks**: Removed deprecated chat code (~279 lines)
+- **Unused hooks**: Removed `use-chat-sounds.tsx` (~240 lines)
+
+#### Files Changed
+- **Created**: `lib/presence-utils.ts` (pure functions for presence computation)
+- **Updated**: `presence-provider.tsx` (activity detection, heartbeat optimization)
+- **Updated**: `presence-cleanup/route.ts` (synced thresholds, manual POST endpoint)
+- **Updated**: `inbox.tsx` (realtime message updates)
+- **Removed**: Voice/file components and SQL column references
+
+---
+
 ## [1.17.0] - 2026-01-02
 ### 💬 Comprehensive Chat System Rewrite
 Complete 8-phase rewrite of the messaging system following Matrix SDK patterns for offline-first architecture with optimistic updates. **~13,100 lines** of new chat infrastructure.

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.0**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.1**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.0**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 67 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 66 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -147,7 +147,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**67 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**66 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -1810,16 +1810,15 @@ if (isNewDM && available) {
 | **Gap Detection** | `use-gap-detection.ts` | Fetch missed messages on reconnect |
 | **Batched Read Receipts** | `use-batched-read-receipts.ts` | Broadcast-first, batched DB writes |
 | **Retry Queue** | `use-retry-queue.ts` | Retry/remove failed sends |
-| **Presence System** | `presence-context.tsx`, `compute-status.ts` | Heartbeat-based (30s), `last_active_at` status computation |
+| **Presence System** | `presence-provider.tsx`, `presence-utils.ts` | "Default offline, prove online" - 45s online, 5min idle thresholds |
 | **ConversationView** | `conversation-view.tsx` | Single source of truth (consolidated from 2 components) |
 | **Delivery Status** | `DeliveryTracker`, `DeliveryStatusIndicator` | Sent → delivered → read with visual checkmarks |
-| **Voice Messages** | `VoiceRecorder`, `VoicePlayer` | Web Audio API recording, waveform visualization |
 | **Link Unfurling** | `LinkUnfurler`, `LinkPreviewCard` | Server-side OG metadata, 7-day cache |
 | **Message Pinning** | `PinnedMessagesPanel`, `pinMessage()` | Admin/owner pinning with slide-out panel |
 | **LRU Cache** | `MessageCache`, `PresenceCache` | TTL-based caching with auto-cleanup |
 | **E2EE Auto-Setup** | `setupDMEncryption()` | Automatic encryption for new DMs |
 
-**v1.17.0 Chat Rewrite**: Complete chat system rewrite with ~13,100 lines of new code. Follows Matrix SDK patterns for offline-first messaging, LRU caching, batched realtime updates, and automatic E2EE. See [Chat System (MANDATORY)](#chat-system-mandatory) for full documentation.
+**v1.17.1 Chat Stability**: Fixed messages disappearing, read receipts delay, presence always-online bug. Presence system now uses "default offline, prove online" philosophy with activity detection. ~2,500 lines of unused code (voice/file features) removed.
 
 ### Realtime System (`lib/realtime/realtime-context.tsx`)
 
