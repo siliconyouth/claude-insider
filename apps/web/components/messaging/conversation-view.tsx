@@ -127,6 +127,8 @@ export function ConversationView({
   const [mentionedUsers, setMentionedUsers] = useState<Record<string, MentionedUser>>({});
   // Realtime presence status for participants (overrides initial status from props)
   const [presenceStatus, setPresenceStatus] = useState<Map<string, PresenceState["status"]>>(new Map());
+  // Counter to trigger read receipt refresh (incremented when we receive a message from others)
+  const [readReceiptRefreshTrigger, setReadReceiptRefreshTrigger] = useState(0);
 
   // Merge prop participants with realtime presence status
   // Realtime status takes priority when available (more current than initial fetch)
@@ -376,6 +378,10 @@ export function ConversationView({
         } else {
           playMessageReceived();
         }
+
+        // Trigger read receipt refresh - when the other user responds, they've likely read our messages
+        // This provides a fallback in case the broadcast was missed
+        setReadReceiptRefreshTrigger((prev) => prev + 1);
       }
 
       // Mark as read in background (non-blocking)
@@ -631,6 +637,29 @@ export function ConversationView({
 
     loadReadReceipts();
   }, [conversationId, currentUserId, messages, isLoading, isConnected, markMultipleAsRead]);
+
+  // Refresh read receipts when triggered (e.g., when receiving a message from the other user)
+  // This provides a fallback when the broadcast is missed
+  useEffect(() => {
+    if (readReceiptRefreshTrigger === 0) return; // Skip initial render
+    if (isLoading || messages.length === 0) return;
+
+    const refreshReceipts = async () => {
+      // Only fetch read receipts for our own messages
+      const ownMessageIds = messages
+        .filter((m) => m.senderId === currentUserId)
+        .map((m) => m.id);
+
+      if (ownMessageIds.length > 0) {
+        const receiptsResult = await getReadReceipts(ownMessageIds);
+        if (receiptsResult.success && receiptsResult.receipts) {
+          setReadReceipts((prev) => ({ ...prev, ...receiptsResult.receipts }));
+        }
+      }
+    };
+
+    refreshReceipts();
+  }, [readReceiptRefreshTrigger, currentUserId, messages, isLoading]);
 
   // Scroll to target message when deep linking from notifications
   useEffect(() => {
