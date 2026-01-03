@@ -3,11 +3,18 @@
 -- Description: Remove voice message and file attachment features from chat
 --
 -- This migration:
--- 1. Drops voice message columns from dm_messages
--- 2. Drops file attachment columns from dm_messages
--- 3. Drops the voice-messages storage bucket
--- 4. Drops the chat-attachments storage bucket
+-- 1. Drops triggers and functions that depend on voice/file columns
+-- 2. Drops voice message columns from dm_messages
+-- 3. Drops file attachment columns from dm_messages
+-- 4. Drops the voice-messages storage bucket
+-- 5. Drops the chat-attachments storage bucket
 -- ============================================================================
+
+-- ============================================
+-- STEP 0: Drop dependent triggers and functions
+-- ============================================
+DROP TRIGGER IF EXISTS validate_voice_message_trigger ON dm_messages;
+DROP FUNCTION IF EXISTS validate_voice_message();
 
 -- ============================================
 -- STEP 1: Drop voice message columns
