@@ -66,8 +66,6 @@ export interface Message {
   sessionId?: string;
   // Read receipts (populated separately)
   readReceipts?: ReadReceipt[];
-  // Delivery status (v1.17.0 - WhatsApp-style checkmarks)
-  deliveryStatus?: "sending" | "sent" | "delivered" | "read" | "failed";
   // Reply threading
   replyToMessageId?: string;
   replyToMessage?: {
@@ -135,22 +133,6 @@ interface MessageRow {
   edited_at?: string;
   deleted_at?: string;
   sender?: { id: string; name?: string };
-  // Delivery status (v1.17.0 - read receipts)
-  delivery_status?: string;
-  // Message type (v1.17.0)
-  message_type?: string;
-  // Voice message fields
-  voice_duration?: number;
-  voice_waveform?: number[];
-  voice_url?: string;
-  voice_transcription?: string;
-  // File attachment fields
-  file_url?: string;
-  file_name?: string;
-  file_size?: number;
-  file_type?: string;
-  file_width?: number;
-  file_height?: number;
   // E2EE fields
   encrypted_content?: string;
   is_encrypted?: boolean;
@@ -443,18 +425,6 @@ export async function getMessages(
         created_at,
         edited_at,
         deleted_at,
-        delivery_status,
-        message_type,
-        voice_duration,
-        voice_waveform,
-        voice_url,
-        voice_transcription,
-        file_url,
-        file_name,
-        file_size,
-        file_type,
-        file_width,
-        file_height,
         encrypted_content,
         is_encrypted,
         encryption_algorithm,
@@ -578,8 +548,6 @@ export async function getMessages(
         createdAt: m.created_at,
         editedAt: m.edited_at,
         deletedAt: m.deleted_at,
-        // Delivery status (v1.17.0 - read receipts)
-        deliveryStatus: (m.delivery_status as Message["deliveryStatus"]) || "sent",
         // E2EE fields
         encryptedContent: m.encrypted_content,
         isEncrypted: m.is_encrypted || false,

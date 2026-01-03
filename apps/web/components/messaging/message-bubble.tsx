@@ -459,22 +459,9 @@ export function MessageBubble({
     }
   };
 
-  // Calculate read status for own messages
-  // Priority: 1) message.deliveryStatus from DB, 2) readReceipts, 3) fallback to "sent"
+  // Calculate read status for own messages based on read receipts
   const readStatus = isOwnMessage
-    ? (() => {
-        // If message has deliveryStatus from database (set by trigger), use it
-        if (message.deliveryStatus === "read") {
-          return conversationType === "direct"
-            ? { status: "seen" as const }
-            : { status: "seen_by" as const, seenBy: readReceipts?.map(r => r.userName || "Someone").slice(0, 3) };
-        }
-        if (message.deliveryStatus === "delivered") {
-          return { status: "delivered" as const };
-        }
-        // Fallback to readReceipts-based logic
-        return formatReadStatus(readReceipts, conversationType, participantCount);
-      })()
+    ? formatReadStatus(readReceipts, conversationType, participantCount)
     : null;
 
   // Build user data for hover card
