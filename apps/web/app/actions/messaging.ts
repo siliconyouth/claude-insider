@@ -775,20 +775,30 @@ export async function sendMessage(
         .single();
 
       if (replyMsg) {
-        // Get sender name for the reply preview
+        const replyMsgData = replyMsg as { id: string; sender_id: string; content: string; deleted_at?: string };
+
+        // Get sender name for the reply preview - use same fallback chain as getMessages()
+        // Fallback chain: profile.display_name > user.name > profile.username > "Unknown"
         const { data: replySenderProfile } = await supabase
           .from("profiles")
           .select("display_name, username")
-          .eq("user_id", (replyMsg as { sender_id: string }).sender_id)
+          .eq("user_id", replyMsgData.sender_id)
+          .single();
+
+        // Also check user table for name (fallback if profile doesn't have display_name)
+        const { data: replySenderUser } = await supabase
+          .from("user")
+          .select("name")
+          .eq("id", replyMsgData.sender_id)
           .single();
 
         const replySender = replySenderProfile as { display_name?: string; username?: string } | null;
-        const replyMsgData = replyMsg as { id: string; sender_id: string; content: string; deleted_at?: string };
+        const userName = (replySenderUser as { name?: string } | null)?.name;
 
         replyToMessage = {
           id: replyMsgData.id,
           senderId: replyMsgData.sender_id,
-          senderName: replySender?.display_name || replySender?.username || "Unknown",
+          senderName: replySender?.display_name || userName || replySender?.username || "Unknown",
           content: replyMsgData.deleted_at ? "[Message deleted]" : replyMsgData.content,
           isDeleted: !!replyMsgData.deleted_at,
         };
