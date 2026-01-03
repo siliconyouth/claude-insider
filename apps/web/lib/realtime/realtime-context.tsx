@@ -38,7 +38,7 @@ export interface TypingPayload {
 }
 
 export interface PresenceState {
-  odierUserId: string;
+  userId: string;
   status: "online" | "away" | "offline";
   lastSeen?: string;
 }
@@ -354,7 +354,7 @@ export function RealtimeProvider({ children }: RealtimeProviderProps) {
       if (!state) return;
 
       state.channel.track({
-        odierUserId: userId,
+        userId,
         status,
         lastSeen: new Date().toISOString(),
       } as PresenceState);
@@ -454,6 +454,8 @@ interface UseConversationRealtimeOptions {
   onMessage?: (payload: MessagePayload) => void;
   onTypingChange?: (typingUserIds: string[]) => void;
   onReadReceipt?: (payload: ReadReceiptPayload) => void;
+  /** Called when another user's presence changes (join/leave/status update) */
+  onPresenceChange?: (presenceMap: Map<string, PresenceState["status"]>) => void;
   enabled?: boolean;
 }
 
@@ -463,16 +465,23 @@ export function useConversationRealtime({
   onMessage,
   onTypingChange,
   onReadReceipt,
+  onPresenceChange,
   enabled = true,
 }: UseConversationRealtimeOptions) {
   const { subscribe, sendTyping, sendReadReceipt, trackPresence, isConnected } = useRealtime();
   const typingUsersRef = useRef<Map<string, number>>(new Map()); // userId -> timestamp
+  const presenceMapRef = useRef<Map<string, PresenceState["status"]>>(new Map()); // userId -> status
   const onTypingChangeRef = useRef(onTypingChange);
+  const onPresenceChangeRef = useRef(onPresenceChange);
 
-  // Keep callback ref updated (Matrix SDK pattern - avoids stale closure issues)
+  // Keep callback refs updated (Matrix SDK pattern - avoids stale closure issues)
   useEffect(() => {
     onTypingChangeRef.current = onTypingChange;
   }, [onTypingChange]);
+
+  useEffect(() => {
+    onPresenceChangeRef.current = onPresenceChange;
+  }, [onPresenceChange]);
 
   // Periodic cleanup interval for stale typing indicators (Matrix SDK pattern)
   // This ensures typing indicators are cleared even if "stop typing" event is missed
@@ -555,6 +564,37 @@ export function useConversationRealtime({
         if (payload.userId === currentUserId) return;
         onReadReceipt?.(payload);
       },
+      // Handle presence sync - called when first connecting or on full refresh
+      onPresenceSync: (presenceState) => {
+        // Build a map of userId -> status from presence state
+        // Supabase presence state is keyed by internal presence_ref
+        presenceMapRef.current.clear();
+        Object.values(presenceState).forEach((presences) => {
+          if (Array.isArray(presences)) {
+            presences.forEach((p) => {
+              // Skip own presence
+              if (p.userId && p.userId !== currentUserId) {
+                presenceMapRef.current.set(p.userId, p.status || "online");
+              }
+            });
+          }
+        });
+        onPresenceChangeRef.current?.(new Map(presenceMapRef.current));
+      },
+      // Handle user joining - called when a new user connects
+      onPresenceJoin: (_key, presence) => {
+        if (presence.userId && presence.userId !== currentUserId) {
+          presenceMapRef.current.set(presence.userId, presence.status || "online");
+          onPresenceChangeRef.current?.(new Map(presenceMapRef.current));
+        }
+      },
+      // Handle user leaving - called when a user disconnects
+      onPresenceLeave: (_key, presence) => {
+        if (presence.userId && presence.userId !== currentUserId) {
+          presenceMapRef.current.set(presence.userId, "offline");
+          onPresenceChangeRef.current?.(new Map(presenceMapRef.current));
+        }
+      },
     };
 
     const unsubscribe = subscribe(conversationId, handlers);
@@ -564,6 +604,7 @@ export function useConversationRealtime({
 
     return () => {
       typingUsersRef.current.clear();
+      presenceMapRef.current.clear();
       unsubscribe();
     };
   }, [

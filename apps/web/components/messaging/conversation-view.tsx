@@ -60,6 +60,7 @@ import {
   useConversationRealtime,
   type MessagePayload,
   type ReadReceiptPayload,
+  type PresenceState,
 } from "@/lib/realtime/realtime-context";
 import { AI_ASSISTANT_USER_ID } from "@/lib/roles";
 
@@ -85,7 +86,7 @@ export function ConversationView({
   className,
 }: ConversationViewProps) {
   // DEFENSIVE: Ensure participants is always an array (fixes "Display Error" when prop is undefined)
-  const participants = Array.isArray(participantsProp) ? participantsProp : [];
+  const participantsBase = Array.isArray(participantsProp) ? participantsProp : [];
 
   // Use the new chat bridge hook for messages (uses ChatEngine when available, falls back to server actions)
   const {
@@ -126,6 +127,26 @@ export function ConversationView({
   const [pinnedCount, setPinnedCount] = useState(0);
   // Mentioned users cache for displaying @mentions with display names
   const [mentionedUsers, setMentionedUsers] = useState<Record<string, MentionedUser>>({});
+  // Realtime presence status for participants (overrides initial status from props)
+  const [presenceStatus, setPresenceStatus] = useState<Map<string, PresenceState["status"]>>(new Map());
+
+  // Merge prop participants with realtime presence status
+  // Realtime status takes priority when available (more current than initial fetch)
+  const participants = useMemo(() => {
+    if (presenceStatus.size === 0) {
+      return participantsBase; // No realtime data yet, use props as-is
+    }
+    return participantsBase.map((p) => {
+      const realtimeStatus = presenceStatus.get(p.userId);
+      if (realtimeStatus) {
+        // Map realtime status to participant status format
+        const status: "online" | "offline" | "idle" =
+          realtimeStatus === "away" ? "idle" : realtimeStatus;
+        return { ...p, status };
+      }
+      return p;
+    });
+  }, [participantsBase, presenceStatus]);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
@@ -399,6 +420,11 @@ export function ConversationView({
     });
   }, []);
 
+  // Handle presence changes from realtime (updates participant online status)
+  const handlePresenceChange = useCallback((presenceMap: Map<string, PresenceState["status"]>) => {
+    setPresenceStatus(presenceMap);
+  }, []);
+
   // Use optimized realtime hook - pools subscriptions, uses Broadcast for typing
   // This replaces the old postgres_changes subscriptions (7.6x faster for typing)
   const { sendTyping, sendReadReceipt, isConnected } = useConversationRealtime({
@@ -407,6 +433,7 @@ export function ConversationView({
     onMessage: handleRealtimeMessage,
     onTypingChange: handleTypingChange,
     onReadReceipt: handleReadReceipt,
+    onPresenceChange: handlePresenceChange,
     enabled: !isLoading, // Only subscribe after initial load
   });
 
