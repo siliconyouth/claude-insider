@@ -817,6 +817,21 @@ export async function sendMessage(
 
     const msg = newMessage as MessageRow;
 
+    // Update conversation's last message info for the conversation list preview
+    // This ensures the inbox shows the latest message, not stale data
+    const messagePreview = content.trim().length > 100
+      ? content.trim().slice(0, 100) + "..."
+      : content.trim();
+
+    await supabase
+      .from("dm_conversations")
+      .update({
+        last_message_at: msg.created_at,
+        last_message_preview: messagePreview,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", conversationId);
+
     // Get sender info for response (including username for hovercards)
     const { data: profileData } = await supabase
       .from("profiles")

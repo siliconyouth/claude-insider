@@ -128,6 +128,17 @@ export async function POST(request: NextRequest) {
     const profileData = profile as ProfileRow | null;
     const msg = newMessage as MessageRow;
 
+    // Update conversation's last message info for the conversation list preview
+    // For encrypted messages, we use the placeholder text since content is E2EE
+    await supabase
+      .from("dm_conversations")
+      .update({
+        last_message_at: msg.created_at,
+        last_message_preview: "🔒 Encrypted message",
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", conversationId);
+
     const message = {
       id: msg.id,
       conversationId: msg.conversation_id,

@@ -219,6 +219,21 @@ export async function generateAIChatResponse(
 
     const savedMessage = aiMessage as SavedMessageRow;
 
+    // Update conversation's last message info for the conversation list preview
+    // This ensures the inbox shows the latest AI response, not stale data
+    const messagePreview = aiResponseContent.trim().length > 100
+      ? aiResponseContent.trim().slice(0, 100) + "..."
+      : aiResponseContent.trim();
+
+    await supabase
+      .from("dm_conversations")
+      .update({
+        last_message_at: savedMessage.created_at,
+        last_message_preview: messagePreview,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", conversationId);
+
     // Mark the trigger message as "Seen" by the AI
     // This creates a read receipt so the user sees "Seen" status on their message
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
