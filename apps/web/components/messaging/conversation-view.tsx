@@ -525,25 +525,27 @@ export function ConversationView({
 
   // Batched read receipts - broadcasts immediately, batches DB writes every 30s
   // This reduces DB load while maintaining real-time "Seen" indicators
+  // IMPORTANT: Only enable when channel is connected to avoid silent broadcast failures
   const { markMultipleAsRead } = useBatchedReadReceipts({
     conversationId,
     currentUserId,
     broadcastReadReceipt: sendReadReceipt,
     userName: currentUserProfile.name,
     userAvatar: currentUserProfile.avatar,
-    enabled: !isLoading,
+    enabled: !isLoading && isConnected,
   });
 
   // Process pending read receipt broadcasts (avoids circular dependency with handleRealtimeMessage)
   // This useEffect runs after new messages are added and marks them as read via batched system
+  // IMPORTANT: Wait for channel connection before broadcasting
   useEffect(() => {
-    if (pendingReadReceiptIdsRef.current.length > 0 && !isLoading) {
+    if (pendingReadReceiptIdsRef.current.length > 0 && !isLoading && isConnected) {
       const pendingIds = [...pendingReadReceiptIdsRef.current];
       pendingReadReceiptIdsRef.current = []; // Clear the queue
       // Use batched system - broadcasts immediately, batches DB writes
       markMultipleAsRead(pendingIds);
     }
-  }, [messages.length, isLoading, markMultipleAsRead]);
+  }, [messages.length, isLoading, isConnected, markMultipleAsRead]);
 
   // Sync messages from hook to local state
   // The hook handles initial loading via ChatEngine or server actions
@@ -589,10 +591,13 @@ export function ConversationView({
   const loadedReceiptsRef = useRef<string | null>(null);
 
   // Load read receipts and mark as read after messages are loaded (once per conversation)
+  // IMPORTANT: Wait for realtime channel to connect before broadcasting read receipts
   useEffect(() => {
     if (isLoading || messages.length === 0) return;
     // Only load once per conversation to avoid repeated calls
     if (loadedReceiptsRef.current === conversationId) return;
+    // Wait for channel to connect before marking (fixes race condition)
+    if (!isConnected) return;
     loadedReceiptsRef.current = conversationId;
 
     const loadReadReceipts = async () => {
@@ -621,7 +626,7 @@ export function ConversationView({
     };
 
     loadReadReceipts();
-  }, [conversationId, currentUserId, messages, isLoading, markMultipleAsRead]);
+  }, [conversationId, currentUserId, messages, isLoading, isConnected, markMultipleAsRead]);
 
   // Scroll to target message when deep linking from notifications
   useEffect(() => {
