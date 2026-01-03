@@ -380,13 +380,11 @@ function transformLegacyMessage(msg: any): Message {
     conversationId: msg.conversationId || msg.conversation_id,
     senderId: msg.senderId || msg.sender_id,
     content: msg.content,
-    messageType: msg.messageType || msg.message_type || "text",
     createdAt: msg.createdAt || msg.created_at,
     editedAt: msg.editedAt || msg.edited_at,
     deletedAt: msg.deletedAt || msg.deleted_at,
     replyToMessageId: msg.replyToMessageId || msg.reply_to_message_id,
     mentions: msg.mentions,
-    deliveryStatus: msg.deliveryStatus || msg.delivery_status || "sent",
     isEncrypted: msg.isEncrypted || msg.is_encrypted || false,
   };
 }

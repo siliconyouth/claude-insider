@@ -67,7 +67,7 @@ interface ChatDBSchema extends DBSchema {
       id: string;
       conversationId: string;
       messageId: string;
-      type: "voice" | "image" | "file";
+      type: "image" | "file";
       blob: Blob;
       cachedAt: string;
       expiresAt: string;
@@ -594,13 +594,13 @@ export class ChatStore {
   // ==========================================================================
 
   /**
-   * Cache media (voice, image, file)
+   * Cache media (image, file)
    */
   async cacheMedia(
     id: string,
     conversationId: string,
     messageId: string,
-    type: "voice" | "image" | "file",
+    type: "image" | "file",
     blob: Blob,
     ttlMs: number = 7 * 24 * 60 * 60 * 1000 // 7 days default
   ): Promise<void> {

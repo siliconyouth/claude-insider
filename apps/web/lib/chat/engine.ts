@@ -451,14 +451,11 @@ export class ChatEngine {
       conversationId,
       senderId: this.config.userId,
       content,
-      messageType: options.voice ? "voice" : "text",
       createdAt: now,
       deliveryStatus: "sending",
       isEncrypted: false, // Will be set by E2EE layer
       replyToMessageId: options.replyToMessageId,
       mentions: options.mentions,
-      voiceDuration: options.voice?.duration,
-      voiceWaveform: options.voice?.waveform,
     };
 
     // Add to local state immediately (optimistic)
@@ -474,13 +471,6 @@ export class ChatEngine {
         content,
         replyToMessageId: options.replyToMessageId,
         mentions: options.mentions,
-        voice: options.voice
-          ? {
-              duration: options.voice.duration,
-              waveform: options.voice.waveform,
-              // Blob will be handled separately
-            }
-          : undefined,
       },
       createdAt: now,
       retryCount: 0,

@@ -9,7 +9,7 @@
 // Message Types
 // ============================================================================
 
-export type MessageType = "text" | "voice" | "image" | "file";
+export type MessageType = "text";
 
 export type DeliveryStatus = "sending" | "sent" | "delivered" | "read" | "failed";
 
@@ -20,7 +20,7 @@ export interface Message {
   conversationId: string;
   senderId: string;
   content: string;
-  messageType: MessageType;
+  messageType?: MessageType;
   createdAt: string;
   editedAt?: string;
   deletedAt?: string;
@@ -35,8 +35,8 @@ export interface Message {
   // Mentions
   mentions?: string[];
 
-  // Delivery
-  deliveryStatus: DeliveryStatus;
+  // Delivery (tracked locally, not in DB)
+  deliveryStatus?: DeliveryStatus;
 
   // E2EE
   isEncrypted: boolean;
@@ -45,12 +45,6 @@ export interface Message {
   senderDeviceId?: string;
   senderKey?: string;
   sessionId?: string;
-
-  // Voice message specific
-  voiceDuration?: number;
-  voiceWaveform?: number[];
-  voiceUrl?: string;
-  voiceTranscription?: string;
 
   // AI
   isAiGenerated?: boolean;
@@ -324,19 +318,6 @@ export interface SendMessageOptions {
 
   /** Force plaintext (skip E2EE) */
   forcePlaintext?: boolean;
-
-  /** Voice message data */
-  voice?: {
-    duration: number;
-    waveform: number[];
-    audioBlob: Blob;
-  };
-
-  /** File attachment */
-  file?: File;
-
-  /** Image attachments */
-  images?: File[];
 }
 
 // ============================================================================
