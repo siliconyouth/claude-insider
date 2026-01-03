@@ -378,6 +378,10 @@ function transformLegacyMessage(msg: any): Message {
     id: msg.id,
     conversationId: msg.conversationId || msg.conversation_id,
     senderId: msg.senderId || msg.sender_id,
+    // Preserve sender info for display (needed for reply previews, hovercards, etc.)
+    senderName: msg.senderName || msg.sender_name,
+    senderUsername: msg.senderUsername || msg.sender_username,
+    senderAvatar: msg.senderAvatar || msg.sender_avatar,
     content: msg.content,
     createdAt: msg.createdAt || msg.created_at,
     editedAt: msg.editedAt || msg.edited_at,

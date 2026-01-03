@@ -19,6 +19,10 @@ export interface Message {
   id: string;
   conversationId: string;
   senderId: string;
+  // Sender info (for display - from legacy messaging.ts compatibility)
+  senderName?: string;
+  senderUsername?: string;
+  senderAvatar?: string;
   content: string;
   messageType?: MessageType;
   createdAt: string;
