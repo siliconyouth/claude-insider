@@ -343,6 +343,21 @@ export function ConversationView({
           // Reply threading
           replyToMessageId,
           replyToMessage,
+          // Message type and delivery status (v1.17.0)
+          messageType: payload.message_type || "text",
+          deliveryStatus: payload.delivery_status || "sent",
+          // Voice message fields
+          voiceDuration: payload.voice_duration,
+          voiceWaveform: payload.voice_waveform,
+          voiceUrl: payload.voice_url,
+          voiceTranscription: payload.voice_transcription,
+          // File attachment fields
+          fileUrl: payload.file_url,
+          fileName: payload.file_name,
+          fileSize: payload.file_size,
+          fileType: payload.file_type,
+          fileWidth: payload.file_width,
+          fileHeight: payload.file_height,
         };
 
         return [...prev, message];
