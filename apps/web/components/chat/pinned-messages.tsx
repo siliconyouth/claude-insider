@@ -312,14 +312,7 @@ export const PinnedMessageCard = memo(function PinnedMessageCard({
 
             {/* Message preview */}
             <p className="text-sm ui-text-secondary line-clamp-3 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
-              {pin.messageType === "voice" ? (
-                <span className="flex items-center gap-1">
-                  <MicIcon className="w-3.5 h-3.5" />
-                  Voice message
-                </span>
-              ) : (
-                messagePreview
-              )}
+              {messagePreview}
             </p>
 
             {/* Pin note */}
@@ -481,22 +474,6 @@ function ChevronRightIcon({ className }: { className?: string }) {
       className={className}
     >
       <polyline points="9 18 15 12 9 6" />
-    </svg>
-  );
-}
-
-function MicIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      className={className}
-    >
-      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-      <line x1="12" y1="19" x2="12" y2="22" />
     </svg>
   );
 }

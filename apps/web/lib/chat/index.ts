@@ -127,19 +127,6 @@ export {
   type DeliveryTrackerConfig,
 } from "./delivery";
 
-// Voice Messages
-export {
-  VoiceRecorder,
-  VoicePlayer,
-  formatDuration,
-  isVoiceRecordingSupported,
-  getSupportedMimeType,
-  type VoiceRecorderConfig,
-  type VoiceRecorderState,
-  type VoiceRecorderResult,
-  type VoicePlayerState,
-} from "./voice";
-
 // Link Unfurling
 export {
   LinkUnfurler,

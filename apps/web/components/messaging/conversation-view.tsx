@@ -35,8 +35,6 @@ import {
   useMentionDetection,
   type MentionUser,
 } from "@/components/messaging/mention-autocomplete";
-import { VoiceRecorderButton } from "@/components/chat/voice-recorder";
-import type { VoiceRecorderResult } from "@/lib/chat/voice";
 import {
   PinnedMessagesBadge,
   PinnedMessagesPanel,
@@ -49,8 +47,6 @@ import {
   getReadReceipts,
   searchUsersForMention,
   getProfilesByUsernames,
-  sendVoiceMessage,
-  sendFileMessage,
   type Message,
   type ConversationParticipant,
   type ReadReceipt,
@@ -107,8 +103,6 @@ export function ConversationView({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  const [isSendingVoice, setIsSendingVoice] = useState(false);
-  const [isSendingFile, setIsSendingFile] = useState(false);
 
   // Message drafts - persisted to localStorage per conversation
   const { draft: inputValue, setDraft: setInputValue, clearDraft } = useDraftMessage({
@@ -343,21 +337,6 @@ export function ConversationView({
           // Reply threading
           replyToMessageId,
           replyToMessage,
-          // Message type and delivery status (v1.17.0)
-          messageType: payload.message_type || "text",
-          deliveryStatus: payload.delivery_status || "sent",
-          // Voice message fields
-          voiceDuration: payload.voice_duration,
-          voiceWaveform: payload.voice_waveform,
-          voiceUrl: payload.voice_url,
-          voiceTranscription: payload.voice_transcription,
-          // File attachment fields
-          fileUrl: payload.file_url,
-          fileName: payload.file_name,
-          fileSize: payload.file_size,
-          fileType: payload.file_type,
-          fileWidth: payload.file_width,
-          fileHeight: payload.file_height,
         };
 
         return [...prev, message];
@@ -1055,16 +1034,6 @@ export function ConversationView({
           </div>
         )}
 
-        {/* Upload progress indicator */}
-        {(isSendingFile || isSendingVoice) && (
-          <div className="px-4 py-2 flex items-center gap-3 bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-800">
-            <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-            <span className="text-sm text-blue-600 dark:text-blue-400">
-              {isSendingVoice ? "Uploading voice message..." : "Uploading file..."}
-            </span>
-          </div>
-        )}
-
         <div ref={inputWrapperRef} className="relative p-4 pt-3">
           {/* Mention Autocomplete - positioned above input */}
           <MentionAutocomplete
@@ -1100,139 +1069,6 @@ export function ConversationView({
                 "max-h-32"
               )}
             />
-            {/* Attachment button - always visible for non-AI chats */}
-            {!isAIConversation && (
-              <>
-                <input
-                  type="file"
-                  id="chat-file-input"
-                  className="hidden"
-                  multiple
-                  accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.txt,.zip"
-                  onChange={async (e) => {
-                    const files = e.target.files;
-                    if (!files || files.length === 0 || isSendingFile) return;
-
-                    setIsSendingFile(true);
-                    try {
-                      // Process files one at a time
-                      for (let i = 0; i < files.length; i++) {
-                        const file = files[i];
-                        if (!file) continue;
-
-                        // Convert file to base64
-                        const reader = new FileReader();
-                        const base64Promise = new Promise<string>((resolve) => {
-                          reader.onloadend = () => resolve(reader.result as string);
-                          reader.readAsDataURL(file);
-                        });
-                        const fileData = await base64Promise;
-
-                        // Get image dimensions if applicable
-                        let width: number | undefined;
-                        let height: number | undefined;
-                        if (file.type.startsWith("image/")) {
-                          const img = new Image();
-                          const dimensionsPromise = new Promise<{ w: number; h: number }>((resolve) => {
-                            img.onload = () => resolve({ w: img.width, h: img.height });
-                            img.src = fileData;
-                          });
-                          const dims = await dimensionsPromise;
-                          width = dims.w;
-                          height = dims.h;
-                        }
-
-                        // Send file message
-                        const response = await sendFileMessage({
-                          conversationId,
-                          fileData,
-                          fileName: file.name,
-                          fileSize: file.size,
-                          fileType: file.type,
-                          width,
-                          height,
-                        });
-
-                        if (response.success && response.message) {
-                          setMessages((prev) => [...prev, response.message!]);
-                          playMessageSent?.();
-                        } else {
-                          console.error("File upload failed:", response.error);
-                          alert(response.error || `Failed to send ${file.name}`);
-                        }
-                      }
-                    } catch (error) {
-                      console.error("File upload error:", error);
-                      alert("Failed to send file(s)");
-                    } finally {
-                      setIsSendingFile(false);
-                      e.target.value = ""; // Reset input
-                    }
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => document.getElementById("chat-file-input")?.click()}
-                  disabled={isSendingFile}
-                  className={cn(
-                    "p-2 rounded-full shrink-0",
-                    "text-gray-500 dark:text-gray-400",
-                    "hover:bg-gray-100 dark:hover:bg-gray-800",
-                    "hover:text-gray-700 dark:hover:text-gray-200",
-                    "transition-colors",
-                    isSendingFile && "opacity-50 cursor-not-allowed"
-                  )}
-                  title={isSendingFile ? "Uploading..." : "Attach file"}
-                >
-                  <AttachmentIcon className="w-5 h-5" />
-                </button>
-              </>
-            )}
-            {/* Voice recorder button - hidden when typing */}
-            {!inputValue.trim() && !isAIConversation && (
-              <VoiceRecorderButton
-                onRecordingComplete={async (result: VoiceRecorderResult) => {
-                  if (isSendingVoice) return;
-
-                  setIsSendingVoice(true);
-                  try {
-                    // Convert blob to base64
-                    const reader = new FileReader();
-                    const base64Promise = new Promise<string>((resolve) => {
-                      reader.onloadend = () => resolve(reader.result as string);
-                      reader.readAsDataURL(result.blob);
-                    });
-                    const audioData = await base64Promise;
-
-                    // Send voice message
-                    const response = await sendVoiceMessage({
-                      conversationId,
-                      audioData,
-                      duration: result.duration,
-                      waveform: result.waveform,
-                      mimeType: result.blob.type || "audio/webm",
-                    });
-
-                    if (response.success && response.message) {
-                      // Add to messages optimistically
-                      setMessages((prev) => [...prev, response.message!]);
-                      playMessageSent?.();
-                    } else {
-                      console.error("Voice message failed:", response.error);
-                      alert(response.error || "Failed to send voice message");
-                    }
-                  } catch (error) {
-                    console.error("Voice message error:", error);
-                    alert("Failed to send voice message");
-                  } finally {
-                    setIsSendingVoice(false);
-                  }
-                }}
-                size="md"
-                className="shrink-0"
-                disabled={isSendingVoice}
-              />
-            )}
             <button
               onClick={handleSend}
               disabled={!inputValue.trim()}
@@ -1291,24 +1127,6 @@ function SendIcon({ className }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
-      />
-    </svg>
-  );
-}
-
-function AttachmentIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"
       />
     </svg>
   );

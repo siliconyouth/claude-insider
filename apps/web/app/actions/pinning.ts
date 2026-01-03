@@ -29,7 +29,6 @@ export interface PinnedMessage {
   note: string | null;
   // Message data
   messageContent: string | null;
-  messageType: string;
   messageSenderId: string;
   messageSenderName: string | null;
   messageCreatedAt: string;
@@ -215,7 +214,6 @@ export async function getPinnedMessages(
       pinned_at: string;
       note: string | null;
       message_content: string | null;
-      message_type: string;
       message_sender_id: string;
       message_sender_name: string | null;
       message_created_at: string;
@@ -230,7 +228,6 @@ export async function getPinnedMessages(
          p.pinned_at,
          p.note,
          m.content as message_content,
-         COALESCE(m.message_type, 'text') as message_type,
          m.sender_id as message_sender_id,
          sender.name as message_sender_name,
          m.created_at as message_created_at
@@ -253,7 +250,6 @@ export async function getPinnedMessages(
       pinnedAt: row.pinned_at,
       note: row.note,
       messageContent: row.message_content,
-      messageType: row.message_type,
       messageSenderId: row.message_sender_id,
       messageSenderName: row.message_sender_name,
       messageCreatedAt: row.message_created_at,
@@ -331,7 +327,6 @@ async function getPinnedMessageById(pinId: string): Promise<PinnedMessage | null
     pinned_at: string;
     note: string | null;
     message_content: string | null;
-    message_type: string;
     message_sender_id: string;
     message_sender_name: string | null;
     message_created_at: string;
@@ -346,7 +341,6 @@ async function getPinnedMessageById(pinId: string): Promise<PinnedMessage | null
        p.pinned_at,
        p.note,
        m.content as message_content,
-       COALESCE(m.message_type, 'text') as message_type,
        m.sender_id as message_sender_id,
        sender.name as message_sender_name,
        m.created_at as message_created_at
@@ -373,7 +367,6 @@ async function getPinnedMessageById(pinId: string): Promise<PinnedMessage | null
     pinnedAt: row.pinned_at,
     note: row.note,
     messageContent: row.message_content,
-    messageType: row.message_type,
     messageSenderId: row.message_sender_id,
     messageSenderName: row.message_sender_name,
     messageCreatedAt: row.message_created_at,
