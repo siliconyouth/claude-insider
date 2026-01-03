@@ -2594,12 +2594,16 @@ export async function sendVoiceMessage(
     }
 
     // Decode base64 audio and upload to storage
-    const base64Data = audioData.replace(/^data:audio\/\w+;base64,/, "");
+    // Handle MIME types with codec suffix: data:audio/webm;codecs=opus;base64,...
+    const base64Data = audioData.replace(/^data:[^;]+;(?:codecs=[^;]+;)?base64,/, "");
     const audioBuffer = Buffer.from(base64Data, "base64");
+
+    // Normalize MIME type (remove codec suffix for file extension detection)
+    const baseMimeType = mimeType.split(";")[0]; // 'audio/webm;codecs=opus' -> 'audio/webm'
 
     // Generate unique filename
     const timestamp = Date.now();
-    const ext = mimeType === "audio/webm" ? "webm" : mimeType === "audio/mp4" ? "m4a" : "mp3";
+    const ext = baseMimeType === "audio/webm" ? "webm" : baseMimeType === "audio/mp4" ? "m4a" : baseMimeType === "audio/ogg" ? "ogg" : "mp3";
     const fileName = `${session.user.id}/${conversationId}/${timestamp}.${ext}`;
 
     // Upload to Supabase Storage
@@ -2612,7 +2616,9 @@ export async function sendVoiceMessage(
 
     if (uploadError) {
       console.error("Voice upload error:", uploadError);
-      return { success: false, error: "Failed to upload voice message" };
+      // Return detailed error for debugging
+      const errorDetail = uploadError.message || String(uploadError);
+      return { success: false, error: `Voice upload failed: ${errorDetail}` };
     }
 
     // Get public URL
@@ -2749,7 +2755,9 @@ export async function sendFileMessage(
 
     if (uploadError) {
       console.error("File upload error:", uploadError);
-      return { success: false, error: "Failed to upload file" };
+      // Return detailed error for debugging
+      const errorDetail = uploadError.message || String(uploadError);
+      return { success: false, error: `File upload failed: ${errorDetail}` };
     }
 
     // Get public URL
