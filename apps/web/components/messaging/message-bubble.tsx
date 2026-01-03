@@ -233,10 +233,30 @@ function linkifyContent(
 // Extract URLs from message content for link preview
 // Only returns external URLs (not internal routes)
 function extractUrls(content: string): string[] {
-  const urlRegex = /https?:\/\/[^\s<>"']+/gi;
+  // Match URLs but be careful with trailing punctuation
+  const urlRegex = /https?:\/\/[^\s<>"'()[\]]+(?:\([^\s<>"'()[\]]*\))?[^\s<>"'()[\].,;:!?]*/gi;
   const matches = content.match(urlRegex) || [];
-  // Filter out very short URLs and dedup
-  return [...new Set(matches.filter((url) => url.length > 10))];
+
+  // Clean up URLs - remove trailing punctuation that's likely not part of the URL
+  const cleanedUrls = matches.map((url) => {
+    // Remove trailing punctuation that's commonly at end of sentences
+    return url.replace(/[.,;:!?)]+$/, '');
+  });
+
+  // Filter out very short URLs, localhost, and dedup
+  return [...new Set(cleanedUrls.filter((url) => {
+    if (url.length <= 10) return false;
+    try {
+      const parsed = new URL(url);
+      // Skip localhost and internal URLs
+      if (parsed.hostname === 'localhost' || parsed.hostname.startsWith('127.')) {
+        return false;
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  }))];
 }
 
 // Format file size in human-readable format
