@@ -5,13 +5,16 @@
  *
  * Manages user online/idle/offline status with:
  *
- * 1. **Heartbeat Loop** - Sends heartbeat every 30 seconds while active
- * 2. **Browser Close Handler** - Sets offline on beforeunload
- * 3. **Visibility Change Handler** - Tracks when tab becomes hidden/visible
- * 4. **Idle Detection** - Marks as idle after inactivity
+ * 1. **Heartbeat Loop** - Sends heartbeat every 30 seconds while ACTIVE
+ * 2. **User Activity Detection** - Tracks mouse/keyboard to detect idle
+ * 3. **Browser Close Handler** - Sets offline on beforeunload
+ * 4. **Visibility Change Handler** - Tracks when tab becomes hidden/visible
  *
  * The Matrix SDK doesn't trust stored status - it computes presence at query time.
  * This provider sends regular heartbeats so the server can compute accurate status.
+ *
+ * IMPORTANT: Heartbeats are PAUSED when user is idle (no interaction for 2+ minutes).
+ * This allows the server-side presence computation to correctly show "idle" or "offline".
  */
 
 import { createContext, useContext, useEffect, useRef, useCallback } from "react";
@@ -24,6 +27,10 @@ import { heartbeat, updatePresence } from "@/app/actions/presence";
 
 // Send heartbeat every 30 seconds while active
 const HEARTBEAT_INTERVAL_MS = 30000;
+
+// Stop sending heartbeats after 2 minutes of no user activity
+// This allows server to compute "idle" status (uses 2-minute threshold)
+const IDLE_AFTER_INACTIVE_MS = 2 * 60 * 1000;
 
 // Mark as idle after 5 minutes of tab hidden
 const IDLE_AFTER_HIDDEN_MS = 5 * 60 * 1000;
@@ -58,15 +65,33 @@ export function usePresence() {
 export function PresenceProvider({ children }: { children: React.ReactNode }) {
   const { user, isAuthenticated, isLoading } = useAuth();
   const lastHeartbeatRef = useRef<number>(0);
+  const lastUserActivityRef = useRef<number>(Date.now());
   const hiddenSinceRef = useRef<number | null>(null);
   const heartbeatIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Track if component is mounted to prevent state updates after unmount
   const isMountedRef = useRef(true);
 
-  // Send heartbeat with throttling
+  // Check if user is currently active (had interaction within threshold)
+  const isUserActive = useCallback(() => {
+    const now = Date.now();
+    const timeSinceActivity = now - lastUserActivityRef.current;
+    return timeSinceActivity < IDLE_AFTER_INACTIVE_MS;
+  }, []);
+
+  // Update last activity timestamp (called on user interaction)
+  const recordUserActivity = useCallback(() => {
+    lastUserActivityRef.current = Date.now();
+  }, []);
+
+  // Send heartbeat with throttling - ONLY if user is active
   const sendHeartbeat = useCallback(async () => {
     if (!isMountedRef.current) return;
+
+    // Don't send heartbeat if user has been idle
+    if (!isUserActive()) {
+      return;
+    }
 
     const now = Date.now();
     if (now - lastHeartbeatRef.current < MIN_HEARTBEAT_INTERVAL_MS) {
@@ -81,7 +106,7 @@ export function PresenceProvider({ children }: { children: React.ReactNode }) {
       // Silently fail - don't break the app for presence issues
       console.warn("[Presence] Heartbeat failed:", error);
     }
-  }, []);
+  }, [isUserActive]);
 
   // Set status explicitly
   const setStatus = useCallback(async (status: "online" | "offline") => {
@@ -138,11 +163,13 @@ export function PresenceProvider({ children }: { children: React.ReactNode }) {
         hiddenSinceRef.current = null;
 
         if (hiddenDuration > IDLE_AFTER_HIDDEN_MS) {
-          // User was away for a while, send heartbeat to mark as active again
+          // User was away for a while
           console.log("[Presence] Tab visible after long hidden, refreshing status");
         }
 
-        // Always send heartbeat when tab becomes visible
+        // Record activity and send heartbeat when tab becomes visible
+        // This ensures user appears online when they return to the tab
+        recordUserActivity();
         sendHeartbeat();
       }
     };
@@ -151,7 +178,37 @@ export function PresenceProvider({ children }: { children: React.ReactNode }) {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [isAuthenticated, isLoading, user?.id, sendHeartbeat]);
+  }, [isAuthenticated, isLoading, user?.id, sendHeartbeat, recordUserActivity]);
+
+  // Track user activity (mouse, keyboard, touch, scroll)
+  useEffect(() => {
+    if (!isAuthenticated || isLoading || !user?.id) return;
+
+    // Throttle activity recording to prevent excessive updates
+    let activityTimeout: ReturnType<typeof setTimeout> | null = null;
+    const throttledRecordActivity = () => {
+      if (activityTimeout) return;
+      recordUserActivity();
+      activityTimeout = setTimeout(() => {
+        activityTimeout = null;
+      }, 1000); // Only record activity once per second max
+    };
+
+    // Listen for user interaction events
+    const events = ["mousemove", "mousedown", "keydown", "touchstart", "scroll"];
+    events.forEach((event) => {
+      document.addEventListener(event, throttledRecordActivity, { passive: true });
+    });
+
+    return () => {
+      events.forEach((event) => {
+        document.removeEventListener(event, throttledRecordActivity);
+      });
+      if (activityTimeout) {
+        clearTimeout(activityTimeout);
+      }
+    };
+  }, [isAuthenticated, isLoading, user?.id, recordUserActivity]);
 
   // Handle browser close/navigate away
   useEffect(() => {
