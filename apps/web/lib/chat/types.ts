@@ -31,6 +31,14 @@ export interface Message {
     content: string;
     senderName: string;
   };
+  // Legacy reply format (for backward compatibility with messaging.ts)
+  replyToMessage?: {
+    id: string;
+    senderId: string;
+    senderName: string;
+    content: string;
+    isDeleted: boolean;
+  };
 
   // Mentions
   mentions?: string[];

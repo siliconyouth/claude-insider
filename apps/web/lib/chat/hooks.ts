@@ -164,7 +164,7 @@ export function useChatMessages(conversationId: string | null) {
       } else {
         // Legacy system
         const { sendMessage: legacySend } = await import("@/app/actions/messaging");
-        const result = await legacySend(conversationId, content);
+        const result = await legacySend(conversationId, content, options?.replyToMessageId);
         if (result.success && result.message) {
           // DON'T add to internal state here!
           // The caller (ConversationView) handles optimistic updates and temp→real replacement.
@@ -383,6 +383,7 @@ function transformLegacyMessage(msg: any): Message {
     editedAt: msg.editedAt || msg.edited_at,
     deletedAt: msg.deletedAt || msg.deleted_at,
     replyToMessageId: msg.replyToMessageId || msg.reply_to_message_id,
+    replyToMessage: msg.replyToMessage, // Preserve reply preview data
     mentions: msg.mentions,
     isEncrypted: msg.isEncrypted || msg.is_encrypted || false,
   };
