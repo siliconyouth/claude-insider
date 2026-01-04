@@ -304,6 +304,9 @@ export function filterCIErrors(errors: string[]): string[] {
     /Error performing TLS/i,
     // Failed to load resource generic (covers most CI network issues)
     /Failed to load resource/i,
+    // Service worker errors (Firefox/WebKit in CI without HTTPS)
+    /Service worker/i,
+    /BrowserNotifications/i,
   ];
 
   return errors.filter((err) =>
