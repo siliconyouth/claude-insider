@@ -134,6 +134,8 @@ jobs:
           cd apps/web
           npx playwright test --project=anonymous --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
         env:
+          # Port must match playwright.config.ts BASE_URL
+          PORT: 3001
           # Add minimal env vars for tests
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
@@ -200,6 +202,7 @@ jobs:
           cd apps/web
           npx playwright test --project=chromium
         env:
+          PORT: 3001
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
@@ -259,6 +262,7 @@ jobs:
           cd apps/web
           npx playwright test --project=firefox
         env:
+          PORT: 3001
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
@@ -316,6 +320,7 @@ jobs:
           cd apps/web
           npx playwright test --project=webkit
         env:
+          PORT: 3001
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
