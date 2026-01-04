@@ -9,7 +9,7 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.17.2-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.17.3-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
 [![Features](https://img.shields.io/badge/68-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/3,035+-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)

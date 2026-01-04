@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.2**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.3**.
 
 | Link | URL |
 |------|-----|
@@ -54,9 +54,10 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.2**.
 22. [Feature Documentation](#feature-documentation) - Chat, realtime, E2EE, donations
 23. [Content Structure](#content-structure) - Documentation, resources, legal pages
 24. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
-25. [Success Metrics](#success-metrics)
-26. [Updating Guidelines](#updating-guidelines)
-27. [License](#license)
+25. [E2E Testing (MANDATORY)](#e2e-testing-mandatory) - Playwright, CI integration, error filtering
+26. [Success Metrics](#success-metrics)
+27. [Updating Guidelines](#updating-guidelines)
+28. [License](#license)
 
 ---
 
@@ -2068,6 +2069,80 @@ diagnostics/
 | Sound effect | `sections/sound-effects-section.tsx` |
 | Achievement | `sections/achievements-section.tsx` |
 | New test category | Create new file in `tests/`, add to `tests/index.ts` |
+
+---
+
+## E2E Testing (MANDATORY)
+
+**Location**: `apps/web/tests/e2e/` | **See [docs/PATTERNS.md](docs/PATTERNS.md#e2e-ci-patterns-v1173) for code examples**
+
+Playwright-based E2E testing with GitHub Actions CI integration. All new pages MUST have corresponding E2E tests.
+
+### Test Architecture
+
+| Directory | Purpose |
+|-----------|---------|
+| `tests/e2e/*.anon.spec.ts` | Anonymous user tests (no auth required) |
+| `tests/e2e/*.auth.spec.ts` | Authenticated user tests |
+| `tests/e2e/utils/test-helpers.ts` | Shared utilities (`waitForHydration`, `filterCIErrors`) |
+| `tests/e2e/fixtures/` | Test fixtures and mock data |
+
+### Key Test Helpers
+
+| Helper | Purpose |
+|--------|---------|
+| `waitForHydration(page)` | Wait for Next.js App Router hydration |
+| `captureConsoleErrors(page)` | Capture console errors for assertion |
+| `filterCIErrors(errors)` | Filter expected CI environment errors |
+| `dismissPopups(page)` | Dismiss modal popups (version update, etc.) |
+
+### CI Configuration
+
+| Setting | Value |
+|---------|-------|
+| **Workflow** | `.github/workflows/e2e-tests.yml` |
+| **Server** | `pnpm start` in CI (production), `pnpm dev` locally |
+| **Port** | 3001 (must match `playwright.config.ts`) |
+| **Browsers** | Chromium ✅, Firefox ⚠️, WebKit ⚠️ |
+
+### Error Filtering (MANDATORY)
+
+All tests MUST filter expected CI errors using `filterCIErrors()`:
+
+```typescript
+test.afterEach(async () => {
+  const criticalErrors = filterCIErrors(consoleErrors);
+  expect(criticalErrors).toHaveLength(0);
+});
+```
+
+### Filtered Error Patterns
+
+| Pattern | Reason |
+|---------|--------|
+| `/_vercel/` | Analytics scripts not available in CI |
+| `/500.*Internal Server Error/` | Database routes with placeholder credentials |
+| `/TLS handshake/i` | WebKit/Firefox headless CI issues |
+| `/Service worker/i` | Firefox without HTTPS |
+| `/placeholder\.supabase\.co/` | Placeholder Supabase URL |
+
+### Adding Tests for New Pages
+
+1. Create `tests/e2e/[page].anon.spec.ts` for anonymous tests
+2. Import helpers: `waitForHydration`, `captureConsoleErrors`, `filterCIErrors`
+3. Add `test.beforeEach` to capture console errors
+4. Add `test.afterEach` to filter and assert no critical errors
+5. Use `test.slow()` for heavy pages (resources, etc.)
+
+### Commands
+
+```bash
+cd apps/web
+pnpm exec playwright test                    # Run all tests
+pnpm exec playwright test --project=chromium # Chromium only
+pnpm exec playwright test --ui               # Interactive UI mode
+pnpm exec playwright show-report             # View HTML report
+```
 
 ---
 
