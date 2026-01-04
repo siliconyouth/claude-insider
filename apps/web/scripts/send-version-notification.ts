@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.17.2 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.17.3 notification to all opted-in users...\n");
 
-  const version = "1.17.2";
-  const title = "Claude Insider v1.17.2 - Resources Performance & E2E Testing";
+  const version = "1.17.3";
+  const title = "Claude Insider v1.17.3 - E2E CI Pipeline Stabilization";
   const message =
-    "⚡ Infinite Scroll: Resources page now loads 24 items at a time (99% DOM reduction) • 🧪 E2E Testing: 457 Playwright tests across 6 browser configurations • 📱 Mobile testing with Chrome/Safari support • 🔄 IntersectionObserver-based lazy loading";
+    "🔧 CI Pipeline: 11 commits to stabilize GitHub Actions E2E testing • 🎯 Error Filtering: filterCIErrors() helper for CI-specific error handling • 🌐 Browser Support: Firefox/WebKit with continue-on-error for graceful degradation • 📚 Documentation: Comprehensive E2E testing patterns in CLAUDE.md and PATTERNS.md";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
