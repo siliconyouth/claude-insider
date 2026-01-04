@@ -8,7 +8,7 @@
  */
 
 import { test, expect } from "@playwright/test";
-import { waitForHydration, captureConsoleErrors, getQueryParams } from "./utils/test-helpers";
+import { waitForHydration, captureConsoleErrors, filterCIErrors, getQueryParams } from "./utils/test-helpers";
 
 // Mark all resources tests as slow (3x default timeout)
 test.describe("Resources Page", () => {
@@ -21,9 +21,8 @@ test.describe("Resources Page", () => {
   });
 
   test.afterEach(async () => {
-    const criticalErrors = consoleErrors.filter(
-      (err) => !err.includes("favicon") && !err.includes("404") && !err.includes("hydration")
-    );
+    // Filter out expected CI environment errors (Vercel scripts, database 500s, etc.)
+    const criticalErrors = filterCIErrors(consoleErrors);
     expect(criticalErrors).toHaveLength(0);
   });
 

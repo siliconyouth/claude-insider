@@ -6,7 +6,7 @@
  */
 
 import { test, expect, type Page } from "@playwright/test";
-import { captureConsoleErrors, waitForHydration } from "./utils/test-helpers";
+import { captureConsoleErrors, filterCIErrors, waitForHydration } from "./utils/test-helpers";
 
 test.describe("Homepage", () => {
   let consoleErrors: string[];
@@ -18,10 +18,8 @@ test.describe("Homepage", () => {
   });
 
   test.afterEach(async () => {
-    // Allow known errors (e.g., favicon not found in dev)
-    const criticalErrors = consoleErrors.filter(
-      (err) => !err.includes("favicon") && !err.includes("404") && !err.includes("hydration")
-    );
+    // Filter out expected CI environment errors (Vercel scripts, database 500s, etc.)
+    const criticalErrors = filterCIErrors(consoleErrors);
     expect(criticalErrors).toHaveLength(0);
   });
 
