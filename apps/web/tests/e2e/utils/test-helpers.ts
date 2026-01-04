@@ -299,6 +299,11 @@ export function filterCIErrors(errors: string[]): string[] {
     // Supabase placeholder errors
     /placeholder\.supabase\.co/,
     /Invalid API key/,
+    // TLS handshake errors (WebKit/Firefox in CI)
+    /TLS handshake/i,
+    /Error performing TLS/i,
+    // Failed to load resource generic (covers most CI network issues)
+    /Failed to load resource/i,
   ];
 
   return errors.filter((err) =>
