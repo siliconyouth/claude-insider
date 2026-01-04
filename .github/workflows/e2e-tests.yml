@@ -65,8 +65,8 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: cd apps/web && npx playwright install-deps
 
-      - name: Build Next.js app
-        run: cd apps/web && pnpm build
+      - name: Build all packages (Turborepo)
+        run: pnpm build
         env:
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
@@ -74,11 +74,13 @@ jobs:
           # Skip database-dependent operations during build
           SKIP_ENV_VALIDATION: true
 
-      - name: Cache Next.js build
+      - name: Cache build outputs
         uses: actions/cache/save@v4
         with:
-          path: apps/web/.next
-          key: ${{ runner.os }}-nextjs-${{ github.sha }}
+          path: |
+            apps/web/.next
+            packages/ui/dist
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
   # ==========================================================================
   # Anonymous Tests (No Auth Required)
@@ -107,11 +109,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Restore Next.js build cache
+      - name: Restore build cache
         uses: actions/cache/restore@v4
         with:
-          path: apps/web/.next
-          key: ${{ runner.os }}-nextjs-${{ github.sha }}
+          path: |
+            apps/web/.next
+            packages/ui/dist
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
       - name: Restore Playwright cache
         uses: actions/cache@v4
@@ -171,11 +175,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Restore Next.js build cache
+      - name: Restore build cache
         uses: actions/cache/restore@v4
         with:
-          path: apps/web/.next
-          key: ${{ runner.os }}-nextjs-${{ github.sha }}
+          path: |
+            apps/web/.next
+            packages/ui/dist
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
       - name: Restore Playwright cache
         uses: actions/cache@v4
@@ -228,11 +234,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Restore Next.js build cache
+      - name: Restore build cache
         uses: actions/cache/restore@v4
         with:
-          path: apps/web/.next
-          key: ${{ runner.os }}-nextjs-${{ github.sha }}
+          path: |
+            apps/web/.next
+            packages/ui/dist
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
       - name: Restore Playwright cache
         uses: actions/cache@v4
@@ -283,11 +291,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Restore Next.js build cache
+      - name: Restore build cache
         uses: actions/cache/restore@v4
         with:
-          path: apps/web/.next
-          key: ${{ runner.os }}-nextjs-${{ github.sha }}
+          path: |
+            apps/web/.next
+            packages/ui/dist
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
       - name: Restore Playwright cache
         uses: actions/cache@v4
