@@ -5,9 +5,12 @@
  * Full directory of Claude AI resources with search, filters, and category browsing
  */
 
-import { useState, useMemo, useCallback, useEffect, Suspense } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
+
+// Pagination constants for infinite scroll
+const ITEMS_PER_PAGE = 24; // Load 24 items at a time (divisible by 1, 2, and 3 columns)
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { ResourceCard, ResourceCardSkeleton } from '@/components/resources/resource-card';
@@ -140,6 +143,11 @@ function ResourcesContent() {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [showFilters, setShowFilters] = useState(false);
+
+  // Infinite scroll pagination state
+  const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
   // URL Parameter Sync (B4 - Migration 088)
   // Update URL when filters change to enable shareable links
@@ -296,6 +304,62 @@ function ResourcesContent() {
     filters.targetAudience.length > 0 || filters.useCases.length > 0 ||
     filters.minKeyFeatures !== null || filters.hasPros !== null ||
     filters.hasCons !== null || filters.hasPrerequisites !== null;
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setDisplayCount(ITEMS_PER_PAGE);
+  }, [
+    filters.query, filters.category, filters.tags, filters.difficulty,
+    filters.status, filters.featured, filters.sort, filters.targetAudience,
+    filters.useCases, filters.minKeyFeatures, filters.hasPros, filters.hasCons,
+    filters.hasPrerequisites
+  ]);
+
+  // Load more function
+  const loadMore = useCallback(() => {
+    if (isLoadingMore || displayCount >= filteredResources.length) return;
+
+    setIsLoadingMore(true);
+    // Small delay for visual feedback
+    setTimeout(() => {
+      setDisplayCount((prev) => Math.min(prev + ITEMS_PER_PAGE, filteredResources.length));
+      setIsLoadingMore(false);
+    }, 100);
+  }, [isLoadingMore, displayCount, filteredResources.length]);
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    const loadMoreElement = loadMoreRef.current;
+    if (!loadMoreElement) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting && !isLoadingMore && displayCount < filteredResources.length) {
+          loadMore();
+        }
+      },
+      {
+        root: null, // viewport
+        rootMargin: '200px', // Start loading 200px before reaching the bottom
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(loadMoreElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [loadMore, isLoadingMore, displayCount, filteredResources.length]);
+
+  // Visible resources (paginated)
+  const visibleResources = useMemo(
+    () => filteredResources.slice(0, displayCount),
+    [filteredResources, displayCount]
+  );
+
+  const hasMoreToLoad = displayCount < filteredResources.length;
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
@@ -820,7 +884,9 @@ function ResourcesContent() {
             <p className="text-gray-600 dark:text-gray-400">
               {filteredResources.length === 1
                 ? '1 resource found'
-                : `${filteredResources.length} resources found`}
+                : hasMoreToLoad
+                  ? `Showing ${displayCount} of ${filteredResources.length} resources`
+                  : `${filteredResources.length} resources found`}
             </p>
           </div>
 
@@ -851,30 +917,87 @@ function ResourcesContent() {
 
           {/* Results Grid/List */}
           {filteredResources.length > 0 ? (
-            <div className={cn(
-              viewMode === 'grid'
-                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
-                : 'space-y-3'
-            )}>
-              {filteredResources.map((resource, index) => (
+            <>
+              <div className={cn(
+                viewMode === 'grid'
+                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
+                  : 'space-y-3'
+              )}>
+                {visibleResources.map((resource, index) => (
+                  <div
+                    key={resource.id}
+                    className="animate-fade-in-up"
+                    style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}
+                  >
+                    <ResourceCard
+                      resource={resource}
+                      slug={resource.id}
+                      variant={viewMode === 'grid' ? 'default' : 'compact'}
+                      showCategory
+                      showTags={viewMode === 'grid'}
+                      showInteractions
+                      showAskAI
+                      maxTags={3}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Load More / Infinite Scroll Trigger */}
+              {hasMoreToLoad && (
                 <div
-                  key={resource.id}
-                  className="animate-fade-in-up"
-                  style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}
+                  ref={loadMoreRef}
+                  className="flex flex-col items-center justify-center py-12"
                 >
-                  <ResourceCard
-                    resource={resource}
-                    slug={resource.id}
-                    variant={viewMode === 'grid' ? 'default' : 'compact'}
-                    showCategory
-                    showTags={viewMode === 'grid'}
-                    showInteractions
-                    showAskAI
-                    maxTags={3}
-                  />
+                  {isLoadingMore ? (
+                    <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                      <svg
+                        className="animate-spin h-5 w-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      <span>Loading more...</span>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={loadMore}
+                      className={cn(
+                        'px-6 py-3 rounded-xl text-sm font-medium',
+                        'border border-gray-200 dark:border-[#262626]',
+                        'bg-white dark:bg-[#111111]',
+                        'text-gray-700 dark:text-gray-300',
+                        'hover:border-blue-500/50 hover:text-blue-600 dark:hover:text-cyan-400',
+                        'transition-all duration-200'
+                      )}
+                    >
+                      Load more ({filteredResources.length - displayCount} remaining)
+                    </button>
+                  )}
                 </div>
-              ))}
-            </div>
+              )}
+
+              {/* All loaded indicator */}
+              {!hasMoreToLoad && filteredResources.length > ITEMS_PER_PAGE && (
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400 text-sm">
+                  ✓ All {filteredResources.length} resources loaded
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-16">
               <div className="text-4xl mb-4">🔍</div>

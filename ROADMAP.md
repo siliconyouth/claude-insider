@@ -1,15 +1,15 @@
 # Claude Insider Roadmap 2026
 
-> **Generated:** January 3, 2026
-> **Current Version:** 1.17.1
-> **Total Features:** 66 implemented (FR-63 Voice Messages removed in v1.17.1)
+> **Generated:** January 4, 2026
+> **Current Version:** 1.17.2
+> **Total Features:** 68 implemented (FR-63 Voice Messages removed in v1.17.1)
 > **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140 versions), FEATURES.md
 
 ---
 
 ## Executive Summary
 
-Claude Insider has achieved exceptional maturity with **66 production features**, **3,035+ curated resources**, **147 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
+Claude Insider has achieved exceptional maturity with **68 production features**, **3,035+ curated resources**, **147 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
 
 1. **Developer Experience**: MCP Playground, VS Code Extension, API Sandbox
 2. **Enterprise Readiness**: SSO/SAML, Teams, Analytics
@@ -24,8 +24,8 @@ Claude Insider has achieved exceptional maturity with **66 production features**
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| **Version** | 1.17.1 | Released January 3, 2026 |
-| **Features** | 66 | Documented in FEATURES.md |
+| **Version** | 1.17.2 | Released January 4, 2026 |
+| **Features** | 68 | Documented in FEATURES.md |
 | **Database Tables** | 147 | PostgreSQL with RLS |
 | **Resources** | 3,035+ | 10 categories, 21 enhanced fields |
 | **RAG Chunks** | 6,983 | 14% audio-enriched |
@@ -39,6 +39,7 @@ Claude Insider has achieved exceptional maturity with **66 production features**
 
 | Version | Date | Features |
 |---------|------|----------|
+| **v1.17.2** | Jan 4 | Infinite Scroll Pagination (resources), E2E Testing Infrastructure (457 Playwright tests) |
 | **v1.17.0** | Jan 2 | Chat System Rewrite (LRU cache, delivery tracking, voice messages, link unfurling, message pinning, E2EE default) |
 | **v1.16.0** | Jan 2 | MCP Playground (Monaco editor, validation, templates, save/share, gallery) |
 | **v1.15.0** | Jan 2 | Resource Relationship Analysis (confidence scoring, graph viz) |
@@ -103,20 +104,21 @@ Claude Insider has achieved exceptional maturity with **66 production features**
 
 | Version | Target | Features | Status |
 |---------|--------|----------|--------|
+| **1.17.2** | Jan W1 | Infinite Scroll Pagination, E2E Testing Infrastructure (457 Playwright tests) | ✅ Done |
 | **1.17.0** | Jan W1 | Chat System Rewrite (LRU cache, delivery tracking, voice messages, link unfurling, pinning, E2EE default) | ✅ Done |
-| **2.0.0** | Jan W2 | Integration Test Framework (Playwright, 50+ tests) | 🔥 Next |
-| **2.1.0** | Feb W1 | Error Monitoring (Sentry integration) | Planned |
-| **2.2.0** | Feb W2 | VS Code Extension MVP (search, favorites) | Planned |
-| **2.3.0** | Feb W3 | API Sandbox MVP (interactive documentation) | Planned |
-| **2.4.0** | Feb W4 | Feature Flags (environment-based toggles) | Planned |
-| **2.5.0** | Mar W1 | CLI Tool MVP (search, favorites, sync) | Planned |
-| **2.6.0** | Mar W2 | Browser Extension (Chrome, Firefox) | Planned |
-| **2.7.0** | Mar W4 | Agent Marketplace MVP (browse, submit) | Planned |
+| **2.0.0** | Jan W2 | Error Monitoring (Sentry integration) | 🔥 Next |
+| **2.1.0** | Feb W1 | VS Code Extension MVP (search, favorites) | Planned |
+| **2.2.0** | Feb W2 | API Sandbox MVP (interactive documentation) | Planned |
+| **2.3.0** | Feb W3 | Feature Flags (environment-based toggles) | Planned |
+| **2.4.0** | Feb W4 | CLI Tool MVP (search, favorites, sync) | Planned |
+| **2.5.0** | Mar W1 | Browser Extension (Chrome, Firefox) | Planned |
+| **2.6.0** | Mar W3 | Agent Marketplace MVP (browse, submit) | Planned |
 
 **Q1 Deliverables:**
+- **E2E Testing Infrastructure v1.17.2** - 457 Playwright tests, 6 browser configs ✅
+- **Infinite Scroll Pagination v1.17.2** - Resources page 99% DOM reduction ✅
 - **Chat System v1.17.0** - Complete rewrite with LRU caching, delivery tracking, voice messages ✅
 - **MCP Playground** - Full featured by end of January (TOP PRIORITY)
-- 50+ integration tests with 80% coverage target
 - Sentry error tracking across all API routes
 - VS Code extension with 1,000+ installs target
 - CLI tool published on npm
@@ -539,6 +541,7 @@ Target (v4.0.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.2 | Jan 4, 2026 | Claude Opus 4.5 | Updated for v1.17.2 E2E testing, infinite scroll |
 | 3.1 | Jan 2, 2026 | Claude Opus 4.5 | Updated for v1.17.0 chat system rewrite |
 | 3.0 | Jan 2, 2026 | Claude Opus 4.5 | Complete rewrite for v1.15.0, 2026 roadmap |
 | 2.1 | Dec 21, 2025 | Claude Opus 4.5 | v1.10.0 release, 47 features |
@@ -549,7 +552,7 @@ Target (v4.0.0):
 
 ## Conclusion
 
-Claude Insider has achieved exceptional maturity with 67 production features and 100% Lighthouse performance. The **AGGRESSIVE 2026 roadmap** focuses on:
+Claude Insider has achieved exceptional maturity with 68 production features and 100% Lighthouse performance. The **AGGRESSIVE 2026 roadmap** focuses on:
 
 1. **Q1 - MCP Ecosystem**: MCP Playground (TOP PRIORITY), VS Code Extension, CLI Tool, Agent Marketplace MVP
 2. **Q2 - Enterprise**: SSO/SAML, Teams, Webhooks, Slack/Discord Bots, API v2, Integrations
@@ -578,8 +581,8 @@ By December 2026, Claude Insider will be:
 
 ---
 
-*Document Version: 3.1*
-*Last Updated: January 2, 2026*
+*Document Version: 3.2*
+*Last Updated: January 4, 2026*
 *Author: Claude Opus 4.5 via Claude Code*
 *Timeline: AGGRESSIVE*
-*Next Review: January 31, 2026 (after Integration Test Framework)*
+*Next Review: January 31, 2026 (after Error Monitoring)*

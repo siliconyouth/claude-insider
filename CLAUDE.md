@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.1**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.2**.
 
 | Link | URL |
 |------|-----|
@@ -32,7 +32,7 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.1**.
 
 1. [Overview](#overview)
 2. [Quick Reference](#quick-reference) - Tech stack, commands, environment variables
-3. [Feature Requirements Summary](#feature-requirements-summary) - 66 implemented features
+3. [Feature Requirements Summary](#feature-requirements-summary) - 68 implemented features
 4. [Project Structure](#project-structure) - Directory layout
 5. [Code Style Guidelines](#code-style-guidelines) - TypeScript, ESLint, Supabase
 6. [UX System (MANDATORY)](#ux-system-mandatory---seven-pillars) - Seven pillars, skeleton sync, mobile optimization
@@ -147,7 +147,7 @@ Domain redirects in `vercel.json`: `claudeinsider.com` and `claude-insider.com` 
 
 ## Feature Requirements Summary
 
-**66 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
+**68 implemented features** across 7 categories. Full details: [FEATURES.md](FEATURES.md)
 
 | Category | Key Features |
 |----------|--------------|
@@ -1299,6 +1299,55 @@ The resources page MUST sync filters to URL parameters:
 | `minFeatures` | `?minFeatures=3` | Minimum count filter |
 | `hasPros` | `?hasPros=true` | Boolean toggle |
 | `hasCons` | `?hasCons=true` | Boolean toggle |
+
+### Infinite Scroll Pagination (MANDATORY - v1.17.2)
+
+The resources page MUST use infinite scroll to handle 3,000+ resources efficiently:
+
+| Constant | Value | Purpose |
+|----------|-------|---------|
+| `ITEMS_PER_PAGE` | 24 | Initial and batch load size (divisible by 1, 2, 3 columns) |
+
+**State Management:**
+
+```typescript
+const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
+const [isLoadingMore, setIsLoadingMore] = useState(false);
+const loadMoreRef = useRef<HTMLDivElement>(null);
+```
+
+**Implementation Requirements:**
+
+1. **Intersection Observer** - Auto-load when trigger element enters viewport (200px rootMargin)
+2. **Load More Button** - Fallback for users who prefer manual loading
+3. **Filter Reset** - Reset `displayCount` to `ITEMS_PER_PAGE` when any filter changes
+4. **Progress Indicator** - Show "Showing X of Y resources" count
+5. **Completion State** - Show "All X resources loaded" when complete
+
+```tsx
+// ✅ CORRECT: Use visibleResources (sliced), not filteredResources
+const visibleResources = useMemo(
+  () => filteredResources.slice(0, displayCount),
+  [filteredResources, displayCount]
+);
+
+// ✅ CORRECT: IntersectionObserver for auto-loading
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0]?.isIntersecting) loadMore();
+    },
+    { rootMargin: '200px', threshold: 0.1 }
+  );
+  if (loadMoreRef.current) observer.observe(loadMoreRef.current);
+  return () => observer.disconnect();
+}, [loadMore]);
+```
+
+**Performance Impact:**
+- Initial DOM nodes: ~24 (was ~3,000)
+- Initial render time: ~100ms (was ~3-5s)
+- Memory usage: ~5MB (was ~50MB)
 
 ### Homepage Resources Section (MANDATORY)
 

@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **66 implemented features** with detailed capabilities.
+Complete list of all **68 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (66 total)
+## Implemented Features (68 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -15,7 +15,7 @@ Complete list of all **66 implemented features** with detailed capabilities.
 | FR-3 | Search | Fuzzy search (Fuse.js), Cmd/Ctrl+K shortcut, history persistence |
 | FR-4 | User Experience | Dark/Light/System themes, responsive design, PWA offline support |
 | FR-5 | AI Voice Assistant | Claude streaming (SSE), RAG (6,983 chunks with 14% audio-enriched), ElevenLabs Turbo v2.5 TTS (42 voices, immediate text streaming, low-latency audio), speech-to-text |
-| FR-6 | Resources Section | 3,035 curated resources, 10 categories, search, GitHub integration |
+| FR-6 | Resources Section | 3,000+ curated resources, 10 categories, infinite scroll pagination (24 items/batch), search, GitHub integration |
 | FR-7 | Account Security | Password management, OAuth linking, safety checks |
 | FR-8 | Email Digest | Daily/weekly/monthly digests, Vercel Cron integration |
 | FR-9 | Admin Notifications | In-app, push, email channels; scheduling; targeting by role |
@@ -77,6 +77,7 @@ Complete list of all **66 implemented features** with detailed capabilities.
 | FR-65 | Message Pinning | Server actions (`pinMessage`, `unpinMessage`, `getPinnedMessages`), `PinnedMessagesPanel` slide-out UI with jump-to-message, `PinnedMessagesBadge` for header pin count, `PinIndicator` for inline display, admin/owner-only permissions with optional pin notes, stored in `dm_pinned_messages` table |
 | FR-66 | Chat Performance Optimizations | `LRUCache<K,V>` with TTL and automatic cleanup, specialized caches (`MessageCache`, `ConversationCache`, `PresenceCache`, `UserProfileCache`), batched realtime updates (50ms window, max 20 items), subscription pooling with reference counting, `RequestDeduplicator` for concurrent request coalescing, optimized SQL functions (`get_messages_with_context`, `get_users_presence`, `get_conversations_with_context`) |
 | FR-67 | E2EE Default for DMs | Automatic encryption setup for new DMs, `setupDMEncryption()` and `upgradeDMToE2EE()` utilities, device key synchronization via `dm_device_keys` table, E2EE availability checking with graceful fallback, per-conversation settings in `dm_e2ee_settings` table, Olm/Megolm algorithm support |
+| FR-68 | E2E Testing Infrastructure | 457 Playwright tests, 6 browser configs (Chromium, Firefox, WebKit, Mobile Chrome/Safari), anonymous/authenticated projects, global setup with dev server pre-warming, `waitForHydration()` for App Router, test suites for auth, docs, homepage, resources |
 
 ---
 

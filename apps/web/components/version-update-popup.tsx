@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.17.2",
+    date: "2026-01-04",
+    type: "patch",
+    highlights: [
+      "⚡ Infinite Scroll: Resources page now loads 24 items at a time (99% DOM reduction)",
+      "🧪 E2E Testing: 457 Playwright tests across 6 browser configurations",
+      "📱 Mobile Testing: Chrome/Safari mobile browser support with touch interactions",
+      "🔄 Performance: IntersectionObserver-based lazy loading with 'Load More' fallback",
+    ],
+  },
+  {
     version: "1.17.1",
     date: "2026-01-03",
     type: "patch",

@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.17.1 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.17.2 notification to all opted-in users...\n");
 
-  const version = "1.17.1";
-  const title = "Claude Insider v1.17.1 - Chat Stability & Presence Overhaul";
+  const version = "1.17.2";
+  const title = "Claude Insider v1.17.2 - Resources Performance & E2E Testing";
   const message =
-    "🔧 Fixed messages disappearing after sending • 👁️ Presence overhaul: 'default offline, prove online' with 45s/5min thresholds • 📨 Fixed delayed read receipts • 📋 Inbox now updates in real-time • 🧹 Removed voice/file features, ~2,500 lines of unused code cleaned up";
+    "⚡ Infinite Scroll: Resources page now loads 24 items at a time (99% DOM reduction) • 🧪 E2E Testing: 457 Playwright tests across 6 browser configurations • 📱 Mobile testing with Chrome/Safari support • 🔄 IntersectionObserver-based lazy loading";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

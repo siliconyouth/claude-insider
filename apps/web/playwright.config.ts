@@ -1,0 +1,165 @@
+import { defineConfig, devices } from "@playwright/test";
+
+/**
+ * Playwright Configuration for Claude Insider
+ *
+ * Integration Test Framework v2.0.0
+ *
+ * Features:
+ * - Multi-browser testing (Chromium, Firefox, WebKit)
+ * - Parallel execution with isolated contexts
+ * - Screenshot capture on failure
+ * - Video recording for debugging
+ * - Network mocking capabilities
+ * - Mobile viewport testing
+ *
+ * @see https://playwright.dev/docs/test-configuration
+ */
+
+// Use port 3001 to match the dev server configuration
+const PORT = process.env.PORT || 3001;
+const BASE_URL = process.env.PLAYWRIGHT_TEST_BASE_URL || `http://localhost:${PORT}`;
+
+export default defineConfig({
+  // Test directory
+  testDir: "./tests/e2e",
+
+  // Output directories
+  outputDir: "./tests/e2e/test-results",
+
+  // Maximum time one test can run for (60s for dev server compilation)
+  timeout: 60 * 1000,
+
+  // Expect timeout for assertions (higher for dev server)
+  expect: {
+    timeout: 45 * 1000,
+  },
+
+  // Run tests in files in parallel (disabled for dev server stability)
+  fullyParallel: false,
+
+  // Fail the build on CI if you accidentally left test.only in the source code
+  forbidOnly: !!process.env.CI,
+
+  // Retry on CI only
+  retries: process.env.CI ? 2 : 0,
+
+  // Use single worker locally to reduce dev server load, CI uses 1 for stability
+  workers: 1,
+
+  // Reporter to use
+  reporter: [
+    ["list"],
+    ["html", { outputFolder: "./tests/e2e/playwright-report", open: "never" }],
+    ...(process.env.CI ? [["github" as const]] : []),
+  ],
+
+  // Global setup and teardown
+  globalSetup: "./tests/e2e/global-setup.ts",
+  globalTeardown: "./tests/e2e/global-teardown.ts",
+
+  // Shared settings for all the projects below
+  use: {
+    // Base URL to use in actions like `await page.goto('/')`
+    baseURL: BASE_URL,
+
+    // Collect trace when retrying the failed test
+    trace: "on-first-retry",
+
+    // Capture screenshot only on failure
+    screenshot: "only-on-failure",
+
+    // Record video only when retrying
+    video: "on-first-retry",
+
+    // Browser context options
+    contextOptions: {
+      // Reduce motion for consistent animations
+      reducedMotion: "reduce",
+    },
+
+    // Navigation timeout (higher for dev server compilation)
+    navigationTimeout: 45 * 1000,
+
+    // Action timeout
+    actionTimeout: 15 * 1000,
+  },
+
+  // Configure projects for major browsers
+  projects: [
+    // Auth setup - runs before tests that need authentication
+    {
+      name: "setup",
+      testMatch: /.*\.setup\.ts/,
+    },
+
+    // Desktop browsers
+    {
+      name: "chromium",
+      use: {
+        ...devices["Desktop Chrome"],
+        // Use prepared auth state
+        storageState: "./tests/e2e/.auth/user.json",
+      },
+      dependencies: ["setup"],
+    },
+
+    {
+      name: "firefox",
+      use: {
+        ...devices["Desktop Firefox"],
+        storageState: "./tests/e2e/.auth/user.json",
+      },
+      dependencies: ["setup"],
+    },
+
+    {
+      name: "webkit",
+      use: {
+        ...devices["Desktop Safari"],
+        storageState: "./tests/e2e/.auth/user.json",
+      },
+      dependencies: ["setup"],
+    },
+
+    // Mobile viewports
+    {
+      name: "mobile-chrome",
+      use: {
+        ...devices["Pixel 5"],
+        storageState: "./tests/e2e/.auth/user.json",
+      },
+      dependencies: ["setup"],
+    },
+
+    {
+      name: "mobile-safari",
+      use: {
+        ...devices["iPhone 13"],
+        storageState: "./tests/e2e/.auth/user.json",
+      },
+      dependencies: ["setup"],
+    },
+
+    // Anonymous tests (no auth)
+    {
+      name: "anonymous",
+      testMatch: /.*\.anon\.spec\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+        // No storage state = not logged in
+      },
+    },
+  ],
+
+  // Run your local dev server before starting the tests
+  webServer: {
+    command: "pnpm dev",
+    url: BASE_URL,
+    reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
+    // Stdout/stderr to console
+    stdout: "pipe",
+    stderr: "pipe",
+  },
+});

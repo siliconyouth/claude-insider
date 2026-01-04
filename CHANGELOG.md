@@ -9,6 +9,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.17.2] - 2026-01-04
+### ⚡ Resources Page Performance & E2E Test Framework
+Major performance optimization for the resources page and comprehensive E2E test infrastructure.
+
+#### Performance
+- **Infinite Scroll Pagination**: Resources page now loads 24 items at a time instead of all 3,000+
+  - Uses Intersection Observer API for efficient scroll detection
+  - "Load More" button as fallback for manual loading
+  - Automatic pagination reset when filters change
+  - Shows "Showing X of Y resources" count and "All loaded" indicator
+  - Reduces initial DOM nodes from ~3,000 to ~24 (99% reduction)
+
+#### E2E Testing Infrastructure (Playwright v1.53.1)
+- **457 test cases** across 6 browser configurations
+- **Multi-browser**: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari
+- **Auth strategies**: Anonymous and authenticated test projects
+- **Global setup**: Dev server pre-warming, mock authentication
+- **Test helpers**: `waitForHydration()` for Next.js App Router
+- **Test suites**: Auth, Docs, Homepage, Resources with comprehensive coverage
+
+#### Bug Fixes
+- Fixed `waitForHydration()` for Next.js App Router (was checking Pages Router `__NEXT_DATA__`)
+- Fixed auth tests for modal-based authentication (Better Auth pattern)
+- Fixed resources test selectors to match actual DOM structure
+
+#### Files Changed
+- **Modified**: `app/(main)/resources/page.tsx` (+60 lines for infinite scroll)
+- **Modified**: `tests/e2e/resources.anon.spec.ts` (updated selectors)
+- **Modified**: `tests/e2e/auth.anon.spec.ts` (modal auth fixes)
+- **Created**: `tests/e2e/` framework with fixtures, helpers, configs
+
+---
+
 ## [1.17.1] - 2026-01-03
 ### 🔧 Chat Stability & Presence System Overhaul
 Critical bug fixes for messaging reliability and complete rewrite of the presence detection system.

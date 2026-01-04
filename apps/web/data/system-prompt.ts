@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-03 for v1.17.1 (Chat Stability - Presence overhaul with Matrix SDK pattern, message bug fixes, read receipts fix, code cleanup)
+ * Updated: 2026-01-04 for v1.17.2 (Resources Performance - Infinite scroll pagination, E2E testing infrastructure with 457 Playwright tests)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.17.1",
+  version: "1.17.2",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.17.0 - updated 2026-01-02)
+// TECH STACK KNOWLEDGE (v1.17.2 - updated 2026-01-04)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -1214,6 +1214,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.17.0", "chat system rewrite", "lru cache", "delivery status", "link unfurling", "message pinning", "e2ee default", "matrix sdk", "realtime optimization"],
+  },
+  {
+    id: "v1172-features",
+    title: "Version 1.17.2 Features",
+    section: "New in v1.17.2",
+    content: `Claude Insider v1.17.2 introduces major performance improvements and comprehensive E2E testing infrastructure. Infinite Scroll Pagination (FR-6 Enhancement): Resources page now loads 24 items at a time instead of all 3,000+ resources. Uses IntersectionObserver API for efficient scroll detection with 200px rootMargin preloading. "Load More" button as fallback for manual loading. Automatic pagination reset when filters change. Shows "Showing X of Y resources" count and "All loaded" indicator. Reduces initial DOM nodes from ~3,000 to ~24 (99% reduction). E2E Testing Infrastructure (FR-68): 457 Playwright tests covering critical user flows. 6 browser configurations: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari. Anonymous and authenticated test projects. Global setup with dev server pre-warming and \`waitForHydration()\` for App Router. Test suites for auth, docs, homepage, resources. Resources tests use \`test.slow()\` for 3x timeout (90s) due to heavy page load. New pattern in PATTERNS.md: Infinite Scroll Pattern with state management, IntersectionObserver trigger, filter reset pattern, and performance metrics.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.17.2", "infinite scroll", "pagination", "e2e testing", "playwright", "intersection observer", "resources performance", "fr-68", "457 tests", "mobile testing"],
   },
 ];
 
