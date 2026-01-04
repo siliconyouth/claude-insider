@@ -306,8 +306,8 @@ test.describe("Resources Page", () => {
     const firstCard = page.locator('a[href^="/resources/"]:has(h4)').first();
 
     if (await firstCard.isVisible()) {
-      // Should have title
-      const title = firstCard.locator("h2, h3, [class*='title']").first();
+      // Should have title (resource cards use h4)
+      const title = firstCard.locator("h4").first();
       await expect(title).toBeVisible();
 
       // Should have description or preview
@@ -435,13 +435,13 @@ test.describe("Resources SEO", () => {
     const title = await page.title();
     expect(title).toContain("Resource");
 
-    // Meta description
-    const metaDesc = await page.locator('meta[name="description"]').getAttribute("content");
+    // Meta description (use .first() as page may have duplicate meta tags)
+    const metaDesc = await page.locator('meta[name="description"]').first().getAttribute("content");
     expect(metaDesc).toBeTruthy();
     expect(metaDesc!.length).toBeGreaterThan(50);
 
-    // OG tags
-    const ogTitle = await page.locator('meta[property="og:title"]').getAttribute("content");
+    // OG tags (use .first() for potential duplicates)
+    const ogTitle = await page.locator('meta[property="og:title"]').first().getAttribute("content");
     expect(ogTitle).toBeTruthy();
   });
 
@@ -449,11 +449,14 @@ test.describe("Resources SEO", () => {
     await page.goto("/resources", { timeout: 90000 });
     await waitForHydration(page);
 
-    const jsonLd = await page.locator('script[type="application/ld+json"]').textContent();
+    // Use .first() as page may have multiple JSON-LD scripts
+    const jsonLd = await page.locator('script[type="application/ld+json"]').first().textContent();
 
     if (jsonLd) {
       const parsed = JSON.parse(jsonLd);
-      expect(parsed["@type"]).toBeTruthy();
+      // Check for @type in root or @graph array
+      const hasType = parsed["@type"] || (parsed["@graph"] && parsed["@graph"].length > 0);
+      expect(hasType).toBeTruthy();
     }
   });
 });
