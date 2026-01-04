@@ -71,6 +71,9 @@ jobs:
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+          # API keys needed for build-time static analysis (not used at runtime in tests)
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY || 're_placeholder_key' }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET || 'placeholder-secret-min-32-chars-long' }}
           # Skip database-dependent operations during build
           SKIP_ENV_VALIDATION: true
 
