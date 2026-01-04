@@ -154,10 +154,12 @@ export default defineConfig({
 
   // Run your local dev server before starting the tests
   webServer: {
-    command: "pnpm dev",
+    // Use production server in CI (faster, more stable), dev server locally
+    command: process.env.CI ? "pnpm start" : "pnpm dev",
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
+    // CI needs more time for cold start, dev server needs time for compilation
+    timeout: process.env.CI ? 60 * 1000 : 180 * 1000,
     // Stdout/stderr to console
     stdout: "pipe",
     stderr: "pipe",
