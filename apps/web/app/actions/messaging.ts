@@ -731,19 +731,24 @@ export async function sendMessage(
     // Look up user IDs for mentioned usernames
     const mentionedUserIds: string[] = aiMentioned ? [AI_ASSISTANT_USER_ID] : [];
     if (mentionUsernames.length > 0) {
-      // Get user IDs from profiles by username (cast due to types being out of sync)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: mentionedProfiles } = await (supabase as any)
-        .from("profiles")
-        .select("user_id, username")
-        .in("username", mentionUsernames);
+      // Query both tables in PARALLEL for better performance
+      const [profilesResult, usersResult] = await Promise.all([
+        // Get user IDs from profiles by username
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (supabase as any)
+          .from("profiles")
+          .select("user_id, username")
+          .in("username", mentionUsernames),
+        // Also check user table for usernames
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (supabase as any)
+          .from("user")
+          .select("id, username")
+          .in("username", mentionUsernames),
+      ]);
 
-      // Also check user table for usernames
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: mentionedUsers } = await (supabase as any)
-        .from("user")
-        .select("id, username")
-        .in("username", mentionUsernames);
+      const mentionedProfiles = profilesResult.data;
+      const mentionedUsers = usersResult.data;
 
       // Collect user IDs from both sources
       const userIdSet = new Set<string>();
@@ -777,23 +782,23 @@ export async function sendMessage(
       if (replyMsg) {
         const replyMsgData = replyMsg as { id: string; sender_id: string; content: string; deleted_at?: string };
 
-        // Get sender name for the reply preview - use same fallback chain as getMessages()
+        // Get sender name for the reply preview - query profile and user in PARALLEL
         // Fallback chain: profile.display_name > user.name > profile.username > "Unknown"
-        const { data: replySenderProfile } = await supabase
-          .from("profiles")
-          .select("display_name, username")
-          .eq("user_id", replyMsgData.sender_id)
-          .single();
+        const [profileResult, userResult] = await Promise.all([
+          supabase
+            .from("profiles")
+            .select("display_name, username")
+            .eq("user_id", replyMsgData.sender_id)
+            .single(),
+          supabase
+            .from("user")
+            .select("name")
+            .eq("id", replyMsgData.sender_id)
+            .single(),
+        ]);
 
-        // Also check user table for name (fallback if profile doesn't have display_name)
-        const { data: replySenderUser } = await supabase
-          .from("user")
-          .select("name")
-          .eq("id", replyMsgData.sender_id)
-          .single();
-
-        const replySender = replySenderProfile as { display_name?: string; username?: string } | null;
-        const userName = (replySenderUser as { name?: string } | null)?.name;
+        const replySender = profileResult.data as { display_name?: string; username?: string } | null;
+        const userName = (userResult.data as { name?: string } | null)?.name;
 
         replyToMessage = {
           id: replyMsgData.id,
