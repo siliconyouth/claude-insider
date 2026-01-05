@@ -53,6 +53,7 @@
     "@paypal/paypal-js": "^9.1.0",
     "@paypal/react-paypal-js": "^8.9.2",
     "@repo/ui": "workspace:*",
+    "@sentry/nextjs": "^10.32.1",
     "@simplewebauthn/browser": "^13.2.2",
     "@simplewebauthn/server": "^13.2.2",
     "@supabase/ssr": "^0.8.0",

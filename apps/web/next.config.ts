@@ -4,6 +4,7 @@ import { withPayload } from "@payloadcms/next/withPayload";
 import createNextIntlPlugin from "next-intl/plugin";
 import { withBotId } from "botid/next/config";
 import bundleAnalyzer from "@next/bundle-analyzer";
+import { withSentryConfig } from "@sentry/nextjs";
 import webpack from "webpack";
 
 const withBundleAnalyzer = bundleAnalyzer({
@@ -166,7 +167,7 @@ const nextConfig: NextConfig = {
               "media-src 'self' blob: https://*.elevenlabs.io",
               // Supabase (REST API + Realtime WebSocket), PayPal, ElevenLabs, Vercel analytics/live
               // CDN sources for fetching vodozemac WASM binaries
-              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io https://vercel.live https://*.vercel.live wss://vercel.live wss://*.vercel.live https://unpkg.com https://cdn.jsdelivr.net https://*.matrix.org https://github.com https://raw.githubusercontent.com",
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io https://vercel.live https://*.vercel.live wss://vercel.live wss://*.vercel.live https://unpkg.com https://cdn.jsdelivr.net https://*.matrix.org https://github.com https://raw.githubusercontent.com https://*.sentry.io https://*.ingest.sentry.io",
               // PayPal buttons and Vercel Live preview render in iframes
               "frame-src 'self' https://*.paypal.com https://*.paypalobjects.com https://vercel.live https://*.vercel.live",
               "frame-ancestors 'none'",
@@ -189,5 +190,35 @@ const withMDX = createMDX({
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
-// Wrap with Payload, MDX, i18n, BotId, and Bundle Analyzer
-export default withBundleAnalyzer(withBotId(withPayload(withNextIntl(withMDX(nextConfig)))));
+// Wrap with Payload, MDX, i18n, BotId, Bundle Analyzer, and Sentry
+const wrappedConfig = withBundleAnalyzer(withBotId(withPayload(withNextIntl(withMDX(nextConfig)))));
+
+// Sentry configuration options
+const sentryWebpackPluginOptions = {
+  // Suppresses source map uploading logs during build
+  silent: true,
+
+  // Organization and project from environment variables
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+
+  // Upload source maps for better error stack traces
+  // Only uploads in production builds with SENTRY_AUTH_TOKEN set
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
+  },
+
+  // Automatically tree-shake Sentry logger in production
+  disableLogger: true,
+
+  // Hides source maps from generated client bundles
+  hideSourceMaps: true,
+
+  // Tunnel Sentry requests through Next.js to avoid ad blockers
+  tunnelRoute: "/monitoring-tunnel",
+
+  // Disable Sentry telemetry
+  telemetry: false,
+};
+
+export default withSentryConfig(wrappedConfig, sentryWebpackPluginOptions);

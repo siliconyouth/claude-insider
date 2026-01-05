@@ -581,6 +581,99 @@ Tags enriched in ~14% of RAG chunks: `[excited]`, `[curious]`, `[thoughtful]`, `
 
 ---
 
+## Error Monitoring with Sentry (MANDATORY)
+
+**Location**: `sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`, `instrumentation.ts`
+
+### Configuration Files
+
+| File | Runtime | Purpose |
+|------|---------|---------|
+| `sentry.client.config.ts` | Browser | React errors, user sessions, frontend performance |
+| `sentry.server.config.ts` | Node.js | API routes, SSR, database errors |
+| `sentry.edge.config.ts` | Edge | Middleware, edge functions |
+| `instrumentation.ts` | All | Next.js instrumentation hook (initializes Sentry at startup) |
+
+### Exception Catching
+
+Use `Sentry.captureException(error)` in try-catch blocks:
+
+```typescript
+import * as Sentry from "@sentry/nextjs";
+
+try {
+  await riskyOperation();
+} catch (error) {
+  Sentry.captureException(error);
+  // Handle error gracefully
+}
+```
+
+### Custom Span Instrumentation
+
+Create spans for meaningful actions (button clicks, API calls, functions):
+
+```typescript
+// UI Actions
+function handleClick() {
+  Sentry.startSpan(
+    { op: "ui.click", name: "Submit Form" },
+    (span) => {
+      span.setAttribute("formId", formId);
+      submitForm();
+    }
+  );
+}
+
+// API Calls
+async function fetchUser(userId: string) {
+  return Sentry.startSpan(
+    { op: "http.client", name: `GET /api/users/${userId}` },
+    async () => {
+      const response = await fetch(`/api/users/${userId}`);
+      return response.json();
+    }
+  );
+}
+```
+
+### Structured Logging
+
+Use Sentry's logger for structured logs that appear in Sentry:
+
+```typescript
+import * as Sentry from "@sentry/nextjs";
+const { logger } = Sentry;
+
+// Log levels
+logger.trace("Starting operation", { operationId: "123" });
+logger.debug(logger.fmt`Cache miss for user: ${userId}`);
+logger.info("Profile updated", { profileId: 345 });
+logger.warn("Rate limit approaching", { endpoint: "/api/chat", remaining: 5 });
+logger.error("Payment failed", { orderId: "order_123", amount: 99.99 });
+logger.fatal("Database connection lost", { database: "main" });
+```
+
+### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NEXT_PUBLIC_SENTRY_DSN` | Yes | Sentry DSN from project settings |
+| `SENTRY_AUTH_TOKEN` | For builds | Enables source map uploads |
+| `SENTRY_ORG` | For builds | Sentry organization slug |
+| `SENTRY_PROJECT` | For builds | Sentry project slug |
+
+### Best Practices
+
+| Practice | Description |
+|----------|-------------|
+| **Production only** | Sentry only initializes when `NODE_ENV === "production"` |
+| **Sample rates** | 10% traces, 1% replays, 100% error replays |
+| **Sensitive data** | Auth headers and cookies are automatically redacted |
+| **Ignored errors** | Browser extensions, network errors, expected redirects filtered |
+
+---
+
 ## SEO System (MANDATORY)
 
 **Location**: `lib/seo-config.ts`, `components/seo/json-ld.tsx`, `payload.config.ts`
