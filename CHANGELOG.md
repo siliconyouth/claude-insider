@@ -9,6 +9,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.18.1] - 2026-01-06
+### 📚 Documentation Optimization
+Major documentation refactoring reducing CLAUDE.md by 69.5% while preserving all rules and requirements.
+
+#### Documentation Architecture Improvements
+- **CLAUDE.md Reduction**: From 2,414 lines to 735 lines (69.5% reduction)
+- **DRY Principle**: Rules in CLAUDE.md, code examples in PATTERNS.md
+- **Glossary Section**: Added abbreviations (RLS, E2EE, TTS, LRU, OG, MCP, RAG)
+- **Section Consolidation**: Design + Icon System merged, E2E + Unit Testing merged
+- **Cross-References**: Deep links to PATTERNS.md, DATABASE.md, FEATURES.md throughout
+
+#### Documentation Hierarchy
+| File | Purpose | Lines |
+|------|---------|-------|
+| CLAUDE.md | Rules, requirements, constraints | 735 |
+| PATTERNS.md | Implementation patterns, code examples | 3,561 |
+| DATABASE.md | Schema details, SQL patterns | 531 |
+| FEATURES.md | Feature catalog (70 features) | 167 |
+
+#### Key Changes
+- Collapsed environment variables table to inline list format
+- Replaced verbose code examples with PATTERNS.md references
+- Standardized prohibition lists format across sections
+- Updated cross-references in DATABASE.md to new anchor names
+
+#### Files Changed
+- **Modified**: `CLAUDE.md` (complete rewrite, 69.5% reduction)
+- **Modified**: `docs/DATABASE.md` (cross-reference update)
+- **Modified**: `ROADMAP.md` (marked Sentry complete, added v1.18.1)
+- **Modified**: `README.md` (version badge update)
+- **Modified**: `apps/web/data/build-info.json` (version bump)
+- **Modified**: `apps/web/data/system-prompt.ts` (version update)
+- **Modified**: `apps/web/components/version-update-popup.tsx` (new entry)
+
+---
+
 ## [1.18.0] - 2026-01-06
 ### 🛡️ Error Monitoring, Unit Testing & Performance
 Major release adding Sentry error monitoring, Vitest unit testing framework, and messaging performance optimizations.

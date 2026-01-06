@@ -2,7 +2,7 @@
 
 This document contains the complete database schema, table catalog, and SQL reference for Claude Insider.
 
-**For core rules and patterns, see [CLAUDE.md](../CLAUDE.md#data-layer-architecture-mandatory).**
+**For core rules and patterns, see [CLAUDE.md](../CLAUDE.md#data-layer-mandatory).**
 
 ---
 

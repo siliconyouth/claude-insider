@@ -26,6 +26,28 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.18.1",
+    date: "2026-01-06",
+    type: "patch",
+    highlights: [
+      "📚 Documentation Optimization: CLAUDE.md reduced 69.5% (2,414 → 735 lines)",
+      "🔗 DRY Architecture: Rules in CLAUDE.md, code examples in PATTERNS.md",
+      "📖 Glossary Added: RLS, E2EE, TTS, LRU, OG, MCP, RAG abbreviations defined",
+      "🏗️ Sections Consolidated: Design+Icon System, E2E+Unit Testing merged",
+    ],
+  },
+  {
+    version: "1.18.0",
+    date: "2026-01-06",
+    type: "major",
+    highlights: [
+      "🛡️ Sentry Integration: Full error monitoring with session replays (100% on errors)",
+      "🧪 Vitest Framework: 57 unit tests across rate-limiting, validation, sanitization, API routes",
+      "⚡ N+1 Query Fix: Parallelized sendMessage() queries with Promise.all() (~3x faster)",
+      "📊 Performance Tracing: 10% sample rate for transactions, structured logging",
+    ],
+  },
+  {
     version: "1.17.2",
     date: "2026-01-04",
     type: "patch",
@@ -33,19 +55,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "⚡ Infinite Scroll: Resources page now loads 24 items at a time (99% DOM reduction)",
       "🧪 E2E Testing: 457 Playwright tests across 6 browser configurations",
       "📱 Mobile Testing: Chrome/Safari mobile browser support with touch interactions",
-      "🔄 Performance: IntersectionObserver-based lazy loading with 'Load More' fallback",
-    ],
-  },
-  {
-    version: "1.17.1",
-    date: "2026-01-03",
-    type: "patch",
-    highlights: [
-      "🔧 Chat Stability: Fixed messages disappearing after sending (orphaned trigger bug)",
-      "👁️ Presence Overhaul: Matrix SDK 'default offline, prove online' with 45s/5min thresholds",
-      "📨 Read Receipts: Fixed delayed 'Seen' indicator (race condition resolved)",
-      "📋 Inbox Updates: Conversation list now refreshes on new messages in real-time",
-      "🧹 Code Cleanup: Removed voice/file features, ~2,500 lines of unused code",
     ],
   },
   {
