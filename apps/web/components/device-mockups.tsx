@@ -283,7 +283,7 @@ export function IPhone17ProMax({
 }
 
 /**
- * Realistic terminal content showing Claude Insider v1.16.2
+ * Realistic terminal content showing Claude Insider v1.18.2
  */
 function MacBookTerminalContent() {
   return (
@@ -311,11 +311,11 @@ function MacBookTerminalContent() {
         <div className="mt-1">
           <span className="text-[#a371f7]">╭─</span>
           <span className="text-[#7ee787]"> Claude Insider</span>
-          <span className="text-[#8b949e]"> v1.16.2</span>
+          <span className="text-[#8b949e]"> v1.18.2</span>
         </div>
         <div>
           <span className="text-[#a371f7]">│</span>
-          <span className="text-[#8b949e]"> Features: 61 • Resources: 3,012+</span>
+          <span className="text-[#8b949e]"> Features: 71 • Resources: 3,035+</span>
         </div>
         <div>
           <span className="text-[#a371f7]">╰─</span>
@@ -323,11 +323,11 @@ function MacBookTerminalContent() {
         </div>
 
         <div className="mt-2 space-y-[3px]">
-          <div className="text-[#7ee787]">✓ MCP Playground (config builder)</div>
-          <div className="text-[#7ee787]">✓ 2,136+ MCP Server Templates</div>
+          <div className="text-[#7ee787]">✓ Sentry Admin Dashboard</div>
+          <div className="text-[#7ee787]">✓ 57+ Unit Tests (Vitest)</div>
           <div className="text-[#7ee787]">✓ E2EE Matrix Protocol</div>
           <div className="text-[#7ee787]">✓ 50+ Achievements</div>
-          <div className="text-[#7ee787]">✓ RAG v7.0 (6,983 chunks)</div>
+          <div className="text-[#7ee787]">✓ RAG v8.0 (9,043 terms)</div>
         </div>
 
         <div className="mt-2 flex items-center gap-1">
