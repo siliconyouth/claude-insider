@@ -3471,6 +3471,85 @@ export default function Error({ error, reset }) {
 }
 ```
 
+### Sentry Admin Dashboard (v1.18.2)
+
+Dashboard for managing Sentry errors with TanStack Query integration:
+
+```typescript
+// lib/query/hooks/use-sentry-query.ts
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "../keys";
+
+// Fetch issues with filters
+export function useSentryIssues(filters: SentryIssuesFilters) {
+  return useQuery({
+    queryKey: queryKeys.sentry.issues(filters),
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (filters.status) params.set("status", filters.status);
+      if (filters.level) params.set("level", filters.level);
+      if (filters.statsPeriod) params.set("statsPeriod", filters.statsPeriod);
+
+      const res = await fetch(`/api/admin/sentry?${params}`);
+      if (!res.ok) throw new Error("Failed to fetch issues");
+      return res.json();
+    },
+    staleTime: 30_000, // 30 seconds
+  });
+}
+
+// Update issue status with optimistic updates
+export function useUpdateSentryIssue() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ issueId, status }) => {
+      const res = await fetch(`/api/admin/sentry/${issueId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      if (!res.ok) throw new Error("Failed to update");
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.sentry.all });
+    },
+  });
+}
+```
+
+Cron job for hourly monitoring:
+
+```typescript
+// app/api/cron/sentry-check/route.ts
+export async function GET(request: Request) {
+  // Verify CRON_SECRET
+  const authHeader = request.headers.get("authorization");
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Fetch new issues since last check
+  const newIssues = await getNewIssuesSince(lastCheckTime);
+
+  // Send admin notification if new issues found
+  if (newIssues.length > 0) {
+    await notifyAdmins({
+      type: "new_user",
+      title: `🔴 New Sentry Issues: ${newIssues.length} found`,
+      message: formatIssuesList(newIssues),
+    });
+  }
+
+  // Log to sentry_check_logs table
+  await supabase.from("sentry_check_logs").insert({
+    issues_found: stats.totalIssues,
+    new_issues: newIssues.length,
+    notification_sent: newIssues.length > 0,
+  });
+}
+```
+
 ---
 
 ## Unit Testing Patterns (v1.18.0)

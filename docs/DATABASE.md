@@ -28,9 +28,9 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 147 |
-| **Categories** | 23 |
-| **Migrations** | 119 |
+| **Total Tables** | 148 |
+| **Categories** | 24 |
+| **Migrations** | 129 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -343,6 +343,25 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 - `mcp_configs_insert` - Users insert their own configs
 - `mcp_configs_update_own` - Users update their own configs
 - `mcp_configs_delete_own` - Users delete their own configs
+
+### Error Monitoring (1 table) - v1.18.2
+
+`sentry_check_logs`
+
+**Key columns in `sentry_check_logs`:**
+- `id` (UUID, PK) - Log entry identifier
+- `checked_at` (TIMESTAMPTZ, DEFAULT NOW()) - When the check ran
+- `issues_found` (INTEGER, DEFAULT 0) - Total unresolved issues
+- `new_issues` (INTEGER, DEFAULT 0) - New issues since last check
+- `error_count` (INTEGER, DEFAULT 0) - Issues with level "error"
+- `warning_count` (INTEGER, DEFAULT 0) - Issues with level "warning"
+- `fatal_count` (INTEGER, DEFAULT 0) - Issues with level "fatal"
+- `notification_sent` (BOOLEAN, DEFAULT FALSE) - Whether admin notification was sent
+- `notification_id` (UUID, NULLABLE) - Reference to admin_notifications
+- `error` (TEXT, NULLABLE) - Error message if check failed
+- `duration_ms` (INTEGER, NULLABLE) - How long the check took
+
+**Purpose:** Tracks hourly cron job runs for Sentry error monitoring, enabling historical analysis and debugging of the monitoring pipeline.
 
 ---
 

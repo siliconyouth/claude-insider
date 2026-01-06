@@ -106,7 +106,7 @@ Root Directory: `apps/web` | Domain redirects: `claudeinsider.com`, `claude-insi
 
 ## Feature Requirements Summary
 
-**70 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
+**71 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
 
 | Category | Highlights |
 |----------|------------|
@@ -145,11 +145,11 @@ claude-insider/
 │   ├── i18n/                   # 18 languages
 │   └── supabase/migrations/    # 119 SQL migration files
 ├── docs/                       # Documentation
-│   ├── DATABASE.md             # Complete schema reference (147 tables)
+│   ├── DATABASE.md             # Complete schema reference (148 tables)
 │   ├── PATTERNS.md             # Implementation patterns & code examples
 │   └── archive/                # Archived implementation plans
 ├── CLAUDE.md                   # Rules & requirements (this file)
-├── FEATURES.md                 # Detailed feature list (70 features)
+├── FEATURES.md                 # Detailed feature list (71 features)
 ├── CHANGELOG.md                # Version history
 └── ROADMAP.md                  # Future planning
 ```
@@ -377,15 +377,60 @@ Web Audio API synthesis - **0 bytes payload**, 26 types, 10 themes
 
 ## Error Monitoring (MANDATORY)
 
-**Location**: `sentry.*.config.ts`, `instrumentation.ts`
+**Location**: `sentry.*.config.ts`, `instrumentation.ts`, `lib/sentry-api.ts`
 
-### Configuration
+### Configuration Files
 
-| File | Runtime |
+| File | Runtime | Purpose |
+|------|---------|---------|
+| `sentry.client.config.ts` | Browser | React errors, sessions, replays |
+| `sentry.server.config.ts` | Node.js | API routes, SSR, database |
+| `sentry.edge.config.ts` | Edge | Middleware, edge functions |
+| `lib/sentry-api.ts` | Server | REST API client for dashboard |
+
+### Admin Dashboard (`/dashboard/sentry`)
+
+Interactive error management page (admin-only):
+
+| Feature | Description |
+|---------|-------------|
+| **Stats Cards** | Total issues, errors, warnings, fatal, affected users |
+| **Filters** | Status (unresolved/resolved/ignored), level, time period |
+| **Issues Table** | Paginated list with last seen, count, actions |
+| **Detail Modal** | Full issue info, stack trace, resolve/ignore actions |
+| **Manual Check** | Trigger cron job on-demand |
+
+### Hourly Cron Job
+
+**File**: `app/api/cron/sentry-check/route.ts` | **Schedule**: `0 * * * *` (every hour)
+
+| Step | Action |
+|------|--------|
+| 1 | Fetch unresolved issues from Sentry API |
+| 2 | Compare against last check timestamp |
+| 3 | Send admin notification if new issues found |
+| 4 | Log result to `sentry_check_logs` table |
+
+### API Routes
+
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/admin/sentry` | GET | List issues with filters, stats |
+| `/api/admin/sentry/[issueId]` | GET | Issue detail with latest event |
+| `/api/admin/sentry/[issueId]` | PATCH | Update status (resolve/ignore) |
+| `/api/cron/sentry-check` | GET | Cron trigger (CRON_SECRET auth) |
+| `/api/cron/sentry-check` | POST | Manual trigger (admin session) |
+
+### TanStack Query Hooks
+
+| Hook | Purpose |
 |------|---------|
-| `sentry.client.config.ts` | Browser (React errors, sessions) |
-| `sentry.server.config.ts` | Node.js (API routes, SSR) |
-| `sentry.edge.config.ts` | Edge (middleware) |
+| `useSentryIssues(filters)` | Paginated issues list |
+| `useSentryIssueDetail(id)` | Single issue with stack trace |
+| `useSentryStats(period)` | Aggregated statistics |
+| `useUpdateSentryIssue()` | Status mutation |
+| `useBulkUpdateSentryIssues()` | Bulk status update |
+| `useSentryCheckLogs(page)` | Cron job history |
 
 ### Usage
 
@@ -399,6 +444,14 @@ Sentry.startSpan({ op: "db.query", name: "SELECT user" }, async (span) => { ... 
 // Structured logging
 Sentry.logger.info("User signed in", { userId, method: "oauth" });
 ```
+
+### Environment Variables
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `SENTRY_AUTH_TOKEN` | Yes | API access + source maps |
+| `SENTRY_ORG` | Yes | Organization slug |
+| `SENTRY_PROJECT` | Yes | Project slug |
 
 **Best Practices:** Production only, 10% traces, 1% replays, `setUser()` before exceptions, fingerprinting for related errors
 
@@ -437,7 +490,7 @@ Sentry.logger.info("User signed in", { userId, method: "oauth" });
 
 ## Data Layer (MANDATORY)
 
-**147 tables** across 23 categories, **119 migrations**. **Full schema:** [docs/DATABASE.md](docs/DATABASE.md)
+**148 tables** across 24 categories, **129 migrations**. **Full schema:** [docs/DATABASE.md](docs/DATABASE.md)
 
 ### Critical Rules
 
@@ -637,18 +690,19 @@ pnpm exec playwright test --ui               # Interactive UI
 
 ### Unit Testing (Vitest)
 
-**Location:** `apps/web/tests/unit/` | **Framework:** Vitest 3.3.1
+**Location:** `apps/web/tests/unit/` | **Framework:** Vitest 3.3.1 | **Total:** 1,039 tests
 
-| Suite | Tests |
-|-------|-------|
-| `rate-limiting.test.ts` | 14 (token bucket, sliding window) |
-| `validation.test.ts` | 19 (email, password, URL) |
-| `sanitization.test.ts` | 6 (XSS prevention) |
-| `api-routes.test.ts` | 18 (auth, resources, search) |
+| Category | Suites | Tests |
+|----------|--------|-------|
+| **Admin Dashboard** | `dashboard-status-config.test.ts`, `dashboard-query-keys.test.ts`, `dashboard-types.test.ts`, `payload-access.test.ts`, `roles.test.ts` | 387 |
+| **Search/RAG** | `rag.test.ts`, `search-history.test.ts`, `resource-search.test.ts` | 172 |
+| **Chat/Messaging** | `chat-unfurl.test.ts`, `chat-cache.test.ts`, `chat-types.test.ts`, `presence-utils.test.ts` | 211 |
+| **Resources** | `resource-schema.test.ts`, `link-validator.test.ts` | 132 |
+| **Authentication** | `auth-validation.test.ts`, `webauthn-client.test.ts` | 137 |
 
 ```bash
-pnpm test              # Run all
-pnpm test --coverage   # With coverage
+pnpm test:unit            # Run all unit tests
+pnpm test:unit --coverage # With coverage
 ```
 
 **Best Practices:** Fast (<1s), isolated (no external deps), mock with `vi.mock()`

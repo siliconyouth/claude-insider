@@ -9,6 +9,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.18.2] - 2026-01-06
+### 🎛️ Sentry Admin Dashboard & Extended Unit Testing
+Complete error management dashboard for Sentry issues with hourly monitoring cron job and 14 additional unit tests.
+
+#### Sentry Admin Dashboard (`/dashboard/sentry`)
+- **Interactive Error Management**: View, filter, and manage Sentry issues from the admin dashboard
+- **Stats Cards**: Real-time counts for total issues, errors, warnings, fatal errors, and affected users
+- **Issue Filters**: Filter by status (unresolved/resolved/ignored), level (error/warning/fatal), and time period
+- **Detail Modal**: View full stack traces, event counts, first/last seen, with resolve/ignore actions
+- **Hourly Cron Job**: Automated checks for new errors with in-app admin notifications
+
+#### Sentry API Routes
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/admin/sentry` | GET | List issues with pagination, filters, and stats |
+| `/api/admin/sentry/[issueId]` | GET | Issue detail with latest event and stack trace |
+| `/api/admin/sentry/[issueId]` | PATCH | Update issue status (resolve/ignore/unresolve) |
+| `/api/cron/sentry-check` | GET/POST | Hourly cron trigger (GET) and manual trigger (POST) |
+
+#### TanStack Query Integration
+- `useSentryIssues(filters)` - Paginated issues with filtering
+- `useSentryIssueDetail(id)` - Single issue with stack trace
+- `useSentryStats(period)` - Aggregated statistics
+- `useUpdateSentryIssue()` - Status mutation with optimistic updates
+- `useBulkUpdateSentryIssues()` - Bulk status updates
+- `useSentryCheckLogs(page)` - Cron job history
+
+#### Extended Unit Testing (14 New Tests)
+| Suite | Purpose |
+|-------|---------|
+| `auth-validation.test.ts` | Auth flow validation |
+| `chat-cache.test.ts` | LRU cache behavior |
+| `chat-types.test.ts` | Chat type definitions |
+| `chat-unfurl.test.ts` | Link unfurling |
+| `dashboard-query-keys.test.ts` | Query key factory |
+| `dashboard-status-config.test.ts` | Status config enums |
+| `dashboard-types.test.ts` | Dashboard type definitions |
+| `link-validator.test.ts` | URL validation |
+| `payload-access.test.ts` | Role-based access |
+| `rag.test.ts` | RAG search |
+| `resource-schema.test.ts` | Resource schema |
+| `resource-search.test.ts` | Resource search |
+| `search-history.test.ts` | Search history |
+| `webauthn-client.test.ts` | WebAuthn client |
+
+#### Database Schema
+- **New Table**: `sentry_check_logs` - Tracks hourly cron job runs with issues found, notifications sent, and duration
+
+#### Files Changed
+- **Created**: `lib/sentry-api.ts` (512 lines - REST API client)
+- **Created**: `app/api/admin/sentry/route.ts` (Issues list API)
+- **Created**: `app/api/admin/sentry/[issueId]/route.ts` (Issue detail API)
+- **Created**: `app/api/cron/sentry-check/route.ts` (Hourly cron)
+- **Created**: `app/(main)/dashboard/sentry/page.tsx` (Dashboard page)
+- **Created**: `lib/query/hooks/use-sentry-query.ts` (TanStack hooks)
+- **Created**: `supabase/migrations/129_sentry_check_logs.sql` (Database migration)
+- **Created**: `tests/unit/*.test.ts` (14 new unit test files)
+- **Modified**: `lib/query/keys.ts` (Sentry query keys)
+- **Modified**: `dashboard-nav.tsx` (Sentry navigation link)
+- **Modified**: `vercel.json` (Cron schedule)
+- **Modified**: `CLAUDE.md` (Error Monitoring section expanded)
+
+---
+
 ## [1.18.1] - 2026-01-06
 ### 📚 Documentation Optimization
 Major documentation refactoring reducing CLAUDE.md by 69.5% while preserving all rules and requirements.

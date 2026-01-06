@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.18.2",
+    date: "2026-01-06",
+    type: "patch",
+    highlights: [
+      "🎛️ Sentry Admin Dashboard: View, filter, and manage Sentry errors from /dashboard/sentry",
+      "⏰ Hourly Error Monitoring: Automated cron job with admin notifications for new issues",
+      "📊 Issue Management: Stats cards, status filters, detail modal with stack traces, resolve/ignore",
+      "🧪 Extended Unit Testing: 14 new test files (71+ total tests across 18 suites)",
+    ],
+  },
+  {
     version: "1.18.1",
     date: "2026-01-06",
     type: "patch",
@@ -33,7 +44,6 @@ const CHANGELOG: ChangelogEntry[] = [
       "📚 Documentation Optimization: CLAUDE.md reduced 69.5% (2,414 → 735 lines)",
       "🔗 DRY Architecture: Rules in CLAUDE.md, code examples in PATTERNS.md",
       "📖 Glossary Added: RLS, E2EE, TTS, LRU, OG, MCP, RAG abbreviations defined",
-      "🏗️ Sections Consolidated: Design+Icon System, E2E+Unit Testing merged",
     ],
   },
   {

@@ -1,8 +1,8 @@
 # Claude Insider Roadmap 2026
 
 > **Generated:** January 6, 2026
-> **Current Version:** 1.18.1
-> **Total Features:** 70 implemented (FR-63 Voice Messages removed in v1.17.1)
+> **Current Version:** 1.18.2
+> **Total Features:** 71 implemented (FR-63 Voice Messages removed in v1.17.1)
 > **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140+ versions), FEATURES.md
 
 ---
@@ -24,9 +24,9 @@ Claude Insider has achieved exceptional maturity with **70 production features**
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| **Version** | 1.18.1 | Released January 6, 2026 |
-| **Features** | 70 | Documented in FEATURES.md |
-| **Database Tables** | 147 | PostgreSQL with RLS |
+| **Version** | 1.18.2 | Released January 6, 2026 |
+| **Features** | 71 | Documented in FEATURES.md |
+| **Database Tables** | 148 | PostgreSQL with RLS |
 | **Resources** | 3,035+ | 10 categories, 21 enhanced fields |
 | **RAG Chunks** | 6,983 | 14% audio-enriched |
 | **Doc Pages** | 34 | 7 categories |
@@ -107,6 +107,7 @@ Claude Insider has achieved exceptional maturity with **70 production features**
 
 | Version | Target | Features | Status |
 |---------|--------|----------|--------|
+| **1.18.2** | Jan W1 | Sentry Admin Dashboard, Extended Unit Testing (71+ tests), Hourly Error Monitoring Cron | ✅ Done |
 | **1.18.1** | Jan W1 | Documentation Optimization (69.5% CLAUDE.md reduction, 2,414→735 lines) | ✅ Done |
 | **1.18.0** | Jan W1 | Sentry Error Monitoring, Vitest Unit Testing (57 tests), N+1 Query Fix | ✅ Done |
 | **1.17.3** | Jan W1 | CI Pipeline Stabilization (11 commits), filterCIErrors() helper, GitHub Actions E2E | ✅ Done |
@@ -559,6 +560,7 @@ Target (v4.0.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.5 | Jan 6, 2026 | Claude Opus 4.5 | Updated for v1.18.2 Sentry Admin Dashboard, 71+ unit tests |
 | 3.4 | Jan 6, 2026 | Claude Opus 4.5 | Updated for v1.18.1 documentation optimization, marked Sentry complete |
 | 3.3 | Jan 5, 2026 | Claude Opus 4.5 | Updated for v1.17.3 CI stabilization, marked MCP Playground complete |
 | 3.2 | Jan 4, 2026 | Claude Opus 4.5 | Updated for v1.17.2 E2E testing, infinite scroll |
@@ -572,7 +574,7 @@ Target (v4.0.0):
 
 ## Conclusion
 
-Claude Insider has achieved exceptional maturity with 68 production features and 100% Lighthouse performance. The **AGGRESSIVE 2026 roadmap** focuses on:
+Claude Insider has achieved exceptional maturity with 71 production features and 100% Lighthouse performance. The **AGGRESSIVE 2026 roadmap** focuses on:
 
 1. **Q1 - MCP Ecosystem**: MCP Playground ✅, Sentry Error Monitoring ✅, Doc Optimization ✅, VS Code Extension (🔥 NEXT), CLI Tool, Agent Marketplace MVP
 2. **Q2 - Enterprise**: SSO/SAML, Teams, Webhooks, Slack/Discord Bots, API v2, Integrations
@@ -587,7 +589,7 @@ Claude Insider has achieved exceptional maturity with 68 production features and
 | **E2E Testing v1.17.2** | Jan W1 | ✅ Complete |
 | **CI Pipeline v1.17.3** | Jan W1 | ✅ Complete |
 | **v1.18.0 Sentry** | Jan W1 | ✅ Complete |
-| **v1.18.1 Docs Opt** | Jan W1 | ✅ Complete |
+| **v1.18.2 Sentry Dashboard** | Jan W1 | ✅ Complete |
 | **v1.19.0 VS Code** | Feb W1 | 🔥 NEXT |
 | **v3.0.0** | Apr W3 | Teams & Orgs |
 | **Mobile App Launch** | Jul W4 | App Store/Play Store |
@@ -605,7 +607,7 @@ By December 2026, Claude Insider will be:
 
 ---
 
-*Document Version: 3.4*
+*Document Version: 3.5*
 *Last Updated: January 6, 2026*
 *Author: Claude Opus 4.5 via Claude Code*
 *Timeline: AGGRESSIVE*

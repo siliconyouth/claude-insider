@@ -103,6 +103,10 @@
     {
       "path": "/api/cron/validate-links",
       "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/sentry-check",
+      "schedule": "0 * * * *"
     }
   ],
   "redirects": [

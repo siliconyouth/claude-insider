@@ -231,6 +231,23 @@ export const queryKeys = {
     indexnow: ["dashboard", "seo", "indexnow"] as const,
   },
 
+  // Sentry Error Monitoring Section
+  sentry: {
+    all: ["dashboard", "sentry"] as const,
+    issues: (filters: {
+      status?: string;
+      level?: string;
+      statsPeriod?: string;
+      sort?: string;
+      cursor?: string;
+    }) => ["dashboard", "sentry", "issues", filters] as const,
+    issue: (issueId: string) => ["dashboard", "sentry", "issue", issueId] as const,
+    stats: (statsPeriod?: string) =>
+      ["dashboard", "sentry", "stats", statsPeriod] as const,
+    checkLogs: (page?: number) =>
+      ["dashboard", "sentry", "check-logs", page] as const,
+  },
+
   // Broken Links Section
   brokenLinks: {
     all: ["dashboard", "broken-links"] as const,
