@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.18.0 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.18.1 notification to all opted-in users...\n");
 
-  const version = "1.18.0";
-  const title = "Claude Insider v1.18.0 - Error Monitoring & Unit Testing";
+  const version = "1.18.1";
+  const title = "Claude Insider v1.18.1 - Documentation Optimization";
   const message =
-    "🛡️ Sentry Integration: Complete error monitoring with session replays, performance tracing, and structured logging • 🧪 Vitest Unit Testing: 57 tests across rate limiting, validation, sanitization, and API routes • ⚡ Performance: N+1 query fix in messaging with Promise.all parallelization";
+    "📚 Documentation Optimization: CLAUDE.md reduced by 69.5% (2,414 → 735 lines) • 🔗 DRY Architecture: Rules in CLAUDE.md, code examples in PATTERNS.md • 📖 Glossary Added: RLS, E2EE, TTS, LRU, OG, MCP, RAG abbreviations defined • 🏗️ Sections Consolidated: Design+Icon System, E2E+Unit Testing merged";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
