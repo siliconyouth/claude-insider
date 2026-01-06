@@ -7,6 +7,7 @@
 
 import { NextResponse } from "next/server";
 import { pool } from "@/lib/db";
+import buildInfo from "@/data/build-info.json";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +53,6 @@ export async function GET() {
     timestamp: new Date().toISOString(),
     responseTime: Date.now() - start,
     services,
-    version: "0.86.0",
+    version: buildInfo.version,
   });
 }

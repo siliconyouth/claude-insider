@@ -8,6 +8,7 @@ import "server-only";
 import { getPayload } from "payload";
 import config from "../payload.config";
 import type { SiteSetting } from "../payload-types";
+import buildInfo from "@/data/build-info.json";
 
 // Cache for site settings
 let settingsCache: SiteSetting | null = null;
@@ -21,7 +22,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSetting = {
     siteName: "Claude Insider",
     tagline: "Your Guide to Mastering Claude AI",
     description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
-    version: "0.86.0",
+    version: buildInfo.version,
   },
   social: {
     github: "https://github.com/siliconyouth/claude-insider",

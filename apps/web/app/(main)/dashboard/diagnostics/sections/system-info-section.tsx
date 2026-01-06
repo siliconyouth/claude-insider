@@ -6,6 +6,7 @@
 
 import { ACHIEVEMENTS } from "@/lib/achievements";
 import { SOUND_CATEGORIES } from "../diagnostics.types";
+import buildInfo from "@/data/build-info.json";
 
 export function SystemInfoSection() {
   return (
@@ -16,7 +17,7 @@ export function SystemInfoSection() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
         <div>
           <label className="text-xs text-gray-500 uppercase">Version</label>
-          <p className="text-white font-mono">0.86.0</p>
+          <p className="text-white font-mono">{buildInfo.version}</p>
         </div>
         <div>
           <label className="text-xs text-gray-500 uppercase">Environment</label>
