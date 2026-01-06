@@ -214,7 +214,7 @@ function SidebarContent() {
         icon={<LockIcon className="w-4 h-4" />}
       >
         <NavItem href="/dashboard/security" label="Overview" />
-        <NavItem href="/dashboard/security/bots" label="Bot Analytics" />
+        <NavItem href="/dashboard/security/analytics" label="Bot Analytics" />
         <NavItem href="/dashboard/security/logs" label="Logs" />
         <NavItem href="/dashboard/security/visitors" label="Visitors" />
         <NavItem href="/dashboard/security/honeypots" label="Honeypots" />

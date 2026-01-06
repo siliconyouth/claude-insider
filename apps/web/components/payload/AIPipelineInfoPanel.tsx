@@ -103,7 +103,7 @@ export default function AIPipelineInfoPanel() {
             <LinkIcon />
             Relationships
           </a>
-          <a href="/dashboard/ai-queue" style={styles.link}>
+          <a href="/dashboard/resource-updates" style={styles.link}>
             <QueueIcon />
             Operation Queue
           </a>
