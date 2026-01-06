@@ -21,20 +21,41 @@ if (SENTRY_DSN && IS_PRODUCTION) {
     // Environment tagging
     environment: process.env.VERCEL_ENV || "production",
 
+    // Enable structured logging
+    _experiments: {
+      enableLogs: true,
+    },
+
     // Performance Monitoring
     // Lower sample rate for edge (high volume)
     tracesSampleRate: 0.05,
+
+    // Integrations
+    integrations: [
+      // Capture console.error calls as logs
+      Sentry.consoleLoggingIntegration({ levels: ["error"] }),
+    ],
 
     // Filter out noisy errors
     ignoreErrors: [
       "NEXT_NOT_FOUND",
       "NEXT_REDIRECT",
+      // Network errors
+      "ECONNRESET",
+      "ETIMEDOUT",
     ],
 
     // Add custom context
-    beforeSend(event) {
+    beforeSend(event, _hint) {
       if (!IS_PRODUCTION) {
         return null;
+      }
+
+      // Redact sensitive data from request headers
+      if (event.request?.headers) {
+        delete event.request.headers["authorization"];
+        delete event.request.headers["cookie"];
+        delete event.request.headers["x-api-key"];
       }
 
       event.tags = {

@@ -97,8 +97,8 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             A critical error occurred. Please try refreshing the page.
           </p>
 
-          {/* Error Message */}
-          {error.message && (
+          {/* Error Message (only in development) */}
+          {process.env.NODE_ENV === "development" && error.message && (
             <p style={{
               fontSize: "12px",
               color: "#6b7280",

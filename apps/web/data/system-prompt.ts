@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-04 for v1.17.3 (E2E CI Pipeline Stabilization - GitHub Actions integration, filterCIErrors helper, browser-specific handling)
+ * Updated: 2026-01-06 for v1.18.0 (Sentry Error Monitoring, Vitest Unit Testing, N+1 Query Fix)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.17.3",
+  version: "1.18.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.17.3 - updated 2026-01-04)
+// TECH STACK KNOWLEDGE (v1.18.0 - updated 2026-01-06)
 // =============================================================================
 
 export const TECH_STACK = {

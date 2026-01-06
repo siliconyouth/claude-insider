@@ -29,6 +29,8 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 21. [E2EE Auto-Setup Pattern](#e2ee-auto-setup-pattern-v1170) - Automatic encryption for DMs (v1.17.0)
 22. [Infinite Scroll Pattern](#infinite-scroll-pattern-v1172) - Resources pagination with IntersectionObserver (v1.17.2)
 23. [E2E CI Patterns](#e2e-ci-patterns-v1173) - GitHub Actions integration, error filtering, browser-specific handling (v1.17.3)
+24. [Sentry Error Monitoring Patterns](#sentry-error-monitoring-patterns-v1180) - Exception capture, tracing, structured logging (v1.18.0)
+25. [Unit Testing Patterns](#unit-testing-patterns-v1180) - Vitest setup, mocking, test structure (v1.18.0)
 
 ---
 
@@ -3369,4 +3371,191 @@ if (jsonLd) {
 | Anonymous | ✅ Required | 64 tests across 2 shards |
 | Firefox | ⚠️ Allowed to fail | TLS/service worker issues in CI |
 | WebKit | ⚠️ Allowed to fail | TLS handshake issues in CI |
+
+---
+
+## Sentry Error Monitoring Patterns (v1.18.0)
+
+### Exception Capture with Context
+
+```typescript
+import * as Sentry from "@sentry/nextjs";
+
+// Basic exception capture in try-catch
+try {
+  await riskyOperation();
+} catch (error) {
+  Sentry.captureException(error);
+}
+
+// With additional context (recommended for debugging)
+try {
+  await processPayment(orderId);
+} catch (error) {
+  Sentry.captureException(error, {
+    tags: { component: "payments", orderId },
+    extra: { paymentMethod, amount },
+    level: "error",
+  });
+}
+
+// Set user context before capturing
+Sentry.setUser({ id: userId, email: userEmail });
+try {
+  await updateProfile(data);
+} catch (error) {
+  Sentry.captureException(error);
+}
+```
+
+### Custom Span Instrumentation
+
+```typescript
+// Database queries
+async function getUser(userId: string) {
+  return Sentry.startSpan(
+    { op: "db.query", name: "SELECT user" },
+    async (span) => {
+      span.setAttribute("db.system", "postgresql");
+      span.setAttribute("db.user_id", userId);
+      return await db.query("SELECT * FROM users WHERE id = $1", [userId]);
+    }
+  );
+}
+
+// External API calls
+async function fetchData(endpoint: string) {
+  return Sentry.startSpan(
+    { op: "http.client", name: `GET ${endpoint}` },
+    async (span) => {
+      const response = await fetch(endpoint);
+      span.setAttribute("http.status_code", response.status);
+      return response.json();
+    }
+  );
+}
+```
+
+### Structured Logging
+
+```typescript
+import * as Sentry from "@sentry/nextjs";
+const { logger } = Sentry;
+
+// Log levels (trace → debug → info → warn → error → fatal)
+logger.info("User signed in", { userId, method: "oauth" });
+logger.warn("Rate limit approaching", { endpoint, remaining: 5 });
+logger.error("Payment failed", { orderId, reason: "declined" });
+
+// Use fmt for template literals
+logger.info(logger.fmt`User ${userId} purchased ${itemCount} items`);
+```
+
+### Error Boundary Integration
+
+```typescript
+// app/error.tsx
+"use client";
+import * as Sentry from "@sentry/nextjs";
+import { useEffect } from "react";
+
+export default function Error({ error, reset }) {
+  useEffect(() => {
+    Sentry.captureException(error, {
+      tags: { errorBoundary: "route" },
+      extra: { digest: error.digest },
+    });
+  }, [error]);
+
+  return <ErrorUI onRetry={reset} />;
+}
+```
+
+---
+
+## Unit Testing Patterns (v1.18.0)
+
+### Basic Test Structure
+
+```typescript
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+
+describe('MyFeature', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should perform expected behavior', () => {
+    const result = myFunction('input');
+    expect(result).toBe('expected output');
+  });
+
+  it('should handle errors gracefully', async () => {
+    await expect(asyncFunction()).rejects.toThrow('Error message');
+  });
+});
+```
+
+### Mocking External Dependencies
+
+```typescript
+import { vi } from 'vitest';
+
+// Mock entire module
+vi.mock('@/lib/supabase/server', () => ({
+  createServerClient: vi.fn(() => ({
+    from: vi.fn(() => ({
+      select: vi.fn(() => ({ data: [], error: null })),
+    })),
+  })),
+}));
+
+// Mock specific function
+const mockFetch = vi.fn().mockResolvedValue({
+  ok: true,
+  json: () => Promise.resolve({ data: 'test' }),
+});
+global.fetch = mockFetch;
+
+// Reset between tests
+beforeEach(() => {
+  vi.clearAllMocks();
+});
+```
+
+### Testing API Routes
+
+```typescript
+import { describe, it, expect, vi } from 'vitest';
+
+describe('GET /api/resources', () => {
+  it('should return resources with correct structure', async () => {
+    const response = await GET(new Request('http://localhost/api/resources'));
+    const data = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(data).toHaveProperty('resources');
+    expect(Array.isArray(data.resources)).toBe(true);
+  });
+
+  it('should return 429 when rate limited', async () => {
+    // Mock rate limiter to return exceeded
+    vi.mock('@/lib/rate-limit', () => ({
+      checkRateLimit: vi.fn(() => ({ success: false, remaining: 0 })),
+    }));
+
+    const response = await GET(new Request('http://localhost/api/resources'));
+    expect(response.status).toBe(429);
+  });
+});
+```
+
+### Running Tests
+
+```bash
+pnpm test                    # Run all unit tests
+pnpm test --watch            # Watch mode for development
+pnpm test --coverage         # Generate coverage report
+pnpm test validation         # Run specific file/pattern
+```
 

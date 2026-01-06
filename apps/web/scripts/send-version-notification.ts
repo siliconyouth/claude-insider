@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.17.3 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.18.0 notification to all opted-in users...\n");
 
-  const version = "1.17.3";
-  const title = "Claude Insider v1.17.3 - E2E CI Pipeline Stabilization";
+  const version = "1.18.0";
+  const title = "Claude Insider v1.18.0 - Error Monitoring & Unit Testing";
   const message =
-    "🔧 CI Pipeline: 11 commits to stabilize GitHub Actions E2E testing • 🎯 Error Filtering: filterCIErrors() helper for CI-specific error handling • 🌐 Browser Support: Firefox/WebKit with continue-on-error for graceful degradation • 📚 Documentation: Comprehensive E2E testing patterns in CLAUDE.md and PATTERNS.md";
+    "🛡️ Sentry Integration: Complete error monitoring with session replays, performance tracing, and structured logging • 🧪 Vitest Unit Testing: 57 tests across rate limiting, validation, sanitization, and API routes • ⚡ Performance: N+1 query fix in messaging with Promise.all parallelization";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

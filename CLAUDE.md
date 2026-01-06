@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.3**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.18.0**.
 
 | Link | URL |
 |------|-----|
@@ -55,9 +55,10 @@ Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.17.3**.
 23. [Content Structure](#content-structure) - Documentation, resources, legal pages
 24. [Status & Diagnostics (MANDATORY)](#status--diagnostics-mandatory) - Test architecture
 25. [E2E Testing (MANDATORY)](#e2e-testing-mandatory) - Playwright, CI integration, error filtering
-26. [Success Metrics](#success-metrics)
-27. [Updating Guidelines](#updating-guidelines)
-28. [License](#license)
+26. [Unit Testing (MANDATORY)](#unit-testing-mandatory) - Vitest, test suites, coverage
+27. [Success Metrics](#success-metrics)
+28. [Updating Guidelines](#updating-guidelines)
+29. [License](#license)
 
 ---
 
@@ -92,7 +93,9 @@ All technologies are **free and/or open source** (except hosting services with f
 | react-image-crop | 11.x | ISC | Client-side image cropping |
 | recharts | 3.6.0 | MIT | Animated charts (Area, Bar, Pie, Line) |
 | @tanstack/react-query | 5.x | MIT | Server state management, caching, mutations |
-| Playwright | 1.53.1 | Apache-2.0 | Icon generation (SVG rendering) |
+| Playwright | 1.53.1 | Apache-2.0 | E2E testing, icon generation |
+| Vitest | 3.3.1 | MIT | Unit testing framework |
+| @sentry/nextjs | 10.32.1 | MIT | Error monitoring, performance tracing |
 | sharp | 0.34.3 | Apache-2.0 | Image resizing for icons |
 | next-seo | 7.0.1 | MIT | JSON-LD structured data components |
 | @payloadcms/plugin-seo | 3.69.0 | MIT | CMS SEO field management |
@@ -115,6 +118,8 @@ pnpm check-types      # TypeScript type checking
 pnpm format           # Format with Prettier
 pnpm clean            # Remove build artifacts
 pnpm db:types         # Generate Supabase TypeScript types
+pnpm test             # Run unit tests (Vitest)
+pnpm test:e2e         # Run E2E tests (Playwright)
 ```
 
 ### Environment Variables
@@ -134,6 +139,10 @@ pnpm db:types         # Generate Supabase TypeScript types
 | `NEXT_PUBLIC_APP_URL` | Yes | App URL (e.g., https://www.claudeinsider.com) |
 | `CRON_SECRET` | Yes | Secret for cron job endpoints |
 | `API_KEY_ENCRYPTION_SECRET` | No | User API key encryption (falls back to BETTER_AUTH_SECRET) |
+| `NEXT_PUBLIC_SENTRY_DSN` | No | Sentry DSN for error monitoring |
+| `SENTRY_ORG` | No | Sentry organization slug (for source maps) |
+| `SENTRY_PROJECT` | No | Sentry project slug (for source maps) |
+| `SENTRY_AUTH_TOKEN` | No | Sentry auth token (for source map uploads) |
 
 ### Vercel Deployment
 
@@ -601,37 +610,92 @@ Use `Sentry.captureException(error)` in try-catch blocks:
 ```typescript
 import * as Sentry from "@sentry/nextjs";
 
+// Basic exception capture
 try {
   await riskyOperation();
 } catch (error) {
   Sentry.captureException(error);
-  // Handle error gracefully
+}
+
+// With additional context
+try {
+  await processPayment(orderId);
+} catch (error) {
+  Sentry.captureException(error, {
+    tags: { component: "payments", orderId },
+    extra: { paymentMethod, amount },
+    level: "error",
+  });
+}
+
+// With user context
+Sentry.setUser({ id: userId, email: userEmail });
+try {
+  await updateProfile(data);
+} catch (error) {
+  Sentry.captureException(error);
+}
+
+// Group similar errors with fingerprinting
+try {
+  await externalApiCall();
+} catch (error) {
+  Sentry.captureException(error, {
+    fingerprint: ["external-api", endpoint],
+  });
 }
 ```
 
-### Custom Span Instrumentation
+### Custom Span Instrumentation (Tracing)
 
-Create spans for meaningful actions (button clicks, API calls, functions):
+Create spans for meaningful operations to track performance:
 
 ```typescript
-// UI Actions
-function handleClick() {
+import * as Sentry from "@sentry/nextjs";
+
+// Database queries
+async function getUser(userId: string) {
+  return Sentry.startSpan(
+    { op: "db.query", name: "SELECT user" },
+    async (span) => {
+      span.setAttribute("db.system", "postgresql");
+      span.setAttribute("db.user_id", userId);
+      return await db.query("SELECT * FROM users WHERE id = $1", [userId]);
+    }
+  );
+}
+
+// External API calls
+async function fetchWeather(city: string) {
+  return Sentry.startSpan(
+    { op: "http.client", name: `GET /weather/${city}` },
+    async (span) => {
+      span.setAttribute("http.url", `https://api.weather.com/${city}`);
+      const response = await fetch(`https://api.weather.com/${city}`);
+      span.setAttribute("http.status_code", response.status);
+      return response.json();
+    }
+  );
+}
+
+// UI interactions
+function handleSubmit() {
   Sentry.startSpan(
-    { op: "ui.click", name: "Submit Form" },
+    { op: "ui.action", name: "Form Submit" },
     (span) => {
-      span.setAttribute("formId", formId);
+      span.setAttribute("form.type", "contact");
       submitForm();
     }
   );
 }
 
-// API Calls
-async function fetchUser(userId: string) {
+// Background jobs
+async function processQueue() {
   return Sentry.startSpan(
-    { op: "http.client", name: `GET /api/users/${userId}` },
-    async () => {
-      const response = await fetch(`/api/users/${userId}`);
-      return response.json();
+    { op: "queue.process", name: "Email Queue" },
+    async (span) => {
+      const processed = await sendPendingEmails();
+      span.setAttribute("queue.processed_count", processed);
     }
   );
 }
@@ -639,19 +703,33 @@ async function fetchUser(userId: string) {
 
 ### Structured Logging
 
-Use Sentry's logger for structured logs that appear in Sentry:
+Use Sentry's logger for structured logs that appear in Sentry dashboard:
 
 ```typescript
 import * as Sentry from "@sentry/nextjs";
+
+// Initialize logger (requires _experiments.enableLogs: true in config)
 const { logger } = Sentry;
 
-// Log levels
-logger.trace("Starting operation", { operationId: "123" });
-logger.debug(logger.fmt`Cache miss for user: ${userId}`);
-logger.info("Profile updated", { profileId: 345 });
+// Log levels (trace → debug → info → warn → error → fatal)
+logger.trace("Operation started", { operationId: "op_123" });
+logger.debug("Cache lookup", { key: "user:456", hit: false });
+logger.info("User signed in", { userId: "user_789", method: "oauth" });
 logger.warn("Rate limit approaching", { endpoint: "/api/chat", remaining: 5 });
-logger.error("Payment failed", { orderId: "order_123", amount: 99.99 });
-logger.fatal("Database connection lost", { database: "main" });
+logger.error("Payment failed", { orderId: "order_abc", reason: "declined" });
+logger.fatal("Database connection lost", { host: "db.example.com" });
+
+// Use fmt for template literals (better parameter indexing)
+logger.info(logger.fmt`User ${userId} purchased ${itemCount} items`);
+logger.error(logger.fmt`Failed to process order ${orderId}: ${errorMessage}`);
+
+// Parameterized messages (structured attributes)
+logger.info("API request completed", {
+  method: "POST",
+  path: "/api/users",
+  status: 201,
+  duration_ms: 45,
+});
 ```
 
 ### Environment Variables
@@ -669,8 +747,12 @@ logger.fatal("Database connection lost", { database: "main" });
 |----------|-------------|
 | **Production only** | Sentry only initializes when `NODE_ENV === "production"` |
 | **Sample rates** | 10% traces, 1% replays, 100% error replays |
-| **Sensitive data** | Auth headers and cookies are automatically redacted |
+| **Sensitive data** | Auth headers and cookies are automatically redacted in `beforeSend` |
 | **Ignored errors** | Browser extensions, network errors, expected redirects filtered |
+| **Context first** | Always `setUser()` before capturing exceptions for user attribution |
+| **Meaningful spans** | Create spans for DB queries, API calls, UI actions - not trivial operations |
+| **Structured logs** | Use `logger.fmt` for template literals, include relevant attributes |
+| **Fingerprinting** | Group related errors with custom fingerprints to reduce noise |
 
 ---
 
@@ -2236,6 +2318,63 @@ pnpm exec playwright test --project=chromium # Chromium only
 pnpm exec playwright test --ui               # Interactive UI mode
 pnpm exec playwright show-report             # View HTML report
 ```
+
+---
+
+## Unit Testing (MANDATORY)
+
+**Location**: `apps/web/tests/unit/` | **Framework**: Vitest 3.3.1
+
+### Configuration
+
+| File | Purpose |
+|------|---------|
+| `vitest.config.ts` | Vitest configuration (jsdom, path aliases) |
+| `tests/unit/setup.ts` | Test setup (mocks, globals) |
+
+### Test Suites
+
+| Suite | Tests | Coverage |
+|-------|-------|----------|
+| `rate-limiting.test.ts` | 14 | Token bucket, sliding window, key generation |
+| `validation.test.ts` | 19 | Email, password, username, URL, JSON |
+| `sanitization.test.ts` | 6 | XSS prevention, HTML escaping |
+| `api-routes.test.ts` | 18 | Auth, resources, search endpoints |
+
+### Running Tests
+
+```bash
+pnpm test                    # Run all unit tests
+pnpm test --watch            # Watch mode
+pnpm test --coverage         # With coverage report
+pnpm test rate-limiting      # Run specific file
+```
+
+### Writing New Tests
+
+```typescript
+import { describe, it, expect, vi } from 'vitest';
+
+describe('MyFeature', () => {
+  it('should do something', () => {
+    expect(myFunction()).toBe(expected);
+  });
+
+  it('should handle errors', async () => {
+    await expect(asyncFunction()).rejects.toThrow('Error message');
+  });
+});
+```
+
+### Best Practices
+
+| Practice | Description |
+|----------|-------------|
+| **Fast execution** | Unit tests should complete in <1 second |
+| **Isolated** | No external dependencies (database, network) |
+| **Mock external calls** | Use `vi.mock()` for API calls, database |
+| **Test edge cases** | Empty inputs, null values, boundary conditions |
+| **Descriptive names** | `it('should return 429 when rate limit exceeded')` |
 
 ---
 

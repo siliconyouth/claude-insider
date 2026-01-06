@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **68 implemented features** with detailed capabilities.
+Complete list of all **70 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (68 total)
+## Implemented Features (70 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -78,6 +78,8 @@ Complete list of all **68 implemented features** with detailed capabilities.
 | FR-66 | Chat Performance Optimizations | `LRUCache<K,V>` with TTL and automatic cleanup, specialized caches (`MessageCache`, `ConversationCache`, `PresenceCache`, `UserProfileCache`), batched realtime updates (50ms window, max 20 items), subscription pooling with reference counting, `RequestDeduplicator` for concurrent request coalescing, optimized SQL functions (`get_messages_with_context`, `get_users_presence`, `get_conversations_with_context`) |
 | FR-67 | E2EE Default for DMs | Automatic encryption setup for new DMs, `setupDMEncryption()` and `upgradeDMToE2EE()` utilities, device key synchronization via `dm_device_keys` table, E2EE availability checking with graceful fallback, per-conversation settings in `dm_e2ee_settings` table, Olm/Megolm algorithm support |
 | FR-68 | E2E Testing Infrastructure | 457 Playwright tests, 6 browser configs (Chromium, Firefox, WebKit, Mobile Chrome/Safari), anonymous/authenticated projects, global setup with dev server pre-warming, `waitForHydration()` for App Router, test suites for auth, docs, homepage, resources, **GitHub Actions CI integration** with `filterCIErrors()` helper, production server in CI, browser-specific error handling |
+| FR-69 | Sentry Error Monitoring | @sentry/nextjs v10.32.1, client/server/edge runtime support, session replay (1% normal, 100% errors), performance tracing (10% sample rate), structured logging (`Sentry.logger`), console capture, source map uploads, request tunneling (`/monitoring-tunnel`), sensitive data redaction, error boundaries with Sentry capture |
+| FR-70 | Unit Testing Framework | Vitest 3.3.1 with jsdom, 57 tests across 4 suites (rate-limiting, validation, sanitization, API routes), ~0.5s execution time, `pnpm test` command, mocking support with `vi.mock()` |
 
 ---
 
@@ -134,12 +136,14 @@ Complete list of all **68 implemented features** with detailed capabilities.
 - Chat performance optimizations (LRU cache, batching)
 - E2EE by default for DMs
 
-### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50, FR-61)
+### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50, FR-61, FR-69, FR-70)
 - Database types (147 tables)
 - PWA enhancements
 - Advanced search
 - GitHub sync, doc versioning
 - Prompt library
+- Sentry error monitoring
+- Unit testing framework (Vitest)
 - Logo component system
 - MCP Playground with config storage
 

@@ -9,6 +9,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.18.0] - 2026-01-06
+### 🛡️ Error Monitoring, Unit Testing & Performance
+Major release adding Sentry error monitoring, Vitest unit testing framework, and messaging performance optimizations.
+
+#### Sentry Integration (Error Monitoring)
+- **@sentry/nextjs v10.32.1**: Complete integration with client, server, and edge runtime support
+- **Session Replay**: 1% of sessions recorded, 100% of sessions with errors
+- **Performance Tracing**: 10% sample rate for transactions
+- **Structured Logging**: `Sentry.logger` with trace/debug/info/warn/error/fatal levels
+- **Console Capture**: Automatic capture of console.error and console.warn
+- **Source Map Uploads**: Automatic upload during builds for readable stack traces
+- **Request Tunneling**: `/monitoring-tunnel` route bypasses ad blockers
+- **Sensitive Data Redaction**: Auth headers, cookies, API keys automatically stripped
+- **Error Boundaries**: Route-level (`error.tsx`) and global (`global-error.tsx`) with Sentry reporting
+
+#### Configuration Files
+| File | Purpose |
+|------|---------|
+| `sentry.client.config.ts` | Browser errors, replays, performance |
+| `sentry.server.config.ts` | API routes, SSR, database errors |
+| `sentry.edge.config.ts` | Middleware, edge functions |
+| `instrumentation.ts` | Next.js startup hook |
+
+#### Vitest Unit Testing (57 Tests)
+- **Framework**: Vitest 3.3.1 with jsdom environment
+- **Coverage**: Rate limiting, validation, sanitization, API routes
+- **Performance**: Tests complete in ~0.5s (vs Playwright's ~60s for E2E)
+- **Integration**: `pnpm test` runs unit tests, `pnpm test:e2e` runs E2E
+
+#### Test Suites
+| Suite | Tests | Coverage |
+|-------|-------|----------|
+| Rate Limiting | 14 | Token bucket, sliding window, key generation |
+| Validation | 19 | Email, password, username, URL, JSON |
+| Sanitization | 6 | XSS prevention, HTML escaping |
+| API Routes | 18 | Auth, resources, search endpoints |
+
+#### Performance Optimization
+- **N+1 Query Fix**: Parallelized sequential queries in `sendMessage()` with `Promise.all()`
+- **Affected queries**: Profile lookup, conversation check, read receipt update
+- **Impact**: ~3x faster message sending on database operations
+
+#### Files Changed
+- **Created**: `sentry.*.config.ts` (3 files), `instrumentation.ts`, `vitest.config.ts`
+- **Created**: `tests/unit/` directory with 4 test files
+- **Modified**: `next.config.ts` (Sentry wrapper, CSP updates)
+- **Modified**: `turbo.json` (Sentry env vars)
+- **Modified**: `app/error.tsx`, `app/global-error.tsx` (Sentry capture)
+- **Modified**: `lib/messaging.ts` (Promise.all optimization)
+
+---
+
 ## [1.17.3] - 2026-01-04
 ### 🔧 E2E CI Pipeline Stabilization
 Fixed 11 critical issues preventing E2E tests from passing in GitHub Actions CI environment.

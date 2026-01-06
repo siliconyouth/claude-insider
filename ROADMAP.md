@@ -1,15 +1,15 @@
 # Claude Insider Roadmap 2026
 
-> **Generated:** January 5, 2026
-> **Current Version:** 1.17.3
-> **Total Features:** 68 implemented (FR-63 Voice Messages removed in v1.17.1)
-> **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140 versions), FEATURES.md
+> **Generated:** January 6, 2026
+> **Current Version:** 1.18.0
+> **Total Features:** 70 implemented (FR-63 Voice Messages removed in v1.17.1)
+> **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140+ versions), FEATURES.md
 
 ---
 
 ## Executive Summary
 
-Claude Insider has achieved exceptional maturity with **68 production features**, **3,035+ curated resources**, **147 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
+Claude Insider has achieved exceptional maturity with **70 production features**, **3,035+ curated resources**, **147 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
 
 1. **Developer Experience**: MCP Playground, VS Code Extension, API Sandbox
 2. **Enterprise Readiness**: SSO/SAML, Teams, Analytics
@@ -24,8 +24,8 @@ Claude Insider has achieved exceptional maturity with **68 production features**
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| **Version** | 1.17.3 | Released January 5, 2026 |
-| **Features** | 68 | Documented in FEATURES.md |
+| **Version** | 1.18.0 | Released January 6, 2026 |
+| **Features** | 70 | Documented in FEATURES.md |
 | **Database Tables** | 147 | PostgreSQL with RLS |
 | **Resources** | 3,035+ | 10 categories, 21 enhanced fields |
 | **RAG Chunks** | 6,983 | 14% audio-enriched |
@@ -39,6 +39,7 @@ Claude Insider has achieved exceptional maturity with **68 production features**
 
 | Version | Date | Features |
 |---------|------|----------|
+| **v1.18.0** | Jan 6 | Sentry Error Monitoring, Vitest Unit Testing (57 tests), N+1 Query Fix |
 | **v1.17.3** | Jan 5 | CI Pipeline Stabilization (11 commits), filterCIErrors() helper, GitHub Actions E2E |
 | **v1.17.2** | Jan 4 | Infinite Scroll Pagination (resources), E2E Testing Infrastructure (457 Playwright tests) |
 | **v1.17.0** | Jan 2 | Chat System Rewrite (LRU cache, delivery tracking, voice messages, link unfurling, message pinning, E2EE default) |
