@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.18.1**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.18.3**.
 
 | Link | URL |
 |------|-----|
@@ -106,11 +106,11 @@ Root Directory: `apps/web` | Domain redirects: `claudeinsider.com`, `claude-insi
 
 ## Feature Requirements Summary
 
-**71 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
+**72 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
 
 | Category | Highlights |
 |----------|------------|
-| **Content** | MDX docs (34), 3,000+ resources, AI Voice Assistant, Advanced Search |
+| **Content** | MDX docs (34), 3,012 resources (100% screenshots), AI Voice Assistant, Advanced Search |
 | **Auth & Security** | OAuth, Passkeys/2FA, E2EE (Matrix), Bot Challenge, Security Dashboard |
 | **Messaging** | Group Chat, Unified Chat, Delivery Status, Link Unfurling, Message Pinning, E2EE Default |
 | **Admin** | Diagnostics, 5 Payload Globals, Audit Export, Resource Updates |
@@ -490,7 +490,7 @@ Sentry.logger.info("User signed in", { userId, method: "oauth" });
 
 ## Data Layer (MANDATORY)
 
-**148 tables** across 24 categories, **129 migrations**. **Full schema:** [docs/DATABASE.md](docs/DATABASE.md)
+**148 tables** across 24 categories, **130 migrations**, **2 storage buckets**. **Full schema:** [docs/DATABASE.md](docs/DATABASE.md)
 
 ### Critical Rules
 
@@ -572,7 +572,7 @@ const stats = await query1; const users = await query2;
 
 ## Resources System (MANDATORY)
 
-**3,000+ resources** across 10 categories with **21 enhanced fields**.
+**3,012 resources** across 10 categories with **21 enhanced fields** and **100% screenshot coverage**.
 
 ### Enhanced Fields
 
@@ -581,6 +581,18 @@ const stats = await query1; const users = await query2;
 | `keyFeatures`, `targetAudience`, `useCases` | `string[]` | Card badges, filters, insights |
 | `pros`, `cons`, `prerequisites` | `string[]` | Detail page, coverage chart |
 | `aiOverview`, `aiSummary` | `string` | AI badge, meta description |
+| `primary_screenshot_url`, `screenshot_metadata` | `string`, `JSONB` | Resource cards, detail pages |
+
+### Automated Screenshot Generation (v1.18.3)
+
+| Tier | Method | Coverage |
+|------|--------|----------|
+| 1st | Playwright (15 browsers, bot evasion, dark mode) | 98.8% |
+| 2nd | OpenGraph images (`og:image`, `twitter:image`) | 0.6% |
+| 3rd | Branded SVG placeholders | 0.6% |
+
+**Scripts:** `generate-resource-screenshots-parallel.ts`, `fetch-opengraph-images.ts`, `generate-placeholder-images.ts`
+**Storage:** `resource-screenshots` bucket (Supabase Storage)
 
 ### Infinite Scroll Pagination (v1.17.2)
 

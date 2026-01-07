@@ -1,8 +1,8 @@
 # Claude Insider Roadmap 2026
 
-> **Generated:** January 6, 2026
-> **Current Version:** 1.18.2
-> **Total Features:** 71 implemented (FR-63 Voice Messages removed in v1.17.1)
+> **Generated:** January 7, 2026
+> **Current Version:** 1.18.3
+> **Total Features:** 72 implemented (FR-63 Voice Messages removed in v1.17.1)
 > **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140+ versions), FEATURES.md
 
 ---
@@ -24,10 +24,10 @@ Claude Insider has achieved exceptional maturity with **70 production features**
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| **Version** | 1.18.2 | Released January 6, 2026 |
-| **Features** | 71 | Documented in FEATURES.md |
+| **Version** | 1.18.3 | Released January 7, 2026 |
+| **Features** | 72 | Documented in FEATURES.md |
 | **Database Tables** | 148 | PostgreSQL with RLS |
-| **Resources** | 3,035+ | 10 categories, 21 enhanced fields |
+| **Resources** | 3,012 | 10 categories, 21 enhanced fields, 100% screenshot coverage |
 | **RAG Chunks** | 6,983 | 14% audio-enriched |
 | **Doc Pages** | 34 | 7 categories |
 | **Lighthouse Desktop** | 100% | FCP 0.4s, LCP 0.7s, TBT 0ms |
@@ -107,6 +107,7 @@ Claude Insider has achieved exceptional maturity with **70 production features**
 
 | Version | Target | Features | Status |
 |---------|--------|----------|--------|
+| **1.18.3** | Jan W1 | Automated Screenshot Generation (100% coverage, 3-tier pipeline, Playwright + OG + placeholders) | ✅ Done |
 | **1.18.2** | Jan W1 | Sentry Admin Dashboard, Extended Unit Testing (71+ tests), Hourly Error Monitoring Cron | ✅ Done |
 | **1.18.1** | Jan W1 | Documentation Optimization (69.5% CLAUDE.md reduction, 2,414→735 lines) | ✅ Done |
 | **1.18.0** | Jan W1 | Sentry Error Monitoring, Vitest Unit Testing (57 tests), N+1 Query Fix | ✅ Done |
@@ -121,6 +122,7 @@ Claude Insider has achieved exceptional maturity with **70 production features**
 | **1.24.0** | Mar W3 | Agent Marketplace MVP (browse, submit) | Planned |
 
 **Q1 Deliverables:**
+- **Automated Screenshots v1.18.3** - 100% resource coverage with 3-tier pipeline (Playwright, OG, placeholders) ✅
 - **Documentation Optimization v1.18.1** - CLAUDE.md reduced 69.5% (2,414→735 lines) ✅
 - **Sentry Error Monitoring v1.18.0** - Full error tracking, session replays, performance tracing ✅
 - **CI Pipeline Stabilization v1.17.3** - 11 commits, filterCIErrors() helper, GitHub Actions E2E ✅
@@ -560,6 +562,7 @@ Target (v4.0.0):
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
+| 3.6 | Jan 7, 2026 | Claude Opus 4.5 | Updated for v1.18.3 automated screenshot generation, 72 features |
 | 3.5 | Jan 6, 2026 | Claude Opus 4.5 | Updated for v1.18.2 Sentry Admin Dashboard, 71+ unit tests |
 | 3.4 | Jan 6, 2026 | Claude Opus 4.5 | Updated for v1.18.1 documentation optimization, marked Sentry complete |
 | 3.3 | Jan 5, 2026 | Claude Opus 4.5 | Updated for v1.17.3 CI stabilization, marked MCP Playground complete |
@@ -574,7 +577,7 @@ Target (v4.0.0):
 
 ## Conclusion
 
-Claude Insider has achieved exceptional maturity with 71 production features and 100% Lighthouse performance. The **AGGRESSIVE 2026 roadmap** focuses on:
+Claude Insider has achieved exceptional maturity with 72 production features and 100% Lighthouse performance. The **AGGRESSIVE 2026 roadmap** focuses on:
 
 1. **Q1 - MCP Ecosystem**: MCP Playground ✅, Sentry Error Monitoring ✅, Doc Optimization ✅, VS Code Extension (🔥 NEXT), CLI Tool, Agent Marketplace MVP
 2. **Q2 - Enterprise**: SSO/SAML, Teams, Webhooks, Slack/Discord Bots, API v2, Integrations
@@ -590,6 +593,7 @@ Claude Insider has achieved exceptional maturity with 71 production features and
 | **CI Pipeline v1.17.3** | Jan W1 | ✅ Complete |
 | **v1.18.0 Sentry** | Jan W1 | ✅ Complete |
 | **v1.18.2 Sentry Dashboard** | Jan W1 | ✅ Complete |
+| **v1.18.3 Screenshots** | Jan W1 | ✅ Complete |
 | **v1.19.0 VS Code** | Feb W1 | 🔥 NEXT |
 | **v3.0.0** | Apr W3 | Teams & Orgs |
 | **Mobile App Launch** | Jul W4 | App Store/Play Store |

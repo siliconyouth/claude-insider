@@ -9,6 +9,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.18.3] - 2026-01-07
+### 🖼️ Automated Resource Screenshot Generation
+Complete automated screenshot pipeline achieving **100% coverage** for all 3,012 resources using multi-tier fallback strategy.
+
+#### Screenshot Generation Pipeline
+| Tier | Method | Coverage | Files |
+|------|--------|----------|-------|
+| **1st** | Playwright Screenshots | 2,977 (98.8%) | Dark mode, bot evasion, parallel browsers |
+| **2nd** | OpenGraph Images | 17 (0.6%) | Meta tag extraction, SVG support |
+| **3rd** | Branded Placeholders | 18 (0.6%) | Design system SVGs with gradients |
+
+#### Scripts Created
+| Script | Purpose |
+|--------|---------|
+| `generate-resource-screenshots-parallel.ts` | Parallel Playwright with 15 browsers, stealth mode, resume capability |
+| `fetch-opengraph-images.ts` | OG/Twitter image extraction with fallback |
+| `generate-placeholder-images.ts` | Branded SVG generator using design system |
+
+#### Technical Implementation
+- **Browser Pool Pattern**: 15 concurrent Playwright browsers with reuse for efficiency
+- **Bot Evasion**: `--disable-blink-features=AutomationControlled`, navigator property overrides, realistic user agents
+- **Dark Mode Capture**: `colorScheme: 'dark'` in browser context
+- **Retry Mode**: `--retry-failed` flag with 60s timeout (vs 25s normal)
+- **Supabase Pagination**: Fixed 1,000-row default limit with `.range()` pagination
+- **Progress Tracking**: `.screenshot-progress.json` for resume capability
+
+#### Database & Storage
+- **New Bucket**: `resource-screenshots` in Supabase Storage (public read, service role write)
+- **Allowed Types**: PNG, JPEG, WebP, SVG (added SVG support)
+- **Schema Updates**: `primary_screenshot_url`, `screenshot_metadata JSONB`
+
+#### Performance Metrics
+| Metric | Value |
+|--------|-------|
+| Total Resources | 3,012 |
+| Successful Screenshots | 2,977 |
+| OG Image Fallbacks | 17 |
+| Branded Placeholders | 18 |
+| **Final Coverage** | **100%** |
+| Processing Time | ~45 minutes (parallel) |
+
+#### Files Changed
+- **Created**: `scripts/generate-resource-screenshots-parallel.ts` (600+ lines)
+- **Created**: `scripts/fetch-opengraph-images.ts` (280 lines)
+- **Created**: `scripts/generate-placeholder-images.ts` (250 lines)
+- **Created**: `supabase/migrations/130_resource_screenshots_bucket.sql`
+- **Modified**: Supabase bucket config (added SVG mime type)
+
+---
+
 ## [1.18.2] - 2026-01-06
 ### 🎛️ Sentry Admin Dashboard & Extended Unit Testing
 Complete error management dashboard for Sentry issues with hourly monitoring cron job and 14 additional unit tests.

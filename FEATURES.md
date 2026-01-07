@@ -1,6 +1,6 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **71 implemented features** with detailed capabilities.
+Complete list of all **72 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
@@ -81,18 +81,20 @@ Complete list of all **71 implemented features** with detailed capabilities.
 | FR-69 | Sentry Error Monitoring | @sentry/nextjs v10.32.1, client/server/edge runtime support, session replay (1% normal, 100% errors), performance tracing (10% sample rate), structured logging (`Sentry.logger`), console capture, source map uploads, request tunneling (`/monitoring-tunnel`), sensitive data redaction, error boundaries with Sentry capture |
 | FR-70 | Unit Testing Framework | Vitest 3.3.1 with jsdom, 71+ tests across 18 suites (rate-limiting, validation, sanitization, API routes, chat, auth, RAG, resources), ~0.5s execution time, `pnpm test` command, mocking support with `vi.mock()` |
 | FR-71 | Sentry Admin Dashboard | Admin-only error management dashboard (`/dashboard/sentry`), stats cards (total/error/warning/fatal/users), status filters, issue detail modal with stack traces, resolve/ignore actions, hourly cron job with admin notifications, TanStack Query hooks (`useSentryIssues`, `useSentryStats`, `useUpdateSentryIssue`), `sentry_check_logs` table |
+| FR-72 | Automated Screenshot Generation | Multi-tier screenshot pipeline (Playwright → OpenGraph → Branded Placeholders), 100% coverage for 3,012 resources, browser pool pattern (15 concurrent), bot evasion (stealth mode), dark mode capture, `--retry-failed` mode (60s timeout), Supabase Storage bucket (`resource-screenshots`), progress tracking with resume, SVG placeholder generator using design system |
 
 ---
 
 ## Feature Categories
 
-### Content & Documentation (FR-1 to FR-6, FR-51, FR-52, FR-59)
+### Content & Documentation (FR-1 to FR-6, FR-51, FR-52, FR-59, FR-72)
 - MDX documentation with 34 pages
-- 3,035 curated resources with 21 enhanced fields
+- 3,012 curated resources with 21 enhanced fields + 100% screenshot coverage
 - Advanced search with fuzzy matching and URL parameter sync
 - AI Voice Assistant with RAG
 - Resource insights dashboard with interactive charts
 - Automated link validation with admin moderation
+- Automated screenshot generation (Playwright + OG fallback + branded placeholders)
 
 ### User Authentication & Security (FR-7, FR-10, FR-18, FR-19, FR-27, FR-28, FR-45)
 - OAuth (GitHub, Google) + email/password

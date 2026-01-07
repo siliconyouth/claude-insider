@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-06 for v1.18.2 (Sentry Admin Dashboard, Extended Unit Testing 71+ tests)
+ * Updated: 2026-01-07 for v1.18.3 (Automated Screenshot Generation, 100% resource coverage)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.18.2",
+  version: "1.18.3",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.18.0 - updated 2026-01-06)
+// TECH STACK KNOWLEDGE (v1.18.3 - updated 2026-01-07)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -192,7 +192,7 @@ export const DOCUMENTATION_STATS = {
 // =============================================================================
 
 export const RESOURCES_INFO = {
-  totalResources: 1952,
+  totalResources: 3012,
   categories: 10,
   categoriesList: {
     official: { name: "Official Resources", description: "Anthropic documentation, SDKs, console, API reference" },
@@ -1223,6 +1223,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.17.2", "infinite scroll", "pagination", "e2e testing", "playwright", "intersection observer", "resources performance", "fr-68", "457 tests", "mobile testing"],
+  },
+  {
+    id: "v1183-features",
+    title: "Version 1.18.3 Features",
+    section: "New in v1.18.3",
+    content: `Claude Insider v1.18.3 introduces Automated Screenshot Generation (FR-72) achieving 100% visual coverage for all 3,012 resources. 3-Tier Screenshot Pipeline: Tier 1 uses Playwright with Browser Pool (15 concurrent browsers, 30s timeout, stealth mode with bot evasion). Tier 2 falls back to OpenGraph image extraction from meta tags. Tier 3 generates branded SVG placeholders using design system colors. Coverage Results: 2,975 Playwright captures (98.8%), 1 OpenGraph fallback, 36 branded placeholders. Browser Pool Pattern: Reusable browser instances with \`--disable-blink-features=AutomationControlled\` for bot evasion. Dark mode capture via \`prefers-color-scheme: dark\` media emulation. Supabase Storage: Screenshots stored in public \`resource-screenshots\` bucket with CDN delivery. New Database Columns: \`primary_screenshot_url\` and \`screenshot_metadata\` (JSONB with width, height, captured_at, source) added to resources table. Scripts: generate-resource-screenshots-parallel.ts (main pipeline), generate-opengraph-fallback-screenshots.ts (OG extraction), generate-placeholder-screenshots.ts (SVG placeholders). All scripts support \`--retry-failed\` mode with 60s extended timeout. 130 total migrations.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.18.3", "screenshot generation", "browser pool", "playwright", "100% coverage", "opengraph fallback", "placeholder screenshots", "fr-72", "supabase storage", "bot evasion"],
   },
 ];
 

@@ -30,7 +30,8 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 |------|-------|
 | **Total Tables** | 148 |
 | **Categories** | 24 |
-| **Migrations** | 129 |
+| **Migrations** | 130 |
+| **Storage Buckets** | 2 |
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
@@ -84,7 +85,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 ---
 
-## Table Catalog (147 Tables)
+## Table Catalog (148 Tables + 2 Storage Buckets)
 
 ### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 
@@ -254,6 +255,20 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 - `github_owner`, `github_repo`, `github_stars`, `github_forks` - GitHub integration
 - `key_features`, `pros`, `cons`, `use_cases` (TEXT[]) - Enhanced fields
 - `content_hash` (TEXT) - MD5 hash for sync change detection (v1.13.3)
+- `primary_screenshot_url` (TEXT) - CDN URL for automated screenshot (v1.18.3)
+- `screenshot_metadata` (JSONB) - Screenshot details (width, height, captured_at, source) (v1.18.3)
+
+### Storage Buckets (2 buckets)
+
+| Bucket | Public | Use Case |
+|--------|--------|----------|
+| `mcp-configs` | No | MCP Playground config storage |
+| `resource-screenshots` | Yes | Automated resource screenshots (v1.18.3) |
+
+**`resource-screenshots` bucket (v1.18.3):**
+- `file_size_limit`: 5MB
+- `allowed_mime_types`: `image/png`, `image/jpeg`, `image/webp`, `image/svg+xml`
+- **Policies**: Public read, service role write/update/delete
 
 ### Reading & Search (8 tables)
 
@@ -454,7 +469,9 @@ supabase/migrations/
 ├── 116                          # Message pinning (dm_pinned_messages)
 ├── 117                          # Link previews cache (link_previews)
 ├── 118                          # Optimized chat SQL functions
-└── 119                          # E2EE default for DMs (dm_device_keys, dm_e2ee_settings)
+├── 119                          # E2EE default for DMs (dm_device_keys, dm_e2ee_settings)
+├── 129                          # Sentry check logs (sentry_check_logs)
+└── 130                          # Resource screenshots bucket (storage.buckets)
 ```
 
 ---

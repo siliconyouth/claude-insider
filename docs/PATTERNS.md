@@ -1075,6 +1075,60 @@ export default function ResourcesLayout({ children }) {
 }
 ```
 
+### Resource Screenshot Generation (v1.18.3)
+
+Multi-tier screenshot pipeline with fallbacks:
+
+```bash
+# Full screenshot generation (15 parallel browsers)
+npx dotenvx run -- npx tsx scripts/generate-resource-screenshots-parallel.ts
+
+# Retry failed with extended 60s timeout
+npx dotenvx run -- npx tsx scripts/generate-resource-screenshots-parallel.ts --retry-failed
+
+# Fetch OpenGraph images for remaining
+npx dotenvx run -- npx tsx scripts/fetch-opengraph-images.ts
+
+# Generate branded placeholders for unfetchable resources
+npx dotenvx run -- npx tsx scripts/generate-placeholder-images.ts
+```
+
+**Tier Priority:**
+1. **Playwright Screenshots** (98.8%) - Dark mode, bot evasion, stealth browser
+2. **OpenGraph Images** (0.6%) - `og:image`, `twitter:image` meta extraction
+3. **Branded Placeholders** (0.6%) - SVG with design system gradients
+
+**Browser Pool Pattern:**
+
+```typescript
+// scripts/generate-resource-screenshots-parallel.ts
+class BrowserPool {
+  private browsers: Browser[] = [];
+  private available: Browser[] = [];
+
+  async acquire(): Promise<Browser> {
+    while (this.available.length === 0) {
+      await new Promise(r => setTimeout(r, 100));
+    }
+    return this.available.pop()!;
+  }
+
+  release(browser: Browser): void {
+    this.available.push(browser);
+  }
+}
+```
+
+**Bot Evasion Args:**
+
+```typescript
+const STEALTH_ARGS = [
+  "--disable-blink-features=AutomationControlled",
+  "--disable-features=IsolateOrigins,site-per-process",
+  "--hide-scrollbars",
+  "--mute-audio",
+];
+```
 
 ---
 

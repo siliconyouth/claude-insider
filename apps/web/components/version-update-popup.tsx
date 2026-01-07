@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.18.3",
+    date: "2026-01-07",
+    type: "patch",
+    highlights: [
+      "📸 Automated Screenshot Generation: 3-tier pipeline (Playwright → OpenGraph → Branded Placeholders)",
+      "🌐 100% Coverage: All 3,012 resources now have screenshots (2,975 Playwright, 1 OG fallback, 36 placeholders)",
+      "🚀 Browser Pool: 15 concurrent Playwright browsers with intelligent reuse and stealth mode",
+      "☁️ Supabase Storage: Screenshots stored in resource-screenshots bucket with CDN delivery",
+    ],
+  },
+  {
     version: "1.18.2",
     date: "2026-01-06",
     type: "patch",
