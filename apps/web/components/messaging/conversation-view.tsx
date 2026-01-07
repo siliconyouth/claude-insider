@@ -435,6 +435,8 @@ export function ConversationView({
 
   // Use optimized realtime hook - pools subscriptions, uses Broadcast for typing
   // This replaces the old postgres_changes subscriptions (7.6x faster for typing)
+  // IMPORTANT: Subscription must be enabled immediately to avoid missing messages
+  // during initial load window. handleRealtimeMessage has deduplication built-in.
   const { sendTyping, sendReadReceipt, isConnected } = useConversationRealtime({
     conversationId,
     currentUserId,
@@ -442,7 +444,7 @@ export function ConversationView({
     onTypingChange: handleTypingChange,
     onReadReceipt: handleReadReceipt,
     onPresenceChange: handlePresenceChange,
-    enabled: !isLoading, // Only subscribe after initial load
+    enabled: true, // Always subscribe - deduplication handles overlap with initial load
   });
 
   // Handle missing messages found by gap detection
