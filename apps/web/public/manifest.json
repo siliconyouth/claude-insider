@@ -1,7 +1,7 @@
 {
   "name": "Claude Insider",
   "short_name": "Claude Insider",
-  "description": "Your comprehensive resource for Claude AI documentation, tips, tricks, configuration guides, and setup instructions. Built with Claude Code powered by Claude Opus 4.5.",
+  "description": "Your comprehensive resource for Claude AI documentation, tips, tricks, and configuration guides. 71 features, 3,035+ curated resources, 50+ achievements, E2E encryption. Built with Claude Code powered by Claude Opus 4.5.",
   "start_url": "/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],

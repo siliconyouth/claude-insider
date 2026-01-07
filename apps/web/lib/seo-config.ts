@@ -10,7 +10,7 @@
 const SITE_URL = 'https://www.claudeinsider.com';
 const SITE_NAME = 'Claude Insider';
 const SITE_DESCRIPTION =
-  'Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem. Master AI-powered development with 34 docs and 1,952+ curated resources.';
+  'Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem. Master AI-powered development with 34 docs, 3,035+ curated resources, and 71 features including AI Voice Assistant, E2EE messaging, and MCP Playground.';
 
 /**
  * Default SEO configuration applied to all pages
