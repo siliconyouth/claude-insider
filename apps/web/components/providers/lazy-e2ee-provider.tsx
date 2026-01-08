@@ -8,6 +8,10 @@
  * Performance Impact:
  * - Defers ~157KB of WASM until after critical rendering
  * - Synchronized with other providers for single re-render
+ *
+ * Error Handling (v1.18.5):
+ * - Wrapped in ErrorBoundary for graceful degradation on chunk load failures
+ * - If chunk fails to load, renders children without E2EE (no crash)
  */
 
 "use client";
@@ -15,6 +19,7 @@
 import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { useDeferredLoading } from "./deferred-loading-context";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 // Lazy load the actual E2EE provider
 const E2EEProvider = dynamic(
@@ -41,5 +46,15 @@ export function LazyE2EEProvider({ children }: LazyE2EEProviderProps) {
     return <>{children}</>;
   }
 
-  return <E2EEProvider>{children}</E2EEProvider>;
+  // Wrap in ErrorBoundary for graceful degradation on chunk load failures
+  return (
+    <ErrorBoundary
+      fallback={<>{children}</>}
+      onError={(error) => {
+        console.warn("[LazyE2EEProvider] Chunk load failed, continuing without E2EE:", error.message);
+      }}
+    >
+      <E2EEProvider>{children}</E2EEProvider>
+    </ErrorBoundary>
+  );
 }

@@ -13,6 +13,10 @@
  * Authentication:
  * - Only initializes when user is authenticated
  * - Gracefully renders children without provider for unauthenticated users
+ *
+ * Error Handling (v1.18.5):
+ * - Wrapped in ErrorBoundary for graceful degradation on chunk load failures
+ * - If chunk fails to load, renders children without chat (no crash)
  */
 
 "use client";
@@ -21,6 +25,7 @@ import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { useDeferredLoading } from "./deferred-loading-context";
 import { useSession } from "@/lib/auth-client";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 // Lazy load the chat provider
 const ChatProvider = dynamic(
@@ -57,13 +62,20 @@ export function LazyChatProvider({ children }: LazyChatProviderProps) {
     return <>{children}</>;
   }
 
-  // Initialize chat provider with authenticated user
+  // Initialize chat provider with authenticated user, wrapped in ErrorBoundary
   return (
-    <ChatProvider
-      userId={session.user.id}
-      debug={process.env.NODE_ENV === "development"}
+    <ErrorBoundary
+      fallback={<>{children}</>}
+      onError={(error) => {
+        console.warn("[LazyChatProvider] Chunk load failed, continuing without chat:", error.message);
+      }}
     >
-      {children}
-    </ChatProvider>
+      <ChatProvider
+        userId={session.user.id}
+        debug={process.env.NODE_ENV === "development"}
+      >
+        {children}
+      </ChatProvider>
+    </ErrorBoundary>
   );
 }

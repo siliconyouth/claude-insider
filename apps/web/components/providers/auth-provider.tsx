@@ -12,6 +12,11 @@
  *
  * @see https://github.com/better-auth/better-auth/issues/1006
  *
+ * Network Resilience (v1.18.5):
+ * - fetchWithRetry() handles transient network failures
+ * - Exponential backoff prevents overwhelming the server
+ * - Graceful degradation when all retries fail
+ *
  * @example
  * ```tsx
  * // In a component
@@ -26,6 +31,73 @@
 import { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
 import { useSession, signOut as authSignOut } from "@/lib/auth-client";
 import type { UserRole } from "@/lib/roles";
+
+// ============================================================================
+// Network Resilience Utilities (v1.18.5)
+// ============================================================================
+
+interface FetchWithRetryOptions {
+  maxRetries?: number;
+  baseDelay?: number;
+  timeout?: number;
+  onRetry?: (attempt: number, error: Error) => void;
+}
+
+/**
+ * Fetch with automatic retry and exponential backoff
+ * Used for session refresh and other critical network operations
+ */
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit = {},
+  retryOptions: FetchWithRetryOptions = {}
+): Promise<Response | null> {
+  const {
+    maxRetries = 3,
+    baseDelay = 1000,
+    timeout = 5000,
+    onRetry,
+  } = retryOptions;
+
+  let lastError: Error | null = null;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        return response;
+      }
+
+      // Server error - retry
+      lastError = new Error(`HTTP ${response.status}`);
+    } catch (error) {
+      clearTimeout(timeoutId);
+      lastError = error instanceof Error ? error : new Error(String(error));
+
+      // AbortError (timeout) is retryable
+      // Other errors (network failures) are also retryable
+    }
+
+    // If we have retries left, wait with exponential backoff
+    if (attempt < maxRetries) {
+      const delay = baseDelay * Math.pow(2, attempt - 1);
+      onRetry?.(attempt, lastError!);
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+
+  // All retries exhausted
+  return null;
+}
 
 interface User {
   id: string;
@@ -134,28 +206,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       hasCheckedSession.current = true;
 
       // Only fetch if we still have no session
-      if (shouldDebugLog) console.log("[Auth] Starting fallback fetch...");
+      if (shouldDebugLog) console.log("[Auth] Starting fallback fetch with retry...");
       setIsRefetching(true);
-
-      // Use a separate variable for abort timeout to avoid shadowing
-      let abortTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
       try {
         // Better Auth's session endpoint - must match catch-all route handler
-        // Add AbortController with 5 second timeout to prevent hanging
-        const controller = new AbortController();
-        abortTimeoutId = setTimeout(() => controller.abort(), 5000);
+        // Use fetchWithRetry for network resilience (v1.18.5)
+        const response = await fetchWithRetry(
+          "/api/auth/get-session",
+          {
+            credentials: "include",
+            cache: "no-store",
+          },
+          {
+            maxRetries: 3,
+            baseDelay: 1000,
+            timeout: 5000,
+            onRetry: (attempt, error) => {
+              if (shouldDebugLog) {
+                console.log(`[Auth] Session fetch retry ${attempt}/3:`, error.message);
+              }
+            },
+          }
+        );
 
-        const response = await fetch("/api/auth/get-session", {
-          credentials: "include",
-          cache: "no-store",
-          signal: controller.signal,
-        });
-
-        if (abortTimeoutId) clearTimeout(abortTimeoutId);
-        if (shouldDebugLog) console.log("[Auth] Fallback response status:", response.status);
-
-        if (response.ok) {
+        if (response) {
+          if (shouldDebugLog) console.log("[Auth] Fallback response status:", response.status);
           const data = await response.json();
           if (shouldDebugLog) console.log("[Auth] Fallback data:", { hasSession: !!data?.session, hasUser: !!data?.user });
           if (data?.session && data?.user) {
@@ -165,15 +241,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               session: data.session,
             });
           }
+        } else {
+          // All retries failed - log warning but don't crash
+          console.warn("[Auth] Session fetch failed after 3 retries - user may need to refresh");
         }
       } catch (error) {
-        if (abortTimeoutId) clearTimeout(abortTimeoutId);
-        // Always log errors - they're important for debugging
-        if (error instanceof Error && error.name === "AbortError") {
-          console.warn("[Auth] Session fetch timed out after 5s - user may need to refresh");
-        } else {
-          console.error("[Auth] Session refresh failed:", error);
-        }
+        // Unexpected error during retry logic
+        console.error("[Auth] Session refresh failed unexpectedly:", error);
       } finally {
         if (shouldDebugLog) console.log("[Auth] Fallback complete, setting hasFallbackCompleted=true");
         setIsRefetching(false);

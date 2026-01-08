@@ -8,6 +8,10 @@
  * Performance Impact:
  * - Defers ~32KB of JavaScript until after critical rendering
  * - Synchronized with other providers for single re-render
+ *
+ * Error Handling (v1.18.5):
+ * - Wrapped in ErrorBoundary for graceful degradation on chunk load failures
+ * - If chunk fails to load, renders children without provider (no crash)
  */
 
 "use client";
@@ -15,6 +19,7 @@
 import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { useDeferredLoading } from "./deferred-loading-context";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 // Lazy load the fingerprint provider - it's not needed for initial render
 const FingerprintProvider = dynamic(
@@ -40,5 +45,15 @@ export function LazyFingerprintProvider({ children }: LazyFingerprintProviderPro
     return <>{children}</>;
   }
 
-  return <FingerprintProvider>{children}</FingerprintProvider>;
+  // Wrap in ErrorBoundary for graceful degradation on chunk load failures
+  return (
+    <ErrorBoundary
+      fallback={<>{children}</>}
+      onError={(error) => {
+        console.warn("[LazyFingerprintProvider] Chunk load failed, continuing without fingerprinting:", error.message);
+      }}
+    >
+      <FingerprintProvider>{children}</FingerprintProvider>
+    </ErrorBoundary>
+  );
 }

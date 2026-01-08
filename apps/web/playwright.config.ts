@@ -3,7 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 /**
  * Playwright Configuration for Claude Insider
  *
- * Integration Test Framework v2.0.0
+ * Integration Test Framework v2.1.0
  *
  * Features:
  * - Multi-browser testing (Chromium, Firefox, WebKit)
@@ -13,8 +13,16 @@ import { defineConfig, devices } from "@playwright/test";
  * - Network mocking capabilities
  * - Mobile viewport testing
  *
+ * Browser Availability (v1.18.5):
+ * - Firefox/WebKit only run in CI where they're installed
+ * - Local development uses Chromium only for faster feedback
+ * - Use `pnpm exec playwright install firefox webkit` to enable locally
+ *
  * @see https://playwright.dev/docs/test-configuration
  */
+
+// Check if we're in CI environment
+const IS_CI = !!process.env.CI;
 
 // Use port 3001 to match the dev server configuration
 const PORT = process.env.PORT || 3001;
@@ -51,7 +59,7 @@ export default defineConfig({
   reporter: [
     ["list"],
     ["html", { outputFolder: "./tests/e2e/playwright-report", open: "never" }],
-    ...(process.env.CI ? [["github" as const]] : []),
+    ...(process.env.CI ? [["github", {}] as const] : []),
   ],
 
   // Global setup and teardown
@@ -104,23 +112,27 @@ export default defineConfig({
       dependencies: ["setup"],
     },
 
-    {
+    // Firefox - only in CI (requires browser installation)
+    // To enable locally: pnpm exec playwright install firefox
+    ...(IS_CI ? [{
       name: "firefox",
       use: {
         ...devices["Desktop Firefox"],
         storageState: "./tests/e2e/.auth/user.json",
       },
       dependencies: ["setup"],
-    },
+    }] : []),
 
-    {
+    // WebKit - only in CI (requires browser installation)
+    // To enable locally: pnpm exec playwright install webkit
+    ...(IS_CI ? [{
       name: "webkit",
       use: {
         ...devices["Desktop Safari"],
         storageState: "./tests/e2e/.auth/user.json",
       },
       dependencies: ["setup"],
-    },
+    }] : []),
 
     // Mobile viewports
     {
@@ -132,14 +144,15 @@ export default defineConfig({
       dependencies: ["setup"],
     },
 
-    {
+    // Mobile Safari - only in CI (requires WebKit installation)
+    ...(IS_CI ? [{
       name: "mobile-safari",
       use: {
         ...devices["iPhone 13"],
         storageState: "./tests/e2e/.auth/user.json",
       },
       dependencies: ["setup"],
-    },
+    }] : []),
 
     // Anonymous tests (no auth)
     {

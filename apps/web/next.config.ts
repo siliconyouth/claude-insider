@@ -149,6 +149,15 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(self), geolocation=(), interest-cohort=()",
           },
+          // Report-To header for CSP and other security reports (modern browsers)
+          {
+            key: "Report-To",
+            value: JSON.stringify({
+              group: "csp-endpoint",
+              max_age: 86400,
+              endpoints: [{ url: "/api/csp-report" }],
+            }),
+          },
           {
             key: "Content-Security-Policy",
             value: [
@@ -158,7 +167,8 @@ const nextConfig: NextConfig = {
               // Vercel Analytics uses va.vercel-scripts.com for the analytics script
               // CDN sources (unpkg, jsdelivr) for vodozemac WASM E2EE library
               // 'wasm-unsafe-eval' allows WebAssembly execution for E2EE crypto
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://www.paypal.com https://*.paypal.com https://*.paypalobjects.com https://vercel.live https://*.vercel.live https://va.vercel-scripts.com https://unpkg.com https://cdn.jsdelivr.net https://*.matrix.org",
+              // Sentry browser SDK (bundled, loads from 'self')
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://www.paypal.com https://*.paypal.com https://*.paypalobjects.com https://vercel.live https://*.vercel.live https://va.vercel-scripts.com https://unpkg.com https://cdn.jsdelivr.net https://*.matrix.org https://browser.sentry-cdn.com",
               // Monaco Editor loads CSS from jsdelivr CDN
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
               // Monaco Editor embeds fonts as data: URIs
@@ -167,15 +177,20 @@ const nextConfig: NextConfig = {
               "media-src 'self' blob: https://*.elevenlabs.io",
               // Supabase (REST API + Realtime WebSocket), PayPal, ElevenLabs, Vercel analytics/live
               // CDN sources for fetching vodozemac WASM binaries
-              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io https://vercel.live https://*.vercel.live wss://vercel.live wss://*.vercel.live https://unpkg.com https://cdn.jsdelivr.net https://*.matrix.org https://github.com https://raw.githubusercontent.com https://*.sentry.io https://*.ingest.sentry.io",
+              // Sentry: *.sentry.io (API), *.ingest.sentry.io (event ingestion), sentry-cdn.com (lazy-loaded assets)
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.paypal.com https://*.paypalobjects.com https://api.elevenlabs.io https://vercel.live https://*.vercel.live wss://vercel.live wss://*.vercel.live https://unpkg.com https://cdn.jsdelivr.net https://*.matrix.org https://github.com https://raw.githubusercontent.com https://*.sentry.io https://*.ingest.sentry.io https://*.sentry-cdn.com",
               // PayPal buttons and Vercel Live preview render in iframes
               "frame-src 'self' https://*.paypal.com https://*.paypalobjects.com https://vercel.live https://*.vercel.live",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self' https://*.paypal.com",
-              // Worker source for potential crypto Web Workers
+              // Worker source for potential crypto Web Workers and Sentry Session Replay
               "worker-src 'self' blob:",
               "upgrade-insecure-requests",
+              // CSP violation reporting to /api/csp-report (forwarded to Sentry)
+              // report-uri is legacy, report-to is modern - include both for compatibility
+              "report-uri /api/csp-report",
+              "report-to csp-endpoint",
             ].join("; "),
           },
         ],
