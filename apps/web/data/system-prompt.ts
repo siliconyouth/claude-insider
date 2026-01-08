@@ -1242,6 +1242,24 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     category: "Project",
     keywords: ["v1.18.4", "database-first", "isr caching", "unstable_cache", "revalidateTag", "server queries", "cache invalidation", "homepage migration", "supabase", "server components"],
   },
+  {
+    id: "v1185-features",
+    title: "Version 1.18.5 Features",
+    section: "New in v1.18.5",
+    content: `Claude Insider v1.18.5 introduces Resilience, Caching Optimization, and CSP Hardening. Cache Optimization for 2MB Limit: Next.js unstable_cache has a 2MB per-entry limit. ResourceListItem lean schema (~500 bytes vs ~2KB full) reduces payload. Category-based chunked caching splits resources into ~150KB chunks. Hybrid server/client approach: server caches initial 24, client fetches more via TanStack Query infinite scroll. checkCacheSize() dev utility for early detection of cache size issues. Network Resilience: fetchWithRetry() utility with exponential backoff (3 retries, 1s→2s→4s delays). All 6 lazy providers wrapped with ErrorBoundary for graceful chunk load failure handling. waitForHydration() enhanced to continue gracefully when chunks fail but content renders. filterCIErrors() extended with patterns for ChunkLoadError, session refresh failures. CSP Hardening: Sentry CDN domains (browser.sentry-cdn.com, *.sentry-cdn.com) added to CSP directives. New /api/csp-report endpoint for CSP violation reporting to Sentry. Rate limiting and smart filtering prevents CSP report flooding. Report-To header and report-uri/report-to directives for violation monitoring. E2E Test Improvements: Firefox/WebKit/mobile-safari browser tests now conditional on CI environment. ChunkLoadError patterns filtered from test assertions.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.18.5", "cache optimization", "2mb limit", "lean schema", "chunked caching", "network resilience", "fetchWithRetry", "error boundary", "csp hardening", "sentry cdn", "csp-report", "e2e testing"],
+  },
+  {
+    id: "v1186-features",
+    title: "Version 1.18.6 Features",
+    section: "New in v1.18.6",
+    content: `Claude Insider v1.18.6 fixes Resource Relationships Data to display 1,800+ AI-analyzed relationships. Issue: Related resources and alternatives were showing empty on resource pages despite database containing relationships. Root Cause: UI was querying resource_alternatives (legacy table with 0 rows) instead of resource_relationships (1,800+ AI-analyzed rows from migration 087). Database Tables: resource_alternatives (migration 081, 0 rows) is deprecated. resource_relationships (migration 087, 1,800+ rows) is the primary table with AI confidence scores. resource_resource_relationships (migration 091, 106 rows) is a specialized subset. Relationship Distribution: similar (1,177), complement (322), alternative (229), uses (48), integrates (18), fork (4), inspired_by (2). Average confidence scores: alternative 0.816, similar 0.798, complement 0.785. Files Fixed: lib/resources/server-queries.ts queries resource_relationships with proper FK reference. app/api/resources/[slug]/alternatives/route.ts uses resource_relationships for API endpoint. Result: Resource pages now show related tools, alternatives, and similar resources based on AI analysis.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.18.6", "resource relationships", "alternatives", "related resources", "ai analysis", "confidence scores", "database fix", "resource_relationships table"],
+  },
 ];
 
 export default buildComprehensiveSystemPrompt;

@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.18.4 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.18.6 notification to all opted-in users...\n");
 
-  const version = "1.18.4";
-  const title = "Claude Insider v1.18.4 - Database-First Architecture";
+  const version = "1.18.6";
+  const title = "Claude Insider v1.18.6 - Resource Relationships Fix";
   const message =
-    "🗄️ Database-First Architecture: Resources data now fetched from Supabase as source of truth • ⚡ ISR Caching: 60-second revalidation with Next.js unstable_cache • 🔄 Cache Invalidation: Database triggers + webhook endpoint for instant updates • 🏠 Homepage Migration: All sections use database-fetched data with Server Components";
+    "🔗 Resource Relationships Fix: Connected UI to 1,800+ AI-analyzed relationships • 📊 Relationship Types: Similar, alternative, complement, uses, integrates now displaying • 🗄️ Database Table Correction: Query resource_relationships instead of legacy empty table • ⚡ Related Resources: Resource pages now show related and alternative tools";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

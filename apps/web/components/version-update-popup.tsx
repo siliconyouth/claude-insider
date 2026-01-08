@@ -26,6 +26,28 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.18.6",
+    date: "2026-01-08",
+    type: "patch",
+    highlights: [
+      "🔗 Resource Relationships Fix: Connected UI to 1,800+ AI-analyzed relationships",
+      "📊 Relationship Types: Similar, alternative, complement, uses, integrates now showing",
+      "🗄️ Database Table Correction: Query resource_relationships (not legacy empty table)",
+      "⚡ Related Resources: Resource pages now display related and alternative tools",
+    ],
+  },
+  {
+    version: "1.18.5",
+    date: "2026-01-08",
+    type: "patch",
+    highlights: [
+      "🛡️ Resilience: Network retry with exponential backoff, ErrorBoundary wrapping for lazy providers",
+      "📦 Cache Optimization: Lean schema (~500 bytes) and chunked caching for 2MB unstable_cache limit",
+      "🔒 CSP Hardening: Sentry CDN domains, violation reporting endpoint, rate limiting",
+      "🧪 E2E Improvements: Conditional browser tests, ChunkLoadError filtering, session retry patterns",
+    ],
+  },
+  {
     version: "1.18.4",
     date: "2026-01-08",
     type: "patch",

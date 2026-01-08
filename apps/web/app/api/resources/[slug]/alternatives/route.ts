@@ -49,7 +49,9 @@ export async function GET(
 
     const resourceId = resourceResult.rows[0]!.id;
 
-    // Get alternatives with their details
+    // Get alternatives with their details from AI-analyzed relationships table
+    // Uses resource_relationships (1,800+ AI-analyzed relationships from migration 087)
+    // instead of resource_alternatives (legacy, empty)
     const alternativesResult = await pool.query<AlternativeResource>(
       `SELECT
         r.id,
@@ -61,18 +63,23 @@ export async function GET(
         r.github_stars,
         r.average_rating,
         r.favorites_count,
-        ra.relationship
-      FROM resource_alternatives ra
-      JOIN resources r ON r.id = ra.alternative_resource_id
-      WHERE ra.resource_id = $1 AND r.is_published = TRUE
+        rr.relationship_type as relationship
+      FROM resource_relationships rr
+      JOIN resources r ON r.id = rr.target_resource_id
+      WHERE rr.source_resource_id = $1
+        AND rr.is_active = TRUE
+        AND r.is_published = TRUE
       ORDER BY
-        CASE ra.relationship
+        CASE rr.relationship_type
           WHEN 'alternative' THEN 1
           WHEN 'similar' THEN 2
           WHEN 'complement' THEN 3
           WHEN 'successor' THEN 4
-          ELSE 5
+          WHEN 'uses' THEN 5
+          WHEN 'integrates' THEN 6
+          ELSE 7
         END,
+        rr.confidence_score DESC,
         r.github_stars DESC
       LIMIT 12`,
       [resourceId]

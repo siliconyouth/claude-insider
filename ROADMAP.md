@@ -1,7 +1,7 @@
 # Claude Insider Roadmap 2026
 
 > **Generated:** January 8, 2026
-> **Current Version:** 1.18.4
+> **Current Version:** 1.18.6
 > **Total Features:** 72 implemented (FR-63 Voice Messages removed in v1.17.1)
 > **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140+ versions), FEATURES.md
 
@@ -24,7 +24,7 @@ Claude Insider has achieved exceptional maturity with **72 production features**
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| **Version** | 1.18.3 | Released January 7, 2026 |
+| **Version** | 1.18.6 | Released January 8, 2026 |
 | **Features** | 72 | Documented in FEATURES.md |
 | **Database Tables** | 148 | PostgreSQL with RLS |
 | **Resources** | 3,012 | 10 categories, 21 enhanced fields, 100% screenshot coverage |

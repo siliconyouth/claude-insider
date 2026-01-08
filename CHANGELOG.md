@@ -9,6 +9,92 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.18.6] - 2026-01-08
+### 🔗 Resource Relationships Data Fix
+Critical fix connecting UI to AI-analyzed resource relationships data.
+
+#### Issue
+Related resources and alternatives were showing empty on resource pages despite database containing 1,800+ AI-analyzed relationships.
+
+#### Root Cause
+- **Wrong Table**: UI was querying `resource_alternatives` (legacy table, 0 rows)
+- **Correct Table**: `resource_relationships` has 1,800+ rows from migration 087
+
+#### Database Tables Clarification
+| Table | Migration | Rows | Purpose |
+|-------|-----------|------|---------|
+| `resource_alternatives` | 081 | 0 | Legacy, deprecated |
+| `resource_relationships` | 087 | 1,800+ | **Primary** - AI-analyzed relationships |
+| `resource_resource_relationships` | 091 | 106 | Specialized subset |
+
+#### Relationship Distribution
+| Type | Count | Avg Confidence |
+|------|-------|----------------|
+| similar | 1,177 | 0.798 |
+| complement | 322 | 0.785 |
+| alternative | 229 | 0.816 |
+| uses | 48 | - |
+| integrates | 18 | - |
+| fork | 4 | - |
+| inspired_by | 2 | - |
+
+#### Files Changed
+| File | Change |
+|------|--------|
+| `lib/resources/server-queries.ts` | Query `resource_relationships` instead of `resource_alternatives` |
+| `app/api/resources/[slug]/alternatives/route.ts` | Same table fix for API endpoint |
+
+---
+
+## [1.18.5] - 2026-01-08
+### 🛡️ Resilience, Caching & CSP Hardening
+Infrastructure improvements for cache efficiency, network resilience, and security monitoring.
+
+#### Cache Optimization (2MB Limit)
+Next.js `unstable_cache` has a **2MB per-entry limit**. All 3,000+ resources exceed this when cached together.
+
+| Solution | Implementation |
+|----------|----------------|
+| **Lean Schema** | `ResourceListItem` (~500 bytes vs ~2KB full) |
+| **Chunked Caching** | Category-based chunks (~150KB each) |
+| **Hybrid Fetching** | Server caches initial 24, client loads more |
+| **Dev Utility** | `checkCacheSize()` for early detection |
+
+#### Network Resilience
+| Feature | Implementation |
+|---------|----------------|
+| **Retry Logic** | `fetchWithRetry()` with exponential backoff (1s→2s→4s) |
+| **ErrorBoundary** | All 6 lazy providers wrapped for graceful chunk failures |
+| **E2E Resilience** | `waitForHydration()` continues when chunks fail but content renders |
+| **Error Filters** | Extended patterns for ChunkLoadError, session refresh failures |
+
+#### CSP Hardening
+| Feature | Implementation |
+|---------|----------------|
+| **Sentry CDN** | Added `browser.sentry-cdn.com`, `*.sentry-cdn.com` to CSP |
+| **Violation Reporting** | `/api/csp-report` endpoint sends violations to Sentry |
+| **Rate Limiting** | Smart filtering to prevent report flooding |
+| **Report-To Header** | Modern reporting API with NEL support |
+
+#### E2E Test Improvements
+| Change | Purpose |
+|--------|---------|
+| Conditional Browser Tests | Firefox/WebKit/mobile-safari only run in CI |
+| ChunkLoadError Filtering | Expected lazy-load failures don't fail tests |
+| Session Refresh Patterns | Auth retry errors filtered in assertions |
+
+#### Files Changed
+- 6 lazy provider files (ErrorBoundary wrapping)
+- `auth-provider.tsx` (fetchWithRetry utility)
+- `playwright.config.ts` (conditional browser projects)
+- `test-helpers.ts` (hydration detection, error filters)
+- `next.config.ts` (CSP directives)
+- `app/api/csp-report/route.ts` (new)
+- `lib/resources/server-queries.ts` (lean schema, chunked caching)
+- `lib/query/hooks/use-resources-infinite.ts` (TanStack infinite scroll)
+
+---
+
 ## [1.18.4] - 2026-01-08
 ### 🗄️ Database-First Architecture with ISR Caching
 Complete migration to database-as-source-of-truth with Incremental Static Regeneration (ISR) caching for optimal performance.

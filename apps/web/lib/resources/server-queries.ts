@@ -955,21 +955,26 @@ export const getFullResourceBySlug = unstable_cache(
         .eq("resource_id", resource.id)
         .order("is_primary", { ascending: false })
         .order("name"),
-      // Get alternatives via join
+      // Get alternatives/related resources from AI-analyzed relationships table
+      // Uses resource_relationships (1,800+ AI-analyzed relationships from migration 087)
+      // instead of resource_alternatives (legacy, empty)
       supabase
-        .from("resource_alternatives")
+        .from("resource_relationships")
         .select(`
-          alternative_resource_id,
-          relationship,
-          resources!resource_alternatives_alternative_resource_id_fkey (
+          target_resource_id,
+          relationship_type,
+          confidence_score,
+          resources!resource_relationships_target_resource_id_fkey (
             id, slug, title, description, category, icon_url, github_stars
           )
         `)
-        .eq("resource_id", resource.id)
+        .eq("source_resource_id", resource.id)
+        .eq("is_active", true)
+        .order("confidence_score", { ascending: false })
         .limit(8),
     ]);
 
-    // Process alternatives - need to flatten the joined data
+    // Process alternatives - flatten the joined data from resource_relationships
     const alternatives: ResourceAlternative[] = [];
     if (alternativesResult.data) {
       for (const alt of alternativesResult.data) {
@@ -991,7 +996,7 @@ export const getFullResourceBySlug = unstable_cache(
             category: relatedResource.category,
             icon_url: relatedResource.icon_url,
             github_stars: relatedResource.github_stars,
-            relationship: alt.relationship || "alternative",
+            relationship: alt.relationship_type || "related",
           });
         }
       }
