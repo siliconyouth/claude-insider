@@ -26,6 +26,17 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.18.4",
+    date: "2026-01-08",
+    type: "patch",
+    highlights: [
+      "🗄️ Database-First Architecture: Resources data now fetched from Supabase as source of truth",
+      "⚡ ISR Caching: 60-second revalidation with Next.js unstable_cache for optimal performance",
+      "🔄 Cache Invalidation: Database triggers + webhook endpoint for instant updates",
+      "🏠 Homepage Migration: All sections use database-fetched data with Server Components",
+    ],
+  },
+  {
     version: "1.18.3",
     date: "2026-01-07",
     type: "patch",

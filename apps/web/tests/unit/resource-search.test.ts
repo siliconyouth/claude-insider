@@ -6,7 +6,7 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { highlightMatches, groupResultsByCategory } from "@/lib/resources/search";
+import { highlightMatches, groupResultsByCategory } from "@/lib/resources/client-helpers";
 import type { ResourceCategorySlug } from "@/data/resources/schema";
 
 // Type for our search result format

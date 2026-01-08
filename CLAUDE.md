@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.18.3**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.18.4**.
 
 | Link | URL |
 |------|-----|
@@ -143,7 +143,7 @@ claude-insider/
 │   ├── content/                # 34 MDX documentation pages
 │   ├── data/                   # System prompt, RAG index, resources
 │   ├── i18n/                   # 18 languages
-│   └── supabase/migrations/    # 119 SQL migration files
+│   └── supabase/migrations/    # 131 SQL migration files
 ├── docs/                       # Documentation
 │   ├── DATABASE.md             # Complete schema reference (148 tables)
 │   ├── PATTERNS.md             # Implementation patterns & code examples
@@ -573,6 +573,36 @@ const stats = await query1; const users = await query2;
 ## Resources System (MANDATORY)
 
 **3,012 resources** across 10 categories with **21 enhanced fields** and **100% screenshot coverage**.
+
+### Database-First Architecture (v1.18.4)
+
+**Database is the source of truth.** All resources data is fetched from Supabase with ISR caching.
+
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Server Queries** | `lib/resources/server-queries.ts` | Database queries with `unstable_cache` |
+| **Client Helpers** | `lib/resources/client-helpers.ts` | Filtering/search on pre-fetched data |
+| **Types** | `lib/resources/types.ts` | Shared Server→Client prop types |
+
+### ISR Caching Pattern
+
+All server queries use `unstable_cache` with 60s revalidation and tag-based invalidation.
+
+### Homepage Resources Data Flow
+
+```
+Server Component (page.tsx) → getResourcesSectionData() → Database
+                            ↓ pass props
+Client Components (via LazyResourcesSection)
+```
+
+**Components receiving props:** `ResourcesSection`, `HeroFeatured`, `TrendingResources`, `CategoryQuickLinks`
+
+### Cache Invalidation
+
+- **Database Triggers**: `notify_resource_cache_change()` on INSERT/UPDATE/DELETE
+- **Webhook**: `/api/revalidate/resources` receives notifications
+- **Tag-Based**: `revalidateTag('resources')` for global, `revalidateTag('resource-{slug}')` for targeted
 
 ### Enhanced Fields
 

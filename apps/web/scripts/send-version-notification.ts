@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.18.1 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.18.4 notification to all opted-in users...\n");
 
-  const version = "1.18.1";
-  const title = "Claude Insider v1.18.1 - Documentation Optimization";
+  const version = "1.18.4";
+  const title = "Claude Insider v1.18.4 - Database-First Architecture";
   const message =
-    "📚 Documentation Optimization: CLAUDE.md reduced by 69.5% (2,414 → 735 lines) • 🔗 DRY Architecture: Rules in CLAUDE.md, code examples in PATTERNS.md • 📖 Glossary Added: RLS, E2EE, TTS, LRU, OG, MCP, RAG abbreviations defined • 🏗️ Sections Consolidated: Design+Icon System, E2E+Unit Testing merged";
+    "🗄️ Database-First Architecture: Resources data now fetched from Supabase as source of truth • ⚡ ISR Caching: 60-second revalidation with Next.js unstable_cache • 🔄 Cache Invalidation: Database triggers + webhook endpoint for instant updates • 🏠 Homepage Migration: All sections use database-fetched data with Server Components";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)

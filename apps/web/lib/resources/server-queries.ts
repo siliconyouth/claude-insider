@@ -974,3 +974,63 @@ export const getAllResourceSlugs = unstable_cache(
   [CACHE_TAGS.ALL_RESOURCES],
   { revalidate: DEFAULT_REVALIDATE, tags: [CACHE_TAGS.ALL_RESOURCES] }
 );
+
+// Re-export schema constants and types for convenience
+export { RESOURCE_CATEGORIES } from "@/data/resources/schema";
+export type {
+  ResourceEntry,
+  ResourceCategory,
+  ResourceCategorySlug,
+  ResourceStats,
+  TagWithCount,
+  DifficultyLevel,
+  ResourceStatus,
+} from "@/data/resources/schema";
+
+// Re-export types from shared types module
+export type {
+  ResourcesSectionData,
+  EnhancedFieldsCoverage,
+  AudienceStatsItem,
+  CategoryWithCount,
+  HeroFeaturedProps,
+  TrendingResourcesProps,
+  CategoryQuickLinksProps,
+} from "./types";
+
+/**
+ * Fetch all data needed for the homepage Resources Section
+ *
+ * This function parallelizes all queries for optimal performance.
+ * Used by the homepage Server Component to pass data to client components.
+ */
+export async function getResourcesSectionData(): Promise<import("./types").ResourcesSectionData> {
+  // Parallel fetch all data
+  const [
+    stats,
+    coverage,
+    popularTags,
+    audienceStats,
+    featuredResources,
+    topByStars,
+    categoriesWithCounts,
+  ] = await Promise.all([
+    getResourceStats(),
+    getEnhancedFieldsCoverage(),
+    getPopularTags(15),
+    getTargetAudienceStats(),
+    getFeaturedResources(10),
+    getTopByStars(10),
+    getCategoriesWithCounts(),
+  ]);
+
+  return {
+    stats,
+    coverage,
+    popularTags,
+    audienceStats: audienceStats.slice(0, 6),
+    featuredResources,
+    topByStars,
+    categoriesWithCounts,
+  };
+}

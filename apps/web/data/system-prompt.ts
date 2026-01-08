@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-07 for v1.18.3 (Automated Screenshot Generation, 100% resource coverage)
+ * Updated: 2026-01-08 for v1.18.4 (Database-First Architecture with ISR Caching)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.18.3",
+  version: "1.18.4",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.18.3 - updated 2026-01-07)
+// TECH STACK KNOWLEDGE (v1.18.4 - updated 2026-01-08)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -119,7 +119,7 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.89.0",
     engine: "PostgreSQL 15+",
-    tables: 147,
+    tables: 148,
     categories: 23,
     features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library", "LRU caching"],
   },
@@ -1232,6 +1232,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.18.3", "screenshot generation", "browser pool", "playwright", "100% coverage", "opengraph fallback", "placeholder screenshots", "fr-72", "supabase storage", "bot evasion"],
+  },
+  {
+    id: "v1184-features",
+    title: "Version 1.18.4 Features",
+    section: "New in v1.18.4",
+    content: `Claude Insider v1.18.4 introduces Database-First Architecture with ISR Caching for optimal performance. Architecture Migration: Resources data now fetched from Supabase database as source of truth instead of JSON files. Server-side caching via Next.js unstable_cache with 60-second revalidation. Tag-based cache invalidation with revalidateTag('resources'). Server Components: New lib/resources/server-queries.ts provides getAllResources(), getFeaturedResources(), getResourceStats() with built-in caching. Client Components: lib/resources/client-helpers.ts for filtering and search on pre-fetched data. Type Safety: Shared ServerResourcesData type for Server→Client component data flow via props. Cache Invalidation: Database trigger notify_resource_cache_change() fires on resources table changes. Webhook endpoint /api/revalidate/resources for external cache invalidation. Homepage Migration: All homepage sections now use database-fetched data with ISR instead of static JSON imports. Performance: 60-second cache reduces database queries while ensuring near-real-time updates. Files Deprecated: apps/web/data/resources.json and apps/web/data/featured-resources.json no longer used for runtime data. 131 total migrations.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.18.4", "database-first", "isr caching", "unstable_cache", "revalidateTag", "server queries", "cache invalidation", "homepage migration", "supabase", "server components"],
   },
 ];
 

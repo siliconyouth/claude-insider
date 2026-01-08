@@ -1,20 +1,20 @@
 /**
  * Claude Insider Resources - Library Exports
- * Re-exports search utilities and data functions
+ * Re-exports client helpers and database functions
  */
 
-// Search utilities
+// Client-side search utilities (for components that receive resources as props)
 export {
   searchResources,
   getSearchSuggestions,
   highlightMatches,
   groupResultsByCategory,
   quickSearch,
-  getSearchInstance,
-  resetSearchInstance,
+  filterResources,
   type ResourceSearchResult,
   type ResourceSearchOptions,
-} from './search';
+  type ResourceFilterOptions,
+} from './client-helpers';
 
 // Database queries
 export {

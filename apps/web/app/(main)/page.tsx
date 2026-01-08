@@ -12,9 +12,14 @@ import { LazyHighlightsSection } from "@/components/home/lazy-highlights-section
 import { cn } from "@/lib/design-system";
 import buildInfo from "@/data/build-info.json";
 import { getSiteStats } from "@/app/actions/site-stats";
+import { getResourcesSectionData } from "@/lib/resources/server-queries";
 
 export default async function HomePage() {
-  const stats = await getSiteStats();
+  // Parallel fetch site stats and resources data
+  const [stats, resourcesData] = await Promise.all([
+    getSiteStats(),
+    getResourcesSectionData(),
+  ]);
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
       <Header activePage="home" />
@@ -143,7 +148,7 @@ export default async function HomePage() {
         </div>
 
         {/* Resources Section - lazy loaded for better LCP */}
-        <LazyResourcesSection />
+        <LazyResourcesSection data={resourcesData} />
 
         {/* MCP Playground Section - lazy loaded */}
         <LazyMCPPlaygroundSection />

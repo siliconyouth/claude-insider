@@ -4,14 +4,16 @@
  * Trending Resources Section
  *
  * Displays trending resources in horizontal card layout.
- * Uses the new horizontal variant of ResourceCard for a compact, scannable list.
+ * Uses the horizontal variant of ResourceCard for a compact, scannable list.
+ *
+ * Receives pre-fetched data from the parent ResourcesSection component.
  */
 
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { cn } from '@/lib/design-system';
 import { ResourceCard } from '@/components/resources/resource-card';
-import { getTopByStars, getFeaturedResources } from '@/data/resources';
+import type { TrendingResourcesProps } from '@/lib/resources/types';
 
 const ArrowRightIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -25,20 +27,17 @@ const TrendingIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export function TrendingResources() {
+export function TrendingResources({ topByStars, featuredResources }: TrendingResourcesProps) {
   // Get a mix of trending resources (by stars and featured)
   const trendingResources = useMemo(() => {
-    const topStars = getTopByStars(10);
-    const featured = getFeaturedResources(10);
-
     // Interleave featured and top stars, avoiding duplicates
     const seen = new Set<string>();
     const result = [];
 
-    const maxLen = Math.max(topStars.length, featured.length);
+    const maxLen = Math.max(topByStars.length, featuredResources.length);
     for (let i = 0; i < maxLen && result.length < 6; i++) {
-      const featuredItem = featured[i];
-      const topStarsItem = topStars[i];
+      const featuredItem = featuredResources[i];
+      const topStarsItem = topByStars[i];
 
       if (featuredItem && !seen.has(featuredItem.id)) {
         seen.add(featuredItem.id);
@@ -51,7 +50,7 @@ export function TrendingResources() {
     }
 
     return result.slice(0, 6);
-  }, []);
+  }, [topByStars, featuredResources]);
 
   return (
     <div className="mb-12">

@@ -9,15 +9,21 @@
  * - Trending resources grid (horizontal cards)
  * - Popular tags cloud
  * - CTA button
+ *
+ * This component receives pre-fetched data from the parent Server Component
+ * via the LazyResourcesSection wrapper. No JSON imports needed.
  */
 
 import Link from 'next/link';
-import { useMemo } from 'react';
 import { cn } from '@/lib/design-system';
 import { HeroFeatured } from './hero-featured';
 import { TrendingResources } from './trending-resources';
 import { CategoryQuickLinks } from './category-quick-links';
-import { getResourceStats, getPopularTags, getTargetAudienceStats, getEnhancedFieldsCoverage } from '@/data/resources';
+import type { ResourcesSectionData } from '@/lib/resources/types';
+
+interface ResourcesSectionProps {
+  data: ResourcesSectionData;
+}
 
 // Icons
 const SearchIcon = ({ className }: { className?: string }) => (
@@ -48,10 +54,7 @@ function formatNumber(num: number): string {
 /**
  * Quick Stats Bar - Compact horizontal stats
  */
-function QuickStats() {
-  const stats = useMemo(() => getResourceStats(), []);
-  const coverage = useMemo(() => getEnhancedFieldsCoverage(), []);
-
+function QuickStats({ stats, coverage }: { stats: ResourcesSectionData['stats']; coverage: ResourcesSectionData['coverage'] }) {
   // Calculate percentage with features
   const featuresPercent = Math.round((coverage.hasKeyFeatures / coverage.total) * 100);
 
@@ -89,9 +92,7 @@ const AUDIENCE_ICONS: Record<string, string> = {
 /**
  * Browse by Audience - Quick audience links
  */
-function BrowseByAudience() {
-  const audienceStats = useMemo(() => getTargetAudienceStats().slice(0, 6), []);
-
+function BrowseByAudience({ audienceStats }: { audienceStats: ResourcesSectionData['audienceStats'] }) {
   if (audienceStats.length === 0) return null;
 
   return (
@@ -146,9 +147,7 @@ function BrowseByAudience() {
 /**
  * Popular Tags Component - Compact tag cloud
  */
-function PopularTags() {
-  const tags = useMemo(() => getPopularTags(15), []);
-
+function PopularTags({ tags }: { tags: ResourcesSectionData['popularTags'] }) {
   return (
     <div className="mb-12">
       <div className="flex items-center justify-between mb-4">
@@ -195,7 +194,17 @@ function PopularTags() {
 /**
  * Main Resources Section Component
  */
-export function ResourcesSection() {
+export function ResourcesSection({ data }: ResourcesSectionProps) {
+  const {
+    stats,
+    coverage,
+    popularTags,
+    audienceStats,
+    featuredResources,
+    topByStars,
+    categoriesWithCounts,
+  } = data;
+
   return (
     <section className="border-t border-gray-200 dark:border-[#1a1a1a] bg-gradient-to-b from-gray-50 dark:from-[#0a0a0a] to-white dark:to-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
@@ -216,7 +225,7 @@ export function ResourcesSection() {
           </p>
 
           {/* Quick Stats */}
-          <QuickStats />
+          <QuickStats stats={stats} coverage={coverage} />
         </div>
 
         {/* Quick Search Bar */}
@@ -242,19 +251,25 @@ export function ResourcesSection() {
         </div>
 
         {/* Hero Featured Cards */}
-        <HeroFeatured />
+        <HeroFeatured
+          featuredResources={featuredResources}
+          topByStars={topByStars}
+        />
 
         {/* Category Quick Links */}
-        <CategoryQuickLinks />
+        <CategoryQuickLinks categories={categoriesWithCounts} />
 
         {/* Trending Resources */}
-        <TrendingResources />
+        <TrendingResources
+          topByStars={topByStars}
+          featuredResources={featuredResources}
+        />
 
         {/* Browse by Audience */}
-        <BrowseByAudience />
+        <BrowseByAudience audienceStats={audienceStats} />
 
         {/* Popular Tags */}
-        <PopularTags />
+        <PopularTags tags={popularTags} />
 
         {/* CTA Buttons */}
         <div className="text-center flex flex-col sm:flex-row items-center justify-center gap-4">

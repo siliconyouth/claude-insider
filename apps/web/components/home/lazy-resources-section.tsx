@@ -3,12 +3,20 @@
  *
  * Dynamically imports the ResourcesSection to defer loading until needed.
  * This component is below-the-fold, so lazy loading improves initial LCP.
+ *
+ * Receives pre-fetched data from the parent Server Component and passes
+ * it to the ResourcesSection client component.
  */
 
 "use client";
 
 import dynamic from "next/dynamic";
 import { ResourcesErrorBoundary } from "./resources-error-boundary";
+import type { ResourcesSectionData } from "@/lib/resources/types";
+
+interface LazyResourcesSectionProps {
+  data: ResourcesSectionData;
+}
 
 // Lazy load the resources section - it's below the fold
 const ResourcesSection = dynamic(
@@ -39,10 +47,10 @@ const ResourcesSection = dynamic(
   }
 );
 
-export function LazyResourcesSection() {
+export function LazyResourcesSection({ data }: LazyResourcesSectionProps) {
   return (
     <ResourcesErrorBoundary>
-      <ResourcesSection />
+      <ResourcesSection data={data} />
     </ResourcesErrorBoundary>
   );
 }

@@ -49,7 +49,7 @@ CREATE POLICY "Admins can view sentry check logs"
   USING (
     EXISTS (
       SELECT 1 FROM "user"
-      WHERE id = auth.uid()
+      WHERE id = auth.uid()::text
       AND role IN ('admin', 'superadmin')
     )
   );

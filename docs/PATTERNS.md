@@ -31,6 +31,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 23. [E2E CI Patterns](#e2e-ci-patterns-v1173) - GitHub Actions integration, error filtering, browser-specific handling (v1.17.3)
 24. [Sentry Error Monitoring Patterns](#sentry-error-monitoring-patterns-v1180) - Exception capture, tracing, structured logging (v1.18.0)
 25. [Unit Testing Patterns](#unit-testing-patterns-v1180) - Vitest setup, mocking, test structure (v1.18.0)
+26. [ISR Caching Patterns](#isr-caching-patterns-v1184) - Database-first architecture, cache invalidation (v1.18.4)
 
 ---
 
@@ -3690,5 +3691,222 @@ pnpm test                    # Run all unit tests
 pnpm test --watch            # Watch mode for development
 pnpm test --coverage         # Generate coverage report
 pnpm test validation         # Run specific file/pattern
+```
+
+---
+
+## ISR Caching Patterns (v1.18.4)
+
+### Server Queries with unstable_cache
+
+```typescript
+// lib/resources/server-queries.ts
+import { unstable_cache } from "next/cache";
+import { createServerClient } from "@/lib/supabase/server";
+
+// Cached query with tags and revalidation
+export const getAllResources = unstable_cache(
+  async (): Promise<ResourceEntry[]> => {
+    const supabase = await createServerClient();
+    const { data, error } = await supabase
+      .from("resources")
+      .select("*")
+      .eq("is_published", true)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return transformToResourceEntry(data);
+  },
+  ["all-resources"],  // Cache key
+  {
+    revalidate: 60,   // 60 seconds
+    tags: ["resources"],  // For tag-based invalidation
+  }
+);
+
+// Resource-specific cache with slug tag
+export const getResourceBySlug = unstable_cache(
+  async (slug: string): Promise<ResourceEntry | null> => {
+    const supabase = await createServerClient();
+    const { data, error } = await supabase
+      .from("resources")
+      .select("*")
+      .eq("id", slug)
+      .eq("is_published", true)
+      .single();
+
+    if (error) return null;
+    return transformToResourceEntry(data);
+  },
+  ["resource-by-slug"],
+  {
+    revalidate: 60,
+    tags: ["resources"],  // Global tag + specific tag added dynamically
+  }
+);
+```
+
+### Server Component Data Fetching Pattern
+
+```typescript
+// app/(main)/page.tsx - Server Component
+import { getResourcesSectionData } from "@/lib/resources/server-queries";
+
+export default async function HomePage() {
+  // Parallel fetch all data needed for client components
+  const [stats, resourcesData] = await Promise.all([
+    getSiteStats(),
+    getResourcesSectionData(),  // Fetches all homepage resources data
+  ]);
+
+  return (
+    <div>
+      {/* Pass data to client component via props */}
+      <LazyResourcesSection data={resourcesData} />
+    </div>
+  );
+}
+```
+
+### Client Component Props Pattern
+
+```typescript
+// lib/resources/types.ts - Shared types for Server→Client data flow
+export interface ResourcesSectionData {
+  stats: ResourceStats;
+  coverage: EnhancedFieldsCoverage;
+  popularTags: TagWithCount[];
+  audienceStats: AudienceStatsItem[];
+  featuredResources: ResourceEntry[];
+  topByStars: ResourceEntry[];
+  categoriesWithCounts: CategoryWithCount[];
+}
+
+// components/home/resources-section.tsx - Client Component
+'use client';
+
+interface ResourcesSectionProps {
+  data: ResourcesSectionData;  // Received from Server Component
+}
+
+export function ResourcesSection({ data }: ResourcesSectionProps) {
+  const { stats, popularTags, featuredResources } = data;
+  // Use data directly - no fetching needed
+}
+```
+
+### Cache Invalidation via Webhook
+
+```typescript
+// app/api/revalidate/resources/route.ts
+import { revalidateTag } from "next/cache";
+
+export async function POST(request: Request) {
+  // Verify webhook secret
+  const authHeader = request.headers.get("authorization");
+  if (authHeader !== `Bearer ${process.env.REVALIDATE_SECRET}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = await request.json();
+
+  // Invalidate specific resource or all resources
+  if (body.slug) {
+    revalidateTag(`resource-${body.slug}`);
+  } else {
+    revalidateTag("resources");
+  }
+
+  return NextResponse.json({ revalidated: true });
+}
+```
+
+### Database Trigger for Cache Invalidation
+
+```sql
+-- supabase/migrations/131_resource_cache_invalidation.sql
+CREATE OR REPLACE FUNCTION notify_resource_cache_change()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Notify on resource changes
+  PERFORM pg_notify(
+    'resource_cache_invalidation',
+    json_build_object(
+      'operation', TG_OP,
+      'slug', COALESCE(NEW.id, OLD.id)
+    )::text
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER resource_cache_trigger
+AFTER INSERT OR UPDATE OR DELETE ON resources
+FOR EACH ROW EXECUTE FUNCTION notify_resource_cache_change();
+```
+
+### Parallel Data Aggregation
+
+```typescript
+// lib/resources/server-queries.ts
+export async function getResourcesSectionData(): Promise<ResourcesSectionData> {
+  // Parallel fetch all data for homepage
+  const [
+    stats,
+    coverage,
+    popularTags,
+    audienceStats,
+    featuredResources,
+    topByStars,
+    categoriesWithCounts,
+  ] = await Promise.all([
+    getResourceStats(),
+    getEnhancedFieldsCoverage(),
+    getPopularTags(15),
+    getTargetAudienceStats(),
+    getFeaturedResources(10),
+    getTopByStars(10),
+    getCategoriesWithCounts(),
+  ]);
+
+  return {
+    stats,
+    coverage,
+    popularTags,
+    audienceStats: audienceStats.slice(0, 6),
+    featuredResources,
+    topByStars,
+    categoriesWithCounts,
+  };
+}
+```
+
+### MDX Component JSON Import (Exception)
+
+```typescript
+// components/mdx/InlineResourceLink.tsx
+// MDX components are an exception - they use JSON for client-side lookup
+// since they're instantiated inline by the MDX compiler and can't receive props
+
+/**
+ * Architecture Note:
+ * MDX components are instantiated inline by the MDX compiler, so we can't pass
+ * props from a parent Server Component. This component uses JSON-based resource
+ * lookup which is still database-driven since JSON is generated from the database
+ * at build time via the prebuild script.
+ *
+ * The data flow is: Database → JSON (build time) → Component lookup (runtime)
+ */
+import { getAllResources } from '@/data/resources';  // JSON import OK here
+
+let resourceCache: Map<string, ResourceEntry> | null = null;
+
+function getResourceById(id: string): ResourceEntry | undefined {
+  if (!resourceCache) {
+    const resources = getAllResources();
+    resourceCache = new Map(resources.map((r) => [r.id, r]));
+  }
+  return resourceCache.get(id);
+}
 ```
 

@@ -1,7 +1,7 @@
 # Claude Insider Roadmap 2026
 
-> **Generated:** January 7, 2026
-> **Current Version:** 1.18.3
+> **Generated:** January 8, 2026
+> **Current Version:** 1.18.4
 > **Total Features:** 72 implemented (FR-63 Voice Messages removed in v1.17.1)
 > **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140+ versions), FEATURES.md
 
@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-Claude Insider has achieved exceptional maturity with **70 production features**, **3,035+ curated resources**, **147 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
+Claude Insider has achieved exceptional maturity with **72 production features**, **3,012 curated resources**, **148 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
 
 1. **Developer Experience**: MCP Playground, VS Code Extension, API Sandbox
 2. **Enterprise Readiness**: SSO/SAML, Teams, Analytics

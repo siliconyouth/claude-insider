@@ -76,8 +76,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  // It's an individual resource
-  const resource = await getResourceBySlug(slug);
+  // It's an individual resource - use full row for all metadata fields
+  const resource = await getFullResourceBySlug(slug);
   if (!resource) {
     return { title: "Resource Not Found | Claude Insider" };
   }

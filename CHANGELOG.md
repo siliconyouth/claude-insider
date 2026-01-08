@@ -9,6 +9,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.18.4] - 2026-01-08
+### 🗄️ Database-First Architecture with ISR Caching
+Complete migration to database-as-source-of-truth with Incremental Static Regeneration (ISR) caching for optimal performance.
+
+#### Architecture Migration
+| Component | Before | After |
+|-----------|--------|-------|
+| **Resources Data** | JSON files imported | Database queries via Supabase |
+| **Caching** | Build-time static | ISR with 60s revalidation |
+| **Homepage Resources** | Client imports JSON | Server Component → props → Client |
+| **Search** | `search.ts` (JSON-based) | `client-helpers.ts` (props-based) |
+
+#### Server-Side Data Fetching Pattern
+```
+Server Component (page.tsx) → getResourcesSectionData() → Database
+                            ↓ pass props
+Client Components (ResourcesSection, HeroFeatured, TrendingResources, CategoryQuickLinks)
+```
+
+#### ISR Caching Implementation
+| Function | Cache Duration | Revalidation |
+|----------|---------------|--------------|
+| `getAllResources()` | 60s | On-demand via webhook |
+| `getResourceBySlug()` | 60s | Tag-based invalidation |
+| `getCategoriesWithCounts()` | 60s | Automatic |
+| `getResourcesSectionData()` | 60s | Automatic |
+
+#### Cache Invalidation System
+- **Database Triggers**: `notify_resource_cache_change()` on INSERT/UPDATE/DELETE
+- **Webhook Endpoint**: `/api/revalidate/resources` receives notifications
+- **Edge Function**: Listens to Postgres changes and calls webhook
+- **Tag-Based**: `revalidateTag('resource-{slug}')` for targeted invalidation
+
+#### New Files Created
+| File | Purpose |
+|------|---------|
+| `lib/resources/types.ts` | Shared types for Server→Client data flow |
+| `lib/resources/server-queries.ts` | Database queries with `unstable_cache` |
+| `supabase/migrations/131_resource_cache_invalidation.sql` | Cache triggers |
+| `app/api/revalidate/resources/route.ts` | Revalidation webhook |
+
+#### Files Removed
+| File | Reason |
+|------|--------|
+| `lib/resources/search.ts` | Replaced by `client-helpers.ts` |
+
+#### Homepage Components Migrated
+- `resources-section.tsx` - Uses `ResourcesSectionData` props
+- `hero-featured.tsx` - Uses `HeroFeaturedProps`
+- `trending-resources.tsx` - Uses `TrendingResourcesProps`
+- `category-quick-links.tsx` - Uses `CategoryQuickLinksProps`
+- `lazy-resources-section.tsx` - Forwards props to child components
+
+#### Performance Benefits
+| Metric | Impact |
+|--------|--------|
+| **Initial Load** | Faster (no JSON bundle) |
+| **Data Freshness** | 60s max staleness |
+| **Cache Hit Rate** | High (ISR serves from cache) |
+| **Invalidation** | Instant via webhooks |
+
+#### Other Changes
+- Fixed chat realtime subscription to prevent missed messages
+- Fixed screenshotUrl sync from primary_screenshot_url fallback
+- Updated unit tests to import from `client-helpers.ts`
+
+---
+
 ## [1.18.3] - 2026-01-07
 ### 🖼️ Automated Resource Screenshot Generation
 Complete automated screenshot pipeline achieving **100% coverage** for all 3,012 resources using multi-tier fallback strategy.

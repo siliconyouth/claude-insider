@@ -5,12 +5,14 @@
  *
  * Compact horizontal scrolling category navigation.
  * Each category shows an icon, name, and resource count in a pill-style button.
+ *
+ * Receives pre-fetched data from the parent ResourcesSection component.
  */
 
 import Link from 'next/link';
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { cn } from '@/lib/design-system';
-import { getCategoriesWithCounts } from '@/data/resources';
+import type { CategoryQuickLinksProps } from '@/lib/resources/types';
 
 const ChevronLeftIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,8 +26,7 @@ const ChevronRightIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export function CategoryQuickLinks() {
-  const categories = useMemo(() => getCategoriesWithCounts(), []);
+export function CategoryQuickLinks({ categories }: CategoryQuickLinksProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {

@@ -9,9 +9,9 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.18.3-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.18.4-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
-[![Features](https://img.shields.io/badge/72-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Features](https://img.shields.io/badge/71-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
 [![Resources](https://img.shields.io/badge/3,012-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
@@ -122,7 +122,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 
 ---
 
-## 68 Platform Features
+## 71 Platform Features
 
 <details>
 <summary><b>Content & Documentation</b></summary>
@@ -285,7 +285,7 @@ pnpm dev
 
 - Supabase
 - PostgreSQL 15+
-- 147 Tables
+- 148 Tables
 - Payload CMS 3.69
 
 </td>
@@ -334,7 +334,7 @@ See [CLAUDE.md](CLAUDE.md) for complete documentation.
 
 | Document | Description |
 |:---------|:------------|
-| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 68 feature requirements |
+| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 71 feature requirements |
 | [**CHANGELOG.md**](CHANGELOG.md) | Version history with detailed release notes |
 | [**ROADMAP.md**](ROADMAP.md) | Future feature planning and priorities |
 

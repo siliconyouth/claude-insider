@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllResources } from '@/data/resources';
+import { getAllResources } from '@/lib/resources/server-queries';
 import { getAllDocsMeta } from '@/lib/mdx';
 import {
   getAutoMatchedResources,
@@ -25,8 +25,8 @@ export async function GET(request: NextRequest) {
     const resourceId = searchParams.get('resource');
     const computeAll = searchParams.get('compute') === 'true';
 
-    // Get all resources for matching
-    const allResources = getAllResources();
+    // Get all resources for matching (async - from database with ISR caching)
+    const allResources = await getAllResources();
 
     // Compute all matches
     if (computeAll) {

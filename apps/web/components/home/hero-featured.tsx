@@ -5,14 +5,15 @@
  *
  * Displays two large featured resource cards at the top of the resources section.
  * Shows "Editor's Pick" and "Trending Now" with rich information.
+ *
+ * Receives pre-fetched data from the parent ResourcesSection component.
  */
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { useMemo } from 'react';
 import { cn } from '@/lib/design-system';
-import { getFeaturedResources, getTopByStars } from '@/data/resources';
-import type { ResourceEntry } from '@/data/resources/schema';
+import type { HeroFeaturedProps, ResourceEntry } from '@/lib/resources/types';
 
 // Format numbers like 85000 -> "85k"
 function formatNumber(num: number): string {
@@ -159,18 +160,16 @@ function HeroCard({ resource, label, labelColor, animationDelay = '0ms' }: HeroC
   );
 }
 
-export function HeroFeatured() {
+export function HeroFeatured({ featuredResources, topByStars }: HeroFeaturedProps) {
   // Get editor's pick (first featured resource)
   const editorsPick = useMemo(() => {
-    const featured = getFeaturedResources(1);
-    return featured[0];
-  }, []);
+    return featuredResources[0];
+  }, [featuredResources]);
 
   // Get trending (most starred that isn't the editor's pick)
   const trending = useMemo(() => {
-    const topStars = getTopByStars(5);
-    return topStars.find(r => r.id !== editorsPick?.id) || topStars[1];
-  }, [editorsPick]);
+    return topByStars.find(r => r.id !== editorsPick?.id) || topByStars[1];
+  }, [topByStars, editorsPick]);
 
   if (!editorsPick || !trending) {
     return null;

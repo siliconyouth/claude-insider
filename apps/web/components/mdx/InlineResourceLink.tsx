@@ -5,11 +5,24 @@
  *
  * MDX component for embedding resource links with hover previews.
  * Usage: <ResourceLink id="anthropic-docs">Claude Documentation</ResourceLink>
+ *
+ * Architecture Note:
+ * MDX components are instantiated inline by the MDX compiler, so we can't pass
+ * props from a parent Server Component. This component uses JSON-based resource
+ * lookup which is still database-driven since JSON is generated from the database
+ * at build time via the prebuild script.
+ *
+ * The data flow is: Database → JSON (build time) → Component lookup (runtime)
+ *
+ * For future consideration: A ResourcesContext provider could be added to
+ * the MDX layout to provide resources via React Context, allowing these
+ * components to consume from context instead of importing JSON directly.
  */
 
 import { useMemo } from 'react';
 import { cn } from '@/lib/design-system';
 import { ResourceHoverCard } from '@/components/cross-linking/ResourceHoverCard';
+// JSON import for MDX components - data is database-driven via prebuild
 import { getAllResources } from '@/data/resources';
 import type { ResourceEntry } from '@/data/resources/schema';
 
