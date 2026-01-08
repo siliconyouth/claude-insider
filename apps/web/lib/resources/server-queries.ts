@@ -714,6 +714,12 @@ export const getEnhancedFieldsCoverage = unstable_cache(
       .eq("is_published", true)
       .not("prerequisites", "is", null);
 
+    const { count: hasAiAnalysis } = await supabase
+      .from("resources")
+      .select("*", { count: "exact", head: true })
+      .eq("is_published", true)
+      .not("ai_summary", "is", null);
+
     return {
       total: total || 0,
       hasKeyFeatures: hasKeyFeatures || 0,
@@ -722,6 +728,7 @@ export const getEnhancedFieldsCoverage = unstable_cache(
       hasTargetAudience: hasTargetAudience || 0,
       hasUseCases: hasUseCases || 0,
       hasPrerequisites: hasPrerequisites || 0,
+      hasAiAnalysis: hasAiAnalysis || 0,
     };
   },
   [CACHE_TAGS.RESOURCE_STATS],
