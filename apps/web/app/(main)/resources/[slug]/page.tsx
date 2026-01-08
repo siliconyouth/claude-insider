@@ -13,13 +13,15 @@ import { Footer } from "@/components/footer";
 import { cn } from "@/lib/design-system";
 import { ResourceCard } from "@/components/resources/resource-card";
 import {
-  getResourcesByCategory,
   getCategoryBySlug,
-  getCategoriesWithCounts,
   RESOURCE_CATEGORIES,
   RESOURCE_CATEGORY_SLUGS,
   type ResourceCategorySlug,
 } from "@/data/resources";
+import {
+  getResourcesByCategory,
+  getCategoriesWithCounts,
+} from "@/lib/resources/server-queries";
 import { getResourceBySlug, getAllResourceSlugs } from "@/lib/resources/queries";
 import { ResourceHero } from "@/components/resources/resource-hero";
 import { ResourceStats } from "@/components/resources/resource-stats";
@@ -176,8 +178,11 @@ async function CategoryPageContent({ categorySlug }: { categorySlug: ResourceCat
     notFound();
   }
 
-  const resources = getResourcesByCategory(categorySlug);
-  const allCategories = getCategoriesWithCounts();
+  // Fetch resources and categories from database with ISR caching
+  const [resources, allCategories] = await Promise.all([
+    getResourcesByCategory(categorySlug),
+    getCategoriesWithCounts(),
+  ]);
 
   // Find previous and next categories for navigation
   const currentIndex = allCategories.findIndex((c) => c.slug === categorySlug);
