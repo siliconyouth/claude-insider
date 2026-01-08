@@ -26,7 +26,7 @@ async function takeScreenshot() {
     localStorage.setItem('theme', 'dark');
     
     // Dismiss version popup by setting the version as seen
-    localStorage.setItem('lastSeenVersion', '1.18.2');
+    localStorage.setItem('claude-insider-last-seen-version', '1.18.6');
     localStorage.setItem('versionPopupDismissed', 'true');
   });
   
