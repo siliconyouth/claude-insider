@@ -60,7 +60,19 @@
       "awesome-chatgpt-prompts",
       "langgptai-awesome-claude-prompts",
       "prompts-chat"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1767802585126-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:25.499Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-prompt-library/1767802585126-screenshot.png"
   },
   {
     "id": "awesome-chatgpt-prompts",
@@ -130,7 +142,19 @@
     "relatedResourceSlugs": [
       "anthropic-prompt-library",
       "langgptai-awesome-claude-prompts"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1767802570613-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:11.743Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-chatgpt-prompts/1767802570613-screenshot.png"
   },
   {
     "id": "system-prompts-coding",
@@ -199,7 +223,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "prompt-senior-developer"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1767802569961-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:10.485Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/system-prompts-coding/1767802569961-screenshot.png"
   },
   {
     "id": "promptbook-utils",
@@ -248,7 +284,19 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promptbook-utils/1767802568705-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:09.366Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promptbook-utils/1767802568705-screenshot.png"
   },
   {
     "id": "asgeirtj-system-prompts-leaks",
@@ -309,7 +357,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-system-prompt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/asgeirtj-system-prompts-leaks/1767802568101-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:08.395Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/asgeirtj-system-prompts-leaks/1767802568101-screenshot.png"
   },
   {
     "id": "chain-of-thought",
@@ -370,7 +430,19 @@
       "few-shot-learning",
       "self-reflection",
       "structured-outputs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1767802561688-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:02.478Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chain-of-thought/1767802561688-screenshot.png"
   },
   {
     "id": "claude-code-prompt-improver",
@@ -431,7 +503,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-system-prompt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-prompt-improver/1767802561249-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:02.696Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-prompt-improver/1767802561249-screenshot.png"
   },
   {
     "id": "claude-code-system-prompt",
@@ -495,7 +579,19 @@
       "claude-code-prompt-improver",
       "claude-code-templates-1",
       "mufeedvh-code2prompt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-system-prompt/1767802563388-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:05.368Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-system-prompt/1767802563388-screenshot.png"
   },
   {
     "id": "claude-code-templates-1",
@@ -548,7 +644,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-system-prompt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates-1/1767802566271-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:06.835Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-templates-1/1767802566271-screenshot.png"
   },
   {
     "id": "claude-prompts",
@@ -597,7 +705,19 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-prompts/1767802566246-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:06.746Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-prompts/1767802566246-screenshot.png"
   },
   {
     "id": "prompt-code-reviewer",
@@ -610,6 +730,7 @@
     "addedDate": "2024-05-15",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1767802569952-screenshot.png",
     "aiSummary": "Prompt template for detailed code reviews focusing on security and performance",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -650,7 +771,19 @@
     "relatedResourceSlugs": [
       "prompt-security-expert",
       "prompt-senior-developer"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1767802569952-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:10.177Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-code-reviewer/1767802569952-screenshot.png"
   },
   {
     "id": "few-shot-learning",
@@ -663,6 +796,7 @@
     "addedDate": "2024-03-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1767802585930-screenshot.png",
     "aiSummary": "Official Anthropic guide to using few-shot learning examples effectively with Claude",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -702,7 +836,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "chain-of-thought"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1767802585930-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:26.412Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/few-shot-learning/1767802585930-screenshot.png"
   },
   {
     "id": "friuns2-blackfriday-gpts-prompts",
@@ -759,7 +905,19 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friuns2-blackfriday-gpts-prompts/1767802573271-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:13.662Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friuns2-blackfriday-gpts-prompts/1767802573271-screenshot.png"
   },
   {
     "id": "github-stats-for-claude-code-system-prompts",
@@ -808,7 +966,19 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-system-prompts/1767802564179-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:05.071Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-system-prompts/1767802564179-screenshot.png"
   },
   {
     "id": "github-stats-for-claude-code-templates",
@@ -857,7 +1027,19 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-templates/1767802569720-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:09.871Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-code-templates/1767802569720-screenshot.png"
   },
   {
     "id": "l1xu4n-awesome-chatgpt-prompts-zh-cn",
@@ -914,7 +1096,19 @@
       "Access to Claude (web or API)",
       "Basic understanding of prompt engineering",
       "Clear use case for the prompt template"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l1xu4n-awesome-chatgpt-prompts-zh-cn/1767802572839-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:13.633Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l1xu4n-awesome-chatgpt-prompts-zh-cn/1767802572839-screenshot.png"
   },
   {
     "id": "langgptai-awesome-claude-prompts",
@@ -976,7 +1170,19 @@
     "relatedResourceSlugs": [
       "anthropic-prompt-library",
       "awesome-chatgpt-prompts"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langgptai-awesome-claude-prompts/1767802569186-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:09.701Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langgptai-awesome-claude-prompts/1767802569186-screenshot.png"
   },
   {
     "id": "mufeedvh-code2prompt",
@@ -1036,7 +1242,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-system-prompt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mufeedvh-code2prompt/1767802571104-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:11.737Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mufeedvh-code2prompt/1767802571104-screenshot.png"
   },
   {
     "id": "prompts-chat",
@@ -1095,7 +1313,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-prompt-library"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompts-chat/1767802574886-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:15.201Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompts-chat/1767802574886-screenshot.png"
   },
   {
     "id": "prompt-security-expert",
@@ -1108,6 +1338,7 @@
     "addedDate": "2024-07-01",
     "lastVerified": "2024-12-11",
     "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1767802571642-screenshot.png",
     "aiSummary": "Prompt template for security audits and vulnerability analysis with expert focus",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -1147,7 +1378,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "prompt-code-reviewer"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1767802571642-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:11.884Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-security-expert/1767802571642-screenshot.png"
   },
   {
     "id": "self-reflection",
@@ -1160,6 +1403,7 @@
     "addedDate": "2024-04-15",
     "lastVerified": "2024-12-11",
     "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1767802566228-screenshot.png",
     "aiSummary": "Techniques from Anthropic research for making Claude review and improve its responses",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -1199,7 +1443,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "chain-of-thought"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1767802566228-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:06.580Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/self-reflection/1767802566228-screenshot.png"
   },
   {
     "id": "prompt-senior-developer",
@@ -1212,6 +1468,7 @@
     "addedDate": "2024-05-01",
     "lastVerified": "2024-12-11",
     "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1767802566205-screenshot.png",
     "aiSummary": "System prompt for Claude to act as an experienced senior software developer",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -1253,7 +1510,19 @@
       "prompt-code-reviewer",
       "prompt-technical-writer",
       "system-prompts-coding"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1767802566205-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:06.515Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-senior-developer/1767802566205-screenshot.png"
   },
   {
     "id": "structured-outputs",
@@ -1266,6 +1535,7 @@
     "addedDate": "2024-03-15",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1767802568288-screenshot.png",
     "aiSummary": "Official guide for getting structured outputs like JSON and XML from Claude",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -1305,7 +1575,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "chain-of-thought"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1767802568288-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:08.811Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/structured-outputs/1767802568288-screenshot.png"
   },
   {
     "id": "prompt-technical-writer",
@@ -1318,6 +1600,7 @@
     "addedDate": "2024-06-01",
     "lastVerified": "2024-12-11",
     "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1767802566235-screenshot.png",
     "aiSummary": "Prompt template for generating documentation, README files, and API docs",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -1358,6 +1641,18 @@
     "relatedResourceSlugs": [
       "prompt-senior-developer",
       "rules-documentation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1767802566235-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:06.521Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-technical-writer/1767802566235-screenshot.png"
   }
 ]

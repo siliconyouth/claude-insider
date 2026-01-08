@@ -68,7 +68,19 @@
       "claude-cookbook",
       "claude-quickstarts",
       "evals"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1767802531255-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:31.979Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-cookbook/1767802531255-screenshot.png"
   },
   {
     "id": "anthropic-docs",
@@ -134,7 +146,19 @@
       "mcp-docs",
       "prompt-engineering-guide",
       "tool-use-tutorial"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1767802530078-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:30.538Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-docs/1767802530078-screenshot.png"
   },
   {
     "id": "claude-code-docs",
@@ -198,7 +222,19 @@
       "claude-code-monitoring-guide",
       "claude-code-tutorial",
       "mcp-docs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1767802533687-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:34.463Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-docs/1767802533687-screenshot.png"
   },
   {
     "id": "claude-code-repo",
@@ -267,7 +303,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "devcontainer-features"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1767802529105-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:29.771Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-repo/1767802529105-screenshot.png"
   },
   {
     "id": "mcp-docs",
@@ -330,7 +378,19 @@
       "anthropic-docs",
       "claude-code-docs",
       "mcp-server-tutorial"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1767802535403-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:35.750Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-docs/1767802535403-screenshot.png"
   },
   {
     "id": "announcement-2",
@@ -379,7 +439,19 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1767802559871-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:00.304Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/announcement-2/1767802559871-screenshot.png"
   },
   {
     "id": "anthropic-blog",
@@ -438,7 +510,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-docs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-blog/1767802557727-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:58.308Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-blog/1767802557727-screenshot.png"
   },
   {
     "id": "anthropic-claude-code-best-practices",
@@ -491,7 +575,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-docs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1767802539254-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:39.548Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-claude-code-best-practices/1767802539254-screenshot.png"
   },
   {
     "id": "sdk-python-official",
@@ -512,6 +608,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-python-official/1767802527900-screenshot.png",
     "aiSummary": "Official Python SDK from Anthropic for building Claude-powered applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -556,7 +653,19 @@
       "anthropic-sdk-java",
       "anthropic-sdk-php",
       "anthropic-sdk-ruby"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-python-official/1767802527900-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:28.379Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-python-official/1767802527900-screenshot.png"
   },
   {
     "id": "sdk-typescript-official",
@@ -577,6 +686,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-typescript-official/1767802534486-screenshot.png",
     "aiSummary": "Official TypeScript SDK from Anthropic for Node.js and browser Claude integration",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -616,7 +726,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-typescript-official/1767802534486-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:34.828Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-typescript-official/1767802534486-screenshot.png"
   },
   {
     "id": "anthropic-bedrock-python",
@@ -678,7 +800,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-bedrock-sdk",
       "anthropic-bedrock-typescript"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-python/1767802529102-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:29.910Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-python/1767802529102-screenshot.png"
   },
   {
     "id": "anthropic-bedrock-typescript",
@@ -740,7 +874,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-bedrock-sdk",
       "anthropic-bedrock-python"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-typescript/1767802528894-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:29.293Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-bedrock-typescript/1767802528894-screenshot.png"
   },
   {
     "id": "anthropic-sdk-csharp",
@@ -801,7 +947,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "sdk-python-official"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-csharp/1767802525754-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:26.141Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-csharp/1767802525754-screenshot.png"
   },
   {
     "id": "anthropic-sdk-go",
@@ -862,7 +1020,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "sdk-python-official"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-go/1767802560389-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:00.990Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-go/1767802560389-screenshot.png"
   },
   {
     "id": "anthropic-sdk-java",
@@ -923,7 +1093,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "sdk-python-official"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-java/1767802537593-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:38.024Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-java/1767802537593-screenshot.png"
   },
   {
     "id": "anthropic-sdk-php",
@@ -984,7 +1166,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "sdk-python-official"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-php/1767802549553-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:50.225Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-php/1767802549553-screenshot.png"
   },
   {
     "id": "anthropic-sdk-ruby",
@@ -1045,7 +1239,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "sdk-python-official"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-ruby/1767802560654-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:01.245Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-sdk-ruby/1767802560654-screenshot.png"
   },
   {
     "id": "anthropic-tokenizer-typescript",
@@ -1106,7 +1312,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-tokenizer"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-tokenizer-typescript/1767802536701-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:37.120Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-tokenizer-typescript/1767802536701-screenshot.png"
   },
   {
     "id": "anthropic-s-article",
@@ -1155,7 +1373,19 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1767802558983-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:59.263Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-s-article/1767802558983-screenshot.png"
   },
   {
     "id": "blobfile",
@@ -1212,7 +1442,19 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blobfile/1767802536713-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:37.122Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blobfile/1767802536713-screenshot.png"
   },
   {
     "id": "claude-agent-sdk-python",
@@ -1277,7 +1519,19 @@
       "anthropic-ai-claude-agent-sdk",
       "claude-agent-sdk-demos",
       "claude-agent-sdk-typescript"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-python/1767802528668-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:29.124Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-python/1767802528668-screenshot.png"
   },
   {
     "id": "claude-agent-sdk-typescript",
@@ -1338,7 +1592,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-claude-agent-sdk",
       "claude-agent-sdk-python"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-typescript/1767802538027-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:38.302Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-typescript/1767802538027-screenshot.png"
   },
   {
     "id": "claude-agent-skills",
@@ -1391,7 +1657,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "skills"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1767802537071-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:37.404Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-skills/1767802537071-screenshot.png"
   },
   {
     "id": "claude-code-with-plugins",
@@ -1444,7 +1722,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-plugins-official"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1767802529158-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:29.910Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-with-plugins/1767802529158-screenshot.png"
   },
   {
     "id": "claude-console",
@@ -1499,7 +1789,20 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Claude Console placeholder",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official/claude-console-placeholder.svg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "placeholder",
+        "caption": "Generated placeholder image",
+        "captured_at": "2026-01-07T22:06:45.181Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official/claude-console-placeholder.svg"
   },
   {
     "id": "claude-cookbook",
@@ -1560,7 +1863,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-cookbook"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-cookbook/1767802535788-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:36.152Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-cookbook/1767802535788-screenshot.png"
   },
   {
     "id": "claude-haiku-4-5-system-card",
@@ -1614,7 +1929,20 @@
     "relatedResourceSlugs": [
       "claude-opus-4-5-system-card",
       "claude-sonnet-4-5-system-card"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Claude Haiku 4.5 System Card placeholder",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official/claude-haiku-4-5-system-card-placeholder.svg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "placeholder",
+        "caption": "Generated placeholder image",
+        "captured_at": "2026-01-07T22:06:45.418Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official/claude-haiku-4-5-system-card-placeholder.svg"
   },
   {
     "id": "claude-opus-4-5-system-card",
@@ -1668,7 +1996,20 @@
     "relatedResourceSlugs": [
       "claude-haiku-4-5-system-card",
       "claude-sonnet-4-5-system-card"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Claude Opus 4.5 System Card placeholder",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official/claude-opus-4-5-system-card-placeholder.svg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "placeholder",
+        "caption": "Generated placeholder image",
+        "captured_at": "2026-01-07T22:06:44.655Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official/claude-opus-4-5-system-card-placeholder.svg"
   },
   {
     "id": "claude-quickstarts",
@@ -1729,7 +2070,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-cookbook"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-quickstarts/1767802536166-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:36.459Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-quickstarts/1767802536166-screenshot.png"
   },
   {
     "id": "claude-sonnet-4-5-system-card",
@@ -1783,7 +2136,20 @@
     "relatedResourceSlugs": [
       "claude-haiku-4-5-system-card",
       "claude-opus-4-5-system-card"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Claude Sonnet 4.5 System Card placeholder",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official/claude-sonnet-4-5-system-card-placeholder.svg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "placeholder",
+        "caption": "Generated placeholder image",
+        "captured_at": "2026-01-07T22:06:44.897Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/official/claude-sonnet-4-5-system-card-placeholder.svg"
   },
   {
     "id": "claude-agent-sdk-demos",
@@ -1844,7 +2210,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-agent-sdk-python"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-demos/1767802527786-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:28.105Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-sdk-demos/1767802527786-screenshot.png"
   },
   {
     "id": "claude-code-action",
@@ -1906,7 +2284,19 @@
     "relatedResourceSlugs": [
       "claude-code-base-action",
       "claude-code-security-review"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-action/1767802528682-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:29.114Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-action/1767802528682-screenshot.png"
   },
   {
     "id": "claude-code-base-action",
@@ -1967,7 +2357,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-action"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-base-action/1767802560648-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:01.133Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-base-action/1767802560648-screenshot.png"
   },
   {
     "id": "claude-code-monitoring-guide",
@@ -2028,7 +2430,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-docs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-monitoring-guide/1767802539538-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:39.822Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-monitoring-guide/1767802539538-screenshot.png"
   },
   {
     "id": "claude-code-sdk-python",
@@ -2088,7 +2502,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-claude-code"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-python/1767802534493-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:35.046Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-python/1767802534493-screenshot.png"
   },
   {
     "id": "claude-code-security-review",
@@ -2149,7 +2575,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-action"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-security-review/1767802539992-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:40.308Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-security-review/1767802539992-screenshot.png"
   },
   {
     "id": "claude-plugins-official",
@@ -2210,7 +2648,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-with-plugins"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins-official/1767802559471-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:59.980Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins-official/1767802559471-screenshot.png"
   },
   {
     "id": "devcontainer-features",
@@ -2271,7 +2721,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-repo"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devcontainer-features/1767802560155-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:00.839Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devcontainer-features/1767802560155-screenshot.png"
   },
   {
     "id": "evals",
@@ -2332,7 +2794,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-cookbook"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/evals/1767802560378-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:01.528Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/evals/1767802560378-screenshot.png"
   },
   {
     "id": "life-sciences",
@@ -2389,7 +2863,19 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/life-sciences/1767802540535-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:40.791Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/life-sciences/1767802540535-screenshot.png"
   },
   {
     "id": "political-neutrality-eval",
@@ -2446,7 +2932,19 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/political-neutrality-eval/1767802560377-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:00.726Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/political-neutrality-eval/1767802560377-screenshot.png"
   },
   {
     "id": "prompt-engineering-guide",
@@ -2506,7 +3004,19 @@
     "relatedResourceSlugs": [
       "anthropic-docs",
       "prompt-eng-interactive-tutorial"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1767802539298-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:39.530Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-engineering-guide/1767802539298-screenshot.png"
   },
   {
     "id": "prompt-eng-interactive-tutorial",
@@ -2567,7 +3077,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "prompt-engineering-guide"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-eng-interactive-tutorial/1767802528419-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:28.789Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/prompt-eng-interactive-tutorial/1767802528419-screenshot.png"
   },
   {
     "id": "redis-py",
@@ -2624,7 +3146,19 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/redis-py/1767802560569-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:01.091Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/redis-py/1767802560569-screenshot.png"
   },
   {
     "id": "riv2025-long-horizon-coding-agent-demo",
@@ -2681,7 +3215,19 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/riv2025-long-horizon-coding-agent-demo/1767802561162-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:01.528Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/riv2025-long-horizon-coding-agent-demo/1767802561162-screenshot.png"
   },
   {
     "id": "s5cmd",
@@ -2738,7 +3284,19 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s5cmd/1767802560634-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:01.291Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s5cmd/1767802560634-screenshot.png"
   },
   {
     "id": "skills",
@@ -2799,7 +3357,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-agent-skills"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/skills/1767802528119-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:28.564Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/skills/1767802528119-screenshot.png"
   },
   {
     "id": "transparency-hub",
@@ -2848,6 +3418,18 @@
       "Anthropic account with appropriate tier",
       "Understanding of Claude's capabilities",
       "Compliance with usage guidelines"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1767802539495-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:15:39.758Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/transparency-hub/1767802539495-screenshot.png"
   }
 ]

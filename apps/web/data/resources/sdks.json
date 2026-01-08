@@ -83,7 +83,19 @@
       "ollama-ai-provider",
       "openrouter-ai-sdk-provider",
       "voyage-ai-provider"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-ai-sdk/1767802598114-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:38.360Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-ai-sdk/1767802598114-screenshot.png"
   },
   {
     "id": "adaline-anthropic",
@@ -132,7 +144,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-anthropic/1767802695605-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:15.735Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-anthropic/1767802695605-screenshot.png"
   },
   {
     "id": "adaline-google",
@@ -181,7 +205,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-google/1767802749398-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:09.625Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-google/1767802749398-screenshot.png"
   },
   {
     "id": "adaline-together-ai",
@@ -230,7 +266,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-together-ai/1767802685914-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:06.227Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adaline-together-ai/1767802685914-screenshot.png"
   },
   {
     "id": "ai-sdk-amazon-bedrock",
@@ -283,7 +331,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-amazon-bedrock/1767802645790-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:25.945Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-amazon-bedrock/1767802645790-screenshot.png"
   },
   {
     "id": "ai-sdk-anthropic",
@@ -337,7 +397,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-sdk",
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-anthropic/1767802591752-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:32.025Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-anthropic/1767802591752-screenshot.png"
   },
   {
     "id": "ai-sdk-azure",
@@ -390,7 +462,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-azure/1767802750539-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:10.900Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-azure/1767802750539-screenshot.png"
   },
   {
     "id": "ai-sdk-cerebras",
@@ -438,7 +522,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cerebras/1767802715471-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.754Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cerebras/1767802715471-screenshot.png"
   },
   {
     "id": "ai-sdk-cohere",
@@ -491,7 +587,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cohere/1767802715608-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.904Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-cohere/1767802715608-screenshot.png"
   },
   {
     "id": "ai-sdk-deepinfra",
@@ -540,7 +648,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepinfra/1767802692546-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:12.727Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepinfra/1767802692546-screenshot.png"
   },
   {
     "id": "ai-sdk-deepseek",
@@ -588,7 +708,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepseek/1767802682059-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.361Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-deepseek/1767802682059-screenshot.png"
   },
   {
     "id": "ai-sdk-fireworks",
@@ -636,7 +768,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-fireworks/1767802646391-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:26.539Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-fireworks/1767802646391-screenshot.png"
   },
   {
     "id": "ai-sdk-gateway",
@@ -685,7 +829,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-gateway/1767802688749-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:08.933Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-gateway/1767802688749-screenshot.png"
   },
   {
     "id": "ai-sdk-google",
@@ -737,7 +893,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google/1767802690713-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:11.125Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google/1767802690713-screenshot.png"
   },
   {
     "id": "ai-sdk-google-vertex",
@@ -787,7 +955,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google-vertex/1767802696017-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:16.157Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-google-vertex/1767802696017-screenshot.png"
   },
   {
     "id": "ai-sdk-groq",
@@ -841,7 +1021,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-groq/1767802640532-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:20.665Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-groq/1767802640532-screenshot.png"
   },
   {
     "id": "ai-sdk-langchain",
@@ -894,7 +1086,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-langchain/1767802591755-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:32.025Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-langchain/1767802591755-screenshot.png"
   },
   {
     "id": "ai-sdk-mistral",
@@ -947,7 +1151,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-mistral/1767802592241-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:32.535Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-mistral/1767802592241-screenshot.png"
   },
   {
     "id": "ai-sdk-openai",
@@ -999,7 +1215,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai/1767802590446-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:30.921Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai/1767802590446-screenshot.png"
   },
   {
     "id": "ai-sdk-openai-compatible",
@@ -1047,7 +1275,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai-compatible/1767802637359-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:17.683Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-openai-compatible/1767802637359-screenshot.png"
   },
   {
     "id": "ai-sdk-perplexity",
@@ -1096,7 +1336,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-perplexity/1767802715463-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.604Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-perplexity/1767802715463-screenshot.png"
   },
   {
     "id": "ai-sdk-provider",
@@ -1145,7 +1397,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider/1767802689948-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:10.217Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider/1767802689948-screenshot.png"
   },
   {
     "id": "ai-sdk-provider-utils",
@@ -1194,7 +1458,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-utils/1767802716908-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:37.179Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-utils/1767802716908-screenshot.png"
   },
   {
     "id": "ai-sdk-react",
@@ -1247,7 +1523,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-react/1767802632292-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:12.679Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-react/1767802632292-screenshot.png"
   },
   {
     "id": "ai-sdk-replicate",
@@ -1296,7 +1584,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-replicate/1767802639170-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:19.620Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-replicate/1767802639170-screenshot.png"
   },
   {
     "id": "ai-sdk-rsc",
@@ -1349,7 +1649,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-rsc/1767802721187-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:41.336Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-rsc/1767802721187-screenshot.png"
   },
   {
     "id": "ai-sdk-solid",
@@ -1398,7 +1710,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-solid/1767802746139-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.350Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-solid/1767802746139-screenshot.png"
   },
   {
     "id": "ai-sdk-svelte",
@@ -1451,7 +1775,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-svelte/1767802640530-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:20.676Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-svelte/1767802640530-screenshot.png"
   },
   {
     "id": "ai-sdk-togetherai",
@@ -1499,7 +1835,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-togetherai/1767802726471-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:46.913Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-togetherai/1767802726471-screenshot.png"
   },
   {
     "id": "ai-sdk-ui-utils",
@@ -1548,7 +1896,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-ui-utils/1767802603228-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:43.500Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-ui-utils/1767802603228-screenshot.png"
   },
   {
     "id": "ai-sdk-vercel",
@@ -1597,7 +1957,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vercel/1767802718583-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:38.731Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vercel/1767802718583-screenshot.png"
   },
   {
     "id": "ai-sdk-vue",
@@ -1650,7 +2022,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vue/1767802591807-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:32.248Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-vue/1767802591807-screenshot.png"
   },
   {
     "id": "ai-sdk-xai",
@@ -1699,7 +2083,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-xai/1767802681695-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.432Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-xai/1767802681695-screenshot.png"
   },
   {
     "id": "aigne-anthropic",
@@ -1748,7 +2144,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aigne-anthropic/1767802608607-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:48.838Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aigne-anthropic/1767802608607-screenshot.png"
   },
   {
     "id": "anthropic-ai-bedrock-sdk",
@@ -1802,7 +2210,19 @@
       "anthropic-ai-sdk",
       "anthropic-bedrock-python",
       "anthropic-bedrock-typescript"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-bedrock-sdk/1767802591469-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:31.756Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-bedrock-sdk/1767802591469-screenshot.png"
   },
   {
     "id": "anthropic-ai-claude-agent-sdk",
@@ -1861,7 +2281,19 @@
       "claude-agent-sdk-python",
       "claude-agent-sdk-typescript",
       "claude-code-sdk-ts"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-agent-sdk/1767802599356-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:39.604Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-agent-sdk/1767802599356-screenshot.png"
   },
   {
     "id": "anthropic-ai-claude-code",
@@ -1915,7 +2347,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-sdk",
       "claude-code-sdk-python"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-code/1767802599146-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:39.549Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-claude-code/1767802599146-screenshot.png"
   },
   {
     "id": "anthropic-ai-foundry-sdk",
@@ -1967,7 +2411,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-foundry-sdk/1767802745698-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.005Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-foundry-sdk/1767802745698-screenshot.png"
   },
   {
     "id": "anthropic-ai-sandbox-runtime",
@@ -2020,7 +2476,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-claude-agent-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sandbox-runtime/1767802592371-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:32.706Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sandbox-runtime/1767802592371-screenshot.png"
   },
   {
     "id": "anthropic-ai-sdk",
@@ -2079,7 +2547,19 @@
       "claude-sdk",
       "sdk-python-official",
       "sdk-typescript-official"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sdk/1767802590396-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:30.745Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-sdk/1767802590396-screenshot.png"
   },
   {
     "id": "anthropic-ai-tokenizer",
@@ -2133,7 +2613,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-sdk",
       "anthropic-tokenizer-typescript"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-tokenizer/1767802599600-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:39.894Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-tokenizer/1767802599600-screenshot.png"
   },
   {
     "id": "anthropic-ai-vertex-sdk",
@@ -2185,7 +2677,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-vertex-sdk/1767802751001-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:11.397Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai-vertex-sdk/1767802751001-screenshot.png"
   },
   {
     "id": "aps-sdk-model-derivative",
@@ -2233,7 +2737,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aps-sdk-model-derivative/1767802746135-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.400Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aps-sdk-model-derivative/1767802746135-screenshot.png"
   },
   {
     "id": "arizeai-openinference-instrumentation-anthropic",
@@ -2282,7 +2798,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/arizeai-openinference-instrumentation-anthropic/1767802718996-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:39.223Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/arizeai-openinference-instrumentation-anthropic/1767802718996-screenshot.png"
   },
   {
     "id": "assistant-ui-react-ai-sdk",
@@ -2331,7 +2859,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/assistant-ui-react-ai-sdk/1767802719047-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:39.195Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/assistant-ui-react-ai-sdk/1767802719047-screenshot.png"
   },
   {
     "id": "azure-rest-ai-document-intelligence",
@@ -2380,7 +2920,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-rest-ai-document-intelligence/1767802602756-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:43.025Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-rest-ai-document-intelligence/1767802602756-screenshot.png"
   },
   {
     "id": "azure-ai-form-recognizer",
@@ -2429,7 +2981,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-form-recognizer/1767802646428-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:26.699Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-form-recognizer/1767802646428-screenshot.png"
   },
   {
     "id": "azure-ai-projects",
@@ -2478,7 +3042,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-projects/1767802693817-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:14.181Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-projects/1767802693817-screenshot.png"
   },
   {
     "id": "azure-search-documents",
@@ -2527,7 +3103,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-search-documents/1767802726616-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:46.925Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-search-documents/1767802726616-screenshot.png"
   },
   {
     "id": "browserbasehq-stagehand",
@@ -2576,7 +3164,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserbasehq-stagehand/1767802718576-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:38.732Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserbasehq-stagehand/1767802718576-screenshot.png"
   },
   {
     "id": "browserstack-ai-sdk-node",
@@ -2625,7 +3225,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserstack-ai-sdk-node/1767802745650-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:05.801Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/browserstack-ai-sdk-node/1767802745650-screenshot.png"
   },
   {
     "id": "chatclub1-claude-code",
@@ -2674,7 +3286,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatclub1-claude-code/1767802721543-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:41.699Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatclub1-claude-code/1767802721543-screenshot.png"
   },
   {
     "id": "ckeditor-ckeditor5-ai",
@@ -2723,7 +3347,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ckeditor-ckeditor5-ai/1767802721884-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:42.065Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ckeditor-ckeditor5-ai/1767802721884-screenshot.png"
   },
   {
     "id": "composio-anthropic",
@@ -2776,7 +3412,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/composio-anthropic/1767802642051-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:22.198Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/composio-anthropic/1767802642051-screenshot.png"
   },
   {
     "id": "convex-dev-ai-sdk-google",
@@ -2824,7 +3472,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/convex-dev-ai-sdk-google/1767802681733-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.750Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/convex-dev-ai-sdk-google/1767802681733-screenshot.png"
   },
   {
     "id": "effect-ai",
@@ -2877,7 +3537,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/effect-ai/1767802635062-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:15.461Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/effect-ai/1767802635062-screenshot.png"
   },
   {
     "id": "firebase-ai",
@@ -2926,7 +3598,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-ai/1767802686050-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:06.233Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-ai/1767802686050-screenshot.png"
   },
   {
     "id": "firebase-vertexai",
@@ -2975,7 +3659,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai/1767802724126-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:44.299Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai/1767802724126-screenshot.png"
   },
   {
     "id": "firebase-vertexai-preview",
@@ -3024,7 +3720,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai-preview/1767802718316-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:38.557Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/firebase-vertexai-preview/1767802718316-screenshot.png"
   },
   {
     "id": "flatfile-anthropic",
@@ -3073,7 +3781,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/flatfile-anthropic/1767802722494-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:42.723Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/flatfile-anthropic/1767802722494-screenshot.png"
   },
   {
     "id": "gauravrathod674-super-customizable-chatbot",
@@ -3121,7 +3841,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gauravrathod674-super-customizable-chatbot/1767802724332-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:44.475Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gauravrathod674-super-customizable-chatbot/1767802724332-screenshot.png"
   },
   {
     "id": "genkit-ai-google-cloud",
@@ -3170,7 +3902,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-cloud/1767802722766-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:42.998Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-cloud/1767802722766-screenshot.png"
   },
   {
     "id": "genkit-ai-google-genai",
@@ -3219,7 +3963,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-genai/1767802745981-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.314Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit-ai-google-genai/1767802745981-screenshot.png"
   },
   {
     "id": "getzep-zep-cloud",
@@ -3268,7 +4024,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-cloud/1767802746062-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.344Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-cloud/1767802746062-screenshot.png"
   },
   {
     "id": "getzep-zep-js",
@@ -3317,7 +4085,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-js/1767802639350-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:19.582Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/getzep-zep-js/1767802639350-screenshot.png"
   },
   {
     "id": "gooddata-sdk-model",
@@ -3366,7 +4146,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gooddata-sdk-model/1767802752773-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:14.182Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gooddata-sdk-model/1767802752773-screenshot.png"
   },
   {
     "id": "google-cloud-aiplatform",
@@ -3414,7 +4206,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-aiplatform/1767802647977-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:28.295Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-aiplatform/1767802647977-screenshot.png"
   },
   {
     "id": "google-cloud-documentai",
@@ -3463,7 +4267,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-documentai/1767802633559-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:13.881Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-documentai/1767802633559-screenshot.png"
   },
   {
     "id": "google-cloud-vertexai",
@@ -3512,7 +4328,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-vertexai/1767802642175-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:22.566Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-cloud-vertexai/1767802642175-screenshot.png"
   },
   {
     "id": "google-genai",
@@ -3561,7 +4389,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-genai/1767802643318-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:23.583Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-genai/1767802643318-screenshot.png"
   },
   {
     "id": "google-generative-ai",
@@ -3610,7 +4450,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-generative-ai/1767802718617-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:38.787Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/google-generative-ai/1767802718617-screenshot.png"
   },
   {
     "id": "graygate-claude-orchestrator",
@@ -3659,7 +4511,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/graygate-claude-orchestrator/1767802752808-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:13.458Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/graygate-claude-orchestrator/1767802752808-screenshot.png"
   },
   {
     "id": "ibm-generative-ai-node-sdk",
@@ -3708,7 +4572,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ibm-generative-ai-node-sdk/1767802718574-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:38.730Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ibm-generative-ai-node-sdk/1767802718574-screenshot.png"
   },
   {
     "id": "inngest-ai",
@@ -3757,7 +4633,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/inngest-ai/1767802749397-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:09.651Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/inngest-ai/1767802749397-screenshot.png"
   },
   {
     "id": "instantlyeasy-claude-code-sdk-ts",
@@ -3806,7 +4694,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/instantlyeasy-claude-code-sdk-ts/1767802721541-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:41.692Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/instantlyeasy-claude-code-sdk-ts/1767802721541-screenshot.png"
   },
   {
     "id": "kaitranntt-ccs",
@@ -3855,7 +4755,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kaitranntt-ccs/1767802715579-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.896Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kaitranntt-ccs/1767802715579-screenshot.png"
   },
   {
     "id": "kontent-ai-core-sdk",
@@ -3904,7 +4816,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kontent-ai-core-sdk/1767802644456-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:24.617Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kontent-ai-core-sdk/1767802644456-screenshot.png"
   },
   {
     "id": "langchain-anthropic-1",
@@ -3953,7 +4877,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic-1/1767802693844-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:14.254Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-anthropic-1/1767802693844-screenshot.png"
   },
   {
     "id": "langchain-google-common",
@@ -4002,7 +4938,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-google-common/1767802724913-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:45.100Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-google-common/1767802724913-screenshot.png"
   },
   {
     "id": "langchain-langgraph",
@@ -4051,7 +4999,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-langgraph/1767802682622-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.908Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-langgraph/1767802682622-screenshot.png"
   },
   {
     "id": "lenml-tokenizer-claude",
@@ -4100,7 +5060,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lenml-tokenizer-claude/1767802745972-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.183Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lenml-tokenizer-claude/1767802745972-screenshot.png"
   },
   {
     "id": "llamaindex-anthropic-1",
@@ -4149,7 +5121,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic-1/1767802685917-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:06.172Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-anthropic-1/1767802685917-screenshot.png"
   },
   {
     "id": "lmnr-ai-claude-code-proxy",
@@ -4197,7 +5181,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lmnr-ai-claude-code-proxy/1767802720674-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:40.825Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lmnr-ai-claude-code-proxy/1767802720674-screenshot.png"
   },
   {
     "id": "loopback-model-api-builder",
@@ -4246,7 +5242,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/loopback-model-api-builder/1767802695298-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:15.519Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/loopback-model-api-builder/1767802695298-screenshot.png"
   },
   {
     "id": "mariozechner-claude-trace",
@@ -4295,7 +5303,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mariozechner-claude-trace/1767802691084-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:11.366Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mariozechner-claude-trace/1767802691084-screenshot.png"
   },
   {
     "id": "mastra-core",
@@ -4344,7 +5364,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra-core/1767802721502-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:41.661Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra-core/1767802721502-screenshot.png"
   },
   {
     "id": "matkirit-claude-trace",
@@ -4392,7 +5424,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/matkirit-claude-trace/1767802715472-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.758Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/matkirit-claude-trace/1767802715472-screenshot.png"
   },
   {
     "id": "memberjunction-ai-anthropic",
@@ -4441,7 +5485,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memberjunction-ai-anthropic/1767802724340-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:44.490Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memberjunction-ai-anthropic/1767802724340-screenshot.png"
   },
   {
     "id": "metorial-anthropic",
@@ -4490,7 +5546,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/metorial-anthropic/1767802724722-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:44.946Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/metorial-anthropic/1767802724722-screenshot.png"
   },
   {
     "id": "microsoft-applicationinsights-web",
@@ -4539,7 +5607,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/microsoft-applicationinsights-web/1767802717272-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:37.588Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/microsoft-applicationinsights-web/1767802717272-screenshot.png"
   },
   {
     "id": "modelcontextprotocol-sdk",
@@ -4592,7 +5672,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "typescript-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-sdk/1767802594783-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:35.051Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-sdk/1767802594783-screenshot.png"
   },
   {
     "id": "modelcontextprotocol-server-memory-1",
@@ -4641,7 +5733,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-server-memory-1/1767802719213-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:39.605Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/modelcontextprotocol-server-memory-1/1767802719213-screenshot.png"
   },
   {
     "id": "musistudio-claude-code-router",
@@ -4690,7 +5794,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/musistudio-claude-code-router/1767802745983-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.392Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/musistudio-claude-code-router/1767802745983-screenshot.png"
   },
   {
     "id": "n8n-io-ai-assistant-sdk",
@@ -4739,7 +5855,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-io-ai-assistant-sdk/1767802632658-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:12.899Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-io-ai-assistant-sdk/1767802632658-screenshot.png"
   },
   {
     "id": "openrouter-ai-sdk-provider",
@@ -4792,7 +5920,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openrouter-ai-sdk-provider/1767802634310-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:14.851Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openrouter-ai-sdk-provider/1767802634310-screenshot.png"
   },
   {
     "id": "owloops-claude-powerline",
@@ -4840,7 +5980,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/owloops-claude-powerline/1767802635264-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:15.584Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/owloops-claude-powerline/1767802635264-screenshot.png"
   },
   {
     "id": "platejs-ai",
@@ -4889,7 +6041,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/platejs-ai/1767802643789-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:23.934Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/platejs-ai/1767802643789-screenshot.png"
   },
   {
     "id": "react-grab-claude-code",
@@ -4938,7 +6102,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-grab-claude-code/1767802639723-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:19.951Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-grab-claude-code/1767802639723-screenshot.png"
   },
   {
     "id": "reservoir0x-relay-protocol-sdk",
@@ -4987,7 +6163,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reservoir0x-relay-protocol-sdk/1767802745991-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.315Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/reservoir0x-relay-protocol-sdk/1767802745991-screenshot.png"
   },
   {
     "id": "sanity-assist",
@@ -5036,7 +6224,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sanity-assist/1767802721489-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:41.669Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sanity-assist/1767802721489-screenshot.png"
   },
   {
     "id": "sap-ai-sdk-ai-api",
@@ -5085,7 +6285,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-ai-api/1767802685895-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:06.232Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-ai-api/1767802685895-screenshot.png"
   },
   {
     "id": "sap-ai-sdk-prompt-registry",
@@ -5134,7 +6346,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-prompt-registry/1767802639021-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:19.375Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sap-ai-sdk-prompt-registry/1767802639021-screenshot.png"
   },
   {
     "id": "sista-ai-assistant-react",
@@ -5183,7 +6407,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sista-ai-assistant-react/1767802721793-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:41.918Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sista-ai-assistant-react/1767802721793-screenshot.png"
   },
   {
     "id": "siteboon-claude-code-ui",
@@ -5232,7 +6468,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/siteboon-claude-code-ui/1767802636119-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:16.565Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/siteboon-claude-code-ui/1767802636119-screenshot.png"
   },
   {
     "id": "sssaicode-claude",
@@ -5281,7 +6529,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sssaicode-claude/1767802745976-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.314Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sssaicode-claude/1767802745976-screenshot.png"
   },
   {
     "id": "storybook-manager-api",
@@ -5330,7 +6590,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/storybook-manager-api/1767802750981-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:11.919Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/storybook-manager-api/1767802750981-screenshot.png"
   },
   {
     "id": "tanstack-ai-anthropic",
@@ -5383,7 +6655,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tanstack-ai-anthropic/1767802635067-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:15.691Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tanstack-ai-anthropic/1767802635067-screenshot.png"
   },
   {
     "id": "theia-ai-anthropic",
@@ -5432,7 +6716,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-anthropic/1767802715622-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.904Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-anthropic/1767802715622-screenshot.png"
   },
   {
     "id": "theia-ai-claude-code",
@@ -5481,7 +6777,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-claude-code/1767802749396-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:09.682Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/theia-ai-claude-code/1767802749396-screenshot.png"
   },
   {
     "id": "traceloop-instrumentation-anthropic",
@@ -5530,7 +6838,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/traceloop-instrumentation-anthropic/1767802642873-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:23.037Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/traceloop-instrumentation-anthropic/1767802642873-screenshot.png"
   },
   {
     "id": "tscircuit-fake-anthropic",
@@ -5578,7 +6898,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tscircuit-fake-anthropic/1767802692002-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:12.188Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tscircuit-fake-anthropic/1767802692002-screenshot.png"
   },
   {
     "id": "wbern-claude-instructions",
@@ -5626,7 +6958,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/wbern-claude-instructions/1767802715463-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.623Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/wbern-claude-instructions/1767802715463-screenshot.png"
   },
   {
     "id": "zed-industries-claude-code-acp",
@@ -5675,7 +7019,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zed-industries-claude-code-acp/1767802746215-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.454Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zed-industries-claude-code-acp/1767802746215-screenshot.png"
   },
   {
     "id": "zilliz-claude-context-core",
@@ -5724,7 +7080,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zilliz-claude-context-core/1767802682000-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.358Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zilliz-claude-context-core/1767802682000-screenshot.png"
   },
   {
     "id": "agentapi",
@@ -5785,7 +7153,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-claude-code"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentapi/1767802697031-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:17.587Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentapi/1767802697031-screenshot.png"
   },
   {
     "id": "universal-mcp-universal-mcp",
@@ -5807,11 +7187,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/universal-mcp-universal-mcp/1767802646481-screenshot.png",
     "aiSummary": "A python SDK to build MCP Servers with inbuilt credential management by **[Agentr](https://agentr.dev/home)**",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/universal-mcp-universal-mcp/1767802646481-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:26.782Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/universal-mcp-universal-mcp/1767802646481-screenshot.png"
   },
   {
     "id": "ai-elements",
@@ -5860,7 +7253,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-elements/1767802749973-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:10.226Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-elements/1767802749973-screenshot.png"
   },
   {
     "id": "ai-fallback",
@@ -5909,7 +7314,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fallback/1767802749065-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:09.275Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-fallback/1767802749065-screenshot.png"
   },
   {
     "id": "ai-sdk-provider-claude-code",
@@ -5963,7 +7380,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-claude-agent-sdk",
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-claude-code/1767802598741-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:39.114Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-claude-code/1767802598741-screenshot.png"
   },
   {
     "id": "ai-sdk-provider-gemini-cli",
@@ -6012,7 +7441,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-gemini-cli/1767802695206-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:15.458Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-provider-gemini-cli/1767802695206-screenshot.png"
   },
   {
     "id": "ai-sdk-v5-anthropic-custom",
@@ -6061,7 +7502,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-v5-anthropic-custom/1767802694766-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:14.938Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-sdk-v5-anthropic-custom/1767802694766-screenshot.png"
   },
   {
     "id": "anthropic",
@@ -6109,7 +7562,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic/1767802606826-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:47.163Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic/1767802606826-screenshot.png"
   },
   {
     "id": "anthropic-ai",
@@ -6158,7 +7623,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai/1767802690849-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:11.064Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-ai/1767802690849-screenshot.png"
   },
   {
     "id": "anthropic-vertex-ai",
@@ -6206,7 +7683,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-vertex-ai/1767802681993-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.416Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-vertex-ai/1767802681993-screenshot.png"
   },
   {
     "id": "zoedsoupe-anubis-mcp",
@@ -6228,10 +7717,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zoedsoupe-anubis-mcp/1767802604579-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zoedsoupe-anubis-mcp/1767802604579-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:45.118Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zoedsoupe-anubis-mcp/1767802604579-screenshot.png"
   },
   {
     "id": "apache-apisix",
@@ -6288,7 +7790,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/apache-apisix/1767802717599-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:38.000Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/apache-apisix/1767802717599-screenshot.png"
   },
   {
     "id": "api-overview-pricing",
@@ -6336,7 +7850,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/api-overview-pricing/1767802605818-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:46.334Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/api-overview-pricing/1767802605818-screenshot.png"
   },
   {
     "id": "apiparklab-apipark",
@@ -6393,7 +7919,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/apiparklab-apipark/1767802687107-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:07.457Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/apiparklab-apipark/1767802687107-screenshot.png"
   },
   {
     "id": "ask-sdk-model",
@@ -6442,7 +7980,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ask-sdk-model/1767802745970-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:06.134Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ask-sdk-model/1767802745970-screenshot.png"
   },
   {
     "id": "awesome-sdks-for-ai-agents",
@@ -6498,7 +8048,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-sdks-for-ai-agents/1767802603063-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:43.478Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-sdks-for-ai-agents/1767802603063-screenshot.png"
   },
   {
     "id": "better-claude-code",
@@ -6546,7 +8108,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/better-claude-code/1767802721613-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:41.832Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/better-claude-code/1767802721613-screenshot.png"
   },
   {
     "id": "building-with-the-claude-api",
@@ -6595,7 +8169,20 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Building with the Claude API preview",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdks/building-with-the-claude-api-og.png",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "opengraph",
+        "caption": "OpenGraph preview image",
+        "captured_at": "2026-01-07T22:00:39.088Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdks/building-with-the-claude-api-og.png"
   },
   {
     "id": "ccstatusline-1",
@@ -6644,7 +8231,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccstatusline-1/1767802695300-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:15.606Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccstatusline-1/1767802695300-screenshot.png"
   },
   {
     "id": "ccusage-1",
@@ -6693,7 +8292,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccusage-1/1767802681840-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.709Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ccusage-1/1767802681840-screenshot.png"
   },
   {
     "id": "chatanywhere-gpt-api-free",
@@ -6750,7 +8361,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatanywhere-gpt-api-free/1767802689140-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:09.396Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatanywhere-gpt-api-free/1767802689140-screenshot.png"
   },
   {
     "id": "cheahjs-free-llm-api-resources",
@@ -6807,7 +8430,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cheahjs-free-llm-api-resources/1767802695275-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:15.545Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cheahjs-free-llm-api-resources/1767802695275-screenshot.png"
   },
   {
     "id": "clasp-ai",
@@ -6856,7 +8491,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/clasp-ai/1767802715823-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:36.028Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/clasp-ai/1767802715823-screenshot.png"
   },
   {
     "id": "claude-1",
@@ -6905,7 +8552,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-1/1767802632048-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:12.315Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-1/1767802632048-screenshot.png"
   },
   {
     "id": "sdk-dotnet",
@@ -6926,6 +8585,7 @@
       "lastUpdated": "2024-08-01",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-dotnet/1767802727583-screenshot.png",
     "aiSummary": "Community .NET SDK for integrating Claude API into C# and .NET applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -6961,7 +8621,19 @@
       ".NET 6+",
       "Anthropic API key",
       "NuGet package manager"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-dotnet/1767802727583-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:47.961Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-dotnet/1767802727583-screenshot.png"
   },
   {
     "id": "sdk-go",
@@ -6982,6 +8654,7 @@
       "lastUpdated": "2024-03-01",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-go/1767802692134-screenshot.png",
     "aiSummary": "Community Go SDK for integrating Claude API into Go applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -7017,7 +8690,19 @@
       "Go 1.18+",
       "Anthropic API key",
       "go mod for dependencies"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-go/1767802692134-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:12.609Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-go/1767802692134-screenshot.png"
   },
   {
     "id": "sdk-java",
@@ -7038,6 +8723,7 @@
       "lastUpdated": "2024-06-01",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-java/1767802603084-screenshot.png",
     "aiSummary": "Community Kotlin/Java SDK for integrating Claude API into JVM applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -7073,7 +8759,19 @@
       "JDK 8+",
       "Anthropic API key",
       "Gradle or Maven"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-java/1767802603084-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:43.847Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-java/1767802603084-screenshot.png"
   },
   {
     "id": "sdk-php",
@@ -7094,6 +8792,7 @@
       "lastUpdated": "2024-07-01",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-php/1767802684952-screenshot.png",
     "aiSummary": "Community PHP SDK for integrating Claude API into PHP applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -7129,7 +8828,19 @@
       "PHP 8.0+",
       "Anthropic API key",
       "Composer for installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-php/1767802684952-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:05.340Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-php/1767802684952-screenshot.png"
   },
   {
     "id": "sdk-ruby",
@@ -7150,6 +8861,7 @@
       "lastUpdated": "2024-05-01",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-ruby/1767802608456-screenshot.png",
     "aiSummary": "Community Ruby SDK for integrating Claude API into Ruby applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -7185,7 +8897,19 @@
       "Ruby 3.0+",
       "Anthropic API key",
       "Bundler for installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-ruby/1767802608456-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:48.763Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-ruby/1767802608456-screenshot.png"
   },
   {
     "id": "sdk-rust",
@@ -7206,6 +8930,7 @@
       "lastUpdated": "2024-04-01",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-rust/1767802752144-screenshot.png",
     "aiSummary": "Community Rust SDK for integrating Claude API into Rust applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -7241,7 +8966,19 @@
       "Rust 1.70+",
       "Anthropic API key",
       "Cargo for dependencies"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-rust/1767802752144-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:13.448Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sdk-rust/1767802752144-screenshot.png"
   },
   {
     "id": "claude-api",
@@ -7289,7 +9026,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-api/1767802719867-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:40.151Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-api/1767802719867-screenshot.png"
   },
   {
     "id": "claude-code",
@@ -7338,7 +9087,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code/1767802632300-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:12.748Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code/1767802632300-screenshot.png"
   },
   {
     "id": "claude-code-api-rs",
@@ -7394,7 +9155,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-api-rs/1767802748900-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:09.286Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-api-rs/1767802748900-screenshot.png"
   },
   {
     "id": "claude-code-plugins",
@@ -7443,7 +9216,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-plugins/1767802637358-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:17.798Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-plugins/1767802637358-screenshot.png"
   },
   {
     "id": "claude-code-sdk-ts",
@@ -7503,7 +9288,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-claude-agent-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-ts/1767802640904-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:21.221Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sdk-ts/1767802640904-screenshot.png"
   },
   {
     "id": "claude-evolve",
@@ -7552,7 +9349,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-evolve/1767802637796-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:18.171Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-evolve/1767802637796-screenshot.png"
   },
   {
     "id": "claude-issue-solver",
@@ -7601,7 +9410,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-issue-solver/1767802633575-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:13.932Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-issue-solver/1767802633575-screenshot.png"
   },
   {
     "id": "claude-mira3",
@@ -7650,7 +9471,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-mira3/1767802633533-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:14.123Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-mira3/1767802633533-screenshot.png"
   },
   {
     "id": "claude-plugins",
@@ -7698,7 +9531,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins/1767802637368-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:17.782Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-plugins/1767802637368-screenshot.png"
   },
   {
     "id": "claude-pretty-printer",
@@ -7751,7 +9596,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-claude-agent-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-pretty-printer/1767802598540-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:38.866Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-pretty-printer/1767802598540-screenshot.png"
   },
   {
     "id": "claude-recall",
@@ -7800,7 +9657,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-recall/1767802722008-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:42.240Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-recall/1767802722008-screenshot.png"
   },
   {
     "id": "claude-sdk",
@@ -7853,7 +9722,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sdk/1767802682898-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:03.203Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sdk/1767802682898-screenshot.png"
   },
   {
     "id": "marimo-team-codemirror-mcp",
@@ -7875,11 +9756,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/marimo-team-codemirror-mcp/1767802686177-screenshot.png",
     "aiSummary": "CodeMirror extension that implements the Model Context Protocol (MCP) for resource mentions and prompt commands",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/marimo-team-codemirror-mcp/1767802686177-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:06.471Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/marimo-team-codemirror-mcp/1767802686177-screenshot.png"
   },
   {
     "id": "cohere-ai",
@@ -7928,7 +9822,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cohere-ai/1767802718256-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:38.390Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cohere-ai/1767802718256-screenshot.png"
   },
   {
     "id": "copilot-api",
@@ -7977,7 +9883,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api/1767802689282-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:09.424Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/copilot-api/1767802689282-screenshot.png"
   },
   {
     "id": "csharp-sdk",
@@ -8037,7 +9955,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "python-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/csharp-sdk/1767802608725-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:49.015Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/csharp-sdk/1767802608725-screenshot.png"
   },
   {
     "id": "dreame-claude",
@@ -8086,7 +10016,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dreame-claude/1767802715482-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.742Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dreame-claude/1767802715482-screenshot.png"
   },
   {
     "id": "zcaceres-easy-mcp",
@@ -8108,10 +10050,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zcaceres-easy-mcp/1767802643623-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zcaceres-easy-mcp/1767802643623-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:23.931Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zcaceres-easy-mcp/1767802643623-screenshot.png"
   },
   {
     "id": "foobara-mcp-connector",
@@ -8133,11 +10088,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/foobara-mcp-connector/1767802605448-screenshot.png",
     "aiSummary": "Easily expose Foobara commands written in Ruby as tools via MCP",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/foobara-mcp-connector/1767802605448-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:45.801Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/foobara-mcp-connector/1767802605448-screenshot.png"
   },
   {
     "id": "strowk-foxy-contexts",
@@ -8159,11 +10127,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/strowk-foxy-contexts/1767802647749-screenshot.png",
     "aiSummary": "A library to build MCP servers in Golang by **[strowk](https://github.com/strowk)**",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/strowk-foxy-contexts/1767802647749-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:28.018Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/strowk-foxy-contexts/1767802647749-screenshot.png"
   },
   {
     "id": "genkit",
@@ -8216,7 +10197,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "genkitx-anthropic"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit/1767802640534-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:20.675Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkit/1767802640534-screenshot.png"
   },
   {
     "id": "genkitx-anthropic",
@@ -8270,7 +10263,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-sdk",
       "genkit"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkitx-anthropic/1767802681990-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.357Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genkitx-anthropic/1767802681990-screenshot.png"
   },
   {
     "id": "github-stats-for-claude-hooks-sdk",
@@ -8319,7 +10324,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-hooks-sdk/1767802631591-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:11.759Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-hooks-sdk/1767802631591-screenshot.png"
   },
   {
     "id": "go-sdk",
@@ -8380,7 +10397,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "python-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/go-sdk/1767802609999-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:50.263Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/go-sdk/1767802609999-screenshot.png"
   },
   {
     "id": "googleapis-genai-toolbox",
@@ -8436,7 +10465,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/googleapis-genai-toolbox/1767802685708-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:06.088Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/googleapis-genai-toolbox/1767802685708-screenshot.png"
   },
   {
     "id": "alibaba-higress",
@@ -8458,6 +10499,7 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/alibaba-higress/1767802688884-screenshot.png",
     "aiSummary": "A solution for hosting MCP Servers by extending the API Gateway (based on Envoy) with wasm plugins.",
     "aiAnalyzedAt": "2025-12-31",
     "keyFeatures": [
@@ -8465,7 +10507,19 @@
     ],
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/alibaba-higress/1767802688884-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:09.320Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/alibaba-higress/1767802688884-screenshot.png"
   },
   {
     "id": "java-sdk",
@@ -8526,7 +10580,19 @@
     "relatedResourceSlugs": [
       "kotlin-sdk",
       "python-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/java-sdk/1767802593521-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:33.799Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/java-sdk/1767802593521-screenshot.png"
   },
   {
     "id": "jktfe-servemyapi",
@@ -8582,7 +10648,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jktfe-servemyapi/1767802685333-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:05.725Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jktfe-servemyapi/1767802685333-screenshot.png"
   },
   {
     "id": "kotlin-sdk",
@@ -8642,7 +10720,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "java-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kotlin-sdk/1767802593725-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:34.158Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kotlin-sdk/1767802593725-screenshot.png"
   },
   {
     "id": "xuzexin-hz-llm-analysis-assistant",
@@ -8664,10 +10754,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xuzexin-hz-llm-analysis-assistant/1767802603135-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xuzexin-hz-llm-analysis-assistant/1767802603135-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:43.564Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xuzexin-hz-llm-analysis-assistant/1767802603135-screenshot.png"
   },
   {
     "id": "mastra",
@@ -8721,7 +10824,19 @@
     "relatedResourceSlugs": [
       "anthropic-ai-sdk",
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra/1767802598267-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:38.500Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mastra/1767802598267-screenshot.png"
   },
   {
     "id": "vincent-pli-mcp-cli-host",
@@ -8743,11 +10858,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vincent-pli-mcp-cli-host/1767802602621-screenshot.png",
     "aiSummary": "A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP).",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vincent-pli-mcp-cli-host/1767802602621-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:42.964Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vincent-pli-mcp-cli-host/1767802602621-screenshot.png"
   },
   {
     "id": "codeboyzhou-mcp-declarative-java-sdk",
@@ -8769,10 +10897,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codeboyzhou-mcp-declarative-java-sdk/1767802646706-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codeboyzhou-mcp-declarative-java-sdk/1767802646706-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:27.097Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codeboyzhou-mcp-declarative-java-sdk/1767802646706-screenshot.png"
   },
   {
     "id": "super-i-tech-mcp-plexus",
@@ -8794,6 +10935,7 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/super-i-tech-mcp-plexus/1767802689839-screenshot.png",
     "aiSummary": "A secure, **multi-tenant** and Multi-user MCP python server framework built to integrate easily with external services via OAuth 2.1, offering scalable and robu",
     "aiAnalyzedAt": "2025-12-31",
     "keyFeatures": [
@@ -8801,7 +10943,19 @@
     ],
     "targetAudience": [
       "AI Engineers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/super-i-tech-mcp-plexus/1767802689839-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:10.217Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/super-i-tech-mcp-plexus/1767802689839-screenshot.png"
   },
   {
     "id": "kend-mcp-sse",
@@ -8823,10 +10977,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kend-mcp-sse/1767802605907-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kend-mcp-sse/1767802605907-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:46.180Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/kend-mcp-sse/1767802605907-screenshot.png"
   },
   {
     "id": "lastmile-ai-mcp-agent",
@@ -8848,11 +11015,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lastmile-ai-mcp-agent/1767802695893-screenshot.png",
     "aiSummary": "A simple, composable framework to build agents using Model Context Protocol by **[LastMile AI](https://www.lastmileai.dev)**",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "AI Engineers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lastmile-ai-mcp-agent/1767802695893-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:16.312Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lastmile-ai-mcp-agent/1767802695893-screenshot.png"
   },
   {
     "id": "mcp-framework-mjtoobdk",
@@ -8866,10 +11046,23 @@
     "lastVerified": "2025-12-31",
     "subcategory": "For servers",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-framework-mjtoobdk/1767802642925-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-framework-mjtoobdk/1767802642925-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:23.324Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-framework-mjtoobdk/1767802642925-screenshot.png"
   },
   {
     "id": "phuctm97-modelfetch",
@@ -8891,10 +11084,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/phuctm97-modelfetch/1767802640933-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/phuctm97-modelfetch/1767802640933-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:21.307Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/phuctm97-modelfetch/1767802640933-screenshot.png"
   },
   {
     "id": "msw-auto-mock",
@@ -8943,7 +11149,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/msw-auto-mock/1767802724776-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:45.113Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/msw-auto-mock/1767802724776-screenshot.png"
   },
   {
     "id": "raw-labs-mxcp",
@@ -8965,10 +11183,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/raw-labs-mxcp/1767802648026-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/raw-labs-mxcp/1767802648026-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:28.529Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/raw-labs-mxcp/1767802648026-screenshot.png"
   },
   {
     "id": "n8n-nodes-azure-anthropic",
@@ -9017,7 +11248,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-nodes-azure-anthropic/1767802681747-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:02.050Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/n8n-nodes-azure-anthropic/1767802681747-screenshot.png"
   },
   {
     "id": "nanoid",
@@ -9066,7 +11309,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nanoid/1767802750540-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:10.850Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nanoid/1767802750540-screenshot.png"
   },
   {
     "id": "vercel-labs-mcp-for-next-js",
@@ -9088,10 +11343,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-labs-mcp-for-next-js/1767802605643-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-labs-mcp-for-next-js/1767802605643-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:46.096Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-labs-mcp-for-next-js/1767802605643-screenshot.png"
   },
   {
     "id": "node-releases",
@@ -9140,7 +11408,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/node-releases/1767802715630-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.910Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/node-releases/1767802715630-screenshot.png"
   },
   {
     "id": "nori-ai",
@@ -9189,7 +11469,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nori-ai/1767802721443-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:41.769Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nori-ai/1767802721443-screenshot.png"
   },
   {
     "id": "ollama-ai-provider",
@@ -9242,7 +11534,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider/1767802596233-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:36.679Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider/1767802596233-screenshot.png"
   },
   {
     "id": "ollama-ai-provider-v2",
@@ -9291,7 +11595,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider-v2/1767802692426-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:12.578Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ollama-ai-provider-v2/1767802692426-screenshot.png"
   },
   {
     "id": "openapi3-ts",
@@ -9340,7 +11656,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openapi3-ts/1767802724475-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:44.603Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openapi3-ts/1767802724475-screenshot.png"
   },
   {
     "id": "lstm-kirigaya-openmcp-client",
@@ -9362,11 +11690,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lstm-kirigaya-openmcp-client/1767802607556-screenshot.png",
     "aiSummary": "An all-in-one vscode/trae/cursor plugin for MCP server debugging. [Document](https://kirigaya.cn/openmcp/) & [OpenMCP SDK](https://kirigaya.cn/openmcp/sdk-tutor",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lstm-kirigaya-openmcp-client/1767802607556-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:47.896Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lstm-kirigaya-openmcp-client/1767802607556-screenshot.png"
   },
   {
     "id": "blustai-paymcp",
@@ -9388,10 +11729,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blustai-paymcp/1767802722721-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blustai-paymcp/1767802722721-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:42.995Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blustai-paymcp/1767802722721-screenshot.png"
   },
   {
     "id": "mojolicious-mojo-mcp",
@@ -9413,11 +11767,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mojolicious-mojo-mcp/1767802742384-screenshot.png",
     "aiSummary": "An SDK for building MCP servers and clients with the Perl programming language.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mojolicious-mojo-mcp/1767802742384-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:03.002Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mojolicious-mojo-mcp/1767802742384-screenshot.png"
   },
   {
     "id": "php-mcp-client",
@@ -9439,6 +11806,7 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-mcp-client/1767802605040-screenshot.png",
     "aiSummary": "Core PHP implementation for the Model Context Protocol (MCP) Client",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
@@ -9447,7 +11815,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "php-mcp-server"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-mcp-client/1767802605040-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:45.425Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-mcp-client/1767802605040-screenshot.png"
   },
   {
     "id": "php-mcp-server",
@@ -9469,6 +11849,7 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-mcp-server/1767802605775-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
@@ -9476,7 +11857,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "php-mcp-client"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-mcp-server/1767802605775-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:46.115Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-mcp-server/1767802605775-screenshot.png"
   },
   {
     "id": "php-sdk",
@@ -9536,7 +11929,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "python-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-sdk/1767802593523-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:33.991Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/php-sdk/1767802593523-screenshot.png"
   },
   {
     "id": "portkey-ai",
@@ -9588,7 +11993,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/portkey-ai/1767802639715-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:19.892Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/portkey-ai/1767802639715-screenshot.png"
   },
   {
     "id": "pyclaude",
@@ -9637,7 +12054,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/pyclaude/1767802607196-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:47.704Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/pyclaude/1767802607196-screenshot.png"
   },
   {
     "id": "python-sdk",
@@ -9704,7 +12133,19 @@
       "rust-sdk",
       "swift-sdk",
       "typescript-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/python-sdk/1767802692701-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:13.241Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/python-sdk/1767802692701-screenshot.png"
   },
   {
     "id": "quantumnous-new-api",
@@ -9761,7 +12202,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quantumnous-new-api/1767802659306-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:39.866Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quantumnous-new-api/1767802659306-screenshot.png"
   },
   {
     "id": "quarkiverse-quarkus-mcp-server",
@@ -9783,10 +12236,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quarkiverse-quarkus-mcp-server/1767802645225-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quarkiverse-quarkus-mcp-server/1767802645225-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:25.651Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quarkiverse-quarkus-mcp-server/1767802645225-screenshot.png"
   },
   {
     "id": "posit-dev-mcptools",
@@ -9808,11 +12274,24 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/posit-dev-mcptools/1767802645359-screenshot.png",
     "aiSummary": "An R SDK for creating R-based MCP servers and retrieving functionality from third-party MCP servers as R functions.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/posit-dev-mcptools/1767802645359-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:25.651Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/posit-dev-mcptools/1767802645359-screenshot.png"
   },
   {
     "id": "react-scroll",
@@ -9861,7 +12340,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-scroll/1767802638633-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:18.855Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/react-scroll/1767802638633-screenshot.png"
   },
   {
     "id": "ruby-sdk",
@@ -9922,7 +12413,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "python-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ruby-sdk/1767802610555-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:50.831Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ruby-sdk/1767802610555-screenshot.png"
   },
   {
     "id": "runbear",
@@ -9936,11 +12439,24 @@
     "lastVerified": "2025-12-31",
     "subcategory": "For clients",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/runbear/1767802750259-screenshot.png",
     "aiSummary": "No-code MCP client for team chat platforms, such as Slack, Microsoft Teams, and Discord.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Teams"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/runbear/1767802750259-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:11.083Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/runbear/1767802750259-screenshot.png"
   },
   {
     "id": "rust-sdk",
@@ -10001,7 +12517,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "python-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rust-sdk/1767802593017-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:33.351Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rust-sdk/1767802593017-screenshot.png"
   },
   {
     "id": "s2-streamstore-s2-sdk-typescript",
@@ -10057,7 +12585,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s2-streamstore-s2-sdk-typescript/1767802691966-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:12.341Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/s2-streamstore-s2-sdk-typescript/1767802691966-screenshot.png"
   },
   {
     "id": "abap-ai-mcp",
@@ -10079,6 +12619,7 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/abap-ai-mcp/1767802635091-screenshot.png",
     "aiSummary": "Build SAP ABAP based MCP servers. ABAP 7.52 based with 7.02 downport; runs on R/3 & S/4HANA on-premises, currently not cloud-ready.",
     "aiAnalyzedAt": "2025-12-31",
     "keyFeatures": [
@@ -10086,7 +12627,19 @@
     ],
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/abap-ai-mcp/1767802635091-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:15.476Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/abap-ai-mcp/1767802635091-screenshot.png"
   },
   {
     "id": "serverless",
@@ -10135,7 +12688,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/serverless/1767802700181-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:20.699Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/serverless/1767802700181-screenshot.png"
   },
   {
     "id": "size-limit",
@@ -10184,7 +12749,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/size-limit/1767802696739-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:17.075Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/size-limit/1767802696739-screenshot.png"
   },
   {
     "id": "songquanpeng-one-api",
@@ -10240,7 +12817,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/songquanpeng-one-api/1767802689795-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:10.206Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/songquanpeng-one-api/1767802689795-screenshot.png"
   },
   {
     "id": "spring-ai-mcp-client",
@@ -10254,6 +12843,7 @@
     "lastVerified": "2025-12-31",
     "subcategory": "For clients",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/spring-ai-mcp-client/1767802753564-screenshot.png",
     "aiSummary": "Provides auto-configuration for MCP client functionality in Spring Boot applications.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
@@ -10263,7 +12853,19 @@
     "relatedResourceSlugs": [
       "java-sdk",
       "spring-ai-mcp-server"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/spring-ai-mcp-client/1767802753564-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:14.755Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/spring-ai-mcp-client/1767802753564-screenshot.png"
   },
   {
     "id": "spring-ai-mcp-server",
@@ -10277,6 +12879,7 @@
     "lastVerified": "2025-12-31",
     "subcategory": "For servers",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/spring-ai-mcp-server/1767802609497-screenshot.png",
     "aiSummary": "Provides auto-configuration for setting up an MCP server in Spring Boot applications.",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
@@ -10285,7 +12888,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "spring-ai-mcp-client"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/spring-ai-mcp-server/1767802609497-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:49.788Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/spring-ai-mcp-server/1767802609497-screenshot.png"
   },
   {
     "id": "strands-agents-sdk-python",
@@ -10342,7 +12957,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/strands-agents-sdk-python/1767802748899-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:09.269Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/strands-agents-sdk-python/1767802748899-screenshot.png"
   },
   {
     "id": "su-kaka-gcli2api",
@@ -10399,7 +13026,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/su-kaka-gcli2api/1767802712230-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:32.758Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/su-kaka-gcli2api/1767802712230-screenshot.png"
   },
   {
     "id": "swift-sdk",
@@ -10460,7 +13099,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "python-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swift-sdk/1767802627977-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:08.570Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swift-sdk/1767802627977-screenshot.png"
   },
   {
     "id": "task-master-ai",
@@ -10509,7 +13160,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/task-master-ai/1767802639543-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:17:19.891Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/task-master-ai/1767802639543-screenshot.png"
   },
   {
     "id": "tdd-guard-1",
@@ -10558,7 +13221,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tdd-guard-1/1767802715600-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:35.895Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tdd-guard-1/1767802715600-screenshot.png"
   },
   {
     "id": "typescript-sdk",
@@ -10619,7 +13294,19 @@
     "relatedResourceSlugs": [
       "modelcontextprotocol-sdk",
       "python-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/typescript-sdk/1767802595674-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:36.625Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/typescript-sdk/1767802595674-screenshot.png"
   },
   {
     "id": "vercel-mcp-adapter-mjtoodm2",
@@ -10641,10 +13328,23 @@
       "lastUpdated": "2025-12-31",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-mcp-adapter-mjtoodm2/1767802753562-screenshot.png",
     "aiAnalyzedAt": "2025-12-31",
     "targetAudience": [
       "Developers"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-mcp-adapter-mjtoodm2/1767802753562-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:14.752Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-mcp-adapter-mjtoodm2/1767802753562-screenshot.png"
   },
   {
     "id": "voyage-ai-provider",
@@ -10697,7 +13397,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "vercel-ai-sdk"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/voyage-ai-provider/1767802596960-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:37.332Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/voyage-ai-provider/1767802596960-screenshot.png"
   },
   {
     "id": "xing61-zzz-api",
@@ -10754,7 +13466,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xing61-zzz-api/1767802712092-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:32.749Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xing61-zzz-api/1767802712092-screenshot.png"
   },
   {
     "id": "z-ai-web-dev-sdk",
@@ -10803,7 +13527,19 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/z-ai-web-dev-sdk/1767802599367-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:39.848Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/z-ai-web-dev-sdk/1767802599367-screenshot.png"
   },
   {
     "id": "zod-gpt",
@@ -10852,6 +13588,18 @@
       "Anthropic API key with appropriate tier",
       "Programming language runtime installed",
       "Package manager for dependency installation"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zod-gpt/1767802718425-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:18:38.708Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/zod-gpt/1767802718425-screenshot.png"
   }
 ]

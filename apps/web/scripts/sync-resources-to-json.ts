@@ -273,12 +273,15 @@ function convertToJsonFormat(resource: DatabaseResource, tags: string[]): JsonRe
     };
   }
 
-  // Screenshots (basic)
+  // Screenshots (basic) - prefer screenshots array, fallback to primary_screenshot_url
   if (resource.screenshots && resource.screenshots.length > 0) {
     jsonResource.screenshotUrl = resource.screenshots[0];
     if (resource.screenshots.length > 1) {
       jsonResource.screenshots = resource.screenshots;
     }
+  } else if (resource.primary_screenshot_url) {
+    // Fallback to primary_screenshot_url when screenshots array is empty
+    jsonResource.screenshotUrl = resource.primary_screenshot_url;
   }
 
   // ============================================

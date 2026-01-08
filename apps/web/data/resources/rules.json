@@ -66,7 +66,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "cursor-directory"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1767802593256-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:33.562Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-cursorrules/1767802593256-screenshot.png"
   },
   {
     "id": "cursor-directory",
@@ -127,7 +139,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "awesome-cursorrules"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1767802578300-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:18.544Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory/1767802578300-screenshot.png"
   },
   {
     "id": "secretlint-secretlint-rule-anthropic",
@@ -176,7 +200,19 @@
       "Claude Code or compatible AI coding tool",
       "Project with CLAUDE.md or rules file",
       "Access to project configuration"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1767802577586-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:17.873Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/secretlint-secretlint-rule-anthropic/1767802577586-screenshot.png"
   },
   {
     "id": "cursor-watchful-headers",
@@ -233,7 +269,19 @@
       "Claude Code or compatible AI coding tool",
       "Project with CLAUDE.md or rules file",
       "Access to project configuration"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-watchful-headers/1767802593604-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:34.033Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-watchful-headers/1767802593604-screenshot.png"
   },
   {
     "id": "rules-documentation",
@@ -246,6 +294,7 @@
     "addedDate": "2024-10-01",
     "lastVerified": "2024-12-11",
     "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1767802573728-screenshot.png",
     "aiSummary": "CLAUDE.md rules for generating clear and consistent documentation with AI",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -285,7 +334,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "prompt-technical-writer"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1767802573728-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:14.193Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-documentation/1767802573728-screenshot.png"
   },
   {
     "id": "rules-fastapi",
@@ -298,6 +359,7 @@
     "addedDate": "2024-09-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1767802574551-screenshot.png",
     "aiSummary": "CLAUDE.md rules for FastAPI development with Pydantic and async patterns",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -337,7 +399,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "rules-python"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1767802574551-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:14.706Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-fastapi/1767802574551-screenshot.png"
   },
   {
     "id": "rules-go",
@@ -350,6 +424,7 @@
     "addedDate": "2024-09-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1767802591949-screenshot.png",
     "aiSummary": "CLAUDE.md rules following idiomatic Go patterns and best practices",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -385,7 +460,19 @@
       "Go experience",
       "CLAUDE.md setup",
       "Go project"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1767802591949-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:32.182Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-go/1767802591949-screenshot.png"
   },
   {
     "id": "rules-nextjs",
@@ -398,6 +485,7 @@
     "addedDate": "2024-08-01",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1767802575305-screenshot.png",
     "aiSummary": "Optimized CLAUDE.md rules for Next.js App Router with TypeScript best practices",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -438,7 +526,19 @@
     "relatedResourceSlugs": [
       "rules-react",
       "rules-tailwind"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1767802575305-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:15.695Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-nextjs/1767802575305-screenshot.png"
   },
   {
     "id": "rules-python",
@@ -451,6 +551,7 @@
     "addedDate": "2024-08-01",
     "lastVerified": "2024-12-11",
     "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1767802573034-screenshot.png",
     "aiSummary": "CLAUDE.md rules for Python development with type hints and modern practices",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -490,7 +591,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "rules-fastapi"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1767802573034-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:13.337Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-python/1767802573034-screenshot.png"
   },
   {
     "id": "rules-react",
@@ -503,6 +616,7 @@
     "addedDate": "2024-08-01",
     "lastVerified": "2024-12-11",
     "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1767802574520-screenshot.png",
     "aiSummary": "CLAUDE.md rules for React applications with hooks and modern patterns",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -543,7 +657,19 @@
     "relatedResourceSlugs": [
       "rules-nextjs",
       "rules-typescript"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1767802574520-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:14.710Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-react/1767802574520-screenshot.png"
   },
   {
     "id": "rules-rust",
@@ -556,6 +682,7 @@
     "addedDate": "2024-09-01",
     "lastVerified": "2024-12-11",
     "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1767802575602-screenshot.png",
     "aiSummary": "CLAUDE.md rules for Rust development emphasizing safety and performance",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -591,7 +718,19 @@
       "Rust experience",
       "Ownership understanding",
       "CLAUDE.md setup"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1767802575602-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:15.757Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-rust/1767802575602-screenshot.png"
   },
   {
     "id": "rules-svelte",
@@ -604,6 +743,7 @@
     "addedDate": "2024-08-15",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1767802573044-screenshot.png",
     "aiSummary": "CLAUDE.md rules for Svelte 5 and SvelteKit development with modern patterns",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -643,7 +783,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "rules-tailwind"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1767802573044-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:13.337Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-svelte/1767802573044-screenshot.png"
   },
   {
     "id": "rules-tailwind",
@@ -656,6 +808,7 @@
     "addedDate": "2024-09-15",
     "lastVerified": "2024-12-11",
     "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1767802577021-screenshot.png",
     "aiSummary": "CLAUDE.md rules for Tailwind CSS utility-first styling best practices",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -696,7 +849,19 @@
     "relatedResourceSlugs": [
       "rules-nextjs",
       "rules-svelte"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1767802577021-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:17.191Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-tailwind/1767802577021-screenshot.png"
   },
   {
     "id": "rules-testing",
@@ -709,6 +874,7 @@
     "addedDate": "2024-10-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1767802577029-screenshot.png",
     "aiSummary": "CLAUDE.md rules for effective testing with Jest, Vitest, and Playwright",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -748,7 +914,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "rules-typescript"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1767802577029-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:17.186Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-testing/1767802577029-screenshot.png"
   },
   {
     "id": "rules-typescript",
@@ -761,6 +939,7 @@
     "addedDate": "2024-08-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1767802574544-screenshot.png",
     "aiSummary": "Strict CLAUDE.md rules for type-safe TypeScript development",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -802,7 +981,19 @@
       "rules-react",
       "rules-testing",
       "rules-vue"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1767802574544-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:14.741Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-typescript/1767802574544-screenshot.png"
   },
   {
     "id": "rules-vue",
@@ -815,6 +1006,7 @@
     "addedDate": "2024-08-15",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1767802575594-screenshot.png",
     "aiSummary": "CLAUDE.md rules for Vue 3 Composition API with TypeScript support",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -854,6 +1046,18 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "rules-typescript"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1767802575594-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:16:15.774Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rules-vue/1767802575594-screenshot.png"
   }
 ]

@@ -77,7 +77,19 @@
       "awesome-claude-code-agents",
       "demogpt",
       "awesome-claude-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-llm-apps/1767799855113-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:30:55.738Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-llm-apps/1767799855113-screenshot.png"
   },
   {
     "id": "langchain",
@@ -159,7 +171,19 @@
       "dspy",
       "autogen",
       "llamaindex"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain/1767799980922-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:01.441Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain/1767799980922-screenshot.png"
   },
   {
     "id": "ajhous44",
@@ -215,7 +239,19 @@
       "cody-by-ajhous44",
       "agentforge",
       "artisian-ai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ajhous44/1767799981236-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:01.693Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ajhous44/1767799981236-screenshot.png"
   },
   {
     "id": "azure-ai-agents",
@@ -271,7 +307,19 @@
       "awslabs-agent-squad",
       "autogen",
       "github-9"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-agents/1767799855133-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:30:56.013Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/azure-ai-agents/1767799855133-screenshot.png"
   },
   {
     "id": "champpaba-claude-agent-kit",
@@ -331,7 +379,19 @@
       "claude-code-unified-agents",
       "claude-code-agents",
       "voltagent-awesome-claude-code-subagents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/champpaba-claude-agent-kit/1767800041720-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:02.029Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/champpaba-claude-agent-kit/1767800041720-screenshot.png"
   },
   {
     "id": "graphai-anthropic-agent",
@@ -386,7 +446,19 @@
       "automata",
       "agentforge",
       "artisian-ai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/graphai-anthropic-agent/1767800002292-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:22.574Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/graphai-anthropic-agent/1767800002292-screenshot.png"
   },
   {
     "id": "vercel-detect-agent",
@@ -445,7 +517,19 @@
       "blinky",
       "e2b",
       "claude-code-hooks-multi-agent-observability"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-detect-agent/1767800034894-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:55.500Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vercel-detect-agent/1767800034894-screenshot.png"
   },
   {
     "id": "adala",
@@ -509,7 +593,19 @@
       "crewai-1",
       "camel",
       "agentverse"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adala/1767800036231-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:56.672Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/adala/1767800036231-screenshot.png"
   },
   {
     "id": "agent-fusion",
@@ -576,7 +672,19 @@
       "github-19",
       "local-gpt",
       "bloop-apps"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agent-fusion/1767800062087-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:22.400Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agent-fusion/1767800062087-screenshot.png"
   },
   {
     "id": "agent-rules",
@@ -647,7 +755,19 @@
       "awesome-claude-code-agents",
       "claude-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agent-rules/1767799980901-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:01.409Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agent-rules/1767799980901-screenshot.png"
   },
   {
     "id": "agent4rec",
@@ -710,7 +830,19 @@
       "bambooai",
       "github-29",
       "data-to-paper"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agent4rec/1767800109552-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:10.815Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agent4rec/1767800109552-screenshot.png"
   },
   {
     "id": "agentcheck",
@@ -774,7 +906,19 @@
       "claudecodeagents",
       "autopr",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentcheck/1767800001385-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:21.759Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentcheck/1767800001385-screenshot.png"
   },
   {
     "id": "agentera-agently",
@@ -839,7 +983,19 @@
       "crewai-1",
       "github-9",
       "camel"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentera-agently/1767799981802-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:02.876Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentera-agently/1767799981802-screenshot.png"
   },
   {
     "id": "agentforge",
@@ -911,7 +1067,19 @@
       "github-6",
       "xataio-agent",
       "artisian-ai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentforge/1767799986369-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:07.140Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentforge/1767799986369-screenshot.png"
   },
   {
     "id": "agentops-ai-agentops",
@@ -982,7 +1150,19 @@
       "autogen",
       "crewai-1",
       "claude-code-hooks-multi-agent-observability"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentops-ai-agentops/1767800000083-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:20.608Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentops-ai-agentops/1767800000083-screenshot.png"
   },
   {
     "id": "agentops-ai-tokencost",
@@ -1047,7 +1227,19 @@
     ],
     "relatedResourceSlugs": [
       "agentops-ai-agentops"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentops-ai-tokencost/1767800108165-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:08.772Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentops-ai-tokencost/1767800108165-screenshot.png"
   },
   {
     "id": "agentpilot",
@@ -1113,7 +1305,19 @@
       "crewai-1",
       "github-9",
       "agentverse"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentpilot/1767799978819-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:32:59.416Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentpilot/1767799978819-screenshot.png"
   },
   {
     "id": "agents-2",
@@ -1176,7 +1380,19 @@
       "awesome-claude-agents",
       "claude-code-unified-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agents-2/1767800001290-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:21.786Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agents-2/1767800001290-screenshot.png"
   },
   {
     "id": "agentverse",
@@ -1246,7 +1462,19 @@
       "github-9",
       "camel",
       "github-4"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentverse/1767799982951-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:03.414Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentverse/1767799982951-screenshot.png"
   },
   {
     "id": "agentvibes",
@@ -1300,7 +1528,19 @@
       "awesome-claude-code-agents",
       "claude-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentvibes/1767800003007-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:23.211Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agentvibes/1767800003007-screenshot.png"
   },
   {
     "id": "ai-legion",
@@ -1366,7 +1606,19 @@
       "agentverse",
       "ailice",
       "ufo"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-legion/1767800026797-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:47.218Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-legion/1767800026797-screenshot.png"
   },
   {
     "id": "ailice",
@@ -1447,7 +1699,19 @@
       "ufo",
       "beebot",
       "image-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ailice/1767800100836-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:01.568Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ailice/1767800100836-screenshot.png"
   },
   {
     "id": "github-9",
@@ -1468,6 +1732,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-9/1767800012799-screenshot.png",
     "aiSummary": "Production-ready multi-agent framework for deploying AI workflows with minimal setup time",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -1514,7 +1779,19 @@
       "crewai-1",
       "agentverse",
       "superagent-ai-superagent"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-9/1767800012799-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:33.139Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-9/1767800012799-screenshot.png"
   },
   {
     "id": "aiwaves-inc",
@@ -1569,7 +1846,20 @@
       "automata",
       "agentforge",
       "artisian-ai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "AIWaves Inc. preview",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agents/aiwaves-inc-og.jpg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "opengraph",
+        "caption": "OpenGraph preview image",
+        "captured_at": "2026-01-07T21:59:08.692Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/agents/aiwaves-inc-og.jpg"
   },
   {
     "id": "github-12",
@@ -1590,6 +1880,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-12/1767800045529-screenshot.png",
     "aiSummary": "CLI tool for AI-powered code generation that evolved into Lovable.dev",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -1642,7 +1933,19 @@
       "english-compiler",
       "devgpt",
       "fullagent-fulling"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-12/1767800045529-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:05.812Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-12/1767800045529-screenshot.png"
   },
   {
     "id": "artisian-ai",
@@ -1697,7 +2000,19 @@
       "aiwaves-inc",
       "automata",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/artisian-ai/1767800035456-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:55.881Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/artisian-ai/1767800035456-screenshot.png"
   },
   {
     "id": "autogen",
@@ -1798,7 +2113,19 @@
       "langroid",
       "superagent-ai-superagent",
       "image-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/autogen/1767800091709-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:53.098Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/autogen/1767800091709-screenshot.png"
   },
   {
     "id": "automata",
@@ -1869,7 +2196,19 @@
       "xataio-agent",
       "agentforge",
       "artisian-ai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/automata/1767799986335-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:07.140Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/automata/1767799986335-screenshot.png"
   },
   {
     "id": "autonomous-hr-chatbot",
@@ -1938,7 +2277,19 @@
       "ferdousbhai-investor-agent",
       "gpt-discord",
       "codefuse-chatbot"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/autonomous-hr-chatbot/1767800104027-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:04.342Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/autonomous-hr-chatbot/1767800104027-screenshot.png"
   },
   {
     "id": "autopr",
@@ -2006,7 +2357,19 @@
       "github-15",
       "agentcheck",
       "devon"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/autopr/1767800000602-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:21.035Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/autopr/1767800000602-screenshot.png"
   },
   {
     "id": "awesome-claude-agents",
@@ -2076,7 +2439,19 @@
       "agents-2",
       "claude-code-agents",
       "voltagent-awesome-claude-code-subagents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-claude-agents/1767800034942-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:55.559Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-claude-agents/1767800034942-screenshot.png"
   },
   {
     "id": "awesome-claude-code-agents",
@@ -2152,7 +2527,19 @@
       "awesome-claude-agents",
       "claude-code-agents",
       "voltagent-awesome-claude-code-subagents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-claude-code-agents/1767800061550-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:21.778Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awesome-claude-code-agents/1767800061550-screenshot.png"
   },
   {
     "id": "awslabs-agent-squad",
@@ -2223,7 +2610,19 @@
       "camel",
       "multi-agent-squad",
       "superagent-ai-superagent"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awslabs-agent-squad/1767800096765-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:57.277Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/awslabs-agent-squad/1767800096765-screenshot.png"
   },
   {
     "id": "babyagi",
@@ -2296,7 +2695,19 @@
       "multi-gpt",
       "beebot",
       "image-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/babyagi/1767800036140-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:56.468Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/babyagi/1767800036140-screenshot.png"
   },
   {
     "id": "babycommandagi",
@@ -2360,7 +2771,19 @@
       "yourgoal",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/babycommandagi/1767800144299-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:44.886Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/babycommandagi/1767800144299-screenshot.png"
   },
   {
     "id": "bambooai",
@@ -2426,7 +2849,19 @@
       "github-29",
       "data-to-paper",
       "agent4rec"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/bambooai/1767800038021-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:58.605Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/bambooai/1767800038021-screenshot.png"
   },
   {
     "id": "beebot",
@@ -2493,7 +2928,19 @@
       "devika",
       "ailice",
       "instrukt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/beebot/1767800058847-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:19.299Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/beebot/1767800058847-screenshot.png"
   },
   {
     "id": "blackbox-ai-code-interpreter-in-terminal",
@@ -2549,7 +2996,19 @@
       "blinky",
       "e2b",
       "devon"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blackbox-ai-code-interpreter-in-terminal/1767799992936-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:13.302Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blackbox-ai-code-interpreter-in-terminal/1767799992936-screenshot.png"
   },
   {
     "id": "blinky",
@@ -2615,7 +3074,19 @@
       "agentcheck",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blinky/1767799995684-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:16.877Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/blinky/1767799995684-screenshot.png"
   },
   {
     "id": "bloop-apps",
@@ -2677,7 +3148,19 @@
     "relatedResourceSlugs": [
       "github-2",
       "agent-fusion"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/bloop-apps/1767799986269-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:06.658Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/bloop-apps/1767799986269-screenshot.png"
   },
   {
     "id": "github-2",
@@ -2698,6 +3181,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-2/1767799982344-screenshot.png",
     "aiSummary": "High-performance code search engine built in Rust for navigating large codebases",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -2738,7 +3222,19 @@
     "relatedResourceSlugs": [
       "agent-fusion",
       "bloop-apps"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-2/1767799982344-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:02.884Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-2/1767799982344-screenshot.png"
   },
   {
     "id": "bumpgen",
@@ -2801,7 +3297,19 @@
       "gpt-migrate",
       "devopsgpt",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/bumpgen/1767800152772-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:53.856Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/bumpgen/1767800152772-screenshot.png"
   },
   {
     "id": "cal-com-core-team",
@@ -2858,7 +3366,19 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cal-com-core-team/1767800101678-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:02.435Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cal-com-core-team/1767800101678-screenshot.png"
   },
   {
     "id": "camel",
@@ -2932,7 +3452,19 @@
       "agentverse",
       "github-4",
       "langroid"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/camel/1767800044511-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:04.856Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/camel/1767800044511-screenshot.png"
   },
   {
     "id": "github-29",
@@ -2953,6 +3485,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-29/1767800037366-screenshot.png",
     "aiSummary": "Generative BI platform for natural language database queries with SQL and chart generation",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -2995,7 +3528,19 @@
       "bambooai",
       "agent4rec",
       "github-6"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-29/1767800037366-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:58.598Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-29/1767800037366-screenshot.png"
   },
   {
     "id": "chatdev",
@@ -3066,7 +3611,19 @@
       "agentverse",
       "github-4",
       "codefuse-chatbot"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatdev/1767800080379-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:40.917Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chatdev/1767800080379-screenshot.png"
   },
   {
     "id": "chemcrow",
@@ -3129,7 +3686,19 @@
       "gpt-researcher",
       "autogen",
       "data-to-paper"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chemcrow/1767800036135-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:56.664Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/chemcrow/1767800036135-screenshot.png"
   },
   {
     "id": "claude-code-agent-farm",
@@ -3195,7 +3764,19 @@
       "agents-2",
       "claude-code-unified-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-agent-farm/1767800059060-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:19.630Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-agent-farm/1767800059060-screenshot.png"
   },
   {
     "id": "claude-agent-server",
@@ -3257,7 +3838,19 @@
     "relatedResourceSlugs": [
       "claude-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-server/1767800145746-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:46.549Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agent-server/1767800145746-screenshot.png"
   },
   {
     "id": "claude-agents",
@@ -3332,7 +3925,19 @@
       "awesome-claude-code-agents",
       "awesome-claude-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agents/1767799983598-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:03.952Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-agents/1767799983598-screenshot.png"
   },
   {
     "id": "claude-code-agents",
@@ -3408,7 +4013,19 @@
       "claude-agents",
       "awesome-claude-agents",
       "agents-2"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-agents/1767800144965-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:45.405Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-agents/1767800144965-screenshot.png"
   },
   {
     "id": "claude-code-hooks-multi-agent-observability",
@@ -3477,7 +4094,19 @@
       "claude-code-sub-agents",
       "claude-code-subagents-1",
       "claude-code-unified-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-hooks-multi-agent-observability/1767800143818-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:44.452Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-hooks-multi-agent-observability/1767800143818-screenshot.png"
   },
   {
     "id": "claude-code-sub-agents",
@@ -3550,7 +4179,19 @@
       "claude-code-subagents-1",
       "awesome-claude-code-agents",
       "voltagent-awesome-claude-code-subagents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sub-agents/1767800042331-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:02.718Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-sub-agents/1767800042331-screenshot.png"
   },
   {
     "id": "claude-code-subagents-1",
@@ -3627,7 +4268,19 @@
       "awesome-claude-agents",
       "claude-code-agents",
       "voltagent-awesome-claude-code-subagents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-subagents-1/1767800042315-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:02.670Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-subagents-1/1767800042315-screenshot.png"
   },
   {
     "id": "claude-code-subagents-collection",
@@ -3701,7 +4354,19 @@
       "claude-agents",
       "awesome-claude-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-subagents-collection/1767800043004-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:03.286Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-subagents-collection/1767800043004-screenshot.png"
   },
   {
     "id": "claude-code-unified-agents",
@@ -3770,7 +4435,19 @@
       "claudecodeagents",
       "claude-sub-agent",
       "agents-2"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-unified-agents/1767799987886-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:08.954Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-unified-agents/1767799987886-screenshot.png"
   },
   {
     "id": "claude-sub-agent",
@@ -3838,7 +4515,19 @@
       "claude-agents",
       "awesome-claude-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sub-agent/1767800043864-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:04.503Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-sub-agent/1767800043864-screenshot.png"
   },
   {
     "id": "claude-swarm",
@@ -3907,7 +4596,19 @@
       "camel",
       "agentverse",
       "agents-2"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-swarm/1767800043573-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:04.120Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-swarm/1767800043573-screenshot.png"
   },
   {
     "id": "claudecodeagents",
@@ -3976,7 +4677,19 @@
       "claude-agents",
       "awesome-claude-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claudecodeagents/1767799996817-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:17.405Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claudecodeagents/1767799996817-screenshot.png"
   },
   {
     "id": "codefuse-chatbot",
@@ -4042,7 +4755,19 @@
       "gpt-pilot",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codefuse-chatbot/1767800043582-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:03.988Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codefuse-chatbot/1767800043582-screenshot.png"
   },
   {
     "id": "cody-by-ajhous44",
@@ -4108,7 +4833,19 @@
       "devika",
       "ailice",
       "beebot"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cody-by-ajhous44/1767800043871-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:04.627Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cody-by-ajhous44/1767800043871-screenshot.png"
   },
   {
     "id": "community",
@@ -4165,7 +4902,19 @@
       "crewai-1",
       "awesome-llm-apps",
       "awesome-claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/1767800118238-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:18.435Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/1767800118238-screenshot.png"
   },
   {
     "id": "crew-ai-wiki-with-examples-and-guides",
@@ -4229,7 +4978,19 @@
       "awesome-llm-apps",
       "chatdev",
       "camel"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/crew-ai-wiki-with-examples-and-guides/1767800067075-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:27.518Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/crew-ai-wiki-with-examples-and-guides/1767800067075-screenshot.png"
   },
   {
     "id": "crewai-1",
@@ -4314,7 +5075,19 @@
       "github-4",
       "langroid",
       "superagent-ai-superagent"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/crewai-1/1767800088919-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:49.172Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/crewai-1/1767800088919-screenshot.png"
   },
   {
     "id": "data-to-paper",
@@ -4379,7 +5152,19 @@
       "chemcrow",
       "agent4rec",
       "gemy411-multi-research-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/data-to-paper/1767800058090-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:18.389Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/data-to-paper/1767800058090-screenshot.png"
   },
   {
     "id": "demogpt",
@@ -4446,7 +5231,19 @@
       "gpt-pilot",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/demogpt/1767799990165-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:10.594Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/demogpt/1767799990165-screenshot.png"
   },
   {
     "id": "devgpt",
@@ -4511,7 +5308,19 @@
       "github-12",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devgpt/1767800119786-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:20.282Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devgpt/1767800119786-screenshot.png"
   },
   {
     "id": "devika",
@@ -4597,7 +5406,19 @@
       "github-17",
       "devgpt",
       "fullagent-fulling"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devika/1767800022243-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:42.595Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devika/1767800022243-screenshot.png"
   },
   {
     "id": "devon",
@@ -4681,7 +5502,19 @@
       "github-17",
       "devgpt",
       "fullagent-fulling"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devon/1767800091153-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:52.055Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devon/1767800091153-screenshot.png"
   },
   {
     "id": "devopsgpt",
@@ -4752,7 +5585,19 @@
       "autopr",
       "devgpt",
       "fullagent-fulling"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devopsgpt/1767800047896-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:08.715Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/devopsgpt/1767800047896-screenshot.png"
   },
   {
     "id": "dexter-storey",
@@ -4802,7 +5647,19 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dexter-storey/1767800110923-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:11.515Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dexter-storey/1767800110923-screenshot.png"
   },
   {
     "id": "documentation",
@@ -4852,7 +5709,19 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/documentation/1767800087144-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:48.818Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/documentation/1767800087144-screenshot.png"
   },
   {
     "id": "dotagent",
@@ -4915,7 +5784,19 @@
       "dspy",
       "autogen",
       "automata"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dotagent/1767799981819-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:02.884Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dotagent/1767799981819-screenshot.png"
   },
   {
     "id": "dspy",
@@ -4989,7 +5870,19 @@
       "camel",
       "langchain",
       "llamaindex"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dspy/1767800047573-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:08.077Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/dspy/1767800047573-screenshot.png"
   },
   {
     "id": "e2b",
@@ -5059,7 +5952,19 @@
       "blackbox-ai-code-interpreter-in-terminal",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/e2b/1767799987866-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:08.506Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/e2b/1767799987866-screenshot.png"
   },
   {
     "id": "e2b-cookbook",
@@ -5124,7 +6029,19 @@
       "gpt-pilot",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/e2b-cookbook/1767799979998-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:00.308Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/e2b-cookbook/1767799979998-screenshot.png"
   },
   {
     "id": "github-7",
@@ -5145,6 +6062,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-7/1767800050935-screenshot.png",
     "aiSummary": "Enterprise AI agent server with pluggable SDK for building and deploying agentic applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -5192,7 +6110,19 @@
       "github-6",
       "superagent-ai-superagent",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-7/1767800050935-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:11.628Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-7/1767800050935-screenshot.png"
   },
   {
     "id": "english-compiler",
@@ -5257,7 +6187,19 @@
       "github-12",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/english-compiler/1767800114958-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:15.649Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/english-compiler/1767800114958-screenshot.png"
   },
   {
     "id": "eumemic",
@@ -5314,7 +6256,19 @@
       "crewai-1",
       "ailice",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/eumemic/1767800047796-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:08.235Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/eumemic/1767800047796-screenshot.png"
   },
   {
     "id": "github-21",
@@ -5335,6 +6289,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-21/1767800058677-screenshot.png",
     "aiSummary": "Open-source autonomous LLM agent framework specifically designed for React.js applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -5378,7 +6333,19 @@
       "devon",
       "devika",
       "fullagent-fulling"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-21/1767800058677-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:19.272Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-21/1767800058677-screenshot.png"
   },
   {
     "id": "github-4",
@@ -5399,6 +6366,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-4/1767800036132-screenshot.png",
     "aiSummary": "Multi-agent language game environments for developing AI communication and collaboration",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -5444,7 +6412,19 @@
       "chatdev",
       "camel",
       "agentverse"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-4/1767800036132-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:56.690Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-4/1767800036132-screenshot.png"
   },
   {
     "id": "ferdousbhai-investor-agent",
@@ -5513,7 +6493,19 @@
       "autogen",
       "github-29",
       "crewai-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ferdousbhai-investor-agent/1767799980256-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:00.516Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ferdousbhai-investor-agent/1767799980256-screenshot.png"
   },
   {
     "id": "ferdousbhai-tasty-agent",
@@ -5582,7 +6574,19 @@
       "github-29",
       "crewai-1",
       "ferdousbhai-investor-agent"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ferdousbhai-tasty-agent/1767799991152-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:11.583Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ferdousbhai-tasty-agent/1767799991152-screenshot.png"
   },
   {
     "id": "github-10",
@@ -5603,6 +6607,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-10/1767800103944-screenshot.png",
     "aiSummary": "Visual drag-and-drop platform for building LLM applications and AI workflows without code",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -5650,7 +6655,19 @@
       "crewai-1",
       "github-6",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-10/1767800103944-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:04.428Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-10/1767800103944-screenshot.png"
   },
   {
     "id": "github-11",
@@ -5671,6 +6688,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-11/1767799999793-screenshot.png",
     "aiSummary": "Viral AI agent interface that reached one million users enabling autonomous GPT interactions",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -5713,7 +6731,19 @@
       "autogen",
       "github-6",
       "gpt-discord"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-11/1767799999793-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:20.281Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-11/1767799999793-screenshot.png"
   },
   {
     "id": "founder-s-github-devin-stein",
@@ -5771,7 +6801,19 @@
       "github-12",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/founder-s-github-devin-stein/1767800051387-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:12.103Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/founder-s-github-devin-stein/1767800051387-screenshot.png"
   },
   {
     "id": "friday",
@@ -5837,7 +6879,19 @@
       "demogpt",
       "devika",
       "fullagent-fulling"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friday/1767800050940-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:11.627Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/friday/1767800050940-screenshot.png"
   },
   {
     "id": "fullagent-fulling",
@@ -5905,7 +6959,19 @@
       "github-12",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fullagent-fulling/1767800051438-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:12.364Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fullagent-fulling/1767800051438-screenshot.png"
   },
   {
     "id": "gabrielmaialva33-winx-code-agent",
@@ -5970,7 +7036,19 @@
       "github-12",
       "devon",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gabrielmaialva33-winx-code-agent/1767800145897-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:46.912Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gabrielmaialva33-winx-code-agent/1767800145897-screenshot.png"
   },
   {
     "id": "gemy411-multi-research-agents",
@@ -6034,7 +7112,19 @@
       "crewai-1",
       "data-to-paper",
       "chatdev"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gemy411-multi-research-agents/1767800128183-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:28.512Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gemy411-multi-research-agents/1767800128183-screenshot.png"
   },
   {
     "id": "genia",
@@ -6099,7 +7189,19 @@
       "devon",
       "devika",
       "fullagent-fulling"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genia/1767800055713-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:16.188Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/genia/1767800055713-screenshot.png"
   },
   {
     "id": "github-issue-only",
@@ -6166,7 +7268,19 @@
       "devon",
       "devika",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-issue-only/1767800050312-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:10.687Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-issue-only/1767800050312-screenshot.png"
   },
   {
     "id": "github-42",
@@ -6224,7 +7338,19 @@
       "blinky",
       "github-copilot-x",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-42/1767799995977-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:16.425Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-42/1767799995977-screenshot.png"
   },
   {
     "id": "github-copilot-x",
@@ -6283,7 +7409,19 @@
       "blinky",
       "devika",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-copilot-x/1767800054915-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:15.445Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-copilot-x/1767800054915-screenshot.png"
   },
   {
     "id": "github-repository-1",
@@ -6349,7 +7487,19 @@
       "blinky",
       "github-copilot-x",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-repository-1/1767800053470-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:14.805Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-repository-1/1767800053470-screenshot.png"
   },
   {
     "id": "github-stats-for-claude-swarm",
@@ -6406,7 +7556,19 @@
       "claude-swarm",
       "agentops-ai-tokencost",
       "claude-code-hooks-multi-agent-observability"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-swarm/1767800147872-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:48.053Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-stats-for-claude-swarm/1767800147872-screenshot.png"
   },
   {
     "id": "github-6",
@@ -6427,6 +7589,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-6/1767800098443-screenshot.png",
     "aiSummary": "No-code platform for building custom LLM agents with visual tools and integrations",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -6473,7 +7636,19 @@
       "github-29",
       "crewai-1",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-6/1767800098443-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:58.881Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-6/1767800098443-screenshot.png"
   },
   {
     "id": "gpt-discord",
@@ -6538,7 +7713,19 @@
       "crewai-1",
       "github-6",
       "github-11"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-discord/1767799993328-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:13.907Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-discord/1767799993328-screenshot.png"
   },
   {
     "id": "gpt-migrate",
@@ -6604,7 +7791,19 @@
       "devika",
       "autopr",
       "english-compiler"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-migrate/1767801268969-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:54:29.424Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-migrate/1767801268969-screenshot.png"
   },
   {
     "id": "gpt-pilot",
@@ -6685,7 +7884,19 @@
       "beebot",
       "devgpt",
       "fullagent-fulling"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-pilot/1767800097637-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:57.956Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-pilot/1767800097637-screenshot.png"
   },
   {
     "id": "gpt-researcher",
@@ -6752,7 +7963,19 @@
       "data-to-paper",
       "memfree",
       "gemy411-multi-research-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-researcher/1767800105423-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:05.990Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-researcher/1767800105423-screenshot.png"
   },
   {
     "id": "gpt-runner",
@@ -6816,7 +8039,19 @@
       "autogen",
       "crewai-1",
       "gpt-pilot"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-runner/1767800059522-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:19.777Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/gpt-runner/1767800059522-screenshot.png"
   },
   {
     "id": "haystack",
@@ -6886,7 +8121,19 @@
       "langchain",
       "agent-fusion",
       "llamaindex"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/haystack/1767800061101-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:21.355Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/haystack/1767800061101-screenshot.png"
   },
   {
     "id": "github-23",
@@ -6907,6 +8154,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-23/1767800035635-screenshot.png",
     "aiSummary": "AI agent platform with purpose-trained guardrails for secure and compliant AI deployments",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -6953,7 +8201,19 @@
       "autogen",
       "crewai-1",
       "e2b"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-23/1767800035635-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:56.090Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-23/1767800035635-screenshot.png"
   },
   {
     "id": "image-1",
@@ -7017,7 +8277,19 @@
       "loop-gpt",
       "autogen",
       "ailice"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/image-1/1767799987847-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:08.671Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/image-1/1767799987847-screenshot.png"
   },
   {
     "id": "github-19",
@@ -7038,6 +8310,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-19/1767800001002-screenshot.png",
     "aiSummary": "Private document interaction using LLMs with 100% local processing and no data leaks",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -7080,7 +8353,19 @@
       "local-gpt",
       "agent-fusion",
       "llamaindex"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-19/1767800001002-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:21.233Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-19/1767800001002-screenshot.png"
   },
   {
     "id": "infinite-agentic-loop",
@@ -7144,7 +8429,19 @@
       "ailice",
       "claude-agents",
       "claude-code-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/infinite-agentic-loop/1767800060521-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:20.843Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/infinite-agentic-loop/1767800060521-screenshot.png"
   },
   {
     "id": "instrukt",
@@ -7208,7 +8505,19 @@
       "devika",
       "beebot",
       "github-17"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/instrukt/1767800059815-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:20.241Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/instrukt/1767800059815-screenshot.png"
   },
   {
     "id": "jarvis",
@@ -7272,7 +8581,19 @@
       "crewai-1",
       "metagpt",
       "ailice"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jarvis/1767800061313-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:21.577Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jarvis/1767800061313-screenshot.png"
   },
   {
     "id": "jinming-yang",
@@ -7322,7 +8643,19 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jinming-yang/1767800105943-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:06.649Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/jinming-yang/1767800105943-screenshot.png"
   },
   {
     "id": "github-17",
@@ -7343,6 +8676,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-17/1767800105066-screenshot.png",
     "aiSummary": "Natural language interface enabling computers to execute tasks through conversational commands",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -7385,7 +8719,19 @@
       "devon",
       "devika",
       "instrukt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-17/1767800105066-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:05.334Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-17/1767800105066-screenshot.png"
   },
   {
     "id": "l2mac",
@@ -7449,7 +8795,19 @@
       "ailice",
       "instrukt",
       "github-17"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l2mac/1767800147636-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:48.262Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/l2mac/1767800147636-screenshot.png"
   },
   {
     "id": "langroid",
@@ -7514,7 +8872,19 @@
       "metagpt",
       "camel",
       "memgpt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langroid/1767800063862-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:24.251Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langroid/1767800063862-screenshot.png"
   },
   {
     "id": "lemon-agent",
@@ -7578,7 +8948,19 @@
       "autogen",
       "crewai-1",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lemon-agent/1767800120694-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:21.077Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/lemon-agent/1767800120694-screenshot.png"
   },
   {
     "id": "llamaindex",
@@ -7658,7 +9040,19 @@
       "dspy",
       "langchain",
       "agent-fusion"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex/1767800060883-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:21.242Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex/1767800060883-screenshot.png"
   },
   {
     "id": "llm-agents",
@@ -7722,7 +9116,19 @@
       "crewai-1",
       "awesome-llm-apps",
       "langroid"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llm-agents/1767800145680-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:46.004Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llm-agents/1767800145680-screenshot.png"
   },
   {
     "id": "local-gpt",
@@ -7786,7 +9192,19 @@
       "github-19",
       "agent-fusion",
       "llamaindex"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/local-gpt/1767800122442-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:22.643Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/local-gpt/1767800122442-screenshot.png"
   },
   {
     "id": "loop-gpt",
@@ -7850,7 +9268,19 @@
       "autogen",
       "ailice",
       "image-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/loop-gpt/1767800066960-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:27.290Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/loop-gpt/1767800066960-screenshot.png"
   },
   {
     "id": "github-27",
@@ -7871,6 +9301,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-27/1767800002941-screenshot.png",
     "aiSummary": "Natural language smart contract development and deployment for Web3 applications",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -7913,7 +9344,19 @@
       "autogen",
       "gpt-pilot",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-27/1767800002941-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:23.210Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-27/1767800002941-screenshot.png"
   },
   {
     "id": "memfree",
@@ -7977,7 +9420,19 @@
       "haystack",
       "agent-fusion",
       "llamaindex"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memfree/1767800116527-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:16.800Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memfree/1767800116527-screenshot.png"
   },
   {
     "id": "memgpt",
@@ -8041,7 +9496,19 @@
       "autogen",
       "ailice",
       "langroid"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memgpt/1767799995992-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:16.585Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/memgpt/1767799995992-screenshot.png"
   },
   {
     "id": "mentat",
@@ -8105,7 +9572,19 @@
       "devika",
       "instrukt",
       "github-17"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mentat/1767800117819-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:18.139Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mentat/1767800117819-screenshot.png"
   },
   {
     "id": "metagpt",
@@ -8171,7 +9650,19 @@
       "camel",
       "jarvis",
       "langroid"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/metagpt/1767800091759-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:53.176Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/metagpt/1767800091759-screenshot.png"
   },
   {
     "id": "github-13",
@@ -8192,6 +9683,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-13/1767800000501-screenshot.png",
     "aiSummary": "Self-improving agentic swarm solution enabling collaborative multi-agent problem solving",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -8234,7 +9726,19 @@
       "crewai-1",
       "metagpt",
       "camel"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-13/1767800000501-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:20.952Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-13/1767800000501-screenshot.png"
   },
   {
     "id": "github-26",
@@ -8255,6 +9759,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-26/1767800034933-screenshot.png",
     "aiSummary": "Open-ended embodied AI agent using LLMs for continuous learning in Minecraft environments",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -8297,7 +9802,19 @@
       "autogen",
       "e2b",
       "ailice"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-26/1767800034933-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:55.543Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-26/1767800034933-screenshot.png"
   },
   {
     "id": "mini-agi",
@@ -8362,7 +9879,19 @@
       "autogen",
       "smolagents",
       "ailice"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mini-agi/1767800091625-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:53.096Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mini-agi/1767800091625-screenshot.png"
   },
   {
     "id": "multi-gpt",
@@ -8427,7 +9956,19 @@
       "opendevin",
       "devika",
       "github-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/multi-gpt/1767800089934-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:50.360Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/multi-gpt/1767800089934-screenshot.png"
   },
   {
     "id": "multi-agent-squad",
@@ -8491,7 +10032,19 @@
       "swarm",
       "autogen",
       "crewai-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/multi-agent-squad/1767800152639-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:53.664Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/multi-agent-squad/1767800152639-screenshot.png"
   },
   {
     "id": "multiagent-debate",
@@ -8555,7 +10108,19 @@
       "crewai-1",
       "camel",
       "github-4"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/multiagent-debate/1767799997843-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:18.318Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/multiagent-debate/1767799997843-screenshot.png"
   },
   {
     "id": "mutahunterai",
@@ -8618,7 +10183,19 @@
       "blinky",
       "agentcheck",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mutahunterai/1767799986607-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:07.233Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mutahunterai/1767799986607-screenshot.png"
   },
   {
     "id": "nlsom",
@@ -8681,7 +10258,19 @@
       "crewai-1",
       "camel",
       "agentverse"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nlsom/1767800097294-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:57.564Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/nlsom/1767800097294-screenshot.png"
   },
   {
     "id": "github-16",
@@ -8702,6 +10291,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-16/1767800001288-screenshot.png",
     "aiSummary": "Cutting-edge toolkit for building new kinds of AI applications with modular architecture",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -8744,7 +10334,19 @@
       "github-10",
       "phidata",
       "github-6"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-16/1767800001288-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:21.605Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-16/1767800001288-screenshot.png"
   },
   {
     "id": "openagents-1",
@@ -8807,7 +10409,19 @@
       "claude-code-subagents-1",
       "awesome-claude-code-agents",
       "claude-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openagents-1/1767800117020-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:17.455Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openagents-1/1767800117020-screenshot.png"
   },
   {
     "id": "openagi",
@@ -8871,7 +10485,19 @@
       "mini-agi",
       "autogen",
       "ailice"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openagi/1767800143880-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:44.527Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/openagi/1767800143880-screenshot.png"
   },
   {
     "id": "swarm",
@@ -8892,6 +10518,7 @@
       "lastUpdated": "2024-10-15",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swarm/1767800107320-screenshot.png",
     "aiSummary": "OpenAI's experimental framework for lightweight multi-agent orchestration and handoffs",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -8935,7 +10562,19 @@
       "autogen",
       "crewai-1",
       "multi-agent-squad"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swarm/1767800107320-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:08.130Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swarm/1767800107320-screenshot.png"
   },
   {
     "id": "opendevin",
@@ -9001,7 +10640,19 @@
       "devika",
       "github-1",
       "multi-gpt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/opendevin/1767800091876-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:53.336Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/opendevin/1767800091876-screenshot.png"
   },
   {
     "id": "operative-sh-web-eval-agent",
@@ -9062,7 +10713,19 @@
     "relatedDocsCount": 1,
     "relatedDocSlugs": [
       "api/tool-use"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/operative-sh-web-eval-agent/1767800148336-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:48.664Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/operative-sh-web-eval-agent/1767800148336-screenshot.png"
   },
   {
     "id": "github-22",
@@ -9083,6 +10746,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-22/1767800090734-screenshot.png",
     "aiSummary": "Framework enabling multimodal AI models to operate and control computers visually",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -9123,7 +10787,19 @@
     "relatedResourceSlugs": [
       "e2b",
       "opendevin"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-22/1767800090734-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:51.202Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-22/1767800090734-screenshot.png"
   },
   {
     "id": "paul-gauthier",
@@ -9173,7 +10849,19 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/paul-gauthier/1767800103139-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:03.631Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/paul-gauthier/1767800103139-screenshot.png"
   },
   {
     "id": "github-18",
@@ -9194,6 +10882,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-18/1767800135617-screenshot.png",
     "aiSummary": "Developer-first LLMOps platform for prompt management, version control, and observability",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -9234,7 +10923,19 @@
     "relatedResourceSlugs": [
       "agentops-ai-agentops",
       "semantic-kernel"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-18/1767800135617-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:36.096Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-18/1767800135617-screenshot.png"
   },
   {
     "id": "phidata",
@@ -9313,7 +11014,19 @@
       "autogen",
       "crewai-1",
       "smolagents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/phidata/1767800115702-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:16.227Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/phidata/1767800115702-screenshot.png"
   },
   {
     "id": "github-8",
@@ -9334,6 +11047,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-8/1767800147688-screenshot.png",
     "aiSummary": "AI agent framework enabling autonomous task execution with multi-step reasoning",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -9369,7 +11083,19 @@
       "Programming experience",
       "LLM API access",
       "Understanding of agent concepts"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-8/1767800147688-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:48.039Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-8/1767800147688-screenshot.png"
   },
   {
     "id": "promethai",
@@ -9431,7 +11157,19 @@
     "relatedResourceSlugs": [
       "phidata",
       "crewai-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promethai/1767799994073-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:15.034Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/promethai/1767799994073-screenshot.png"
   },
   {
     "id": "pydantic-ai",
@@ -9509,7 +11247,19 @@
       "phidata",
       "crewai-1",
       "smolagents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/pydantic-ai/1767799979351-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:32:59.786Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/pydantic-ai/1767799979351-screenshot.png"
   },
   {
     "id": "github-15",
@@ -9530,6 +11280,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-15/1767800146153-screenshot.png",
     "aiSummary": "Open-source infrastructure for running natural language workflows on codebases",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -9570,7 +11321,19 @@
     "relatedResourceSlugs": [
       "github-12",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-15/1767800146153-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:46.547Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-15/1767800146153-screenshot.png"
   },
   {
     "id": "semantic-kernel",
@@ -9646,7 +11409,19 @@
       "phidata",
       "autogen",
       "crewai-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/semantic-kernel/1767800090314-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:50.669Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/semantic-kernel/1767800090314-screenshot.png"
   },
   {
     "id": "shlomi-shemesh",
@@ -9696,7 +11471,19 @@
       "Understanding of agent architectures",
       "LLM API access with sufficient credits",
       "Python or JavaScript development experience"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/shlomi-shemesh/1767800142628-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:44.427Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/shlomi-shemesh/1767800142628-screenshot.png"
   },
   {
     "id": "github-1",
@@ -9717,6 +11504,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-1/1767799979436-screenshot.png",
     "aiSummary": "Pioneering autonomous AI agent platform making AI accessible to everyone for building and using",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -9760,7 +11548,19 @@
       "opendevin",
       "devika",
       "multi-gpt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-1/1767799979436-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:00.274Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-1/1767799979436-screenshot.png"
   },
   {
     "id": "smol-developer",
@@ -9824,7 +11624,19 @@
       "opendevin",
       "github-12",
       "devika"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/smol-developer/1767799991125-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:11.576Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/smol-developer/1767799991125-screenshot.png"
   },
   {
     "id": "smolagents",
@@ -9898,7 +11710,19 @@
       "phidata",
       "crewai-1",
       "pydantic-ai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/smolagents/1767800091451-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:52.278Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/smolagents/1767800091451-screenshot.png"
   },
   {
     "id": "specialized-ai-agents",
@@ -9964,7 +11788,19 @@
       "automata",
       "ailice",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/specialized-ai-agents/1767800089227-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:49.705Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/specialized-ai-agents/1767800089227-screenshot.png"
   },
   {
     "id": "stackwise",
@@ -10029,7 +11865,19 @@
       "awesome-llm-apps",
       "github-6",
       "demogpt"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stackwise/1767800118448-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:18.765Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stackwise/1767800118448-screenshot.png"
   },
   {
     "id": "sub-agents",
@@ -10093,7 +11941,19 @@
       "claude-code-subagents-1",
       "awesome-claude-code-agents",
       "claude-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sub-agents/1767800096324-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:57.184Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/sub-agents/1767800096324-screenshot.png"
   },
   {
     "id": "superagent-ai-superagent",
@@ -10157,7 +12017,19 @@
       "autogen",
       "crewai-1",
       "github-9"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/superagent-ai-superagent/1767799994319-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:15.023Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/superagent-ai-superagent/1767799994319-screenshot.png"
   },
   {
     "id": "suspicion-agent",
@@ -10220,7 +12092,19 @@
       "camel",
       "agentverse",
       "github-4"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/suspicion-agent/1767800098118-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:58.544Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/suspicion-agent/1767800098118-screenshot.png"
   },
   {
     "id": "swe-agent",
@@ -10285,7 +12169,19 @@
       "devon",
       "devika",
       "autopr"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swe-agent/1767800111267-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:11.947Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/swe-agent/1767800111267-screenshot.png"
   },
   {
     "id": "taxy-ai",
@@ -10346,7 +12242,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "blinky"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/taxy-ai/1767799995151-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:15.633Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/taxy-ai/1767799995151-screenshot.png"
   },
   {
     "id": "ted-spare",
@@ -10402,7 +12310,19 @@
       "automata",
       "ailice",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ted-spare/1767800102456-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:03.002Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ted-spare/1767800102456-screenshot.png"
   },
   {
     "id": "telecom-mas-agent",
@@ -10457,7 +12377,19 @@
       "autonomous-hr-chatbot",
       "autogen",
       "camel"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/telecom-mas-agent/1767800096815-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:57.214Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/telecom-mas-agent/1767800096815-screenshot.png"
   },
   {
     "id": "github-28",
@@ -10478,6 +12410,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-28/1767800119536-screenshot.png",
     "aiSummary": "Python multi-agent simulation library for modeling complex agent interactions",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -10520,7 +12453,19 @@
       "camel",
       "agentverse",
       "github-4"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-28/1767800119536-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:20.039Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-28/1767800119536-screenshot.png"
   },
   {
     "id": "github-14",
@@ -10541,6 +12486,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-14/1767800124409-screenshot.png",
     "aiSummary": "No-code framework for building LLM agents and workflows with custom data integration",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -10583,7 +12529,19 @@
       "autogen",
       "crewai-1",
       "github-6"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-14/1767800124409-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:24.693Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-14/1767800124409-screenshot.png"
   },
   {
     "id": "ufo",
@@ -10646,7 +12604,19 @@
       "ai-legion",
       "autogen",
       "ailice"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ufo/1767799985475-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:06.144Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ufo/1767799985475-screenshot.png"
   },
   {
     "id": "uri-shamay",
@@ -10701,7 +12671,19 @@
     "relatedResourceSlugs": [
       "ailice",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/uri-shamay/1767800143290-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:44.749Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/uri-shamay/1767800143290-screenshot.png"
   },
   {
     "id": "github-25",
@@ -10722,6 +12704,7 @@
       "lastUpdated": "2025-12-20",
       "language": "Unknown"
     },
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-25/1767800106566-screenshot.png",
     "aiSummary": "Chat with SQL databases using natural language with accurate Text-to-SQL via agentic RAG",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -10762,7 +12745,19 @@
     "relatedResourceSlugs": [
       "bambooai",
       "github-29"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-25/1767800106566-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:06.878Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/github-25/1767800106566-screenshot.png"
   },
   {
     "id": "voltagent-awesome-claude-code-subagents",
@@ -10826,7 +12821,19 @@
       "claude-code-subagents-1",
       "awesome-claude-code-agents",
       "awesome-claude-agents"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/voltagent-awesome-claude-code-subagents/1767800152663-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:53.676Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/voltagent-awesome-claude-code-subagents/1767800152663-screenshot.png"
   },
   {
     "id": "workgpt",
@@ -10888,7 +12895,19 @@
       "agentpilot",
       "autogen",
       "crewai-1"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/workgpt/1767800116952-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:17.458Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/workgpt/1767800116952-screenshot.png"
   },
   {
     "id": "xagent",
@@ -10951,7 +12970,19 @@
       "ai-legion",
       "autogen",
       "ailice"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xagent/1767800041329-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:34:01.645Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xagent/1767800041329-screenshot.png"
   },
   {
     "id": "xataio-agent",
@@ -11014,7 +13045,19 @@
     "relatedResourceSlugs": [
       "automata",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xataio-agent/1767800119677-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:20.040Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/xataio-agent/1767800119677-screenshot.png"
   },
   {
     "id": "yagents",
@@ -11077,7 +13120,19 @@
       "autogen",
       "ailice",
       "agentforge"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/yagents/1767799995677-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:33:16.067Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/yagents/1767799995677-screenshot.png"
   },
   {
     "id": "yourgoal",
@@ -11140,6 +13195,18 @@
       "babyagi",
       "ai-legion",
       "babycommandagi"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/yourgoal/1767800145536-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:46.004Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/yourgoal/1767800145536-screenshot.png"
   }
 ]

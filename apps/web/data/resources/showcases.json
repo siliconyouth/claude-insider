@@ -66,7 +66,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-docs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-insider/1767802765485-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:26.750Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-insider/1767802765485-screenshot.png"
   },
   {
     "id": "v0-vercel",
@@ -127,7 +139,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "replit-agent"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/v0-vercel/1767802764664-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:24.996Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/v0-vercel/1767802764664-screenshot.png"
   },
   {
     "id": "aichat",
@@ -193,7 +217,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "khoj"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aichat/1767802759735-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:20.227Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/aichat/1767802759735-screenshot.png"
   },
   {
     "id": "chatgpt-alternative",
@@ -253,7 +289,20 @@
     "relatedResourceSlugs": [
       "claude-desktop",
       "quora-poe"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Claude.ai preview",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/showcases/chatgpt-alternative-og.png",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "opengraph",
+        "caption": "OpenGraph preview image",
+        "captured_at": "2026-01-07T21:59:38.269Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/showcases/chatgpt-alternative-og.png"
   },
   {
     "id": "duckduckgo-ai",
@@ -266,6 +315,7 @@
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/duckduckgo-ai/1767802753106-screenshot.png",
     "aiSummary": "Private AI chat interface using Claude without tracking or data collection",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -305,7 +355,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "perplexity"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/duckduckgo-ai/1767802753106-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:13.740Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/duckduckgo-ai/1767802753106-screenshot.png"
   },
   {
     "id": "khoj",
@@ -372,7 +434,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "aichat"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/khoj/1767802759022-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:19.708Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/khoj/1767802759022-screenshot.png"
   },
   {
     "id": "notion-ai",
@@ -431,7 +505,20 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "obsidian-copilot"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Notion AI placeholder",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/showcases/notion-ai-placeholder.svg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "placeholder",
+        "caption": "Generated placeholder image",
+        "captured_at": "2026-01-07T22:06:45.695Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/showcases/notion-ai-placeholder.svg"
   },
   {
     "id": "obsidian-copilot",
@@ -498,7 +585,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "notion-ai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/obsidian-copilot/1767802770024-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:30.328Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/obsidian-copilot/1767802770024-screenshot.png"
   },
   {
     "id": "perplexity",
@@ -557,7 +656,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "duckduckgo-ai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/perplexity/1767802758484-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:19.132Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/perplexity/1767802758484-screenshot.png"
   },
   {
     "id": "quora-poe",
@@ -616,7 +727,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "chatgpt-alternative"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quora-poe/1767802760314-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:21.493Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/quora-poe/1767802760314-screenshot.png"
   },
   {
     "id": "replit-agent",
@@ -675,7 +798,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "v0-vercel"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/replit-agent/1767802779797-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:40.479Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/replit-agent/1767802779797-screenshot.png"
   },
   {
     "id": "codeium-windsurf",
@@ -734,6 +869,18 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "windsurf"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codeium-windsurf/1767802781604-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:19:42.524Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/codeium-windsurf/1767802781604-screenshot.png"
   }
 ]

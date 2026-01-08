@@ -67,7 +67,19 @@
     "relatedResourceSlugs": [
       "building-ai-apps",
       "deeplearning-claude"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-courses/1767803267657-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:47.970Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-courses/1767803267657-screenshot.png"
   },
   {
     "id": "claude-code-tutorial",
@@ -127,7 +139,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "claude-code-docs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-tutorial/1767803272088-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:52.376Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/claude-code-tutorial/1767803272088-screenshot.png"
   },
   {
     "id": "deeplearning-claude",
@@ -188,7 +212,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-courses"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/deeplearning-claude/1767803271422-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:51.709Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/deeplearning-claude/1767803271422-screenshot.png"
   },
   {
     "id": "building-ai-apps",
@@ -248,7 +284,19 @@
     "relatedResourceSlugs": [
       "anthropic-courses",
       "streaming-tutorial"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/building-ai-apps/1767803273580-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:53.837Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/building-ai-apps/1767803273580-screenshot.png"
   },
   {
     "id": "mcp-server-tutorial",
@@ -261,6 +309,7 @@
     "addedDate": "2024-06-01",
     "lastVerified": "2024-12-11",
     "difficulty": "advanced",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-server-tutorial/1767803267105-screenshot.png",
     "aiSummary": "Official tutorial for creating custom MCP servers to extend Claude capabilities",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -300,7 +349,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "mcp-docs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-server-tutorial/1767803267105-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:47.333Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/mcp-server-tutorial/1767803267105-screenshot.png"
   },
   {
     "id": "fine-tuning-guide",
@@ -313,6 +374,7 @@
     "addedDate": "2024-07-01",
     "lastVerified": "2025-12-20",
     "difficulty": "expert",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fine-tuning-guide/1767803268773-screenshot.png",
     "aiSummary": "Official Anthropic guide for preparing data and fine-tuning Claude models",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -348,7 +410,19 @@
       "Enterprise account",
       "Training data",
       "Fine-tuning access"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fine-tuning-guide/1767803268773-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:49.044Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/fine-tuning-guide/1767803268773-screenshot.png"
   },
   {
     "id": "langchain-crash-course",
@@ -407,7 +481,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "llamaindex-tutorial"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-crash-course/1767803269739-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:50.056Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/langchain-crash-course/1767803269739-screenshot.png"
   },
   {
     "id": "llamaindex-tutorial",
@@ -420,6 +506,7 @@
     "addedDate": "2024-04-15",
     "lastVerified": "2024-12-11",
     "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-tutorial/1767803268300-screenshot.png",
     "aiSummary": "Getting started guide for building RAG applications with LlamaIndex",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -460,7 +547,19 @@
     "relatedResourceSlugs": [
       "langchain-crash-course",
       "rag-from-scratch"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-tutorial/1767803268300-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:48.564Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/llamaindex-tutorial/1767803268300-screenshot.png"
   },
   {
     "id": "rag-from-scratch",
@@ -528,7 +627,19 @@
     "relatedResourceSlugs": [
       "llamaindex-tutorial",
       "vector-databases"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rag-from-scratch/1767803269648-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:49.899Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/rag-from-scratch/1767803269648-screenshot.png"
   },
   {
     "id": "streaming-tutorial",
@@ -541,6 +652,7 @@
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/streaming-tutorial/1767803271320-screenshot.png",
     "aiSummary": "Official tutorial for implementing streaming responses with Claude API",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -580,7 +692,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "building-ai-apps"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/streaming-tutorial/1767803271320-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:51.530Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/streaming-tutorial/1767803271320-screenshot.png"
   },
   {
     "id": "tool-use-tutorial",
@@ -639,7 +763,19 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "anthropic-docs"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tool-use-tutorial/1767803268275-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:48.721Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tool-use-tutorial/1767803268275-screenshot.png"
   },
   {
     "id": "vector-databases",
@@ -652,6 +788,7 @@
     "addedDate": "2024-05-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vector-databases/1767803272796-screenshot.png",
     "aiSummary": "Official guide for choosing and using vector databases with Claude RAG systems",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -691,6 +828,18 @@
     "relatedResourcesCount": 1,
     "relatedResourceSlugs": [
       "rag-from-scratch"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vector-databases/1767803272796-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T16:27:53.054Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/vector-databases/1767803272796-screenshot.png"
   }
 ]

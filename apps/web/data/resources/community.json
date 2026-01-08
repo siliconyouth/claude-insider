@@ -62,7 +62,19 @@
       "twitter-anthropic",
       "youtube-anthropic",
       "reddit-claudeai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-discord/1767800152063-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:53.295Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/anthropic-discord/1767800152063-screenshot.png"
   },
   {
     "id": "reddit-claudeai",
@@ -127,7 +139,20 @@
       "ai-explained",
       "hacker-news",
       "cursor-directory-community"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "r/ClaudeAI placeholder",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/reddit-claudeai-placeholder.svg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "placeholder",
+        "caption": "Generated placeholder image",
+        "captured_at": "2026-01-07T22:06:42.075Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/reddit-claudeai-placeholder.svg"
   },
   {
     "id": "ai-explained",
@@ -140,6 +165,7 @@
     "addedDate": "2024-06-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-explained/1767800154106-screenshot.png",
     "aiSummary": "In-depth YouTube explanations of Claude AI capabilities and broader AI concepts",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -182,7 +208,19 @@
       "ai-news-newsletter",
       "youtube-anthropic",
       "reddit-claudeai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-explained/1767800154106-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:55.039Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-explained/1767800154106-screenshot.png"
   },
   {
     "id": "linkedin-anthropic",
@@ -195,6 +233,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/linkedin-anthropic-placeholder.svg",
     "aiSummary": "Official Anthropic LinkedIn presence for company news, updates, and professional networking",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -237,7 +276,20 @@
       "ai-news-newsletter",
       "twitter-anthropic",
       "youtube-anthropic"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Anthropic on LinkedIn placeholder",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/linkedin-anthropic-placeholder.svg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "placeholder",
+        "caption": "Generated placeholder image",
+        "captured_at": "2026-01-07T22:06:42.553Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/linkedin-anthropic-placeholder.svg"
   },
   {
     "id": "twitter-anthropic",
@@ -250,6 +302,7 @@
     "addedDate": "2025-12-20",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/twitter-anthropic-placeholder.svg",
     "aiSummary": "Official Anthropic Twitter account for real-time news, announcements, and community engagement",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -293,7 +346,20 @@
       "linkedin-anthropic",
       "tldr-ai",
       "youtube-anthropic"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Anthropic on Twitter/X placeholder",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/twitter-anthropic-placeholder.svg",
+        "order": 0,
+        "width": 1200,
+        "height": 630,
+        "source": "placeholder",
+        "caption": "Generated placeholder image",
+        "captured_at": "2026-01-07T22:06:42.795Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/community/twitter-anthropic-placeholder.svg"
   },
   {
     "id": "youtube-anthropic",
@@ -306,6 +372,7 @@
     "addedDate": "2024-02-15",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/youtube-anthropic/1767800157370-screenshot.png",
     "aiSummary": "Official Anthropic YouTube channel featuring demos, explanations, and AI insights",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -349,7 +416,19 @@
       "linkedin-anthropic",
       "twitter-anthropic",
       "reddit-claudeai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/youtube-anthropic/1767800157370-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:57.809Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/youtube-anthropic/1767800157370-screenshot.png"
   },
   {
     "id": "cursor-directory-community",
@@ -411,7 +490,19 @@
       "stack-overflow",
       "hacker-news",
       "reddit-claudeai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory-community/1767800152379-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:53.296Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/cursor-directory-community/1767800152379-screenshot.png"
   },
   {
     "id": "hacker-news",
@@ -424,6 +515,7 @@
     "addedDate": "2024-03-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/hacker-news/1767801267051-screenshot.png",
     "aiSummary": "Hacker News discussions and insights about Claude AI from the tech community",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -466,7 +558,19 @@
       "stack-overflow",
       "ai-news-newsletter",
       "reddit-claudeai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/hacker-news/1767801267051-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:54:27.610Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/hacker-news/1767801267051-screenshot.png"
   },
   {
     "id": "stack-overflow",
@@ -479,6 +583,7 @@
     "addedDate": "2024-03-15",
     "lastVerified": "2025-12-20",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stack-overflow/1767800154257-screenshot.png",
     "aiSummary": "Stack Overflow Q&A for Claude AI implementation questions and troubleshooting",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -521,7 +626,19 @@
       "hacker-news",
       "cursor-directory-community",
       "reddit-claudeai"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stack-overflow/1767800154257-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:55.287Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/stack-overflow/1767800154257-screenshot.png"
   },
   {
     "id": "ai-news-newsletter",
@@ -534,6 +651,7 @@
     "addedDate": "2024-04-01",
     "lastVerified": "2025-12-20",
     "difficulty": "beginner",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-news-newsletter/1767800152520-screenshot.png",
     "aiSummary": "Weekly AI newsletter from DeepLearning.AI covering Claude and broader AI developments",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -577,7 +695,19 @@
       "hacker-news",
       "tldr-ai",
       "twitter-anthropic"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-news-newsletter/1767800152520-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:53.569Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/ai-news-newsletter/1767800152520-screenshot.png"
   },
   {
     "id": "tldr-ai",
@@ -590,6 +720,7 @@
     "addedDate": "2024-05-01",
     "lastVerified": "2024-12-11",
     "difficulty": "intermediate",
+    "screenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tldr-ai/1767800154827-screenshot.png",
     "aiSummary": "Daily AI news digest including Claude updates in a concise, scannable format",
     "aiAnalyzedAt": "2025-12-30",
     "aiConfidence": 0.9,
@@ -632,6 +763,18 @@
       "linkedin-anthropic",
       "hacker-news",
       "twitter-anthropic"
-    ]
+    ],
+    "screenshotMetadata": [
+      {
+        "alt": "Resource screenshot (dark mode)",
+        "url": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tldr-ai/1767800154827-screenshot.png",
+        "order": 0,
+        "width": 2880,
+        "height": 1800,
+        "caption": "Captured 1/7/2026",
+        "captured_at": "2026-01-07T15:35:56.563Z"
+      }
+    ],
+    "primaryScreenshotUrl": "https://pmsnjddolwngdeygkcfn.supabase.co/storage/v1/object/public/resource-screenshots/tldr-ai/1767800154827-screenshot.png"
   }
 ]
