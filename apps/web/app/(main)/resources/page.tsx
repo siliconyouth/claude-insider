@@ -1,13 +1,16 @@
 /**
- * Resources Index Page - Server Component
+ * Resources Index Page - Server Component (v1.18.5)
  *
- * Fetches all resource data server-side with ISR caching,
- * then delegates to client component for interactivity.
+ * Hybrid architecture for optimal performance:
+ * 1. Server: Loads lean initial data (24 items + stats) - cached under 2MB
+ * 2. Client: Fetches full lean list via API for filtering (~1.5MB total)
+ * 3. Client-side search and filtering works on the full lean dataset
  *
- * This hybrid approach provides:
- * - Fast initial load with SSR
- * - Automatic cache invalidation via webhooks
- * - Client-side search and filtering without server round-trips
+ * Key optimizations:
+ * - Uses ResourceListItem (lean schema) instead of full ResourceEntry
+ * - Initial server cache: ~300KB (well under 2MB limit)
+ * - API response for full list: ~1.5MB (split across pagination)
+ * - Infinite scroll with IntersectionObserver
  */
 
 import { Suspense } from 'react';
@@ -20,10 +23,7 @@ import {
   type ResourcesPageClientProps,
 } from '@/components/resources/resources-page-client';
 import {
-  getAllResources,
-  getResourceStats,
-  getCategoriesWithCounts,
-  getPopularTags,
+  getResourcePageInitialData,
   getDifficultyStats,
   getStatusStats,
   getTargetAudienceStats,
@@ -67,22 +67,17 @@ function ResourcesLoading() {
 
 // Async component that fetches data
 async function ResourcesDataLoader() {
-  // Fetch all data in parallel - ISR cached with webhook invalidation
+  // Fetch initial data (lean, cached under 2MB) + stats in parallel
+  // Initial data includes first 24 resources + stats/categories/tags
   const [
-    resources,
-    stats,
-    categories,
-    popularTags,
+    initialData,
     difficultyStats,
     statusStats,
     audienceStats,
     useCasesStats,
     enhancedCoverage,
   ] = await Promise.all([
-    getAllResources(),
-    getResourceStats(),
-    getCategoriesWithCounts(),
-    getPopularTags(30),
+    getResourcePageInitialData(),
     getDifficultyStats(),
     getStatusStats(),
     getTargetAudienceStats(),
@@ -91,16 +86,19 @@ async function ResourcesDataLoader() {
   ]);
 
   // Transform data to match client component props
+  // Note: Client will fetch full list via API for client-side filtering
   const clientProps: ResourcesPageClientProps = {
-    initialResources: resources,
-    stats,
-    categories,
-    popularTags,
+    initialResources: initialData.resources,
+    stats: initialData.stats,
+    categories: initialData.categories,
+    popularTags: initialData.popularTags,
     difficultyStats,
     statusStats,
     audienceStats,
     useCasesStats,
     enhancedCoverage,
+    // New: Pass total count so client knows to fetch more
+    totalResources: initialData.total,
   };
 
   return <ResourcesPageClient {...clientProps} />;

@@ -16,7 +16,7 @@ This document contains the complete database schema, table catalog, and SQL refe
 6. [Role Hierarchy](#role-hierarchy)
 7. [RLS Security Model](#rls-security-model)
 8. [Migration Structure](#migration-structure)
-9. [SQL Examples](#sql-examples)
+9. [SQL Examples](#sql-examples) - includes Selective Column Queries (MANDATORY - v1.18.5)
 10. [API Route Template](#api-route-template)
 11. [Common Queries](#common-queries-reference)
 
@@ -487,6 +487,33 @@ await pool.query('SELECT * FROM favorites WHERE user_id = $1', [userId]);
 // ❌ WRONG - SQL Injection vulnerability
 await pool.query(`SELECT * FROM favorites WHERE user_id = '${userId}'`);
 ```
+
+### Selective Column Queries (MANDATORY for Cached Data - v1.18.5)
+
+When caching query results (especially with `unstable_cache`), use selective columns to stay under the 2MB limit:
+
+```typescript
+// ✅ CORRECT: Select only needed columns for listings (~500 bytes/row)
+const LEAN_COLUMNS = `slug, title, description, url, category, status,
+  difficulty, is_featured, github_stars, ai_summary, added_at`;
+
+await pool.query(`SELECT ${LEAN_COLUMNS} FROM resources WHERE is_published = true`);
+
+// ❌ WRONG: Full query with all 60+ columns (~2KB/row)
+await pool.query(`SELECT * FROM resources WHERE is_published = true`);
+```
+
+**When to use `SELECT *`:**
+- Small tables (< 100 rows)
+- Single-row queries (get by ID)
+- Non-cached queries
+- When ALL columns are needed
+
+**When to use selective columns:**
+- List views and paginated queries
+- Cached data (especially `unstable_cache`)
+- Large tables (> 500 rows)
+- API responses returned to clients
 
 ### Defensive Migration Pattern
 

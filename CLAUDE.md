@@ -584,9 +584,35 @@ const stats = await query1; const users = await query2;
 | **Client Helpers** | `lib/resources/client-helpers.ts` | Filtering/search on pre-fetched data |
 | **Types** | `lib/resources/types.ts` | Shared Server→Client prop types |
 
-### ISR Caching Pattern
+### ISR Caching Pattern (MANDATORY - v1.18.5)
 
-All server queries use `unstable_cache` with 60s revalidation and tag-based invalidation.
+All server queries use `unstable_cache` with 5-minute revalidation and tag-based invalidation.
+
+**CRITICAL: 2MB Cache Limit**
+
+Next.js `unstable_cache` has a **hard 2MB limit** per cached item. Exceeding this causes silent failures.
+
+| Rule | Description |
+|------|-------------|
+| **Monitor Size** | Use `checkCacheSize()` helper in development |
+| **Lean Schema** | Use `ResourceListItem` for listings (~500 bytes vs ~2KB) |
+| **Chunk Large Data** | Split by category instead of caching all at once |
+| **Selective Columns** | Query only needed columns, not `SELECT *` |
+
+**Lean vs Full Schema:**
+
+| Type | Size | Use For |
+|------|------|---------|
+| `ResourceListItem` | ~500 bytes | Listings, search results, cards |
+| `ResourceEntry` | ~2KB | Detail pages, admin dashboard |
+
+**Cache Size Targets:**
+
+| Cache | Max Size | Actual |
+|-------|----------|--------|
+| `getResourcePageInitialData` | < 500KB | ~300KB |
+| `getResourceListByCategory` | < 200KB | ~150KB |
+| Individual resource | < 10KB | ~5KB |
 
 ### Homepage Resources Data Flow
 

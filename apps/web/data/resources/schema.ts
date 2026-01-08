@@ -267,6 +267,91 @@ export function getCategoryBySlug(slug: ResourceCategorySlug): ResourceCategory 
   return RESOURCE_CATEGORIES.find((cat) => cat.slug === slug);
 }
 
+// ============================================
+// Lean Schema for Listings (v1.18.5)
+// ============================================
+
+/**
+ * ResourceListItem - Lean version for listings (~500 bytes vs ~2KB)
+ *
+ * Used for:
+ * - Resource listing pages (infinite scroll)
+ * - Search results
+ * - Category pages
+ *
+ * Full ResourceEntry is used for:
+ * - Detail pages
+ * - Admin dashboard
+ *
+ * Size optimization:
+ * - 3,000 resources × ~500 bytes = ~1.5MB (under 2MB cache limit)
+ * - Excludes: aiOverview, pros, cons, prerequisites, screenshotMetadata
+ */
+export interface ResourceListItem {
+  // Core fields (required)
+  id: string;
+  title: string;
+  description: string; // May be truncated to 200 chars
+  url: string;
+  category: ResourceCategorySlug;
+  status: ResourceStatus;
+  tags: string[];
+
+  // Visual (optional, for cards)
+  screenshotUrl?: string;
+  thumbnailUrl?: string;
+
+  // GitHub stats (optional, for sorting/display)
+  githubStars?: number;
+  githubLanguage?: string;
+
+  // Key display fields (optional)
+  difficulty?: DifficultyLevel;
+  featured?: boolean;
+  featuredReason?: string;
+
+  // Minimal AI data (optional)
+  aiSummary?: string; // Short summary only
+  keyFeaturesCount?: number; // Just the count, not full array
+
+  // Timestamps
+  addedDate: string;
+  lastVerified: string;
+}
+
+/**
+ * Paginated response for resource listings
+ */
+export interface ResourceListResponse {
+  resources: ResourceListItem[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasMore: boolean;
+  nextCursor?: number; // For cursor-based pagination
+}
+
+/**
+ * Initial page data (cached on server, under 2MB)
+ */
+export interface ResourcePageInitialData {
+  // First batch of resources (24 items)
+  resources: ResourceListItem[];
+  total: number;
+
+  // Stats and filters (small, cacheable)
+  stats: ResourceStats;
+  categories: Array<{
+    slug: ResourceCategorySlug;
+    name: string;
+    shortName?: string;
+    icon: string;
+    count: number;
+  }>;
+  popularTags: TagWithCount[];
+}
+
 // Validate resource entry
 export function validateResource(resource: Partial<ResourceEntry>): resource is ResourceEntry {
   return !!(

@@ -54,6 +54,19 @@ export interface ResourceFilters {
   search?: string;
 }
 
+// Public resources listing filters (for infinite scroll)
+export interface ResourceListingFilters {
+  category?: string;
+  difficulty?: string;
+  status?: string;
+  tags?: string[];
+  featured?: boolean;
+  search?: string;
+  sort?: "relevance" | "stars" | "recent" | "title";
+  audience?: string[];
+  useCases?: string[];
+}
+
 export interface NotificationFilters {
   page?: number;
   pageSize?: number;
@@ -254,6 +267,24 @@ export const queryKeys = {
     queue: (filters: { status?: string; page?: number }) =>
       ["dashboard", "broken-links", "queue", filters] as const,
     stats: ["dashboard", "broken-links", "stats"] as const,
+  },
+
+  // =============================================================================
+  // PUBLIC RESOURCES (v1.18.5)
+  // =============================================================================
+  // For /resources page infinite scroll
+  publicResources: {
+    all: ["resources"] as const,
+    // Initial page data (SSR cached)
+    initial: ["resources", "initial"] as const,
+    // Infinite scroll pages
+    list: (filters: ResourceListingFilters) =>
+      ["resources", "list", filters] as const,
+    // Individual pages for infinite query
+    page: (filters: ResourceListingFilters, page: number) =>
+      ["resources", "page", filters, page] as const,
+    // Search results
+    search: (query: string) => ["resources", "search", query] as const,
   },
 
   // Admin Section (consolidated admin-specific queries)

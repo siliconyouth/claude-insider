@@ -32,6 +32,7 @@ Implementation patterns for Claude Insider. **For rules and requirements, see [C
 24. [Sentry Error Monitoring Patterns](#sentry-error-monitoring-patterns-v1180) - Exception capture, tracing, structured logging (v1.18.0)
 25. [Unit Testing Patterns](#unit-testing-patterns-v1180) - Vitest setup, mocking, test structure (v1.18.0)
 26. [ISR Caching Patterns](#isr-caching-patterns-v1184) - Database-first architecture, cache invalidation (v1.18.4)
+27. [Cache Size Patterns](#cache-size-patterns-mandatory---v1185) - 2MB limit, lean schema, chunked caching (MANDATORY - v1.18.5)
 
 ---
 
@@ -3908,5 +3909,234 @@ function getResourceById(id: string): ResourceEntry | undefined {
   }
   return resourceCache.get(id);
 }
+```
+
+---
+
+## Cache Size Patterns (MANDATORY - v1.18.5)
+
+Next.js `unstable_cache` has a **hard 2MB limit** per cached item. These patterns prevent cache failures.
+
+### Cache Size Monitoring
+
+```typescript
+// lib/resources/server-queries.ts
+
+const CACHE_SIZE_LIMIT = 2 * 1024 * 1024; // 2MB
+const CACHE_SIZE_WARNING_THRESHOLD = 0.75; // 75%
+
+function checkCacheSize<T>(data: T, label: string): T {
+  if (process.env.NODE_ENV === "development") {
+    const size = JSON.stringify(data).length;
+    const percentage = (size / CACHE_SIZE_LIMIT) * 100;
+
+    if (size > CACHE_SIZE_LIMIT) {
+      console.error(
+        `[CACHE SIZE ERROR] ${label}: ${(size / 1024 / 1024).toFixed(2)}MB EXCEEDS 2MB LIMIT!`
+      );
+    } else if (size > CACHE_SIZE_LIMIT * CACHE_SIZE_WARNING_THRESHOLD) {
+      console.warn(
+        `[CACHE SIZE WARNING] ${label}: ${(size / 1024 / 1024).toFixed(2)}MB (${percentage.toFixed(1)}% of limit)`
+      );
+    }
+  }
+  return data;
+}
+```
+
+### Lean Schema Pattern
+
+Create slim versions of types for listings to reduce payload size.
+
+```typescript
+// data/resources/schema.ts
+
+// Full schema for detail pages (~2KB per item)
+export interface ResourceEntry {
+  id: string;
+  title: string;
+  description: string;
+  // ... 30+ fields including arrays like keyFeatures, pros, cons
+}
+
+// Lean schema for listings (~500 bytes per item)
+export interface ResourceListItem {
+  id: string;
+  title: string;
+  description: string; // Truncated to 200 chars
+  url: string;
+  category: ResourceCategorySlug;
+  status: ResourceStatus;
+  tags: string[];
+  screenshotUrl?: string;
+  githubStars?: number;
+  difficulty?: DifficultyLevel;
+  featured?: boolean;
+  aiSummary?: string;
+  keyFeaturesCount?: number; // Just count, not full array
+  addedDate: string;
+  lastVerified: string;
+}
+```
+
+### Transform Function
+
+```typescript
+function transformToListItem(row: DatabaseRow): ResourceListItem {
+  const item: ResourceListItem = {
+    id: row.slug,
+    title: row.title,
+    // Truncate description for listings
+    description: row.description.length > 200
+      ? row.description.slice(0, 197) + "..."
+      : row.description,
+    url: row.url,
+    category: row.category as ResourceCategorySlug,
+    status: row.status || "community",
+    tags: row.tags || [],
+    addedDate: row.added_at?.split("T")[0] || "",
+    lastVerified: row.last_verified_at?.split("T")[0] || "",
+  };
+
+  // Only include optional fields if present
+  if (row.primary_screenshot_url) item.screenshotUrl = row.primary_screenshot_url;
+  if (row.github_stars) item.githubStars = row.github_stars;
+  if (row.key_features?.length) item.keyFeaturesCount = row.key_features.length;
+
+  return item;
+}
+```
+
+### Chunked Caching by Category
+
+```typescript
+// ❌ WRONG: Cache all resources at once (6MB+ exceeds 2MB limit)
+export const getAllResources = unstable_cache(
+  async (): Promise<ResourceEntry[]> => {
+    const { data } = await supabase.from("resources").select("*");
+    return data; // 3,000 resources × 2KB = 6MB!
+  },
+  ["all-resources"],
+  { revalidate: 300 }
+);
+
+// ✅ CORRECT: Cache by category (each ~150KB)
+export const getResourceListByCategory = unstable_cache(
+  async (category: ResourceCategorySlug): Promise<ResourceListItem[]> => {
+    const { data } = await supabase
+      .from("resources")
+      .select(LEAN_COLUMNS) // Only needed columns
+      .eq("category", category);
+    return data.map(transformToListItem);
+  },
+  ["resources-category"],
+  { revalidate: 300 }
+);
+
+// Aggregate from category caches when needed
+export async function getAllResourcesList(): Promise<ResourceListItem[]> {
+  const categoryPromises = RESOURCE_CATEGORIES.map((cat) =>
+    getResourceListByCategory(cat.slug)
+  );
+  const results = await Promise.all(categoryPromises);
+  return results.flat();
+}
+```
+
+### Selective Column Query
+
+```typescript
+// Only select columns needed for listings
+const LEAN_COLUMNS = `
+  slug,
+  title,
+  description,
+  url,
+  category,
+  status,
+  difficulty,
+  is_featured,
+  github_stars,
+  primary_screenshot_url,
+  ai_summary,
+  key_features,
+  added_at,
+  last_verified_at
+`;
+
+// ✅ CORRECT: Lean query
+const { data } = await supabase
+  .from("resources")
+  .select(LEAN_COLUMNS)
+  .eq("is_published", true);
+
+// ❌ WRONG: Full query with all 60+ columns
+const { data } = await supabase
+  .from("resources")
+  .select("*")
+  .eq("is_published", true);
+```
+
+### Hybrid Server/Client Pattern
+
+```typescript
+// Server: Cache initial batch + stats (under 2MB)
+export const getResourcePageInitialData = unstable_cache(
+  async (): Promise<ResourcePageInitialData> => {
+    const [resourcesResult, statsResult, categoriesResult] = await Promise.all([
+      supabase.from("resources").select(LEAN_COLUMNS).limit(24),
+      getResourceStats(),
+      getCategoriesWithCounts(),
+    ]);
+
+    return checkCacheSize({
+      resources: resourcesResult.data.map(transformToListItem),
+      total: resourcesResult.count,
+      stats: statsResult,
+      categories: categoriesResult,
+    }, "getResourcePageInitialData");
+  },
+  ["resources-initial"],
+  { revalidate: 300 }
+);
+
+// Client: Fetch more via API for infinite scroll
+function useResourcesInfinite(filters: Filters) {
+  return useInfiniteQuery({
+    queryKey: ["resources", "list", filters],
+    queryFn: ({ pageParam }) => fetchResourcesPage(filters, pageParam),
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+}
+```
+
+### Size Estimation Rules
+
+| Data Type | Estimated Size |
+|-----------|----------------|
+| Full ResourceEntry | ~2KB |
+| Lean ResourceListItem | ~500 bytes |
+| Category stats | ~1KB |
+| Popular tags (30) | ~2KB |
+| Initial page data (24 items + stats) | ~300KB |
+| Single category (300 items) | ~150KB |
+| All resources (3,000 lean) | ~1.5MB |
+
+### CI/CD Validation
+
+Add cache size check to CI pipeline:
+
+```yaml
+# .github/workflows/cache-size-check.yml
+- name: Check cache sizes
+  run: |
+    node -e "
+      const data = require('./test-cache-data.json');
+      const size = JSON.stringify(data).length;
+      if (size > 2 * 1024 * 1024) {
+        console.error('Cache exceeds 2MB limit');
+        process.exit(1);
+      }
+    "
 ```
 

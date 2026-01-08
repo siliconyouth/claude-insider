@@ -1108,3 +1108,315 @@ export async function getResourcesSectionData(): Promise<import("./types").Resou
     categoriesWithCounts,
   };
 }
+
+// =============================================================================
+// LEAN SCHEMA QUERIES (v1.18.5)
+// =============================================================================
+// These functions return ResourceListItem (lean schema) for listings pages.
+// Each cached item stays well under the 2MB Next.js unstable_cache limit.
+
+import type {
+  ResourceListItem,
+  ResourceListResponse,
+  ResourcePageInitialData,
+} from "@/data/resources/schema";
+
+// Columns for lean listing queries (only what's needed for cards)
+const LEAN_COLUMNS = `
+  slug,
+  title,
+  description,
+  url,
+  category,
+  status,
+  difficulty,
+  is_featured,
+  featured_reason,
+  github_stars,
+  github_language,
+  primary_screenshot_url,
+  thumbnail_url,
+  ai_summary,
+  key_features,
+  added_at,
+  last_verified_at
+`;
+
+/**
+ * Cache size monitoring utility
+ *
+ * MANDATORY: Call this in development to catch cache size issues before production.
+ * Next.js unstable_cache has a hard 2MB limit per cached item.
+ */
+const CACHE_SIZE_LIMIT = 2 * 1024 * 1024; // 2MB
+const CACHE_SIZE_WARNING_THRESHOLD = 0.75; // Warn at 75%
+
+function checkCacheSize<T>(data: T, label: string): T {
+  if (process.env.NODE_ENV === "development") {
+    const size = JSON.stringify(data).length;
+    const percentage = (size / CACHE_SIZE_LIMIT) * 100;
+
+    if (size > CACHE_SIZE_LIMIT) {
+      console.error(
+        `[CACHE SIZE ERROR] ${label}: ${(size / 1024 / 1024).toFixed(2)}MB EXCEEDS 2MB LIMIT!`
+      );
+    } else if (size > CACHE_SIZE_LIMIT * CACHE_SIZE_WARNING_THRESHOLD) {
+      console.warn(
+        `[CACHE SIZE WARNING] ${label}: ${(size / 1024 / 1024).toFixed(2)}MB (${percentage.toFixed(1)}% of limit)`
+      );
+    }
+  }
+  return data;
+}
+
+/**
+ * Transform database row to lean ResourceListItem
+ * ~500 bytes per item vs ~2KB for full ResourceEntry
+ */
+function transformToListItem(row: {
+  slug: string;
+  title: string;
+  description: string;
+  url: string;
+  category: string;
+  status: string | null;
+  difficulty: string | null;
+  is_featured: boolean | null;
+  featured_reason: string | null;
+  github_stars: number | null;
+  github_language: string | null;
+  primary_screenshot_url: string | null;
+  thumbnail_url: string | null;
+  ai_summary: string | null;
+  key_features: string[] | null;
+  added_at: string | null;
+  last_verified_at: string | null;
+  tags?: string[];
+}): ResourceListItem {
+  const item: ResourceListItem = {
+    id: row.slug,
+    title: row.title,
+    // Truncate description to 200 chars for listings
+    description: row.description.length > 200
+      ? row.description.slice(0, 197) + "..."
+      : row.description,
+    url: row.url,
+    category: row.category as ResourceCategorySlug,
+    status: (row.status as ResourceStatus) || "community",
+    tags: row.tags || [],
+    addedDate: row.added_at?.split("T")[0] || "",
+    lastVerified: row.last_verified_at?.split("T")[0] || row.added_at?.split("T")[0] || "",
+  };
+
+  // Optional fields (only add if present)
+  if (row.primary_screenshot_url) item.screenshotUrl = row.primary_screenshot_url;
+  if (row.thumbnail_url) item.thumbnailUrl = row.thumbnail_url;
+  if (row.github_stars) item.githubStars = row.github_stars;
+  if (row.github_language) item.githubLanguage = row.github_language;
+  if (row.difficulty) item.difficulty = row.difficulty as DifficultyLevel;
+  if (row.is_featured) {
+    item.featured = true;
+    if (row.featured_reason) item.featuredReason = row.featured_reason;
+  }
+  if (row.ai_summary) item.aiSummary = row.ai_summary;
+  if (row.key_features?.length) item.keyFeaturesCount = row.key_features.length;
+
+  return item;
+}
+
+/**
+ * Get initial page data for /resources page (cached)
+ *
+ * Returns first batch of resources + all stats in a single cached response.
+ * Total size: ~300KB (well under 2MB limit)
+ *
+ * Used by: Server Component for SSR
+ */
+export const getResourcePageInitialData = unstable_cache(
+  async (): Promise<ResourcePageInitialData> => {
+    if (!hasSupabaseCredentials()) {
+      const emptyCategories = RESOURCE_CATEGORIES.map((cat) => ({
+        slug: cat.slug,
+        name: cat.name,
+        shortName: cat.shortName,
+        icon: cat.icon,
+        count: 0,
+      }));
+      return {
+        resources: [],
+        total: 0,
+        stats: {
+          totalResources: 0,
+          totalCategories: 0,
+          totalTags: 0,
+          totalGitHubStars: 0,
+          featuredCount: 0,
+          recentlyAdded: 0,
+          byCategory: {} as Record<ResourceCategorySlug, number>,
+        },
+        categories: emptyCategories,
+        popularTags: [],
+      };
+    }
+
+    const supabase = await createAdminClient();
+
+    // Parallel fetch: initial resources + stats
+    const [resourcesResult, statsResult, categoriesResult, tagsResult] = await Promise.all([
+      // First 24 resources (lean columns only)
+      supabase
+        .from("resources")
+        .select(LEAN_COLUMNS, { count: "exact" })
+        .eq("is_published", true)
+        .order("is_featured", { ascending: false })
+        .order("github_stars", { ascending: false, nullsFirst: false })
+        .limit(24),
+      // Stats
+      getResourceStats(),
+      // Categories with counts
+      getCategoriesWithCounts(),
+      // Popular tags
+      getPopularTags(30),
+    ]);
+
+    // Fetch tags for initial resources
+    const resourceIds = resourcesResult.data?.map((r) => r.slug) || [];
+    const tagsMap = new Map<string, string[]>();
+
+    if (resourceIds.length > 0) {
+      // Need to get resource IDs first for tag lookup
+      const { data: idData } = await supabase
+        .from("resources")
+        .select("id, slug")
+        .in("slug", resourceIds);
+
+      if (idData) {
+        const idToSlug = new Map<string, string>(idData.map((r) => [r.id, r.slug]));
+        const ids = idData.map((r) => r.id);
+
+        const { data: tagsData } = await supabase
+          .from("resource_tags")
+          .select("resource_id, tag")
+          .in("resource_id", ids);
+
+        if (tagsData) {
+          for (const t of tagsData) {
+            const slug = idToSlug.get(t.resource_id);
+            if (slug) {
+              const existing = tagsMap.get(slug) || [];
+              existing.push(t.tag);
+              tagsMap.set(slug, existing);
+            }
+          }
+        }
+      }
+    }
+
+    // Transform to lean items
+    const resources = (resourcesResult.data || []).map((row) => {
+      const rowWithTags = { ...row, tags: tagsMap.get(row.slug) || [] };
+      return transformToListItem(rowWithTags);
+    });
+
+    const result: ResourcePageInitialData = {
+      resources,
+      total: resourcesResult.count || 0,
+      stats: statsResult,
+      categories: categoriesResult,
+      popularTags: tagsResult,
+    };
+
+    // Development: Check cache size
+    return checkCacheSize(result, "getResourcePageInitialData");
+  },
+  ["resources-page-initial"],
+  { revalidate: DEFAULT_REVALIDATE, tags: [CACHE_TAGS.ALL_RESOURCES, CACHE_TAGS.RESOURCE_STATS] }
+);
+
+/**
+ * Get resources by category (lean, cached)
+ *
+ * Each category stays well under 2MB:
+ * - ~300 resources max × 500 bytes = ~150KB
+ */
+export const getResourceListByCategory = unstable_cache(
+  async (category: ResourceCategorySlug): Promise<ResourceListItem[]> => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
+    const supabase = await createAdminClient();
+
+    const { data, error } = await supabase
+      .from("resources")
+      .select(LEAN_COLUMNS)
+      .eq("is_published", true)
+      .eq("category", category)
+      .order("is_featured", { ascending: false })
+      .order("github_stars", { ascending: false, nullsFirst: false });
+
+    if (error) {
+      console.error(`Failed to fetch resources for category "${category}":`, error);
+      throw error;
+    }
+
+    // Fetch tags
+    const slugs = data?.map((r) => r.slug) || [];
+    const tagsMap = new Map<string, string[]>();
+
+    if (slugs.length > 0) {
+      const { data: idData } = await supabase
+        .from("resources")
+        .select("id, slug")
+        .in("slug", slugs);
+
+      if (idData) {
+        const idToSlug = new Map<string, string>(idData.map((r) => [r.id, r.slug]));
+        const ids = idData.map((r) => r.id);
+
+        const { data: tagsData } = await supabase
+          .from("resource_tags")
+          .select("resource_id, tag")
+          .in("resource_id", ids);
+
+        if (tagsData) {
+          for (const t of tagsData) {
+            const slug = idToSlug.get(t.resource_id);
+            if (slug) {
+              const existing = tagsMap.get(slug) || [];
+              existing.push(t.tag);
+              tagsMap.set(slug, existing);
+            }
+          }
+        }
+      }
+    }
+
+    const items = (data || []).map((row) => {
+      const rowWithTags = { ...row, tags: tagsMap.get(row.slug) || [] };
+      return transformToListItem(rowWithTags);
+    });
+
+    return checkCacheSize(items, `getResourceListByCategory(${category})`);
+  },
+  ["resources-list-category"],
+  { revalidate: DEFAULT_REVALIDATE, tags: [CACHE_TAGS.ALL_RESOURCES] }
+);
+
+/**
+ * Get all resources as lean list items (chunked by category)
+ *
+ * IMPORTANT: This aggregates from category caches, NOT a single large cache.
+ * Each category cache is ~150KB, total is ~1.5MB but split across 10 cache entries.
+ */
+export async function getAllResourcesList(): Promise<ResourceListItem[]> {
+  // Fetch all categories in parallel (each cached separately)
+  const categoryPromises = RESOURCE_CATEGORIES.map((cat) =>
+    getResourceListByCategory(cat.slug)
+  );
+
+  const results = await Promise.all(categoryPromises);
+  return results.flat();
+}
+
+// Re-export lean types
+export type { ResourceListItem, ResourceListResponse, ResourcePageInitialData } from "@/data/resources/schema";

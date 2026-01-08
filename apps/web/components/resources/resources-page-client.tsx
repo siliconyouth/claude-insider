@@ -1,10 +1,17 @@
 'use client';
 
 /**
- * Resources Page Client Component
+ * Resources Page Client Component (v1.18.5)
  *
- * Handles client-side filtering, search, and pagination for resources.
- * Receives initial data from the Server Component via props.
+ * Hybrid architecture for optimal performance:
+ * 1. Receives lean initial data (24 items) from Server Component
+ * 2. Fetches full lean list via API when filters are applied
+ * 3. Client-side search and filtering on the full dataset
+ *
+ * Key optimizations:
+ * - Uses ResourceListItem (lean schema) for listings (~500 bytes vs ~2KB)
+ * - Infinite scroll with IntersectionObserver
+ * - API fetching only when needed (no filters = use initial data)
  *
  * @module components/resources/resources-page-client
  */
@@ -19,6 +26,7 @@ import { cn } from '@/lib/design-system';
 import { ResourceInsights } from '@/components/resources/resource-insights';
 import type {
   ResourceEntry,
+  ResourceListItem,
   ResourceCategorySlug,
   DifficultyLevel,
   ResourceStatus,
@@ -120,7 +128,8 @@ interface EnhancedCoverage {
 }
 
 export interface ResourcesPageClientProps {
-  initialResources: ResourceEntry[];
+  // Initial resources (lean items from server cache, first 24)
+  initialResources: ResourceListItem[] | ResourceEntry[];
   stats: ResourceStats;
   categories: CategoryWithCount[];
   popularTags: TagWithCount[];
@@ -129,6 +138,8 @@ export interface ResourcesPageClientProps {
   audienceStats: AudienceStatItem[];
   useCasesStats: UseCaseStatItem[];
   enhancedCoverage: EnhancedCoverage;
+  // Total count for knowing when to fetch more
+  totalResources?: number;
 }
 
 export function ResourcesPageClient({
@@ -141,9 +152,43 @@ export function ResourcesPageClient({
   audienceStats,
   useCasesStats,
   enhancedCoverage,
+  totalResources = 0,
 }: ResourcesPageClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  // State for API-fetched full resource list
+  const [allResources, setAllResources] = useState<(ResourceListItem | ResourceEntry)[]>(initialResources);
+  const [isLoadingAll, setIsLoadingAll] = useState(false);
+  const [hasFetchedAll, setHasFetchedAll] = useState(false);
+
+  // Fetch all resources when filters are first applied or on mount if initial data is partial
+  const fetchAllResources = useCallback(async () => {
+    if (hasFetchedAll || isLoadingAll) return;
+
+    setIsLoadingAll(true);
+    try {
+      // Fetch all resources in pages (API already handles this efficiently)
+      const allItems: (ResourceListItem | ResourceEntry)[] = [];
+      let page = 1;
+      let hasMore = true;
+
+      while (hasMore) {
+        const response = await fetch(`/api/resources?page=${page}&limit=100`);
+        const data = await response.json();
+        allItems.push(...data.resources);
+        hasMore = page < data.totalPages;
+        page++;
+      }
+
+      setAllResources(allItems);
+      setHasFetchedAll(true);
+    } catch (error) {
+      console.error('Failed to fetch all resources:', error);
+    } finally {
+      setIsLoadingAll(false);
+    }
+  }, [hasFetchedAll, isLoadingAll]);
 
   // Initialize filters from URL params
   const initialFilters: FilterState = useMemo(() => ({
@@ -193,8 +238,18 @@ export function ResourcesPageClient({
     router.replace(newUrl, { scroll: false });
   }, [filters, router]);
 
+  // Fetch all resources when initial data is partial (less than total)
+  useEffect(() => {
+    if (initialResources.length < totalResources && !hasFetchedAll) {
+      fetchAllResources();
+    }
+  }, [initialResources.length, totalResources, hasFetchedAll, fetchAllResources]);
+
   // Filter and search resources
   const filteredResources = useMemo(() => {
+    // Cast to ResourceEntry[] for compatibility with search/filter functions
+    // Both ResourceListItem and ResourceEntry have the required fields
+    const sourceResources = allResources as ResourceEntry[];
     let results: ResourceEntry[];
 
     const enhancedFilters = {
@@ -207,7 +262,7 @@ export function ResourcesPageClient({
     };
 
     if (filters.query.trim()) {
-      const searchResults = searchResources(initialResources, {
+      const searchResults = searchResources(sourceResources, {
         query: filters.query,
         category: filters.category || undefined,
         tags: filters.tags.length > 0 ? filters.tags : undefined,
@@ -219,7 +274,7 @@ export function ResourcesPageClient({
       });
       results = searchResults.map((r) => r.item);
     } else {
-      results = filterResources(initialResources, {
+      results = filterResources(sourceResources, {
         category: filters.category || undefined,
         tags: filters.tags.length > 0 ? filters.tags : undefined,
         difficulty: filters.difficulty || undefined,
@@ -232,7 +287,12 @@ export function ResourcesPageClient({
     // Sort results
     switch (filters.sort) {
       case 'stars':
-        results = [...results].sort((a, b) => (b.github?.stars || 0) - (a.github?.stars || 0));
+        results = [...results].sort((a, b) => {
+          // Support both full ResourceEntry (github?.stars) and lean (githubStars)
+          const aStars = (a as ResourceEntry).github?.stars ?? (a as unknown as ResourceListItem).githubStars ?? 0;
+          const bStars = (b as ResourceEntry).github?.stars ?? (b as unknown as ResourceListItem).githubStars ?? 0;
+          return bStars - aStars;
+        });
         break;
       case 'recent':
         results = [...results].sort((a, b) =>
@@ -245,7 +305,7 @@ export function ResourcesPageClient({
     }
 
     return results;
-  }, [filters, initialResources]);
+  }, [filters, allResources]);
 
   // Filter handlers
   const updateFilter = useCallback(<K extends keyof FilterState>(key: K, value: FilterState[K]) => {
