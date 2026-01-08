@@ -734,3 +734,243 @@ export const getEnhancedFieldsCoverage = unstable_cache(
   [CACHE_TAGS.RESOURCE_STATS],
   { revalidate: DEFAULT_REVALIDATE, tags: [CACHE_TAGS.RESOURCE_STATS] }
 );
+
+// =============================================================================
+// FULL RESOURCE TYPES (for individual resource pages)
+// =============================================================================
+
+/**
+ * Full database row type for resources (all 60+ fields)
+ */
+export interface FullResourceRow {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  long_description: string | null;
+  url: string;
+  category: string;
+  subcategory: string | null;
+  status: string;
+  is_featured: boolean;
+  featured_reason: string | null;
+  is_published: boolean;
+  difficulty: string | null;
+  version: string | null;
+  namespace: string | null;
+  pricing: string;
+  price_details: Record<string, unknown> | null;
+  platforms: string[];
+  license: string | null;
+  website_url: string | null;
+  docs_url: string | null;
+  changelog_url: string | null;
+  discord_url: string | null;
+  twitter_url: string | null;
+  github_owner: string | null;
+  github_repo: string | null;
+  github_stars: number;
+  github_forks: number;
+  github_issues: number;
+  github_language: string | null;
+  github_last_commit: string | null;
+  github_contributors: number;
+  npm_package: string | null;
+  npm_downloads_weekly: number;
+  pypi_package: string | null;
+  pypi_downloads_monthly: number;
+  icon_url: string | null;
+  banner_url: string | null;
+  screenshots: string[];
+  video_url: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
+  og_image_url: string | null;
+  views_count: number;
+  favorites_count: number;
+  ratings_count: number;
+  average_rating: number;
+  reviews_count: number;
+  comments_count: number;
+  added_at: string;
+  last_verified_at: string | null;
+  last_synced_at: string | null;
+  created_at: string;
+  updated_at: string;
+  // Enhanced fields (Migration 088)
+  ai_overview: string | null;
+  ai_summary: string | null;
+  ai_analyzed_at: string | null;
+  ai_confidence: number | null;
+  key_features: string[] | null;
+  use_cases: string[] | null;
+  pros: string[] | null;
+  cons: string[] | null;
+  target_audience: string[] | null;
+  prerequisites: string[] | null;
+  // Relationship denormalization
+  related_docs_count: number;
+  related_resources_count: number;
+  related_doc_slugs: string[] | null;
+  related_resource_slugs: string[] | null;
+  // Screenshot metadata
+  screenshot_metadata: Array<{
+    url: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+    caption?: string;
+    order?: number;
+  }> | null;
+  primary_screenshot_url: string | null;
+  thumbnail_url: string | null;
+  // Trending/popularity
+  views_this_week: number;
+  trending_score: number | null;
+  trending_calculated_at: string | null;
+}
+
+export interface ResourceAuthor {
+  id: string;
+  user_id: string | null;
+  name: string;
+  role: string;
+  github_username: string | null;
+  twitter_username: string | null;
+  website_url: string | null;
+  avatar_url: string | null;
+  is_primary: boolean;
+}
+
+export interface ResourceAlternative {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  icon_url: string | null;
+  github_stars: number;
+  relationship: string;
+}
+
+export interface FullResourceWithDetails extends FullResourceRow {
+  tags: string[];
+  authors: ResourceAuthor[];
+  alternatives: ResourceAlternative[];
+}
+
+/**
+ * Get full resource by slug with all details (cached)
+ * Used for individual resource pages that need all 60+ fields
+ */
+export const getFullResourceBySlug = unstable_cache(
+  async (slug: string): Promise<FullResourceWithDetails | null> => {
+    const supabase = await createAdminClient();
+
+    // Get main resource
+    const { data: resource, error } = await supabase
+      .from("resources")
+      .select("*")
+      .eq("slug", slug)
+      .eq("is_published", true)
+      .single();
+
+    if (error || !resource) {
+      return null;
+    }
+
+    // Fetch all related data in parallel
+    const [tagsResult, authorsResult, alternativesResult] = await Promise.all([
+      // Get tags
+      supabase
+        .from("resource_tags")
+        .select("tag")
+        .eq("resource_id", resource.id)
+        .order("tag"),
+      // Get authors
+      supabase
+        .from("resource_authors")
+        .select("id, user_id, name, role, github_username, twitter_username, website_url, avatar_url, is_primary")
+        .eq("resource_id", resource.id)
+        .order("is_primary", { ascending: false })
+        .order("name"),
+      // Get alternatives via join
+      supabase
+        .from("resource_alternatives")
+        .select(`
+          alternative_resource_id,
+          relationship,
+          resources!resource_alternatives_alternative_resource_id_fkey (
+            id, slug, title, description, category, icon_url, github_stars
+          )
+        `)
+        .eq("resource_id", resource.id)
+        .limit(8),
+    ]);
+
+    // Process alternatives - need to flatten the joined data
+    const alternatives: ResourceAlternative[] = [];
+    if (alternativesResult.data) {
+      for (const alt of alternativesResult.data) {
+        const relatedResource = alt.resources as unknown as {
+          id: string;
+          slug: string;
+          title: string;
+          description: string;
+          category: string;
+          icon_url: string | null;
+          github_stars: number;
+        } | null;
+        if (relatedResource) {
+          alternatives.push({
+            id: relatedResource.id,
+            slug: relatedResource.slug,
+            title: relatedResource.title,
+            description: relatedResource.description,
+            category: relatedResource.category,
+            icon_url: relatedResource.icon_url,
+            github_stars: relatedResource.github_stars,
+            relationship: alt.relationship || "alternative",
+          });
+        }
+      }
+    }
+
+    return {
+      ...resource,
+      tags: tagsResult.data?.map((t) => t.tag) || [],
+      authors: (authorsResult.data as ResourceAuthor[]) || [],
+      alternatives,
+    } as FullResourceWithDetails;
+  },
+  [], // Dynamic cache key based on slug
+  {
+    revalidate: DEFAULT_REVALIDATE,
+    tags: [CACHE_TAGS.ALL_RESOURCES],
+  }
+);
+
+/**
+ * Get all published resource slugs (cached)
+ * Used for static generation
+ */
+export const getAllResourceSlugs = unstable_cache(
+  async (): Promise<string[]> => {
+    const supabase = await createAdminClient();
+
+    const { data, error } = await supabase
+      .from("resources")
+      .select("slug")
+      .eq("is_published", true)
+      .order("slug");
+
+    if (error) {
+      console.error("Failed to fetch resource slugs:", error);
+      return [];
+    }
+
+    return data?.map((r) => r.slug) || [];
+  },
+  [CACHE_TAGS.ALL_RESOURCES],
+  { revalidate: DEFAULT_REVALIDATE, tags: [CACHE_TAGS.ALL_RESOURCES] }
+);

@@ -21,8 +21,9 @@ import {
 import {
   getResourcesByCategory,
   getCategoriesWithCounts,
+  getFullResourceBySlug,
+  getAllResourceSlugs,
 } from "@/lib/resources/server-queries";
-import { getResourceBySlug, getAllResourceSlugs } from "@/lib/resources/queries";
 import { ResourceHero } from "@/components/resources/resource-hero";
 import { ResourceStats } from "@/components/resources/resource-stats";
 import { ResourceTabs } from "@/components/resources/resource-tabs";
@@ -466,7 +467,7 @@ async function CategoryPageContent({ categorySlug }: { categorySlug: ResourceCat
 // ============================================================================
 
 async function ResourcePageContent({ slug }: { slug: string }) {
-  const resource = await getResourceBySlug(slug);
+  const resource = await getFullResourceBySlug(slug);
 
   if (!resource) {
     notFound();
