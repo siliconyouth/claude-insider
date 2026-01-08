@@ -37,6 +37,18 @@ export const CACHE_TAGS = {
 const DEFAULT_REVALIDATE = 300;
 
 /**
+ * Check if Supabase credentials are available
+ * Returns false in CI/build environments without database access
+ */
+function hasSupabaseCredentials(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY &&
+      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder")
+  );
+}
+
+/**
  * Transform database row to ResourceEntry format
  */
 function transformToResourceEntry(row: DatabaseResource): ResourceEntry {
@@ -177,6 +189,9 @@ interface DatabaseResource {
  */
 export const getAllResources = unstable_cache(
   async (): Promise<ResourceEntry[]> => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     // Fetch resources with pagination
@@ -236,6 +251,9 @@ export const getAllResources = unstable_cache(
  */
 export const getResourcesByCategory = unstable_cache(
   async (category: ResourceCategorySlug): Promise<ResourceEntry[]> => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     const { data, error } = await supabase
@@ -283,6 +301,9 @@ export const getResourcesByCategory = unstable_cache(
  */
 export const getResourceBySlug = unstable_cache(
   async (slug: string): Promise<ResourceEntry | null> => {
+    if (!hasSupabaseCredentials()) {
+      return null;
+    }
     const supabase = await createAdminClient();
 
     const { data, error } = await supabase
@@ -321,6 +342,13 @@ export const getResourceBySlug = unstable_cache(
  */
 export const getResourceStats = unstable_cache(
   async (): Promise<ResourceStats> => {
+    if (!hasSupabaseCredentials()) {
+      const byCategory = {} as Record<ResourceCategorySlug, number>;
+      for (const cat of RESOURCE_CATEGORIES) {
+        byCategory[cat.slug] = 0;
+      }
+      return { totalResources: 0, totalCategories: 0, totalTags: 0, totalGitHubStars: 0, featuredCount: 0, recentlyAdded: 0, byCategory };
+    }
     const supabase = await createAdminClient();
 
     // Get total count
@@ -396,6 +424,9 @@ export const getResourceStats = unstable_cache(
  */
 export const getAllTags = unstable_cache(
   async (): Promise<TagWithCount[]> => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     const { data } = await supabase.from("resource_tags").select("tag");
@@ -426,6 +457,9 @@ export async function getPopularTags(limit: number = 20): Promise<TagWithCount[]
  */
 export const getCategoriesWithCounts = unstable_cache(
   async () => {
+    if (!hasSupabaseCredentials()) {
+      return RESOURCE_CATEGORIES.map((category) => ({ ...category, count: 0 }));
+    }
     const supabase = await createAdminClient();
 
     const { data: categoryCounts } = await supabase
@@ -452,6 +486,9 @@ export const getCategoriesWithCounts = unstable_cache(
  */
 export const getFeaturedResources = unstable_cache(
   async (limit?: number): Promise<ResourceEntry[]> => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     let query = supabase
@@ -502,6 +539,9 @@ export const getFeaturedResources = unstable_cache(
  */
 export const getRecentlyAdded = unstable_cache(
   async (limit: number = 10): Promise<ResourceEntry[]> => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     const { data } = await supabase
@@ -525,6 +565,9 @@ export const getRecentlyAdded = unstable_cache(
  */
 export const getTopByStars = unstable_cache(
   async (limit: number = 10): Promise<ResourceEntry[]> => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     const { data } = await supabase
@@ -549,6 +592,9 @@ export const getTopByStars = unstable_cache(
  */
 export const getDifficultyStats = unstable_cache(
   async () => {
+    if (!hasSupabaseCredentials()) {
+      return [{ level: "beginner" as DifficultyLevel, count: 0 }, { level: "intermediate" as DifficultyLevel, count: 0 }, { level: "advanced" as DifficultyLevel, count: 0 }, { level: "expert" as DifficultyLevel, count: 0 }];
+    }
     const supabase = await createAdminClient();
 
     const { data } = await supabase
@@ -584,6 +630,9 @@ export const getDifficultyStats = unstable_cache(
  */
 export const getStatusStats = unstable_cache(
   async () => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     const { data } = await supabase
@@ -613,6 +662,9 @@ export const getStatusStats = unstable_cache(
  */
 export const getTargetAudienceStats = unstable_cache(
   async () => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     const { data } = await supabase
@@ -642,6 +694,9 @@ export const getTargetAudienceStats = unstable_cache(
  */
 export const getUseCasesStats = unstable_cache(
   async () => {
+    if (!hasSupabaseCredentials()) {
+      return [];
+    }
     const supabase = await createAdminClient();
 
     const { data } = await supabase
@@ -671,6 +726,9 @@ export const getUseCasesStats = unstable_cache(
  */
 export const getEnhancedFieldsCoverage = unstable_cache(
   async () => {
+    if (!hasSupabaseCredentials()) {
+      return { total: 0, hasKeyFeatures: 0, hasPros: 0, hasCons: 0, hasTargetAudience: 0, hasUseCases: 0, hasPrerequisites: 0, hasAiAnalysis: 0 };
+    }
     const supabase = await createAdminClient();
 
     const { count: total } = await supabase
@@ -865,6 +923,9 @@ export interface FullResourceWithDetails extends FullResourceRow {
  */
 export const getFullResourceBySlug = unstable_cache(
   async (slug: string): Promise<FullResourceWithDetails | null> => {
+    if (!hasSupabaseCredentials()) {
+      return null;
+    }
     const supabase = await createAdminClient();
 
     // Get main resource
@@ -960,9 +1021,7 @@ export const getFullResourceBySlug = unstable_cache(
  */
 export const getAllResourceSlugs = unstable_cache(
   async (): Promise<string[]> => {
-    // Check if Supabase credentials are available (for CI builds)
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.log("[getAllResourceSlugs] Supabase not configured, skipping static generation");
+    if (!hasSupabaseCredentials()) {
       return [];
     }
 
