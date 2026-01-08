@@ -953,23 +953,38 @@ export const getFullResourceBySlug = unstable_cache(
 /**
  * Get all published resource slugs (cached)
  * Used for static generation
+ *
+ * NOTE: Returns empty array if Supabase credentials are not available (CI builds).
+ * This means individual resource pages will be generated on-demand via ISR
+ * instead of statically at build time.
  */
 export const getAllResourceSlugs = unstable_cache(
   async (): Promise<string[]> => {
-    const supabase = await createAdminClient();
-
-    const { data, error } = await supabase
-      .from("resources")
-      .select("slug")
-      .eq("is_published", true)
-      .order("slug");
-
-    if (error) {
-      console.error("Failed to fetch resource slugs:", error);
+    // Check if Supabase credentials are available (for CI builds)
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.log("[getAllResourceSlugs] Supabase not configured, skipping static generation");
       return [];
     }
 
-    return data?.map((r) => r.slug) || [];
+    try {
+      const supabase = await createAdminClient();
+
+      const { data, error } = await supabase
+        .from("resources")
+        .select("slug")
+        .eq("is_published", true)
+        .order("slug");
+
+      if (error) {
+        console.error("Failed to fetch resource slugs:", error);
+        return [];
+      }
+
+      return data?.map((r) => r.slug) || [];
+    } catch (err) {
+      console.error("[getAllResourceSlugs] Error:", err);
+      return [];
+    }
   },
   [CACHE_TAGS.ALL_RESOURCES],
   { revalidate: DEFAULT_REVALIDATE, tags: [CACHE_TAGS.ALL_RESOURCES] }
