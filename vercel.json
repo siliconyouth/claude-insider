@@ -107,6 +107,10 @@
     {
       "path": "/api/cron/sentry-check",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/check-resource-updates",
+      "schedule": "*/5 * * * *"
     }
   ],
   "redirects": [
