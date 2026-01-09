@@ -1,16 +1,14 @@
 #!/usr/bin/env npx tsx
 /**
- * Parallel OpenGraph Image Fetcher
+ * Parallel OpenGraph Image Fetcher v2
  *
  * Fetches OpenGraph/meta images for all resources and makes them the PRIMARY
  * photo in the gallery. Existing screenshots move to secondary position.
  *
- * Priority order:
- * 1. og:image (OpenGraph)
- * 2. twitter:image
- * 3. PWA manifest icons (highest resolution)
- * 4. apple-touch-icon
- * 5. Large favicon
+ * Sources (in priority order):
+ * 1. GitHub API - social preview image (uses GITHUB_TOKEN)
+ * 2. npm Registry API - gets repo URL, then fetches GitHub image
+ * 3. HTML scraping - og:image, twitter:image, manifest icons, favicons
  *
  * Usage: npx dotenvx run -f .env.local -- npx tsx scripts/fetch-og-images-parallel.ts
  *
@@ -20,6 +18,7 @@
  *   --dry-run          Show what would be processed
  *   --skip-existing    Skip resources that already have 2+ screenshots
  *   --concurrency=50   Number of parallel requests (default: 50)
+ *   --only-failed      Only process resources that failed in previous runs (1 screenshot)
  */
 
 import * as cheerio from "cheerio";
@@ -30,12 +29,19 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 // Configuration
 const DEFAULT_CONCURRENCY = 50;
 const IMAGE_DOWNLOAD_CONCURRENCY = 25;
-const REQUEST_TIMEOUT = 12000; // 12 seconds
+const REQUEST_TIMEOUT = 15000; // 15 seconds
 const MIN_IMAGE_SIZE = 5000; // 5KB minimum
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB maximum
 const TARGET_WIDTH = 1280;
 const TARGET_HEIGHT = 800;
 const SCREENSHOT_BUCKET = "resource-screenshots";
+
+// GitHub API configuration
+const GITHUB_API_BASE = "https://api.github.com";
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
+// npm Registry API
+const NPM_REGISTRY_BASE = "https://registry.npmjs.org";
 
 // Dark background for centering images
 const BACKGROUND_COLOR = { r: 17, g: 17, b: 17, alpha: 1 }; // #111111
@@ -46,12 +52,11 @@ const SKIP_PATTERNS = [
   "x.com",
   "twitter.com",
   "linkedin.com",
-  "github.com/login",
   "localhost",
   "127.0.0.1",
 ];
 
-// User agent to avoid blocks
+// User agent
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
@@ -89,12 +94,14 @@ function parseArgs(): {
   category?: string;
   dryRun: boolean;
   skipExisting: boolean;
+  onlyFailed: boolean;
   concurrency: number;
 } {
   const args = process.argv.slice(2);
   const options = {
     dryRun: false,
     skipExisting: false,
+    onlyFailed: false,
     concurrency: DEFAULT_CONCURRENCY,
   } as ReturnType<typeof parseArgs>;
 
@@ -112,6 +119,8 @@ function parseArgs(): {
       options.dryRun = true;
     } else if (arg === "--skip-existing") {
       options.skipExisting = true;
+    } else if (arg === "--only-failed") {
+      options.onlyFailed = true;
     }
   }
 
@@ -143,6 +152,160 @@ function resolveUrl(relativeUrl: string, baseUrl: string): string {
     return new URL(relativeUrl, baseUrl).href;
   } catch {
     return relativeUrl;
+  }
+}
+
+// Parse GitHub repo from URL
+function parseGitHubRepo(url: string): { owner: string; repo: string } | null {
+  const patterns = [
+    /github\.com\/([^\/]+)\/([^\/\?\#]+)/,
+    /raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match && match[1] && match[2]) {
+      return {
+        owner: match[1],
+        repo: match[2].replace(/\.git$/, ""),
+      };
+    }
+  }
+  return null;
+}
+
+// Parse npm package name from URL
+function parseNpmPackage(url: string): string | null {
+  // Match patterns like:
+  // https://www.npmjs.com/package/@scope/name
+  // https://www.npmjs.com/package/name
+  // https://npmjs.com/package/name
+  const match = url.match(/npmjs\.com\/package\/((?:@[^\/]+\/)?[^\/\?\#]+)/);
+  if (match && match[1]) {
+    return match[1];
+  }
+  return null;
+}
+
+// Fetch GitHub social preview image via API
+async function fetchGitHubSocialPreview(
+  owner: string,
+  repo: string
+): Promise<ImageCandidate | null> {
+  if (!GITHUB_TOKEN) {
+    return null;
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+
+  try {
+    // GitHub API returns og:image in the repository data
+    const response = await fetch(
+      `${GITHUB_API_BASE}/repos/${owner}/${repo}`,
+      {
+        signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${GITHUB_TOKEN}`,
+          Accept: "application/vnd.github.v3+json",
+          "User-Agent": "Claude-Insider-Bot/1.0",
+        },
+      }
+    );
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+
+    // GitHub's social preview is available via the opengraph_image_url
+    // or we can construct it from the repo URL
+    // Format: https://opengraph.githubassets.com/{hash}/{owner}/{repo}
+    // But easier: just use the repo's HTML page og:image
+
+    // Fetch the repo's HTML to get the actual og:image
+    const htmlResponse = await fetch(`https://github.com/${owner}/${repo}`, {
+      headers: {
+        "User-Agent": USER_AGENT,
+        Accept: "text/html",
+      },
+    });
+
+    if (!htmlResponse.ok) {
+      return null;
+    }
+
+    const html = await htmlResponse.text();
+    const $ = cheerio.load(html);
+    const ogImage = $('meta[property="og:image"]').attr("content");
+
+    if (ogImage) {
+      return {
+        url: ogImage,
+        source: "github-api",
+        priority: 5, // Highest priority
+      };
+    }
+
+    return null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+// Fetch npm package info and get GitHub repo
+async function fetchNpmPackageRepo(
+  packageName: string
+): Promise<{ owner: string; repo: string } | null> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+
+  try {
+    // Encode scoped packages properly: @scope/name -> @scope%2Fname
+    const encodedName = packageName.replace("/", "%2F");
+    const response = await fetch(`${NPM_REGISTRY_BASE}/${encodedName}`, {
+      signal: controller.signal,
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "Claude-Insider-Bot/1.0",
+      },
+    });
+
+    clearTimeout(timeout);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+
+    // Extract repository URL from package.json
+    const repoUrl =
+      data.repository?.url ||
+      data.homepage ||
+      data.bugs?.url;
+
+    if (repoUrl) {
+      // Parse GitHub repo from various URL formats
+      const cleaned = repoUrl
+        .replace(/^git\+/, "")
+        .replace(/^git:\/\//, "https://")
+        .replace(/\.git$/, "")
+        .replace(/^ssh:\/\/git@github\.com/, "https://github.com");
+
+      return parseGitHubRepo(cleaned);
+    }
+
+    return null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -195,14 +358,14 @@ async function fetchManifest(
       .filter((icon: { sizes?: string }) => {
         if (!icon.sizes) return false;
         const size = parseInt(icon.sizes.split("x")[0] || "0", 10);
-        return size >= 128; // Minimum useful size
+        return size >= 128;
       })
       .map((icon: { src: string; sizes: string }, index: number) => {
         const size = parseInt(icon.sizes.split("x")[0] || "0", 10);
         return {
           url: resolveUrl(icon.src, manifestUrl),
           source: "manifest",
-          priority: 30 + index, // Lower than OG but with size consideration
+          priority: 30 + index,
           width: size,
           height: size,
         };
@@ -210,7 +373,7 @@ async function fetchManifest(
       .sort(
         (a: ImageCandidate, b: ImageCandidate) =>
           (b.width || 0) - (a.width || 0)
-      ); // Sort by size descending
+      );
   } catch {
     return null;
   }
@@ -224,7 +387,7 @@ async function extractImageCandidates(
   const $ = cheerio.load(html);
   const candidates: ImageCandidate[] = [];
 
-  // 1. OpenGraph image (highest priority)
+  // 1. OpenGraph image
   const ogImage = $('meta[property="og:image"]').attr("content");
   if (ogImage) {
     candidates.push({
@@ -256,7 +419,6 @@ async function extractImageCandidates(
       candidates.push(...manifestIcons);
     }
   } else {
-    // Try default manifest.json location
     const origin = new URL(baseUrl).origin;
     const defaultManifest = await fetchManifest(`${origin}/manifest.json`);
     if (defaultManifest) {
@@ -278,7 +440,7 @@ async function extractImageCandidates(
     });
   }
 
-  // 5. Large favicon (with sizes)
+  // 5. Large favicon
   $('link[rel="icon"]').each((_, el) => {
     const href = $(el).attr("href");
     const sizes = $(el).attr("sizes");
@@ -296,7 +458,6 @@ async function extractImageCandidates(
     }
   });
 
-  // Sort by priority (lower = better)
   return candidates.sort((a, b) => a.priority - b.priority);
 }
 
@@ -332,7 +493,6 @@ async function downloadAndProcessImage(
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Validate size
     if (buffer.length < MIN_IMAGE_SIZE || buffer.length > MAX_IMAGE_SIZE) {
       return null;
     }
@@ -362,7 +522,7 @@ async function uploadImage(
   source: string
 ): Promise<string | null> {
   const timestamp = Date.now();
-  const storagePath = `${resourceSlug}/${timestamp}-${source.replace(":", "-")}.png`;
+  const storagePath = `${resourceSlug}/${timestamp}-${source.replace(/[^a-z0-9]/gi, "-")}.png`;
 
   const { data, error } = await supabase.storage
     .from(SCREENSHOT_BUCKET)
@@ -389,7 +549,6 @@ async function updateResourceWithOgImage(
   newPrimaryUrl: string,
   existingScreenshots: string[] | null
 ): Promise<boolean> {
-  // New primary (OG image) goes first, existing screenshot becomes secondary
   const existingPrimary = existingScreenshots?.[0];
   const newScreenshots = existingPrimary
     ? [newPrimaryUrl, existingPrimary]
@@ -416,20 +575,45 @@ async function processResource(
   const startTime = Date.now();
 
   try {
-    // Fetch HTML
-    const html = await fetchHtml(resource.url);
-    if (!html) {
-      return {
-        id: resource.id,
-        slug: resource.slug,
-        success: false,
-        error: "Failed to fetch HTML",
-        duration: Date.now() - startTime,
-      };
+    const candidates: ImageCandidate[] = [];
+
+    // Strategy 1: GitHub API for GitHub URLs
+    const githubRepo = parseGitHubRepo(resource.url);
+    if (githubRepo) {
+      const githubImage = await fetchGitHubSocialPreview(
+        githubRepo.owner,
+        githubRepo.repo
+      );
+      if (githubImage) {
+        candidates.push(githubImage);
+      }
     }
 
-    // Extract image candidates
-    const candidates = await extractImageCandidates(html, resource.url);
+    // Strategy 2: npm Registry API for npm URLs
+    const npmPackage = parseNpmPackage(resource.url);
+    if (npmPackage) {
+      const npmRepo = await fetchNpmPackageRepo(npmPackage);
+      if (npmRepo) {
+        const npmGithubImage = await fetchGitHubSocialPreview(
+          npmRepo.owner,
+          npmRepo.repo
+        );
+        if (npmGithubImage) {
+          npmGithubImage.source = "npm-registry";
+          candidates.push(npmGithubImage);
+        }
+      }
+    }
+
+    // Strategy 3: HTML scraping for other URLs (or as fallback)
+    if (candidates.length === 0) {
+      const html = await fetchHtml(resource.url);
+      if (html) {
+        const htmlCandidates = await extractImageCandidates(html, resource.url);
+        candidates.push(...htmlCandidates);
+      }
+    }
+
     if (candidates.length === 0) {
       return {
         id: resource.id,
@@ -442,13 +626,11 @@ async function processResource(
 
     // Try each candidate in order
     for (const candidate of candidates) {
-      // Queue image download to respect concurrency
       const imageBuffer = await imageQueue.add(() =>
         downloadAndProcessImage(candidate.url)
       );
 
       if (imageBuffer) {
-        // Upload to storage
         const uploadedUrl = await uploadImage(
           supabase,
           imageBuffer,
@@ -457,7 +639,6 @@ async function processResource(
         );
 
         if (uploadedUrl) {
-          // Update database - OG image becomes PRIMARY
           const updated = await updateResourceWithOgImage(
             supabase,
             resource.id,
@@ -482,7 +663,7 @@ async function processResource(
       id: resource.id,
       slug: resource.slug,
       success: false,
-      error: `All ${candidates.length} candidates failed`,
+      error: `All ${candidates.length} candidates failed to download`,
       duration: Date.now() - startTime,
     };
   } catch (error) {
@@ -499,7 +680,12 @@ async function processResource(
 // Get resources from database
 async function getResources(
   supabase: SupabaseClient,
-  options: { limit?: number; category?: string; skipExisting: boolean }
+  options: {
+    limit?: number;
+    category?: string;
+    skipExisting: boolean;
+    onlyFailed: boolean;
+  }
 ): Promise<Resource[]> {
   const PAGE_SIZE = 1000;
   let allResources: Resource[] = [];
@@ -509,14 +695,19 @@ async function getResources(
   while (hasMore) {
     let query = supabase
       .from("resources")
-      .select("id, slug, title, url, category, screenshots, primary_screenshot_url")
+      .select(
+        "id, slug, title, url, category, screenshots, primary_screenshot_url"
+      )
       .eq("is_published", true);
 
     if (options.category) {
       query = query.eq("category", options.category);
     }
 
-    query = query.order("category").order("slug").range(offset, offset + PAGE_SIZE - 1);
+    query = query
+      .order("category")
+      .order("slug")
+      .range(offset, offset + PAGE_SIZE - 1);
 
     const { data, error } = await query;
 
@@ -543,6 +734,13 @@ async function getResources(
     );
   }
 
+  // Only process resources with exactly 1 screenshot (previously failed)
+  if (options.onlyFailed) {
+    filtered = filtered.filter(
+      (r) => r.screenshots && r.screenshots.length === 1
+    );
+  }
+
   // Apply limit
   if (options.limit) {
     filtered = filtered.slice(0, options.limit);
@@ -556,18 +754,23 @@ async function main() {
   const options = parseArgs();
 
   console.log("\n" + "=".repeat(60));
-  console.log("🖼️  Parallel OpenGraph Image Fetcher");
+  console.log("🖼️  Parallel OpenGraph Image Fetcher v2");
   console.log("=".repeat(60));
-  console.log(`Concurrency: ${options.concurrency} HTML fetches, ${IMAGE_DOWNLOAD_CONCURRENCY} image downloads`);
+  console.log(
+    `GitHub Token: ${GITHUB_TOKEN ? "✓ configured" : "✗ not set (GitHub API disabled)"}`
+  );
+  console.log(
+    `Concurrency: ${options.concurrency} fetches, ${IMAGE_DOWNLOAD_CONCURRENCY} downloads`
+  );
   if (options.limit) console.log(`Limit: ${options.limit} resources`);
   if (options.category) console.log(`Category filter: ${options.category}`);
   if (options.dryRun) console.log("Mode: DRY RUN");
   if (options.skipExisting) console.log("Skip: Resources with 2+ screenshots");
+  if (options.onlyFailed) console.log("Filter: Only previously failed (1 screenshot)");
   console.log("");
 
   const supabase = getSupabaseClient();
 
-  // Get resources
   console.log("📊 Fetching resources from database...");
   const resources = await getResources(supabase, options);
 
@@ -577,6 +780,22 @@ async function main() {
     console.log("✨ No resources to process!");
     return;
   }
+
+  // Show URL type breakdown
+  let githubCount = 0;
+  let npmCount = 0;
+  let otherCount = 0;
+
+  resources.forEach((r) => {
+    if (parseGitHubRepo(r.url)) githubCount++;
+    else if (parseNpmPackage(r.url)) npmCount++;
+    else otherCount++;
+  });
+
+  console.log("\nBy URL type:");
+  console.log(`  GitHub repos: ${githubCount}`);
+  console.log(`  npm packages: ${npmCount}`);
+  console.log(`  Other: ${otherCount}`);
 
   // Show category breakdown
   const byCategory: Record<string, number> = {};
@@ -589,23 +808,29 @@ async function main() {
     .sort((a, b) => b[1] - a[1])
     .forEach(([cat, count]) => console.log(`  ${cat}: ${count}`));
 
-  // Dry run
   if (options.dryRun) {
     console.log("\n🔍 DRY RUN - Would process these resources:\n");
-    resources.slice(0, 20).forEach((r) => console.log(`  ${r.slug}: ${r.url}`));
+    resources.slice(0, 20).forEach((r) => {
+      const type = parseGitHubRepo(r.url)
+        ? "[GitHub]"
+        : parseNpmPackage(r.url)
+          ? "[npm]"
+          : "[Other]";
+      console.log(`  ${type} ${r.slug}: ${r.url}`);
+    });
     if (resources.length > 20) {
       console.log(`  ... and ${resources.length - 20} more`);
     }
     return;
   }
 
-  // Estimate time
   const estimatedSeconds = Math.ceil(
-    (resources.length / options.concurrency) * 1.5
+    (resources.length / options.concurrency) * 2
   );
-  console.log(`\n⏱️  Estimated time: ~${Math.ceil(estimatedSeconds / 60)} minutes`);
+  console.log(
+    `\n⏱️  Estimated time: ~${Math.ceil(estimatedSeconds / 60)} minutes`
+  );
 
-  // Create queues
   const fetchQueue = new PQueue({ concurrency: options.concurrency });
   const imageQueue = new PQueue({ concurrency: IMAGE_DOWNLOAD_CONCURRENCY });
 
@@ -616,7 +841,8 @@ async function main() {
   let failed = 0;
   const startTime = Date.now();
 
-  // Process all resources
+  const bySource: Record<string, number> = {};
+
   const promises = resources.map((resource) =>
     fetchQueue.add(async () => {
       const result = await processResource(supabase, resource, imageQueue);
@@ -624,11 +850,13 @@ async function main() {
 
       if (result.success) {
         successful++;
+        if (result.source) {
+          bySource[result.source] = (bySource[result.source] || 0) + 1;
+        }
       } else {
         failed++;
       }
 
-      // Progress update every 50 resources
       if ((successful + failed) % 50 === 0) {
         const elapsed = Math.round((Date.now() - startTime) / 1000);
         process.stdout.write(
@@ -644,7 +872,6 @@ async function main() {
 
   const duration = Math.round((Date.now() - startTime) / 1000);
 
-  // Summary
   console.log("\n\n" + "=".repeat(60));
   console.log("📊 OpenGraph Image Fetch Summary");
   console.log("=".repeat(60));
@@ -656,24 +883,15 @@ async function main() {
     `⚡ Rate: ${(results.length / duration).toFixed(1)} resources/second`
   );
 
-  // Source breakdown
-  const bySources: Record<string, number> = {};
-  results
-    .filter((r) => r.success && r.source)
-    .forEach((r) => {
-      bySources[r.source!] = (bySources[r.source!] || 0) + 1;
-    });
-
-  if (Object.keys(bySources).length > 0) {
+  if (Object.keys(bySource).length > 0) {
     console.log("\nBy image source:");
-    Object.entries(bySources)
+    Object.entries(bySource)
       .sort((a, b) => b[1] - a[1])
       .forEach(([source, count]) => console.log(`  ${source}: ${count}`));
   }
 
   console.log("=".repeat(60) + "\n");
 
-  // Show failures
   const failures = results.filter((r) => !r.success);
   if (failures.length > 0 && failures.length <= 30) {
     console.log("Failed resources:");
