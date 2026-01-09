@@ -296,76 +296,65 @@ function PromptsContent() {
             )}
           </div>
 
-          {/* Filters Panel */}
+          {/* Category Quick Links - Inline chips like Resources page */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            <button
+              onClick={() => { setCategory(""); setPage(1); }}
+              className={cn(
+                "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all duration-200",
+                !category
+                  ? "bg-blue-500/10 text-blue-600 dark:text-cyan-400 border border-blue-500/30"
+                  : "bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#262626] text-gray-700 dark:text-gray-300 hover:border-blue-500/50"
+              )}
+            >
+              <SparklesIcon className="w-4 h-4" />
+              <span>All</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">({pagination?.total || 0})</span>
+            </button>
+            {categories.map((cat) => (
+              <button
+                key={cat.slug}
+                onClick={() => { setCategory(cat.slug); setPage(1); }}
+                className={cn(
+                  "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all duration-200",
+                  category === cat.slug
+                    ? "bg-blue-500/10 text-blue-600 dark:text-cyan-400 border border-blue-500/30"
+                    : "bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#262626] text-gray-700 dark:text-gray-300 hover:border-blue-500/50"
+                )}
+              >
+                {CATEGORY_ICONS[cat.slug] || <SparklesIcon className="w-4 h-4" />}
+                <span>{cat.name}</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">({cat.promptCount})</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Filter Options - Inline chips */}
           <div className={cn(
-            "grid grid-cols-1 md:grid-cols-4 gap-6 mb-8",
-            !showFilters && "md:block hidden",
-            showFilters && "block"
+            "flex flex-wrap gap-2 mb-6",
+            !showFilters && "hidden md:flex"
           )}>
-            {/* Category Sidebar */}
-            <div className="md:col-span-1">
-              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
-                Categories
-              </h3>
-              <nav className="space-y-1">
-                <button
-                  onClick={() => { setCategory(""); setPage(1); }}
-                  className={cn(
-                    "w-full flex items-center justify-between px-3 py-2 rounded-lg text-left text-sm transition-colors",
-                    !category
-                      ? "bg-blue-500/10 text-blue-500"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  )}
-                >
-                  <span>All Categories</span>
-                  <span className="text-gray-400">{pagination?.total || 0}</span>
-                </button>
-                {categories.map((cat) => (
-                  <button
-                    key={cat.slug}
-                    onClick={() => { setCategory(cat.slug); setPage(1); }}
-                    className={cn(
-                      "w-full flex items-center justify-between px-3 py-2 rounded-lg text-left text-sm transition-colors",
-                      category === cat.slug
-                        ? "bg-blue-500/10 text-blue-500"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                    )}
-                  >
-                    <span className="flex items-center gap-2">
-                      {CATEGORY_ICONS[cat.slug] || <SparklesIcon className="w-4 h-4" />}
-                      {cat.name}
-                    </span>
-                    <span className="text-gray-400">{cat.promptCount}</span>
-                  </button>
-                ))}
-              </nav>
+            {filterOptions.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => { setFilter(opt.value); setPage(1); }}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-all duration-200",
+                  filter === opt.value
+                    ? "bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/30"
+                    : "bg-white dark:bg-[#111111] border border-gray-200 dark:border-[#262626] text-gray-700 dark:text-gray-300 hover:border-violet-500/50"
+                )}
+              >
+                {opt.value === "saved" && <BookmarkIcon className="w-3.5 h-3.5" />}
+                {opt.value === "featured" && <SparklesIcon className="w-3.5 h-3.5" />}
+                {opt.value === "system" && <StarIcon className="w-3.5 h-3.5" />}
+                {opt.label}
+              </button>
+            ))}
+          </div>
 
-              {/* Filter Options */}
-              <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3 mt-6">
-                Filter
-              </h3>
-              <div className="space-y-1">
-                {filterOptions.map((opt) => (
-                  <button
-                    key={opt.value}
-                    onClick={() => { setFilter(opt.value); setPage(1); }}
-                    className={cn(
-                      "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-sm transition-colors",
-                      filter === opt.value
-                        ? "bg-blue-500/10 text-blue-500"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                    )}
-                  >
-                    {opt.value === "saved" && <BookmarkIcon className="w-4 h-4" />}
-                    {opt.value === "featured" && <SparklesIcon className="w-4 h-4" />}
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Prompts Grid */}
-            <div className="md:col-span-3">
+          {/* Prompts Grid - Full width now */}
+          <div>
               {/* Mobile Sort */}
               <div className="md:hidden flex items-center gap-2 overflow-x-auto pb-3 mb-4">
                 {sortOptions.map((option) => (
@@ -396,7 +385,7 @@ function PromptsContent() {
 
               {/* Loading State */}
               {isLoading ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {[...Array(6)].map((_, i) => (
                     <PromptCardSkeleton key={i} />
                   ))}
@@ -439,7 +428,7 @@ function PromptsContent() {
               ) : (
                 <>
                   {/* Prompts Grid */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {prompts.map((prompt) => (
                       <PromptCard
                         key={prompt.id}
@@ -483,7 +472,6 @@ function PromptsContent() {
                 </>
               )}
             </div>
-          </div>
         </div>
       </main>
 
@@ -504,18 +492,24 @@ function PromptsLoading() {
             <div className="h-12 w-80 mx-auto bg-gray-200 dark:bg-gray-800 rounded animate-pulse mb-4" />
             <div className="h-6 w-96 mx-auto bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
           </div>
-          <div className="h-12 w-full max-w-xl bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse mb-8" />
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="hidden md:block space-y-2">
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="h-10 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse" />
-              ))}
-            </div>
-            <div className="md:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {[...Array(6)].map((_, i) => (
-                <PromptCardSkeleton key={i} />
-              ))}
-            </div>
+          <div className="h-12 w-full max-w-xl bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse mb-6" />
+          {/* Category chips skeleton */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="h-8 w-24 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse" />
+            ))}
+          </div>
+          {/* Filter chips skeleton */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-8 w-20 bg-gray-200 dark:bg-gray-800 rounded-lg animate-pulse" />
+            ))}
+          </div>
+          {/* Full-width cards grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[...Array(6)].map((_, i) => (
+              <PromptCardSkeleton key={i} />
+            ))}
           </div>
         </div>
       </main>
