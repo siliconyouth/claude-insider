@@ -236,7 +236,7 @@ export function Header({ activePage }: HeaderProps) {
             />
 
             {/* Simple Links */}
-            <NavLink label="Stats" href="/stats" isActive={activePage === "stats"} />
+            <NavLink label="Prompts" href="/prompts" isActive={activePage === "prompts"} />
             <NavLink label="Community" href="/users" isActive={activePage === "community"} />
 
             {/* Donate Button */}
@@ -361,16 +361,16 @@ export function Header({ activePage }: HeaderProps) {
                 {t("resources")}
               </Link>
               <Link
-                href="/stats"
+                href="/prompts"
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
                   "rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
-                  activePage === "stats"
+                  activePage === "prompts"
                     ? "text-blue-600 dark:text-cyan-400 bg-blue-50 dark:bg-blue-900/20"
                     : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-[#1a1a1a]"
                 )}
               >
-                Stats
+                Prompts
               </Link>
               <Link
                 href="/users"
