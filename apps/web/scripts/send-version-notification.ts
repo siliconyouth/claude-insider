@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.18.6 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.19.0 notification to all opted-in users...\n");
 
-  const version = "1.18.6";
-  const title = "Claude Insider v1.18.6 - Resource Relationships Fix";
+  const version = "1.19.0";
+  const title = "Claude Insider v1.19.0 - Prompt Library Enhancement";
   const message =
-    "🔗 Resource Relationships Fix: Connected UI to 1,800+ AI-analyzed relationships • 📊 Relationship Types: Similar, alternative, complement, uses, integrates now displaying • 🗄️ Database Table Correction: Query resource_relationships instead of legacy empty table • ⚡ Related Resources: Resource pages now show related and alternative tools";
+    "📚 800+ Claude-optimized prompts across 18 categories • 🧠 Claude Hints with optimization scores and best practice detection • 📝 Version history with diff viewing and restore • 👥 Community submissions with AI analysis and moderation • 🚀 One-click AI Assistant integration with variable filling";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
