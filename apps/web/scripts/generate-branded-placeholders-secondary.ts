@@ -1,15 +1,20 @@
 #!/usr/bin/env npx tsx
 /**
- * Branded Placeholder Generator
+ * Branded Placeholder Generator (Secondary)
  *
- * Generates branded placeholder images for resources that don't have OG images.
+ * Generates branded placeholder images for resources that ALREADY have OG images.
+ * Adds the placeholder as a SECONDARY image (not primary) for gallery consistency.
+ *
+ * This ensures ALL resources have a branded Claude Insider image in their gallery,
+ * while preserving the original OG image as the primary/card image.
+ *
  * Design follows Claude Insider's design system:
  * - Dark background (#0a0a0a)
  * - Resource name in center (white, Inter font)
  * - Claude Insider logo beneath
  * - claudeinsider.com at bottom
  *
- * Usage: npx dotenvx run -f .env.local -- npx tsx scripts/generate-branded-placeholders.ts
+ * Usage: npx dotenvx run -f .env.local -- npx tsx scripts/generate-branded-placeholders-secondary.ts
  *
  * Options:
  *   --limit=100        Process only N resources
@@ -44,6 +49,7 @@ interface Resource {
   title: string;
   category: string;
   screenshots: string[] | null;
+  primary_screenshot_url: string | null;
 }
 
 interface ProcessResult {
@@ -221,9 +227,7 @@ function generateBrandedSvg(resourceTitle: string): string {
 // Convert SVG to PNG using Sharp
 async function svgToPng(svg: string): Promise<Buffer> {
   const buffer = Buffer.from(svg);
-  return await sharp(buffer)
-    .png()
-    .toBuffer();
+  return await sharp(buffer).png().toBuffer();
 }
 
 // Upload image to Supabase Storage
@@ -253,24 +257,22 @@ async function uploadImage(
   return urlData.publicUrl;
 }
 
-// Update resource with new primary image
-async function updateResourceWithPlaceholder(
+// Update resource - add placeholder as SECONDARY (not primary)
+async function addSecondaryPlaceholder(
   supabase: SupabaseClient,
   resourceId: string,
-  newPrimaryUrl: string,
+  placeholderUrl: string,
   existingScreenshots: string[] | null
 ): Promise<boolean> {
-  // New placeholder goes first, existing screenshot becomes secondary
-  const existingPrimary = existingScreenshots?.[0];
-  const newScreenshots = existingPrimary
-    ? [newPrimaryUrl, existingPrimary]
-    : [newPrimaryUrl];
+  // Keep existing screenshots, append the branded placeholder at the end
+  // This preserves the OG image as primary (index 0)
+  const newScreenshots = [...(existingScreenshots || []), placeholderUrl];
 
+  // Only update screenshots array, NOT primary_screenshot_url
   const { error } = await supabase
     .from("resources")
     .update({
       screenshots: newScreenshots,
-      primary_screenshot_url: newPrimaryUrl,
       updated_at: new Date().toISOString(),
     })
     .eq("id", resourceId);
@@ -302,8 +304,8 @@ async function processResource(
       };
     }
 
-    // Update database - placeholder becomes PRIMARY
-    const updated = await updateResourceWithPlaceholder(
+    // Update database - placeholder becomes SECONDARY (appended to array)
+    const updated = await addSecondaryPlaceholder(
       supabase,
       resource.id,
       uploadedUrl,
@@ -327,8 +329,14 @@ async function processResource(
   }
 }
 
-// Get resources without OG images (only 1 screenshot)
-async function getResourcesNeedingPlaceholders(
+// Check if resource already has a branded placeholder
+function hasBrandedPlaceholder(screenshots: string[] | null): boolean {
+  if (!screenshots) return false;
+  return screenshots.some((url) => url.includes("branded-placeholder"));
+}
+
+// Get resources that don't have a branded placeholder yet (regardless of screenshot count)
+async function getResourcesWithoutBrandedPlaceholder(
   supabase: SupabaseClient,
   options: { limit?: number; category?: string }
 ): Promise<Resource[]> {
@@ -340,7 +348,7 @@ async function getResourcesNeedingPlaceholders(
   while (hasMore) {
     let query = supabase
       .from("resources")
-      .select("id, slug, title, category, screenshots")
+      .select("id, slug, title, category, screenshots, primary_screenshot_url")
       .eq("is_published", true);
 
     if (options.category) {
@@ -367,9 +375,15 @@ async function getResourcesNeedingPlaceholders(
     }
   }
 
-  // Filter to only resources with exactly 1 screenshot (no OG image)
+  // Filter to resources that:
+  // 1. Have at least 1 screenshot
+  // 2. Don't already have a branded placeholder
+  // This keeps ALL existing screenshots and just appends the branded one
   let filtered = allResources.filter(
-    (r) => r.screenshots && r.screenshots.length === 1
+    (r) =>
+      r.screenshots &&
+      r.screenshots.length >= 1 &&
+      !hasBrandedPlaceholder(r.screenshots)
   );
 
   // Apply limit
@@ -385,10 +399,11 @@ async function main() {
   const options = parseArgs();
 
   console.log("\n" + "=".repeat(60));
-  console.log("🎨 Branded Placeholder Generator");
+  console.log("🎨 Branded Placeholder Generator (Secondary)");
   console.log("=".repeat(60));
   console.log(`Concurrency: ${options.concurrency}`);
   console.log(`Dimensions: ${TARGET_WIDTH}x${TARGET_HEIGHT}`);
+  console.log(`Mode: Add as SECONDARY image (preserve OG as primary)`);
   if (options.limit) console.log(`Limit: ${options.limit} resources`);
   if (options.category) console.log(`Category filter: ${options.category}`);
   if (options.dryRun) console.log("Mode: DRY RUN");
@@ -396,13 +411,13 @@ async function main() {
 
   const supabase = getSupabaseClient();
 
-  console.log("📊 Fetching resources needing placeholders...");
-  const resources = await getResourcesNeedingPlaceholders(supabase, options);
+  console.log("📊 Fetching resources without branded placeholder...");
+  const resources = await getResourcesWithoutBrandedPlaceholder(supabase, options);
 
-  console.log(`\n📋 Found ${resources.length} resources needing placeholders`);
+  console.log(`\n📋 Found ${resources.length} resources needing secondary placeholders`);
 
   if (resources.length === 0) {
-    console.log("✨ All resources already have images!");
+    console.log("✨ All resources already have branded placeholders!");
     return;
   }
 
@@ -418,7 +433,7 @@ async function main() {
     .forEach(([cat, count]) => console.log(`  ${cat}: ${count}`));
 
   if (options.dryRun) {
-    console.log("\n🔍 DRY RUN - Would generate placeholders for:\n");
+    console.log("\n🔍 DRY RUN - Would generate secondary placeholders for:\n");
     resources.slice(0, 20).forEach((r) => console.log(`  ${r.slug}: ${r.title}`));
     if (resources.length > 20) {
       console.log(`  ... and ${resources.length - 20} more`);
@@ -431,7 +446,7 @@ async function main() {
 
   const queue = new PQueue({ concurrency: options.concurrency });
 
-  console.log(`\n🚀 Generating branded placeholders...\n`);
+  console.log(`\n🚀 Generating secondary branded placeholders...\n`);
 
   const results: ProcessResult[] = [];
   let successful = 0;
@@ -465,7 +480,7 @@ async function main() {
   const duration = Math.round((Date.now() - startTime) / 1000);
 
   console.log("\n\n" + "=".repeat(60));
-  console.log("📊 Placeholder Generation Summary");
+  console.log("📊 Secondary Placeholder Generation Summary");
   console.log("=".repeat(60));
   console.log(`✅ Successful: ${successful}`);
   console.log(`❌ Failed: ${failed}`);
