@@ -39,6 +39,9 @@ import {
   MessageSquareIcon,
   BriefcaseIcon,
 } from "lucide-react";
+import { UseWithAssistantButton } from "@/components/prompts/use-with-assistant-button";
+import { ClaudeHintsBadges } from "@/components/prompts/claude-hints-badges";
+import { VersionHistory } from "@/components/prompts/version-history";
 
 // Category icon mapping
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
@@ -56,6 +59,27 @@ interface PromptVariable {
   name: string;
   description?: string;
   default?: string;
+}
+
+interface ClaudeHints {
+  usesXmlTags?: boolean;
+  usesThinkingSection?: boolean;
+  usesExamples?: boolean;
+  usesChainOfThought?: boolean;
+  usesSystemContext?: boolean;
+  usesOutputFormat?: boolean;
+  structureScore?: number;
+  clarityScore?: number;
+  specificityScore?: number;
+  overallOptimizationScore?: number;
+  recommendedModel?: string;
+  estimatedTokens?: number;
+  complexityLevel?: string;
+  improvementSuggestions?: Array<{
+    type: string;
+    description: string;
+    priority: string;
+  }>;
 }
 
 interface PromptDetail {
@@ -90,6 +114,8 @@ interface PromptDetail {
   status: string;
   createdAt: string;
   updatedAt: string;
+  claudeHints?: ClaudeHints | null;
+  versionCount?: number;
 }
 
 export default function PromptDetailPage() {
@@ -431,6 +457,34 @@ export default function PromptDetailPage() {
                 ))}
               </div>
             )}
+
+            {/* Claude Optimization Hints */}
+            {prompt.claudeHints && (
+              <div className="mt-4">
+                <ClaudeHintsBadges
+                  hints={{
+                    uses_xml_tags: prompt.claudeHints.usesXmlTags,
+                    uses_thinking_section: prompt.claudeHints.usesThinkingSection,
+                    uses_examples: prompt.claudeHints.usesExamples,
+                    uses_chain_of_thought: prompt.claudeHints.usesChainOfThought,
+                    uses_system_context: prompt.claudeHints.usesSystemContext,
+                    uses_output_format: prompt.claudeHints.usesOutputFormat,
+                    structure_score: prompt.claudeHints.structureScore,
+                    clarity_score: prompt.claudeHints.clarityScore,
+                    specificity_score: prompt.claudeHints.specificityScore,
+                    overall_optimization_score: prompt.claudeHints.overallOptimizationScore,
+                    recommended_model: prompt.claudeHints.recommendedModel,
+                    estimated_tokens: prompt.claudeHints.estimatedTokens,
+                    complexity_level: prompt.claudeHints.complexityLevel,
+                    improvement_suggestions: prompt.claudeHints.improvementSuggestions,
+                  }}
+                  variant="compact"
+                  showScore={true}
+                  showFeatures={true}
+                  showModel={true}
+                />
+              </div>
+            )}
           </div>
 
           {/* Variables Form */}
@@ -479,26 +533,42 @@ export default function PromptDetailPage() {
               <h2 className="font-medium text-gray-900 dark:text-white">
                 Prompt
               </h2>
-              <button
-                onClick={handleCopy}
-                className={cn(
-                  "inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm",
-                  "bg-blue-500/10 text-blue-500 border border-blue-500/30",
-                  "hover:bg-blue-500/20 transition-colors"
-                )}
-              >
-                {isCopied ? (
-                  <>
-                    <CheckIcon className="w-4 h-4" />
-                    Copied!
-                  </>
-                ) : (
-                  <>
-                    <CopyIcon className="w-4 h-4" />
-                    Copy
-                  </>
-                )}
-              </button>
+              <div className="flex items-center gap-2">
+                <UseWithAssistantButton
+                  promptId={prompt.id}
+                  promptTitle={prompt.title}
+                  promptContent={prompt.content}
+                  variables={variables.map(v => ({
+                    name: v.name,
+                    description: v.description,
+                    default_value: v.default,
+                    required: !v.default,
+                  }))}
+                  category={prompt.category?.slug}
+                  variant="primary"
+                  size="sm"
+                />
+                <button
+                  onClick={handleCopy}
+                  className={cn(
+                    "inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm",
+                    "bg-blue-500/10 text-blue-500 border border-blue-500/30",
+                    "hover:bg-blue-500/20 transition-colors"
+                  )}
+                >
+                  {isCopied ? (
+                    <>
+                      <CheckIcon className="w-4 h-4" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <CopyIcon className="w-4 h-4" />
+                      Copy
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
             <div
               className="p-4 whitespace-pre-wrap font-mono text-sm text-gray-800 dark:text-gray-200 leading-relaxed"
@@ -571,6 +641,17 @@ export default function PromptDetailPage() {
               Copy & Use with Claude
             </button>
           </div>
+
+          {/* Version History */}
+          {(prompt.versionCount ?? 0) > 0 && (
+            <VersionHistory
+              promptId={prompt.id}
+              promptSlug={prompt.slug}
+              currentContent={prompt.content}
+              canEdit={canEdit}
+              className="mt-6"
+            />
+          )}
         </div>
       </main>
 

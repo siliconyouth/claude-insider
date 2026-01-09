@@ -1,15 +1,15 @@
 # Claude Insider Roadmap 2026
 
-> **Generated:** January 8, 2026
-> **Current Version:** 1.18.6
-> **Total Features:** 72 implemented (FR-63 Voice Messages removed in v1.17.1)
+> **Generated:** January 9, 2026
+> **Current Version:** 1.19.0
+> **Total Features:** 73 implemented (FR-63 Voice Messages removed in v1.17.1)
 > **Analysis Basis:** Full codebase scan (960+ TypeScript files), CHANGELOG.md (140+ versions), FEATURES.md
 
 ---
 
 ## Executive Summary
 
-Claude Insider has achieved exceptional maturity with **72 production features**, **3,012 curated resources**, **148 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
+Claude Insider has achieved exceptional maturity with **73 production features**, **3,012 curated resources**, **800+ prompts**, **152 database tables**, and **100% Lighthouse desktop performance**. This roadmap focuses on:
 
 1. **Developer Experience**: MCP Playground, VS Code Extension, API Sandbox
 2. **Enterprise Readiness**: SSO/SAML, Teams, Analytics
@@ -24,10 +24,11 @@ Claude Insider has achieved exceptional maturity with **72 production features**
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| **Version** | 1.18.6 | Released January 8, 2026 |
-| **Features** | 72 | Documented in FEATURES.md |
-| **Database Tables** | 148 | PostgreSQL with RLS |
+| **Version** | 1.19.0 | Released January 9, 2026 |
+| **Features** | 73 | Documented in FEATURES.md |
+| **Database Tables** | 152 | PostgreSQL with RLS |
 | **Resources** | 3,012 | 10 categories, 21 enhanced fields, 100% screenshot coverage |
+| **Prompts** | 800+ | 18 categories, Claude hints, community submissions |
 | **RAG Chunks** | 6,983 | 14% audio-enriched |
 | **Doc Pages** | 34 | 7 categories |
 | **Lighthouse Desktop** | 100% | FCP 0.4s, LCP 0.7s, TBT 0ms |
@@ -39,6 +40,8 @@ Claude Insider has achieved exceptional maturity with **72 production features**
 
 | Version | Date | Features |
 |---------|------|----------|
+| **v1.19.0** | Jan 9 | **Prompt Library Enhancement** (800+ prompts, 18 categories, Claude hints, versioning, community submissions, import pipeline) |
+| **v1.18.6** | Jan 8 | Resource relationships UI (1,800+ connections) |
 | **v1.18.1** | Jan 6 | Documentation Optimization (69.5% CLAUDE.md reduction) |
 | **v1.18.0** | Jan 6 | Sentry Error Monitoring, Vitest Unit Testing (57 tests), N+1 Query Fix |
 | **v1.17.3** | Jan 5 | CI Pipeline Stabilization (11 commits), filterCIErrors() helper, GitHub Actions E2E |
@@ -60,7 +63,7 @@ Claude Insider has achieved exceptional maturity with **72 production features**
 
 | Category | Capabilities |
 |----------|--------------|
-| **Content** | MDX docs (34 pages), 3,035 resources, Prompt Library (10 prompts), Doc Versioning, Cross-Linking |
+| **Content** | MDX docs (34 pages), 3,012 resources, **Prompt Library (800+ prompts, 18 categories, Claude hints)**, Doc Versioning, Cross-Linking |
 | **AI** | Claude Sonnet 4 streaming, ElevenLabs TTS (42 voices), RAG search, AI Writing Assistant, Relationship Analysis |
 | **Auth** | OAuth (GitHub, Google), Passkeys/WebAuthn, Multi-device 2FA, E2EE (Matrix), Bot Challenge |
 | **Messaging** | Direct Messages, Group Chat, Unified Chat, Delivery Tracking, Voice Messages, Link Unfurling, Message Pinning, E2EE Default |

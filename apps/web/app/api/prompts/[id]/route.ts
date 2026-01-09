@@ -104,6 +104,64 @@ export async function GET(request: NextRequest, context: RouteContext) {
       canEdit = hasMinRole(userRole, ROLES.ADMIN);
     }
 
+    // Fetch Claude optimization hints (optional - may not exist)
+    let claudeHints = null;
+    try {
+      const hintsResult = await pool.query(`
+        SELECT
+          uses_xml_tags,
+          uses_thinking_section,
+          uses_examples,
+          uses_chain_of_thought,
+          uses_system_context,
+          uses_output_format,
+          structure_score,
+          clarity_score,
+          specificity_score,
+          overall_optimization_score,
+          recommended_model,
+          estimated_tokens,
+          complexity_level,
+          improvement_suggestions
+        FROM prompt_claude_hints
+        WHERE prompt_id = $1
+      `, [p.id]);
+
+      if (hintsResult.rows.length > 0) {
+        const h = hintsResult.rows[0];
+        claudeHints = {
+          usesXmlTags: h.uses_xml_tags,
+          usesThinkingSection: h.uses_thinking_section,
+          usesExamples: h.uses_examples,
+          usesChainOfThought: h.uses_chain_of_thought,
+          usesSystemContext: h.uses_system_context,
+          usesOutputFormat: h.uses_output_format,
+          structureScore: h.structure_score,
+          clarityScore: h.clarity_score,
+          specificityScore: h.specificity_score,
+          overallOptimizationScore: h.overall_optimization_score,
+          recommendedModel: h.recommended_model,
+          estimatedTokens: h.estimated_tokens,
+          complexityLevel: h.complexity_level,
+          improvementSuggestions: h.improvement_suggestions || [],
+        };
+      }
+    } catch {
+      // Claude hints table may not exist yet or query failed - ignore
+    }
+
+    // Fetch version count (optional)
+    let versionCount = 0;
+    try {
+      const versionResult = await pool.query(
+        'SELECT COUNT(*)::int as count FROM prompt_versions WHERE prompt_id = $1',
+        [p.id]
+      );
+      versionCount = versionResult.rows[0]?.count || 0;
+    } catch {
+      // Version table may not exist yet - ignore
+    }
+
     return NextResponse.json({
       prompt: {
         id: p.id,
@@ -137,6 +195,8 @@ export async function GET(request: NextRequest, context: RouteContext) {
         status: p.status,
         createdAt: p.created_at,
         updatedAt: p.updated_at,
+        claudeHints,
+        versionCount,
       },
       canEdit,
       isOwner,

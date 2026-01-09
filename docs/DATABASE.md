@@ -28,9 +28,9 @@ Claude Insider uses **Supabase** (PostgreSQL) with **Better Auth** for authentic
 
 | Stat | Value |
 |------|-------|
-| **Total Tables** | 148 |
-| **Categories** | 24 |
-| **Migrations** | 131 |
+| **Total Tables** | 152 |
+| **Categories** | 25 |
+| **Migrations** | 133 |
 | **Storage Buckets** | 2 |
 
 | Layer | Technology | Purpose |
@@ -85,7 +85,7 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 ---
 
-## Table Catalog (148 Tables + 2 Storage Buckets)
+## Table Catalog (152 Tables + 2 Storage Buckets)
 
 ### Authentication (Better Auth - DO NOT MODIFY STRUCTURE)
 
@@ -304,9 +304,75 @@ SELECT id, email, createdAt FROM "user";   -- FAILS: becomes "createdat"
 
 `export_jobs`
 
-### Prompts (5 tables)
+### Prompts (9 tables) - Enhanced v1.19.0
 
-`prompt_categories`, `prompts`, `user_prompt_saves`, `prompt_ratings`, `prompt_usage`
+`prompt_categories`, `prompts`, `user_prompt_saves`, `prompt_ratings`, `prompt_usage`, `prompt_versions`, `prompt_claude_hints`, `prompt_submissions`, `prompt_imports`
+
+**Enhanced columns in `prompts` (v1.19.0):**
+- `source_type` ('original', 'imported', 'adapted', 'community') - Origin of prompt
+- `source_url` (TEXT) - URL if imported from external source
+- `source_attribution` (TEXT) - Attribution text
+- `original_content` (TEXT) - Pre-adaptation content
+- `current_version` (INTEGER DEFAULT 1) - Version counter
+- `fork_count` (INTEGER DEFAULT 0) - Number of forks
+- `forked_from_id` (UUID, FK → prompts) - Fork parent
+- `difficulty` ('beginner', 'intermediate', 'advanced') - Skill level
+- `estimated_tokens` (INTEGER) - Token count estimate
+- `use_cases` (TEXT[]) - Applicable scenarios
+
+**Key columns in `prompt_versions` (v1.19.0):**
+- `id` (UUID, PK) - Version identifier
+- `prompt_id` (UUID, FK → prompts) - Parent prompt
+- `version_number` (INTEGER) - Incremental version
+- `content` (TEXT NOT NULL) - Prompt content at this version
+- `variables` (JSONB) - Variables at this version
+- `change_summary` (TEXT) - Description of changes
+- `claude_adaptation_notes` (TEXT) - AI adaptation notes
+- `created_by` (TEXT, FK → user) - User who created version
+- UNIQUE constraint: `(prompt_id, version_number)`
+
+**Key columns in `prompt_claude_hints` (v1.19.0):**
+- `id` (UUID, PK) - Hints identifier
+- `prompt_id` (UUID, FK → prompts, UNIQUE) - One-to-one with prompt
+- `uses_xml_tags`, `uses_thinking_section`, `uses_examples`, `uses_chain_of_thought`, `uses_system_context`, `uses_output_format` (BOOLEAN) - Best practice flags
+- `structure_score`, `clarity_score`, `specificity_score`, `overall_optimization_score` (INTEGER 0-100) - Quality scores
+- `improvement_suggestions` (JSONB) - AI-generated improvement tips
+- `recommended_model` ('opus', 'sonnet', 'haiku') - Best model for prompt
+- `estimated_tokens` (INTEGER) - Token estimate
+- `complexity_level` ('simple', 'moderate', 'complex') - Complexity assessment
+- `analyzed_at` (TIMESTAMPTZ) - Last AI analysis time
+
+**Key columns in `prompt_submissions` (v1.19.0):**
+- `id` (UUID, PK) - Submission identifier
+- `title`, `description`, `content` (TEXT) - Submission content
+- `category_id` (UUID, FK → prompt_categories) - Target category
+- `tags` (TEXT[]) - User-provided tags
+- `variables` (JSONB) - Extracted variables
+- `source_url`, `source_name`, `source_attribution` (TEXT) - Source info
+- `submitter_user_id` (TEXT, FK → user) - Submitter
+- `submitter_ip_hash` (VARCHAR(64)) - For anonymous rate limiting
+- `status` ('pending', 'reviewing', 'approved', 'rejected', 'needs_adaptation') - Workflow status
+- `reviewed_by` (TEXT, FK → user), `reviewed_at` (TIMESTAMPTZ) - Review info
+- `rejection_reason` ('duplicate', 'low_quality', 'inappropriate', 'spam', 'off_topic', 'needs_work', 'other') - Rejection type
+- `ai_analysis` (JSONB), `ai_category_suggestion`, `ai_adaptation_suggestions`, `ai_adapted_content` (TEXT) - AI analysis
+- `ai_quality_score` (DECIMAL 0-1) - AI quality assessment
+- `duplicate_of_id` (UUID, FK → prompts), `similarity_score` (DECIMAL) - Duplicate detection
+- `created_prompt_id` (UUID, FK → prompts) - Links to created prompt after approval
+
+**Key columns in `prompt_imports` (v1.19.0):**
+- `id` (UUID, PK) - Import job identifier
+- `source_name` (TEXT NOT NULL) - Source identifier (e.g., 'awesome-chatgpt-prompts')
+- `source_url`, `source_version` (TEXT) - Source details
+- `status` ('pending', 'running', 'completed', 'failed', 'cancelled') - Job status
+- `total_prompts`, `imported_count`, `adapted_count`, `skipped_count`, `failed_count` (INTEGER) - Progress tracking
+- `import_config` (JSONB) - Configuration (adaptForClaude, autoApprove, categoryMapping)
+- `error_log` (JSONB) - Array of error records
+- `started_at`, `completed_at` (TIMESTAMPTZ) - Timing
+- `triggered_by` (TEXT, FK → user) - Admin who triggered import
+
+**Categories (18 total in v1.19.0):**
+- Original (8): coding, writing, analysis, creative, productivity, learning, conversation, business
+- New (10): roleplay, research, marketing, legal, healthcare, education, translation, design, devops, security
 
 ### MCP Playground (4 tables) - v1.16.0
 
@@ -471,7 +537,10 @@ supabase/migrations/
 ├── 118                          # Optimized chat SQL functions
 ├── 119                          # E2EE default for DMs (dm_device_keys, dm_e2ee_settings)
 ├── 129                          # Sentry check logs (sentry_check_logs)
-└── 130                          # Resource screenshots bucket (storage.buckets)
+├── 130                          # Resource screenshots bucket (storage.buckets)
+├── 131                          # Resource cache invalidation triggers
+├── 132                          # Sync screenshots array
+└── 133                          # Prompt Library expansion (prompt_versions, prompt_claude_hints, prompt_submissions, prompt_imports, 10 new categories)
 ```
 
 ---

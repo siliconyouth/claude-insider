@@ -15,7 +15,7 @@
  *
  * Project info is now dynamically loaded from Payload CMS Site Settings
  *
- * Updated: 2026-01-08 for v1.18.4 (Database-First Architecture with ISR Caching)
+ * Updated: 2026-01-09 for v1.19.0 (Prompt Library Enhancement)
  */
 
 import { DEFAULT_MODEL, DEFAULT_MODEL_NAME } from "../lib/models";
@@ -27,7 +27,7 @@ import type { SiteSetting } from "../payload-types";
 
 export const PROJECT_INFO_DEFAULTS = {
   name: "Claude Insider",
-  version: "1.18.4",
+  version: "1.19.0",
   tagline: "Your Guide to Mastering Claude AI",
   description: "Comprehensive documentation, tips, and guides for Claude AI, Claude Code, and the Anthropic ecosystem",
   liveUrl: "https://www.claudeinsider.com",
@@ -80,7 +80,7 @@ export function getAuthorInfo(settings?: SiteSetting | null) {
 export const AUTHOR_INFO = AUTHOR_INFO_DEFAULTS;
 
 // =============================================================================
-// TECH STACK KNOWLEDGE (v1.18.4 - updated 2026-01-08)
+// TECH STACK KNOWLEDGE (v1.19.0 - updated 2026-01-09)
 // =============================================================================
 
 export const TECH_STACK = {
@@ -119,9 +119,9 @@ export const TECH_STACK = {
     provider: "Supabase",
     version: "2.89.0",
     engine: "PostgreSQL 15+",
-    tables: 148,
-    categories: 23,
-    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library", "LRU caching"],
+    tables: 152,
+    categories: 25,
+    features: ["RLS policies", "Realtime subscriptions", "Edge functions", "E2EE key storage", "Prompt library (800+ prompts, 18 categories)", "LRU caching"],
   },
   cms: {
     provider: "Payload CMS",
@@ -1259,6 +1259,15 @@ export const PROJECT_KNOWLEDGE_CHUNKS = [
     url: "/changelog",
     category: "Project",
     keywords: ["v1.18.6", "resource relationships", "alternatives", "related resources", "ai analysis", "confidence scores", "database fix", "resource_relationships table"],
+  },
+  {
+    id: "v1190-features",
+    title: "Version 1.19.0 Features",
+    section: "New in v1.19.0",
+    content: `Claude Insider v1.19.0 introduces the Prompt Library Enhancement (FR-73), expanding from 10 system prompts to 800+ curated, Claude-optimized prompts. 18 Categories: Expanded from 8 to 18 categories - coding, writing, analysis, creative, productivity, learning, conversation, business, roleplay, research, marketing, legal, healthcare, education, translation, design, devops, security. Claude Hints System: Optimization scores (0-100), best practice detection (uses_xml_tags, uses_thinking_section, uses_examples, uses_chain_of_thought), improvement_suggestions (JSONB), recommended_model, estimated_tokens, complexity_level. Version History: Immutable audit trail via prompt_versions table with content snapshots, change_summary, and created_by tracking. Diff viewing and restore capability through API. Community Submissions: Users submit prompts at /prompts/submit with duplicate detection, AI analysis queue for Claude adaptation, and moderation workflow (pending→reviewing→approved/rejected/needs_adaptation). Admin dashboard at /dashboard/prompts/submissions. One-Click AI Use: UseWithAssistantButton component opens AI Assistant with prompt pre-filled. VariableInputModal for {{placeholder}} variable substitution. Usage tracked via /api/prompts/[id]/use endpoint. Import Pipeline: Bulk import support from external sources (awesome-chatgpt-prompts, awesome-claude-prompts, TheBigPromptLibrary) with Claude adaptation. New Database Tables: prompt_versions (version history), prompt_claude_hints (AI optimization metadata), prompt_submissions (community queue), prompt_imports (bulk import jobs). 133 total migrations, 152 database tables.`,
+    url: "/changelog",
+    category: "Project",
+    keywords: ["v1.19.0", "prompt library", "800+ prompts", "18 categories", "claude hints", "optimization scores", "version history", "community submissions", "one-click ai", "fr-73"],
   },
 ];
 

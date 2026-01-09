@@ -1,12 +1,12 @@
 # Claude Insider Feature Requirements
 
-Complete list of all **72 implemented features** with detailed capabilities.
+Complete list of all **73 implemented features** with detailed capabilities.
 
 **For quick reference, see [CLAUDE.md](CLAUDE.md#feature-requirements-summary).**
 
 ---
 
-## Implemented Features (71 total)
+## Implemented Features (73 total)
 
 | ID | Feature | Key Capabilities |
 |----|---------|------------------|
@@ -58,7 +58,7 @@ Complete list of all **72 implemented features** with detailed capabilities.
 | FR-46 | AI Writing Assistant | In-place doc editing, 8 AI commands (improve, expand, simplify, etc.), diff preview, streaming |
 | FR-47 | GitHub CLAUDE.md Sync | Sync CLAUDE.md to GitHub repos, repo selector, OAuth scopes, status tracking |
 | FR-48 | Doc Versioning | Version history, LCS line-by-line diff, unified/split view, rollback (admin only), 50 versions per doc |
-| FR-49 | Prompt Library | 10 system prompts, 8 categories, save/rate/use tracking, variable syntax `{{placeholder}}`, visibility controls |
+| FR-49 | Prompt Library | **800+ Claude-optimized prompts**, 18 categories (coding, writing, analysis, creative, productivity, learning, conversation, business, roleplay, research, marketing, legal, healthcare, education, translation, design, devops, security), save/rate/use tracking, variable syntax `{{placeholder}}`, visibility controls, **Use with AI Assistant** (one-click chat integration with variable filling), **Claude Hints System** (optimization scores 0-100, best practice detection: XML tags, thinking sections, chain-of-thought, improvement suggestions, recommended model), **Version History** (immutable audit trail, diff viewing, restore capability), **Community Submissions** (submit form, AI analysis, duplicate detection, moderation workflow), **Import Pipeline** (bulk import from external sources with Claude adaptation), forking system |
 | FR-50 | Logo Component System | `GradientLogo`/`MonochromeLogo` SVG components, 58.6% scaling formula, OG image support, design system enforcement |
 | FR-51 | Resource Insights Dashboard | Interactive charts (category donut, difficulty bars, audience distribution, coverage visualization), click-to-filter, enhanced field display |
 | FR-52 | Resource Enhanced Fields | 21 enhanced fields (keyFeatures, targetAudience, useCases, pros, cons, prerequisites), URL parameter sync, homepage audience grid |
@@ -82,6 +82,7 @@ Complete list of all **72 implemented features** with detailed capabilities.
 | FR-70 | Unit Testing Framework | Vitest 3.3.1 with jsdom, 71+ tests across 18 suites (rate-limiting, validation, sanitization, API routes, chat, auth, RAG, resources), ~0.5s execution time, `pnpm test` command, mocking support with `vi.mock()` |
 | FR-71 | Sentry Admin Dashboard | Admin-only error management dashboard (`/dashboard/sentry`), stats cards (total/error/warning/fatal/users), status filters, issue detail modal with stack traces, resolve/ignore actions, hourly cron job with admin notifications, TanStack Query hooks (`useSentryIssues`, `useSentryStats`, `useUpdateSentryIssue`), `sentry_check_logs` table |
 | FR-72 | Automated Screenshot Generation | Multi-tier screenshot pipeline (Playwright → OpenGraph → Branded Placeholders), 100% coverage for 3,012 resources, browser pool pattern (15 concurrent), bot evasion (stealth mode), dark mode capture, `--retry-failed` mode (60s timeout), Supabase Storage bucket (`resource-screenshots`), progress tracking with resume, SVG placeholder generator using design system |
+| FR-73 | Prompt Library Enhancement | Bulk import pipeline (awesome-chatgpt-prompts, awesome-claude-prompts, TheBigPromptLibrary), Claude AI adaptation (XML tags, thinking sections, chain-of-thought), category expansion (8→18 categories), `prompt_versions` table for immutable history, `prompt_claude_hints` table for AI optimization metadata, `prompt_submissions` table for community contributions, `prompt_imports` table for job tracking, `UseWithAssistantButton` component, `VariableInputModal` component, `ClaudeHintsBadges` component, `VersionHistory` component, moderation dashboard (`/dashboard/prompts/submissions`), submission form (`/prompts/submit`) |
 
 ---
 
@@ -139,12 +140,12 @@ Complete list of all **72 implemented features** with detailed capabilities.
 - Chat performance optimizations (LRU cache, batching)
 - E2EE by default for DMs
 
-### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50, FR-61, FR-69, FR-70, FR-71)
-- Database types (148 tables)
+### Infrastructure (FR-17, FR-25, FR-26, FR-31, FR-43, FR-47, FR-48, FR-49, FR-50, FR-61, FR-69, FR-70, FR-71, FR-73)
+- Database types (152 tables)
 - PWA enhancements
 - Advanced search
 - GitHub sync, doc versioning
-- Prompt library
+- Prompt library (800+ prompts, 18 categories, Claude hints, versioning, community submissions)
 - Sentry error monitoring + admin dashboard
 - Unit testing framework (Vitest, 71+ tests)
 - Logo component system

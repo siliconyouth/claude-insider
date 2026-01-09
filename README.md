@@ -9,9 +9,10 @@
 <br />
 
 [![Live Site](https://img.shields.io/badge/Live-claudeinsider.com-8b5cf6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com)
-[![Version](https://img.shields.io/badge/v1.18.6-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/v1.19.0-changelog-22c55e?style=for-the-badge&labelColor=0a0a0a)](CHANGELOG.md)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%25-00cc66?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md#performance-optimization-mandatory)
-[![Features](https://img.shields.io/badge/71-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Features](https://img.shields.io/badge/73-features-06b6d4?style=for-the-badge&labelColor=0a0a0a)](CLAUDE.md)
+[![Prompts](https://img.shields.io/badge/800+-prompts-a855f7?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/prompts)
 [![Resources](https://img.shields.io/badge/3,012-resources-3b82f6?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/resources)
 [![Donate](https://img.shields.io/badge/Support-donate-ec4899?style=for-the-badge&labelColor=0a0a0a)](https://www.claudeinsider.com/donate)
 
@@ -122,7 +123,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 
 ---
 
-## 71 Platform Features
+## 73 Platform Features
 
 <details>
 <summary><b>Content & Documentation</b></summary>
@@ -132,7 +133,7 @@ See [Performance Optimization (MANDATORY)](CLAUDE.md#performance-optimization-ma
 | MDX Documentation | 34 pages with syntax highlighting (33 languages), copy-to-clipboard, ToC with scroll spy |
 | Resources Section | 3,012 curated resources, 10 categories, infinite scroll pagination (24/batch), GitHub integration, AI-enhanced descriptions, community submissions |
 | **MCP Playground** | **Interactive MCP config builder with Monaco editor, 2,136 templates, validation, save/share, public gallery** |
-| Prompt Library | 10 system prompts, 8 categories, variable syntax, save/rate/use tracking |
+| **Prompt Library** | **800+ Claude-optimized prompts, 18 categories, Claude hints (optimization scores), versioning, community submissions, one-click AI Assistant integration** |
 | Doc Versioning | Version history, line-by-line diff, unified/split view, rollback capability |
 | Cross-Linking | 63 doc-resource + 1,800 resource-resource relationships with confidence scores |
 
@@ -285,7 +286,7 @@ pnpm dev
 
 - Supabase
 - PostgreSQL 15+
-- 148 Tables
+- 152 Tables
 - Payload CMS 3.69
 
 </td>
@@ -334,7 +335,7 @@ See [CLAUDE.md](CLAUDE.md) for complete documentation.
 
 | Document | Description |
 |:---------|:------------|
-| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 71 feature requirements |
+| [**CLAUDE.md**](CLAUDE.md) | Development guidelines, design system, UX patterns, 73 feature requirements |
 | [**CHANGELOG.md**](CHANGELOG.md) | Version history with detailed release notes |
 | [**ROADMAP.md**](ROADMAP.md) | Future feature planning and priorities |
 

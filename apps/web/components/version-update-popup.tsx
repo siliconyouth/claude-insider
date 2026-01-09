@@ -26,6 +26,18 @@ interface ChangelogEntry {
 // Recent changelog entries - keep last 3-5 versions
 const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "1.19.0",
+    date: "2026-01-09",
+    type: "major",
+    highlights: [
+      "📚 Prompt Library: 800+ Claude-optimized prompts across 18 categories",
+      "🧠 Claude Hints: Optimization scores, best practice detection (XML tags, thinking sections)",
+      "📝 Version History: Immutable audit trail with diff viewing and restore capability",
+      "👥 Community Submissions: Submit prompts with AI analysis and moderation workflow",
+      "🚀 One-Click AI: Use prompts directly in AI Assistant with variable filling",
+    ],
+  },
+  {
     version: "1.18.6",
     date: "2026-01-08",
     type: "patch",

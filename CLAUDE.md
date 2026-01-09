@@ -2,7 +2,7 @@
 
 ## Overview
 
-Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.18.6**.
+Claude Insider is a Next.js documentation hub for Claude AI. **Version 1.19.0**.
 
 | Link | URL |
 |------|-----|
@@ -59,11 +59,12 @@ Developers using Claude Code CLI, Claude.ai web interface users, teams integrati
 16. [Resources System (MANDATORY)](#resources-system-mandatory)
 17. [Chat System (MANDATORY)](#chat-system-mandatory)
 18. [MCP Playground (MANDATORY)](#mcp-playground-mandatory)
-19. [Testing (MANDATORY)](#testing-mandatory)
-20. [Feature Documentation](#feature-documentation)
-21. [Content Structure](#content-structure)
-22. [Updating Guidelines](#updating-guidelines)
-23. [License](#license)
+19. [Prompt Library System (MANDATORY)](#prompt-library-system-mandatory---v1190)
+20. [Testing (MANDATORY)](#testing-mandatory)
+21. [Feature Documentation](#feature-documentation)
+22. [Content Structure](#content-structure)
+23. [Updating Guidelines](#updating-guidelines)
+24. [License](#license)
 
 ---
 
@@ -106,16 +107,16 @@ Root Directory: `apps/web` | Domain redirects: `claudeinsider.com`, `claude-insi
 
 ## Feature Requirements Summary
 
-**72 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
+**73 implemented features** across 7 categories. **Full details:** [FEATURES.md](FEATURES.md)
 
 | Category | Highlights |
 |----------|------------|
-| **Content** | MDX docs (34), 3,012 resources (100% screenshots), AI Voice Assistant, Advanced Search |
+| **Content** | MDX docs (34), 3,012 resources (100% screenshots), AI Voice Assistant, Advanced Search, **Prompt Library (800+ prompts)** |
 | **Auth & Security** | OAuth, Passkeys/2FA, E2EE (Matrix), Bot Challenge, Security Dashboard |
 | **Messaging** | Group Chat, Unified Chat, Delivery Status, Link Unfurling, Message Pinning, E2EE Default |
-| **Admin** | Diagnostics, 5 Payload Globals, Audit Export, Resource Updates |
-| **AI** | RAG (6,983 chunks), Resource Auto-Update, Relationship Analysis |
-| **Infrastructure** | 147 DB tables, PWA, MCP Playground, LRU Cache System |
+| **Admin** | Diagnostics, 5 Payload Globals, Audit Export, Resource Updates, **Prompt Moderation** |
+| **AI** | RAG (6,983 chunks), Resource Auto-Update, Relationship Analysis, **Prompt Claude Hints** |
+| **Infrastructure** | 152 DB tables, PWA, MCP Playground, LRU Cache System |
 
 ### Non-Functional Requirements
 
@@ -143,13 +144,13 @@ claude-insider/
 │   ├── content/                # 34 MDX documentation pages
 │   ├── data/                   # System prompt, RAG index, resources
 │   ├── i18n/                   # 18 languages
-│   └── supabase/migrations/    # 131 SQL migration files
+│   └── supabase/migrations/    # 133 SQL migration files
 ├── docs/                       # Documentation
-│   ├── DATABASE.md             # Complete schema reference (148 tables)
+│   ├── DATABASE.md             # Complete schema reference (152 tables)
 │   ├── PATTERNS.md             # Implementation patterns & code examples
 │   └── archive/                # Archived implementation plans
 ├── CLAUDE.md                   # Rules & requirements (this file)
-├── FEATURES.md                 # Detailed feature list (71 features)
+├── FEATURES.md                 # Detailed feature list (73 features)
 ├── CHANGELOG.md                # Version history
 └── ROADMAP.md                  # Future planning
 ```
@@ -490,7 +491,7 @@ Sentry.logger.info("User signed in", { userId, method: "oauth" });
 
 ## Data Layer (MANDATORY)
 
-**148 tables** across 24 categories, **130 migrations**, **2 storage buckets**. **Full schema:** [docs/DATABASE.md](docs/DATABASE.md)
+**152 tables** across 25 categories, **133 migrations**, **2 storage buckets**. **Full schema:** [docs/DATABASE.md](docs/DATABASE.md)
 
 ### Critical Rules
 
@@ -732,6 +733,76 @@ Interactive sandbox for building, validating, and sharing MCP server configurati
 ### Database Tables
 
 `mcp_configs`, `mcp_config_versions`, `mcp_config_stars`, `mcp_config_reviews`
+
+---
+
+## Prompt Library System (MANDATORY) - v1.19.0
+
+**Location:** `/prompts` | **Components:** `components/prompts/`
+
+Curated library of **800+ Claude-optimized prompts** with Claude hints, community contributions, and versioning.
+
+### Architecture
+
+| Layer | Purpose |
+|-------|---------|
+| `prompts` | Main prompt records with metadata |
+| `prompt_versions` | Immutable version history |
+| `prompt_claude_hints` | AI optimization scores and recommendations |
+| `prompt_submissions` | Community contribution queue |
+| `prompt_imports` | Bulk import job tracking |
+| `prompt_categories` | 18 categories (8 original + 10 new) |
+
+### Categories (18 Total)
+
+| Original (8) | New (10) |
+|--------------|----------|
+| coding, writing, analysis, creative | roleplay, research, marketing, legal |
+| productivity, learning, conversation, business | healthcare, education, translation, design, devops, security |
+
+### Claude Hints System
+
+| Field | Type | Purpose |
+|-------|------|---------|
+| `uses_xml_tags`, `uses_thinking_section` | Boolean | Best practice detection |
+| `overall_optimization_score` | 0-100 | Composite quality score |
+| `improvement_suggestions` | JSONB | AI-generated enhancement tips |
+| `recommended_model` | opus/sonnet/haiku | Best model for prompt |
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Use with AI Assistant** | One-click to send prompt to AI chat with variable substitution |
+| **Version History** | Immutable audit trail with diff viewing |
+| **Community Submissions** | User-submitted prompts with AI analysis and moderation |
+| **Claude Hints Badges** | Visual indicators for XML tags, thinking sections, etc. |
+| **Variable System** | `{{placeholder}}` syntax with input modal |
+
+### Key Components
+
+| Component | Purpose |
+|-----------|---------|
+| `UseWithAssistantButton` | One-click AI integration with variable filling |
+| `VariableInputModal` | Modal for filling `{{variable}}` placeholders |
+| `ClaudeHintsBadges` | Optimization score and feature badges |
+| `VersionHistory` | Version list with restore capability |
+
+### API Routes
+
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/prompts` | GET | List prompts with filters |
+| `/api/prompts/[id]` | GET/PATCH | Get/update single prompt |
+| `/api/prompts/[id]/versions` | GET/POST | Version history, create version |
+| `/api/prompts/submit` | POST | Submit community prompt |
+| `/api/admin/prompts/submissions` | GET/PATCH | Moderation queue |
+
+### Submission Workflow
+
+`pending` → `reviewing` → `approved` | `rejected` | `needs_adaptation`
+
+On approval: Creates `prompts` record + `prompt_claude_hints` + links submission
 
 ---
 
