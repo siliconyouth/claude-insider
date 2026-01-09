@@ -287,6 +287,7 @@ async function uploadScreenshot(
 }
 
 // Update resource in database with screenshot URL
+// Note: Database trigger (sync_primary_screenshot_to_array) keeps these in sync
 async function updateResourceScreenshot(
   supabase: SupabaseClient,
   resourceId: string,
@@ -294,7 +295,11 @@ async function updateResourceScreenshot(
 ): Promise<boolean> {
   const { error } = await supabase
     .from("resources")
-    .update({ screenshots: [screenshotUrl] })
+    .update({
+      screenshots: [screenshotUrl],
+      primary_screenshot_url: screenshotUrl,
+      updated_at: new Date().toISOString(),
+    })
     .eq("id", resourceId);
 
   return !error;

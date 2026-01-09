@@ -170,13 +170,20 @@ export function ResourcesPageClient({
     try {
       // Fetch all resources in pages (API already handles this efficiently)
       const allItems: (ResourceListItem | ResourceEntry)[] = [];
+      const seenIds = new Set<string>();
       let page = 1;
       let hasMore = true;
 
       while (hasMore) {
         const response = await fetch(`/api/resources?page=${page}&limit=100`);
         const data = await response.json();
-        allItems.push(...data.resources);
+        // Deduplicate resources by id to prevent React key warnings
+        for (const resource of data.resources) {
+          if (!seenIds.has(resource.id)) {
+            seenIds.add(resource.id);
+            allItems.push(resource);
+          }
+        }
         hasMore = page < data.totalPages;
         page++;
       }

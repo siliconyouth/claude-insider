@@ -198,22 +198,29 @@ export async function GET(request: NextRequest) {
       dbQuery = dbQuery.not("cons", "is", null);
     }
 
-    // Sorting
+    // Sorting - always include slug as stable tie-breaker to prevent duplicates across pages
     switch (sort) {
       case "stars":
-        dbQuery = dbQuery.order("github_stars", { ascending: false, nullsFirst: false });
+        dbQuery = dbQuery
+          .order("github_stars", { ascending: false, nullsFirst: false })
+          .order("slug", { ascending: true });
         break;
       case "recent":
-        dbQuery = dbQuery.order("added_at", { ascending: false });
+        dbQuery = dbQuery
+          .order("added_at", { ascending: false })
+          .order("slug", { ascending: true });
         break;
       case "title":
-        dbQuery = dbQuery.order("title", { ascending: true });
+        dbQuery = dbQuery
+          .order("title", { ascending: true })
+          .order("slug", { ascending: true });
         break;
       default:
-        // Relevance - order by featured first, then stars
+        // Relevance - order by featured first, then stars, then slug for stability
         dbQuery = dbQuery
           .order("is_featured", { ascending: false })
-          .order("github_stars", { ascending: false, nullsFirst: false });
+          .order("github_stars", { ascending: false, nullsFirst: false })
+          .order("slug", { ascending: true });
     }
 
     // Pagination

@@ -444,8 +444,15 @@ function OverviewTab({ resource }: { resource: ResourceWithDetails }) {
       )}
 
       {/* Screenshots Gallery */}
+      {/* Use screenshots array if available, fallback to primary_screenshot_url */}
       <ScreenshotGallery
-        screenshots={resource.screenshots || []}
+        screenshots={
+          resource.screenshots && resource.screenshots.length > 0
+            ? resource.screenshots
+            : resource.primary_screenshot_url
+              ? [resource.primary_screenshot_url]
+              : []
+        }
         title={resource.title}
       />
 

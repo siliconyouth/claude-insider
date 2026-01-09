@@ -470,14 +470,14 @@ async function updateResourceScreenshot(
     };
 
     // Update resource with new screenshot as primary
+    // Note: Database trigger (sync_primary_screenshot_to_array) will ensure
+    // screenshots array is kept in sync, but we update it explicitly as well
     const { error } = await supabase
       .from("resources")
       .update({
         primary_screenshot_url: screenshotUrl,
         screenshot_metadata: [newMetadata], // Set as array with new screenshot first
-        screenshots: supabase.rpc
-          ? undefined
-          : [screenshotUrl], // Also update the screenshots array
+        screenshots: [screenshotUrl], // Always update screenshots array
         updated_at: now,
       })
       .eq("id", resourceId);
