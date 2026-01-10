@@ -8,7 +8,6 @@ import { OpenAssistantButton } from "@/components/open-assistant-button";
 import { LazyResourcesSection } from "@/components/home/lazy-resources-section";
 import { LazyMCPPlaygroundSection } from "@/components/home/lazy-mcp-playground-section";
 import { LazyCategoriesSection } from "@/components/home/lazy-categories-section";
-import { LazyHighlightsSection } from "@/components/home/lazy-highlights-section";
 import { cn } from "@/lib/design-system";
 import buildInfo from "@/data/build-info.json";
 import { getSiteStats } from "@/app/actions/site-stats";
@@ -213,9 +212,6 @@ export default async function HomePage() {
 
         {/* Categories Section - lazy loaded for better performance */}
         <LazyCategoriesSection />
-
-        {/* Highlights Section - lazy loaded for better performance */}
-        <LazyHighlightsSection />
       </main>
 
       <Footer />
