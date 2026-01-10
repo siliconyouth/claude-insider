@@ -172,12 +172,8 @@ export default function PromptDetailPage() {
         }
         setVariableValues(defaults);
 
-        // Track usage
-        fetch(`/api/prompts/${data.prompt.id}/use`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ context: "view" }),
-        }).catch(() => {});
+        // Note: Usage is only tracked when user copies the prompt, not on view
+        // This prevents double-counting when viewing and then copying
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {

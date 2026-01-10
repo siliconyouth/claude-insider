@@ -131,6 +131,13 @@ export function PromptCard({
       setIsCopied(true);
       onCopy?.(prompt.content);
       setTimeout(() => setIsCopied(false), 2000);
+
+      // Track usage
+      fetch(`/api/prompts/${prompt.id}/use`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ context: "copy" }),
+      }).catch(() => {});
     } catch {
       // Clipboard API not available
     }
