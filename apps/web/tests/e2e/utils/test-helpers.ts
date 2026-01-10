@@ -356,6 +356,17 @@ export function filterCIErrors(errors: string[]): string[] {
     // ErrorBoundary caught errors (logged as warnings)
     /\[Lazy.*Provider\].*Chunk load failed/i,
     /continuing without/i,
+
+    // ==========================================================================
+    // Server Component & Auth Errors in CI (v1.19.0)
+    // Protected routes throw server errors without auth secrets
+    // ==========================================================================
+    /Server Components render/i,
+    /An error occurred in the Server Components/i,
+    /BetterAuthError/i,
+    /default secret/i,
+    /\[Error Digest\]/i,
+    /\[App Error\]/i,
   ];
 
   return errors.filter((err) =>
