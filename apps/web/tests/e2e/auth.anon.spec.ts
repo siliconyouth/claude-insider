@@ -94,12 +94,20 @@ test.describe("Authentication Pages", () => {
     await waitForHydration(page);
 
     // Look for sign-in link OR button (some pages use button, some use link)
+    // Wait with timeout since auth provider may still be loading after hydration
+    // (Better Auth does async session check with retries which can take up to 7s)
     const signInElement = page.locator("header").getByRole("link", { name: /sign in/i })
       .or(page.locator("header").getByRole("button", { name: /sign in/i })).first();
-    const isVisible = await signInElement.isVisible().catch(() => false);
 
-    // Auth should be accessible from any page
-    expect(isVisible).toBe(true);
+    try {
+      // Wait for sign-in element to be visible (handles auth loading state)
+      await signInElement.waitFor({ state: "visible", timeout: 15000 });
+      expect(true).toBe(true); // Element found and visible
+    } catch {
+      // If still not visible after timeout, check if it exists but maybe hidden
+      const isVisible = await signInElement.isVisible().catch(() => false);
+      expect(isVisible).toBe(true);
+    }
   });
 
   // =========================================================================
