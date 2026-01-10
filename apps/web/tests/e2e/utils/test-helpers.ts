@@ -367,6 +367,8 @@ export function filterCIErrors(errors: string[]): string[] {
     /default secret/i,
     /\[Error Digest\]/i,
     /\[App Error\]/i,
+    // Generic "Error" messages from error boundaries (no specific message)
+    /^Error$/,
   ];
 
   return errors.filter((err) =>
