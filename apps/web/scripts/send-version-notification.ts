@@ -17,12 +17,12 @@ const pool = new Pool({
 });
 
 async function main() {
-  console.log("🔔 Sending version 1.19.0 notification to all opted-in users...\n");
+  console.log("🔔 Sending version 1.20.0 notification to all opted-in users...\n");
 
-  const version = "1.19.0";
-  const title = "Claude Insider v1.19.0 - Prompt Library Enhancement";
+  const version = "1.20.0";
+  const title = "Claude Insider v1.20.0 - Interactive Prompt Builder";
   const message =
-    "📚 800+ Claude-optimized prompts across 18 categories • 🧠 Claude Hints with optimization scores and best practice detection • 📝 Version history with diff viewing and restore • 👥 Community submissions with AI analysis and moderation • 🚀 One-click AI Assistant integration with variable filling";
+    "🛠️ Interactive Prompt Builder with 4 building modes (Quick/Guided/Chat/Playground) • 📝 Smart Mode Selection recommends based on variable complexity • 🎨 Monaco Editor Integration for playground environment • 💬 AI Chat Mode fills variables through conversation • ⚡ 8 Variable Input Types with auto-detection";
 
   try {
     // Get all users who have in_app_version_updates enabled (or no preference = default enabled)
