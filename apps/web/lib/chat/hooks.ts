@@ -302,7 +302,8 @@ export function useChatConversations() {
   }, [chatEngine]);
 
   // Refresh conversations
-  const refresh = useCallback(async () => {
+  // Returns true if refresh succeeded, false otherwise (for callers to verify)
+  const refresh = useCallback(async (): Promise<boolean> => {
     // Try engine first, fall back to server if engine returns empty
     let useServerFallback = true;
 
@@ -312,22 +313,46 @@ export function useChatConversations() {
       if (convs.length > 0) {
         setState({ conversations: convs, isLoading: false, error: null });
         useServerFallback = false;
+        return true;
       }
     }
 
     if (useServerFallback) {
       // Reload from server
-      setState((s) => ({ ...s, isLoading: true }));
-      const { getConversations } = await import("@/app/actions/messaging");
-      const result = await getConversations();
-      if (result.success && result.conversations) {
-        setState({
-          conversations: result.conversations.map(transformLegacyConversation),
+      setState((s) => ({ ...s, isLoading: true, error: null }));
+      try {
+        const { getConversations } = await import("@/app/actions/messaging");
+        const result = await getConversations();
+        if (result.success && result.conversations) {
+          setState({
+            conversations: result.conversations.map(transformLegacyConversation),
+            isLoading: false,
+            error: null,
+          });
+          return true;
+        } else {
+          // Server returned error - update state to reflect failure
+          console.error("[useChatConversations] refresh failed:", result.error);
+          setState((s) => ({
+            ...s,
+            isLoading: false,
+            error: result.error || "Failed to refresh conversations",
+          }));
+          return false;
+        }
+      } catch (error) {
+        // Network or unexpected error
+        console.error("[useChatConversations] refresh error:", error);
+        setState((s) => ({
+          ...s,
           isLoading: false,
-          error: null,
-        });
+          error: error instanceof Error ? error.message : "Failed to refresh",
+        }));
+        return false;
       }
     }
+
+    return true;
   }, [chatEngine]);
 
   return {

@@ -102,21 +102,74 @@ let globalOpenUnifiedChat: ((mode: "ai" | "messages", options?: OpenOptions) => 
 let globalOpenAIAssistant: ((options?: { context?: AIContext; question?: string }) => void) | null = null;
 let globalOpenMessages: ((options?: { conversationId?: string; userId?: string; messageId?: string }) => void) | null = null;
 
+// Pending calls queue - for when functions are called before provider mounts
+type PendingCall =
+  | { type: "chat"; mode: "ai" | "messages"; options?: OpenOptions }
+  | { type: "ai"; options?: { context?: AIContext; question?: string } }
+  | { type: "messages"; options?: { conversationId?: string; userId?: string; messageId?: string } };
+
+let pendingCalls: PendingCall[] = [];
+let providerReady = false;
+
+// Process any pending calls once provider is ready
+function processPendingCalls() {
+  const calls = [...pendingCalls];
+  pendingCalls = [];
+
+  for (const call of calls) {
+    switch (call.type) {
+      case "chat":
+        if (globalOpenUnifiedChat) globalOpenUnifiedChat(call.mode, call.options);
+        break;
+      case "ai":
+        if (globalOpenAIAssistant) globalOpenAIAssistant(call.options);
+        break;
+      case "messages":
+        if (globalOpenMessages) globalOpenMessages(call.options);
+        break;
+    }
+  }
+}
+
+// Mark provider as ready and process pending calls
+export function markProviderReady() {
+  providerReady = true;
+  processPendingCalls();
+}
+
 export function openUnifiedChat(mode: "ai" | "messages", options?: OpenOptions) {
   if (globalOpenUnifiedChat) {
     globalOpenUnifiedChat(mode, options);
+  } else if (!providerReady) {
+    // Queue call for when provider is ready
+    pendingCalls.push({ type: "chat", mode, options });
+    console.debug("[UnifiedChat] Queued openUnifiedChat call - provider not ready");
+  } else {
+    console.warn("[UnifiedChat] openUnifiedChat called but global function not registered");
   }
 }
 
 export function openAIAssistant(options?: { context?: AIContext; question?: string }) {
   if (globalOpenAIAssistant) {
     globalOpenAIAssistant(options);
+  } else if (!providerReady) {
+    // Queue call for when provider is ready
+    pendingCalls.push({ type: "ai", options });
+    console.debug("[UnifiedChat] Queued openAIAssistant call - provider not ready");
+  } else {
+    console.warn("[UnifiedChat] openAIAssistant called but global function not registered");
   }
 }
 
 export function openMessages(options?: { conversationId?: string; userId?: string; messageId?: string }) {
   if (globalOpenMessages) {
     globalOpenMessages(options);
+  } else if (!providerReady) {
+    // Queue call for when provider is ready
+    pendingCalls.push({ type: "messages", options });
+    console.debug("[UnifiedChat] Queued openMessages call - provider not ready");
+  } else {
+    console.warn("[UnifiedChat] openMessages called but global function not registered");
   }
 }
 
@@ -181,11 +234,13 @@ export function UnifiedChatProvider({ children }: { children: ReactNode }) {
     if (options?.messageId) setTargetMessageId(options.messageId);
   }, []);
 
-  // Register global functions on mount
+  // Register global functions on mount and mark provider as ready
   useEffect(() => {
     globalOpenUnifiedChat = openUnifiedChatFn;
     globalOpenAIAssistant = openAIAssistantFn;
     globalOpenMessages = openMessagesFn;
+    // Mark ready and process any pending calls that were queued before mount
+    markProviderReady();
   }, [openUnifiedChatFn, openAIAssistantFn, openMessagesFn]);
 
   // Handle URL parameters for deep linking (e.g., from notification clicks)

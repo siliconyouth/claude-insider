@@ -72,6 +72,12 @@ export function MessagesTab() {
   const [isStartingConversation, setIsStartingConversation] = useState(false);
   const processedUserIdRef = useRef<string | null>(null);
 
+  // Ref to store stable reference to refreshConversations (avoids effect re-triggers when chatEngine changes)
+  const refreshConversationsRef = useRef(refreshConversations);
+  useEffect(() => {
+    refreshConversationsRef.current = refreshConversations;
+  }, [refreshConversations]);
+
   // Sync conversations from hook to local state and update unread count
   useEffect(() => {
     if (chatConversations.length > 0 || !isLoadingConversations) {
@@ -111,7 +117,7 @@ export function MessagesTab() {
   }, [pendingVerificationId]);
 
   // Handle selectedUserId - start or find conversation with user
-  // FIX: Reset processedUserIdRef when selectedUserId is cleared to allow re-messaging same user
+  // Uses stable ref to avoid effect re-triggers when chatEngine changes
   useEffect(() => {
     // When selectedUserId is cleared, reset the processed ref to allow future attempts
     if (!selectedUserId) {
@@ -148,23 +154,29 @@ export function MessagesTab() {
           // Need to create a new conversation
           const result = await startConversation(selectedUserId);
           if (result.success && result.conversationId) {
-            // Refresh conversations using the chat hook (uses ChatEngine when available)
-            await refreshConversations();
-            // Select the new conversation
-            // Note: selectConversation() already clears selectedUserId to null
-            selectConversation(result.conversationId);
+            // Refresh conversations using the stable ref (avoids effect re-triggers)
+            // refresh() now returns boolean to indicate success
+            const refreshSuccess = await refreshConversationsRef.current();
+            if (refreshSuccess) {
+              // Select the new conversation
+              // Note: selectConversation() already clears selectedUserId to null
+              selectConversation(result.conversationId);
+            } else {
+              // Refresh failed but conversation was created - still try to select it
+              // The conversation will appear when conversations reload naturally
+              console.warn("[MessagesTab] Refresh failed, selecting conversation anyway");
+              selectConversation(result.conversationId);
+            }
           } else {
-            // FIX: Handle failure - clear state so user can retry
-            console.error("Failed to start conversation:", result.error);
-            // Clear processedUserIdRef to allow retry
+            // Server action failed - clear state so user can retry
+            console.error("[MessagesTab] Failed to start conversation:", result.error);
             processedUserIdRef.current = null;
-            // Clear selectedUserId via selectConversation(null)
             selectConversation(null);
           }
         }
       } catch (error) {
-        // FIX: Handle unexpected errors
-        console.error("Error starting conversation:", error);
+        // Unexpected error - clear state so user can retry
+        console.error("[MessagesTab] Error starting conversation:", error);
         processedUserIdRef.current = null;
         selectConversation(null);
       } finally {
@@ -173,7 +185,8 @@ export function MessagesTab() {
     };
 
     handleStartConversation();
-  }, [selectedUserId, currentUserId, conversations, isStartingConversation, selectConversation, refreshConversations]);
+    // Note: refreshConversations removed from deps - using stable ref instead
+  }, [selectedUserId, currentUserId, conversations, isStartingConversation, selectConversation]);
 
   // Filter conversations
   const filteredConversations = conversations.filter((conv) => {
@@ -210,19 +223,27 @@ export function MessagesTab() {
     setShowNewChatModal(false);
     const result = await startConversation(userId);
     if (result.success && result.conversationId) {
-      // Refresh conversations using the chat hook (uses ChatEngine when available)
-      await refreshConversations();
+      // Refresh conversations using the stable ref (avoids callback recreation issues)
+      const refreshSuccess = await refreshConversationsRef.current();
+      if (!refreshSuccess) {
+        console.warn("[MessagesTab] Refresh failed after new chat, selecting anyway");
+      }
       selectConversation(result.conversationId);
+    } else {
+      console.error("[MessagesTab] Failed to start new chat:", result.error);
     }
-  }, [selectConversation, refreshConversations]);
+  }, [selectConversation]);
 
   // Handle new group creation - moved before conditional returns
   const handleNewGroupCreated = useCallback(async (conversationId: string) => {
     setShowNewGroupModal(false);
-    // Refresh conversations using the chat hook (uses ChatEngine when available)
-    await refreshConversations();
+    // Refresh conversations using the stable ref (avoids callback recreation issues)
+    const refreshSuccess = await refreshConversationsRef.current();
+    if (!refreshSuccess) {
+      console.warn("[MessagesTab] Refresh failed after group creation, selecting anyway");
+    }
     selectConversation(conversationId);
-  }, [selectConversation, refreshConversations]);
+  }, [selectConversation]);
 
   // Show conversation view if one is selected
   if (selectedConversationId && currentUserId) {
