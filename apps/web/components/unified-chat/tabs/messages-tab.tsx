@@ -36,7 +36,6 @@ export function MessagesTab() {
     selectedConversationId,
     selectedUserId,
     selectConversation,
-    startConversationWithUser,
     unreadCount,
     setUnreadCount,
     targetMessageId,
@@ -131,8 +130,8 @@ export function MessagesTab() {
 
       if (existingConversation) {
         // Already have a conversation, just select it
+        // Note: selectConversation() already clears selectedUserId to null
         selectConversation(existingConversation.id);
-        startConversationWithUser(""); // Clear the selectedUserId
       } else {
         // Need to create a new conversation
         const result = await startConversation(selectedUserId);
@@ -140,16 +139,16 @@ export function MessagesTab() {
           // Refresh conversations using the chat hook (uses ChatEngine when available)
           await refreshConversations();
           // Select the new conversation
+          // Note: selectConversation() already clears selectedUserId to null
           selectConversation(result.conversationId);
         }
-        startConversationWithUser(""); // Clear the selectedUserId
       }
 
       setIsStartingConversation(false);
     };
 
     handleStartConversation();
-  }, [selectedUserId, currentUserId, conversations, isStartingConversation, selectConversation, startConversationWithUser, refreshConversations]);
+  }, [selectedUserId, currentUserId, conversations, isStartingConversation, selectConversation, refreshConversations]);
 
   // Filter conversations
   const filteredConversations = conversations.filter((conv) => {
