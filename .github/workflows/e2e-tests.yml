@@ -140,6 +140,7 @@ jobs:
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET || 'placeholder-secret-min-32-chars-long' }}
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -267,6 +268,7 @@ jobs:
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET || 'placeholder-secret-min-32-chars-long' }}
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -326,6 +328,7 @@ jobs:
           NEXT_PUBLIC_APP_URL: http://localhost:3001
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET || 'placeholder-secret-min-32-chars-long' }}
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
